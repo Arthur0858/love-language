@@ -153,6 +153,15 @@
     .nav-links { display: flex; gap: 20px; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
     .nav-links a:hover { color: var(--rose); }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .lang-toggle {
+      background: transparent; border: 1.5px solid var(--rose);
+      color: var(--rose); border-radius: 999px;
+      padding: 4px 13px; font-size: .78rem; font-weight: 700;
+      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+      transition: all .2s; letter-spacing: .05em;
+    }
+    .lang-toggle:hover { background: var(--rose); color: #fff; }
 
     /* ─── HERO ─── */
     .hero {
@@ -392,6 +401,31 @@
     .aff-body .aff-label { font-size: .78rem; color: var(--muted); }
     .aff-body .aff-title { font-size: .88rem; font-weight: 700; color: var(--text); }
 
+    /* Luna Yoga Music */
+    .luna-yoga-card {
+      background: linear-gradient(135deg, #EFF8F4, #E3F3ED);
+      border: 1.5px solid #A8D5C5;
+      border-radius: var(--radius);
+      padding: 28px; margin-bottom: 28px;
+    }
+    .luna-yoga-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+    }
+    .luna-yoga-logo { font-size: 2rem; line-height: 1; }
+    .luna-yoga-brand { font-weight: 700; font-size: 1rem; color: #2D7A5E; }
+    .luna-yoga-tagline { font-size: .82rem; color: #5A9E84; margin-top: 2px; }
+    .luna-yoga-desc {
+      font-size: .9rem; color: var(--muted); line-height: 1.78; margin-bottom: 18px;
+    }
+    .luna-yoga-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #2D7A5E; color: #fff;
+      border-radius: 999px; padding: 11px 28px;
+      font-size: .88rem; font-weight: 700; text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .luna-yoga-btn:hover { background: #235F49; transform: translateY(-1px); }
+
     /* Retake */
     .retake-row { text-align: center; margin-top: 8px; }
     .btn-retake {
@@ -477,46 +511,49 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-    </svg>
-    LoveTypes
-  </a>
+  <div class="nav-left">
+    <button class="lang-toggle" id="lang-btn" onclick="toggleLang()">EN</button>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      LoveTypes
+    </a>
+  </div>
   <div class="nav-links">
-    <a href="#types-section">5種語言</a>
-    <a href="#quiz-section" id="nav-test-link">開始測驗</a>
-    <a href="#about-section">關於理論</a>
+    <a href="#types-section" data-i18n="nav.types">5種語言</a>
+    <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
+    <a href="#about-section" data-i18n="nav.about">關於理論</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="home-section">
-  <div class="hero-badge">🌸 免費 · 無需註冊 · 2分鐘完成</div>
-  <h1>你最需要的愛，<br>是哪一種<span>語言</span>？</h1>
-  <p>每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。</p>
+  <div class="hero-badge" data-i18n="hero.badge">🌸 免費 · 無需註冊 · 2分鐘完成</div>
+  <h1 data-i18n-html="hero.h1">你最需要的愛，<br>是哪一種<span>語言</span>？</h1>
+  <p data-i18n="hero.p">每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。</p>
   <div class="hero-meta">
     <span class="hero-meta-item">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      約 2 分鐘
+      <span data-i18n="hero.meta1">約 2 分鐘</span>
     </span>
     <span class="hero-meta-item">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      15 道情境選擇題
+      <span data-i18n="hero.meta2">15 道情境選擇題</span>
     </span>
     <span class="hero-meta-item">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      已有 38,000+ 人測驗
+      <span data-i18n="hero.meta3">已有 38,000+ 人測驗</span>
     </span>
   </div>
-  <button class="btn-start" onclick="startQuiz()">開始測驗 →</button>
+  <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">開始測驗 →</button>
 </section>
 
 <!-- TYPES PREVIEW -->
 <section class="types-section" id="types-section">
   <div class="section-header">
-    <h2>五種愛的語言</h2>
-    <p>心理學家 Gary Chapman 提出的理論，影響了全球數百萬對情侶</p>
+    <h2 data-i18n="types.h2">五種愛的語言</h2>
+    <p data-i18n="types.p">心理學家 Gary Chapman 提出的理論，影響了全球數百萬對情侶</p>
   </div>
   <div class="types-grid">
     <div class="type-card" onclick="startQuiz()">
@@ -564,29 +601,29 @@
 <!-- ABOUT -->
 <section class="about-section" id="about-section">
   <div class="section-header">
-    <h2>關於愛的語言理論</h2>
-    <p>了解這套理論背後的心理學依據</p>
+    <h2 data-i18n="about.h2">關於愛的語言理論</h2>
+    <p data-i18n="about.p">了解這套理論背後的心理學依據</p>
   </div>
   <div class="about-grid">
     <div class="about-card">
       <div class="icon">📖</div>
-      <h3>理論起源</h3>
-      <p>Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。</p>
+      <h3 data-i18n="about.c1.h3">理論起源</h3>
+      <p data-i18n="about.c1.p">Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。</p>
     </div>
     <div class="about-card">
       <div class="icon">🔬</div>
-      <h3>科學依據</h3>
-      <p>研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。</p>
+      <h3 data-i18n="about.c2.h3">科學依據</h3>
+      <p data-i18n="about.c2.p">研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。</p>
     </div>
     <div class="about-card">
       <div class="icon">🔄</div>
-      <h3>語言可以改變嗎？</h3>
-      <p>是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。</p>
+      <h3 data-i18n="about.c3.h3">語言可以改變嗎？</h3>
+      <p data-i18n="about.c3.p">是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。</p>
     </div>
     <div class="about-card">
       <div class="icon">💑</div>
-      <h3>不只是愛情</h3>
-      <p>愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。</p>
+      <h3 data-i18n="about.c4.h3">不只是愛情</h3>
+      <p data-i18n="about.c4.p">愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。</p>
     </div>
   </div>
 </section>
@@ -594,75 +631,85 @@
 <!-- LOVE LANGUAGES DETAIL — Static HTML for AI crawlers & SEO -->
 <section class="detail-section" id="love-languages-detail">
   <div class="section-header">
-    <h2>五種愛的語言完整說明</h2>
-    <p>了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通</p>
+    <h2 data-i18n="detail.h2">五種愛的語言完整說明</h2>
+    <p data-i18n="detail.p">了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通</p>
   </div>
 
   <article class="detail-card" id="words-of-affirmation">
     <div class="detail-icon">💬</div>
-    <h3>肯定的言詞（Words of Affirmation）</h3>
-    <p>肯定的言詞是五種愛的語言中，以語言作為愛的主要媒介的類型。對這類型的人而言，語言有著巨大的力量——一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，就能讓他們深刻感受到被珍視的溫度。他們不需要大張旗鼓，只需要對方願意說出那份真誠。</p>
-    <p>批評和冷漠對他們的傷害特別深，因為他們相信語言是連結心的橋樑。在日常中，伴侶的一則暖心訊息、一句臨時的鼓勵，都能讓他們充滿能量。Gary Chapman 指出，給予這類型伴侶愛的最佳方式，是養成每天表達欣賞與感謝的習慣，讓正向語言成為關係的日常養分。</p>
-    <ul>
-      <li><strong>日常表現：</strong>重視對方的稱讚、感謝訊息、睡前暖心的一句話</li>
-      <li><strong>最受傷的事：</strong>被忽視、批評，或對方從不說「謝謝」</li>
-      <li><strong>給伴侶的提示：</strong>每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了</li>
-    </ul>
+    <div data-i18n-html="detail.W">
+      <h3>肯定的言詞（Words of Affirmation）</h3>
+      <p>肯定的言詞是五種愛的語言中，以語言作為愛的主要媒介的類型。對這類型的人而言，語言有著巨大的力量——一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，就能讓他們深刻感受到被珍視的溫度。他們不需要大張旗鼓，只需要對方願意說出那份真誠。</p>
+      <p>批評和冷漠對他們的傷害特別深，因為他們相信語言是連結心的橋樑。在日常中，伴侶的一則暖心訊息、一句臨時的鼓勵，都能讓他們充滿能量。Gary Chapman 指出，給予這類型伴侶愛的最佳方式，是養成每天表達欣賞與感謝的習慣，讓正向語言成為關係的日常養分。</p>
+      <ul>
+        <li><strong>日常表現：</strong>重視對方的稱讚、感謝訊息、睡前暖心的一句話</li>
+        <li><strong>最受傷的事：</strong>被忽視、批評，或對方從不說「謝謝」</li>
+        <li><strong>給伴侶的提示：</strong>每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了</li>
+      </ul>
+    </div>
   </article>
 
   <article class="detail-card" id="acts-of-service">
     <div class="detail-icon">🛠️</div>
-    <h3>服務的行動（Acts of Service）</h3>
-    <p>服務的行動是以實際行動表達愛意的類型。對這類型的人而言，愛不是說出來的，而是做出來的。當對方默默幫忙分擔家務、主動把事情處理好，他們感受到的不只是感謝，而是被深深照顧的安全感。「我願意為你做這件事」這份心意的重量，遠比一千個「我愛你」都來得真實。</p>
-    <p>這類型的人通常也是那個默默付出、用行動表達心意的人，但有時容易因付出不被看見而感到委屈。Chapman 提醒，與服務行動型的伴侶相處，最重要的是主動幫忙處理他不喜歡但必須做的事，這比任何語言或禮物都更能打動他的心。</p>
-    <ul>
-      <li><strong>日常表現：</strong>幫伴侶跑腿、準備餐點、主動承擔瑣事</li>
-      <li><strong>最受傷的事：</strong>一直在付出，但對方從未主動做過任何事</li>
-      <li><strong>給伴侶的提示：</strong>主動幫對方做一件他不喜歡但必須做的事，效果遠超過任何禮物</li>
-    </ul>
+    <div data-i18n-html="detail.S">
+      <h3>服務的行動（Acts of Service）</h3>
+      <p>服務的行動是以實際行動表達愛意的類型。對這類型的人而言，愛不是說出來的，而是做出來的。當對方默默幫忙分擔家務、主動把事情處理好，他們感受到的不只是感謝，而是被深深照顧的安全感。「我願意為你做這件事」這份心意的重量，遠比一千個「我愛你」都來得真實。</p>
+      <p>這類型的人通常也是那個默默付出、用行動表達心意的人，但有時容易因付出不被看見而感到委屈。Chapman 提醒，與服務行動型的伴侶相處，最重要的是主動幫忙處理他不喜歡但必須做的事，這比任何語言或禮物都更能打動他的心。</p>
+      <ul>
+        <li><strong>日常表現：</strong>幫伴侶跑腿、準備餐點、主動承擔瑣事</li>
+        <li><strong>最受傷的事：</strong>一直在付出，但對方從未主動做過任何事</li>
+        <li><strong>給伴侶的提示：</strong>主動幫對方做一件他不喜歡但必須做的事，效果遠超過任何禮物</li>
+      </ul>
+    </div>
   </article>
 
   <article class="detail-card" id="receiving-gifts">
     <div class="detail-icon">🎁</div>
-    <h3>接受禮物（Receiving Gifts）</h3>
-    <p>接受禮物型的人把禮物視為心意的具體化。重要的不是金額，而是對方是否「記得」、是否「用心想過」。每一個精心挑選的小東西，都在傳遞一個訊息：「我看見你、我記得你喜歡什麼、我在不在你身邊都想著你。」這種被記住、被惦記的感覺，是他們感受愛的核心方式。</p>
-    <p>忘記紀念日、從不準備任何心意，對這類型的人而言是情感疏忽的訊號，不只是失望，而是懷疑自己在關係中是否被重視。Gary Chapman 強調，這並非物質主義，而是對「有人在乎我」的渴望。給這類型伴侶最好的禮物，不需要昂貴——一張手寫卡片、一朵路邊的花，都能成為感情最有力的表達。</p>
-    <ul>
-      <li><strong>日常表現：</strong>珍惜有意義的小禮物、重視紀念日儀式</li>
-      <li><strong>最受傷的事：</strong>重要日子對方毫無準備，讓他感覺不被記得</li>
-      <li><strong>給伴侶的提示：</strong>隨手帶他說過想吃的東西，這份「我記得你」的感覺才是關鍵</li>
-    </ul>
+    <div data-i18n-html="detail.G">
+      <h3>接受禮物（Receiving Gifts）</h3>
+      <p>接受禮物型的人把禮物視為心意的具體化。重要的不是金額，而是對方是否「記得」、是否「用心想過」。每一個精心挑選的小東西，都在傳遞一個訊息：「我看見你、我記得你喜歡什麼、我在不在你身邊都想著你。」這種被記住、被惦記的感覺，是他們感受愛的核心方式。</p>
+      <p>忘記紀念日、從不準備任何心意，對這類型的人而言是情感疏忽的訊號，不只是失望，而是懷疑自己在關係中是否被重視。Gary Chapman 強調，這並非物質主義，而是對「有人在乎我」的渴望。給這類型伴侶最好的禮物，不需要昂貴——一張手寫卡片、一朵路邊的花，都能成為感情最有力的表達。</p>
+      <ul>
+        <li><strong>日常表現：</strong>珍惜有意義的小禮物、重視紀念日儀式</li>
+        <li><strong>最受傷的事：</strong>重要日子對方毫無準備，讓他感覺不被記得</li>
+        <li><strong>給伴侶的提示：</strong>隨手帶他說過想吃的東西，這份「我記得你」的感覺才是關鍵</li>
+      </ul>
+    </div>
   </article>
 
   <article class="detail-card" id="quality-time">
     <div class="detail-icon">⏳</div>
-    <h3>優質的時光（Quality Time）</h3>
-    <p>優質的時光型的人把時間視為衡量愛最重要的標準。他們要的不是相處的時數，而是那份全然的專注——手機放下、眼神對上、心真正在這裡。當對方願意把最珍貴的時間毫無保留地給予，他們才真實感受到被愛。</p>
-    <p>各自低頭滑手機的夜晚，對他們而言是最深的孤獨，即使人坐在旁邊也感到疏離。Chapman 的研究指出，這類型的伴侶在共處時最渴望的是「被全神貫注對待」。建議與優質時光型的伴侶每天設定一段無手機時光，即使只有 30 分鐘，全心全意在彼此身上，效果勝過整晚卻心不在焉的陪伴。</p>
-    <ul>
-      <li><strong>日常表現：</strong>珍視專注的共處，重視眼神交流與深度對話</li>
-      <li><strong>最受傷的事：</strong>對方在身邊卻一直看手機，讓他感到被忽視</li>
-      <li><strong>給伴侶的提示：</strong>每週安排一個「無手機約會夜」，讓他感受完整的你</li>
-    </ul>
+    <div data-i18n-html="detail.T">
+      <h3>優質的時光（Quality Time）</h3>
+      <p>優質的時光型的人把時間視為衡量愛最重要的標準。他們要的不是相處的時數，而是那份全然的專注——手機放下、眼神對上、心真正在這裡。當對方願意把最珍貴的時間毫無保留地給予，他們才真實感受到被愛。</p>
+      <p>各自低頭滑手機的夜晚，對他們而言是最深的孤獨，即使人坐在旁邊也感到疏離。Chapman 的研究指出，這類型的伴侶在共處時最渴望的是「被全神貫注對待」。建議與優質時光型的伴侶每天設定一段無手機時光，即使只有 30 分鐘，全心全意在彼此身上，效果勝過整晚卻心不在焉的陪伴。</p>
+      <ul>
+        <li><strong>日常表現：</strong>珍視專注的共處，重視眼神交流與深度對話</li>
+        <li><strong>最受傷的事：</strong>對方在身邊卻一直看手機，讓他感到被忽視</li>
+        <li><strong>給伴侶的提示：</strong>每週安排一個「無手機約會夜」，讓他感受完整的你</li>
+      </ul>
+    </div>
   </article>
 
   <article class="detail-card" id="physical-touch">
     <div class="detail-icon">🤝</div>
-    <h3>身體的接觸（Physical Touch）</h3>
-    <p>身體的接觸型的人透過肢體接觸感受愛與安全感。一個擁抱、牽手、靠在對方肩上睡著，這些物理連結提供的安全感是無可替代的。他們不需要豪華晚餐或昂貴禮物，只要能感受到對方的體溫與存在感，就是最好的時光。</p>
-    <p>長期缺乏身體接觸對他們來說會造成情感上的疏離感，甚至懷疑關係的親密度。Gary Chapman 指出，給予這類型伴侶愛，最有效的方式是建立日常肢體接觸的儀式——早安吻、出門前的擁抱、睡前牽手，讓愛以固定且具體的方式流動。值得注意的是，身體的接觸重視的是溫暖與連結，與性無直接關聯。</p>
-    <ul>
-      <li><strong>日常表現：</strong>喜歡牽手、擁抱、走路時靠近對方</li>
-      <li><strong>最受傷的事：</strong>對方幾乎不主動靠近或碰觸，讓他感到疏離</li>
-      <li><strong>給伴侶的提示：</strong>主動給予日常的非性化肢體接觸，牽手和擁抱對他意義重大</li>
-    </ul>
+    <div data-i18n-html="detail.P">
+      <h3>身體的接觸（Physical Touch）</h3>
+      <p>身體的接觸型的人透過肢體接觸感受愛與安全感。一個擁抱、牽手、靠在對方肩上睡著，這些物理連結提供的安全感是無可替代的。他們不需要豪華晚餐或昂貴禮物，只要能感受到對方的體溫與存在感，就是最好的時光。</p>
+      <p>長期缺乏身體接觸對他們來說會造成情感上的疏離感，甚至懷疑關係的親密度。Gary Chapman 指出，給予這類型伴侶愛，最有效的方式是建立日常肢體接觸的儀式——早安吻、出門前的擁抱、睡前牽手，讓愛以固定且具體的方式流動。值得注意的是，身體的接觸重視的是溫暖與連結，與性無直接關聯。</p>
+      <ul>
+        <li><strong>日常表現：</strong>喜歡牽手、擁抱、走路時靠近對方</li>
+        <li><strong>最受傷的事：</strong>對方幾乎不主動靠近或碰觸，讓他感到疏離</li>
+        <li><strong>給伴侶的提示：</strong>主動給予日常的非性化肢體接觸，牽手和擁抱對他意義重大</li>
+      </ul>
+    </div>
   </article>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
-  <p style="margin-top:8px;"><a href="#">隱私政策</a> · <a href="#">使用條款</a> · <a href="#">聯繫我們</a></p>
+  <p data-i18n="footer.copy">© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
+  <p style="margin-top:8px;"><a href="#" data-i18n="footer.privacy">隱私政策</a> · <a href="#" data-i18n="footer.terms">使用條款</a> · <a href="#" data-i18n="footer.contact">聯繫我們</a></p>
 </footer>
 
 <script>
@@ -840,7 +887,12 @@ const results = {
       { icon: "🎓", label: "Udemy 課程", title: "非暴力溝通：讓愛自然流露", url: "https://www.udemy.com/courses/search/?q=%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%BA%9D%E9%80%9A" },
       { icon: "✍️", label: "Pinkoi 禮物", title: "客製化情書卡片・手寫刻字", url: "https://www.pinkoi.com/tag/%E5%AE%A2%E8%A3%BD%E5%8C%96%E5%8D%A1%E7%89%87" },
       { icon: "💑", label: "KKday 體驗", title: "情侶溝通桌遊工作坊", url: "https://www.kkday.com/zh-tw/category/couples" },
-    ]
+    ],
+    yoga: {
+      desc: "語言有力量，聲音也有。為「肯定的言詞」型的你，Luna Yoga Music 精選了帶有正向引導語的冥想音樂——讓溫柔的聲音在你最需要被肯定的時候，成為滋養自己的力量。",
+      url: "https://www.youtube.com/@LunaYogaMusic",
+      playlist: "正向肯定冥想 Playlist"
+    }
   },
   S: {
     icon: "🛠️",
@@ -859,7 +911,12 @@ const results = {
       { icon: "🎁", label: "Pinkoi 禮物", title: "實用系客製禮物・生活小物", url: "https://www.pinkoi.com/tag/%E5%AF%A6%E7%94%A8" },
       { icon: "🏡", label: "KKday 體驗", title: "情侶下廚體驗・居家約會課", url: "https://www.kkday.com/zh-tw/category/cooking" },
       { icon: "🎓", label: "Udemy 課程", title: "親密關係中的付出與界線", url: "https://www.udemy.com/courses/search/?q=%E8%A6%AA%E5%AF%86%E9%97%9C%E4%BF%82" },
-    ]
+    ],
+    yoga: {
+      desc: "默默付出的你，最容易忘記照顧自己。Luna Yoga Music 的療癒背景音樂，讓你在忙碌的給予之後，找到一個只屬於自己的靜心時刻，充飽電再繼續愛人。",
+      url: "https://www.youtube.com/@LunaYogaMusic",
+      playlist: "療癒放鬆背景音樂 Playlist"
+    }
   },
   G: {
     icon: "🎁",
@@ -878,7 +935,12 @@ const results = {
       { icon: "💍", label: "Pinkoi 禮物", title: "刻字飾品・紀念日禮物", url: "https://www.pinkoi.com/tag/%E5%88%BB%E5%AD%97" },
       { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
       { icon: "🎉", label: "KKday 體驗", title: "情侶驚喜策劃體驗活動", url: "https://www.kkday.com/zh-tw/category/couples" },
-    ]
+    ],
+    yoga: {
+      desc: "送禮是你的愛，而有時候最美的禮物是給自己一段寧靜。Luna Yoga Music 精選感恩冥想音樂，讓你在感受被愛的同時，也學會感謝自己值得被珍視的每一刻。",
+      url: "https://www.youtube.com/@LunaYogaMusic",
+      playlist: "感恩冥想音樂 Playlist"
+    }
   },
   T: {
     icon: "⏳",
@@ -897,7 +959,12 @@ const results = {
       { icon: "🎡", label: "Klook 活動", title: "台灣情侶互動體驗票券", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
       { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
       { icon: "🎓", label: "Udemy 課程", title: "高品質伴侶相處與溝通技巧", url: "https://www.udemy.com/courses/search/?q=%E4%BC%B4%E4%BE%B6%E6%BA%9D%E9%80%9A" },
-    ]
+    ],
+    yoga: {
+      desc: "全心在當下，是你最珍視的愛。Luna Yoga Music 的靜心冥想音樂，幫助你與伴侶一起放下手機、真正同在——兩個人一起靜靜呼吸，就是最珍貴的優質時光。",
+      url: "https://www.youtube.com/@LunaYogaMusic",
+      playlist: "雙人靜心冥想 Playlist"
+    }
   },
   P: {
     icon: "🤝",
@@ -916,7 +983,12 @@ const results = {
       { icon: "🧘", label: "Klook 活動", title: "雙人瑜珈・身心靈工作坊", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
       { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
       { icon: "🎓", label: "Udemy 課程", title: "依附理論與親密關係安全感", url: "https://www.udemy.com/courses/search/?q=%E4%BE%9D%E9%99%84%E7%90%86%E8%AB%96" },
-    ]
+    ],
+    yoga: {
+      desc: "身體需要被感受，靈魂也需要。Luna Yoga Music 精選的身體掃描放鬆音樂，讓你從頭到腳感受自己的存在——當你與自己的身體重新連結，才能更安心地靠近另一個人。",
+      url: "https://www.youtube.com/@LunaYogaMusic",
+      playlist: "身體放鬆掃描冥想 Playlist"
+    }
   },
 };
 
@@ -944,11 +1016,12 @@ function startQuiz() {
 
 // ─── RENDER QUESTION ─────────────────────────────────────────────
 function renderQuestion() {
-  const q    = questions[currentQ];
-  const pct  = (currentQ / questions.length) * 100;
+  const qs   = lang === 'en' ? questionsEn : questions;
+  const q    = qs[currentQ];
+  const pct  = (currentQ / qs.length) * 100;
   chosen     = null;
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = `第 ${currentQ+1} 題，共 ${questions.length} 題`;
+  document.getElementById('progress-text').textContent = t('quiz.progress', currentQ+1, qs.length);
 
   const opts = q.options.map((o,i) => `
     <button class="option-btn" onclick="selectOption(this,'${o.type}')">
@@ -957,11 +1030,11 @@ function renderQuestion() {
     </button>`).join('');
 
   document.getElementById('question-card').innerHTML = `
-    <div class="q-number">Q ${currentQ+1} / ${questions.length}</div>
+    <div class="q-number">Q ${currentQ+1} / ${qs.length}</div>
     <div class="q-text">${q.text}</div>
     ${opts}
     <button class="btn-next" id="btn-next" onclick="nextQuestion()">
-      ${currentQ < questions.length-1 ? '下一題 →' : '查看我的結果 ✨'}
+      ${currentQ < qs.length-1 ? t('quiz.next') : t('quiz.result')}
     </button>`;
 }
 
@@ -981,13 +1054,19 @@ function nextQuestion() {
 }
 
 // ─── SHOW RESULT ─────────────────────────────────────────────────
-function showResult() {
+function showResult(silent = false) {
   document.getElementById('quiz-wrapper').style.display = 'none';
 
   // Find winner
   const top    = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
   const total  = questions.length;
-  const r      = results[top];
+  const rBase  = results[top];
+  const r      = (lang === 'en' && rBase.en) ? {...rBase, ...rBase.en} : rBase;
+
+  // Type names map (bilingual)
+  const typeNamesMap = lang === 'en'
+    ? { W:'Words of Affirmation', S:'Acts of Service', G:'Receiving Gifts', T:'Quality Time', P:'Physical Touch' }
+    : TYPE_NAMES;
 
   // Build score bars (sorted)
   const sortedScores = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
@@ -996,7 +1075,7 @@ function showResult() {
     return `
       <div class="score-row">
         <div class="score-row-header">
-          <span class="score-label">${TYPE_NAMES[k]}</span>
+          <span class="score-label">${typeNamesMap[k]}</span>
           <span class="score-pct">${pct}%</span>
         </div>
         <div class="score-bar">
@@ -1005,11 +1084,11 @@ function showResult() {
       </div>`;
   }).join('');
 
-  // Build tips
-  const tipsHTML = r.tips.map(t=>`
+  // Build tips (avoid shadowing t() function with variable name)
+  const tipsHTML = r.tips.map(tip=>`
     <div class="tip-item">
-      <span class="tip-emoji">${t.emoji}</span>
-      <div class="tip-text"><strong>${t.title}：</strong>${t.text}</div>
+      <span class="tip-emoji">${tip.emoji}</span>
+      <div class="tip-text"><strong>${tip.title}${lang==='en'?': ':'：'}</strong>${tip.text}</div>
     </div>`).join('');
 
   // Build affiliate
@@ -1034,40 +1113,54 @@ function showResult() {
     </div>
 
     <div class="scores-card">
-      <h3>📊 你的愛的語言分佈</h3>
+      <h3>${t('result.scores')}</h3>
       ${barsHTML}
     </div>
 
     <div class="tips-card">
-      <h3>💡 給你和另一半的建議</h3>
+      <h3>${t('result.tips')}</h3>
       ${tipsHTML}
     </div>
 
+    <div class="luna-yoga-card">
+      <div class="luna-yoga-header">
+        <div class="luna-yoga-logo">🌙</div>
+        <div>
+          <div class="luna-yoga-brand">Luna Yoga Music</div>
+          <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
+        </div>
+      </div>
+      <p class="luna-yoga-desc">${r.yoga.desc}</p>
+      <a class="luna-yoga-btn" href="${r.yoga.url}" target="_blank" rel="noopener">
+        ${t('result.lunaBtn', r.yoga.playlist)}
+      </a>
+    </div>
+
     <div class="affiliate-card">
-      <h3>🌱 深化你們的關係</h3>
-      <p>根據你的愛的語言，這些資源可以幫助你和另一半走得更近</p>
+      <h3>${t('result.affTitle')}</h3>
+      <p>${t('result.affDesc')}</p>
       <div class="affiliate-grid">${affHTML}</div>
     </div>
 
     <div class="share-row">
       <a class="btn-share line" href="#" onclick="shareResult('${r.tag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
-        分享給伴侶
+        ${t('result.shareLine')}
       </a>
       <a class="btn-share ig" href="#" onclick="copyResult('${r.tag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        限動分享
+        ${t('result.shareIG')}
       </a>
       <button class="btn-share copy" onclick="copyResult('${r.tag}')">
-        🔗 複製結果連結
+        ${t('result.copyLink')}
       </button>
     </div>
     <div class="retake-row">
-      <button class="btn-retake" onclick="retake()">重新測驗</button>
+      <button class="btn-retake" onclick="retake()" data-retake>${t('result.retake')}</button>
     </div>
   `;
 
-  sec.scrollIntoView({ behavior: 'smooth' });
+  if (!silent) sec.scrollIntoView({ behavior: 'smooth' });
 
   // Animate bars
   requestAnimationFrame(()=>{
@@ -1089,13 +1182,374 @@ function retake() {
 }
 
 function shareResult(tag) {
-  const text = `我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`;
-  navigator.clipboard?.writeText(text).then(()=>alert('已複製，貼到 LINE 分享給另一半吧！'));
+  const text = t('share.line', tag);
+  navigator.clipboard?.writeText(text).then(()=>alert(t('share.alert.line')));
 }
 function copyResult(tag) {
-  const text = `我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`;
-  navigator.clipboard?.writeText(text).then(()=>alert('✅ 已複製！可以貼到 IG 限動或傳給朋友'));
+  const text = t('share.copy', tag);
+  navigator.clipboard?.writeText(text).then(()=>alert(t('share.alert.copy')));
 }
+
+// ─── I18N SYSTEM ──────────────────────────────────────────────────
+let lang = 'zh';
+
+const i18n = {
+  zh: {
+    'nav.types':'5種語言','nav.test':'開始測驗','nav.about':'關於理論',
+    'hero.badge':'🌸 免費 · 無需註冊 · 2分鐘完成',
+    'hero.h1':'你最需要的愛，<br>是哪一種<span>語言</span>？',
+    'hero.p':'每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。',
+    'hero.meta1':'約 2 分鐘','hero.meta2':'15 道情境選擇題','hero.meta3':'已有 38,000+ 人測驗',
+    'hero.btn':'開始測驗 →',
+    'types.h2':'五種愛的語言',
+    'types.p':'心理學家 Gary Chapman 提出的理論，影響了全球數百萬對情侶',
+    'quiz.progress':(c,total)=>`第 ${c} 題，共 ${total} 題`,
+    'quiz.next':'下一題 →','quiz.result':'查看我的結果 ✨',
+    'result.scores':'📊 你的愛的語言分佈','result.tips':'💡 給你和另一半的建議',
+    'result.lunaTagline':'為你的愛的語言，找到你的療癒頻率',
+    'result.lunaBtn':(p)=>`🎵 聆聽${p}`,
+    'result.affTitle':'🌱 深化你們的關係',
+    'result.affDesc':'根據你的愛的語言，這些資源可以幫助你和另一半走得更近',
+    'result.shareLine':'分享給伴侶','result.shareIG':'限動分享',
+    'result.copyLink':'🔗 複製結果連結','result.retake':'重新測驗',
+    'about.h2':'關於愛的語言理論','about.p':'了解這套理論背後的心理學依據',
+    'about.c1.h3':'理論起源','about.c1.p':'Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。',
+    'about.c2.h3':'科學依據','about.c2.p':'研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。',
+    'about.c3.h3':'語言可以改變嗎？','about.c3.p':'是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。',
+    'about.c4.h3':'不只是愛情','about.c4.p':'愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。',
+    'detail.h2':'五種愛的語言完整說明','detail.p':'了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通',
+    'footer.copy':'© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論',
+    'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.contact':'聯繫我們',
+    'share.line':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
+    'share.copy':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
+    'share.alert.line':'已複製，貼到 LINE 分享給另一半吧！',
+    'share.alert.copy':'✅ 已複製！可以貼到 IG 限動或傳給朋友',
+  },
+  en: {
+    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.about':'About',
+    'hero.badge':'🌸 Free · No Sign-up · 2 Min',
+    'hero.h1':'What Kind of Love<br>Do You Need <span>Most</span>?',
+    'hero.p':'Everyone gives and receives love differently. Answer 15 scenario questions to discover your core love language and end relationship misunderstandings.',
+    'hero.meta1':'~2 minutes','hero.meta2':'15 scenario questions','hero.meta3':'38,000+ people tested',
+    'hero.btn':'Start Quiz →',
+    'types.h2':'The 5 Love Languages',
+    'types.p':'A theory by Dr. Gary Chapman that has influenced millions of couples worldwide',
+    'quiz.progress':(c,total)=>`Question ${c} of ${total}`,
+    'quiz.next':'Next →','quiz.result':'View My Results ✨',
+    'result.scores':'📊 Your Love Language Distribution','result.tips':'💡 Tips for You & Your Partner',
+    'result.lunaTagline':'Find Your Healing Frequency for Your Love Language',
+    'result.lunaBtn':(p)=>`🎵 Listen to ${p}`,
+    'result.affTitle':'🌱 Deepen Your Relationship',
+    'result.affDesc':'Based on your love language, these resources can help you and your partner grow closer',
+    'result.shareLine':'Share with Partner','result.shareIG':'Share Story',
+    'result.copyLink':'🔗 Copy Result Link','result.retake':'Retake Quiz',
+    'about.h2':'About the Love Languages Theory','about.p':'Discover the psychology behind this relationship framework',
+    'about.c1.h3':'Origins','about.c1.p':'Dr. Gary Chapman developed this theory after 30 years of marriage counseling. His 1992 book "The 5 Love Languages" became a global relationship psychology classic.',
+    'about.c2.h3':'Scientific Basis','about.c2.p':"Research shows that when partners express love in each other's preferred language, relationship satisfaction significantly increases. It's not just a technique—it's true understanding.",
+    'about.c3.h3':'Can Your Language Change?','about.c3.p':'Yes. As life stages shift or after major events, your primary language may change. We recommend retaking the quiz periodically to track your evolving needs.',
+    'about.c4.h3':'Beyond Romance','about.c4.p':"Love languages apply equally to parent-child bonds, friendships, and workplace dynamics. Understanding different people's languages makes all relationships more harmonious.",
+    'detail.h2':'The 5 Love Languages: Full Descriptions','detail.p':'Understand each love language, its everyday expressions, and how to communicate with your partner',
+    'footer.copy':'© 2026 LoveTypes · Based on Dr. Gary Chapman\'s "The 5 Love Languages"',
+    'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.contact':'Contact Us',
+    'share.line':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
+    'share.copy':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
+    'share.alert.line':'Copied! Share it with your partner.',
+    'share.alert.copy':'✅ Copied! Share on Instagram Story or send to a friend.',
+    'detail.W':`<h3>Words of Affirmation</h3>
+      <p>Words of Affirmation is the love language that uses language as its primary vehicle for love. For this type of person, words carry enormous power — a heartfelt "I love you," "You did great today," or "Thank you for everything you do" makes them feel deeply cherished. They don't need grand gestures; they just need sincerity spoken aloud.</p>
+      <p>Criticism and emotional coldness cut especially deep for them, because they believe language is the bridge that connects hearts. In everyday life, a warm message from a partner or a spontaneous word of encouragement fills them with energy. Dr. Gary Chapman notes that the best way to love this type of partner is to cultivate a daily habit of expressing appreciation and gratitude — making positive language the ongoing nourishment of the relationship.</p>
+      <ul>
+        <li><strong>Everyday expression:</strong> Values compliments, thank-you messages, and a kind word before bed</li>
+        <li><strong>Most hurtful:</strong> Being ignored, criticized, or never hearing "thank you"</li>
+        <li><strong>Tip for your partner:</strong> Share one thing you appreciate about them every day — one genuine sentence is all it takes</li>
+      </ul>`,
+    'detail.S':`<h3>Acts of Service</h3>
+      <p>Acts of Service is the love language that expresses love through real, practical actions. For this type of person, love isn't said — it's done. When a partner quietly helps with chores or proactively handles tasks, they feel not just gratitude, but deep, enveloping security. The weight of "I'm willing to do this for you" far outweighs a thousand "I love you's."</p>
+      <p>This type of person is usually the one who gives quietly and expresses care through actions — but sometimes they feel unseen and unappreciated. Chapman reminds us: the most important thing when loving an Acts of Service partner is to proactively handle the things they dislike but have to do. This moves them far more than any words or gifts ever could.</p>
+      <ul>
+        <li><strong>Everyday expression:</strong> Running errands, preparing meals, proactively taking on household responsibilities</li>
+        <li><strong>Most hurtful:</strong> Always being the one who gives, while the partner never does anything proactively</li>
+        <li><strong>Tip for your partner:</strong> Do one thing they dislike but need to do — the impact far exceeds any gift</li>
+      </ul>`,
+    'detail.G':`<h3>Receiving Gifts</h3>
+      <p>People with a Receiving Gifts love language treat gifts as the tangible form of affection. What matters isn't the price — it's whether the person "remembered" and "put genuine thought into it." Every carefully chosen item sends a message: "I see you, I remember what you like, I think of you whether I'm near or far." This feeling of being remembered and held in mind is the core way they experience love.</p>
+      <p>Forgotten anniversaries or no effort at all are signals of emotional neglect to this type — not just disappointment, but a quiet doubt about whether they truly matter. Dr. Gary Chapman emphasizes that this is not materialism; it's a deep longing to feel that someone cares. The best gift for this type of partner doesn't have to be expensive — a handwritten card or a flower by the road can be the most powerful expression of love.</p>
+      <ul>
+        <li><strong>Everyday expression:</strong> Cherishes meaningful small gifts and values anniversary rituals</li>
+        <li><strong>Most hurtful:</strong> No preparation on an important day — feeling forgotten and unvalued</li>
+        <li><strong>Tip for your partner:</strong> Pick up that snack they mentioned wanting. The "I remembered you" is what truly matters</li>
+      </ul>`,
+    'detail.T':`<h3>Quality Time</h3>
+      <p>People with a Quality Time love language measure love primarily by time. They don't need hours of togetherness — they need full presence: phone down, eyes meeting, heart truly here. When a partner gives their most precious time without reservation, that's when they truly feel loved.</p>
+      <p>An evening spent side by side scrolling phones is the deepest loneliness for this type, even with someone physically present. Chapman's research shows that what this type of partner craves most during shared time is "being treated with complete, undivided attention." A daily or weekly no-phone window with a Quality Time partner — even just 30 minutes fully focused on each other — beats an entire evening of distracted togetherness.</p>
+      <ul>
+        <li><strong>Everyday expression:</strong> Values focused presence, eye contact, and meaningful conversation</li>
+        <li><strong>Most hurtful:</strong> Partner constantly on their phone, making them feel invisible and alone</li>
+        <li><strong>Tip for your partner:</strong> Plan a weekly "no-phone date night" — give them your whole, undivided presence</li>
+      </ul>`,
+    'detail.P':`<h3>Physical Touch</h3>
+      <p>People with a Physical Touch love language experience love and security through physical contact. A hug, holding hands, falling asleep on someone's shoulder — these physical connections provide irreplaceable security. They don't need a lavish dinner or expensive gifts; just feeling another person's warmth and presence beside them is the best of times.</p>
+      <p>Prolonged absence of physical contact causes genuine emotional distance for them, sometimes even leading to doubts about the depth of the relationship. Dr. Gary Chapman notes that the most effective way to love this type of partner is to establish daily rituals of physical connection — a morning kiss, a hug before leaving, holding hands at bedtime — letting love flow in a regular, tangible way. Importantly, Physical Touch is about warmth and connection, not directly related to sexuality.</p>
+      <ul>
+        <li><strong>Everyday expression:</strong> Enjoys holding hands, hugging, and staying close while walking</li>
+        <li><strong>Most hurtful:</strong> Partner almost never reaching out to touch them — making them feel distant and disconnected</li>
+        <li><strong>Tip for your partner:</strong> Offer everyday non-sexual physical affection — holding hands and hugging carry tremendous meaning</li>
+      </ul>`,
+  }
+};
+
+function t(key, ...args) {
+  const dict = i18n[lang] || i18n.zh;
+  const val = dict[key] !== undefined ? dict[key] : (i18n.zh[key] || key);
+  return typeof val === 'function' ? val(...args) : val;
+}
+
+function applyLang() {
+  document.getElementById('lang-btn').textContent = lang === 'zh' ? 'EN' : '中文';
+  document.documentElement.lang = lang === 'zh' ? 'zh-TW' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t(el.dataset.i18n);
+    if (v) el.textContent = v;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t(el.dataset.i18nHtml);
+    if (v) el.innerHTML = v;
+  });
+  if (document.getElementById('quiz-wrapper').style.display !== 'none') renderQuestion();
+  const sec = document.getElementById('result-section');
+  if (sec && sec.style.display !== 'none') showResult(true);
+}
+
+function toggleLang() {
+  lang = lang === 'zh' ? 'en' : 'zh';
+  applyLang();
+}
+
+// ─── ENGLISH QUESTIONS ────────────────────────────────────────────
+const questionsEn = [
+  { text: "When you're feeling down, what would your partner do that would move you most?",
+    options: [
+      { text: "Say 'I'm here — you're not alone'", type: "W" },
+      { text: "Quietly do the dishes and take care of things without being asked", type: "S" },
+      { text: "Show up with your favorite drink or snack", type: "G" },
+      { text: "Put their phone away and sit quietly with you", type: "T" },
+      { text: "Give you a tight, warm hug", type: "P" },
+    ]
+  },
+  { text: "When is 'I love you' from your partner most meaningful?",
+    options: [
+      { text: "Out of nowhere on an ordinary day: 'Thinking of you makes me happy'", type: "W" },
+      { text: "At your busiest moment, they quietly finished what you couldn't get to", type: "S" },
+      { text: "Handing you a small gift saying 'I saw this and thought of you'", type: "G" },
+      { text: "Planning a special afternoon that's just for the two of you", type: "T" },
+      { text: "As you're drifting to sleep, gently stroking your hair", type: "P" },
+    ]
+  },
+  { text: "On your birthday, which would make you feel most valued?",
+    options: [
+      { text: "Receiving a heartfelt birthday letter or message", type: "W" },
+      { text: "Discovering your partner arranged everything — nothing for you to worry about", type: "S" },
+      { text: "Getting a thoughtfully prepared surprise gift", type: "G" },
+      { text: "They took the day off just to spend it all with you", type: "T" },
+      { text: "Feeling them close to you all day, not wanting to let go", type: "P" },
+    ]
+  },
+  { text: "After making up from an argument, what makes you feel it's truly resolved?",
+    options: [
+      { text: "Your partner says 'I was wrong. Thank you for putting up with me'", type: "W" },
+      { text: "They do something concrete to show they want to make amends", type: "S" },
+      { text: "They bring a small gift or surprise as a peace offering", type: "G" },
+      { text: "You both sit down and talk everything through clearly", type: "T" },
+      { text: "They take your hand, lean in and say 'We're okay now, right?'", type: "P" },
+    ]
+  },
+  { text: "After a hectic week, what relaxation do you look forward to most?",
+    options: [
+      { text: "Talking with your partner and hearing how hard you've been working", type: "W" },
+      { text: "Coming home to find the house tidy and dinner ready", type: "S" },
+      { text: "Your partner waiting at the door with something you love", type: "G" },
+      { text: "Lying down together in silence and watching a whole movie", type: "T" },
+      { text: "Nestled in your partner's arms with nothing to think about", type: "P" },
+    ]
+  },
+  { text: "Which behavior makes you feel most undervalued in a relationship?",
+    options: [
+      { text: "Your partner never says thank you or offers any positive words", type: "W" },
+      { text: "You've been giving and giving, but they've never done anything for you", type: "S" },
+      { text: "On an important day, your partner prepared absolutely nothing", type: "G" },
+      { text: "They're always on their phone and never give you their full attention", type: "T" },
+      { text: "They almost never reach out to touch you or hold your hand", type: "P" },
+    ]
+  },
+  { text: "When traveling together, which part matters most to you?",
+    options: [
+      { text: "The genuine conversations and romantic moments shared along the way", type: "W" },
+      { text: "Your partner handling all the bookings and itinerary details", type: "S" },
+      { text: "Your partner picking out souvenirs or special items at each place", type: "G" },
+      { text: "Truly exploring together, fully focused on each other the whole trip", type: "T" },
+      { text: "Holding hands in a new city, always close to each other's side", type: "P" },
+    ]
+  },
+  { text: "What quality in your partner are you most grateful for?",
+    options: [
+      { text: "They always say exactly what you need to hear, filling you with strength", type: "W" },
+      { text: "They quietly take care of your life in so many ways", type: "S" },
+      { text: "They remember what you once mentioned and surprise you with it unexpectedly", type: "G" },
+      { text: "When they talk with you, they're always fully present — you feel important", type: "T" },
+      { text: "They know when you need a hug and never hesitate to give you one", type: "P" },
+    ]
+  },
+  { text: "What's your favorite everyday sweet moment?",
+    options: [
+      { text: "A bedtime text: 'Seeing you today made me happy'", type: "W" },
+      { text: "On a drive, they hop out to fill the gas without being asked", type: "S" },
+      { text: "Receiving a flower or drink with no reason at all", type: "G" },
+      { text: "An evening walk after work, chatting about the day", type: "T" },
+      { text: "While walking, they naturally reach out and take your hand", type: "P" },
+    ]
+  },
+  { text: "What does 'true love' feel like to you?",
+    options: [
+      { text: "Being gently caught by words — 'You're wonderful. I'm proud of you'", type: "W" },
+      { text: "Someone who doesn't say it but does it — making your life lighter", type: "S" },
+      { text: "Finding little signs that 'they remember what I like'", type: "G" },
+      { text: "Someone willing to give you their most precious time, without holding back", type: "T" },
+      { text: "Feeling safe and connected through physical presence and touch", type: "P" },
+    ]
+  },
+  { text: "If you were sick, what would warm your heart most?",
+    options: [
+      { text: "Constant caring messages: 'Take it easy. I'm worried about you'", type: "W" },
+      { text: "Rushing over to get your medicine, make soup, and clean up", type: "S" },
+      { text: "Bringing a pile of your favorite things to keep you company while recovering", type: "G" },
+      { text: "Taking time off to go to the doctor with you, staying all day", type: "T" },
+      { text: "Lying beside you and squeezing your hand tight", type: "P" },
+    ]
+  },
+  { text: "When do you most hope your partner thinks of you?",
+    options: [
+      { text: "Sending a message: 'Something happened today and I thought of you'", type: "W" },
+      { text: "When you're swamped, they step in and take over your responsibilities", type: "S" },
+      { text: "Passing a store, they pick up that snack you mentioned wanting", type: "G" },
+      { text: "Even when both are busy, planning a night that's just the two of you", type: "T" },
+      { text: "The second they see you, hugging you before saying a word", type: "P" },
+    ]
+  },
+  { text: "What's the key to your ideal perfect date?",
+    options: [
+      { text: "Deep conversations with several lines you'd want to save forever", type: "W" },
+      { text: "Your partner handled every detail — all you had to do was show up", type: "S" },
+      { text: "A themed venue with thoughtfully chosen souvenirs or surprises", type: "G" },
+      { text: "Phones put away, both completely focused on each other", type: "T" },
+      { text: "Physical closeness throughout: holding hands, leaning in, not letting go", type: "P" },
+    ]
+  },
+  { text: "Your partner says 'I want to make you happy.' What do you hope comes next?",
+    options: [
+      { text: "They say something that deeply moves you or makes you laugh", type: "W" },
+      { text: "They solve the one thing that's been stressing you out lately", type: "S" },
+      { text: "They pull out a beautifully wrapped little gift from behind their back", type: "G" },
+      { text: "'All my time today is yours — wherever you want to go'", type: "T" },
+      { text: "They pull you close and hold you tight", type: "P" },
+    ]
+  },
+  { text: "In a long-distance relationship, what makes you feel 'We're still together'?",
+    options: [
+      { text: "A nightly voice call to say goodnight and talk about missing each other", type: "W" },
+      { text: "They handle things remotely for you: ordering food, paying bills, looking things up", type: "S" },
+      { text: "A care package arrives — full of 'the things you love'", type: "G" },
+      { text: "A fixed video call every week — phones away, just the two of you", type: "T" },
+      { text: "The moment you reunite, the very first thing is a long-overdue hug", type: "P" },
+    ]
+  },
+];
+
+// ─── ENGLISH RESULT DATA ──────────────────────────────────────────
+results.W.en = {
+  tag: "Words of Affirmation",
+  name: "Your Love Language: Words of Affirmation",
+  desc: "Words carry enormous power for you. A heartfelt 'I love you,' 'You did great today,' or 'Thank you for everything you do' fills you with warmth and a sense of being truly cherished. You don't need grand gestures — just sincere words spoken from the heart. Criticism and silence cut especially deep, because you believe language is the bridge that connects souls.",
+  tips: [
+    { emoji: "✉️", title: "Tip for your partner", text: "Try sharing one thing you appreciate about them every day. No need for long speeches — one genuine sentence is enough." },
+    { emoji: "📔", title: "Reminder for yourself", text: "Practice saying 'I need to hear that I'm doing well' when you need encouragement. Let your partner have the chance to give you what you need." },
+    { emoji: "🔥", title: "Level up your love", text: "Write a gratitude list together and share three things you're thankful for each week. Build a habit of verbal nourishment in your relationship." },
+  ],
+  courses: [
+    { icon: "📖", label: "Book", title: "The 5 Love Languages by Gary Chapman", url: "https://www.amazon.com/Five-Love-Languages-Secret-Lasts/dp/080241270X" },
+    { icon: "🎓", label: "Udemy Course", title: "Nonviolent Communication: Let Love Flow", url: "https://www.udemy.com/courses/search/?q=nonviolent+communication" },
+    { icon: "✍️", label: "Pinkoi Gift", title: "Custom Love Letter Cards · Handwritten Engraving", url: "https://www.pinkoi.com/tag/%E5%AE%A2%E8%A3%BD%E5%8C%96%E5%8D%A1%E7%89%87" },
+    { icon: "💑", label: "KKday Experience", title: "Couples Communication Workshop", url: "https://www.kkday.com/zh-tw/category/couples" },
+  ],
+  yoga: { desc: "Words have power — and so does sound. For you, a Words of Affirmation person, Luna Yoga Music has curated guided meditation with positive affirmations. Let gentle voices be the nourishment you need when you most need to feel affirmed.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Positive Affirmation Meditation" }
+};
+results.S.en = {
+  tag: "Acts of Service",
+  name: "Your Love Language: Acts of Service",
+  desc: "For you, love isn't said — it's done. When someone quietly takes on your burdens, handles things proactively, you feel not just gratitude, but deep, enveloping security. 'I'm willing to do this for you' carries far more weight than a thousand 'I love you's. You're also often the one who gives quietly, expressing care through actions.",
+  tips: [
+    { emoji: "🎯", title: "Tip for your partner", text: "Proactively do one thing your partner dislikes but needs to do. This touches their heart more than any gift." },
+    { emoji: "💡", title: "Reminder for yourself", text: "Sometimes saying 'I need help' deepens intimacy more than quietly carrying it alone — give your partner the chance to love you back." },
+    { emoji: "🔥", title: "Level up your love", text: "Create a 'service list' together — things you each wish the other would handle. Make love concrete and action-oriented." },
+  ],
+  courses: [
+    { icon: "📖", label: "Book", title: "The 5 Love Languages by Gary Chapman", url: "https://www.amazon.com/Five-Love-Languages-Secret-Lasts/dp/080241270X" },
+    { icon: "🎁", label: "Pinkoi Gift", title: "Practical Custom Gifts · Everyday Items", url: "https://www.pinkoi.com/tag/%E5%AF%A6%E7%94%A8" },
+    { icon: "🏡", label: "KKday Experience", title: "Couples Cooking Class · Home Date", url: "https://www.kkday.com/zh-tw/category/cooking" },
+    { icon: "🎓", label: "Udemy Course", title: "Giving & Boundaries in Intimate Relationships", url: "https://www.udemy.com/courses/search/?q=relationships+boundaries" },
+  ],
+  yoga: { desc: "You, who give so much, often forget to care for yourself. Luna Yoga Music's healing background music offers you a quiet moment just for yourself after all that giving — recharge, then love again.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Healing Relaxation Music" }
+};
+results.G.en = {
+  tag: "Receiving Gifts",
+  name: "Your Love Language: Receiving Gifts",
+  desc: "Gifts are the tangible form of affection for you. What matters isn't the price — it's whether someone 'remembered,' whether they 'put thought into it.' Every carefully chosen item says: 'I see you, I remember what you like, I think of you whether I'm near or far.' Forgotten anniversaries or no effort at all signal emotional neglect to you.",
+  tips: [
+    { emoji: "🎀", title: "Tip for your partner", text: "No need for expensive gifts — a handwritten card, that snack you mentioned, a flower by the road. These are the most powerful expressions of love." },
+    { emoji: "💡", title: "Reminder for yourself", text: "Tell your partner why you value anniversaries and small surprises. Let them understand it's not about materialism — it's about feeling remembered." },
+    { emoji: "🔥", title: "Level up your love", text: "Build a 'wish list' together — big or small — so you each have direction when choosing gifts for each other." },
+  ],
+  courses: [
+    { icon: "🎀", label: "Pinkoi Gift", title: "Curated Custom Gifts · Surprise Boxes", url: "https://www.pinkoi.com/tag/%E7%A6%AE%E7%9B%92" },
+    { icon: "💍", label: "Pinkoi Gift", title: "Engraved Jewelry · Anniversary Gifts", url: "https://www.pinkoi.com/tag/%E5%88%BB%E5%AD%97" },
+    { icon: "📖", label: "Book", title: "The 5 Love Languages by Gary Chapman", url: "https://www.amazon.com/Five-Love-Languages-Secret-Lasts/dp/080241270X" },
+    { icon: "🎉", label: "KKday Experience", title: "Couples Surprise Planning Activities", url: "https://www.kkday.com/zh-tw/category/couples" },
+  ],
+  yoga: { desc: "Giving gifts is your love, and sometimes the most beautiful gift is a moment of stillness for yourself. Luna Yoga Music's gratitude meditation music helps you receive love — and also learn to cherish every moment of being valued.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Gratitude Meditation Music" }
+};
+results.T.en = {
+  tag: "Quality Time",
+  name: "Your Love Language: Quality Time",
+  desc: "Time is your measure of love. You don't need hours of togetherness — you need full presence: phone down, eyes meeting, heart truly here. When someone gives you their most precious time without reservation, that's when you truly feel loved. Evenings spent side by side scrolling phones are the deepest loneliness for you.",
+  tips: [
+    { emoji: "📵", title: "Tip for your partner", text: "Set a daily or weekly 'no-phone time' — even just 30 minutes, fully focused on each other." },
+    { emoji: "💡", title: "Reminder for yourself", text: "Learn to say 'I want you completely focused on me tonight.' Let your partner know you need presence, not just proximity." },
+    { emoji: "🔥", title: "Level up your love", text: "Design a dedicated 'date ritual' — regular time that's just the two of you, free from all distractions." },
+  ],
+  courses: [
+    { icon: "🗺️", label: "KKday Experience", title: "Couples Exclusive Date · Day Trip", url: "https://www.kkday.com/zh-tw/category/couples" },
+    { icon: "🎡", label: "Klook Activity", title: "Taiwan Couples Interactive Experiences", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
+    { icon: "📖", label: "Book", title: "The 5 Love Languages by Gary Chapman", url: "https://www.amazon.com/Five-Love-Languages-Secret-Lasts/dp/080241270X" },
+    { icon: "🎓", label: "Udemy Course", title: "Quality Time & Communication Skills for Couples", url: "https://www.udemy.com/courses/search/?q=couples+communication" },
+  ],
+  yoga: { desc: "Being fully in the present moment is what you treasure most. Luna Yoga Music's mindfulness meditation helps you and your partner put down your phones and truly be together — breathing quietly side by side is the most precious quality time.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Couples Mindfulness Meditation" }
+};
+results.P.en = {
+  tag: "Physical Touch",
+  name: "Your Love Language: Physical Touch",
+  desc: "Touch is your most direct language of love. A hug, holding hands, falling asleep on someone's shoulder — these physical connections provide irreplaceable security. You don't need a lavish dinner, just the warmth of someone's presence beside you. Long periods without physical contact create genuine emotional distance for you.",
+  tips: [
+    { emoji: "🫂", title: "Tip for your partner", text: "Offer non-sexual physical affection proactively: holding hands, hugging, a gentle touch on the shoulder. These small gestures mean the world to your partner." },
+    { emoji: "💡", title: "Reminder for yourself", text: "Try saying 'I need a hug right now' so your partner knows exactly how to give you love when you need it." },
+    { emoji: "🔥", title: "Level up your love", text: "Build daily touch rituals: a morning kiss, a bedtime hug, holding hands before leaving. Let love flow in a regular, tangible way." },
+  ],
+  courses: [
+    { icon: "💆", label: "KKday Experience", title: "Couples Spa · Healing Relaxation", url: "https://www.kkday.com/zh-tw/category/spa-wellness" },
+    { icon: "🧘", label: "Klook Activity", title: "Couples Yoga · Mind & Body Workshop", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
+    { icon: "📖", label: "Book", title: "The 5 Love Languages by Gary Chapman", url: "https://www.amazon.com/Five-Love-Languages-Secret-Lasts/dp/080241270X" },
+    { icon: "🎓", label: "Udemy Course", title: "Attachment Theory & Relationship Security", url: "https://www.udemy.com/courses/search/?q=attachment+theory+relationships" },
+  ],
+  yoga: { desc: "The body needs to be felt, and so does the soul. Luna Yoga Music's body scan relaxation music helps you feel your own existence from head to toe. When you reconnect with your body, you can more comfortably draw close to another person.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Body Scan Relaxation Meditation" }
+};
 </script>
 </body>
 </html>

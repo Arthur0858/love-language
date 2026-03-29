@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>愛的語言測驗｜找出你最需要的愛 | LoveTypes</title>
-  <meta name="description" content="免費愛的語言測驗，15題找出你最需要哪種愛。肯定的言詞、服務的行動、接受禮物、優質的時光、身體的接觸，讓你與伴侶的關係更深刻。" />
+  <title>愛の言語テスト｜あなたの愛の言語を見つけよう | LoveTypes</title>
+  <meta name="description" content="無料の愛の言語テスト — 15問で5つの愛の言語の中から最も必要なものを発見。肯定的な言葉・奉仕の行為・贈り物・充実した時間・身体的な接触。登録不要で即座に結果がわかります。" />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="7k70YvjSl-TBgC102ENWTDe0037IqvoFUwQx6-5n8QI" />
-  <link rel="canonical" href="https://lovetypes.tw/" />
+  <link rel="canonical" href="https://lovetypes.tw/ja/" />
 
   <!-- Hreflang: Multilingual alternate links -->
   <link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
@@ -23,11 +23,13 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lovetypes.tw/" />
-  <meta property="og:title" content="愛的語言測驗｜找出你最需要的愛" />
-  <meta property="og:description" content="免費15題測驗，找出你最需要哪種愛的語言。讓你與伴侶的關係更深刻！" />
+  <meta property="og:url" content="https://lovetypes.tw/ja/" />
+  <meta property="og:title" content="愛の言語テスト｜あなたの愛の言語を見つけよう" />
+  <meta property="og:description" content="無料15問テストで、5つの愛の言語の中からあなたが最も必要とするものを発見しましょう。" />
   <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale:alternate" content="zh_TW" />
+  <meta property="og:locale:alternate" content="en_US" />
   <meta property="og:site_name" content="LoveTypes" />
   <script>var ConverlyCustomData = {channelId: null};</script>
   <script async defer src="https://cdn.affiliates.one/production/adlinks/9debdd711c52d9dc844e3f5a6669fe912d4a1908c6a6f579e4ad35a346ddc87a.js"></script>
@@ -36,8 +38,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="愛的語言測驗｜找出你最需要的愛" />
-  <meta name="twitter:description" content="免費15題測驗，找出你最需要哪種愛的語言。" />
+  <meta name="twitter:title" content="愛の言語テスト｜あなたの愛の言語を見つけよう" />
+  <meta name="twitter:description" content="無料15問テストで、あなたの愛の言語を発見しましょう。" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
 
   <!-- JSON-LD 結構化資料 -->
@@ -45,10 +47,10 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "愛的語言測驗",
-    "url": "https://lovetypes.tw/",
-    "description": "免費愛的語言測驗，15題找出你最需要的愛的語言，讓你與伴侶的關係更深刻。",
-    "inLanguage": "zh-TW",
+    "name": "愛の言語テスト",
+    "url": "https://lovetypes.tw/ja/",
+    "description": "無料の愛の言語テスト — 15問で5つの愛の言語の中から最も必要なものを発見。登録不要で即座に結果がわかります。",
+    "inLanguage": "ja",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "All",
     "offers": {
@@ -537,7 +539,7 @@
 <nav>
   <div class="nav-left">
     <div class="lang-menu" id="lang-menu">
-      <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ZH ▾</button>
+      <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">JA ▾</button>
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
         <li><a href="/en/">English</a></li>
@@ -1232,7 +1234,7 @@ function copyResult(tag) {
 }
 
 // ─── I18N SYSTEM ──────────────────────────────────────────────────
-let lang = 'zh';
+let lang = 'ja';
 
 const i18n = {
   zh: {
@@ -2230,6 +2232,8 @@ results.P.en = {
   ],
   yoga: { desc: "The body needs to be felt, and so does the soul. Luna Yoga Music's body scan relaxation music helps you feel your own existence from head to toe. When you reconnect with your body, you can more comfortably draw close to another person.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Body Scan Relaxation Meditation" }
 };
+
+document.addEventListener('DOMContentLoaded', applyLang);
 
 // ─── JAPANESE RESULT DATA ─────────────────────────────────────────
 results.W.ja = {

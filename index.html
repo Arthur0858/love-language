@@ -362,6 +362,16 @@
       color: var(--text); font-size: .95rem; line-height: 1.85;
       max-width: 520px; margin: 0 auto;
     }
+    .result-icon-combo {
+      font-size: 2.4rem; margin-bottom: 14px; letter-spacing: .15em;
+    }
+    .combo-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #C9666E 0%, #5C8CB0 100%);
+      color: #fff;
+      font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+      padding: 4px 16px; border-radius: 999px; margin-bottom: 12px;
+    }
 
     /* Score bars */
     .scores-card {
@@ -1027,6 +1037,50 @@ const results = {
 
 const TYPE_NAMES = { W:"肯定的言詞", S:"服務的行動", G:"接受禮物", T:"優質的時光", P:"身體的接觸" };
 
+// ─── COMBO DESCRIPTIONS (10 alphabetical pairs) ───────────────────
+const combos = {
+  GP: {
+    desc: "禮物讓你感受被記得，觸碰讓你感受被需要。你珍視那個記得你說過喜歡什麼的人，也珍視那個拉著你的手說「有我在」的人。你的愛需要具體，可以是一個小驚喜，也可以是一個及時的擁抱。",
+    yoga: { desc: "你需要的愛，是有重量和溫度的。Luna Yoga Music 的療癒冥想音樂，讓你在聆聽中感受自己被溫柔包圍，就像最好的禮物和最溫暖的擁抱同時到來。", playlist: "療癒頻率 × 正念放鬆 Playlist" }
+  },
+  GS: {
+    desc: "你相信愛要落地——要做出來，也要帶回來。幫你把事情處理好是愛，帶回一個你曾說過想要的東西也是愛。你不需要花言巧語，你看的是對方的心思和付出。你自己也是這樣愛人的：默默做，默默記。",
+    yoga: { desc: "付出與珍視，是你的愛的語言。Luna Yoga Music 的療癒音樂，讓你在給予之後，也給自己一份禮物——一段安靜的、只屬於你自己的放鬆時光。", playlist: "深度放鬆療癒 Playlist" }
+  },
+  GT: {
+    desc: "你希望愛是有形的，也是全心的。一個精心挑選的禮物，加上對方願意放下一切陪你慢慢打開它——那才是你心中最美好的愛。你不要走形式，你要的是心思和時間同時被給予的那種被珍視感。",
+    yoga: { desc: "你值得被記得、也值得被陪伴。Luna Yoga Music 的引導放鬆音樂，讓你在靜心中感受自己本就值得被全心對待——不需要等一個禮物或一段時光來證明。", playlist: "感恩靜心 × 療癒放鬆 Playlist" }
+  },
+  GW: {
+    desc: "言語與心意的完美融合。你需要對方的話語，也珍視那份「他記得我」的具體心意。每一句讚美讓你發光，每一個用心的小禮物讓你感受被看見。你不是物質，你是在尋找「你在我心裡」這件事的各種證明。",
+    yoga: { desc: "語言與禮物都是對你說：你值得被珍視。Luna Yoga Music 精選感恩冥想音樂，讓你在音符流動中感受自己本就值得被愛——不需要任何理由。", playlist: "感恩冥想 × 正向引導 Playlist" }
+  },
+  PS: {
+    desc: "你用行動愛人，也需要身體的連結來確認愛。你是那個默默幫對方做好一切的人，也是那個下班後需要一個真實擁抱才能卸下一天重量的人。行動說「我在乎你」，觸碰說「我需要你在這裡」。",
+    yoga: { desc: "付出的你，最需要被好好接住。Luna Yoga Music 的身體掃描放鬆音樂，讓你從忙碌的付出中回到自己的身體，感受自己也被溫柔照顧著。", playlist: "身體掃描放鬆冥想 Playlist" }
+  },
+  PT: {
+    desc: "你要的愛是完全在場的陪伴——放下手機，靠在你身邊，然後什麼都不做也好。時光與觸碰，缺一你都會感到孤單。你不需要對方說很多話，只要真的在這裡，真的感受到彼此的存在，那就是你所有的愛了。",
+    yoga: { desc: "當下同在，是你最深的渴望。Luna Yoga Music 的靜心音樂，讓你與自己同在，感受自己的存在與呼吸，就像你渴望的那種——不用說話，只是陪著。", playlist: "身心同在靜心冥想 Playlist" }
+  },
+  PW: {
+    desc: "你的愛需要被聽見，也需要被感受。「我愛你」三個字說出口的同時，一個擁抱傳遞的溫度，是你最深的滿足。話語讓你確認心意，觸碰讓你確認存在。兩者缺少任何一樣，都讓你感到不完整。",
+    yoga: { desc: "聲音和觸覺都是你感受愛的方式。Luna Yoga Music 的療癒頻率音樂，讓你在聆聽中感受到一種被包圍的安全感——像語言，也像擁抱。", playlist: "療癒頻率冥想音樂 Playlist" }
+  },
+  ST: {
+    desc: "你要的愛是看得見的投入。對方花時間陪你做一件事，或者默默把讓你頭痛的事處理掉，都讓你覺得被深深珍視。你不需要言語的花朵，你需要的是「他願意把他的時間和精力放在我身上」這件事。",
+    yoga: { desc: "你的愛存在於行動與陪伴之中。Luna Yoga Music 的靜心音樂，讓你學習在忙碌的給予之中，也給自己一段安靜的優質時光，補充能量再繼續愛人。", playlist: "靜心專注冥想 Playlist" }
+  },
+  SW: {
+    desc: "你是語言與行動兼具的愛人。你需要聽到「我愛你」，也需要看見對方為你付出的具體行動。語言滋養你的心，行動讓你感受安全。你最怕的是說好卻不做到——空話讓你失望，冷漠讓你受傷。你的愛也是這樣：說到做到，心口如一。",
+    yoga: { desc: "語言與行動都是愛，而你值得兩者兼備。Luna Yoga Music 精選結合引導語音與舒緩旋律的冥想音樂——讓聲音告訴你「你夠好了」，讓音樂陪你在安靜中感受被好好照顧的溫度。", playlist: "引導冥想 × 療癒音樂 Playlist" }
+  },
+  TW: {
+    desc: "你渴望的是被全心對待——用語言，也用時間。對方說出「你今天很棒」的同時，還放下手機專注看著你，那就是你最想要的愛。你不接受敷衍的讚美，也不接受身在心不在的陪伴。你要的是真實、完整的在乎。",
+    yoga: { desc: "你需要的愛是真實同在的。Luna Yoga Music 的靜心冥想，幫助你放下過去的記憶和未來的焦慮，完全活在當下這一刻——就像你渴望的那種全心在場的愛。", playlist: "正念當下冥想 Playlist" }
+  },
+};
+
 // ─── STATE ────────────────────────────────────────────────────────
 let currentQ = 0;
 let scores   = { W:0, S:0, G:0, T:0, P:0 };
@@ -1093,11 +1147,12 @@ function nextQuestion() {
 function showResult(silent = false) {
   document.getElementById('quiz-wrapper').style.display = 'none';
 
-  // Find winner
-  const top    = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
-  const total  = questions.length;
-  const rBase  = results[top];
-  const r      = (lang !== 'zh' && rBase[lang]) ? {...rBase, ...rBase[lang]} : rBase;
+  // Find top 2 winners
+  const sorted  = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top     = sorted[0][0];
+  const second  = sorted[1][0];
+  const isCombo = (sorted[0][1] - sorted[1][1]) <= 2 && sorted[1][1] > 0;
+  const total   = questions.length;
 
   // Type names map per language
   const typeNamesMaps = {
@@ -1108,10 +1163,10 @@ function showResult(silent = false) {
     es: { W:'Palabras de Afirmación', S:'Actos de Servicio', G:'Recibir Regalos', T:'Tiempo de Calidad', P:'Contacto Físico' },
   };
   const typeNamesMap = typeNamesMaps[lang] || typeNamesMaps.zh;
+  const sep = (lang==='en'||lang==='es') ? ': ' : '：';
 
   // Build score bars (sorted)
-  const sortedScores = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
-  const barsHTML = sortedScores.map(([k,v])=>{
+  const barsHTML = sorted.map(([k,v])=>{
     const pct = Math.round((v/total)*100);
     return `
       <div class="score-row">
@@ -1125,33 +1180,111 @@ function showResult(silent = false) {
       </div>`;
   }).join('');
 
-  // Build tips (avoid shadowing t() function with variable name)
-  const tipsHTML = r.tips.map(tip=>`
-    <div class="tip-item">
-      <span class="tip-emoji">${tip.emoji}</span>
-      <div class="tip-text"><strong>${tip.title}${(lang==='en'||lang==='es')?': ':'：'}</strong>${tip.text}</div>
-    </div>`).join('');
+  let heroHTML, tipsHTML, affHTML, yogaHTML, shareTag;
 
-  // Build affiliate
-  const affHTML = r.courses.map(c=>`
-    <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
-      <span class="aff-icon">${c.icon}</span>
-      <div class="aff-body">
-        <div class="aff-label">${c.label}</div>
-        <div class="aff-title">${c.title}</div>
-      </div>
-    </a>`).join('');
+  if (isCombo) {
+    // ─── COMBO RESULT ───────────────────────────────────────────
+    const [k1, k2] = [top, second].sort();
+    const combo    = combos[k1 + k2] || {};
+    const r1       = results[top];
+    const r2       = results[second];
+    const rr1      = (lang !== 'zh' && r1[lang]) ? {...r1, ...r1[lang]} : r1;
+    const rr2      = (lang !== 'zh' && r2[lang]) ? {...r2, ...r2[lang]} : r2;
+    const tag1     = typeNamesMap[top];
+    const tag2     = typeNamesMap[second];
+    shareTag       = tag1 + ' × ' + tag2;
+
+    heroHTML = `
+      <div class="result-hero">
+        <div class="result-icon-combo">${r1.icon} × ${r2.icon}</div>
+        <div class="combo-badge">✨ 複合型</div>
+        <div class="result-name">你是：${tag1} × ${tag2} 複合型</div>
+        <div class="result-subtitle">${typeNamesMaps.en[top]} × ${typeNamesMaps.en[second]}</div>
+        <p class="result-desc">${combo.desc || rr1.desc}</p>
+      </div>`;
+
+    tipsHTML = [...(rr1.tips || []), ...(rr2.tips || [])].map(tip=>`
+      <div class="tip-item">
+        <span class="tip-emoji">${tip.emoji}</span>
+        <div class="tip-text"><strong>${tip.title}${sep}</strong>${tip.text}</div>
+      </div>`).join('');
+
+    const courses = [...r1.courses.slice(0,2), ...r2.courses.slice(0,2)];
+    affHTML = courses.map(c=>`
+      <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
+        <span class="aff-icon">${c.icon}</span>
+        <div class="aff-body">
+          <div class="aff-label">${c.label}</div>
+          <div class="aff-title">${c.title}</div>
+        </div>
+      </a>`).join('');
+
+    const yoga = combo.yoga || r1.yoga;
+    yogaHTML = `
+      <div class="luna-yoga-card">
+        <div class="luna-yoga-header">
+          <div class="luna-yoga-logo">🌙</div>
+          <div>
+            <div class="luna-yoga-brand">Luna Yoga Music</div>
+            <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
+          </div>
+        </div>
+        <p class="luna-yoga-desc">${yoga.desc}</p>
+        <a class="luna-yoga-btn" href="${r1.yoga.url}" target="_blank" rel="noopener">
+          ${t('result.lunaBtn', yoga.playlist)}
+        </a>
+      </div>`;
+
+  } else {
+    // ─── SINGLE RESULT ──────────────────────────────────────────
+    const rBase = results[top];
+    const r     = (lang !== 'zh' && rBase[lang]) ? {...rBase, ...rBase[lang]} : rBase;
+    shareTag    = r.tag;
+
+    heroHTML = `
+      <div class="result-hero">
+        <div class="result-icon">${r.icon}</div>
+        <div class="result-tag">${r.tag}</div>
+        <div class="result-name">${r.name}</div>
+        <div class="result-subtitle">${r.subtitle}</div>
+        <p class="result-desc">${r.desc}</p>
+      </div>`;
+
+    tipsHTML = r.tips.map(tip=>`
+      <div class="tip-item">
+        <span class="tip-emoji">${tip.emoji}</span>
+        <div class="tip-text"><strong>${tip.title}${sep}</strong>${tip.text}</div>
+      </div>`).join('');
+
+    affHTML = r.courses.map(c=>`
+      <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
+        <span class="aff-icon">${c.icon}</span>
+        <div class="aff-body">
+          <div class="aff-label">${c.label}</div>
+          <div class="aff-title">${c.title}</div>
+        </div>
+      </a>`).join('');
+
+    yogaHTML = `
+      <div class="luna-yoga-card">
+        <div class="luna-yoga-header">
+          <div class="luna-yoga-logo">🌙</div>
+          <div>
+            <div class="luna-yoga-brand">Luna Yoga Music</div>
+            <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
+          </div>
+        </div>
+        <p class="luna-yoga-desc">${r.yoga.desc}</p>
+        <a class="luna-yoga-btn" href="${r.yoga.url}" target="_blank" rel="noopener">
+          ${t('result.lunaBtn', r.yoga.playlist)}
+        </a>
+      </div>`;
+  }
 
   const sec = document.getElementById('result-section');
   sec.style.display = 'block';
   sec.innerHTML = `
-    <div class="result-hero">
-      <div class="result-icon">${r.icon}</div>
-      <div class="result-tag">${r.tag}</div>
-      <div class="result-name">${r.name}</div>
-      <div class="result-subtitle">${r.subtitle}</div>
-      <p class="result-desc">${r.desc}</p>
-    </div>
+    ${heroHTML}
 
     <div class="scores-card">
       <h3>${t('result.scores')}</h3>
@@ -1163,19 +1296,7 @@ function showResult(silent = false) {
       ${tipsHTML}
     </div>
 
-    <div class="luna-yoga-card">
-      <div class="luna-yoga-header">
-        <div class="luna-yoga-logo">🌙</div>
-        <div>
-          <div class="luna-yoga-brand">Luna Yoga Music</div>
-          <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
-        </div>
-      </div>
-      <p class="luna-yoga-desc">${r.yoga.desc}</p>
-      <a class="luna-yoga-btn" href="${r.yoga.url}" target="_blank" rel="noopener">
-        ${t('result.lunaBtn', r.yoga.playlist)}
-      </a>
-    </div>
+    ${yogaHTML}
 
     <div class="affiliate-card">
       <h3>${t('result.affTitle')}</h3>
@@ -1184,15 +1305,15 @@ function showResult(silent = false) {
     </div>
 
     <div class="share-row">
-      <a class="btn-share line" href="#" onclick="shareResult('${r.tag}');return false;">
+      <a class="btn-share line" href="#" onclick="shareResult('${shareTag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
         ${t('result.shareLine')}
       </a>
-      <a class="btn-share ig" href="#" onclick="copyResult('${r.tag}');return false;">
+      <a class="btn-share ig" href="#" onclick="copyResult('${shareTag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         ${t('result.shareIG')}
       </a>
-      <button class="btn-share copy" onclick="copyResult('${r.tag}')">
+      <button class="btn-share copy" onclick="copyResult('${shareTag}')">
         ${t('result.copyLink')}
       </button>
     </div>

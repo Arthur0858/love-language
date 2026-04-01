@@ -67,50 +67,50 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "什麼是愛的語言？",
+        "name": "What are the Love Languages?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "愛的語言是心理學家 Gary Chapman 博士於 1992 年提出的關係理論，指出每個人表達與接受愛的方式可分為五種類型：肯定的言詞、服務的行動、接受禮物、優質的時光、身體的接觸。了解自己和伴侶的主要愛的語言，能幫助雙方以對方「聽得懂」的方式溝通，顯著提升感情滿意度與親密感。"
+          "text": "The Love Languages is a relationship theory proposed by psychologist Dr. Gary Chapman in 1992. It suggests that every person expresses and receives love through one of five primary types: Words of Affirmation, Acts of Service, Receiving Gifts, Quality Time, and Physical Touch. Understanding your own and your partner's primary love language can help you communicate love in ways the other person truly \"hears\", significantly improving relationship satisfaction and intimacy."
         }
       },
       {
         "@type": "Question",
-        "name": "五種愛的語言分別是什麼？",
+        "name": "What are the five Love Languages?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "五種愛的語言為：1) 肯定的言詞（Words of Affirmation）—透過語言、稱讚與感謝表達愛意；2) 服務的行動（Acts of Service）—用實際行動減輕對方的負擔；3) 接受禮物（Receiving Gifts）—透過有心意的禮物感受被記住與被重視；4) 優質的時光（Quality Time）—全神貫注、不受干擾地與伴侶共處；5) 身體的接觸（Physical Touch）—透過擁抱、牽手等肢體接觸感受安全感與連結。"
+          "text": "The five Love Languages are: 1) Words of Affirmation — expressing love through verbal praise, compliments, and encouragement; 2) Acts of Service — showing love through helpful actions that ease the other person's load; 3) Receiving Gifts — feeling loved through thoughtful, meaningful gifts that show you were remembered; 4) Quality Time — feeling loved through focused, uninterrupted time together; 5) Physical Touch — feeling love and security through hugs, holding hands, and other physical closeness."
         }
       },
       {
         "@type": "Question",
-        "name": "愛的語言可以改變嗎？",
+        "name": "Can your Love Language change over time?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "是的，愛的語言可以改變。人生階段不同、或經歷重大事件後，主要的愛的語言可能會有所轉移。建議每隔一段時間重新測驗，了解自己當下的狀態與需求。"
+          "text": "Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It's a good idea to retake the quiz periodically to understand your current needs and emotional state."
         }
       },
       {
         "@type": "Question",
-        "name": "愛的語言只適用於愛情關係嗎？",
+        "name": "Are Love Languages only for romantic relationships?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "不只是愛情。愛的語言同樣適用於親子關係、友誼、職場互動等各種人際關係。理解不同人慣用的溝通與表達方式，能讓所有關係都更加和諧，減少誤解與衝突。"
+          "text": "Not at all. Love Languages apply equally to parent-child relationships, friendships, and workplace interactions. Understanding how different people prefer to communicate and receive care makes all relationships more harmonious and reduces misunderstandings."
         }
       },
       {
         "@type": "Question",
-        "name": "愛的語言測驗有幾題？需要多久時間？",
+        "name": "How many questions are in the quiz and how long does it take?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "LoveTypes 的愛的語言測驗共有 15 道情境選擇題，約需 2 分鐘完成。測驗完全免費，無需註冊帳號，完成後立即顯示你的主要愛的語言及詳細分析。"
+          "text": "The LoveTypes quiz has 15 scenario-based questions and takes about 2 minutes to complete. The quiz is completely free, requires no registration, and shows your primary Love Language with a detailed analysis immediately after completion."
         }
       },
       {
         "@type": "Question",
-        "name": "如果伴侶的愛的語言和我不同怎麼辦？",
+        "name": "What if my partner's Love Language is different from mine?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "伴侶的愛的語言不同是非常普遍的情況。關鍵在於互相了解對方的語言，並練習用對方的方式表達愛。例如，若你偏好「肯定的言詞」但伴侶重視「服務的行動」，可以嘗試主動幫忙分擔家務，對他的意義可能遠大於一句「我愛你」。溝通與理解是跨越語言差異的橋樑。"
+          "text": "Having a different Love Language from your partner is very common. The key is to learn each other's languages and practice expressing love in the way your partner understands. For example, if you prefer Words of Affirmation but your partner values Acts of Service, try proactively helping with chores — that gesture may mean far more to them than saying \"I love you\". Communication and understanding are the bridge across the language gap."
         }
       }
     ]
@@ -363,6 +363,16 @@
       color: var(--text); font-size: .95rem; line-height: 1.85;
       max-width: 520px; margin: 0 auto;
     }
+    .result-icon-combo {
+      font-size: 2.4rem; margin-bottom: 14px; letter-spacing: .15em;
+    }
+    .combo-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #C9666E 0%, #5C8CB0 100%);
+      color: #fff;
+      font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+      padding: 4px 16px; border-radius: 999px; margin-bottom: 12px;
+    }
 
     /* Score bars */
     .scores-card {
@@ -547,7 +557,7 @@
         <li><a href="/es/">Español</a></li>
       </ul>
     </div>
-    <a href="#" class="nav-logo">
+    <a href="/en/" class="nav-logo">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
@@ -557,7 +567,7 @@
   <div class="nav-links">
     <a href="#types-section" data-i18n="nav.types">5種語言</a>
     <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
-    <a href="#about-section" data-i18n="nav.about">關於理論</a>
+    <a href="/en/theory/">Theory</a>
   </div>
 </nav>
 
@@ -592,28 +602,28 @@
   <div class="types-grid">
     <div class="type-card" onclick="startQuiz()">
       <div class="icon">💬</div>
-      <div class="name">肯定的言詞</div>
-      <div class="sub">Words of Affirmation</div>
+      <div class="name">Words of Affirmation</div>
+      <div class="sub">Verbal encouragement & praise</div>
     </div>
     <div class="type-card" onclick="startQuiz()">
       <div class="icon">🛠️</div>
-      <div class="name">服務的行動</div>
-      <div class="sub">Acts of Service</div>
+      <div class="name">Acts of Service</div>
+      <div class="sub">Actions that show you care</div>
     </div>
     <div class="type-card" onclick="startQuiz()">
       <div class="icon">🎁</div>
-      <div class="name">接受禮物</div>
-      <div class="sub">Receiving Gifts</div>
+      <div class="name">Receiving Gifts</div>
+      <div class="sub">Thoughtful tokens of love</div>
     </div>
     <div class="type-card" onclick="startQuiz()">
       <div class="icon">⏳</div>
-      <div class="name">優質的時光</div>
-      <div class="sub">Quality Time</div>
+      <div class="name">Quality Time</div>
+      <div class="sub">Focused, undivided attention</div>
     </div>
     <div class="type-card" onclick="startQuiz()">
       <div class="icon">🤝</div>
-      <div class="name">身體的接觸</div>
-      <div class="sub">Physical Touch</div>
+      <div class="name">Physical Touch</div>
+      <div class="sub">Warmth through closeness</div>
     </div>
   </div>
 </section>
@@ -624,7 +634,7 @@
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="progress-text" id="progress-text">第 1 題，共 15 題</div>
+    <div class="progress-text" id="progress-text">Question 1 of 15</div>
     <div class="q-card" id="question-card"></div>
   </div>
 </section>
@@ -672,13 +682,13 @@
   <article class="detail-card" id="words-of-affirmation">
     <div class="detail-icon">💬</div>
     <div data-i18n-html="detail.W">
-      <h3>肯定的言詞（Words of Affirmation）</h3>
-      <p>肯定的言詞是五種愛的語言中，以語言作為愛的主要媒介的類型。對這類型的人而言，語言有著巨大的力量——一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，就能讓他們深刻感受到被珍視的溫度。他們不需要大張旗鼓，只需要對方願意說出那份真誠。</p>
-      <p>批評和冷漠對他們的傷害特別深，因為他們相信語言是連結心的橋樑。在日常中，伴侶的一則暖心訊息、一句臨時的鼓勵，都能讓他們充滿能量。Gary Chapman 指出，給予這類型伴侶愛的最佳方式，是養成每天表達欣賞與感謝的習慣，讓正向語言成為關係的日常養分。</p>
+      <h3>Words of Affirmation</h3>
+      <p>Words of Affirmation is the Love Language that uses spoken and written words as the primary channel of love. For these people, language carries enormous power — a sincere "I love you," "You were amazing today," or "Thank you for everything you do" lets them feel genuinely valued. They don't need grand gestures; they just need to hear that you mean it.</p>
+      <p>Criticism and emotional silence cut them deeply, because they believe words are the bridge that connects hearts. A warm text from a partner or a spontaneous word of encouragement can energize them for hours. Gary Chapman notes that the best way to love this type of partner is to make daily expressions of appreciation and gratitude a habit — let positive language become the daily nourishment of the relationship.</p>
       <ul>
-        <li><strong>日常表現：</strong>重視對方的稱讚、感謝訊息、睡前暖心的一句話</li>
-        <li><strong>最受傷的事：</strong>被忽視、批評，或對方從不說「謝謝」</li>
-        <li><strong>給伴侶的提示：</strong>每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了</li>
+        <li><strong>Everyday signs:</strong> They treasure compliments, heartfelt messages, and a kind word before bed</li>
+        <li><strong>What hurts most:</strong> Being ignored, criticized, or never hearing "thank you"</li>
+        <li><strong>Tip for your partner:</strong> Every day, mention one thing you appreciate about them — no speech needed, just one sincere sentence</li>
       </ul>
     </div>
   </article>
@@ -686,13 +696,13 @@
   <article class="detail-card" id="acts-of-service">
     <div class="detail-icon">🛠️</div>
     <div data-i18n-html="detail.S">
-      <h3>服務的行動（Acts of Service）</h3>
-      <p>服務的行動是以實際行動表達愛意的類型。對這類型的人而言，愛不是說出來的，而是做出來的。當對方默默幫忙分擔家務、主動把事情處理好，他們感受到的不只是感謝，而是被深深照顧的安全感。「我願意為你做這件事」這份心意的重量，遠比一千個「我愛你」都來得真實。</p>
-      <p>這類型的人通常也是那個默默付出、用行動表達心意的人，但有時容易因付出不被看見而感到委屈。Chapman 提醒，與服務行動型的伴侶相處，最重要的是主動幫忙處理他不喜歡但必須做的事，這比任何語言或禮物都更能打動他的心。</p>
+      <h3>Acts of Service</h3>
+      <p>Acts of Service is the Love Language that expresses love through actions rather than words. For these people, love isn't spoken — it's done. When a partner quietly helps with household chores or takes care of something without being asked, what they feel isn't just gratitude but a deep sense of being cared for and safe. The weight of "I'm willing to do this for you" is more real to them than a thousand "I love you's."</p>
+      <p>People with this language tend to be the quietly devoted ones who show their feelings through action, yet can feel unseen when their efforts go unnoticed. Chapman reminds us that with an Acts of Service partner, the most powerful thing you can do is proactively take on a task they dislike but have to do — that beats any words or gifts hands down.</p>
       <ul>
-        <li><strong>日常表現：</strong>幫伴侶跑腿、準備餐點、主動承擔瑣事</li>
-        <li><strong>最受傷的事：</strong>一直在付出，但對方從未主動做過任何事</li>
-        <li><strong>給伴侶的提示：</strong>主動幫對方做一件他不喜歡但必須做的事，效果遠超過任何禮物</li>
+        <li><strong>Everyday signs:</strong> Running errands for their partner, preparing meals, cheerfully handling small chores</li>
+        <li><strong>What hurts most:</strong> Always giving while the partner never initiates any helpful action</li>
+        <li><strong>Tip for your partner:</strong> Proactively do one task they dislike — the effect far outweighs any gift</li>
       </ul>
     </div>
   </article>
@@ -700,13 +710,13 @@
   <article class="detail-card" id="receiving-gifts">
     <div class="detail-icon">🎁</div>
     <div data-i18n-html="detail.G">
-      <h3>接受禮物（Receiving Gifts）</h3>
-      <p>接受禮物型的人把禮物視為心意的具體化。重要的不是金額，而是對方是否「記得」、是否「用心想過」。每一個精心挑選的小東西，都在傳遞一個訊息：「我看見你、我記得你喜歡什麼、我在不在你身邊都想著你。」這種被記住、被惦記的感覺，是他們感受愛的核心方式。</p>
-      <p>忘記紀念日、從不準備任何心意，對這類型的人而言是情感疏忽的訊號，不只是失望，而是懷疑自己在關係中是否被重視。Gary Chapman 強調，這並非物質主義，而是對「有人在乎我」的渴望。給這類型伴侶最好的禮物，不需要昂貴——一張手寫卡片、一朵路邊的花，都能成為感情最有力的表達。</p>
+      <h3>Receiving Gifts</h3>
+      <p>For people whose Love Language is Receiving Gifts, a gift is love made tangible. What matters isn't the price tag — it's whether the person "remembered" and "put thought into it." Every carefully chosen little thing carries a message: "I see you. I remember what you like. I think of you whether I'm with you or not." That feeling of being remembered and cherished is the core of how they experience love.</p>
+      <p>Forgotten anniversaries or never receiving any gesture feels like emotional neglect to this type — not just disappointment, but a question of whether they matter in the relationship. Gary Chapman stresses this is not materialism; it's a longing to know someone cares. The best gift for this partner doesn't need to be expensive — a handwritten card or a flower picked up on a walk can be the most powerful expression of love.</p>
       <ul>
-        <li><strong>日常表現：</strong>珍惜有意義的小禮物、重視紀念日儀式</li>
-        <li><strong>最受傷的事：</strong>重要日子對方毫無準備，讓他感覺不被記得</li>
-        <li><strong>給伴侶的提示：</strong>隨手帶他說過想吃的東西，這份「我記得你」的感覺才是關鍵</li>
+        <li><strong>Everyday signs:</strong> Cherishing meaningful small gifts, valuing anniversary rituals</li>
+        <li><strong>What hurts most:</strong> A partner who arrives empty-handed on important days, making them feel forgotten</li>
+        <li><strong>Tip for your partner:</strong> Bring home that snack they mentioned once — the "I remembered you" feeling is what counts</li>
       </ul>
     </div>
   </article>
@@ -714,13 +724,13 @@
   <article class="detail-card" id="quality-time">
     <div class="detail-icon">⏳</div>
     <div data-i18n-html="detail.T">
-      <h3>優質的時光（Quality Time）</h3>
-      <p>優質的時光型的人把時間視為衡量愛最重要的標準。他們要的不是相處的時數，而是那份全然的專注——手機放下、眼神對上、心真正在這裡。當對方願意把最珍貴的時間毫無保留地給予，他們才真實感受到被愛。</p>
-      <p>各自低頭滑手機的夜晚，對他們而言是最深的孤獨，即使人坐在旁邊也感到疏離。Chapman 的研究指出，這類型的伴侶在共處時最渴望的是「被全神貫注對待」。建議與優質時光型的伴侶每天設定一段無手機時光，即使只有 30 分鐘，全心全意在彼此身上，效果勝過整晚卻心不在焉的陪伴。</p>
+      <h3>Quality Time</h3>
+      <p>People whose Love Language is Quality Time measure love by time — specifically, by the quality of attention given. It's not about how many hours you spend together; it's about being fully present — phone down, eyes meeting, heart actually here. When a partner gives their most precious resource without reservation, that's when this person truly feels loved.</p>
+      <p>An evening where both people scroll their phones in silence is, for them, a deep loneliness — even sitting side by side can feel isolating. Chapman's research shows that this type craves being treated with complete, undivided attention during shared time. Try setting aside a daily phone-free window with your Quality Time partner — even 30 minutes of genuine presence outweighs an entire evening of distracted togetherness.</p>
       <ul>
-        <li><strong>日常表現：</strong>珍視專注的共處，重視眼神交流與深度對話</li>
-        <li><strong>最受傷的事：</strong>對方在身邊卻一直看手機，讓他感到被忽視</li>
-        <li><strong>給伴侶的提示：</strong>每週安排一個「無手機約會夜」，讓他感受完整的你</li>
+        <li><strong>Everyday signs:</strong> Treasuring focused together-time, valuing eye contact and deep conversation</li>
+        <li><strong>What hurts most:</strong> A partner who constantly checks their phone, making them feel invisible</li>
+        <li><strong>Tip for your partner:</strong> Schedule a weekly "phone-free date night" — let them experience your undivided self</li>
       </ul>
     </div>
   </article>
@@ -728,13 +738,13 @@
   <article class="detail-card" id="physical-touch">
     <div class="detail-icon">🤝</div>
     <div data-i18n-html="detail.P">
-      <h3>身體的接觸（Physical Touch）</h3>
-      <p>身體的接觸型的人透過肢體接觸感受愛與安全感。一個擁抱、牽手、靠在對方肩上睡著，這些物理連結提供的安全感是無可替代的。他們不需要豪華晚餐或昂貴禮物，只要能感受到對方的體溫與存在感，就是最好的時光。</p>
-      <p>長期缺乏身體接觸對他們來說會造成情感上的疏離感，甚至懷疑關係的親密度。Gary Chapman 指出，給予這類型伴侶愛，最有效的方式是建立日常肢體接觸的儀式——早安吻、出門前的擁抱、睡前牽手，讓愛以固定且具體的方式流動。值得注意的是，身體的接觸重視的是溫暖與連結，與性無直接關聯。</p>
+      <h3>Physical Touch</h3>
+      <p>People whose Love Language is Physical Touch feel love and safety through physical closeness. A hug, holding hands, or falling asleep on a partner's shoulder — these physical connections provide a sense of security that nothing else can replicate. They don't need a fancy dinner or an expensive gift; as long as they can feel their partner's warmth and presence, that's the best moment of all.</p>
+      <p>A prolonged lack of physical contact leaves them feeling emotionally distant and can even make them question the intimacy of the relationship. Gary Chapman notes that the most effective way to love this type of partner is to build daily rituals of touch — a good-morning kiss, a hug before heading out, holding hands before sleep — letting love flow in a regular, tangible way. Importantly, Physical Touch is about warmth and connection; it is not directly linked to sexual expression.</p>
       <ul>
-        <li><strong>日常表現：</strong>喜歡牽手、擁抱、走路時靠近對方</li>
-        <li><strong>最受傷的事：</strong>對方幾乎不主動靠近或碰觸，讓他感到疏離</li>
-        <li><strong>給伴侶的提示：</strong>主動給予日常的非性化肢體接觸，牽手和擁抱對他意義重大</li>
+        <li><strong>Everyday signs:</strong> Enjoying hand-holding, hugging, and staying physically close while walking</li>
+        <li><strong>What hurts most:</strong> A partner who rarely initiates physical closeness, making them feel disconnected</li>
+        <li><strong>Tip for your partner:</strong> Offer everyday non-sexual physical touch — holding hands and hugs carry enormous meaning to them</li>
       </ul>
     </div>
   </article>
@@ -743,7 +753,7 @@
 <!-- FOOTER -->
 <footer>
   <p data-i18n="footer.copy">© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
-  <p style="margin-top:8px;"><a href="#" data-i18n="footer.privacy">隱私政策</a> · <a href="#" data-i18n="footer.terms">使用條款</a> · <a href="#" data-i18n="footer.contact">聯繫我們</a></p>
+  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
 </footer>
 
 <script>
@@ -906,127 +916,171 @@ const questions = [
 const results = {
   W: {
     icon: "💬",
-    tag: "肯定的言詞",
-    name: "你的愛的語言是：肯定的言詞",
+    tag: "Words of Affirmation",
+    name: "Your Love Language: Words of Affirmation",
     subtitle: "Words of Affirmation",
     color: "#C9666E",
-    desc: "語言對你而言有著巨大的力量。一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，能讓你感受到被珍視的溫度。你不需要大張旗鼓，只需要對方願意說出口的那份真誠。批評和冷漠對你的傷害也特別深，因為你相信語言是連結心的橋樑。",
+    desc: "Language carries enormous power for you. A heartfelt \"I love you,\" \"You were amazing today,\" or \"Thank you for everything you do\" makes you feel deeply cherished. You don't need grand gestures — you just need your partner to say what they mean. Criticism and emotional silence hurt you particularly deeply, because you believe language is the bridge that connects hearts.",
     tips: [
-      { emoji: "✉️", title: "給伴侶的提示", text: "試著每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了。" },
-      { emoji: "📔", title: "給自己的提醒", text: "練習在需要鼓勵時開口說「我需要聽你說說我做得好的地方」，讓伴侶有機會給你所需要的。" },
-      { emoji: "🔥", title: "愛的提升", text: "和伴侶一起寫感謝清單，每週互相說三件感謝對方的事，建立持續的語言滋養。" },
+      { emoji: "✉️", title: "Tip for your partner", text: "Try sharing one thing you appreciate about them every day — no need for long speeches, one sincere sentence is enough." },
+      { emoji: "📔", title: "Reminder for yourself", text: "Practice asking for encouragement: say \"I need to hear something I did well today\" — give your partner the chance to love you the way you need." },
+      { emoji: "🔥", title: "Deepen your love", text: "Write gratitude lists together and share three things you're thankful for each week — building a steady flow of affirming language into your relationship." },
     ],
     courses: [
-      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
-      { icon: "🎓", label: "Udemy 課程", title: "非暴力溝通：讓愛自然流露", url: "https://www.udemy.com/courses/search/?q=%E9%9D%9E%E6%9A%B4%E5%8A%9B%E6%BA%9D%E9%80%9A" },
-      { icon: "✍️", label: "Pinkoi 禮物", title: "客製化情書卡片・手寫刻字", url: "https://www.pinkoi.com/tag/%E5%AE%A2%E8%A3%BD%E5%8C%96%E5%8D%A1%E7%89%87" },
-      { icon: "💑", label: "KKday 體驗", title: "情侶溝通桌遊工作坊", url: "https://www.kkday.com/zh-tw/category/couples" },
+      { icon: "📖", label: "Books.com.tw", title: "The 5 Love Languages: The Secret to Love That Lasts", url: "https://www.books.com.tw/products/0010940456" },
+      { icon: "🎓", label: "Udemy Course", title: "Nonviolent Communication: Let Love Flow Naturally", url: "https://www.udemy.com/courses/search/?q=nonviolent+communication" },
+      { icon: "✍️", label: "Pinkoi Gift", title: "Custom Love Letter Cards · Handwritten Engraving", url: "https://www.pinkoi.com/tag/%E5%AE%A2%E8%A3%BD%E5%8C%96%E5%8D%A1%E7%89%87" },
+      { icon: "💑", label: "KKday Experience", title: "Couples Communication Board Game Workshop", url: "https://www.kkday.com/zh-tw/category/couples" },
     ],
     yoga: {
-      desc: "語言有力量，聲音也有。為「肯定的言詞」型的你，Luna Yoga Music 精選了帶有正向引導語的冥想音樂——讓溫柔的聲音在你最需要被肯定的時候，成為滋養自己的力量。",
+      desc: "Words carry power — so does sound. Luna Yoga Music has curated meditation music with gentle, positive guidance especially for Words of Affirmation types — let a warm voice become your nourishment in the moments you need affirmation most.",
       url: "https://www.youtube.com/@LunaYogaMusic",
-      playlist: "正向肯定冥想 Playlist"
+      playlist: "Positive Affirmation Meditation Playlist"
     }
   },
   S: {
     icon: "🛠️",
-    tag: "服務的行動",
-    name: "你的愛的語言是：服務的行動",
+    tag: "Acts of Service",
+    name: "Your Love Language: Acts of Service",
     subtitle: "Acts of Service",
     color: "#7A9E8B",
-    desc: "對你來說，愛不是說出來的，是做出來的。當對方默默幫你分擔、主動把事情處理好，你感受到的不只是感謝，而是被深深照顧的安全感。「我願意為你做這件事」這句話的重量，遠比一千個「我愛你」都來得真實。你也通常是那個默默付出、用行動表達心意的人。",
+    desc: "For you, love isn't spoken — it's done. When a partner quietly helps with chores or proactively handles tasks, you feel not just gratitude, but a deep sense of being cared for. The weight of \"I'm willing to do this for you\" is far more real than a thousand \"I love you's.\" You're usually the one who shows love quietly through action, too.",
     tips: [
-      { emoji: "🎯", title: "給伴侶的提示", text: "主動幫對方做一件他不喜歡但必須做的事，這比任何禮物都更能打動他的心。" },
-      { emoji: "💡", title: "給自己的提醒", text: "有時候說出你需要幫助，比默默扛著更能增進親密感——讓伴侶有機會愛你的方式。" },
-      { emoji: "🔥", title: "愛的提升", text: "和伴侶制定「服務清單」，列出彼此最希望對方幫忙的事，讓愛具體而有行動力。" },
+      { emoji: "🎯", title: "Tip for your partner", text: "Proactively do one task they dislike but have to do — this moves their heart more than any gift." },
+      { emoji: "💡", title: "Reminder for yourself", text: "Sometimes saying \"I need help with this\" creates more intimacy than silently carrying it — give your partner the chance to love you." },
+      { emoji: "🔥", title: "Deepen your love", text: "Create a 'service list' together — write down what each of you most hopes the other will help with, making love concrete and actionable." },
     ],
     courses: [
-      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
-      { icon: "🎁", label: "Pinkoi 禮物", title: "實用系客製禮物・生活小物", url: "https://www.pinkoi.com/tag/%E5%AF%A6%E7%94%A8" },
-      { icon: "🏡", label: "KKday 體驗", title: "情侶下廚體驗・居家約會課", url: "https://www.kkday.com/zh-tw/category/cooking" },
-      { icon: "🎓", label: "Udemy 課程", title: "親密關係中的付出與界線", url: "https://www.udemy.com/courses/search/?q=%E8%A6%AA%E5%AF%86%E9%97%9C%E4%BF%82" },
+      { icon: "📖", label: "Books.com.tw", title: "The 5 Love Languages: The Secret to Love That Lasts", url: "https://www.books.com.tw/products/0010940456" },
+      { icon: "🎁", label: "Pinkoi Gift", title: "Practical Custom Gifts · Everyday Essentials", url: "https://www.pinkoi.com/tag/%E5%AF%A6%E7%94%A8" },
+      { icon: "🏡", label: "KKday Experience", title: "Couples Cooking Class · Home Date Experience", url: "https://www.kkday.com/zh-tw/category/cooking" },
+      { icon: "🎓", label: "Udemy Course", title: "Giving and Boundaries in Intimate Relationships", url: "https://www.udemy.com/courses/search/?q=healthy+relationships+boundaries" },
     ],
     yoga: {
-      desc: "默默付出的你，最容易忘記照顧自己。Luna Yoga Music 的療癒背景音樂，讓你在忙碌的給予之後，找到一個只屬於自己的靜心時刻，充飽電再繼續愛人。",
+      desc: "The quiet giver often forgets to care for themselves. Luna Yoga Music's healing background music gives you, after all that devoted giving, a moment of stillness that belongs only to you — recharge, then keep loving.",
       url: "https://www.youtube.com/@LunaYogaMusic",
-      playlist: "療癒放鬆背景音樂 Playlist"
+      playlist: "Healing Relaxation Background Music Playlist"
     }
   },
   G: {
     icon: "🎁",
-    tag: "接受禮物",
-    name: "你的愛的語言是：接受禮物",
+    tag: "Receiving Gifts",
+    name: "Your Love Language: Receiving Gifts",
     subtitle: "Receiving Gifts",
     color: "#B07AB0",
-    desc: "禮物對你而言是心意的具體化。重要的不是金額，而是對方是否「記得」、是否「用心想過」。每一個精心挑選的小東西，都在說：「我看見你、我記得你喜歡什麼、我在不在你身邊都想著你。」忘記紀念日、從不準備任何心意，對你來說是情感疏忽的訊號。",
+    desc: "Gifts are love made tangible for you. What matters isn't the price — it's whether your partner 'remembered' and 'put genuine thought into it.' Every carefully chosen item says: \"I see you. I remember what you like. I think of you whether I'm near or far.\" Forgotten anniversaries or no effort at all feel like emotional neglect — not just disappointment, but a quiet doubt about whether you truly matter.",
     tips: [
-      { emoji: "🎀", title: "給伴侶的提示", text: "不需要昂貴的禮物——一張手寫卡片、你說過想吃的東西、一朵路邊的花，都是最有力的愛。" },
-      { emoji: "💡", title: "給自己的提醒", text: "告訴伴侶你重視紀念日和小驚喜的原因，讓他明白這不是物質，而是被記住的感覺。" },
-      { emoji: "🔥", title: "愛的提升", text: "互相建立一份「心願清單」，從小到大都可以，讓彼此挑選禮物時更有方向。" },
+      { emoji: "🎀", title: "Tip for your partner", text: "The gift doesn't need to be expensive — a handwritten card, something they once said they wanted, or a flower picked along the way is the most powerful love." },
+      { emoji: "💡", title: "Reminder for yourself", text: "Tell your partner why you value anniversaries and small surprises — help them understand this isn't materialism, it's the feeling of being remembered." },
+      { emoji: "🔥", title: "Deepen your love", text: "Create a 'wish list' together — anything from small to large — so both of you have direction when choosing gifts for each other." },
     ],
     courses: [
-      { icon: "🎀", label: "Pinkoi 禮物", title: "精選客製禮物・驚喜禮盒", url: "https://www.pinkoi.com/tag/%E7%A6%AE%E7%9B%92" },
-      { icon: "💍", label: "Pinkoi 禮物", title: "刻字飾品・紀念日禮物", url: "https://www.pinkoi.com/tag/%E5%88%BB%E5%AD%97" },
-      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
-      { icon: "🎉", label: "KKday 體驗", title: "情侶驚喜策劃體驗活動", url: "https://www.kkday.com/zh-tw/category/couples" },
+      { icon: "🎀", label: "Pinkoi Gift", title: "Curated Custom Gifts · Surprise Gift Boxes", url: "https://www.pinkoi.com/tag/%E7%A6%AE%E7%9B%92" },
+      { icon: "💍", label: "Pinkoi Gift", title: "Engraved Jewelry · Anniversary Gifts", url: "https://www.pinkoi.com/tag/%E5%88%BB%E5%AD%97" },
+      { icon: "📖", label: "Books.com.tw", title: "The 5 Love Languages: The Secret to Love That Lasts", url: "https://www.books.com.tw/products/0010940456" },
+      { icon: "🎉", label: "KKday Experience", title: "Couple Surprise Planning & Activity Experiences", url: "https://www.kkday.com/zh-tw/category/couples" },
     ],
     yoga: {
-      desc: "送禮是你的愛，而有時候最美的禮物是給自己一段寧靜。Luna Yoga Music 精選感恩冥想音樂，讓你在感受被愛的同時，也學會感謝自己值得被珍視的每一刻。",
+      desc: "Giving gifts is your love language — but sometimes the most beautiful gift is a quiet moment for yourself. Luna Yoga Music's gratitude meditation music lets you feel loved, while also learning to cherish every moment you deserve to be treasured.",
       url: "https://www.youtube.com/@LunaYogaMusic",
-      playlist: "感恩冥想音樂 Playlist"
+      playlist: "Gratitude Meditation Music Playlist"
     }
   },
   T: {
     icon: "⏳",
-    tag: "優質的時光",
-    name: "你的愛的語言是：優質的時光",
+    tag: "Quality Time",
+    name: "Your Love Language: Quality Time",
     subtitle: "Quality Time",
     color: "#C9A94E",
-    desc: "時間是你衡量愛的尺。你要的不是相處的時數，而是那份全然的專注——手機放下、眼神對上、心在這裡。當對方願意把最珍貴的時間毫無保留地給你，你才真的感受到被愛。被忽視、各自低頭滑手機的夜晚，對你而言是最深的孤獨。",
+    desc: "Time is your measure of love. You don't need more hours together — you need full, undivided presence: phone down, eyes meeting, heart actually here. When a partner gives their most precious resource without reservation, that's when you truly feel loved. An evening where both people scroll their phones in silence is the deepest loneliness for you.",
     tips: [
-      { emoji: "📵", title: "給伴侶的提示", text: "每天或每週設定一段「無手機時光」，即使只有 30 分鐘，全心全意在彼此身上。" },
-      { emoji: "💡", title: "給自己的提醒", text: "學習說「我想要你今晚只專注在我身上」，讓伴侶知道你需要的是專注的陪伴，而不只是人在旁邊。" },
-      { emoji: "🔥", title: "愛的提升", text: "設計專屬的「約會日」，定期創造只屬於你們兩個、無外擾的時光儀式。" },
+      { emoji: "📵", title: "Tip for your partner", text: "Set a 'phone-free window' daily or weekly — even just 30 minutes of complete focus on each other makes all the difference." },
+      { emoji: "💡", title: "Reminder for yourself", text: "Practice saying \"I need you fully focused on me tonight\" — help your partner understand you need presence, not just proximity." },
+      { emoji: "🔥", title: "Deepen your love", text: "Design your own 'date ritual' — regularly create undistracted, screen-free time that belongs only to both of you." },
     ],
     courses: [
-      { icon: "🗺️", label: "KKday 體驗", title: "情侶專屬約會體驗・一日遊", url: "https://www.kkday.com/zh-tw/category/couples" },
-      { icon: "🎡", label: "Klook 活動", title: "台灣情侶互動體驗票券", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
-      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
-      { icon: "🎓", label: "Udemy 課程", title: "高品質伴侶相處與溝通技巧", url: "https://www.udemy.com/courses/search/?q=%E4%BC%B4%E4%BE%B6%E6%BA%9D%E9%80%9A" },
+      { icon: "🗺️", label: "KKday Experience", title: "Exclusive Couple Date Experiences · Day Trips", url: "https://www.kkday.com/zh-tw/category/couples" },
+      { icon: "🎡", label: "Klook Activity", title: "Taiwan Couples Interactive Experiences", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
+      { icon: "📖", label: "Books.com.tw", title: "The 5 Love Languages: The Secret to Love That Lasts", url: "https://www.books.com.tw/products/0010940456" },
+      { icon: "🎓", label: "Udemy Course", title: "Quality Time & Communication Skills for Couples", url: "https://www.udemy.com/courses/search/?q=couples+communication" },
     ],
     yoga: {
-      desc: "全心在當下，是你最珍視的愛。Luna Yoga Music 的靜心冥想音樂，幫助你與伴侶一起放下手機、真正同在——兩個人一起靜靜呼吸，就是最珍貴的優質時光。",
+      desc: "Being fully in the present moment is the love you treasure most. Luna Yoga Music's mindfulness meditation music helps you and your partner put down your phones and truly be together — two people breathing quietly, the most precious quality time of all.",
       url: "https://www.youtube.com/@LunaYogaMusic",
-      playlist: "雙人靜心冥想 Playlist"
+      playlist: "Mindfulness Meditation Music Playlist"
     }
   },
   P: {
     icon: "🤝",
-    tag: "身體的接觸",
-    name: "你的愛的語言是：身體的接觸",
+    tag: "Physical Touch",
+    name: "Your Love Language: Physical Touch",
     subtitle: "Physical Touch",
     color: "#5C8CB0",
-    desc: "觸碰對你來說是愛最直接的語言。一個擁抱、牽手、靠在對方肩上睡著，這些物理連結給你的安全感是無可替代的。你不需要豪華的晚餐，只要對方在你身邊，能感受到那份體溫和存在感，就是最好的時光。長期缺乏身體接觸對你來說會造成情感上的疏離感。",
+    desc: "Touch is love's most direct language for you. A hug, holding hands, or falling asleep on a partner's shoulder — these physical connections provide an irreplaceable sense of security. You don't need a fancy dinner; just feeling your partner's warmth and presence is all you need. A prolonged lack of physical contact leaves you feeling emotionally distant.",
     tips: [
-      { emoji: "🫂", title: "給伴侶的提示", text: "主動給予非性化的肢體接觸：牽手、擁抱、輕摸肩膀，這些小動作對你的伴侶意義重大。" },
-      { emoji: "💡", title: "給自己的提醒", text: "不妨告訴伴侶「我今天需要一個抱抱」，讓對方知道如何在你需要的時候給予愛。" },
-      { emoji: "🔥", title: "愛的提升", text: "建立身體接觸的日常儀式：早安吻、睡前擁抱、出門前牽手，讓愛以固定的方式流動。" },
+      { emoji: "🫂", title: "Tip for your partner", text: "Offer non-sexual physical touch proactively: holding hands, hugs, a gentle touch on the shoulder — these small gestures mean a great deal to your partner." },
+      { emoji: "💡", title: "Reminder for yourself", text: "Try telling your partner 'I need a hug today' — let them know how to give you love in the moment you need it." },
+      { emoji: "🔥", title: "Deepen your love", text: "Build daily touch rituals: a good-morning kiss, a before-sleep hug, holding hands before going out — let love flow in a regular, tangible way." },
     ],
     courses: [
-      { icon: "💆", label: "KKday 體驗", title: "情侶雙人 SPA・放鬆療癒體驗", url: "https://www.kkday.com/zh-tw/category/spa-wellness" },
-      { icon: "🧘", label: "Klook 活動", title: "雙人瑜珈・身心靈工作坊", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
-      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/products/0010940456" },
-      { icon: "🎓", label: "Udemy 課程", title: "依附理論與親密關係安全感", url: "https://www.udemy.com/courses/search/?q=%E4%BE%9D%E9%99%84%E7%90%86%E8%AB%96" },
+      { icon: "💆", label: "KKday Experience", title: "Couples Spa & Relaxation Healing Experience", url: "https://www.kkday.com/zh-tw/category/spa-wellness" },
+      { icon: "🧘", label: "Klook Activity", title: "Couples Yoga · Mind-Body Wellness Workshop", url: "https://www.klook.com/zh-TW/list/taiwan-activities/" },
+      { icon: "📖", label: "Books.com.tw", title: "The 5 Love Languages: The Secret to Love That Lasts", url: "https://www.books.com.tw/products/0010940456" },
+      { icon: "🎓", label: "Udemy Course", title: "Attachment Theory & Intimacy in Relationships", url: "https://www.udemy.com/courses/search/?q=attachment+theory+relationships" },
     ],
     yoga: {
-      desc: "身體需要被感受，靈魂也需要。Luna Yoga Music 精選的身體掃描放鬆音樂，讓你從頭到腳感受自己的存在——當你與自己的身體重新連結，才能更安心地靠近另一個人。",
+      desc: "The body needs to be felt, and so does the soul. Luna Yoga Music's body-scan relaxation music guides you to feel your own presence from head to toe — when you reconnect with your own body, you can more safely draw close to another person.",
       url: "https://www.youtube.com/@LunaYogaMusic",
-      playlist: "身體放鬆掃描冥想 Playlist"
+      playlist: "Body Scan Relaxation Meditation Playlist"
     }
   },
 };
 
-const TYPE_NAMES = { W:"肯定的言詞", S:"服務的行動", G:"接受禮物", T:"優質的時光", P:"身體的接觸" };
+const TYPE_NAMES = { W:"Words of Affirmation", S:"Acts of Service", G:"Receiving Gifts", T:"Quality Time", P:"Physical Touch" };
+
+// ─── COMBO DESCRIPTIONS (10 alphabetical pairs) ───────────────────
+const combos = {
+  GP: {
+    desc: "A gift makes you feel remembered; a touch makes you feel needed. You cherish the person who recalls what you once said you liked, and treasure equally the one who takes your hand and says 'I'm here.' Your love needs to be tangible—a small surprise or a well-timed hug are both perfect.",
+    yoga: { desc: "The love you need has weight and warmth. Luna Yoga Music's healing meditation wraps you in gentleness as you listen—like the best gift and the warmest hug arriving at the same moment.", playlist: 'Healing Frequency × Mindful Relaxation Playlist' }
+  },
+  GS: {
+    desc: "You believe love must land—it must be done and brought back. Handling things for you is love; bringing back something you once mentioned wanting is love. You don't need sweet words; you watch for thoughtfulness and effort. And that's exactly how you love too: quietly doing, quietly remembering.",
+    yoga: { desc: "Giving and cherishing are your love language. Luna Yoga Music's healing music invites you, after all you've given, to give yourself a gift—a quiet moment of rest that belongs only to you.", playlist: 'Deep Relaxation & Healing Playlist' }
+  },
+  GT: {
+    desc: "You want love to be tangible and wholehearted. A thoughtfully chosen gift, plus a partner who sets everything aside to sit with you while you open it—that's your ideal love. You don't want empty gestures; you want thoughtfulness and undivided time given to you together.",
+    yoga: { desc: "You deserve to be remembered and accompanied. Luna Yoga Music's guided relaxation music helps you feel, in stillness, that you are already worthy of complete devotion—no gift or special moment needed to prove it.", playlist: 'Gratitude Meditation × Healing Relaxation Playlist' }
+  },
+  GW: {
+    desc: "The perfect blend of words and meaning. You need your partner's words and also that tangible proof that says 'I remembered you.' Every compliment makes you shine; every thoughtful little gift makes you feel truly seen. It's not materialism—you're looking for evidence, in all its forms, that 'you live in my heart.'",
+    yoga: { desc: "Words and gifts both say: you are worth cherishing. Luna Yoga Music's gratitude meditation music helps you feel, as the notes flow, that you are already loved—no reason needed.", playlist: 'Gratitude Meditation × Positive Affirmation Playlist' }
+  },
+  PS: {
+    desc: "You love through action and need physical connection to confirm that love. You're the one who quietly takes care of everything for your partner—and the one who needs a real hug after work to shed the day's weight. Action says 'I care about you'; touch says 'I need you here.'",
+    yoga: { desc: "The one who gives so much needs to be held too. Luna Yoga Music's body-scan relaxation music guides you back to your own body after all that busy giving—a reminder that you are also being tenderly cared for.", playlist: 'Body Scan Relaxation Meditation Playlist' }
+  },
+  PT: {
+    desc: "The love you want is complete, present companionship—put the phone down, lean close, and doing nothing is perfectly fine. Time together and touch: lacking either leaves you lonely. You don't need many words; just truly be here, feel each other's presence—that is all the love you need.",
+    yoga: { desc: "Being fully present is your deepest longing. Luna Yoga Music's meditation helps you be present with yourself—feeling your own existence and breath—just like the love you crave: no words, just being together.", playlist: 'Mind-Body Presence Meditation Playlist' }
+  },
+  PW: {
+    desc: "Your love needs to be heard and felt. Saying 'I love you' while a hug carries its warmth across—that is your deepest fulfillment. Words confirm intention; touch confirms existence. Missing either one leaves you feeling incomplete.",
+    yoga: { desc: "Sound and touch are both ways you receive love. Luna Yoga Music's healing frequency music envelops you in a sense of being surrounded as you listen—like language and an embrace at the same time.", playlist: 'Healing Frequency Meditation Music Playlist' }
+  },
+  ST: {
+    desc: "The love you want is visible investment. A partner who spends time doing something with you, or quietly handles the task that's been nagging you, makes you feel deeply cherished. You don't need verbal flowers—you need to know 'they're willing to put their time and energy into me.'",
+    yoga: { desc: "Your love lives in action and companionship. Luna Yoga Music's meditation music teaches you to carve out a quiet moment of quality time for yourself amid all the busy giving—recharge, then keep loving.", playlist: 'Focused Mindfulness Meditation Playlist' }
+  },
+  SW: {
+    desc: "You are a lover of both words and actions. You need to hear 'I love you' and also need to see your partner's concrete efforts for you. Words nourish your heart; actions give you security. What you fear most is promises not kept—empty words disappoint you, indifference hurts you. Your love is the same: say what you'll do, do what you say.",
+    yoga: { desc: "Words and actions are both love—and you deserve both. Luna Yoga Music's guided meditation music lets a voice tell you 'you are enough' while the music holds you in quiet care.", playlist: 'Guided Meditation × Healing Music Playlist' }
+  },
+  TW: {
+    desc: "What you crave is to be treated wholeheartedly—with words and with time. Your partner saying 'you were great today' while putting their phone down and focusing fully on you—that's the love you want most. You won't accept hollow praise or physically-present-but-mentally-absent company. You need real, complete care.",
+    yoga: { desc: "The love you need is real, present togetherness. Luna Yoga Music's meditation helps you release memories of the past and anxiety about the future, living fully in this moment—just like the wholehearted presence you long for.", playlist: 'Present-Moment Mindfulness Meditation Playlist' }
+  },
+};
 
 // ─── STATE ────────────────────────────────────────────────────────
 let currentQ = 0;
@@ -1091,20 +1145,16 @@ function nextQuestion() {
 function showResult(silent = false) {
   document.getElementById('quiz-wrapper').style.display = 'none';
 
-  // Find winner
-  const top    = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
-  const total  = questions.length;
-  const rBase  = results[top];
-  const r      = (lang === 'en' && rBase.en) ? {...rBase, ...rBase.en} : rBase;
+  // Find top 2 winners
+  const sorted  = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top     = sorted[0][0];
+  const second  = sorted[1][0];
+  const isCombo = (sorted[0][1] - sorted[1][1]) <= 2 && sorted[1][1] > 0;
+  const total   = questions.length;
 
-  // Type names map (bilingual)
-  const typeNamesMap = lang === 'en'
-    ? { W:'Words of Affirmation', S:'Acts of Service', G:'Receiving Gifts', T:'Quality Time', P:'Physical Touch' }
-    : TYPE_NAMES;
+  const typeNamesMap = { W:'Words of Affirmation', S:'Acts of Service', G:'Receiving Gifts', T:'Quality Time', P:'Physical Touch' };
 
-  // Build score bars (sorted)
-  const sortedScores = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
-  const barsHTML = sortedScores.map(([k,v])=>{
+  const barsHTML = sorted.map(([k,v])=>{
     const pct = Math.round((v/total)*100);
     return `
       <div class="score-row">
@@ -1118,74 +1168,132 @@ function showResult(silent = false) {
       </div>`;
   }).join('');
 
-  // Build tips (avoid shadowing t() function with variable name)
-  const tipsHTML = r.tips.map(tip=>`
-    <div class="tip-item">
-      <span class="tip-emoji">${tip.emoji}</span>
-      <div class="tip-text"><strong>${tip.title}${lang==='en'?': ':'：'}</strong>${tip.text}</div>
-    </div>`).join('');
+  let heroHTML, tipsHTML, affHTML, yogaHTML, shareTag;
 
-  // Build affiliate
-  const affHTML = r.courses.map(c=>`
-    <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
-      <span class="aff-icon">${c.icon}</span>
-      <div class="aff-body">
-        <div class="aff-label">${c.label}</div>
-        <div class="aff-title">${c.title}</div>
-      </div>
-    </a>`).join('');
+  if (isCombo) {
+    const [k1, k2] = [top, second].sort();
+    const combo = combos[k1 + k2] || {};
+    const r1    = results[top];
+    const r2    = results[second];
+    const rr1   = r1.en ? {...r1, ...r1.en} : r1;
+    const rr2   = r2.en ? {...r2, ...r2.en} : r2;
+    const tag1  = typeNamesMap[top];
+    const tag2  = typeNamesMap[second];
+    shareTag    = tag1 + ' × ' + tag2;
+
+    heroHTML = `
+      <div class="result-hero">
+        <div class="result-icon-combo">${r1.icon} × ${r2.icon}</div>
+        <div class="combo-badge">✨ Hybrid Type</div>
+        <div class="result-name">You are: ${tag1} × ${tag2} Hybrid</div>
+        <div class="result-subtitle">${tag1} × ${tag2}</div>
+        <p class="result-desc">${combo.desc || rr1.desc}</p>
+      </div>`;
+
+    tipsHTML = [...(rr1.tips||[]),...(rr2.tips||[])].map(tip=>`
+      <div class="tip-item">
+        <span class="tip-emoji">${tip.emoji}</span>
+        <div class="tip-text"><strong>${tip.title}: </strong>${tip.text}</div>
+      </div>`).join('');
+
+    const courses = [...r1.courses.slice(0,2), ...r2.courses.slice(0,2)];
+    affHTML = courses.map(c=>`
+      <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
+        <span class="aff-icon">${c.icon}</span>
+        <div class="aff-body">
+          <div class="aff-label">${c.label}</div>
+          <div class="aff-title">${c.title}</div>
+        </div>
+      </a>`).join('');
+
+    const yoga = combo.yoga || r1.yoga;
+    yogaHTML = `
+      <div class="luna-yoga-card">
+        <div class="luna-yoga-header">
+          <div class="luna-yoga-logo">🌙</div>
+          <div>
+            <div class="luna-yoga-brand">Luna Yoga Music</div>
+            <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
+          </div>
+        </div>
+        <p class="luna-yoga-desc">${yoga.desc}</p>
+        <a class="luna-yoga-btn" href="${r1.yoga.url}" target="_blank" rel="noopener">
+          ${t('result.lunaBtn', yoga.playlist)}
+        </a>
+      </div>`;
+  } else {
+    const rBase = results[top];
+    const r     = rBase.en ? {...rBase, ...rBase.en} : rBase;
+    shareTag    = r.tag;
+
+    heroHTML = `
+      <div class="result-hero">
+        <div class="result-icon">${r.icon}</div>
+        <div class="result-tag">${r.tag}</div>
+        <div class="result-name">${r.name}</div>
+        <div class="result-subtitle">${r.subtitle}</div>
+        <p class="result-desc">${r.desc}</p>
+      </div>`;
+
+    tipsHTML = r.tips.map(tip=>`
+      <div class="tip-item">
+        <span class="tip-emoji">${tip.emoji}</span>
+        <div class="tip-text"><strong>${tip.title}: </strong>${tip.text}</div>
+      </div>`).join('');
+
+    affHTML = r.courses.map(c=>`
+      <a class="aff-item" href="${c.url}" target="_blank" rel="noopener sponsored">
+        <span class="aff-icon">${c.icon}</span>
+        <div class="aff-body">
+          <div class="aff-label">${c.label}</div>
+          <div class="aff-title">${c.title}</div>
+        </div>
+      </a>`).join('');
+
+    yogaHTML = `
+      <div class="luna-yoga-card">
+        <div class="luna-yoga-header">
+          <div class="luna-yoga-logo">🌙</div>
+          <div>
+            <div class="luna-yoga-brand">Luna Yoga Music</div>
+            <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
+          </div>
+        </div>
+        <p class="luna-yoga-desc">${r.yoga.desc}</p>
+        <a class="luna-yoga-btn" href="${r.yoga.url}" target="_blank" rel="noopener">
+          ${t('result.lunaBtn', r.yoga.playlist)}
+        </a>
+      </div>`;
+  }
 
   const sec = document.getElementById('result-section');
   sec.style.display = 'block';
   sec.innerHTML = `
-    <div class="result-hero">
-      <div class="result-icon">${r.icon}</div>
-      <div class="result-tag">${r.tag}</div>
-      <div class="result-name">${r.name}</div>
-      <div class="result-subtitle">${r.subtitle}</div>
-      <p class="result-desc">${r.desc}</p>
-    </div>
-
+    ${heroHTML}
     <div class="scores-card">
       <h3>${t('result.scores')}</h3>
       ${barsHTML}
     </div>
-
     <div class="tips-card">
       <h3>${t('result.tips')}</h3>
       ${tipsHTML}
     </div>
-
-    <div class="luna-yoga-card">
-      <div class="luna-yoga-header">
-        <div class="luna-yoga-logo">🌙</div>
-        <div>
-          <div class="luna-yoga-brand">Luna Yoga Music</div>
-          <div class="luna-yoga-tagline">${t('result.lunaTagline')}</div>
-        </div>
-      </div>
-      <p class="luna-yoga-desc">${r.yoga.desc}</p>
-      <a class="luna-yoga-btn" href="${r.yoga.url}" target="_blank" rel="noopener">
-        ${t('result.lunaBtn', r.yoga.playlist)}
-      </a>
-    </div>
-
+    ${yogaHTML}
     <div class="affiliate-card">
       <h3>${t('result.affTitle')}</h3>
       <p>${t('result.affDesc')}</p>
       <div class="affiliate-grid">${affHTML}</div>
     </div>
-
     <div class="share-row">
-      <a class="btn-share line" href="#" onclick="shareResult('${r.tag}');return false;">
+      <a class="btn-share line" href="#" onclick="shareResult('${shareTag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
         ${t('result.shareLine')}
       </a>
-      <a class="btn-share ig" href="#" onclick="copyResult('${r.tag}');return false;">
+      <a class="btn-share ig" href="#" onclick="copyResult('${shareTag}');return false;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         ${t('result.shareIG')}
       </a>
-      <button class="btn-share copy" onclick="copyResult('${r.tag}')">
+      <button class="btn-share copy" onclick="copyResult('${shareTag}')">
         ${t('result.copyLink')}
       </button>
     </div>
@@ -1195,16 +1303,9 @@ function showResult(silent = false) {
   `;
 
   if (!silent) sec.scrollIntoView({ behavior: 'smooth' });
-
-  // Animate bars
-  requestAnimationFrame(()=>{
-    setTimeout(()=>{
-      document.querySelectorAll('.score-fill').forEach(el=>{
-        el.style.width = el.dataset.pct + '%';
-      });
-    }, 300);
-  });
+  requestAnimationFrame(()=>{ setTimeout(()=>{ document.querySelectorAll('.score-fill').forEach(el=>{ el.style.width = el.dataset.pct + '%'; }); }, 300); });
 }
+
 
 function retake() {
   document.getElementById('result-section').style.display = 'none';

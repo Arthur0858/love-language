@@ -537,6 +537,66 @@
     }
     footer a { color: var(--rose); text-decoration: none; }
 
+    /* ─── THEORY TEASER ─── */
+    .theory-teaser {
+      background: linear-gradient(135deg, #FFF0F0 0%, var(--peach) 50%, #FFF5F0 100%);
+      border-top: 1px solid var(--rose-lt);
+      padding: 72px 24px;
+    }
+    .theory-teaser-inner {
+      max-width: 760px; margin: 0 auto; text-align: center;
+    }
+    .theory-badge {
+      display: inline-block;
+      background: var(--rose-lt); color: var(--rose);
+      font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      padding: 4px 14px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .theory-teaser h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 12px; line-height: 1.35;
+    }
+    .theory-teaser > .theory-teaser-inner > p,
+    .theory-teaser-header p {
+      color: var(--muted); font-size: .95rem;
+      max-width: 480px; margin: 0 auto 40px;
+    }
+    .theory-highlights {
+      display: flex; flex-direction: column; gap: 0;
+      background: var(--card-bg); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 36px; overflow: hidden;
+    }
+    .theory-highlight-item {
+      display: flex; align-items: center; gap: 18px;
+      padding: 20px 28px; text-align: left;
+      border-bottom: 1px solid var(--rose-lt);
+    }
+    .theory-highlight-item:last-child { border-bottom: none; }
+    .th-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--peach); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .th-text {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .th-text strong { font-size: .92rem; color: var(--text); font-weight: 700; }
+    .th-text span   { font-size: .8rem; color: var(--muted); }
+    .btn-theory {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose), #B54E56);
+      color: #fff; font-size: .95rem; font-weight: 700;
+      padding: 14px 44px; border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(201,102,110,.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-theory:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,102,110,.45); }
+
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -556,7 +616,7 @@
         <li><a href="/es/">Español</a></li>
       </ul>
     </div>
-    <a href="#" class="nav-logo">
+    <a href="/" class="nav-logo">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
@@ -566,7 +626,7 @@
   <div class="nav-links">
     <a href="#types-section" data-i18n="nav.types">5種語言</a>
     <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
-    <a href="#about-section" data-i18n="nav.about">關於理論</a>
+    <a href="/theory/" data-i18n="nav.theory">理論</a>
   </div>
 </nav>
 
@@ -641,118 +701,45 @@
 <!-- RESULT SECTION -->
 <section id="result-section"></section>
 
-<!-- ABOUT -->
-<section class="about-section" id="about-section">
-  <div class="section-header">
-    <h2 data-i18n="about.h2">關於愛的語言理論</h2>
-    <p data-i18n="about.p">了解這套理論背後的心理學依據</p>
+<!-- THEORY TEASER -->
+<section class="theory-teaser" id="about-section">
+  <div class="theory-teaser-inner">
+    <div class="theory-teaser-header">
+      <div class="theory-badge" data-i18n="theory.badge">📖 理論完整指南</div>
+      <h2 data-i18n="theory.h2">想更深入了解愛的語言理論？</h2>
+      <p data-i18n="theory.p">從 Gary Chapman 的理論起源、五種語言深度解析，到科學依據與推薦資源，一次掌握。</p>
+    </div>
+    <div class="theory-highlights">
+      <div class="theory-highlight-item">
+        <div class="th-icon">📖</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h1.title">理論起源</strong>
+          <span data-i18n="theory.h1.sub">Chapman 博士 30 年婚姻輔導的結晶</span>
+        </div>
+      </div>
+      <div class="theory-highlight-item">
+        <div class="th-icon">💬</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h2.title">五種語言完整說明</strong>
+          <span data-i18n="theory.h2.sub">特質、日常表現、給伴侶的建議</span>
+        </div>
+      </div>
+      <div class="theory-highlight-item">
+        <div class="th-icon">❓</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h3.title">常見問題解答</strong>
+          <span data-i18n="theory.h3.sub">語言能改變嗎？不同語言怎麼辦？</span>
+        </div>
+      </div>
+    </div>
+    <a href="/theory/" class="btn-theory" data-i18n="theory.btn">深入了解理論 →</a>
   </div>
-  <div class="about-grid">
-    <div class="about-card">
-      <div class="icon">📖</div>
-      <h3 data-i18n="about.c1.h3">理論起源</h3>
-      <p data-i18n="about.c1.p">Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">🔬</div>
-      <h3 data-i18n="about.c2.h3">科學依據</h3>
-      <p data-i18n="about.c2.p">研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">🔄</div>
-      <h3 data-i18n="about.c3.h3">語言可以改變嗎？</h3>
-      <p data-i18n="about.c3.p">是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">💑</div>
-      <h3 data-i18n="about.c4.h3">不只是愛情</h3>
-      <p data-i18n="about.c4.p">愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。</p>
-    </div>
-  </div>
-</section>
-
-<!-- LOVE LANGUAGES DETAIL — Static HTML for AI crawlers & SEO -->
-<section class="detail-section" id="love-languages-detail">
-  <div class="section-header">
-    <h2 data-i18n="detail.h2">五種愛的語言完整說明</h2>
-    <p data-i18n="detail.p">了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通</p>
-  </div>
-
-  <article class="detail-card" id="words-of-affirmation">
-    <div class="detail-icon">💬</div>
-    <div data-i18n-html="detail.W">
-      <h3>肯定的言詞（Words of Affirmation）</h3>
-      <p>肯定的言詞是五種愛的語言中，以語言作為愛的主要媒介的類型。對這類型的人而言，語言有著巨大的力量——一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，就能讓他們深刻感受到被珍視的溫度。他們不需要大張旗鼓，只需要對方願意說出那份真誠。</p>
-      <p>批評和冷漠對他們的傷害特別深，因為他們相信語言是連結心的橋樑。在日常中，伴侶的一則暖心訊息、一句臨時的鼓勵，都能讓他們充滿能量。Gary Chapman 指出，給予這類型伴侶愛的最佳方式，是養成每天表達欣賞與感謝的習慣，讓正向語言成為關係的日常養分。</p>
-      <ul>
-        <li><strong>日常表現：</strong>重視對方的稱讚、感謝訊息、睡前暖心的一句話</li>
-        <li><strong>最受傷的事：</strong>被忽視、批評，或對方從不說「謝謝」</li>
-        <li><strong>給伴侶的提示：</strong>每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="acts-of-service">
-    <div class="detail-icon">🛠️</div>
-    <div data-i18n-html="detail.S">
-      <h3>服務的行動（Acts of Service）</h3>
-      <p>服務的行動是以實際行動表達愛意的類型。對這類型的人而言，愛不是說出來的，而是做出來的。當對方默默幫忙分擔家務、主動把事情處理好，他們感受到的不只是感謝，而是被深深照顧的安全感。「我願意為你做這件事」這份心意的重量，遠比一千個「我愛你」都來得真實。</p>
-      <p>這類型的人通常也是那個默默付出、用行動表達心意的人，但有時容易因付出不被看見而感到委屈。Chapman 提醒，與服務行動型的伴侶相處，最重要的是主動幫忙處理他不喜歡但必須做的事，這比任何語言或禮物都更能打動他的心。</p>
-      <ul>
-        <li><strong>日常表現：</strong>幫伴侶跑腿、準備餐點、主動承擔瑣事</li>
-        <li><strong>最受傷的事：</strong>一直在付出，但對方從未主動做過任何事</li>
-        <li><strong>給伴侶的提示：</strong>主動幫對方做一件他不喜歡但必須做的事，效果遠超過任何禮物</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="receiving-gifts">
-    <div class="detail-icon">🎁</div>
-    <div data-i18n-html="detail.G">
-      <h3>接受禮物（Receiving Gifts）</h3>
-      <p>接受禮物型的人把禮物視為心意的具體化。重要的不是金額，而是對方是否「記得」、是否「用心想過」。每一個精心挑選的小東西，都在傳遞一個訊息：「我看見你、我記得你喜歡什麼、我在不在你身邊都想著你。」這種被記住、被惦記的感覺，是他們感受愛的核心方式。</p>
-      <p>忘記紀念日、從不準備任何心意，對這類型的人而言是情感疏忽的訊號，不只是失望，而是懷疑自己在關係中是否被重視。Gary Chapman 強調，這並非物質主義，而是對「有人在乎我」的渴望。給這類型伴侶最好的禮物，不需要昂貴——一張手寫卡片、一朵路邊的花，都能成為感情最有力的表達。</p>
-      <ul>
-        <li><strong>日常表現：</strong>珍惜有意義的小禮物、重視紀念日儀式</li>
-        <li><strong>最受傷的事：</strong>重要日子對方毫無準備，讓他感覺不被記得</li>
-        <li><strong>給伴侶的提示：</strong>隨手帶他說過想吃的東西，這份「我記得你」的感覺才是關鍵</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="quality-time">
-    <div class="detail-icon">⏳</div>
-    <div data-i18n-html="detail.T">
-      <h3>優質的時光（Quality Time）</h3>
-      <p>優質的時光型的人把時間視為衡量愛最重要的標準。他們要的不是相處的時數，而是那份全然的專注——手機放下、眼神對上、心真正在這裡。當對方願意把最珍貴的時間毫無保留地給予，他們才真實感受到被愛。</p>
-      <p>各自低頭滑手機的夜晚，對他們而言是最深的孤獨，即使人坐在旁邊也感到疏離。Chapman 的研究指出，這類型的伴侶在共處時最渴望的是「被全神貫注對待」。建議與優質時光型的伴侶每天設定一段無手機時光，即使只有 30 分鐘，全心全意在彼此身上，效果勝過整晚卻心不在焉的陪伴。</p>
-      <ul>
-        <li><strong>日常表現：</strong>珍視專注的共處，重視眼神交流與深度對話</li>
-        <li><strong>最受傷的事：</strong>對方在身邊卻一直看手機，讓他感到被忽視</li>
-        <li><strong>給伴侶的提示：</strong>每週安排一個「無手機約會夜」，讓他感受完整的你</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="physical-touch">
-    <div class="detail-icon">🤝</div>
-    <div data-i18n-html="detail.P">
-      <h3>身體的接觸（Physical Touch）</h3>
-      <p>身體的接觸型的人透過肢體接觸感受愛與安全感。一個擁抱、牽手、靠在對方肩上睡著，這些物理連結提供的安全感是無可替代的。他們不需要豪華晚餐或昂貴禮物，只要能感受到對方的體溫與存在感，就是最好的時光。</p>
-      <p>長期缺乏身體接觸對他們來說會造成情感上的疏離感，甚至懷疑關係的親密度。Gary Chapman 指出，給予這類型伴侶愛，最有效的方式是建立日常肢體接觸的儀式——早安吻、出門前的擁抱、睡前牽手，讓愛以固定且具體的方式流動。值得注意的是，身體的接觸重視的是溫暖與連結，與性無直接關聯。</p>
-      <ul>
-        <li><strong>日常表現：</strong>喜歡牽手、擁抱、走路時靠近對方</li>
-        <li><strong>最受傷的事：</strong>對方幾乎不主動靠近或碰觸，讓他感到疏離</li>
-        <li><strong>給伴侶的提示：</strong>主動給予日常的非性化肢體接觸，牽手和擁抱對他意義重大</li>
-      </ul>
-    </div>
-  </article>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <p data-i18n="footer.copy">© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
-  <p style="margin-top:8px;"><a href="#" data-i18n="footer.privacy">隱私政策</a> · <a href="#" data-i18n="footer.terms">使用條款</a> · <a href="#" data-i18n="footer.contact">聯繫我們</a></p>
+  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
 </footer>
 
 <script>
@@ -1037,47 +1024,207 @@ const results = {
 
 const TYPE_NAMES = { W:"肯定的言詞", S:"服務的行動", G:"接受禮物", T:"優質的時光", P:"身體的接觸" };
 
-// ─── COMBO DESCRIPTIONS (10 alphabetical pairs) ───────────────────
+// ─── COMBO DESCRIPTIONS (10 alphabetical pairs, 5 languages) ─────
 const combos = {
   GP: {
     desc: "禮物讓你感受被記得，觸碰讓你感受被需要。你珍視那個記得你說過喜歡什麼的人，也珍視那個拉著你的手說「有我在」的人。你的愛需要具體，可以是一個小驚喜，也可以是一個及時的擁抱。",
-    yoga: { desc: "你需要的愛，是有重量和溫度的。Luna Yoga Music 的療癒冥想音樂，讓你在聆聽中感受自己被溫柔包圍，就像最好的禮物和最溫暖的擁抱同時到來。", playlist: "療癒頻率 × 正念放鬆 Playlist" }
+    yoga: { desc: "你需要的愛，是有重量和溫度的。Luna Yoga Music 的療癒冥想音樂，讓你在聆聽中感受自己被溫柔包圍，就像最好的禮物和最溫暖的擁抱同時到來。", playlist: "療癒頻率 × 正念放鬆 Playlist" },
+    en: {
+      desc: "A gift makes you feel remembered; a touch makes you feel needed. You cherish the person who recalls what you once said you liked, and treasure equally the one who takes your hand and says 'I'm here.' Your love needs to be tangible—a small surprise or a well-timed hug are both perfect.",
+      yoga: { desc: "The love you need has weight and warmth. Luna Yoga Music's healing meditation wraps you in gentleness as you listen—like the best gift and the warmest hug arriving at the same moment.", playlist: "Healing Frequency × Mindful Relaxation Playlist" }
+    },
+    ja: {
+      desc: "贈り物は「覚えてもらっている」と感じさせ、タッチは「必要とされている」と感じさせます。好きなものを覚えてくれる人も、手を握って「そばにいるよ」と言ってくれる人も、どちらも大切にしています。愛には形が必要で、小さなサプライズでも、タイムリーなハグでも完璧です。",
+      yoga: { desc: "あなたが必要な愛には重さと温もりがあります。Luna Yoga Musicの癒しの瞑想音楽が、聴く中でそっと包まれる感覚を与えてくれます。最高の贈り物と最も温かいハグが同時に届くような心地よさです。", playlist: "ヒーリング周波数 × マインドフルリラクゼーション Playlist" }
+    },
+    ko: {
+      desc: "선물은 당신이 기억받고 있다는 느낌을 주고, 터치는 필요받고 있다는 느낌을 줍니다. 당신이 좋아하는 것을 기억해주는 사람도, 손을 잡고 '내가 여기 있어'라고 말해주는 사람도 똑같이 소중합니다. 당신의 사랑에는 형태가 필요해요—작은 깜짝 선물이든 적시의 포옹이든 모두 완벽합니다.",
+      yoga: { desc: "당신에게 필요한 사랑에는 무게와 온기가 있습니다. Luna Yoga Music의 힐링 명상 음악은 듣는 동안 부드럽게 감싸주는 느낌을 줍니다—최고의 선물과 가장 따뜻한 포옹이 동시에 오는 것처럼요.", playlist: "힐링 주파수 × 마음챙김 이완 Playlist" }
+    },
+    es: {
+      desc: "Un regalo te hace sentir recordado/a; un toque te hace sentir necesitado/a. Aprecias tanto a quien recuerda lo que dijiste que te gustaba como a quien toma tu mano y dice 'aquí estoy'. Tu amor necesita ser tangible—una pequeña sorpresa o un abrazo oportuno son igualmente perfectos.",
+      yoga: { desc: "El amor que necesitas tiene peso y calidez. La música de meditación sanadora de Luna Yoga Music te envuelve suavemente mientras escuchas—como el mejor regalo y el abrazo más cálido llegando al mismo tiempo.", playlist: "Frecuencia Sanadora × Relajación Consciente Playlist" }
+    },
   },
   GS: {
     desc: "你相信愛要落地——要做出來，也要帶回來。幫你把事情處理好是愛，帶回一個你曾說過想要的東西也是愛。你不需要花言巧語，你看的是對方的心思和付出。你自己也是這樣愛人的：默默做，默默記。",
-    yoga: { desc: "付出與珍視，是你的愛的語言。Luna Yoga Music 的療癒音樂，讓你在給予之後，也給自己一份禮物——一段安靜的、只屬於你自己的放鬆時光。", playlist: "深度放鬆療癒 Playlist" }
+    yoga: { desc: "付出與珍視，是你的愛的語言。Luna Yoga Music 的療癒音樂，讓你在給予之後，也給自己一份禮物——一段安靜的、只屬於你自己的放鬆時光。", playlist: "深度放鬆療癒 Playlist" },
+    en: {
+      desc: "You believe love must land—it must be done and brought back. Handling things for you is love; bringing back something you once mentioned wanting is love. You don't need sweet words; you watch for thoughtfulness and effort. And that's exactly how you love too: quietly doing, quietly remembering.",
+      yoga: { desc: "Giving and cherishing are your love language. Luna Yoga Music's healing music invites you, after all you've given, to give yourself a gift—a quiet moment of rest that belongs only to you.", playlist: "Deep Relaxation & Healing Playlist" }
+    },
+    ja: {
+      desc: "愛は形になるべきだと信じています——実行され、持ち帰られるべきものです。あなたのために物事を処理してくれることも愛だし、あなたが欲しいと言ったものを持ち帰ってくれることも愛です。言葉より、相手の心遣いと努力を見ています。そしてあなた自身も同じように愛します：静かに行動し、静かに覚えておく。",
+      yoga: { desc: "与えることと大切にすることが、あなたの愛の言語です。Luna Yoga Musicの癒しの音楽は、与え続けた後に自分自身への贈り物——静かな、あなただけのリラックスの時間——を楽しむよう誘います。", playlist: "深いリラクゼーション＆ヒーリング Playlist" }
+    },
+    ko: {
+      desc: "당신은 사랑이 착지해야 한다고 믿습니다—실행되고 돌아와야 합니다. 당신을 위해 일을 처리해주는 것도 사랑이고, 언젠가 원한다고 했던 것을 가져다주는 것도 사랑입니다. 달콤한 말보다 상대방의 배려와 노력을 봅니다. 당신 자신도 그렇게 사랑합니다: 조용히 행동하고, 조용히 기억하며.",
+      yoga: { desc: "주는 것과 소중히 여기는 것이 당신의 사랑의 언어입니다. Luna Yoga Music의 힐링 음악은 모든 것을 준 후에 자신에게도 선물을 주도록 초대합니다—조용하고 오롯이 당신만을 위한 휴식의 시간.", playlist: "깊은 이완 & 힐링 Playlist" }
+    },
+    es: {
+      desc: "Crees que el amor debe aterrizarse—debe hacerse y traerse de vuelta. Manejar las cosas por ti es amor; traer algo que mencionaste querer es amor. No necesitas palabras bonitas; observas la consideración y el esfuerzo. Y así es exactamente como amas tú también: haciendo en silencio, recordando en silencio.",
+      yoga: { desc: "Dar y valorar son tu lenguaje del amor. La música sanadora de Luna Yoga Music te invita, después de todo lo que has dado, a darte un regalo—un momento tranquilo de descanso que pertenece solo a ti.", playlist: "Relajación Profunda & Sanación Playlist" }
+    },
   },
   GT: {
     desc: "你希望愛是有形的，也是全心的。一個精心挑選的禮物，加上對方願意放下一切陪你慢慢打開它——那才是你心中最美好的愛。你不要走形式，你要的是心思和時間同時被給予的那種被珍視感。",
-    yoga: { desc: "你值得被記得、也值得被陪伴。Luna Yoga Music 的引導放鬆音樂，讓你在靜心中感受自己本就值得被全心對待——不需要等一個禮物或一段時光來證明。", playlist: "感恩靜心 × 療癒放鬆 Playlist" }
+    yoga: { desc: "你值得被記得、也值得被陪伴。Luna Yoga Music 的引導放鬆音樂，讓你在靜心中感受自己本就值得被全心對待——不需要等一個禮物或一段時光來證明。", playlist: "感恩靜心 × 療癒放鬆 Playlist" },
+    en: {
+      desc: "You want love to be tangible and wholehearted. A thoughtfully chosen gift, plus a partner who sets everything aside to sit with you while you open it—that's your ideal love. You don't want empty gestures; you want thoughtfulness and undivided time given to you together.",
+      yoga: { desc: "You deserve to be remembered and accompanied. Luna Yoga Music's guided relaxation music helps you feel, in stillness, that you are already worthy of complete devotion—no gift or special moment needed to prove it.", playlist: "Gratitude Meditation × Healing Relaxation Playlist" }
+    },
+    ja: {
+      desc: "愛には形があり、全力であってほしいと思っています。心を込めて選ばれた贈り物に、すべてを置いてゆっくりと一緒に開けてくれるパートナー——それがあなたの理想の愛です。形式的なものは不要で、思いやりと時間が同時に与えられる、大切にされている感覚が欲しいのです。",
+      yoga: { desc: "あなたは覚えてもらい、一緒にいてもらう価値があります。Luna Yoga Musicのガイド付きリラクゼーション音楽は、静寂の中で自分が全力で接してもらう価値があると感じさせてくれます。", playlist: "感謝の瞑想 × ヒーリングリラクゼーション Playlist" }
+    },
+    ko: {
+      desc: "사랑이 구체적이고 전심으로 이루어지기를 바랍니다. 정성껏 선택한 선물에, 모든 것을 내려놓고 함께 천천히 열어주는 파트너——그것이 당신이 꿈꾸는 사랑입니다. 형식적인 것은 원하지 않습니다. 사려 깊음과 시간이 동시에 주어지는 소중히 여겨지는 느낌을 원합니다.",
+      yoga: { desc: "당신은 기억받고 동반될 자격이 있습니다. Luna Yoga Music의 안내 이완 음악은 고요 속에서 당신이 이미 온전한 헌신을 받을 자격이 있다고 느끼게 해줍니다.", playlist: "감사 명상 × 힐링 이완 Playlist" }
+    },
+    es: {
+      desc: "Quieres que el amor sea tangible y de todo corazón. Un regalo cuidadosamente elegido, más una pareja que deja todo de lado para sentarse contigo mientras lo abres—eso es tu amor ideal. No quieres gestos vacíos; quieres consideración y tiempo indiviso dados juntos.",
+      yoga: { desc: "Mereces ser recordado/a y acompañado/a. La música de relajación guiada de Luna Yoga Music te ayuda a sentir, en la quietud, que ya mereces completa devoción—sin necesitar un regalo o momento especial que lo pruebe.", playlist: "Meditación de Gratitud × Relajación Sanadora Playlist" }
+    },
   },
   GW: {
     desc: "言語與心意的完美融合。你需要對方的話語，也珍視那份「他記得我」的具體心意。每一句讚美讓你發光，每一個用心的小禮物讓你感受被看見。你不是物質，你是在尋找「你在我心裡」這件事的各種證明。",
-    yoga: { desc: "語言與禮物都是對你說：你值得被珍視。Luna Yoga Music 精選感恩冥想音樂，讓你在音符流動中感受自己本就值得被愛——不需要任何理由。", playlist: "感恩冥想 × 正向引導 Playlist" }
+    yoga: { desc: "語言與禮物都是對你說：你值得被珍視。Luna Yoga Music 精選感恩冥想音樂，讓你在音符流動中感受自己本就值得被愛——不需要任何理由。", playlist: "感恩冥想 × 正向引導 Playlist" },
+    en: {
+      desc: "The perfect blend of words and meaning. You need your partner's words and also that tangible proof that says 'I remembered you.' Every compliment makes you shine; every thoughtful little gift makes you feel truly seen. It's not materialism—you're looking for evidence, in all its forms, that 'you live in my heart.'",
+      yoga: { desc: "Words and gifts both say: you are worth cherishing. Luna Yoga Music's gratitude meditation music helps you feel, as the notes flow, that you are already loved—no reason needed.", playlist: "Gratitude Meditation × Positive Affirmation Playlist" }
+    },
+    ja: {
+      desc: "言葉と心遣いの完璧な融合。パートナーの言葉も必要だし、「覚えていてくれた」という具体的な証拠も大切にしています。ひとつの褒め言葉があなたを輝かせ、心のこもった小さな贈り物があなたを本当に見てもらえたと感じさせます。物質主義ではなく、「あなたが心の中にいる」という証拠をあらゆる形で探しているのです。",
+      yoga: { desc: "言葉も贈り物も、あなたに伝えています：あなたは大切にされる価値があると。Luna Yoga Musicの感謝の瞑想音楽は、音符が流れる中で、あなたがすでに愛されていると感じさせてくれます。", playlist: "感謝の瞑想 × ポジティブアファメーション Playlist" }
+    },
+    ko: {
+      desc: "말과 마음의 완벽한 융합. 파트너의 말도 필요하고, '나를 기억해줬구나'라는 구체적인 증거도 소중히 여깁니다. 한 마디 칭찬이 당신을 빛나게 하고, 정성스러운 작은 선물이 진정으로 보여진다는 느낌을 줍니다. 물질주의가 아닙니다—'당신은 내 마음속에 있어'라는 증거를 모든 형태로 찾고 있는 것입니다.",
+      yoga: { desc: "말도 선물도 당신에게 말합니다: 당신은 소중히 여겨질 자격이 있다고. Luna Yoga Music의 감사 명상 음악은 음표가 흐르는 동안 당신이 이미 사랑받고 있음을 느끼게 해줍니다.", playlist: "감사 명상 × 긍정 확언 Playlist" }
+    },
+    es: {
+      desc: "La mezcla perfecta de palabras y significado. Necesitas las palabras de tu pareja y también esa prueba tangible que dice 'te recordé.' Cada cumplido te hace brillar; cada pequeño regalo pensativo te hace sentir verdaderamente visto/a. No es materialismo—buscas evidencia, en todas sus formas, de que 'vives en mi corazón.'",
+      yoga: { desc: "Las palabras y los regalos dicen: mereces ser apreciado/a. La música de meditación de gratitud de Luna Yoga Music te ayuda a sentir, mientras fluyen las notas, que ya eres amado/a—sin necesitar razón alguna.", playlist: "Meditación de Gratitud × Afirmación Positiva Playlist" }
+    },
   },
   PS: {
     desc: "你用行動愛人，也需要身體的連結來確認愛。你是那個默默幫對方做好一切的人，也是那個下班後需要一個真實擁抱才能卸下一天重量的人。行動說「我在乎你」，觸碰說「我需要你在這裡」。",
-    yoga: { desc: "付出的你，最需要被好好接住。Luna Yoga Music 的身體掃描放鬆音樂，讓你從忙碌的付出中回到自己的身體，感受自己也被溫柔照顧著。", playlist: "身體掃描放鬆冥想 Playlist" }
+    yoga: { desc: "付出的你，最需要被好好接住。Luna Yoga Music 的身體掃描放鬆音樂，讓你從忙碌的付出中回到自己的身體，感受自己也被溫柔照顧著。", playlist: "身體掃描放鬆冥想 Playlist" },
+    en: {
+      desc: "You love through action and need physical connection to confirm that love. You're the one who quietly takes care of everything for your partner—and the one who needs a real hug after work to shed the day's weight. Action says 'I care about you'; touch says 'I need you here.'",
+      yoga: { desc: "The one who gives so much needs to be held too. Luna Yoga Music's body-scan relaxation music guides you back to your own body after all that busy giving—a reminder that you are also being tenderly cared for.", playlist: "Body Scan Relaxation Meditation Playlist" }
+    },
+    ja: {
+      desc: "行動で愛し、愛を確認するために身体的なつながりも必要です。パートナーのためにすべてを静かに処理する人でもあり、仕事後に一日の重さを脱ぐための本物のハグが必要な人でもあります。行動は「あなたを気にかけている」と言い、タッチは「ここにいてほしい」と言います。",
+      yoga: { desc: "こんなにも与え続けるあなたも、受け止めてもらう必要があります。Luna Yoga Musicのボディスキャンリラクゼーション音楽は、忙しい給与の後に自分の体に戻り、自分も優しくケアされていると感じさせます。", playlist: "ボディスキャンリラクゼーション瞑想 Playlist" }
+    },
+    ko: {
+      desc: "행동으로 사랑하고, 사랑을 확인하기 위해 신체적 연결도 필요합니다. 파트너를 위해 모든 것을 조용히 처리하는 사람이기도 하고, 퇴근 후 하루의 무게를 내려놓기 위한 진짜 포옹이 필요한 사람이기도 합니다. 행동은 '당신이 소중해'라고 말하고, 터치는 '여기 있어줘'라고 말합니다.",
+      yoga: { desc: "이토록 많이 주는 당신도 받아들여져야 합니다. Luna Yoga Music의 바디 스캔 이완 음악은 바쁜 헌신 후에 자신의 몸으로 돌아오게 이끌어—자신도 부드럽게 돌봄받고 있음을 느끼게 해줍니다.", playlist: "바디 스캔 이완 명상 Playlist" }
+    },
+    es: {
+      desc: "Amas a través de la acción y necesitas conexión física para confirmar ese amor. Eres quien cuida silenciosamente todo para tu pareja—y quien necesita un abrazo real después del trabajo para soltar el peso del día. La acción dice 'me importas'; el toque dice 'te necesito aquí.'",
+      yoga: { desc: "Quien tanto da también necesita ser sostenido/a. La música de relajación de escaneo corporal de Luna Yoga Music te guía de vuelta a tu propio cuerpo después de tanto dar—un recordatorio de que tú también estás siendo tiernamente cuidado/a.", playlist: "Meditación de Relajación de Escaneo Corporal Playlist" }
+    },
   },
   PT: {
     desc: "你要的愛是完全在場的陪伴——放下手機，靠在你身邊，然後什麼都不做也好。時光與觸碰，缺一你都會感到孤單。你不需要對方說很多話，只要真的在這裡，真的感受到彼此的存在，那就是你所有的愛了。",
-    yoga: { desc: "當下同在，是你最深的渴望。Luna Yoga Music 的靜心音樂，讓你與自己同在，感受自己的存在與呼吸，就像你渴望的那種——不用說話，只是陪著。", playlist: "身心同在靜心冥想 Playlist" }
+    yoga: { desc: "當下同在，是你最深的渴望。Luna Yoga Music 的靜心音樂，讓你與自己同在，感受自己的存在與呼吸，就像你渴望的那種——不用說話，只是陪著。", playlist: "身心同在靜心冥想 Playlist" },
+    en: {
+      desc: "The love you want is complete, present companionship—put the phone down, lean close, and doing nothing is perfectly fine. Time together and touch: lacking either leaves you lonely. You don't need many words; just truly be here, feel each other's presence—that is all the love you need.",
+      yoga: { desc: "Being fully present is your deepest longing. Luna Yoga Music's meditation helps you be present with yourself—feeling your own existence and breath—just like the love you crave: no words, just being together.", playlist: "Mind-Body Presence Meditation Playlist" }
+    },
+    ja: {
+      desc: "あなたが望む愛は、完全に在席している同伴——スマホを置いて、そばに寄り添い、何もしなくていい。一緒の時間とタッチ：どちらが欠けても孤独を感じます。多くの言葉は必要ありません；ただ本当にここにいて、お互いの存在を感じること——それがあなたのすべての愛です。",
+      yoga: { desc: "今この瞬間に共にいることが、あなたの最も深い渇望です。Luna Yoga Musicの瞑想音楽は、自分自身と共にあり、自分の存在と呼吸を感じることを助けます。言葉不要、ただ一緒にいるだけ——あなたが渇望する愛のように。", playlist: "心身の存在感瞑想 Playlist" }
+    },
+    ko: {
+      desc: "당신이 원하는 사랑은 완전히 현재에 있는 동행——폰을 내려놓고, 옆에 기대어, 아무것도 안 해도 됩니다. 함께하는 시간과 터치: 둘 중 하나라도 없으면 외로움을 느낍니다. 많은 말은 필요 없습니다; 그저 진정으로 여기 있어서 서로의 존재를 느끼는 것——그것이 당신의 모든 사랑입니다.",
+      yoga: { desc: "완전히 현재에 있는 것이 당신의 가장 깊은 갈망입니다. Luna Yoga Music의 명상 음악은 자신과 함께 있으며 자신의 존재와 호흡을 느끼게 도와줍니다. 말 없이 그냥 함께——당신이 갈망하는 사랑처럼.", playlist: "심신 존재감 명상 Playlist" }
+    },
+    es: {
+      desc: "El amor que quieres es compañía completa y presente—suelta el teléfono, apóyate cerca, no hacer nada está perfectamente bien. Tiempo juntos y contacto: faltando cualquiera de los dos te sientes solo/a. No necesitas muchas palabras; solo estar aquí de verdad, sentir la presencia del otro—eso es todo el amor que necesitas.",
+      yoga: { desc: "Estar completamente presente es tu anhelo más profundo. La música de meditación de Luna Yoga Music te ayuda a estar presente contigo mismo/a—sintiendo tu propia existencia y respiración—igual que el amor que anhelas: sin palabras, solo estar juntos.", playlist: "Meditación de Presencia Mente-Cuerpo Playlist" }
+    },
   },
   PW: {
     desc: "你的愛需要被聽見，也需要被感受。「我愛你」三個字說出口的同時，一個擁抱傳遞的溫度，是你最深的滿足。話語讓你確認心意，觸碰讓你確認存在。兩者缺少任何一樣，都讓你感到不完整。",
-    yoga: { desc: "聲音和觸覺都是你感受愛的方式。Luna Yoga Music 的療癒頻率音樂，讓你在聆聽中感受到一種被包圍的安全感——像語言，也像擁抱。", playlist: "療癒頻率冥想音樂 Playlist" }
+    yoga: { desc: "聲音和觸覺都是你感受愛的方式。Luna Yoga Music 的療癒頻率音樂，讓你在聆聽中感受到一種被包圍的安全感——像語言，也像擁抱。", playlist: "療癒頻率冥想音樂 Playlist" },
+    en: {
+      desc: "Your love needs to be heard and felt. Saying 'I love you' while a hug carries its warmth across—that is your deepest fulfillment. Words confirm intention; touch confirms existence. Missing either one leaves you feeling incomplete.",
+      yoga: { desc: "Sound and touch are both ways you receive love. Luna Yoga Music's healing frequency music envelops you in a sense of being surrounded as you listen—like language and an embrace at the same time.", playlist: "Healing Frequency Meditation Music Playlist" }
+    },
+    ja: {
+      desc: "あなたの愛は聞かれ、感じられる必要があります。「愛してる」と言いながらハグの温もりが伝わる——それがあなたの最も深い満足です。言葉は意図を確認させ、タッチは存在を確認させます。どちらが欠けても不完全に感じます。",
+      yoga: { desc: "音と触覚はどちらもあなたが愛を受け取る方法です。Luna Yoga Musicのヒーリング周波数音楽は、聴く中で包まれている安心感を与えてくれます——言語のようでもあり、抱擁のようでもあります。", playlist: "ヒーリング周波数瞑想音楽 Playlist" }
+    },
+    ko: {
+      desc: "당신의 사랑은 들려지고 느껴져야 합니다. '사랑해'라고 말하면서 포옹의 따스함이 전해지는 것——그것이 당신의 가장 깊은 만족입니다. 말은 의도를 확인시키고, 터치는 존재를 확인시킵니다. 둘 중 하나라도 없으면 불완전하게 느껴집니다.",
+      yoga: { desc: "소리와 촉감은 모두 당신이 사랑을 받는 방식입니다. Luna Yoga Music의 힐링 주파수 음악은 듣는 동안 둘러싸인 안도감을 줍니다——언어이기도 하고 포옹이기도 한 것처럼.", playlist: "힐링 주파수 명상 음악 Playlist" }
+    },
+    es: {
+      desc: "Tu amor necesita ser escuchado y sentido. Decir 'te amo' mientras la calidez de un abrazo se transmite—esa es tu satisfacción más profunda. Las palabras confirman la intención; el toque confirma la existencia. Faltar cualquiera de los dos te hace sentir incompleto/a.",
+      yoga: { desc: "El sonido y el tacto son ambas formas en que recibes amor. La música de frecuencia sanadora de Luna Yoga Music te envuelve en una sensación de ser rodeado/a mientras escuchas—como lenguaje y un abrazo al mismo tiempo.", playlist: "Música de Meditación de Frecuencia Sanadora Playlist" }
+    },
   },
   ST: {
     desc: "你要的愛是看得見的投入。對方花時間陪你做一件事，或者默默把讓你頭痛的事處理掉，都讓你覺得被深深珍視。你不需要言語的花朵，你需要的是「他願意把他的時間和精力放在我身上」這件事。",
-    yoga: { desc: "你的愛存在於行動與陪伴之中。Luna Yoga Music 的靜心音樂，讓你學習在忙碌的給予之中，也給自己一段安靜的優質時光，補充能量再繼續愛人。", playlist: "靜心專注冥想 Playlist" }
+    yoga: { desc: "你的愛存在於行動與陪伴之中。Luna Yoga Music 的靜心音樂，讓你學習在忙碌的給予之中，也給自己一段安靜的優質時光，補充能量再繼續愛人。", playlist: "靜心專注冥想 Playlist" },
+    en: {
+      desc: "The love you want is visible investment. A partner who spends time doing something with you, or quietly handles the task that's been nagging you, makes you feel deeply cherished. You don't need verbal flowers—you need to know 'they're willing to put their time and energy into me.'",
+      yoga: { desc: "Your love lives in action and companionship. Luna Yoga Music's meditation music teaches you to carve out a quiet moment of quality time for yourself amid all the busy giving—recharge, then keep loving.", playlist: "Focused Mindfulness Meditation Playlist" }
+    },
+    ja: {
+      desc: "あなたが望む愛は、目に見える投資です。一緒に何かをするために時間を使ってくれるパートナーや、頭を悩ませていたことを静かに処理してくれるパートナーは、深く大切にされていると感じさせます。言葉の花束は必要ありません——「時間とエネルギーを私に注いでくれる」ということが必要なのです。",
+      yoga: { desc: "あなたの愛は行動と同伴の中にあります。Luna Yoga Musicの瞑想音楽は、忙しい給与の中に、自分のための静かなクオリティタイムを作り出すことを教えてくれます。", playlist: "集中マインドフルネス瞑想 Playlist" }
+    },
+    ko: {
+      desc: "당신이 원하는 사랑은 눈에 보이는 투자입니다. 함께 무언가를 하는 데 시간을 쓰거나, 당신을 괴롭히던 일을 조용히 처리해주는 파트너는 깊이 소중히 여겨진다는 느낌을 줍니다. 언어의 꽃다발은 필요 없습니다——'그들이 나에게 시간과 에너지를 기꺼이 쏟는다'는 것이 필요합니다.",
+      yoga: { desc: "당신의 사랑은 행동과 동행 속에 있습니다. Luna Yoga Music의 명상 음악은 바쁜 헌신 속에서 자신을 위한 조용한 양질의 시간을 만들어내는 것을 가르쳐줍니다.", playlist: "집중 마음챙김 명상 Playlist" }
+    },
+    es: {
+      desc: "El amor que quieres es inversión visible. Una pareja que pasa tiempo haciendo algo contigo, o que silenciosamente maneja la tarea que te ha estado molestando, te hace sentir profundamente apreciado/a. No necesitas flores verbales—necesitas saber que 'están dispuestos a poner su tiempo y energía en mí.'",
+      yoga: { desc: "Tu amor vive en la acción y la compañía. La música de meditación de Luna Yoga Music te enseña a crear un momento tranquilo de tiempo de calidad para ti mismo/a en medio de todo ese dar ocupado—recarga, luego sigue amando.", playlist: "Meditación de Atención Plena Enfocada Playlist" }
+    },
   },
   SW: {
     desc: "你是語言與行動兼具的愛人。你需要聽到「我愛你」，也需要看見對方為你付出的具體行動。語言滋養你的心，行動讓你感受安全。你最怕的是說好卻不做到——空話讓你失望，冷漠讓你受傷。你的愛也是這樣：說到做到，心口如一。",
-    yoga: { desc: "語言與行動都是愛，而你值得兩者兼備。Luna Yoga Music 精選結合引導語音與舒緩旋律的冥想音樂——讓聲音告訴你「你夠好了」，讓音樂陪你在安靜中感受被好好照顧的溫度。", playlist: "引導冥想 × 療癒音樂 Playlist" }
+    yoga: { desc: "語言與行動都是愛，而你值得兩者兼備。Luna Yoga Music 精選結合引導語音與舒緩旋律的冥想音樂——讓聲音告訴你「你夠好了」，讓音樂陪你在安靜中感受被好好照顧的溫度。", playlist: "引導冥想 × 療癒音樂 Playlist" },
+    en: {
+      desc: "You are a lover of both words and actions. You need to hear 'I love you' and also need to see your partner's concrete efforts for you. Words nourish your heart; actions give you security. What you fear most is promises not kept—empty words disappoint you, indifference hurts you. Your love is the same: say what you'll do, do what you say.",
+      yoga: { desc: "Words and actions are both love—and you deserve both. Luna Yoga Music's guided meditation music lets a voice tell you 'you are enough' while the music holds you in quiet care.", playlist: "Guided Meditation × Healing Music Playlist" }
+    },
+    ja: {
+      desc: "言葉と行動の両方を持つ愛人です。「愛してる」と聞く必要があり、パートナーのあなたへの具体的な努力を見る必要もあります。言葉は心を育て、行動は安心感を与えます。最も恐れるのは約束が守られないこと——空虚な言葉は失望させ、冷淡さは傷つけます。あなたの愛も同じです：言ったことを行い、行動が言葉と一致する。",
+      yoga: { desc: "言葉も行動も愛であり、あなたはその両方を受ける価値があります。Luna Yoga Musicのガイド付き瞑想音楽は、声が「あなたは十分です」と伝えながら、音楽が静かなケアの中で包んでくれます。", playlist: "ガイド付き瞑想 × ヒーリング音楽 Playlist" }
+    },
+    ko: {
+      desc: "말과 행동을 모두 가진 연인입니다. '사랑해'라는 말을 들어야 하고, 파트너의 구체적인 노력도 보아야 합니다. 말은 마음을 키우고, 행동은 안정감을 줍니다. 가장 두려운 것은 약속이 지켜지지 않는 것——빈말은 실망시키고, 냉담함은 상처를 줍니다. 당신의 사랑도 같습니다: 말한 것을 행하고, 행동이 말과 일치합니다.",
+      yoga: { desc: "말도 행동도 사랑이며, 당신은 둘 다 받을 자격이 있습니다. Luna Yoga Music의 안내 명상 음악은 목소리가 '당신은 충분합니다'라고 전하면서 음악이 조용한 돌봄 속에 감싸줍니다.", playlist: "안내 명상 × 힐링 음악 Playlist" }
+    },
+    es: {
+      desc: "Eres un amante tanto de palabras como de acciones. Necesitas escuchar 'te amo' y también necesitas ver los esfuerzos concretos de tu pareja por ti. Las palabras nutren tu corazón; las acciones te dan seguridad. Lo que más temes son las promesas incumplidas—las palabras vacías te decepcionan, la indiferencia te lastima. Tu amor es igual: di lo que harás, haz lo que dices.",
+      yoga: { desc: "Las palabras y las acciones son ambas amor—y mereces ambas. La música de meditación guiada de Luna Yoga Music deja que una voz te diga 'eres suficiente' mientras la música te sostiene en cuidado tranquilo.", playlist: "Meditación Guiada × Música Sanadora Playlist" }
+    },
   },
   TW: {
     desc: "你渴望的是被全心對待——用語言，也用時間。對方說出「你今天很棒」的同時，還放下手機專注看著你，那就是你最想要的愛。你不接受敷衍的讚美，也不接受身在心不在的陪伴。你要的是真實、完整的在乎。",
-    yoga: { desc: "你需要的愛是真實同在的。Luna Yoga Music 的靜心冥想，幫助你放下過去的記憶和未來的焦慮，完全活在當下這一刻——就像你渴望的那種全心在場的愛。", playlist: "正念當下冥想 Playlist" }
+    yoga: { desc: "你需要的愛是真實同在的。Luna Yoga Music 的靜心冥想，幫助你放下過去的記憶和未來的焦慮，完全活在當下這一刻——就像你渴望的那種全心在場的愛。", playlist: "正念當下冥想 Playlist" },
+    en: {
+      desc: "What you crave is to be treated wholeheartedly—with words and with time. Your partner saying 'you were great today' while putting their phone down and focusing fully on you—that's the love you want most. You won't accept hollow praise or physically-present-but-mentally-absent company. You need real, complete care.",
+      yoga: { desc: "The love you need is real, present togetherness. Luna Yoga Music's meditation helps you release memories of the past and anxiety about the future, living fully in this moment—just like the wholehearted presence you long for.", playlist: "Present-Moment Mindfulness Meditation Playlist" }
+    },
+    ja: {
+      desc: "あなたが渇望するのは、全力で接してもらうこと——言葉でも時間でも。パートナーが「今日すごかったね」と言いながらスマホを置いて完全に集中してくれる——それがあなたが最も望む愛です。形ばかりの褒め言葉も、体はそこにいても心はどこかにある同伴も受け入れません。本物の、完全な気にかけが必要なのです。",
+      yoga: { desc: "あなたが必要な愛は、本物の、現在に共にある愛です。Luna Yoga Musicの瞑想は、過去の記憶と未来への不安を手放し、今この瞬間に完全に生きることを助けます。", playlist: "現在瞬間マインドフルネス瞑想 Playlist" }
+    },
+    ko: {
+      desc: "당신이 갈망하는 것은 전심으로 대우받는 것——말로도, 시간으로도. 파트너가 '오늘 정말 대단했어'라고 말하면서 폰을 내려놓고 완전히 집중해주는 것——그것이 당신이 가장 원하는 사랑입니다. 형식적인 칭찬도, 몸은 있지만 마음은 딴 곳에 있는 동행도 받아들이지 않습니다. 진짜, 완전한 관심이 필요합니다.",
+      yoga: { desc: "당신에게 필요한 사랑은 진짜, 현재에 함께하는 사랑입니다. Luna Yoga Music의 명상은 과거의 기억과 미래에 대한 불안을 내려놓고 지금 이 순간에 완전히 살도록 도와줍니다.", playlist: "현재 순간 마음챙김 명상 Playlist" }
+    },
+    es: {
+      desc: "Lo que anhelas es ser tratado/a de todo corazón—con palabras y con tiempo. Tu pareja diciendo 'estuviste genial hoy' mientras deja su teléfono y se enfoca completamente en ti—ese es el amor que más quieres. No aceptas elogios vacíos ni compañía físicamente presente pero mentalmente ausente. Necesitas cuidado real y completo.",
+      yoga: { desc: "El amor que necesitas es real, unión presente. La meditación de Luna Yoga Music te ayuda a soltar recuerdos del pasado y ansiedad sobre el futuro, viviendo plenamente en este momento—igual que la presencia de todo corazón que anhelas.", playlist: "Meditación de Atención Plena en el Momento Presente Playlist" }
+    },
   },
 };
 
@@ -1185,9 +1332,10 @@ function showResult(silent = false) {
   if (isCombo) {
     // ─── COMBO RESULT ───────────────────────────────────────────
     const [k1, k2] = [top, second].sort();
-    const combo    = combos[k1 + k2] || {};
-    const r1       = results[top];
-    const r2       = results[second];
+    const comboBase = combos[k1 + k2] || {};
+    const combo     = (lang !== 'zh' && comboBase[lang]) ? {...comboBase, ...comboBase[lang]} : comboBase;
+    const r1        = results[top];
+    const r2        = results[second];
     const rr1      = (lang !== 'zh' && r1[lang]) ? {...r1, ...r1[lang]} : r1;
     const rr2      = (lang !== 'zh' && r2[lang]) ? {...r2, ...r2[lang]} : r2;
     const tag1     = typeNamesMap[top];
@@ -1357,7 +1505,7 @@ let lang = 'zh';
 
 const i18n = {
   zh: {
-    'nav.types':'5種語言','nav.test':'開始測驗','nav.about':'關於理論',
+    'nav.types':'5種語言','nav.test':'開始測驗','nav.theory':'理論',
     'hero.badge':'🌸 免費 · 無需註冊 · 2分鐘完成',
     'hero.h1':'你最需要的愛，<br>是哪一種<span>語言</span>？',
     'hero.p':'每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。',
@@ -1374,12 +1522,13 @@ const i18n = {
     'result.affDesc':'根據你的愛的語言，這些資源可以幫助你和另一半走得更近',
     'result.shareLine':'分享給伴侶','result.shareIG':'限動分享',
     'result.copyLink':'🔗 複製結果連結','result.retake':'重新測驗',
-    'about.h2':'關於愛的語言理論','about.p':'了解這套理論背後的心理學依據',
-    'about.c1.h3':'理論起源','about.c1.p':'Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。',
-    'about.c2.h3':'科學依據','about.c2.p':'研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。',
-    'about.c3.h3':'語言可以改變嗎？','about.c3.p':'是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。',
-    'about.c4.h3':'不只是愛情','about.c4.p':'愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。',
-    'detail.h2':'五種愛的語言完整說明','detail.p':'了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通',
+    'theory.badge':'📖 理論完整指南',
+    'theory.h2':'想更深入了解愛的語言理論？',
+    'theory.p':'從 Gary Chapman 的理論起源、五種語言深度解析，到科學依據與推薦資源，一次掌握。',
+    'theory.h1.title':'理論起源','theory.h1.sub':'Chapman 博士 30 年婚姻輔導的結晶',
+    'theory.h2.title':'五種語言完整說明','theory.h2.sub':'特質、日常表現、給伴侶的建議',
+    'theory.h3.title':'常見問題解答','theory.h3.sub':'語言能改變嗎？不同語言怎麼辦？',
+    'theory.btn':'深入了解理論 →',
     'footer.copy':'© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論',
     'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.contact':'聯繫我們',
     'share.line':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
@@ -1388,7 +1537,7 @@ const i18n = {
     'share.alert.copy':'✅ 已複製！可以貼到 IG 限動或傳給朋友',
   },
   en: {
-    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.about':'About',
+    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.theory':'Theory',
     'hero.badge':'🌸 Free · No Sign-up · 2 Min',
     'hero.h1':'What Kind of Love<br>Do You Need <span>Most</span>?',
     'hero.p':'Everyone gives and receives love differently. Answer 15 scenario questions to discover your core love language and end relationship misunderstandings.',
@@ -1405,12 +1554,13 @@ const i18n = {
     'result.affDesc':'Based on your love language, these resources can help you and your partner grow closer',
     'result.shareLine':'Share with Partner','result.shareIG':'Share Story',
     'result.copyLink':'🔗 Copy Result Link','result.retake':'Retake Quiz',
-    'about.h2':'About the Love Languages Theory','about.p':'Discover the psychology behind this relationship framework',
-    'about.c1.h3':'Origins','about.c1.p':'Dr. Gary Chapman developed this theory after 30 years of marriage counseling. His 1992 book "The 5 Love Languages" became a global relationship psychology classic.',
-    'about.c2.h3':'Scientific Basis','about.c2.p':"Research shows that when partners express love in each other's preferred language, relationship satisfaction significantly increases. It's not just a technique—it's true understanding.",
-    'about.c3.h3':'Can Your Language Change?','about.c3.p':'Yes. As life stages shift or after major events, your primary language may change. We recommend retaking the quiz periodically to track your evolving needs.',
-    'about.c4.h3':'Beyond Romance','about.c4.p':"Love languages apply equally to parent-child bonds, friendships, and workplace dynamics. Understanding different people's languages makes all relationships more harmonious.",
-    'detail.h2':'The 5 Love Languages: Full Descriptions','detail.p':'Understand each love language, its everyday expressions, and how to communicate with your partner',
+    'theory.badge':'📖 Theory Guide',
+    'theory.h2':'Want to Understand the Theory Deeper?',
+    'theory.p':'From Chapman\'s origins to full descriptions of all 5 languages — science, FAQ, and resources all in one place.',
+    'theory.h1.title':'Theory Origins','theory.h1.sub':'Chapman\'s 30 years of marriage counseling',
+    'theory.h2.title':'5 Languages In-Depth','theory.h2.sub':'Traits, daily expressions, tips for partners',
+    'theory.h3.title':'Common Questions','theory.h3.sub':'Can languages change? What if we\'re different?',
+    'theory.btn':'Explore the Theory →',
     'footer.copy':'© 2026 LoveTypes · Based on Dr. Gary Chapman\'s "The 5 Love Languages"',
     'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.contact':'Contact Us',
     'share.line':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
@@ -1460,7 +1610,7 @@ const i18n = {
   },
   // ── JAPANESE ──
   ja: {
-    'nav.types':'5つの言語','nav.test':'テスト開始','nav.about':'理論について',
+    'nav.types':'5つの言語','nav.test':'テスト開始','nav.theory':'理論',
     'hero.badge':'🌸 無料 · 登録不要 · 2分で完了',
     'hero.h1':'あなたが最も必要とする愛は、<br>どんな<span>言語</span>ですか？',
     'hero.p':'愛の与え方と受け取り方は人それぞれ。15問のシナリオで、あなたの核心的な愛の言語を見つけましょう。',
@@ -1477,12 +1627,13 @@ const i18n = {
     'result.affDesc':'あなたの愛の言語に基づいて、これらのリソースがパートナーとの絆を深めるお手伝いをします',
     'result.shareLine':'パートナーにシェア','result.shareIG':'ストーリーでシェア',
     'result.copyLink':'🔗 結果リンクをコピー','result.retake':'もう一度テストする',
-    'about.h2':'愛の言語理論について','about.p':'この関係心理学の根拠を深く理解しよう',
-    'about.c1.h3':'理論の起源','about.c1.p':'ゲイリー・チャップマン博士は30年間の結婚カウンセリングを経て、愛の受け取り方が人それぞれ異なることを発見し、1992年に「愛の言語」を出版しました。',
-    'about.c2.h3':'科学的根拠','about.c2.p':'パートナーがお互いの好みの言語で愛を表現すると、関係満足度が大幅に向上することが研究で示されています。',
-    'about.c3.h3':'言語は変化しますか？','about.c3.p':'はい。人生のステージや重大な出来事の後、主要な言語が変わることがあります。定期的に再テストすることをお勧めします。',
-    'about.c4.h3':'恋愛だけではない','about.c4.p':'愛の言語は親子関係、友情、職場の交流にも適用されます。さまざまな言語を理解することで、すべての関係がより調和的になります。',
-    'detail.h2':'5つの愛の言語 完全ガイド','detail.p':'各愛の言語の特性、日常的な表現、パートナーとのコミュニケーション方法を理解しよう',
+    'theory.badge':'📖 理論ガイド',
+    'theory.h2':'愛の言語理論をもっと詳しく知りたいですか？',
+    'theory.p':'チャップマン博士の起源から5つの言語の詳細まで、科学的根拠・FAQ・推薦リソースをすべて網羅。',
+    'theory.h1.title':'理論の起源','theory.h1.sub':'30年間のカウンセリングから生まれた洞察',
+    'theory.h2.title':'5つの言語 詳細解説','theory.h2.sub':'特性、日常表現、パートナーへのヒント',
+    'theory.h3.title':'よくある質問','theory.h3.sub':'言語は変わる？違う言語の場合は？',
+    'theory.btn':'理論を深く知る →',
     'footer.copy':'© 2026 LoveTypes · ゲイリー・チャップマン博士「愛の言語」理論に基づく',
     'footer.privacy':'プライバシーポリシー','footer.terms':'利用規約','footer.contact':'お問い合わせ',
     'share.line':(tag)=>`私の愛の言語は「${tag}」です！あなたもテストしてみよう：${window.location.href}`,
@@ -1532,7 +1683,7 @@ const i18n = {
   },
   // ── KOREAN ──
   ko: {
-    'nav.types':'5가지 언어','nav.test':'테스트 시작','nav.about':'이론 소개',
+    'nav.types':'5가지 언어','nav.test':'테스트 시작','nav.theory':'이론',
     'hero.badge':'🌸 무료 · 가입 불필요 · 2분 완료',
     'hero.h1':'내가 가장 필요로 하는 사랑은<br>어떤 <span>언어</span>일까요?',
     'hero.p':'모든 사람은 사랑을 주고받는 방식이 다릅니다. 15가지 상황 문제로 나의 핵심 사랑의 언어를 찾아보세요.',
@@ -1549,12 +1700,13 @@ const i18n = {
     'result.affDesc':'내 사랑의 언어를 바탕으로 파트너와 더 가까워질 수 있는 자료들입니다',
     'result.shareLine':'파트너에게 공유','result.shareIG':'스토리로 공유',
     'result.copyLink':'🔗 결과 링크 복사','result.retake':'다시 테스트하기',
-    'about.h2':'사랑의 언어 이론에 대하여','about.p':'이 관계 심리학 이론의 배경을 이해해보세요',
-    'about.c1.h3':'이론의 기원','about.c1.p':'게리 채프먼 박사는 30년간의 결혼 상담 경험을 바탕으로 1992년 「사랑의 언어」를 출판했습니다. 이 책은 전 세계적인 관계 심리학 고전이 되었습니다.',
-    'about.c2.h3':'과학적 근거','about.c2.p':'연구에 따르면 파트너가 서로의 선호하는 언어로 사랑을 표현할 때 관계 만족도가 크게 향상됩니다.',
-    'about.c3.h3':'언어는 변할 수 있나요?','about.c3.p':'네. 삶의 단계가 바뀌거나 중요한 사건을 겪은 후 주요 언어가 바뀔 수 있습니다. 주기적으로 다시 테스트해보는 것을 권장합니다.',
-    'about.c4.h3':'사랑만이 아니에요','about.c4.p':'사랑의 언어는 부모-자녀 관계, 우정, 직장 생활에도 적용됩니다. 다양한 언어를 이해하면 모든 관계가 더 조화로워집니다.',
-    'detail.h2':'5가지 사랑의 언어 완전 가이드','detail.p':'각 사랑의 언어의 특성, 일상적 표현, 그리고 파트너와 소통하는 방법을 이해해보세요',
+    'theory.badge':'📖 이론 가이드',
+    'theory.h2':'사랑의 언어 이론을 더 깊이 이해하고 싶으신가요?',
+    'theory.p':'채프먼 박사의 이론 기원부터 5가지 언어 심층 분석까지, 과학적 근거·FAQ·추천 자료를 한번에.',
+    'theory.h1.title':'이론의 기원','theory.h1.sub':'30년 결혼 상담에서 탄생한 통찰',
+    'theory.h2.title':'5가지 언어 완전 설명','theory.h2.sub':'특성, 일상 표현, 파트너에게 주는 힌트',
+    'theory.h3.title':'자주 묻는 질문','theory.h3.sub':'언어가 바뀔 수 있나요? 다른 언어면 어떻게?',
+    'theory.btn':'이론 자세히 보기 →',
     'footer.copy':'© 2026 LoveTypes · 게리 채프먼 박사 「사랑의 언어」 이론 기반',
     'footer.privacy':'개인정보처리방침','footer.terms':'이용약관','footer.contact':'문의하기',
     'share.line':(tag)=>`나의 사랑의 언어는 "${tag}"입니다! 당신도 테스트해보세요：${window.location.href}`,
@@ -1604,7 +1756,7 @@ const i18n = {
   },
   // ── SPANISH ──
   es: {
-    'nav.types':'5 Lenguajes','nav.test':'Hacer Test','nav.about':'Acerca de',
+    'nav.types':'5 Lenguajes','nav.test':'Hacer Test','nav.theory':'Teoría',
     'hero.badge':'🌸 Gratis · Sin registro · 2 minutos',
     'hero.h1':'¿Qué tipo de amor<br>necesitas <span>más</span>?',
     'hero.p':'Cada persona da y recibe amor de manera diferente. Responde 15 preguntas de escenarios para descubrir tu lenguaje de amor principal.',
@@ -1621,12 +1773,13 @@ const i18n = {
     'result.affDesc':'Basado en tu lenguaje de amor, estos recursos pueden ayudarte a ti y a tu pareja a crecer juntos',
     'result.shareLine':'Compartir con Pareja','result.shareIG':'Compartir en Historia',
     'result.copyLink':'🔗 Copiar Enlace','result.retake':'Repetir Test',
-    'about.h2':'Sobre la Teoría de los Lenguajes del Amor','about.p':'Descubre la psicología detrás de este marco de relaciones',
-    'about.c1.h3':'Orígenes','about.c1.p':'El Dr. Gary Chapman desarrolló esta teoría tras 30 años de orientación matrimonial. Su libro de 1992 "Los 5 Lenguajes del Amor" se convirtió en un clásico global de la psicología de las relaciones.',
-    'about.c2.h3':'Base Científica','about.c2.p':'La investigación muestra que cuando las parejas expresan amor en el lenguaje preferido del otro, la satisfacción en la relación aumenta significativamente.',
-    'about.c3.h3':'¿Puede Cambiar Tu Lenguaje?','about.c3.p':'Sí. A medida que cambian las etapas de vida o después de eventos importantes, tu lenguaje principal puede cambiar. Recomendamos hacer el test periódicamente.',
-    'about.c4.h3':'Más que Romance','about.c4.p':'Los lenguajes del amor se aplican igualmente a vínculos entre padres e hijos, amistades y dinámicas laborales. Entender los lenguajes de las personas hace que todas las relaciones sean más armoniosas.',
-    'detail.h2':'Los 5 Lenguajes del Amor: Guía Completa','detail.p':'Comprende cada lenguaje del amor, sus expresiones cotidianas y cómo comunicarte con tu pareja',
+    'theory.badge':'📖 Guía Teórica',
+    'theory.h2':'¿Quieres Entender la Teoría en Profundidad?',
+    'theory.p':'Desde los orígenes de Chapman hasta el análisis completo de los 5 lenguajes — ciencia, FAQ y recursos recomendados en un solo lugar.',
+    'theory.h1.title':'Orígenes de la Teoría','theory.h1.sub':'30 años de orientación matrimonial de Chapman',
+    'theory.h2.title':'5 Lenguajes en Detalle','theory.h2.sub':'Características, expresiones diarias, consejos para parejas',
+    'theory.h3.title':'Preguntas Frecuentes','theory.h3.sub':'¿Puede cambiar tu lenguaje? ¿Qué si son diferentes?',
+    'theory.btn':'Explorar la Teoría →',
     'footer.copy':'© 2026 LoveTypes · Basado en "Los 5 Lenguajes del Amor" del Dr. Gary Chapman',
     'footer.privacy':'Política de Privacidad','footer.terms':'Términos de Uso','footer.contact':'Contáctanos',
     'share.line':(tag)=>`¡Mi lenguaje del amor es "${tag}"! Descubre el tuyo: ${window.location.href}`,
@@ -2612,6 +2765,32 @@ results.P.es = {
   ],
   yoga: { desc: "El cuerpo necesita ser sentido, y también el alma. La música de relajación body scan de Luna Yoga Music te ayuda a sentir tu propia existencia de la cabeza a los pies. Cuando reconectas con tu cuerpo, puedes acercarte más cómodamente a otra persona.", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "Meditación de Relajación Body Scan" }
 };
+</script>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#3A2828;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:0.875rem;line-height:1.5;">
+  <p style="margin:0;flex:1;min-width:200px;">
+    🍪 本網站使用 Cookie 以改善您的瀏覽體驗，並透過 Google AdSense 顯示廣告。繼續使用本網站即表示您同意我們的 <a href="/privacy/" style="color:#F2C4C7;text-decoration:underline;">隱私政策</a>。
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#C9666E;color:#fff;border:none;padding:8px 20px;border-radius:20px;cursor:pointer;font-size:0.875rem;font-weight:600;">接受</button>
+    <button onclick="declineCookies()" style="background:transparent;color:#F2C4C7;border:1px solid #F2C4C7;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.875rem;">拒絕非必要 Cookie</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookie_consent')){
+    document.getElementById('cookie-banner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookie_consent','accepted');
+  document.getElementById('cookie-banner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookie_consent','declined');
+  document.getElementById('cookie-banner').style.display='none';
+}
 </script>
 </body>
 </html>

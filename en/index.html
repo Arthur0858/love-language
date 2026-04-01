@@ -484,51 +484,65 @@
     .btn-share.ig   { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff; }
     .btn-share.copy { background: #eee; color: var(--text); }
 
-    /* ─── ABOUT SECTION ─── */
-    .about-section {
-      max-width: 860px; margin: 0 auto; padding: 64px 24px;
+    /* ─── THEORY TEASER ─── */
+    .theory-teaser {
+      background: linear-gradient(135deg, #FFF0F0 0%, var(--peach) 50%, #FFF5F0 100%);
       border-top: 1px solid var(--rose-lt);
+      padding: 72px 24px;
     }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 24px; margin-top: 40px;
+    .theory-teaser-inner {
+      max-width: 760px; margin: 0 auto; text-align: center;
     }
-    @media(max-width:600px){ .about-grid { grid-template-columns: 1fr; } }
-    .about-card {
+    .theory-badge {
+      display: inline-block;
+      background: var(--rose-lt); color: var(--rose);
+      font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      padding: 4px 14px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .theory-teaser h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 12px; line-height: 1.35;
+    }
+    .theory-teaser > .theory-teaser-inner > p,
+    .theory-teaser-header p {
+      color: var(--muted); font-size: .95rem;
+      max-width: 480px; margin: 0 auto 40px;
+    }
+    .theory-highlights {
+      display: flex; flex-direction: column; gap: 0;
       background: var(--card-bg); border-radius: var(--radius);
-      padding: 24px; box-shadow: var(--shadow);
+      box-shadow: var(--shadow);
+      margin-bottom: 36px; overflow: hidden;
     }
-    .about-card .icon { font-size: 1.6rem; margin-bottom: 12px; }
-    .about-card h3 { font-weight: 700; margin-bottom: 6px; font-size: .95rem; }
-    .about-card p  { color: var(--muted); font-size: .85rem; line-height: 1.7; }
-
-    /* ─── DETAIL SECTION ─── */
-    .detail-section {
-      max-width: 860px; margin: 0 auto; padding: 64px 24px;
-      border-top: 1px solid var(--rose-lt);
+    .theory-highlight-item {
+      display: flex; align-items: center; gap: 18px;
+      padding: 20px 28px; text-align: left;
+      border-bottom: 1px solid var(--rose-lt);
     }
-    .detail-card {
-      background: var(--card-bg); border-radius: var(--radius);
-      padding: 32px; box-shadow: var(--shadow); margin-top: 32px;
+    .theory-highlight-item:last-child { border-bottom: none; }
+    .th-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--peach); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
     }
-    .detail-card .detail-icon { font-size: 2rem; margin-bottom: 12px; }
-    .detail-card h3 {
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--rose); margin-bottom: 14px;
+    .th-text {
+      display: flex; flex-direction: column; gap: 2px;
     }
-    .detail-card p {
-      color: var(--muted); font-size: .9rem;
-      line-height: 1.8; margin-bottom: 12px;
+    .th-text strong { font-size: .92rem; color: var(--text); font-weight: 700; }
+    .th-text span   { font-size: .8rem; color: var(--muted); }
+    .btn-theory {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose), #B54E56);
+      color: #fff; font-size: .95rem; font-weight: 700;
+      padding: 14px 44px; border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(201,102,110,.35);
+      transition: transform .2s, box-shadow .2s;
     }
-    .detail-card ul {
-      list-style: none; padding: 0; margin-top: 16px;
-      border-top: 1px solid var(--rose-lt); padding-top: 16px;
-    }
-    .detail-card ul li {
-      font-size: .85rem; color: var(--muted);
-      line-height: 1.7; padding: 4px 0;
-    }
-    .detail-card ul li strong { color: var(--fg); }
+    .btn-theory:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,102,110,.45); }
 
     /* ─── FOOTER ─── */
     footer {
@@ -642,112 +656,39 @@
 <!-- RESULT SECTION -->
 <section id="result-section"></section>
 
-<!-- ABOUT -->
-<section class="about-section" id="about-section">
-  <div class="section-header">
-    <h2 data-i18n="about.h2">關於愛的語言理論</h2>
-    <p data-i18n="about.p">了解這套理論背後的心理學依據</p>
+<!-- THEORY TEASER -->
+<section class="theory-teaser" id="about-section">
+  <div class="theory-teaser-inner">
+    <div class="theory-teaser-header">
+      <div class="theory-badge" data-i18n="theory.badge">📖 Theory Guide</div>
+      <h2 data-i18n="theory.h2">Want to Understand the Theory Deeper?</h2>
+      <p data-i18n="theory.p">From Chapman's origins to full descriptions of all 5 languages — science, FAQ, and resources all in one place.</p>
+    </div>
+    <div class="theory-highlights">
+      <div class="theory-highlight-item">
+        <div class="th-icon">📖</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h1.title">Theory Origins</strong>
+          <span data-i18n="theory.h1.sub">Chapman's 30 years of marriage counseling</span>
+        </div>
+      </div>
+      <div class="theory-highlight-item">
+        <div class="th-icon">💬</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h2.title">5 Languages In-Depth</strong>
+          <span data-i18n="theory.h2.sub">Traits, daily expressions, tips for partners</span>
+        </div>
+      </div>
+      <div class="theory-highlight-item">
+        <div class="th-icon">❓</div>
+        <div class="th-text">
+          <strong data-i18n="theory.h3.title">Common Questions</strong>
+          <span data-i18n="theory.h3.sub">Can languages change? What if we're different?</span>
+        </div>
+      </div>
+    </div>
+    <a href="/en/theory/" class="btn-theory" data-i18n="theory.btn">Explore the Theory →</a>
   </div>
-  <div class="about-grid">
-    <div class="about-card">
-      <div class="icon">📖</div>
-      <h3 data-i18n="about.c1.h3">理論起源</h3>
-      <p data-i18n="about.c1.p">Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">🔬</div>
-      <h3 data-i18n="about.c2.h3">科學依據</h3>
-      <p data-i18n="about.c2.p">研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">🔄</div>
-      <h3 data-i18n="about.c3.h3">語言可以改變嗎？</h3>
-      <p data-i18n="about.c3.p">是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。</p>
-    </div>
-    <div class="about-card">
-      <div class="icon">💑</div>
-      <h3 data-i18n="about.c4.h3">不只是愛情</h3>
-      <p data-i18n="about.c4.p">愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。</p>
-    </div>
-  </div>
-</section>
-
-<!-- LOVE LANGUAGES DETAIL — Static HTML for AI crawlers & SEO -->
-<section class="detail-section" id="love-languages-detail">
-  <div class="section-header">
-    <h2 data-i18n="detail.h2">五種愛的語言完整說明</h2>
-    <p data-i18n="detail.p">了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通</p>
-  </div>
-
-  <article class="detail-card" id="words-of-affirmation">
-    <div class="detail-icon">💬</div>
-    <div data-i18n-html="detail.W">
-      <h3>Words of Affirmation</h3>
-      <p>Words of Affirmation is the Love Language that uses spoken and written words as the primary channel of love. For these people, language carries enormous power — a sincere "I love you," "You were amazing today," or "Thank you for everything you do" lets them feel genuinely valued. They don't need grand gestures; they just need to hear that you mean it.</p>
-      <p>Criticism and emotional silence cut them deeply, because they believe words are the bridge that connects hearts. A warm text from a partner or a spontaneous word of encouragement can energize them for hours. Gary Chapman notes that the best way to love this type of partner is to make daily expressions of appreciation and gratitude a habit — let positive language become the daily nourishment of the relationship.</p>
-      <ul>
-        <li><strong>Everyday signs:</strong> They treasure compliments, heartfelt messages, and a kind word before bed</li>
-        <li><strong>What hurts most:</strong> Being ignored, criticized, or never hearing "thank you"</li>
-        <li><strong>Tip for your partner:</strong> Every day, mention one thing you appreciate about them — no speech needed, just one sincere sentence</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="acts-of-service">
-    <div class="detail-icon">🛠️</div>
-    <div data-i18n-html="detail.S">
-      <h3>Acts of Service</h3>
-      <p>Acts of Service is the Love Language that expresses love through actions rather than words. For these people, love isn't spoken — it's done. When a partner quietly helps with household chores or takes care of something without being asked, what they feel isn't just gratitude but a deep sense of being cared for and safe. The weight of "I'm willing to do this for you" is more real to them than a thousand "I love you's."</p>
-      <p>People with this language tend to be the quietly devoted ones who show their feelings through action, yet can feel unseen when their efforts go unnoticed. Chapman reminds us that with an Acts of Service partner, the most powerful thing you can do is proactively take on a task they dislike but have to do — that beats any words or gifts hands down.</p>
-      <ul>
-        <li><strong>Everyday signs:</strong> Running errands for their partner, preparing meals, cheerfully handling small chores</li>
-        <li><strong>What hurts most:</strong> Always giving while the partner never initiates any helpful action</li>
-        <li><strong>Tip for your partner:</strong> Proactively do one task they dislike — the effect far outweighs any gift</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="receiving-gifts">
-    <div class="detail-icon">🎁</div>
-    <div data-i18n-html="detail.G">
-      <h3>Receiving Gifts</h3>
-      <p>For people whose Love Language is Receiving Gifts, a gift is love made tangible. What matters isn't the price tag — it's whether the person "remembered" and "put thought into it." Every carefully chosen little thing carries a message: "I see you. I remember what you like. I think of you whether I'm with you or not." That feeling of being remembered and cherished is the core of how they experience love.</p>
-      <p>Forgotten anniversaries or never receiving any gesture feels like emotional neglect to this type — not just disappointment, but a question of whether they matter in the relationship. Gary Chapman stresses this is not materialism; it's a longing to know someone cares. The best gift for this partner doesn't need to be expensive — a handwritten card or a flower picked up on a walk can be the most powerful expression of love.</p>
-      <ul>
-        <li><strong>Everyday signs:</strong> Cherishing meaningful small gifts, valuing anniversary rituals</li>
-        <li><strong>What hurts most:</strong> A partner who arrives empty-handed on important days, making them feel forgotten</li>
-        <li><strong>Tip for your partner:</strong> Bring home that snack they mentioned once — the "I remembered you" feeling is what counts</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="quality-time">
-    <div class="detail-icon">⏳</div>
-    <div data-i18n-html="detail.T">
-      <h3>Quality Time</h3>
-      <p>People whose Love Language is Quality Time measure love by time — specifically, by the quality of attention given. It's not about how many hours you spend together; it's about being fully present — phone down, eyes meeting, heart actually here. When a partner gives their most precious resource without reservation, that's when this person truly feels loved.</p>
-      <p>An evening where both people scroll their phones in silence is, for them, a deep loneliness — even sitting side by side can feel isolating. Chapman's research shows that this type craves being treated with complete, undivided attention during shared time. Try setting aside a daily phone-free window with your Quality Time partner — even 30 minutes of genuine presence outweighs an entire evening of distracted togetherness.</p>
-      <ul>
-        <li><strong>Everyday signs:</strong> Treasuring focused together-time, valuing eye contact and deep conversation</li>
-        <li><strong>What hurts most:</strong> A partner who constantly checks their phone, making them feel invisible</li>
-        <li><strong>Tip for your partner:</strong> Schedule a weekly "phone-free date night" — let them experience your undivided self</li>
-      </ul>
-    </div>
-  </article>
-
-  <article class="detail-card" id="physical-touch">
-    <div class="detail-icon">🤝</div>
-    <div data-i18n-html="detail.P">
-      <h3>Physical Touch</h3>
-      <p>People whose Love Language is Physical Touch feel love and safety through physical closeness. A hug, holding hands, or falling asleep on a partner's shoulder — these physical connections provide a sense of security that nothing else can replicate. They don't need a fancy dinner or an expensive gift; as long as they can feel their partner's warmth and presence, that's the best moment of all.</p>
-      <p>A prolonged lack of physical contact leaves them feeling emotionally distant and can even make them question the intimacy of the relationship. Gary Chapman notes that the most effective way to love this type of partner is to build daily rituals of touch — a good-morning kiss, a hug before heading out, holding hands before sleep — letting love flow in a regular, tangible way. Importantly, Physical Touch is about warmth and connection; it is not directly linked to sexual expression.</p>
-      <ul>
-        <li><strong>Everyday signs:</strong> Enjoying hand-holding, hugging, and staying physically close while walking</li>
-        <li><strong>What hurts most:</strong> A partner who rarely initiates physical closeness, making them feel disconnected</li>
-        <li><strong>Tip for your partner:</strong> Offer everyday non-sexual physical touch — holding hands and hugs carry enormous meaning to them</li>
-      </ul>
-    </div>
-  </article>
 </section>
 
 <!-- FOOTER -->
@@ -1347,12 +1288,13 @@ const i18n = {
     'result.affDesc':'根據你的愛的語言，這些資源可以幫助你和另一半走得更近',
     'result.shareLine':'分享給伴侶','result.shareIG':'限動分享',
     'result.copyLink':'🔗 複製結果連結','result.retake':'重新測驗',
-    'about.h2':'關於愛的語言理論','about.p':'了解這套理論背後的心理學依據',
-    'about.c1.h3':'理論起源','about.c1.p':'Gary Chapman 博士在從事婚姻輔導 30 年後，發現每個人感受愛的方式截然不同，並在 1992 年出版《愛的五種語言》，成為暢銷全球的關係心理學經典。',
-    'about.c2.h3':'科學依據','about.c2.p':'研究顯示，當伴侶以對方「理解」的語言表達愛，感情滿意度顯著提升。學會對方的語言，不只是技巧，而是真正的理解。',
-    'about.c3.h3':'語言可以改變嗎？','about.c3.p':'是的。人生階段不同、經歷重大事件後，主要語言可能會有所轉移。建議每隔一段時間重測，了解自己的變化。',
-    'about.c4.h3':'不只是愛情','about.c4.p':'愛的語言同樣適用於親子關係、友誼、職場互動。理解不同人的語言，讓所有關係都更和諧。',
-    'detail.h2':'五種愛的語言完整說明','detail.p':'了解每種愛的語言的特質、日常表現，以及如何和伴侶溝通',
+    'theory.badge':'📖 理論完整指南',
+    'theory.h2':'想更深入了解愛的語言理論？',
+    'theory.p':'從 Gary Chapman 的理論起源、五種語言深度解析，到科學依據與推薦資源，一次掌握。',
+    'theory.h1.title':'理論起源','theory.h1.sub':'Chapman 博士 30 年婚姻輔導的結晶',
+    'theory.h2.title':'五種語言完整說明','theory.h2.sub':'特質、日常表現、給伴侶的建議',
+    'theory.h3.title':'常見問題解答','theory.h3.sub':'語言能改變嗎？不同語言怎麼辦？',
+    'theory.btn':'深入了解理論 →',
     'footer.copy':'© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論',
     'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.contact':'聯繫我們',
     'share.line':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
@@ -1378,12 +1320,13 @@ const i18n = {
     'result.affDesc':'Based on your love language, these resources can help you and your partner grow closer',
     'result.shareLine':'Share with Partner','result.shareIG':'Share Story',
     'result.copyLink':'🔗 Copy Result Link','result.retake':'Retake Quiz',
-    'about.h2':'About the Love Languages Theory','about.p':'Discover the psychology behind this relationship framework',
-    'about.c1.h3':'Origins','about.c1.p':'Dr. Gary Chapman developed this theory after 30 years of marriage counseling. His 1992 book "The 5 Love Languages" became a global relationship psychology classic.',
-    'about.c2.h3':'Scientific Basis','about.c2.p':"Research shows that when partners express love in each other's preferred language, relationship satisfaction significantly increases. It's not just a technique—it's true understanding.",
-    'about.c3.h3':'Can Your Language Change?','about.c3.p':'Yes. As life stages shift or after major events, your primary language may change. We recommend retaking the quiz periodically to track your evolving needs.',
-    'about.c4.h3':'Beyond Romance','about.c4.p':"Love languages apply equally to parent-child bonds, friendships, and workplace dynamics. Understanding different people's languages makes all relationships more harmonious.",
-    'detail.h2':'The 5 Love Languages: Full Descriptions','detail.p':'Understand each love language, its everyday expressions, and how to communicate with your partner',
+    'theory.badge':'📖 Theory Guide',
+    'theory.h2':'Want to Understand the Theory Deeper?',
+    'theory.p':'From Chapman\'s origins to full descriptions of all 5 languages — science, FAQ, and resources all in one place.',
+    'theory.h1.title':'Theory Origins','theory.h1.sub':'Chapman\'s 30 years of marriage counseling',
+    'theory.h2.title':'5 Languages In-Depth','theory.h2.sub':'Traits, daily expressions, tips for partners',
+    'theory.h3.title':'Common Questions','theory.h3.sub':'Can languages change? What if we\'re different?',
+    'theory.btn':'Explore the Theory →',
     'footer.copy':'© 2026 LoveTypes · Based on Dr. Gary Chapman\'s "The 5 Love Languages"',
     'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.contact':'Contact Us',
     'share.line':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,

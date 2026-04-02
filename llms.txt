@@ -5,7 +5,11 @@
 
 ## 測驗工具
 
-- [愛的語言測驗](https://lovetypes.tw/): 15 題免費測驗，已有 38,000+ 人完成
+- [愛的語言測驗（繁體中文）](https://lovetypes.tw/): 15 題免費測驗
+- [Love Language Quiz (English)](https://lovetypes.tw/en/): 15-question free quiz
+- [愛の言語テスト（日本語）](https://lovetypes.tw/ja/): 15問無料テスト
+- [사랑의 언어 테스트（한국어）](https://lovetypes.tw/ko/): 15문항 무료 테스트
+- [Test de Lenguajes del Amor（Español）](https://lovetypes.tw/es/): Prueba gratuita de 15 preguntas
 
 ## 五種愛的語言說明
 
@@ -17,6 +21,17 @@
 
 ## 關於理論
 
+- [深入理論解析](https://lovetypes.tw/theory/)：Gary Chapman 博士的五種愛的語言完整說明
 - Gary Chapman 博士於 1992 年出版《愛的五種語言》，影響全球數百萬對情侶
 - 研究顯示，當伴侶以對方的語言表達愛，感情滿意度顯著提升
 - 愛的語言不限於愛情，同樣適用於親子關係、友誼、職場互動
+
+## 推薦資源
+
+- [書籍與課程推薦](https://lovetypes.tw/resources/)：精選愛的語言相關書籍、療癒課程、Luna Yoga Music 冥想音樂
+- Luna Yoga Music 頻道提供身心掃描冥想與療癒音樂，協助連結身心：[YouTube 頻道](https://www.youtube.com/@LunaYogaMusic)
+
+## 隱私與條款
+
+- [隱私政策](https://lovetypes.tw/privacy/)
+- [使用條款](https://lovetypes.tw/terms/)

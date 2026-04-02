@@ -552,6 +552,35 @@
     }
     footer a { color: var(--rose); text-decoration: none; }
 
+
+    /* ─── FAQ SECTION ─── */
+    .faq-section {
+      max-width: 860px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+    .faq-item {
+      background: var(--card-bg); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; background: none; border: none;
+      padding: 20px 24px; display: flex; justify-content: space-between;
+      align-items: center; cursor: pointer;
+      font-family: inherit; font-size: .95rem; font-weight: 700;
+      color: var(--text); text-align: left; gap: 16px; line-height: 1.5;
+    }
+    .faq-q:hover { background: var(--peach); }
+    .faq-icon {
+      font-size: 1.3rem; font-weight: 300; color: var(--rose);
+      flex-shrink: 0; transition: transform .25s ease;
+      width: 24px; text-align: center;
+    }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 24px 20px; color: var(--muted);
+      font-size: .9rem; line-height: 1.85;
+    }
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -582,6 +611,7 @@
     <a href="#types-section" data-i18n="nav.types">5種語言</a>
     <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
     <a href="/en/theory/">Theory</a>
+    <a href="/resources/" data-i18n="nav.resources">Resources</a>
   </div>
 </nav>
 
@@ -691,10 +721,63 @@
   </div>
 </section>
 
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq-section">
+  <div class="section-header" style="text-align:center">
+    <h2>Frequently Asked Questions</h2>
+    <p>Everything you want to know about the Love Languages quiz and theory</p>
+  </div>
+  <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>What are the Love Languages?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>The Love Languages is a relationship theory proposed by psychologist Dr. Gary Chapman in 1992. It suggests that every person expresses and receives love through one of five primary types: Words of Affirmation, Acts of Service, Receiving Gifts, Quality Time, and Physical Touch. Understanding your own and your partner's primary love language helps you communicate love in ways the other person truly "hears," significantly improving relationship satisfaction and intimacy.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>What are the five Love Languages?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>The five Love Languages are: ① Words of Affirmation — expressing love through verbal praise, compliments, and encouragement; ② Acts of Service — showing love through helpful actions that ease the other person's load; ③ Receiving Gifts — feeling loved through thoughtful, meaningful gifts that show you were remembered; ④ Quality Time — feeling loved through focused, uninterrupted time together; ⑤ Physical Touch — feeling love and security through hugs, holding hands, and other physical closeness.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>Can your Love Language change over time?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It's a good idea to retake the quiz periodically to understand your current needs and emotional state — this helps keep your relationship fresh and connected.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>Are Love Languages only for romantic relationships?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>Not at all. Love Languages apply equally to parent-child relationships, friendships, and workplace interactions. Understanding how different people prefer to communicate and receive care makes all relationships more harmonious and reduces misunderstandings, improving your overall quality of life.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>How many questions are in the quiz and how long does it take?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>The LoveTypes quiz has 15 scenario-based questions and takes about 2 minutes to complete. It's completely free, requires no registration, and shows your primary Love Language with a detailed analysis and practical tips for you and your partner immediately after completion.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>What if my partner's Love Language is different from mine?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>Having a different Love Language from your partner is very common. The key is to learn each other's languages and practice expressing love in the way your partner understands. For example, if you prefer Words of Affirmation but your partner values Acts of Service, try proactively helping with chores — that gesture may mean far more to them than saying "I love you." Communication and understanding are the bridge across the language gap.</div>
+      </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <p data-i18n="footer.copy">© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
-  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
+  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="/resources/" data-i18n="footer.resources">推薦資源</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
 </footer>
 
 <script>
@@ -1036,6 +1119,7 @@ function startQuiz() {
   document.getElementById('home-section').style.display  = 'none';
   document.getElementById('types-section').style.display = 'none';
   document.getElementById('about-section').style.display = 'none';
+  document.getElementById('faq-section').style.display   = 'none';
   document.querySelector('footer').style.display         = 'none';
   document.getElementById('result-section').style.display= 'none';
   document.getElementById('quiz-wrapper').style.display  = 'block';
@@ -1253,6 +1337,7 @@ function retake() {
   document.getElementById('home-section').style.display   = 'block';
   document.getElementById('types-section').style.display  = 'block';
   document.getElementById('about-section').style.display  = 'block';
+  document.getElementById('faq-section').style.display   = 'block';
   document.querySelector('footer').style.display          = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1266,12 +1351,24 @@ function copyResult(tag) {
   navigator.clipboard?.writeText(text).then(()=>alert(t('share.alert.copy')));
 }
 
+
+function toggleFaq(btn) {
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  document.querySelectorAll('.faq-q').forEach(b => {
+    b.setAttribute('aria-expanded', 'false');
+    b.nextElementSibling.hidden = true;
+  });
+  if (!isOpen) {
+    btn.setAttribute('aria-expanded', 'true');
+    btn.nextElementSibling.hidden = false;
+  }
+}
 // ─── I18N SYSTEM ──────────────────────────────────────────────────
 let lang = 'en'; // English is the default language for this page
 
 const i18n = {
   zh: {
-    'nav.types':'5種語言','nav.test':'開始測驗','nav.about':'關於理論',
+    'nav.types':'5種語言','nav.test':'開始測驗','nav.about':'關於理論','nav.resources':'推薦資源',
     'hero.badge':'🌸 免費 · 無需註冊 · 2分鐘完成',
     'hero.h1':'你最需要的愛，<br>是哪一種<span>語言</span>？',
     'hero.p':'每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。',
@@ -1296,14 +1393,14 @@ const i18n = {
     'theory.h3.title':'常見問題解答','theory.h3.sub':'語言能改變嗎？不同語言怎麼辦？',
     'theory.btn':'深入了解理論 →',
     'footer.copy':'© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論',
-    'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.contact':'聯繫我們',
+    'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.resources':'推薦資源','footer.contact':'聯繫我們',
     'share.line':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
     'share.copy':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
     'share.alert.line':'已複製，貼到 LINE 分享給另一半吧！',
     'share.alert.copy':'✅ 已複製！可以貼到 IG 限動或傳給朋友',
   },
   en: {
-    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.about':'About',
+    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.about':'About','nav.resources':'Resources',
     'hero.badge':'🌸 Free · No Sign-up · 2 Min',
     'hero.h1':'What Kind of Love<br>Do You Need <span>Most</span>?',
     'hero.p':'Everyone gives and receives love differently. Answer 15 scenario questions to discover your core love language and end relationship misunderstandings.',
@@ -1328,7 +1425,7 @@ const i18n = {
     'theory.h3.title':'Common Questions','theory.h3.sub':'Can languages change? What if we\'re different?',
     'theory.btn':'Explore the Theory →',
     'footer.copy':'© 2026 LoveTypes · Based on Dr. Gary Chapman\'s "The 5 Love Languages"',
-    'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.contact':'Contact Us',
+    'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.resources':'Resources','footer.contact':'Contact Us',
     'share.line':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
     'share.copy':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
     'share.alert.line':'Copied! Share it with your partner.',

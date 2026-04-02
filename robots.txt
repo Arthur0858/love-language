@@ -3,6 +3,15 @@ Allow: /
 
 # Language subdirectories
 Allow: /en/
+Allow: /ja/
+Allow: /ko/
+Allow: /es/
+Allow: /theory/
+Allow: /resources/
+
+# Disallow utility pages from indexing (noindex already set in HTML)
+Disallow: /privacy/
+Disallow: /terms/
 
 # Sitemap location
 Sitemap: https://lovetypes.tw/sitemap.xml

@@ -597,6 +597,35 @@
     }
     .btn-theory:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,102,110,.45); }
 
+
+    /* ─── FAQ SECTION ─── */
+    .faq-section {
+      max-width: 860px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+    .faq-item {
+      background: var(--card-bg); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; background: none; border: none;
+      padding: 20px 24px; display: flex; justify-content: space-between;
+      align-items: center; cursor: pointer;
+      font-family: inherit; font-size: .95rem; font-weight: 700;
+      color: var(--text); text-align: left; gap: 16px; line-height: 1.5;
+    }
+    .faq-q:hover { background: var(--peach); }
+    .faq-icon {
+      font-size: 1.3rem; font-weight: 300; color: var(--rose);
+      flex-shrink: 0; transition: transform .25s ease;
+      width: 24px; text-align: center;
+    }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      padding: 0 24px 20px; color: var(--muted);
+      font-size: .9rem; line-height: 1.85;
+    }
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -627,6 +656,7 @@
     <a href="#types-section" data-i18n="nav.types">5種語言</a>
     <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
     <a href="/theory/" data-i18n="nav.theory">理論</a>
+    <a href="/resources/" data-i18n="nav.resources">推薦資源</a>
   </div>
 </nav>
 
@@ -736,10 +766,63 @@
   </div>
 </section>
 
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq-section">
+  <div class="section-header" style="text-align:center">
+    <h2>常見問題解答</h2>
+    <p>關於愛的語言測驗與理論，你最想知道的答案都在這裡</p>
+  </div>
+  <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>什麼是愛的語言？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>愛的語言是心理學家 Gary Chapman 博士於 1992 年提出的關係理論，指出每個人表達與接受愛的方式可分為五種類型：肯定的言詞、服務的行動、接受禮物、優質的時光、身體的接觸。了解自己和伴侶的主要愛的語言，能幫助雙方以對方「聽得懂」的方式溝通，顯著提升感情滿意度與親密感。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>五種愛的語言分別是什麼？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>五種愛的語言為：① 肯定的言詞（Words of Affirmation）——透過語言、稱讚與感謝表達愛意；② 服務的行動（Acts of Service）——用實際行動減輕對方的負擔；③ 接受禮物（Receiving Gifts）——透過有心意的禮物感受被記住與被重視；④ 優質的時光（Quality Time）——全神貫注、不受干擾地與伴侶共處；⑤ 身體的接觸（Physical Touch）——透過擁抱、牽手等肢體接觸感受安全感與連結。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>愛的語言可以改變嗎？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>是的，愛的語言可以改變。人生階段不同、或經歷重大事件後，主要的愛的語言可能會有所轉移。建議每隔一段時間重新測驗，了解自己當下的狀態與需求，有助於讓感情持續保持新鮮感與連結感。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>愛的語言只適用於愛情關係嗎？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>不只是愛情。愛的語言同樣適用於親子關係、友誼、職場互動等各種人際關係。理解不同人慣用的溝通與表達方式，能讓所有關係都更加和諧，減少誤解與衝突，提升整體生活品質。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>測驗有幾題？需要多久時間？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>LoveTypes 的愛的語言測驗共有 15 道情境選擇題，約需 2 分鐘完成。測驗完全免費，無需註冊帳號，完成後立即顯示你的主要愛的語言及詳細分析，並提供給你和另一半的實用建議。</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          <span>如果伴侶的愛的語言和我不同怎麼辦？</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" hidden>伴侶的愛的語言不同是非常普遍的情況。關鍵在於互相了解對方的語言，並練習用對方的方式表達愛。例如，若你偏好「肯定的言詞」但伴侶重視「服務的行動」，可嘗試主動幫忙分擔家務，那份心意對他的意義可能遠大於一句「我愛你」。溝通與理解是跨越差異的橋樑。</div>
+      </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <p data-i18n="footer.copy">© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論</p>
-  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
+  <p style="margin-top:8px;"><a href="/privacy/" data-i18n="footer.privacy">隱私政策</a> · <a href="/terms/" data-i18n="footer.terms">使用條款</a> · <a href="/resources/" data-i18n="footer.resources">推薦資源</a> · <a href="mailto:hello@lovetypes.tw" data-i18n="footer.contact">聯繫我們</a></p>
 </footer>
 
 <script>
@@ -1241,6 +1324,7 @@ function startQuiz() {
   document.getElementById('home-section').style.display  = 'none';
   document.getElementById('types-section').style.display = 'none';
   document.getElementById('about-section').style.display = 'none';
+  document.getElementById('faq-section').style.display   = 'none';
   document.querySelector('footer').style.display         = 'none';
   document.getElementById('result-section').style.display= 'none';
   document.getElementById('quiz-wrapper').style.display  = 'block';
@@ -1487,6 +1571,7 @@ function retake() {
   document.getElementById('home-section').style.display   = 'block';
   document.getElementById('types-section').style.display  = 'block';
   document.getElementById('about-section').style.display  = 'block';
+  document.getElementById('faq-section').style.display   = 'block';
   document.querySelector('footer').style.display          = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1500,12 +1585,24 @@ function copyResult(tag) {
   navigator.clipboard?.writeText(text).then(()=>alert(t('share.alert.copy')));
 }
 
+
+function toggleFaq(btn) {
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  document.querySelectorAll('.faq-q').forEach(b => {
+    b.setAttribute('aria-expanded', 'false');
+    b.nextElementSibling.hidden = true;
+  });
+  if (!isOpen) {
+    btn.setAttribute('aria-expanded', 'true');
+    btn.nextElementSibling.hidden = false;
+  }
+}
 // ─── I18N SYSTEM ──────────────────────────────────────────────────
 let lang = 'zh';
 
 const i18n = {
   zh: {
-    'nav.types':'5種語言','nav.test':'開始測驗','nav.theory':'理論',
+    'nav.types':'5種語言','nav.test':'開始測驗','nav.theory':'理論','nav.resources':'推薦資源',
     'hero.badge':'🌸 免費 · 無需註冊 · 2分鐘完成',
     'hero.h1':'你最需要的愛，<br>是哪一種<span>語言</span>？',
     'hero.p':'每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。',
@@ -1530,14 +1627,14 @@ const i18n = {
     'theory.h3.title':'常見問題解答','theory.h3.sub':'語言能改變嗎？不同語言怎麼辦？',
     'theory.btn':'深入了解理論 →',
     'footer.copy':'© 2026 LoveTypes · 基於 Gary Chapman《愛的五種語言》理論',
-    'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.contact':'聯繫我們',
+    'footer.privacy':'隱私政策','footer.terms':'使用條款','footer.resources':'推薦資源','footer.contact':'聯繫我們',
     'share.line':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
     'share.copy':(tag)=>`我的愛的語言是「${tag}」！快來測測你的：${window.location.href}`,
     'share.alert.line':'已複製，貼到 LINE 分享給另一半吧！',
     'share.alert.copy':'✅ 已複製！可以貼到 IG 限動或傳給朋友',
   },
   en: {
-    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.theory':'Theory',
+    'nav.types':'5 Languages','nav.test':'Take Quiz','nav.theory':'Theory','nav.resources':'Resources',
     'hero.badge':'🌸 Free · No Sign-up · 2 Min',
     'hero.h1':'What Kind of Love<br>Do You Need <span>Most</span>?',
     'hero.p':'Everyone gives and receives love differently. Answer 15 scenario questions to discover your core love language and end relationship misunderstandings.',
@@ -1562,7 +1659,7 @@ const i18n = {
     'theory.h3.title':'Common Questions','theory.h3.sub':'Can languages change? What if we\'re different?',
     'theory.btn':'Explore the Theory →',
     'footer.copy':'© 2026 LoveTypes · Based on Dr. Gary Chapman\'s "The 5 Love Languages"',
-    'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.contact':'Contact Us',
+    'footer.privacy':'Privacy Policy','footer.terms':'Terms of Use','footer.resources':'Resources','footer.contact':'Contact Us',
     'share.line':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
     'share.copy':(tag)=>`My love language is "${tag}"! Find out yours: ${window.location.href}`,
     'share.alert.line':'Copied! Share it with your partner.',
@@ -1610,7 +1707,7 @@ const i18n = {
   },
   // ── JAPANESE ──
   ja: {
-    'nav.types':'5つの言語','nav.test':'テスト開始','nav.theory':'理論',
+    'nav.types':'5つの言語','nav.test':'テスト開始','nav.theory':'理論','nav.resources':'リソース',
     'hero.badge':'🌸 無料 · 登録不要 · 2分で完了',
     'hero.h1':'あなたが最も必要とする愛は、<br>どんな<span>言語</span>ですか？',
     'hero.p':'愛の与え方と受け取り方は人それぞれ。15問のシナリオで、あなたの核心的な愛の言語を見つけましょう。',
@@ -1635,7 +1732,7 @@ const i18n = {
     'theory.h3.title':'よくある質問','theory.h3.sub':'言語は変わる？違う言語の場合は？',
     'theory.btn':'理論を深く知る →',
     'footer.copy':'© 2026 LoveTypes · ゲイリー・チャップマン博士「愛の言語」理論に基づく',
-    'footer.privacy':'プライバシーポリシー','footer.terms':'利用規約','footer.contact':'お問い合わせ',
+    'footer.privacy':'プライバシーポリシー','footer.terms':'利用規約','footer.resources':'リソース','footer.contact':'お問い合わせ',
     'share.line':(tag)=>`私の愛の言語は「${tag}」です！あなたもテストしてみよう：${window.location.href}`,
     'share.copy':(tag)=>`私の愛の言語は「${tag}」です！あなたもテストしてみよう：${window.location.href}`,
     'share.alert.line':'コピーしました！パートナーにシェアしましょう。',
@@ -1683,7 +1780,7 @@ const i18n = {
   },
   // ── KOREAN ──
   ko: {
-    'nav.types':'5가지 언어','nav.test':'테스트 시작','nav.theory':'이론',
+    'nav.types':'5가지 언어','nav.test':'테스트 시작','nav.theory':'이론','nav.resources':'추천 자료',
     'hero.badge':'🌸 무료 · 가입 불필요 · 2분 완료',
     'hero.h1':'내가 가장 필요로 하는 사랑은<br>어떤 <span>언어</span>일까요?',
     'hero.p':'모든 사람은 사랑을 주고받는 방식이 다릅니다. 15가지 상황 문제로 나의 핵심 사랑의 언어를 찾아보세요.',
@@ -1708,7 +1805,7 @@ const i18n = {
     'theory.h3.title':'자주 묻는 질문','theory.h3.sub':'언어가 바뀔 수 있나요? 다른 언어면 어떻게?',
     'theory.btn':'이론 자세히 보기 →',
     'footer.copy':'© 2026 LoveTypes · 게리 채프먼 박사 「사랑의 언어」 이론 기반',
-    'footer.privacy':'개인정보처리방침','footer.terms':'이용약관','footer.contact':'문의하기',
+    'footer.privacy':'개인정보처리방침','footer.terms':'이용약관','footer.resources':'추천 자료','footer.contact':'문의하기',
     'share.line':(tag)=>`나의 사랑의 언어는 "${tag}"입니다! 당신도 테스트해보세요：${window.location.href}`,
     'share.copy':(tag)=>`나의 사랑의 언어는 "${tag}"입니다! 당신도 테스트해보세요：${window.location.href}`,
     'share.alert.line':'복사됐습니다! 파트너에게 공유해보세요.',
@@ -1756,7 +1853,7 @@ const i18n = {
   },
   // ── SPANISH ──
   es: {
-    'nav.types':'5 Lenguajes','nav.test':'Hacer Test','nav.theory':'Teoría',
+    'nav.types':'5 Lenguajes','nav.test':'Hacer Test','nav.theory':'Teoría','nav.resources':'Recursos',
     'hero.badge':'🌸 Gratis · Sin registro · 2 minutos',
     'hero.h1':'¿Qué tipo de amor<br>necesitas <span>más</span>?',
     'hero.p':'Cada persona da y recibe amor de manera diferente. Responde 15 preguntas de escenarios para descubrir tu lenguaje de amor principal.',
@@ -1781,7 +1878,7 @@ const i18n = {
     'theory.h3.title':'Preguntas Frecuentes','theory.h3.sub':'¿Puede cambiar tu lenguaje? ¿Qué si son diferentes?',
     'theory.btn':'Explorar la Teoría →',
     'footer.copy':'© 2026 LoveTypes · Basado en "Los 5 Lenguajes del Amor" del Dr. Gary Chapman',
-    'footer.privacy':'Política de Privacidad','footer.terms':'Términos de Uso','footer.contact':'Contáctanos',
+    'footer.privacy':'Política de Privacidad','footer.terms':'Términos de Uso','footer.resources':'Recursos','footer.contact':'Contáctanos',
     'share.line':(tag)=>`¡Mi lenguaje del amor es "${tag}"! Descubre el tuyo: ${window.location.href}`,
     'share.copy':(tag)=>`¡Mi lenguaje del amor es "${tag}"! Descubre el tuyo: ${window.location.href}`,
     'share.alert.line':'¡Copiado! Compártelo con tu pareja.',

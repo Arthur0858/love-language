@@ -1,9 +1,10 @@
 /* ============================================================
    luna.css — Luna Yoga Music 專屬樣式
+   色調：溫暖薰衣草 / 紫水晶（Warm Lavender · Amethyst）
    適用於所有 5 個語言版本的 Luna 頁面
    ============================================================ */
 
-/* ─── CSS 變數（含 Luna 深色主題） ─── */
+/* ─── CSS 變數（含 Luna 淡紫溫暖主題） ─── */
 :root {
   --rose:    #C9666E;
   --rose-lt: #F2C4C7;
@@ -16,16 +17,16 @@
   --shadow:  0 4px 24px rgba(180,100,100,.10);
   --radius:  16px;
 
-  /* Luna dark palette */
-  --luna-deep:   #0d1117;
-  --luna-navy:   #1a1a2e;
-  --luna-mid:    #16213e;
-  --luna-blue:   #0f3460;
-  --luna-accent: #93c5fd;
-  --luna-soft:   #bfdbfe;
-  --luna-text:   #e2f0ff;
-  --luna-muted:  #a8c8e8;
-  --luna-teal:   #2D7A5E;
+  /* Luna 溫暖薰衣草色盤 */
+  --luna-deep:   #1a0e2e;   /* 極深紫（背景底色）*/
+  --luna-navy:   #2d1b52;   /* 深紫（區塊底色）*/
+  --luna-mid:    #3f2876;   /* 中紫 */
+  --luna-blue:   #6b4baa;   /* 溫暖紫（主色調）*/
+  --luna-accent: #ddb6ff;   /* 薰衣草高光 */
+  --luna-soft:   #eedcff;   /* 淡薰衣草 */
+  --luna-text:   #f8f1ff;   /* 近白帶紫 */
+  --luna-muted:  #c5a6e0;   /* 霧紫 */
+  --luna-teal:   #c084fc;   /* 亮紫（標籤色）*/
 }
 
 /* ─── RESET ─── */
@@ -37,13 +38,13 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--cream); color:
 /* ─── NAV ─── */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(13,17,23,.96); backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(147,197,253,.15);
+  background: rgba(26,14,46,.97); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(200,155,255,.18);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 24px; height: 56px;
 }
 .nav-left  { display: flex; align-items: center; gap: 16px; }
-.nav-logo  { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; color: var(--rose-lt); text-decoration: none; }
+.nav-logo  { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; color: var(--luna-soft); text-decoration: none; }
 .nav-links { display: flex; gap: 24px; }
 .nav-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .88rem; font-weight: 500; transition: color .2s; }
 .nav-links a:hover { color: var(--luna-accent); }
@@ -51,11 +52,11 @@ nav {
 
 /* ─── LANG DROPDOWN ─── */
 .lang-menu { position: relative; }
-.lang-current { background: none; border: 1px solid rgba(147,197,253,.3); color: rgba(255,255,255,.6); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: .8rem; font-family: inherit; }
-.lang-list { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--luna-navy); border: 1px solid rgba(147,197,253,.2); border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.4); list-style: none; padding: 6px; min-width: 110px; }
+.lang-current { background: none; border: 1px solid rgba(200,155,255,.35); color: rgba(255,255,255,.65); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: .8rem; font-family: inherit; }
+.lang-list { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--luna-navy); border: 1px solid rgba(200,155,255,.22); border-radius: 10px; box-shadow: 0 8px 32px rgba(10,0,30,.5); list-style: none; padding: 6px; min-width: 110px; }
 .lang-menu.open .lang-list { display: block; }
 .lang-list li a { display: block; padding: 7px 12px; border-radius: 7px; font-size: .85rem; color: var(--luna-text); text-decoration: none; }
-.lang-list li a:hover { background: rgba(147,197,253,.1); }
+.lang-list li a:hover { background: rgba(200,155,255,.12); }
 
 /* ─── HERO ─── */
 .hero {
@@ -66,27 +67,27 @@ nav {
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(59,130,246,.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(160,80,240,.22) 0%, transparent 70%);
   pointer-events: none;
 }
 .stars {
   position: absolute; inset: 0; pointer-events: none;
   background-image:
-    radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 25%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 55% 60%, rgba(255,255,255,.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 55%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(2px 2px at 45% 20%, rgba(147,197,253,.8) 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 65% 10%, rgba(255,255,255,.6) 0%, transparent 100%);
+    radial-gradient(1px 1px at 20% 15%, rgba(255,230,255,.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 25%, rgba(255,220,255,.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 60%, rgba(255,240,255,.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 70%, rgba(240,210,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,230,255,.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 40%, rgba(230,200,255,.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 55%, rgba(255,230,255,.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 45% 20%, rgba(221,182,255,.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 85%, rgba(240,210,255,.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 10%, rgba(255,240,255,.7) 0%, transparent 100%);
 }
 .hero-inner { position: relative; z-index: 1; max-width: 680px; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(147,197,253,.12); border: 1px solid rgba(147,197,253,.25);
+  background: rgba(200,155,255,.13); border: 1px solid rgba(200,155,255,.28);
   color: var(--luna-accent); font-size: .75rem; font-weight: 700;
   letter-spacing: .1em; padding: 6px 18px; border-radius: 999px; margin-bottom: 28px;
 }
@@ -101,21 +102,21 @@ nav {
 .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
   color: #fff; font-size: .95rem; font-weight: 700;
   padding: 14px 32px; border-radius: 999px; text-decoration: none;
-  box-shadow: 0 4px 24px rgba(59,130,246,.45);
+  box-shadow: 0 4px 24px rgba(147,51,234,.45);
   transition: transform .2s, box-shadow .2s;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59,130,246,.6); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(147,51,234,.6); }
 .btn-secondary {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.22);
   color: var(--luna-text); font-size: .95rem; font-weight: 500;
   padding: 14px 28px; border-radius: 999px; text-decoration: none;
   transition: background .2s, border-color .2s;
 }
-.btn-secondary:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); }
+.btn-secondary:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.42); }
 .hero-stats { display: flex; gap: 32px; justify-content: center; margin-top: 52px; }
 .hero-stat { text-align: center; }
 .hero-stat-num { font-size: 1.6rem; font-weight: 700; color: var(--luna-accent); }
@@ -143,11 +144,11 @@ nav {
 .about-logo-wrap { text-align: center; }
 .about-logo-circle {
   width: 140px; height: 140px; border-radius: 50%;
-  background: linear-gradient(135deg, #1d4ed8, #3b82f6, #06b6d4);
+  background: linear-gradient(135deg, #7c3aed, #9333ea, #c084fc);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   margin: 0 auto 16px;
-  box-shadow: 0 0 48px rgba(59,130,246,.4);
+  box-shadow: 0 0 48px rgba(147,51,234,.45);
 }
 .about-logo-name { color: var(--luna-accent); font-weight: 700; font-size: 1.1rem; }
 .about-logo-sub { color: var(--luna-muted); font-size: .82rem; margin-top: 4px; }
@@ -159,21 +160,21 @@ nav {
 .about-text p { color: var(--luna-muted); font-size: .9rem; line-height: 1.9; margin-bottom: 14px; }
 .about-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
 .about-tag {
-  background: rgba(147,197,253,.1); border: 1px solid rgba(147,197,253,.2);
+  background: rgba(200,155,255,.12); border: 1px solid rgba(200,155,255,.22);
   color: var(--luna-soft); font-size: .75rem; font-weight: 600;
   padding: 5px 14px; border-radius: 999px;
 }
 
 /* ─── PLAYLISTS ─── */
-.playlists-bg { background: var(--cream); }
+.playlists-bg { background: #f9f5ff; }
 .playlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
 .playlist-card {
   background: var(--card-bg); border-radius: var(--radius);
-  box-shadow: var(--shadow); overflow: hidden;
+  box-shadow: 0 4px 24px rgba(130,80,200,.10); overflow: hidden;
   transition: transform .2s, box-shadow .2s;
   display: flex; flex-direction: column;
 }
-.playlist-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(180,100,100,.15); }
+.playlist-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(130,80,200,.18); }
 .playlist-thumb {
   background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue));
   position: relative; overflow: hidden; height: 170px;
@@ -185,7 +186,7 @@ nav {
 .playlist-card:hover .playlist-thumb img { transform: scale(1.04); }
 .playlist-badge { position: absolute; bottom: 10px; left: 12px; }
 .playlist-badge {
-  display: inline-block; background: rgba(147,197,253,.15); border: 1px solid rgba(147,197,253,.25);
+  display: inline-block; background: rgba(200,155,255,.18); border: 1px solid rgba(200,155,255,.28);
   color: var(--luna-accent); font-size: .65rem; font-weight: 700; letter-spacing: .08em;
   padding: 3px 10px; border-radius: 999px;
 }
@@ -195,7 +196,7 @@ nav {
 .playlist-desc { font-size: .82rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 18px; }
 .playlist-love-tag {
   display: inline-flex; align-items: center; gap: 5px;
-  background: var(--peach); color: var(--rose); font-size: .7rem; font-weight: 600;
+  background: #f3e8ff; color: #7c3aed; font-size: .7rem; font-weight: 600;
   padding: 4px 10px; border-radius: 999px; margin-bottom: 16px; width: fit-content;
 }
 .btn-playlist {
@@ -203,9 +204,9 @@ nav {
   background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue));
   color: var(--luna-accent); font-size: .85rem; font-weight: 700;
   padding: 10px 20px; border-radius: 10px; text-decoration: none;
-  transition: opacity .2s;
+  transition: opacity .2s, transform .2s;
 }
-.btn-playlist:hover { opacity: .85; }
+.btn-playlist:hover { opacity: .88; transform: translateY(-1px); }
 
 /* ─── EMBED SECTION ─── */
 .embed-bg {
@@ -221,7 +222,7 @@ nav {
 .embed-inner > p { color: var(--luna-muted); font-size: .9rem; margin-bottom: 36px; }
 .embed-wrap {
   position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
-  border-radius: 16px; box-shadow: 0 0 60px rgba(59,130,246,.25);
+  border-radius: 16px; box-shadow: 0 0 60px rgba(147,51,234,.28);
 }
 .embed-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 16px; }
 
@@ -229,7 +230,7 @@ nav {
 .bridge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
 .bridge-card {
   background: var(--card-bg); border-radius: var(--radius);
-  padding: 24px 20px; box-shadow: var(--shadow);
+  padding: 24px 20px; box-shadow: 0 4px 24px rgba(130,80,200,.10);
   border-top: 3px solid transparent;
   transition: transform .2s;
 }
@@ -238,7 +239,7 @@ nav {
 .bridge-card.time   { border-color: #E9C46A; }
 .bridge-card.gifts  { border-color: #C9666E; }
 .bridge-card.acts   { border-color: #2D7A5E; }
-.bridge-card.touch  { border-color: #4A90D9; }
+.bridge-card.touch  { border-color: #9333ea; }
 .bridge-icon { font-size: 2rem; margin-bottom: 10px; }
 .bridge-lang { font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .bridge-title { font-weight: 700; font-size: .88rem; margin-bottom: 6px; }
@@ -259,9 +260,9 @@ nav {
 
 /* ─── FOOTER ─── */
 footer {
-  background: var(--luna-deep); border-top: 1px solid rgba(147,197,253,.1);
+  background: var(--luna-deep); border-top: 1px solid rgba(200,155,255,.12);
   text-align: center; padding: 32px 24px;
-  color: rgba(255,255,255,.35); font-size: .8rem;
+  color: rgba(255,255,255,.38); font-size: .8rem;
 }
 footer a { color: var(--luna-accent); text-decoration: none; }
 

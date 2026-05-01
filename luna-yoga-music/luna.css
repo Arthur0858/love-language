@@ -258,6 +258,52 @@ nav {
 .cta-strip p { color: var(--luna-muted); font-size: .95rem; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
 .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
+/* ─── YOUTUBE BRANDED HERO BUTTON ─── */
+.btn-youtube {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #FF0000;
+  color: #fff; font-size: .95rem; font-weight: 700;
+  padding: 14px 32px; border-radius: 999px; text-decoration: none;
+  box-shadow: 0 4px 24px rgba(255,0,0,.40);
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+.btn-youtube:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,0,0,.55); }
+.btn-youtube svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ─── FLOATING YOUTUBE SUBSCRIBE BUTTON ─── */
+.yt-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+  display: flex; align-items: center; gap: 10px;
+  background: #FF0000; color: #fff;
+  padding: 13px 22px; border-radius: 999px;
+  text-decoration: none; font-weight: 700; font-size: .9rem;
+  box-shadow: 0 4px 20px rgba(255,0,0,.45);
+  opacity: 0; transform: translateY(16px) scale(.95);
+  pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease, box-shadow .2s;
+}
+.yt-float.show {
+  opacity: 1; transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.yt-float:hover { background: #cc0000; box-shadow: 0 8px 28px rgba(255,0,0,.6); transform: translateY(-2px) scale(1); }
+.yt-float svg { width: 20px; height: 20px; flex-shrink: 0; }
+.yt-float-pulse {
+  position: absolute; inset: 0; border-radius: 999px;
+  background: #FF0000; opacity: .5;
+  animation: yt-pulse 2.2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes yt-pulse {
+  0%   { transform: scale(1);   opacity: .5; }
+  70%  { transform: scale(1.25); opacity: 0; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+@media (max-width: 480px) {
+  .yt-float { bottom: 18px; right: 16px; padding: 12px 18px; font-size: .82rem; }
+  .yt-float-label { display: none; }
+}
+
 /* ─── FOOTER ─── */
 footer {
   background: var(--luna-deep); border-top: 1px solid rgba(200,155,255,.12);

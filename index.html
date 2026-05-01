@@ -550,6 +550,121 @@
       padding: 0 24px 20px; color: var(--muted);
       font-size: .9rem; line-height: 1.85;
     }
+    /* ─── CHARACTERS SECTION ─── */
+    .characters-section {
+      max-width: 980px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .chars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .char-card {
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .char-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: inherit; opacity: .06;
+      pointer-events: none;
+    }
+    /* per-type color themes */
+    .char-card.type-w { background: linear-gradient(145deg, #FFFBF0, #FFF3D6); border: 1.5px solid #F5DDA0; }
+    .char-card.type-t { background: linear-gradient(145deg, #EEF3FA, #E0EBF8); border: 1.5px solid #A8C4E0; }
+    .char-card.type-g { background: linear-gradient(145deg, #FDF0F5, #FADFEA); border: 1.5px solid #E8A8C8; }
+    .char-card.type-s { background: linear-gradient(145deg, #EFF7F2, #DCF0E5); border: 1.5px solid #9FCFB5; }
+    .char-card.type-p { background: linear-gradient(145deg, #FEF5F0, #FDE8DC); border: 1.5px solid #F0C0A8; }
+
+    .char-top {
+      display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px;
+    }
+    .char-spirit-badge {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .type-w .char-spirit-badge { background: #FDE68A; }
+    .type-t .char-spirit-badge { background: #BFDBFE; }
+    .type-g .char-spirit-badge { background: #FBCFE8; }
+    .type-s .char-spirit-badge { background: #A7F3D0; }
+    .type-p .char-spirit-badge { background: #FED7AA; }
+
+    .char-title-wrap { flex: 1; }
+    .char-type-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 5px;
+    }
+    .type-w .char-type-badge { background: #FDE68A; color: #92400E; }
+    .type-t .char-type-badge { background: #BFDBFE; color: #1E40AF; }
+    .type-g .char-type-badge { background: #FBCFE8; color: #9D174D; }
+    .type-s .char-type-badge { background: #A7F3D0; color: #065F46; }
+    .type-p .char-type-badge { background: #FED7AA; color: #92400E; }
+
+    .char-name {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.15rem; font-weight: 700; color: var(--text);
+      line-height: 1.2;
+    }
+    .char-subtitle {
+      font-size: .75rem; color: var(--muted); margin-top: 2px;
+    }
+
+    .char-divider {
+      height: 1px; margin: 14px 0;
+    }
+    .type-w .char-divider { background: #F5DDA0; }
+    .type-t .char-divider { background: #A8C4E0; }
+    .type-g .char-divider { background: #E8A8C8; }
+    .type-s .char-divider { background: #9FCFB5; }
+    .type-p .char-divider { background: #F0C0A8; }
+
+    .char-section-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 4px;
+    }
+    .char-personality { font-size: .85rem; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .char-spirit-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.55); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 12px;
+    }
+    .char-spirit-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+    .char-spirit-desc { font-size: .77rem; color: var(--muted); margin-top: 1px; }
+    .char-outfit {
+      font-size: .8rem; color: var(--muted); line-height: 1.65;
+      font-style: italic;
+    }
+    .char-scene {
+      margin-top: 12px;
+      font-size: .78rem; color: var(--muted); line-height: 1.65;
+      background: rgba(255,255,255,.4); border-radius: 8px; padding: 8px 10px;
+    }
+
+    /* Result page character display */
+    .result-char-card {
+      border-radius: 16px; padding: 22px 20px;
+      margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start;
+    }
+    .result-char-card.type-w { background: linear-gradient(135deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
+    .result-char-card.type-t { background: linear-gradient(135deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }
+    .result-char-card.type-g { background: linear-gradient(135deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
+    .result-char-card.type-s { background: linear-gradient(135deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
+    .result-char-card.type-p { background: linear-gradient(135deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
+    .result-char-spirit { font-size: 2.6rem; flex-shrink: 0; line-height: 1; }
+    .result-char-body { flex: 1; }
+    .result-char-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .result-char-name { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .result-char-role { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-char-desc { font-size: .82rem; color: var(--text); line-height: 1.7; }
+    .result-char-spirit-info { font-size: .78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -578,6 +693,7 @@
   </div>
   <div class="nav-links">
     <a href="#types-section" data-i18n="nav.types">5種語言</a>
+    <a href="#characters-section">守護靈</a>
     <a href="#quiz-section" id="nav-test-link" data-i18n="nav.test">開始測驗</a>
     <a href="/theory/" data-i18n="nav.theory">理論</a>
     <a href="/resources/" data-i18n="nav.resources">推薦資源</a>
@@ -639,6 +755,142 @@
       <div class="name">身體的接觸</div>
       <div class="sub">Physical Touch</div>
     </div>
+  </div>
+</section>
+
+<!-- CHARACTERS SECTION -->
+<section class="characters-section" id="characters-section">
+  <div class="section-header">
+    <h2>五位守護靈角色</h2>
+    <p>每種愛的語言都住著一位守護靈——你的守護靈，是哪一位？</p>
+  </div>
+  <div class="chars-grid">
+
+    <!-- 1. 肯定的言詞 · 艾莉絲 -->
+    <div class="char-card type-w">
+      <div class="char-top">
+        <div class="char-spirit-badge">🎶</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">肯定的言詞 · Words of Affirmation</div>
+          <div class="char-name">艾莉絲 Iris</div>
+          <div class="char-subtitle">晨曦詩人</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">敏銳、溫暖、擅長發現事物微光中的美。她不急於表達，但每一句話都像經過雕琢的珍珠。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐦</span>
+        <div>
+          <div class="char-spirit-name">靈魂動物：百靈鳥 · 詠歌</div>
+          <div class="char-spirit-desc">羽毛帶有金屬光澤，尾羽極長。當艾莉絲讚美他人時，詠歌會繞著受讚美者旋轉並散發微光。</div>
+        </div>
+      </div>
+      <div class="char-section-label">服飾裝扮</div>
+      <div class="char-outfit">暖白色亞麻長裙，腰間繫著淡金色的絲帶。領口掛著一枚小巧的羽毛金飾，隨身攜帶一本磨損但精緻的牛皮筆記本。</div>
+      <div class="char-scene">✨ 艾莉絲輕托指尖，詠歌停駐其上，陽光穿透樹葉灑下，語言點亮靈魂。</div>
+    </div>
+
+    <!-- 2. 優質的時光 · 諾雅 -->
+    <div class="char-card type-t">
+      <div class="char-top">
+        <div class="char-spirit-badge">🌌</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">優質的時光 · Quality Time</div>
+          <div class="char-name">諾雅 Noah</div>
+          <div class="char-subtitle">星海領航員</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">內斂、極度專注。她討厭虛假的寒暄，追求靈魂深處的共振。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐋</span>
+        <div>
+          <div class="char-spirit-name">靈魂動物：座頭鯨 · 沉寂</div>
+          <div class="char-spirit-desc">身體由半透明的星雲組成，背部有點點繁星。當諾雅與人深度交流時，沉寂會隔絕外界所有噪音，創造靜止的時空。</div>
+        </div>
+      </div>
+      <div class="char-section-label">服飾裝扮</div>
+      <div class="char-outfit">俐落的深藍色絲絨連身褲，外披一件銀灰色長版斗篷。雙耳戴著星軌造型的耳環，目光深邃。</div>
+      <div class="char-scene">🌊 諾雅在幽暗的空間中與人對坐，沉寂在其身後的虛空中緩慢游動——此時此刻只有彼此。</div>
+    </div>
+
+    <!-- 3. 接受禮物 · 薇薇安 -->
+    <div class="char-card type-g">
+      <div class="char-top">
+        <div class="char-spirit-badge">✨</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">接受禮物 · Receiving Gifts</div>
+          <div class="char-name">薇薇安 Vivian</div>
+          <div class="char-subtitle">記憶收藏家</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">慷慨、富有玩心、熱愛儀式感。她認為每一份禮物都是時間的定格。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦜</span>
+        <div>
+          <div class="char-spirit-name">靈魂動物：園丁鳥 · 匠心</div>
+          <div class="char-spirit-desc">擁有一雙鮮豔的紫色瞳孔，嘴裡常啣著發光的絲線。牠主動尋找世界上的「驚喜碎片」，將「思念」視覺化。</div>
+        </div>
+      </div>
+      <div class="char-section-label">服飾裝扮</div>
+      <div class="char-outfit">充滿設計感的復古玫瑰紅澎澎袖洋裝，頸部戴著一條鑲嵌多種碎寶石的項鍊。口袋永遠鼓鼓的，裝滿了各種有趣的小物件。</div>
+      <div class="char-scene">🎁 薇薇安坐在一堆精緻禮物盒中，匠心正將一顆閃爍的星星放在她的掌心，氣氛歡樂且華麗。</div>
+    </div>
+
+    <!-- 4. 服務的行動 · 克萊兒 -->
+    <div class="char-card type-s">
+      <div class="char-top">
+        <div class="char-spirit-badge">🔧</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">服務的行動 · Acts of Service</div>
+          <div class="char-name">克萊兒 Claire</div>
+          <div class="char-subtitle">靜謐守護者</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">務實、堅定、不辭辛勞。比起情話，她更相信汗水的價值。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐝</span>
+        <div>
+          <div class="char-spirit-name">靈魂動物：工蜂 · 勤行</div>
+          <div class="char-spirit-desc">身體是半透明的琥珀色，振翅聲如同大提琴般低沉穩定。引導克萊兒發現他人的需求，協同完成修補工作。</div>
+        </div>
+      </div>
+      <div class="char-section-label">服飾裝扮</div>
+      <div class="char-outfit">墨綠色工裝襯衫搭配合身的長褲，雙袖俐落地捲起。腰間掛著一個多功能工具包，頭髮隨意紮成高馬尾。</div>
+      <div class="char-scene">🍯 克萊兒專注地修理或烹飪，勤行在身旁散發柔和的蜜蠟黃光芒——默默守護的可靠感。</div>
+    </div>
+
+    <!-- 5. 身體的接觸 · 朵拉 -->
+    <div class="char-card type-p">
+      <div class="char-top">
+        <div class="char-spirit-badge">🫂</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">身體的接觸 · Physical Touch</div>
+          <div class="char-name">朵拉 Dora</div>
+          <div class="char-subtitle">溫暖發光體</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">感性、純真、極具同理心。她相信肌膚的溫度能治癒最深的傷口。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦦</span>
+        <div>
+          <div class="char-spirit-name">靈魂動物：水獺 · 依依</div>
+          <div class="char-spirit-desc">毛皮閃爍著溫潤的水光，眼神濕潤且溫順。永遠緊貼著朵拉，當朵拉擁抱他人時也伸出小爪子輕觸，傳遞純粹的生理慰藉。</div>
+        </div>
+      </div>
+      <div class="char-section-label">服飾裝扮</div>
+      <div class="char-outfit">極其寬鬆舒適的奶茶色厚針織衫，赤著腳。脖子上圍著一條柔軟的羊絨圍巾，整個人像是一朵可以隨時陷入的雲。</div>
+      <div class="char-scene">🌸 朵拉閉眼與依依緊緊依偎，光影呈現柔和的粉白色調，觸覺的柔軟與溫暖幾乎溢出畫面。</div>
+    </div>
+
   </div>
 </section>
 
@@ -915,6 +1167,7 @@ const results = {
     subtitle: "Words of Affirmation",
     color: "#C9666E",
     desc: "語言對你而言有著巨大的力量。一句真心的「我愛你」、「你今天很棒」、「謝謝你的付出」，能讓你感受到被珍視的溫度。你不需要大張旗鼓，只需要對方願意說出口的那份真誠。批評和冷漠對你的傷害也特別深，因為你相信語言是連結心的橋樑。",
+    character: { typeClass: "type-w", spirit: "🎶", name: "艾莉絲 Iris", role: "晨曦詩人", animal: "百靈鳥 · 詠歌", animalDesc: "羽毛帶有金屬光澤，當艾莉絲讚美他人時會散發微光，語言點亮靈魂。", personality: "敏銳、溫暖，擅長發現事物微光中的美。每一句話都像經過雕琢的珍珠。" },
     tips: [
       { emoji: "✉️", title: "給伴侶的提示", text: "試著每天說一件你欣賞對方的事，不需要長篇大論，一句真心話就夠了。" },
       { emoji: "📔", title: "給自己的提醒", text: "練習在需要鼓勵時開口說「我需要聽你說說我做得好的地方」，讓伴侶有機會給你所需要的。" },
@@ -932,6 +1185,7 @@ const results = {
     subtitle: "Acts of Service",
     color: "#7B8FC9",
     desc: "對你而言，愛不是嘴巴說說，而是實際的行動。當對方主動幫你分擔家事、為你準備一杯熱茶、在你忙碌時默默處理瑣事，那份「我願意為你做」的心意，比任何甜言蜜語都更打動你。你重視的是對方願意為你付出時間和精力的那份用心。",
+    character: { typeClass: "type-s", spirit: "🔧", name: "克萊兒 Claire", role: "靜謐守護者", animal: "工蜂 · 勤行", animalDesc: "身體是半透明的琥珀色，振翅聲如同大提琴般低沉穩定，引導克萊兒發現並修補一切需要。", personality: "務實、堅定、不辭辛勞。比起情話，她更相信汗水的價值。" },
     tips: [
       { emoji: "🧹", title: "給伴侶的提示", text: "留意對方最近忙什麼，主動幫忙完成一件小事，不需要等對方開口。" },
       { emoji: "📋", title: "給自己的提醒", text: "當你需要幫助時，具體地說出來，例如「你可以幫我處理這件事嗎？這對我很重要。」" },
@@ -949,6 +1203,7 @@ const results = {
     subtitle: "Receiving Gifts",
     color: "#D4A259",
     desc: "禮物對你而言不是物質的價值，而是「你在想我」的具體證明。一朵路邊摘的小花、一張手寫卡片、甚至是對方記住你隨口提過的小東西然後默默買回來——這些都讓你感受到被記在心上。重要的不是價格，而是那份用心與惦記。",
+    character: { typeClass: "type-g", spirit: "✨", name: "薇薇安 Vivian", role: "記憶收藏家", animal: "園丁鳥 · 匠心", animalDesc: "擁有鮮豔的紫色瞳孔，嘴裡常啣著發光的絲線，主動尋找世界上的「驚喜碎片」將思念視覺化。", personality: "慷慨、富有玩心、熱愛儀式感。她認為每一份禮物都是時間的定格。" },
     tips: [
       { emoji: "🎀", title: "給伴侶的提示", text: "記下對方無意間提到「好想要」的東西，在意想不到的時刻送出，驚喜感會讓心意加倍。" },
       { emoji: "💭", title: "給自己的提醒", text: "告訴伴侶「禮物對我來說代表你在想我」，讓對方理解這不是你物質，而是你重視被惦記的感覺。" },
@@ -966,6 +1221,7 @@ const results = {
     subtitle: "Quality Time",
     color: "#5C8CB0",
     desc: "對你來說，最珍貴的禮物就是「全心全意的陪伴」。你渴望的不只是待在同一個空間，而是對方放下手機、關掉電視，眼裡只有你的那種專注。一起散步、聊天、甚至只是安靜地坐著，只要彼此全然在場，你就能感受到深深的愛與連結。",
+    character: { typeClass: "type-t", spirit: "🌌", name: "諾雅 Noah", role: "星海領航員", animal: "座頭鯨 · 沉寂", animalDesc: "身體由半透明的星雲組成，背部有點點繁星，與人深度交流時會隔絕外界所有噪音，創造靜止時空。", personality: "內斂、極度專注。她討厭虛假的寒暄，追求靈魂深處的共振。" },
     tips: [
       { emoji: "📵", title: "給伴侶的提示", text: "每天至少留出15分鐘的「無干擾時光」，放下手機，專心和對方在一起。" },
       { emoji: "🗓️", title: "給自己的提醒", text: "主動安排約會，不需要多華麗，一起散步或喝咖啡都好，重點是彼此全然在場。" },
@@ -983,6 +1239,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "擁抱、牽手、依偎、輕拍肩膀——這些身體的接觸對你來說不只是肢體動作，而是最直接的愛的表達。一個溫暖的擁抱能讓你瞬間感到安全，牽手走在路上讓你覺得「我們是一體的」。缺少肢體接觸會讓你感到孤單和疏離。",
+    character: { typeClass: "type-p", spirit: "🫂", name: "朵拉 Dora", role: "溫暖發光體", animal: "水獺 · 依依", animalDesc: "毛皮閃爍著溫潤的水光，永遠緊貼著朵拉。當朵拉擁抱他人時，也伸出小爪子輕觸，傳遞純粹的生理慰藉。", personality: "感性、純真、極具同理心。她相信肌膚的溫度能治癒最深的傷口。" },
     tips: [
       { emoji: "🤗", title: "給伴侶的提示", text: "不需要等特別的時刻，日常中多給一個擁抱、摸摸頭、牽牽手，這些小動作對對方意義重大。" },
       { emoji: "💬", title: "給自己的提醒", text: "告訴伴侶「我需要多一點身體的親近」，具體說出什麼樣的接觸讓你最有安全感。" },
@@ -1096,6 +1353,20 @@ function showResult() {
     html += '<div class="result-subtitle">' + r.subtitle + '</div>';
     html += '<div class="result-desc">' + r.desc + '</div>';
     html += '</div>';
+  }
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">你的守護靈</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 靈魂動物：' + ch.animal + '｜' + ch.animalDesc + '</div>';
+    html += '</div></div>';
   }
 
   // ─── Score bars ───

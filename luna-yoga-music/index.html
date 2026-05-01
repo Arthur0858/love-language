@@ -215,15 +215,14 @@
     .playlist-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(180,100,100,.15); }
     .playlist-thumb {
       background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue));
-      padding: 28px 24px 20px; position: relative; overflow: hidden;
+      position: relative; overflow: hidden; height: 170px;
     }
-    .playlist-thumb::after {
-      content: '';
-      position: absolute; bottom: -12px; right: -12px;
-      width: 80px; height: 80px; border-radius: 50%;
-      background: rgba(255,255,255,.04);
+    .playlist-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .4s ease;
     }
-    .playlist-emoji { font-size: 2.6rem; line-height: 1; margin-bottom: 8px; }
+    .playlist-card:hover .playlist-thumb img { transform: scale(1.04); }
+    .playlist-badge { position: absolute; bottom: 10px; left: 12px; }
     .playlist-badge {
       display: inline-block; background: rgba(147,197,253,.15); border: 1px solid rgba(147,197,253,.25);
       color: var(--luna-accent); font-size: .65rem; font-weight: 700; letter-spacing: .08em;
@@ -348,7 +347,7 @@
   <div class="stars"></div>
   <div class="hero-inner">
     <div class="hero-badge">🎵 療癒音樂頻道</div>
-    <div class="hero-logo">🌙</div>
+    <div class="hero-logo"><img src="images/icon.png" alt="Luna Yoga Music" style="width:80px;height:80px;border-radius:50%;object-fit:cover;"></div>
     <h1>Luna Yoga Music<br><span>內心平靜，從音樂開始</span></h1>
     <p class="hero-desc">
       在愛的語言的旅程中，音樂是最溫柔的陪伴。<br>
@@ -382,7 +381,7 @@
 <div class="about-strip">
   <div class="about-inner">
     <div class="about-logo-wrap">
-      <div class="about-logo-circle">🌙</div>
+      <div class="about-logo-circle"><img src="images/icon.png" alt="Luna Yoga Music" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
       <div class="about-logo-name">Luna Yoga Music</div>
       <div class="about-logo-sub">Healing · Flow · Meditation</div>
     </div>
@@ -417,7 +416,7 @@
       <!-- 1. Healing Vibes -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">✨</div>
+          <img src="images/healing.png" alt="Healing Vibes 療癒精選" loading="lazy">
           <div class="playlist-badge">HEALING · 療癒精選</div>
         </div>
         <div class="playlist-body">
@@ -432,7 +431,7 @@
       <!-- 2. Sleep Yoga -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">😴</div>
+          <img src="images/sleep.png" alt="Sleep Yoga Music 睡前放鬆" loading="lazy">
           <div class="playlist-badge">SLEEP · 睡前放鬆</div>
         </div>
         <div class="playlist-body">
@@ -447,7 +446,7 @@
       <!-- 3. Morning Yoga -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">🌅</div>
+          <img src="images/morning.png" alt="Morning Yoga Music 晨間喚醒" loading="lazy">
           <div class="playlist-badge">MORNING · 晨間喚醒</div>
         </div>
         <div class="playlist-body">
@@ -462,7 +461,7 @@
       <!-- 4. Stress Relief -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">💆</div>
+          <img src="images/stress.png" alt="Stress Relief Yoga Music 舒壓療癒" loading="lazy">
           <div class="playlist-badge">STRESS RELIEF · 舒壓療癒</div>
         </div>
         <div class="playlist-body">
@@ -477,7 +476,7 @@
       <!-- 5. Feminine Healing -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">🌸</div>
+          <img src="images/feminine.png" alt="Feminine Healing Yoga Music 女性療癒" loading="lazy" onerror="this.src='images/healing.png'">
           <div class="playlist-badge">FEMININE · 女性療癒</div>
         </div>
         <div class="playlist-body">
@@ -492,7 +491,7 @@
       <!-- 6. Luna Flow -->
       <div class="playlist-card">
         <div class="playlist-thumb">
-          <div class="playlist-emoji">🌙</div>
+          <img src="images/flow.png" alt="Luna Flow 1-Hour Yoga Music 瑜珈流動" loading="lazy">
           <div class="playlist-badge">FLOW · 瑜珈流動</div>
         </div>
         <div class="playlist-body">

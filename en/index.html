@@ -504,6 +504,84 @@
       padding: 0 24px 20px; color: var(--muted);
       font-size: .9rem; line-height: 1.85;
     }
+
+    /* ─── CHARACTERS SECTION ─── */
+    .characters-section {
+      max-width: 980px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .chars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .char-card {
+      border-radius: 20px; padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .char-card.type-w { background: linear-gradient(145deg, #FFFBF0, #FFF3D6); border: 1.5px solid #F5DDA0; }
+    .char-card.type-t { background: linear-gradient(145deg, #EEF3FA, #E0EBF8); border: 1.5px solid #A8C4E0; }
+    .char-card.type-g { background: linear-gradient(145deg, #FDF0F5, #FADFEA); border: 1.5px solid #E8A8C8; }
+    .char-card.type-s { background: linear-gradient(145deg, #EFF7F2, #DCF0E5); border: 1.5px solid #9FCFB5; }
+    .char-card.type-p { background: linear-gradient(145deg, #FEF5F0, #FDE8DC); border: 1.5px solid #F0C0A8; }
+    .char-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .char-spirit-badge {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .type-w .char-spirit-badge { background: #FDE68A; }
+    .type-t .char-spirit-badge { background: #BFDBFE; }
+    .type-g .char-spirit-badge { background: #FBCFE8; }
+    .type-s .char-spirit-badge { background: #A7F3D0; }
+    .type-p .char-spirit-badge { background: #FED7AA; }
+    .char-title-wrap { flex: 1; }
+    .char-type-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 5px;
+    }
+    .type-w .char-type-badge { background: #FDE68A; color: #92400E; }
+    .type-t .char-type-badge { background: #BFDBFE; color: #1E40AF; }
+    .type-g .char-type-badge { background: #FBCFE8; color: #9D174D; }
+    .type-s .char-type-badge { background: #A7F3D0; color: #065F46; }
+    .type-p .char-type-badge { background: #FED7AA; color: #92400E; }
+    .char-name { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .char-subtitle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .char-divider { height: 1px; margin: 14px 0; }
+    .type-w .char-divider { background: #F5DDA0; }
+    .type-t .char-divider { background: #A8C4E0; }
+    .type-g .char-divider { background: #E8A8C8; }
+    .type-s .char-divider { background: #9FCFB5; }
+    .type-p .char-divider { background: #F0C0A8; }
+    .char-section-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .char-personality { font-size: .85rem; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .char-spirit-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.55); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 12px;
+    }
+    .char-spirit-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+    .char-spirit-desc { font-size: .77rem; color: var(--muted); margin-top: 1px; }
+    .char-outfit { font-size: .8rem; color: var(--muted); line-height: 1.65; font-style: italic; }
+    .char-scene { margin-top: 12px; font-size: .78rem; color: var(--muted); line-height: 1.65; background: rgba(255,255,255,.4); border-radius: 8px; padding: 8px 10px; }
+    /* Result page character display */
+    .result-char-card { border-radius: 16px; padding: 22px 20px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+    .result-char-card.type-w { background: linear-gradient(135deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
+    .result-char-card.type-t { background: linear-gradient(135deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }
+    .result-char-card.type-g { background: linear-gradient(135deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
+    .result-char-card.type-s { background: linear-gradient(135deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
+    .result-char-card.type-p { background: linear-gradient(135deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
+    .result-char-spirit { font-size: 2.6rem; flex-shrink: 0; line-height: 1; }
+    .result-char-body { flex: 1; }
+    .result-char-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .result-char-name { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .result-char-role { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-char-desc { font-size: .82rem; color: var(--text); line-height: 1.7; }
+    .result-char-spirit-info { font-size: .78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -532,6 +610,7 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5 Languages</a>
+    <a href="#characters-section">Guardians</a>
     <a href="#quiz-section" id="nav-test-link">Start Quiz</a>
     <a href="/en/theory/">Theory</a>
     <a href="/resources/">Resources</a>
@@ -593,6 +672,141 @@
       <div class="name">Physical Touch</div>
       <div class="sub">Warmth through closeness</div>
     </div>
+  </div>
+</section>
+
+<!-- CHARACTERS SECTION -->
+<section class="characters-section" id="characters-section">
+  <div class="section-header">
+    <h2>The Five Guardian Spirits</h2>
+    <p>Every love language has its own guardian spirit — which one is yours?</p>
+  </div>
+  <div class="chars-grid">
+    <!-- W · Iris -->
+    <div class="char-card type-w">
+      <div class="char-top">
+        <div class="char-spirit-badge">🎶</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Words of Affirmation</div>
+          <div class="char-name">Iris</div>
+          <div class="char-subtitle">Poet of the Dawn</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personality</div>
+      <div class="char-personality">Sharp, warm, with a gift for finding beauty in the faintest glimmers of light. Every word she speaks feels like a carefully polished gem.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐦</span>
+        <div>
+          <div class="char-spirit-name">Spirit Animal: Lark · Song-Wing</div>
+          <div class="char-spirit-desc">Feathers with a metallic sheen and an extraordinarily long tail. When Iris praises someone, Song-Wing circles them and radiates a soft glow.</div>
+        </div>
+      </div>
+      <div class="char-section-label">Style</div>
+      <div class="char-outfit">A warm-white linen dress cinched with a pale-gold ribbon. A small feather pendant and a worn-but-beautiful leather notebook always on hand.</div>
+      <div class="char-scene">✨ Iris gently extends a fingertip; Song-Wing perches there as sunlight filters through the leaves — words illuminating the soul.</div>
+    </div>
+
+    <!-- T · Noah -->
+    <div class="char-card type-t">
+      <div class="char-top">
+        <div class="char-spirit-badge">🌌</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Quality Time</div>
+          <div class="char-name">Noah</div>
+          <div class="char-subtitle">Navigator of the Star-Sea</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personality</div>
+      <div class="char-personality">Reserved and intensely focused. She despises hollow small talk and seeks deep resonance at the level of the soul.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐋</span>
+        <div>
+          <div class="char-spirit-name">Spirit Animal: Humpback Whale · Stillness</div>
+          <div class="char-spirit-desc">Its body is woven from translucent nebulae, its back studded with stars. When Noah connects deeply, Stillness envelops them and silences the outside world.</div>
+        </div>
+      </div>
+      <div class="char-section-label">Style</div>
+      <div class="char-outfit">A sleek deep-blue velvet jumpsuit under a silver-grey long cape. Star-orbit earrings and eyes that seem to see through every distraction.</div>
+      <div class="char-scene">🌊 Noah sits across from someone in soft darkness; Stillness drifts slowly behind them — this moment belongs only to each other.</div>
+    </div>
+
+    <!-- G · Vivian -->
+    <div class="char-card type-g">
+      <div class="char-top">
+        <div class="char-spirit-badge">✨</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Receiving Gifts</div>
+          <div class="char-name">Vivian</div>
+          <div class="char-subtitle">Collector of Memories</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personality</div>
+      <div class="char-personality">Generous, playful, and devoted to ritual. She believes every gift is a moment frozen in time.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦜</span>
+        <div>
+          <div class="char-spirit-name">Spirit Animal: Bowerbird · Craft-Heart</div>
+          <div class="char-spirit-desc">Vivid purple eyes, always carrying a glowing silk thread in its beak. It seeks out 'surprise fragments' to materialize affection.</div>
+        </div>
+      </div>
+      <div class="char-section-label">Style</div>
+      <div class="char-outfit">A vintage rose-red puff-sleeve dress with a multi-gemstone necklace. Pockets always full of curious little treasures.</div>
+      <div class="char-scene">🎁 Vivian sits among beautifully wrapped boxes; Craft-Heart places a shimmering star in her palm — joyful and radiant.</div>
+    </div>
+
+    <!-- S · Claire -->
+    <div class="char-card type-s">
+      <div class="char-top">
+        <div class="char-spirit-badge">🔧</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Acts of Service</div>
+          <div class="char-name">Claire</div>
+          <div class="char-subtitle">The Silent Guardian</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personality</div>
+      <div class="char-personality">Practical, steadfast, and tireless. She trusts sweat over sweet words.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐝</span>
+        <div>
+          <div class="char-spirit-name">Spirit Animal: Worker Bee · Diligent</div>
+          <div class="char-spirit-desc">A translucent amber body with wings that hum like a deep cello. Diligent guides Claire toward others' unspoken needs and helps her mend what is broken.</div>
+        </div>
+      </div>
+      <div class="char-section-label">Style</div>
+      <div class="char-outfit">Forest-green work shirt with sleeves neatly rolled up, slim trousers and a multi-tool kit at the hip. Casual high ponytail — effortless artisan energy.</div>
+      <div class="char-scene">🍯 Claire works with quiet focus; Diligent glows a warm beeswax yellow beside her — the steady warmth of someone who quietly watches over you.</div>
+    </div>
+
+    <!-- P · Dora -->
+    <div class="char-card type-p">
+      <div class="char-top">
+        <div class="char-spirit-badge">🫂</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Physical Touch</div>
+          <div class="char-name">Dora</div>
+          <div class="char-subtitle">Warm Luminescent</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personality</div>
+      <div class="char-personality">Sensitive, pure, and deeply empathetic. She believes the warmth of skin can heal the deepest wounds.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦦</span>
+        <div>
+          <div class="char-spirit-name">Spirit Animal: Otter · Clinger</div>
+          <div class="char-spirit-desc">Fur shimmering with warm water-light and soft moist eyes. Always close to Dora — when she hugs someone, it reaches out a tiny paw to touch them too.</div>
+        </div>
+      </div>
+      <div class="char-section-label">Style</div>
+      <div class="char-outfit">An oversized milk-tea chunky knit sweater, barefoot. A soft cashmere scarf — she looks like a cloud you could sink into at any moment.</div>
+      <div class="char-scene">🌸 Dora closes her eyes and cuddles close with Clinger; the light is soft pink-white — warmth and softness almost overflow the frame.</div>
+    </div>
+
   </div>
 </section>
 
@@ -869,6 +1083,7 @@ const results = {
     subtitle: "Words of Affirmation",
     color: "#C9666E",
     desc: "Language carries enormous power for you. A heartfelt \"I love you,\" \"You were amazing today,\" or \"Thank you for everything you do\" makes you feel deeply cherished. You don't need grand gestures — you just need your partner to say what they mean. Criticism and emotional silence hurt you particularly deeply, because you believe language is the bridge that connects hearts.",
+    character: { typeClass: "type-w", spirit: "🎶", name: "Iris", role: "Poet of the Dawn", animal: "Lark · Song-Wing", animalDesc: "Feathers with a metallic sheen and an extraordinarily long tail. When Iris praises someone, Song-Wing circles them and radiates a soft glow — language lighting up the soul.", personality: "Sharp, warm, with a gift for finding beauty in the faintest glimmers of light. Every word she speaks feels like a carefully polished gem." },
     tips: [
       { emoji: "✉️", title: "Tip for your partner", text: "Try sharing one thing you appreciate about them every day — no need for long speeches, one sincere sentence is enough." },
       { emoji: "📔", title: "Reminder for yourself", text: "Practice asking for encouragement: say \"I need to hear something I did well today\" — give your partner the chance to love you the way you need." },
@@ -886,6 +1101,7 @@ const results = {
     subtitle: "Acts of Service",
     color: "#7B8FC9",
     desc: "For you, love isn't about words — it's about action. When your partner helps with chores, makes you a cup of tea, or quietly handles errands while you're busy, that \"I'm willing to do this for you\" speaks louder than any sweet talk. What matters most is the effort and thoughtfulness your partner puts into making your life easier.",
+    character: { typeClass: "type-s", spirit: "🔧", name: "Claire", role: "The Silent Guardian", animal: "Worker Bee · Diligent", animalDesc: "A translucent amber body with wings that hum like a deep cello. Diligent guides Claire toward others' unspoken needs and helps her mend whatever is broken.", personality: "Practical, steadfast, and tireless. She trusts sweat over sweet words." },
     tips: [
       { emoji: "🧹", title: "Tip for your partner", text: "Pay attention to what they've been busy with lately and help finish one small task — no need to wait for them to ask." },
       { emoji: "📋", title: "Reminder for yourself", text: "When you need help, be specific: say \"Could you handle this for me? It would really mean a lot.\"" },
@@ -903,6 +1119,7 @@ const results = {
     subtitle: "Receiving Gifts",
     color: "#D4A259",
     desc: "For you, gifts aren't about material value — they're tangible proof that \"you were thinking of me.\" A small flower picked from the roadside, a handwritten card, or something you casually mentioned that they quietly went and bought — these all make you feel remembered and cherished. It's not about the price tag; it's about the thought and care behind it.",
+    character: { typeClass: "type-g", spirit: "✨", name: "Vivian", role: "Collector of Memories", animal: "Bowerbird · Craft-Heart", animalDesc: "Vivid purple eyes, always carrying a glowing silk thread in its beak. It seeks out 'surprise fragments' across the world and hands them to Vivian — materializing affection.", personality: "Generous, playful, and devoted to ritual. She believes every gift is a moment frozen in time." },
     tips: [
       { emoji: "🎀", title: "Tip for your partner", text: "Write down things they casually say they want, then surprise them with it at an unexpected moment — the surprise factor multiplies the meaning." },
       { emoji: "💭", title: "Reminder for yourself", text: "Tell your partner: \"Gifts mean you were thinking of me\" — help them understand it's not about being materialistic, it's about feeling remembered." },
@@ -920,6 +1137,7 @@ const results = {
     subtitle: "Quality Time",
     color: "#5C8CB0",
     desc: "For you, the most precious gift is undivided attention. You don't just want to be in the same room — you want your partner to put down the phone, turn off the TV, and focus entirely on you. Walking together, talking, or even sitting in comfortable silence — as long as you're both fully present, you feel deeply loved and connected.",
+    character: { typeClass: "type-t", spirit: "🌌", name: "Noah", role: "Navigator of the Star-Sea", animal: "Humpback Whale · Stillness", animalDesc: "Its body is woven from translucent nebulae, its back studded with stars. When Noah connects deeply with someone, Stillness envelops them both and silences all outside noise.", personality: "Reserved and intensely focused. She despises hollow small talk and seeks deep resonance at the level of the soul." },
     tips: [
       { emoji: "📵", title: "Tip for your partner", text: "Set aside at least 15 minutes of distraction-free time each day — put down the phone and be fully present with them." },
       { emoji: "🗓️", title: "Reminder for yourself", text: "Take the lead in planning dates — they don't need to be fancy. A walk or a coffee together is perfect, as long as you're both fully there." },
@@ -937,6 +1155,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "Hugs, hand-holding, cuddling, a gentle pat on the shoulder — these aren't just physical gestures for you; they're the most direct expression of love. A warm embrace instantly makes you feel safe, and walking hand in hand tells you \"we are one.\" Without physical closeness, you feel lonely and disconnected.",
+    character: { typeClass: "type-p", spirit: "🫂", name: "Dora", role: "Warm Luminescent", animal: "Otter · Clinger", animalDesc: "Fur that shimmers with a warm water-glow, soft and moist eyes. Clinger is always close to Dora, and when Dora hugs someone, it reaches out a tiny paw to touch them too.", personality: "Sensitive, pure, and deeply empathetic. She believes the warmth of skin can heal the deepest wounds." },
     tips: [
       { emoji: "🤗", title: "Tip for your partner", text: "Don't wait for a special moment — a casual hug, a pat on the head, or holding hands in everyday life means the world to them." },
       { emoji: "💬", title: "Reminder for yourself", text: "Tell your partner: \"I need more physical closeness\" — be specific about what kind of touch makes you feel most secure." },
@@ -1050,6 +1269,21 @@ function showResult() {
     html += '<div class="result-subtitle">' + r.subtitle + '</div>';
     html += '<div class="result-desc">' + r.desc + '</div>';
     html += '</div>';
+  }
+
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">Your Guardian Spirit</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 Spirit Animal: ' + ch.animal + ' | ' + ch.animalDesc + '</div>';
+    html += '</div></div>';
   }
 
   // ─── Score bars ───

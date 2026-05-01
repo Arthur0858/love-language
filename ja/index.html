@@ -505,6 +505,84 @@
       padding: 0 24px 20px; color: var(--muted);
       font-size: .9rem; line-height: 1.85;
     }
+
+    /* ─── CHARACTERS SECTION ─── */
+    .characters-section {
+      max-width: 980px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .chars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .char-card {
+      border-radius: 20px; padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .char-card.type-w { background: linear-gradient(145deg, #FFFBF0, #FFF3D6); border: 1.5px solid #F5DDA0; }
+    .char-card.type-t { background: linear-gradient(145deg, #EEF3FA, #E0EBF8); border: 1.5px solid #A8C4E0; }
+    .char-card.type-g { background: linear-gradient(145deg, #FDF0F5, #FADFEA); border: 1.5px solid #E8A8C8; }
+    .char-card.type-s { background: linear-gradient(145deg, #EFF7F2, #DCF0E5); border: 1.5px solid #9FCFB5; }
+    .char-card.type-p { background: linear-gradient(145deg, #FEF5F0, #FDE8DC); border: 1.5px solid #F0C0A8; }
+    .char-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .char-spirit-badge {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .type-w .char-spirit-badge { background: #FDE68A; }
+    .type-t .char-spirit-badge { background: #BFDBFE; }
+    .type-g .char-spirit-badge { background: #FBCFE8; }
+    .type-s .char-spirit-badge { background: #A7F3D0; }
+    .type-p .char-spirit-badge { background: #FED7AA; }
+    .char-title-wrap { flex: 1; }
+    .char-type-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 5px;
+    }
+    .type-w .char-type-badge { background: #FDE68A; color: #92400E; }
+    .type-t .char-type-badge { background: #BFDBFE; color: #1E40AF; }
+    .type-g .char-type-badge { background: #FBCFE8; color: #9D174D; }
+    .type-s .char-type-badge { background: #A7F3D0; color: #065F46; }
+    .type-p .char-type-badge { background: #FED7AA; color: #92400E; }
+    .char-name { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .char-subtitle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .char-divider { height: 1px; margin: 14px 0; }
+    .type-w .char-divider { background: #F5DDA0; }
+    .type-t .char-divider { background: #A8C4E0; }
+    .type-g .char-divider { background: #E8A8C8; }
+    .type-s .char-divider { background: #9FCFB5; }
+    .type-p .char-divider { background: #F0C0A8; }
+    .char-section-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .char-personality { font-size: .85rem; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .char-spirit-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.55); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 12px;
+    }
+    .char-spirit-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+    .char-spirit-desc { font-size: .77rem; color: var(--muted); margin-top: 1px; }
+    .char-outfit { font-size: .8rem; color: var(--muted); line-height: 1.65; font-style: italic; }
+    .char-scene { margin-top: 12px; font-size: .78rem; color: var(--muted); line-height: 1.65; background: rgba(255,255,255,.4); border-radius: 8px; padding: 8px 10px; }
+    /* Result page character display */
+    .result-char-card { border-radius: 16px; padding: 22px 20px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+    .result-char-card.type-w { background: linear-gradient(135deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
+    .result-char-card.type-t { background: linear-gradient(135deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }
+    .result-char-card.type-g { background: linear-gradient(135deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
+    .result-char-card.type-s { background: linear-gradient(135deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
+    .result-char-card.type-p { background: linear-gradient(135deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
+    .result-char-spirit { font-size: 2.6rem; flex-shrink: 0; line-height: 1; }
+    .result-char-body { flex: 1; }
+    .result-char-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .result-char-name { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .result-char-role { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-char-desc { font-size: .82rem; color: var(--text); line-height: 1.7; }
+    .result-char-spirit-info { font-size: .78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
     /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
@@ -533,6 +611,7 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5つの言語</a>
+    <a href="#characters-section">守護霊キャラ</a>
     <a href="#quiz-section" id="nav-test-link">診断スタート</a>
     <a href="/ja/theory/">理論</a>
     <a href="/resources/">リソース</a>
@@ -594,6 +673,141 @@
       <div class="name">身体的な接触</div>
       <div class="sub">Physical Touch</div>
     </div>
+  </div>
+</section>
+
+<!-- CHARACTERS SECTION -->
+<section class="characters-section" id="characters-section">
+  <div class="section-header">
+    <h2>5人の守護霊キャラクター</h2>
+    <p>愛の言語にはそれぞれ守護霊がいます。あなたの守護霊は誰でしょう？</p>
+  </div>
+  <div class="chars-grid">
+    <!-- W · アイリス (Iris) -->
+    <div class="char-card type-w">
+      <div class="char-top">
+        <div class="char-spirit-badge">🎶</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">肯定的な言葉</div>
+          <div class="char-name">アイリス (Iris)</div>
+          <div class="char-subtitle">夜明けの詩人</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">鋭く、温かく、物事のかすかな輝きの中に美を見つける。彼女の言葉はどれも磨かれた真珠のようだ。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐦</span>
+        <div>
+          <div class="char-spirit-name">ソウルアニマル: ヒバリ · 詠歌</div>
+          <div class="char-spirit-desc">金属光沢の羽根と長い尾羽を持つ。アイリスが誰かを褒めると、詠歌はその人の周りを飛びながら微かに輝く。</div>
+        </div>
+      </div>
+      <div class="char-section-label">スタイル</div>
+      <div class="char-outfit">暖白色のリネンロングワンピース、腰には淡金色のリボン。小さな羽根の金飾りと使い込まれた革のノートが常備。</div>
+      <div class="char-scene">✨ アイリスが指先を差し出すと詠歌が止まり、木漏れ日が差し込む――言葉が魂を照らす瞬間。</div>
+    </div>
+
+    <!-- T · ノア (Noah) -->
+    <div class="char-card type-t">
+      <div class="char-top">
+        <div class="char-spirit-badge">🌌</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">充実した時間</div>
+          <div class="char-name">ノア (Noah)</div>
+          <div class="char-subtitle">星海の航海士</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">内向的で極めて集中力が高い。形ばかりの挨拶を嫌い、魂の深い共鳴を求める。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐋</span>
+        <div>
+          <div class="char-spirit-name">ソウルアニマル: ザトウクジラ · 沉寂</div>
+          <div class="char-spirit-desc">体は半透明の星雲で構成され、背中には繁星が輝く。深い交流の場では外界の雑音をすべて遮断し、静止した時空を作る。</div>
+        </div>
+      </div>
+      <div class="char-section-label">スタイル</div>
+      <div class="char-outfit">深藍色のベルベットオールインワン、銀灰色の長いマント。星軌イヤリング、すべてを見透かすような深い眼差し。</div>
+      <div class="char-scene">🌊 薄暗い空間でノアが向かい合って座る。沉寂が背後の虚空をゆっくり泳ぐ――今この瞬間はふたりだけのもの。</div>
+    </div>
+
+    <!-- G · ヴィヴィアン (Vivian) -->
+    <div class="char-card type-g">
+      <div class="char-top">
+        <div class="char-spirit-badge">✨</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">贈り物</div>
+          <div class="char-name">ヴィヴィアン (Vivian)</div>
+          <div class="char-subtitle">記憶のコレクター</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">寛大で遊び心があり、儀式を大切にする。すべての贈り物は時間の定点だと信じている。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦜</span>
+        <div>
+          <div class="char-spirit-name">ソウルアニマル: ニワシドリ · 匠心</div>
+          <div class="char-spirit-desc">鮮やかな紫の瞳を持ち、口には光る絹糸を咥えている。世界の「驚きの欠片」を集め、思いやりを可視化する。</div>
+        </div>
+      </div>
+      <div class="char-section-label">スタイル</div>
+      <div class="char-outfit">ビンテージローズレッドのパフスリーブドレス、碎石入りのネックレス。ポケットは常に小物でいっぱい。</div>
+      <div class="char-scene">🎁 精緻な贈り物の箱に囲まれたヴィヴィアン。匠心が輝く星を掌に置く――華やかで楽しい光景。</div>
+    </div>
+
+    <!-- S · クレール (Claire) -->
+    <div class="char-card type-s">
+      <div class="char-top">
+        <div class="char-spirit-badge">🔧</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">奉仕の行為</div>
+          <div class="char-name">クレール (Claire)</div>
+          <div class="char-subtitle">静かな守護者</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">実用的で堅実、疲れ知らず。甘い言葉より汗の価値を信じる。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐝</span>
+        <div>
+          <div class="char-spirit-name">ソウルアニマル: ミツバチ · 勤行</div>
+          <div class="char-spirit-desc">半透明の琥珀色の体、羽音はチェロのように低く安定。クレールに他者のニーズを気づかせ、修繕を共に行う。</div>
+        </div>
+      </div>
+      <div class="char-section-label">スタイル</div>
+      <div class="char-outfit">墨緑色のワークシャツにスリムパンツ、袖を折り上げ。腰にはマルチツールポーチ、無造作な高いポニーテール。</div>
+      <div class="char-scene">🍯 クレールが静かに修理や料理に集中する。勤行が蜜蠟の黄色い光を放つ――黙って守る頼もしさ。</div>
+    </div>
+
+    <!-- P · ドーラ (Dora) -->
+    <div class="char-card type-p">
+      <div class="char-top">
+        <div class="char-spirit-badge">🫂</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">身体的な接触</div>
+          <div class="char-name">ドーラ (Dora)</div>
+          <div class="char-subtitle">温もりの発光体</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">性格</div>
+      <div class="char-personality">感受性豊かで純粋、深い共感力を持つ。肌の温もりが最も深い傷を癒せると信じる。</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦦</span>
+        <div>
+          <div class="char-spirit-name">ソウルアニマル: カワウソ · 依依</div>
+          <div class="char-spirit-desc">毛皮は温かな水の光を帯び、瞳は潤んで穏やか。常にドーラのそばにいて、誰かを抱きしめると小さな前足でそっと触れる。</div>
+        </div>
+      </div>
+      <div class="char-section-label">スタイル</div>
+      <div class="char-outfit">超ゆったりのミルクティー色の厚手ニット、裸足。柔らかなカシミヤのスカーフ――いつでも包まれそうな雲のよう。</div>
+      <div class="char-scene">🌸 ドーラが目を閉じ依依とそっと寄り添う。光は柔らかなピンクホワイト――温もりと柔らかさが溢れ出す。</div>
+    </div>
+
   </div>
 </section>
 
@@ -870,6 +1084,7 @@ const results = {
     subtitle: "Words of Affirmation",
     color: "#C9666E",
     desc: "言葉はあなたにとって大きな力を持っています。心からの「愛してる」「今日もすごく頑張ったね」「いつもありがとう」という一言が、大切にされていると感じさせてくれます。派手な演出は必要ありません。ただ相手が口にしてくれる誠実な気持ちだけで十分です。批判や冷たい態度は特に深く傷つきます。なぜなら言葉こそが心と心をつなぐ架け橋だと信じているからです。",
+    character: { typeClass: "type-w", spirit: "🎶", name: "アイリス (Iris)", role: "夜明けの詩人", animal: "ヒバリ · 詠歌（えいか）", animalDesc: "金属光沢の羽根と長い尾羽を持つ。アイリスが誰かを褒めると、詠歌はその人の周りを飛びながら微かに輝く。", personality: "鋭く、温かく、物事のかすかな輝きの中に美を見つける。彼女の言葉はどれも磨かれた真珠のようだ。" },
     tips: [
       { emoji: "✉️", title: "パートナーへのヒント", text: "毎日一つ、相手の素敵なところを伝えてみましょう。長い文章は必要ありません。一言の本音で十分です。" },
       { emoji: "📔", title: "自分へのリマインド", text: "励ましが必要なときは「私のいいところを言ってほしい」と伝える練習をしましょう。パートナーがあなたの求めるものを届けるチャンスになります。" },
@@ -887,6 +1102,7 @@ const results = {
     subtitle: "Acts of Service",
     color: "#7B8FC9",
     desc: "あなたにとって愛とは口で言うことではなく、実際の行動です。パートナーが家事を手伝ってくれたり、温かいお茶を入れてくれたり、忙しいときに黙って雑用を片付けてくれたりするとき、その「あなたのためにやりたい」という気持ちが、どんな甘い言葉よりも心に響きます。あなたが大切にしているのは、相手が時間と労力を惜しまず注いでくれるその思いやりです。",
+    character: { typeClass: "type-s", spirit: "🔧", name: "クレール (Claire)", role: "静かな守護者", animal: "ミツバチ · 勤行（きんぎょう）", animalDesc: "半透明の琥珀色の体、羽音はチェロのように低く安定。クレールに他者のニーズを気づかせ、修繕を共に行う。", personality: "実用的で堅実、疲れ知らず。甘い言葉より汗の価値を信じる。" },
     tips: [
       { emoji: "🧹", title: "パートナーへのヒント", text: "相手が最近忙しいことに気づいたら、頼まれる前にひとつ手伝ってみましょう。" },
       { emoji: "📋", title: "自分へのリマインド", text: "助けが必要なとき、具体的に伝えましょう。「これを手伝ってくれると助かるんだけど」と言えば、パートナーも動きやすくなります。" },
@@ -904,6 +1120,7 @@ const results = {
     subtitle: "Receiving Gifts",
     color: "#D4A259",
     desc: "贈り物はあなたにとって物質的な価値ではなく、「あなたのことを考えていた」という具体的な証です。道端で摘んだ一輪の花、手書きのカード、何気なく話した好きなものをこっそり買ってきてくれること。これらすべてが、心に留めてもらえていると感じさせてくれます。大切なのは値段ではなく、その気持ちと思いやりです。",
+    character: { typeClass: "type-g", spirit: "✨", name: "ヴィヴィアン (Vivian)", role: "記憶のコレクター", animal: "ニワシドリ · 匠心（しょうしん）", animalDesc: "鮮やかな紫の瞳を持ち、口には光る絹糸を咥えている。世界の「驚きの欠片」を集め、思いやりを可視化する。", personality: "寛大で遊び心があり、儀式を大切にする。すべての贈り物は時間の定点だと信じている。" },
     tips: [
       { emoji: "🎀", title: "パートナーへのヒント", text: "相手がふと「欲しいな」と言ったものをメモしておき、思いがけないタイミングで贈りましょう。サプライズ感が気持ちを倍にします。" },
       { emoji: "💭", title: "自分へのリマインド", text: "「贈り物は私にとって、あなたが私を想ってくれている証なの」と伝えましょう。物欲ではなく、気にかけてもらえる感覚が大事だと分かってもらえます。" },
@@ -921,6 +1138,7 @@ const results = {
     subtitle: "Quality Time",
     color: "#5C8CB0",
     desc: "あなたにとって一番大切な贈り物は「全身全霊の寄り添い」です。同じ空間にいるだけでなく、スマホを置いてテレビを消して、あなただけを見つめてくれる集中力を求めています。一緒に散歩したり、おしゃべりしたり、ただ静かに座っているだけでも、お互いが完全にそこにいれば、深い愛とつながりを感じられます。",
+    character: { typeClass: "type-t", spirit: "🌌", name: "ノア (Noah)", role: "星海の航海士", animal: "ザトウクジラ · 沉寂（ちんせき）", animalDesc: "体は半透明の星雲で構成され、背中には繁星が輝く。深い交流の場では外界の雑音をすべて遮断し、静止した時空を作る。", personality: "内向的で極めて集中力が高い。形ばかりの挨拶を嫌い、魂の深い共鳴を求める。" },
     tips: [
       { emoji: "📵", title: "パートナーへのヒント", text: "毎日最低15分の「邪魔なし時間」を作りましょう。スマホを置いて、相手だけに集中しましょう。" },
       { emoji: "🗓️", title: "自分へのリマインド", text: "自分からデートを計画しましょう。豪華でなくてOK。一緒に散歩やコーヒーでも、大事なのはお互いが完全にそこにいることです。" },
@@ -938,6 +1156,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "ハグ、手つなぎ、寄り添い、肩をポンと叩く。これらのスキンシップはあなたにとって単なる体の動きではなく、最もストレートな愛の表現です。温かいハグで一瞬で安心でき、手をつないで歩くだけで「私たちは一つだ」と感じられます。スキンシップが少ないと、孤独感や距離感を覚えてしまいます。",
+    character: { typeClass: "type-p", spirit: "🫂", name: "ドーラ (Dora)", role: "温もりの発光体", animal: "カワウソ · 依依（いい）", animalDesc: "毛皮は温かな水の光を帯び、瞳は潤んで穏やか。常にドーラのそばにいて、誰かを抱きしめると小さな前足でそっと触れる。", personality: "感受性豊かで純粋、深い共感力を持つ。肌の温もりが最も深い傷を癒せると信じる。" },
     tips: [
       { emoji: "🤗", title: "パートナーへのヒント", text: "特別なときを待たなくて大丈夫。日常の中でハグしたり、頭を撫でたり、手をつないだり。こうした小さな動作が相手にとって大きな意味を持ちます。" },
       { emoji: "💬", title: "自分へのリマインド", text: "「もっとスキンシップが欲しい」と伝えましょう。どんな触れ合いが一番安心するか、具体的に教えてあげましょう。" },
@@ -1051,6 +1270,21 @@ function showResult() {
     html += '<div class="result-subtitle">' + r.subtitle + '</div>';
     html += '<div class="result-desc">' + r.desc + '</div>';
     html += '</div>';
+  }
+
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">あなたの守護霊</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 ソウルアニマル: ' + ch.animal + ' | ' + ch.animalDesc + '</div>';
+    html += '</div></div>';
   }
 
   // ─── Score bars ───

@@ -620,8 +620,7 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5 Lenguajes</a>
-    <a href="#characters-section">Guardianes</a>
-    <a href="#quiz-section" id="nav-test-link">Iniciar Test</a>
+        <a href="#quiz-section" id="nav-test-link">Iniciar Test</a>
     <a href="/es/theory/">Teoría</a>
     <a href="/resources/">Recursos</a>
     <a href="/es/luna-yoga-music/">🎵 Luna Music</a>
@@ -650,50 +649,15 @@
   <button class="btn-start" onclick="startQuiz()">Iniciar Test →</button>
 </section>
 
-<!-- TYPES PREVIEW -->
-<section class="types-section" id="types-section">
-  <div class="section-header">
-    <h2>Los cinco lenguajes del amor</h2>
-    <p>Una teoría del psicólogo Gary Chapman que ha transformado millones de relaciones en todo el mundo</p>
-  </div>
-  <div class="types-grid">
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">💬</div>
-      <div class="name">Palabras de Afirmación</div>
-      <div class="sub">Words of Affirmation</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🛠️</div>
-      <div class="name">Actos de Servicio</div>
-      <div class="sub">Acts of Service</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🎁</div>
-      <div class="name">Recibir Regalos</div>
-      <div class="sub">Receiving Gifts</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">⏳</div>
-      <div class="name">Tiempo de Calidad</div>
-      <div class="sub">Quality Time</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🤝</div>
-      <div class="name">Contacto Físico</div>
-      <div class="sub">Physical Touch</div>
-    </div>
-  </div>
-</section>
-
 <!-- CHARACTERS SECTION -->
-<section class="characters-section" id="characters-section">
+<section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>Los Cinco Espíritus Guardianes</h2>
-    <p>Cada lenguaje del amor tiene su propio espíritu guardián — ¿cuál es el tuyo?</p>
+    <h2>Cinco Lenguajes del Amor × Guardianes</h2>
+    <p>Los cinco lenguajes del amor de Gary Chapman, cada uno con su propio espíritu guardián.<br>¡Haz clic en una tarjeta para comenzar el test y encontrar el tuyo!</p>
   </div>
   <div class="chars-grid">
     <!-- W · Iris -->
-    <div class="char-card type-w">
+    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
@@ -716,7 +680,7 @@
     </div>
 
     <!-- T · Noah -->
-    <div class="char-card type-t">
+    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
@@ -739,7 +703,7 @@
     </div>
 
     <!-- G · Vivian -->
-    <div class="char-card type-g">
+    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
@@ -762,7 +726,7 @@
     </div>
 
     <!-- S · Claire -->
-    <div class="char-card type-s">
+    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
@@ -785,7 +749,7 @@
     </div>
 
     <!-- P · Dora -->
-    <div class="char-card type-p">
+    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>

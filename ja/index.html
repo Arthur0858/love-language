@@ -620,8 +620,7 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5つの言語</a>
-    <a href="#characters-section">守護霊キャラ</a>
-    <a href="#quiz-section" id="nav-test-link">診断スタート</a>
+        <a href="#quiz-section" id="nav-test-link">診断スタート</a>
     <a href="/ja/theory/">理論</a>
     <a href="/resources/">リソース</a>
     <a href="/ja/luna-yoga-music/">🎵 Luna Music</a>
@@ -650,50 +649,15 @@
   <button class="btn-start" onclick="startQuiz()">診断スタート →</button>
 </section>
 
-<!-- TYPES PREVIEW -->
-<section class="types-section" id="types-section">
-  <div class="section-header">
-    <h2>5つの愛の言語</h2>
-    <p>心理学者ゲイリー・チャップマンが提唱した理論。世界中の数百万のカップルに影響を与えました</p>
-  </div>
-  <div class="types-grid">
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">💬</div>
-      <div class="name">肯定的な言葉</div>
-      <div class="sub">Words of Affirmation</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🛠️</div>
-      <div class="name">奉仕の行為</div>
-      <div class="sub">Acts of Service</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🎁</div>
-      <div class="name">贈り物</div>
-      <div class="sub">Receiving Gifts</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">⏳</div>
-      <div class="name">充実した時間</div>
-      <div class="sub">Quality Time</div>
-    </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🤝</div>
-      <div class="name">身体的な接触</div>
-      <div class="sub">Physical Touch</div>
-    </div>
-  </div>
-</section>
-
 <!-- CHARACTERS SECTION -->
-<section class="characters-section" id="characters-section">
+<section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>5人の守護霊キャラクター</h2>
+    <h2>5つの愛の言語 × 守護霊</h2>
     <p>愛の言語にはそれぞれ守護霊がいます。あなたの守護霊は誰でしょう？</p>
   </div>
   <div class="chars-grid">
     <!-- W · アイリス (Iris) -->
-    <div class="char-card type-w">
+    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
@@ -716,7 +680,7 @@
     </div>
 
     <!-- T · ノア (Noah) -->
-    <div class="char-card type-t">
+    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
@@ -739,7 +703,7 @@
     </div>
 
     <!-- G · ヴィヴィアン (Vivian) -->
-    <div class="char-card type-g">
+    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
@@ -762,7 +726,7 @@
     </div>
 
     <!-- S · クレール (Claire) -->
-    <div class="char-card type-s">
+    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
@@ -785,7 +749,7 @@
     </div>
 
     <!-- P · ドーラ (Dora) -->
-    <div class="char-card type-p">
+    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
       <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>

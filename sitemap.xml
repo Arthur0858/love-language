@@ -148,4 +148,14 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ── Luna Yoga Music Page ── -->
+  <url>
+    <loc>https://lovetypes.tw/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

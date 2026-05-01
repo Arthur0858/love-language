@@ -1223,3 +1223,263 @@ const results = {
     character: { typeClass: "type-t", spirit: "🌌", name: "諾雅 Noah", role: "星海領航員", animal: "座頭鯨 · 沉寂", animalDesc: "身體由半透明的星雲組成，背部有點點繁星，與人深度交流時會隔絕外界所有噪音，創造靜止時空。", personality: "內斂、極度專注。她討厭虛假的寒暄，追求靈魂深處的共振。" },
     tips: [
       { emoji: "📵", title: "給伴侶的提示", text: "每天至少留出15分鐘的「無干擾時光」，放下手機，專心和對方在一起。" },
+      { emoji: "🗓️", title: "給自己的提醒", text: "主動安排約會，不需要多華麗，一起散步或喝咖啡都好，重點是彼此全然在場。" },
+      { emoji: "🔥", title: "愛的提升", text: "建立每週「約會之夜」，輪流由一人規劃，創造專屬兩人的回憶。" },
+    ],
+    courses: [
+      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010940456?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" },
+    ],
+    yoga: { desc: "優質的時光也包括你與自己相處的時刻。Luna Yoga Music 的冥想音樂，幫助你在忙碌生活中找到一段「只屬於自己」的安靜時光。當你學會與自己好好在一起，也能更自在地與愛人同在。", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "靜心冥想音樂" }
+  },
+  P: {
+    icon: "🫂",
+    tag: "身體的接觸",
+    name: "你的愛的語言是：身體的接觸",
+    subtitle: "Physical Touch",
+    color: "#9B7BBF",
+    desc: "擁抱、牽手、依偎、輕拍肩膀——這些身體的接觸對你來說不只是肢體動作，而是最直接的愛的表達。一個溫暖的擁抱能讓你瞬間感到安全，牽手走在路上讓你覺得「我們是一體的」。缺少肢體接觸會讓你感到孤單和疏離。",
+    tips: [
+      { emoji: "🤗", title: "給伴侶的提示", text: "不需要等特別的時刻，日常中多給一個擁抱、摸摸頭、牽牽手，這些小動作對對方意義重大。" },
+      { emoji: "💬", title: "給自己的提醒", text: "告訴伴侶「我需要多一點身體的親近」，具體說出什麼樣的接觸讓你最有安全感。" },
+      { emoji: "🔥", title: "愛的提升", text: "睡前建立「擁抱儀式」，每晚擁抱至少30秒，研究顯示這能有效提升親密感與安全感。" },
+    ],
+    courses: [
+      { icon: "📖", label: "博客來書籍", title: "愛之語：兩性溝通的雙贏策略", url: "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010940456?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" },
+    ],
+    yoga: { desc: "身體是感受愛的容器。Luna Yoga Music 的 Body Scan 放鬆音樂，引導你從頭到腳感受自己的存在。當你重新連結身體，也能更自在地靠近另一個人。", url: "https://www.youtube.com/@LunaYogaMusic", playlist: "身體掃描放鬆音樂" }
+  }
+};
+
+// ─── LABEL MAP ───────────────────────────────────────────────────
+const labelMap = { W: "肯定的言詞", S: "服務的行動", G: "接受禮物", T: "優質的時光", P: "身體的接觸" };
+
+// ─── QUIZ STATE ──────────────────────────────────────────────────
+let currentQ = 0;
+let answers = [];
+let selectedType = null;
+
+// ─── QUIZ FUNCTIONS ──────────────────────────────────────────────
+function startQuiz() {
+  currentQ = 0;
+  answers = [];
+  selectedType = null;
+  document.getElementById('quiz-wrapper').style.display = 'block';
+  document.getElementById('result-section').style.display = 'none';
+  document.querySelector('.hero').style.display = 'none';
+  document.querySelector('.types-grid').parentElement.style.display = 'none';
+  showQuestion(0);
+  document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+function showQuestion(idx) {
+  const q = questions[idx];
+  const total = questions.length;
+  const pct = ((idx) / total * 100).toFixed(0);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = '第 ' + (idx + 1) + ' 題，共 ' + total + ' 題';
+
+  let html = '<div class="q-number">QUESTION ' + (idx + 1) + '</div>';
+  html += '<div class="q-text">' + q.text + '</div>';
+  q.options.forEach(function(opt) {
+    html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
+    html += '<span class="option-dot"></span>' + opt.text + '</button>';
+  });
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">下一題 →</button>';
+
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+  card.innerHTML = html;
+}
+
+function selectOption(type, btn) {
+  selectedType = type;
+  document.querySelectorAll('#question-card .option-btn').forEach(function(b) { b.classList.remove('chosen'); });
+  btn.classList.add('chosen');
+  document.getElementById('btn-next').classList.add('active');
+}
+
+function nextQuestion() {
+  if (!selectedType) return;
+  answers.push(selectedType);
+  selectedType = null;
+  currentQ++;
+  if (currentQ < questions.length) {
+    showQuestion(currentQ);
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-wrapper').style.display = 'none';
+  document.getElementById('progress-fill').style.width = '100%';
+
+  // Calculate scores
+  const counts = { W: 0, S: 0, G: 0, T: 0, P: 0 };
+  answers.forEach(function(a) { counts[a]++; });
+  const total = answers.length;
+
+  // Find top type(s)
+  const maxVal = Math.max(...Object.values(counts));
+  const topTypes = Object.keys(counts).filter(function(k) { return counts[k] === maxVal; });
+
+  // Primary & secondary
+  const sorted = Object.entries(counts).sort(function(a, b) { return b[1] - a[1]; });
+  const primary = sorted[0][0];
+  const secondary = sorted[1] && sorted[1][1] > 0 ? sorted[1][0] : null;
+  const r = results[primary];
+
+  let html = '';
+
+  // ─── Result hero ───
+  if (topTypes.length >= 2 && secondary) {
+    const r2 = results[secondary];
+    html += '<div class="result-hero">';
+    html += '<div class="result-icon-combo">' + r.icon + ' × ' + r2.icon + '</div>';
+    html += '<div class="combo-badge">雙重愛的語言</div>';
+    html += '<div class="result-name">' + r.tag + ' ＆ ' + r2.tag + '</div>';
+    html += '<div class="result-subtitle">' + r.subtitle + ' & ' + r2.subtitle + '</div>';
+    html += '<div class="result-desc">' + r.desc + '</div>';
+    html += '</div>';
+  } else {
+    html += '<div class="result-hero">';
+    html += '<div class="result-icon">' + r.icon + '</div>';
+    html += '<div class="result-tag">' + r.tag + '</div>';
+    html += '<div class="result-name">' + r.name + '</div>';
+    html += '<div class="result-subtitle">' + r.subtitle + '</div>';
+    html += '<div class="result-desc">' + r.desc + '</div>';
+    html += '</div>';
+  }
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">你的守護靈</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 守護聖獸：' + ch.animal + '｜' + ch.animalDesc + '</div>';
+    html += '</div></div>';
+  }
+
+  // ─── Score bars ───
+  html += '<div class="scores-card"><h3>📊 你的五種愛的語言分數</h3>';
+  sorted.forEach(function(entry) {
+    const key = entry[0], val = entry[1];
+    const pct = Math.round(val / total * 100);
+    html += '<div class="score-row">';
+    html += '<div class="score-row-header"><span class="score-label">' + labelMap[key] + '</span><span class="score-pct">' + pct + '%</span></div>';
+    html += '<div class="score-bar"><div class="score-fill" style="width:0%;" data-pct="' + pct + '"></div></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // ─── Tips ───
+  html += '<div class="tips-card"><h3>💡 實用建議</h3>';
+  r.tips.forEach(function(tip) {
+    html += '<div class="tip-item"><div class="tip-emoji">' + tip.emoji + '</div>';
+    html += '<div class="tip-text"><strong>' + tip.title + '</strong><br>' + tip.text + '</div></div>';
+  });
+  html += '</div>';
+
+  // ─── Affiliate books ───
+  html += '<div class="affiliate-card"><h3>📚 推薦閱讀</h3>';
+  html += '<p>深入了解愛的語言，讓關係更進一步</p><div class="affiliate-grid">';
+  r.courses.forEach(function(c) {
+    html += '<a class="aff-item" href="' + c.url + '" target="_blank" rel="noopener">';
+    html += '<div class="aff-icon">' + c.icon + '</div>';
+    html += '<div class="aff-body"><div class="aff-label">' + c.label + '</div>';
+    html += '<div class="aff-title">' + c.title + '</div></div></a>';
+  });
+  html += '</div></div>';
+
+  // ─── Luna Yoga Music ───
+  html += '<div class="luna-yoga-card">';
+  html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div>';
+  html += '<div class="luna-yoga-tagline">用音樂療癒身心靈</div></div></div>';
+  html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
+  html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 聆聽 ' + r.yoga.playlist + '</a>';
+  html += '</div>';
+
+  // ─── Share & Retake ───
+  const shareText = '我的愛的語言是「' + r.tag + '」！來測測你的 👉 https://lovetypes.tw';
+  html += '<div class="share-row">';
+  html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 分享到 LINE</a>';
+  html += '<button class="btn-share copy" onclick="copyResult()">📋 複製結果</button>';
+  html += '</div>';
+  html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 再測一次</button></div>';
+
+  const section = document.getElementById('result-section');
+  section.innerHTML = html;
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth' });
+
+  // Animate score bars
+  setTimeout(function() {
+    document.querySelectorAll('.score-fill').forEach(function(bar) {
+      bar.style.width = bar.dataset.pct + '%';
+    });
+  }, 300);
+}
+
+function retakeQuiz() {
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('result-section').innerHTML = '';
+  startQuiz();
+}
+
+function copyResult() {
+  const sorted = Object.entries({ W: 0, S: 0, G: 0, T: 0, P: 0 });
+  answers.forEach(function(a) { sorted.forEach(function(e) { if(e[0]===a) e[1]++; }); });
+  sorted.sort(function(a,b){ return b[1]-a[1]; });
+  const primary = sorted[0][0];
+  const r = results[primary];
+  const text = '🌸 我的愛的語言測驗結果\n\n' + r.icon + ' ' + r.name + '\n\n' + r.desc + '\n\n來測測你的愛的語言 👉 https://lovetypes.tw';
+  navigator.clipboard.writeText(text).then(function() {
+    const btn = document.querySelector('.btn-share.copy');
+    btn.textContent = '✅ 已複製！';
+    setTimeout(function() { btn.textContent = '📋 複製結果'; }, 2000);
+  });
+}
+
+function toggleFaq(btn) {
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !expanded);
+  const answer = btn.nextElementSibling;
+  answer.style.display = expanded ? 'none' : 'block';
+}
+</script>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#3A2828;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:0.875rem;line-height:1.5;">
+  <p style="margin:0;flex:1;min-width:200px;">
+    🍪 本網站使用 Cookie 以改善您的瀏覽體驗，並透過 Google AdSense 顯示廣告。繼續使用本網站即表示您同意我們的 <a href="/privacy/" style="color:#F2C4C7;text-decoration:underline;">隱私政策</a>。
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#C9666E;color:#fff;border:none;padding:8px 20px;border-radius:20px;cursor:pointer;font-size:0.875rem;font-weight:600;">接受</button>
+    <button onclick="declineCookies()" style="background:transparent;color:#F2C4C7;border:1px solid #F2C4C7;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:0.875rem;">拒絕非必要 Cookie</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookie_consent')){
+    document.getElementById('cookie-banner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookie_consent','accepted');
+  document.getElementById('cookie-banner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookie_consent','declined');
+  document.getElementById('cookie-banner').style.display='none';
+}
+</script>
+</body>
+</html>

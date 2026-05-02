@@ -775,7 +775,7 @@
 
     <!-- 1. 肯定的言詞 · 艾莉絲 -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="愛麗絲，晨曦詩人 — 肯定的言語守護靈" loading="lazy">
+      <img class="char-img" src="/images/characters/iris.webp" alt="愛麗絲，晨曦詩人 — 肯定的言語守護靈" width="844" height="733" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -798,7 +798,7 @@
 
     <!-- 2. 優質的時光 · 諾雅 -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="諾亞，星空旅人 — 優質時光守護靈" loading="lazy">
+      <img class="char-img" src="/images/characters/noah.webp" alt="諾亞，星空旅人 — 優質時光守護靈" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -821,7 +821,7 @@
 
     <!-- 3. 接受禮物 · 薇薇安 -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="薇薇安，夢境編織者 — 接受禮物守護靈" loading="lazy">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="薇薇安，夢境編織者 — 接受禮物守護靈" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -844,7 +844,7 @@
 
     <!-- 4. 服務的行動 · 克萊兒 -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="克蕾兒，陽光少女 — 服務的行動守護靈" loading="lazy">
+      <img class="char-img" src="/images/characters/claire.webp" alt="克蕾兒，陽光少女 — 服務的行動守護靈" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -867,7 +867,7 @@
 
     <!-- 5. 身體的接觸 · 朵拉 -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="朵拉，溫暖使者 — 身體接觸守護靈" loading="lazy">
+      <img class="char-img" src="/images/characters/dora.webp" alt="朵拉，溫暖使者 — 身體接觸守護靈" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1334,11 +1334,15 @@ function showResult() {
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
+  var imgDimMap = { iris: [844, 733], noah: [1408, 768], vivian: [1408, 768], claire: [1408, 768], dora: [1408, 768] };
   var ch = r.character;
   var typeClass = ch ? ch.typeClass : '';
   var imgFile = imgMap[typeClass] || '';
   html += '<div class="result-hero-card ' + typeClass + '">';
-  if (imgFile) html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '">';
+  if (imgFile) {
+    var imgDim = imgDimMap[imgFile] || [1408, 768];
+    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+  }
   html += '<div class="result-hero-body">';
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">你的守護靈</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';
@@ -1465,7 +1469,7 @@ function toggleFaq(btn) {
 </script>
 
 <!-- COOKIE CONSENT BANNER -->
-<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#3A2828;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:0.875rem;line-height:1.5;">
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#3A2828;color:#fff;padding:16px 24px;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:0.875rem;line-height:1.5;">
   <p style="margin:0;flex:1;min-width:200px;">
     🍪 本網站使用 Cookie 以改善您的瀏覽體驗，並透過 Google AdSense 顯示廣告。繼續使用本網站即表示您同意我們的 <a href="/privacy/" style="color:#F2C4C7;text-decoration:underline;">隱私政策</a>。
   </p>

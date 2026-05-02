@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Love Languages Quiz | Find Your Love Language | LoveTypes</title>
-  <meta name="description" content="Free love language quiz — 15 questions to discover which of the 5 love languages you need most. Words of Affirmation, Acts of Service, Receiving Gifts, Quality Time, or Physical Touch. Instant results, no sign-up needed." />
+  <meta name="description" content="Free 15-question love language quiz. Discover your top love language instantly, with no sign-up needed." />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="7k70YvjSl-TBgC102ENWTDe0037IqvoFUwQx6-5n8QI" />
   <link rel="canonical" href="https://lovetypes.tw/en/" />
@@ -663,7 +663,7 @@
   <div class="chars-grid">
     <!-- W · Iris -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris, the Morning Poet — Words of Affirmation Guardian" loading="lazy">
+      <img class="char-img" src="/images/characters/iris.webp" alt="Iris, the Morning Poet — Words of Affirmation Guardian" width="844" height="733" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -686,7 +686,7 @@
 
     <!-- T · Noah -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah, the Stargazer — Quality Time Guardian" loading="lazy">
+      <img class="char-img" src="/images/characters/noah.webp" alt="Noah, the Stargazer — Quality Time Guardian" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -709,7 +709,7 @@
 
     <!-- G · Vivian -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian, the Dreamweaver — Receiving Gifts Guardian" loading="lazy">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian, the Dreamweaver — Receiving Gifts Guardian" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -732,7 +732,7 @@
 
     <!-- S · Claire -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire, the Sunbeam — Acts of Service Guardian" loading="lazy">
+      <img class="char-img" src="/images/characters/claire.webp" alt="Claire, the Sunbeam — Acts of Service Guardian" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -755,7 +755,7 @@
 
     <!-- P · Dora -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora, the Warmth — Physical Touch Guardian" loading="lazy">
+      <img class="char-img" src="/images/characters/dora.webp" alt="Dora, the Warmth — Physical Touch Guardian" width="1408" height="768" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1223,11 +1223,15 @@ function showResult() {
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
+  var imgDimMap = { iris: [844, 733], noah: [1408, 768], vivian: [1408, 768], claire: [1408, 768], dora: [1408, 768] };
   var ch = r.character;
   var typeClass = ch ? ch.typeClass : '';
   var imgFile = imgMap[typeClass] || '';
   html += '<div class="result-hero-card ' + typeClass + '">';
-  if (imgFile) html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '">';
+  if (imgFile) {
+    var imgDim = imgDimMap[imgFile] || [1408, 768];
+    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+  }
   html += '<div class="result-hero-body">';
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">Your Guardian Spirit</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';

@@ -118,52 +118,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/shared.css" />
   <style>
-    :root {
-      --rose:    #C9666E;
-      --rose-lt: #F2C4C7;
-      --peach:   #F5E6E0;
-      --cream:   #FDF8F5;
-      --warm:    #8B5C5C;
-      --text:    #3A2828;
-      --muted:   #7A6060;
-      --card-bg: #FFFFFF;
-      --shadow:  0 4px 24px rgba(180,100,100,.10);
-      --radius:  16px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.75;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(253,248,245,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rose-lt);
-      padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-    }
-    .nav-logo {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--rose); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .nav-links { display: flex; gap: 20px; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--rose); }
-    .nav-links a.active { color: var(--rose); font-weight: 700; }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-
     /* ─── PAGE HERO ─── */
     .page-hero {
       text-align: center;
@@ -403,15 +359,6 @@
       transition: transform .2s, box-shadow .2s;
     }
     .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.2); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: #FFF5F5; border-top: 1px solid var(--rose-lt);
-      text-align: center; padding: 32px 24px;
-      color: var(--muted); font-size: .8rem;
-    }
-    footer a { color: var(--rose); text-decoration: none; }
-
     /* ─── DIVIDER ─── */
     .section-divider {
       max-width: 760px; margin: 0 auto;
@@ -424,6 +371,16 @@
 <!-- NAV -->
 <nav>
   <div class="nav-left">
+  <div class="lang-menu" id="lang-menu">
+    <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ZH ▾</button>
+    <ul class="lang-list">
+      <li><a href="/theory/">中文</a></li>
+      <li><a href="/en/theory/">English</a></li>
+      <li><a href="/ja/theory/">日本語</a></li>
+      <li><a href="/ko/theory/">한국어</a></li>
+      <li><a href="/es/theory/">Español</a></li>
+    </ul>
+  </div>
     <a href="/" class="nav-logo">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -436,6 +393,7 @@
     <a href="/#quiz-section">開始測驗</a>
     <a href="/theory/" class="active">理論</a>
     <a href="/resources/">推薦資源</a>
+    <a href="/luna-yoga-music/">🎵 Luna Music</a>
   </div>
 </nav>
 

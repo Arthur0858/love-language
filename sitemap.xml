@@ -148,4 +148,70 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ── Luna Yoga Music Pages ── -->
+  <url>
+    <loc>https://lovetypes.tw/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lovetypes.tw/en/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lovetypes.tw/ja/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lovetypes.tw/ko/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://lovetypes.tw/es/luna-yoga-music/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

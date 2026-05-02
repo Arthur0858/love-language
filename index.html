@@ -1237,7 +1237,8 @@ function startQuiz() {
   document.getElementById('quiz-wrapper').style.display = 'block';
   document.getElementById('result-section').style.display = 'none';
   document.querySelector('.hero').style.display = 'none';
-  document.querySelector('.types-grid').parentElement.style.display = 'none';
+  const typesSection = document.getElementById('types-section');
+  if (typesSection) typesSection.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }

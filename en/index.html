@@ -55,7 +55,7 @@
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "TWD"
+      "priceCurrency": "USD"
     }
   }
   </script>
@@ -601,6 +601,7 @@
   </style>
 </head>
 <body>
+<a href="#quiz-wrapper" class="skip-link">Skip to main content</a>
 
 <!-- NAV -->
 <nav>
@@ -609,7 +610,7 @@
       <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">EN ▾</button>
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
-        <li><a href="/en/">English</a></li>
+        <li><a href="/en/" class="lang-active">English</a></li>
         <li><a href="/ja/">日本語</a></li>
         <li><a href="/ko/">한국어</a></li>
         <li><a href="/es/">Español</a></li>
@@ -662,7 +663,7 @@
   <div class="chars-grid">
     <!-- W · Iris -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <img class="char-img" src="/images/characters/iris.webp" alt="Iris, the Morning Poet — Words of Affirmation Guardian" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -685,7 +686,7 @@
 
     <!-- T · Noah -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <img class="char-img" src="/images/characters/noah.webp" alt="Noah, the Stargazer — Quality Time Guardian" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -708,7 +709,7 @@
 
     <!-- G · Vivian -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian, the Dreamweaver — Receiving Gifts Guardian" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -731,7 +732,7 @@
 
     <!-- S · Claire -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <img class="char-img" src="/images/characters/claire.webp" alt="Claire, the Sunbeam — Acts of Service Guardian" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -754,7 +755,7 @@
 
     <!-- P · Dora -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <img class="char-img" src="/images/characters/dora.webp" alt="Dora, the Warmth — Physical Touch Guardian" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1281,12 +1282,13 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ Official Partner Channel</span>';
   html += '<div class="luna-yoga-tagline">Healing body, mind & soul through music</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
   html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 Listen to ' + r.yoga.playlist + '</a>';
   html += '</div>';
 
+  html += '<p class="affiliate-disclosure">* This page contains affiliate links. We may earn a small commission at no extra cost to you.</p>';
   // ─── Share & Retake ───
   const shareText = 'My love language is "' + r.tag + '"! Find yours 👉 https://lovetypes.tw/en/';
   html += '<div class="share-row">';
@@ -1294,6 +1296,20 @@ function showResult() {
   html += '<button class="btn-share copy" onclick="copyResult()">📋 Copy Result</button>';
   html += '</div>';
   html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 Take Again</button></div>';
+
+  html += '<div class="dist-card">';
+  html += '<h4>Your Love Language Tribe</h4>';
+  html += '<div class="dist-row"><div class="dist-label">💬 Words</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:23%"></div></div><div class="dist-pct">23%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">⏱ Time</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:20%"></div></div><div class="dist-pct">20%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🎁 Gifts</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:18%"></div></div><div class="dist-pct">18%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤝 Acts</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:22%"></div></div><div class="dist-pct">22%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤗 Touch</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:17%"></div></div><div class="dist-pct">17%</div></div>';
+  html += '<div class="dist-note">Approximate global distribution based on research surveys</div>';
+  html += '</div>';
+  html += '<div class="theory-cta">';
+  html += '<p>✨ Want to explore deeper?</p>';
+  html += '<a class="btn-theory" href="/en/theory/">📖 Explore the Theory →</a>';
+  html += '</div>';
 
   const section = document.getElementById('result-section');
   section.innerHTML = html;

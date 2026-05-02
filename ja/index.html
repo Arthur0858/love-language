@@ -56,7 +56,7 @@
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "TWD"
+      "priceCurrency": "JPY"
     }
   }
   </script>
@@ -602,6 +602,7 @@
   </style>
 </head>
 <body>
+<a href="#quiz-wrapper" class="skip-link">メインコンテンツへスキップ</a>
 
 <!-- NAV -->
 <nav>
@@ -611,7 +612,7 @@
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
         <li><a href="/en/">English</a></li>
-        <li><a href="/ja/">日本語</a></li>
+        <li><a href="/ja/" class="lang-active">日本語</a></li>
         <li><a href="/ko/">한국어</a></li>
         <li><a href="/es/">Español</a></li>
       </ul>
@@ -663,7 +664,7 @@
   <div class="chars-grid">
     <!-- W · アイリス (Iris) -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <img class="char-img" src="/images/characters/iris.webp" alt="アイリス、愛の言語「肯定の言葉」の守護霊" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -686,7 +687,7 @@
 
     <!-- T · ノア (Noah) -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <img class="char-img" src="/images/characters/noah.webp" alt="ノア、愛の言語「クオリティタイム」の守護霊" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -709,7 +710,7 @@
 
     <!-- G · ヴィヴィアン (Vivian) -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="ヴィヴィアン、愛の言語「贈り物」の守護霊" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -732,7 +733,7 @@
 
     <!-- S · クレール (Claire) -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <img class="char-img" src="/images/characters/claire.webp" alt="クレア、愛の言語「奉仕の行為」の守護霊" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -755,7 +756,7 @@
 
     <!-- P · ドーラ (Dora) -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <img class="char-img" src="/images/characters/dora.webp" alt="ドーラ、愛の言語「スキンシップ」の守護霊" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1282,12 +1283,13 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ 公式パートナーチャンネル</span>';
   html += '<div class="luna-yoga-tagline">音楽で心と体を癒す</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
   html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 聴く ' + r.yoga.playlist + '</a>';
   html += '</div>';
 
+  html += '<p class="affiliate-disclosure">※ このページにはアフィリエイトリンクが含まれています。購入いただくと当サイトに少額の報酬が入ります（お客様の負担は変わりません）。</p>';
   // ─── Share & Retake ───
   const shareText = '私の愛の言語は「' + r.tag + '」です！あなたも診断してみて 👉 https://lovetypes.tw/ja/';
   html += '<div class="share-row">';
@@ -1295,6 +1297,20 @@ function showResult() {
   html += '<button class="btn-share copy" onclick="copyResult()">📋 結果をコピー</button>';
   html += '</div>';
   html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 もう一度診断する</button></div>';
+
+  html += '<div class="dist-card">';
+  html += '<h4>あなたの愛の言語タイプ分布</h4>';
+  html += '<div class="dist-row"><div class="dist-label">💬 言葉</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:23%"></div></div><div class="dist-pct">23%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">⏱ 時間</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:20%"></div></div><div class="dist-pct">20%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🎁 贈物</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:18%"></div></div><div class="dist-pct">18%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤝 行為</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:22%"></div></div><div class="dist-pct">22%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤗 触れ合い</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:17%"></div></div><div class="dist-pct">17%</div></div>';
+  html += '<div class="dist-note">調査研究に基づく概算データ</div>';
+  html += '</div>';
+  html += '<div class="theory-cta">';
+  html += '<p>✨ もっと深く知りたい方へ</p>';
+  html += '<a class="btn-theory" href="/ja/theory/">📖 理論をもっと学ぶ →</a>';
+  html += '</div>';
 
   const section = document.getElementById('result-section');
   section.innerHTML = html;

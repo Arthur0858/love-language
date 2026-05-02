@@ -56,7 +56,7 @@
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "TWD"
+      "priceCurrency": "MXN"
     }
   }
   </script>
@@ -602,6 +602,7 @@
   </style>
 </head>
 <body>
+<a href="#quiz-wrapper" class="skip-link">Ir al contenido principal</a>
 
 <!-- NAV -->
 <nav>
@@ -613,7 +614,7 @@
         <li><a href="/en/">English</a></li>
         <li><a href="/ja/">日本語</a></li>
         <li><a href="/ko/">한국어</a></li>
-        <li><a href="/es/">Español</a></li>
+        <li><a href="/es/" class="lang-active">Español</a></li>
       </ul>
     </div>
     <a href="/es/" class="nav-logo">
@@ -663,7 +664,7 @@
   <div class="chars-grid">
     <!-- W · Iris -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <img class="char-img" src="/images/characters/iris.webp" alt="Iris, la Poeta del Alba — Guardiana de las Palabras de Afirmación" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -686,7 +687,7 @@
 
     <!-- T · Noah -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <img class="char-img" src="/images/characters/noah.webp" alt="Noah, el Observador de Estrellas — Guardián del Tiempo de Calidad" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -709,7 +710,7 @@
 
     <!-- G · Vivian -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian, la Tejedora de Sueños — Guardiana de los Regalos" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -732,7 +733,7 @@
 
     <!-- S · Claire -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <img class="char-img" src="/images/characters/claire.webp" alt="Claire, el Rayo de Sol — Guardiana de los Actos de Servicio" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -755,7 +756,7 @@
 
     <!-- P · Dora -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <img class="char-img" src="/images/characters/dora.webp" alt="Dora, el Calor — Guardiana del Contacto Físico" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1282,12 +1283,13 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ Canal socio oficial</span>';
   html += '<div class="luna-yoga-tagline">Sanando cuerpo, mente y alma con música</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
   html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 Escuchar ' + r.yoga.playlist + '</a>';
   html += '</div>';
 
+  html += '<p class="affiliate-disclosure">* Esta página contiene enlaces de afiliados. Podemos ganar una pequeña comisión sin costo adicional para ti.</p>';
   // ─── Share & Retake ───
   const shareText = '¡Mi lenguaje del amor es "' + r.tag + '"! Descubre el tuyo 👉 https://lovetypes.tw/es/';
   html += '<div class="share-row">';
@@ -1295,6 +1297,20 @@ function showResult() {
   html += '<button class="btn-share copy" onclick="copyResult()">📋 Copiar resultado</button>';
   html += '</div>';
   html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 Repetir test</button></div>';
+
+  html += '<div class="dist-card">';
+  html += '<h4>Tu tribu de lenguaje del amor</h4>';
+  html += '<div class="dist-row"><div class="dist-label">💬 Palabras</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:23%"></div></div><div class="dist-pct">23%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">⏱ Tiempo</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:20%"></div></div><div class="dist-pct">20%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🎁 Regalos</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:18%"></div></div><div class="dist-pct">18%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤝 Actos</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:22%"></div></div><div class="dist-pct">22%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤗 Contacto</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:17%"></div></div><div class="dist-pct">17%</div></div>';
+  html += '<div class="dist-note">Distribución aproximada basada en estudios de investigación</div>';
+  html += '</div>';
+  html += '<div class="theory-cta">';
+  html += '<p>✨ ¿Quieres explorar más a fondo?</p>';
+  html += '<a class="btn-theory" href="/es/theory/">📖 Explorar la teoría →</a>';
+  html += '</div>';
 
   const section = document.getElementById('result-section');
   section.innerHTML = html;

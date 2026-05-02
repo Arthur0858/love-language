@@ -684,9 +684,35 @@
 
       /* ─── UTILS ─── */
     .hidden { display: none !important; }
+
+    /* Skip link */
+    .skip-link { position: absolute; left: -9999px; top: 4px; padding: 8px 16px; background: var(--primary, #e57373); color: #fff; border-radius: 4px; font-weight: 700; z-index: 9999; text-decoration: none; }
+    .skip-link:focus { left: 4px; }
+    /* Affiliate disclosure */
+    .affiliate-disclosure { font-size: .78rem; color: var(--muted, #888); text-align: center; padding: 6px 12px; margin-top: 8px; font-style: italic; }
+    /* Luna partner badge */
+    .luna-partner-badge { display: inline-block; font-size: .78rem; font-weight: 700; background: #e6f4ef; color: #2D7A5E; border-radius: 999px; padding: 2px 10px; margin-bottom: 6px; }
+    /* Distribution stats */
+    .dist-card { background: #f9f9f9; border-radius: 14px; padding: 16px 18px; margin-bottom: 18px; }
+    .dist-card h4 { font-size: .9rem; font-weight: 700; margin-bottom: 12px; text-align: center; color: var(--text, #333); }
+    .dist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; font-size: .82rem; }
+    .dist-label { width: 80px; text-align: right; color: var(--muted, #888); }
+    .dist-bar-wrap { flex: 1; background: #e8e8e8; border-radius: 999px; height: 8px; overflow: hidden; }
+    .dist-bar { height: 100%; border-radius: 999px; background: var(--primary, #e57373); transition: width .6s ease; }
+    .dist-pct { width: 34px; font-weight: 700; color: var(--text, #333); }
+    .dist-note { font-size: .72rem; color: var(--muted, #aaa); text-align: center; margin-top: 6px; }
+    /* Theory CTA */
+    .theory-cta { text-align: center; margin: 14px 0 6px; }
+    .theory-cta p { font-size: .85rem; color: var(--muted, #888); margin-bottom: 8px; }
+    .btn-theory { display: inline-block; padding: 10px 22px; background: var(--primary, #e57373); color: #fff; border-radius: 999px; font-weight: 700; font-size: .88rem; text-decoration: none; }
+    .btn-theory:hover { opacity: .88; }
+    /* Language switcher current item */
+    .lang-list a.lang-active { font-weight: 700; }
+    .lang-list a.lang-active::before { content: "✓ "; }
   </style>
 </head>
 <body>
+<a href="#quiz-wrapper" class="skip-link">跳至測驗內容</a>
 
 <!-- NAV -->
 <nav>
@@ -694,7 +720,7 @@
     <div class="lang-menu" id="lang-menu">
       <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ZH ▾</button>
       <ul class="lang-list">
-        <li><a href="/">中文</a></li>
+        <li><a href="/" class="lang-active">中文</a></li>
         <li><a href="/en/">English</a></li>
         <li><a href="/ja/">日本語</a></li>
         <li><a href="/ko/">한국어</a></li>
@@ -749,7 +775,7 @@
 
     <!-- 1. 肯定的言詞 · 艾莉絲 -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <img class="char-img" src="/images/characters/iris.webp" alt="愛麗絲，晨曦詩人 — 肯定的言語守護靈" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -772,7 +798,7 @@
 
     <!-- 2. 優質的時光 · 諾雅 -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <img class="char-img" src="/images/characters/noah.webp" alt="諾亞，星空旅人 — 優質時光守護靈" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -795,7 +821,7 @@
 
     <!-- 3. 接受禮物 · 薇薇安 -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="薇薇安，夢境編織者 — 接受禮物守護靈" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -818,7 +844,7 @@
 
     <!-- 4. 服務的行動 · 克萊兒 -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <img class="char-img" src="/images/characters/claire.webp" alt="克蕾兒，陽光少女 — 服務的行動守護靈" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -841,7 +867,7 @@
 
     <!-- 5. 身體的接觸 · 朵拉 -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <img class="char-img" src="/images/characters/dora.webp" alt="朵拉，溫暖使者 — 身體接觸守護靈" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1367,11 +1393,13 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ 官方合作頻道</span>';
   html += '<div class="luna-yoga-tagline">用音樂療癒身心靈</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
   html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 聆聽 ' + r.yoga.playlist + '</a>';
   html += '</div>';
+
+  html += '<p class="affiliate-disclosure">*本頁包含聯盟連結，點擊購買可能為本站帶來少量佣金，您的購買價格不受影響。</p>';
 
   // ─── Share & Retake ───
   const shareText = '我的愛的語言是「' + r.tag + '」！來測測你的 👉 https://lovetypes.tw';
@@ -1380,6 +1408,20 @@ function showResult() {
   html += '<button class="btn-share copy" onclick="copyResult()">📋 複製結果</button>';
   html += '</div>';
   html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 再測一次</button></div>';
+
+  html += '<div class="dist-card">';
+  html += '<h4>全球愛的語言分布</h4>';
+  html += '<div class="dist-row"><div class="dist-label">💬 言語</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:23%"></div></div><div class="dist-pct">23%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">⏱ 時光</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:20%"></div></div><div class="dist-pct">20%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🎁 禮物</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:18%"></div></div><div class="dist-pct">18%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤝 行動</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:22%"></div></div><div class="dist-pct">22%</div></div>';
+  html += '<div class="dist-row"><div class="dist-label">🤗 接觸</div><div class="dist-bar-wrap"><div class="dist-bar" style="width:17%"></div></div><div class="dist-pct">17%</div></div>';
+  html += '<div class="dist-note">以研究調查為基礎的概估分布數據</div>';
+  html += '</div>';
+  html += '<div class="theory-cta">';
+  html += '<p>✨ 想深入了解愛的語言理論？</p>';
+  html += '<a class="btn-theory" href="/theory/">📖 探索愛的語言理論 →</a>';
+  html += '</div>';
 
   const section = document.getElementById('result-section');
   section.innerHTML = html;

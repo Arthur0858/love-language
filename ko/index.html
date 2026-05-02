@@ -120,75 +120,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/shared.css" />
   <style>
-    :root {
-      --rose:    #C9666E;
-      --rose-lt: #F2C4C7;
-      --peach:   #F5E6E0;
-      --cream:   #FDF8F5;
-      --warm:    #8B5C5C;
-      --text:    #3A2828;
-      --muted:   #7A6060;
-      --card-bg: #FFFFFF;
-      --shadow:  0 4px 24px rgba(180,100,100,.10);
-      --radius:  16px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.75;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(253,248,245,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rose-lt);
-      padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-    }
-    .nav-logo {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--rose); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .nav-links { display: flex; gap: 20px; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--rose); }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    /* ─── LANG DROPDOWN ─── */
-    .lang-menu { position: relative; }
-    .lang-current {
-      background: transparent; border: 1.5px solid var(--rose);
-      color: var(--rose); border-radius: 999px;
-      padding: 4px 13px; font-size: .78rem; font-weight: 700;
-      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
-      transition: all .2s; letter-spacing: .05em;
-      display: inline-flex; align-items: center; gap: 4px;
-    }
-    .lang-current:hover { background: var(--rose); color: #fff; }
-    .lang-list {
-      display: none; position: absolute; top: calc(100% + 6px); left: 0;
-      background: #fff; border: 1px solid var(--rose-lt);
-      border-radius: 10px; box-shadow: 0 4px 20px rgba(180,100,100,.15);
-      list-style: none; overflow: hidden; z-index: 200; min-width: 110px;
-    }
-    .lang-menu.open .lang-list { display: block; }
-    .lang-list li a {
-      display: block; padding: 9px 16px;
-      font-size: .82rem; color: var(--text); text-decoration: none;
-      transition: background .15s;
-    }
-    .lang-list li a:hover { background: var(--peach); color: var(--rose); }
-
     /* ─── HERO ─── */
     .hero {
       text-align: center;
@@ -544,16 +477,6 @@
       transition: transform .2s, box-shadow .2s;
     }
     .btn-theory:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,102,110,.45); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: #FFF5F5; border-top: 1px solid var(--rose-lt);
-      text-align: center; padding: 32px 24px;
-      color: var(--muted); font-size: .8rem;
-    }
-    footer a { color: var(--rose); text-decoration: none; }
-
-
     /* ─── FAQ SECTION ─── */
     .faq-section {
       max-width: 860px; margin: 0 auto; padding: 64px 24px;
@@ -582,7 +505,94 @@
       padding: 0 24px 20px; color: var(--muted);
       font-size: .9rem; line-height: 1.85;
     }
-    /* ─── UTILS ─── */
+
+    /* ─── CHARACTERS SECTION ─── */
+    .characters-section {
+      max-width: 980px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .chars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .char-card {
+      border-radius: 20px; padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .char-card.type-w { background: linear-gradient(145deg, #FFFBF0, #FFF3D6); border: 1.5px solid #F5DDA0; }
+    .char-card.type-t { background: linear-gradient(145deg, #EEF3FA, #E0EBF8); border: 1.5px solid #A8C4E0; }
+    .char-card.type-g { background: linear-gradient(145deg, #FDF0F5, #FADFEA); border: 1.5px solid #E8A8C8; }
+    .char-card.type-s { background: linear-gradient(145deg, #EFF7F2, #DCF0E5); border: 1.5px solid #9FCFB5; }
+    .char-card.type-p { background: linear-gradient(145deg, #FEF5F0, #FDE8DC); border: 1.5px solid #F0C0A8; }
+    .char-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .char-spirit-badge {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .type-w .char-spirit-badge { background: #FDE68A; }
+    .type-t .char-spirit-badge { background: #BFDBFE; }
+    .type-g .char-spirit-badge { background: #FBCFE8; }
+    .type-s .char-spirit-badge { background: #A7F3D0; }
+    .type-p .char-spirit-badge { background: #FED7AA; }
+    .char-title-wrap { flex: 1; }
+    .char-type-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 5px;
+    }
+    .type-w .char-type-badge { background: #FDE68A; color: #92400E; }
+    .type-t .char-type-badge { background: #BFDBFE; color: #1E40AF; }
+    .type-g .char-type-badge { background: #FBCFE8; color: #9D174D; }
+    .type-s .char-type-badge { background: #A7F3D0; color: #065F46; }
+    .type-p .char-type-badge { background: #FED7AA; color: #92400E; }
+    .char-name { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .char-subtitle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .char-divider { height: 1px; margin: 14px 0; }
+    .type-w .char-divider { background: #F5DDA0; }
+    .type-t .char-divider { background: #A8C4E0; }
+    .type-g .char-divider { background: #E8A8C8; }
+    .type-s .char-divider { background: #9FCFB5; }
+    .type-p .char-divider { background: #F0C0A8; }
+    .char-section-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .char-personality { font-size: .85rem; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .char-spirit-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.55); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 12px;
+    }
+    .char-spirit-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+    .char-spirit-desc { font-size: .77rem; color: var(--muted); margin-top: 1px; }
+    .char-outfit { font-size: .8rem; color: var(--muted); line-height: 1.65; font-style: italic; }
+    .char-scene { margin-top: 12px; font-size: .78rem; color: var(--muted); line-height: 1.65; background: rgba(255,255,255,.4); border-radius: 8px; padding: 8px 10px; }
+    /* Result page character display */
+    .result-char-card { border-radius: 16px; padding: 22px 20px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+    .result-char-card.type-w { background: linear-gradient(135deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
+    .result-char-card.type-t { background: linear-gradient(135deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }
+    .result-char-card.type-g { background: linear-gradient(135deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
+    .result-char-card.type-s { background: linear-gradient(135deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
+    .result-char-card.type-p { background: linear-gradient(135deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
+    .result-char-spirit { font-size: 2.6rem; flex-shrink: 0; line-height: 1; }
+    .result-char-body { flex: 1; }
+    .result-char-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .result-char-name { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .result-char-role { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-char-desc { font-size: .82rem; color: var(--text); line-height: 1.7; }
+    .result-char-spirit-info { font-size: .78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+    
+      .char-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+      }
+
+      /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
 </head>
@@ -610,9 +620,10 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5가지 언어</a>
-    <a href="#quiz-section" id="nav-test-link">테스트 시작</a>
+        <a href="#quiz-section" id="nav-test-link">테스트 시작</a>
     <a href="/ko/theory/">이론</a>
     <a href="/resources/">리소스</a>
+    <a href="/ko/luna-yoga-music/">🎵 Luna Music</a>
   </div>
 </nav>
 
@@ -638,38 +649,128 @@
   <button class="btn-start" onclick="startQuiz()">테스트 시작 →</button>
 </section>
 
-<!-- TYPES PREVIEW -->
-<section class="types-section" id="types-section">
+<!-- CHARACTERS SECTION -->
+<section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>다섯 가지 사랑의 언어</h2>
-    <p>심리학자 게리 채프먼이 제안한 이론으로, 전 세계 수백만 커플에게 영향을 미쳤습니다</p>
+    <h2>다섯 수호령 캐릭터</h2>
+    <p>각각의 사랑의 언어에는 수호령이 있습니다. 당신의 수호령은 누구인가요?</p>
   </div>
-  <div class="types-grid">
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">💬</div>
-      <div class="name">인정하는 말</div>
-      <div class="sub">Words of Affirmation</div>
+  <div class="chars-grid">
+    <!-- W · 아이리스 (Iris) -->
+    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <div class="char-top">
+        <div class="char-spirit-badge">🎶</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">인정의 말</div>
+          <div class="char-name">아이리스 (Iris)</div>
+          <div class="char-subtitle">새벽의 시인</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">성격</div>
+      <div class="char-personality">날카롭고 따뜻하며 사물의 미세한 빛 속에서 아름다움을 발견하는 재능이 있다. 그녀의 말은 하나하나가 조각된 진주처럼 빛난다.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐦</span>
+        <div>
+          <div class="char-spirit-name">소울 애니멀: 종달새 · 영가</div>
+          <div class="char-spirit-desc">금속 광택의 깃털과 길고 아름다운 꼬리 깃털. 아이리스가 누군가를 칭찬할 때, 영가는 그 주변을 맴돌며 은은한 빛을 발산한다.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🛠️</div>
-      <div class="name">봉사 행위</div>
-      <div class="sub">Acts of Service</div>
+
+    <!-- T · 노아 (Noah) -->
+    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <div class="char-top">
+        <div class="char-spirit-badge">🌌</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">소중한 시간</div>
+          <div class="char-name">노아 (Noah)</div>
+          <div class="char-subtitle">별바다 항해사</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">성격</div>
+      <div class="char-personality">내성적이고 극도로 집중력이 높다. 형식적인 인사를 싫어하고 영혼 깊은 곳에서의 공명을 추구한다.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐋</span>
+        <div>
+          <div class="char-spirit-name">소울 애니멀: 혹등고래 · 침묵</div>
+          <div class="char-spirit-desc">몸은 반투명한 성운으로 이루어졌으며 등에는 별들이 반짝인다. 깊은 교류 중에는 외부의 모든 소음을 차단해 정지된 시공간을 만든다.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🎁</div>
-      <div class="name">선물</div>
-      <div class="sub">Receiving Gifts</div>
+
+    <!-- G · 비비안 (Vivian) -->
+    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <div class="char-top">
+        <div class="char-spirit-badge">✨</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">선물 받기</div>
+          <div class="char-name">비비안 (Vivian)</div>
+          <div class="char-subtitle">기억 수집가</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">성격</div>
+      <div class="char-personality">관대하고 장난기 넘치며 의식을 소중히 여긴다. 모든 선물은 시간의 정점이라고 믿는다.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦜</span>
+        <div>
+          <div class="char-spirit-name">소울 애니멀: 바우어버드 · 장심</div>
+          <div class="char-spirit-desc">선명한 보라색 눈동자와 항상 빛나는 실을 부리에 물고 있다. 세상의 '놀라움 조각'을 모아 그리움을 시각화한다.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">⏳</div>
-      <div class="name">함께하는 시간</div>
-      <div class="sub">Quality Time</div>
+
+    <!-- S · 클레어 (Claire) -->
+    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <div class="char-top">
+        <div class="char-spirit-badge">🔧</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">봉사 행동</div>
+          <div class="char-name">클레어 (Claire)</div>
+          <div class="char-subtitle">고요한 수호자</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">성격</div>
+      <div class="char-personality">실용적이고 단호하며 지칠 줄 모른다. 달콤한 말보다 땀의 가치를 더 믿는다.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐝</span>
+        <div>
+          <div class="char-spirit-name">소울 애니멀: 일벌 · 근행</div>
+          <div class="char-spirit-desc">반투명한 호박색 몸체에 첼로처럼 낮고 안정된 날갯소리. 클레어가 타인의 필요를 발견하도록 이끌고 함께 수선한다.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🤝</div>
-      <div class="name">신체적 접촉</div>
-      <div class="sub">Physical Touch</div>
+
+    <!-- P · 도라 (Dora) -->
+    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <div class="char-top">
+        <div class="char-spirit-badge">🫂</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">신체적 접촉</div>
+          <div class="char-name">도라 (Dora)</div>
+          <div class="char-subtitle">따뜻한 발광체</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">성격</div>
+      <div class="char-personality">감성적이고 순수하며 깊은 공감 능력을 가지고 있다. 피부의 온기가 가장 깊은 상처를 치유할 수 있다고 믿는다.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦦</span>
+        <div>
+          <div class="char-spirit-name">소울 애니멀: 수달 · 의의</div>
+          <div class="char-spirit-desc">따뜻한 물빛을 띠는 털과 촉촉하고 온순한 눈빛. 항상 도라 곁에 붙어있으며 도라가 누군가를 안을 때 작은 발로 살며시 닿는다.</div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -946,6 +1047,7 @@ const results = {
     subtitle: "Words of Affirmation",
     color: "#C9666E",
     desc: "말은 당신에게 엄청난 힘을 가집니다. 진심 어린 \"사랑해\", \"오늘 정말 잘했어\", \"노력해줘서 고마워\"라는 한마디가 소중히 여겨지는 따뜻함을 느끼게 합니다. 거창한 것이 필요 없고, 상대가 기꺼이 말해주는 진심만으로 충분합니다. 비판과 냉담은 당신에게 특히 깊은 상처가 됩니다. 왜냐하면 당신은 말이 마음을 연결하는 다리라고 믿기 때문입니다.",
+    character: { typeClass: "type-w", spirit: "🎶", name: "아이리스 (Iris)", role: "새벽의 시인", animal: "종달새 · 영가(詠歌)", animalDesc: "금속 광택의 깃털과 길고 아름다운 꼬리 깃털. 아이리스가 누군가를 칭찬할 때, 영가는 그 주변을 맴돌며 은은한 빛을 발산한다.", personality: "날카롭고 따뜻하며 사물의 미세한 빛 속에서 아름다움을 발견하는 재능이 있다. 그녀의 말은 하나하나가 조각된 진주처럼 빛난다." },
     tips: [
       { emoji: "✉️", title: "파트너를 위한 팁", text: "매일 상대에 대해 감사하는 점 한 가지를 말해보세요. 길게 말할 필요 없이, 진심 어린 한마디면 충분합니다." },
       { emoji: "📔", title: "자신을 위한 팁", text: "격려가 필요할 때 \"내가 잘한 점을 말해줄 수 있어?\"라고 먼저 말하는 연습을 해보세요. 파트너가 당신이 필요한 것을 줄 기회를 만들어 주세요." },
@@ -963,6 +1065,7 @@ const results = {
     subtitle: "Acts of Service",
     color: "#7B8FC9",
     desc: "당신에게 사랑은 말이 아닌 실제 행동입니다. 상대가 자발적으로 집안일을 도와주거나, 따뜻한 차 한 잔을 준비해주거나, 바쁠 때 조용히 잡일을 처리해줄 때 느끼는 \"당신을 위해 기꺼이 하겠다\"는 마음이, 어떤 달콤한 말보다 더 감동적입니다. 당신이 중요하게 여기는 것은 상대가 시간과 에너지를 기꺼이 들여주는 그 정성입니다.",
+    character: { typeClass: "type-s", spirit: "🔧", name: "클레어 (Claire)", role: "고요한 수호자", animal: "일벌 · 근행(勤行)", animalDesc: "반투명한 호박색 몸체에 첼로처럼 낮고 안정된 날갯소리. 클레어가 타인의 필요를 발견하도록 이끌고 함께 수선한다.", personality: "실용적이고 단호하며 지칠 줄 모른다. 달콤한 말보다 땀의 가치를 더 믿는다." },
     tips: [
       { emoji: "🧹", title: "파트너를 위한 팁", text: "상대가 요즘 무엇 때문에 바쁜지 살피고, 말하기 전에 먼저 작은 일 하나를 도와주세요." },
       { emoji: "📋", title: "자신을 위한 팁", text: "도움이 필요할 때 구체적으로 말해보세요. 예를 들어 \"이것 좀 도와줄 수 있어? 나한테 정말 중요한 일이야.\"" },
@@ -980,6 +1083,7 @@ const results = {
     subtitle: "Receiving Gifts",
     color: "#D4A259",
     desc: "선물은 당신에게 물질적 가치가 아니라 \"나를 생각하고 있다\"는 구체적인 증거입니다. 길가에서 꺾은 작은 꽃, 손으로 쓴 카드, 심지어 당신이 무심코 말한 작은 것을 기억하고 몰래 사다 준 것까지 -- 이 모든 것이 당신이 누군가의 마음속에 있다고 느끼게 합니다. 중요한 것은 가격이 아니라 그 정성과 기억입니다.",
+    character: { typeClass: "type-g", spirit: "✨", name: "비비안 (Vivian)", role: "기억 수집가", animal: "바우어버드 · 장심(匠心)", animalDesc: "선명한 보라색 눈동자와 항상 빛나는 실을 부리에 물고 있다. 세상의 '놀라움 조각'을 모아 그리움을 시각화한다.", personality: "관대하고 장난기 넘치며 의식을 소중히 여긴다. 모든 선물은 시간의 정점이라고 믿는다." },
     tips: [
       { emoji: "🎀", title: "파트너를 위한 팁", text: "상대가 무심코 \"갖고 싶다\"고 말한 것을 메모해두고, 예상치 못한 순간에 선물하세요. 깜짝 놀라는 느낌이 마음을 배로 전해줍니다." },
       { emoji: "💭", title: "자신을 위한 팁", text: "파트너에게 \"선물은 나에게 당신이 나를 생각하고 있다는 의미야\"라고 말해주세요. 물질을 좋아하는 것이 아니라, 기억되는 느낌을 소중히 여긴다는 것을 이해하게 해주세요." },
@@ -997,6 +1101,7 @@ const results = {
     subtitle: "Quality Time",
     color: "#5C8CB0",
     desc: "당신에게 가장 소중한 선물은 \"온전한 관심과 함께함\"입니다. 같은 공간에 있는 것만으로는 충분하지 않고, 상대가 핸드폰을 내려놓고 TV를 끄고 오직 당신만 바라보는 그런 집중을 원합니다. 함께 산책하고, 대화하고, 심지어 조용히 앉아 있기만 해도, 서로가 온전히 함께한다면 깊은 사랑과 유대를 느낄 수 있습니다.",
+    character: { typeClass: "type-t", spirit: "🌌", name: "노아 (Noah)", role: "별바다 항해사", animal: "혹등고래 · 침묵(沉寂)", animalDesc: "몸은 반투명한 성운으로 이루어졌으며 등에는 별들이 반짝인다. 깊은 교류 중에는 외부의 모든 소음을 차단해 정지된 시공간을 만든다.", personality: "내성적이고 극도로 집중력이 높다. 형식적인 인사를 싫어하고 영혼 깊은 곳에서의 공명을 추구한다." },
     tips: [
       { emoji: "📵", title: "파트너를 위한 팁", text: "매일 최소 15분의 \"방해 없는 시간\"을 만들어, 핸드폰을 내려놓고 상대에게 집중하세요." },
       { emoji: "🗓️", title: "자신을 위한 팁", text: "직접 데이트를 계획하세요. 화려할 필요 없이, 함께 산책하거나 커피 한잔이면 충분합니다. 핵심은 서로에게 온전히 있는 것입니다." },
@@ -1014,6 +1119,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "포옹, 손잡기, 기대기, 어깨 토닥이기 -- 이런 신체 접촉은 당신에게 단순한 동작이 아니라 가장 직접적인 사랑의 표현입니다. 따뜻한 포옹 하나가 즉시 안정감을 주고, 손을 잡고 길을 걸으면 \"우리는 하나\"라고 느끼게 합니다. 신체 접촉이 부족하면 외로움과 소외감을 느낍니다.",
+    character: { typeClass: "type-p", spirit: "🫂", name: "도라 (Dora)", role: "따뜻한 발광체", animal: "수달 · 의의(依依)", animalDesc: "따뜻한 물빛을 띠는 털과 촉촉하고 온순한 눈빛. 항상 도라 곁에 붙어있으며 도라가 누군가를 안을 때 작은 발로 살며시 닿는다.", personality: "감성적이고 순수하며 깊은 공감 능력을 가지고 있다. 피부의 온기가 가장 깊은 상처를 치유할 수 있다고 믿는다." },
     tips: [
       { emoji: "🤗", title: "파트너를 위한 팁", text: "특별한 순간을 기다릴 필요 없이, 일상에서 포옹, 머리 쓰다듬기, 손잡기를 더 해주세요. 이런 작은 행동이 상대에게 큰 의미가 됩니다." },
       { emoji: "💬", title: "자신을 위한 팁", text: "파트너에게 \"좀 더 가까이 있고 싶어\"라고 말하고, 어떤 접촉이 가장 안정감을 주는지 구체적으로 알려주세요." },
@@ -1042,7 +1148,8 @@ function startQuiz() {
   document.getElementById('quiz-wrapper').style.display = 'block';
   document.getElementById('result-section').style.display = 'none';
   document.querySelector('.hero').style.display = 'none';
-  document.querySelector('.types-grid').parentElement.style.display = 'none';
+  const typesSection = document.getElementById('types-section');
+  if (typesSection) typesSection.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1127,6 +1234,21 @@ function showResult() {
     html += '<div class="result-subtitle">' + r.subtitle + '</div>';
     html += '<div class="result-desc">' + r.desc + '</div>';
     html += '</div>';
+  }
+
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">당신의 수호령</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 소울 애니멀: ' + ch.animal + ' | ' + ch.animalDesc + '</div>';
+    html += '</div></div>';
   }
 
   // ─── Score bars ───

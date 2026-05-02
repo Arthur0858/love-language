@@ -120,75 +120,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/shared.css" />
   <style>
-    :root {
-      --rose:    #C9666E;
-      --rose-lt: #F2C4C7;
-      --peach:   #F5E6E0;
-      --cream:   #FDF8F5;
-      --warm:    #8B5C5C;
-      --text:    #3A2828;
-      --muted:   #7A6060;
-      --card-bg: #FFFFFF;
-      --shadow:  0 4px 24px rgba(180,100,100,.10);
-      --radius:  16px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.75;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(253,248,245,.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--rose-lt);
-      padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-    }
-    .nav-logo {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--rose); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .nav-links { display: flex; gap: 20px; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--rose); }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
-    /* ─── LANG DROPDOWN ─── */
-    .lang-menu { position: relative; }
-    .lang-current {
-      background: transparent; border: 1.5px solid var(--rose);
-      color: var(--rose); border-radius: 999px;
-      padding: 4px 13px; font-size: .78rem; font-weight: 700;
-      cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
-      transition: all .2s; letter-spacing: .05em;
-      display: inline-flex; align-items: center; gap: 4px;
-    }
-    .lang-current:hover { background: var(--rose); color: #fff; }
-    .lang-list {
-      display: none; position: absolute; top: calc(100% + 6px); left: 0;
-      background: #fff; border: 1px solid var(--rose-lt);
-      border-radius: 10px; box-shadow: 0 4px 20px rgba(180,100,100,.15);
-      list-style: none; overflow: hidden; z-index: 200; min-width: 110px;
-    }
-    .lang-menu.open .lang-list { display: block; }
-    .lang-list li a {
-      display: block; padding: 9px 16px;
-      font-size: .82rem; color: var(--text); text-decoration: none;
-      transition: background .15s;
-    }
-    .lang-list li a:hover { background: var(--peach); color: var(--rose); }
-
     /* ─── HERO ─── */
     .hero {
       text-align: center;
@@ -544,16 +477,6 @@
       transition: transform .2s, box-shadow .2s;
     }
     .btn-theory:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,102,110,.45); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: #FFF5F5; border-top: 1px solid var(--rose-lt);
-      text-align: center; padding: 32px 24px;
-      color: var(--muted); font-size: .8rem;
-    }
-    footer a { color: var(--rose); text-decoration: none; }
-
-
     /* ─── FAQ SECTION ─── */
     .faq-section {
       max-width: 860px; margin: 0 auto; padding: 64px 24px;
@@ -582,7 +505,94 @@
       padding: 0 24px 20px; color: var(--muted);
       font-size: .9rem; line-height: 1.85;
     }
-    /* ─── UTILS ─── */
+
+    /* ─── CHARACTERS SECTION ─── */
+    .characters-section {
+      max-width: 980px; margin: 0 auto; padding: 64px 24px;
+      border-top: 1px solid var(--rose-lt);
+    }
+    .chars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; margin-top: 40px;
+    }
+    .char-card {
+      border-radius: 20px; padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      position: relative; overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .char-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.12); }
+    .char-card.type-w { background: linear-gradient(145deg, #FFFBF0, #FFF3D6); border: 1.5px solid #F5DDA0; }
+    .char-card.type-t { background: linear-gradient(145deg, #EEF3FA, #E0EBF8); border: 1.5px solid #A8C4E0; }
+    .char-card.type-g { background: linear-gradient(145deg, #FDF0F5, #FADFEA); border: 1.5px solid #E8A8C8; }
+    .char-card.type-s { background: linear-gradient(145deg, #EFF7F2, #DCF0E5); border: 1.5px solid #9FCFB5; }
+    .char-card.type-p { background: linear-gradient(145deg, #FEF5F0, #FDE8DC); border: 1.5px solid #F0C0A8; }
+    .char-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .char-spirit-badge {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .type-w .char-spirit-badge { background: #FDE68A; }
+    .type-t .char-spirit-badge { background: #BFDBFE; }
+    .type-g .char-spirit-badge { background: #FBCFE8; }
+    .type-s .char-spirit-badge { background: #A7F3D0; }
+    .type-p .char-spirit-badge { background: #FED7AA; }
+    .char-title-wrap { flex: 1; }
+    .char-type-badge {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+      padding: 3px 10px; border-radius: 999px; margin-bottom: 5px;
+    }
+    .type-w .char-type-badge { background: #FDE68A; color: #92400E; }
+    .type-t .char-type-badge { background: #BFDBFE; color: #1E40AF; }
+    .type-g .char-type-badge { background: #FBCFE8; color: #9D174D; }
+    .type-s .char-type-badge { background: #A7F3D0; color: #065F46; }
+    .type-p .char-type-badge { background: #FED7AA; color: #92400E; }
+    .char-name { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .char-subtitle { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+    .char-divider { height: 1px; margin: 14px 0; }
+    .type-w .char-divider { background: #F5DDA0; }
+    .type-t .char-divider { background: #A8C4E0; }
+    .type-g .char-divider { background: #E8A8C8; }
+    .type-s .char-divider { background: #9FCFB5; }
+    .type-p .char-divider { background: #F0C0A8; }
+    .char-section-label { font-size: .68rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .char-personality { font-size: .85rem; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .char-spirit-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.55); border-radius: 10px;
+      padding: 8px 12px; margin-bottom: 12px;
+    }
+    .char-spirit-name { font-size: .82rem; font-weight: 700; color: var(--text); }
+    .char-spirit-desc { font-size: .77rem; color: var(--muted); margin-top: 1px; }
+    .char-outfit { font-size: .8rem; color: var(--muted); line-height: 1.65; font-style: italic; }
+    .char-scene { margin-top: 12px; font-size: .78rem; color: var(--muted); line-height: 1.65; background: rgba(255,255,255,.4); border-radius: 8px; padding: 8px 10px; }
+    /* Result page character display */
+    .result-char-card { border-radius: 16px; padding: 22px 20px; margin-bottom: 28px; display: flex; gap: 16px; align-items: flex-start; }
+    .result-char-card.type-w { background: linear-gradient(135deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
+    .result-char-card.type-t { background: linear-gradient(135deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }
+    .result-char-card.type-g { background: linear-gradient(135deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
+    .result-char-card.type-s { background: linear-gradient(135deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
+    .result-char-card.type-p { background: linear-gradient(135deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
+    .result-char-spirit { font-size: 2.6rem; flex-shrink: 0; line-height: 1; }
+    .result-char-body { flex: 1; }
+    .result-char-label { font-size: .7rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; margin-bottom: 3px; }
+    .result-char-name { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .result-char-role { font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+    .result-char-desc { font-size: .82rem; color: var(--text); line-height: 1.7; }
+    .result-char-spirit-info { font-size: .78rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+    
+      .char-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+      }
+
+      /* ─── UTILS ─── */
     .hidden { display: none !important; }
   </style>
 </head>
@@ -610,9 +620,10 @@
   </div>
   <div class="nav-links">
     <a href="#types-section">5 Lenguajes</a>
-    <a href="#quiz-section" id="nav-test-link">Iniciar Test</a>
+        <a href="#quiz-section" id="nav-test-link">Iniciar Test</a>
     <a href="/es/theory/">Teoría</a>
     <a href="/resources/">Recursos</a>
+    <a href="/es/luna-yoga-music/">🎵 Luna Music</a>
   </div>
 </nav>
 
@@ -638,38 +649,128 @@
   <button class="btn-start" onclick="startQuiz()">Iniciar Test →</button>
 </section>
 
-<!-- TYPES PREVIEW -->
-<section class="types-section" id="types-section">
+<!-- CHARACTERS SECTION -->
+<section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>Los cinco lenguajes del amor</h2>
-    <p>Una teoría del psicólogo Gary Chapman que ha transformado millones de relaciones en todo el mundo</p>
+    <h2>Cinco Lenguajes del Amor × Guardianes</h2>
+    <p>Los cinco lenguajes del amor de Gary Chapman, cada uno con su propio espíritu guardián.<br>¡Haz clic en una tarjeta para comenzar el test y encontrar el tuyo!</p>
   </div>
-  <div class="types-grid">
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">💬</div>
-      <div class="name">Palabras de Afirmación</div>
-      <div class="sub">Words of Affirmation</div>
+  <div class="chars-grid">
+    <!-- W · Iris -->
+    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/iris.webp" alt="Iris">
+      <div class="char-top">
+        <div class="char-spirit-badge">🎶</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Palabras de Afirmación</div>
+          <div class="char-name">Iris</div>
+          <div class="char-subtitle">Poeta del Amanecer</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personalidad</div>
+      <div class="char-personality">Aguda, cálida, con un don para encontrar belleza en los destellos más tenues. Cada palabra suya parece una perla cuidadosamente pulida.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐦</span>
+        <div>
+          <div class="char-spirit-name">Animal del Alma: Alondra · Canción-Ala</div>
+          <div class="char-spirit-desc">Plumas con brillo metálico y cola extraordinariamente larga. Cuando Iris alaba a alguien, Canción-Ala vuela a su alrededor irradiando un suave resplandor.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🛠️</div>
-      <div class="name">Actos de Servicio</div>
-      <div class="sub">Acts of Service</div>
+
+    <!-- T · Noah -->
+    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/noah.webp" alt="Noah">
+      <div class="char-top">
+        <div class="char-spirit-badge">🌌</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Tiempo de Calidad</div>
+          <div class="char-name">Noah</div>
+          <div class="char-subtitle">Navegante del Mar Estelar</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personalidad</div>
+      <div class="char-personality">Reservada e intensamente enfocada. Detesta la charla vacía y busca una resonancia profunda a nivel del alma.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐋</span>
+        <div>
+          <div class="char-spirit-name">Animal del Alma: Ballena Jorobada · Silencio</div>
+          <div class="char-spirit-desc">Su cuerpo está tejido de nebulosas translúcidas con estrellas en el lomo. Cuando Noah conecta profundamente, Silencio rodea a ambos y aísla todo el ruido exterior.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🎁</div>
-      <div class="name">Recibir Regalos</div>
-      <div class="sub">Receiving Gifts</div>
+
+    <!-- G · Vivian -->
+    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian">
+      <div class="char-top">
+        <div class="char-spirit-badge">✨</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Recibir Regalos</div>
+          <div class="char-name">Vivian</div>
+          <div class="char-subtitle">Coleccionista de Memorias</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personalidad</div>
+      <div class="char-personality">Generosa, juguetona y devota de los rituales. Cree que cada regalo es un momento congelado en el tiempo.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦜</span>
+        <div>
+          <div class="char-spirit-name">Animal del Alma: Pergolero · Corazón-Artesano</div>
+          <div class="char-spirit-desc">Ojos violetas vívidos y un hilo dorado brillante siempre en el pico. Reúne fragmentos de sorpresa del mundo para materializar el afecto.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">⏳</div>
-      <div class="name">Tiempo de Calidad</div>
-      <div class="sub">Quality Time</div>
+
+    <!-- S · Claire -->
+    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/claire.webp" alt="Claire">
+      <div class="char-top">
+        <div class="char-spirit-badge">🔧</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Actos de Servicio</div>
+          <div class="char-name">Claire</div>
+          <div class="char-subtitle">La Guardiana Silenciosa</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personalidad</div>
+      <div class="char-personality">Práctica, firme e incansable. Confía más en el sudor que en las palabras dulces.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🐝</span>
+        <div>
+          <div class="char-spirit-name">Animal del Alma: Abeja Obrera · Diligente</div>
+          <div class="char-spirit-desc">Cuerpo de ámbar translúcido con un zumbido de alas como un chelo profundo. Guía a Claire hacia las necesidades no expresadas y la ayuda a repararlas.</div>
+        </div>
+      </div>
     </div>
-    <div class="type-card" onclick="startQuiz()">
-      <div class="icon">🤝</div>
-      <div class="name">Contacto Físico</div>
-      <div class="sub">Physical Touch</div>
+
+    <!-- P · Dora -->
+    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
+      <img class="char-img" src="/images/characters/dora.webp" alt="Dora">
+      <div class="char-top">
+        <div class="char-spirit-badge">🫂</div>
+        <div class="char-title-wrap">
+          <div class="char-type-badge">Contacto Físico</div>
+          <div class="char-name">Dora</div>
+          <div class="char-subtitle">Luminiscencia Cálida</div>
+        </div>
+      </div>
+      <div class="char-divider"></div>
+      <div class="char-section-label">Personalidad</div>
+      <div class="char-personality">Sensible, pura y profundamente empática. Cree que la calidez de la piel puede sanar las heridas más profundas.</div>
+      <div class="char-spirit-row">
+        <span style="font-size:1.3rem">🦦</span>
+        <div>
+          <div class="char-spirit-name">Animal del Alma: Nutria · Pegajosa</div>
+          <div class="char-spirit-desc">Pelaje con el cálido brillo del agua y ojos suaves y húmedos. Siempre cerca de Dora, tocando suavemente con su patita a quien ella abraza.</div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -946,6 +1047,7 @@ const results = {
     subtitle: "Words of Affirmation",
     color: "#C9666E",
     desc: "Las palabras tienen un poder inmenso para ti. Un sincero «te quiero», «lo hiciste genial hoy» o «gracias por todo lo que haces» te hace sentir verdaderamente valorado/a. No necesitas grandes gestos, solo la sinceridad de que tu pareja esté dispuesta a expresar lo que siente. Las críticas y la indiferencia te duelen especialmente, porque crees que las palabras son el puente que conecta los corazones.",
+    character: { typeClass: "type-w", spirit: "🎶", name: "Iris", role: "Poeta del Amanecer", animal: "Alondra · Canción-Ala", animalDesc: "Plumas con brillo metálico y una cola extraordinariamente larga. Cuando Iris alaba a alguien, vuela a su alrededor irradiando un suave resplandor — el lenguaje iluminando el alma.", personality: "Aguda, cálida, con un don para encontrar belleza en los destellos más tenues. Cada palabra suya parece una perla cuidadosamente pulida." },
     tips: [
       { emoji: "✉️", title: "Consejo para tu pareja", text: "Intenta decir cada día algo que admires de tu pareja. No hace falta un discurso largo, basta una frase sincera." },
       { emoji: "📔", title: "Recordatorio para ti", text: "Practica pedir ánimo cuando lo necesites: «Necesito que me digas qué hago bien». Dale a tu pareja la oportunidad de darte lo que necesitas." },
@@ -963,6 +1065,7 @@ const results = {
     subtitle: "Acts of Service",
     color: "#7B8FC9",
     desc: "Para ti, el amor no se dice, se demuestra con acciones. Cuando tu pareja te ayuda con las tareas del hogar, te prepara un té caliente o se ocupa de los pendientes mientras estás ocupado/a, ese «quiero hacer algo por ti» te conmueve más que cualquier palabra bonita. Valoras el esfuerzo y la dedicación que tu pareja invierte en tu bienestar.",
+    character: { typeClass: "type-s", spirit: "🔧", name: "Claire", role: "La Guardiana Silenciosa", animal: "Abeja Obrera · Diligente", animalDesc: "Cuerpo de ámbar translúcido con un zumbido de alas como un chelo profundo. Guía a Claire hacia las necesidades no expresadas de otros y la ayuda a repararlas.", personality: "Práctica, firme e incansable. Confía más en el sudor que en las palabras dulces." },
     tips: [
       { emoji: "🧹", title: "Consejo para tu pareja", text: "Fíjate en qué anda ocupado/a tu pareja últimamente y ayúdale con alguna tarea pequeña sin que te lo pida." },
       { emoji: "📋", title: "Recordatorio para ti", text: "Cuando necesites ayuda, pídela con claridad: «¿Podrías encargarte de esto? Es importante para mí»." },
@@ -980,6 +1083,7 @@ const results = {
     subtitle: "Receiving Gifts",
     color: "#D4A259",
     desc: "Los regalos para ti no son cuestión de valor material, sino la prueba concreta de que «estás pensando en mí». Una flor del camino, una tarjeta escrita a mano o que tu pareja recuerde algo que mencionaste de pasada y lo compre en secreto: todo eso te hace sentir que estás en su corazón. Lo importante no es el precio, sino el cariño y la atención detrás del detalle.",
+    character: { typeClass: "type-g", spirit: "✨", name: "Vivian", role: "Coleccionista de Memorias", animal: "Pergolero · Corazón-Artesano", animalDesc: "Ojos violetas vívidos y un hilo dorado brillante siempre en el pico. Reúne 'fragmentos de sorpresa' del mundo para materializar el afecto.", personality: "Generosa, juguetona y devota de los rituales. Cree que cada regalo es un momento congelado en el tiempo." },
     tips: [
       { emoji: "🎀", title: "Consejo para tu pareja", text: "Anota las cosas que tu pareja menciona al pasar que le gustaría tener. Regálaselas en un momento inesperado: la sorpresa multiplica el gesto." },
       { emoji: "💭", title: "Recordatorio para ti", text: "Dile a tu pareja: «Los regalos significan que piensas en mí». Así entenderá que no es materialismo, sino que valoras sentirte recordado/a." },
@@ -997,6 +1101,7 @@ const results = {
     subtitle: "Quality Time",
     color: "#5C8CB0",
     desc: "Para ti, el regalo más valioso es la «compañía plena y atenta». No solo quieres estar en el mismo espacio, sino que tu pareja deje el móvil, apague la tele y te mire solo a ti con toda su atención. Pasear juntos, charlar o simplemente sentarse en silencio: mientras ambos estén totalmente presentes, sientes un amor y una conexión profundos.",
+    character: { typeClass: "type-t", spirit: "🌌", name: "Noah", role: "Navegante del Mar Estelar", animal: "Ballena Jorobada · Silencio", animalDesc: "Su cuerpo está tejido de nebulosas translúcidas, con estrellas en el lomo. Cuando Noah conecta profundamente, Silencio rodea a ambos y aísla todo el ruido exterior.", personality: "Reservada e intensamente enfocada. Detesta la charla vacía y busca una resonancia profunda a nivel del alma." },
     tips: [
       { emoji: "📵", title: "Consejo para tu pareja", text: "Reserva al menos 15 minutos al día de «tiempo sin interrupciones»: deja el móvil y dedícate por completo a tu pareja." },
       { emoji: "🗓️", title: "Recordatorio para ti", text: "Organiza citas de forma proactiva. No hace falta nada lujoso: un paseo o un café juntos bastan, lo que importa es estar presentes." },
@@ -1014,6 +1119,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "Abrazos, tomarse de la mano, acurrucarse, una palmadita en el hombro: para ti el contacto físico no es solo un gesto corporal, sino la expresión más directa del amor. Un abrazo cálido te hace sentir seguro/a al instante; caminar de la mano te da la sensación de que «somos uno». La falta de contacto físico te hace sentir soledad y distancia.",
+    character: { typeClass: "type-p", spirit: "🫂", name: "Dora", role: "Luminiscencia Cálida", animal: "Nutria · Pegajosa", animalDesc: "Pelaje con el cálido brillo del agua y ojos suaves y húmedos. Siempre cerca de Dora, tocando suavemente con su patita a quien ella abraza.", personality: "Sensible, pura y profundamente empática. Cree que la calidez de la piel puede sanar las heridas más profundas." },
     tips: [
       { emoji: "🤗", title: "Consejo para tu pareja", text: "No esperes un momento especial: en el día a día, da más abrazos, acaricia su cabeza, toma su mano. Estos pequeños gestos significan mucho para tu pareja." },
       { emoji: "💬", title: "Recordatorio para ti", text: "Dile a tu pareja: «Necesito más cercanía física». Explica con claridad qué tipo de contacto te da más seguridad." },
@@ -1042,7 +1148,8 @@ function startQuiz() {
   document.getElementById('quiz-wrapper').style.display = 'block';
   document.getElementById('result-section').style.display = 'none';
   document.querySelector('.hero').style.display = 'none';
-  document.querySelector('.types-grid').parentElement.style.display = 'none';
+  const typesSection = document.getElementById('types-section');
+  if (typesSection) typesSection.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1127,6 +1234,21 @@ function showResult() {
     html += '<div class="result-subtitle">' + r.subtitle + '</div>';
     html += '<div class="result-desc">' + r.desc + '</div>';
     html += '</div>';
+  }
+
+
+  // ─── Guardian Character card ───
+  var ch = r.character;
+  if (ch) {
+    html += '<div class="result-char-card ' + ch.typeClass + '">';
+    html += '<div class="result-char-spirit">' + ch.spirit + '</div>';
+    html += '<div class="result-char-body">';
+    html += '<div class="result-char-label">Tu Espíritu Guardián</div>';
+    html += '<div class="result-char-name">' + ch.name + '</div>';
+    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-desc">' + ch.personality + '</div>';
+    html += '<div class="result-char-spirit-info">🐾 Animal del Alma: ' + ch.animal + ' | ' + ch.animalDesc + '</div>';
+    html += '</div></div>';
   }
 
   // ─── Score bars ───

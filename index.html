@@ -654,7 +654,7 @@
     .result-hero-card.type-g { background: linear-gradient(160deg,#FDF0F5,#FADFEA); border: 1.5px solid #E8A8C8; }
     .result-hero-card.type-s { background: linear-gradient(160deg,#EFF7F2,#DCF0E5); border: 1.5px solid #9FCFB5; }
     .result-hero-card.type-p { background: linear-gradient(160deg,#FEF5F0,#FDE8DC); border: 1.5px solid #F0C0A8; }
-    .result-hero-img { width: 100%; height: 260px; object-fit: cover; object-position: top center; display: block; }
+    .result-hero-img { width: 100%; height: 280px; object-fit: contain; object-position: bottom center; display: block; padding-top: 12px; filter: drop-shadow(0 18px 20px rgba(58,40,40,.15)); }
     .result-hero-body { padding: 20px 22px 24px; }
     .result-hero-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     .result-char-spirit { font-size: 2rem; line-height: 1; }
@@ -681,6 +681,228 @@
         border-radius: 12px;
         margin-bottom: 16px;
       }
+
+      /* ─── Visual refresh with layered guardian artwork ─── */
+    .hero {
+      min-height: calc(100vh - 60px);
+      padding: 0 24px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(253,248,245,.96) 0%, rgba(253,248,245,.88) 42%, rgba(253,248,245,.36) 72%, rgba(253,248,245,.72) 100%),
+        url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(253,248,245,0), var(--cream));
+      pointer-events: none;
+    }
+    .hero-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .92fr);
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-copy {
+      max-width: 560px;
+      padding: 76px 0 88px;
+    }
+    .hero p { margin: 0 0 28px; }
+    .hero-meta { justify-content: flex-start; gap: 12px 18px; }
+    .hero-meta-item {
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(201,102,110,.18);
+      border-radius: 999px;
+      padding: 7px 11px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-art {
+      min-height: 560px;
+      position: relative;
+      align-self: end;
+    }
+    .hero-guardian {
+      position: absolute;
+      bottom: -18px;
+      filter: drop-shadow(0 24px 28px rgba(58,40,40,.24));
+      user-select: none;
+      pointer-events: none;
+    }
+    .hero-guardian-main {
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(340px, 66vw);
+      z-index: 3;
+    }
+    .hero-guardian-side {
+      width: 220px;
+      opacity: .72;
+      z-index: 2;
+    }
+    .hero-guardian-side.left { left: 2%; transform: translateY(28px) rotate(-4deg); }
+    .hero-guardian-side.right { right: -2%; transform: translateY(38px) rotate(5deg); }
+    .hero-prop {
+      position: absolute;
+      z-index: 4;
+      filter: drop-shadow(0 12px 18px rgba(58,40,40,.22));
+      pointer-events: none;
+    }
+    .hero-prop.pen { width: 94px; left: 13%; top: 22%; transform: rotate(-14deg); }
+    .hero-prop.lantern { width: 82px; right: 15%; top: 24%; transform: rotate(8deg); }
+
+    .characters-section {
+      max-width: none;
+      margin: 0;
+      padding: 72px 24px;
+      background:
+        linear-gradient(180deg, var(--cream) 0%, #fff 48%, #FFF7F0 100%);
+      border-top: 0;
+    }
+    .characters-section .section-header,
+    .chars-grid {
+      width: min(1120px, 100%);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .chars-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+    .char-card {
+      min-height: 520px;
+      padding: 0 16px 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      isolation: isolate;
+    }
+    .char-img {
+      height: 250px;
+      object-fit: contain;
+      object-position: bottom center;
+      margin: -8px -8px 8px;
+      border-radius: 0;
+      filter: drop-shadow(0 18px 20px rgba(58,40,40,.16));
+      position: relative;
+      z-index: 2;
+    }
+    .char-prop {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      position: absolute;
+      right: 14px;
+      top: 190px;
+      z-index: 3;
+      filter: drop-shadow(0 8px 12px rgba(58,40,40,.18));
+      pointer-events: none;
+    }
+    .char-top { gap: 10px; }
+    .char-spirit-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      font-size: 1.35rem;
+    }
+    .char-spirit-row {
+      margin-top: auto;
+      align-items: flex-start;
+    }
+
+    .quiz-preview {
+      width: min(980px, calc(100% - 48px));
+      margin: 0 auto 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .82fr);
+      gap: 28px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid rgba(201,102,110,.18);
+      border-radius: 18px;
+      box-shadow: 0 10px 34px rgba(58,40,40,.08);
+      overflow: hidden;
+    }
+    .quiz-preview-art {
+      min-height: 300px;
+      background:
+        linear-gradient(90deg, rgba(58,40,40,0), rgba(58,40,40,.08)),
+        url('/assets/lovetypes/backgrounds/quiz-desk.jpg') center/cover no-repeat;
+    }
+    .quiz-preview-copy { padding: 34px 32px 34px 0; }
+    .quiz-preview-badge {
+      display: inline-block;
+      color: var(--rose);
+      background: var(--rose-lt);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .quiz-preview h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      line-height: 1.35;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .quiz-preview p {
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+
+    @media(max-width: 1020px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 0; }
+      .hero-copy { padding: 68px 0 0; text-align: center; margin: 0 auto; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-meta { justify-content: center; }
+      .hero-art { min-height: 390px; width: min(620px, 100%); margin: 0 auto; }
+      .hero-guardian-main { width: min(300px, 64vw); }
+      .hero-guardian-side { width: 178px; }
+      .chars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .char-card { min-height: 500px; }
+    }
+    @media(max-width: 700px) {
+      .hero {
+        min-height: auto;
+        padding: 0 18px;
+        background:
+          linear-gradient(180deg, rgba(253,248,245,.97) 0%, rgba(253,248,245,.88) 52%, rgba(253,248,245,.56) 100%),
+          url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+      }
+      .hero-copy { padding: 56px 0 0; }
+      .hero h1 { font-size: clamp(2rem, 10vw, 2.7rem); }
+      .hero-art { min-height: 330px; }
+      .hero-guardian-main { width: min(260px, 72vw); bottom: -12px; }
+      .hero-guardian-side { width: 140px; opacity: .56; }
+      .hero-prop.pen { left: 4%; top: 18%; }
+      .hero-prop.lantern { right: 4%; top: 20%; }
+      .characters-section { padding: 56px 18px; }
+      .chars-grid { grid-template-columns: 1fr; }
+      .char-card { min-height: auto; }
+      .char-img { height: 280px; }
+      .quiz-preview {
+        width: calc(100% - 36px);
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .quiz-preview-art { min-height: 220px; }
+      .quiz-preview-copy { padding: 28px 24px 30px; }
+    }
 
       /* ─── UTILS ─── */
     .hidden { display: none !important; }
@@ -745,24 +967,35 @@
 
 <!-- HERO -->
 <section class="hero" id="home-section">
-  <div class="hero-badge" data-i18n="hero.badge">🌸 免費 · 無需註冊 · 2分鐘完成</div>
-  <h1 data-i18n-html="hero.h1">你最需要的愛，<br>是哪一種<span>語言</span>？</h1>
-  <p data-i18n="hero.p">每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。</p>
-  <div class="hero-meta">
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span data-i18n="hero.meta1">約 2 分鐘</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span data-i18n="hero.meta2">15 道情境選擇題</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span data-i18n="hero.meta3">已有 38,000+ 人測驗</span>
-    </span>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge" data-i18n="hero.badge">🌸 免費 · 無需註冊 · 2分鐘完成</div>
+      <h1 data-i18n-html="hero.h1">你最需要的愛，<br>是哪一種<span>語言</span>？</h1>
+      <p data-i18n="hero.p">每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-i18n="hero.meta1">約 2 分鐘</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-i18n="hero.meta2">15 道情境選擇題</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span data-i18n="hero.meta3">已有 38,000+ 人測驗</span>
+        </span>
+      </div>
+      <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">開始測驗 →</button>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+    </div>
   </div>
-  <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">開始測驗 →</button>
 </section>
 
 <!-- TYPES & CHARACTERS SECTION -->
@@ -775,7 +1008,8 @@
 
     <!-- 1. 肯定的言詞 · 艾莉絲 -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="愛麗絲，晨曦詩人 — 肯定的言語守護靈" width="844" height="733" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="艾莉絲，晨曦詩人 — 肯定的言詞守護靈" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -798,7 +1032,8 @@
 
     <!-- 2. 優質的時光 · 諾雅 -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="諾亞，星空旅人 — 優質時光守護靈" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="諾雅，星海領航員 — 優質時光守護靈" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -821,7 +1056,8 @@
 
     <!-- 3. 接受禮物 · 薇薇安 -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="薇薇安，夢境編織者 — 接受禮物守護靈" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="薇薇安，記憶收藏家 — 接受禮物守護靈" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -844,7 +1080,8 @@
 
     <!-- 4. 服務的行動 · 克萊兒 -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="克蕾兒，陽光少女 — 服務的行動守護靈" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="克萊兒，靜謐守護者 — 服務的行動守護靈" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -867,7 +1104,8 @@
 
     <!-- 5. 身體的接觸 · 朵拉 -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="朵拉，溫暖使者 — 身體接觸守護靈" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="朵拉，溫暖發光體 — 身體接觸守護靈" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -893,6 +1131,15 @@
 
 <!-- QUIZ SECTION -->
 <section id="quiz-section">
+  <div class="quiz-preview">
+    <div class="quiz-preview-art" aria-hidden="true"></div>
+    <div class="quiz-preview-copy">
+      <div class="quiz-preview-badge">互動測驗</div>
+      <h2>讓守護靈帶你找出愛的語言</h2>
+      <p>依照直覺回答 15 個日常情境，測驗會整理你的五種愛語比例，並給出最適合的相處提醒。</p>
+      <button class="btn-start" onclick="startQuiz()">開始測驗 →</button>
+    </div>
+  </div>
   <div id="quiz-wrapper">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
@@ -1236,6 +1483,7 @@ const results = {
     subtitle: "Physical Touch",
     color: "#9B7BBF",
     desc: "擁抱、牽手、依偎、輕拍肩膀——這些身體的接觸對你來說不只是肢體動作，而是最直接的愛的表達。一個溫暖的擁抱能讓你瞬間感到安全，牽手走在路上讓你覺得「我們是一體的」。缺少肢體接觸會讓你感到孤單和疏離。",
+    character: { typeClass: "type-p", spirit: "🫂", name: "朵拉 Dora", role: "溫暖發光體", animal: "水獺 · 依依", animalDesc: "毛皮閃爍溫潤水光，總是靠近朵拉，透過擁抱與輕觸傳遞安定感。", personality: "感性、純真、極具同理心。她相信肌膚的溫度能治癒最深的傷口。" },
     tips: [
       { emoji: "🤗", title: "給伴侶的提示", text: "不需要等特別的時刻，日常中多給一個擁抱、摸摸頭、牽牽手，這些小動作對對方意義重大。" },
       { emoji: "💬", title: "給自己的提醒", text: "告訴伴侶「我需要多一點身體的親近」，具體說出什麼樣的接觸讓你最有安全感。" },
@@ -1266,6 +1514,8 @@ function startQuiz() {
   document.querySelector('.hero').style.display = 'none';
   const typesSection = document.getElementById('types-section');
   if (typesSection) typesSection.style.display = 'none';
+  const quizPreview = document.querySelector('.quiz-preview');
+  if (quizPreview) quizPreview.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1341,7 +1591,7 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {

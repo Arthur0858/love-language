@@ -302,9 +302,10 @@ body.lovetypes-universe {
 }
 
 .lovetypes-universe .hero-guardian-main {
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(340px, 66vw);
+  --hero-main-width: min(340px, 66vw);
+  left: calc(50% - (var(--hero-main-width) / 2)) !important;
+  transform: none !important;
+  width: var(--hero-main-width) !important;
   z-index: 3;
 }
 
@@ -321,7 +322,10 @@ body.lovetypes-universe {
 
 .lovetypes-universe .hero-prop {
   position: absolute;
-  z-index: 4;
+  z-index: 1;
+  height: auto !important;
+  object-fit: contain;
+  opacity: .78;
   filter: drop-shadow(0 12px 18px rgba(58,40,40,.22));
   pointer-events: none;
   animation: softPulse 5.2s ease-in-out infinite;
@@ -702,7 +706,7 @@ body.lovetypes-universe {
   .lovetypes-universe .hero p { margin-left: auto; margin-right: auto; }
   .lovetypes-universe .hero-meta { justify-content: center; }
   .lovetypes-universe .hero-art { min-height: 390px; width: min(620px, 100%); margin: 0 auto; }
-  .lovetypes-universe .hero-guardian-main { width: min(300px, 64vw); }
+  .lovetypes-universe .hero-guardian-main { --hero-main-width: min(300px, 64vw); }
   .lovetypes-universe .hero-guardian-side { width: 178px; }
   .lovetypes-universe .chars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lovetypes-universe .char-card { min-height: 500px; }
@@ -827,7 +831,7 @@ body.lovetypes-universe {
     white-space: normal;
   }
   .lovetypes-universe .hero-art { min-height: 330px; }
-  .lovetypes-universe .hero-guardian-main { width: min(260px, 72vw); bottom: -12px; }
+  .lovetypes-universe .hero-guardian-main { --hero-main-width: min(260px, 72vw); bottom: -12px; }
   .lovetypes-universe .hero-guardian-side { width: 140px; opacity: .56; }
   .lovetypes-universe .hero-prop.pen { left: 4%; top: 18%; }
   .lovetypes-universe .hero-prop.lantern { right: 4%; top: 20%; }

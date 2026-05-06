@@ -658,11 +658,11 @@
       <button class="btn-start" onclick="startQuiz()">여정 시작하기</button>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
-      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
-      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
-      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
-      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.webp" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.webp" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.webp" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="">
     </div>
   </div>
 </section>
@@ -692,8 +692,8 @@
   <div class="chars-grid">
     <!-- W · 아이리스 (Iris) -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="아이리스, 사랑의 언어 '인정하는 말' 수호령" width="844" height="733" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.webp" alt="아이리스, 사랑의 언어 '인정하는 말' 수호령" width="844" height="733" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -716,8 +716,8 @@
 
     <!-- T · 노아 (Noah) -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="노아, 사랑의 언어 '함께하는 시간' 수호령" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.webp" alt="노아, 사랑의 언어 '함께하는 시간' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -740,8 +740,8 @@
 
     <!-- G · 비비안 (Vivian) -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="비비안, 사랑의 언어 '선물' 수호령" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.webp" alt="비비안, 사랑의 언어 '선물' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -764,8 +764,8 @@
 
     <!-- S · 클레어 (Claire) -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="클레어, 사랑의 언어 '봉사 행위' 수호령" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.webp" alt="클레어, 사랑의 언어 '봉사 행위' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -788,8 +788,8 @@
 
     <!-- P · 도라 (Dora) -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="도라, 사랑의 언어 '스킨십' 수호령" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.webp" alt="도라, 사랑의 언어 '스킨십' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1356,7 +1356,7 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {

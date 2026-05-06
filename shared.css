@@ -15,6 +15,7 @@
   --card-bg: #FFFFFF;
   --shadow:  0 4px 24px rgba(180,100,100,.10);
   --radius:  16px;
+  --serif: 'Noto Serif TC', serif;
 }
 
 /* ─── RESET ─── */
@@ -159,7 +160,7 @@ body.lovetypes-universe {
   align-items: center;
   background:
     linear-gradient(90deg, rgba(253,248,245,.96) 0%, rgba(253,248,245,.88) 42%, rgba(253,248,245,.36) 72%, rgba(253,248,245,.72) 100%),
-    url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+    url('/assets/lovetypes/backgrounds/guardian-garden.webp') center/cover no-repeat;
 }
 
 .lovetypes-universe .hero::after {
@@ -329,6 +330,8 @@ body.lovetypes-universe {
   display: flex;
   flex-direction: column;
   isolation: isolate;
+  color: inherit;
+  text-decoration: none;
 }
 
 .lovetypes-universe .char-card:hover {
@@ -417,11 +420,20 @@ body.lovetypes-universe {
 }
 
 .lore-chip {
+  display: block;
   border-radius: 14px;
   padding: 16px;
   background: rgba(255,255,255,.66);
   border: 1px solid rgba(201,102,110,.15);
   box-shadow: 0 10px 30px rgba(58,40,40,.06);
+  color: inherit;
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.lore-chip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(58,40,40,.1);
 }
 
 .lore-chip b {
@@ -469,7 +481,7 @@ body.lovetypes-universe {
   min-height: 300px;
   background:
     linear-gradient(90deg, rgba(58,40,40,0), rgba(58,40,40,.08)),
-    url('/assets/lovetypes/backgrounds/quiz-desk.jpg') center/cover no-repeat;
+    url('/assets/lovetypes/backgrounds/quiz-desk.webp') center/cover no-repeat;
 }
 
 .lovetypes-universe .quiz-preview-copy { padding: 34px 32px 34px 0; }
@@ -699,7 +711,7 @@ body.lovetypes-universe {
     padding: 0 18px;
     background:
       linear-gradient(180deg, rgba(253,248,245,.97) 0%, rgba(253,248,245,.88) 52%, rgba(253,248,245,.56) 100%),
-      url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+      url('/assets/lovetypes/backgrounds/guardian-garden.webp') center/cover no-repeat;
   }
   .lovetypes-universe .hero-copy {
     padding: 56px 0 0;
@@ -770,5 +782,380 @@ body.lovetypes-universe {
     display: block;
     max-width: 280px;
     font-size: .84rem;
+  }
+}
+
+/* Guardian profile pages */
+.guardian-profile-page {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.96), transparent 28%),
+    linear-gradient(135deg, #fff8f4 0%, #f7edf6 48%, #edf5ff 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.guardian-profile-page .site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  background: rgba(255,255,255,.78);
+  border-bottom: 1px solid rgba(255,255,255,.72);
+  backdrop-filter: blur(18px);
+}
+
+.guardian-profile-page .site-header .brand {
+  font-family: var(--serif);
+  color: var(--rose);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.guardian-profile-page .site-header nav {
+  position: static;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  display: flex;
+  gap: 18px;
+  justify-content: flex-end;
+}
+
+.guardian-profile-page .site-header nav a {
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.guardian-profile-page .site-header nav a:hover {
+  color: var(--rose);
+}
+
+.guardian-profile-page .primary-btn,
+.guardian-profile-page .secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(201,102,110,.18);
+}
+
+.guardian-profile-page .primary-btn {
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose), var(--guardian-accent, #d86f91));
+}
+
+.guardian-profile-page .secondary-btn {
+  color: var(--guardian-accent, var(--rose));
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.86);
+}
+
+.guardian-profile-page .guardian-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: minmax(0, .96fr) minmax(320px, .82fr);
+  gap: 34px;
+  align-items: center;
+  padding: 118px min(6vw, 76px) 72px;
+}
+
+.guardian-profile-page .guardian-hero::before,
+.guardian-profile-page .guardian-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.guardian-profile-page .guardian-hero::before {
+  width: 42vw;
+  height: 42vw;
+  right: -14vw;
+  top: 4vh;
+  background: radial-gradient(circle, var(--guardian-glow, rgba(255,180,198,.36)), transparent 68%);
+}
+
+.guardian-profile-page .guardian-hero::after {
+  inset: 12% 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+  box-shadow: 0 0 38px rgba(255,255,255,.88);
+}
+
+.guardian-profile-page .guardian-copy,
+.guardian-profile-page .guardian-art {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.guardian-profile-page .guardian-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.8);
+  color: var(--rose);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.guardian-profile-page h1 {
+  margin: 22px 0 12px;
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  line-height: .94;
+  letter-spacing: 0;
+  color: #2b2224;
+}
+
+.guardian-profile-page .guardian-title {
+  font-family: var(--serif);
+  font-size: clamp(1.45rem, 2.8vw, 2.4rem);
+  color: var(--guardian-accent, var(--rose));
+  margin-bottom: 18px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.guardian-profile-page .guardian-quote {
+  max-width: 680px;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1.55;
+  color: #4b3338;
+  overflow-wrap: anywhere;
+}
+
+.guardian-profile-page .guardian-intro {
+  max-width: 680px;
+  margin: 18px 0 28px;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.9;
+}
+
+.guardian-profile-page .guardian-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.guardian-profile-page .guardian-actions a {
+  text-decoration: none;
+}
+
+.guardian-profile-page .guardian-art {
+  min-height: 620px;
+  display: grid;
+  place-items: end center;
+}
+
+.guardian-profile-page .guardian-art img {
+  width: min(520px, 48vw);
+  max-height: 72vh;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 44px rgba(107,65,74,.24));
+  animation: guardianFloat 7s ease-in-out infinite;
+}
+
+.guardian-profile-page .profile-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 84px;
+}
+
+.guardian-profile-page .profile-grid,
+.guardian-profile-page .relationship-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.guardian-profile-page .profile-panel,
+.guardian-profile-page .voice-panel,
+.guardian-profile-page .compatibility-panel {
+  min-width: 0;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 18px 48px rgba(116,74,83,.10);
+}
+
+.guardian-profile-page .profile-panel h2,
+.guardian-profile-page .voice-panel h2,
+.guardian-profile-page .compatibility-panel h2 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+  color: #35282b;
+}
+
+.guardian-profile-page .profile-panel p,
+.guardian-profile-page .voice-panel p,
+.guardian-profile-page .compatibility-panel p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.guardian-profile-page .lore-section {
+  margin: 18px 0;
+  padding: 30px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.54));
+  border: 1px solid rgba(255,255,255,.86);
+}
+
+.guardian-profile-page .lore-section h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  margin: 0 0 14px;
+}
+
+.guardian-profile-page .lore-section p {
+  color: var(--muted);
+  line-height: 1.95;
+  font-size: 1.04rem;
+}
+
+.guardian-profile-page .voice-panel {
+  margin-top: 18px;
+}
+
+.guardian-profile-page .voice-line-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.guardian-profile-page .voice-line-list span {
+  display: block;
+  padding: 15px 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.62);
+  color: #4d3940;
+  line-height: 1.7;
+}
+
+.guardian-profile-page .shorts-strip {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: linear-gradient(110deg, rgba(43,34,36,.9), rgba(122,72,91,.82));
+  color: white;
+}
+
+.guardian-profile-page .shorts-strip strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.32rem;
+  margin-bottom: 6px;
+}
+
+.guardian-profile-page .shorts-strip span {
+  color: rgba(255,255,255,.78);
+}
+
+@keyframes guardianFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+@media (max-width: 860px) {
+  .guardian-profile-page .guardian-hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding: 96px 20px 48px;
+  }
+
+  .guardian-profile-page .site-header {
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .guardian-profile-page .site-header nav {
+    gap: 14px;
+  }
+
+  .guardian-profile-page .site-header nav a:nth-child(n+2) {
+    display: none;
+  }
+
+  .guardian-profile-page .guardian-copy,
+  .guardian-profile-page .guardian-title,
+  .guardian-profile-page .guardian-quote,
+  .guardian-profile-page .guardian-intro {
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px);
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    line-break: anywhere;
+  }
+
+  .guardian-profile-page .profile-panel p,
+  .guardian-profile-page .lore-section p,
+  .guardian-profile-page .voice-line-list span,
+  .guardian-profile-page .shorts-strip span {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    line-break: anywhere;
+  }
+
+  .guardian-profile-page .guardian-title {
+    font-size: 1.28rem;
+    line-height: 1.55;
+  }
+
+  .guardian-profile-page .guardian-quote {
+    font-size: 1.18rem;
+  }
+
+  .guardian-profile-page .guardian-art {
+    min-height: 360px;
+    order: -1;
+  }
+
+  .guardian-profile-page .guardian-art img {
+    width: min(330px, 86vw);
+    max-height: 420px;
+  }
+
+  .guardian-profile-page .profile-grid,
+  .guardian-profile-page .relationship-grid,
+  .guardian-profile-page .voice-line-list,
+  .guardian-profile-page .shorts-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .guardian-profile-page .profile-shell {
+    padding: 12px 18px 62px;
   }
 }

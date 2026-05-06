@@ -658,11 +658,11 @@
       <button class="btn-start" onclick="startQuiz()">Comienza tu viaje</button>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
-      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
-      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
-      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
-      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.webp" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.webp" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.webp" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="">
     </div>
   </div>
 </section>
@@ -692,8 +692,8 @@
   <div class="chars-grid">
     <!-- W · Iris -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="Iris, la Poeta del Alba — Guardiana de las Palabras de Afirmación" width="844" height="733" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.webp" alt="Iris, la Poeta del Alba — Guardiana de las Palabras de Afirmación" width="844" height="733" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -716,8 +716,8 @@
 
     <!-- T · Noah -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="Noah, el Observador de Estrellas — Guardián del Tiempo de Calidad" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.webp" alt="Noah, el Observador de Estrellas — Guardián del Tiempo de Calidad" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -740,8 +740,8 @@
 
     <!-- G · Vivian -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="Vivian, la Tejedora de Sueños — Guardiana de los Regalos" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.webp" alt="Vivian, la Tejedora de Sueños — Guardiana de los Regalos" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -764,8 +764,8 @@
 
     <!-- S · Claire -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="Claire, el Rayo de Sol — Guardiana de los Actos de Servicio" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.webp" alt="Claire, el Rayo de Sol — Guardiana de los Actos de Servicio" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -788,8 +788,8 @@
 
     <!-- P · Dora -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="Dora, el Calor — Guardiana del Contacto Físico" width="1408" height="768" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.webp" alt="Dora, el Calor — Guardiana del Contacto Físico" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1356,7 +1356,7 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {

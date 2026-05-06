@@ -292,6 +292,9 @@ body.lovetypes-universe {
 .lovetypes-universe .hero-guardian {
   position: absolute;
   bottom: -18px;
+  height: auto;
+  max-height: min(78vh, 620px);
+  object-fit: contain;
   filter: drop-shadow(0 24px 28px rgba(58,40,40,.24));
   user-select: none;
   pointer-events: none;

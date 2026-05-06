@@ -1119,6 +1119,20 @@ body.lovetypes-universe {
   color: rgba(255,255,255,.78);
 }
 
+.guardian-profile-page .shorts-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.guardian-profile-page .shorts-strip .secondary-btn {
+  color: #fff;
+  background: rgba(255,255,255,.14);
+  border-color: rgba(255,255,255,.24);
+  box-shadow: none;
+}
+
 @keyframes guardianFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-16px); }
@@ -1188,6 +1202,10 @@ body.lovetypes-universe {
   .guardian-profile-page .voice-line-list,
   .guardian-profile-page .shorts-strip {
     grid-template-columns: 1fr;
+  }
+
+  .guardian-profile-page .shorts-actions {
+    justify-content: flex-start;
   }
 
   .guardian-profile-page .profile-shell {

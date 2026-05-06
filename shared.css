@@ -27,6 +27,7 @@ body {
   color: var(--text);
   min-height: 100vh;
   line-height: 1.75;
+  overflow-x: hidden;
 }
 
 /* ─── NAV ─── */
@@ -50,6 +51,21 @@ nav {
 .nav-links a:hover { color: var(--rose); }
 .nav-links a.active { color: var(--rose); font-weight: 700; }
 .nav-left { display: flex; align-items: center; gap: 12px; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 4px;
+  padding: 8px 16px;
+  background: var(--rose);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.skip-link:focus { left: 4px; }
 
 /* ─── LANG DROPDOWN ─── */
 .lang-menu { position: relative; }
@@ -136,6 +152,23 @@ body.lovetypes-universe {
   isolation: isolate;
   position: relative;
   overflow: hidden;
+  min-height: calc(100vh - 60px);
+  padding: 0 24px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(253,248,245,.96) 0%, rgba(253,248,245,.88) 42%, rgba(253,248,245,.36) 72%, rgba(253,248,245,.72) 100%),
+    url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+}
+
+.lovetypes-universe .hero::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(253,248,245,0), var(--cream));
+  pointer-events: none;
 }
 
 .lovetypes-universe .hero::before {
@@ -162,6 +195,7 @@ body.lovetypes-universe {
 .lovetypes-universe .hero h1 {
   text-wrap: balance;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
 .lovetypes-universe .hero h1 span {
@@ -174,16 +208,84 @@ body.lovetypes-universe {
   text-wrap: pretty;
 }
 
+.lovetypes-universe .hero-inner {
+  width: min(1120px, 100%);
+  min-width: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .92fr);
+  gap: 28px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.lovetypes-universe .hero-copy {
+  width: 100%;
+  min-width: 0;
+  max-width: 560px;
+  padding: 76px 0 88px;
+}
+
+.lovetypes-universe .hero p { margin: 0 0 28px; }
+.lovetypes-universe .hero-meta { justify-content: flex-start; gap: 12px 18px; }
+.lovetypes-universe .hero-meta-item {
+  background: rgba(255,255,255,.68);
+  border: 1px solid rgba(201,102,110,.18);
+  border-radius: 999px;
+  padding: 7px 11px;
+  backdrop-filter: blur(10px);
+}
+
+.lovetypes-universe .hero-badge {
+  max-width: min(100%, 340px);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.lovetypes-universe .hero-art {
+  min-height: 560px;
+  position: relative;
+  align-self: end;
+}
+
 .lovetypes-universe .hero-guardian {
+  position: absolute;
+  bottom: -18px;
+  filter: drop-shadow(0 24px 28px rgba(58,40,40,.24));
+  user-select: none;
+  pointer-events: none;
   animation: guardianFloat 6.8s ease-in-out infinite;
 }
 
+.lovetypes-universe .hero-guardian-main {
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(340px, 66vw);
+  z-index: 3;
+}
+
+.lovetypes-universe .hero-guardian-side {
+  width: 220px;
+  opacity: .72;
+  z-index: 2;
+}
+
+.lovetypes-universe .hero-guardian-side.left { left: 2%; transform: translateY(28px) rotate(-4deg); }
+.lovetypes-universe .hero-guardian-side.right { right: -2%; transform: translateY(38px) rotate(5deg); }
 .lovetypes-universe .hero-guardian-side.left { animation-delay: -1.2s; }
 .lovetypes-universe .hero-guardian-side.right { animation-delay: -2.4s; }
 
 .lovetypes-universe .hero-prop {
+  position: absolute;
+  z-index: 4;
+  filter: drop-shadow(0 12px 18px rgba(58,40,40,.22));
+  pointer-events: none;
   animation: softPulse 5.2s ease-in-out infinite;
 }
+
+.lovetypes-universe .hero-prop.pen { width: 94px; left: 13%; top: 22%; transform: rotate(-14deg); }
+.lovetypes-universe .hero-prop.lantern { width: 82px; right: 15%; top: 24%; transform: rotate(8deg); }
 
 .lovetypes-universe .btn-start,
 .lovetypes-universe .btn-theory,
@@ -196,6 +298,79 @@ body.lovetypes-universe {
 .lovetypes-universe .btn-theory:hover,
 .lovetypes-universe .btn-next:hover {
   box-shadow: 0 18px 44px rgba(159,122,234,.34);
+}
+
+.lovetypes-universe .characters-section {
+  max-width: none;
+  margin: 0;
+  padding: 72px 24px;
+  background:
+    linear-gradient(180deg, var(--cream) 0%, #fff 48%, #fff7f0 100%);
+  border-top: 0;
+}
+
+.lovetypes-universe .characters-section .section-header,
+.lovetypes-universe .chars-grid {
+  width: min(1120px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lovetypes-universe .chars-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.lovetypes-universe .char-card {
+  min-height: 520px;
+  padding: 0 16px 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+.lovetypes-universe .char-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.12);
+}
+
+.lovetypes-universe .char-img {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  object-position: bottom center;
+  margin: -8px -8px 8px;
+  border-radius: 0;
+  filter: drop-shadow(0 18px 20px rgba(58,40,40,.16));
+  position: relative;
+  z-index: 2;
+}
+
+.lovetypes-universe .char-prop {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  position: absolute;
+  right: 14px;
+  top: 190px;
+  z-index: 3;
+  filter: drop-shadow(0 8px 12px rgba(58,40,40,.18));
+  pointer-events: none;
+}
+
+.lovetypes-universe .char-top { gap: 10px; }
+.lovetypes-universe .char-spirit-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 1.35rem;
+}
+
+.lovetypes-universe .char-spirit-row {
+  margin-top: auto;
+  align-items: flex-start;
 }
 
 .portal-hooks {
@@ -230,6 +405,7 @@ body.lovetypes-universe {
   color: var(--muted);
   font-size: .86rem;
   line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
 .character-lore-grid {
@@ -273,6 +449,55 @@ body.lovetypes-universe {
 .lovetypes-universe #quiz-wrapper {
   width: min(760px, 100%);
   margin: 0 auto;
+}
+
+.lovetypes-universe .quiz-preview {
+  width: min(980px, calc(100% - 48px));
+  margin: 0 auto 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .82fr);
+  gap: 28px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(201,102,110,.18);
+  border-radius: 18px;
+  box-shadow: 0 10px 34px rgba(58,40,40,.08);
+  overflow: hidden;
+}
+
+.lovetypes-universe .quiz-preview-art {
+  min-height: 300px;
+  background:
+    linear-gradient(90deg, rgba(58,40,40,0), rgba(58,40,40,.08)),
+    url('/assets/lovetypes/backgrounds/quiz-desk.jpg') center/cover no-repeat;
+}
+
+.lovetypes-universe .quiz-preview-copy { padding: 34px 32px 34px 0; }
+
+.lovetypes-universe .quiz-preview-badge {
+  display: inline-block;
+  color: var(--rose);
+  background: var(--rose-lt);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.lovetypes-universe .quiz-preview h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  line-height: 1.35;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.lovetypes-universe .quiz-preview p {
+  color: var(--muted);
+  font-size: .94rem;
+  line-height: 1.8;
+  margin-bottom: 22px;
 }
 
 .lovetypes-universe .progress-text {
@@ -418,6 +643,15 @@ body.lovetypes-universe {
 }
 
 @media(max-width: 900px) {
+  .lovetypes-universe .hero-inner { grid-template-columns: 1fr; gap: 0; }
+  .lovetypes-universe .hero-copy { padding: 68px 0 0; text-align: center; margin: 0 auto; }
+  .lovetypes-universe .hero p { margin-left: auto; margin-right: auto; }
+  .lovetypes-universe .hero-meta { justify-content: center; }
+  .lovetypes-universe .hero-art { min-height: 390px; width: min(620px, 100%); margin: 0 auto; }
+  .lovetypes-universe .hero-guardian-main { width: min(300px, 64vw); }
+  .lovetypes-universe .hero-guardian-side { width: 178px; }
+  .lovetypes-universe .chars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lovetypes-universe .char-card { min-height: 500px; }
   .portal-hooks,
   .character-lore-grid,
   .result-insight-grid {
@@ -427,12 +661,114 @@ body.lovetypes-universe {
 }
 
 @media(max-width: 640px) {
-  .portal-hooks {
+  nav {
+    padding: 0 12px;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .nav-left {
+    flex-shrink: 0;
+    gap: 8px;
+  }
+  .nav-logo {
+    font-size: .98rem;
+    white-space: nowrap;
+  }
+  .nav-links {
+    flex: 1;
+    min-width: 0;
+    gap: 14px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    white-space: nowrap;
+    font-size: .78rem;
+  }
+  .nav-links a:nth-child(n+3) {
+    display: none;
+  }
+  .lang-current {
+    padding: 4px 11px;
+    font-size: .74rem;
+  }
+  .lovetypes-universe .hero {
+    min-height: auto;
+    padding: 0 18px;
+    background:
+      linear-gradient(180deg, rgba(253,248,245,.97) 0%, rgba(253,248,245,.88) 52%, rgba(253,248,245,.56) 100%),
+      url('/assets/lovetypes/backgrounds/guardian-garden.jpg') center/cover no-repeat;
+  }
+  .lovetypes-universe .hero-copy {
+    padding: 56px 0 0;
+    max-width: 330px;
+  }
+  .lovetypes-universe .hero h1 {
+    font-size: clamp(1.8rem, 8.2vw, 2.2rem);
+    line-height: 1.22;
+  }
+  .lovetypes-universe .hero h1 span {
+    display: block;
+  }
+  .lovetypes-universe .hero-badge {
+    font-size: .68rem;
+    line-height: 1.45;
+    padding: 5px 12px;
+    max-width: 300px;
+  }
+  .lovetypes-universe .hero p {
+    width: 100%;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-break: anywhere;
+  }
+  .lovetypes-universe .hero-meta {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lovetypes-universe .hero-meta-item {
+    font-size: .76rem;
+    max-width: 100%;
+    white-space: normal;
+  }
+  .lovetypes-universe .hero-art { min-height: 330px; }
+  .lovetypes-universe .hero-guardian-main { width: min(260px, 72vw); bottom: -12px; }
+  .lovetypes-universe .hero-guardian-side { width: 140px; opacity: .56; }
+  .lovetypes-universe .hero-prop.pen { left: 4%; top: 18%; }
+  .lovetypes-universe .hero-prop.lantern { right: 4%; top: 20%; }
+  .lovetypes-universe .characters-section { padding: 56px 18px; }
+  .lovetypes-universe .chars-grid { grid-template-columns: 1fr; }
+  .lovetypes-universe .char-card { min-height: auto; }
+  .lovetypes-universe .char-img { height: 280px; }
+  .lovetypes-universe .quiz-preview {
     width: calc(100% - 36px);
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .lovetypes-universe .quiz-preview-art { min-height: 220px; }
+  .lovetypes-universe .quiz-preview-copy { padding: 28px 24px 30px; }
+  .portal-hooks {
+    width: calc(100vw - 36px);
+    margin-left: 18px;
+    margin-right: 18px;
     margin-bottom: 54px;
   }
   .portal-hook {
     min-height: 0;
     padding: 18px;
+  }
+  .portal-hook span {
+    display: block;
+    max-width: 280px;
+    font-size: .84rem;
   }
 }

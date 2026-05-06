@@ -636,36 +636,64 @@
 <!-- HERO -->
 <section class="hero" id="home-section">
   <div class="universe-particles" aria-hidden="true"></div>
-  <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
-  <h1>Cada alma<br>ama de forma <span>distinta</span>.</h1>
-  <p>Algunas buscan calor. Otras esperan palabras. Tu guardiana emocional escucha desde la luz.</p>
-  <div class="hero-meta">
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>Ritual del corazón · 2 min</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span>15 elecciones emocionales</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>38,000+ guardianes encontrados</span>
-    </span>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
+      <h1>Cada alma<br>ama de forma <span>distinta</span>.</h1>
+      <p>Algunas buscan calor. Otras esperan palabras. Tu guardiana emocional escucha desde la luz.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Ritual del corazón · 2 min</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>15 elecciones emocionales</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>38,000+ guardianes encontrados</span>
+        </span>
+      </div>
+      <button class="btn-start" onclick="startQuiz()">Comienza tu viaje</button>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+    </div>
   </div>
-  <button class="btn-start" onclick="startQuiz()">Comienza tu viaje</button>
+</section>
+
+<section class="portal-hooks" aria-label="LoveTypes universe emotional hooks">
+  <div class="portal-hook">
+    <strong>Nunca fuiste difícil de amar.</strong>
+    <span>Simplemente hablaron otro idioma y no aprendieron dónde se calma tu corazón.</span>
+  </div>
+  <div class="portal-hook">
+    <strong>Esto no es un test. Es un encuentro.</strong>
+    <span>Cada respuesta se vuelve una pequeña luz que te guía hacia la guardiana que entiende tu ritmo emocional.</span>
+  </div>
+  <div class="portal-hook">
+    <strong>Encuentra tu identidad emocional.</strong>
+    <span>No “qué tipo soy”, sino “así es como el amor logra llegar a mí”.</span>
+  </div>
 </section>
 
 <!-- CHARACTERS SECTION -->
 <section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>Cinco Lenguajes del Amor × Guardianes</h2>
-    <p>Los cinco lenguajes del amor de Gary Chapman, cada uno con su propio espíritu guardián.<br>¡Haz clic en una tarjeta para comenzar el test y encontrar el tuyo!</p>
+    <div class="section-kicker">Emotion Guardians</div>
+    <h2>Cinco lenguajes del amor × Cinco guardianas emocionales</h2>
+    <p>No son etiquetas. Son formas vivas del amor, cada una con su herida, creencia, voz y manera de proteger el corazón.</p>
   </div>
   <div class="chars-grid">
     <!-- W · Iris -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="Iris, la Poeta del Alba — Guardiana de las Palabras de Afirmación" width="844" height="733" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="Iris, la Poeta del Alba — Guardiana de las Palabras de Afirmación" width="844" height="733" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -688,7 +716,8 @@
 
     <!-- T · Noah -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="Noah, el Observador de Estrellas — Guardián del Tiempo de Calidad" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="Noah, el Observador de Estrellas — Guardián del Tiempo de Calidad" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -711,7 +740,8 @@
 
     <!-- G · Vivian -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="Vivian, la Tejedora de Sueños — Guardiana de los Regalos" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="Vivian, la Tejedora de Sueños — Guardiana de los Regalos" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -734,7 +764,8 @@
 
     <!-- S · Claire -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="Claire, el Rayo de Sol — Guardiana de los Actos de Servicio" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="Claire, el Rayo de Sol — Guardiana de los Actos de Servicio" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -757,7 +788,8 @@
 
     <!-- P · Dora -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="Dora, el Calor — Guardiana del Contacto Físico" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="Dora, el Calor — Guardiana del Contacto Físico" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -781,13 +813,30 @@
   </div>
 </section>
 
+<section class="character-lore-grid" aria-label="Guardian lore preview">
+  <div class="lore-chip"><b>Iris · Spoken Hearts</b><span>Convierte las palabras en magia emocional. Teme ser borrada por el silencio y sabe que una frase puede salvar un corazón.</span></div>
+  <div class="lore-chip"><b>Noah · Star-Sea Time</b><span>Protege la presencia sin distracciones. Para ella, la atención es la promesa más profunda.</span></div>
+  <div class="lore-chip"><b>Vivian · Memory Gifts</b><span>Colecciona pruebas de haber sido recordada. Un regalo significa “te llevé en mi mente”.</span></div>
+  <div class="lore-chip"><b>Claire · Quiet Devotion</b><span>Repara el mundo con acciones. Cuando estás cansado, sostiene la vida en silencio.</span></div>
+  <div class="lore-chip"><b>Dora · Living Warmth</b><span>Sana la distancia con cercanía. Un abrazo es donde la seguridad vuelve al cuerpo.</span></div>
+</section>
+
 <!-- QUIZ SECTION -->
 <section id="quiz-section">
+  <div class="quiz-preview">
+    <div class="quiz-preview-art" aria-hidden="true"></div>
+    <div class="quiz-preview-copy">
+      <div class="quiz-preview-badge">Heart Ritual</div>
+      <h2>Las guardianas escuchan. Elige lo que se siente verdadero.</h2>
+      <p>Cada pregunta es un fragmento emocional. No actúes como tu yo ideal; deja que el instinto te acerque a quien te entiende.</p>
+      <button class="btn-start" onclick="startQuiz()">Conoce a tu guardiana</button>
+    </div>
+  </div>
   <div id="quiz-wrapper">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="progress-text" id="progress-text">Pregunta 1 de 15</div>
+    <div class="progress-text" id="progress-text">Las guardianas están escuchando...</div>
     <div class="q-card" id="question-card"></div>
   </div>
 </section>
@@ -1139,6 +1188,69 @@ const results = {
   }
 };
 
+const guardianProfiles = {
+  "W": {
+    "title": "Guardiana de los corazones hablados",
+    "quote": "No tienes que ser mejor para merecer palabras tiernas.",
+    "philosophy": "Las palabras no son adorno: convierten el amor invisible en luz que el corazón puede oír.",
+    "strength": "Puedes iluminar la inseguridad de alguien con una sola frase sincera.",
+    "wound": "El silencio, las respuestas frías y la crítica cortante duelen especialmente.",
+    "fear": "Temes que tu esfuerzo no sea visto y que el amor desaparezca en silencio.",
+    "express": "Mensajes, cartas, elogios, gratitud y nombrar emociones con claridad.",
+    "compatibility": "Alguien que responda, hable de lo que siente y repare con palabras.",
+    "dialogue": "“Si el mundo olvidó elogiarte hoy, déjame hacerlo. Te estás esforzando muchísimo.”",
+    "shortsHook": "No necesitas demasiada validación. Simplemente escuchas el amor a través de las palabras."
+  },
+  "S": {
+    "title": "Guardiana de la devoción silenciosa",
+    "quote": "A veces el amor no se dice: te quita peso de las manos.",
+    "philosophy": "Una promesa solo se vuelve segura cuando entra en la vida diaria.",
+    "strength": "Ves necesidades en medio del caos y ayudas a que la relación respire otra vez.",
+    "wound": "Duele cargar demasiado y que lo tomen como algo normal.",
+    "fear": "Temes ser quien siempre resuelve todo sin que nadie vea tu cansancio.",
+    "express": "Organizar, compartir cargas, arreglar, cuidar y terminar detalles.",
+    "compatibility": "Alguien proactivo, agradecido y dispuesto a compartir el peso.",
+    "dialogue": "“Hoy no tienes que sostenerlo todo. Lo resolvemos juntos.”",
+    "shortsHook": "No pides demasiado. Crees que el amor también debe verse en acciones."
+  },
+  "G": {
+    "title": "Coleccionista de momentos recordados",
+    "quote": "Cuando te recuerdan, el amor toma forma.",
+    "philosophy": "Un regalo es un recipiente de memoria: prueba de que alguien pensó en ti.",
+    "strength": "Transformas días comunes en rituales que se atesoran.",
+    "wound": "Duele que olviden fechas importantes o llamen materialista a tu sensibilidad.",
+    "fear": "Temes no ocupar un lugar duradero en la mente de la otra persona.",
+    "express": "Sorpresas pequeñas, recuerdos, detalles hechos a mano, envoltorios y rituales.",
+    "compatibility": "Alguien que recuerde detalles y honre el significado detrás de los gestos.",
+    "dialogue": "“Guardé esto porque ese día sonreíste como primavera.”",
+    "shortsHook": "No eres materialista. Solo quieres saber que estuviste presente en su mente."
+  },
+  "T": {
+    "title": "Navegante del mar estelar",
+    "quote": "Si me das tu tiempo, trae también tu corazón.",
+    "philosophy": "Estar presente no es compartir una habitación: es que dos corazones lleguen al mismo momento.",
+    "strength": "Creas profundidad y devuelves el amor a un lugar donde puede sentirse.",
+    "wound": "El teléfono, la distracción, las cancelaciones y la atención a medias duelen.",
+    "fear": "Temes convertirte en un espacio reemplazable dentro de su agenda.",
+    "express": "Conversaciones profundas, paseos, experiencias compartidas, citas rituales y presencia tranquila.",
+    "compatibility": "Alguien atento, puntual y protector de los recuerdos compartidos.",
+    "dialogue": "“No respondas con prisa. Esta noche es tuya, y estoy aquí.”",
+    "shortsHook": "No eres intensa. Necesitas que la otra persona llegue de verdad a tu lado."
+  },
+  "P": {
+    "title": "Guardiana de la calidez viva",
+    "quote": "Algunos corazones necesitan ser abrazados antes de poder hablar.",
+    "philosophy": "El cuerpo recuerda la seguridad. La cercanía confirma que el amor sigue aquí.",
+    "strength": "Calmas la ansiedad con calidez y devuelves suavidad a la relación.",
+    "wound": "Ser apartada, la frialdad prolongada o la falta de afecto se sienten como soledad.",
+    "fear": "Temes que la distancia se vuelva costumbre y que tu deseo de cercanía parezca demasiado.",
+    "express": "Abrazos, tomarse de la mano, acercarse, besos, cercanía antes de dormir y contacto natural.",
+    "compatibility": "Alguien afectuoso, respetuoso con los límites y emocionalmente cálido.",
+    "dialogue": "“Acércate primero. Cuando te sientas a salvo, hablamos despacio.”",
+    "shortsHook": "No dependes demasiado. La calidez es como tu cuerpo sabe que el amor permanece."
+  }
+};
+
 // ─── LABEL MAP ───────────────────────────────────────────────────
 const labelMap = { W: "Palabras de Afirmación", S: "Actos de Servicio", G: "Regalos", T: "Tiempo de Calidad", P: "Contacto Físico" };
 
@@ -1157,6 +1269,9 @@ function startQuiz() {
   document.querySelector('.hero').style.display = 'none';
   const typesSection = document.getElementById('types-section');
   if (typesSection) typesSection.style.display = 'none';
+  document.querySelectorAll('.portal-hooks, .character-lore-grid').forEach(function(el) { el.style.display = 'none'; });
+  const quizPreview = document.querySelector('.quiz-preview');
+  if (quizPreview) quizPreview.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1166,15 +1281,22 @@ function showQuestion(idx) {
   const total = questions.length;
   const pct = ((idx) / total * 100).toFixed(0);
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = 'Pregunta ' + (idx + 1) + ' de ' + total;
+  const ritualLines = [
+      "Las guardianas están escuchando...",
+      "Tu corazón se acerca a una respuesta...",
+      "Elige el momento que se siente verdadero...",
+      "La luz recuerda tu ritmo emocional..."
+  ];
+  document.getElementById('progress-text').textContent = ritualLines[idx % ritualLines.length];
 
-  let html = '<div class="q-number">QUESTION ' + (idx + 1) + '</div>';
+  let html = '<div class="ritual-kicker">Las guardianas están escuchando</div>';
+  html += '<div class="q-number">Fragmento del corazón ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
     html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">Siguiente →</button>';
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">Deja que la luz continúe</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1220,8 +1342,10 @@ function showResult() {
   const primary = sorted[0][0];
   const secondary = sorted[1] && sorted[1][1] > 0 ? sorted[1][0] : null;
   const r = results[primary];
+  const profile = guardianProfiles[primary];
 
   let html = '';
+  html += '<div class="result-claim">Ritual de reconocimiento completado</div>';
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
@@ -1232,13 +1356,13 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">Tu Espíritu Guardián</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';
     html += '<div class="result-char-name">' + ch.name + '</div>';
-    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-role">' + profile.title + ' · ' + ch.role + '</div>';
   }
   if (topTypes.length >= 2 && secondary) {
     const r2 = results[secondary];
@@ -1254,8 +1378,24 @@ function showResult() {
   }
   html += '</div></div>';
 
+  html += '<div class="share-card">';
+  html += '<div class="share-card-title">Soy ' + ch.name + ' guardiana</div>';
+  html += '<div class="share-card-quote">“' + profile.quote + '”</div>';
+  html += '</div>';
+
+  html += '<div class="result-insight-grid">';
+  html += '<div class="result-insight"><b>Filosofía emocional</b><span>' + profile.philosophy + '</span></div>';
+  html += '<div class="result-insight"><b>Fortaleza amorosa</b><span>' + profile.strength + '</span></div>';
+  html += '<div class="result-insight"><b>Herida emocional</b><span>' + profile.wound + '</span></div>';
+  html += '<div class="result-insight"><b>Miedo en las relaciones</b><span>' + profile.fear + '</span></div>';
+  html += '<div class="result-insight"><b>Cómo expresa amor</b><span>' + profile.express + '</span></div>';
+  html += '<div class="result-insight"><b>Compatibilidad ideal</b><span>' + profile.compatibility + '</span></div>';
+  html += '</div>';
+
+  html += '<div class="voice-lines"><h3>Frases de la guardiana</h3><p>' + profile.dialogue + '</p><p>Gancho para Shorts: ' + profile.shortsHook + '</p></div>';
+
   // ─── Score bars ───
-  html += '<div class="scores-card"><h3>📊 Tu puntuación en los 5 lenguajes del amor</h3>';
+  html += '<div class="scores-card"><h3>Tu mapa estelar del amor</h3>';
   sorted.forEach(function(entry) {
     const key = entry[0], val = entry[1];
     const pct = Math.round(val / total * 100);
@@ -1267,7 +1407,7 @@ function showResult() {
   html += '</div>';
 
   // ─── Tips ───
-  html += '<div class="tips-card"><h3>💡 Consejos prácticos</h3>';
+  html += '<div class="tips-card"><h3>Notas de tu guardiana</h3>';
   r.tips.forEach(function(tip) {
     html += '<div class="tip-item"><div class="tip-emoji">' + tip.emoji + '</div>';
     html += '<div class="tip-text"><strong>' + tip.title + '</strong><br>' + tip.text + '</div></div>';

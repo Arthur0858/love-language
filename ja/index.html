@@ -636,36 +636,64 @@
 <!-- HERO -->
 <section class="hero" id="home-section">
   <div class="universe-particles" aria-hidden="true"></div>
-  <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
-  <h1>魂はそれぞれ、<br>違うかたちで<span>恋をする</span>。</h1>
-  <p>ぬくもりを求める心。言葉を待つ心。あなたを理解する守護者が、光の向こうで耳を澄ませています。</p>
-  <div class="hero-meta">
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>運命の儀式 · 約2分</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span>15の感情の選択</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>38,000人以上が守護者と出会う</span>
-    </span>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
+      <h1>魂はそれぞれ、<br>違うかたちで<span>恋をする</span>。</h1>
+      <p>ぬくもりを求める心。言葉を待つ心。あなたを理解する守護者が、光の向こうで耳を澄ませています。</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>運命の儀式 · 約2分</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>15の感情の選択</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>38,000人以上が守護者と出会う</span>
+        </span>
+      </div>
+      <button class="btn-start" onclick="startQuiz()">旅をはじめる</button>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+    </div>
   </div>
-  <button class="btn-start" onclick="startQuiz()">旅をはじめる</button>
+</section>
+
+<section class="portal-hooks" aria-label="LoveTypes universe emotional hooks">
+  <div class="portal-hook">
+    <strong>あなたは、愛されにくい人なんかじゃない。</strong>
+    <span>ただ、あなたの言語をまだ知らない人がいただけ。</span>
+  </div>
+  <div class="portal-hook">
+    <strong>これは診断ではなく、出会いです。</strong>
+    <span>答えの一つひとつが光となり、あなたの心を理解する守護者へ導きます。</span>
+  </div>
+  <div class="portal-hook">
+    <strong>感情のアイデンティティを見つける。</strong>
+    <span>「私は何タイプ？」ではなく、「こう愛されると安心できる」と知るために。</span>
+  </div>
 </section>
 
 <!-- CHARACTERS SECTION -->
 <section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>5つの愛の言語 × 守護霊</h2>
-    <p>愛の言語にはそれぞれ守護霊がいます。あなたの守護霊は誰でしょう？</p>
+    <div class="section-kicker">Emotion Guardians</div>
+    <h2>5つの愛の言語 × 5人の感情守護者</h2>
+    <p>彼女たちは分類ではなく、愛そのものの姿。傷、信念、声、そして心への近づき方を持っています。</p>
   </div>
   <div class="chars-grid">
     <!-- W · アイリス (Iris) -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="アイリス、愛の言語「肯定の言葉」の守護霊" width="844" height="733" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="アイリス、愛の言語「肯定の言葉」の守護霊" width="844" height="733" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -688,7 +716,8 @@
 
     <!-- T · ノア (Noah) -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="ノア、愛の言語「クオリティタイム」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="ノア、愛の言語「クオリティタイム」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -711,7 +740,8 @@
 
     <!-- G · ヴィヴィアン (Vivian) -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="ヴィヴィアン、愛の言語「贈り物」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="ヴィヴィアン、愛の言語「贈り物」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -734,7 +764,8 @@
 
     <!-- S · クレール (Claire) -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="クレア、愛の言語「奉仕の行為」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="クレア、愛の言語「奉仕の行為」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -757,7 +788,8 @@
 
     <!-- P · ドーラ (Dora) -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="ドーラ、愛の言語「スキンシップ」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="ドーラ、愛の言語「スキンシップ」の守護霊" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -781,13 +813,30 @@
   </div>
 </section>
 
+<section class="character-lore-grid" aria-label="Guardian lore preview">
+  <div class="lore-chip"><b>Iris · Spoken Hearts</b><span>言葉を感情の魔法に変える守護者。沈黙に消される痛みを知り、一言が心を救うことを知っています。</span></div>
+  <div class="lore-chip"><b>Noah · Star-Sea Time</b><span>邪魔されない時間を守る人。彼女にとって、集中して向き合うことは最も深い約束です。</span></div>
+  <div class="lore-chip"><b>Vivian · Memory Gifts</b><span>覚えていてくれた証を集める人。贈り物は「あなたを思い出していた」という形です。</span></div>
+  <div class="lore-chip"><b>Claire · Quiet Devotion</b><span>行動で世界を修復する人。あなたが疲れた時、生活が崩れないよう静かに支えます。</span></div>
+  <div class="lore-chip"><b>Dora · Living Warmth</b><span>近さで距離を癒す人。抱きしめられることで、身体に安心が戻ってきます。</span></div>
+</section>
+
 <!-- QUIZ SECTION -->
 <section id="quiz-section">
+  <div class="quiz-preview">
+    <div class="quiz-preview-art" aria-hidden="true"></div>
+    <div class="quiz-preview-copy">
+      <div class="quiz-preview-badge">Heart Ritual</div>
+      <h2>守護者は耳を澄ませています。真実に近い方を選んで。</h2>
+      <p>一問ごとに、心の欠片が灯ります。理想の自分を演じず、直感のままに選んでください。</p>
+      <button class="btn-start" onclick="startQuiz()">守護者に会う</button>
+    </div>
+  </div>
   <div id="quiz-wrapper">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="progress-text" id="progress-text">第 1 問、全 15 問</div>
+    <div class="progress-text" id="progress-text">守護者が耳を澄ませています...</div>
     <div class="q-card" id="question-card"></div>
   </div>
 </section>
@@ -1139,6 +1188,69 @@ const results = {
   }
 };
 
+const guardianProfiles = {
+  "W": {
+    "title": "Keeper of Spoken Hearts",
+    "quote": "もっと良い人にならなくても、あなたは優しい言葉に値します。",
+    "philosophy": "言葉は飾りではなく、見えない愛を心に届く光へ変えるものです。",
+    "strength": "たった一つの本音で、相手の不安な場所を照らせます。",
+    "wound": "沈黙、冷たい返事、鋭い批判に深く傷つきます。",
+    "fear": "努力が見られず、愛が沈黙の中で消えることを恐れます。",
+    "express": "メッセージ、手紙、称賛、感謝、感情を言葉にすること。",
+    "compatibility": "安定して返事をし、感情を言葉で伝え、言葉で修復できる人。",
+    "dialogue": "「今日、世界があなたを褒め忘れたなら、私が言うね。あなたは本当によく頑張っている。」",
+    "shortsHook": "あなたは慰めを求めすぎているのではなく、言葉で愛を受け取る人です。"
+  },
+  "S": {
+    "title": "Guardian of Quiet Devotion",
+    "quote": "本当の愛は、ときに言葉ではなく重さを引き受けることです。",
+    "philosophy": "約束は生活の中に降りてきて、初めて安心になります。",
+    "strength": "混乱の中で必要を見つけ、関係を呼吸できる状態へ戻します。",
+    "wound": "支え続けた努力を当たり前にされると深く傷つきます。",
+    "fear": "いつも自分だけが抱え、疲れを誰にも見てもらえないことを恐れます。",
+    "express": "段取り、分担、修理、世話、細部を静かに整えること。",
+    "compatibility": "自分から動き、感謝を伝え、負担を分け合える人。",
+    "dialogue": "「今日はもう一人で抱えなくていい。残りは一緒にやろう。」",
+    "shortsHook": "あなたは求めすぎではありません。愛には行動が必要だと信じているだけ。"
+  },
+  "G": {
+    "title": "Collector of Remembered Moments",
+    "quote": "覚えていてもらえた瞬間、愛は形になります。",
+    "philosophy": "贈り物は記憶の器。誰かが本当にあなたを思い出した証です。",
+    "strength": "何気ない日を、宝物のような儀式へ変えられます。",
+    "wound": "大切な日を忘れられたり、気持ちを物欲だと片づけられると傷つきます。",
+    "fear": "相手の心に自分の場所が残っていないことを恐れます。",
+    "express": "小さなサプライズ、記念品、手作り、包み、節目の儀式。",
+    "compatibility": "細部を覚え、贈り物の意味を大切にできる人。",
+    "dialogue": "「この日のあなたの笑顔が春みたいだったから、残しておいたの。」",
+    "shortsHook": "あなたは物質的なのではなく、心に置かれていたいだけ。"
+  },
+  "T": {
+    "title": "Navigator of the Star-Sea",
+    "quote": "時間をくれるなら、心も一緒に連れてきて。",
+    "philosophy": "一緒にいるとは同じ部屋にいることではなく、同じ瞬間に心が到着することです。",
+    "strength": "深いつながりを作り、愛を静かに感じられる場所へ戻します。",
+    "wound": "スマホ、上の空、急なキャンセル、半分だけの注意に傷つきます。",
+    "fear": "相手の予定の中で、置き換え可能な一枠になることを恐れます。",
+    "express": "深い会話、散歩、共有体験、定期的なデート、静かな同席。",
+    "compatibility": "集中して向き合い、時間を守り、思い出を大切にできる人。",
+    "dialogue": "「急いで答えなくていいよ。今夜の時間はあなたのもの。私はここにいる。」",
+    "shortsHook": "あなたは重いのではなく、相手に本当にここへ来てほしいだけ。"
+  },
+  "P": {
+    "title": "Guardian of Living Warmth",
+    "quote": "言葉にする前に、抱きしめられる必要がある心もあります。",
+    "philosophy": "身体は安心を覚えています。近さは、愛がまだここにあると確かめる方法です。",
+    "strength": "温もりで不安を静め、関係を柔らかさへ戻します。",
+    "wound": "拒まれること、長い冷たさ、触れ合いの少なさに孤独を感じます。",
+    "fear": "距離が当たり前になり、近づきたい気持ちを重いと言われることを恐れます。",
+    "express": "ハグ、手つなぎ、肩にもたれる、キス、寝る前のぬくもり、自然な触れ合い。",
+    "compatibility": "自分から近づき、境界線を尊重し、温かく関われる人。",
+    "dialogue": "「まず近くに来て。安心できたら、ゆっくり話そう。」",
+    "shortsHook": "あなたは依存しすぎではなく、温度で愛を確かめる人です。"
+  }
+};
+
 // ─── LABEL MAP ───────────────────────────────────────────────────
 const labelMap = { W: "肯定の言葉", S: "奉仕の行動", G: "贈り物", T: "クオリティ・タイム", P: "スキンシップ" };
 
@@ -1157,6 +1269,9 @@ function startQuiz() {
   document.querySelector('.hero').style.display = 'none';
   const typesSection = document.getElementById('types-section');
   if (typesSection) typesSection.style.display = 'none';
+  document.querySelectorAll('.portal-hooks, .character-lore-grid').forEach(function(el) { el.style.display = 'none'; });
+  const quizPreview = document.querySelector('.quiz-preview');
+  if (quizPreview) quizPreview.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1166,15 +1281,22 @@ function showQuestion(idx) {
   const total = questions.length;
   const pct = ((idx) / total * 100).toFixed(0);
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = '全' + total + '問中 第' + (idx + 1) + '問';
+  const ritualLines = [
+      "守護者が耳を澄ませています...",
+      "心が答えに近づいています...",
+      "本当だと感じる瞬間を選んで...",
+      "光があなたの感情のリズムを覚えています..."
+  ];
+  document.getElementById('progress-text').textContent = ritualLines[idx % ritualLines.length];
 
-  let html = '<div class="q-number">QUESTION ' + (idx + 1) + '</div>';
+  let html = '<div class="ritual-kicker">守護者が耳を澄ませています</div>';
+  html += '<div class="q-number">心の欠片 ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
     html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">次へ →</button>';
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">光を先へ進める</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1220,8 +1342,10 @@ function showResult() {
   const primary = sorted[0][0];
   const secondary = sorted[1] && sorted[1][1] > 0 ? sorted[1][0] : null;
   const r = results[primary];
+  const profile = guardianProfiles[primary];
 
   let html = '';
+  html += '<div class="result-claim">守護者認定の儀式が完了しました</div>';
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
@@ -1232,13 +1356,13 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">あなたの守護霊</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';
     html += '<div class="result-char-name">' + ch.name + '</div>';
-    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-role">' + profile.title + ' · ' + ch.role + '</div>';
   }
   if (topTypes.length >= 2 && secondary) {
     const r2 = results[secondary];
@@ -1254,8 +1378,24 @@ function showResult() {
   }
   html += '</div></div>';
 
+  html += '<div class="share-card">';
+  html += '<div class="share-card-title">私は ' + ch.name + ' 型守護者</div>';
+  html += '<div class="share-card-quote">“' + profile.quote + '”</div>';
+  html += '</div>';
+
+  html += '<div class="result-insight-grid">';
+  html += '<div class="result-insight"><b>感情の哲学</b><span>' + profile.philosophy + '</span></div>';
+  html += '<div class="result-insight"><b>愛の強み</b><span>' + profile.strength + '</span></div>';
+  html += '<div class="result-insight"><b>感情の傷</b><span>' + profile.wound + '</span></div>';
+  html += '<div class="result-insight"><b>関係での恐れ</b><span>' + profile.fear + '</span></div>';
+  html += '<div class="result-insight"><b>愛の表し方</b><span>' + profile.express + '</span></div>';
+  html += '<div class="result-insight"><b>理想の相性</b><span>' + profile.compatibility + '</span></div>';
+  html += '</div>';
+
+  html += '<div class="voice-lines"><h3>守護者のボイスライン</h3><p>' + profile.dialogue + '</p><p>Shorts導入フック: ' + profile.shortsHook + '</p></div>';
+
   // ─── Score bars ───
-  html += '<div class="scores-card"><h3>📊 あなたの5つの愛の言語スコア</h3>';
+  html += '<div class="scores-card"><h3>あなたの愛の星図</h3>';
   sorted.forEach(function(entry) {
     const key = entry[0], val = entry[1];
     const pct = Math.round(val / total * 100);
@@ -1267,7 +1407,7 @@ function showResult() {
   html += '</div>';
 
   // ─── Tips ───
-  html += '<div class="tips-card"><h3>💡 実践アドバイス</h3>';
+  html += '<div class="tips-card"><h3>守護者からのメモ</h3>';
   r.tips.forEach(function(tip) {
     html += '<div class="tip-item"><div class="tip-emoji">' + tip.emoji + '</div>';
     html += '<div class="tip-text"><strong>' + tip.title + '</strong><br>' + tip.text + '</div></div>';

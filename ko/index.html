@@ -636,36 +636,64 @@
 <!-- HERO -->
 <section class="hero" id="home-section">
   <div class="universe-particles" aria-hidden="true"></div>
-  <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
-  <h1>모든 마음은<br>다른 방식으로 <span>사랑합니다</span>.</h1>
-  <p>누군가는 온기를, 누군가는 말을 기다립니다. 당신의 마음을 이해할 수호자가 빛 속에서 듣고 있습니다.</p>
-  <div class="hero-meta">
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span>운명의 의식 · 약 2분</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span>15개의 감정 선택</span>
-    </span>
-    <span class="hero-meta-item">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>38,000명 이상 수호자 발견</span>
-    </span>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
+      <h1>모든 마음은<br>다른 방식으로 <span>사랑합니다</span>.</h1>
+      <p>누군가는 온기를, 누군가는 말을 기다립니다. 당신의 마음을 이해할 수호자가 빛 속에서 듣고 있습니다.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>운명의 의식 · 약 2분</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>15개의 감정 선택</span>
+        </span>
+        <span class="hero-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>38,000명 이상 수호자 발견</span>
+        </span>
+      </div>
+      <button class="btn-start" onclick="startQuiz()">여정 시작하기</button>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
+      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.png" alt="">
+      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.png" alt="">
+      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="">
+      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.png" alt="">
+    </div>
   </div>
-  <button class="btn-start" onclick="startQuiz()">여정 시작하기</button>
+</section>
+
+<section class="portal-hooks" aria-label="LoveTypes universe emotional hooks">
+  <div class="portal-hook">
+    <strong>당신은 사랑받기 어려운 사람이 아닙니다.</strong>
+    <span>그저 누군가가 아직 당신의 언어를 배우지 못했을 뿐입니다.</span>
+  </div>
+  <div class="portal-hook">
+    <strong>이것은 테스트가 아니라 만남입니다.</strong>
+    <span>모든 답은 작은 빛이 되어 당신의 감정 리듬을 이해하는 수호자에게 이어집니다.</span>
+  </div>
+  <div class="portal-hook">
+    <strong>감정의 정체성을 찾으세요.</strong>
+    <span>“나는 무슨 유형인가”가 아니라 “이렇게 사랑받을 때 안심하는구나”를 알기 위해.</span>
+  </div>
 </section>
 
 <!-- CHARACTERS SECTION -->
 <section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>다섯 수호령 캐릭터</h2>
-    <p>각각의 사랑의 언어에는 수호령이 있습니다. 당신의 수호령은 누구인가요?</p>
+    <div class="section-kicker">Emotion Guardians</div>
+    <h2>5가지 사랑의 언어 × 5명의 감정 수호자</h2>
+    <p>그녀들은 단순한 분류가 아니라 사랑의 형태입니다. 각자 상처, 믿음, 목소리, 마음에 다가가는 방식을 가지고 있습니다.</p>
   </div>
   <div class="chars-grid">
     <!-- W · 아이리스 (Iris) -->
     <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/iris.webp" alt="아이리스, 사랑의 언어 '인정하는 말' 수호령" width="844" height="733" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/iris.png" alt="아이리스, 사랑의 언어 '인정하는 말' 수호령" width="844" height="733" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -688,7 +716,8 @@
 
     <!-- T · 노아 (Noah) -->
     <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/noah.webp" alt="노아, 사랑의 언어 '함께하는 시간' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/noah.png" alt="노아, 사랑의 언어 '함께하는 시간' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -711,7 +740,8 @@
 
     <!-- G · 비비안 (Vivian) -->
     <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/vivian.webp" alt="비비안, 사랑의 언어 '선물' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/vivian.png" alt="비비안, 사랑의 언어 '선물' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -734,7 +764,8 @@
 
     <!-- S · 클레어 (Claire) -->
     <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/claire.webp" alt="클레어, 사랑의 언어 '봉사 행위' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/claire.png" alt="클레어, 사랑의 언어 '봉사 행위' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -757,7 +788,8 @@
 
     <!-- P · 도라 (Dora) -->
     <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
-      <img class="char-img" src="/images/characters/dora.webp" alt="도라, 사랑의 언어 '스킨십' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-img" src="/assets/lovetypes/guardians/dora.png" alt="도라, 사랑의 언어 '스킨십' 수호령" width="1408" height="768" loading="lazy">
+      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.png" alt="" loading="lazy">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -781,13 +813,30 @@
   </div>
 </section>
 
+<section class="character-lore-grid" aria-label="Guardian lore preview">
+  <div class="lore-chip"><b>Iris · Spoken Hearts</b><span>말을 감정의 마법으로 바꿉니다. 침묵에 지워지는 아픔을 알고, 한 문장이 마음을 구할 수 있음을 압니다.</span></div>
+  <div class="lore-chip"><b>Noah · Star-Sea Time</b><span>방해받지 않는 시간을 지킵니다. 그녀에게 집중은 가장 깊은 약속입니다.</span></div>
+  <div class="lore-chip"><b>Vivian · Memory Gifts</b><span>기억되었다는 증거를 모읍니다. 선물은 “내 마음에 네가 있었다”는 형태입니다.</span></div>
+  <div class="lore-chip"><b>Claire · Quiet Devotion</b><span>행동으로 세계를 고칩니다. 당신이 지쳤을 때 삶이 무너지지 않도록 조용히 받쳐줍니다.</span></div>
+  <div class="lore-chip"><b>Dora · Living Warmth</b><span>가까움으로 거리를 치유합니다. 포옹은 몸에 안전감이 돌아오는 장소입니다.</span></div>
+</section>
+
 <!-- QUIZ SECTION -->
 <section id="quiz-section">
+  <div class="quiz-preview">
+    <div class="quiz-preview-art" aria-hidden="true"></div>
+    <div class="quiz-preview-copy">
+      <div class="quiz-preview-badge">Heart Ritual</div>
+      <h2>수호자들이 듣고 있습니다. 진짜처럼 느껴지는 것을 고르세요.</h2>
+      <p>각 질문은 감정의 조각입니다. 이상적인 모습을 연기하지 말고 직감이 이끄는 대로 선택하세요.</p>
+      <button class="btn-start" onclick="startQuiz()">수호자 만나기</button>
+    </div>
+  </div>
   <div id="quiz-wrapper">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="progress-text" id="progress-text">1번 질문, 총 15번</div>
+    <div class="progress-text" id="progress-text">수호자들이 듣고 있습니다...</div>
     <div class="q-card" id="question-card"></div>
   </div>
 </section>
@@ -1139,6 +1188,69 @@ const results = {
   }
 };
 
+const guardianProfiles = {
+  "W": {
+    "title": "말하는 마음의 수호자",
+    "quote": "더 나은 사람이 되어야만 다정한 말을 들을 자격이 생기는 것은 아닙니다.",
+    "philosophy": "말은 장식이 아니라 보이지 않는 사랑을 마음이 들을 수 있는 빛으로 바꿉니다.",
+    "strength": "진심 어린 한 문장으로 상대의 가장 불안한 곳을 밝혀줄 수 있습니다.",
+    "wound": "침묵, 차가운 답장, 날카로운 비판에 특히 깊이 상처받습니다.",
+    "fear": "노력이 보이지 않고 사랑이 침묵 속에서 사라질까 두려워합니다.",
+    "express": "메시지, 편지, 칭찬, 감사, 감정을 분명히 말하는 방식.",
+    "compatibility": "꾸준히 반응하고 감정을 말로 표현하며 말로 관계를 회복하려는 사람.",
+    "dialogue": "“오늘 세상이 당신을 칭찬하지 않았다면 내가 말할게요. 당신은 정말 애쓰고 있어요.”",
+    "shortsHook": "당신은 위로를 너무 많이 원하는 게 아닙니다. 말로 사랑을 듣는 사람입니다."
+  },
+  "S": {
+    "title": "조용한 헌신의 수호자",
+    "quote": "때로 사랑은 말이 아니라 당신 손의 무게를 조용히 가져가는 것입니다.",
+    "philosophy": "약속은 일상 속에 내려앉을 때 비로소 안전감이 됩니다.",
+    "strength": "혼란 속에서도 필요한 것을 보고 관계가 다시 숨 쉴 수 있게 돕습니다.",
+    "wound": "너무 많이 짊어졌는데 당연하게 여겨질 때 깊이 상처받습니다.",
+    "fear": "늘 모든 것을 처리하는 사람이 되고, 아무도 피로를 보지 못할까 두려워합니다.",
+    "express": "계획, 분담, 수리, 돌봄, 세부사항을 조용히 마무리하는 방식.",
+    "compatibility": "먼저 움직이고 감사하며 부담을 함께 나눌 수 있는 사람.",
+    "dialogue": "“오늘은 혼자 다 버티지 않아도 돼요. 나도 같이 할게요.”",
+    "shortsHook": "당신은 너무 많이 요구하는 게 아닙니다. 사랑에는 행동이 필요하다고 믿는 사람입니다."
+  },
+  "G": {
+    "title": "기억된 순간의 수집가",
+    "quote": "기억되는 순간, 사랑은 형태를 갖습니다.",
+    "philosophy": "선물은 기억의 그릇입니다. 누군가 진심으로 당신을 떠올렸다는 증거입니다.",
+    "strength": "평범한 하루를 소중한 의식과 추억으로 바꿀 수 있습니다.",
+    "wound": "중요한 날을 잊거나 마음을 물질적이라고 치부하면 상처받습니다.",
+    "fear": "상대의 마음속에 자신의 자리가 남아 있지 않을까 두려워합니다.",
+    "express": "작은 놀라움, 기념품, 손수 만든 것, 포장, 특별한 날의 의식.",
+    "compatibility": "세부사항을 기억하고 행동 뒤의 의미를 소중히 여기는 사람.",
+    "dialogue": "“그날 당신의 웃음이 봄 같아서 이걸 간직했어요.”",
+    "shortsHook": "당신은 물질적인 사람이 아닙니다. 마음속에 기억되고 싶은 사람입니다."
+  },
+  "T": {
+    "title": "별바다의 항해자",
+    "quote": "내게 시간을 준다면, 마음도 함께 가져와 주세요.",
+    "philosophy": "함께 있음은 같은 방에 있는 것이 아니라 같은 순간에 두 마음이 도착하는 것입니다.",
+    "strength": "깊은 연결을 만들고 사랑이 조용히 느껴질 수 있는 공간을 만듭니다.",
+    "wound": "휴대폰, 산만함, 갑작스러운 취소, 반쪽짜리 관심에 상처받습니다.",
+    "fear": "상대의 일정 속에서 대체 가능한 한 칸이 될까 두려워합니다.",
+    "express": "깊은 대화, 산책, 함께하는 경험, 정기적인 데이트, 조용한 동행.",
+    "compatibility": "집중해서 함께하고 시간을 지키며 공동의 기억을 아끼는 사람.",
+    "dialogue": "“서둘러 답하지 않아도 돼요. 오늘 밤은 당신의 시간이고, 나는 여기 있어요.”",
+    "shortsHook": "당신은 집착하는 게 아닙니다. 상대가 진짜로 곁에 도착하길 바라는 사람입니다."
+  },
+  "P": {
+    "title": "살아있는 온기의 수호자",
+    "quote": "어떤 마음은 말하기 전에 먼저 안겨야 합니다.",
+    "philosophy": "몸은 안전감을 기억합니다. 가까움은 사랑이 아직 여기 있음을 확인하는 방식입니다.",
+    "strength": "온기로 불안을 가라앉히고 관계를 다시 부드럽게 만듭니다.",
+    "wound": "밀려남, 긴 냉담함, 애정 표현 부족은 깊은 외로움으로 느껴집니다.",
+    "fear": "거리가 습관이 되고 가까움을 원하는 마음이 과하다고 불릴까 두려워합니다.",
+    "express": "포옹, 손잡기, 기대기, 입맞춤, 잠들기 전 가까움, 자연스러운 접촉.",
+    "compatibility": "먼저 다가오며 경계를 존중하고 따뜻하게 반응하는 사람.",
+    "dialogue": "“먼저 가까이 와요. 안전하다고 느끼면 천천히 이야기해요.”",
+    "shortsHook": "당신은 너무 의존적인 게 아닙니다. 온기로 사랑이 남아 있음을 확인하는 사람입니다."
+  }
+};
+
 // ─── LABEL MAP ───────────────────────────────────────────────────
 const labelMap = { W: "인정의 말", S: "봉사의 행위", G: "선물", T: "함께하는 시간", P: "스킨십" };
 
@@ -1157,6 +1269,9 @@ function startQuiz() {
   document.querySelector('.hero').style.display = 'none';
   const typesSection = document.getElementById('types-section');
   if (typesSection) typesSection.style.display = 'none';
+  document.querySelectorAll('.portal-hooks, .character-lore-grid').forEach(function(el) { el.style.display = 'none'; });
+  const quizPreview = document.querySelector('.quiz-preview');
+  if (quizPreview) quizPreview.style.display = 'none';
   showQuestion(0);
   document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
 }
@@ -1166,15 +1281,22 @@ function showQuestion(idx) {
   const total = questions.length;
   const pct = ((idx) / total * 100).toFixed(0);
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = '총 15문 중 ' + (idx + 1) + '번';
+  const ritualLines = [
+      "수호자들이 듣고 있습니다...",
+      "마음이 답에 가까워지고 있습니다...",
+      "진짜처럼 느껴지는 순간을 선택하세요...",
+      "빛이 당신의 감정 리듬을 기억하고 있습니다..."
+  ];
+  document.getElementById('progress-text').textContent = ritualLines[idx % ritualLines.length];
 
-  let html = '<div class="q-number">QUESTION ' + (idx + 1) + '</div>';
+  let html = '<div class="ritual-kicker">수호자들이 듣고 있습니다</div>';
+  html += '<div class="q-number">마음의 조각 ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
     html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">다음 →</button>';
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">빛을 계속 따라가기</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1220,8 +1342,10 @@ function showResult() {
   const primary = sorted[0][0];
   const secondary = sorted[1] && sorted[1][1] > 0 ? sorted[1][0] : null;
   const r = results[primary];
+  const profile = guardianProfiles[primary];
 
   let html = '';
+  html += '<div class="result-claim">수호자 인정 의식 완료</div>';
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
@@ -1232,13 +1356,13 @@ function showResult() {
   html += '<div class="result-hero-card ' + typeClass + '">';
   if (imgFile) {
     var imgDim = imgDimMap[imgFile] || [1408, 768];
-    html += '<img class="result-hero-img" src="/images/characters/' + imgFile + '.webp" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
+    html += '<img class="result-hero-img" src="/assets/lovetypes/guardians/' + imgFile + '.png" alt="' + (ch ? ch.name : '') + '" width="' + imgDim[0] + '" height="' + imgDim[1] + '">';
   }
   html += '<div class="result-hero-body">';
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">당신의 수호령</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';
     html += '<div class="result-char-name">' + ch.name + '</div>';
-    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-role">' + profile.title + ' · ' + ch.role + '</div>';
   }
   if (topTypes.length >= 2 && secondary) {
     const r2 = results[secondary];
@@ -1254,8 +1378,24 @@ function showResult() {
   }
   html += '</div></div>';
 
+  html += '<div class="share-card">';
+  html += '<div class="share-card-title">나는 ' + ch.name + ' 수호자</div>';
+  html += '<div class="share-card-quote">“' + profile.quote + '”</div>';
+  html += '</div>';
+
+  html += '<div class="result-insight-grid">';
+  html += '<div class="result-insight"><b>감정 철학</b><span>' + profile.philosophy + '</span></div>';
+  html += '<div class="result-insight"><b>사랑의 강점</b><span>' + profile.strength + '</span></div>';
+  html += '<div class="result-insight"><b>감정의 상처</b><span>' + profile.wound + '</span></div>';
+  html += '<div class="result-insight"><b>관계 속 두려움</b><span>' + profile.fear + '</span></div>';
+  html += '<div class="result-insight"><b>사랑을 표현하는 방식</b><span>' + profile.express + '</span></div>';
+  html += '<div class="result-insight"><b>이상적인 궁합</b><span>' + profile.compatibility + '</span></div>';
+  html += '</div>';
+
+  html += '<div class="voice-lines"><h3>수호자의 음성 대사</h3><p>' + profile.dialogue + '</p><p>Shorts 후킹 문장: ' + profile.shortsHook + '</p></div>';
+
   // ─── Score bars ───
-  html += '<div class="scores-card"><h3>📊 당신의 5가지 사랑의 언어 점수</h3>';
+  html += '<div class="scores-card"><h3>당신의 사랑 언어 별자리</h3>';
   sorted.forEach(function(entry) {
     const key = entry[0], val = entry[1];
     const pct = Math.round(val / total * 100);
@@ -1267,7 +1407,7 @@ function showResult() {
   html += '</div>';
 
   // ─── Tips ───
-  html += '<div class="tips-card"><h3>💡 실천 조언</h3>';
+  html += '<div class="tips-card"><h3>수호자가 전하는 메모</h3>';
   r.tips.forEach(function(tip) {
     html += '<div class="tip-item"><div class="tip-emoji">' + tip.emoji + '</div>';
     html += '<div class="tip-text"><strong>' + tip.title + '</strong><br>' + tip.text + '</div></div>';

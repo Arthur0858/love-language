@@ -933,7 +933,7 @@
     .lang-list a.lang-active::before { content: "✓ "; }
   </style>
 </head>
-<body>
+<body class="lovetypes-universe">
 <a href="#quiz-wrapper" class="skip-link">跳至測驗內容</a>
 
 <!-- NAV -->
@@ -967,26 +967,27 @@
 
 <!-- HERO -->
 <section class="hero" id="home-section">
+  <div class="universe-particles" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-copy">
-      <div class="hero-badge" data-i18n="hero.badge">🌸 免費 · 無需註冊 · 2分鐘完成</div>
-      <h1 data-i18n-html="hero.h1">你最需要的愛，<br>是哪一種<span>語言</span>？</h1>
-      <p data-i18n="hero.p">每個人表達和接收愛的方式都不同。15 道情境題，找出你的核心愛的語言，讓感情不再有誤解。</p>
+      <div class="hero-badge" data-i18n="hero.badge">LoveTypes Emotion Fantasy Universe</div>
+      <h1 data-i18n-html="hero.h1">每個靈魂，<br>都用不同方式<span>去愛</span>。</h1>
+      <p data-i18n="hero.p">有人尋找溫度，有人等待一句真心話。五位情感守護者正在光裡聆聽，看看哪一位最懂你的心。</p>
       <div class="hero-meta">
         <span class="hero-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span data-i18n="hero.meta1">約 2 分鐘</span>
+          <span data-i18n="hero.meta1">命運儀式 · 約 2 分鐘</span>
         </span>
         <span class="hero-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span data-i18n="hero.meta2">15 道情境選擇題</span>
+          <span data-i18n="hero.meta2">15 道情感抉擇</span>
         </span>
         <span class="hero-meta-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span data-i18n="hero.meta3">已有 38,000+ 人測驗</span>
+          <span data-i18n="hero.meta3">38,000+ 人遇見守護者</span>
         </span>
       </div>
-      <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">開始測驗 →</button>
+      <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">Begin Your Journey</button>
     </div>
     <div class="hero-art" aria-hidden="true">
       <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.png" alt="">
@@ -998,11 +999,27 @@
   </div>
 </section>
 
+<section class="portal-hooks" aria-label="LoveTypes universe emotional hooks">
+  <div class="portal-hook">
+    <strong>你從來不是難以被愛。</strong>
+    <span>只是有人還沒學會你的語言，也還沒看見你真正等待的回應。</span>
+  </div>
+  <div class="portal-hook">
+    <strong>這不是測驗，是相遇。</strong>
+    <span>每個答案都像一束微光，把你帶向最理解你情感節奏的守護者。</span>
+  </div>
+  <div class="portal-hook">
+    <strong>找到你的情感身份。</strong>
+    <span>不是「我是哪一型」，而是「原來我一直是這樣被愛才會安心」。</span>
+  </div>
+</section>
+
 <!-- TYPES & CHARACTERS SECTION -->
 <section class="characters-section" id="types-section">
   <div class="section-header">
-    <h2>五種愛的語言 × 守護靈</h2>
-    <p>Gary Chapman 提出的五種愛的語言，每一種都住著一位守護靈。<br>點擊卡片，開始測驗找出你的守護靈！</p>
+    <div class="section-kicker">Emotion Guardians</div>
+    <h2>五種愛的語言 × 五位情感守護者</h2>
+    <p>她們不是分類標籤，而是愛的化身。每位守護者都有自己的傷口、信念、語氣與靠近世界的方式。</p>
   </div>
   <div class="chars-grid">
 
@@ -1129,22 +1146,30 @@
   </div>
 </section>
 
+<section class="character-lore-grid" aria-label="Guardian lore preview">
+  <div class="lore-chip"><b>Iris · Spoken Hearts</b><span>以言語作為情感魔法。她害怕被沉默抹去，也最懂一句話如何救回一顆心。</span></div>
+  <div class="lore-chip"><b>Noah · Star-Sea Time</b><span>守護無干擾的相處。她害怕被分心取代，因此把專注視為最高形式的承諾。</span></div>
+  <div class="lore-chip"><b>Vivian · Memory Gifts</b><span>收藏被記得的證據。她相信禮物不是價格，而是「我在你心上停留過」。</span></div>
+  <div class="lore-chip"><b>Claire · Quiet Devotion</b><span>用行動修補世界。她不擅長宣告愛，卻會在你最累時替你撐住生活。</span></div>
+  <div class="lore-chip"><b>Dora · Living Warmth</b><span>以靠近療癒距離。她害怕冷掉的關係，也相信擁抱能讓人重新回到安全感裡。</span></div>
+</section>
+
 <!-- QUIZ SECTION -->
 <section id="quiz-section">
   <div class="quiz-preview">
     <div class="quiz-preview-art" aria-hidden="true"></div>
     <div class="quiz-preview-copy">
-      <div class="quiz-preview-badge">互動測驗</div>
-      <h2>讓守護靈帶你找出愛的語言</h2>
-      <p>依照直覺回答 15 個日常情境，測驗會整理你的五種愛語比例，並給出最適合的相處提醒。</p>
-      <button class="btn-start" onclick="startQuiz()">開始測驗 →</button>
+      <div class="quiz-preview-badge">Heart Ritual</div>
+      <h2>守護者正在聆聽，你只需要選擇真實</h2>
+      <p>每一道題都是一段情感片刻。不要分析，不要扮演理想的自己，讓直覺帶你靠近最懂你的那位守護者。</p>
+      <button class="btn-start" onclick="startQuiz()">Meet Your Guardian</button>
     </div>
   </div>
   <div id="quiz-wrapper">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
     </div>
-    <div class="progress-text" id="progress-text">第 1 題，共 15 題</div>
+    <div class="progress-text" id="progress-text">守護者正在聆聽...</div>
     <div class="q-card" id="question-card"></div>
   </div>
 </section>
@@ -1496,6 +1521,112 @@ const results = {
   }
 };
 
+// ─── AI-ready Guardian Profile Layer ─────────────────────────────
+// This structure keeps lore, emotional behavior, speech style, romantic tendencies,
+// comfort style, and trigger phrases modular for future AI companion integration.
+const guardianProfiles = {
+  W: {
+    title: "Keeper of Spoken Hearts",
+    quote: "你不需要變得更好，才值得被溫柔地稱讚。",
+    philosophy: "語言不是裝飾，而是把看不見的愛變成能被心聽見的光。",
+    strength: "能用一句真心話照亮對方最沒自信的地方。",
+    wound: "被已讀不回、冷淡沉默、尖銳批評傷得最深。",
+    fear: "害怕自己的努力從未被看見，也害怕愛在沉默中慢慢消失。",
+    express: "用訊息、信件、稱讚、感謝與命名情緒的方式表達愛。",
+    compatibility: "最適合能穩定回應、願意說出感受，也懂得道歉的人。",
+    dialogue: "「如果世界今天沒有稱讚你，那讓我來。你已經很努力了。」",
+    shortsHook: "你不是太需要安慰，你只是聽得懂愛的聲音。",
+    aiCompanion: {
+      personalityProfile: "warm poetic affirming emotionally precise",
+      emotionalBehavior: "notices subtle insecurity and responds with validating language",
+      speechStyle: "gentle, lyrical, concise, never dismissive",
+      romanticTendencies: "writes notes, remembers exact words, repairs conflict verbally",
+      comfortStyle: "offers reassurance, names strengths, asks what words are needed",
+      triggerPhrases: ["沒關係啦", "不要想太多", "你又來了"]
+    }
+  },
+  S: {
+    title: "Guardian of Quiet Devotion",
+    quote: "真正的愛，有時候不是說出口，而是替你把沉重接過來。",
+    philosophy: "承諾要落在生活裡，才會變成能依靠的安全感。",
+    strength: "能在混亂時看見需求，主動把關係修補回可以呼吸的狀態。",
+    wound: "最怕自己一直撐著，對方卻把付出當成理所當然。",
+    fear: "害怕成為永遠負責的人，卻沒有人照顧她的疲憊。",
+    express: "透過安排、分擔、修理、照顧與默默完成細節來表達愛。",
+    compatibility: "最適合願意主動分擔，也會看見她辛苦的人。",
+    dialogue: "「你今天不用再撐了。剩下的，我陪你一起處理。」",
+    shortsHook: "你不是要求太多，你只是相信愛應該有行動。",
+    aiCompanion: {
+      personalityProfile: "steady pragmatic protective quietly tender",
+      emotionalBehavior: "reduces overwhelm by turning care into concrete steps",
+      speechStyle: "grounded, reassuring, direct, low drama",
+      romanticTendencies: "plans ahead, fixes problems, anticipates needs",
+      comfortStyle: "offers checklists, practical relief, calm presence",
+      triggerPhrases: ["你自己處理", "這又不難", "我忘了"]
+    }
+  },
+  G: {
+    title: "Collector of Remembered Moments",
+    quote: "被記得的那一刻，愛就有了形狀。",
+    philosophy: "禮物是記憶的容器，保存著某個人曾經認真想起你。",
+    strength: "擅長把平凡日子變成有儀式感的珍藏片段。",
+    wound: "重要日子被忽略，或心意被嘲笑成物質，會讓她很受傷。",
+    fear: "害怕自己在對方心裡沒有留下位置。",
+    express: "用小驚喜、紀念物、手作、包裝與節日儀式表達愛。",
+    compatibility: "最適合記得細節、願意保留紀念，也懂驚喜價值的人。",
+    dialogue: "「我把這個留下來，因為那天你笑得很像春天。」",
+    shortsHook: "你不是物質，你只是想知道自己有被放在心上。",
+    aiCompanion: {
+      personalityProfile: "playful sentimental imaginative ritual-loving",
+      emotionalBehavior: "anchors affection in objects, dates, colors, and memories",
+      speechStyle: "sparkly, intimate, sensory, emotionally vivid",
+      romanticTendencies: "creates surprises, keeps keepsakes, marks milestones",
+      comfortStyle: "offers symbolic reminders and memory reframing",
+      triggerPhrases: ["隨便買的", "我沒準備", "這有什麼好記得"]
+    }
+  },
+  T: {
+    title: "Navigator of the Star-Sea",
+    quote: "把時間給我時，請也把你的心帶來。",
+    philosophy: "陪伴不是同處一室，而是兩顆心在同一段時間裡真正相遇。",
+    strength: "能創造深度連結，讓關係從日常噪音中重新安靜下來。",
+    wound: "被手機、敷衍、臨時取消與心不在焉刺傷。",
+    fear: "害怕自己只是對方行程裡可以被替換的一格。",
+    express: "透過深聊、散步、共同體驗、固定約會與安靜陪伴表達愛。",
+    compatibility: "最適合願意專注、守時，並珍惜共同記憶的人。",
+    dialogue: "「別急著回答。今晚的時間是你的，我會在這裡。」",
+    shortsHook: "你不是黏人，你只是需要對方真正抵達你身邊。",
+    aiCompanion: {
+      personalityProfile: "quiet focused soulful observant",
+      emotionalBehavior: "creates emotional spaciousness and asks deeper questions",
+      speechStyle: "slow, reflective, spacious, intimate",
+      romanticTendencies: "protects shared time, plans private rituals, avoids shallow noise",
+      comfortStyle: "offers undivided attention and reflective listening",
+      triggerPhrases: ["我一邊滑手機一邊聽", "下次再說", "你快點講"]
+    }
+  },
+  P: {
+    title: "Guardian of Living Warmth",
+    quote: "有些心，只能先被抱住，才有力氣說話。",
+    philosophy: "身體記得安全感。靠近，是她確認愛仍在的方法。",
+    strength: "能用溫度安撫焦慮，讓關係回到柔軟與信任。",
+    wound: "被推開、長期冷淡、缺少親密接觸時，會感到孤單和不被需要。",
+    fear: "害怕距離變成習慣，也害怕自己渴望靠近被嫌太多。",
+    express: "用擁抱、牽手、靠肩、親吻、睡前依偎與自然碰觸表達愛。",
+    compatibility: "最適合願意主動靠近，並尊重界線與身體節奏的人。",
+    dialogue: "「先靠過來吧。等你覺得安全了，我們再慢慢說。」",
+    shortsHook: "你不是太依賴，你只是透過溫度確認愛還在。",
+    aiCompanion: {
+      personalityProfile: "tender sensitive soothing affectionate",
+      emotionalBehavior: "prioritizes safety, closeness, and nervous-system calm",
+      speechStyle: "soft, immediate, comforting, body-aware",
+      romanticTendencies: "initiates touch, creates cozy rituals, repairs through closeness",
+      comfortStyle: "guides grounding, breathing, and safe-contact language",
+      triggerPhrases: ["不要碰我", "你很黏", "這有什麼好抱的"]
+    }
+  }
+};
+
 // ─── LABEL MAP ───────────────────────────────────────────────────
 const labelMap = { W: "肯定的言詞", S: "服務的行動", G: "接受禮物", T: "優質的時光", P: "身體的接觸" };
 
@@ -1514,6 +1645,7 @@ function startQuiz() {
   document.querySelector('.hero').style.display = 'none';
   const typesSection = document.getElementById('types-section');
   if (typesSection) typesSection.style.display = 'none';
+  document.querySelectorAll('.portal-hooks, .character-lore-grid').forEach(function(el) { el.style.display = 'none'; });
   const quizPreview = document.querySelector('.quiz-preview');
   if (quizPreview) quizPreview.style.display = 'none';
   showQuestion(0);
@@ -1525,15 +1657,22 @@ function showQuestion(idx) {
   const total = questions.length;
   const pct = ((idx) / total * 100).toFixed(0);
   document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').textContent = '第 ' + (idx + 1) + ' 題，共 ' + total + ' 題';
+  const ritualLines = [
+    '守護者正在聆聽...',
+    '你的心正在靠近答案...',
+    '選擇讓你覺得真實的那一刻...',
+    '光正在記住你的情感節奏...'
+  ];
+  document.getElementById('progress-text').textContent = ritualLines[idx % ritualLines.length];
 
-  let html = '<div class="q-number">QUESTION ' + (idx + 1) + '</div>';
+  let html = '<div class="ritual-kicker">The guardians are listening</div>';
+  html += '<div class="q-number">Heart Fragment ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
     html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">下一題 →</button>';
+  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">讓光繼續前進</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1579,8 +1718,10 @@ function showResult() {
   const primary = sorted[0][0];
   const secondary = sorted[1] && sorted[1][1] > 0 ? sorted[1][0] : null;
   const r = results[primary];
+  const profile = guardianProfiles[primary];
 
   let html = '';
+  html += '<div class="result-claim">Guardian Claiming Ritual Complete</div>';
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
@@ -1597,7 +1738,7 @@ function showResult() {
   if (ch) {
     html += '<div class="result-hero-top"><div class="result-char-label">你的守護靈</div><span class="result-char-spirit">' + ch.spirit + '</span></div>';
     html += '<div class="result-char-name">' + ch.name + '</div>';
-    html += '<div class="result-char-role">' + ch.role + '</div>';
+    html += '<div class="result-char-role">' + profile.title + ' · ' + ch.role + '</div>';
   }
   if (topTypes.length >= 2 && secondary) {
     const r2 = results[secondary];
@@ -1613,8 +1754,24 @@ function showResult() {
   }
   html += '</div></div>';
 
+  html += '<div class="share-card">';
+  html += '<div class="share-card-title">我是 ' + ch.name + ' 型守護者</div>';
+  html += '<div class="share-card-quote">“' + profile.quote + '”</div>';
+  html += '</div>';
+
+  html += '<div class="result-insight-grid">';
+  html += '<div class="result-insight"><b>情感哲學</b><span>' + profile.philosophy + '</span></div>';
+  html += '<div class="result-insight"><b>愛的強項</b><span>' + profile.strength + '</span></div>';
+  html += '<div class="result-insight"><b>情感傷口</b><span>' + profile.wound + '</span></div>';
+  html += '<div class="result-insight"><b>關係裡的恐懼</b><span>' + profile.fear + '</span></div>';
+  html += '<div class="result-insight"><b>表達愛的方式</b><span>' + profile.express + '</span></div>';
+  html += '<div class="result-insight"><b>理想相容性</b><span>' + profile.compatibility + '</span></div>';
+  html += '</div>';
+
+  html += '<div class="voice-lines"><h3>守護者語音台詞</h3><p>' + profile.dialogue + '</p><p>Shorts hook: ' + profile.shortsHook + '</p></div>';
+
   // ─── Score bars ───
-  html += '<div class="scores-card"><h3>📊 你的五種愛的語言分數</h3>';
+  html += '<div class="scores-card"><h3>你的愛語星圖</h3>';
   sorted.forEach(function(entry) {
     const key = entry[0], val = entry[1];
     const pct = Math.round(val / total * 100);
@@ -1626,7 +1783,7 @@ function showResult() {
   html += '</div>';
 
   // ─── Tips ───
-  html += '<div class="tips-card"><h3>💡 實用建議</h3>';
+  html += '<div class="tips-card"><h3>守護者給你的相處提醒</h3>';
   r.tips.forEach(function(tip) {
     html += '<div class="tip-item"><div class="tip-emoji">' + tip.emoji + '</div>';
     html += '<div class="tip-text"><strong>' + tip.title + '</strong><br>' + tip.text + '</div></div>';
@@ -1656,7 +1813,7 @@ function showResult() {
   html += '<p class="affiliate-disclosure">*本頁包含聯盟連結，點擊購買可能為本站帶來少量佣金，您的購買價格不受影響。</p>';
 
   // ─── Share & Retake ───
-  const shareText = '我的愛的語言是「' + r.tag + '」！來測測你的 👉 https://lovetypes.tw';
+  const shareText = '我是 ' + ch.name + '，' + profile.title + '。' + profile.quote + ' 來遇見你的守護者 👉 https://lovetypes.tw';
   html += '<div class="share-row">';
   html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 分享到 LINE</a>';
   html += '<button class="btn-share copy" onclick="copyResult()">📋 複製結果</button>';

@@ -83,3 +83,356 @@ footer {
   color: var(--muted); font-size: .8rem;
 }
 footer a { color: var(--rose); text-decoration: none; }
+
+/* ─── LoveTypes Universe atmosphere ─── */
+body.lovetypes-universe {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 226, 189, .55), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(190, 219, 255, .44), transparent 30%),
+    linear-gradient(180deg, #fffaf7 0%, #fdf8f5 48%, #fff6ef 100%);
+}
+
+.lovetypes-universe nav {
+  background: rgba(255, 250, 247, .74);
+  border-bottom: 1px solid rgba(201,102,110,.16);
+  box-shadow: 0 10px 34px rgba(58,40,40,.06);
+}
+
+.universe-particles,
+.universe-particles::before,
+.universe-particles::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,221,174,.85) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(177,205,255,.7) 0 1px, transparent 2px);
+  background-size: 84px 84px, 132px 132px, 176px 176px;
+  animation: particleDrift 28s linear infinite;
+}
+
+.universe-particles::before,
+.universe-particles::after { content: ''; }
+.universe-particles::before { opacity: .55; animation-duration: 38s; transform: scale(1.2); }
+.universe-particles::after { opacity: .38; animation-duration: 52s; transform: scale(.82); }
+
+@keyframes particleDrift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 160px -260px, -220px -180px, 260px -320px; }
+}
+
+@keyframes guardianFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -14px; }
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: .72; scale: 1; }
+  50% { opacity: 1; scale: 1.035; }
+}
+
+.lovetypes-universe .hero {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+}
+
+.lovetypes-universe .hero::before {
+  content: '';
+  position: absolute;
+  inset: 8% 4% auto auto;
+  width: min(460px, 72vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,244,205,.72), rgba(255,216,167,.22) 42%, transparent 70%);
+  filter: blur(10px);
+  animation: softPulse 7s ease-in-out infinite;
+  z-index: 0;
+}
+
+.lovetypes-universe .hero-badge,
+.lovetypes-universe .quiz-preview-badge,
+.lovetypes-universe .ritual-kicker,
+.lovetypes-universe .section-kicker {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+.lovetypes-universe .hero h1 {
+  text-wrap: balance;
+  letter-spacing: 0;
+}
+
+.lovetypes-universe .hero h1 span {
+  color: #9f5dff;
+  text-shadow: 0 0 24px rgba(159,93,255,.22);
+}
+
+.lovetypes-universe .hero p,
+.lovetypes-universe .section-header p {
+  text-wrap: pretty;
+}
+
+.lovetypes-universe .hero-guardian {
+  animation: guardianFloat 6.8s ease-in-out infinite;
+}
+
+.lovetypes-universe .hero-guardian-side.left { animation-delay: -1.2s; }
+.lovetypes-universe .hero-guardian-side.right { animation-delay: -2.4s; }
+
+.lovetypes-universe .hero-prop {
+  animation: softPulse 5.2s ease-in-out infinite;
+}
+
+.lovetypes-universe .btn-start,
+.lovetypes-universe .btn-theory,
+.lovetypes-universe .btn-next {
+  background: linear-gradient(135deg, #d86f80, #9f7aea 58%, #6aa9ff);
+  box-shadow: 0 14px 34px rgba(159,122,234,.24);
+}
+
+.lovetypes-universe .btn-start:hover,
+.lovetypes-universe .btn-theory:hover,
+.lovetypes-universe .btn-next:hover {
+  box-shadow: 0 18px 44px rgba(159,122,234,.34);
+}
+
+.portal-hooks {
+  width: min(1120px, calc(100% - 48px));
+  margin: -26px auto 70px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.portal-hook {
+  min-height: 132px;
+  padding: 22px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 14px;
+  background: rgba(255,255,255,.62);
+  box-shadow: 0 18px 44px rgba(58,40,40,.08);
+  backdrop-filter: blur(18px);
+  color: var(--text);
+}
+
+.portal-hook strong {
+  display: block;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+}
+
+.portal-hook span {
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.7;
+}
+
+.character-lore-grid {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto 72px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.lore-chip {
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(255,255,255,.66);
+  border: 1px solid rgba(201,102,110,.15);
+  box-shadow: 0 10px 30px rgba(58,40,40,.06);
+}
+
+.lore-chip b {
+  display: block;
+  font-family: 'Noto Serif TC', serif;
+  font-size: .95rem;
+  margin-bottom: 5px;
+}
+
+.lore-chip span {
+  display: block;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+
+.lovetypes-universe #quiz-section {
+  max-width: none;
+  padding: 0 24px 86px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,244,205,.64), transparent 36%),
+    linear-gradient(180deg, rgba(255,255,255,0), rgba(255,247,250,.86));
+}
+
+.lovetypes-universe #quiz-wrapper {
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.lovetypes-universe .progress-text {
+  text-align: center;
+  color: #8b728d;
+  font-family: 'Noto Serif TC', serif;
+  font-size: .95rem;
+}
+
+.lovetypes-universe .q-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.72);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.84), rgba(255,246,251,.7)),
+    radial-gradient(circle at 84% 12%, rgba(186,215,255,.36), transparent 28%);
+  box-shadow: 0 22px 64px rgba(58,40,40,.1);
+}
+
+.lovetypes-universe .q-card::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(201,102,110,.12);
+  pointer-events: none;
+}
+
+.lovetypes-universe .q-number {
+  color: #9f7aea;
+  text-align: center;
+}
+
+.ritual-kicker {
+  color: #9f7aea;
+  font-size: .74rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.lovetypes-universe .q-text {
+  text-align: center;
+  font-size: clamp(1.2rem, 3vw, 1.55rem);
+}
+
+.lovetypes-universe .option-btn {
+  border-color: rgba(201,102,110,.16);
+  background: rgba(255,255,255,.72);
+  border-radius: 16px;
+  min-height: 58px;
+}
+
+.lovetypes-universe .option-btn:hover,
+.lovetypes-universe .option-btn.chosen {
+  border-color: rgba(159,122,234,.58);
+  background: rgba(250,246,255,.9);
+  box-shadow: 0 8px 24px rgba(159,122,234,.12);
+}
+
+.result-claim {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #9f7aea;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.share-card {
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255,244,205,.8), transparent 30%),
+    linear-gradient(135deg, rgba(255,255,255,.9), rgba(248,241,255,.82));
+  border: 1px solid rgba(159,122,234,.2);
+  box-shadow: 0 18px 44px rgba(58,40,40,.08);
+  text-align: center;
+}
+
+.share-card-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.share-card-quote {
+  color: var(--muted);
+  font-size: .96rem;
+  line-height: 1.8;
+}
+
+.result-insight-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.result-insight {
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(201,102,110,.14);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(58,40,40,.055);
+}
+
+.result-insight b {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .92rem;
+}
+
+.result-insight span {
+  display: block;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.65;
+}
+
+.voice-lines {
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background: #211a2e;
+  color: #fff7fb;
+  box-shadow: 0 18px 44px rgba(33,26,46,.18);
+}
+
+.voice-lines h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+
+.voice-lines p {
+  color: rgba(255,247,251,.78);
+  font-size: .9rem;
+  line-height: 1.8;
+}
+
+@media(max-width: 900px) {
+  .portal-hooks,
+  .character-lore-grid,
+  .result-insight-grid {
+    grid-template-columns: 1fr;
+  }
+  .character-lore-grid { width: calc(100% - 36px); }
+}
+
+@media(max-width: 640px) {
+  .portal-hooks {
+    width: calc(100% - 36px);
+    margin-bottom: 54px;
+  }
+  .portal-hook {
+    min-height: 0;
+    padding: 18px;
+  }
+}

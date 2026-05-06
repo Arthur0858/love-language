@@ -116,6 +116,8 @@
   }
   </script>
 
+  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" type="image/webp" />
+  <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/shared.css" />
@@ -990,11 +992,11 @@
       <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">Begin Your Journey</button>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <img class="hero-guardian hero-guardian-main" src="/assets/lovetypes/guardians/iris.webp" alt="">
-      <img class="hero-guardian hero-guardian-side left" src="/assets/lovetypes/guardians/noah.webp" alt="">
-      <img class="hero-guardian hero-guardian-side right" src="/assets/lovetypes/guardians/vivian.webp" alt="">
-      <img class="hero-prop pen" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="">
-      <img class="hero-prop lantern" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="">
+      <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
+      <img class="hero-guardian hero-guardian-side left" loading="eager" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="" width="1066" height="1024">
+      <img class="hero-guardian hero-guardian-side right" loading="eager" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="" width="823" height="1024">
+      <img class="hero-prop pen" loading="eager" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
+      <img class="hero-prop lantern" loading="eager" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
     </div>
   </div>
 </section>
@@ -1025,8 +1027,8 @@
 
     <!-- 1. 肯定的言詞 · 艾莉絲 -->
     <a class="char-card type-w" href="/characters/iris/">
-      <img class="char-img" src="/assets/lovetypes/guardians/iris.webp" alt="艾莉絲，晨曦詩人 — 肯定的言詞守護靈" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" loading="lazy">
+      <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/iris.webp" alt="艾莉絲，晨曦詩人 — 肯定的言詞守護靈" width="966" height="1024">
+      <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
       <div class="char-top">
         <div class="char-spirit-badge">🎶</div>
         <div class="char-title-wrap">
@@ -1049,8 +1051,8 @@
 
     <!-- 2. 優質的時光 · 諾雅 -->
     <a class="char-card type-t" href="/characters/noah/">
-      <img class="char-img" src="/assets/lovetypes/guardians/noah.webp" alt="諾雅，星海領航員 — 優質時光守護靈" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" loading="lazy">
+      <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="諾雅，星海領航員 — 優質時光守護靈" width="1066" height="1024">
+      <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
       <div class="char-top">
         <div class="char-spirit-badge">🌌</div>
         <div class="char-title-wrap">
@@ -1073,8 +1075,8 @@
 
     <!-- 3. 接受禮物 · 薇薇安 -->
     <a class="char-card type-g" href="/characters/vivian/">
-      <img class="char-img" src="/assets/lovetypes/guardians/vivian.webp" alt="薇薇安，記憶收藏家 — 接受禮物守護靈" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" loading="lazy">
+      <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="薇薇安，記憶收藏家 — 接受禮物守護靈" width="823" height="1024">
+      <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" width="215" height="190">
       <div class="char-top">
         <div class="char-spirit-badge">✨</div>
         <div class="char-title-wrap">
@@ -1097,8 +1099,8 @@
 
     <!-- 4. 服務的行動 · 克萊兒 -->
     <a class="char-card type-s" href="/characters/claire/">
-      <img class="char-img" src="/assets/lovetypes/guardians/claire.webp" alt="克萊兒，靜謐守護者 — 服務的行動守護靈" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" loading="lazy">
+      <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/claire.webp" alt="克萊兒，靜謐守護者 — 服務的行動守護靈" width="720" height="1007">
+      <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" width="250" height="135">
       <div class="char-top">
         <div class="char-spirit-badge">🔧</div>
         <div class="char-title-wrap">
@@ -1121,8 +1123,8 @@
 
     <!-- 5. 身體的接觸 · 朵拉 -->
     <a class="char-card type-p" href="/characters/dora/">
-      <img class="char-img" src="/assets/lovetypes/guardians/dora.webp" alt="朵拉，溫暖發光體 — 身體接觸守護靈" loading="lazy">
-      <img class="char-prop" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" loading="lazy">
+      <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/dora.webp" alt="朵拉，溫暖發光體 — 身體接觸守護靈" width="736" height="1007">
+      <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" width="305" height="180">
       <div class="char-top">
         <div class="char-spirit-badge">🫂</div>
         <div class="char-title-wrap">
@@ -1725,7 +1727,7 @@ function showResult() {
 
   // ─── Merged Result + Guardian Hero Card ───
   var imgMap = { 'type-w': 'iris', 'type-t': 'noah', 'type-g': 'vivian', 'type-s': 'claire', 'type-p': 'dora' };
-  var imgDimMap = { iris: [844, 733], noah: [1408, 768], vivian: [1408, 768], claire: [1408, 768], dora: [1408, 768] };
+  var imgDimMap = { iris: [966, 1024], noah: [1066, 1024], vivian: [823, 1024], claire: [720, 1007], dora: [736, 1007] };
   var ch = r.character;
   var typeClass = ch ? ch.typeClass : '';
   var imgFile = imgMap[typeClass] || '';

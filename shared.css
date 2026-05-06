@@ -675,36 +675,68 @@ body.lovetypes-universe {
 @media(max-width: 640px) {
   nav {
     padding: 0 12px;
-    gap: 10px;
-    overflow: hidden;
+    gap: 8px;
+    overflow: visible;
   }
   .nav-left {
+    min-width: 0;
     flex-shrink: 0;
     gap: 8px;
+  }
+  .lang-menu {
+    position: static;
+    flex: 0 0 auto;
   }
   .nav-logo {
     font-size: .98rem;
     white-space: nowrap;
   }
+  .nav-logo svg {
+    width: 18px;
+    height: 18px;
+  }
   .nav-links {
-    flex: 1;
-    min-width: 0;
-    gap: 14px;
-    overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
+    flex: 0 0 auto;
+    min-width: auto;
+    gap: 0;
+    overflow: visible;
+    justify-content: flex-end;
   }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a {
     white-space: nowrap;
     font-size: .78rem;
   }
-  .nav-links a:nth-child(n+3) {
+  .nav-links a:not(#nav-test-link) {
     display: none;
   }
+  .nav-links #nav-test-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 92px;
+    min-height: 34px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(201,102,110,.11);
+    color: var(--rose);
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .lang-current {
-    padding: 4px 11px;
+    min-height: 34px;
+    padding: 4px 10px;
     font-size: .74rem;
+  }
+  .lang-list {
+    position: fixed;
+    top: 54px;
+    left: 12px;
+    z-index: 1000;
+    min-width: 132px;
+    border-radius: 14px;
+    box-shadow: 0 18px 44px rgba(58,40,40,.18);
   }
   .lovetypes-universe .hero {
     min-height: auto;

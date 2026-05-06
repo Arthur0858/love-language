@@ -490,6 +490,25 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ── Legal Pages ── -->
+  <url>
+    <loc>https://lovetypes.tw/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/privacy/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/privacy/" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://lovetypes.tw/terms/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/terms/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/terms/" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- ── Luna Yoga Music Pages ── -->
   <url>
     <loc>https://lovetypes.tw/luna-yoga-music/</loc>

@@ -519,6 +519,7 @@
       gap: 24px; margin-top: 40px;
     }
     .char-card {
+      display: block; color: inherit; text-decoration: none;
       border-radius: 20px; padding: 28px 24px;
       box-shadow: 0 4px 24px rgba(0,0,0,.07);
       position: relative; overflow: hidden;
@@ -693,7 +694,7 @@
   </div>
   <div class="chars-grid">
     <!-- W · 아이리스 (Iris) -->
-    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-w" href="/ko/characters/iris/" aria-label="Meet Iris">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/iris.webp" alt="아이리스, 사랑의 언어 '인정하는 말' 수호령" width="966" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
       <div class="char-top">
@@ -714,10 +715,10 @@
           <div class="char-spirit-desc">금속 광택의 깃털과 길고 아름다운 꼬리 깃털. 아이리스가 누군가를 칭찬할 때, 영가는 그 주변을 맴돌며 은은한 빛을 발산한다.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- T · 노아 (Noah) -->
-    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-t" href="/ko/characters/noah/" aria-label="Meet Noah">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="노아, 사랑의 언어 '함께하는 시간' 수호령" width="1066" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
       <div class="char-top">
@@ -738,10 +739,10 @@
           <div class="char-spirit-desc">몸은 반투명한 성운으로 이루어졌으며 등에는 별들이 반짝인다. 깊은 교류 중에는 외부의 모든 소음을 차단해 정지된 시공간을 만든다.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- G · 비비안 (Vivian) -->
-    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-g" href="/ko/characters/vivian/" aria-label="Meet Vivian">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="비비안, 사랑의 언어 '선물' 수호령" width="823" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" width="215" height="190">
       <div class="char-top">
@@ -762,10 +763,10 @@
           <div class="char-spirit-desc">선명한 보라색 눈동자와 항상 빛나는 실을 부리에 물고 있다. 세상의 '놀라움 조각'을 모아 그리움을 시각화한다.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- S · 클레어 (Claire) -->
-    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-s" href="/ko/characters/claire/" aria-label="Meet Claire">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/claire.webp" alt="클레어, 사랑의 언어 '봉사 행위' 수호령" width="720" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" width="250" height="135">
       <div class="char-top">
@@ -786,10 +787,10 @@
           <div class="char-spirit-desc">반투명한 호박색 몸체에 첼로처럼 낮고 안정된 날갯소리. 클레어가 타인의 필요를 발견하도록 이끌고 함께 수선한다.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- P · 도라 (Dora) -->
-    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-p" href="/ko/characters/dora/" aria-label="Meet Dora">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/dora.webp" alt="도라, 사랑의 언어 '스킨십' 수호령" width="736" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" width="305" height="180">
       <div class="char-top">
@@ -810,17 +811,17 @@
           <div class="char-spirit-desc">따뜻한 물빛을 띠는 털과 촉촉하고 온순한 눈빛. 항상 도라 곁에 붙어있으며 도라가 누군가를 안을 때 작은 발로 살며시 닿는다.</div>
         </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
 
 <section class="character-lore-grid" aria-label="Guardian lore preview">
-  <a class="lore-chip" href="/characters/iris/"><b>Iris · Spoken Hearts</b><span>말을 감정의 마법으로 바꿉니다. 침묵에 지워지는 아픔을 알고, 한 문장이 마음을 구할 수 있음을 압니다.</span></a>
-  <a class="lore-chip" href="/characters/noah/"><b>Noah · Star-Sea Time</b><span>방해받지 않는 시간을 지킵니다. 그녀에게 집중은 가장 깊은 약속입니다.</span></a>
-  <a class="lore-chip" href="/characters/vivian/"><b>Vivian · Memory Gifts</b><span>기억되었다는 증거를 모읍니다. 선물은 “내 마음에 네가 있었다”는 형태입니다.</span></a>
-  <a class="lore-chip" href="/characters/claire/"><b>Claire · Quiet Devotion</b><span>행동으로 세계를 고칩니다. 당신이 지쳤을 때 삶이 무너지지 않도록 조용히 받쳐줍니다.</span></a>
-  <a class="lore-chip" href="/characters/dora/"><b>Dora · Living Warmth</b><span>가까움으로 거리를 치유합니다. 포옹은 몸에 안전감이 돌아오는 장소입니다.</span></a>
+  <a class="lore-chip" href="/ko/characters/iris/"><b>Iris · Spoken Hearts</b><span>말을 감정의 마법으로 바꿉니다. 침묵에 지워지는 아픔을 알고, 한 문장이 마음을 구할 수 있음을 압니다.</span></a>
+  <a class="lore-chip" href="/ko/characters/noah/"><b>Noah · Star-Sea Time</b><span>방해받지 않는 시간을 지킵니다. 그녀에게 집중은 가장 깊은 약속입니다.</span></a>
+  <a class="lore-chip" href="/ko/characters/vivian/"><b>Vivian · Memory Gifts</b><span>기억되었다는 증거를 모읍니다. 선물은 “내 마음에 네가 있었다”는 형태입니다.</span></a>
+  <a class="lore-chip" href="/ko/characters/claire/"><b>Claire · Quiet Devotion</b><span>행동으로 세계를 고칩니다. 당신이 지쳤을 때 삶이 무너지지 않도록 조용히 받쳐줍니다.</span></a>
+  <a class="lore-chip" href="/ko/characters/dora/"><b>Dora · Living Warmth</b><span>가까움으로 거리를 치유합니다. 포옹은 몸에 안전감이 돌아오는 장소입니다.</span></a>
 </section>
 
 <!-- QUIZ SECTION -->
@@ -1395,7 +1396,8 @@ function showResult() {
   html += '<div class="result-insight"><b>이상적인 궁합</b><span>' + profile.compatibility + '</span></div>';
   html += '</div>';
 
-  html += '<div class="voice-lines"><h3>수호자의 음성 대사</h3><p>' + profile.dialogue + '</p><p>Shorts 후킹 문장: ' + profile.shortsHook + '</p></div>';
+  var profileUrl = imgFile ? '/ko/characters/' + imgFile + '/' : '/ko/#types-section';
+  html += '<div class="voice-lines"><h3>수호자의 음성 대사</h3><p>' + profile.dialogue + '</p><p>Shorts 후킹 문장: ' + profile.shortsHook + '</p><a class="secondary-btn" href="' + profileUrl + '">수호자 이야기 보기 →</a></div>';
 
   // ─── Score bars ───
   html += '<div class="scores-card"><h3>당신의 사랑 언어 별자리</h3>';

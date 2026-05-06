@@ -519,6 +519,7 @@
       gap: 24px; margin-top: 40px;
     }
     .char-card {
+      display: block; color: inherit; text-decoration: none;
       border-radius: 20px; padding: 28px 24px;
       box-shadow: 0 4px 24px rgba(0,0,0,.07);
       position: relative; overflow: hidden;
@@ -693,7 +694,7 @@
   </div>
   <div class="chars-grid">
     <!-- W · アイリス (Iris) -->
-    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-w" href="/ja/characters/iris/" aria-label="Meet Iris">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/iris.webp" alt="アイリス、愛の言語「肯定の言葉」の守護霊" width="966" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
       <div class="char-top">
@@ -714,10 +715,10 @@
           <div class="char-spirit-desc">金属光沢の羽根と長い尾羽を持つ。アイリスが誰かを褒めると、詠歌はその人の周りを飛びながら微かに輝く。</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- T · ノア (Noah) -->
-    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-t" href="/ja/characters/noah/" aria-label="Meet Noah">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="ノア、愛の言語「クオリティタイム」の守護霊" width="1066" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
       <div class="char-top">
@@ -738,10 +739,10 @@
           <div class="char-spirit-desc">体は半透明の星雲で構成され、背中には繁星が輝く。深い交流の場では外界の雑音をすべて遮断し、静止した時空を作る。</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- G · ヴィヴィアン (Vivian) -->
-    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-g" href="/ja/characters/vivian/" aria-label="Meet Vivian">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="ヴィヴィアン、愛の言語「贈り物」の守護霊" width="823" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" width="215" height="190">
       <div class="char-top">
@@ -762,10 +763,10 @@
           <div class="char-spirit-desc">鮮やかな紫の瞳を持ち、口には光る絹糸を咥えている。世界の「驚きの欠片」を集め、思いやりを可視化する。</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- S · クレール (Claire) -->
-    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-s" href="/ja/characters/claire/" aria-label="Meet Claire">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/claire.webp" alt="クレア、愛の言語「奉仕の行為」の守護霊" width="720" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" width="250" height="135">
       <div class="char-top">
@@ -786,10 +787,10 @@
           <div class="char-spirit-desc">半透明の琥珀色の体、羽音はチェロのように低く安定。クレールに他者のニーズを気づかせ、修繕を共に行う。</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- P · ドーラ (Dora) -->
-    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-p" href="/ja/characters/dora/" aria-label="Meet Dora">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/dora.webp" alt="ドーラ、愛の言語「スキンシップ」の守護霊" width="736" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" width="305" height="180">
       <div class="char-top">
@@ -810,17 +811,17 @@
           <div class="char-spirit-desc">毛皮は温かな水の光を帯び、瞳は潤んで穏やか。常にドーラのそばにいて、誰かを抱きしめると小さな前足でそっと触れる。</div>
         </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
 
 <section class="character-lore-grid" aria-label="Guardian lore preview">
-  <a class="lore-chip" href="/characters/iris/"><b>Iris · Spoken Hearts</b><span>言葉を感情の魔法に変える守護者。沈黙に消される痛みを知り、一言が心を救うことを知っています。</span></a>
-  <a class="lore-chip" href="/characters/noah/"><b>Noah · Star-Sea Time</b><span>邪魔されない時間を守る人。彼女にとって、集中して向き合うことは最も深い約束です。</span></a>
-  <a class="lore-chip" href="/characters/vivian/"><b>Vivian · Memory Gifts</b><span>覚えていてくれた証を集める人。贈り物は「あなたを思い出していた」という形です。</span></a>
-  <a class="lore-chip" href="/characters/claire/"><b>Claire · Quiet Devotion</b><span>行動で世界を修復する人。あなたが疲れた時、生活が崩れないよう静かに支えます。</span></a>
-  <a class="lore-chip" href="/characters/dora/"><b>Dora · Living Warmth</b><span>近さで距離を癒す人。抱きしめられることで、身体に安心が戻ってきます。</span></a>
+  <a class="lore-chip" href="/ja/characters/iris/"><b>Iris · Spoken Hearts</b><span>言葉を感情の魔法に変える守護者。沈黙に消される痛みを知り、一言が心を救うことを知っています。</span></a>
+  <a class="lore-chip" href="/ja/characters/noah/"><b>Noah · Star-Sea Time</b><span>邪魔されない時間を守る人。彼女にとって、集中して向き合うことは最も深い約束です。</span></a>
+  <a class="lore-chip" href="/ja/characters/vivian/"><b>Vivian · Memory Gifts</b><span>覚えていてくれた証を集める人。贈り物は「あなたを思い出していた」という形です。</span></a>
+  <a class="lore-chip" href="/ja/characters/claire/"><b>Claire · Quiet Devotion</b><span>行動で世界を修復する人。あなたが疲れた時、生活が崩れないよう静かに支えます。</span></a>
+  <a class="lore-chip" href="/ja/characters/dora/"><b>Dora · Living Warmth</b><span>近さで距離を癒す人。抱きしめられることで、身体に安心が戻ってきます。</span></a>
 </section>
 
 <!-- QUIZ SECTION -->
@@ -1395,7 +1396,8 @@ function showResult() {
   html += '<div class="result-insight"><b>理想の相性</b><span>' + profile.compatibility + '</span></div>';
   html += '</div>';
 
-  html += '<div class="voice-lines"><h3>守護者のボイスライン</h3><p>' + profile.dialogue + '</p><p>Shorts導入フック: ' + profile.shortsHook + '</p></div>';
+  var profileUrl = imgFile ? '/ja/characters/' + imgFile + '/' : '/ja/#types-section';
+  html += '<div class="voice-lines"><h3>守護者のボイスライン</h3><p>' + profile.dialogue + '</p><p>Shorts導入フック: ' + profile.shortsHook + '</p><a class="secondary-btn" href="' + profileUrl + '">守護者の物語を読む →</a></div>';
 
   // ─── Score bars ───
   html += '<div class="scores-card"><h3>あなたの愛の星図</h3>';

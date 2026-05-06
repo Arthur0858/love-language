@@ -518,6 +518,7 @@
       gap: 24px; margin-top: 40px;
     }
     .char-card {
+      display: block; color: inherit; text-decoration: none;
       border-radius: 20px; padding: 28px 24px;
       box-shadow: 0 4px 24px rgba(0,0,0,.07);
       position: relative; overflow: hidden;
@@ -692,7 +693,7 @@
   </div>
   <div class="chars-grid">
     <!-- W · Iris -->
-    <div class="char-card type-w" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-w" href="/en/characters/iris/" aria-label="Meet Iris">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/iris.webp" alt="Iris, the Morning Poet — Words of Affirmation Guardian" width="966" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
       <div class="char-top">
@@ -713,10 +714,10 @@
           <div class="char-spirit-desc">Feathers with a metallic sheen and an extraordinarily long tail. When Iris praises someone, Song-Wing circles them and radiates a soft glow.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- T · Noah -->
-    <div class="char-card type-t" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-t" href="/en/characters/noah/" aria-label="Meet Noah">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="Noah, the Stargazer — Quality Time Guardian" width="1066" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
       <div class="char-top">
@@ -737,10 +738,10 @@
           <div class="char-spirit-desc">Its body is woven from translucent nebulae, its back studded with stars. When Noah connects deeply, Stillness envelops them and silences the outside world.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- G · Vivian -->
-    <div class="char-card type-g" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-g" href="/en/characters/vivian/" aria-label="Meet Vivian">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="Vivian, the Dreamweaver — Receiving Gifts Guardian" width="823" height="1024">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/gifts-ribboned-gift-box.webp" alt="" width="215" height="190">
       <div class="char-top">
@@ -761,10 +762,10 @@
           <div class="char-spirit-desc">Vivid purple eyes, always carrying a glowing silk thread in its beak. It seeks out 'surprise fragments' to materialize affection.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- S · Claire -->
-    <div class="char-card type-s" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-s" href="/en/characters/claire/" aria-label="Meet Claire">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/claire.webp" alt="Claire, the Sunbeam — Acts of Service Guardian" width="720" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/service-tool-pouch.webp" alt="" width="250" height="135">
       <div class="char-top">
@@ -785,10 +786,10 @@
           <div class="char-spirit-desc">A translucent amber body with wings that hum like a deep cello. Diligent guides Claire toward others' unspoken needs and helps her mend what is broken.</div>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- P · Dora -->
-    <div class="char-card type-p" onclick="startQuiz()" style="cursor:pointer">
+    <a class="char-card type-p" href="/en/characters/dora/" aria-label="Meet Dora">
       <img class="char-img" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/dora.webp" alt="Dora, the Warmth — Physical Touch Guardian" width="736" height="1007">
       <img class="char-prop" loading="lazy" decoding="async" src="/assets/lovetypes/props/touch-golden-hug-glow.webp" alt="" width="305" height="180">
       <div class="char-top">
@@ -809,17 +810,17 @@
           <div class="char-spirit-desc">Fur shimmering with warm water-light and soft moist eyes. Always close to Dora — when she hugs someone, it reaches out a tiny paw to touch them too.</div>
         </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
 
 <section class="character-lore-grid" aria-label="Guardian lore preview">
-  <a class="lore-chip" href="/characters/iris/"><b>Iris · Spoken Hearts</b><span>Words become emotional magic. She fears being erased by silence and knows how one sentence can save a heart.</span></a>
-  <a class="lore-chip" href="/characters/noah/"><b>Noah · Star-Sea Time</b><span>She protects undistracted presence. To her, attention is the highest form of promise.</span></a>
-  <a class="lore-chip" href="/characters/vivian/"><b>Vivian · Memory Gifts</b><span>She collects proof of being remembered. A gift means “I carried you in my mind.”</span></a>
-  <a class="lore-chip" href="/characters/claire/"><b>Claire · Quiet Devotion</b><span>She repairs the world through action. When you are tired, she quietly helps life hold together.</span></a>
-  <a class="lore-chip" href="/characters/dora/"><b>Dora · Living Warmth</b><span>She heals distance with closeness. A hug is where safety returns to the body.</span></a>
+  <a class="lore-chip" href="/en/characters/iris/"><b>Iris · Spoken Hearts</b><span>Words become emotional magic. She fears being erased by silence and knows how one sentence can save a heart.</span></a>
+  <a class="lore-chip" href="/en/characters/noah/"><b>Noah · Star-Sea Time</b><span>She protects undistracted presence. To her, attention is the highest form of promise.</span></a>
+  <a class="lore-chip" href="/en/characters/vivian/"><b>Vivian · Memory Gifts</b><span>She collects proof of being remembered. A gift means “I carried you in my mind.”</span></a>
+  <a class="lore-chip" href="/en/characters/claire/"><b>Claire · Quiet Devotion</b><span>She repairs the world through action. When you are tired, she quietly helps life hold together.</span></a>
+  <a class="lore-chip" href="/en/characters/dora/"><b>Dora · Living Warmth</b><span>She heals distance with closeness. A hug is where safety returns to the body.</span></a>
 </section>
 
 <!-- QUIZ SECTION -->
@@ -1394,7 +1395,8 @@ function showResult() {
   html += '<div class="result-insight"><b>Ideal compatibility</b><span>' + profile.compatibility + '</span></div>';
   html += '</div>';
 
-  html += '<div class="voice-lines"><h3>Guardian voice lines</h3><p>' + profile.dialogue + '</p><p>Shorts hook: ' + profile.shortsHook + '</p></div>';
+  var profileUrl = imgFile ? '/en/characters/' + imgFile + '/' : '/en/#types-section';
+  html += '<div class="voice-lines"><h3>Guardian voice lines</h3><p>' + profile.dialogue + '</p><p>Shorts hook: ' + profile.shortsHook + '</p><a class="secondary-btn" href="' + profileUrl + '">Explore full guardian lore →</a></div>';
 
   // ─── Score bars ───
   html += '<div class="scores-card"><h3>Your love-language star map</h3>';

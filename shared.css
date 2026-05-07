@@ -392,13 +392,29 @@ body.lovetypes-universe {
 .lovetypes-universe .btn-start,
 .lovetypes-universe .btn-theory,
 .lovetypes-universe .btn-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 32px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 999px;
   background: linear-gradient(135deg, #d86f80, #9f7aea 58%, #6aa9ff);
+  color: #fff;
   box-shadow: 0 14px 34px rgba(159,122,234,.24);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .22s ease, opacity .22s ease;
+  white-space: normal;
 }
 
 .lovetypes-universe .btn-start:hover,
 .lovetypes-universe .btn-theory:hover,
 .lovetypes-universe .btn-next:hover {
+  transform: translateY(-2px);
   box-shadow: 0 18px 44px rgba(159,122,234,.34);
 }
 

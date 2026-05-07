@@ -147,6 +147,28 @@ nav {
 }
 .lang-list li a:hover { background: var(--peach); color: var(--rose); }
 
+/* Defensive baseline so reused CTA classes never degrade into plain text. */
+:where(.btn-start, .btn-theory, .btn-next, .btn-retake, .btn-share, .primary-btn, .secondary-btn, .btn-primary, .btn-white, .luna-yoga-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .22s ease, opacity .22s ease, background .22s ease, border-color .22s ease;
+}
+
+:where(.btn-start, .btn-theory, .btn-next, .btn-retake, .btn-share, .primary-btn, .secondary-btn, .btn-primary, .btn-white, .luna-yoga-btn):hover {
+  transform: translateY(-1px);
+}
+
 /* ─── FOOTER ─── */
 footer {
   background: #FFF5F5; border-top: 1px solid var(--rose-lt);

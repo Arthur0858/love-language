@@ -341,6 +341,7 @@ body.lovetypes-universe {
   min-height: 560px;
   position: relative;
   align-self: end;
+  pointer-events: none;
 }
 
 .lovetypes-universe .hero-guardian {

@@ -125,7 +125,7 @@
   <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/shared.css?v=20260507-nav-og-fix" />
+    <link rel="stylesheet" href="/shared.css?v=20260507-cta-fix" />
   <style>
     /* ─── LOVE TYPES PREVIEW ─── */
     .types-section {
@@ -695,6 +695,7 @@
       min-height: 560px;
       position: relative;
       align-self: end;
+      pointer-events: none;
     }
     .hero-guardian {
       position: absolute;
@@ -962,7 +963,7 @@
           <span data-i18n="hero.meta3">38,000+ 人遇見守護者</span>
         </span>
       </div>
-      <button class="btn-start" onclick="startQuiz()" data-i18n="hero.btn">開始你的旅程</button>
+      <button class="btn-start" type="button" onclick="startQuiz()" data-i18n="hero.btn">開始你的旅程</button>
     </div>
     <div class="hero-art" aria-hidden="true">
       <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
@@ -1137,7 +1138,7 @@
       <div class="quiz-preview-badge">Heart Ritual</div>
       <h2>守護者正在聆聽，你只需要選擇真實</h2>
       <p>每一道題都是一段情感片刻。不要分析，不要扮演理想的自己，讓直覺帶你靠近最懂你的那位守護者。</p>
-      <button class="btn-start" onclick="startQuiz()">遇見你的守護者</button>
+      <button class="btn-start" type="button" onclick="startQuiz()">遇見你的守護者</button>
     </div>
   </div>
   <div id="quiz-wrapper">

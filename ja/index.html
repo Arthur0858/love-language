@@ -126,7 +126,7 @@
   <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/shared.css?v=20260507-cta-fix" />
+    <link rel="stylesheet" href="/shared.css?v=20260507-site-click-fix" />
   <style>
     /* ─── HERO ─── */
     .hero {
@@ -616,7 +616,7 @@
 <nav>
   <div class="nav-left">
     <div class="lang-menu" id="lang-menu">
-      <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">JA ▾</button>
+      <button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">JA ▾</button>
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
         <li><a href="/en/">English</a></li>
@@ -673,7 +673,7 @@
           <span>38,000人以上が守護者と出会う</span>
         </span>
       </div>
-      <button class="btn-start" onclick="startQuiz()">旅をはじめる</button>
+      <button type="button" class="btn-start" onclick="startQuiz()">旅をはじめる</button>
     </div>
     <div class="hero-art" aria-hidden="true">
       <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
@@ -847,7 +847,7 @@
       <div class="quiz-preview-badge">Heart Ritual</div>
       <h2>守護者は耳を澄ませています。真実に近い方を選んで。</h2>
       <p>一問ごとに、心の欠片が灯ります。理想の自分を演じず、直感のままに選んでください。</p>
-      <button class="btn-start" onclick="startQuiz()">守護者に会う</button>
+      <button type="button" class="btn-start" onclick="startQuiz()">守護者に会う</button>
     </div>
   </div>
   <div id="quiz-wrapper">
@@ -906,42 +906,42 @@
   </div>
   <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>愛の言語とは何ですか？</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>愛の言語とは、心理学者のゲーリー・チャップマン博士が1992年に提唱した関係理論です。すべての人が愛を表現・受け取る方法は5つのタイプに分かれます：肯定の言葉、奉仕の行為、贈り物、充実した時間、身体的な接触。自分とパートナーの愛の言語を理解することで、相手に「伝わる」方法で愛を表現でき、関係満足度と親密感が大幅に向上します。</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>5つの愛の言語とはそれぞれ何ですか？</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>5つの愛の言語は次のとおりです：① 肯定の言葉（Words of Affirmation）——言葉・称賛・感謝で愛を表す；② 奉仕の行為（Acts of Service）——相手の負担を減らす実際の行動；③ 贈り物（Receiving Gifts）——思いやりのあるプレゼントで愛されていると感じる；④ 充実した時間（Quality Time）——集中した邪魔のない時間を共に過ごす；⑤ 身体的な接触（Physical Touch）——抱擁・手を繋ぐなど身体的な近さで安心感を得る。</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>愛の言語は変わることがありますか？</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>はい、愛の言語は変わることがあります。人生のステージが変わったり、大きな出来事を経験すると、主な愛の言語が変化することがあります。定期的にテストを受け直して、今の自分の状態やニーズを確認することをお勧めします。それにより関係の新鮮さと絆を保つことができます。</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>愛の言語は恋愛関係だけに使えるものですか？</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>いいえ、恋愛だけではありません。愛の言語は親子関係、友情、職場でのやり取りなど、あらゆる人間関係に応用できます。相手の伝え方・受け取り方を理解することで、すべての関係をより良くし、誤解や衝突を減らすことができます。</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>テストは何問ありますか？どのくらい時間がかかりますか？</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>LoveTypesの愛の言語テストは15問の状況選択式で、約2分で完了します。テストは完全無料で、登録不要。終了後すぐにあなたの主な愛の言語と詳しい分析が表示されます。パートナーへの実用的なアドバイスもご覧いただけます。</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>パートナーの愛の言語が自分と違う場合はどうすればいいですか？</span>
           <span class="faq-icon">+</span>
         </button>
@@ -1339,10 +1339,10 @@ function showQuestion(idx) {
   html += '<div class="q-number">心の欠片 ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
-    html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
+    html += '<button type="button" class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">光を先へ進める</button>';
+  html += '<button type="button" class="btn-next" id="btn-next" onclick="nextQuestion()">光を先へ進める</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1486,9 +1486,9 @@ function showResult() {
   const shareText = '私の愛の言語は「' + r.tag + '」です！あなたも診断してみて 👉 https://lovetypes.tw/ja/';
   html += '<div class="share-row">';
   html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw/ja/') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 LINEでシェア</a>';
-  html += '<button class="btn-share copy" onclick="copyResult()">📋 結果をコピー</button>';
+  html += '<button type="button" class="btn-share copy" onclick="copyResult()">📋 結果をコピー</button>';
   html += '</div>';
-  html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 もう一度診断する</button></div>';
+  html += '<div class="retake-row"><button type="button" class="btn-retake" onclick="retakeQuiz()">🔄 もう一度診断する</button></div>';
 
   html += '<div class="dist-card">';
   html += '<h4>あなたの愛の言語タイプ分布</h4>';

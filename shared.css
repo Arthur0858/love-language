@@ -1078,6 +1078,7 @@ body.lovetypes-universe {
   min-height: 620px;
   display: grid;
   place-items: end center;
+  pointer-events: none;
 }
 
 .guardian-profile-page .guardian-art img {

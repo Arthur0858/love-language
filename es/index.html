@@ -126,7 +126,7 @@
   <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/shared.css?v=20260507-cta-fix" />
+    <link rel="stylesheet" href="/shared.css?v=20260507-site-click-fix" />
   <style>
     /* ─── HERO ─── */
     .hero {
@@ -616,7 +616,7 @@
 <nav>
   <div class="nav-left">
     <div class="lang-menu" id="lang-menu">
-      <button class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ES ▾</button>
+      <button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ES ▾</button>
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
         <li><a href="/en/">English</a></li>
@@ -673,7 +673,7 @@
           <span>38,000+ guardianes encontrados</span>
         </span>
       </div>
-      <button class="btn-start" onclick="startQuiz()">Comienza tu viaje</button>
+      <button type="button" class="btn-start" onclick="startQuiz()">Comienza tu viaje</button>
     </div>
     <div class="hero-art" aria-hidden="true">
       <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
@@ -847,7 +847,7 @@
       <div class="quiz-preview-badge">Heart Ritual</div>
       <h2>Las guardianas escuchan. Elige lo que se siente verdadero.</h2>
       <p>Cada pregunta es un fragmento emocional. No actúes como tu yo ideal; deja que el instinto te acerque a quien te entiende.</p>
-      <button class="btn-start" onclick="startQuiz()">Conoce a tu guardiana</button>
+      <button type="button" class="btn-start" onclick="startQuiz()">Conoce a tu guardiana</button>
     </div>
   </div>
   <div id="quiz-wrapper">
@@ -906,42 +906,42 @@
   </div>
   <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Qué son los lenguajes del amor?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Los lenguajes del amor son una teoría de relaciones propuesta por el psicólogo Dr. Gary Chapman en 1992. Sugiere que cada persona expresa y recibe amor a través de uno de cinco tipos principales: Palabras de Afirmación, Actos de Servicio, Recibir Regalos, Tiempo de Calidad y Contacto Físico. Entender tu lenguaje del amor y el de tu pareja te ayuda a comunicar el amor de formas que el otro realmente "escucha," mejorando significativamente la satisfacción en la relación.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Cuáles son los cinco lenguajes del amor?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Los cinco lenguajes del amor son: ① Palabras de Afirmación — expresar amor a través de elogios verbales, cumplidos y aliento; ② Actos de Servicio — mostrar amor mediante acciones útiles que alivian la carga del otro; ③ Recibir Regalos — sentirse amado a través de regalos reflexivos y significativos; ④ Tiempo de Calidad — sentirse amado a través de tiempo enfocado y sin interrupciones juntos; ⑤ Contacto Físico — sentir amor y seguridad a través de abrazos, tomarse de las manos y cercanía física.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Puede cambiar tu lenguaje del amor con el tiempo?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Sí, tu lenguaje del amor puede cambiar. A medida que pasas por diferentes etapas de vida o experimentas eventos significativos, tu lenguaje del amor principal puede cambiar. Es buena idea retomar el test periódicamente para entender tus necesidades actuales y mantener la relación fresca y conectada.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Los lenguajes del amor solo aplican a relaciones románticas?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Para nada. Los lenguajes del amor aplican igualmente a relaciones padre-hijo, amistades e interacciones en el trabajo. Entender cómo diferentes personas prefieren comunicar y recibir cuidado hace que todas las relaciones sean más armoniosas y reduce los malentendidos.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Cuántas preguntas tiene el test y cuánto tiempo toma?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>El test de LoveTypes tiene 15 preguntas basadas en escenarios y toma aproximadamente 2 minutos completarlo. Es completamente gratuito, no requiere registro, y muestra tu lenguaje del amor principal con un análisis detallado y consejos prácticos para ti y tu pareja inmediatamente después de completarlo.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
           <span>¿Qué hago si el lenguaje del amor de mi pareja es diferente al mío?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -1339,10 +1339,10 @@ function showQuestion(idx) {
   html += '<div class="q-number">Fragmento del corazón ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
-    html += '<button class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
+    html += '<button type="button" class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button class="btn-next" id="btn-next" onclick="nextQuestion()">Deja que la luz continúe</button>';
+  html += '<button type="button" class="btn-next" id="btn-next" onclick="nextQuestion()">Deja que la luz continúe</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1486,9 +1486,9 @@ function showResult() {
   const shareText = '¡Mi lenguaje del amor es "' + r.tag + '"! Descubre el tuyo 👉 https://lovetypes.tw/es/';
   html += '<div class="share-row">';
   html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw/es/') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 Compartir en LINE</a>';
-  html += '<button class="btn-share copy" onclick="copyResult()">📋 Copiar resultado</button>';
+  html += '<button type="button" class="btn-share copy" onclick="copyResult()">📋 Copiar resultado</button>';
   html += '</div>';
-  html += '<div class="retake-row"><button class="btn-retake" onclick="retakeQuiz()">🔄 Repetir test</button></div>';
+  html += '<div class="retake-row"><button type="button" class="btn-retake" onclick="retakeQuiz()">🔄 Repetir test</button></div>';
 
   html += '<div class="dist-card">';
   html += '<h4>Tu tribu de lenguaje del amor</h4>';

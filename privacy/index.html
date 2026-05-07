@@ -34,13 +34,20 @@
     }
     body {
       font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-      background: var(--cream);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(201,102,110,.10), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(124,90,203,.10), transparent 30%),
+        var(--cream);
       color: var(--text);
       line-height: 1.8;
     }
     nav {
-      background: #fff;
-      border-bottom: 1px solid #f0e8e4;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(253,248,245,.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,102,110,.16);
       padding: 14px 24px;
       display: flex;
       align-items: center;
@@ -61,11 +68,25 @@
     .page-wrap {
       max-width: 780px;
       margin: 48px auto;
-      padding: 0 24px 64px;
+      padding: 42px 36px 64px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(201,102,110,.12);
+      border-radius: 22px;
+      box-shadow: 0 18px 52px rgba(180,100,100,.10);
     }
     h1 {
+      font-family: 'Noto Serif TC', Georgia, serif;
       font-size: 2rem;
       color: var(--rose);
+      margin-bottom: 8px;
+    }
+    h1::before {
+      content: 'TRUST BOUNDARY · ';
+      display: block;
+      color: var(--muted);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .75rem;
+      letter-spacing: .12em;
       margin-bottom: 8px;
     }
     .updated {
@@ -90,7 +111,7 @@
       padding: 32px 16px;
       font-size: 0.85rem;
       color: var(--muted);
-      border-top: 1px solid #f0e8e4;
+      border-top: 1px solid rgba(201,102,110,.16);
     }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--rose); }
@@ -99,8 +120,8 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">LoveTypes <span>愛的語言測驗</span></a>
-  <div class="doc-nav-links"><a href="/#types-section">守護者</a><a href="/#quiz-section">測驗</a><a href="/theory/">理論</a><a href="/resources/">資源</a></div>
+  <a href="/" class="nav-logo">LoveTypes <span>情感守護者宇宙</span></a>
+  <div class="doc-nav-links"><a href="/#types-section">守護者</a><a href="/#quiz-section">測驗</a><a href="/theory/">愛之語指南</a><a href="/resources/">旅人補給</a></div>
 </nav>
 
 <div class="page-wrap">
@@ -159,7 +180,7 @@
 </div>
 
 <footer>
-  <p>© 2026 LoveTypes · <a href="/#types-section">守護者宇宙</a> · <a href="/#quiz-section">開始測驗</a> · <a href="/theory/">理論指南</a> · <a href="/resources/">推薦資源</a> · <a href="/luna-yoga-music/">Luna Yoga Music</a> · <a href="mailto:hello@lovetypes.tw">聯繫我們</a></p>
+  <p>© 2026 LoveTypes · <a href="/#types-section">守護者宇宙</a> · <a href="/#quiz-section">開始測驗</a> · <a href="/theory/">愛之語指南</a> · <a href="/resources/">旅人補給</a> · <a href="/luna-yoga-music/">Luna Yoga Music</a> · <a href="mailto:hello@lovetypes.tw">聯繫我們</a></p>
 </footer>
 
 </body>

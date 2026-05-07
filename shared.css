@@ -52,6 +52,60 @@ nav {
 .nav-links a:hover { color: var(--rose); }
 .nav-links a.active { color: var(--rose); font-weight: 700; }
 .nav-left { display: flex; align-items: center; gap: 12px; }
+.menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(201,102,110,.32);
+  border-radius: 999px;
+  background: rgba(255,255,255,.76);
+  color: var(--rose);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.menu-toggle span {
+  display: block;
+  width: 17px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform .2s, opacity .2s;
+}
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 12px;
+  right: 12px;
+  z-index: 99;
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid rgba(242,196,199,.9);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 18px 50px rgba(58,40,40,.16);
+  backdrop-filter: blur(14px);
+}
+.mobile-menu[hidden] { display: none; }
+.mobile-menu a {
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: .92rem;
+}
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible {
+  background: var(--peach);
+  color: var(--rose);
+}
 
 .skip-link {
   position: absolute;
@@ -742,34 +796,9 @@ body.lovetypes-universe {
     height: 18px;
   }
   .nav-links {
-    flex: 0 0 auto;
-    min-width: auto;
-    gap: 0;
-    overflow: visible;
-    justify-content: flex-end;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a {
-    white-space: nowrap;
-    font-size: .78rem;
-  }
-  .nav-links a:not(#nav-test-link) {
     display: none;
   }
-  .nav-links #nav-test-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 92px;
-    min-height: 34px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    background: rgba(201,102,110,.11);
-    color: var(--rose);
-    font-weight: 800;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .menu-toggle { display: inline-flex; flex: 0 0 auto; }
   .lang-current {
     min-height: 34px;
     padding: 4px 10px;

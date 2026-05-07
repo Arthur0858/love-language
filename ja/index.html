@@ -26,7 +26,11 @@
   <meta property="og:url" content="https://lovetypes.tw/ja/" />
   <meta property="og:title" content="愛の言語テスト｜あなたの愛の言語を見つけよう" />
   <meta property="og:description" content="無料15問テストで、5つの愛の言語の中からあなたが最も必要とするものを発見しましょう。" />
-  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg" />
+  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
+  <meta property="og:image:secure_url" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:locale:alternate" content="zh_TW" />
   <meta property="og:locale:alternate" content="en_US" />
@@ -40,7 +44,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="愛の言語テスト｜あなたの愛の言語を見つけよう" />
   <meta name="twitter:description" content="無料15問テストで、あなたの愛の言語を発見しましょう。" />
-  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
+  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
 
   <!-- JSON-LD 結構化資料 -->
   <script type="application/ld+json">
@@ -122,7 +126,7 @@
   <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/shared.css?v=20260507-hero-layer-fix" />
+    <link rel="stylesheet" href="/shared.css?v=20260507-nav-og-fix" />
   <style>
     /* ─── HERO ─── */
     .hero {
@@ -265,8 +269,9 @@
       background: var(--rose); color: #fff;
       border: none; border-radius: 12px;
       padding: 15px; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: background .2s, transform .15s;
-      opacity: 0; pointer-events: none; transition: opacity .25s;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: background .2s, transform .15s, opacity .25s;
       font-family: 'Noto Sans TC', sans-serif;
     }
     .btn-next.active { opacity: 1; pointer-events: all; }
@@ -605,7 +610,7 @@
   </style>
 </head>
 <body class="lovetypes-universe">
-<a href="#quiz-wrapper" class="skip-link">メインコンテンツへスキップ</a>
+<a href="#quiz-section" class="skip-link">メインコンテンツへスキップ</a>
 
 <!-- NAV -->
 <nav>
@@ -634,14 +639,24 @@
     <a href="/resources/">リソース</a>
     <a href="/ja/luna-yoga-music/">🎵 Luna Music</a>
   </div>
+  <button class="menu-toggle" type="button" aria-label="ナビゲーションを開く" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobile-menu" hidden>
+  <a href="#types-section">5つの言語</a>
+  <a href="#quiz-section">診断を始める</a>
+  <a href="/ja/theory/">理論</a>
+  <a href="/resources/">リソース</a>
+  <a href="/ja/luna-yoga-music/">Luna Music</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home-section">
   <div class="universe-particles" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-copy">
-      <div class="hero-badge">LoveTypes Emotion Fantasy Universe</div>
+      <div class="hero-badge">LoveTypes 感情守護者ユニバース</div>
       <h1>魂はそれぞれ、<br>違うかたちで<span>恋をする</span>。</h1>
       <p>ぬくもりを求める心。言葉を待つ心。あなたを理解する守護者が、光の向こうで耳を澄ませています。</p>
       <div class="hero-meta">
@@ -943,6 +958,33 @@
 </footer>
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function() {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.hidden = expanded;
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.hidden = true;
+      });
+    });
+  }
+  document.addEventListener('click', function(event) {
+    const langMenu = document.getElementById('lang-menu');
+    if (langMenu && !langMenu.contains(event.target)) langMenu.classList.remove('open');
+    if (menuToggle && mobileMenu && !mobileMenu.hidden && !mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.hidden = true;
+    }
+  });
+});
+
 // ─── QUESTIONS DATA ───────────────────────────────────────────────
 // Keys: W = Words, S = Service, G = Gifts, T = Quality Time, P = Physical Touch
 const questions = [
@@ -1497,9 +1539,9 @@ function copyResult() {
 
 function toggleFaq(btn) {
   const expanded = btn.getAttribute('aria-expanded') === 'true';
-  btn.setAttribute('aria-expanded', !expanded);
+  btn.setAttribute('aria-expanded', String(!expanded));
   const answer = btn.nextElementSibling;
-  answer.style.display = expanded ? 'none' : 'block';
+  answer.hidden = expanded;
 }
 </script>
 </body>

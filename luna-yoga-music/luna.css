@@ -504,10 +504,10 @@ footer {
 }
 footer a { color: var(--luna-accent); text-decoration: none; }
 .site-footer-map {
-  width: min(920px, 100%);
+  width: min(1080px, 100%);
   margin: 0 auto 18px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 14px;
   text-align: left;
 }

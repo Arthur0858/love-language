@@ -88,7 +88,7 @@
         "name": "Can your Love Language change over time?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It's a good idea to retake the quiz periodically to understand your current needs and emotional state."
+          "text": "Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It is helpful to revisit the Heart Ritual periodically to understand your current needs and emotional state."
         }
       },
       {
@@ -101,10 +101,10 @@
       },
       {
         "@type": "Question",
-        "name": "How many questions are in the quiz and how long does it take?",
+        "name": "How many heart prompts are in the ritual, and how long does it take?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The LoveTypes quiz has 15 scenario-based questions and takes about 2 minutes to complete. The quiz is completely free, requires no registration, and shows your primary Love Language with a detailed analysis immediately after completion."
+          "text": "The LoveTypes Heart Ritual has 15 scenario prompts and takes about 2 minutes. It is completely free, requires no registration, and reveals the guardian who understands your heart with a concise love language analysis."
         }
       },
       {
@@ -746,7 +746,7 @@
     <span>They simply spoke a different language, and never learned where your heart feels safest.</span>
   </div>
   <div class="portal-hook">
-    <strong>This is not a quiz. It is an encounter.</strong>
+    <strong>This is not a form. It is an encounter.</strong>
     <span>Every answer becomes a small light leading you toward the guardian who understands your emotional rhythm.</span>
   </div>
   <div class="portal-hook">
@@ -958,7 +958,7 @@
 <section class="faq-section" id="faq-section">
   <div class="section-header" style="text-align:center">
     <h2>Frequently Asked Questions</h2>
-    <p>Everything you want to know about the Love Languages quiz and theory</p>
+    <p>Everything you want to know about the Heart Ritual, love languages, and the world guide</p>
   </div>
   <div class="faq-list">
       <div class="faq-item">
@@ -980,7 +980,7 @@
           <span>Can your Love Language change over time?</span>
           <span class="faq-icon">+</span>
         </button>
-        <div class="faq-a" hidden>Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It's a good idea to retake the quiz periodically to understand your current needs and emotional state — this helps keep your relationship fresh and connected.</div>
+        <div class="faq-a" hidden>Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It is helpful to revisit the Heart Ritual periodically to understand your current needs and emotional state — this helps keep your relationship fresh and connected.</div>
       </div>
       <div class="faq-item">
         <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
@@ -991,10 +991,10 @@
       </div>
       <div class="faq-item">
         <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
-          <span>How many questions are in the quiz and how long does it take?</span>
+          <span>How many heart prompts are in the ritual, and how long does it take?</span>
           <span class="faq-icon">+</span>
         </button>
-        <div class="faq-a" hidden>The LoveTypes quiz has 15 scenario-based questions and takes about 2 minutes to complete. It's completely free, requires no registration, and shows your primary Love Language with a detailed analysis and practical tips for you and your partner immediately after completion.</div>
+        <div class="faq-a" hidden>The LoveTypes Heart Ritual has 15 scenario prompts and takes about 2 minutes. It is completely free, requires no registration, and reveals the guardian who understands your heart, your primary love language, and practical relationship notes.</div>
       </div>
       <div class="faq-item">
         <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
@@ -1008,7 +1008,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="site-footer-map"><a href="/en/#quiz-section"><strong>Main · Heart Ritual</strong><span>Begin the quiz and meet the guardian who understands you</span></a><a href="/en/#types-section"><strong>Main · Guardian Pages</strong><span>Claim your character and understand your emotional needs</span></a><a href="/en/luna-yoga-music/"><strong>Main · Luna</strong><span>Settle your feelings in the moonlit sound sanctuary</span></a><a href="/en/theory/"><strong>Side · World Guide</strong><span>Keep the theory, SEO depth, and credibility in one place</span></a><a href="/en/resources/"><strong>Side · Deep Dive</strong><span>Books, courses, and relationship practice resources</span></a></div>
+  <div class="site-footer-map"><a href="/en/#quiz-section"><strong>Main · Heart Ritual</strong><span>Begin the Heart Ritual and meet the guardian who understands you</span></a><a href="/en/#types-section"><strong>Main · Guardian Pages</strong><span>Claim your character and understand your emotional needs</span></a><a href="/en/luna-yoga-music/"><strong>Main · Luna</strong><span>Settle your feelings in the moonlit sound sanctuary</span></a><a href="/en/theory/"><strong>Side · World Guide</strong><span>Keep the world guide, SEO depth, and credibility in one place</span></a><a href="/en/resources/"><strong>Side · Deep Dive</strong><span>Books, courses, and relationship practice resources</span></a></div>
   <p>© 2026 LoveTypes · Love Languages emotional universe</p>
   <p class="site-footer-links"><a href="/en/resources/">Resources</a> · <a href="/en/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:hello@lovetypes.tw">Contact</a></p>
 </footer>
@@ -1548,12 +1548,12 @@ function showResult() {
 
   html += '<p class="affiliate-disclosure">* This page contains affiliate links. We may earn a small commission at no extra cost to you.</p>';
   // ─── Share & Retake ───
-  const shareText = 'My love language is "' + r.tag + '"! Find yours 👉 https://lovetypes.tw/en/';
+  const shareText = 'My emotion guardian speaks "' + r.tag + '"! Meet your guardian 👉 https://lovetypes.tw/en/';
   html += '<div class="share-row">';
   html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw/en/') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 Share on LINE</a>';
   html += '<button type="button" class="btn-share copy" data-result-action="copy">📋 Copy Result</button>';
   html += '</div>';
-  html += '<div class="retake-row"><button type="button" class="btn-retake" data-result-action="retake">🔄 Take Again</button></div>';
+  html += '<div class="retake-row"><button type="button" class="btn-retake" data-result-action="retake">🔄 Repeat the Ritual</button></div>';
 
   html += '<div class="dist-card">';
   html += '<h4>Your Love Language Tribe</h4>';
@@ -1594,7 +1594,7 @@ function copyResult() {
   sorted.sort(function(a,b){ return b[1]-a[1]; });
   const primary = sorted[0][0];
   const r = results[primary];
-  const text = '🌸 My Love Language Quiz Result\n\n' + r.icon + ' ' + r.name + '\n\n' + r.desc + '\n\nDiscover your love language 👉 https://lovetypes.tw/en/';
+  const text = '🌸 My Emotion Guardian Result\n\n' + r.icon + ' ' + r.name + '\n\n' + r.desc + '\n\nMeet your emotion guardian 👉 https://lovetypes.tw/en/';
   navigator.clipboard.writeText(text).then(function() {
     const btn = document.querySelector('.btn-share.copy');
     btn.textContent = '✅ Copied!';

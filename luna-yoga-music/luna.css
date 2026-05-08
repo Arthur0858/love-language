@@ -58,6 +58,36 @@ nav {
 .nav-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .88rem; font-weight: 500; transition: color .2s; }
 .nav-links a:hover { color: var(--luna-accent); }
 .nav-links a.active { color: var(--luna-accent); }
+.menu-toggle {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(221,182,255,.28);
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  color: var(--luna-soft);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.menu-toggle span,
+.menu-toggle::before,
+.menu-toggle::after {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform .2s, opacity .2s;
+}
+.menu-toggle {
+  flex-direction: column;
+  gap: 4px;
+}
+nav.nav-open .menu-toggle span { opacity: 0; }
+nav.nav-open .menu-toggle::before { transform: translateY(6px) rotate(45deg); }
+nav.nav-open .menu-toggle::after { transform: translateY(-6px) rotate(-45deg); }
 
 /* ─── LANG DROPDOWN ─── */
 .lang-menu { position: relative; }
@@ -550,31 +580,34 @@ footer a { color: var(--luna-accent); text-decoration: none; }
   }
 
   .nav-links {
-    min-width: auto;
-    gap: 0;
-    overflow: visible;
-    justify-content: flex-end;
-  }
-
-  .nav-links a:not(:nth-child(2)) {
+    position: absolute;
+    top: 62px;
+    left: 12px;
+    right: 12px;
     display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(26,14,46,.96);
+    border: 1px solid rgba(221,182,255,.22);
+    box-shadow: 0 18px 50px rgba(10,0,30,.36);
   }
 
-  .nav-links a:nth-child(2) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 104px;
-    min-height: 34px;
-    padding: 6px 10px;
-    border-radius: 999px;
+  nav.nav-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: var(--luna-text);
+  }
+
+  .nav-links a.active,
+  .nav-links a:hover {
     background: rgba(221,182,255,.12);
-    color: var(--luna-accent);
-    font-size: .78rem;
-    font-weight: 800;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .lang-current {
@@ -589,6 +622,11 @@ footer a { color: var(--luna-accent); text-decoration: none; }
     z-index: 1000;
     min-width: 132px;
     border-radius: 14px;
+  }
+
+  .menu-toggle {
+    display: flex;
+    flex: 0 0 auto;
   }
 
   .hero {

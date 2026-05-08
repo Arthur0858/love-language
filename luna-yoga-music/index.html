@@ -73,6 +73,7 @@
     <a href="/#quiz-section">命運儀式</a>
     <a href="/luna-yoga-music/" class="active">Luna 聲音聖域</a>
   </div>
+  <button class="menu-toggle" type="button" aria-label="開啟 Luna 導覽選單" aria-expanded="false"><span></span></button>
 </nav>
 <section class="hero">
   <div class="stars"></div>
@@ -278,6 +279,20 @@ document.addEventListener("click", function(e) {
 </a>
 <script>
 (function(){
+  var nav = document.querySelector('nav');
+  var menuToggle = document.querySelector('.menu-toggle');
+  if (nav && menuToggle) {
+    menuToggle.addEventListener('click', function() {
+      var open = nav.classList.toggle('nav-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
   var btn = document.getElementById("yt-float");
   var hero = document.querySelector(".hero");
   if (!btn || !hero) return;

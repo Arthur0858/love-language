@@ -85,6 +85,7 @@
     <a href="/ko/luna-yoga-music/" class="active">Luna 성역</a>
     <a href="/ko/theory/">세계관 설정</a>
   </div>
+  <button class="menu-toggle" type="button" aria-label="Luna 내비게이션 열기" aria-expanded="false"><span></span></button>
 </nav>
 
 <section class="hero">
@@ -297,9 +298,9 @@
 </div>
 
 <footer>
-  <div class="site-footer-map"><a href="/ko/#quiz-section"><strong>메인 · 마음의 의식</strong><span>테스트를 시작하고 나를 이해하는 수호자를 만나기</span></a><a href="/ko/#types-section"><strong>메인 · 수호자 페이지</strong><span>캐릭터를 받아들이고 감정의 필요를 이해하기</span></a><a href="/ko/luna-yoga-music/"><strong>메인 · Luna</strong><span>달빛 소리 성역에서 감정을 가라앉히기</span></a><a href="/ko/theory/"><strong>사이드 · 세계관 설정</strong><span>이론, 검색 깊이, 신뢰도를 보존하기</span></a><a href="/resources/"><strong>사이드 · 깊이 이해하기</strong><span>책, 강의, 관계 연습 자료</span></a></div>
+  <div class="site-footer-map"><a href="/ko/#quiz-section"><strong>메인 · 마음의 의식</strong><span>테스트를 시작하고 나를 이해하는 수호자를 만나기</span></a><a href="/ko/#types-section"><strong>메인 · 수호자 페이지</strong><span>캐릭터를 받아들이고 감정의 필요를 이해하기</span></a><a href="/ko/luna-yoga-music/"><strong>메인 · Luna</strong><span>달빛 소리 성역에서 감정을 가라앉히기</span></a><a href="/ko/theory/"><strong>사이드 · 세계관 설정</strong><span>이론, 검색 깊이, 신뢰도를 보존하기</span></a><a href="/ko/resources/"><strong>사이드 · 깊이 이해하기</strong><span>책, 강의, 관계 연습 자료</span></a></div>
   <p>© 2026 LoveTypes · 사랑의 언어 감정 세계</p>
-  <p class="site-footer-links"><a href="/resources/">리소스</a> · <a href="/ko/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">개인정보</a> · <a href="/terms/">이용약관</a> · <a href="mailto:hello@lovetypes.tw">문의</a></p>
+  <p class="site-footer-links"><a href="/ko/resources/">리소스</a> · <a href="/ko/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">개인정보</a> · <a href="/terms/">이용약관</a> · <a href="mailto:hello@lovetypes.tw">문의</a></p>
 </footer>
 
 <script>
@@ -319,6 +320,20 @@ document.addEventListener('click', function(e) {
 </a>
 <script>
 (function(){
+  var nav = document.querySelector('nav');
+  var menuToggle = document.querySelector('.menu-toggle');
+  if (nav && menuToggle) {
+    menuToggle.addEventListener('click', function() {
+      var open = nav.classList.toggle('nav-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
   var btn = document.getElementById('yt-float');
   var hero = document.querySelector('.hero');
   if (!btn || !hero) return;

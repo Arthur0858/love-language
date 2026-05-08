@@ -85,6 +85,7 @@
     <a href="/en/luna-yoga-music/" class="active">Luna Sanctuary</a>
     <a href="/en/theory/">World Guide</a>
   </div>
+  <button class="menu-toggle" type="button" aria-label="Open Luna navigation menu" aria-expanded="false"><span></span></button>
 </nav>
 
 <section class="hero">
@@ -297,9 +298,9 @@
 </div>
 
 <footer>
-  <div class="site-footer-map"><a href="/en/#quiz-section"><strong>Main · Heart Ritual</strong><span>Begin the quiz and meet the guardian who understands you</span></a><a href="/en/#types-section"><strong>Main · Guardian Pages</strong><span>Claim your character and understand your emotional needs</span></a><a href="/en/luna-yoga-music/"><strong>Main · Luna</strong><span>Settle your feelings in the moonlit sound sanctuary</span></a><a href="/en/theory/"><strong>Side · World Guide</strong><span>Keep the theory, SEO depth, and credibility in one place</span></a><a href="/resources/"><strong>Side · Deep Dive</strong><span>Books, courses, and relationship practice resources</span></a></div>
+  <div class="site-footer-map"><a href="/en/#quiz-section"><strong>Main · Heart Ritual</strong><span>Begin the quiz and meet the guardian who understands you</span></a><a href="/en/#types-section"><strong>Main · Guardian Pages</strong><span>Claim your character and understand your emotional needs</span></a><a href="/en/luna-yoga-music/"><strong>Main · Luna</strong><span>Settle your feelings in the moonlit sound sanctuary</span></a><a href="/en/theory/"><strong>Side · World Guide</strong><span>Keep the theory, SEO depth, and credibility in one place</span></a><a href="/en/resources/"><strong>Side · Deep Dive</strong><span>Books, courses, and relationship practice resources</span></a></div>
   <p>© 2026 LoveTypes · Love Languages emotional universe</p>
-  <p class="site-footer-links"><a href="/resources/">Resources</a> · <a href="/en/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:hello@lovetypes.tw">Contact</a></p>
+  <p class="site-footer-links"><a href="/en/resources/">Resources</a> · <a href="/en/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="mailto:hello@lovetypes.tw">Contact</a></p>
 </footer>
 
 <script>
@@ -319,6 +320,20 @@ document.addEventListener('click', function(e) {
 </a>
 <script>
 (function(){
+  var nav = document.querySelector('nav');
+  var menuToggle = document.querySelector('.menu-toggle');
+  if (nav && menuToggle) {
+    menuToggle.addEventListener('click', function() {
+      var open = nav.classList.toggle('nav-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
   var btn = document.getElementById('yt-float');
   var hero = document.querySelector('.hero');
   if (!btn || !hero) return;

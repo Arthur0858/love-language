@@ -1,81 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- ── zh-TW Homepage (Default) ── -->
+
   <url>
     <loc>https://lovetypes.tw/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- ── English Homepage ── -->
+
   <url>
     <loc>https://lovetypes.tw/en/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- ── Japanese Homepage ── -->
+
   <url>
     <loc>https://lovetypes.tw/ja/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- ── Korean Homepage ── -->
+
   <url>
     <loc>https://lovetypes.tw/ko/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- ── Spanish Homepage ── -->
+
   <url>
     <loc>https://lovetypes.tw/es/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- ── Multilingual Guardian Profile Pages ── -->
 
 
-  <!-- Chinese Guardian Profile Pages -->
+
+
 
   <url>
     <loc>https://lovetypes.tw/characters/iris/</loc>
@@ -143,7 +142,7 @@
   </url>
 
 
-  <!-- en Guardian Profile Pages -->
+
 
   <url>
     <loc>https://lovetypes.tw/en/characters/iris/</loc>
@@ -211,7 +210,7 @@
   </url>
 
 
-  <!-- ja Guardian Profile Pages -->
+
 
   <url>
     <loc>https://lovetypes.tw/ja/characters/iris/</loc>
@@ -279,7 +278,7 @@
   </url>
 
 
-  <!-- ko Guardian Profile Pages -->
+
 
   <url>
     <loc>https://lovetypes.tw/ko/characters/iris/</loc>
@@ -347,7 +346,7 @@
   </url>
 
 
-  <!-- es Guardian Profile Pages -->
+
 
   <url>
     <loc>https://lovetypes.tw/es/characters/iris/</loc>
@@ -414,14 +413,14 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ── Theory Pages ── -->
+
   <url>
     <loc>https://lovetypes.tw/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/theory/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -431,10 +430,10 @@
   <url>
     <loc>https://lovetypes.tw/en/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/theory/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -444,10 +443,10 @@
   <url>
     <loc>https://lovetypes.tw/ja/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/theory/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -457,10 +456,10 @@
   <url>
     <loc>https://lovetypes.tw/ko/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/theory/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -470,17 +469,17 @@
   <url>
     <loc>https://lovetypes.tw/es/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/theory/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- ── Resources Page ── -->
+
   <url>
     <loc>https://lovetypes.tw/resources/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/resources/" />
@@ -490,8 +489,8 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- ── Legal Pages ── -->
-  <url>
+
+  <url><loc>https://lovetypes.tw/en/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ja/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ko/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/es/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url>
     <loc>https://lovetypes.tw/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/privacy/" />
@@ -509,14 +508,14 @@
     <priority>0.3</priority>
   </url>
 
-  <!-- ── Luna Yoga Music Pages ── -->
+
   <url>
     <loc>https://lovetypes.tw/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -526,10 +525,10 @@
   <url>
     <loc>https://lovetypes.tw/en/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -539,10 +538,10 @@
   <url>
     <loc>https://lovetypes.tw/ja/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -552,10 +551,10 @@
   <url>
     <loc>https://lovetypes.tw/ko/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -565,10 +564,10 @@
   <url>
     <loc>https://lovetypes.tw/es/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en"    href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja"    href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko"    href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es"    href="https://lovetypes.tw/es/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>

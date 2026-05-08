@@ -75,6 +75,15 @@
     .lang-menu.open .lang-list { display: block; }
     .lang-list li a { display: block; padding: 7px 12px; border-radius: 7px; font-size: .85rem; color: var(--text); text-decoration: none; }
     .lang-list li a:hover { background: var(--peach); }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--rose-lt); border-radius: 999px; background: rgba(255,255,255,.74); align-items: center; justify-content: center; flex-direction: column; gap: 4px; cursor: pointer; }
+    .menu-toggle span { width: 17px; height: 2px; border-radius: 999px; background: var(--rose); transition: transform .2s ease, opacity .2s ease; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display: none; position: sticky; top: 56px; z-index: 95; padding: 10px 14px 14px; background: rgba(253,248,245,.96); border-bottom: 1px solid var(--rose-lt); box-shadow: 0 16px 36px rgba(58,40,40,.08); }
+    .mobile-menu:not([hidden]) { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 700; padding: 11px 14px; border-radius: 14px; background: rgba(255,255,255,.68); border: 1px solid rgba(201,102,110,.12); }
+    .mobile-menu a.active { color: var(--rose); background: rgba(255,232,226,.74); }
 
     /* ─── HERO ─── */
     .res-hero {
@@ -277,14 +286,14 @@
     }
     .site-footer-links { margin-top: 8px; }
     @media (max-width: 720px) {
-      nav { flex-wrap: wrap; gap: 12px; }
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px 12px;
-      }
-      .nav-links a { font-size: .78rem; }
+      nav { gap: 10px; padding: 0 12px; }
+      .nav-left { min-width: 0; gap: 10px; }
+      .nav-logo { font-size: .98rem; white-space: nowrap; }
+      .nav-logo svg { width: 18px; height: 18px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; flex: 0 0 auto; }
+      .lang-current { min-height: 34px; padding: 4px 10px; font-size: .74rem; }
+      .lang-list { position: fixed; top: 54px; left: 12px; z-index: 1000; min-width: 132px; }
       .site-footer-map { grid-template-columns: 1fr; text-align: center; }
     }
     @media (max-width: 640px) {
@@ -295,12 +304,12 @@
 </head>
 <body>
 <nav><div class="nav-left"><div class="lang-menu" id="lang-menu"><button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">KO ▾</button><ul class="lang-list">
-        <li><a href="/ko/resources/">中文</a></li>
+        <li><a href="/resources/">中文</a></li>
         <li><a href="/en/resources/">English</a></li>
         <li><a href="/ja/resources/">日本語</a></li>
         <li><a href="/ko/resources/">한국어</a></li>
         <li><a href="/es/resources/">Español</a></li>
-      </ul></div><a href="/ko/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a><a href="/ko/theory/">세계관</a><a href="/ko/resources/" class="active">리소스</a></div></nav>
+      </ul></div><a href="/ko/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a><a href="/ko/theory/">세계관</a><a href="/ko/resources/" class="active">리소스</a></div><button class="menu-toggle" type="button" aria-label="내비게이션 열기" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button></nav><div class="mobile-menu" id="mobile-menu" hidden><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a><a href="/ko/theory/">세계관</a><a href="/ko/resources/" class="active">리소스</a></div>
 <section class="res-hero"><div class="res-hero-inner"><div class="res-hero-badge">TRAVELER SUPPLY VAULT · 여행자의 보급고</div><h1>마음의 의식이 끝난 뒤,<br><span>사랑의 언어를 일상으로 가져가기</span></h1><p>수호자 여정을 실제 관계 속 대화와 회복, 가까워짐으로 이어 주는 책과 연습, Luna 사운드스케이프를 모았습니다.</p><div class="affiliate-disclosure">이 페이지에는 제휴 링크가 포함되어 있으며, 구매 가격에는 영향을 주지 않습니다.</div></div></section>
 <section class="res-section"><span class="section-label">BOOK RELICS</span><h2>수호자 여정을 위한 책</h2><p>수호자 페이지에서 이해받은 감각을 일상에서 사용할 수 있는 언어와 행동으로 바꿔 줍니다.</p><div class="book-grid">
     <div class="book-card"><div class="book-emoji">💕</div><div class="book-tag">핵심 이론</div><h3>5가지 사랑의 언어</h3><p class="author">Gary Chapman</p><p class="desc">LoveTypes 세계의 기반이 되는 이론. 사람이 사랑을 표현하고 받아들이며 엇갈리는 이유를 설명합니다.</p><a class="btn-book" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener sponsored">책 보기 →</a></div>
@@ -316,9 +325,25 @@
   </div></section>
 <footer><div class="site-footer-map"><a href="/ko/#quiz-section"><strong>메인 · 마음 의식</strong><span>테스트로 수호자 만나기</span></a><a href="/ko/#types-section"><strong>메인 · 수호자</strong><span>캐릭터와 감정 상처 읽기</span></a><a href="/ko/luna-yoga-music/"><strong>메인 · Luna</strong><span>결과 후 감정을 음악으로 가라앉히기</span></a><a href="/ko/theory/"><strong>사이드 · 세계관</strong><span>이론과 배경 이해하기</span></a><a href="/ko/resources/"><strong>사이드 · 리소스</strong><span>책, 연습, 확장 자료</span></a></div><p>© 2026 LoveTypes</p><p class="site-footer-links"><a href="/ko/resources/">리소스</a> · <a href="/ko/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">개인정보</a> · <a href="/terms/">이용약관</a> · <a href="mailto:hello@lovetypes.tw">문의</a></p><p style="margin-top:12px; font-size:.75rem; color:#aaa;">이 페이지에는 제휴 링크가 포함되어 있으며, 구매 가격에는 영향을 주지 않습니다.</p></footer>
 <script>
+var navToggle = document.querySelector(".menu-toggle");
+var mobileMenu = document.getElementById("mobile-menu");
+if (navToggle && mobileMenu) {
+  navToggle.addEventListener("click", function() {
+    var isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!isOpen));
+    mobileMenu.hidden = isOpen;
+  });
+  mobileMenu.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      navToggle.setAttribute("aria-expanded", "false");
+      mobileMenu.hidden = true;
+    });
+  });
+}
 document.addEventListener("click", function(e) {
   var menu = document.getElementById("lang-menu");
-  if (menu && !menu.contains(e.target)) menu.classList.remove("open");
+  var clickedNav = navToggle && (navToggle.contains(e.target) || (mobileMenu && mobileMenu.contains(e.target)));
+  if (menu && !menu.contains(e.target) && !clickedNav) menu.classList.remove("open");
 });
 </script>
 </body>

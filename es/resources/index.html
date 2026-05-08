@@ -75,6 +75,15 @@
     .lang-menu.open .lang-list { display: block; }
     .lang-list li a { display: block; padding: 7px 12px; border-radius: 7px; font-size: .85rem; color: var(--text); text-decoration: none; }
     .lang-list li a:hover { background: var(--peach); }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--rose-lt); border-radius: 999px; background: rgba(255,255,255,.74); align-items: center; justify-content: center; flex-direction: column; gap: 4px; cursor: pointer; }
+    .menu-toggle span { width: 17px; height: 2px; border-radius: 999px; background: var(--rose); transition: transform .2s ease, opacity .2s ease; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display: none; position: sticky; top: 56px; z-index: 95; padding: 10px 14px 14px; background: rgba(253,248,245,.96); border-bottom: 1px solid var(--rose-lt); box-shadow: 0 16px 36px rgba(58,40,40,.08); }
+    .mobile-menu:not([hidden]) { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 700; padding: 11px 14px; border-radius: 14px; background: rgba(255,255,255,.68); border: 1px solid rgba(201,102,110,.12); }
+    .mobile-menu a.active { color: var(--rose); background: rgba(255,232,226,.74); }
 
     /* ─── HERO ─── */
     .res-hero {
@@ -277,14 +286,14 @@
     }
     .site-footer-links { margin-top: 8px; }
     @media (max-width: 720px) {
-      nav { flex-wrap: wrap; gap: 12px; }
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px 12px;
-      }
-      .nav-links a { font-size: .78rem; }
+      nav { gap: 10px; padding: 0 12px; }
+      .nav-left { min-width: 0; gap: 10px; }
+      .nav-logo { font-size: .98rem; white-space: nowrap; }
+      .nav-logo svg { width: 18px; height: 18px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; flex: 0 0 auto; }
+      .lang-current { min-height: 34px; padding: 4px 10px; font-size: .74rem; }
+      .lang-list { position: fixed; top: 54px; left: 12px; z-index: 1000; min-width: 132px; }
       .site-footer-map { grid-template-columns: 1fr; text-align: center; }
     }
     @media (max-width: 640px) {
@@ -295,12 +304,12 @@
 </head>
 <body>
 <nav><div class="nav-left"><div class="lang-menu" id="lang-menu"><button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ES ▾</button><ul class="lang-list">
-        <li><a href="/es/resources/">中文</a></li>
+        <li><a href="/resources/">中文</a></li>
         <li><a href="/en/resources/">English</a></li>
         <li><a href="/ja/resources/">日本語</a></li>
         <li><a href="/ko/resources/">한국어</a></li>
         <li><a href="/es/resources/">Español</a></li>
-      </ul></div><a href="/es/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/es/#types-section">Guardianas</a><a href="/es/#quiz-section">Ritual</a><a href="/es/luna-yoga-music/">Santuario Luna</a><a href="/es/theory/">Guía del mundo</a><a href="/es/resources/" class="active">Recursos</a></div></nav>
+      </ul></div><a href="/es/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/es/#types-section">Guardianas</a><a href="/es/#quiz-section">Ritual</a><a href="/es/luna-yoga-music/">Santuario Luna</a><a href="/es/theory/">Guía del mundo</a><a href="/es/resources/" class="active">Recursos</a></div><button class="menu-toggle" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button></nav><div class="mobile-menu" id="mobile-menu" hidden><a href="/es/#types-section">Guardianas</a><a href="/es/#quiz-section">Ritual</a><a href="/es/luna-yoga-music/">Santuario Luna</a><a href="/es/theory/">Guía del mundo</a><a href="/es/resources/" class="active">Recursos</a></div>
 <section class="res-hero"><div class="res-hero-inner"><div class="res-hero-badge">TRAVELER SUPPLY VAULT · RECURSOS</div><h1>Después del ritual del corazón,<br><span>lleva tu lenguaje del amor a la vida diaria</span></h1><p>Una biblioteca de libros, prácticas y paisajes sonoros de Luna para continuar el viaje de las guardianas en conversaciones reales, reparación y cercanía.</p><div class="affiliate-disclosure">Esta página contiene enlaces de afiliado. Podemos recibir una pequeña comisión sin cambiar tu precio de compra.</div></div></section>
 <section class="res-section"><span class="section-label">BOOK RELICS</span><h2>Libros para el viaje de las guardianas</h2><p>Si una página de guardiana te hizo sentir comprendido/a, estos libros ayudan a convertir esa comprensión en lenguaje y práctica diaria.</p><div class="book-grid">
     <div class="book-card"><div class="book-emoji">💕</div><div class="book-tag">Teoría base</div><h3>Los 5 lenguajes del amor</h3><p class="author">Gary Chapman</p><p class="desc">El texto que inspira el universo LoveTypes. Explica cómo damos, recibimos y a veces no reconocemos el amor.</p><a class="btn-book" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener sponsored">Ver libro →</a></div>
@@ -316,9 +325,25 @@
   </div></section>
 <footer><div class="site-footer-map"><a href="/es/#quiz-section"><strong>Principal · Ritual</strong><span>Conoce a tu guardiana con el test</span></a><a href="/es/#types-section"><strong>Principal · Guardianas</strong><span>Lee tu personaje y heridas emocionales</span></a><a href="/es/luna-yoga-music/"><strong>Principal · Luna</strong><span>Convierte el resultado en calma emocional</span></a><a href="/es/theory/"><strong>Lateral · Mundo</strong><span>Teoría, contexto y profundidad</span></a><a href="/es/resources/"><strong>Lateral · Recursos</strong><span>Libros, cursos y prácticas</span></a></div><p>© 2026 LoveTypes</p><p class="site-footer-links"><a href="/es/resources/">Recursos</a> · <a href="/es/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">Privacidad</a> · <a href="/terms/">Términos</a> · <a href="mailto:hello@lovetypes.tw">Contacto</a></p><p style="margin-top:12px; font-size:.75rem; color:#aaa;">Esta página contiene enlaces de afiliado. Podemos recibir una pequeña comisión sin cambiar tu precio de compra.</p></footer>
 <script>
+var navToggle = document.querySelector(".menu-toggle");
+var mobileMenu = document.getElementById("mobile-menu");
+if (navToggle && mobileMenu) {
+  navToggle.addEventListener("click", function() {
+    var isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!isOpen));
+    mobileMenu.hidden = isOpen;
+  });
+  mobileMenu.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      navToggle.setAttribute("aria-expanded", "false");
+      mobileMenu.hidden = true;
+    });
+  });
+}
 document.addEventListener("click", function(e) {
   var menu = document.getElementById("lang-menu");
-  if (menu && !menu.contains(e.target)) menu.classList.remove("open");
+  var clickedNav = navToggle && (navToggle.contains(e.target) || (mobileMenu && mobileMenu.contains(e.target)));
+  if (menu && !menu.contains(e.target) && !clickedNav) menu.classList.remove("open");
 });
 </script>
 </body>

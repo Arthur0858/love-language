@@ -75,6 +75,15 @@
     .lang-menu.open .lang-list { display: block; }
     .lang-list li a { display: block; padding: 7px 12px; border-radius: 7px; font-size: .85rem; color: var(--text); text-decoration: none; }
     .lang-list li a:hover { background: var(--peach); }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--rose-lt); border-radius: 999px; background: rgba(255,255,255,.74); align-items: center; justify-content: center; flex-direction: column; gap: 4px; cursor: pointer; }
+    .menu-toggle span { width: 17px; height: 2px; border-radius: 999px; background: var(--rose); transition: transform .2s ease, opacity .2s ease; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-menu { display: none; position: sticky; top: 56px; z-index: 95; padding: 10px 14px 14px; background: rgba(253,248,245,.96); border-bottom: 1px solid var(--rose-lt); box-shadow: 0 16px 36px rgba(58,40,40,.08); }
+    .mobile-menu:not([hidden]) { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 700; padding: 11px 14px; border-radius: 14px; background: rgba(255,255,255,.68); border: 1px solid rgba(201,102,110,.12); }
+    .mobile-menu a.active { color: var(--rose); background: rgba(255,232,226,.74); }
 
     /* ─── HERO ─── */
     .res-hero {
@@ -277,14 +286,14 @@
     }
     .site-footer-links { margin-top: 8px; }
     @media (max-width: 720px) {
-      nav { flex-wrap: wrap; gap: 12px; }
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px 12px;
-      }
-      .nav-links a { font-size: .78rem; }
+      nav { gap: 10px; padding: 0 12px; }
+      .nav-left { min-width: 0; gap: 10px; }
+      .nav-logo { font-size: .98rem; white-space: nowrap; }
+      .nav-logo svg { width: 18px; height: 18px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; flex: 0 0 auto; }
+      .lang-current { min-height: 34px; padding: 4px 10px; font-size: .74rem; }
+      .lang-list { position: fixed; top: 54px; left: 12px; z-index: 1000; min-width: 132px; }
       .site-footer-map { grid-template-columns: 1fr; text-align: center; }
     }
     @media (max-width: 640px) {
@@ -295,12 +304,12 @@
 </head>
 <body>
 <nav><div class="nav-left"><div class="lang-menu" id="lang-menu"><button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">JA ▾</button><ul class="lang-list">
-        <li><a href="/ja/resources/">中文</a></li>
+        <li><a href="/resources/">中文</a></li>
         <li><a href="/en/resources/">English</a></li>
         <li><a href="/ja/resources/">日本語</a></li>
         <li><a href="/ko/resources/">한국어</a></li>
         <li><a href="/es/resources/">Español</a></li>
-      </ul></div><a href="/ja/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/ja/#types-section">守護者</a><a href="/ja/#quiz-section">心の儀式</a><a href="/ja/luna-yoga-music/">Luna 聖域</a><a href="/ja/theory/">世界観設定</a><a href="/ja/resources/" class="active">リソース</a></div></nav>
+      </ul></div><a href="/ja/" class="nav-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>LoveTypes</a></div><div class="nav-links"><a href="/ja/#types-section">守護者</a><a href="/ja/#quiz-section">心の儀式</a><a href="/ja/luna-yoga-music/">Luna 聖域</a><a href="/ja/theory/">世界観設定</a><a href="/ja/resources/" class="active">リソース</a></div><button class="menu-toggle" type="button" aria-label="ナビゲーションを開く" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button></nav><div class="mobile-menu" id="mobile-menu" hidden><a href="/ja/#types-section">守護者</a><a href="/ja/#quiz-section">心の儀式</a><a href="/ja/luna-yoga-music/">Luna 聖域</a><a href="/ja/theory/">世界観設定</a><a href="/ja/resources/" class="active">リソース</a></div>
 <section class="res-hero"><div class="res-hero-inner"><div class="res-hero-badge">TRAVELER SUPPLY VAULT · 旅人の補給庫</div><h1>心の儀式のあと、<br><span>愛の言語を日常へ持ち帰る</span></h1><p>ここは、守護者の旅を現実の関係へつなげる書籍、実践、Lunaの音の聖域を集めた場所です。</p><div class="affiliate-disclosure">このページにはアフィリエイトリンクが含まれます。購入価格は変わりません。</div></div></section>
 <section class="res-section"><span class="section-label">BOOK RELICS</span><h2>守護者の旅を深める書物</h2><p>キャラクターに理解された感覚を、日常で使える言葉と行動へ変えていくための本です。</p><div class="book-grid">
     <div class="book-card"><div class="book-emoji">💕</div><div class="book-tag">理論の源</div><h3>愛を伝える5つの方法</h3><p class="author">Gary Chapman</p><p class="desc">LoveTypes宇宙の土台となる理論。人が愛を表現し、受け取り、すれ違う理由をやさしく整理します。</p><a class="btn-book" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener sponsored">書籍を見る →</a></div>
@@ -316,9 +325,25 @@
   </div></section>
 <footer><div class="site-footer-map"><a href="/ja/#quiz-section"><strong>主線 · 心の儀式</strong><span>テストで守護者に出会う</span></a><a href="/ja/#types-section"><strong>主線 · 守護者</strong><span>キャラクターと心の傷を読む</span></a><a href="/ja/luna-yoga-music/"><strong>主線 · Luna</strong><span>結果後の感情を音で整える</span></a><a href="/ja/theory/"><strong>支線 · 世界観</strong><span>理論と背景を深く知る</span></a><a href="/ja/resources/"><strong>支線 · リソース</strong><span>書籍、実践、補給</span></a></div><p>© 2026 LoveTypes</p><p class="site-footer-links"><a href="/ja/resources/">リソース</a> · <a href="/ja/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">プライバシー</a> · <a href="/terms/">利用規約</a> · <a href="mailto:hello@lovetypes.tw">連絡</a></p><p style="margin-top:12px; font-size:.75rem; color:#aaa;">このページにはアフィリエイトリンクが含まれます。購入価格は変わりません。</p></footer>
 <script>
+var navToggle = document.querySelector(".menu-toggle");
+var mobileMenu = document.getElementById("mobile-menu");
+if (navToggle && mobileMenu) {
+  navToggle.addEventListener("click", function() {
+    var isOpen = navToggle.getAttribute("aria-expanded") === "true";
+    navToggle.setAttribute("aria-expanded", String(!isOpen));
+    mobileMenu.hidden = isOpen;
+  });
+  mobileMenu.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      navToggle.setAttribute("aria-expanded", "false");
+      mobileMenu.hidden = true;
+    });
+  });
+}
 document.addEventListener("click", function(e) {
   var menu = document.getElementById("lang-menu");
-  if (menu && !menu.contains(e.target)) menu.classList.remove("open");
+  var clickedNav = navToggle && (navToggle.contains(e.target) || (mobileMenu && mobileMenu.contains(e.target)));
+  if (menu && !menu.contains(e.target) && !clickedNav) menu.classList.remove("open");
 });
 </script>
 </body>

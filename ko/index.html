@@ -401,6 +401,27 @@
       transition: background .2s, transform .2s;
     }
     .luna-yoga-btn:hover { background: #235F49; transform: translateY(-1px); }
+    .journey-next-card {
+      margin: 24px 0;
+      padding: 24px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(253,240,245,.92));
+      border: 1px solid rgba(201,102,110,.16);
+      box-shadow: 0 14px 42px rgba(180,100,100,.12);
+    }
+    .journey-next-card h3 { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
+    .journey-next-card > p { color: var(--muted); font-size: .9rem; margin-bottom: 16px; }
+    .journey-next-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .journey-next-link {
+      display: flex; flex-direction: column; gap: 5px; min-height: 118px; padding: 16px;
+      border-radius: 16px; color: var(--text); text-decoration: none;
+      background: rgba(255,255,255,.78); border: 1px solid rgba(201,102,110,.13);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .journey-next-link:hover { transform: translateY(-2px); border-color: rgba(201,102,110,.34); box-shadow: 0 12px 28px rgba(180,100,100,.12); }
+    .journey-next-link b { color: var(--rose); font-family: 'Noto Serif TC', serif; font-size: .95rem; }
+    .journey-next-link span { color: var(--muted); font-size: .78rem; line-height: 1.55; }
+    @media(max-width:640px){ .journey-next-grid { grid-template-columns: 1fr; } }
 
     /* Retake */
     .retake-row { text-align: center; margin-top: 8px; }
@@ -859,13 +880,13 @@
 <!-- RESULT SECTION -->
 <section id="result-section"></section>
 
-<!-- THEORY TEASER -->
+<!-- AUXILIARY WORLD GUIDE -->
 <section class="theory-teaser" id="about-section">
   <div class="theory-teaser-inner">
     <div class="theory-teaser-header">
-      <div class="theory-badge">📖 이론 가이드</div>
-      <h2>이론을 더 깊이 이해하고 싶으신가요?</h2>
-      <p>채프먼의 이론 기원부터 5가지 언어의 심층 설명, 과학적 근거와 FAQ까지 한곳에서.</p>
+      <div class="theory-badge">SIDE PATH · 세계관 설정</div>
+      <h2>수호자 뒤에 있는 세계를 더 깊이 이해해보세요.</h2>
+      <p>메인 여정은 마음의 의식에서 수호자, 그리고 Luna 로 이어집니다. 이곳은 이론, 세계관, 깊은 관계 이해를 보관하는 사이드 경로입니다.</p>
     </div>
     <div class="theory-highlights">
       <div class="theory-highlight-item">
@@ -890,7 +911,8 @@
         </div>
       </div>
     </div>
-    <a href="/ko/theory/" class="btn-theory">이론 살펴보기 →</a>
+    <a href="/ko/theory/" class="btn-theory">세계관 설정으로 →</a>
+    <a href="/resources/" class="btn-theory" style="margin-left:10px;background:rgba(201,102,110,.12);color:var(--rose);box-shadow:none;">깊이 이해하기 →</a>
   </div>
 </section>
 
@@ -1438,6 +1460,15 @@ function showResult() {
   var profileUrl = imgFile ? '/ko/characters/' + imgFile + '/' : '/ko/#types-section';
   html += '<div class="voice-lines"><h3>수호자의 음성 대사</h3><p>' + profile.dialogue + '</p><p>Shorts 후킹 문장: ' + profile.shortsHook + '</p><a class="secondary-btn" href="' + profileUrl + '">수호자 이야기 보기 →</a></div>';
 
+  html += '<div class="journey-next-card">';
+  html += '<h3>다음 여정</h3>';
+  html += '<p>결과는 끝이 아닙니다. 당신의 수호자 페이지로 이동한 뒤, Luna 성역에서 감정을 조용히 가라앉히세요.</p>';
+  html += '<div class="journey-next-grid">';
+  html += '<a class="journey-next-link" href="' + profileUrl + '"><b>1 · 수호자 받아들이기</b><span>캐릭터 페이지에서 사랑의 언어, 감정의 상처, 관계의 필요를 읽어보세요.</span></a>';
+  html += '<a class="journey-next-link" href="/ko/luna-yoga-music/"><b>2 · Luna 로 들어가기</b><span>달빛 소리 성역에서 결과를 분석이 아닌 감정으로 받아들이세요.</span></a>';
+  html += '<a class="journey-next-link" href="/ko/theory/"><b>사이드 · 세계관 설정</b><span>이 세계의 이론적 배경이 궁금할 때 가이드를 이어 읽으세요.</span></a>';
+  html += '</div></div>';
+
   // ─── Score bars ───
   html += '<div class="scores-card"><h3>당신의 사랑 언어 별자리</h3>';
   sorted.forEach(function(entry) {
@@ -1472,10 +1503,10 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ 공식 파트너 채널</span>';
-  html += '<div class="luna-yoga-tagline">음악으로 몸과 마음을 치유하다</div></div></div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ 달빛 소리 성역</span>';
+  html += '<div class="luna-yoga-tagline">결과 이후 감정을 내려놓는 공간</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
-  html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 들어보기 ' + r.yoga.playlist + '</a>';
+  html += '<a class="luna-yoga-btn" href="/ko/luna-yoga-music/">Luna 성역으로 →</a>';
   html += '</div>';
 
   html += '<p class="affiliate-disclosure">* 이 페이지에는 제휴 링크가 포함되어 있습니다. 구매 시 추가 비용 없이 소정의 수수료가 발생할 수 있습니다.</p>';
@@ -1498,7 +1529,7 @@ function showResult() {
   html += '</div>';
   html += '<div class="theory-cta">';
   html += '<p>✨ 더 깊이 알고 싶으신가요?</p>';
-  html += '<a class="btn-theory" href="/ko/theory/">📖 이론 더 알아보기 →</a>';
+  html += '<a class="btn-theory" href="/ko/theory/">세계관 설정으로 →</a>';
   html += '</div>';
 
   const section = document.getElementById('result-section');

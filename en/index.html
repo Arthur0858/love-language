@@ -400,6 +400,59 @@
       transition: background .2s, transform .2s;
     }
     .luna-yoga-btn:hover { background: #235F49; transform: translateY(-1px); }
+    .journey-next-card {
+      margin: 24px 0;
+      padding: 24px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(253,240,245,.92));
+      border: 1px solid rgba(201,102,110,.16);
+      box-shadow: 0 14px 42px rgba(180,100,100,.12);
+    }
+    .journey-next-card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .journey-next-card > p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 16px;
+    }
+    .journey-next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .journey-next-link {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-height: 118px;
+      padding: 16px;
+      border-radius: 16px;
+      color: var(--text);
+      text-decoration: none;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(201,102,110,.13);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .journey-next-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(201,102,110,.34);
+      box-shadow: 0 12px 28px rgba(180,100,100,.12);
+    }
+    .journey-next-link b {
+      color: var(--rose);
+      font-family: 'Noto Serif TC', serif;
+      font-size: .95rem;
+    }
+    .journey-next-link span {
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.55;
+    }
+    @media(max-width:640px){ .journey-next-grid { grid-template-columns: 1fr; } }
 
     /* Retake */
     .retake-row { text-align: center; margin-top: 8px; }
@@ -858,13 +911,13 @@
 <!-- RESULT SECTION -->
 <section id="result-section"></section>
 
-<!-- THEORY TEASER -->
+<!-- AUXILIARY WORLD GUIDE -->
 <section class="theory-teaser" id="about-section">
   <div class="theory-teaser-inner">
     <div class="theory-teaser-header">
-      <div class="theory-badge">📖 Theory Guide</div>
-      <h2>Want to Understand the Theory Deeper?</h2>
-      <p>From Chapman's origins to full descriptions of all 5 languages — science, FAQ, and resources all in one place.</p>
+      <div class="theory-badge">SIDE PATH · WORLD GUIDE</div>
+      <h2>Want to understand the lore behind your guardian?</h2>
+      <p>The main journey leads from ritual to guardian to Luna. This side path keeps Chapman's theory, worldbuilding notes, and deeper relationship context in one place.</p>
     </div>
     <div class="theory-highlights">
       <div class="theory-highlight-item">
@@ -889,7 +942,8 @@
         </div>
       </div>
     </div>
-    <a href="/en/theory/" class="btn-theory">Explore the Theory →</a>
+    <a href="/en/theory/" class="btn-theory">Enter the World Guide →</a>
+    <a href="/resources/" class="btn-theory" style="margin-left:10px;background:rgba(201,102,110,.12);color:var(--rose);box-shadow:none;">Open the Deep Dive →</a>
   </div>
 </section>
 
@@ -1437,6 +1491,15 @@ function showResult() {
   var profileUrl = imgFile ? '/en/characters/' + imgFile + '/' : '/en/#types-section';
   html += '<div class="voice-lines"><h3>Guardian voice lines</h3><p>' + profile.dialogue + '</p><p>Shorts hook: ' + profile.shortsHook + '</p><a class="secondary-btn" href="' + profileUrl + '">Explore full guardian lore →</a></div>';
 
+  html += '<div class="journey-next-card">';
+  html += '<h3>Next Journey</h3>';
+  html += '<p>The result is not the end. Move from your heart type into your guardian page, then settle the feeling inside Luna Sanctuary.</p>';
+  html += '<div class="journey-next-grid">';
+  html += '<a class="journey-next-link" href="' + profileUrl + '"><b>1 · Claim your guardian</b><span>Read the full character page to understand your love language, wounds, and relationship needs.</span></a>';
+  html += '<a class="journey-next-link" href="/en/luna-yoga-music/"><b>2 · Enter Luna</b><span>Let the moonlit sound sanctuary turn the result from analysis into feeling.</span></a>';
+  html += '<a class="journey-next-link" href="/en/theory/"><b>Side · World Guide</b><span>When you want the theory behind the universe, continue into the guide.</span></a>';
+  html += '</div></div>';
+
   // ─── Score bars ───
   html += '<div class="scores-card"><h3>Your love-language star map</h3>';
   sorted.forEach(function(entry) {
@@ -1471,10 +1534,10 @@ function showResult() {
   // ─── Luna Yoga Music ───
   html += '<div class="luna-yoga-card">';
   html += '<div class="luna-yoga-header"><div class="luna-yoga-logo">🧘‍♀️</div>';
-  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ Official Partner Channel</span>';
-  html += '<div class="luna-yoga-tagline">Healing body, mind & soul through music</div></div></div>';
+  html += '<div><div class="luna-yoga-brand">Luna Yoga Music</div><span class="luna-partner-badge">♡ Moonlit Sound Sanctuary</span>';
+  html += '<div class="luna-yoga-tagline">The emotional landing space after your result</div></div></div>';
   html += '<div class="luna-yoga-desc">' + r.yoga.desc + '</div>';
-  html += '<a class="luna-yoga-btn" href="' + r.yoga.url + '" target="_blank" rel="noopener">🎵 Listen to ' + r.yoga.playlist + '</a>';
+  html += '<a class="luna-yoga-btn" href="/en/luna-yoga-music/">Enter Luna Sanctuary →</a>';
   html += '</div>';
 
   html += '<p class="affiliate-disclosure">* This page contains affiliate links. We may earn a small commission at no extra cost to you.</p>';
@@ -1497,7 +1560,7 @@ function showResult() {
   html += '</div>';
   html += '<div class="theory-cta">';
   html += '<p>✨ Want to explore deeper?</p>';
-  html += '<a class="btn-theory" href="/en/theory/">📖 Explore the Theory →</a>';
+  html += '<a class="btn-theory" href="/en/theory/">Enter the World Guide →</a>';
   html += '</div>';
 
   const section = document.getElementById('result-section');

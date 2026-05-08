@@ -372,9 +372,21 @@ body.lovetypes-universe {
   pointer-events: none;
 }
 
+.lovetypes-universe .hero-art::after {
+  content: '';
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -2px;
+  height: 92px;
+  z-index: 6;
+  background: linear-gradient(180deg, rgba(253,248,245,0), rgba(253,248,245,.78) 58%, var(--cream));
+  pointer-events: none;
+}
+
 .lovetypes-universe .hero-guardian {
   position: absolute;
-  bottom: -18px;
+  bottom: 0;
   height: auto;
   max-height: min(78vh, 620px);
   object-fit: contain;

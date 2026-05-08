@@ -377,6 +377,16 @@ nav.nav-open .menu-toggle::after { transform: translateY(-6px) rotate(-45deg); }
   background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue));
   position: relative; overflow: hidden; height: 170px;
 }
+.playlist-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.2), transparent 38%),
+    linear-gradient(180deg, rgba(8,13,32,0) 48%, rgba(8,13,32,.42));
+  box-shadow: inset 0 0 28px rgba(255,255,255,.16), inset 0 -28px 34px rgba(8,13,32,.2);
+  pointer-events: none;
+}
 .playlist-thumb img {
   width: 100%; height: 100%; object-fit: cover; display: block;
   transition: transform .4s ease;

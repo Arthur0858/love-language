@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Languages Quiz | Find Your Love Language | LoveTypes</title>
-  <meta name="description" content="Free 15-question love language quiz. Discover your top love language instantly, with no sign-up needed." />
+  <meta name="apple-mobile-web-app-title" content="LoveTypes Emotion Guardian Universe" />
+  <meta name="application-name" content="LoveTypes Emotion Guardian Universe" />
+  <title>LoveTypes | Emotion Guardian Universe</title>
+  <meta name="description" content="Enter the LoveTypes Emotion Guardian Universe. Take a cinematic heart ritual and meet the guardian who understands how you love, hurt, and connect." />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="7k70YvjSl-TBgC102ENWTDe0037IqvoFUwQx6-5n8QI" />
   <link rel="canonical" href="https://lovetypes.tw/en/" />
@@ -24,35 +26,31 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lovetypes.tw/en/" />
-  <meta property="og:title" content="Love Languages Quiz | Find Your Love Language" />
-  <meta property="og:description" content="Free 15-question quiz to discover your love language. Strengthen your relationship today — no sign-up needed." />
-  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
-  <meta property="og:image:secure_url" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
+  <meta property="og:title" content="LoveTypes Emotion Guardian Universe" />
+  <meta property="og:description" content="Every soul loves differently. Begin the heart ritual and meet the guardian who understands your way of love." />
+  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg?v=20260508-universe" />
+  <meta property="og:image:secure_url" content="https://lovetypes.tw/og-cover.jpg?v=20260508-universe" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="zh_TW" />
-  <meta property="og:site_name" content="LoveTypes" />
-  <script>var ConverlyCustomData = {channelId: null};</script>
-  <script async defer src="https://cdn.affiliates.one/production/adlinks/9debdd711c52d9dc844e3f5a6669fe912d4a1908c6a6f579e4ad35a346ddc87a.js"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4093856660317740"
-     crossorigin="anonymous"></script>
+  <meta property="og:site_name" content="LoveTypes｜Emotion Guardian Universe" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Love Languages Quiz | Find Your Love Language" />
-  <meta name="twitter:description" content="Free 15-question quiz to discover your love language. Instant results, no sign-up needed." />
-  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg?v=20260507-nav-og-fix" />
+  <meta name="twitter:title" content="LoveTypes Emotion Guardian Universe" />
+  <meta name="twitter:description" content="Every soul loves differently. Begin the heart ritual and meet the guardian who understands your way of love." />
+  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg?v=20260508-universe" />
 
   <!-- JSON-LD 結構化資料 -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Love Languages Quiz",
+    "name": "LoveTypes Emotion Guardian Universe",
     "url": "https://lovetypes.tw/en/",
-    "description": "Free love language quiz — 15 questions to discover which of the 5 love languages you need most. Instant results, no sign-up needed.",
+    "description": "Enter the LoveTypes Emotion Guardian Universe. Take a cinematic heart ritual and meet the guardian who understands how you love, hurt, and connect.",
     "inLanguage": "en",
     "applicationCategory": "LifestyleApplication",
     "operatingSystem": "All",
@@ -121,8 +119,10 @@
   }
   </script>
 
-  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" type="image/webp" />
-  <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" />
+  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" type="image/webp" media="(max-width: 720px)" />
+  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" type="image/webp" media="(min-width: 721px)" />
+  <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris-mobile.webp" type="image/webp" media="(max-width: 720px)" />
+  <link rel="preload" as="image" href="/assets/lovetypes/guardians/iris.webp" type="image/webp" media="(min-width: 721px)" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/shared.css?v=20260508-main-journey" />
@@ -672,7 +672,7 @@
 <nav>
   <div class="nav-left">
     <div class="lang-menu" id="lang-menu">
-      <button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">EN ▾</button>
+      <button type="button" class="lang-current" data-lang-toggle aria-label="Language">EN ▾</button>
       <ul class="lang-list">
         <li><a href="/">中文</a></li>
         <li><a href="/en/" class="lang-active">English</a></li>
@@ -728,12 +728,12 @@
           <span>38,000+ guardians found</span>
         </span>
       </div>
-      <button type="button" class="btn-start" onclick="startQuiz()">Begin Your Journey</button>
+      <button type="button" class="btn-start" data-start-quiz>Begin Your Journey</button>
     </div>
     <div class="hero-art" aria-hidden="true">
-      <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
-      <img class="hero-guardian hero-guardian-side left" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/noah.webp" alt="" width="1066" height="1024">
-      <img class="hero-guardian hero-guardian-side right" loading="lazy" decoding="async" src="/assets/lovetypes/guardians/vivian.webp" alt="" width="823" height="1024">
+      <img class="hero-guardian hero-guardian-main" loading="eager" decoding="async" fetchpriority="high" srcset="/assets/lovetypes/guardians/iris-mobile.webp 640w, /assets/lovetypes/guardians/iris.webp 966w" sizes="(max-width: 720px) 72vw, 340px" src="/assets/lovetypes/guardians/iris.webp" alt="" width="966" height="1024">
+      <img class="hero-guardian hero-guardian-side left" loading="lazy" decoding="async" srcset="/assets/lovetypes/guardians/noah-mobile.webp 460w, /assets/lovetypes/guardians/noah.webp 1066w" sizes="(max-width: 720px) 140px, 220px" src="/assets/lovetypes/guardians/noah.webp" alt="" width="1066" height="1024">
+      <img class="hero-guardian hero-guardian-side right" loading="lazy" decoding="async" srcset="/assets/lovetypes/guardians/vivian-mobile.webp 430w, /assets/lovetypes/guardians/vivian.webp 823w" sizes="(max-width: 720px) 140px, 220px" src="/assets/lovetypes/guardians/vivian.webp" alt="" width="823" height="1024">
       <img class="hero-prop pen" loading="lazy" decoding="async" src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="" width="285" height="235">
       <img class="hero-prop lantern" loading="lazy" decoding="async" src="/assets/lovetypes/props/quality-time-lantern.webp" alt="" width="100" height="195">
     </div>
@@ -902,7 +902,7 @@
       <div class="quiz-preview-badge">Heart Ritual</div>
       <h2>The guardians are listening. Choose what feels true.</h2>
       <p>Each question is an emotional fragment. Do not perform the ideal self. Let instinct bring you closer to the one who understands you.</p>
-      <button type="button" class="btn-start" onclick="startQuiz()">Meet Your Guardian</button>
+      <button type="button" class="btn-start" data-start-quiz>Meet Your Guardian</button>
     </div>
   </div>
   <div id="quiz-wrapper">
@@ -962,42 +962,42 @@
   </div>
   <div class="faq-list">
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>What are the Love Languages?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>The Love Languages is a relationship theory proposed by psychologist Dr. Gary Chapman in 1992. It suggests that every person expresses and receives love through one of five primary types: Words of Affirmation, Acts of Service, Receiving Gifts, Quality Time, and Physical Touch. Understanding your own and your partner's primary love language helps you communicate love in ways the other person truly "hears," significantly improving relationship satisfaction and intimacy.</div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>What are the five Love Languages?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>The five Love Languages are: ① Words of Affirmation — expressing love through verbal praise, compliments, and encouragement; ② Acts of Service — showing love through helpful actions that ease the other person's load; ③ Receiving Gifts — feeling loved through thoughtful, meaningful gifts that show you were remembered; ④ Quality Time — feeling loved through focused, uninterrupted time together; ⑤ Physical Touch — feeling love and security through hugs, holding hands, and other physical closeness.</div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>Can your Love Language change over time?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Yes, your Love Language can change. As you go through different life stages or experience significant events, your primary love language may shift. It's a good idea to retake the quiz periodically to understand your current needs and emotional state — this helps keep your relationship fresh and connected.</div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>Are Love Languages only for romantic relationships?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>Not at all. Love Languages apply equally to parent-child relationships, friendships, and workplace interactions. Understanding how different people prefer to communicate and receive care makes all relationships more harmonious and reduces misunderstandings, improving your overall quality of life.</div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>How many questions are in the quiz and how long does it take?</span>
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a" hidden>The LoveTypes quiz has 15 scenario-based questions and takes about 2 minutes to complete. It's completely free, requires no registration, and shows your primary Love Language with a detailed analysis and practical tips for you and your partner immediately after completion.</div>
       </div>
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <button type="button" class="faq-q" data-faq-toggle aria-expanded="false">
           <span>What if my partner's Love Language is different from mine?</span>
           <span class="faq-icon">+</span>
         </button>
@@ -1395,10 +1395,10 @@ function showQuestion(idx) {
   html += '<div class="q-number">Heart Fragment ' + String(idx + 1).padStart(2, '0') + '</div>';
   html += '<div class="q-text">' + q.text + '</div>';
   q.options.forEach(function(opt) {
-    html += '<button type="button" class="option-btn" onclick="selectOption(\'' + opt.type + '\', this)">';
+    html += '<button type="button" class="option-btn" data-option-type="' + opt.type + '">';
     html += '<span class="option-dot"></span>' + opt.text + '</button>';
   });
-  html += '<button type="button" class="btn-next" id="btn-next" onclick="nextQuestion()">Let the light continue</button>';
+  html += '<button type="button" class="btn-next" id="btn-next" data-next-question>Let the light continue</button>';
 
   const card = document.getElementById('question-card');
   card.style.animation = 'none';
@@ -1551,9 +1551,9 @@ function showResult() {
   const shareText = 'My love language is "' + r.tag + '"! Find yours 👉 https://lovetypes.tw/en/';
   html += '<div class="share-row">';
   html += '<a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent('https://lovetypes.tw/en/') + '&text=' + encodeURIComponent(shareText) + '" target="_blank" rel="noopener">💚 Share on LINE</a>';
-  html += '<button type="button" class="btn-share copy" onclick="copyResult()">📋 Copy Result</button>';
+  html += '<button type="button" class="btn-share copy" data-result-action="copy">📋 Copy Result</button>';
   html += '</div>';
-  html += '<div class="retake-row"><button type="button" class="btn-retake" onclick="retakeQuiz()">🔄 Take Again</button></div>';
+  html += '<div class="retake-row"><button type="button" class="btn-retake" data-result-action="retake">🔄 Take Again</button></div>';
 
   html += '<div class="dist-card">';
   html += '<h4>Your Love Language Tribe</h4>';
@@ -1609,5 +1609,7 @@ function toggleFaq(btn) {
   answer.hidden = expanded;
 }
 </script>
+  <script src="/site-interactions.js?v=20260508-journey" defer></script>
+  <script src="/deferred-external.js?v=20260508-journey" data-affiliate data-ads defer></script>
 </body>
 </html>

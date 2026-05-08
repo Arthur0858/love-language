@@ -878,7 +878,7 @@ body.lovetypes-universe {
     padding: 0 18px;
     background:
       linear-gradient(180deg, rgba(253,248,245,.97) 0%, rgba(253,248,245,.88) 52%, rgba(253,248,245,.56) 100%),
-      url('/assets/lovetypes/backgrounds/guardian-garden.webp') center/cover no-repeat;
+      url('/assets/lovetypes/backgrounds/guardian-garden-mobile.webp') center/cover no-repeat;
   }
   .lovetypes-universe .hero-copy {
     padding: 56px 0 0;
@@ -931,6 +931,9 @@ body.lovetypes-universe {
     width: calc(100% - 36px);
     grid-template-columns: 1fr;
     gap: 0;
+    background:
+      linear-gradient(180deg, rgba(253,248,245,.86), rgba(253,248,245,.74)),
+      url('/assets/lovetypes/backgrounds/quiz-desk-mobile.webp') center/cover no-repeat;
   }
   .lovetypes-universe .quiz-preview-art { min-height: 220px; }
   .lovetypes-universe .quiz-preview-copy { padding: 28px 24px 30px; }
@@ -1231,6 +1234,81 @@ body.lovetypes-universe {
   line-height: 1.7;
 }
 
+.guardian-profile-page .guardian-journey-block {
+  margin-top: 22px;
+  padding: clamp(22px, 4vw, 34px);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255,255,255,.86), transparent 34%),
+    linear-gradient(135deg, rgba(255,255,255,.76), rgba(255,244,247,.62));
+  border: 1px solid rgba(255,255,255,.82);
+  box-shadow: 0 24px 70px rgba(107,65,74,.12);
+}
+
+.guardian-profile-page .guardian-journey-block h2 {
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+}
+
+.guardian-profile-page .guardian-journey-block p {
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.guardian-profile-page .guardian-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.guardian-profile-page .guardian-journey-grid a {
+  display: grid;
+  gap: 8px;
+  min-height: 132px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.84);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgba(107,65,74,.08);
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.guardian-profile-page .guardian-journey-grid a:hover,
+.guardian-profile-page .guardian-journey-grid a:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--guardian-accent, var(--rose)) 42%, white);
+  box-shadow: 0 18px 44px rgba(107,65,74,.13);
+}
+
+.guardian-profile-page .journey-step {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--rose), var(--guardian-accent, var(--rose)));
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.guardian-profile-page .guardian-journey-grid b {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--guardian-accent, var(--rose));
+}
+
+.guardian-profile-page .guardian-journey-grid span:last-child {
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
 .guardian-profile-page .shorts-strip {
   margin-top: 18px;
   display: grid;
@@ -1338,11 +1416,16 @@ body.lovetypes-universe {
   }
 
   .guardian-profile-page .site-header nav {
-    gap: 14px;
+    display: none;
   }
 
-  .guardian-profile-page .site-header nav a:nth-child(n+2) {
-    display: none;
+  .guardian-profile-page .site-header .menu-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .guardian-profile-page .mobile-menu {
+    top: 64px;
   }
 
   .guardian-profile-page .guardian-copy,
@@ -1387,6 +1470,7 @@ body.lovetypes-universe {
   .guardian-profile-page .profile-grid,
   .guardian-profile-page .relationship-grid,
   .guardian-profile-page .voice-line-list,
+  .guardian-profile-page .guardian-journey-grid,
   .guardian-profile-page .guardian-pathway-grid,
   .guardian-profile-page .shorts-strip {
     grid-template-columns: 1fr;
@@ -1413,6 +1497,7 @@ body.lovetypes-universe {
   .guardian-profile-page .profile-panel,
   .guardian-profile-page .lore-section,
   .guardian-profile-page .voice-panel,
+  .guardian-profile-page .guardian-journey-block,
   .guardian-profile-page .guardian-pathways,
   .guardian-profile-page .shorts-strip {
     width: min(100%, 354px);

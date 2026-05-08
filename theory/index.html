@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4093856660317740"
-       crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>愛之語世界觀指南｜五位守護者與 Gary Chapman 理論 | LoveTypes</title>
@@ -27,15 +25,15 @@
   <meta property="og:url" content="https://lovetypes.tw/theory/" />
   <meta property="og:title" content="愛之語世界觀指南｜五位守護者與 Gary Chapman 理論" />
   <meta property="og:description" content="把五種愛的語言讀成五位情感守護者的世界觀設定，理解你如何感受愛、表達愛與受傷。" />
-  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg" />
+  <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg?v=20260508-universe" />
   <meta property="og:locale" content="zh_TW" />
-  <meta property="og:site_name" content="LoveTypes" />
+  <meta property="og:site_name" content="LoveTypes｜Emotion Guardian Universe" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="愛之語世界觀指南｜LoveTypes" />
   <meta name="twitter:description" content="從五位情感守護者理解五種愛的語言。" />
-  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
+  <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg?v=20260508-universe" />
 
   <!-- JSON-LD: Article -->
   <script type="application/ld+json">
@@ -467,7 +465,7 @@
 <nav>
   <div class="nav-left">
   <div class="lang-menu" id="lang-menu">
-    <button type="button" class="lang-current" onclick="document.getElementById('lang-menu').classList.toggle('open')" aria-label="Language">ZH ▾</button>
+    <button type="button" class="lang-current" data-lang-toggle aria-label="Language">ZH ▾</button>
     <ul class="lang-list">
       <li><a href="/theory/">中文</a></li>
       <li><a href="/en/theory/">English</a></li>
@@ -490,7 +488,15 @@
     <a href="/theory/" class="active">世界觀設定</a>
     <a href="/resources/">深度理解</a>
   </div>
+  <button class="menu-toggle" type="button" data-menu-toggle aria-label="開啟導覽選單" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="/#types-section">守護者</a>
+    <a href="/#quiz-section">命運儀式</a>
+    <a href="/luna-yoga-music/">Luna 聲音聖域</a>
+    <a href="/theory/">世界觀設定</a>
+    <a href="/resources/">深度理解</a>
+  </div>
 
 <!-- PAGE HERO -->
 <section class="page-hero">
@@ -707,7 +713,7 @@
   <div class="faq-list">
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         什麼是愛的語言？
         <span class="faq-arrow">▼</span>
       </button>
@@ -715,7 +721,7 @@
     </div>
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         五種愛的語言分別是什麼？
         <span class="faq-arrow">▼</span>
       </button>
@@ -723,7 +729,7 @@
     </div>
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         如何知道自己的愛的語言是哪一種？
         <span class="faq-arrow">▼</span>
       </button>
@@ -731,7 +737,7 @@
     </div>
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         愛的語言可以改變嗎？
         <span class="faq-arrow">▼</span>
       </button>
@@ -739,7 +745,7 @@
     </div>
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         愛的語言只適用於愛情關係嗎？
         <span class="faq-arrow">▼</span>
       </button>
@@ -747,7 +753,7 @@
     </div>
 
     <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" data-faq-toggle>
         如果伴侶的愛的語言和我不同怎麼辦？
         <span class="faq-arrow">▼</span>
       </button>
@@ -823,5 +829,7 @@ function toggleFaq(btn) {
 }
 </script>
 
+  <script src="/site-interactions.js?v=20260508-journey" defer></script>
+  <script src="/deferred-external.js?v=20260508-journey" data-ads defer></script>
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://lovetypes.tw/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://lovetypes.tw/apple-touch-icon.png" />
   <title>아이리스 Iris｜인정의 말 수호자 | LoveTypes</title>
   <meta name="description" content="인정의 말 수호자 아이리스. 그녀는 말을 감정의 마법으로 바꾸고, 보이고 칭찬받고 다정하게 답받고 싶은 마음을 이해합니다." />
   <meta name="robots" content="index, follow" />
@@ -21,7 +23,7 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="ko_KR" />
-  <meta property="og:site_name" content="LoveTypes" />
+  <meta property="og:site_name" content="LoveTypes｜Emotion Guardian Universe" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="아이리스 Iris｜인정의 말 수호자 | LoveTypes" />
   <meta name="twitter:description" content="인정의 말 수호자 아이리스. 그녀는 말을 감정의 마법으로 바꾸고, 보이고 칭찬받고 다정하게 답받고 싶은 마음을 이해합니다." />
@@ -34,10 +36,8 @@
 </head>
 <body class="lovetypes-universe guardian-profile-page" style="--guardian-accent:#d86f91;--guardian-glow:rgba(255,170,198,.42);">
   <a class="skip-link" href="#profile">수호자 프로필로 이동</a>
-  <header class="site-header">
-    <a class="brand" href="/ko/">LoveTypes</a>
-    <nav><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음의 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a></nav>
-  </header>
+  <header class="site-header"><a class="brand" href="/ko/">LoveTypes</a><nav><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음의 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a><a href="/ko/theory/">세계관</a><a href="/ko/resources/">리소스</a></nav><button class="menu-toggle" type="button" data-menu-toggle aria-label="내비게이션 열기" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button></header>
+  <div class="mobile-menu" id="mobile-menu" hidden><a href="/ko/#types-section">수호자</a><a href="/ko/#quiz-section">마음의 의식</a><a href="/ko/luna-yoga-music/">Luna 성역</a><a href="/ko/theory/">세계관</a><a href="/ko/resources/">리소스</a></div>
 
   <main>
     <section class="guardian-hero">
@@ -74,8 +74,18 @@
         <h2>Voice Lines</h2>
         <div class="voice-line-list"><span>오늘 세상이 당신을 칭찬하는 걸 잊었다면, 내가 먼저 할게요. 정말 애썼어요.</span><span>당신은 위로를 너무 많이 요구하는 게 아니에요. 그저 말로 사랑을 듣는 사람입니다.</span><span>가까워지려는 마음을 침묵으로 벌하지 말아 주세요.</span><span>진심 어린 한 문장은 누군가가 다시 자신을 믿게 합니다.</span></div>
       </div>
+      <div class="guardian-journey-block">
+        <h2>다음 여정</h2>
+        <p>이 수호자를 관계 속으로 가져가세요. 스토리 카드를 저장하고, 상성을 본 뒤, Luna와 리소스로 이해를 일상의 연습으로 바꿉니다.</p>
+        <div class="guardian-journey-grid">
+          <a href="/assets/lovetypes/share/iris-story-ko.webp" download><span class="journey-step">01</span><b>스토리 카드 저장</b><span>스토리 공유와 저장에 적합합니다.</span></a>
+          <a href="#guardian-compatibility"><span class="journey-step">02</span><b>상성 보기</b><span>내 마음의 리듬과 맞는 수호자.</span></a>
+          <a href="/ko/luna-yoga-music/"><span class="journey-step">03</span><b>Luna로 이동</b><span>결과 이후 감정을 소리로 가라앉히기.</span></a>
+          <a href="/ko/resources/"><span class="journey-step">04</span><b>리소스 보기</b><span>사랑의 언어를 일상 연습으로.</span></a>
+        </div>
+      </div>
 
-      <div class="guardian-pathways">
+      <div class="guardian-pathways" id="guardian-compatibility">
         <h2>수호자 세계 계속 보기</h2>
         <div class="guardian-pathway-grid"><a href="/ko/characters/noah/"><b>노아 Noah</b><span>별바다 시간의 항해자</span></a><a href="/ko/characters/vivian/"><b>비비안 Vivian</b><span>기억 선물의 수호자</span></a><a href="/ko/characters/claire/"><b>클레어 Claire</b><span>조용한 헌신의 수호자</span></a><a href="/ko/characters/dora/"><b>도라 Dora</b><span>살아 있는 온기의 수호자</span></a></div>
       </div>
@@ -88,5 +98,6 @@
     <p>© 2026 LoveTypes · Gary Chapman의 다섯 가지 사랑의 언어 이론 기반</p>
     <p class="site-footer-links"><a href="/ko/resources/">추천 자료</a> · <a href="/ko/luna-yoga-music/">Luna Yoga Music</a> · <a href="/privacy/">개인정보</a> · <a href="/terms/">이용 약관</a> · <a href="mailto:hello@lovetypes.tw">문의</a></p>
   </footer>
+  <script src="/site-interactions.js?v=20260508-journey" defer></script>
 </body>
 </html>

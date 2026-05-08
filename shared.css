@@ -372,15 +372,18 @@ body.lovetypes-universe {
   pointer-events: none;
 }
 
-.lovetypes-universe .hero-art::after {
+.lovetypes-universe .hero-art::before {
   content: '';
   position: absolute;
-  left: -8%;
-  right: -8%;
-  bottom: -2px;
-  height: 92px;
-  z-index: 6;
-  background: linear-gradient(180deg, rgba(253,248,245,0), rgba(253,248,245,.78) 58%, var(--cream));
+  left: 12%;
+  right: 12%;
+  bottom: 18px;
+  height: 90px;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at center, rgba(159,122,234,.22), rgba(255,194,148,.12) 42%, transparent 72%);
+  filter: blur(6px);
+  transform: scaleX(1.06);
   pointer-events: none;
 }
 

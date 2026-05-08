@@ -667,7 +667,7 @@
 
     /* ── Merged result + guardian hero card ── */
     .result-hero-card { position: relative; border-radius: 20px; margin-bottom: 28px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.09); }
-    .result-hero-card::after { content: ''; position: absolute; left: 0; right: 0; top: 212px; height: 76px; background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.58)); pointer-events: none; z-index: 2; }
+    .result-hero-card::before { content: ''; position: absolute; left: 16%; right: 16%; top: 202px; height: 62px; background: radial-gradient(ellipse at center, rgba(159,122,234,.16), rgba(201,102,110,.10) 46%, transparent 74%); filter: blur(8px); pointer-events: none; z-index: 0; }
     .result-hero-img { position: relative; z-index: 1; }
     .result-hero-card.type-w { background: linear-gradient(160deg,#FFFBF0,#FFF3D6); border: 1.5px solid #F5DDA0; }
     .result-hero-card.type-t { background: linear-gradient(160deg,#EEF3FA,#E0EBF8); border: 1.5px solid #A8C4E0; }

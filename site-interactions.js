@@ -61,6 +61,7 @@
     if (resultAction) {
       var action = resultAction.getAttribute('data-result-action');
       if (action === 'copy' && typeof window.copyResult === 'function') window.copyResult();
+      if (action === 'story' && typeof window.downloadStoryCard === 'function') window.downloadStoryCard(resultAction);
       if (action === 'retake' && typeof window.retakeQuiz === 'function') window.retakeQuiz();
       return;
     }
@@ -78,4 +79,128 @@
       if (!menu.contains(event.target)) menu.classList.remove('open');
     });
   });
+})();
+
+(function () {
+  function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+    var words = String(text || '').split(/(\s+)/).filter(Boolean);
+    var line = '';
+    var lines = [];
+    words.forEach(function (word) {
+      var test = line + word;
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line.trim());
+        line = word.trimStart();
+      } else {
+        line = test;
+      }
+    });
+    if (line.trim()) lines.push(line.trim());
+    lines.slice(0, maxLines).forEach(function (item, index) {
+      ctx.fillText(index === maxLines - 1 && lines.length > maxLines ? item.replace(/[。.!?…]*$/, '') + '…' : item, x, y + index * lineHeight);
+    });
+  }
+
+  function loadImage(src) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  function roundedRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  window.downloadStoryCard = function (button) {
+    var data = window.lovetypesLastResult;
+    if (!data) return;
+
+    var labels = {
+      kicker: button.getAttribute('data-story-kicker') || 'Emotion Guardian',
+      cta: button.getAttribute('data-story-cta') || 'lovetypes.tw'
+    };
+
+    var canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1920;
+    var ctx = canvas.getContext('2d');
+
+    var gradient = ctx.createLinearGradient(0, 0, 1080, 1920);
+    gradient.addColorStop(0, '#fff8fb');
+    gradient.addColorStop(.52, '#f2ebff');
+    gradient.addColorStop(1, '#ffe9ee');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1080, 1920);
+
+    ctx.fillStyle = 'rgba(255,255,255,.72)';
+    ctx.beginPath();
+    ctx.arc(230, 220, 210, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(201,102,110,.13)';
+    ctx.beginPath();
+    ctx.arc(900, 260, 240, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(159,122,234,.15)';
+    ctx.beginPath();
+    ctx.arc(190, 1640, 260, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#C9666E';
+    ctx.font = '800 34px Arial, sans-serif';
+    ctx.letterSpacing = '3px';
+    ctx.fillText(labels.kicker.toUpperCase(), 82, 124);
+
+    ctx.letterSpacing = '0px';
+    ctx.fillStyle = '#3A2828';
+    ctx.font = '700 78px Georgia, "Times New Roman", serif';
+    wrapText(ctx, data.name || '', 82, 230, 760, 86, 2);
+
+    ctx.fillStyle = '#7A6060';
+    ctx.font = '700 34px Arial, sans-serif';
+    wrapText(ctx, data.title || data.tag || '', 84, 410, 780, 44, 2);
+
+    loadImage(data.image).then(function (img) {
+      var maxW = 760;
+      var maxH = 840;
+      var scale = Math.min(maxW / img.width, maxH / img.height);
+      var w = img.width * scale;
+      var h = img.height * scale;
+      ctx.drawImage(img, (1080 - w) / 2, 560 + (maxH - h), w, h);
+
+      ctx.fillStyle = 'rgba(255,255,255,.72)';
+      roundedRect(ctx, 72, 1370, 936, 330, 42);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.9)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = '#3A2828';
+      ctx.font = '600 44px Arial, sans-serif';
+      wrapText(ctx, '“' + (data.quote || '') + '”', 118, 1460, 844, 62, 3);
+
+      ctx.fillStyle = '#C9666E';
+      ctx.font = '800 34px Arial, sans-serif';
+      ctx.fillText(labels.cta, 118, 1778);
+
+      var link = document.createElement('a');
+      link.download = 'lovetypes-' + (data.slug || 'guardian') + '-story.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(function () {
+      if (button) button.textContent = button.getAttribute('data-story-error') || 'Image failed';
+    });
+  };
 })();

@@ -490,7 +490,24 @@
   </url>
 
 
-  <url><loc>https://lovetypes.tw/en/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ja/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ko/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/es/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url>
+  <url><loc>https://lovetypes.tw/en/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ja/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ko/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/es/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url>
+    <loc>https://lovetypes.tw/about/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/about/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/about/" />
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lovetypes.tw/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/contact/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/contact/" />
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://lovetypes.tw/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/privacy/" />

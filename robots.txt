@@ -9,9 +9,7 @@ Allow: /es/
 Allow: /theory/
 Allow: /resources/
 
-# Disallow utility pages from indexing (noindex already set in HTML)
-Disallow: /privacy/
-Disallow: /terms/
+# Utility pages are allowed so AdSense and search crawlers can review trust pages.
 
 # Sitemap location
 Sitemap: https://lovetypes.tw/sitemap.xml

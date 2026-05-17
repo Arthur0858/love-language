@@ -455,6 +455,68 @@ nav.nav-open .menu-toggle::after { transform: translateY(-6px) rotate(-45deg); }
 .bridge-title { font-weight: 700; font-size: .88rem; margin-bottom: 6px; }
 .bridge-desc { font-size: .78rem; color: var(--muted); line-height: 1.6; }
 
+/* ─── LUNA GUIDE CONTENT ─── */
+.luna-usage-section {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(221,182,255,.2), transparent 34%),
+    linear-gradient(180deg, #fff9fb 0%, #f7f0ff 100%);
+  padding: 72px 24px;
+}
+.luna-usage-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.luna-usage-inner h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.45rem, 3vw, 2.05rem);
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.luna-usage-inner > p {
+  max-width: 700px;
+  color: var(--muted);
+  font-size: .94rem;
+  line-height: 1.85;
+  margin-bottom: 28px;
+}
+.luna-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.luna-guide-card {
+  min-height: 210px;
+  padding: 24px 22px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.86);
+  border: 1px solid rgba(130,80,200,.12);
+  box-shadow: 0 12px 36px rgba(130,80,200,.1);
+}
+.luna-guide-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--luna-navy), var(--luna-blue));
+  color: var(--luna-accent);
+  font-weight: 800;
+  font-size: .78rem;
+}
+.luna-guide-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.luna-guide-card p {
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.75;
+}
+
 /* ─── CTA STRIP ─── */
 .cta-strip {
   background: linear-gradient(135deg, var(--luna-navy) 0%, var(--luna-blue) 100%);
@@ -673,6 +735,14 @@ footer a { color: var(--luna-accent); text-decoration: none; }
   .hero-stats { gap: 20px; }
 
   .resonance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .luna-usage-section {
+    padding: 58px 18px;
+  }
+
+  .luna-guide-grid {
     grid-template-columns: 1fr;
   }
 

@@ -587,8 +587,27 @@ footer a { color: var(--rose); text-decoration: none; }
     display: none;
   }
 
+  .guide-page .site-header {
+    padding: 12px 18px;
+  }
+
   .guide-hero {
     padding: 58px 18px 42px;
+  }
+
+  .guide-hero h1,
+  .guide-hero p,
+  .guide-article h2,
+  .guide-article p,
+  .guide-article li,
+  .guide-tool-panel h3,
+  .guide-tool-panel p,
+  .guide-script-box span,
+  .guide-index-card b,
+  .guide-index-card span {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    line-break: anywhere;
   }
 
   .guide-shell {
@@ -598,6 +617,21 @@ footer a { color: var(--rose); text-decoration: none; }
   .guide-article {
     padding: 24px 18px;
     border-radius: 18px;
+  }
+
+  .guide-tool-panel {
+    padding: 20px 18px;
+  }
+
+  .guide-step-strip,
+  .guide-card-grid,
+  .guide-index-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-card,
+  .guide-index-card {
+    min-height: 0;
   }
 }
 

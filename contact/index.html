@@ -21,6 +21,7 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --rose:#C9666E; --cream:#FDF8F5; --warm:#8B5C5C; --text:#3A2828; --muted:#7A6060; }
+    html, body { max-width: 100%; overflow-x: hidden; }
     body { font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: var(--cream); color: var(--text); line-height: 1.8; }
     nav { position: sticky; top: 0; background: rgba(253,248,245,.94); border-bottom: 1px solid rgba(201,102,110,.16); padding: 14px 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .nav-logo { color: var(--rose); font-weight: 700; font-size: 1.25rem; text-decoration: none; }
@@ -30,11 +31,11 @@
     h1 { font-family: Georgia, 'Noto Serif TC', serif; color: var(--rose); font-size: 2rem; margin-bottom: 10px; }
     .lead { color: var(--muted); margin-bottom: 30px; }
     h2 { color: var(--warm); font-size: 1.12rem; margin: 30px 0 10px; }
-    p, li { margin-bottom: 12px; }
+    p, li { margin-bottom: 12px; overflow-wrap: anywhere; word-break: break-all; line-break: anywhere; }
     ul { padding-left: 20px; }
     .contact-card { background: #fff7f5; border: 1px solid rgba(201,102,110,.18); border-radius: 14px; padding: 18px; margin: 18px 0; }
     footer { text-align: center; padding: 32px 16px; font-size: .85rem; color: var(--muted); border-top: 1px solid rgba(201,102,110,.16); }
-    @media (max-width: 640px) { .doc-nav-links { margin-left: 0; } .page-wrap { margin: 24px 14px; padding: 30px 22px 44px; } }
+    @media (max-width: 640px) { nav { align-items: flex-start; } .doc-nav-links { width: 100%; margin-left: 0; gap: 10px 14px; } .page-wrap { max-width: calc(100% - 28px); margin: 24px 14px; padding: 30px 22px 44px; } }
   </style>
 </head>
 <body>

@@ -733,6 +733,32 @@
     /* Language switcher current item */
     .lang-list a.lang-active { font-weight: 700; }
     .lang-list a.lang-active::before { content: "✓ "; }
+
+    @media(max-width: 480px) {
+      #cookie-banner {
+        padding: 14px 18px !important;
+        align-items: flex-start !important;
+      }
+      #cookie-banner p {
+        flex-basis: 100% !important;
+        min-width: 0 !important;
+      }
+      #cookie-banner div {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        min-width: 0 !important;
+        gap: 8px !important;
+      }
+      #cookie-banner button {
+        flex: 1 1 132px !important;
+        min-width: 0 !important;
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        white-space: normal !important;
+      }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4093856660317740" crossorigin="anonymous"></script>
 </head>

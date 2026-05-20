@@ -1,486 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-
   <url>
     <loc>https://lovetypes.tw/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
-
-  <url>
-    <loc>https://lovetypes.tw/en/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-
-  <url>
-    <loc>https://lovetypes.tw/ja/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-
-  <url>
-    <loc>https://lovetypes.tw/ko/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-
-  <url>
-    <loc>https://lovetypes.tw/es/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-
-
-
-
-
-  <url>
+<url>
     <loc>https://lovetypes.tw/characters/iris/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/iris/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/iris/" />
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <url>
+<url>
     <loc>https://lovetypes.tw/characters/noah/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/noah/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/noah/" />
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <url>
+<url>
     <loc>https://lovetypes.tw/characters/vivian/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/vivian/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/vivian/" />
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <url>
+<url>
     <loc>https://lovetypes.tw/characters/claire/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/claire/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/claire/" />
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <url>
+<url>
     <loc>https://lovetypes.tw/characters/dora/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/dora/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/dora/" />
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-
-
-
-  <url>
-    <loc>https://lovetypes.tw/en/characters/iris/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/iris/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/en/characters/noah/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/noah/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/en/characters/vivian/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/vivian/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/en/characters/claire/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/claire/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/en/characters/dora/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/dora/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-
-
-
-  <url>
-    <loc>https://lovetypes.tw/ja/characters/iris/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/iris/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/characters/noah/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/noah/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/characters/vivian/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/vivian/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/characters/claire/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/claire/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/characters/dora/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/dora/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-
-
-
-  <url>
-    <loc>https://lovetypes.tw/ko/characters/iris/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/iris/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/characters/noah/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/noah/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/characters/vivian/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/vivian/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/characters/claire/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/claire/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/characters/dora/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/dora/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-
-
-
-  <url>
-    <loc>https://lovetypes.tw/es/characters/iris/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/iris/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/iris/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/characters/noah/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/noah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/noah/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/characters/vivian/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/vivian/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/vivian/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/characters/claire/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/claire/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/claire/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/characters/dora/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/characters/dora/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/characters/dora/" />
-    <lastmod>2026-05-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-
-  <url>
+<url>
     <loc>https://lovetypes.tw/theory/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <url>
-    <loc>https://lovetypes.tw/en/theory/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/theory/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/theory/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/theory/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/theory/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/theory/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/theory/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/theory/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/theory/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/theory/" />
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-
-  <url>
+<url>
     <loc>https://lovetypes.tw/resources/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/resources/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/resources/" />
@@ -489,22 +73,35 @@
     <priority>0.7</priority>
   </url>
 
+<url><loc>https://lovetypes.tw/guides/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
 
-  <url><loc>https://lovetypes.tw/en/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ja/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/ko/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url><url><loc>https://lovetypes.tw/es/resources/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+<url><loc>https://lovetypes.tw/guides/heart-garden/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
-  <url><loc>https://lovetypes.tw/guides/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://lovetypes.tw/guides/heart-garden/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/misfrequency/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/iris-words-of-affirmation/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/noah-quality-time/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/vivian-receiving-gifts/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/claire-acts-of-service/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/dora-physical-touch/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/repair-after-conflict/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/use-your-result/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://lovetypes.tw/guides/guardian-pairings/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://lovetypes.tw/guides/misfrequency/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
-  <url>
+<url><loc>https://lovetypes.tw/guides/iris-words-of-affirmation/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/noah-quality-time/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/vivian-receiving-gifts/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/claire-acts-of-service/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/dora-physical-touch/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/repair-after-conflict/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/use-your-result/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url><loc>https://lovetypes.tw/guides/guardian-pairings/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://lovetypes.tw/guides/dialogue-scripts/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://lovetypes.tw/guides/conflict-repair-worksheet/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <url><loc>https://lovetypes.tw/guides/relationship-stages/</loc><lastmod>2026-05-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+<url>
     <loc>https://lovetypes.tw/about/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/about/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/about/" />
@@ -512,7 +109,8 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <url>
+
+<url>
     <loc>https://lovetypes.tw/contact/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/contact/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/contact/" />
@@ -520,7 +118,8 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  <url>
+
+<url>
     <loc>https://lovetypes.tw/privacy/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/privacy/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/privacy/" />
@@ -529,7 +128,7 @@
     <priority>0.3</priority>
   </url>
 
-  <url>
+<url>
     <loc>https://lovetypes.tw/terms/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/terms/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/terms/" />
@@ -538,66 +137,9 @@
     <priority>0.3</priority>
   </url>
 
-
-  <url>
+<url>
     <loc>https://lovetypes.tw/luna-yoga-music/</loc>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/en/luna-yoga-music/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ja/luna-yoga-music/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/ko/luna-yoga-music/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://lovetypes.tw/es/luna-yoga-music/</loc>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/luna-yoga-music/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/luna-yoga-music/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/luna-yoga-music/" />
     <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>

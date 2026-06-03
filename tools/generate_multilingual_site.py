@@ -1363,6 +1363,204 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
 """
 
 
+def character_link_card(lang: str, slug: str, data: dict, current_slug: str = "") -> str:
+    name, typ, _desc = data[lang]
+    current = slug == current_slug
+    attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
+    return f"""
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}">
+  {img_tag(data["asset"], name)}
+  <div><span>{escape(typ)}</span><h3>{escape(name)}</h3></div>
+</a>
+"""
+
+
+def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str, str]) -> dict:
+    name, typ, guardian_desc = guardian
+    templates = {
+        "zh": {
+            "lede": "{title} 不是一篇通用提醒，而是把「{desc}」放進 {name} 的守護視角：先辨認這種愛之語在哪裡錯頻，再把它翻成對方能接住的一步。",
+            "why": "當主題來到「{title}」時，重點不是證明誰比較用心，而是看見 {typ} 如何在日常裡被聽見、被忽略，或被誤解。{guardian_desc}",
+            "notice": "閱讀這頁時，先找一個最近發生的場景：哪一句話、哪一段時間、哪個行動或哪種靠近，讓「{desc}」變得特別明顯？",
+            "practice": "今天只為「{title}」設計一個小練習：把需求說成一句可執行請求，再把完成時間縮到二十四小時內，讓修復不必等到情緒耗盡。",
+            "mistakes": "不要把「{title}」當成要求對方立刻改變的證據。它比較像一張地圖，提醒你在 {name} 守護的入口前，把感受、界線與請求分開說清楚。",
+            "scripts": ["我想談的不是對錯，而是「{desc}」這件事對我代表什麼。", "如果我們只修「{title}」裡的一小步，我希望先從這個可做到的行動開始。", "我需要你理解的不是標籤，而是 {name} 守護的這個情境裡，我怎麼接收愛。"],
+            "reflection": ["「{title}」提到的情境，最像我最近哪一次錯頻？", "面對「{desc}」，我希望對方具體做什麼，而不是只猜我的感受？", "如果我用 {typ} 的語言表達，請求會不會更清楚？"],
+        },
+        "en": {
+            "lede": "{title} is not a generic reminder. It places \"{desc}\" inside {name}'s guardian lens so you can name where this love language misses and translate it into one receivable step.",
+            "why": "When the topic is {title}, the point is not proving who cares more. It is seeing how {typ} is heard, missed, or misunderstood in daily life. {guardian_desc}",
+            "notice": "As you read, choose one recent scene: which word, stretch of time, action, keepsake, or kind of closeness made \"{desc}\" feel especially visible?",
+            "practice": "Design one small practice for {title} today. Turn the need into a request someone can act on, then keep the timeframe within twenty-four hours.",
+            "mistakes": "Do not use {title} as evidence that someone must immediately change. Treat it as a map for separating feeling, boundary, and request at {name}'s doorway.",
+            "scripts": ["I am not trying to decide who is right; I want to explain what \"{desc}\" means to me.", "If we repair only one small step in {title}, I would like to begin with this doable action.", "I need you to understand the {name} situation, not just the label."],
+            "reflection": ["Which recent misfrequency looks most like {title}?", "For \"{desc}\", what do I want the other person to do specifically instead of guessing my feelings?", "Would the request become clearer if I used the language of {typ}?"],
+        },
+        "ja": {
+            "lede": "「{title}」は一般的な注意書きではありません。「{desc}」を {name} の守護者視点に置き、この愛の言語がどこですれ違い、どの一歩なら届くかを見ます。",
+            "why": "「{title}」で大切なのは、誰がより頑張ったかを証明することではありません。{typ} が日常でどう届き、見落とされ、誤解されるかを見ることです。{guardian_desc}",
+            "notice": "読みながら最近の場面を一つ選びます。どの言葉、時間、行動、記憶、近さが「{desc}」をはっきりさせましたか。",
+            "practice": "今日は「{title}」のために小さな練習を一つだけ作ります。ニーズを実行できるお願いに変え、二十四時間以内に試せる形へ縮めます。",
+            "mistakes": "「{title}」を、相手がすぐ変わるべき証拠として使わないでください。{name} の入口で、感情、境界線、お願いを分ける地図として使います。",
+            "scripts": ["正しさを決めたいのではなく、「{desc}」が私にとって何を意味するかを話したい。", "「{title}」で一つだけ修復するなら、まずこの小さな行動から始めたい。", "理解してほしいのはラベルではなく、{name} が守るこの場面で私がどう愛を受け取るかです。"],
+            "reflection": ["「{title}」の場面は、最近のどのすれ違いに近いか。", "「{desc}」について、相手に察してほしいのではなく具体的に何をしてほしいか。", "{typ} の言語で言えば、お願いはもっと明確になるか。"],
+        },
+        "ko": {
+            "lede": "{title}은 일반적인 조언이 아닙니다. \"{desc}\"를 {name}의 수호자 관점에 놓고, 이 사랑의 언어가 어디에서 어긋나는지와 어떤 한 걸음이면 받을 수 있는지 봅니다.",
+            "why": "{title}에서 중요한 것은 누가 더 애썼는지 증명하는 일이 아닙니다. {typ}이 일상에서 어떻게 들리고, 놓치고, 오해되는지 보는 것입니다. {guardian_desc}",
+            "notice": "읽으면서 최근 장면 하나를 고르세요. 어떤 말, 시간, 행동, 기억, 가까움이 \"{desc}\"를 특히 분명하게 만들었나요?",
+            "practice": "오늘은 {title}을 위한 작은 연습 하나만 설계하세요. 욕구를 실행 가능한 요청으로 바꾸고, 24시간 안에 해볼 수 있을 만큼 작게 줄입니다.",
+            "mistakes": "{title}을 상대가 즉시 바뀌어야 한다는 증거로 쓰지 마세요. {name}의 입구에서 감정, 경계, 요청을 나누는 지도로 사용하세요.",
+            "scripts": ["옳고 그름을 가리려는 게 아니라 \"{desc}\"가 나에게 무엇을 의미하는지 말하고 싶어.", "{title}에서 한 걸음만 회복한다면 이 작은 행동부터 시작하고 싶어.", "내가 이해받고 싶은 것은 라벨이 아니라 {name}가 지키는 이 상황에서 사랑을 받는 방식이야."],
+            "reflection": ["{title}의 장면은 최근 어떤 어긋남과 가장 닮았나?", "\"{desc}\"에 대해 상대가 추측하기보다 구체적으로 무엇을 해 주길 바라나?", "{typ}의 언어로 말하면 요청이 더 분명해질까?"],
+        },
+        "es": {
+            "lede": "{title} no es un recordatorio genérico. Coloca \"{desc}\" dentro de la mirada de {name} para nombrar dónde se desajusta este lenguaje y traducirlo en un paso que sí pueda recibirse.",
+            "why": "Cuando el tema es {title}, no se trata de probar quién cuida más. Se trata de ver cómo {typ} se escucha, se pierde o se malinterpreta en la vida diaria. {guardian_desc}",
+            "notice": "Mientras lees, elige una escena reciente: qué palabra, tiempo, acción, recuerdo o cercanía hizo que \"{desc}\" se volviera especialmente visible?",
+            "practice": "Diseña hoy una práctica pequeña para {title}. Convierte la necesidad en una petición posible y mantén el plazo dentro de veinticuatro horas.",
+            "mistakes": "No uses {title} como prueba de que alguien debe cambiar de inmediato. Úsalo como mapa para separar emoción, límite y petición en la puerta de {name}.",
+            "scripts": ["No quiero decidir quién tiene razón; quiero explicar qué significa para mí \"{desc}\".", "Si reparamos solo un paso pequeño de {title}, me gustaría empezar con esta acción posible.", "Necesito que entiendas la situación de {name}, no solo la etiqueta."],
+            "reflection": ["Qué desajuste reciente se parece más a {title}?", "Para \"{desc}\", qué quiero que la otra persona haga concretamente en lugar de adivinar mis emociones?", "La petición sería más clara si uso el lenguaje de {typ}?"],
+        },
+    }
+    raw = templates[lang]
+    values = {"title": title, "desc": desc, "name": name, "typ": typ, "guardian_desc": guardian_desc}
+    return {key: [item.format(**values) for item in value] if isinstance(value, list) else value.format(**values) for key, value in raw.items()}
+
+
+def character_detail_copy(lang: str, name: str, typ: str, desc: str) -> dict:
+    templates = {
+        "zh": {
+            "how": "{name} 的頁面聚焦在 {typ} 如何讓人感到被愛。當這個入口被忽略時，受傷常不是來自大事件，而是來自那些沒有被說清楚、沒有被留下、或沒有被安全接住的細節。",
+            "need": "{name} 守護的不是任性要求，而是一種希望被理解的接收方式。你可以用這頁辨認：我需要被看見的是什麼、我害怕哪種錯頻、哪個小行動最能讓我安心。",
+            "practice": "今天用 {name} 的方式練習一次：先說出感受，再說出 {typ} 的需求，最後只提出一個對方能做到的小請求。",
+            "scripts": ["我想用 {typ} 的語言說清楚這件事。", "對我來說，這不是小題大作，而是我接收愛的入口。", "如果你願意，我希望先從一個小行動開始。"],
+            "reflection": ["我最近一次沒有被接住，是不是和 {typ} 有關？", "{name} 的提醒能不能幫我把要求縮小成可執行的一步？", "我有沒有把需要說成指責，而不是請求？"],
+        },
+        "en": {
+            "how": "{name}'s page focuses on how {typ} helps someone feel loved. When this doorway is missed, the hurt often comes from small details that were not named, kept, shared, or safely received.",
+            "need": "{name} does not guard a demand; this guardian protects a way of receiving care. Use the page to name what needs to be seen, which misfrequency feels tender, and what small action would help.",
+            "practice": "Practice once through {name}'s lens today: name the feeling, name the need in the language of {typ}, then ask for one small action the other person can do.",
+            "scripts": ["I want to explain this through the language of {typ}.", "This is not me making it too big; this is one doorway where I receive love.", "If you are willing, I would like to start with one small action."],
+            "reflection": ["Was my latest moment of not feeling received connected to {typ}?", "Can {name}'s reminder help me shrink the request into one doable step?", "Did I state a need as blame instead of a request?"],
+        },
+        "ja": {
+            "how": "{name} のページは、{typ} がどのように愛されている感覚につながるかを扱います。この入口が見落とされる時、傷つきは大事件ではなく、言葉にされない、残されない、安全に受け取られない細部から生まれます。",
+            "need": "{name} が守るのはわがままな要求ではなく、ケアを受け取る一つの方法です。このページで、何を見てほしいのか、どのすれ違いが痛むのか、どんな小さな行動が助けになるのかを整理できます。",
+            "practice": "今日は {name} の視点で一度練習します。感情を名づけ、{typ} のニーズを伝え、相手ができる小さな行動を一つだけお願いします。",
+            "scripts": ["このことを {typ} の言語で説明したい。", "大げさにしたいのではなく、ここが私の愛を受け取る入口です。", "よければ、小さな行動を一つだけ始めたい。"],
+            "reflection": ["最近受け取られなかった感覚は {typ} と関係しているか。", "{name} の視点でお願いを一つの行動へ小さくできるか。", "ニーズをお願いではなく責め言葉として言っていないか。"],
+        },
+        "ko": {
+            "how": "{name} 페이지는 {typ}이 어떻게 사랑받는 감각으로 이어지는지 다룹니다. 이 입구가 놓치면 상처는 큰 사건보다 말해지지 않거나 남겨지지 않거나 안전하게 받지 못한 세부에서 생깁니다.",
+            "need": "{name}가 지키는 것은 고집스러운 요구가 아니라 돌봄을 받는 방식입니다. 이 페이지로 무엇이 보이길 바라는지, 어떤 어긋남이 아픈지, 어떤 작은 행동이 도움이 되는지 정리할 수 있습니다.",
+            "practice": "오늘 {name}의 관점으로 한 번 연습하세요. 감정을 말하고, {typ}의 욕구를 밝히고, 상대가 할 수 있는 작은 행동 하나만 요청합니다.",
+            "scripts": ["이 일을 {typ}의 언어로 설명하고 싶어.", "이건 과장하려는 게 아니라 내가 사랑을 받는 입구야.", "괜찮다면 작은 행동 하나부터 시작하고 싶어."],
+            "reflection": ["최근 받지 못했다고 느낀 순간은 {typ}과 관련이 있나?", "{name}의 시선으로 요청을 실행 가능한 한 걸음으로 줄일 수 있나?", "욕구를 요청이 아니라 비난처럼 말하고 있지는 않나?"],
+        },
+        "es": {
+            "how": "La página de {name} se centra en cómo {typ} ayuda a una persona a sentirse amada. Cuando esta puerta se pierde, el dolor suele venir de detalles que no fueron nombrados, guardados, compartidos o recibidos con seguridad.",
+            "need": "{name} no protege una exigencia; protege una forma de recibir cuidado. Usa la página para nombrar qué necesita verse, qué desajuste duele y qué acción pequeña ayudaría.",
+            "practice": "Practica hoy una vez desde la mirada de {name}: nombra el sentimiento, nombra la necesidad en el lenguaje de {typ} y pide una acción pequeña que la otra persona pueda hacer.",
+            "scripts": ["Quiero explicar esto con el lenguaje de {typ}.", "No estoy exagerando; esta es una puerta por donde recibo amor.", "Si estás dispuesto/a, me gustaría empezar con una acción pequeña."],
+            "reflection": ["Mi último momento de no sentirme recibida estuvo conectado con {typ}?", "La mirada de {name} puede ayudarme a convertir la petición en un paso posible?", "Estoy diciendo una necesidad como culpa en vez de petición?"],
+        },
+    }
+    raw = templates[lang]
+    values = {"name": name, "typ": typ, "desc": desc}
+    return {key: [item.format(**values) for item in value] if isinstance(value, list) else value.format(**values) for key, value in raw.items()}
+
+
+POLICY_SECTIONS = {
+    "zh": {
+        "contact": [
+            ("可以聯絡我們的事情", "如果頁面內容、守護者對應、語言版本、聯盟連結或可用性出現問題，請寄到 contact@lovetypes.tw。描述你看到的頁面網址、裝置與需要修正的地方，能讓我們更快回到心語庭園裡補上缺口。"),
+            ("合作與素材授權", "品牌合作、素材引用、教學或媒體需求可以用同一個信箱提出。LoveTypes 會先確認合作是否符合五守護者宇宙觀、讀者信任與清楚揭露原則，再決定是否進一步討論。"),
+            ("不適合透過本站處理的狀況", "LoveTypes 無法提供緊急諮商、醫療、法律或個案診斷。如果你正處於危急、暴力、騷擾或自傷風險，請優先尋求當地緊急資源與專業協助。"),
+        ],
+        "privacy": [
+            ("我們收集什麼", "LoveTypes 目前不要求註冊帳號，也不要求你提交測驗結果才能閱讀內容。你主動寄信給我們時，信件地址與內容只會用於回覆、修正問題或處理你提出的請求。"),
+            ("第三方服務", "網站可能使用託管、分析、聯盟行銷或外部連結服務。這些服務可能依各自政策處理技術資料，例如瀏覽器資訊、來源網址或點擊紀錄；我們會避免把它們設計成辨識個人情感狀態的工具。"),
+            ("資料請求與刪除", "若你曾透過 contact@lovetypes.tw 聯絡我們，可以要求查詢、更正或刪除相關通信紀錄。我們會在合理範圍內處理，除非法律、安全或防濫用需求要求保留最少必要紀錄。"),
+        ],
+        "terms": [
+            ("內容用途", "LoveTypes 的測驗、指南與守護者設定是自我理解與關係溝通工具。你可以用它們整理語言、準備對話與練習修復，但不應把結果當成永久標籤或判定一段關係的唯一依據。"),
+            ("責任邊界", "本站內容不能取代心理治療、醫療、法律、財務或危機介入建議。任何基於本站內容做出的行動，都需要結合你的真實情境、雙方同意與必要的專業支持。"),
+            ("智慧財產與外部連結", "LoveTypes 的文字、角色設定、圖片與版面屬於網站內容資產，除合理引用外請勿未經許可大量重製。外部與聯盟連結會帶你離開本站，購買與使用條款由各服務自行負責。"),
+        ],
+    },
+    "en": {
+        "contact": [
+            ("What to Send Us", "If a page, guardian match, language version, affiliate link, or accessibility detail looks wrong, write to contact@lovetypes.tw. Include the page URL, device, and what needs correction so we can repair that corner of the Heart Garden clearly."),
+            ("Partnerships and Assets", "Use the same inbox for brand inquiries, media requests, teaching use, or asset permissions. LoveTypes reviews whether a request fits the five-guardian world, reader trust, and clear disclosure before discussing next steps."),
+            ("What This Site Cannot Handle", "LoveTypes cannot provide emergency counseling, medical care, legal advice, or individual diagnosis. If you face danger, violence, harassment, or self-harm risk, contact local emergency and professional resources first."),
+        ],
+        "privacy": [
+            ("What We Collect", "LoveTypes does not currently require accounts, and you do not need to submit quiz results to read the site. If you email us, your address and message are used to reply, correct issues, or handle the request you made."),
+            ("Third-Party Services", "The site may use hosting, analytics, affiliate, or external link services. These services may process technical data such as browser information, referrers, or click records under their own policies; we avoid designing them to identify personal emotional states."),
+            ("Access and Deletion", "If you contacted us through contact@lovetypes.tw, you may ask to access, correct, or delete related communication records. We will handle reasonable requests unless law, safety, or abuse-prevention needs require minimal retention."),
+        ],
+        "terms": [
+            ("How to Use the Content", "LoveTypes quizzes, guides, and guardian stories are tools for self-understanding and relationship conversation. Use them to organize language, prepare dialogue, and practice repair, not as permanent labels or the sole judgment of a relationship."),
+            ("Responsibility Boundary", "The site does not replace therapy, medical care, legal advice, financial advice, or crisis support. Actions based on this content should account for real context, consent from everyone involved, and professional support when needed."),
+            ("Intellectual Property and Links", "LoveTypes text, character settings, images, and layouts are site assets. Please do not reproduce them at scale without permission beyond reasonable citation. External and affiliate links take you away from this site, and their purchases or terms are handled by each service."),
+        ],
+    },
+    "ja": {
+        "contact": [
+            ("連絡できる内容", "ページ内容、守護者の対応、言語版、アフィリエイトリンク、使いやすさに問題がある場合は contact@lovetypes.tw へお送りください。URL、端末、修正点を書いていただくと、心語庭園の欠けた場所を早く直せます。"),
+            ("協力と素材利用", "ブランド連携、取材、教育利用、素材許可も同じ連絡先で受け付けます。LoveTypes は五守護者の世界観、読者の信頼、明確な開示に合うかを確認してから次の相談に進みます。"),
+            ("本站で扱えないこと", "LoveTypes は緊急相談、医療、法律助言、個別診断を提供できません。危険、暴力、嫌がらせ、自傷リスクがある場合は、まず地域の緊急窓口と専門家に連絡してください。"),
+        ],
+        "privacy": [
+            ("収集する情報", "LoveTypes は現在アカウント登録を求めず、測験結果を送信しなくても読むことができます。あなたがメールを送った場合、アドレスと本文は返信、修正、依頼対応のために使います。"),
+            ("第三者サービス", "サイトはホスティング、分析、アフィリエイト、外部リンクサービスを使うことがあります。これらは各自の方針に従い、ブラウザ情報、参照元、クリック記録などの技術情報を扱う場合があります。個人の感情状態を識別する設計にはしません。"),
+            ("確認と削除", "contact@lovetypes.tw に連絡したことがある場合、関連する通信記録の確認、修正、削除を依頼できます。法律、安全、不正利用防止のために最小限の保持が必要な場合を除き、合理的に対応します。"),
+        ],
+        "terms": [
+            ("内容の使い方", "LoveTypes の測験、ガイド、守護者設定は自己理解と関係の対話のための道具です。言葉を整理し、会話を準備し、修復を練習するために使い、永続的なラベルや関係判断の唯一の根拠にはしないでください。"),
+            ("責任の境界", "本站は心理療法、医療、法律、財務、危機介入の助言を代替しません。内容に基づく行動は、現実の状況、関係者の同意、必要な専門支援を合わせて考えてください。"),
+            ("知的財産とリンク", "LoveTypes の文章、キャラクター設定、画像、レイアウトはサイト資産です。合理的な引用を超える大量複製は許可なく行わないでください。外部リンクやアフィリエイトリンク先の購入・規約は各サービスの責任です。"),
+        ],
+    },
+    "ko": {
+        "contact": [
+            ("문의할 수 있는 내용", "페이지 내용, 수호자 연결, 언어 버전, 제휴 링크, 접근성에 문제가 있으면 contact@lovetypes.tw 로 보내 주세요. 페이지 주소, 기기, 수정이 필요한 부분을 적어 주면 마음 정원의 빈틈을 더 빨리 고칠 수 있습니다."),
+            ("협업과 자료 사용", "브랜드 협업, 미디어 요청, 교육 활용, 자료 허가도 같은 메일로 보낼 수 있습니다. LoveTypes는 요청이 다섯 수호자 세계관, 독자 신뢰, 명확한 공개 원칙에 맞는지 먼저 확인합니다."),
+            ("이 사이트가 처리할 수 없는 일", "LoveTypes는 긴급 상담, 의료, 법률 조언, 개인 진단을 제공하지 않습니다. 위험, 폭력, 괴롭힘, 자해 위험이 있다면 먼저 지역 긴급 자원과 전문가의 도움을 구하세요."),
+        ],
+        "privacy": [
+            ("수집하는 정보", "LoveTypes는 현재 계정 가입을 요구하지 않으며, 테스트 결과를 제출하지 않아도 콘텐츠를 읽을 수 있습니다. 사용자가 메일을 보낼 경우 주소와 내용은 답변, 문제 수정, 요청 처리에만 사용됩니다."),
+            ("제3자 서비스", "사이트는 호스팅, 분석, 제휴, 외부 링크 서비스를 사용할 수 있습니다. 이러한 서비스는 각자의 정책에 따라 브라우저 정보, 유입 주소, 클릭 기록 같은 기술 자료를 처리할 수 있으며, 개인의 감정 상태를 식별하도록 설계하지 않습니다."),
+            ("조회와 삭제 요청", "contact@lovetypes.tw 로 연락한 적이 있다면 관련 통신 기록의 조회, 수정, 삭제를 요청할 수 있습니다. 법률, 안전, 남용 방지를 위해 최소 보관이 필요한 경우를 제외하고 합리적으로 처리합니다."),
+        ],
+        "terms": [
+            ("콘텐츠 사용", "LoveTypes의 테스트, 가이드, 수호자 설정은 자기 이해와 관계 대화를 돕는 도구입니다. 언어를 정리하고 대화를 준비하며 회복을 연습하는 데 사용하되, 영구 라벨이나 관계 판단의 유일한 근거로 삼지 마세요."),
+            ("책임의 경계", "이 사이트는 심리치료, 의료, 법률, 재정, 위기 개입 조언을 대신하지 않습니다. 콘텐츠를 바탕으로 한 행동은 실제 상황, 모두의 동의, 필요한 전문 지원을 함께 고려해야 합니다."),
+            ("지식재산과 외부 링크", "LoveTypes의 글, 캐릭터 설정, 이미지, 레이아웃은 사이트 콘텐츠 자산입니다. 합리적 인용을 넘는 대량 복제는 허가 없이 하지 마세요. 외부 및 제휴 링크의 구매와 약관은 각 서비스가 책임집니다."),
+        ],
+    },
+    "es": {
+        "contact": [
+            ("Qué Puedes Enviarnos", "Si una página, correspondencia de guardián, versión de idioma, enlace afiliado o detalle de accesibilidad parece incorrecto, escribe a contact@lovetypes.tw. Incluye la URL, el dispositivo y lo que debe corregirse para reparar esa parte del Jardín del Corazón."),
+            ("Colaboraciones y Recursos", "Usa el mismo correo para propuestas de marca, medios, uso educativo o permisos de material. LoveTypes revisa si la solicitud encaja con el mundo de los cinco guardianes, la confianza del lector y una divulgación clara antes de avanzar."),
+            ("Lo Que Este Sitio No Atiende", "LoveTypes no ofrece consejería de emergencia, atención médica, asesoría legal ni diagnóstico individual. Si hay peligro, violencia, acoso o riesgo de autolesión, busca primero recursos locales de emergencia y apoyo profesional."),
+        ],
+        "privacy": [
+            ("Qué Recopilamos", "LoveTypes actualmente no requiere cuentas, y no necesitas enviar resultados del test para leer el sitio. Si nos escribes, tu dirección y mensaje se usan para responder, corregir problemas o atender la solicitud que hiciste."),
+            ("Servicios de Terceros", "El sitio puede usar servicios de alojamiento, analítica, afiliación o enlaces externos. Estos servicios pueden procesar datos técnicos como navegador, referencia o clics bajo sus propias políticas; evitamos diseñarlos para identificar estados emocionales personales."),
+            ("Acceso y Eliminación", "Si contactaste a contact@lovetypes.tw, puedes pedir acceso, corrección o eliminación de registros relacionados. Atenderemos solicitudes razonables salvo que la ley, la seguridad o la prevención de abuso requieran conservar lo mínimo necesario."),
+        ],
+        "terms": [
+            ("Uso del Contenido", "Los tests, guías e historias de guardianes de LoveTypes son herramientas de autocomprensión y conversación relacional. Úsalos para ordenar lenguaje, preparar diálogo y practicar reparación, no como etiquetas permanentes ni como único juicio de una relación."),
+            ("Límite de Responsabilidad", "El sitio no reemplaza terapia, atención médica, asesoría legal, financiera ni apoyo de crisis. Toda acción basada en este contenido debe considerar el contexto real, el consentimiento de las personas involucradas y apoyo profesional cuando haga falta."),
+            ("Propiedad Intelectual y Enlaces", "Los textos, personajes, imágenes y diseños de LoveTypes son activos del sitio. No los reproduzcas a gran escala sin permiso más allá de una cita razonable. Los enlaces externos y afiliados te llevan fuera del sitio, y sus compras o términos dependen de cada servicio."),
+        ],
+    },
+}
+
+
 def quiz_payload(lang: str) -> str:
     type_order = ["W", "T", "G", "S", "P"]
     questions = []
@@ -1585,14 +1783,14 @@ def guides_index(lang: str) -> None:
 def guide_page(lang: str, guide: dict, index: int) -> None:
     t = LANGS[lang]
     labels = TOPIC_DETAILS[lang]
-    copy = PRACTICAL_COPY[lang]
     title, desc = guide[lang]
     guardian = GUARDIANS[guide["guardian"]][lang]
+    detail = guide_detail_copy(lang, title, desc, guardian)
     related = [g for g in GUIDES if g["slug"] != guide["slug"]]
     next_a = related[(index + 1) % len(related)]
     next_b = related[(index + 4) % len(related)]
-    scripts = "".join(f"<li>{escape(item)}</li>" for item in copy["scripts"])
-    reflections = "".join(f"<li>{escape(item)}</li>" for item in copy["reflection"])
+    scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
+    reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -1600,13 +1798,13 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
 </section>
 <section class="article-shell">
   <article class="article-body">
-    <p class="lede">{escape(desc)} {escape(copy["why"])}</p>
-    <h2>{escape(labels["why"])}</h2><p>{escape(copy["why"])}</p>
-    <h2>{escape(labels["notice"])}</h2><p>{escape(copy["notice"])}</p>
+    <p class="lede">{escape(detail["lede"])}</p>
+    <h2>{escape(labels["why"])}</h2><p>{escape(detail["why"])}</p>
+    <h2>{escape(labels["notice"])}</h2><p>{escape(detail["notice"])}</p>
     <h2>{escape(labels["scripts"])}</h2><ul>{scripts}</ul>
-    <h2>{escape(labels["practice"])}</h2><p>{escape(copy["practice"])}</p>
+    <h2>{escape(labels["practice"])}</h2><p>{escape(detail["practice"])}</p>
     <div class="callout"><strong>{escape(t["practice"])}</strong><p>{escape(guardian[2])}</p></div>
-    <h2>{escape(labels["mistakes"])}</h2><p>{escape(copy["mistakes"])}</p>
+    <h2>{escape(labels["mistakes"])}</h2><p>{escape(detail["mistakes"])}</p>
     <h2>{escape(labels["reflection"])}</h2><ol>{reflections}</ol>
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
   </article>
@@ -1624,8 +1822,9 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
 def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str) -> None:
     lang = "zh"
     t = LANGS[lang]
-    copy = PRACTICAL_COPY[lang]
     related = next(g for g in GUIDES if g["slug"] == canonical_target)
+    guardian = GUARDIANS[related["guardian"]][lang]
+    detail = guide_detail_copy(lang, title, desc, guardian)
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">HEART GARDEN ARCHIVE</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -1635,13 +1834,13 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <article class="article-body">
     <p class="lede">{escape(desc)} 這一頁保留原有主題，並把它放回心語庭園的語境：先辨認錯頻，再找到能被接收的修復方式。</p>
     <h2>先把守護者結果翻成真實需求</h2>
-    <p>{escape(copy["notice"])}</p>
+    <p>{escape(detail["notice"])}</p>
     <h2>把理解變成一盞可以點亮的小燈</h2>
-    <p>{escape(copy["practice"])}</p>
+    <p>{escape(detail["practice"])}</p>
     <h2>可以直接開口的句型</h2>
-    <ul>{"".join(f"<li>{escape(item)}</li>" for item in copy["scripts"])}</ul>
+    <ul>{"".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])}</ul>
     <h2>不要讓守護者類型取代溝通</h2>
-    <p>{escape(copy["mistakes"])}</p>
+    <p>{escape(detail["mistakes"])}</p>
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
   </article>
   <aside class="article-side"><h2>延伸閱讀</h2>{guide_card(lang, related)}</aside>
@@ -1654,21 +1853,21 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 def character_page(lang: str, slug: str, data: dict) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
-    copy = PRACTICAL_COPY[lang]
     name, typ, desc = data[lang]
+    detail = character_detail_copy(lang, name, typ, desc)
     related_guides = [g for g in GUIDES if g["guardian"] == slug][:3]
     related_html = "".join(guide_card(lang, g) for g in related_guides)
-    guardian_nav = "".join(character_card(lang, item_slug, item_data, slug) for item_slug, item_data in GUARDIANS.items())
-    scripts = "".join(f"<li>{escape(item)}</li>" for item in copy["scripts"])
-    reflections = "".join(f"<li>{escape(item)}</li>" for item in copy["reflection"])
+    guardian_nav = "".join(character_link_card(lang, item_slug, item_data, slug) for item_slug, item_data in GUARDIANS.items())
+    scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
+    reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     body = f"""
 <section class="guardian-hero">
   <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False)}
 </section>
 <section class="section intro-grid">
-  <div><h2>{escape(labels["how"])}</h2><p>{escape(copy["why"])}</p><p>{escape(desc)}</p></div>
-  <div class="text-stack"><h2>{escape(labels["need"])}</h2><p>{escape(copy["notice"])}</p><p>{escape(copy["practice"])}</p></div>
+  <div><h2>{escape(labels["how"])}</h2><p>{escape(detail["how"])}</p><p>{escape(desc)}</p></div>
+  <div class="text-stack"><h2>{escape(labels["need"])}</h2><p>{escape(detail["need"])}</p><p>{escape(detail["practice"])}</p></div>
 </section>
 <section class="section article-body standalone">
   <h2>{escape(labels["use"])}</h2>
@@ -1817,6 +2016,21 @@ def simple_page(lang: str, slug: str) -> None:
         extra = '<p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p>'
     if slug in {"privacy", "terms"}:
         extra = f"<p><strong>Updated:</strong> {UPDATED}</p>"
+    if slug in {"contact", "privacy", "terms"}:
+        policy_items = "".join(f"<h2>{escape(heading)}</h2><p>{escape(body_text)}</p>" for heading, body_text in POLICY_SECTIONS[lang][slug])
+        schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
+        body = f"""
+<section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
+<section class="section article-body standalone">
+  {policy_items}
+  <h2>{escape(t["boundary"])}</h2>
+  <p>{escape(t["boundary_text"])}</p>
+</section>
+"""
+        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"{schema_type}","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
+        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
+        return
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
 <section class="section article-body standalone">

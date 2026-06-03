@@ -208,6 +208,7 @@ LANGS = {
 RESOURCE_CARDS = {
     "zh": [
         ("guides", "守護者深度指南", "把測驗結果、錯頻、界線與修復練習整理成可直接閱讀的路線。"),
+        ("repair-plan", "7 日心語修復計畫", "把守護者結果帶進一週練習：整理傷口、開口請求、選擇補給與回顧修復。"),
         ("characters/iris", "五位情感守護者", "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉開始，找到你最容易接收愛的入口。"),
         ("luna-yoga-music", "Luna Yoga Music", "夜晚、書寫、伸展與關係反思時可使用的安定音樂補給。"),
         ("theory", "愛之語理論", "回到五種愛之語的基礎，理解為什麼有愛仍可能錯頻。"),
@@ -215,6 +216,7 @@ RESOURCE_CARDS = {
     ],
     "en": [
         ("guides", "Guardian guides", "Read paths for results, misfrequency, boundaries, and repair practices."),
+        ("repair-plan", "7-Day Heart-Language Repair Plan", "Carry your guardian result through one week of reflection, requests, supplies, and repair review."),
         ("characters/iris", "Five emotion guardians", "Begin with Iris, Noah, Vivian, Claire, and Dora to find your doorway to receiving love."),
         ("luna-yoga-music", "Luna Yoga Music", "Calm audio supplies for night reflection, journaling, stretching, and relationship review."),
         ("theory", "Love-language theory", "Return to the five love languages and why love can still arrive out of frequency."),
@@ -222,6 +224,7 @@ RESOURCE_CARDS = {
     ],
     "ja": [
         ("guides", "守護者ガイド", "診断結果、すれ違い、境界線、修復練習を読むための入口です。"),
+        ("repair-plan", "7日間の心語修復プラン", "守護者の結果を一週間の内省、お願い、補給、修復レビューへつなげます。"),
         ("characters/iris", "五人の感情の守護者", "アイリス、ノア、ヴィヴィアン、クレア、ドラから、愛を受け取る入口を探します。"),
         ("luna-yoga-music", "Luna Yoga Music", "夜の内省、日記、ストレッチ、関係のふり返りに寄り添う静かな音楽。"),
         ("theory", "愛の言語の理論", "五つの愛の言語と、愛があってもすれ違う理由に戻ります。"),
@@ -229,6 +232,7 @@ RESOURCE_CARDS = {
     ],
     "ko": [
         ("guides", "수호자 가이드", "결과, 어긋남, 경계, 회복 연습을 읽기 쉽게 모은 입구입니다."),
+        ("repair-plan", "7일 마음 언어 회복 계획", "수호자 결과를 일주일의 성찰, 요청, 보급, 회복 점검으로 이어 갑니다."),
         ("characters/iris", "다섯 감정 수호자", "아이리스, 노아, 비비안, 클레어, 도라에서 사랑을 받는 입구를 찾습니다."),
         ("luna-yoga-music", "Luna Yoga Music", "밤의 성찰, 기록, 스트레칭, 관계 돌아보기에 어울리는 차분한 음악입니다."),
         ("theory", "사랑의 언어 이론", "다섯 가지 사랑의 언어와 사랑이 있어도 어긋나는 이유로 돌아갑니다."),
@@ -236,6 +240,7 @@ RESOURCE_CARDS = {
     ],
     "es": [
         ("guides", "Guías de guardianas", "Entradas para resultados, desajustes, límites y prácticas de reparación."),
+        ("repair-plan", "Plan de reparación de 7 días", "Lleva tu resultado por una semana de reflexión, petición, recursos y revisión de reparación."),
         ("characters/iris", "Cinco guardianas emocionales", "Empieza con Iris, Noah, Vivian, Claire y Dora para encontrar tu entrada al amor."),
         ("luna-yoga-music", "Luna Yoga Music", "Audio tranquilo para reflexión nocturna, escritura, estiramiento y revisión relacional."),
         ("theory", "Teoría de lenguajes del amor", "Vuelve a los cinco lenguajes del amor y a por qué el amor puede llegar desajustado."),
@@ -998,6 +1003,105 @@ COLLECTOR_LABELS = {
         "download": "Guardar imagen",
         "route": "Volver a la ruta",
         "share_hint": "Úsala en historias, envíala a una pareja o ponla en tu diario relacional como puerta de lenguaje del corazón.",
+    },
+}
+
+
+REPAIR_PLAN = {
+    "zh": {
+        "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
+        "title": "7 日心語修復計畫",
+        "desc": "完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。",
+        "days_title": "一週練習路線",
+        "guardian_title": "依守護者調整任務",
+        "start": "開始測驗",
+        "resources": "打開補給站",
+        "download": "保存這週路線",
+        "days": [
+            ("第 1 天", "認領你的守護者", "寫下結果、分數最高的愛之語，以及最近一次感覺沒被接住的場景。"),
+            ("第 2 天", "命名錯頻傷口", "把受傷翻成一句話：我不是在要求完美，我是在乎哪一種被愛入口。"),
+            ("第 3 天", "縮小成一個請求", "把需求縮成 24 小時內可以做到的一步，不把它說成考驗。"),
+            ("第 4 天", "選一個補給", "回到旅人補給站，選指南、書卷或 Luna，不一次買齊或讀完整座庭園。"),
+            ("第 5 天", "練習一段對話", "用守護者句型說出感受、需求與小請求，避免用類型替代溝通。"),
+            ("第 6 天", "觀察回應", "記錄對方做得到、做不到或誤解的地方，把它當作下一次翻譯的資料。"),
+            ("第 7 天", "回顧修復", "保留有效的做法，放下無效的期待，選下一週要繼續練的一個入口。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
+        "title": "7-Day Heart-Language Repair Plan",
+        "desc": "After the quiz, you do not need to repair the whole relationship at once. Use seven days to turn your guardian result into a route you can revisit: notice the wound, ask for one small action, then choose one supply to support practice.",
+        "days_title": "One-week practice route",
+        "guardian_title": "Adjust by guardian",
+        "start": "Start quiz",
+        "resources": "Open supply station",
+        "download": "Save this route",
+        "days": [
+            ("Day 1", "Claim your guardian", "Write down the result, the strongest love language, and one recent moment when you did not feel received."),
+            ("Day 2", "Name the wound", "Translate hurt into one sentence: I am not asking for perfection; I care about this doorway to love."),
+            ("Day 3", "Shrink the request", "Turn the need into one step that can happen within 24 hours, without making it a test."),
+            ("Day 4", "Choose one supply", "Return to the supply station and pick one guide, book, or Luna path instead of trying everything at once."),
+            ("Day 5", "Practice one conversation", "Name feeling, need, and one small request through your guardian language."),
+            ("Day 6", "Observe the response", "Record what worked, what did not, and what was misunderstood. Treat it as material for the next translation."),
+            ("Day 7", "Review repair", "Keep the useful action, release one unhelpful expectation, and choose next week's doorway."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
+        "title": "7日間の心語修復プラン",
+        "desc": "診断後、関係全体をすぐ修復する必要はありません。七日間で守護者の結果を見返せる練習ルートにします。傷を見つけ、小さなお願いにし、補給を一つ選びます。",
+        "days_title": "一週間の練習ルート",
+        "guardian_title": "守護者別の調整",
+        "start": "診断を始める",
+        "resources": "補給ステーションを開く",
+        "download": "このルートを保存",
+        "days": [
+            ("1日目", "守護者を認領する", "結果、もっとも強い愛の言語、最近受け取られなかった場面を書きます。"),
+            ("2日目", "すれ違いの傷に名前をつける", "傷つきを一文にします。完璧を求めたいのではなく、この入口を大切にしたい。"),
+            ("3日目", "お願いを小さくする", "ニーズを二十四時間以内にできる一歩へ縮め、試す形にしません。"),
+            ("4日目", "補給を一つ選ぶ", "補給ステーションに戻り、ガイド、本、Luna のどれか一つを選びます。"),
+            ("5日目", "会話を一つ練習する", "守護者の言語で感情、ニーズ、小さなお願いを伝えます。"),
+            ("6日目", "反応を観察する", "できたこと、難しかったこと、誤解されたことを記録し、次の翻訳材料にします。"),
+            ("7日目", "修復を見直す", "有効だった行動を残し、役に立たない期待を一つ手放し、来週の入口を選びます。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
+        "title": "7일 마음 언어 회복 계획",
+        "desc": "테스트 뒤 관계 전체를 한 번에 고칠 필요는 없습니다. 일주일 동안 수호자 결과를 다시 볼 수 있는 연습 루트로 바꾸세요. 상처를 보고, 작은 요청을 만들고, 보급 하나를 선택합니다.",
+        "days_title": "일주일 연습 루트",
+        "guardian_title": "수호자별 조정",
+        "start": "테스트 시작",
+        "resources": "보급소 열기",
+        "download": "이 루트 저장",
+        "days": [
+            ("1일차", "수호자 인정하기", "결과, 가장 강한 사랑의 언어, 최근 받지 못했다고 느낀 장면을 적습니다."),
+            ("2일차", "어긋남 상처 이름 붙이기", "상처를 한 문장으로 바꿉니다. 완벽을 바라는 것이 아니라 이 사랑의 입구를 중요하게 여깁니다."),
+            ("3일차", "요청 줄이기", "욕구를 24시간 안에 가능한 한 걸음으로 줄이고 시험처럼 만들지 않습니다."),
+            ("4일차", "보급 하나 선택", "보급소로 돌아가 가이드, 책, Luna 중 하나만 고릅니다."),
+            ("5일차", "대화 하나 연습", "수호자의 언어로 감정, 욕구, 작은 요청을 말합니다."),
+            ("6일차", "반응 관찰", "된 것, 어려운 것, 오해된 것을 기록해 다음 번역의 자료로 삼습니다."),
+            ("7일차", "회복 점검", "효과가 있던 행동을 남기고 도움이 안 되는 기대 하나를 내려놓고 다음 주 입구를 고릅니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
+        "title": "Plan de reparación de 7 días",
+        "desc": "Después del test, no hace falta reparar toda la relación de una vez. Usa siete días para convertir tu resultado en una ruta revisitable: mira la herida, pide una acción pequeña y elige un recurso para practicar.",
+        "days_title": "Ruta de práctica semanal",
+        "guardian_title": "Ajusta por guardiana",
+        "start": "Iniciar test",
+        "resources": "Abrir recursos",
+        "download": "Guardar esta ruta",
+        "days": [
+            ("Día 1", "Reclama tu guardiana", "Escribe el resultado, el lenguaje más fuerte y un momento reciente en que no te sentiste recibida."),
+            ("Día 2", "Nombra la herida", "Traduce el dolor en una frase: no pido perfección; me importa esta puerta para recibir amor."),
+            ("Día 3", "Reduce la petición", "Convierte la necesidad en un paso posible dentro de 24 horas, sin volverlo una prueba."),
+            ("Día 4", "Elige un recurso", "Vuelve a recursos y elige una guía, libro o camino Luna en vez de intentar todo a la vez."),
+            ("Día 5", "Practica una conversación", "Nombra emoción, necesidad y una petición pequeña con el lenguaje de tu guardiana."),
+            ("Día 6", "Observa la respuesta", "Registra qué funcionó, qué no, y qué se malentendió. Úsalo para la próxima traducción."),
+            ("Día 7", "Revisa la reparación", "Conserva la acción útil, suelta una expectativa inútil y elige la puerta de la próxima semana."),
+        ],
     },
 }
 
@@ -1936,6 +2040,8 @@ def quiz_payload(lang: str) -> str:
             "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
             "collectorOpen": COLLECTOR_LABELS[lang]["open"],
             "collectorSave": COLLECTOR_LABELS[lang]["download"],
+            "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
+            "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
         }
     payload = {
@@ -2048,6 +2154,7 @@ def quiz_script(lang: str) -> str:
         <a class="primary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
         <a class="secondary-btn" href="${{result.guideUrl}}">${{quiz.labels.guide_link}}</a>
         <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.resources_link}}</a>
+        <a class="secondary-btn" href="${{result.planUrl}}">${{result.planLabel}}</a>
       </nav>
       <div class="quiz-tools"><button type="button" class="secondary-btn" data-copy-result>${{quiz.labels.copy}}</button><button type="button" class="secondary-btn" data-retake>${{quiz.labels.retake}}</button></div>
       <p class="quiz-boundary">${{quiz.labels.boundary}}</p>`;
@@ -2312,6 +2419,60 @@ def resources_page(lang: str) -> None:
     write(page_path(lang, "resources"), layout(lang, page_title, t["resources_desc"], "resources", body, t["resources"], "website", "/og-cover.jpg", schema, affiliate=True))
 
 
+def repair_plan_page(lang: str) -> None:
+    t = LANGS[lang]
+    plan = REPAIR_PLAN[lang]
+    days = "".join(f"""
+<article>
+  <span>{escape(day)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+""" for day, title, desc in plan["days"])
+    guardian_rows = []
+    for slug in GUARDIANS:
+        route = supply_route(lang, slug)
+        name, typ, _guardian_desc = route["guardian"][lang]
+        guardian_rows.append(f"""
+<article class="repair-guardian-card" id="plan-{slug}">
+  {img_tag(route["guardian"]["prop"], route["title"])}
+  <div>
+    <p class="eyebrow">{escape(name)} · {escape(typ)}</p>
+    <h3>{escape(route["title"])}</h3>
+    <p>{escape(route["wound"])}</p>
+    <p><strong>{escape(SUPPLY_LABELS[lang]["repair"])}:</strong> {escape(route["mission"])}</p>
+    <div class="repair-plan-actions">
+      <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(REPAIR_PLAN[lang]["resources"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}">{escape(t["guardians"])}</a>
+    </div>
+  </div>
+</article>
+""")
+    body = f"""
+<section class="page-hero compact repair-plan-hero">
+  <p class="eyebrow">{escape(plan["eyebrow"])}</p>
+  <h1>{escape(plan["title"])}</h1>
+  <p>{escape(plan["desc"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
+</section>
+<section class="section repair-plan-section">
+  <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
+  <div class="repair-day-grid">{days}</div>
+</section>
+<section class="section repair-guardian-section">
+  <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>
+  <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>
+</section>
+<section class="section intro-grid">
+  <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
+  <div class="text-stack"><h2>{escape(SUPPLY_LABELS[lang]["not_now"])}</h2><p>{escape(SUPPLY_LABELS[lang]["not_now_text"])}</p></div>
+</section>
+"""
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"HowTo","name":"{escape(plan["title"])}","description":"{escape(plan["desc"])}","url":"{abs_url(lang, "repair-plan")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    page_title = f"{plan['title']} | LoveTypes" if lang == "zh" else f"{plan['title']} | LoveTypes {t['name']}"
+    write(page_path(lang, "repair-plan"), layout(lang, page_title, plan["desc"], "repair-plan", body, plan["title"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+
+
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
@@ -2453,7 +2614,7 @@ def write_css() -> None:
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
-        paths = ["", "guides", "characters", "theory", "resources", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+        paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "luna-yoga-music", "about", "contact", "privacy", "terms"]
         paths += [f"guides/{g['slug']}" for g in GUIDES]
         paths += [f"characters/{slug}" for slug in GUARDIANS]
         for path in paths:
@@ -2478,6 +2639,7 @@ def main() -> None:
         for slug, data in GUARDIANS.items():
             character_page(lang, slug, data)
         resources_page(lang)
+        repair_plan_page(lang)
         luna_page(lang)
         for slug in ["theory", "about", "contact", "privacy", "terms"]:
             simple_page(lang, slug)

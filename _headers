@@ -1,35 +1,8 @@
 /*
   Cache-Control: public, max-age=600
 
-/shared.css*
-  Cache-Control: public, max-age=31536000, immutable
-
-/site-interactions.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/deferred-external.js
-  Cache-Control: public, max-age=31536000, immutable
-
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/images/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/luna-yoga-music/images/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/luna-yoga-music/luna.css*
-  Cache-Control: public, max-age=31536000, immutable
-
-/og-cover.jpg
-  Cache-Control: public, max-age=31536000, immutable
-
-/og-cover.webp
-  Cache-Control: public, max-age=31536000, immutable
-
-/favicon.ico
-  Cache-Control: public, max-age=31536000, immutable
-
-/apple-touch-icon.png
+/shared.css*
   Cache-Control: public, max-age=31536000, immutable

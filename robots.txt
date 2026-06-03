@@ -1,15 +1,4 @@
 User-agent: *
 Allow: /
 
-# Language subdirectories
-Allow: /en/
-Allow: /ja/
-Allow: /ko/
-Allow: /es/
-Allow: /theory/
-Allow: /resources/
-
-# Utility pages are allowed so AdSense and search crawlers can review trust pages.
-
-# Sitemap location
 Sitemap: https://lovetypes.tw/sitemap.xml

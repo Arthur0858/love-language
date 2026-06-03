@@ -1,9 +1,7 @@
 (function () {
   var current = document.currentScript;
   var shouldLoadAffiliate = current && current.hasAttribute('data-affiliate');
-  var shouldLoadAds = current && current.hasAttribute('data-ads');
   var affiliateSrc = 'https://cdn.affiliates.one/production/adlinks/9debdd711c52d9dc844e3f5a6669fe912d4a1908c6a6f579e4ad35a346ddc87a.js';
-  var adsSrc = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4093856660317740';
 
   function loadScript(src, options) {
     if (document.querySelector('script[src="' + src + '"]')) return;
@@ -22,9 +20,6 @@
     if (shouldLoadAffiliate) {
       window.ConverlyCustomData = window.ConverlyCustomData || { channelId: null };
       loadScript(affiliateSrc, { defer: true });
-    }
-    if (shouldLoadAds) {
-      loadScript(adsSrc, { crossOrigin: 'anonymous' });
     }
   }
 

@@ -767,12 +767,184 @@ THEORY_FAQ = {
 }
 
 
+LUNA_USE_CASES = {
+    "zh": [
+        ("睡前反思", "把白天沒說完的感受放進比較安靜的位置，不急著做判斷。"),
+        ("吵架後冷卻", "先讓身體降噪，再回到一句可被接住的修復請求。"),
+        ("關係日記", "用 Luna 當背景，記下今天哪一種愛之語最需要被照顧。"),
+        ("測驗後整理", "完成命運儀式後，陪你把守護者結果整理成下一步。"),
+    ],
+    "en": [
+        ("Before sleep", "Place the day's unfinished feelings somewhere quieter before judging them."),
+        ("After conflict", "Let the body settle before returning to one repair request someone can receive."),
+        ("Relationship journal", "Use Luna as a background while noting which love language needed care today."),
+        ("After the ritual", "After the quiz, turn the guardian result into one next step."),
+    ],
+    "ja": [
+        ("眠る前の内省", "判断を急がず、日中に残った感情を静かな場所へ置きます。"),
+        ("衝突後の冷却", "体を落ち着かせてから、届く修復のお願いへ戻ります。"),
+        ("関係日記", "Luna を背景に、今日ケアしたい愛の言語を書き留めます。"),
+        ("診断後の整理", "儀式の結果を、守護者から次の一歩へ整理します。"),
+    ],
+    "ko": [
+        ("잠들기 전 성찰", "하루의 남은 감정을 조용한 곳에 두고 판단을 서두르지 않습니다."),
+        ("다툼 뒤 식히기", "몸을 먼저 안정시킨 뒤 받을 수 있는 회복 요청으로 돌아갑니다."),
+        ("관계 일기", "Luna를 배경으로 오늘 어떤 사랑의 언어가 돌봄이 필요했는지 적습니다."),
+        ("의식 뒤 정리", "테스트 결과를 수호자에서 다음 한 걸음으로 정리합니다."),
+    ],
+    "es": [
+        ("Antes de dormir", "Deja las emociones pendientes del día en un lugar más tranquilo antes de juzgarlas."),
+        ("Después del conflicto", "Permite que el cuerpo se calme antes de volver a una petición de reparación recibible."),
+        ("Diario relacional", "Usa Luna de fondo mientras anotas qué lenguaje del amor necesitó cuidado hoy."),
+        ("Después del ritual", "Después del test, convierte el resultado de guardiana en un siguiente paso."),
+    ],
+}
+
+
 RESOURCE_PATHS = {
     "zh": [("先測驗", "完成 15 道心語，確認目前最需要被接收的愛之語。"), ("再讀守護者", "從結果頁進入對應角色，理解自己為什麼容易在這裡受傷。"), ("最後選補給", "依照當下狀態選擇指南、書卷或 Luna 音樂，不一次修完整座庭園。")],
     "en": [("Take the ritual", "Answer 15 prompts to see the love language you most need received now."), ("Read the guardian", "Use the result page to understand why this area can feel tender."), ("Choose supplies", "Pick a guide, book, or Luna audio for the current moment, not the whole relationship at once.")],
     "ja": [("まず診断", "15問で今いちばん受け取りたい愛の言語を見ます。"), ("守護者を読む", "結果ページから、その領域がなぜ傷つきやすいかを理解します。"), ("補給を選ぶ", "今の状態に合うガイド、本、Luna 音楽を一つ選びます。")],
     "ko": [("먼저 의식", "15문항으로 지금 가장 받고 싶은 사랑의 언어를 봅니다."), ("수호자 읽기", "결과 페이지에서 왜 이 영역이 예민한지 이해합니다."), ("자료 선택", "지금 상태에 맞는 가이드, 책, Luna 음악 중 하나를 고릅니다.")],
     "es": [("Primero ritual", "Responde 15 señales para ver qué lenguaje necesitas recibir ahora."), ("Lee la guardiana", "Desde el resultado entiende por qué esa zona puede doler."), ("Elige recursos", "Toma una guía, libro o audio Luna para el momento actual, no toda la relación de una vez.")],
+}
+
+
+SUPPLY_LABELS = {
+    "zh": {
+        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "title": "五位守護者補給站",
+        "intro": "依照你的守護者選一條路線：先讀對應指南，再做一個小任務，最後選擇書卷或 Luna 夜間補給。補給是輔助修復，不是療效承諾。",
+        "route": "你的補給路線",
+        "guide": "對應指南",
+        "fit_supply": "適合你的補給",
+        "wound": "你的錯頻傷口",
+        "repair": "你的修復任務",
+        "practice": "今日小任務",
+        "supply": "補給建議",
+        "read_guide": "閱讀對應指南",
+        "open_luna": "開啟 Luna",
+        "choose": "如何選擇補給",
+        "choose_text": "先選一個最貼近當下狀態的補給，不要一次買齊或讀完所有內容；如果關係正處於危險、控制、暴力或高壓狀態，請先尋求真人與專業支持。",
+        "not_now": "不適合購買的時機",
+        "not_now_text": "如果你只是想用商品替代道歉、逼對方改變，或在情緒很滿時衝動下單，請先回到指南裡的一個小請求。LoveTypes 的補給只適合支持覺察與練習。",
+    },
+    "en": {
+        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "title": "Five Guardian Supply Routes",
+        "intro": "Choose a route by guardian: read the matching guide, practice one small task, then pick a book or Luna night supply. Supplies support repair; they do not promise outcomes.",
+        "route": "Your supply route",
+        "guide": "Matching guide",
+        "fit_supply": "Supply that fits you",
+        "wound": "Your misfrequency wound",
+        "repair": "Your repair task",
+        "practice": "Small task today",
+        "supply": "Supply suggestion",
+        "read_guide": "Read guide",
+        "open_luna": "Open Luna",
+        "choose": "How to choose supplies",
+        "choose_text": "Choose one supply that fits the current moment. Do not buy or read everything at once. If the relationship involves danger, control, violence, or acute pressure, seek trusted people and professional support first.",
+        "not_now": "When not to buy",
+        "not_now_text": "Pause if you want a product to replace an apology, force someone to change, or soothe a purchase impulse. LoveTypes supplies are for reflection and practice.",
+    },
+    "ja": {
+        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "title": "五人の守護者の補給ルート",
+        "intro": "守護者ごとに、対応ガイド、小さな練習、本または Luna の夜の補給を選びます。補給は修復を支えるもので、結果を約束するものではありません。",
+        "route": "あなたの補給ルート",
+        "guide": "対応ガイド",
+        "fit_supply": "あなたに合う補給",
+        "wound": "あなたのすれ違いの傷",
+        "repair": "あなたの修復課題",
+        "practice": "今日の小さな課題",
+        "supply": "補給の提案",
+        "read_guide": "ガイドを読む",
+        "open_luna": "Luna を開く",
+        "choose": "補給の選び方",
+        "choose_text": "今の状態に一番近い補給を一つだけ選びます。すべてを一度に買ったり読んだりしないでください。危険、支配、暴力、強い圧力がある場合は、まず信頼できる人と専門支援へ。",
+        "not_now": "購入しない方がよい時",
+        "not_now_text": "謝罪の代わりに商品を使いたい、相手を変えたい、衝動で買いたい時は一度止まります。LoveTypes の補給は気づきと練習を支えるものです。",
+    },
+    "ko": {
+        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "title": "다섯 수호자 보급 루트",
+        "intro": "수호자에 맞춰 가이드, 작은 연습, 책 또는 Luna 밤 보급을 고르세요. 보급은 회복을 돕는 도구이며 결과를 약속하지 않습니다.",
+        "route": "나의 보급 루트",
+        "guide": "연결 가이드",
+        "fit_supply": "나에게 맞는 보급",
+        "wound": "나의 어긋남 상처",
+        "repair": "나의 회복 과제",
+        "practice": "오늘의 작은 과제",
+        "supply": "보급 제안",
+        "read_guide": "가이드 읽기",
+        "open_luna": "Luna 열기",
+        "choose": "보급을 고르는 법",
+        "choose_text": "지금 상태에 가장 맞는 보급 하나만 고르세요. 한 번에 모두 사거나 읽지 마세요. 위험, 통제, 폭력, 큰 압박이 있다면 먼저 믿을 수 있는 사람과 전문 지원을 찾으세요.",
+        "not_now": "구매하지 않는 편이 좋은 때",
+        "not_now_text": "상품으로 사과를 대신하거나 상대를 바꾸려 하거나 감정이 큰 상태에서 충동 구매하려 한다면 멈추세요. LoveTypes 보급은 성찰과 연습을 돕는 도구입니다.",
+    },
+    "es": {
+        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "title": "Rutas de suministro de las cinco guardianas",
+        "intro": "Elige una ruta por guardiana: guía correspondiente, una práctica pequeña y luego un libro o suministro nocturno Luna. Los recursos apoyan la reparación; no prometen resultados.",
+        "route": "Tu ruta de suministro",
+        "guide": "Guía correspondiente",
+        "fit_supply": "Recurso adecuado para ti",
+        "wound": "Tu herida de desajuste",
+        "repair": "Tu tarea de reparación",
+        "practice": "Tarea pequeña de hoy",
+        "supply": "Sugerencia de recurso",
+        "read_guide": "Leer guía",
+        "open_luna": "Abrir Luna",
+        "choose": "Cómo elegir recursos",
+        "choose_text": "Elige un recurso que encaje con este momento. No compres ni leas todo de una vez. Si hay peligro, control, violencia o presión intensa, busca primero personas confiables y apoyo profesional.",
+        "not_now": "Cuándo no comprar",
+        "not_now_text": "Pausa si quieres que un producto reemplace una disculpa, obligue a alguien a cambiar o calme una compra impulsiva. Los recursos LoveTypes son para reflexión y práctica.",
+    },
+}
+
+
+SUPPLY_ROUTES = {
+    "iris": {
+        "book": 1,
+        "zh": ("艾莉絲語言補給", "把想被看見的心翻成一句準確、可被接住的話。", "容易把沒被肯定解讀成不被珍惜，或把需要說成測驗。", "今天寫下三句具體肯定：看見、感謝、承認，不使用空泛稱讚。", "先用非暴力溝通拆開感受與請求，再回到艾莉絲的句型練習。"),
+        "en": ("Iris Word Supply", "Turn the need to be seen into one accurate sentence someone can receive.", "You may read missing affirmation as not being valued, or turn a need into a test.", "Write three specific affirmations today: seeing, gratitude, and recognition.", "Use Nonviolent Communication to separate feeling from request, then practice Iris scripts."),
+        "ja": ("アイリス言葉の補給", "見てもらいたい心を、相手が受け取れる一文へ翻訳します。", "肯定されないことを大切にされていないと読み、ニーズを試す形にしやすい。", "今日、見る、感謝する、認めるの三つの具体的な肯定を書きます。", "非暴力コミュニケーションで感情とお願いを分け、アイリスの句型へ戻ります。"),
+        "ko": ("아이리스 말의 보급", "정확히 보이고 싶은 마음을 받을 수 있는 한 문장으로 바꿉니다.", "인정이 없으면 소중하지 않다고 읽거나 욕구를 시험처럼 만들기 쉽습니다.", "오늘 보기, 감사, 인정의 구체적인 말 세 문장을 쓰세요.", "비폭력 대화로 감정과 요청을 나눈 뒤 아이리스 문장으로 연습하세요."),
+        "es": ("Suministro de palabras Iris", "Convierte la necesidad de ser vista en una frase precisa que pueda recibirse.", "Puedes leer la falta de afirmación como falta de valor, o convertir una necesidad en prueba.", "Escribe hoy tres afirmaciones concretas: ver, agradecer y reconocer.", "Usa Comunicación no violenta para separar emoción y petición, luego practica frases de Iris."),
+    },
+    "noah": {
+        "book": 3,
+        "zh": ("諾雅陪伴補給", "把陪伴從口頭承諾變成一段真正留下來的時間。", "最痛的錯頻通常是人在旁邊，心卻沒有到場。", "安排十五分鐘無手機共處，只問一個問題：這週哪一刻最像我們在一起？", "用長期關係習慣補強優質時光，讓在場不只靠心情。"),
+        "en": ("Noah Presence Supply", "Turn promised company into time where both people truly stay.", "The tender wound is often presence without attention.", "Protect fifteen phone-free minutes and ask one question: when did we feel most together this week?", "Use relationship-habit reading to make quality time less dependent on mood."),
+        "ja": ("ノア同在の補給", "一緒にいる約束を、本当に留まる時間へ変えます。", "痛みは、隣にいるのに心が不在なことから生まれやすい。", "スマホなしの十五分を作り、今週一番一緒に感じた瞬間を聞きます。", "関係習慣の本で上質な時間を気分任せにしない土台を作ります。"),
+        "ko": ("노아 함께함 보급", "함께하겠다는 말을 진짜 머무는 시간으로 바꿉니다.", "가장 아픈 어긋남은 곁에 있지만 마음이 없는 순간입니다.", "휴대폰 없는 15분을 정하고 이번 주 가장 함께였던 순간을 묻습니다.", "관계 습관을 통해 함께하는 시간을 기분에만 맡기지 않게 합니다."),
+        "es": ("Suministro de presencia Noah", "Convierte la compañía prometida en tiempo donde ambas personas se quedan de verdad.", "La herida suele ser presencia sin atención.", "Protege quince minutos sin teléfono y pregunta cuándo se sintieron más juntas esta semana.", "Usa hábitos de relación para que el tiempo de calidad no dependa solo del ánimo."),
+    },
+    "vivian": {
+        "book": 0,
+        "zh": ("薇薇安心意補給", "把禮物從價格拉回記得、觀察與細節。", "容易在重要日子沒有表示時，感覺自己沒有被放在心上。", "記下一個對方隨口提過的小喜歡，並用低成本方式讓它被看見。", "回到愛之語原典，確認禮物型重視的是記得，不是昂貴。"),
+        "en": ("Vivian Memory Supply", "Bring gifts back from price to remembrance, observation, and detail.", "You may feel unheld when important days pass with no sign.", "Record one tiny preference and make it visible in a low-cost way.", "Return to the core love-language text to separate remembrance from expense."),
+        "ja": ("ヴィヴィアン記憶の補給", "贈り物を値段ではなく、覚えていること、観察、細部へ戻します。", "大切な日に何もないと、心に置かれていないと感じやすい。", "相手の小さな好みを一つ記録し、低コストで見える形にします。", "愛の言語の原典へ戻り、贈り物型が重視するのは高価さではなく記憶だと確認します。"),
+        "ko": ("비비안 기억 보급", "선물을 가격이 아니라 기억, 관찰, 세부로 돌려놓습니다.", "중요한 날 아무 표시가 없으면 마음에 없다고 느끼기 쉽습니다.", "상대가 흘려 말한 작은 취향 하나를 적고 낮은 비용으로 보이게 하세요.", "사랑의 언어 원전으로 돌아가 선물형이 비싼 것보다 기억을 중시함을 확인하세요."),
+        "es": ("Suministro de memoria Vivian", "Devuelve los regalos del precio al recuerdo, la observación y los detalles.", "Puede doler cuando los días importantes pasan sin señal.", "Anota una preferencia pequeña y hazla visible de bajo costo.", "Vuelve al texto base para separar recuerdo de gasto."),
+    },
+    "claire": {
+        "book": 3,
+        "zh": ("克萊兒行動補給", "把承諾放回日常，讓照顧不再只由一個人承擔。", "容易把沒有人主動分擔，感覺成自己不值得被照顧。", "把一件想被幫忙的事寫成具體請求：時間、動作、完成標準。", "用伴侶習慣書卷建立分工，不讓服務行動變成情緒勞動。"),
+        "en": ("Claire Action Supply", "Return promises to daily life so care is not carried by one person alone.", "When nobody shares the load, it can feel like you are not worth care.", "Turn one desired help into a concrete request: time, action, and done condition.", "Use couple-habit reading to keep service from becoming emotional labor."),
+        "ja": ("クレア行動の補給", "約束を日常へ戻し、ケアを一人だけで抱えないようにします。", "誰も分担しない時、自分はケアされる価値がないと感じやすい。", "助けてほしいことを、時間、行動、完了条件つきの具体的なお願いにします。", "パートナー習慣の本で、奉仕を感情労働にしない分担を作ります。"),
+        "ko": ("클레어 행동 보급", "약속을 일상으로 돌려놓아 돌봄을 한 사람만 지지 않게 합니다.", "아무도 나누지 않으면 돌봄 받을 가치가 없다고 느끼기 쉽습니다.", "도움이 필요한 일을 시간, 행동, 완료 기준이 있는 요청으로 쓰세요.", "커플 습관 책으로 봉사가 감정 노동이 되지 않게 분담을 만드세요."),
+        "es": ("Suministro de acción Claire", "Devuelve las promesas a la vida diaria para que el cuidado no lo cargue una sola persona.", "Cuando nadie comparte la carga, puede sentirse como no valer cuidado.", "Convierte una ayuda deseada en petición concreta: tiempo, acción y condición de terminado.", "Usa hábitos de pareja para que el servicio no se vuelva trabajo emocional."),
+    },
+    "dora": {
+        "book": 2,
+        "zh": ("朵拉安全補給", "讓靠近先回到同意、身體安全與穩定節奏。", "容易在靠近太快、太突然或沒有確認時，身體先關門。", "建立一個安全靠近句：我現在可以抱你嗎？如果不行，我可以坐在旁邊。", "用依附理解靠近與退縮，再搭配 Luna 做睡前降噪。"),
+        "en": ("Dora Safety Supply", "Bring closeness back to consent, body safety, and a stable rhythm.", "When closeness is sudden or unchecked, the body may close first.", "Create one safe closeness sentence: can I hold you now? If not, I can sit beside you.", "Use attachment reading for pursuit and withdrawal, then pair with Luna at night."),
+        "ja": ("ドラ安全の補給", "近さを同意、身体の安全、安定したリズムへ戻します。", "近づき方が急すぎる、確認がない時、身体が先に閉じやすい。", "安全な近づきの一文を作ります。今抱きしめてもいい？無理なら隣に座るね。", "愛着の理解で近づきと退き方を見て、夜は Luna と組み合わせます。"),
+        "ko": ("도라 안전 보급", "가까움을 동의, 몸의 안전, 안정된 리듬으로 돌립니다.", "가까움이 갑작스럽거나 확인이 없으면 몸이 먼저 닫힐 수 있습니다.", "안전한 가까움 문장을 만드세요. 지금 안아도 돼? 아니면 옆에 앉아 있을게.", "애착으로 다가감과 물러남을 이해하고 밤에는 Luna와 함께 낮추세요."),
+        "es": ("Suministro de seguridad Dora", "Devuelve la cercanía al consentimiento, la seguridad corporal y un ritmo estable.", "Cuando la cercanía llega rápido o sin confirmar, el cuerpo puede cerrarse primero.", "Crea una frase segura: puedo abrazarte ahora? Si no, puedo sentarme a tu lado.", "Usa lectura de apego para acercamiento y retirada, y acompaña con Luna de noche."),
+    },
 }
 
 
@@ -1374,6 +1546,76 @@ def character_link_card(lang: str, slug: str, data: dict, current_slug: str = ""
 """
 
 
+def supply_route(lang: str, slug: str) -> dict:
+    route = SUPPLY_ROUTES[slug]
+    title, desc, wound, mission, supply = route[lang]
+    guide = next(g for g in GUIDES if g["guardian"] == slug)
+    return {
+        "slug": slug,
+        "title": title,
+        "desc": desc,
+        "wound": wound,
+        "mission": mission,
+        "supply": supply,
+        "guide": guide,
+        "book": AFFILIATE_BOOKS[route["book"]],
+        "guardian": GUARDIANS[slug],
+    }
+
+
+def supply_route_card(lang: str, slug: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    route = supply_route(lang, slug)
+    guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
+    book = route["book"]
+    guide = route["guide"]
+    return f"""
+<article class="supply-route-card" id="supply-{slug}">
+  {img_tag(route["guardian"]["prop"], route["title"])}
+  <div class="supply-route-copy">
+    <p class="eyebrow">{escape(guardian_name)} · {escape(guardian_type)}</p>
+    <h3>{escape(route["title"])}</h3>
+    <p>{escape(route["desc"])}</p>
+    <dl>
+      <div><dt>{escape(labels["practice"])}</dt><dd>{escape(route["mission"])}</dd></div>
+      <div><dt>{escape(labels["supply"])}</dt><dd>{escape(route["supply"])}</dd></div>
+    </dl>
+    <p class="supply-book-note"><strong>{escape(book["title"][lang])}</strong> · {escape(book["author"])}</p>
+  </div>
+  <div class="supply-route-actions">
+    <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+  </div>
+</article>
+"""
+
+
+def character_supply_panel(lang: str, slug: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    route = supply_route(lang, slug)
+    guide = route["guide"]
+    book = route["book"]
+    return f"""
+<section class="section supply-panel-section">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(labels["route"])}</p><h2>{escape(route["title"])}</h2></div>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(LANGS[lang]["resources"])}</a>
+  </div>
+  <p class="section-intro">{escape(route["desc"])}</p>
+  <div class="supply-panel-grid">
+    <article><span>{escape(labels["fit_supply"])}</span><h3>{escape(book["title"][lang])}</h3><p>{escape(route["supply"])}</p></article>
+    <article><span>{escape(labels["wound"])}</span><h3>{escape(labels["wound"])}</h3><p>{escape(route["wound"])}</p></article>
+    <article><span>{escape(labels["repair"])}</span><h3>{escape(labels["practice"])}</h3><p>{escape(route["mission"])}</p></article>
+  </div>
+  <div class="supply-panel-actions">
+    <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
+  </div>
+</section>
+"""
+
+
 def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str, str]) -> dict:
     name, typ, guardian_desc = guardian
     templates = {
@@ -1573,6 +1815,7 @@ def quiz_payload(lang: str) -> str:
         guardian = GUARDIANS[meta["slug"]]
         name, typ, desc = guardian[lang]
         guide = next(g for g in GUIDES if g["slug"] == meta["guide"])
+        route = supply_route(lang, meta["slug"])
         results[key] = {
             "name": name,
             "type": typ,
@@ -1582,7 +1825,12 @@ def quiz_payload(lang: str) -> str:
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]),
             "guideTitle": guide[lang][0],
-            "resourceUrl": lang_url(lang, "resources"),
+            "resourceUrl": lang_url(lang, "resources") + f"#supply-{meta['slug']}",
+            "supplyTitle": route["title"],
+            "supplyDesc": route["desc"],
+            "supplyMission": route["mission"],
+            "supplyText": route["supply"],
+            "supplyBook": route["book"]["title"][lang],
             "tips": QUIZ_TIPS[lang][key],
         }
     payload = {
@@ -1673,6 +1921,12 @@ def quiz_script(lang: str) -> str:
         }}).join('')}}
       </section>
       <section class="quiz-advice-card"><h3>${{quiz.labels.tips_title}}</h3><ul>${{result.tips.map((tip) => `<li>${{tip}}</li>`).join('')}}</ul></section>
+      <section class="quiz-supply-card">
+        <p class="eyebrow">${{quiz.labels.resources_link}}</p>
+        <h3>${{result.supplyTitle}}</h3>
+        <p>${{result.supplyDesc}}</p>
+        <ul><li>${{result.supplyMission}}</li><li>${{result.supplyText}}</li><li>${{result.supplyBook}}</li></ul>
+      </section>
       <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
         <a class="primary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
         <a class="secondary-btn" href="${{result.guideUrl}}">${{quiz.labels.guide_link}}</a>
@@ -1877,6 +2131,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <ol>{reflections}</ol>
   <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
 </section>
+{character_supply_panel(lang, slug)}
 <section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
 <section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
@@ -1887,7 +2142,9 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 def resources_page(lang: str) -> None:
     t = LANGS[lang]
     affiliate_labels = AFFILIATE_COPY[lang]
+    supply_labels = SUPPLY_LABELS[lang]
     resource_steps = "".join(f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for idx, (title, desc) in enumerate(RESOURCE_PATHS[lang], start=1))
+    supply_cards = "".join(supply_route_card(lang, slug) for slug in GUARDIANS)
     cards = []
     for path, title, desc in RESOURCE_CARDS[lang]:
         image = ""
@@ -1918,6 +2175,15 @@ def resources_page(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
+<section class="section supply-routes">
+  <div class="section-head"><div><p class="eyebrow">{escape(supply_labels["eyebrow"])}</p><h2>{escape(supply_labels["title"])}</h2></div></div>
+  <p class="section-intro">{escape(supply_labels["intro"])}</p>
+  <div class="supply-route-grid">{supply_cards}</div>
+</section>
+<section class="section intro-grid supply-trust">
+  <div><h2>{escape(supply_labels["choose"])}</h2><p>{escape(supply_labels["choose_text"])}</p></div>
+  <div><h2>{escape(supply_labels["not_now"])}</h2><p>{escape(supply_labels["not_now_text"])}</p></div>
+</section>
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
 <section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
@@ -1930,6 +2196,7 @@ def resources_page(lang: str) -> None:
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
+    use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
     section_cards = []
     for image_slug, title, desc in luna["sections"]:
         section_cards.append(f"""
@@ -1952,6 +2219,10 @@ def luna_page(lang: str) -> None:
 <section class="section luna-strip">
   <div><p class="eyebrow">CALM PATHS</p><h2>{escape(t["luna_desc"])}</h2></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>
+</section>
+<section class="section luna-use-cases">
+  <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
+  <div class="luna-use-grid">{use_cases}</div>
 </section>
 <section class="section intro-grid">
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>

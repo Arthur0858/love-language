@@ -948,6 +948,60 @@ SUPPLY_ROUTES = {
 }
 
 
+COLLECTOR_LABELS = {
+    "zh": {
+        "eyebrow": "GUARDIAN KEEPSAKES",
+        "title": "守護者收藏卡",
+        "intro": "把測驗結果從一個答案變成可以保存、分享與回看的入口。先收藏你的守護者卡，再回到補給路線做一個小任務。",
+        "card": "你的守護者卡",
+        "open": "開啟收藏卡",
+        "download": "保存圖片",
+        "route": "回到補給路線",
+        "share_hint": "適合發限動、傳給伴侶，或放進關係日記作為今天的心語入口。",
+    },
+    "en": {
+        "eyebrow": "GUARDIAN KEEPSAKES",
+        "title": "Guardian Keepsake Cards",
+        "intro": "Turn the quiz result into something you can save, share, and revisit. Keep your guardian card, then return to one small supply task.",
+        "card": "Your guardian card",
+        "open": "Open card",
+        "download": "Save image",
+        "route": "Return to supply route",
+        "share_hint": "Use it in Stories, send it to a partner, or place it in a relationship journal as today's heart-language doorway.",
+    },
+    "ja": {
+        "eyebrow": "GUARDIAN KEEPSAKES",
+        "title": "守護者コレクションカード",
+        "intro": "診断結果を、保存し、共有し、後から見返せる入口にします。守護者カードを残し、小さな補給課題へ戻ります。",
+        "card": "あなたの守護者カード",
+        "open": "カードを開く",
+        "download": "画像を保存",
+        "route": "補給ルートへ戻る",
+        "share_hint": "ストーリー、パートナーへの共有、関係日記の今日の入口として使えます。",
+    },
+    "ko": {
+        "eyebrow": "GUARDIAN KEEPSAKES",
+        "title": "수호자 소장 카드",
+        "intro": "테스트 결과를 저장하고 공유하고 다시 볼 수 있는 입구로 바꿉니다. 수호자 카드를 남기고 작은 보급 과제로 돌아가세요.",
+        "card": "나의 수호자 카드",
+        "open": "카드 열기",
+        "download": "이미지 저장",
+        "route": "보급 루트로 돌아가기",
+        "share_hint": "스토리, 파트너에게 보내기, 관계 일기의 오늘 마음 언어 입구로 사용할 수 있습니다.",
+    },
+    "es": {
+        "eyebrow": "GUARDIAN KEEPSAKES",
+        "title": "Tarjetas de recuerdo de guardianas",
+        "intro": "Convierte el resultado en algo que puedas guardar, compartir y volver a mirar. Conserva tu tarjeta y regresa a una tarea pequeña.",
+        "card": "Tu tarjeta de guardiana",
+        "open": "Abrir tarjeta",
+        "download": "Guardar imagen",
+        "route": "Volver a la ruta",
+        "share_hint": "Úsala en historias, envíala a una pareja o ponla en tu diario relacional como puerta de lenguaje del corazón.",
+    },
+}
+
+
 GUARDIANS = {
     "iris": {
         "asset": "/assets/lovetypes/guardians/iris.webp",
@@ -1591,6 +1645,52 @@ def supply_route_card(lang: str, slug: str) -> str:
 """
 
 
+def guardian_story_image(lang: str, slug: str) -> str:
+    return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
+
+
+def collector_card(lang: str, slug: str, compact: bool = False) -> str:
+    labels = COLLECTOR_LABELS[lang]
+    guardian = GUARDIANS[slug]
+    route = supply_route(lang, slug)
+    name, typ, _desc = guardian[lang]
+    class_name = "collector-card compact" if compact else "collector-card"
+    image = guardian_story_image(lang, slug)
+    return f"""
+<article class="{class_name}">
+  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener">
+    {img_tag(image, f"{name} {labels['card']}")}
+  </a>
+  <div>
+    <p class="eyebrow">{escape(typ)}</p>
+    <h3>{escape(name)}</h3>
+    <p>{escape(route["desc"])}</p>
+    <div class="collector-actions">
+      <a class="primary-btn" href="{image}" target="_blank" rel="noopener">{escape(labels["open"])}</a>
+      <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
+    </div>
+  </div>
+</article>
+"""
+
+
+def collector_section(lang: str, current_slug: str = "") -> str:
+    labels = COLLECTOR_LABELS[lang]
+    slugs = [current_slug] if current_slug else list(GUARDIANS.keys())
+    cards = "".join(collector_card(lang, slug, compact=bool(current_slug)) for slug in slugs)
+    route_link = f"{lang_url(lang, 'resources')}#supply-{current_slug}" if current_slug else lang_url(lang, "resources")
+    return f"""
+<section class="section collector-section">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div>
+    <a href="{route_link}">{escape(labels["route"])}</a>
+  </div>
+  <p class="section-intro">{escape(labels["intro"])} {escape(labels["share_hint"])}</p>
+  <div class="collector-grid">{cards}</div>
+</section>
+"""
+
+
 def character_supply_panel(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     route = supply_route(lang, slug)
@@ -1831,6 +1931,11 @@ def quiz_payload(lang: str) -> str:
             "supplyMission": route["mission"],
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
+            "storyImage": guardian_story_image(lang, meta["slug"]),
+            "collectorTitle": COLLECTOR_LABELS[lang]["card"],
+            "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
+            "collectorOpen": COLLECTOR_LABELS[lang]["open"],
+            "collectorSave": COLLECTOR_LABELS[lang]["download"],
             "tips": QUIZ_TIPS[lang][key],
         }
     payload = {
@@ -1926,6 +2031,18 @@ def quiz_script(lang: str) -> str:
         <h3>${{result.supplyTitle}}</h3>
         <p>${{result.supplyDesc}}</p>
         <ul><li>${{result.supplyMission}}</li><li>${{result.supplyText}}</li><li>${{result.supplyBook}}</li></ul>
+      </section>
+      <section class="quiz-collector-card">
+        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async">
+        <div>
+          <p class="eyebrow">${{result.collectorTitle}}</p>
+          <h3>${{result.name}}</h3>
+          <p>${{result.collectorHint}}</p>
+          <div class="quiz-collector-actions">
+            <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
+            <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
+          </div>
+        </div>
       </section>
       <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
         <a class="primary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
@@ -2132,6 +2249,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
 </section>
 {character_supply_panel(lang, slug)}
+{collector_section(lang, slug)}
 <section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
 <section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
@@ -2184,6 +2302,7 @@ def resources_page(lang: str) -> None:
   <div><h2>{escape(supply_labels["choose"])}</h2><p>{escape(supply_labels["choose_text"])}</p></div>
   <div><h2>{escape(supply_labels["not_now"])}</h2><p>{escape(supply_labels["not_now_text"])}</p></div>
 </section>
+{collector_section(lang)}
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
 <section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>

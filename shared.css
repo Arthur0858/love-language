@@ -922,6 +922,58 @@ button.secondary-btn {
     linear-gradient(180deg, #fff, #fffaf6);
 }
 
+.repair-worksheet-section {
+  background:
+    radial-gradient(circle at 84% 18%, rgba(189, 82, 96, .1), transparent 28%),
+    #fff;
+}
+
+.print-button {
+  border: 1px solid rgba(189, 82, 96, .62);
+}
+
+.repair-worksheet {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.repair-worksheet label {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid rgba(236, 216, 213, .92);
+  border-radius: 8px;
+  background: rgba(255, 253, 249, .92);
+  box-shadow: 0 10px 30px rgba(76, 42, 43, .05);
+}
+
+.repair-worksheet span {
+  color: var(--rose);
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.repair-worksheet textarea {
+  width: 100%;
+  min-height: 132px;
+  resize: vertical;
+  border: 1px solid rgba(236, 216, 213, .96);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.repair-worksheet textarea:focus {
+  outline: 3px solid rgba(189, 82, 96, .18);
+  border-color: rgba(189, 82, 96, .55);
+}
+
 .repair-guardian-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1464,6 +1516,7 @@ button.secondary-btn {
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .collector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .repair-day-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .repair-worksheet { grid-template-columns: 1fr; }
   .repair-guardian-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -1720,5 +1773,51 @@ button.secondary-btn {
 
   .affiliate-book-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .site-nav,
+  .site-footer,
+  .language-menu,
+  .hero-actions,
+  .section-head > a,
+  .print-button,
+  .repair-guardian-section,
+  .collector-section,
+  .affiliate-books {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #111;
+  }
+
+  .page-hero,
+  .section,
+  .repair-plan-section,
+  .repair-worksheet-section {
+    padding: 18px 0;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .repair-day-grid,
+  .repair-worksheet {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .repair-day-grid article,
+  .repair-worksheet label {
+    break-inside: avoid;
+    box-shadow: none;
+    border-color: #bbb;
+  }
+
+  .repair-worksheet textarea {
+    min-height: 96px;
+    border-color: #999;
   }
 }

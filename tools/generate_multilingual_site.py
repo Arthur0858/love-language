@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
-UPDATED = "2026-06-03"
+UPDATED = "2026-06-04"
 
 
 FONT_CSS = ""
@@ -1017,6 +1017,10 @@ REPAIR_PLAN = {
         "start": "開始測驗",
         "resources": "打開補給站",
         "download": "保存這週路線",
+        "worksheet_title": "本週心語工作表",
+        "worksheet_intro": "填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。",
+        "print": "列印 / 存成 PDF",
+        "fields": [("我的守護者結果", "例如：艾莉絲，肯定的言詞"), ("這週最明顯的錯頻", "寫一個具體場景，不寫全部舊帳"), ("我真正想提出的小請求", "縮成 24 小時內可做到的一步"), ("我選擇的補給", "指南、Luna、書卷或一張收藏卡")],
         "days": [
             ("第 1 天", "認領你的守護者", "寫下結果、分數最高的愛之語，以及最近一次感覺沒被接住的場景。"),
             ("第 2 天", "命名錯頻傷口", "把受傷翻成一句話：我不是在要求完美，我是在乎哪一種被愛入口。"),
@@ -1036,6 +1040,10 @@ REPAIR_PLAN = {
         "start": "Start quiz",
         "resources": "Open supply station",
         "download": "Save this route",
+        "worksheet_title": "This Week's Heart-Language Worksheet",
+        "worksheet_intro": "Fill these four fields, then print or save as PDF. It is not meant to solve every relationship issue at once; it leaves repair clues you can revisit.",
+        "print": "Print / save as PDF",
+        "fields": [("My guardian result", "Example: Iris, words of affirmation"), ("This week's clearest misfrequency", "Name one concrete scene, not every old wound"), ("The small request I actually want to make", "Shrink it into one step possible within 24 hours"), ("The supply I choose", "Guide, Luna, book, or keepsake card")],
         "days": [
             ("Day 1", "Claim your guardian", "Write down the result, the strongest love language, and one recent moment when you did not feel received."),
             ("Day 2", "Name the wound", "Translate hurt into one sentence: I am not asking for perfection; I care about this doorway to love."),
@@ -1055,6 +1063,10 @@ REPAIR_PLAN = {
         "start": "診断を始める",
         "resources": "補給ステーションを開く",
         "download": "このルートを保存",
+        "worksheet_title": "今週の心語ワークシート",
+        "worksheet_intro": "四つの欄を埋め、印刷または PDF として保存します。すべての問題を一度に扱うのではなく、戻って見られる修復の手がかりを残します。",
+        "print": "印刷 / PDF 保存",
+        "fields": [("私の守護者結果", "例：アイリス、肯定の言葉"), ("今週いちばん明確なすれ違い", "具体的な場面を一つだけ書きます"), ("本当に伝えたい小さなお願い", "二十四時間以内にできる一歩へ縮めます"), ("選ぶ補給", "ガイド、Luna、本、守護者カード")],
         "days": [
             ("1日目", "守護者を認領する", "結果、もっとも強い愛の言語、最近受け取られなかった場面を書きます。"),
             ("2日目", "すれ違いの傷に名前をつける", "傷つきを一文にします。完璧を求めたいのではなく、この入口を大切にしたい。"),
@@ -1074,6 +1086,10 @@ REPAIR_PLAN = {
         "start": "테스트 시작",
         "resources": "보급소 열기",
         "download": "이 루트 저장",
+        "worksheet_title": "이번 주 마음 언어 워크시트",
+        "worksheet_intro": "네 칸을 채운 뒤 인쇄하거나 PDF로 저장하세요. 모든 관계 문제를 한 번에 해결하려는 것이 아니라 다시 볼 수 있는 회복 단서를 남기는 도구입니다.",
+        "print": "인쇄 / PDF 저장",
+        "fields": [("나의 수호자 결과", "예: 아이리스, 인정의 말"), ("이번 주 가장 분명한 어긋남", "구체적인 장면 하나만 씁니다"), ("내가 실제로 말하고 싶은 작은 요청", "24시간 안에 가능한 한 걸음으로 줄입니다"), ("내가 선택한 보급", "가이드, Luna, 책, 수호자 카드")],
         "days": [
             ("1일차", "수호자 인정하기", "결과, 가장 강한 사랑의 언어, 최근 받지 못했다고 느낀 장면을 적습니다."),
             ("2일차", "어긋남 상처 이름 붙이기", "상처를 한 문장으로 바꿉니다. 완벽을 바라는 것이 아니라 이 사랑의 입구를 중요하게 여깁니다."),
@@ -1093,6 +1109,10 @@ REPAIR_PLAN = {
         "start": "Iniciar test",
         "resources": "Abrir recursos",
         "download": "Guardar esta ruta",
+        "worksheet_title": "Hoja de trabajo de esta semana",
+        "worksheet_intro": "Completa estos cuatro campos y luego imprime o guarda como PDF. No busca resolver toda la relación de una vez; deja pistas de reparación para volver a mirar.",
+        "print": "Imprimir / guardar PDF",
+        "fields": [("Mi resultado de guardiana", "Ejemplo: Iris, palabras de afirmación"), ("El desajuste más claro de esta semana", "Nombra una escena concreta, no todas las heridas"), ("La petición pequeña que quiero hacer", "Redúcela a un paso posible dentro de 24 horas"), ("El recurso que elijo", "Guía, Luna, libro o tarjeta de recuerdo")],
         "days": [
             ("Día 1", "Reclama tu guardiana", "Escribe el resultado, el lenguaje más fuerte y un momento reciente en que no te sentiste recibida."),
             ("Día 2", "Nombra la herida", "Traduce el dolor en una frase: no pido perfección; me importa esta puerta para recibir amor."),
@@ -2429,6 +2449,12 @@ def repair_plan_page(lang: str) -> None:
   <p>{escape(desc)}</p>
 </article>
 """ for day, title, desc in plan["days"])
+    worksheet_fields = "".join(f"""
+<label>
+  <span>{escape(label)}</span>
+  <textarea placeholder="{escape(placeholder)}"></textarea>
+</label>
+""" for label, placeholder in plan["fields"])
     guardian_rows = []
     for slug in GUARDIANS:
         route = supply_route(lang, slug)
@@ -2458,6 +2484,11 @@ def repair_plan_page(lang: str) -> None:
 <section class="section repair-plan-section">
   <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
+</section>
+<section class="section repair-worksheet-section">
+  <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
+  <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
+  <form class="repair-worksheet">{worksheet_fields}</form>
 </section>
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>

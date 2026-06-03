@@ -597,6 +597,11 @@ button.secondary-btn {
   padding: 18px;
 }
 
+.guardian-card.is-current {
+  border-color: rgba(189, 82, 96, .46);
+  box-shadow: 0 14px 30px rgba(189, 82, 96, .12);
+}
+
 .guardian-card img {
   display: block;
   width: 100%;
@@ -963,8 +968,27 @@ button.secondary-btn {
     #fffdf9;
 }
 
+.guardian-index-hero {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(183, 139, 69, .12), transparent 30%),
+    linear-gradient(120deg, #fff8f2, #eef5ef);
+}
+
+.guardian-grid.compact {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.guardian-grid.compact .guardian-card {
+  padding: 14px;
+}
+
 .guardian-grid.compact .guardian-card img {
-  height: clamp(150px, 16vw, 210px);
+  height: clamp(130px, 13vw, 168px);
+}
+
+.guardian-grid.compact .guardian-card p {
+  -webkit-line-clamp: 3;
+  font-size: .92rem;
 }
 
 .resource-path {
@@ -1221,6 +1245,10 @@ button.secondary-btn {
     grid-template-columns: 1fr;
   }
 
+  .guardian-grid.compact {
+    grid-template-columns: 1fr;
+  }
+
   .guardian-card {
     display: grid;
     grid-template-columns: 112px minmax(0, 1fr);
@@ -1234,9 +1262,20 @@ button.secondary-btn {
     margin: 0;
   }
 
+  .guardian-hero img {
+    width: min(78vw, 260px);
+    max-height: 280px;
+    justify-self: center;
+  }
+
+  .guardian-grid.compact .guardian-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    padding: 12px;
+  }
+
   .guardian-grid.compact .guardian-card img {
-    width: 96px;
-    height: 118px;
+    width: 88px;
+    height: 108px;
   }
 
   .quiz-band {

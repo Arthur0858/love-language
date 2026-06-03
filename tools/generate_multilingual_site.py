@@ -1179,7 +1179,7 @@ def nav(lang: str, active: str = "", path: str = "") -> str:
     items = [
         (lang_url(lang), t["brand"].split()[0]),
         (lang_url(lang, "guides"), t["guides"]),
-        (lang_url(lang, "characters/iris"), t["guardians"]),
+        (lang_url(lang, "characters"), t["guardians"]),
         (lang_url(lang, "theory"), t["theory"]),
         (lang_url(lang, "resources"), t["resources"]),
         (lang_url(lang, "about"), t["about"]),
@@ -1283,10 +1283,12 @@ def guide_card(lang: str, guide: dict) -> str:
 """
 
 
-def character_card(lang: str, slug: str, data: dict) -> str:
+def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> str:
     name, typ, desc = data[lang]
+    current = slug == current_slug
+    attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
     return f"""
-<a class="guardian-card" href="{lang_url(lang, "characters/" + slug)}">
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}">
   {img_tag(data["asset"], name)}
   <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p>{escape(desc)}</p></div>
 </a>
@@ -1457,7 +1459,7 @@ def home(lang: str) -> None:
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>
 </section>
 <section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">GUARDIAN FIELD GUIDES</p><h2>{escape(t["guide_index_title"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
-<section class="section" id="types-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2></div><div class="guardian-grid">{guardian_cards}</div></section>
+<section class="section" id="types-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
 <section class="quiz-band" id="quiz-section">
   <div class="quiz-shell" data-quiz-root>
     <div class="quiz-intro" data-quiz-intro>
@@ -1473,6 +1475,31 @@ def home(lang: str) -> None:
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"{escape(t["brand"])}","url":"{DOMAIN}{lang_url(lang).rstrip("/")}/","inLanguage":"{t["code"]}"}}</script>'
     write(page_path(lang), layout(lang, t["home_title"], t["home_desc"], "", body + quiz_script(lang), "", "website", "/og-cover.jpg", schema))
+
+
+def characters_index_page(lang: str) -> None:
+    t = LANGS[lang]
+    guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
+    title = f"{t['guardians']} | LoveTypes"
+    desc = t["trust_intro"]
+    body = f"""
+<section class="page-hero compact guardian-index-hero">
+  <p class="eyebrow">FIVE GUARDIANS</p>
+  <h1>{escape(t["guardians"])}</h1>
+  <p>{escape(desc)}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+</section>
+<section class="section">
+  <div class="section-head"><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <div class="guardian-grid">{guardian_cards}</div>
+</section>
+<section class="section intro-grid">
+  <div><h2>{escape(PAGE_SECTIONS[lang]["how"])}</h2><p>{escape(PRACTICAL_COPY[lang]["why"])}</p></div>
+  <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["need"])}</h2><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
+</section>
+"""
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guardians"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body, t["guardians"], "website", "/og-cover.jpg", schema))
 
 
 def guides_index(lang: str) -> None:
@@ -1563,12 +1590,12 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     name, typ, desc = data[lang]
     related_guides = [g for g in GUIDES if g["guardian"] == slug][:3]
     related_html = "".join(guide_card(lang, g) for g in related_guides)
-    guardian_nav = "".join(character_card(lang, item_slug, item_data) for item_slug, item_data in GUARDIANS.items())
+    guardian_nav = "".join(character_card(lang, item_slug, item_data, slug) for item_slug, item_data in GUARDIANS.items())
     scripts = "".join(f"<li>{escape(item)}</li>" for item in copy["scripts"])
     reflections = "".join(f"<li>{escape(item)}</li>" for item in copy["reflection"])
     body = f"""
 <section class="guardian-hero">
-  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><a class="primary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False)}
 </section>
 <section class="section intro-grid">
@@ -1585,7 +1612,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
 </section>
 <section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
-<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
+<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","name":"{escape(name)}","description":"{escape(desc)}","url":"{abs_url(lang, "characters/" + slug)}","inLanguage":"{t["code"]}","about":{{"@type":"Thing","name":"{escape(typ)}"}},"dateModified":"{UPDATED}"}}</script>'
     write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", data["asset"], schema))
@@ -1727,7 +1754,7 @@ def write_css() -> None:
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
-        paths = ["", "guides", "theory", "resources", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+        paths = ["", "guides", "characters", "theory", "resources", "luna-yoga-music", "about", "contact", "privacy", "terms"]
         paths += [f"guides/{g['slug']}" for g in GUIDES]
         paths += [f"characters/{slug}" for slug in GUARDIANS]
         for path in paths:
@@ -1746,6 +1773,7 @@ def main() -> None:
     for lang in LANGS:
         home(lang)
         guides_index(lang)
+        characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):
             guide_page(lang, guide, idx)
         for slug, data in GUARDIANS.items():

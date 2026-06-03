@@ -1245,7 +1245,6 @@ def json_text(value: str) -> str:
 def nav(lang: str, active: str = "", path: str = "") -> str:
     t = LANGS[lang]
     items = [
-        (lang_url(lang), t["brand"].split()[0]),
         (lang_url(lang, "guides"), t["guides"]),
         (lang_url(lang, "characters"), t["guardians"]),
         (lang_url(lang, "theory"), t["theory"]),

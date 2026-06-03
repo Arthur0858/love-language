@@ -820,6 +820,59 @@ RESOURCE_PATHS = {
     "es": [("Primero ritual", "Responde 15 señales para ver qué lenguaje necesitas recibir ahora."), ("Lee la guardiana", "Desde el resultado entiende por qué esa zona puede doler."), ("Elige recursos", "Toma una guía, libro o audio Luna para el momento actual, no toda la relación de una vez.")],
 }
 
+SUPPLY_DECISION = {
+    "zh": {
+        "eyebrow": "SUPPLY COMPASS",
+        "title": "先免費練習，再決定是否補給",
+        "intro": "把消費放在修復流程後面。先用免費內容確認需要，再選一個能支持你持續練習的補給。",
+        "steps": [
+            ("1", "先做一個免費小任務", "從測驗結果、守護者頁或指南裡選一個 24 小時內能完成的小行動。"),
+            ("2", "需要整理情緒時用 Luna", "睡前、吵架後或寫關係日記時，用 Luna 幫情緒降噪，不急著購買書卷。"),
+            ("3", "需要長期理解再選書卷", "只有在你願意慢慢讀、慢慢練時，才把書當成延伸補給。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SUPPLY COMPASS",
+        "title": "Practice free first, then choose a supply",
+        "intro": "Put spending after repair. Start with free content, confirm the need, then choose one supply that helps you keep practicing.",
+        "steps": [
+            ("1", "Do one free small task", "Choose one action from the quiz result, guardian page, or guide that can be done within 24 hours."),
+            ("2", "Use Luna when feelings need sorting", "At night, after conflict, or while journaling, let Luna quiet the noise before buying books."),
+            ("3", "Choose a book for longer learning", "Only use a book as extended supply when you are ready to read slowly and practice slowly."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SUPPLY COMPASS",
+        "title": "まず無料で練習し、それから補給を選ぶ",
+        "intro": "消費は修復の後ろに置きます。無料の内容で必要を確かめてから、練習を続けるための補給を一つ選びます。",
+        "steps": [
+            ("1", "無料の小さな課題を一つ行う", "診断結果、守護者ページ、ガイドから、二十四時間以内にできる行動を一つ選びます。"),
+            ("2", "感情整理には Luna を使う", "眠る前、衝突後、関係日記を書く時に Luna で心を静め、本を急いで買わないようにします。"),
+            ("3", "長く学びたい時だけ本を選ぶ", "ゆっくり読み、ゆっくり練習する準備がある時だけ、本を延長補給にします。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SUPPLY COMPASS",
+        "title": "먼저 무료로 연습하고 보급을 고르기",
+        "intro": "소비는 회복 과정 뒤에 둡니다. 무료 콘텐츠로 필요를 확인한 뒤 계속 연습하게 돕는 보급 하나만 고르세요.",
+        "steps": [
+            ("1", "무료 작은 과제 하나 하기", "테스트 결과, 수호자 페이지, 가이드에서 24시간 안에 할 수 있는 행동 하나를 고릅니다."),
+            ("2", "감정 정리가 필요할 때 Luna 사용", "잠들기 전, 다툼 뒤, 관계 일기를 쓸 때 Luna로 감정을 낮추고 책 구매를 서두르지 않습니다."),
+            ("3", "장기 이해가 필요할 때 책 선택", "천천히 읽고 천천히 연습할 준비가 되었을 때만 책을 확장 보급으로 사용합니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "SUPPLY COMPASS",
+        "title": "Practica gratis primero, luego elige un recurso",
+        "intro": "Pon el consumo después de la reparación. Empieza con contenido gratuito, confirma la necesidad y elige un solo recurso para seguir practicando.",
+        "steps": [
+            ("1", "Haz una tarea pequeña gratuita", "Elige una acción del resultado, la página de guardiana o una guía que puedas hacer en 24 horas."),
+            ("2", "Usa Luna para ordenar emociones", "De noche, después de un conflicto o al escribir diario, deja que Luna calme el ruido antes de comprar libros."),
+            ("3", "Elige un libro para aprendizaje largo", "Usa un libro como recurso extendido solo si estás lista para leer y practicar despacio."),
+        ],
+    },
+}
+
 
 SUPPLY_LABELS = {
     "zh": {
@@ -2395,7 +2448,9 @@ def resources_page(lang: str) -> None:
     t = LANGS[lang]
     affiliate_labels = AFFILIATE_COPY[lang]
     supply_labels = SUPPLY_LABELS[lang]
+    decision = SUPPLY_DECISION[lang]
     resource_steps = "".join(f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for idx, (title, desc) in enumerate(RESOURCE_PATHS[lang], start=1))
+    decision_steps = "".join(f"<article><span>{escape(number)}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for number, title, desc in decision["steps"])
     supply_cards = "".join(supply_route_card(lang, slug) for slug in GUARDIANS)
     cards = []
     for path, title, desc in RESOURCE_CARDS[lang]:
@@ -2427,6 +2482,11 @@ def resources_page(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
+<section class="section supply-compass">
+  <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>
+  <p class="section-intro">{escape(decision["intro"])}</p>
+  <div class="supply-compass-grid">{decision_steps}</div>
+</section>
 <section class="section supply-routes">
   <div class="section-head"><div><p class="eyebrow">{escape(supply_labels["eyebrow"])}</p><h2>{escape(supply_labels["title"])}</h2></div></div>
   <p class="section-intro">{escape(supply_labels["intro"])}</p>

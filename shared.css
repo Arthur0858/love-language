@@ -745,6 +745,11 @@ button.secondary-btn {
   color: var(--muted);
 }
 
+.quiz-supply-card .secondary-btn {
+  justify-self: start;
+  margin-top: 4px;
+}
+
 .supply-panel-actions {
   margin-top: 22px;
 }

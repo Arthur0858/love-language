@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
+ASSET_VERSION = "20260604-repair-worksheet"
 
 
 FONT_CSS = ""
@@ -499,6 +500,7 @@ QUIZ_LABELS = {
         "guardian_link": "閱讀守護者頁",
         "guide_link": "閱讀對應指南",
         "resources_link": "開啟旅人補給",
+        "supply_action": "選擇這條補給路線",
         "retake": "重新測驗",
         "copy": "複製結果",
         "copied": "已複製",
@@ -522,6 +524,7 @@ QUIZ_LABELS = {
         "guardian_link": "Read guardian page",
         "guide_link": "Read matching guide",
         "resources_link": "Open resources",
+        "supply_action": "Choose this supply route",
         "retake": "Retake",
         "copy": "Copy result",
         "copied": "Copied",
@@ -545,6 +548,7 @@ QUIZ_LABELS = {
         "guardian_link": "守護者ページを読む",
         "guide_link": "対応ガイドを読む",
         "resources_link": "リソースを開く",
+        "supply_action": "この補給ルートを選ぶ",
         "retake": "もう一度",
         "copy": "結果をコピー",
         "copied": "コピー済み",
@@ -568,6 +572,7 @@ QUIZ_LABELS = {
         "guardian_link": "수호자 페이지 읽기",
         "guide_link": "관련 가이드 읽기",
         "resources_link": "자료 열기",
+        "supply_action": "이 보급 루트 선택",
         "retake": "다시 하기",
         "copy": "결과 복사",
         "copied": "복사됨",
@@ -591,6 +596,7 @@ QUIZ_LABELS = {
         "guardian_link": "Leer página de guardiana",
         "guide_link": "Leer guía relacionada",
         "resources_link": "Abrir recursos",
+        "supply_action": "Elegir esta ruta",
         "retake": "Repetir",
         "copy": "Copiar resultado",
         "copied": "Copiado",
@@ -1659,7 +1665,7 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
   <meta property="og:description" content="{escape(desc)}" />
   <meta property="og:image" content="{DOMAIN}{image}" />
   <meta name="twitter:card" content="summary_large_image" />
-{hero_preload}  <link rel="stylesheet" href="/shared.css?v=20260603-affiliate-restore" />
+{hero_preload}  <link rel="stylesheet" href="/shared.css?v={ASSET_VERSION}" />
 </head>
 """
 
@@ -1667,7 +1673,7 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
 def layout(lang: str, title: str, desc: str, path: str, body: str, active: str = "", page_type: str = "website", image: str = "/og-cover.jpg", schema: str = "", affiliate: bool = False) -> str:
     external_script = ""
     if affiliate:
-        external_script = '\n<script src="/deferred-external.js?v=20260603-affiliate-restore" data-affiliate defer></script>'
+        external_script = f'\n<script src="/deferred-external.js?v={ASSET_VERSION}" data-affiliate defer></script>'
     return head(lang, title, desc, path, page_type, image) + f"""<body>
 <a class="skip-link" href="#main">Skip to content</a>
 {nav(lang, active, path)}
@@ -2157,6 +2163,7 @@ def quiz_script(lang: str) -> str:
         <h3>${{result.supplyTitle}}</h3>
         <p>${{result.supplyDesc}}</p>
         <ul><li>${{result.supplyMission}}</li><li>${{result.supplyText}}</li><li>${{result.supplyBook}}</li></ul>
+        <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.supply_action}}</a>
       </section>
       <section class="quiz-collector-card">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async">
@@ -2171,10 +2178,10 @@ def quiz_script(lang: str) -> str:
         </div>
       </section>
       <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
-        <a class="primary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
-        <a class="secondary-btn" href="${{result.guideUrl}}">${{quiz.labels.guide_link}}</a>
+        <a class="primary-btn" href="${{result.planUrl}}">${{result.planLabel}}</a>
         <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.resources_link}}</a>
-        <a class="secondary-btn" href="${{result.planUrl}}">${{result.planLabel}}</a>
+        <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+        <a class="secondary-btn" href="${{result.guideUrl}}">${{quiz.labels.guide_link}}</a>
       </nav>
       <div class="quiz-tools"><button type="button" class="secondary-btn" data-copy-result>${{quiz.labels.copy}}</button><button type="button" class="secondary-btn" data-retake>${{quiz.labels.retake}}</button></div>
       <p class="quiz-boundary">${{quiz.labels.boundary}}</p>`;

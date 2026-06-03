@@ -1126,6 +1126,74 @@ SITE_COPY = {
 }
 
 
+ABOUT_SECTIONS = {
+    "zh": [
+        ("我們是誰", "LoveTypes 是一座以五種愛之語為地圖的心語庭園，將關係裡常見的被愛需求翻成五位情感守護者、15 道心語測驗與可實作的溝通指南。網站的目標不是替人貼標籤，而是讓你更容易說出：我怎麼接收愛、哪裡容易錯頻、下一步可以怎麼修復。"),
+        ("內容怎麼產生與維護", "每一篇指南都從真實關係情境出發，再回到五種愛之語、情感安全、界線與日常練習。當頁面太薄、重複、過度導流，或沒有指向實際修復時，就會重新整理。LoveTypes 維持反思式語氣，不把測驗結果包裝成診斷。"),
+        ("商業與資料揭露", SITE_COPY["zh"]["disclosure"]),
+        ("聯絡與修正", SITE_COPY["zh"]["contact"]),
+    ],
+    "en": [
+        ("Who we are", "LoveTypes is a Heart Garden mapped by the five love languages. It translates common needs for receiving love into five emotion guardians, a 15-prompt ritual, and practical relationship guides. The goal is not to label people, but to help you name how you receive love, where misfrequency hurts, and what repair can look like next."),
+        ("How content is made and maintained", "Each guide starts from a real relationship situation, then returns to love-language theory, emotional safety, boundaries, and daily practice. Pages that become thin, repetitive, too promotional, or disconnected from practical repair are revised. LoveTypes keeps a reflective tone and does not present quiz results as diagnosis."),
+        ("Commercial and data disclosure", SITE_COPY["en"]["disclosure"]),
+        ("Contact and corrections", SITE_COPY["en"]["contact"]),
+    ],
+    "ja": [
+        ("LoveTypes について", "LoveTypes は五つの愛の言語を地図にした心語の庭です。愛されるニーズを五人の感情の守護者、15 問のリチュアル、実践できる関係ガイドへ翻訳します。目的は人を分類することではなく、自分がどう愛を受け取るか、どこですれ違いやすいか、次にどう修復できるかを言葉にしやすくすることです。"),
+        ("内容の作成と維持", "各ガイドは実際の関係場面から始まり、愛の言語、感情的安全、境界線、日常の練習へ戻ります。内容が薄い、重複している、宣伝に寄りすぎている、実際の修復につながらないページは更新します。LoveTypes は診断ではなく内省の語り口を保ちます。"),
+        ("商業・データの開示", SITE_COPY["ja"]["disclosure"]),
+        ("連絡と修正", SITE_COPY["ja"]["contact"]),
+    ],
+    "ko": [
+        ("LoveTypes 소개", "LoveTypes는 다섯 가지 사랑의 언어를 지도로 삼은 마음의 정원입니다. 사랑받고 싶은 욕구를 다섯 감정 수호자, 15문항 의식, 실제 관계 가이드로 번역합니다. 목적은 사람을 분류하는 것이 아니라 내가 사랑을 받는 방식, 어긋남이 아픈 지점, 다음 회복 행동을 말하기 쉽게 만드는 것입니다."),
+        ("콘텐츠 제작과 관리", "각 가이드는 실제 관계 상황에서 시작해 사랑의 언어, 정서적 안전, 경계, 일상 연습으로 돌아갑니다. 내용이 얇거나 반복적이거나 지나치게 홍보적이거나 실제 회복과 연결되지 않는 페이지는 다시 정리합니다. LoveTypes는 진단이 아니라 성찰의 어조를 유지합니다."),
+        ("상업 및 데이터 고지", SITE_COPY["ko"]["disclosure"]),
+        ("연락과 수정", SITE_COPY["ko"]["contact"]),
+    ],
+    "es": [
+        ("Quiénes somos", "LoveTypes es un Jardín del Corazón trazado por los cinco lenguajes del amor. Traduce necesidades comunes de recibir amor en cinco guardianas emocionales, un ritual de 15 señales y guías prácticas de relación. El objetivo no es etiquetar personas, sino ayudarte a nombrar cómo recibes amor, dónde duele el desajuste y qué reparación puede venir después."),
+        ("Cómo se crea y mantiene el contenido", "Cada guía parte de una situación real de relación y vuelve a la teoría de lenguajes del amor, seguridad emocional, límites y práctica diaria. Las páginas delgadas, repetitivas, demasiado promocionales o desconectadas de la reparación práctica se revisan. LoveTypes mantiene un tono reflexivo y no presenta los resultados como diagnóstico."),
+        ("Divulgación comercial y de datos", SITE_COPY["es"]["disclosure"]),
+        ("Contacto y correcciones", SITE_COPY["es"]["contact"]),
+    ],
+}
+
+
+THEORY_SECTIONS = {
+    "zh": [
+        ("五種愛之語是什麼", "五種愛之語把人們表達與接收愛的常見方式整理成五個入口：肯定言詞、優質時光、接受禮物、服務行動與身體接觸。它不是人格分類，而是一套關係溝通語彙，幫助你把模糊的委屈翻成可討論的需求。"),
+        ("五位守護者怎麼對應", "艾莉絲守護被準確看見的肯定言詞；諾雅守護真正同在的優質時光；薇薇安守護被記得的心意；克萊兒守護把承諾放回日常的服務行動；朵拉守護經過同意、讓身體感到安全的靠近。"),
+        ("測驗結果怎麼讀", "15 道心語測驗只反映此刻最容易被點亮或最容易受傷的入口。結果適合拿來開啟對話、選擇指南與設計小行動，不適合拿來要求對方照單全收，也不代表你永遠只有一種愛之語。"),
+        ("錯頻修復的核心", "錯頻不是誰比較不愛，而是發出的愛和接收的方式沒有接上。修復時先說明感受，再指出背後的愛之語需求，最後提出一個對方能在短時間內做到的小請求。"),
+    ],
+    "en": [
+        ("What the five love languages mean", "The five love languages organize common ways people express and receive love: words of affirmation, quality time, receiving gifts, acts of service, and physical touch. They are not a personality system; they are a communication vocabulary for turning vague hurt into discussable needs."),
+        ("How the guardians map to the theory", "Iris guards words that help a person feel clearly seen. Noah guards time where two people are truly present. Vivian guards the proof of being remembered. Claire guards promises returned to daily action. Dora guards consensual closeness that helps the body feel safe."),
+        ("How to read a quiz result", "The 15-prompt ritual reflects the doorway that feels easiest to light up or easiest to wound right now. Use the result to start a conversation, choose a guide, and design one small action. Do not use it as a demand, a permanent label, or proof that you only have one love language."),
+        ("The core of misfrequency repair", "Misfrequency does not mean someone loves less. It means the love being sent and the way love is received are not connecting. Repair begins by naming the feeling, then the love-language need underneath it, then one small request the other person can try soon."),
+    ],
+    "ja": [
+        ("五つの愛の言語とは", "五つの愛の言語は、愛を表す方法と受け取る方法を、肯定の言葉、上質な時間、贈り物、奉仕の行動、身体的なふれあいに整理する枠組みです。人格分類ではなく、曖昧な痛みを話し合えるニーズへ変えるための語彙です。"),
+        ("守護者との対応", "アイリスは正確に見てもらう肯定の言葉を守ります。ノアは本当に一緒にいる時間を守ります。ヴィヴィアンは思い出してもらえた証を守ります。クレアは約束を日常の行動へ戻します。ドラは同意に基づく、安全な近さを守ります。"),
+        ("診断結果の読み方", "15 問のリチュアルは、今もっとも灯りやすい、または傷つきやすい入口を示します。結果は会話、ガイド選び、小さな行動設計に使うもので、相手への要求や固定ラベルではありません。"),
+        ("すれ違い修復の中心", "すれ違いは愛が少ないという意味ではなく、送る愛と受け取る方法が接続していない状態です。修復ではまず感情を名づけ、その下の愛の言語のニーズを伝え、近いうちに試せる小さなお願いを一つ出します。"),
+    ],
+    "ko": [
+        ("다섯 가지 사랑의 언어란", "다섯 가지 사랑의 언어는 사랑을 표현하고 받는 방식을 인정의 말, 함께하는 시간, 선물 받기, 봉사의 행동, 스킨십으로 정리하는 틀입니다. 성격 분류가 아니라 흐릿한 서운함을 말할 수 있는 욕구로 바꾸는 대화 언어입니다."),
+        ("수호자와의 대응", "아이리스는 정확히 보이는 인정의 말을 지킵니다. 노아는 진짜로 함께 있는 시간을 지킵니다. 비비안은 기억되었다는 증거를 지킵니다. 클레어는 약속을 일상의 행동으로 돌려놓습니다. 도라는 동의와 안전이 있는 가까움을 지킵니다."),
+        ("결과를 읽는 법", "15문항 의식은 지금 가장 쉽게 켜지거나 가장 쉽게 다치는 입구를 보여 줍니다. 결과는 대화를 시작하고 가이드를 고르며 작은 행동을 설계하는 데 쓰는 것이지, 요구나 고정 라벨이 아닙니다."),
+        ("어긋남 회복의 핵심", "어긋남은 누가 덜 사랑한다는 뜻이 아니라 보내는 사랑과 받는 방식이 연결되지 않은 상태입니다. 회복은 감정을 말하고, 그 아래의 사랑의 언어 욕구를 밝히고, 가까운 시간 안에 시도할 작은 요청 하나를 정하는 데서 시작합니다."),
+    ],
+    "es": [
+        ("Qué significan los cinco lenguajes", "Los cinco lenguajes del amor ordenan formas comunes de expresar y recibir amor: palabras de afirmación, tiempo de calidad, recibir regalos, actos de servicio y contacto físico. No son una clasificación de personalidad, sino vocabulario para convertir una herida vaga en una necesidad conversable."),
+        ("Cómo se conectan con las guardianas", "Iris protege las palabras que hacen sentir vista a una persona. Noah protege el tiempo de presencia real. Vivian protege la prueba de haber sido recordada. Claire devuelve las promesas a acciones diarias. Dora protege la cercanía consensuada que ayuda al cuerpo a sentirse seguro."),
+        ("Cómo leer el resultado", "El ritual de 15 señales muestra la puerta que ahora se enciende o se hiere con más facilidad. Usa el resultado para iniciar conversación, elegir una guía y diseñar una acción pequeña. No lo uses como exigencia, etiqueta permanente ni prueba de que solo tienes un lenguaje."),
+        ("El centro de reparar el desajuste", "El desajuste no significa que alguien ame menos. Significa que el amor enviado y la forma de recibirlo no se conectan. La reparación empieza nombrando el sentimiento, luego la necesidad de lenguaje del amor y finalmente una petición pequeña que la otra persona pueda probar pronto."),
+    ],
+}
+
+
 def lang_url(lang: str, path: str = "") -> str:
     prefix = LANGS[lang]["prefix"]
     clean = path.strip("/")
@@ -1711,15 +1779,44 @@ def simple_page(lang: str, slug: str) -> None:
         "luna-yoga-music": (t["luna_title"], t["luna_desc"]),
     }
     title, desc = titles[slug]
+    if slug == "about":
+        about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
+        body = f"""
+<section class="page-hero compact"><p class="eyebrow">ABOUT LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></section>
+<section class="section article-body standalone">
+  {about_items}
+  <h2>{escape(t["boundary"])}</h2>
+  <p>{escape(t["boundary_text"])}</p>
+  <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
+</section>
+"""
+        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"AboutPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
+        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
+        return
+    if slug == "theory":
+        theory_items = "".join(f"<h2>{escape(heading)}</h2><p>{escape(body_text)}</p>" for heading, body_text in THEORY_SECTIONS[lang])
+        guardian_cards = "".join(character_card(lang, guardian_slug, guardian_data) for guardian_slug, guardian_data in GUARDIANS.items())
+        faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
+        body = f"""
+<section class="page-hero compact"><p class="eyebrow">LOVE LANGUAGE THEORY</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></section>
+<section class="section article-body standalone">
+  {theory_items}
+  <h2>{escape(t["boundary"])}</h2>
+  <p>{escape(t["boundary_text"])}</p>
+</section>
+<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_cards}</div></section>
+<section class="section faq-section"><div class="section-head"><p class="eyebrow">LOVE LANGUAGE FAQ</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
+"""
+        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
+        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
+        return
     extra = ""
     if slug == "contact":
         extra = '<p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p>'
     if slug in {"privacy", "terms"}:
         extra = f"<p><strong>Updated:</strong> {UPDATED}</p>"
-    faq_html = ""
-    if slug == "theory":
-        faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
-        faq_html = f'<section class="section faq-section"><div class="section-head"><p class="eyebrow">LOVE LANGUAGE FAQ</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>'
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
 <section class="section article-body standalone">
@@ -1738,7 +1835,6 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{SITE_COPY[lang]["contact"]}</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(copy["mistakes"])}</p></div>
 </section>
-{faq_html}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"

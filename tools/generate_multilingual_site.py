@@ -12,6 +12,26 @@ ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-03"
 
 
+FONT_CSS = ""
+
+
+IMAGE_DIMENSIONS = {
+    "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp": (900, 506),
+    "/assets/lovetypes/backgrounds/guardian-garden.webp": (1920, 1080),
+    "/assets/lovetypes/share/guide-toolkit-og.jpg": (1200, 630),
+    "/assets/lovetypes/guardians/claire.webp": (720, 1007),
+    "/assets/lovetypes/guardians/dora.webp": (736, 1007),
+    "/assets/lovetypes/guardians/iris.webp": (966, 1024),
+    "/assets/lovetypes/guardians/noah.webp": (1066, 1024),
+    "/assets/lovetypes/guardians/vivian.webp": (823, 1024),
+    "/assets/lovetypes/props/affirmation-feather-pen.webp": (285, 235),
+    "/assets/lovetypes/props/gifts-ribboned-gift-box.webp": (215, 190),
+    "/assets/lovetypes/props/quality-time-lantern.webp": (100, 195),
+    "/assets/lovetypes/props/service-tool-pouch.webp": (250, 135),
+    "/assets/lovetypes/props/touch-golden-hug-glow.webp": (305, 180),
+}
+
+
 LANGS = {
     "zh": {
         "code": "zh-TW",
@@ -38,6 +58,12 @@ LANGS = {
         "guide_index_title": "LoveTypes 深度指南｜把愛之語帶回真實關係",
         "guide_index_desc": "閱讀 LoveTypes 五種愛之語指南：測驗結果、吵架修復、遠距關係、界線、安全感與伴侶對話練習。",
         "trust_intro": "LoveTypes 是一個以五種愛之語為基礎的原創關係溝通網站，透過角色化敘事、情境測驗與實作指南，幫助使用者整理被愛需求與表達方式。",
+        "resources_desc": "整理 LoveTypes 的指南入口、守護者頁面、理論說明與實作練習，方便快速找到下一步閱讀。",
+        "contact_desc": "聯絡 LoveTypes 團隊，回報內容修正、隱私疑問、合作需求或網站問題。",
+        "privacy_desc": f"LoveTypes 隱私政策，說明資料使用、第三方服務與聯絡方式。更新日期 {UPDATED}。",
+        "terms_desc": f"LoveTypes 使用條款，說明內容邊界、智慧財產、免責與網站使用規則。更新日期 {UPDATED}。",
+        "luna_title": "Luna Yoga Music｜關係反思與放鬆音樂",
+        "luna_desc": "Luna Yoga Music 提供適合書寫、放鬆與關係反思的安定音樂資源。",
     },
     "en": {
         "code": "en",
@@ -64,6 +90,12 @@ LANGS = {
         "guide_index_title": "LoveTypes Guides | Bring Love Languages Into Real Relationships",
         "guide_index_desc": "Explore LoveTypes guides for quiz results, conflict repair, long-distance care, boundaries, emotional needs, and partner conversations.",
         "trust_intro": "LoveTypes is an original relationship communication site based on the five love languages. It combines character storytelling, scenario-based reflection, and practical guides to help readers name what helps them feel loved.",
+        "resources_desc": "Browse LoveTypes guide paths, guardian profiles, theory notes, and practical exercises for relationship reflection.",
+        "contact_desc": "Contact LoveTypes for content corrections, privacy questions, partnership concerns, or broken-page reports.",
+        "privacy_desc": f"LoveTypes privacy policy covering data use, third-party services, and contact options. Updated {UPDATED}.",
+        "terms_desc": f"LoveTypes terms of use covering content boundaries, intellectual property, disclaimers, and site rules. Updated {UPDATED}.",
+        "luna_title": "Luna Yoga Music | Calm Audio for Reflection",
+        "luna_desc": "Luna Yoga Music offers calm companion audio for journaling, decompression, and relationship reflection.",
     },
     "ja": {
         "code": "ja",
@@ -90,6 +122,12 @@ LANGS = {
         "guide_index_title": "LoveTypes ガイド｜愛の言語を現実の関係へ",
         "guide_index_desc": "診断結果、衝突後の修復、遠距離、境界線、感情ニーズ、パートナーとの会話を扱う LoveTypes ガイド。",
         "trust_intro": "LoveTypes は五つの愛の言語を土台にしたオリジナルの関係コミュニケーションサイトです。キャラクター表現、状況型の内省、実用的なガイドを通じて、愛される入口を言葉にします。",
+        "resources_desc": "LoveTypes のガイド、守護者プロフィール、理論メモ、関係をふり返る実践練習をまとめた入口です。",
+        "contact_desc": "内容修正、プライバシー、提携、ページ不具合について LoveTypes に連絡できます。",
+        "privacy_desc": f"データ利用、第三者サービス、連絡方法を説明する LoveTypes プライバシーポリシー。更新日 {UPDATED}。",
+        "terms_desc": f"内容の範囲、知的財産、免責、サイト利用ルールを説明する LoveTypes 利用規約。更新日 {UPDATED}。",
+        "luna_title": "Luna Yoga Music｜内省のための静かな音楽",
+        "luna_desc": "Luna Yoga Music は、日記、緊張をほどく時間、関係のふり返りに使える静かな音楽リソースです。",
     },
     "ko": {
         "code": "ko",
@@ -116,6 +154,12 @@ LANGS = {
         "guide_index_title": "LoveTypes 가이드｜사랑의 언어를 실제 관계로",
         "guide_index_desc": "테스트 결과, 갈등 회복, 장거리 관계, 경계, 정서적 욕구, 파트너 대화를 다루는 LoveTypes 가이드.",
         "trust_intro": "LoveTypes는 다섯 가지 사랑의 언어를 바탕으로 만든 오리지널 관계 커뮤니케이션 사이트입니다. 캐릭터 서사, 상황형 질문, 실용 가이드를 통해 사랑받는 방식을 말로 정리합니다.",
+        "resources_desc": "LoveTypes 가이드, 수호자 프로필, 이론 노트, 관계 성찰 연습을 한곳에서 찾을 수 있는 자료 페이지입니다.",
+        "contact_desc": "콘텐츠 수정, 개인정보 문의, 협업, 깨진 페이지 신고를 위해 LoveTypes에 연락할 수 있습니다.",
+        "privacy_desc": f"데이터 사용, 제3자 서비스, 연락 방법을 설명하는 LoveTypes 개인정보 처리방침. 업데이트 {UPDATED}.",
+        "terms_desc": f"콘텐츠 범위, 지식재산권, 면책, 사이트 이용 규칙을 설명하는 LoveTypes 이용약관. 업데이트 {UPDATED}.",
+        "luna_title": "Luna Yoga Music｜성찰을 위한 차분한 음악",
+        "luna_desc": "Luna Yoga Music은 기록, 긴장 완화, 관계 성찰에 어울리는 차분한 오디오 자료입니다.",
     },
     "es": {
         "code": "es",
@@ -142,6 +186,12 @@ LANGS = {
         "guide_index_title": "Guías LoveTypes | Lleva los lenguajes del amor a la vida real",
         "guide_index_desc": "Explora guías sobre resultados, reparación de conflictos, distancia, límites, necesidades emocionales y conversaciones de pareja.",
         "trust_intro": "LoveTypes es un sitio original de comunicación relacional basado en los cinco lenguajes del amor. Combina personajes, reflexión situacional y guías prácticas para nombrar cómo una persona se siente amada.",
+        "resources_desc": "Encuentra guías LoveTypes, perfiles de guardianas, notas teóricas y ejercicios prácticos para reflexionar sobre relaciones.",
+        "contact_desc": "Contacta a LoveTypes para correcciones de contenido, privacidad, colaboraciones o reportes de páginas rotas.",
+        "privacy_desc": f"Política de privacidad de LoveTypes sobre datos, servicios de terceros y contacto. Actualizada {UPDATED}.",
+        "terms_desc": f"Términos de uso de LoveTypes sobre límites de contenido, propiedad intelectual, descargos y reglas del sitio. Actualizados {UPDATED}.",
+        "luna_title": "Luna Yoga Music | Audio tranquilo para reflexionar",
+        "luna_desc": "Luna Yoga Music ofrece audio tranquilo para escribir, descomprimir y reflexionar sobre relaciones.",
     },
 }
 
@@ -518,6 +568,32 @@ def page_path(lang: str, path: str = "") -> Path:
     return ROOT.joinpath(*parts, "index.html") if parts else ROOT / "index.html"
 
 
+def img_tag(src: str, alt: str, class_name: str = "", lazy: bool = True, priority: bool = False) -> str:
+    width, height = IMAGE_DIMENSIONS.get(src, ("", ""))
+    attrs = [
+        f'src="{src}"',
+        f'alt="{escape(alt)}"',
+    ]
+    if width and height:
+        attrs += [f'width="{width}"', f'height="{height}"']
+    if priority:
+        attrs.append('fetchpriority="high"')
+        attrs.append('decoding="async"')
+    elif lazy:
+        attrs.append('loading="lazy"')
+        attrs.append('decoding="async"')
+    else:
+        attrs.append('loading="eager"')
+        attrs.append('decoding="async"')
+    if class_name:
+        attrs.append(f'class="{class_name}"')
+    return "<img " + " ".join(attrs) + " />"
+
+
+def json_text(value: str) -> str:
+    return escape(value).replace('"', '\\"')
+
+
 def nav(lang: str, active: str = "") -> str:
     t = LANGS[lang]
     items = [
@@ -578,9 +654,6 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
   <meta property="og:description" content="{escape(desc)}" />
   <meta property="og:image" content="{DOMAIN}{image}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/shared.css?v=20260603-multilingual" />
 </head>
 """
@@ -622,7 +695,7 @@ def character_card(lang: str, slug: str, data: dict) -> str:
     name, typ, desc = data[lang]
     return f"""
 <a class="guardian-card" href="{lang_url(lang, "characters/" + slug)}">
-  <img src="{data["asset"]}" alt="{escape(name)}" loading="lazy" />
+  {img_tag(data["asset"], name)}
   <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p>{escape(desc)}</p></div>
 </a>
 """
@@ -640,7 +713,7 @@ def home(lang: str) -> None:
     <p class="lead">{escape(t["tagline"])}</p>
     <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a><a class="secondary-btn" href="#quiz-section">{escape(t["start"])}</a></div>
   </div>
-  <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" /><img src="/assets/lovetypes/backgrounds/guardian-garden.webp" alt="LoveTypes guardian garden" /></picture>
+  <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
 <section class="section intro-grid">
   <div><p class="eyebrow">EDITORIAL PROMISE</p><h2>{escape(t["trust_intro"])}</h2></div>
@@ -669,7 +742,8 @@ def guides_index(lang: str) -> None:
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """
-    write(page_path(lang, "guides"), layout(lang, t["guide_index_title"], t["guide_index_desc"], "guides", body, t["guides"]))
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guide_index_title"])}","description":"{escape(t["guide_index_desc"])}","url":"{abs_url(lang, "guides")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    write(page_path(lang, "guides"), layout(lang, t["guide_index_title"], t["guide_index_desc"], "guides", body, t["guides"], "website", "/og-cover.jpg", schema))
 
 
 def guide_page(lang: str, guide: dict, index: int) -> None:
@@ -686,7 +760,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
-  <img src="{GUARDIANS[guide["guardian"]]["prop"]}" alt="{escape(guardian[1])}" />
+  {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False)}
 </section>
 <section class="article-shell">
   <article class="article-body">
@@ -719,7 +793,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">LOVETYPES ARCHIVE GUIDE</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
-  <img src="/assets/lovetypes/share/guide-toolkit-og.jpg" alt="LoveTypes guide" />
+  {img_tag("/assets/lovetypes/share/guide-toolkit-og.jpg", "LoveTypes guide", lazy=False)}
 </section>
 <section class="article-shell">
   <article class="article-body">
@@ -737,7 +811,8 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <aside class="article-side"><h2>延伸閱讀</h2>{guide_card(lang, related)}</aside>
 </section>
 """
-    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body, t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg"))
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, "guides/" + slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body, t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:
@@ -752,7 +827,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     body = f"""
 <section class="guardian-hero">
   <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><a class="primary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
-  <img src="{data["asset"]}" alt="{escape(name)}" />
+  {img_tag(data["asset"], name, lazy=False)}
 </section>
 <section class="section intro-grid">
   <div><h2>{escape(labels["how"])}</h2><p>{escape(copy["why"])}</p><p>{escape(desc)}</p></div>
@@ -769,7 +844,8 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 </section>
 <section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
 """
-    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", data["asset"]))
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","name":"{escape(name)}","description":"{escape(desc)}","url":"{abs_url(lang, "characters/" + slug)}","inLanguage":"{t["code"]}","about":{{"@type":"Thing","name":"{escape(typ)}"}},"dateModified":"{UPDATED}"}}</script>'
+    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", data["asset"], schema))
 
 
 def simple_page(lang: str, slug: str) -> None:
@@ -778,12 +854,12 @@ def simple_page(lang: str, slug: str) -> None:
     copy = PRACTICAL_COPY[lang]
     titles = {
         "theory": (t["theory"], t["tagline"]),
-        "resources": (t["resources"], t["guide_index_desc"]),
+        "resources": (t["resources"], t["resources_desc"]),
         "about": (t["about"], t["trust_intro"]),
-        "contact": (t["contact"], "s755102@gmail.com"),
-        "privacy": (t["privacy"], f"LoveTypes privacy policy. Updated {UPDATED}."),
-        "terms": (t["terms"], f"LoveTypes terms of use. Updated {UPDATED}."),
-        "luna-yoga-music": ("Luna Yoga Music", "A calm companion resource for reflection, journaling, and relationship decompression."),
+        "contact": (t["contact"], t["contact_desc"]),
+        "privacy": (t["privacy"], t["privacy_desc"]),
+        "terms": (t["terms"], t["terms_desc"]),
+        "luna-yoga-music": (t["luna_title"], t["luna_desc"]),
     }
     title, desc = titles[slug]
     extra = ""
@@ -810,12 +886,14 @@ def simple_page(lang: str, slug: str) -> None:
   <div class="callout"><strong>LoveTypes</strong><p>{escape(copy["mistakes"])}</p></div>
 </section>
 """
-    write(page_path(lang, slug), layout(lang, f"{title} | LoveTypes", desc, slug, body, title))
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
+    write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
 
 
 def write_css() -> None:
     css = """
-:root{--rose:#bd5260;--ink:#302425;--muted:#766160;--cream:#fff8f2;--paper:#fffdf9;--line:#ecd8d5;--sage:#6b7f6a;--gold:#b78b45;--lilac:#7666a8;--shadow:0 18px 54px rgba(76,42,43,.11);--serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',system-ui,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.75}a{color:inherit}.skip-link{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 12px;border-radius:8px;z-index:999}.skip-link:focus{left:8px}.site-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:20px;padding:14px 28px;background:rgba(255,248,242,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.brand{text-decoration:none;font-weight:900;color:var(--rose);font-family:var(--serif);font-size:1.25rem}.nav-links{display:flex;gap:18px;flex:1}.nav-links a,.language-switcher a{text-decoration:none;color:var(--muted);font-weight:700;font-size:.9rem}.nav-links a.active,.nav-links a:hover,.language-switcher a:hover{color:var(--rose)}.language-switcher{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.hero{min-height:calc(100vh - 64px);display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46vw);gap:30px;align-items:center;padding:64px min(7vw,92px) 52px;background:linear-gradient(120deg,#fffaf6 0%,#fdf0ef 54%,#edf4ec 100%)}.hero picture,.hero img{width:100%;height:100%;min-height:420px;object-fit:cover;border-radius:8px;box-shadow:var(--shadow)}.hero-copy{max-width:760px}.eyebrow{margin:0 0 10px;color:var(--sage);font-size:.78rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.hero h1,.page-hero h1,.article-hero h1,.guardian-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,5rem);line-height:1.04;margin:0 0 18px;color:var(--ink);letter-spacing:0}.lead,.hero p,.page-hero p,.article-hero p,.guardian-hero p{font-size:clamp(1.02rem,1.4vw,1.26rem);color:var(--muted);max-width:760px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}.primary-btn,.secondary-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:900}.primary-btn{background:var(--rose);color:#fff}.secondary-btn{border:1px solid var(--rose);color:var(--rose);background:#fff}.section{padding:64px min(7vw,92px)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.section-head h2,.intro-grid h2,.quiz-band h2,.article-body h2,.article-side h2{font-family:var(--serif);font-size:clamp(1.55rem,2.6vw,2.6rem);line-height:1.15;margin:0 0 12px}.intro-grid{display:grid;grid-template-columns:minmax(260px,42%) 1fr;gap:40px}.text-stack p,.article-body p,.article-body li{font-size:1.03rem;color:var(--muted)}.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}.card-grid.wide{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.content-card,.guardian-card,.article-side .content-card,.footer-grid a{display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px;text-decoration:none;box-shadow:0 10px 30px rgba(76,42,43,.06)}.content-card h3,.guardian-card h3{font-family:var(--serif);margin:6px 0 10px;font-size:1.25rem}.content-card p,.guardian-card p,.footer-grid span{color:var(--muted)}.card-link{color:var(--rose);font-weight:900}.guardian-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.guardian-card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;margin-bottom:14px}.guardian-card span{color:var(--gold);font-weight:900}.quiz-band{margin:36px min(7vw,92px) 72px;padding:38px;display:grid;grid-template-columns:1fr minmax(260px,420px);gap:28px;background:#2f2527;color:#fff;border-radius:8px}.quiz-band p{color:#f4dfdc}.quiz-preview{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:22px}.page-hero,.article-hero,.guardian-hero{padding:72px min(7vw,92px);background:linear-gradient(120deg,#fffaf6,#f7e8e6)}.page-hero.compact{min-height:300px}.article-hero,.guardian-hero{display:grid;grid-template-columns:1fr minmax(180px,340px);gap:36px;align-items:center}.article-hero img,.guardian-hero img{width:100%;border-radius:8px;box-shadow:var(--shadow)}.article-shell{display:grid;grid-template-columns:minmax(0,760px) minmax(260px,340px);gap:34px;align-items:start;padding:56px min(7vw,92px)}.article-body{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:clamp(24px,4vw,44px)}.article-body.standalone{max-width:900px;margin:0 auto}.article-body .lede{font-size:1.2rem;color:var(--ink)}.article-body h2{margin-top:34px}.article-body ul,.article-body ol{padding-left:24px}.callout{margin:26px 0;padding:20px;border-left:5px solid var(--rose);background:#fff4f3;border-radius:8px}.callout.safety{border-left-color:var(--sage);background:#f2f7f1}.article-side{position:sticky;top:90px;display:grid;gap:16px}.guardian-hero{background:linear-gradient(120deg,#fff8f2,#eef5ef)}.note-section{background:#fff}.contact-line a{font-size:1.25rem;color:var(--rose);font-weight:900}.site-footer{padding:44px min(7vw,92px);background:#2f2527;color:#fff}.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:24px}.footer-grid a{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#fff}.site-footer p,.site-footer span{color:#ead6d4}.site-footer a{color:#fff}@media(max-width:840px){.site-nav{align-items:flex-start;flex-direction:column}.nav-links{flex-wrap:wrap}.hero,.intro-grid,.quiz-band,.article-hero,.guardian-hero,.article-shell{grid-template-columns:1fr}.hero{padding-top:40px}.hero picture,.hero img{min-height:280px}.article-side{position:static}.section-head{display:block}.language-switcher{justify-content:flex-start}}
+:root{--rose:#bd5260;--ink:#302425;--muted:#766160;--cream:#fff8f2;--paper:#fffdf9;--line:#ecd8d5;--sage:#6b7f6a;--gold:#b78b45;--lilac:#7666a8;--shadow:0 18px 54px rgba(76,42,43,.11);--serif:Georgia,'Times New Roman','Songti TC','Yu Mincho','Batang',serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang TC','Hiragino Sans','Yu Gothic','Malgun Gothic','Noto Sans',Arial,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.75}a{color:inherit}.skip-link{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 12px;border-radius:8px;z-index:999}.skip-link:focus{left:8px}.site-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:20px;padding:14px 28px;background:rgba(255,248,242,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.brand{text-decoration:none;font-weight:900;color:var(--rose);font-family:var(--serif);font-size:1.25rem}.nav-links{display:flex;gap:18px;flex:1}.nav-links a,.language-switcher a{text-decoration:none;color:var(--muted);font-weight:700;font-size:.9rem}.nav-links a.active,.nav-links a:hover,.language-switcher a:hover{color:var(--rose)}.language-switcher{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.hero{min-height:calc(100vh - 64px);display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,46vw);gap:30px;align-items:center;padding:64px min(7vw,92px) 52px;background:linear-gradient(120deg,#fffaf6 0%,#fdf0ef 54%,#edf4ec 100%)}.hero picture,.hero img{display:block;width:100%;height:100%;min-height:420px;object-fit:cover;border-radius:8px;box-shadow:var(--shadow)}.hero-copy{max-width:760px}.eyebrow{margin:0 0 10px;color:var(--sage);font-size:.78rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.hero h1,.page-hero h1,.article-hero h1,.guardian-hero h1{font-family:var(--serif);font-size:clamp(2.2rem,5vw,5rem);line-height:1.04;margin:0 0 18px;color:var(--ink);letter-spacing:0}.lead,.hero p,.page-hero p,.article-hero p,.guardian-hero p{font-size:clamp(1.02rem,1.4vw,1.26rem);color:var(--muted);max-width:760px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}.primary-btn,.secondary-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:900}.primary-btn{background:var(--rose);color:#fff}.secondary-btn{border:1px solid var(--rose);color:var(--rose);background:#fff}.section{padding:64px min(7vw,92px)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.section-head h2,.intro-grid h2,.quiz-band h2,.article-body h2,.article-side h2{font-family:var(--serif);font-size:clamp(1.55rem,2.6vw,2.6rem);line-height:1.15;margin:0 0 12px}.intro-grid{display:grid;grid-template-columns:minmax(260px,42%) 1fr;gap:40px}.text-stack p,.article-body p,.article-body li{font-size:1.03rem;color:var(--muted)}.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}.card-grid.wide{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.content-card,.guardian-card,.article-side .content-card,.footer-grid a{display:block;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:22px;text-decoration:none;box-shadow:0 10px 30px rgba(76,42,43,.06)}.content-card h3,.guardian-card h3{font-family:var(--serif);margin:6px 0 10px;font-size:1.25rem}.content-card p,.guardian-card p,.footer-grid span{color:var(--muted)}.card-link{color:var(--rose);font-weight:900}.guardian-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.guardian-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;margin-bottom:14px}.guardian-card span{color:var(--gold);font-weight:900}.quiz-band{margin:36px min(7vw,92px) 72px;padding:38px;display:grid;grid-template-columns:1fr minmax(260px,420px);gap:28px;background:#2f2527;color:#fff;border-radius:8px}.quiz-band p{color:#f4dfdc}.quiz-preview{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:22px}.page-hero,.article-hero,.guardian-hero{padding:72px min(7vw,92px);background:linear-gradient(120deg,#fffaf6,#f7e8e6)}.page-hero.compact{min-height:300px}.article-hero,.guardian-hero{display:grid;grid-template-columns:1fr minmax(180px,340px);gap:36px;align-items:center}.article-hero img,.guardian-hero img{display:block;width:100%;height:auto;border-radius:8px;box-shadow:var(--shadow)}.article-shell{display:grid;grid-template-columns:minmax(0,760px) minmax(260px,340px);gap:34px;align-items:start;padding:56px min(7vw,92px)}.article-body{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:clamp(24px,4vw,44px)}.article-body.standalone{max-width:900px;margin:0 auto}.article-body .lede{font-size:1.2rem;color:var(--ink)}.article-body h2{margin-top:34px}.article-body ul,.article-body ol{padding-left:24px}.callout{margin:26px 0;padding:20px;border-left:5px solid var(--rose);background:#fff4f3;border-radius:8px}.callout.safety{border-left-color:var(--sage);background:#f2f7f1}.article-side{position:sticky;top:90px;display:grid;gap:16px}.guardian-hero{background:linear-gradient(120deg,#fff8f2,#eef5ef)}.note-section{background:#fff}.contact-line a{font-size:1.25rem;color:var(--rose);font-weight:900}.site-footer{padding:44px min(7vw,92px);background:#2f2527;color:#fff}.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:24px}.footer-grid a{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#fff}.site-footer p,.site-footer span{color:#ead6d4}.site-footer a{color:#fff}@media(max-width:840px){.site-nav{align-items:flex-start;flex-direction:column}.nav-links{flex-wrap:wrap}.hero,.intro-grid,.quiz-band,.article-hero,.guardian-hero,.article-shell{grid-template-columns:1fr}.hero{padding-top:40px}.hero picture,.hero img{min-height:280px}.article-side{position:static}.section-head{display:block}.language-switcher{justify-content:flex-start}}
 """
     write(ROOT / "shared.css", css.strip() + "\n")
 

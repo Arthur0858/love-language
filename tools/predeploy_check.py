@@ -91,13 +91,19 @@ def main() -> int:
         default="",
         help="BASE_URL for the optional visual check. If omitted with --visual, a temporary local server is started.",
     )
+    parser.add_argument(
+        "--visual-only",
+        action="store_true",
+        help="Run only tools/visual_check.mjs, starting a temporary local server unless --base-url is set.",
+    )
     args = parser.parse_args()
 
-    run_step("python compile", [sys.executable, "-m", "py_compile", *PYTHON_TOOLS])
-    run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
-    run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
+    if not args.visual_only:
+        run_step("python compile", [sys.executable, "-m", "py_compile", *PYTHON_TOOLS])
+        run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
+        run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
 
-    if args.visual:
+    if args.visual or args.visual_only:
         node = find_node()
         env = os.environ.copy()
         if args.base_url:

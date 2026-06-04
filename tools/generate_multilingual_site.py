@@ -2573,6 +2573,18 @@ def write(path: Path, html: str) -> None:
     path.write_text(html, encoding="utf-8")
 
 
+def cleanup_versioned_assets() -> None:
+    keep = {
+        CSS_ASSET.lstrip("/"),
+        INTERACTIONS_ASSET.lstrip("/"),
+        AFFILIATE_ASSET.lstrip("/"),
+    }
+    for pattern in ("shared-*.css", "site-interactions-*.js", "deferred-external-*.js"):
+        for path in ROOT.glob(pattern):
+            if path.name not in keep:
+                path.unlink()
+
+
 def guide_card(lang: str, guide: dict) -> str:
     title, desc = guide[lang]
     guardian = GUARDIANS[guide["guardian"]][lang][0]
@@ -4599,6 +4611,7 @@ def write_support_files() -> None:
 
 
 def main() -> None:
+    cleanup_versioned_assets()
     write_css()
     write_versioned_scripts()
     for lang in LANGS:

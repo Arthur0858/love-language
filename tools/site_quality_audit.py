@@ -20,6 +20,8 @@ SITEMAP_PATH = ROOT / "sitemap.xml"
 ROBOTS_PATH = ROOT / "robots.txt"
 FEED_PATH = ROOT / "feed.xml"
 MANIFEST_PATH = ROOT / "site.webmanifest"
+HEADERS_PATH = ROOT / "_headers"
+REDIRECTS_PATH = ROOT / "_redirects"
 SITEMAP_NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
     "xhtml": "http://www.w3.org/1999/xhtml",
@@ -39,6 +41,27 @@ REQUIRED_MANIFEST_FIELDS = {
     "background_color",
     "theme_color",
     "icons",
+}
+REQUIRED_GLOBAL_HEADERS = {
+    "Cache-Control": "public, max-age=600",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+}
+IMMUTABLE_HEADER_PATHS = {
+    "/assets/*",
+    "/shared-*.css",
+    "/site-interactions-*.js",
+    "/deferred-external-*.js",
+}
+EXPECTED_REDIRECTS = {
+    "/.well-known/security.txt": ("/security.txt", "200"),
+    "/luna/": ("/luna-yoga-music/", "301"),
+    "/en/luna/": ("/en/luna-yoga-music/", "301"),
+    "/ja/luna/": ("/ja/luna-yoga-music/", "301"),
+    "/ko/luna/": ("/ko/luna-yoga-music/", "301"),
+    "/es/luna/": ("/es/luna-yoga-music/", "301"),
 }
 
 
@@ -354,6 +377,130 @@ def parse_feed(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple
                 issues.append(f"{FEED_PATH}: item link should match target canonical: {link}")
         if link and link not in sitemap_urls:
             issues.append(f"{FEED_PATH}: feed item link missing from sitemap: {link}")
+
+    return issues, stats
+
+
+def parse_headers() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not HEADERS_PATH.exists():
+        return [f"{HEADERS_PATH}: missing _headers"], stats
+
+    blocks: dict[str, list[tuple[str, str | None, bool]]] = {}
+    current_path = ""
+    for lineno, raw_line in enumerate(HEADERS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines(), 1):
+        if not raw_line.strip() or raw_line.lstrip().startswith("#"):
+            continue
+        if raw_line.startswith((" ", "\t")):
+            if not current_path:
+                issues.append(f"{HEADERS_PATH}:{lineno}: header rule appears before path")
+                continue
+            line = raw_line.strip()
+            remove = line.startswith("!")
+            if remove:
+                name = line[1:].strip()
+                value = None
+            elif ":" in line:
+                name, value = [part.strip() for part in line.split(":", 1)]
+            else:
+                issues.append(f"{HEADERS_PATH}:{lineno}: invalid header rule: {line}")
+                continue
+            if not name:
+                issues.append(f"{HEADERS_PATH}:{lineno}: empty header name")
+                continue
+            blocks.setdefault(current_path, []).append((name, value, remove))
+            stats["header_rules"] += 1
+        else:
+            current_path = raw_line.strip()
+            if current_path in blocks:
+                issues.append(f"{HEADERS_PATH}:{lineno}: duplicate header path: {current_path}")
+            blocks.setdefault(current_path, [])
+            stats["header_blocks"] += 1
+
+    global_headers = {
+        name: value
+        for name, value, remove in blocks.get("/*", [])
+        if not remove and value is not None
+    }
+    for name, expected_value in REQUIRED_GLOBAL_HEADERS.items():
+        actual_value = global_headers.get(name)
+        if actual_value != expected_value:
+            issues.append(f"{HEADERS_PATH}: /* missing {name}: {expected_value}")
+
+    for path in IMMUTABLE_HEADER_PATHS:
+        rules = blocks.get(path)
+        if not rules:
+            issues.append(f"{HEADERS_PATH}: missing immutable cache block for {path}")
+            continue
+        has_cache_remove = any(name.lower() == "cache-control" and remove for name, _, remove in rules)
+        has_immutable = any(
+            name.lower() == "cache-control" and value == "public, max-age=31536000, immutable" and not remove
+            for name, value, remove in rules
+        )
+        if not has_cache_remove:
+            issues.append(f"{HEADERS_PATH}: {path} should clear inherited Cache-Control before setting immutable cache")
+        if not has_immutable:
+            issues.append(f"{HEADERS_PATH}: {path} missing immutable Cache-Control")
+
+    for preview_path in ("https://lovetypes.pages.dev/*", "https://:version.lovetypes.pages.dev/*"):
+        rules = blocks.get(preview_path)
+        if not rules:
+            issues.append(f"{HEADERS_PATH}: missing preview noindex block for {preview_path}")
+            continue
+        if not any(name == "X-Robots-Tag" and value == "noindex" and not remove for name, value, remove in rules):
+            issues.append(f"{HEADERS_PATH}: {preview_path} missing X-Robots-Tag: noindex")
+
+    return issues, stats
+
+
+def parse_redirects(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not REDIRECTS_PATH.exists():
+        return [f"{REDIRECTS_PATH}: missing _redirects"], stats
+
+    redirects: dict[str, tuple[str, str]] = {}
+    for lineno, raw_line in enumerate(REDIRECTS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines(), 1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split()
+        if len(parts) != 3:
+            issues.append(f"{REDIRECTS_PATH}:{lineno}: expected source target status")
+            continue
+        source, target, status = parts
+        if source in redirects:
+            issues.append(f"{REDIRECTS_PATH}:{lineno}: duplicate redirect source: {source}")
+        redirects[source] = (target, status)
+        stats["redirect_rules"] += 1
+
+        if status not in {"200", "301", "302", "307", "308"}:
+            issues.append(f"{REDIRECTS_PATH}:{lineno}: unexpected redirect status {status}: {source}")
+        target_path, target_fragment = target_for(ROOT / "index.html", target)
+        if target_path is None or not target_path.exists():
+            issues.append(f"{REDIRECTS_PATH}:{lineno}: redirect target missing: {target}")
+        elif target_fragment and target_path.suffix == ".html":
+            target_parser = parsers.get(target_path)
+            if target_parser and target_fragment not in target_parser.ids:
+                issues.append(f"{REDIRECTS_PATH}:{lineno}: redirect target anchor missing #{target_fragment}: {target}")
+
+    for source, expected in EXPECTED_REDIRECTS.items():
+        actual = redirects.get(source)
+        if actual != expected:
+            issues.append(f"{REDIRECTS_PATH}: missing redirect {source} {expected[0]} {expected[1]}")
+
+    for source, (target, status) in redirects.items():
+        if source.endswith("/luna/"):
+            source_path, _ = target_for(ROOT / "index.html", source)
+            if source_path is None or not source_path.exists():
+                issues.append(f"{REDIRECTS_PATH}: luna alias source page missing: {source}")
+            else:
+                source_parser = parsers.get(source_path)
+                if source_parser and not is_noindex(source_parser):
+                    issues.append(f"{REDIRECTS_PATH}: luna alias source should be noindex: {source}")
+            if not target.endswith("/luna-yoga-music/") or status != "301":
+                issues.append(f"{REDIRECTS_PATH}: luna alias should be a 301 to luna-yoga-music: {source}")
 
     return issues, stats
 
@@ -697,6 +844,12 @@ def main() -> int:
     feed_issues, feed_stats = parse_feed(parsers, sitemap_urls)
     issues.extend(feed_issues)
     stats.update(feed_stats)
+    header_issues, header_stats = parse_headers()
+    issues.extend(header_issues)
+    stats.update(header_stats)
+    redirect_issues, redirect_stats = parse_redirects(parsers)
+    issues.extend(redirect_issues)
+    stats.update(redirect_stats)
 
     indexable_canonicals: set[str] = set()
     for page, parser in parsers.items():
@@ -733,6 +886,9 @@ def main() -> int:
     print(f"manifest_icons={stats['manifest_icons']}")
     print(f"manifest_shortcuts={stats['manifest_shortcuts']}")
     print(f"feed_items={stats['feed_items']}")
+    print(f"header_blocks={stats['header_blocks']}")
+    print(f"header_rules={stats['header_rules']}")
+    print(f"redirect_rules={stats['redirect_rules']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

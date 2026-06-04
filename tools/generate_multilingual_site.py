@@ -2893,7 +2893,7 @@ def supply_route_card(lang: str, slug: str) -> str:
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
     <button class="secondary-btn" type="button" data-copy-supply-route data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </article>
 """
@@ -3021,7 +3021,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     )
     return f"""
 <article class="{class_name}">
-  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener">
+  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer">
     {img_tag(image, f"{name} {labels['card']}")}
   </a>
   <div>
@@ -3029,7 +3029,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     <h3>{escape(name)}</h3>
     <p>{escape(route["desc"])}</p>
     <div class="collector-actions">
-      <a class="primary-btn" href="{image}" target="_blank" rel="noopener">{escape(labels["open"])}</a>
+      <a class="primary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
       <button class="secondary-btn" type="button" data-result-action="story" {data_attrs}>{escape(labels["story"])}</button>
     </div>
@@ -3088,7 +3088,7 @@ def keepsake_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="keepsake-resume-card" style="--result-accent:${{result.color}}">
-      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener">
+      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="eager" decoding="async">
       </a>
       <div>
@@ -3097,7 +3097,7 @@ def keepsake_resume_script(lang: str) -> str:
         <p>${{result.collectorHint}}</p>
         <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
         <div class="keepsake-resume-actions">
-          <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
+          <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
           <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
@@ -3196,7 +3196,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
     <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </section>
 """
@@ -3585,7 +3585,7 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
             <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
             <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-            <a href="${{result.storyImage}}" target="_blank" rel="noopener">${{quiz.labels.saved_card}}</a>
+            <a href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{quiz.labels.saved_card}}</a>
             <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
@@ -3735,7 +3735,7 @@ def quiz_script(lang: str) -> str:
           <h3>${{result.name}}</h3>
           <p>${{result.collectorHint}}</p>
           <div class="quiz-collector-actions">
-            <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
+            <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
             <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
@@ -3848,7 +3848,7 @@ def supply_resume_script(lang: str) -> str:
               <span>${{step.number}}</span>
               <h3>${{step.title}}</h3>
               <p>${{step.desc}}</p>
-              <a href="${{step.href}}" ${{step.external ? 'target="_blank" rel="noopener sponsored"' : ''}}>${{step.action}}</a>
+              <a href="${{step.href}}" ${{step.external ? 'target="_blank" rel="noopener noreferrer sponsored"' : ''}}>${{step.action}}</a>
             </section>
           `).join('')}}
         </div>
@@ -4275,7 +4275,7 @@ def resources_page(lang: str) -> None:
   <p><strong>{escape(affiliate_labels["fit"])}:</strong> {escape(book["fit"][lang])}</p>
   <p><strong>{escape(affiliate_labels["limit"])}:</strong> {escape(book["limit"][lang])}</p>
   <div class="affiliate-route-match"><span>{escape(affiliate_labels["routes"])}</span><div>{route_tags}</div></div>
-  <a class="primary-btn affiliate-book-link" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(affiliate_labels["button"])}</a>
+  <a class="primary-btn affiliate-book-link" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(affiliate_labels["button"])}</a>
 </article>
 """)
     body = f"""
@@ -4472,10 +4472,10 @@ def repair_worksheet_script(lang: str) -> str:
           <div class="repair-resume-actions">
             <a class="primary-btn" href="${{result.planUrl}}">${{resumePlan}}</a>
             <button class="secondary-btn" type="button" data-fill-repair>${{resumeFill}}</button>
-            <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{quiz.labels.saved_card}}</a>
+            <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{quiz.labels.saved_card}}</a>
             <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
             <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
-            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{bookstoreLabel}}</a>
+            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{bookstoreLabel}}</a>
           </div>
         </div>
       </article>`;
@@ -4542,7 +4542,7 @@ def repair_plan_page(lang: str) -> None:
       <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(REPAIR_PLAN[lang]["resources"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}">{escape(t["guardians"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
-      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
     </div>
   </div>
 </article>
@@ -4622,7 +4622,7 @@ def luna_resume_script(lang: str) -> str:
         <div class="luna-resume-actions">
           <a class="primary-btn" href="${{result.planUrl}}">${{labels.repair}}</a>
           <a class="secondary-btn" href="${{result.resourceUrl}}">${{labels.route}}</a>
-          <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{labels.book}}</a>
+          <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{labels.book}}</a>
         </div>
       </div>
     </article>`;
@@ -4670,7 +4670,7 @@ def luna_offer_section(lang: str) -> str:
   <p class="section-intro">{escape(offer["intro"])}</p>
   <div class="luna-offer-grid">{cards}</div>
   <div class="luna-offer-actions">
-    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener">{escape(offer["listen"])}</a>
+    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(offer["resources"])}</a>
     <a class="secondary-btn" href="mailto:contact@lovetypes.tw?subject=Luna%20night%20supply">{escape(offer["contact"])}</a>
   </div>

@@ -4771,6 +4771,27 @@ def luna_page(lang: str) -> None:
     write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/luna-yoga-music/images/hero.webp", schema))
 
 
+def luna_alias_page(lang: str) -> None:
+    t = LANGS[lang]
+    luna = LUNA_CONTENT[lang]
+    target = lang_url(lang, "luna-yoga-music")
+    body = f"""
+<section class="page-hero compact">
+  <p class="eyebrow">LUNA NIGHT SUPPLY</p>
+  <h1>{escape(t["luna_title"])}</h1>
+  <p>{escape(t["luna_desc"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{target}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+</section>
+<section class="section note-section">
+  <h2>{escape(luna["headline"])}</h2>
+  <p>{escape(luna["intro"])}</p>
+</section>
+"""
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"
+    write(page_path(lang, "luna"), layout(lang, page_title, t["luna_desc"], "luna", body, t["resources"], "website", "/luna-yoga-music/images/hero.webp", schema, alternate_path="luna", canonical_path="luna-yoga-music", robots="noindex, follow"))
+
+
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     cards = "".join(
@@ -5066,8 +5087,16 @@ Policy: {DOMAIN}/privacy/
 
 
 def write_redirects() -> None:
-    redirects = """/.well-known/security.txt /security.txt 200
-"""
+    redirect_lines = [
+        "/.well-known/security.txt /security.txt 200",
+        "/luna/ /luna-yoga-music/ 301",
+    ]
+    redirect_lines += [
+        f"/{cfg['prefix']}/luna/ /{cfg['prefix']}/luna-yoga-music/ 301"
+        for cfg in LANGS.values()
+        if cfg["prefix"]
+    ]
+    redirects = "\n".join(redirect_lines) + "\n"
     write(ROOT / "_redirects", redirects)
 
 
@@ -5150,6 +5179,7 @@ def main() -> None:
         repair_plan_page(lang)
         keepsakes_page(lang)
         luna_page(lang)
+        luna_alias_page(lang)
         for slug in ["theory", "about", "contact", "privacy", "terms"]:
             simple_page(lang, slug)
     for slug, title, desc, target in LEGACY_ZH_GUIDES:

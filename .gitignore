@@ -3,6 +3,7 @@ git_push.bat
 AUDIT_REPORT.md
 *.bat
 docs/
+output/
 
 # 上層目錄意外進入的資料夾
 love/

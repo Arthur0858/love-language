@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-keepsakes-hall"
+ASSET_VERSION = "20260604-keepsake-result-route"
 
 
 FONT_CSS = ""
@@ -1377,6 +1377,7 @@ COLLECTOR_LABELS = {
         "card": "你的守護者卡",
         "open": "開啟收藏卡",
         "download": "保存圖片",
+        "hall": "前往收藏室",
         "route": "回到補給路線",
         "share_hint": "適合發限動、傳給伴侶，或放進關係日記作為今天的心語入口。",
     },
@@ -1387,6 +1388,7 @@ COLLECTOR_LABELS = {
         "card": "Your guardian card",
         "open": "Open card",
         "download": "Save image",
+        "hall": "Open keepsake hall",
         "route": "Return to supply route",
         "share_hint": "Use it in Stories, send it to a partner, or place it in a relationship journal as today's heart-language doorway.",
     },
@@ -1397,6 +1399,7 @@ COLLECTOR_LABELS = {
         "card": "あなたの守護者カード",
         "open": "カードを開く",
         "download": "画像を保存",
+        "hall": "コレクション室へ",
         "route": "補給ルートへ戻る",
         "share_hint": "ストーリー、パートナーへの共有、関係日記の今日の入口として使えます。",
     },
@@ -1407,6 +1410,7 @@ COLLECTOR_LABELS = {
         "card": "나의 수호자 카드",
         "open": "카드 열기",
         "download": "이미지 저장",
+        "hall": "소장실로 가기",
         "route": "보급 루트로 돌아가기",
         "share_hint": "스토리, 파트너에게 보내기, 관계 일기의 오늘 마음 언어 입구로 사용할 수 있습니다.",
     },
@@ -1417,6 +1421,7 @@ COLLECTOR_LABELS = {
         "card": "Tu tarjeta de guardiana",
         "open": "Abrir tarjeta",
         "download": "Guardar imagen",
+        "hall": "Abrir sala",
         "route": "Volver a la ruta",
         "share_hint": "Úsala en historias, envíala a una pareja o ponla en tu diario relacional como puerta de lenguaje del corazón.",
     },
@@ -2732,6 +2737,8 @@ def quiz_payload(lang: str) -> str:
             "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
             "collectorOpen": COLLECTOR_LABELS[lang]["open"],
             "collectorSave": COLLECTOR_LABELS[lang]["download"],
+            "collectorHall": COLLECTOR_LABELS[lang]["hall"],
+            "collectorHallUrl": lang_url(lang, "keepsakes"),
             "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
@@ -2972,6 +2979,7 @@ def quiz_script(lang: str) -> str:
           <div class="quiz-collector-actions">
             <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
           </div>
         </div>
       </section>

@@ -3503,7 +3503,7 @@ def quiz_payload(lang: str) -> str:
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
             "supplyBookUrl": route["book"]["url"],
-            "lunaUrl": lang_url(lang, "luna-yoga-music"),
+            "lunaUrl": lang_url(lang, "luna-yoga-music") + f"#luna-{meta['slug']}",
             "storyImage": guardian_story_image(lang, meta["slug"]),
             "slug": meta["slug"],
             "collectorTitle": COLLECTOR_LABELS[lang]["card"],
@@ -4700,6 +4700,12 @@ def luna_resume_script(lang: str) -> str:
       </div>
     </article>`;
   box.hidden = false;
+  if (location.hash === `#luna-${{slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
 }})();
 </script>
 """

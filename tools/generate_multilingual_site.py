@@ -5,13 +5,14 @@ import json
 from datetime import date
 from html import escape
 from pathlib import Path
+from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-book-route-match"
+ASSET_VERSION = "20260604-supply-wishlist"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1426,6 +1427,55 @@ STARTER_KIT = {
 }
 
 
+SUPPLY_WISHLIST = {
+    "zh": {
+        "eyebrow": "SUPPLY WISHLIST",
+        "title": "想要哪一種守護者補給？",
+        "intro": "如果書卷還不是你現在需要的補給，可以先告訴我們你想要哪位守護者的可下載素材、PDF 練習卡、桌布或短流程。這會幫助我們決定下一批自有補給優先做什麼。",
+        "request": "提出補給願望",
+        "note": "來信不需要提供測驗分數；寫下守護者、使用情境與你希望帶走的素材即可。LoveTypes 不承諾療效，也不取代諮商。",
+        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "body": "我想要的守護者補給：",
+    },
+    "en": {
+        "eyebrow": "SUPPLY WISHLIST",
+        "title": "Which guardian supply should exist next?",
+        "intro": "If a book is not the supply you need right now, tell us which guardian should receive a download, PDF practice card, wallpaper, or short ritual first. This helps us prioritize future LoveTypes-owned supplies.",
+        "request": "Send supply wish",
+        "note": "You do not need to send quiz scores. Include the guardian, use case, and the material you would actually keep. LoveTypes does not promise outcomes or replace counseling.",
+        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "body": "The guardian supply I want:",
+    },
+    "ja": {
+        "eyebrow": "SUPPLY WISHLIST",
+        "title": "次にほしい守護者補給は？",
+        "intro": "本が今の補給ではない場合、どの守護者のダウンロード、PDF 練習カード、壁紙、短い儀式がほしいか教えてください。今後の LoveTypes 自有補給の優先順位を決める助けになります。",
+        "request": "補給の希望を送る",
+        "note": "診断スコアは不要です。守護者、使いたい場面、実際に保存したい素材を書いてください。LoveTypes は効果を約束せず、相談支援の代わりにもなりません。",
+        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "body": "ほしい守護者補給：",
+    },
+    "ko": {
+        "eyebrow": "SUPPLY WISHLIST",
+        "title": "다음에 어떤 수호자 보급이 필요할까요?",
+        "intro": "지금 책이 필요한 보급이 아니라면, 어떤 수호자의 다운로드, PDF 연습 카드, 배경화면, 짧은 의식이 먼저 필요할지 알려 주세요. 향후 LoveTypes 자체 보급 우선순위를 정하는 데 도움이 됩니다.",
+        "request": "보급 희망 보내기",
+        "note": "테스트 점수는 보내지 않아도 됩니다. 수호자, 사용 장면, 실제로 보관하고 싶은 자료를 적어 주세요. LoveTypes는 결과를 약속하거나 상담을 대신하지 않습니다.",
+        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "body": "내가 원하는 수호자 보급:",
+    },
+    "es": {
+        "eyebrow": "SUPPLY WISHLIST",
+        "title": "Qué recurso de guardiana debería existir después?",
+        "intro": "Si un libro no es el recurso que necesitas ahora, cuéntanos qué guardiana debería tener primero una descarga, tarjeta PDF, fondo de pantalla o ritual corto. Esto ayuda a priorizar futuros recursos propios de LoveTypes.",
+        "request": "Enviar deseo",
+        "note": "No necesitas enviar puntajes. Incluye la guardiana, el uso y el material que realmente guardarías. LoveTypes no promete resultados ni reemplaza terapia.",
+        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "body": "El recurso de guardiana que quiero:",
+    },
+}
+
+
 SUPPLY_LABELS = {
     "zh": {
         "eyebrow": "GUARDIAN SUPPLY ROUTES",
@@ -2565,6 +2615,35 @@ def supply_quick_route_nav(lang: str) -> str:
   </div>
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="supply-quick-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+def supply_wishlist_section(lang: str) -> str:
+    labels = SUPPLY_WISHLIST[lang]
+    cards = []
+    for slug, data in GUARDIANS.items():
+        route = supply_route(lang, slug)
+        guardian_name, guardian_type, _guardian_desc = data[lang]
+        accent = next(meta["color"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
+        body = quote(f'{labels["body"]} {guardian_name} · {route["title"]}\n\n')
+        cards.append(f"""
+<article class="supply-wishlist-card" style="--route-accent:{accent}">
+  {img_tag(data["prop"], route["title"])}
+  <div>
+    <p class="eyebrow">{escape(guardian_name)} · {escape(guardian_type)}</p>
+    <h3>{escape(route["title"])}</h3>
+    <p>{escape(route["mission"])}</p>
+    <a href="mailto:contact@lovetypes.tw?subject={labels["subject"]}&body={body}">{escape(labels["request"])}</a>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section supply-wishlist-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(LANGS[lang]["contact"])}</a></div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="supply-wishlist-grid">{"".join(cards)}</div>
+  <p class="supply-wishlist-note">{escape(labels["note"])}</p>
 </section>
 """
 
@@ -3785,6 +3864,7 @@ def resources_page(lang: str) -> None:
   <div><h2>{escape(supply_labels["choose"])}</h2><p>{escape(supply_labels["choose_text"])}</p></div>
   <div><h2>{escape(supply_labels["not_now"])}</h2><p>{escape(supply_labels["not_now_text"])}</p></div>
 </section>
+{supply_wishlist_section(lang)}
 {collector_section(lang)}
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
 <section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>

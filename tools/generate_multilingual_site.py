@@ -4133,12 +4133,19 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
     lang = "zh"
     t = LANGS[lang]
     related = next(g for g in GUIDES if g["slug"] == canonical_target)
+    related_title, _related_desc = related[lang]
     guardian = GUARDIANS[related["guardian"]][lang]
     detail = guide_detail_copy(lang, title, desc, guardian)
+    canonical_path = "guides/" + canonical_target
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">HEART GARDEN ARCHIVE</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
   {img_tag("/assets/lovetypes/share/guide-toolkit-og.jpg", "LoveTypes guide", lazy=False)}
+</section>
+<section class="section note-section archive-forward">
+  <h2>這是舊版心語入口</h2>
+  <p>這一頁保留給從舊連結抵達的旅人；目前主要路線已整理到「{escape(related_title)}」。如果你想閱讀最新版本、切換語言或接到守護者補給，請先前往正式指南。</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, canonical_path)}">前往正式指南</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
 <section class="section guide-personal-resume" data-guide-saved hidden></section>
 <section class="article-shell">
@@ -4157,7 +4164,6 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <aside class="article-side"><h2>延伸閱讀</h2>{guide_card(lang, related)}</aside>
 </section>
 """
-    canonical_path = "guides/" + canonical_target
     schema = json_ld({
         "@context": "https://schema.org",
         "@type": "Article",

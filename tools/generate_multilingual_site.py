@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-result-compass"
+ASSET_VERSION = "20260604-luna-guardian-flow"
 
 
 FONT_CSS = ""
@@ -844,6 +844,85 @@ LUNA_USE_CASES = {
         ("Diario relacional", "Usa Luna de fondo mientras anotas qué lenguaje del amor necesitó cuidado hoy."),
         ("Después del ritual", "Después del test, convierte el resultado de guardiana en un siguiente paso."),
     ],
+}
+
+
+LUNA_GUARDIAN_FLOW = {
+    "zh": {
+        "eyebrow": "GUARDIAN NIGHT SUPPLY",
+        "title": "依你的守護者，選一種夜間整理方式",
+        "intro": "Luna 不替你解決關係，但能把情緒降到可以書寫、可以開口、可以選補給的音量。",
+        "practice": "今晚整理",
+        "repair": "寫進修復計畫",
+        "route": "查看補給路線",
+        "items": {
+            "iris": "把想聽見的肯定句寫下來，先分清楚：我需要被看見，還是需要對方立刻同意我。",
+            "noah": "回想今天哪一刻最需要陪伴，把「希望你在」縮成一個十五分鐘可完成的邀請。",
+            "vivian": "記下一個被記得或沒被記得的細節，確認你要的是心意證據，不是價格證明。",
+            "claire": "把疲憊拆成一件具體可請求的事，寫下時間、動作與完成標準。",
+            "dora": "先感覺身體是否安全，再寫下一句同意與靠近的界線句。",
+        },
+    },
+    "en": {
+        "eyebrow": "GUARDIAN NIGHT SUPPLY",
+        "title": "Choose a night practice by guardian",
+        "intro": "Luna does not fix the relationship for you. It lowers the noise so you can write, ask, and choose one supply clearly.",
+        "practice": "Tonight's practice",
+        "repair": "Add to repair plan",
+        "route": "View supply route",
+        "items": {
+            "iris": "Write the affirmation you want to hear, then separate being seen from needing immediate agreement.",
+            "noah": "Name the moment you needed presence today, then shrink it into one fifteen-minute invitation.",
+            "vivian": "Record one remembered or missed detail, and check whether you need proof of care rather than proof of price.",
+            "claire": "Break tiredness into one concrete request with time, action, and a done condition.",
+            "dora": "Notice whether your body feels safe, then write one consent and closeness boundary sentence.",
+        },
+    },
+    "ja": {
+        "eyebrow": "GUARDIAN NIGHT SUPPLY",
+        "title": "守護者ごとに夜の整え方を選ぶ",
+        "intro": "Luna は関係を代わりに直しません。書く、頼む、補給を一つ選ぶために、感情の音量を下げる灯りです。",
+        "practice": "今夜の整理",
+        "repair": "修復プランへ書く",
+        "route": "補給ルートを見る",
+        "items": {
+            "iris": "聞きたい肯定の言葉を書き、自分は見てもらいたいのか、すぐ同意してほしいのかを分けます。",
+            "noah": "今日いちばん一緒にいてほしかった瞬間を、一つの十五分の誘いへ縮めます。",
+            "vivian": "覚えてもらえた、または忘れられた細部を書き、欲しいのが価格ではなく心意の証拠か確認します。",
+            "claire": "疲れを一つの具体的なお願いに分け、時間、行動、完了条件を書きます。",
+            "dora": "身体が安全かを先に感じ、同意と近さの境界文を一つ書きます。",
+        },
+    },
+    "ko": {
+        "eyebrow": "GUARDIAN NIGHT SUPPLY",
+        "title": "수호자에 맞는 밤 정리법 선택",
+        "intro": "Luna가 관계를 대신 고치지는 않습니다. 쓰고, 요청하고, 보급 하나를 고를 수 있도록 감정의 소음을 낮춥니다.",
+        "practice": "오늘 밤 정리",
+        "repair": "회복 계획에 쓰기",
+        "route": "보급 루트 보기",
+        "items": {
+            "iris": "듣고 싶은 인정의 말을 쓰고, 보이고 싶은 것과 즉시 동의받고 싶은 것을 나눕니다.",
+            "noah": "오늘 가장 함께 있어 주길 바란 순간을 15분 초대로 줄입니다.",
+            "vivian": "기억되었거나 놓친 세부를 적고, 가격 증명이 아니라 마음의 증거가 필요한지 확인합니다.",
+            "claire": "피로를 시간, 행동, 완료 기준이 있는 구체적 요청 하나로 나눕니다.",
+            "dora": "몸이 안전한지 먼저 느끼고, 동의와 가까움의 경계 문장을 하나 씁니다.",
+        },
+    },
+    "es": {
+        "eyebrow": "GUARDIAN NIGHT SUPPLY",
+        "title": "Elige una práctica nocturna por guardiana",
+        "intro": "Luna no arregla la relación por ti. Baja el ruido para que puedas escribir, pedir y elegir un recurso con claridad.",
+        "practice": "Práctica de esta noche",
+        "repair": "Añadir al plan",
+        "route": "Ver ruta de suministro",
+        "items": {
+            "iris": "Escribe la afirmación que quieres oír y separa ser vista de necesitar acuerdo inmediato.",
+            "noah": "Nombra el momento en que necesitaste presencia y conviértelo en una invitación de quince minutos.",
+            "vivian": "Anota un detalle recordado u olvidado y revisa si necesitas prueba de cuidado, no de precio.",
+            "claire": "Convierte el cansancio en una petición concreta con tiempo, acción y condición de terminado.",
+            "dora": "Nota si tu cuerpo se siente seguro y escribe una frase de consentimiento y límite de cercanía.",
+        },
+    },
 }
 
 
@@ -2717,7 +2796,25 @@ def repair_plan_page(lang: str) -> None:
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
+    flow = LUNA_GUARDIAN_FLOW[lang]
     use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
+    guardian_flow_cards = []
+    for slug, data in GUARDIANS.items():
+        name, typ, _desc = data[lang]
+        guardian_flow_cards.append(f"""
+<article class="luna-guardian-card">
+  {img_tag(data["asset"], name)}
+  <div>
+    <p class="eyebrow">{escape(typ)}</p>
+    <h3>{escape(name)}</h3>
+    <p><strong>{escape(flow["practice"])}:</strong> {escape(flow["items"][slug])}</p>
+    <div class="luna-guardian-actions">
+      <a href="{lang_url(lang, "repair-plan")}#plan-{slug}">{escape(flow["repair"])}</a>
+      <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(flow["route"])}</a>
+    </div>
+  </div>
+</article>
+""")
     section_cards = []
     for image_slug, title, desc in luna["sections"]:
         section_cards.append(f"""
@@ -2744,6 +2841,11 @@ def luna_page(lang: str) -> None:
 <section class="section luna-use-cases">
   <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
+</section>
+<section class="section luna-guardian-flow">
+  <div class="section-head"><div><p class="eyebrow">{escape(flow["eyebrow"])}</p><h2>{escape(flow["title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div>
+  <p class="section-intro">{escape(flow["intro"])}</p>
+  <div class="luna-guardian-grid">{"".join(guardian_flow_cards)}</div>
 </section>
 <section class="section intro-grid">
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>

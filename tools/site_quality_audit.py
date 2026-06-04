@@ -453,6 +453,22 @@ def is_keepsakes_page(page: Path) -> bool:
     return parts == ["keepsakes", "index.html"]
 
 
+def normalized_page_parts(page: Path) -> list[str]:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts
+
+
+def is_about_page(page: Path) -> bool:
+    return normalized_page_parts(page) == ["about", "index.html"]
+
+
+def is_theory_page(page: Path) -> bool:
+    return normalized_page_parts(page) == ["theory", "index.html"]
+
+
 def formal_guide_slug_for_page(page: Path) -> str:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -1466,6 +1482,30 @@ def main() -> int:
             if missing_keepsake_hrefs:
                 issues.append(f"{page}: keepsake cards missing continuation hrefs {', '.join(missing_keepsake_hrefs)}")
 
+        if is_about_page(page) or is_theory_page(page):
+            stats["trust_action_route_pages"] += 1
+            route_count = parser.ids.count("trust-action-routes")
+            if route_count != 1:
+                issues.append(f"{page}: expected one #trust-action-routes target, found {route_count}")
+            trust_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_trust_hrefs = {
+                lang_url_for_page(page) + "#quiz-section",
+                lang_url_for_page(page, "characters"),
+            }
+            if is_about_page(page):
+                required_trust_hrefs.update({
+                    lang_url_for_page(page, "guides"),
+                    lang_url_for_page(page, "contact"),
+                })
+            else:
+                required_trust_hrefs.update({
+                    lang_url_for_page(page, "repair-plan"),
+                    lang_url_for_page(page, "resources"),
+                })
+            missing_trust_hrefs = sorted(required_trust_hrefs.difference(trust_hrefs))
+            if missing_trust_hrefs:
+                issues.append(f"{page}: trust action route missing hrefs {', '.join(missing_trust_hrefs)}")
+
         guide_slug = formal_guide_slug_for_page(page)
         if guide_slug:
             stats["guide_action_bridge_pages"] += 1
@@ -2004,6 +2044,7 @@ def main() -> int:
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
+    print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"legacy_guide_action_bridge_pages={stats['legacy_guide_action_bridge_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")

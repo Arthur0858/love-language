@@ -84,6 +84,8 @@ EXPECTED_ANCHOR_TARGETS = {
     "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
     "/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
     "/en/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
+    "/about/": ("trust-action-routes",),
+    "/theory/": ("trust-action-routes",),
 }
 EXPECTED_HREF_TARGETS = {
     "/characters/": ("/#quiz-section", "#guardian-map", "/resources/"),
@@ -114,6 +116,18 @@ EXPECTED_HREF_TARGETS = {
         "/en/characters/iris/",
         "/en/resources/#supply-iris",
         "/en/repair-plan/#plan-iris",
+    ),
+    "/about/": (
+        "/#quiz-section",
+        "/characters/",
+        "/guides/",
+        "/contact/",
+    ),
+    "/theory/": (
+        "/#quiz-section",
+        "/characters/",
+        "/repair-plan/",
+        "/resources/",
     ),
 }
 REDIRECTS = {

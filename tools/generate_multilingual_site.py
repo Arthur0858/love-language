@@ -2571,6 +2571,130 @@ GUIDE_ACTION_BRIDGE = {
 }
 
 
+TRUST_ACTION_ROUTES = {
+    "zh": {
+        "about": {
+            "eyebrow": "從信任回到行動",
+            "title": "確認邊界後，選一條安全的心語路線",
+            "intro": "如果你已經理解 LoveTypes 的內容來源、商業揭露與安全邊界，可以從這裡回到實際練習，不需要把自己套進任何固定類型。",
+            "items": [
+                ("01", "先做 15 道心語儀式", "用情境題辨認此刻最容易接收愛的入口。", "開始測驗", ""),
+                ("02", "認識五位守護者", "看見每種愛之語背後的錯頻傷口與修復任務。", "查看守護者", "characters"),
+                ("03", "閱讀深度指南", "把被愛需求翻成可以開口、可以承擔的句子。", "閱讀指南", "guides"),
+                ("04", "回報或聯絡", "若內容需要修正、合作或隱私協助，直接寫信給我們。", "聯絡我們", "contact"),
+            ],
+        },
+        "theory": {
+            "eyebrow": "從理論進入練習",
+            "title": "理解五種愛之語後，把它放進一週修復",
+            "intro": "理論只是一張地圖。真正讓關係變清楚的，是你能否把一個錯頻片刻翻成守護者、請求與下一步補給。",
+            "items": [
+                ("01", "開始命運儀式", "先用 15 題確認目前最亮的愛之語訊號。", "開始測驗", ""),
+                ("02", "對照五位守護者", "把抽象理論放回艾莉絲、諾雅、薇薇安、克萊兒與朵拉。", "查看守護者", "characters"),
+                ("03", "寫進 7 日修復", "把今天理解的一句話放進可執行的一週練習。", "使用修復計畫", "repair-plan"),
+                ("04", "選一條補給路線", "需要書卷、Luna 或免費任務時，再依守護者拿補給。", "前往旅人補給", "resources"),
+            ],
+        },
+    },
+    "en": {
+        "about": {
+            "eyebrow": "From trust back to action",
+            "title": "After checking the boundaries, choose a safe Heart Garden route",
+            "intro": "Once you understand how LoveTypes handles content, disclosure, and safety, return to practice without treating any result as a fixed identity.",
+            "items": [
+                ("01", "Take the 15-prompt ritual", "Use scenario prompts to name the doorway where love is easiest to receive right now.", "Start quiz", ""),
+                ("02", "Meet the five guardians", "See the wound and repair mission behind each love language.", "View guardians", "characters"),
+                ("03", "Read practical guides", "Translate emotional needs into words that can be spoken and carried.", "Read guides", "guides"),
+                ("04", "Report or contact", "For corrections, partnership, privacy, or broken pages, contact us directly.", "Contact us", "contact"),
+            ],
+        },
+        "theory": {
+            "eyebrow": "From theory into practice",
+            "title": "After learning the five love languages, place them inside a repair week",
+            "intro": "Theory is only a map. The relationship becomes clearer when one misfrequency moment becomes a guardian, a request, and a next supply.",
+            "items": [
+                ("01", "Start the destiny ritual", "Use 15 prompts to confirm the love-language signal that is brightest now.", "Start quiz", ""),
+                ("02", "Compare the guardians", "Place abstract theory back into Iris, Noah, Vivian, Claire, and Dora.", "View guardians", "characters"),
+                ("03", "Use the 7-day repair", "Turn one sentence from today into a practical week-long exercise.", "Use repair plan", "repair-plan"),
+                ("04", "Choose a supply route", "When you need a book, Luna, or a free task, take one guardian supply.", "Open resources", "resources"),
+            ],
+        },
+    },
+    "ja": {
+        "about": {
+            "eyebrow": "信頼から行動へ戻る",
+            "title": "境界線を確認したら、安全な心語ルートを一つ選ぶ",
+            "intro": "LoveTypes の内容、開示、安全の考え方を確認したら、結果を固定された身分にせず、実際の練習へ戻れます。",
+            "items": [
+                ("01", "15 問の心語リチュアル", "状況型の質問で、今いちばん受け取りやすい愛の入口を見つけます。", "診断を始める", ""),
+                ("02", "五人の守護者を見る", "それぞれの愛の言語にある傷と修復任務を理解します。", "守護者を見る", "characters"),
+                ("03", "実用ガイドを読む", "感情的なニーズを、言えて持てる言葉へ翻訳します。", "ガイドを読む", "guides"),
+                ("04", "連絡・報告する", "修正、提携、プライバシー、ページ不具合は直接ご連絡ください。", "連絡する", "contact"),
+            ],
+        },
+        "theory": {
+            "eyebrow": "理論から練習へ",
+            "title": "五つの愛の言語を理解したら、一週間の修復へ入れる",
+            "intro": "理論は地図にすぎません。すれ違いの一場面を守護者、お願い、次の補給へ変える時、関係は少し見えやすくなります。",
+            "items": [
+                ("01", "運命のリチュアルを始める", "15 問で今いちばん明るい愛の言語の信号を確認します。", "診断を始める", ""),
+                ("02", "守護者と照らし合わせる", "抽象的な理論をアイリス、ノア、ヴィヴィアン、クレア、ドーラへ戻します。", "守護者を見る", "characters"),
+                ("03", "7日間修復へ書く", "今日理解した一文を、実行できる一週間の練習へ入れます。", "修復プランを使う", "repair-plan"),
+                ("04", "補給ルートを選ぶ", "本、Luna、無料タスクが必要な時、守護者に合う補給を一つ選びます。", "リソースへ", "resources"),
+            ],
+        },
+    },
+    "ko": {
+        "about": {
+            "eyebrow": "신뢰에서 다시 행동으로",
+            "title": "경계를 확인했다면 안전한 마음 언어 루트 하나를 고르기",
+            "intro": "LoveTypes의 콘텐츠, 고지, 안전 경계를 이해했다면 어떤 결과도 고정된 정체성으로 삼지 않고 실제 연습으로 돌아갈 수 있습니다.",
+            "items": [
+                ("01", "15문항 마음 언어 의식", "상황형 질문으로 지금 가장 받기 쉬운 사랑의 입구를 확인합니다.", "테스트 시작", ""),
+                ("02", "다섯 수호자 만나기", "각 사랑의 언어 뒤의 상처와 회복 과제를 봅니다.", "수호자 보기", "characters"),
+                ("03", "실용 가이드 읽기", "정서적 욕구를 말할 수 있고 함께 감당할 수 있는 문장으로 번역합니다.", "가이드 읽기", "guides"),
+                ("04", "문의 또는 신고", "수정, 협업, 개인정보, 깨진 페이지는 직접 연락해 주세요.", "연락하기", "contact"),
+            ],
+        },
+        "theory": {
+            "eyebrow": "이론에서 연습으로",
+            "title": "다섯 가지 사랑의 언어를 이해했다면 일주일 회복에 넣기",
+            "intro": "이론은 지도일 뿐입니다. 한 번의 어긋남을 수호자, 요청, 다음 보급으로 바꿀 때 관계가 더 선명해집니다.",
+            "items": [
+                ("01", "운명 의식 시작", "15문항으로 지금 가장 밝은 사랑의 언어 신호를 확인합니다.", "테스트 시작", ""),
+                ("02", "수호자와 대조하기", "추상적인 이론을 아이리스, 노아, 비비안, 클레어, 도라로 되돌립니다.", "수호자 보기", "characters"),
+                ("03", "7일 회복에 쓰기", "오늘 이해한 한 문장을 실행 가능한 일주일 연습으로 옮깁니다.", "회복 계획 쓰기", "repair-plan"),
+                ("04", "보급 루트 선택", "책, Luna, 무료 과제가 필요할 때 수호자에 맞는 보급 하나를 선택합니다.", "자료 열기", "resources"),
+            ],
+        },
+    },
+    "es": {
+        "about": {
+            "eyebrow": "De la confianza a la acción",
+            "title": "Después de revisar los límites, elige una ruta segura del Jardín",
+            "intro": "Cuando entiendes cómo LoveTypes maneja contenido, divulgación y seguridad, puedes volver a practicar sin convertir ningún resultado en identidad fija.",
+            "items": [
+                ("01", "Haz el ritual de 15 preguntas", "Usa escenas concretas para nombrar la puerta donde el amor se recibe mejor ahora.", "Empezar test", ""),
+                ("02", "Conoce las cinco guardianas", "Mira la herida y la misión de reparación detrás de cada lenguaje.", "Ver guardianas", "characters"),
+                ("03", "Lee guías prácticas", "Traduce necesidades emocionales en palabras que puedan decirse y sostenerse.", "Leer guías", "guides"),
+                ("04", "Reporta o contacta", "Para correcciones, colaboración, privacidad o páginas rotas, escríbenos.", "Contactar", "contact"),
+            ],
+        },
+        "theory": {
+            "eyebrow": "De la teoría a la práctica",
+            "title": "Después de aprender los cinco lenguajes, llévalos a una semana de reparación",
+            "intro": "La teoría solo es un mapa. La relación se aclara cuando un desajuste se convierte en guardiana, petición y próximo recurso.",
+            "items": [
+                ("01", "Inicia el ritual de destino", "Usa 15 preguntas para confirmar la señal de amor más clara ahora.", "Empezar test", ""),
+                ("02", "Compara las guardianas", "Devuelve la teoría abstracta a Iris, Noah, Vivian, Claire y Dora.", "Ver guardianas", "characters"),
+                ("03", "Usa la reparación de 7 días", "Convierte una frase de hoy en una práctica semanal concreta.", "Usar plan", "repair-plan"),
+                ("04", "Elige una ruta de recursos", "Cuando necesites libro, Luna o tarea gratis, toma un recurso de guardiana.", "Abrir recursos", "resources"),
+            ],
+        },
+    },
+}
+
+
 PRACTICAL_COPY = {
     "zh": {
         "why": "在心語庭園裡，關係裡的痛感常不是沒有愛，而是愛在抵達前就錯頻了。你用自己的方式努力發光，對方卻沒有接收到那盞燈。LoveTypes 把五種愛之語化為五位守護者，目的不是替人貼標籤，而是幫你看見：此刻最需要被翻譯的愛，是話語、時間、心意、行動，還是安全的靠近。",
@@ -4639,6 +4763,30 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
 """
 
 
+def trust_action_routes(lang: str, slug: str) -> str:
+    copy = TRUST_ACTION_ROUTES[lang][slug]
+    cards = []
+    for step, title, desc, cta, target in copy["items"]:
+        href = f"{lang_url(lang)}#quiz-section" if not target else lang_url(lang, target)
+        cards.append(f"""
+<article class="trust-action-card">
+  <span>{escape(step)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}">{escape(cta)}</a>
+</article>
+""")
+    return f"""
+<section class="section trust-action-section" id="trust-action-routes">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
+  </div>
+  <p class="trust-action-intro">{escape(copy["intro"])}</p>
+  <div class="trust-action-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def guide_page(lang: str, guide: dict, index: int) -> None:
     t = LANGS[lang]
     labels = TOPIC_DETAILS[lang]
@@ -5410,6 +5558,7 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{escape(t["boundary_text"])}</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
 </section>
+{trust_action_routes(lang, "about")}
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"AboutPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
@@ -5428,6 +5577,7 @@ def simple_page(lang: str, slug: str) -> None:
 </section>
 <section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_cards}</div></section>
 <section class="section faq-section"><div class="section-head"><p class="eyebrow">LOVE LANGUAGE FAQ</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
+{trust_action_routes(lang, "theory")}
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"

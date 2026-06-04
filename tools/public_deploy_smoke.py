@@ -19,6 +19,7 @@ from urllib.request import Request, urlopen
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 PUBLIC_PATHS = [
     "/",
     "/characters/",
@@ -28,6 +29,7 @@ PUBLIC_PATHS = [
     "/keepsakes/",
     "/luna-yoga-music/",
     "/guides/",
+    "/guides/words-of-affirmation-scripts/",
     "/about/",
     "/theory/",
     "/contact/",
@@ -46,6 +48,7 @@ EXPECTED_TEXT = {
     "/resources/": "旅人補給",
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
+    "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
     "/contact/": "contact@lovetypes.tw",
     "/en/": "LoveTypes Emotion Guardians",
     "/ja/": "LoveTypes 感情の守護者",
@@ -55,6 +58,19 @@ EXPECTED_TEXT = {
     "/ja/resources/": "リソース",
     "/ko/repair-plan/": "7일 마음 언어 회복 계획",
     "/es/guides/": "Guías de Guardianas LoveTypes",
+}
+EXPECTED_ANCHOR_TARGETS = {
+    "/resources/": ("supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
+    "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
+}
+EXPECTED_HREF_TARGETS = {
+    "/resources/": tuple(f"#supply-{slug}" for slug in GUARDIAN_SLUGS),
+    "/repair-plan/": tuple(f"/resources/#supply-{slug}" for slug in GUARDIAN_SLUGS),
+    "/luna-yoga-music/": tuple(
+        target
+        for slug in GUARDIAN_SLUGS
+        for target in (f"/repair-plan/#plan-{slug}", f"/resources/#supply-{slug}")
+    ),
 }
 REDIRECTS = {
     "/luna/": "/luna-yoga-music/",
@@ -126,10 +142,14 @@ class HeadAssetParser(HTMLParser):
         self.hreflang_links: list[tuple[str, str]] = []
         self.metas: list[dict[str, str]] = []
         self.jsonld_blocks: list[str] = []
+        self.ids: set[str] = set()
+        self.hrefs: list[str] = []
         self._in_jsonld_script = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
+        if data.get("id"):
+            self.ids.add(data["id"])
         if tag == "html":
             self.html_lang = data.get("lang", "")
         if tag == "link" and data.get("rel") == "stylesheet" and data.get("href"):
@@ -144,6 +164,8 @@ class HeadAssetParser(HTMLParser):
             self.metas.append(data)
         if tag == "script" and data.get("src"):
             self.scripts.append(data["src"])
+        if tag == "a" and data.get("href"):
+            self.hrefs.append(data["href"])
         if tag == "script" and data.get("type") == "application/ld+json":
             self._in_jsonld_script = True
             self.jsonld_blocks.append("")
@@ -448,6 +470,8 @@ def main() -> int:
     public_sitemap_urls_checked = 0
     public_sitemap_alternates_total = 0
     public_sitemap_alternates_checked = 0
+    public_anchor_targets_checked = 0
+    public_conversion_hrefs_checked = 0
     page_asset_refs: list[str] = []
     social_image_urls: list[str] = []
 
@@ -465,6 +489,14 @@ def main() -> int:
         if expected_text and expected_text not in response.text:
             issues.append(f"{path}: missing expected text {expected_text!r}")
         assets = extract_head_assets(response.text)
+        for target_id in EXPECTED_ANCHOR_TARGETS.get(path, ()):
+            public_anchor_targets_checked += 1
+            if target_id not in assets.ids:
+                issues.append(f"{path}: missing expected anchor target #{target_id}")
+        for href in EXPECTED_HREF_TARGETS.get(path, ()):
+            public_conversion_hrefs_checked += 1
+            if href not in assets.hrefs:
+                issues.append(f"{path}: missing expected conversion href {href}")
         public_canonicals_checked += 1
         expected_canonical_url = expected_canonical(path)
         if assets.canonical != expected_canonical_url:
@@ -592,6 +624,8 @@ def main() -> int:
     print(f"public_sitemap_urls_checked={public_sitemap_urls_checked}")
     print(f"public_sitemap_alternates_total={public_sitemap_alternates_total}")
     print(f"public_sitemap_alternates_checked={public_sitemap_alternates_checked}")
+    print(f"public_anchor_targets_checked={public_anchor_targets_checked}")
+    print(f"public_conversion_hrefs_checked={public_conversion_hrefs_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")

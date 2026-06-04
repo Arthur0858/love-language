@@ -18,9 +18,27 @@ LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 SITEMAP_PATH = ROOT / "sitemap.xml"
 ROBOTS_PATH = ROOT / "robots.txt"
+FEED_PATH = ROOT / "feed.xml"
+MANIFEST_PATH = ROOT / "site.webmanifest"
 SITEMAP_NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
     "xhtml": "http://www.w3.org/1999/xhtml",
+}
+REQUIRED_HEAD_ASSETS = {
+    "icon": "/favicon.ico",
+    "apple-touch-icon": "/apple-touch-icon.png",
+    "manifest": "/site.webmanifest",
+}
+REQUIRED_MANIFEST_FIELDS = {
+    "name",
+    "short_name",
+    "description",
+    "start_url",
+    "scope",
+    "display",
+    "background_color",
+    "theme_color",
+    "icons",
 }
 
 
@@ -176,6 +194,168 @@ def image_size(path: Path) -> tuple[int, int] | None:
             return image.size
     except OSError:
         return None
+
+
+def parse_manifest() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not MANIFEST_PATH.exists():
+        return [f"{MANIFEST_PATH}: missing site.webmanifest"], stats
+
+    try:
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{MANIFEST_PATH}: invalid JSON: {exc}"], stats
+
+    missing_fields = sorted(field for field in REQUIRED_MANIFEST_FIELDS if not manifest.get(field))
+    if missing_fields:
+        issues.append(f"{MANIFEST_PATH}: missing required fields {', '.join(missing_fields)}")
+    if manifest.get("start_url") != "/":
+        issues.append(f"{MANIFEST_PATH}: start_url should be /")
+    if manifest.get("scope") != "/":
+        issues.append(f"{MANIFEST_PATH}: scope should be /")
+    if manifest.get("display") not in {"standalone", "fullscreen", "minimal-ui", "browser"}:
+        issues.append(f"{MANIFEST_PATH}: invalid display value {manifest.get('display')}")
+    if manifest.get("lang") != "zh-TW":
+        issues.append(f"{MANIFEST_PATH}: lang should be zh-TW")
+
+    icons = manifest.get("icons")
+    if not isinstance(icons, list) or not icons:
+        issues.append(f"{MANIFEST_PATH}: icons should be a non-empty list")
+        icons = []
+    for icon in icons:
+        stats["manifest_icons"] += 1
+        if not isinstance(icon, dict):
+            issues.append(f"{MANIFEST_PATH}: icon entry should be an object")
+            continue
+        src = icon.get("src", "")
+        sizes = icon.get("sizes", "")
+        icon_type = icon.get("type", "")
+        if not src or not sizes or not icon_type:
+            issues.append(f"{MANIFEST_PATH}: icon missing src, sizes, or type: {icon}")
+            continue
+        target = ROOT / unquote(src.lstrip("/"))
+        if not target.exists():
+            issues.append(f"{MANIFEST_PATH}: icon target missing: {src}")
+            continue
+        if icon_type == "image/png":
+            size = image_size(target)
+            declared_sizes = [part for part in sizes.split() if "x" in part]
+            if not declared_sizes:
+                issues.append(f"{MANIFEST_PATH}: png icon missing concrete sizes: {src}")
+            for declared in declared_sizes:
+                try:
+                    declared_width, declared_height = [int(part) for part in declared.split("x", 1)]
+                except ValueError:
+                    issues.append(f"{MANIFEST_PATH}: invalid icon size {declared}: {src}")
+                    continue
+                if size and size != (declared_width, declared_height):
+                    issues.append(
+                        f"{MANIFEST_PATH}: icon size {declared} does not match file {size[0]}x{size[1]}: {src}"
+                    )
+        elif icon_type == "image/x-icon":
+            try:
+                with Image.open(target) as image:
+                    actual_sizes = image.ico.sizes() if hasattr(image, "ico") else {image.size}
+            except OSError:
+                issues.append(f"{MANIFEST_PATH}: cannot read icon file: {src}")
+                continue
+            for declared in [part for part in sizes.split() if "x" in part]:
+                try:
+                    declared_size = tuple(int(part) for part in declared.split("x", 1))
+                except ValueError:
+                    issues.append(f"{MANIFEST_PATH}: invalid icon size {declared}: {src}")
+                    continue
+                if declared_size not in actual_sizes:
+                    issues.append(f"{MANIFEST_PATH}: ico missing declared size {declared}: {src}")
+
+    shortcuts = manifest.get("shortcuts", [])
+    if shortcuts and not isinstance(shortcuts, list):
+        issues.append(f"{MANIFEST_PATH}: shortcuts should be a list")
+        shortcuts = []
+    for shortcut in shortcuts:
+        stats["manifest_shortcuts"] += 1
+        if not isinstance(shortcut, dict):
+            issues.append(f"{MANIFEST_PATH}: shortcut entry should be an object")
+            continue
+        if not shortcut.get("name") or not shortcut.get("url"):
+            issues.append(f"{MANIFEST_PATH}: shortcut missing name or url: {shortcut}")
+            continue
+        target, fragment = target_for(ROOT / "index.html", shortcut["url"])
+        if target is None or not target.exists():
+            issues.append(f"{MANIFEST_PATH}: shortcut target missing: {shortcut['url']}")
+        elif fragment and target.suffix == ".html":
+            parser = PageParser()
+            parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
+            if fragment not in parser.ids:
+                issues.append(f"{MANIFEST_PATH}: shortcut anchor missing #{fragment}: {shortcut['url']}")
+
+    return issues, stats
+
+
+def parse_feed(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not FEED_PATH.exists():
+        return [f"{FEED_PATH}: missing feed.xml"], stats
+
+    try:
+        root = ET.parse(FEED_PATH).getroot()
+    except ET.ParseError as exc:
+        return [f"{FEED_PATH}: invalid XML: {exc}"], stats
+    if root.tag != "rss" or root.attrib.get("version") != "2.0":
+        issues.append(f"{FEED_PATH}: expected rss version 2.0")
+
+    channel = root.find("channel")
+    if channel is None:
+        return [f"{FEED_PATH}: missing channel"], stats
+    for tag in ("title", "link", "description", "language", "lastBuildDate"):
+        if not (channel.findtext(tag) or "").strip():
+            issues.append(f"{FEED_PATH}: channel missing {tag}")
+    if channel.findtext("language") != "zh-TW":
+        issues.append(f"{FEED_PATH}: channel language should be zh-TW")
+    if channel.findtext("link") != f"{DOMAIN}/guides/":
+        issues.append(f"{FEED_PATH}: channel link should be {DOMAIN}/guides/")
+
+    seen_links: set[str] = set()
+    items = channel.findall("item")
+    stats["feed_items"] = len(items)
+    if len(items) < 10:
+        issues.append(f"{FEED_PATH}: expected at least 10 feed items, found {len(items)}")
+    for item in items:
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        guid = (item.findtext("guid") or "").strip()
+        description = (item.findtext("description") or "").strip()
+        category = (item.findtext("category") or "").strip()
+        pub_date = (item.findtext("pubDate") or "").strip()
+        if not title or not link or not guid or not description or not category or not pub_date:
+            issues.append(f"{FEED_PATH}: feed item missing required fields: {link or title or '<unknown>'}")
+        if link in seen_links:
+            issues.append(f"{FEED_PATH}: duplicate feed item link: {link}")
+        seen_links.add(link)
+        guid_node = item.find("guid")
+        if guid_node is None or guid_node.attrib.get("isPermaLink") != "true":
+            issues.append(f"{FEED_PATH}: guid should use isPermaLink=true: {link}")
+        if guid and guid != link:
+            issues.append(f"{FEED_PATH}: guid should match link: {link}")
+        parsed_link = urlparse(link)
+        if parsed_link.scheme != "https" or parsed_link.netloc != "lovetypes.tw":
+            issues.append(f"{FEED_PATH}: item link must be absolute https lovetypes.tw URL: {link}")
+        target, _ = target_for(ROOT / "index.html", link)
+        if target is None or not target.exists():
+            issues.append(f"{FEED_PATH}: item link target missing: {link}")
+        else:
+            target_parser = parsers.get(target)
+            if target_parser and is_noindex(target_parser):
+                issues.append(f"{FEED_PATH}: feed item should not point to noindex page: {link}")
+            canonicals = target_parser.links_with_rel("canonical") if target_parser else []
+            if len(canonicals) == 1 and canonicals[0].get("href") != link:
+                issues.append(f"{FEED_PATH}: item link should match target canonical: {link}")
+        if link and link not in sitemap_urls:
+            issues.append(f"{FEED_PATH}: feed item link missing from sitemap: {link}")
+
+    return issues, stats
 
 
 def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
@@ -334,6 +514,31 @@ def main() -> int:
         page_title = "".join(parser.title_parts).strip()
         page_description = parser.meta_content("description")
 
+        for rel, href in REQUIRED_HEAD_ASSETS.items():
+            matching_links = [link for link in parser.links_with_rel(rel) if link.get("href") == href]
+            if not matching_links:
+                issues.append(f"{page}: missing head asset link rel={rel} href={href}")
+            else:
+                stats["head_asset_links"] += 1
+            target, _ = target_for(page, href)
+            if target is None or not target.exists():
+                issues.append(f"{page}: head asset target missing: {href}")
+
+        rss_links = [
+            link
+            for link in parser.links_with_rel("alternate")
+            if link.get("type") == "application/rss+xml" and link.get("href") == "/feed.xml"
+        ]
+        if not rss_links:
+            issues.append(f"{page}: missing RSS alternate link")
+        else:
+            stats["rss_head_links"] += 1
+            if not rss_links[0].get("title"):
+                issues.append(f"{page}: RSS alternate link missing title")
+        rss_target, _ = target_for(page, "/feed.xml")
+        if rss_target is None or not rss_target.exists():
+            issues.append(f"{page}: RSS target missing: /feed.xml")
+
         canonicals = parser.links_with_rel("canonical")
         stats["canonical_links"] += len(canonicals)
         if len(canonicals) != 1:
@@ -486,6 +691,12 @@ def main() -> int:
     issues.extend(sitemap_issues)
     stats.update(sitemap_stats)
     issues.extend(check_robots(sitemap_urls))
+    manifest_issues, manifest_stats = parse_manifest()
+    issues.extend(manifest_issues)
+    stats.update(manifest_stats)
+    feed_issues, feed_stats = parse_feed(parsers, sitemap_urls)
+    issues.extend(feed_issues)
+    stats.update(feed_stats)
 
     indexable_canonicals: set[str] = set()
     for page, parser in parsers.items():
@@ -513,10 +724,15 @@ def main() -> int:
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")
+    print(f"head_asset_links={stats['head_asset_links']}")
+    print(f"rss_head_links={stats['rss_head_links']}")
     print(f"social_cards={stats['social_cards']}")
     print(f"social_images={stats['social_images']}")
     print(f"sitemap_urls={stats['sitemap_urls']}")
     print(f"sitemap_alternates={stats['sitemap_alternates']}")
+    print(f"manifest_icons={stats['manifest_icons']}")
+    print(f"manifest_shortcuts={stats['manifest_shortcuts']}")
+    print(f"feed_items={stats['feed_items']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

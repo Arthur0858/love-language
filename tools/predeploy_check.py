@@ -18,6 +18,7 @@ PYTHON_TOOLS = [
     "tools/site_quality_audit.py",
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
+    "tools/performance_budget_audit.py",
 ]
 
 
@@ -104,6 +105,7 @@ def main() -> int:
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
         run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
+        run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
 
     if args.visual or args.visual_only:
         node = find_node()

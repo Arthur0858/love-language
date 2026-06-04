@@ -151,6 +151,22 @@ function summarizeRedirectFailures(results) {
   });
 }
 
+function summarizeWorksheetFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (result.fieldCount !== 4) failures.push(`expected 4 worksheet fields, got ${result.fieldCount}`);
+    if (!result.statusLiveRegionOk) failures.push('worksheet status live region is not configured');
+    if (!result.autosaveOk) failures.push('worksheet autosave did not persist all fields');
+    if (!result.reloadRestoreOk) failures.push('worksheet values did not restore after reload');
+    if (!result.clearOk) failures.push('worksheet clear did not empty fields and storage');
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 async function firstExistingPath(paths) {
   for (const path of paths) {
     try {
@@ -251,6 +267,11 @@ const conversionCases = [
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-home-saved-to-repair-mobile', target: 'home-saved-plan', path: '/', viewport: { width: 390, height: 844 } },
+];
+
+const worksheetCases = [
+  { name: 'worksheet-autosave-mobile', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
+  { name: 'worksheet-autosave-en-desktop', path: '/en/repair-plan/', viewport: { width: 1280, height: 900 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -610,14 +631,103 @@ for (const item of conversionCases) {
   await page.close();
 }
 
+for (const item of worksheetCases) {
+  const page = await browser.newPage({ viewport: item.viewport });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await waitForSoftIdle(page);
+
+  const fields = page.locator('[data-repair-worksheet] textarea[data-field]');
+  const fieldCount = await fields.count();
+  const statusLiveRegionOk = await page.locator('[data-worksheet-status]').evaluate((node) =>
+    node.getAttribute('role') === 'status' && node.getAttribute('aria-live') === 'polite'
+  ).catch(() => false);
+  const values = [
+    `${item.name} guardian`,
+    `${item.name} wound`,
+    `${item.name} request`,
+    `${item.name} supply`,
+  ];
+
+  for (let index = 0; index < Math.min(fieldCount, values.length); index += 1) {
+    await fields.nth(index).fill(values[index]);
+  }
+
+  const autosaveOk = await page.waitForFunction((expected) => {
+    return Object.entries(localStorage).some(([key, value]) => {
+      if (!key.includes('repair-worksheet')) return false;
+      try {
+        const parsed = JSON.parse(value);
+        return expected.every((item, index) => parsed[index] === item);
+      } catch (_error) {
+        return false;
+      }
+    });
+  }, values, { timeout: 5000 }).then(() => true).catch(() => false);
+
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await waitForSoftIdle(page);
+  const restoredValues = await page.locator('[data-repair-worksheet] textarea[data-field]').evaluateAll((nodes) =>
+    nodes.map((node) => node.value)
+  ).catch(() => []);
+  const reloadRestoreOk = values.every((value, index) => restoredValues[index] === value);
+
+  await page.locator('[data-clear-worksheet]').click();
+  const clearOk = await page.waitForFunction(() => {
+    const fields = [...document.querySelectorAll('[data-repair-worksheet] textarea[data-field]')];
+    const fieldsEmpty = fields.length === 4 && fields.every((field) => !field.value);
+    const storageEmpty = !Object.keys(localStorage).some((key) => key.includes('repair-worksheet'));
+    return fieldsEmpty && storageEmpty;
+  }, undefined, { timeout: 5000 }).then(() => true).catch(() => false);
+
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    url,
+    finalUrl: finalPath(page),
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    fieldCount,
+    statusLiveRegionOk,
+    autosaveOk,
+    reloadRestoreOk,
+    clearOk,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    screenshot,
+  });
+  await page.close();
+}
+
 await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('worksheet-'))),
   ...summarizeRedirectFailures(results.filter((result) => result.name.startsWith('redirect-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
+  ...summarizeWorksheetFailures(results.filter((result) => result.name.startsWith('worksheet-'))),
 ];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);

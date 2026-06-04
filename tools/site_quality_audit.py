@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -99,6 +100,15 @@ EXPECTED_ORGANIZATION = {
 }
 POLICY_PAGE_SLUGS = {"contact", "privacy", "terms"}
 LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+CJK_RE = re.compile(r"[\u4e00-\u9fff]")
+HANGUL_RE = re.compile(r"[\uac00-\ud7af]")
+KANA_RE = re.compile(r"[\u3040-\u30ff]")
+UNEXPECTED_SCRIPT_CHECKS = {
+    "en": {"CJK": CJK_RE, "Hangul": HANGUL_RE, "Kana": KANA_RE},
+    "es": {"CJK": CJK_RE, "Hangul": HANGUL_RE, "Kana": KANA_RE},
+    "ja": {"Hangul": HANGUL_RE},
+    "ko": {"Kana": KANA_RE},
+}
 
 
 class PageParser(HTMLParser):
@@ -120,6 +130,7 @@ class PageParser(HTMLParser):
         self.tag_counts = Counter()
         self.source = ""
         self.title_parts: list[str] = []
+        self.visible_text_parts: list[str] = []
         self.jsonld_blocks: list[str] = []
         self.html_lang: str | None = None
         self._stack: list[tuple[str, dict[str, str], list[str]]] = []
@@ -210,6 +221,8 @@ class PageParser(HTMLParser):
             self.title_parts.append(data)
         if self._in_jsonld:
             self._jsonld_buf.append(data)
+        if self._stack and data.strip() and not self._should_ignore_visible_text():
+            self.visible_text_parts.append(data)
         if self._stack:
             self._stack[-1][2].append(data)
 
@@ -228,6 +241,17 @@ class PageParser(HTMLParser):
 
     def links_with_rel(self, rel: str) -> list[dict[str, str]]:
         return [link for link in self.links if rel in link.get("rel", "").split()]
+
+    def visible_text(self) -> str:
+        return " ".join(" ".join(self.visible_text_parts).split())
+
+    def _should_ignore_visible_text(self) -> bool:
+        for tag, attrs, _ in self._stack:
+            if tag in {"script", "style"}:
+                return True
+            if tag == "details" and "language-menu" in class_tokens(attrs):
+                return True
+        return False
 
 
 def html_pages() -> list[Path]:
@@ -1060,6 +1084,17 @@ def main() -> int:
             issues.append(f"{page}: missing robots meta")
         if not parser.html_lang:
             issues.append(f"{page}: missing html lang")
+        else:
+            script_checks = UNEXPECTED_SCRIPT_CHECKS.get(parser.html_lang, {})
+            stats["language_script_checks"] += len(script_checks)
+            visible_text = parser.visible_text()
+            for script_name, script_pattern in script_checks.items():
+                script_match = script_pattern.search(visible_text)
+                if script_match:
+                    start = max(0, script_match.start() - 32)
+                    end = min(len(visible_text), script_match.end() + 32)
+                    excerpt = visible_text[start:end]
+                    issues.append(f"{page}: unexpected {script_name} text outside language menu: {excerpt}")
 
         page_title = "".join(parser.title_parts).strip()
         page_description = parser.meta_content("description")
@@ -1441,6 +1476,7 @@ def main() -> int:
     print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")
+    print(f"language_script_checks={stats['language_script_checks']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
     print(f"canonical_links={stats['canonical_links']}")

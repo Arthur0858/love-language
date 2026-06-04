@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-keepsake-resume"
+ASSET_VERSION = "20260604-repair-keepsake"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3837,7 +3837,8 @@ def repair_worksheet_script(lang: str) -> str:
     try {{
       for (const resultKey of resultKeys) {{
         const savedResult = JSON.parse(localStorage.getItem(resultKey) || 'null');
-        if (savedResult && quiz.results[savedResult.primaryKey]) return savedResult;
+        const primaryKey = savedResult && (savedResult.primaryKey || savedResult.type);
+        if (primaryKey && quiz.results[primaryKey]) return {{ ...savedResult, primaryKey }};
       }}
     }} catch (_error) {{}}
     return null;
@@ -3873,6 +3874,8 @@ def repair_worksheet_script(lang: str) -> str:
           <div class="repair-resume-actions">
             <a class="primary-btn" href="${{result.planUrl}}">${{resumePlan}}</a>
             <button class="secondary-btn" type="button" data-fill-repair>${{resumeFill}}</button>
+            <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{quiz.labels.saved_card}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
             <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
             <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{bookstoreLabel}}</a>
           </div>

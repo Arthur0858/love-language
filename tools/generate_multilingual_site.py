@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-guide-index-compass"
+ASSET_VERSION = "20260604-supply-quick-routes"
 
 
 FONT_CSS = ""
@@ -2167,6 +2167,34 @@ def supply_route_card(lang: str, slug: str) -> str:
 """
 
 
+def supply_quick_route_nav(lang: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    t = LANGS[lang]
+    cards = []
+    for slug, data in GUARDIANS.items():
+        route = supply_route(lang, slug)
+        name, typ, _desc = data[lang]
+        cards.append(f"""
+<a class="supply-quick-card" href="#supply-{slug}">
+  {img_tag(data["asset"], name)}
+  <span class="eyebrow">{escape(typ)}</span>
+  <h3>{escape(route["title"])}</h3>
+  <p>{escape(route["desc"])}</p>
+  <strong>{escape(labels["route"])}</strong>
+</a>
+""")
+    return f"""
+<section class="section supply-quick-routes">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(labels["quick_route"])}</p><h2>{escape(labels["title"])}</h2></div>
+    <a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a>
+  </div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="supply-quick-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def guardian_story_image(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
@@ -3138,6 +3166,7 @@ def resources_page(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden></section>
+{supply_quick_route_nav(lang)}
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
   <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>

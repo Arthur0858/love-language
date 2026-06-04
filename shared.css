@@ -658,6 +658,71 @@ button.secondary-btn {
     linear-gradient(180deg, #fffdf9, #fff);
 }
 
+.supply-quick-routes {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(189, 82, 96, .09), transparent 26%),
+    linear-gradient(180deg, #fff, #fffdf9);
+}
+
+.supply-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.supply-quick-card {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 8px;
+  min-height: 100%;
+  padding: 14px;
+  border: 1px solid rgba(236, 216, 213, .94);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(76, 42, 43, .055);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.supply-quick-card:hover,
+.supply-quick-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(189, 82, 96, .46);
+  box-shadow: 0 14px 34px rgba(76, 42, 43, .09);
+}
+
+.supply-quick-card img {
+  width: 100%;
+  height: 116px;
+  object-fit: contain;
+  object-position: center top;
+}
+
+.supply-quick-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
+.supply-quick-card p {
+  display: -webkit-box;
+  min-height: 4.5em;
+  margin: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.supply-quick-card strong {
+  color: var(--rose);
+  font-size: .9rem;
+}
+
 .supply-route-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2054,6 +2119,7 @@ button.secondary-btn {
 
 @media (max-width: 1180px) {
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .supply-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2257,6 +2323,7 @@ button.secondary-btn {
   }
 
   .supply-route-grid,
+  .supply-quick-grid,
   .supply-panel-grid,
   .guardian-route-grid,
   .guide-compass-grid,
@@ -2411,6 +2478,46 @@ button.secondary-btn {
 
   .quiz-saved-card img {
     width: 76px;
+  }
+
+  .supply-quick-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .supply-quick-routes .section-intro {
+    display: none;
+  }
+
+  .supply-quick-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 6px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .supply-quick-card img {
+    grid-row: auto;
+    width: 100%;
+    height: 48px;
+    align-self: start;
+  }
+
+  .supply-quick-card h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .9rem;
+    line-height: 1.16;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .supply-quick-card p {
+    display: none;
+  }
+
+  .supply-quick-card strong {
+    font-size: .82rem;
   }
 
   .guide-personal-resume {

@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-language-current"
+ASSET_VERSION = "20260605-affiliate-note"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -401,6 +401,7 @@ AFFILIATE_COPY = {
         "fit": "適合",
         "limit": "使用提醒",
         "routes": "對應守護者路線",
+        "fallback": "外部書店偶爾會阻擋自動檢查或跨區連線；如果按鈕打不開，請用書名與作者到博客來或你常用的書店搜尋。",
     },
     "en": {
         "eyebrow": "BOOK RELICS",
@@ -410,6 +411,7 @@ AFFILIATE_COPY = {
         "fit": "Best for",
         "limit": "Use with",
         "routes": "Guardian routes",
+        "fallback": "External bookstores may block automated checks or some regions. If the button does not open, search the title and author in your preferred bookstore.",
     },
     "ja": {
         "eyebrow": "BOOK RELICS",
@@ -419,6 +421,7 @@ AFFILIATE_COPY = {
         "fit": "向いている人",
         "limit": "使い方",
         "routes": "対応する守護者ルート",
+        "fallback": "外部書店は自動チェックや一部地域からの接続を止める場合があります。開けない時は、書名と著者名で普段使う書店を検索してください。",
     },
     "ko": {
         "eyebrow": "BOOK RELICS",
@@ -428,6 +431,7 @@ AFFILIATE_COPY = {
         "fit": "추천 대상",
         "limit": "사용 팁",
         "routes": "연결 수호자 루트",
+        "fallback": "외부 서점은 자동 검사나 일부 지역 접속을 막을 수 있습니다. 버튼이 열리지 않으면 제목과 저자를 사용해 자주 쓰는 서점에서 검색하세요.",
     },
     "es": {
         "eyebrow": "BOOK RELICS",
@@ -437,6 +441,7 @@ AFFILIATE_COPY = {
         "fit": "Ideal para",
         "limit": "Úsalo con",
         "routes": "Rutas de guardianas",
+        "fallback": "Las librerías externas pueden bloquear revisiones automáticas o algunas regiones. Si el botón no abre, busca el título y el autor en tu librería habitual.",
     },
 }
 
@@ -4536,7 +4541,7 @@ def resources_page(lang: str) -> None:
 {supply_wishlist_section(lang)}
 {collector_section(lang)}
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
-<section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+<section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p><p class="affiliate-link-note">{escape(affiliate_labels["fallback"])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 {supply_resume_script(lang)}
 {supply_route_receipt_script(lang)}

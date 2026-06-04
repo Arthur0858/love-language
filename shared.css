@@ -911,6 +911,14 @@ button.secondary-btn {
   width: 100%;
 }
 
+.affiliate-link-note {
+  max-width: 860px;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+
 .section-intro {
   max-width: 780px;
   margin: -6px 0 24px;

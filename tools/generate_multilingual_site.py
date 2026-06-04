@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-repair-summary"
+ASSET_VERSION = "20260604-route-receipt"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1490,6 +1490,13 @@ SUPPLY_LABELS = {
         "supply": "補給建議",
         "read_guide": "閱讀對應指南",
         "open_luna": "開啟 Luna",
+        "copy_route": "複製此路線",
+        "route_copied": "已複製補給路線",
+        "route_summary_title": "LoveTypes 守護者補給路線",
+        "route_summary_guardian": "守護者",
+        "route_summary_practice": "今日任務",
+        "route_summary_supply": "補給建議",
+        "route_summary_book": "延伸書卷",
         "quick_route": "守護者下一步",
         "deeper_route": "深入補給路線",
         "choose": "如何選擇補給",
@@ -1510,6 +1517,13 @@ SUPPLY_LABELS = {
         "supply": "Supply suggestion",
         "read_guide": "Read guide",
         "open_luna": "Open Luna",
+        "copy_route": "Copy this route",
+        "route_copied": "Supply route copied",
+        "route_summary_title": "LoveTypes guardian supply route",
+        "route_summary_guardian": "Guardian",
+        "route_summary_practice": "Today task",
+        "route_summary_supply": "Supply suggestion",
+        "route_summary_book": "Extended book",
         "quick_route": "Guardian next steps",
         "deeper_route": "Deeper supply route",
         "choose": "How to choose supplies",
@@ -1530,6 +1544,13 @@ SUPPLY_LABELS = {
         "supply": "補給の提案",
         "read_guide": "ガイドを読む",
         "open_luna": "Luna を開く",
+        "copy_route": "このルートをコピー",
+        "route_copied": "補給ルートをコピーしました",
+        "route_summary_title": "LoveTypes 守護者の補給ルート",
+        "route_summary_guardian": "守護者",
+        "route_summary_practice": "今日の課題",
+        "route_summary_supply": "補給の提案",
+        "route_summary_book": "本で深める",
         "quick_route": "守護者の次の一歩",
         "deeper_route": "深い補給ルート",
         "choose": "補給の選び方",
@@ -1550,6 +1571,13 @@ SUPPLY_LABELS = {
         "supply": "보급 제안",
         "read_guide": "가이드 읽기",
         "open_luna": "Luna 열기",
+        "copy_route": "이 루트 복사",
+        "route_copied": "보급 루트가 복사됨",
+        "route_summary_title": "LoveTypes 수호자 보급 루트",
+        "route_summary_guardian": "수호자",
+        "route_summary_practice": "오늘의 과제",
+        "route_summary_supply": "보급 제안",
+        "route_summary_book": "확장 책",
         "quick_route": "수호자 다음 단계",
         "deeper_route": "심화 보급 루트",
         "choose": "보급을 고르는 법",
@@ -1570,6 +1598,13 @@ SUPPLY_LABELS = {
         "supply": "Sugerencia de recurso",
         "read_guide": "Leer guía",
         "open_luna": "Abrir Luna",
+        "copy_route": "Copiar esta ruta",
+        "route_copied": "Ruta copiada",
+        "route_summary_title": "Ruta de suministro LoveTypes",
+        "route_summary_guardian": "Guardiana",
+        "route_summary_practice": "Tarea de hoy",
+        "route_summary_supply": "Sugerencia de recurso",
+        "route_summary_book": "Libro extendido",
         "quick_route": "Siguientes pasos de la guardiana",
         "deeper_route": "Ruta de suministro profunda",
         "choose": "Cómo elegir recursos",
@@ -2599,6 +2634,15 @@ def supply_route_card(lang: str, slug: str) -> str:
     guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
     book = route["book"]
     guide = route["guide"]
+    summary = {
+        "title": route["title"],
+        "guardian": f"{guardian_name} · {guardian_type}",
+        "practice": route["mission"],
+        "supply": route["supply"],
+        "book": f'{book["title"][lang]} · {book["author"]}',
+        "url": abs_url(lang, "resources") + f"#supply-{slug}",
+    }
+    summary_json = escape(json.dumps(summary, ensure_ascii=False))
     return f"""
 <article class="supply-route-card" id="supply-{slug}">
   {img_tag(route["guardian"]["prop"], route["title"])}
@@ -2615,6 +2659,7 @@ def supply_route_card(lang: str, slug: str) -> str:
   <div class="supply-route-actions">
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
+    <button class="secondary-btn" type="button" data-copy-supply-route data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
     <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </article>
@@ -3590,6 +3635,74 @@ def supply_resume_script(lang: str) -> str:
 """
 
 
+def supply_route_receipt_script(lang: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    summary_title = json.dumps(labels["route_summary_title"], ensure_ascii=False)
+    summary_guardian = json.dumps(labels["route_summary_guardian"], ensure_ascii=False)
+    summary_practice = json.dumps(labels["route_summary_practice"], ensure_ascii=False)
+    summary_supply = json.dumps(labels["route_summary_supply"], ensure_ascii=False)
+    summary_book = json.dumps(labels["route_summary_book"], ensure_ascii=False)
+    copied = json.dumps(labels["route_copied"], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const buttons = [...document.querySelectorAll('[data-copy-supply-route]')];
+  if (!buttons.length) return;
+  const labels = {{
+    title: {summary_title},
+    guardian: {summary_guardian},
+    practice: {summary_practice},
+    supply: {summary_supply},
+    book: {summary_book},
+    copied: {copied}
+  }};
+
+  async function copyText(text) {{
+    if (navigator.clipboard?.writeText && window.isSecureContext) {{
+      await navigator.clipboard.writeText(text);
+      return;
+    }}
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }}
+
+  function buildReceipt(route) {{
+    return [
+      labels.title,
+      `${{labels.guardian}}: ${{route.guardian}}`,
+      route.title,
+      `${{labels.practice}}: ${{route.practice}}`,
+      `${{labels.supply}}: ${{route.supply}}`,
+      `${{labels.book}}: ${{route.book}}`,
+      route.url
+    ].filter(Boolean).join('\\n');
+  }}
+
+  buttons.forEach((button) => {{
+    const original = button.textContent;
+    button.addEventListener('click', async () => {{
+      try {{
+        const route = JSON.parse(button.dataset.routeSummary || '{{}}');
+        await copyText(buildReceipt(route));
+        button.textContent = labels.copied;
+        window.setTimeout(() => {{ button.textContent = original; }}, 1800);
+      }} catch (_error) {{
+        button.textContent = original;
+      }}
+    }});
+  }});
+}})();
+</script>
+"""
+
+
 def guide_resume_script(lang: str) -> str:
     data = quiz_payload(lang)
     return f"""
@@ -3900,6 +4013,7 @@ def resources_page(lang: str) -> None:
 <section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 {supply_resume_script(lang)}
+{supply_route_receipt_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["resources"])}","description":"{escape(t["resources_desc"])}","url":"{abs_url(lang, "resources")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{t['resources']} | LoveTypes" if lang == "zh" else f"{t['resources']} | LoveTypes {t['name']}"

@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import os
+import socket
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -21,6 +24,45 @@ def run_step(name: str, command: list[str], env: dict[str, str] | None = None) -
     subprocess.run(command, cwd=ROOT, check=True, env=env)
 
 
+def find_free_port() -> int:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+
+
+def wait_for_server(port: int) -> None:
+    deadline = time.time() + 10
+    while time.time() < deadline:
+        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+            sock.settimeout(0.5)
+            if sock.connect_ex(("127.0.0.1", port)) == 0:
+                return
+        time.sleep(0.1)
+    raise RuntimeError(f"Local preview server did not start on port {port}")
+
+
+@contextlib.contextmanager
+def local_preview_server():
+    port = find_free_port()
+    print(f"== local preview server http://127.0.0.1:{port} ==", flush=True)
+    process = subprocess.Popen(
+        [sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"],
+        cwd=ROOT,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.STDOUT,
+    )
+    try:
+        wait_for_server(port)
+        yield f"http://127.0.0.1:{port}"
+    finally:
+        process.terminate()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=5)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run LoveTypes pre-deploy quality checks.")
     parser.add_argument(
@@ -31,7 +73,7 @@ def main() -> int:
     parser.add_argument(
         "--base-url",
         default="",
-        help="BASE_URL for the optional visual check, for example http://127.0.0.1:4173.",
+        help="BASE_URL for the optional visual check. If omitted with --visual, a temporary local server is started.",
     )
     args = parser.parse_args()
 
@@ -44,7 +86,11 @@ def main() -> int:
         env = os.environ.copy()
         if args.base_url:
             env["BASE_URL"] = args.base_url
-        run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
+            run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
+        else:
+            with local_preview_server() as base_url:
+                env["BASE_URL"] = base_url
+                run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
 
     print("predeploy_checks=ok", flush=True)
     return 0

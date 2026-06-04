@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-keepsake-result-route"
+ASSET_VERSION = "20260604-story-card-generator"
 
 
 FONT_CSS = ""
@@ -1378,6 +1378,10 @@ COLLECTOR_LABELS = {
         "open": "開啟收藏卡",
         "download": "保存圖片",
         "hall": "前往收藏室",
+        "story": "生成分享卡",
+        "story_kicker": "情感守護者收藏",
+        "story_cta": "lovetypes.tw/keepsakes",
+        "story_error": "生成失敗",
         "route": "回到補給路線",
         "share_hint": "適合發限動、傳給伴侶，或放進關係日記作為今天的心語入口。",
     },
@@ -1389,6 +1393,10 @@ COLLECTOR_LABELS = {
         "open": "Open card",
         "download": "Save image",
         "hall": "Open keepsake hall",
+        "story": "Create story card",
+        "story_kicker": "Emotion Guardian Keepsake",
+        "story_cta": "lovetypes.tw/keepsakes",
+        "story_error": "Image failed",
         "route": "Return to supply route",
         "share_hint": "Use it in Stories, send it to a partner, or place it in a relationship journal as today's heart-language doorway.",
     },
@@ -1400,6 +1408,10 @@ COLLECTOR_LABELS = {
         "open": "カードを開く",
         "download": "画像を保存",
         "hall": "コレクション室へ",
+        "story": "共有カードを生成",
+        "story_kicker": "感情の守護者コレクション",
+        "story_cta": "lovetypes.tw/keepsakes",
+        "story_error": "生成できません",
         "route": "補給ルートへ戻る",
         "share_hint": "ストーリー、パートナーへの共有、関係日記の今日の入口として使えます。",
     },
@@ -1411,6 +1423,10 @@ COLLECTOR_LABELS = {
         "open": "카드 열기",
         "download": "이미지 저장",
         "hall": "소장실로 가기",
+        "story": "공유 카드 만들기",
+        "story_kicker": "감정 수호자 소장",
+        "story_cta": "lovetypes.tw/keepsakes",
+        "story_error": "생성 실패",
         "route": "보급 루트로 돌아가기",
         "share_hint": "스토리, 파트너에게 보내기, 관계 일기의 오늘 마음 언어 입구로 사용할 수 있습니다.",
     },
@@ -1422,6 +1438,10 @@ COLLECTOR_LABELS = {
         "open": "Abrir tarjeta",
         "download": "Guardar imagen",
         "hall": "Abrir sala",
+        "story": "Crear historia",
+        "story_kicker": "Recuerdo de guardiana emocional",
+        "story_cta": "lovetypes.tw/keepsakes",
+        "story_error": "No se pudo crear",
         "route": "Volver a la ruta",
         "share_hint": "Úsala en historias, envíala a una pareja o ponla en tu diario relacional como puerta de lenguaje del corazón.",
     },
@@ -2221,6 +2241,7 @@ def layout(lang: str, title: str, desc: str, path: str, body: str, active: str =
 {body}
 </main>
 {footer(lang)}
+<script src="/site-interactions.js?v={ASSET_VERSION}" defer></script>
 {external_script}
 </body>
 </html>
@@ -2354,6 +2375,16 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     name, typ, _desc = guardian[lang]
     class_name = "collector-card compact" if compact else "collector-card"
     image = guardian_story_image(lang, slug)
+    data_attrs = (
+        f'data-story-name="{escape(name)}" '
+        f'data-story-title="{escape(typ)}" '
+        f'data-story-quote="{escape(route["mission"])}" '
+        f'data-story-image="{escape(guardian["asset"])}" '
+        f'data-story-slug="{escape(slug)}" '
+        f'data-story-kicker="{escape(labels["story_kicker"])}" '
+        f'data-story-cta="{escape(labels["story_cta"])}" '
+        f'data-story-error="{escape(labels["story_error"])}"'
+    )
     return f"""
 <article class="{class_name}">
   <a class="collector-image-link" href="{image}" target="_blank" rel="noopener">
@@ -2366,6 +2397,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     <div class="collector-actions">
       <a class="primary-btn" href="{image}" target="_blank" rel="noopener">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
+      <button class="secondary-btn" type="button" data-result-action="story" {data_attrs}>{escape(labels["story"])}</button>
     </div>
   </div>
 </article>

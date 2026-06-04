@@ -125,8 +125,17 @@
   }
 
   window.downloadStoryCard = function (button) {
-    var data = window.lovetypesLastResult;
-    if (!data) return;
+    var data = window.lovetypesLastResult || {};
+    if (button && button.hasAttribute('data-story-name')) {
+      data = {
+        name: button.getAttribute('data-story-name'),
+        title: button.getAttribute('data-story-title'),
+        quote: button.getAttribute('data-story-quote'),
+        image: button.getAttribute('data-story-image'),
+        slug: button.getAttribute('data-story-slug')
+      };
+    }
+    if (!data || !data.image) return;
 
     var labels = {
       kicker: button.getAttribute('data-story-kicker') || 'Emotion Guardian',

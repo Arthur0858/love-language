@@ -5,6 +5,7 @@ import json
 import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -14,6 +15,12 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
+CONTACT_EMAIL = "contact@lovetypes.tw"
+FORBIDDEN_CONTACT_SNIPPETS = {
+    "contact@parenttechchecklist.com",
+    "parenttechchecklist.com",
+    "s755102@gmail.com",
+}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 SITEMAP_PATH = ROOT / "sitemap.xml"
@@ -22,6 +29,8 @@ FEED_PATH = ROOT / "feed.xml"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
+SECURITY_PATH = ROOT / "security.txt"
+WELL_KNOWN_SECURITY_PATH = ROOT / ".well-known" / "security.txt"
 SITEMAP_NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
     "xhtml": "http://www.w3.org/1999/xhtml",
@@ -78,8 +87,10 @@ EXPECTED_ORGANIZATION = {
     "name": "LoveTypes",
     "url": f"{DOMAIN}/",
     "logo": f"{DOMAIN}/apple-touch-icon.png",
-    "email": "contact@lovetypes.tw",
+    "email": CONTACT_EMAIL,
 }
+POLICY_PAGE_SLUGS = {"contact", "privacy", "terms"}
+LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 
 
 class PageParser(HTMLParser):
@@ -99,6 +110,7 @@ class PageParser(HTMLParser):
         self.ids: list[str] = []
         self.metas: list[dict[str, str]] = []
         self.tag_counts = Counter()
+        self.source = ""
         self.title_parts: list[str] = []
         self.jsonld_blocks: list[str] = []
         self.html_lang: str | None = None
@@ -715,6 +727,89 @@ def parse_redirects(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter
     return issues, stats
 
 
+def parse_security_txt(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SECURITY_PATH.exists():
+        return [f"{SECURITY_PATH}: missing security.txt"], stats
+    if not WELL_KNOWN_SECURITY_PATH.exists():
+        issues.append(f"{WELL_KNOWN_SECURITY_PATH}: missing .well-known security.txt")
+
+    security_text = SECURITY_PATH.read_text(encoding="utf-8", errors="ignore").strip()
+    stats["security_txt_files"] += 1
+    if WELL_KNOWN_SECURITY_PATH.exists():
+        well_known_text = WELL_KNOWN_SECURITY_PATH.read_text(encoding="utf-8", errors="ignore").strip()
+        stats["security_txt_files"] += 1
+        if well_known_text != security_text:
+            issues.append(f"{WELL_KNOWN_SECURITY_PATH}: should match root security.txt")
+
+    fields: dict[str, list[str]] = {}
+    for lineno, raw_line in enumerate(security_text.splitlines(), start=1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            issues.append(f"{SECURITY_PATH}:{lineno}: invalid security.txt line")
+            continue
+        key, value = [part.strip() for part in line.split(":", 1)]
+        fields.setdefault(key.lower(), []).append(value)
+        stats["security_txt_fields"] += 1
+
+    expected_fields = {
+        "contact": f"mailto:{CONTACT_EMAIL}",
+        "canonical": f"{DOMAIN}/.well-known/security.txt",
+        "policy": f"{DOMAIN}/privacy/",
+    }
+    for key, expected_value in expected_fields.items():
+        if expected_value not in fields.get(key, []):
+            issues.append(f"{SECURITY_PATH}: missing {key.title()}: {expected_value}")
+    if not any("zh-TW" in value and "en" in value for value in fields.get("preferred-languages", [])):
+        issues.append(f"{SECURITY_PATH}: Preferred-Languages should include zh-TW and en")
+    expires_values = fields.get("expires", [])
+    if len(expires_values) != 1:
+        issues.append(f"{SECURITY_PATH}: expected one Expires field, found {len(expires_values)}")
+    else:
+        try:
+            expires = datetime.fromisoformat(expires_values[0].replace("Z", "+00:00"))
+        except ValueError:
+            issues.append(f"{SECURITY_PATH}: invalid Expires timestamp: {expires_values[0]}")
+        else:
+            if expires <= datetime.now(timezone.utc):
+                issues.append(f"{SECURITY_PATH}: Expires timestamp is in the past: {expires_values[0]}")
+
+    policy_path, _ = target_for(ROOT / "index.html", f"{DOMAIN}/privacy/")
+    if policy_path is None or policy_path not in parsers:
+        issues.append(f"{SECURITY_PATH}: Policy target missing: {DOMAIN}/privacy/")
+    return issues, stats
+
+
+def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    for _lang, prefix in LOCALE_PREFIXES.items():
+        for slug in POLICY_PAGE_SLUGS:
+            path = ROOT / (f"{prefix}/{slug}/index.html" if prefix else f"{slug}/index.html")
+            parser = parsers.get(path)
+            if parser is None:
+                issues.append(f"{path}: missing {slug} policy page")
+                continue
+            stats["policy_pages"] += 1
+            if CONTACT_EMAIL not in parser.source:
+                issues.append(f"{path}: policy page missing contact email {CONTACT_EMAIL}")
+            for forbidden in FORBIDDEN_CONTACT_SNIPPETS:
+                if forbidden.lower() in parser.source.lower():
+                    issues.append(f"{path}: forbidden legacy contact reference: {forbidden}")
+            if slug == "contact":
+                contact_mailtos = [
+                    anchor.get("href", "")
+                    for anchor in parser.anchors
+                    if anchor.get("href", "").lower().startswith(f"mailto:{CONTACT_EMAIL}")
+                ]
+                if not contact_mailtos:
+                    issues.append(f"{path}: contact page missing mailto:{CONTACT_EMAIL}")
+    return issues, stats
+
+
 def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -847,7 +942,8 @@ def main() -> int:
 
     for page in pages:
         parser = PageParser()
-        parser.feed(page.read_text(encoding="utf-8", errors="ignore"))
+        parser.source = page.read_text(encoding="utf-8", errors="ignore")
+        parser.feed(parser.source)
         parsers[page] = parser
 
     for page, parser in parsers.items():
@@ -1086,6 +1182,13 @@ def main() -> int:
         for anchor in parser.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)
+            if parsed.scheme == "mailto":
+                stats["mailto_links"] += 1
+                if parsed.path.lower() != CONTACT_EMAIL:
+                    issues.append(f"{page}: mailto link should use {CONTACT_EMAIL}: {href}")
+            for forbidden in FORBIDDEN_CONTACT_SNIPPETS:
+                if forbidden.lower() in href.lower():
+                    issues.append(f"{page}: forbidden legacy contact reference in link: {forbidden}")
             if parsed.scheme in ("http", "https") and parsed.netloc not in LOCAL_HOSTS:
                 stats["external_links"] += 1
                 rel = set(anchor.get("rel", "").split())
@@ -1129,6 +1232,12 @@ def main() -> int:
     redirect_issues, redirect_stats = parse_redirects(parsers)
     issues.extend(redirect_issues)
     stats.update(redirect_stats)
+    security_issues, security_stats = parse_security_txt(parsers)
+    issues.extend(security_issues)
+    stats.update(security_stats)
+    policy_issues, policy_stats = check_policy_pages(parsers)
+    issues.extend(policy_issues)
+    stats.update(policy_stats)
 
     indexable_canonicals: set[str] = set()
     for page, parser in parsers.items():
@@ -1172,6 +1281,10 @@ def main() -> int:
     print(f"header_blocks={stats['header_blocks']}")
     print(f"header_rules={stats['header_rules']}")
     print(f"redirect_rules={stats['redirect_rules']}")
+    print(f"security_txt_files={stats['security_txt_files']}")
+    print(f"security_txt_fields={stats['security_txt_fields']}")
+    print(f"policy_pages={stats['policy_pages']}")
+    print(f"mailto_links={stats['mailto_links']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

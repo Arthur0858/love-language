@@ -28,7 +28,7 @@
   <meta property="og:image:height" content="881" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/luna-yoga-music/images/hero.webp" />
-  <link rel="stylesheet" href="/shared-20260604-accessibility-polish.css" />
+  <link rel="stylesheet" href="/shared-20260604-performance-polish.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
@@ -94,17 +94,17 @@
   <div><p class="eyebrow">CALM PATHS</p><h2>Luna Yoga Music は、日記、緊張をほどく時間、関係のふり返りに寄り添う静かな音楽です。心語の庭の夜にともる低い灯りのように。</h2></div>
   <div class="luna-card-grid">
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/morning.webp" alt="朝のリセット" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/morning.webp" alt="朝のリセット" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>朝のリセット</h3><p>やさしいリズムで昨夜の感情を置き、今日ケアしたい愛の言語に気づきます。</p></div>
 </article>
 
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/stress.webp" alt="ストレスを静める" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/stress.webp" alt="ストレスを静める" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>ストレスを静める</h3><p>言葉が多すぎて心が騒ぐ時、次の一言を選ぶ前に体を安定させます。</p></div>
 </article>
 
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/sleep.webp" alt="夜の終わり" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/sleep.webp" alt="夜の終わり" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>夜の終わり</h3><p>眠る前にすべてを解決しなくても大丈夫。今日の気持ちを安全な場所へ移します。</p></div>
 </article>
 </div>
@@ -145,7 +145,7 @@
   <p class="section-intro">Luna は関係を代わりに直しません。書く、頼む、補給を一つ選ぶために、感情の音量を下げる灯りです。</p>
   <div class="luna-guardian-grid">
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/iris.webp" alt="アイリス" width="966" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/iris.webp" alt="アイリス" width="966" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">肯定の言葉</p>
     <h3>アイリス</h3>
@@ -158,7 +158,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/noah.webp" alt="ノア" width="1066" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/noah.webp" alt="ノア" width="1066" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">上質な時間</p>
     <h3>ノア</h3>
@@ -171,7 +171,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/vivian.webp" alt="ヴィヴィアン" width="823" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/vivian.webp" alt="ヴィヴィアン" width="823" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">贈り物</p>
     <h3>ヴィヴィアン</h3>
@@ -184,7 +184,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/claire.webp" alt="クレア" width="720" height="1007" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/claire.webp" alt="クレア" width="720" height="1007" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">奉仕の行動</p>
     <h3>クレア</h3>
@@ -197,7 +197,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/dora.webp" alt="ドーラ" width="736" height="1007" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/dora.webp" alt="ドーラ" width="736" height="1007" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">身体的なふれあい</p>
     <h3>ドーラ</h3>
@@ -242,7 +242,7 @@
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
     <article class="luna-resume-card" style="--result-accent:${result.color}">
-      <img src="${result.image}" alt="${result.name}" loading="lazy" decoding="async">
+      <img src="${result.image}" alt="${result.name}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${labels.eyebrow}</p>
         <h2>${labels.title}</h2>
@@ -274,7 +274,7 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-accessibility-polish.js" defer></script>
+<script src="/site-interactions-20260604-performance-polish.js" defer></script>
 
 </body>
 </html>

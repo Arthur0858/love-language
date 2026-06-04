@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-accessibility-polish"
+ASSET_VERSION = "20260604-performance-polish"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2635,6 +2635,7 @@ def img_tag(src: str, alt: str, class_name: str = "", lazy: bool = True, priorit
     elif lazy:
         attrs.append('loading="lazy"')
         attrs.append('decoding="async"')
+        attrs.append('fetchpriority="low"')
     else:
         attrs.append('loading="eager"')
         attrs.append('decoding="async"')
@@ -2929,7 +2930,7 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     <p class="domain-title">{escape(domain_title)}</p>
     <p>{escape(domain_desc)}</p>
     <small>{escape(domain_cta)}</small>
-    <img class="guardian-prop" src="{data["prop"]}" alt="" loading="lazy" decoding="async" width="90" height="90">
+    <img class="guardian-prop" src="{data["prop"]}" alt="" loading="lazy" decoding="async" fetchpriority="low" width="90" height="90">
   </div>
 </a>
 """
@@ -3750,7 +3751,7 @@ def quiz_script(lang: str) -> str:
     const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     savedBox.innerHTML = `
       <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{quiz.labels.saved_title}}</p>
           <h3>${{result.name}} · ${{result.type}}</h3>
@@ -3912,7 +3913,7 @@ def quiz_script(lang: str) -> str:
         <a class="primary-btn" href="${{result.resourceUrl}}">${{quiz.labels.primary_route}}</a>
       </section>
       <section class="quiz-collector-card">
-        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async">
+        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{result.collectorTitle}}</p>
           <h3>${{result.name}}</h3>
@@ -4163,7 +4164,7 @@ def guide_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="quiz-saved-card guide-resume-card" id="guide-${{result.slug}}" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
@@ -4668,7 +4669,7 @@ def repair_worksheet_script(lang: str) -> str:
     const result = quiz.results[savedResult.primaryKey];
     resumeBox.innerHTML = `
       <article class="repair-resume-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{resumeTitle}}</p>
           <h2>${{result.name}} · ${{result.type}}</h2>
@@ -4824,7 +4825,7 @@ def luna_resume_script(lang: str) -> str:
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
     <article class="luna-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{labels.eyebrow}}</p>
         <h2>${{labels.title}}</h2>

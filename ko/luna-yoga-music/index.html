@@ -28,7 +28,7 @@
   <meta property="og:image:height" content="881" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/luna-yoga-music/images/hero.webp" />
-  <link rel="stylesheet" href="/shared-20260604-accessibility-polish.css" />
+  <link rel="stylesheet" href="/shared-20260604-performance-polish.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">본문으로 이동</a>
@@ -94,17 +94,17 @@
   <div><p class="eyebrow">CALM PATHS</p><h2>Luna Yoga Music은 기록, 긴장 완화, 관계 성찰에 어울리는 차분한 음악입니다. 밤의 마음의 정원에 켜진 낮은 등불처럼 함께합니다.</h2></div>
   <div class="luna-card-grid">
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/morning.webp" alt="아침 정리" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/morning.webp" alt="아침 정리" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>아침 정리</h3><p>부드러운 리듬으로 밤의 잔여 감정을 내려놓고 오늘 돌볼 사랑의 언어를 알아차립니다.</p></div>
 </article>
 
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/stress.webp" alt="스트레스 낮추기" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/stress.webp" alt="스트레스 낮추기" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>스트레스 낮추기</h3><p>메시지가 빽빽하고 마음이 시끄러울 때, 다음 말을 고르기 전에 몸을 안정시킵니다.</p></div>
 </article>
 
 <article class="luna-card">
-  <img src="/luna-yoga-music/images/sleep.webp" alt="밤의 마무리" width="1536" height="1024" loading="lazy" decoding="async" />
+  <img src="/luna-yoga-music/images/sleep.webp" alt="밤의 마무리" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div><h3>밤의 마무리</h3><p>잠들기 전 모든 문제를 해결하지 않아도 됩니다. 오늘의 감정을 더 안전한 곳에 둡니다.</p></div>
 </article>
 </div>
@@ -145,7 +145,7 @@
   <p class="section-intro">Luna가 관계를 대신 고치지는 않습니다. 쓰고, 요청하고, 보급 하나를 고를 수 있도록 감정의 소음을 낮춥니다.</p>
   <div class="luna-guardian-grid">
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/iris.webp" alt="아이리스" width="966" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/iris.webp" alt="아이리스" width="966" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">인정의 말</p>
     <h3>아이리스</h3>
@@ -158,7 +158,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/noah.webp" alt="노아" width="1066" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/noah.webp" alt="노아" width="1066" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">함께하는 시간</p>
     <h3>노아</h3>
@@ -171,7 +171,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/vivian.webp" alt="비비안" width="823" height="1024" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/vivian.webp" alt="비비안" width="823" height="1024" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">선물 받기</p>
     <h3>비비안</h3>
@@ -184,7 +184,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/claire.webp" alt="클레어" width="720" height="1007" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/claire.webp" alt="클레어" width="720" height="1007" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">봉사의 행동</p>
     <h3>클레어</h3>
@@ -197,7 +197,7 @@
 </article>
 
 <article class="luna-guardian-card">
-  <img src="/assets/lovetypes/guardians/dora.webp" alt="도라" width="736" height="1007" loading="lazy" decoding="async" />
+  <img src="/assets/lovetypes/guardians/dora.webp" alt="도라" width="736" height="1007" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <p class="eyebrow">스킨십</p>
     <h3>도라</h3>
@@ -242,7 +242,7 @@
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
     <article class="luna-resume-card" style="--result-accent:${result.color}">
-      <img src="${result.image}" alt="${result.name}" loading="lazy" decoding="async">
+      <img src="${result.image}" alt="${result.name}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${labels.eyebrow}</p>
         <h2>${labels.title}</h2>
@@ -274,7 +274,7 @@
   <p>© 2026 LoveTypes · <a href="/ko/privacy/">개인정보</a> · <a href="/ko/terms/">이용약관</a> · <a href="/ko/contact/">연락</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-accessibility-polish.js" defer></script>
+<script src="/site-interactions-20260604-performance-polish.js" defer></script>
 
 </body>
 </html>

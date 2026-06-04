@@ -20,6 +20,9 @@ DEFAULT_BASE_URL = "https://lovetypes.tw"
 EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
+LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
+AFFILIATE_DISCLOSURE_SNIPPET = "本頁部分連結為聯盟行銷連結"
+AFFILIATE_LINK_HOST = "www.books.com.tw"
 PUBLIC_PATHS = [
     "/",
     "/characters/",
@@ -34,9 +37,12 @@ PUBLIC_PATHS = [
     "/theory/",
     "/contact/",
     "/en/",
+    "/en/resources/",
     "/ja/",
     "/ko/",
+    "/ko/resources/",
     "/es/",
+    "/es/resources/",
     "/en/characters/",
     "/ja/resources/",
     "/ko/repair-plan/",
@@ -51,9 +57,12 @@ EXPECTED_TEXT = {
     "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
     "/contact/": "contact@lovetypes.tw",
     "/en/": "LoveTypes Emotion Guardians",
+    "/en/resources/": "Resources",
     "/ja/": "LoveTypes 感情の守護者",
     "/ko/": "LoveTypes 감정 수호자",
+    "/ko/resources/": "자료",
     "/es/": "LoveTypes Guardianas Emocionales",
+    "/es/resources/": "Recursos",
     "/en/characters/": "Five Emotion Guardians Overview",
     "/ja/resources/": "リソース",
     "/ko/repair-plan/": "7일 마음 언어 회복 계획",
@@ -144,6 +153,7 @@ class HeadAssetParser(HTMLParser):
         self.jsonld_blocks: list[str] = []
         self.ids: set[str] = set()
         self.hrefs: list[str] = []
+        self.anchors: list[dict[str, str]] = []
         self._in_jsonld_script = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -166,6 +176,7 @@ class HeadAssetParser(HTMLParser):
             self.scripts.append(data["src"])
         if tag == "a" and data.get("href"):
             self.hrefs.append(data["href"])
+            self.anchors.append(data)
         if tag == "script" and data.get("type") == "application/ld+json":
             self._in_jsonld_script = True
             self.jsonld_blocks.append("")
@@ -335,6 +346,41 @@ def check_jsonld(path: str, assets: HeadAssetParser) -> tuple[list[str], int, in
     return issues, len(assets.jsonld_blocks), entities_checked
 
 
+def is_resources_path(path: str) -> bool:
+    return bool(re.fullmatch(r"/(?:(?:en|ja|ko|es)/)?resources/", path))
+
+
+def check_external_links(path: str, assets: HeadAssetParser, html: str) -> tuple[list[str], int, int]:
+    issues: list[str] = []
+    external_links_checked = 0
+    affiliate_links_checked = 0
+    resources_page = is_resources_path(path)
+    for anchor in assets.anchors:
+        href = anchor.get("href", "")
+        parsed = urlparse(href)
+        if parsed.scheme not in {"http", "https"} or parsed.hostname in LOCAL_HOSTS:
+            continue
+        external_links_checked += 1
+        rel_tokens = set(anchor.get("rel", "").split())
+        if anchor.get("target") == "_blank" and not {"noopener", "noreferrer"}.issubset(rel_tokens):
+            issues.append(f"{path}: external _blank link missing noopener/noreferrer: {href}")
+        if parsed.hostname == AFFILIATE_LINK_HOST:
+            affiliate_links_checked += 1
+            if "sponsored" not in rel_tokens:
+                issues.append(f"{path}: affiliate link missing sponsored rel: {href}")
+            if "/exep/assp.php/arthur0858/" not in parsed.path:
+                issues.append(f"{path}: affiliate link should use arthur0858 tracking path: {href}")
+            if "utm_campaign=ap-202604" not in parsed.query:
+                issues.append(f"{path}: affiliate link missing expected campaign tag: {href}")
+    if affiliate_links_checked:
+        if AFFILIATE_DISCLOSURE_SNIPPET not in html and 'class="affiliate-disclosure"' not in html and "affiliateDisclosure" not in html:
+            issues.append(f"{path}: missing affiliate disclosure")
+    if resources_page:
+        if affiliate_links_checked < len(GUARDIAN_SLUGS):
+            issues.append(f"{path}: expected at least {len(GUARDIAN_SLUGS)} affiliate links, found {affiliate_links_checked}")
+    return issues, external_links_checked, affiliate_links_checked
+
+
 def header_matches(headers: dict[str, str], name: str, expected: str) -> bool:
     return headers.get(name, "") == expected
 
@@ -472,6 +518,8 @@ def main() -> int:
     public_sitemap_alternates_checked = 0
     public_anchor_targets_checked = 0
     public_conversion_hrefs_checked = 0
+    public_external_links_checked = 0
+    public_affiliate_links_checked = 0
     page_asset_refs: list[str] = []
     social_image_urls: list[str] = []
 
@@ -489,6 +537,10 @@ def main() -> int:
         if expected_text and expected_text not in response.text:
             issues.append(f"{path}: missing expected text {expected_text!r}")
         assets = extract_head_assets(response.text)
+        external_issues, external_links_checked, affiliate_links_checked = check_external_links(path, assets, response.text)
+        issues.extend(external_issues)
+        public_external_links_checked += external_links_checked
+        public_affiliate_links_checked += affiliate_links_checked
         for target_id in EXPECTED_ANCHOR_TARGETS.get(path, ()):
             public_anchor_targets_checked += 1
             if target_id not in assets.ids:
@@ -626,6 +678,8 @@ def main() -> int:
     print(f"public_sitemap_alternates_checked={public_sitemap_alternates_checked}")
     print(f"public_anchor_targets_checked={public_anchor_targets_checked}")
     print(f"public_conversion_hrefs_checked={public_conversion_hrefs_checked}")
+    print(f"public_external_links_checked={public_external_links_checked}")
+    print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")

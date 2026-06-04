@@ -23,6 +23,13 @@ FORBIDDEN_CONTACT_SNIPPETS = {
 }
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
+EXPECTED_OG_LOCALES = {
+    "zh-TW": "zh_TW",
+    "en": "en_US",
+    "ja": "ja_JP",
+    "ko": "ko_KR",
+    "es": "es_ES",
+}
 SITEMAP_PATH = ROOT / "sitemap.xml"
 ROBOTS_PATH = ROOT / "robots.txt"
 FEED_PATH = ROOT / "feed.xml"
@@ -199,6 +206,13 @@ class PageParser(HTMLParser):
             if meta.get("name") == name or meta.get("property") == name:
                 return meta.get("content", "")
         return ""
+
+    def meta_contents(self, name: str) -> list[str]:
+        return [
+            meta.get("content", "")
+            for meta in self.metas
+            if meta.get("name") == name or meta.get("property") == name
+        ]
 
     def links_with_rel(self, rel: str) -> list[dict[str, str]]:
         return [link for link in self.links if rel in link.get("rel", "").split()]
@@ -1117,6 +1131,7 @@ def main() -> int:
             "og:image": parser.meta_content("og:image"),
             "og:image:width": parser.meta_content("og:image:width"),
             "og:image:height": parser.meta_content("og:image:height"),
+            "og:locale": parser.meta_content("og:locale"),
             "twitter:card": parser.meta_content("twitter:card"),
             "twitter:image": parser.meta_content("twitter:image"),
         }
@@ -1133,6 +1148,23 @@ def main() -> int:
                 issues.append(f"{page}: twitter:card should be summary_large_image")
             if social_checks["twitter:image"] != social_checks["og:image"]:
                 issues.append(f"{page}: twitter:image does not match og:image")
+            expected_og_locale = EXPECTED_OG_LOCALES.get(parser.html_lang or "")
+            if social_checks["og:locale"] != expected_og_locale:
+                issues.append(f"{page}: og:locale should match html lang {parser.html_lang}: {expected_og_locale}")
+            og_locale_alternates = parser.meta_contents("og:locale:alternate")
+            stats["social_locale_tags"] += 1 + len(og_locale_alternates)
+            expected_alternates = set(EXPECTED_OG_LOCALES.values()) - {expected_og_locale}
+            alternate_counts = Counter(og_locale_alternates)
+            duplicate_og_alternates = [value for value, count in alternate_counts.items() if count > 1]
+            if duplicate_og_alternates:
+                issues.append(f"{page}: duplicate og:locale:alternate values {', '.join(duplicate_og_alternates)}")
+            if set(og_locale_alternates) != expected_alternates:
+                missing = sorted(expected_alternates.difference(og_locale_alternates))
+                extra = sorted(set(og_locale_alternates).difference(expected_alternates))
+                if missing:
+                    issues.append(f"{page}: missing og:locale:alternate values {', '.join(missing)}")
+                if extra:
+                    issues.append(f"{page}: unexpected og:locale:alternate values {', '.join(extra)}")
 
             og_image = social_checks["og:image"]
             parsed_og_image = urlparse(og_image)
@@ -1328,6 +1360,7 @@ def main() -> int:
     print(f"head_asset_links={stats['head_asset_links']}")
     print(f"rss_head_links={stats['rss_head_links']}")
     print(f"social_cards={stats['social_cards']}")
+    print(f"social_locale_tags={stats['social_locale_tags']}")
     print(f"social_images={stats['social_images']}")
     print(f"sitemap_urls={stats['sitemap_urls']}")
     print(f"sitemap_alternates={stats['sitemap_alternates']}")

@@ -261,6 +261,14 @@ LANGS = {
     },
 }
 
+OG_LOCALES = {
+    "zh": "zh_TW",
+    "en": "en_US",
+    "ja": "ja_JP",
+    "ko": "ko_KR",
+    "es": "es_ES",
+}
+
 
 RESOURCE_CARDS = {
     "zh": [
@@ -2826,6 +2834,12 @@ def head(
     alternate_target = alternate_path if alternate_path is not None else path
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, alternate_target)}" />' for code, cfg in LANGS.items())
     alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", alternate_target)}" />'
+    og_locale = OG_LOCALES[lang]
+    og_locale_alternates = "\n".join(
+        f'  <meta property="og:locale:alternate" content="{locale}" />'
+        for code, locale in OG_LOCALES.items()
+        if code != lang
+    )
     image_width, image_height = IMAGE_DIMENSIONS.get(image, (1200, 630))
     hero_preload = ""
     if path == "":
@@ -2855,6 +2869,8 @@ def head(
   <meta property="og:image" content="{DOMAIN}{image}" />
   <meta property="og:image:width" content="{image_width}" />
   <meta property="og:image:height" content="{image_height}" />
+  <meta property="og:locale" content="{og_locale}" />
+{og_locale_alternates}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="{DOMAIN}{image}" />
 {hero_preload}  <link rel="stylesheet" href="{CSS_ASSET}" />

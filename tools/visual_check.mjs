@@ -27,6 +27,17 @@ function makeUrl(path) {
   return new URL(path, baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
 }
 
+function finalPath(page) {
+  const current = new URL(page.url());
+  return `${current.pathname}${current.hash}`;
+}
+
+function shouldCheckCloudflareRedirects() {
+  if (process.env.CHECK_REDIRECTS === '1') return true;
+  const hostname = new URL(makeUrl('/')).hostname;
+  return hostname === 'lovetypes.tw' || hostname.endsWith('.lovetypes.pages.dev');
+}
+
 function hasBlockingConsoleMessage(message) {
   return ['error'].includes(message.type());
 }
@@ -45,6 +56,9 @@ function summarizeFailures(results) {
     if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
     if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
     if (result.name.startsWith('guardian-') && result.supplyCtaCount < 1) failures.push('missing guardian supply CTA');
+    if (result.expectedFinalPath && result.finalUrl !== result.expectedFinalPath) {
+      failures.push(`expected final path ${result.expectedFinalPath}, got ${result.finalUrl}`);
+    }
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
     if (result.pageErrors.length) failures.push('page errors');
@@ -97,6 +111,20 @@ function summarizeConversionFailures(results) {
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
+function summarizeRedirectFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.redirected) failures.push('did not redirect');
+    if (result.finalUrl !== result.expectedFinalPath) {
+      failures.push(`expected final path ${result.expectedFinalPath}, got ${result.finalUrl}`);
+    }
     if (result.consoleErrors.length) failures.push('console errors');
     if (result.pageErrors.length) failures.push('page errors');
     return failures.map((failure) => `${result.name}: ${failure}`);
@@ -169,6 +197,16 @@ const cases = [
   { name: 'es-guides-desktop', path: '/es/guides/', viewport: { width: 1280, height: 900 } },
 ];
 
+const redirectCases = shouldCheckCloudflareRedirects()
+  ? [
+      { name: 'redirect-luna-zh', path: '/luna/', expectedFinalPath: '/luna-yoga-music/' },
+      { name: 'redirect-luna-en', path: '/en/luna/', expectedFinalPath: '/en/luna-yoga-music/' },
+      { name: 'redirect-luna-ja', path: '/ja/luna/', expectedFinalPath: '/ja/luna-yoga-music/' },
+      { name: 'redirect-luna-ko', path: '/ko/luna/', expectedFinalPath: '/ko/luna-yoga-music/' },
+      { name: 'redirect-luna-es', path: '/es/luna/', expectedFinalPath: '/es/luna-yoga-music/' },
+    ]
+  : [];
+
 const quizCases = [
   { name: 'quiz-flow-desktop', path: '/', viewport: { width: 1280, height: 900 } },
   { name: 'quiz-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
@@ -239,6 +277,7 @@ for (const item of cases) {
   results.push({
     name: item.name,
     url,
+    finalUrl: finalPath(page),
     status: response?.status(),
     title,
     h1,
@@ -254,6 +293,36 @@ for (const item of cases) {
     consoleErrors,
     pageErrors,
     screenshot,
+  });
+  await page.close();
+}
+
+for (const item of redirectCases) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  results.push({
+    name: item.name,
+    url,
+    finalUrl: finalPath(page),
+    expectedFinalPath: item.expectedFinalPath,
+    redirected: Boolean(response?.request().redirectedFrom()),
+    status: response?.status(),
+    title: await page.title(),
+    consoleErrors,
+    pageErrors,
   });
   await page.close();
 }
@@ -313,6 +382,7 @@ for (const item of quizCases) {
   results.push({
     name: item.name,
     url,
+    finalUrl: finalPath(page),
     status: response?.status(),
     title: await page.title(),
     h1: await page.locator('h1').first().innerText().catch(() => ''),
@@ -436,7 +506,8 @@ for (const item of conversionCases) {
   results.push({
     name: item.name,
     target: item.target,
-    url: `${new URL(page.url()).pathname}${new URL(page.url()).hash}`,
+    url: finalPath(page),
+    finalUrl: finalPath(page),
     status: response?.status(),
     title: await page.title(),
     h1: await page.locator('h1').first().innerText().catch(() => ''),
@@ -469,7 +540,8 @@ await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-'))),
+  ...summarizeRedirectFailures(results.filter((result) => result.name.startsWith('redirect-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
 ];

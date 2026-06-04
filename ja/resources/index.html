@@ -22,7 +22,7 @@
   <meta property="og:description" content="心語の庭のガイド入口、五人の守護者プロフィール、愛の言語の理論、実践練習をまとめ、次の灯りを見つけやすくします。" />
   <meta property="og:image" content="https://lovetypes.tw/og-cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-contact-requests" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-supply-resume" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -452,18 +452,53 @@
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  const resumeSteps = [
+    {
+      number: "1",
+      title: quiz.labels.free_step,
+      desc: result.supplyMission,
+      href: result.planUrl,
+      action: result.planLabel
+    },
+    {
+      number: "2",
+      title: quiz.labels.luna_step,
+      desc: result.supplyText,
+      href: result.lunaUrl,
+      action: quiz.labels.luna_action
+    },
+    {
+      number: "3",
+      title: quiz.labels.book_step,
+      desc: `${quiz.labels.book_intro}：${result.supplyBook}`,
+      href: result.supplyBookUrl,
+      action: bookstoreLabel,
+      external: true
+    }
+  ];
   box.innerHTML = `
     <article class="quiz-saved-card supply-resume-card" style="--result-accent:${result.color}">
-      <img src="${result.image}" alt="${result.name}" loading="lazy" decoding="async">
+      <img src="${result.image}" alt="${result.name}" loading="eager" decoding="async">
       <div>
         <p class="eyebrow">${quiz.labels.saved_title}</p>
         <h2>${result.supplyTitle}</h2>
+        <p>${result.name} · ${result.type}</p>
         <p>${result.supplyDesc}</p>
+        <div class="supply-resume-next">
+          ${resumeSteps.map((step) => `
+            <section>
+              <span>${step.number}</span>
+              <h3>${step.title}</h3>
+              <p>${step.desc}</p>
+              <a href="${step.href}" ${step.external ? 'target="_blank" rel="noopener sponsored"' : ''}>${step.action}</a>
+            </section>
+          `).join('')}
+        </div>
         <div class="quiz-saved-actions">
           <a href="${result.planUrl}">${quiz.labels.saved_plan}</a>
           <a href="${result.lunaUrl}">${quiz.labels.saved_luna}</a>
           <a href="${result.resourceUrl}">${quiz.labels.saved_route}</a>
-          <a href="${result.supplyBookUrl}" target="_blank" rel="noopener sponsored">${bookstoreLabel}</a>
+          <a href="${result.guardianUrl}">${quiz.labels.guardian_link}</a>
           <button type="button" data-clear-supply-result>${quiz.labels.saved_clear}</button>
         </div>
       </div>
@@ -481,8 +516,8 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions.js?v=20260604-contact-requests" defer></script>
+<script src="/site-interactions.js?v=20260604-supply-resume" defer></script>
 
-<script src="/deferred-external.js?v=20260604-contact-requests" data-affiliate defer></script>
+<script src="/deferred-external.js?v=20260604-supply-resume" data-affiliate defer></script>
 </body>
 </html>

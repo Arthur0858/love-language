@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-contact-requests"
+ASSET_VERSION = "20260604-supply-resume"
 
 
 FONT_CSS = ""
@@ -3355,18 +3355,53 @@ def supply_resume_script(lang: str) -> str:
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  const resumeSteps = [
+    {{
+      number: "1",
+      title: quiz.labels.free_step,
+      desc: result.supplyMission,
+      href: result.planUrl,
+      action: result.planLabel
+    }},
+    {{
+      number: "2",
+      title: quiz.labels.luna_step,
+      desc: result.supplyText,
+      href: result.lunaUrl,
+      action: quiz.labels.luna_action
+    }},
+    {{
+      number: "3",
+      title: quiz.labels.book_step,
+      desc: `${{quiz.labels.book_intro}}：${{result.supplyBook}}`,
+      href: result.supplyBookUrl,
+      action: bookstoreLabel,
+      external: true
+    }}
+  ];
   box.innerHTML = `
     <article class="quiz-saved-card supply-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async">
       <div>
         <p class="eyebrow">${{quiz.labels.saved_title}}</p>
         <h2>${{result.supplyTitle}}</h2>
+        <p>${{result.name}} · ${{result.type}}</p>
         <p>${{result.supplyDesc}}</p>
+        <div class="supply-resume-next">
+          ${{resumeSteps.map((step) => `
+            <section>
+              <span>${{step.number}}</span>
+              <h3>${{step.title}}</h3>
+              <p>${{step.desc}}</p>
+              <a href="${{step.href}}" ${{step.external ? 'target="_blank" rel="noopener sponsored"' : ''}}>${{step.action}}</a>
+            </section>
+          `).join('')}}
+        </div>
         <div class="quiz-saved-actions">
           <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
           <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
           <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-          <a href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{bookstoreLabel}}</a>
+          <a href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
           <button type="button" data-clear-supply-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>

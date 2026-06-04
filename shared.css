@@ -1794,6 +1794,69 @@ button.secondary-btn {
   box-shadow: 0 18px 48px rgba(72, 47, 45, .16);
 }
 
+.supply-resume-card {
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: start;
+}
+
+.supply-resume-card img {
+  width: 112px;
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  padding: 6px;
+}
+
+.supply-resume-next {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.supply-resume-next section {
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .08);
+}
+
+.supply-resume-next span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .18);
+  color: #fff;
+  font-weight: 900;
+}
+
+.supply-resume-next h3 {
+  margin: 0;
+  color: #fff;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.18;
+}
+
+.supply-resume-next p {
+  color: #f4dfdc;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+.supply-resume-next a {
+  align-self: end;
+  color: #fff;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .guide-personal-resume {
   padding-top: 30px;
   padding-bottom: 0;
@@ -2464,6 +2527,7 @@ button.secondary-btn {
   .contact-request-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .starter-kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .quiz-starter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .supply-resume-next { grid-template-columns: 1fr; }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2836,6 +2900,15 @@ button.secondary-btn {
 
   .quiz-saved-card img {
     width: 76px;
+  }
+
+  .supply-resume-card {
+    grid-template-columns: 1fr;
+  }
+
+  .supply-resume-card img {
+    width: min(140px, 100%);
+    justify-self: start;
   }
 
   .supply-quick-grid {

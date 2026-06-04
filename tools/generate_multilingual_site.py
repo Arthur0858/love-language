@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-supply-entry"
+ASSET_VERSION = "20260605-guardian-entry"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1400,6 +1400,60 @@ SUPPLY_ENTRY = {
             ("Aún no tengo resultado", "Responde primero las 15 señales para saber qué ruta de guardiana abrir.", "Iniciar test", ""),
             ("Ya conozco mi guardiana", "Salta a las cinco rutas y elige la que encaja con este momento.", "Ver rutas", "#supply-routes"),
             ("Necesito calma primero", "Abre Luna nocturna, baja el ruido y después decide si leer o comprar.", "Abrir Luna", "luna-yoga-music"),
+        ],
+    },
+}
+
+
+GUARDIAN_ENTRY = {
+    "zh": {
+        "eyebrow": "GUARDIAN COMPASS",
+        "title": "先確認你要進入哪個分域",
+        "intro": "五位守護者不是靜態角色列表。先知道你現在最需要哪種愛之語，再進入對應分域、修復任務與補給路線。",
+        "items": [
+            ("還不知道守護者", "先完成 15 道心語，讓結果把你帶到最需要被接住的分域。", "開始認領儀式", ""),
+            ("想先看五個分域", "瀏覽五域星圖，選一位最像你此刻需求的守護者。", "查看五域星圖", "#guardian-map"),
+            ("已經知道守護者", "直接前往旅人補給，接上指南、7 日修復計畫與 Luna 夜間補給。", "前往補給站", "resources"),
+        ],
+    },
+    "en": {
+        "eyebrow": "GUARDIAN COMPASS",
+        "title": "Choose the domain before entering",
+        "intro": "The five guardians are not a static character list. Find the love language you need most now, then enter the matching domain, repair task, and supply route.",
+        "items": [
+            ("I do not know my guardian", "Take the 15 prompts first so the result points to the domain that needs care.", "Start quiz", ""),
+            ("I want to browse first", "Scan the five-domain map and choose the guardian closest to what you need now.", "View map", "#guardian-map"),
+            ("I already know my guardian", "Go to resources and continue into guides, the 7-day repair plan, and Luna night supply.", "Open resources", "resources"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "GUARDIAN COMPASS",
+        "title": "入る分域を先に確認する",
+        "intro": "五人の守護者は静的な一覧ではありません。今いちばん必要な愛の言語を見つけ、対応する分域、修復課題、補給ルートへ進みます。",
+        "items": [
+            ("まだ守護者が分からない", "まず15問に答え、今ケアが必要な分域を結果で確認します。", "診断を始める", ""),
+            ("先に五つの分域を見る", "五領域の地図を見て、今の必要に近い守護者を選びます。", "地図を見る", "#guardian-map"),
+            ("守護者が分かっている", "リソースへ進み、ガイド、7日間の修復プラン、Luna の夜の補給へつなげます。", "リソースへ", "resources"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "GUARDIAN COMPASS",
+        "title": "들어갈 영역을 먼저 확인하기",
+        "intro": "다섯 수호자는 고정된 캐릭터 목록이 아닙니다. 지금 가장 필요한 사랑의 언어를 찾고, 맞는 영역, 회복 과제, 보급 루트로 이어가세요.",
+        "items": [
+            ("아직 수호자를 모른다면", "먼저 15문항을 완료해 지금 돌봄이 필요한 영역을 확인하세요.", "테스트 시작", ""),
+            ("먼저 다섯 영역을 보고 싶다면", "다섯 영역 지도를 보고 지금 필요에 가까운 수호자를 고르세요.", "지도 보기", "#guardian-map"),
+            ("수호자를 알고 있다면", "자료로 이동해 가이드, 7일 회복 계획, Luna 밤 보급으로 이어가세요.", "자료 열기", "resources"),
+        ],
+    },
+    "es": {
+        "eyebrow": "GUARDIAN COMPASS",
+        "title": "Elige el dominio antes de entrar",
+        "intro": "Las cinco guardianas no son una lista estática. Encuentra el lenguaje del amor que necesitas ahora y entra al dominio, tarea de reparación y ruta de suministro correspondiente.",
+        "items": [
+            ("Aún no conozco mi guardiana", "Responde las 15 señales para que el resultado muestre el dominio que necesita cuidado.", "Iniciar test", ""),
+            ("Quiero mirar primero", "Explora el mapa de cinco dominios y elige la guardiana más cercana a tu necesidad actual.", "Ver mapa", "#guardian-map"),
+            ("Ya conozco mi guardiana", "Ve a recursos y continúa con guías, plan de 7 días y suministro nocturno Luna.", "Abrir recursos", "resources"),
         ],
     },
 }
@@ -3199,7 +3253,7 @@ def universe_map_section(lang: str) -> str:
     _title, _intro, map_title, map_intro = UNIVERSE_COPY[lang]
     cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     return f"""
-<section class="section universe-map-section" data-universe-map>
+<section class="section universe-map-section" id="guardian-map" data-universe-map>
   <div class="section-head"><div><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(map_title)}</h2></div><a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a></div>
   <p class="section-intro">{escape(map_intro)}</p>
   <div class="guardian-grid universe-map-grid">{cards}</div>
@@ -3435,6 +3489,36 @@ def keepsakes_page(lang: str) -> None:
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(labels["title"])}","description":"{escape(labels["desc"])}","url":"{abs_url(lang, "keepsakes")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{labels['title']} | LoveTypes" if lang == "zh" else f"{labels['title']} | LoveTypes {t['name']}"
     write(page_path(lang, "keepsakes"), layout(lang, page_title, labels["desc"], "keepsakes", body, t["resources"], "website", "/og-cover.jpg", schema))
+
+
+def guardian_entry_section(lang: str) -> str:
+    entry = GUARDIAN_ENTRY[lang]
+    cards = []
+    for number, (title, desc, action, target) in enumerate(entry["items"], start=1):
+        if target.startswith("#"):
+            href = target
+        elif target:
+            href = lang_url(lang, target)
+        else:
+            href = lang_url(lang) + "#quiz-section"
+        cards.append(f"""
+    <article>
+      <span>{number}</span>
+      <h3>{escape(title)}</h3>
+      <p>{escape(desc)}</p>
+      <a href="{href}">{escape(action)}</a>
+    </article>
+""")
+    return f"""
+<section class="section guide-index-compass guardian-entry-section" id="guardian-start">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(entry["eyebrow"])}</p><h2>{escape(entry["title"])}</h2></div>
+    <a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a>
+  </div>
+  <p class="section-intro">{escape(entry["intro"])}</p>
+  <div class="guide-compass-grid guardian-entry-grid">{"".join(cards)}</div>
+</section>
+"""
 
 
 def guide_index_compass(lang: str) -> str:
@@ -4392,6 +4476,7 @@ def characters_index_page(lang: str) -> None:
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
+{guardian_entry_section(lang)}
 {universe_map_section(lang)}
 <section class="section intro-grid">
   <div><h2>{escape(PAGE_SECTIONS[lang]["how"])}</h2><p>{escape(PRACTICAL_COPY[lang]["why"])}</p></div>

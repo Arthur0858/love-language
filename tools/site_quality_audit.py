@@ -434,6 +434,14 @@ def is_resources_page(page: Path) -> bool:
     return parts == ["resources", "index.html"]
 
 
+def is_characters_index_page(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts == ["characters", "index.html"]
+
+
 def lang_url_for_page(page: Path, target: str = "") -> str:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -1396,6 +1404,20 @@ def main() -> int:
             missing_resource_hrefs = sorted(required_resource_hrefs.difference(resource_hrefs))
             if missing_resource_hrefs:
                 issues.append(f"{page}: resources supply entry missing hrefs {', '.join(missing_resource_hrefs)}")
+        if is_characters_index_page(page):
+            stats["characters_guardian_entry_pages"] += 1
+            for target_id in ("guardian-start", "guardian-map"):
+                if target_id not in parser.ids:
+                    issues.append(f"{page}: characters page missing #{target_id}")
+            character_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_character_hrefs = {
+                lang_url_for_page(page) + "#quiz-section",
+                "#guardian-map",
+                lang_url_for_page(page, "resources"),
+            }
+            missing_character_hrefs = sorted(required_character_hrefs.difference(character_hrefs))
+            if missing_character_hrefs:
+                issues.append(f"{page}: characters guardian entry missing hrefs {', '.join(missing_character_hrefs)}")
 
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
@@ -1894,6 +1916,7 @@ def main() -> int:
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
+    print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

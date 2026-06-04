@@ -3038,6 +3038,13 @@ button.secondary-btn {
     linear-gradient(120deg, #fff8f2, #eef5ef);
 }
 
+.guardian-entry-section {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(118, 102, 168, .1), transparent 28%),
+    radial-gradient(circle at 88% 20%, rgba(107, 127, 106, .12), transparent 30%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
 .guardian-grid.compact {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }

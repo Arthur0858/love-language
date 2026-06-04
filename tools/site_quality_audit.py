@@ -9,6 +9,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
+from PIL import Image
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
@@ -158,6 +160,22 @@ def public_url_for_page(page: Path) -> str:
 
 def is_noindex(parser: PageParser) -> bool:
     return "noindex" in parser.meta_content("robots").lower()
+
+
+def local_path_for_public_url(value: str) -> Path | None:
+    parsed = urlparse(value)
+    if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw":
+        return None
+    clean = unquote(parsed.path.lstrip("/"))
+    return ROOT / clean if clean else ROOT / "index.html"
+
+
+def image_size(path: Path) -> tuple[int, int] | None:
+    try:
+        with Image.open(path) as image:
+            return image.size
+    except OSError:
+        return None
 
 
 def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
@@ -313,6 +331,9 @@ def main() -> int:
         if not parser.html_lang:
             issues.append(f"{page}: missing html lang")
 
+        page_title = "".join(parser.title_parts).strip()
+        page_description = parser.meta_content("description")
+
         canonicals = parser.links_with_rel("canonical")
         stats["canonical_links"] += len(canonicals)
         if len(canonicals) != 1:
@@ -328,6 +349,53 @@ def main() -> int:
                 issues.append(f"{page}: canonical target missing: {canonical}")
             if parser.meta_content("og:url") != canonical:
                 issues.append(f"{page}: og:url does not match canonical")
+
+        social_checks = {
+            "og:type": parser.meta_content("og:type"),
+            "og:title": parser.meta_content("og:title"),
+            "og:description": parser.meta_content("og:description"),
+            "og:image": parser.meta_content("og:image"),
+            "og:image:width": parser.meta_content("og:image:width"),
+            "og:image:height": parser.meta_content("og:image:height"),
+            "twitter:card": parser.meta_content("twitter:card"),
+            "twitter:image": parser.meta_content("twitter:image"),
+        }
+        missing_social = [key for key, value in social_checks.items() if not value]
+        if missing_social:
+            issues.append(f"{page}: missing social metadata {', '.join(missing_social)}")
+        else:
+            stats["social_cards"] += 1
+            if social_checks["og:title"] != page_title:
+                issues.append(f"{page}: og:title does not match <title>")
+            if social_checks["og:description"] != page_description:
+                issues.append(f"{page}: og:description does not match meta description")
+            if social_checks["twitter:card"] != "summary_large_image":
+                issues.append(f"{page}: twitter:card should be summary_large_image")
+            if social_checks["twitter:image"] != social_checks["og:image"]:
+                issues.append(f"{page}: twitter:image does not match og:image")
+
+            og_image = social_checks["og:image"]
+            parsed_og_image = urlparse(og_image)
+            if parsed_og_image.scheme != "https" or parsed_og_image.netloc != "lovetypes.tw":
+                issues.append(f"{page}: og:image must be absolute https lovetypes.tw URL: {og_image}")
+            og_image_path = local_path_for_public_url(og_image)
+            if og_image_path is None or not og_image_path.exists():
+                issues.append(f"{page}: og:image target missing: {og_image}")
+            else:
+                stats["social_images"] += 1
+                size = image_size(og_image_path)
+                try:
+                    declared_width = int(social_checks["og:image:width"])
+                    declared_height = int(social_checks["og:image:height"])
+                except ValueError:
+                    issues.append(f"{page}: invalid og:image width/height for {og_image}")
+                else:
+                    if declared_width <= 0 or declared_height <= 0:
+                        issues.append(f"{page}: og:image width/height should be positive for {og_image}")
+                    if size and size != (declared_width, declared_height):
+                        issues.append(
+                            f"{page}: og:image dimensions {declared_width}x{declared_height} do not match file {size[0]}x{size[1]}: {og_image}"
+                        )
 
         alternate_links = parser.links_with_rel("alternate")
         hreflang_links = [link for link in alternate_links if link.get("hreflang")]
@@ -445,6 +513,8 @@ def main() -> int:
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")
+    print(f"social_cards={stats['social_cards']}")
+    print(f"social_images={stats['social_images']}")
     print(f"sitemap_urls={stats['sitemap_urls']}")
     print(f"sitemap_alternates={stats['sitemap_alternates']}")
     print(f"internal_refs={stats['internal_refs']}")

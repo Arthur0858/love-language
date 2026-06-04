@@ -199,6 +199,19 @@ function summarizeCopyFailures(results) {
   });
 }
 
+function summarizeAnchorFocusFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.focusOk) failures.push(`expected focus on ${result.expectedFocusId}, got ${result.activeId || 'none'}`);
+    if (!result.scrollOk) failures.push('anchor did not move viewport near the target');
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 async function firstExistingPath(paths) {
   for (const path of paths) {
     try {
@@ -325,6 +338,11 @@ const copyCases = [
   { name: 'copy-quiz-result-mobile', target: 'quiz-result', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'copy-supply-route-mobile', target: 'supply-route', path: '/resources/', viewport: { width: 390, height: 844 } },
   { name: 'copy-repair-summary-mobile', target: 'repair-summary', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
+];
+
+const anchorFocusCases = [
+  { name: 'anchor-focus-direct-quiz-mobile', mode: 'direct', path: '/#quiz-section', expectedFocusId: 'quiz-section', viewport: { width: 390, height: 844 } },
+  { name: 'anchor-focus-click-quiz-mobile', mode: 'click', path: '/', selector: '.hero-actions .primary-btn[href="#quiz-section"]', expectedFocusId: 'quiz-section', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -922,17 +940,72 @@ for (const item of copyCases) {
   await page.close();
 }
 
+for (const item of anchorFocusCases) {
+  const page = await browser.newPage({ viewport: item.viewport });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  if (item.mode === 'click') {
+    await page.locator(item.selector).first().click();
+  }
+  await page.waitForFunction((expectedId) => {
+    const target = document.getElementById(expectedId);
+    if (!target) return false;
+    const top = target.getBoundingClientRect().top;
+    return document.activeElement?.id === expectedId && top >= -120 && top <= 420;
+  }, item.expectedFocusId, { timeout: 5000 }).catch(() => {});
+  const activeId = await page.evaluate(() => document.activeElement?.id || '');
+  const targetTop = await page.locator(`#${item.expectedFocusId}`).evaluate((node) => Math.round(node.getBoundingClientRect().top)).catch(() => 9999);
+  const scrollOk = targetTop >= -120 && targetTop <= 420;
+  const focusOk = activeId === item.expectedFocusId;
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    url,
+    finalUrl: finalPath(page),
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    expectedFocusId: item.expectedFocusId,
+    activeId,
+    focusOk,
+    targetTop,
+    scrollOk,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    screenshot,
+  });
+  await page.close();
+}
+
 await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('language-menu-') && !result.name.startsWith('worksheet-') && !result.name.startsWith('copy-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('language-menu-') && !result.name.startsWith('worksheet-') && !result.name.startsWith('copy-') && !result.name.startsWith('anchor-focus-'))),
   ...summarizeRedirectFailures(results.filter((result) => result.name.startsWith('redirect-'))),
   ...summarizeLanguageMenuFailures(results.filter((result) => result.name.startsWith('language-menu-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
   ...summarizeWorksheetFailures(results.filter((result) => result.name.startsWith('worksheet-'))),
   ...summarizeCopyFailures(results.filter((result) => result.name.startsWith('copy-'))),
+  ...summarizeAnchorFocusFailures(results.filter((result) => result.name.startsWith('anchor-focus-'))),
 ];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);

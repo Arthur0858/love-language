@@ -3,6 +3,57 @@
     return target && target.closest ? target.closest(selector) : null;
   }
 
+  function hashTarget(hash) {
+    if (!hash || hash === '#') return null;
+    var id = '';
+    try {
+      id = decodeURIComponent(hash.slice(1));
+    } catch (error) {
+      id = hash.slice(1);
+    }
+    return id ? document.getElementById(id) : null;
+  }
+
+  function focusHashTarget(hash) {
+    var target = hashTarget(hash);
+    if (!target) return false;
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    try {
+      target.focus({ preventScroll: true });
+    } catch (error) {
+      target.focus();
+    }
+    return true;
+  }
+
+  function scrollToHashTarget(hash, behavior) {
+    var target = hashTarget(hash);
+    if (!target) return false;
+    target.scrollIntoView({ behavior: behavior || 'auto', block: 'start' });
+    focusHashTarget(hash);
+    return true;
+  }
+
+  function samePageHash(link) {
+    var href = link && link.getAttribute ? link.getAttribute('href') : '';
+    if (!href || href === '#') return '';
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (error) {
+      return '';
+    }
+    if (
+      url.origin !== window.location.origin ||
+      url.pathname !== window.location.pathname ||
+      url.search !== window.location.search ||
+      !url.hash
+    ) {
+      return '';
+    }
+    return url.hash;
+  }
+
   document.addEventListener('click', function (event) {
     var menuToggle = closest(event.target, '[data-menu-toggle]');
     if (menuToggle) {
@@ -64,6 +115,17 @@
       var cookie = cookieAction.getAttribute('data-cookie-action');
       if (cookie === 'accept' && typeof window.acceptCookies === 'function') window.acceptCookies();
       if (cookie === 'decline' && typeof window.declineCookies === 'function') window.declineCookies();
+      return;
+    }
+
+    var anchorLink = closest(event.target, 'a[href]');
+    var hash = anchorLink ? samePageHash(anchorLink) : '';
+    var target = hash ? hashTarget(hash) : null;
+    if (target) {
+      event.preventDefault();
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.history && window.history.pushState) window.history.pushState(null, '', hash);
+      scrollToHashTarget(hash, reduceMotion ? 'auto' : 'smooth');
     }
   });
 
@@ -80,6 +142,13 @@
       menu.removeAttribute('open');
       var summary = menu.querySelector('summary');
       if (summary && menu.contains(document.activeElement)) summary.focus();
+    });
+  });
+
+  window.addEventListener('DOMContentLoaded', function () {
+    if (!window.location.hash) return;
+    window.requestAnimationFrame(function () {
+      scrollToHashTarget(window.location.hash, 'auto');
     });
   });
 })();

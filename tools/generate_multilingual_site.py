@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-language-menu-cache"
+ASSET_VERSION = "20260605-anchor-focus"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2916,7 +2916,7 @@ def layout(
 {schema}
 {breadcrumb_schema(lang, path, title)}
 {breadcrumb_nav(lang, path, title)}
-<main id="main">
+<main id="main" tabindex="-1">
 {body}
 </main>
 {footer(lang)}
@@ -4274,7 +4274,7 @@ def home(lang: str) -> None:
 </section>
 <section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">GUARDIAN FIELD GUIDES</p><h2>{escape(t["guide_index_title"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
 <section class="section" id="types-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
-<section class="quiz-band" id="quiz-section">
+<section class="quiz-band" id="quiz-section" tabindex="-1">
   <div class="quiz-shell" data-quiz-root>
     <div class="quiz-intro" data-quiz-intro>
       <p class="eyebrow">{escape(quiz["eyebrow"])}</p>

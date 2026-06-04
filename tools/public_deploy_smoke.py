@@ -92,6 +92,9 @@ REQUIRED_GLOBAL_HEADERS = {
     "x-frame-options": "SAMEORIGIN",
 }
 IMMUTABLE_CACHE_RE = re.compile(r"max-age=31536000.*immutable", re.I)
+VERSIONED_CSS_RE = re.compile(r"^/shared-[^/]+\.css$")
+VERSIONED_INTERACTIONS_RE = re.compile(r"^/site-interactions-[^/]+\.js$")
+VERSIONED_AFFILIATE_RE = re.compile(r"^/deferred-external-[^/]+\.js$")
 
 
 @dataclass
@@ -112,13 +115,19 @@ class HeadAssetParser(HTMLParser):
         self.stylesheets: list[str] = []
         self.scripts: list[str] = []
         self.canonical = ""
+        self.html_lang = ""
+        self.robots = ""
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
+        if tag == "html":
+            self.html_lang = data.get("lang", "")
         if tag == "link" and data.get("rel") == "stylesheet" and data.get("href"):
             self.stylesheets.append(data["href"])
         if tag == "link" and data.get("rel") == "canonical" and data.get("href"):
             self.canonical = data["href"]
+        if tag == "meta" and data.get("name") == "robots":
+            self.robots = data.get("content", "")
         if tag == "script" and data.get("src"):
             self.scripts.append(data["src"])
 
@@ -168,6 +177,22 @@ def request_url(url: str, *, follow_redirects: bool = True, attempts: int = 3) -
 def path_from_url(url: str) -> str:
     parsed = urlparse(url)
     return parsed.path or "/"
+
+
+def expected_html_lang(path: str) -> str:
+    for prefix, lang in (
+        ("/en/", "en"),
+        ("/ja/", "ja"),
+        ("/ko/", "ko"),
+        ("/es/", "es"),
+    ):
+        if path.startswith(prefix):
+            return lang
+    return "zh-TW"
+
+
+def expected_canonical(path: str) -> str:
+    return urljoin(DEFAULT_BASE_URL, path)
 
 
 def header_matches(headers: dict[str, str], name: str, expected: str) -> bool:
@@ -271,7 +296,11 @@ def main() -> int:
     not_found_checked = 0
     support_files_checked = 0
     immutable_assets_checked = 0
-    first_page_assets: HeadAssetParser | None = None
+    public_canonicals_checked = 0
+    public_robots_checked = 0
+    public_lang_checked = 0
+    public_versioned_asset_refs_checked = 0
+    page_asset_refs: list[str] = []
 
     for path in PUBLIC_PATHS:
         response = request_url(urljoin(base_url, path))
@@ -287,10 +316,33 @@ def main() -> int:
         if expected_text and expected_text not in response.text:
             issues.append(f"{path}: missing expected text {expected_text!r}")
         assets = extract_head_assets(response.text)
-        if not assets.canonical.startswith("https://lovetypes.tw/"):
-            issues.append(f"{path}: canonical should use https://lovetypes.tw, got {assets.canonical!r}")
-        if path == "/":
-            first_page_assets = assets
+        public_canonicals_checked += 1
+        expected_canonical_url = expected_canonical(path)
+        if assets.canonical != expected_canonical_url:
+            issues.append(f"{path}: canonical should be {expected_canonical_url!r}, got {assets.canonical!r}")
+        public_robots_checked += 1
+        robots_tokens = {token.strip().lower() for token in assets.robots.split(",") if token.strip()}
+        if "noindex" in robots_tokens:
+            issues.append(f"{path}: public smoke page should not be noindex")
+        if "index" not in robots_tokens or "follow" not in robots_tokens:
+            issues.append(f"{path}: robots should include index, follow; got {assets.robots!r}")
+        public_lang_checked += 1
+        expected_lang = expected_html_lang(path)
+        if assets.html_lang != expected_lang:
+            issues.append(f"{path}: html lang should be {expected_lang!r}, got {assets.html_lang!r}")
+
+        versioned_stylesheets = [href for href in assets.stylesheets if VERSIONED_CSS_RE.match(href)]
+        versioned_interactions = [src for src in assets.scripts if VERSIONED_INTERACTIONS_RE.match(src)]
+        versioned_affiliate = [src for src in assets.scripts if VERSIONED_AFFILIATE_RE.match(src)]
+        public_versioned_asset_refs_checked += len(versioned_stylesheets) + len(versioned_interactions) + len(versioned_affiliate)
+        if len(versioned_stylesheets) != 1:
+            issues.append(f"{path}: expected one versioned shared CSS asset, found {versioned_stylesheets}")
+        if len(versioned_interactions) != 1:
+            issues.append(f"{path}: expected one versioned interaction JS asset, found {versioned_interactions}")
+        expected_affiliate_count = 1 if path.endswith("/resources/") else 0
+        if len(versioned_affiliate) != expected_affiliate_count:
+            issues.append(f"{path}: expected {expected_affiliate_count} versioned affiliate JS asset(s), found {versioned_affiliate}")
+        page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate])
 
     for source, target in REDIRECTS.items():
         response = request_url(urljoin(base_url, source), follow_redirects=False)
@@ -330,21 +382,20 @@ def main() -> int:
         if security_response.text != well_known_security_response.text:
             issues.append("/.well-known/security.txt: body should match /security.txt")
 
-    if first_page_assets is None:
-        issues.append("/: could not inspect head assets")
-    else:
-        for asset in unique_assets([*first_page_assets.stylesheets, *first_page_assets.scripts]):
-            if not re.search(r"/(?:shared|site-interactions|deferred-external)-", asset):
-                continue
-            response = request_url(urljoin(base_url, asset))
-            immutable_assets_checked += 1
-            cache_control = response.headers.get("cache-control", "")
-            if response.status != 200:
-                issues.append(f"{asset}: expected status 200, got {response.status}")
-            if not IMMUTABLE_CACHE_RE.search(cache_control):
-                issues.append(f"{asset}: expected immutable cache header, got {cache_control!r}")
+    for asset in unique_assets(page_asset_refs):
+        response = request_url(urljoin(base_url, asset))
+        immutable_assets_checked += 1
+        cache_control = response.headers.get("cache-control", "")
+        if response.status != 200:
+            issues.append(f"{asset}: expected status 200, got {response.status}")
+        if not IMMUTABLE_CACHE_RE.search(cache_control):
+            issues.append(f"{asset}: expected immutable cache header, got {cache_control!r}")
 
     print(f"public_pages_checked={pages_checked}")
+    print(f"public_canonicals_checked={public_canonicals_checked}")
+    print(f"public_robots_checked={public_robots_checked}")
+    print(f"public_lang_checked={public_lang_checked}")
+    print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")

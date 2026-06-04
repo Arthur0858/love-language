@@ -4547,6 +4547,13 @@ def repair_worksheet_script(lang: str) -> str:
       </article>`;
     resumeBox.hidden = false;
     resumeBox.querySelector('[data-fill-repair]')?.addEventListener('click', () => fillFromResult(result));
+    const slug = result.planUrl.split('#plan-')[1] || '';
+    if (location.hash === `#plan-${{slug}}`) {{
+      const focusResume = () => resumeBox.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+      window.requestAnimationFrame(focusResume);
+      window.setTimeout(focusResume, 120);
+      window.setTimeout(focusResume, 420);
+    }}
   }}
 
   readStorage().forEach((value, index) => {{

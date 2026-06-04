@@ -67,8 +67,10 @@ function summarizeConversionFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
     if (!result.status || result.status >= 400) failures.push('bad status');
-    if (!result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
-    if (!result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (result.name.includes('supply') && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
+    if (result.name.includes('repair') && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
+    if (result.name.includes('supply') && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (result.name.includes('repair') && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -143,7 +145,8 @@ const quizCases = [
 ];
 
 const conversionCases = [
-  { name: 'conversion-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-supply-mobile', target: 'route', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-repair-mobile', target: 'plan', path: '/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -279,9 +282,14 @@ for (const item of conversionCases) {
     await page.locator('.quiz-next').click();
   }
 
-  await page.locator('[data-conversion-route]').click();
+  if (item.target === 'plan') {
+    await page.locator('[data-conversion-plan]').click();
+  } else {
+    await page.locator('[data-conversion-route]').click();
+  }
   await page.waitForLoadState('networkidle');
-  await page.locator('[data-supply-saved]:not([hidden])').waitFor({ state: 'visible' });
+  const resumeSelector = item.target === 'plan' ? '[data-repair-saved]:not([hidden])' : '[data-supply-saved]:not([hidden])';
+  await page.locator(resumeSelector).waitFor({ state: 'visible' });
   await page.waitForFunction(() => window.scrollY < 1200);
 
   const horizontalOverflow = await page.evaluate(() =>
@@ -300,7 +308,8 @@ for (const item of conversionCases) {
     horizontalOverflow,
     consoleErrors,
     pageErrors,
-    supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible(),
+    supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible().catch(() => false),
+    repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
     scrollY: await page.evaluate(() => window.scrollY),
     screenshot,
   });

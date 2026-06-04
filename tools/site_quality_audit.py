@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import importlib.util
 import json
 import re
 import sys
@@ -17,9 +18,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 CONTACT_EMAIL = "contact@lovetypes.tw"
-ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 ADS_TXT_PATH = ROOT / "ads.txt"
-EXPECTED_ADS_TXT = "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS = {
     "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
     "adsbygoogle",
@@ -85,11 +84,6 @@ LEGACY_ROOT_STATIC_ASSETS = {
     "site-interactions.js",
     "deferred-external.js",
 }
-CURRENT_STATIC_ASSETS = {
-    "css": "/shared-20260605-affiliate-note.css",
-    "interactions": "/site-interactions-20260605-affiliate-note.js",
-    "affiliate": "/deferred-external-20260605-affiliate-note.js",
-}
 EXPECTED_REDIRECTS = {
     "/.well-known/security.txt": ("/security.txt", "200"),
     "/luna/": ("/luna-yoga-music/", "301"),
@@ -125,6 +119,26 @@ UNEXPECTED_SCRIPT_CHECKS = {
     "es": {"CJK": CJK_RE, "Hangul": HANGUL_RE, "Kana": KANA_RE},
     "ja": {"Hangul": HANGUL_RE},
     "ko": {"Kana": KANA_RE},
+}
+
+
+def load_generator_config():
+    generator_path = ROOT / "tools" / "generate_multilingual_site.py"
+    spec = importlib.util.spec_from_file_location("lovetypes_site_generator", generator_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generator config from {generator_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+GENERATOR_CONFIG = load_generator_config()
+ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
+EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT.removeprefix('ca-')}, DIRECT, f08c47fec0942fa0"
+CURRENT_STATIC_ASSETS = {
+    "css": GENERATOR_CONFIG.CSS_ASSET,
+    "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
+    "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
 }
 
 
@@ -1106,6 +1120,7 @@ def main() -> int:
     parsers: dict[Path, PageParser] = {}
     issues: list[str] = []
     stats = Counter()
+    stats["generator_config_loaded"] = 1
 
     for page in pages:
         parser = PageParser()
@@ -1585,6 +1600,7 @@ def main() -> int:
         issues.append(f"{SITEMAP_PATH}: {len(unexpected_sitemap_urls) - 50} more unexpected sitemap URL(s)")
 
     print(f"pages={stats['pages']}")
+    print(f"generator_config_loaded={stats['generator_config_loaded']}")
     print(f"indexable_pages={stats['indexable_pages']}")
     print(f"noindex_pages={stats['noindex_pages']}")
     print(f"indexable_unique_titles={stats['indexable_unique_titles']}")

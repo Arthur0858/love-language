@@ -4905,6 +4905,68 @@ def write_404_page() -> None:
     write(ROOT / "404.html", page)
 
 
+def write_llms_txt() -> None:
+    guardian_lines = []
+    for slug, data in GUARDIANS.items():
+        zh_name, zh_language, zh_desc = data["zh"]
+        en_name, en_language, _ = data["en"]
+        guardian_lines.append(f"- {zh_name} / {en_name} ({zh_language} / {en_language}): {zh_desc} {DOMAIN}/characters/{slug}/")
+
+    guide_lines = []
+    for guide in GUIDES:
+        title, desc = guide["zh"]
+        guardian = GUARDIANS[guide["guardian"]]["zh"][0]
+        guide_lines.append(f"- {title}: {desc} Guardian: {guardian}. {DOMAIN}/guides/{guide['slug']}/")
+
+    content = f"""# LoveTypes - Heart Garden Emotion Guardians
+
+> LoveTypes is a multilingual relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by personalized guides, repair practices, guardian supply routes, Luna night support, and keepsake assets.
+
+## Canonical Site
+
+- Production: {DOMAIN}/
+- Last updated: {UPDATED}
+- Primary language: Traditional Chinese
+- Additional entry points: {DOMAIN}/en/ , {DOMAIN}/ja/ , {DOMAIN}/ko/ , {DOMAIN}/es/
+
+## Core Concept
+
+LoveTypes uses the five love languages as reflective communication tools, not as medical, therapeutic, legal, or diagnostic advice. The site vocabulary includes the Heart Garden, guardian recognition ritual, misfrequency repair, traveler supplies, Luna night support, and guardian keepsakes.
+
+## Five Guardians
+
+{chr(10).join(guardian_lines)}
+
+## High-Value Pages
+
+- Quiz and home entrance: {DOMAIN}/
+- Guardian overview: {DOMAIN}/characters/
+- Field guides: {DOMAIN}/guides/
+- Guardian supply routes and affiliate resources: {DOMAIN}/resources/
+- Misfrequency repair plan: {DOMAIN}/repair-plan/
+- Guardian keepsakes: {DOMAIN}/keepsakes/
+- Luna night support: {DOMAIN}/luna-yoga-music/
+- About the Heart Garden: {DOMAIN}/about/
+- Five love languages theory: {DOMAIN}/theory/
+- Contact: {DOMAIN}/contact/
+- Privacy policy: {DOMAIN}/privacy/
+- Terms: {DOMAIN}/terms/
+
+## Guide Index
+
+{chr(10).join(guide_lines)}
+
+## Commercial and Safety Boundaries
+
+- Affiliate links are kept on the Resources page and are disclosed there.
+- No full-site advertising script is enabled before approval boundaries are clear.
+- Recommendations are framed as relationship reflection and practical repair support, not guaranteed outcomes.
+- Luna content is positioned as night reflection, cooling down after conflict, journaling, and post-quiz emotional sorting.
+- Contact email: contact@lovetypes.tw
+"""
+    write(ROOT / "llms.txt", content)
+
+
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
@@ -4950,6 +5012,7 @@ https://:version.lovetypes.pages.dev/*
 """
     write(ROOT / "_headers", headers)
     write_404_page()
+    write_llms_txt()
 
 
 def main() -> None:

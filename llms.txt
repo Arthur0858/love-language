@@ -1,37 +1,60 @@
-# LoveTypes — 愛的語言測驗
+# LoveTypes - Heart Garden Emotion Guardians
 
-> 免費線上愛的語言測驗，基於心理學家 Gary Chapman 的《愛的五種語言》理論。
-> 15 道情境題，幫助你找出最核心的愛的語言，讓感情溝通更有效。
+> LoveTypes is a multilingual relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by personalized guides, repair practices, guardian supply routes, Luna night support, and keepsake assets.
 
-## 測驗工具
+## Canonical Site
 
-- [愛的語言測驗（繁體中文）](https://lovetypes.tw/): 15 題免費測驗
-- [Love Language Quiz (English)](https://lovetypes.tw/en/): 15-question free quiz
-- [愛の言語テスト（日本語）](https://lovetypes.tw/ja/): 15問無料テスト
-- [사랑의 언어 테스트（한국어）](https://lovetypes.tw/ko/): 15문항 무료 테스트
-- [Test de Lenguajes del Amor（Español）](https://lovetypes.tw/es/): Prueba gratuita de 15 preguntas
+- Production: https://lovetypes.tw/
+- Last updated: 2026-06-04
+- Primary language: Traditional Chinese
+- Additional entry points: https://lovetypes.tw/en/ , https://lovetypes.tw/ja/ , https://lovetypes.tw/ko/ , https://lovetypes.tw/es/
 
-## 五種愛的語言說明
+## Core Concept
 
-- 肯定的言詞（Words of Affirmation）：透過語言表達愛與欣賞
-- 服務的行動（Acts of Service）：用實際行動減輕對方負擔
-- 接受禮物（Receiving Gifts）：透過有心意的禮物感受被記得
-- 優質的時光（Quality Time）：專注、不受干擾地共處
-- 身體的接觸（Physical Touch）：透過肢體接觸感受安全與連結
+LoveTypes uses the five love languages as reflective communication tools, not as medical, therapeutic, legal, or diagnostic advice. The site vocabulary includes the Heart Garden, guardian recognition ritual, misfrequency repair, traveler supplies, Luna night support, and guardian keepsakes.
 
-## 關於理論
+## Five Guardians
 
-- [深入理論解析](https://lovetypes.tw/theory/)：Gary Chapman 博士的五種愛的語言完整說明
-- Gary Chapman 博士於 1992 年出版《愛的五種語言》，影響全球數百萬對情侶
-- 研究顯示，當伴侶以對方的語言表達愛，感情滿意度顯著提升
-- 愛的語言不限於愛情，同樣適用於親子關係、友誼、職場互動
+- 艾莉絲 / Iris (肯定的言詞 / Words of affirmation): 她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。 https://lovetypes.tw/characters/iris/
+- 諾雅 / Noah (優質的時光 / Quality time): 她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。 https://lovetypes.tw/characters/noah/
+- 薇薇安 / Vivian (接受禮物 / Receiving gifts): 她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。 https://lovetypes.tw/characters/vivian/
+- 克萊兒 / Claire (服務的行動 / Acts of service): 她守著不停修復的溫室，把承諾放回日常，讓疲憊不再只由一個人撐住。 https://lovetypes.tw/characters/claire/
+- 朵拉 / Dora (身體的接觸 / Physical touch): 她在柔暖聖域守護經過同意的靠近，讓身體重新記得安全的溫度。 https://lovetypes.tw/characters/dora/
 
-## 推薦資源
+## High-Value Pages
 
-- [書籍與課程推薦](https://lovetypes.tw/resources/)：精選愛的語言相關書籍、療癒課程、Luna Yoga Music 冥想音樂
-- Luna Yoga Music 頻道提供身心掃描冥想與療癒音樂，協助連結身心：[YouTube 頻道](https://www.youtube.com/@LunaYogaMusic)
+- Quiz and home entrance: https://lovetypes.tw/
+- Guardian overview: https://lovetypes.tw/characters/
+- Field guides: https://lovetypes.tw/guides/
+- Guardian supply routes and affiliate resources: https://lovetypes.tw/resources/
+- Misfrequency repair plan: https://lovetypes.tw/repair-plan/
+- Guardian keepsakes: https://lovetypes.tw/keepsakes/
+- Luna night support: https://lovetypes.tw/luna-yoga-music/
+- About the Heart Garden: https://lovetypes.tw/about/
+- Five love languages theory: https://lovetypes.tw/theory/
+- Contact: https://lovetypes.tw/contact/
+- Privacy policy: https://lovetypes.tw/privacy/
+- Terms: https://lovetypes.tw/terms/
 
-## 隱私與條款
+## Guide Index
 
-- [隱私政策](https://lovetypes.tw/privacy/)
-- [使用條款](https://lovetypes.tw/terms/)
+- 測驗結果怎麼跟伴侶說: 把守護者結果從有趣分享，翻成對方聽得懂的真實需求。 Guardian: 艾莉絲. https://lovetypes.tw/guides/share-your-result/
+- 吵架後的五種愛之語修復法: 在錯頻的霧散去之前，用五種愛之語把道歉、時間、行動與安全感接回來。 Guardian: 諾雅. https://lovetypes.tw/guides/repair-after-conflict/
+- 肯定言詞的具體句型: 跟著艾莉絲把空泛稱讚拆成看見、感謝、承認與承諾。 Guardian: 艾莉絲. https://lovetypes.tw/guides/words-of-affirmation-scripts/
+- 服務行動與情緒勞動界線: 跟著克萊兒分辨照顧、分擔、討好與被消耗，讓行動不變成壓迫。 Guardian: 克萊兒. https://lovetypes.tw/guides/acts-of-service-boundaries/
+- 禮物型不是物質: 跟著薇薇安看見禮物背後的記得、觀察與珍惜，而不是價格。 Guardian: 薇薇安. https://lovetypes.tw/guides/gifts-are-not-materialism/
+- 優質時光與遠距關係: 跟著諾雅在距離裡留下燈，設計能被感覺到的日常在場。 Guardian: 諾雅. https://lovetypes.tw/guides/quality-time-long-distance/
+- 身體接觸、同意與安全感: 跟著朵拉把靠近放回同意裡，讓親密先成為安全，再成為溫度。 Guardian: 朵拉. https://lovetypes.tw/guides/physical-touch-consent-safety/
+- 每週關係回顧問題: 用十五分鐘巡視心語庭園，整理被愛時刻、錯頻片刻與下一步小約定。 Guardian: 克萊兒. https://lovetypes.tw/guides/weekly-relationship-review/
+- 情感需求自我檢查表: 把心裡模糊的霧，拆成可說出口的需要、界線與請求。 Guardian: 薇薇安. https://lovetypes.tw/guides/emotional-needs-checklist/
+- 五種愛之語錯頻案例: 看懂你明明帶著愛靠近，對方卻沒有收到的錯頻原因。 Guardian: 艾莉絲. https://lovetypes.tw/guides/misfrequency-examples/
+- 單身、曖昧、交往、遠距如何使用結果: 不同關係季節，適合不同的守護者解讀方式與行動尺度。 Guardian: 諾雅. https://lovetypes.tw/guides/relationship-stages/
+- 健康界線與關係安全: 心語庭園也需要邊界：愛之語不能取代尊重、同意、責任分擔與安全。 Guardian: 朵拉. https://lovetypes.tw/guides/healthy-boundaries/
+
+## Commercial and Safety Boundaries
+
+- Affiliate links are kept on the Resources page and are disclosed there.
+- No full-site advertising script is enabled before approval boundaries are clear.
+- Recommendations are framed as relationship reflection and practical repair support, not guaranteed outcomes.
+- Luna content is positioned as night reflection, cooling down after conflict, journaling, and post-quiz emotional sorting.
+- Contact email: contact@lovetypes.tw

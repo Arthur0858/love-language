@@ -88,7 +88,10 @@ NOT_FOUND_REQUIRED_TEXT = [
     "/resources/",
     "/contact/",
 ]
-SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+SITEMAP_NS = {
+    "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
+    "xhtml": "http://www.w3.org/1999/xhtml",
+}
 REQUIRED_GLOBAL_HEADERS = {
     "x-content-type-options": "nosniff",
     "referrer-policy": "strict-origin-when-cross-origin",
@@ -334,32 +337,54 @@ def check_text_support_file(path: str, response: Response, required_snippets: li
     return issues
 
 
-def check_sitemap(response: Response) -> list[str]:
+def check_sitemap(response: Response) -> tuple[list[str], int, int, int]:
     path = "/sitemap.xml"
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"]
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
     issues.extend(check_global_headers(path, response))
     try:
         root = ET.fromstring(response.body)
     except ET.ParseError as error:
-        return [f"{path}: invalid XML: {error}"]
+        return [f"{path}: invalid XML: {error}"], 0, 0, 0
     urls = root.findall("sm:url", SITEMAP_NS)
     locs = [node.findtext("sm:loc", default="", namespaces=SITEMAP_NS) for node in urls]
+    url_nodes_by_loc = {loc: node for loc, node in zip(locs, urls)}
     if len(locs) < 140:
         issues.append(f"{path}: expected at least 140 sitemap URLs, found {len(locs)}")
-    for expected in (
-        "https://lovetypes.tw/",
-        "https://lovetypes.tw/en/",
-        "https://lovetypes.tw/ja/",
-        "https://lovetypes.tw/ko/",
-        "https://lovetypes.tw/es/",
-        "https://lovetypes.tw/resources/",
-        "https://lovetypes.tw/characters/iris/",
-    ):
+    total_alternates = sum(len(node.findall("xhtml:link", SITEMAP_NS)) for node in urls)
+    checked_alternates = 0
+    for expected in (public_url_for_path(path) for path in PUBLIC_PATHS):
         if expected not in locs:
             issues.append(f"{path}: missing sitemap URL {expected}")
-    return issues
+            continue
+        url_node = url_nodes_by_loc[expected]
+        alternates = url_node.findall("xhtml:link", SITEMAP_NS)
+        checked_alternates += len(alternates)
+        alternate_map: dict[str, str] = {}
+        duplicate_hreflangs: list[str] = []
+        for alternate in alternates:
+            if alternate.attrib.get("rel") != "alternate":
+                issues.append(f"{path}: sitemap alternate rel should be alternate for {expected}")
+            lang = alternate.attrib.get("hreflang", "")
+            href = alternate.attrib.get("href", "")
+            if lang in alternate_map:
+                duplicate_hreflangs.append(lang)
+            alternate_map[lang] = href
+        expected_hreflangs = expected_hreflang_map(path_from_url(expected))
+        missing_hreflangs = sorted(set(EXPECTED_HREFLANGS).difference(alternate_map))
+        extra_hreflangs = sorted(set(alternate_map).difference(EXPECTED_HREFLANGS))
+        if missing_hreflangs:
+            issues.append(f"{path}: {expected} missing sitemap hreflang links {', '.join(missing_hreflangs)}")
+        if extra_hreflangs:
+            issues.append(f"{path}: {expected} unexpected sitemap hreflang links {', '.join(extra_hreflangs)}")
+        if duplicate_hreflangs:
+            issues.append(f"{path}: {expected} duplicate sitemap hreflang links {', '.join(sorted(set(duplicate_hreflangs)))}")
+        for lang, expected_href in expected_hreflangs.items():
+            actual_href = alternate_map.get(lang)
+            if actual_href and actual_href != expected_href:
+                issues.append(f"{path}: {expected} sitemap hreflang {lang} should be {expected_href!r}, got {actual_href!r}")
+    return issues, len(locs), total_alternates, checked_alternates
 
 
 def check_feed(response: Response) -> list[str]:
@@ -420,6 +445,9 @@ def main() -> int:
     public_jsonld_blocks_checked = 0
     public_jsonld_entities_checked = 0
     public_versioned_asset_refs_checked = 0
+    public_sitemap_urls_checked = 0
+    public_sitemap_alternates_total = 0
+    public_sitemap_alternates_checked = 0
     page_asset_refs: list[str] = []
     social_image_urls: list[str] = []
 
@@ -521,7 +549,11 @@ def main() -> int:
 
     sitemap_response = request_url(urljoin(base_url, "/sitemap.xml"))
     support_files_checked += 1
-    issues.extend(check_sitemap(sitemap_response))
+    sitemap_issues, sitemap_urls_checked, sitemap_alternates_total, sitemap_alternates_checked = check_sitemap(sitemap_response)
+    issues.extend(sitemap_issues)
+    public_sitemap_urls_checked = sitemap_urls_checked
+    public_sitemap_alternates_total = sitemap_alternates_total
+    public_sitemap_alternates_checked = sitemap_alternates_checked
 
     feed_response = request_url(urljoin(base_url, "/feed.xml"))
     support_files_checked += 1
@@ -557,6 +589,9 @@ def main() -> int:
     print(f"public_jsonld_blocks_checked={public_jsonld_blocks_checked}")
     print(f"public_jsonld_entities_checked={public_jsonld_entities_checked}")
     print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
+    print(f"public_sitemap_urls_checked={public_sitemap_urls_checked}")
+    print(f"public_sitemap_alternates_total={public_sitemap_alternates_total}")
+    print(f"public_sitemap_alternates_checked={public_sitemap_alternates_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")

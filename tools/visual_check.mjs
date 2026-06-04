@@ -284,6 +284,11 @@ const conversionCases = [
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-home-saved-to-repair-mobile', target: 'home-saved-plan', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-en-supply-mobile', target: 'route', path: '/en/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-ja-repair-mobile', target: 'plan', path: '/ja/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-ko-luna-mobile', target: 'luna', path: '/ko/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-es-guide-mobile', target: 'guide', path: '/es/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-en-keepsake-mobile', target: 'keepsake', path: '/en/', viewport: { width: 390, height: 844 } },
 ];
 
 const worksheetCases = [

@@ -173,6 +173,13 @@ CURRENT_STATIC_ASSETS = {
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
     "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
 }
+REQUIRED_INTERACTION_HASH_SNIPPETS = {
+    "samePageHash": "same-page hash link detection",
+    "focusHashTarget": "hash target focus handoff",
+    "scrollToHashTarget": "hash target scrolling",
+    "prefers-reduced-motion: reduce": "reduced motion hash scrolling",
+    "window.history.pushState": "same-page hash history update",
+}
 
 
 class PageParser(HTMLParser):
@@ -1139,6 +1146,16 @@ def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str],
             issues.append(f"{asset}: unexpected root versioned static asset")
         if asset.name not in referenced:
             issues.append(f"{asset}: versioned static asset is not referenced by any generated HTML page")
+
+    interaction_asset = ROOT / CURRENT_STATIC_ASSETS["interactions"].lstrip("/")
+    stats["interaction_hash_focus_snippets_checked"] = len(REQUIRED_INTERACTION_HASH_SNIPPETS)
+    if not interaction_asset.exists():
+        issues.append(f"{interaction_asset}: current interaction asset missing")
+    else:
+        interaction_source = interaction_asset.read_text(encoding="utf-8", errors="ignore")
+        for snippet, label in REQUIRED_INTERACTION_HASH_SNIPPETS.items():
+            if snippet not in interaction_source:
+                issues.append(f"{interaction_asset}: missing {label}: {snippet}")
     return issues, stats
 
 
@@ -1342,6 +1359,20 @@ def main() -> int:
             issues.append(f"{page}: expected one <main> landmark, found {len(parser.mains)}")
         elif parser.mains[0].get("id") != "main":
             issues.append(f"{page}: <main> should use id=\"main\" for the skip link target")
+        elif parser.mains[0].get("tabindex") != "-1":
+            issues.append(f"{page}: <main> should use tabindex=\"-1\" so skip links can move focus")
+
+        if is_locale_home(page):
+            stats["home_quiz_entry_pages"] += 1
+            quiz_section_count = parser.ids.count("quiz-section")
+            if quiz_section_count != 1:
+                issues.append(f"{page}: expected one #quiz-section target, found {quiz_section_count}")
+            elif 'id="quiz-section" tabindex="-1"' not in parser.source:
+                issues.append(f"{page}: #quiz-section should use tabindex=\"-1\" for hash focus")
+            if 'data-quiz-root' not in parser.source:
+                issues.append(f"{page}: home page missing quiz root")
+            if 'class="primary-btn" href="#quiz-section"' not in parser.source:
+                issues.append(f"{page}: home hero primary CTA should point to #quiz-section")
 
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
@@ -1838,8 +1869,10 @@ def main() -> int:
     print(f"progressbars={stats['progressbars']}")
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
+    print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
+    print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")
     print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")

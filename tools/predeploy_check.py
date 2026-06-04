@@ -19,6 +19,7 @@ PYTHON_TOOLS = [
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
     "tools/multilingual_route_audit.py",
+    "tools/guardian_conversion_audit.py",
     "tools/performance_budget_audit.py",
     "tools/public_deploy_smoke.py",
 ]
@@ -108,6 +109,7 @@ def main() -> int:
         run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
+        run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
 
     if args.visual or args.visual_only:

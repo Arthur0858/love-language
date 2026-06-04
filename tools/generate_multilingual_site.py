@@ -4207,7 +4207,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
         "isPartOf": website_ref(lang),
         "mainEntityOfPage": {"@type": "WebPage", "@id": abs_url(lang, canonical_path)},
     })
-    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, alternate_path=canonical_path, canonical_path=canonical_path))
+    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, alternate_path=canonical_path, canonical_path=canonical_path, robots="noindex, follow"))
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:

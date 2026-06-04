@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-luna-personal-resume"
+ASSET_VERSION = "20260604-saved-result-card-share"
 
 
 FONT_CSS = ""
@@ -508,6 +508,8 @@ QUIZ_LABELS = {
         "saved_plan": "回到修復計畫",
         "saved_luna": "開啟 Luna",
         "saved_route": "查看補給路線",
+        "saved_card": "開啟守護者卡",
+        "saved_copy": "複製分享文字",
         "saved_clear": "清除上次結果",
         "routes_title": "延伸路線",
         "guardian_link": "閱讀守護者頁",
@@ -545,6 +547,8 @@ QUIZ_LABELS = {
         "saved_plan": "Return to repair plan",
         "saved_luna": "Open Luna",
         "saved_route": "View supply route",
+        "saved_card": "Open guardian card",
+        "saved_copy": "Copy share text",
         "saved_clear": "Clear last result",
         "routes_title": "Continue the path",
         "guardian_link": "Read guardian page",
@@ -582,6 +586,8 @@ QUIZ_LABELS = {
         "saved_plan": "修復プランへ戻る",
         "saved_luna": "Luna を開く",
         "saved_route": "補給ルートを見る",
+        "saved_card": "守護者カードを開く",
+        "saved_copy": "共有文をコピー",
         "saved_clear": "前回の結果を消す",
         "routes_title": "続きを読む道筋",
         "guardian_link": "守護者ページを読む",
@@ -619,6 +625,8 @@ QUIZ_LABELS = {
         "saved_plan": "회복 계획으로 돌아가기",
         "saved_luna": "Luna 열기",
         "saved_route": "보급 루트 보기",
+        "saved_card": "수호자 카드 열기",
+        "saved_copy": "공유 문구 복사",
         "saved_clear": "지난 결과 지우기",
         "routes_title": "이어 갈 길",
         "guardian_link": "수호자 페이지 읽기",
@@ -656,6 +664,8 @@ QUIZ_LABELS = {
         "saved_plan": "Volver al plan",
         "saved_luna": "Abrir Luna",
         "saved_route": "Ver ruta",
+        "saved_card": "Abrir tarjeta",
+        "saved_copy": "Copiar texto",
         "saved_clear": "Borrar resultado",
         "routes_title": "Continuar el camino",
         "guardian_link": "Leer página de guardiana",
@@ -2408,6 +2418,8 @@ def quiz_script(lang: str) -> str:
       return;
     }}
     const result = quiz.results[saved.primaryKey];
+    const cardUrl = new URL(result.storyImage, location.origin).href;
+    const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     savedBox.innerHTML = `
       <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
         <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
@@ -2419,11 +2431,17 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
             <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
             <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+            <a href="${{result.storyImage}}" target="_blank" rel="noopener">${{quiz.labels.saved_card}}</a>
+            <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
             <button type="button" data-clear-saved-result>${{quiz.labels.saved_clear}}</button>
           </div>
         </div>
       </article>`;
     show(savedBox);
+    savedBox.querySelector('[data-copy-saved-result]').addEventListener('click', async (event) => {{
+      await navigator.clipboard.writeText(savedShareText);
+      event.currentTarget.textContent = quiz.labels.copied;
+    }});
     savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {{
       localStorage.removeItem(storageKey);
       localStorage.removeItem(sharedStorageKey);
@@ -2471,7 +2489,8 @@ def quiz_script(lang: str) -> str:
     const secondaryKey = sorted[1] && sorted[1][1] === sorted[0][1] ? sorted[1][0] : null;
     const result = quiz.results[primaryKey];
     const total = answers.length || 1;
-    const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{quiz.shareUrl}}`;
+    const cardUrl = new URL(result.storyImage, location.origin).href;
+    const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     try {{
       localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
       localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));

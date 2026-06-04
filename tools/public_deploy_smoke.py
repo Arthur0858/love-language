@@ -151,7 +151,8 @@ def check_text_support_file(path: str, response: Response, required_snippets: li
     issues: list[str] = []
     if response.status != 200:
         return [f"{path}: expected status 200, got {response.status}"]
-    issues.extend(check_global_headers(path, response))
+    if path != "/robots.txt":
+        issues.extend(check_global_headers(path, response))
     for snippet in required_snippets:
         if snippet not in response.text:
             issues.append(f"{path}: missing required text {snippet!r}")

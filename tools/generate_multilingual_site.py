@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-story-card-generator"
+ASSET_VERSION = "20260604-quiz-story-card"
 
 
 FONT_CSS = ""
@@ -2765,12 +2765,17 @@ def quiz_payload(lang: str) -> str:
             "supplyBookUrl": route["book"]["url"],
             "lunaUrl": lang_url(lang, "luna-yoga-music"),
             "storyImage": guardian_story_image(lang, meta["slug"]),
+            "slug": meta["slug"],
             "collectorTitle": COLLECTOR_LABELS[lang]["card"],
             "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
             "collectorOpen": COLLECTOR_LABELS[lang]["open"],
             "collectorSave": COLLECTOR_LABELS[lang]["download"],
             "collectorHall": COLLECTOR_LABELS[lang]["hall"],
             "collectorHallUrl": lang_url(lang, "keepsakes"),
+            "collectorStory": COLLECTOR_LABELS[lang]["story"],
+            "collectorStoryKicker": COLLECTOR_LABELS[lang]["story_kicker"],
+            "collectorStoryCta": COLLECTOR_LABELS[lang]["story_cta"],
+            "collectorStoryError": COLLECTOR_LABELS[lang]["story_error"],
             "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
@@ -2947,6 +2952,13 @@ def quiz_script(lang: str) -> str:
     const total = answers.length || 1;
     const cardUrl = new URL(result.storyImage, location.origin).href;
     const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
+    window.lovetypesLastResult = {{
+      name: result.name,
+      title: result.type,
+      quote: result.supplyMission,
+      image: result.image,
+      slug: result.slug
+    }};
     try {{
       localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
       localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
@@ -3011,6 +3023,7 @@ def quiz_script(lang: str) -> str:
           <div class="quiz-collector-actions">
             <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
+            <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
           </div>
         </div>

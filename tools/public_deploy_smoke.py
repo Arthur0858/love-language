@@ -6,6 +6,7 @@ import re
 import ssl
 import sys
 import time
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from typing import Iterable
@@ -43,6 +44,13 @@ REDIRECTS = {
     "/ko/luna/": "/ko/luna-yoga-music/",
     "/es/luna/": "/es/luna-yoga-music/",
 }
+SUPPORT_FILES = {
+    "/robots.txt": ["User-agent: *", "Allow: /", "Sitemap: https://lovetypes.tw/sitemap.xml"],
+    "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
+    "/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
+    "/.well-known/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
+}
+SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 REQUIRED_GLOBAL_HEADERS = {
     "x-content-type-options": "nosniff",
     "referrer-policy": "strict-origin-when-cross-origin",
@@ -139,6 +147,58 @@ def check_global_headers(path: str, response: Response) -> list[str]:
     return issues
 
 
+def check_text_support_file(path: str, response: Response, required_snippets: list[str]) -> list[str]:
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"]
+    issues.extend(check_global_headers(path, response))
+    for snippet in required_snippets:
+        if snippet not in response.text:
+            issues.append(f"{path}: missing required text {snippet!r}")
+    return issues
+
+
+def check_sitemap(response: Response) -> list[str]:
+    path = "/sitemap.xml"
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"]
+    issues.extend(check_global_headers(path, response))
+    try:
+        root = ET.fromstring(response.body)
+    except ET.ParseError as error:
+        return [f"{path}: invalid XML: {error}"]
+    urls = root.findall("sm:url", SITEMAP_NS)
+    locs = [node.findtext("sm:loc", default="", namespaces=SITEMAP_NS) for node in urls]
+    if len(locs) < 140:
+        issues.append(f"{path}: expected at least 140 sitemap URLs, found {len(locs)}")
+    for expected in ("https://lovetypes.tw/", "https://lovetypes.tw/resources/", "https://lovetypes.tw/characters/iris/"):
+        if expected not in locs:
+            issues.append(f"{path}: missing sitemap URL {expected}")
+    return issues
+
+
+def check_feed(response: Response) -> list[str]:
+    path = "/feed.xml"
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"]
+    issues.extend(check_global_headers(path, response))
+    try:
+        root = ET.fromstring(response.body)
+    except ET.ParseError as error:
+        return [f"{path}: invalid XML: {error}"]
+    if root.tag != "rss" or root.attrib.get("version") != "2.0":
+        issues.append(f"{path}: expected RSS 2.0 root")
+    items = root.findall("./channel/item")
+    if len(items) < 10:
+        issues.append(f"{path}: expected at least 10 feed items, found {len(items)}")
+    channel_link = root.findtext("./channel/link", default="")
+    if channel_link != "https://lovetypes.tw/guides/":
+        issues.append(f"{path}: channel link should be https://lovetypes.tw/guides/, got {channel_link!r}")
+    return issues
+
+
 def extract_head_assets(html: str) -> HeadAssetParser:
     parser = HeadAssetParser()
     parser.feed(html)
@@ -164,6 +224,7 @@ def main() -> int:
     issues: list[str] = []
     pages_checked = 0
     redirects_checked = 0
+    support_files_checked = 0
     immutable_assets_checked = 0
     first_page_assets: HeadAssetParser | None = None
 
@@ -196,6 +257,25 @@ def main() -> int:
         if location not in {target, expected_location}:
             issues.append(f"{source}: expected redirect to {target}, got {location!r}")
 
+    for path, snippets in SUPPORT_FILES.items():
+        response = request_url(urljoin(base_url, path))
+        support_files_checked += 1
+        issues.extend(check_text_support_file(path, response, snippets))
+
+    sitemap_response = request_url(urljoin(base_url, "/sitemap.xml"))
+    support_files_checked += 1
+    issues.extend(check_sitemap(sitemap_response))
+
+    feed_response = request_url(urljoin(base_url, "/feed.xml"))
+    support_files_checked += 1
+    issues.extend(check_feed(feed_response))
+
+    security_response = request_url(urljoin(base_url, "/security.txt"))
+    well_known_security_response = request_url(urljoin(base_url, "/.well-known/security.txt"))
+    if security_response.status == 200 and well_known_security_response.status == 200:
+        if security_response.text != well_known_security_response.text:
+            issues.append("/.well-known/security.txt: body should match /security.txt")
+
     if first_page_assets is None:
         issues.append("/: could not inspect head assets")
     else:
@@ -212,6 +292,7 @@ def main() -> int:
 
     print(f"public_pages_checked={pages_checked}")
     print(f"public_redirects_checked={redirects_checked}")
+    print(f"public_support_files_checked={support_files_checked}")
     print(f"public_immutable_assets_checked={immutable_assets_checked}")
     print(f"public_deploy_issues={len(issues)}")
     for issue in issues[:100]:

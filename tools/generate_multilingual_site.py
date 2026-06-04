@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-character-supply-cta"
+ASSET_VERSION = "20260604-repair-plan-resume"
 
 
 FONT_CSS = ""
@@ -1227,6 +1227,10 @@ REPAIR_PLAN = {
         "saved": "已自動保存",
         "clear": "清除本機內容",
         "cleared": "已清除",
+        "resume_title": "繼續你的 7 日路線",
+        "resume_intro": "你上次認領的守護者可以直接帶入這份工作表。先做今天的小任務，再視情況選 Luna、補給站或延伸書卷。",
+        "resume_fill": "帶入工作表",
+        "resume_plan": "跳到守護者任務",
         "fields": [("我的守護者結果", "例如：艾莉絲，肯定的言詞"), ("這週最明顯的錯頻", "寫一個具體場景，不寫全部舊帳"), ("我真正想提出的小請求", "縮成 24 小時內可做到的一步"), ("我選擇的補給", "指南、Luna、書卷或一張收藏卡")],
         "days": [
             ("第 1 天", "認領你的守護者", "寫下結果、分數最高的愛之語，以及最近一次感覺沒被接住的場景。"),
@@ -1254,6 +1258,10 @@ REPAIR_PLAN = {
         "saved": "Autosaved",
         "clear": "Clear local notes",
         "cleared": "Cleared",
+        "resume_title": "Continue your 7-day route",
+        "resume_intro": "Your last guardian result can be carried into this worksheet. Start with today's small task, then choose Luna, the supply station, or an extended book only if it fits.",
+        "resume_fill": "Fill worksheet",
+        "resume_plan": "Jump to guardian task",
         "fields": [("My guardian result", "Example: Iris, words of affirmation"), ("This week's clearest misfrequency", "Name one concrete scene, not every old wound"), ("The small request I actually want to make", "Shrink it into one step possible within 24 hours"), ("The supply I choose", "Guide, Luna, book, or keepsake card")],
         "days": [
             ("Day 1", "Claim your guardian", "Write down the result, the strongest love language, and one recent moment when you did not feel received."),
@@ -1281,6 +1289,10 @@ REPAIR_PLAN = {
         "saved": "自動保存済み",
         "clear": "ローカル内容を消去",
         "cleared": "消去しました",
+        "resume_title": "7日間のルートを続ける",
+        "resume_intro": "前回の守護者結果をこのワークシートへ引き継げます。今日の小さな課題から始め、必要なら Luna、補給ステーション、または本を一つ選びます。",
+        "resume_fill": "ワークシートへ入れる",
+        "resume_plan": "守護者課題へ移動",
         "fields": [("私の守護者結果", "例：アイリス、肯定の言葉"), ("今週いちばん明確なすれ違い", "具体的な場面を一つだけ書きます"), ("本当に伝えたい小さなお願い", "二十四時間以内にできる一歩へ縮めます"), ("選ぶ補給", "ガイド、Luna、本、守護者カード")],
         "days": [
             ("1日目", "守護者を認領する", "結果、もっとも強い愛の言語、最近受け取られなかった場面を書きます。"),
@@ -1308,6 +1320,10 @@ REPAIR_PLAN = {
         "saved": "자동 저장됨",
         "clear": "로컬 내용 지우기",
         "cleared": "지워짐",
+        "resume_title": "7일 루트 이어가기",
+        "resume_intro": "마지막 수호자 결과를 이 워크시트로 가져올 수 있습니다. 오늘의 작은 과제부터 시작하고, 필요할 때 Luna, 보급소, 책 중 하나를 선택하세요.",
+        "resume_fill": "워크시트에 넣기",
+        "resume_plan": "수호자 과제로 이동",
         "fields": [("나의 수호자 결과", "예: 아이리스, 인정의 말"), ("이번 주 가장 분명한 어긋남", "구체적인 장면 하나만 씁니다"), ("내가 실제로 말하고 싶은 작은 요청", "24시간 안에 가능한 한 걸음으로 줄입니다"), ("내가 선택한 보급", "가이드, Luna, 책, 수호자 카드")],
         "days": [
             ("1일차", "수호자 인정하기", "결과, 가장 강한 사랑의 언어, 최근 받지 못했다고 느낀 장면을 적습니다."),
@@ -1335,6 +1351,10 @@ REPAIR_PLAN = {
         "saved": "Autoguardado",
         "clear": "Borrar notas locales",
         "cleared": "Borrado",
+        "resume_title": "Continúa tu ruta de 7 días",
+        "resume_intro": "Tu última guardiana puede entrar en esta hoja. Empieza con la tarea pequeña de hoy y luego elige Luna, recursos o un libro solo si encaja.",
+        "resume_fill": "Completar hoja",
+        "resume_plan": "Ir a tarea de guardiana",
         "fields": [("Mi resultado de guardiana", "Ejemplo: Iris, palabras de afirmación"), ("El desajuste más claro de esta semana", "Nombra una escena concreta, no todas las heridas"), ("La petición pequeña que quiero hacer", "Redúcela a un paso posible dentro de 24 horas"), ("El recurso que elijo", "Guía, Luna, libro o tarjeta de recuerdo")],
         "days": [
             ("Día 1", "Reclama tu guardiana", "Escribe el resultado, el lenguaje más fuerte y un momento reciente en que no te sentiste recibida."),
@@ -2808,17 +2828,32 @@ def resources_page(lang: str) -> None:
 
 def repair_worksheet_script(lang: str) -> str:
     plan = REPAIR_PLAN[lang]
+    data = quiz_payload(lang)
     saved = json.dumps(plan["saved"], ensure_ascii=False)
     cleared = json.dumps(plan["cleared"], ensure_ascii=False)
+    resume_title = json.dumps(plan["resume_title"], ensure_ascii=False)
+    resume_intro = json.dumps(plan["resume_intro"], ensure_ascii=False)
+    resume_fill = json.dumps(plan["resume_fill"], ensure_ascii=False)
+    resume_plan = json.dumps(plan["resume_plan"], ensure_ascii=False)
+    bookstore_label = json.dumps(AFFILIATE_COPY[lang]["button"], ensure_ascii=False)
     return f"""
 <script>
 (() => {{
+  const quiz = {data};
+  const resumeTitle = {resume_title};
+  const resumeIntro = {resume_intro};
+  const resumeFill = {resume_fill};
+  const resumePlan = {resume_plan};
+  const bookstoreLabel = {bookstore_label};
   const form = document.querySelector('[data-repair-worksheet]');
   if (!form) return;
   const fields = [...form.querySelectorAll('textarea[data-field]')];
   const status = document.querySelector('[data-worksheet-status]');
   const clearButton = document.querySelector('[data-clear-worksheet]');
+  const resumeBox = document.querySelector('[data-repair-saved]');
   const key = `lovetypes:${{location.pathname}}:repair-worksheet`;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const resultKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{homePath}}:quiz-result`];
   let timer = 0;
 
   function setStatus(message) {{
@@ -2842,6 +2877,55 @@ def repair_worksheet_script(lang: str) -> str:
     }}
   }}
 
+  function readSavedResult() {{
+    try {{
+      for (const resultKey of resultKeys) {{
+        const savedResult = JSON.parse(localStorage.getItem(resultKey) || 'null');
+        if (savedResult && quiz.results[savedResult.primaryKey]) return savedResult;
+      }}
+    }} catch (_error) {{}}
+    return null;
+  }}
+
+  function fillFromResult(result) {{
+    const values = [
+      `${{result.name}} · ${{result.type}}`,
+      result.supplyDesc,
+      result.supplyMission,
+      `${{result.supplyTitle}} · ${{result.supplyBook}}`
+    ];
+    fields.forEach((field, index) => {{
+      if (!field.value.trim()) field.value = values[index] || '';
+    }});
+    writeStorage();
+    form.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+  }}
+
+  function renderResume() {{
+    if (!resumeBox) return;
+    const savedResult = readSavedResult();
+    if (!savedResult) return;
+    const result = quiz.results[savedResult.primaryKey];
+    resumeBox.innerHTML = `
+      <article class="repair-resume-card" style="--result-accent:${{result.color}}">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+        <div>
+          <p class="eyebrow">${{resumeTitle}}</p>
+          <h2>${{result.name}} · ${{result.type}}</h2>
+          <p>${{resumeIntro}}</p>
+          <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
+          <div class="repair-resume-actions">
+            <a class="primary-btn" href="${{result.planUrl}}">${{resumePlan}}</a>
+            <button class="secondary-btn" type="button" data-fill-repair>${{resumeFill}}</button>
+            <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{bookstoreLabel}}</a>
+          </div>
+        </div>
+      </article>`;
+    resumeBox.hidden = false;
+    resumeBox.querySelector('[data-fill-repair]')?.addEventListener('click', () => fillFromResult(result));
+  }}
+
   readStorage().forEach((value, index) => {{
     if (fields[index]) fields[index].value = value;
   }});
@@ -2860,6 +2944,7 @@ def repair_worksheet_script(lang: str) -> str:
     }}
     setStatus({cleared});
   }});
+  renderResume();
 }})();
 </script>
 """
@@ -2885,6 +2970,7 @@ def repair_plan_page(lang: str) -> None:
     for slug in GUARDIANS:
         route = supply_route(lang, slug)
         name, typ, _guardian_desc = route["guardian"][lang]
+        book = route["book"]
         guardian_rows.append(f"""
 <article class="repair-guardian-card" id="plan-{slug}">
   {img_tag(route["guardian"]["prop"], route["title"])}
@@ -2896,6 +2982,8 @@ def repair_plan_page(lang: str) -> None:
     <div class="repair-plan-actions">
       <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(REPAIR_PLAN[lang]["resources"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}">{escape(t["guardians"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
+      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
     </div>
   </div>
 </article>
@@ -2907,6 +2995,7 @@ def repair_plan_page(lang: str) -> None:
   <p>{escape(plan["desc"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
 </section>
+<section class="section repair-result-resume" data-repair-saved hidden></section>
 <section class="section repair-plan-section">
   <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>

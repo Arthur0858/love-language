@@ -3207,6 +3207,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     name, typ, _desc = guardian[lang]
     class_name = "collector-card compact" if compact else "collector-card"
     image = guardian_story_image(lang, slug)
+    image_label = f"{labels['open']}：{name} {labels['card']}"
     data_attrs = (
         f'data-story-name="{escape(name)}" '
         f'data-story-title="{escape(typ)}" '
@@ -3219,7 +3220,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     )
     return f"""
 <article class="{class_name}">
-  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer">
+  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer" aria-label="{escape(image_label)}">
     {img_tag(image, f"{name} {labels['card']}")}
   </a>
   <div>
@@ -3286,7 +3287,7 @@ def keepsake_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="keepsake-resume-card" id="keepsake-${{result.slug}}" style="--result-accent:${{result.color}}">
-      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">
+      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" aria-label="${{result.collectorOpen}}：${{result.name}} ${{result.collectorTitle}}">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       </a>
       <div>

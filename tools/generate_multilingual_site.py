@@ -2502,8 +2502,9 @@ def json_text(value: str) -> str:
     return escape(value).replace('"', '\\"')
 
 
-def nav(lang: str, active: str = "", path: str = "") -> str:
+def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None = None) -> str:
     t = LANGS[lang]
+    language_path = alternate_path if alternate_path is not None else path
     items = [
         (lang_url(lang, "guides"), t["guides"]),
         (lang_url(lang, "characters"), t["guardians"]),
@@ -2512,7 +2513,7 @@ def nav(lang: str, active: str = "", path: str = "") -> str:
         (lang_url(lang, "about"), t["about"]),
     ]
     links = "".join(f'<a class="{"active" if active == label else ""}" href="{href}">{escape(label)}</a>' for href, label in items)
-    lang_links = "".join(f'<a href="{lang_url(code, path)}" lang="{cfg["code"]}">{cfg["name"]}</a>' for code, cfg in LANGS.items())
+    lang_links = "".join(f'<a href="{lang_url(code, language_path)}" lang="{cfg["code"]}">{cfg["name"]}</a>' for code, cfg in LANGS.items())
     return f"""
 <header class="site-nav">
   <a class="brand" href="{lang_url(lang)}" aria-label="{escape(t["brand"])}"><span>LoveTypes</span></a>
@@ -2625,10 +2626,20 @@ def item_list_schema(name: str, description: str, items: list[tuple[str, str]]) 
     })
 
 
-def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "website", image: str = "/og-cover.jpg") -> str:
-    canonical = abs_url(lang, path)
-    alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, path)}" />' for code, cfg in LANGS.items())
-    alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", path)}" />'
+def head(
+    lang: str,
+    title: str,
+    desc: str,
+    path: str = "",
+    page_type: str = "website",
+    image: str = "/og-cover.jpg",
+    alternate_path: str | None = None,
+    canonical_path: str | None = None,
+) -> str:
+    canonical = abs_url(lang, canonical_path if canonical_path is not None else path)
+    alternate_target = alternate_path if alternate_path is not None else path
+    alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, alternate_target)}" />' for code, cfg in LANGS.items())
+    alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", alternate_target)}" />'
     image_width, image_height = IMAGE_DIMENSIONS.get(image, (1200, 630))
     hero_preload = ""
     if path == "":
@@ -2662,13 +2673,26 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
 """
 
 
-def layout(lang: str, title: str, desc: str, path: str, body: str, active: str = "", page_type: str = "website", image: str = "/og-cover.jpg", schema: str = "", affiliate: bool = False) -> str:
+def layout(
+    lang: str,
+    title: str,
+    desc: str,
+    path: str,
+    body: str,
+    active: str = "",
+    page_type: str = "website",
+    image: str = "/og-cover.jpg",
+    schema: str = "",
+    affiliate: bool = False,
+    alternate_path: str | None = None,
+    canonical_path: str | None = None,
+) -> str:
     external_script = ""
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
-    return head(lang, title, desc, path, page_type, image) + f"""<body>
+    return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path) + f"""<body>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
-{nav(lang, active, path)}
+{nav(lang, active, path, alternate_path)}
 {schema}
 {breadcrumb_schema(lang, path, title)}
 {breadcrumb_nav(lang, path, title)}
@@ -4032,8 +4056,9 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <aside class="article-side"><h2>延伸閱讀</h2>{guide_card(lang, related)}</aside>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, "guides/" + slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
-    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+    canonical_path = "guides/" + canonical_target
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, canonical_path)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, alternate_path=canonical_path, canonical_path=canonical_path))
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:

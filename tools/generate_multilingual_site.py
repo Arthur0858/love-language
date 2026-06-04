@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-guide-personal-resume"
+ASSET_VERSION = "20260604-guardian-route-snapshot"
 
 
 FONT_CSS = ""
@@ -1121,6 +1121,8 @@ SUPPLY_LABELS = {
         "supply": "補給建議",
         "read_guide": "閱讀對應指南",
         "open_luna": "開啟 Luna",
+        "quick_route": "守護者下一步",
+        "deeper_route": "深入補給路線",
         "choose": "如何選擇補給",
         "choose_text": "先選一個最貼近當下狀態的補給，不要一次買齊或讀完所有內容；如果關係正處於危險、控制、暴力或高壓狀態，請先尋求真人與專業支持。",
         "not_now": "不適合購買的時機",
@@ -1139,6 +1141,8 @@ SUPPLY_LABELS = {
         "supply": "Supply suggestion",
         "read_guide": "Read guide",
         "open_luna": "Open Luna",
+        "quick_route": "Guardian next steps",
+        "deeper_route": "Deeper supply route",
         "choose": "How to choose supplies",
         "choose_text": "Choose one supply that fits the current moment. Do not buy or read everything at once. If the relationship involves danger, control, violence, or acute pressure, seek trusted people and professional support first.",
         "not_now": "When not to buy",
@@ -1157,6 +1161,8 @@ SUPPLY_LABELS = {
         "supply": "補給の提案",
         "read_guide": "ガイドを読む",
         "open_luna": "Luna を開く",
+        "quick_route": "守護者の次の一歩",
+        "deeper_route": "深い補給ルート",
         "choose": "補給の選び方",
         "choose_text": "今の状態に一番近い補給を一つだけ選びます。すべてを一度に買ったり読んだりしないでください。危険、支配、暴力、強い圧力がある場合は、まず信頼できる人と専門支援へ。",
         "not_now": "購入しない方がよい時",
@@ -1175,6 +1181,8 @@ SUPPLY_LABELS = {
         "supply": "보급 제안",
         "read_guide": "가이드 읽기",
         "open_luna": "Luna 열기",
+        "quick_route": "수호자 다음 단계",
+        "deeper_route": "심화 보급 루트",
         "choose": "보급을 고르는 법",
         "choose_text": "지금 상태에 가장 맞는 보급 하나만 고르세요. 한 번에 모두 사거나 읽지 마세요. 위험, 통제, 폭력, 큰 압박이 있다면 먼저 믿을 수 있는 사람과 전문 지원을 찾으세요.",
         "not_now": "구매하지 않는 편이 좋은 때",
@@ -1193,6 +1201,8 @@ SUPPLY_LABELS = {
         "supply": "Sugerencia de recurso",
         "read_guide": "Leer guía",
         "open_luna": "Abrir Luna",
+        "quick_route": "Siguientes pasos de la guardiana",
+        "deeper_route": "Ruta de suministro profunda",
         "choose": "Cómo elegir recursos",
         "choose_text": "Elige un recurso que encaje con este momento. No compres ni leas todo de una vez. Si hay peligro, control, violencia o presión intensa, busca primero personas confiables y apoyo profesional.",
         "not_now": "Cuándo no comprar",
@@ -2059,7 +2069,8 @@ def character_link_card(lang: str, slug: str, data: dict, current_slug: str = ""
 def supply_route(lang: str, slug: str) -> dict:
     route = SUPPLY_ROUTES[slug]
     title, desc, wound, mission, supply = route[lang]
-    guide = next(g for g in GUIDES if g["guardian"] == slug)
+    guide_slug = next(meta["guide"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
+    guide = next(g for g in GUIDES if g["slug"] == guide_slug)
     return {
         "slug": slug,
         "title": title,
@@ -2155,7 +2166,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
     return f"""
 <section class="section supply-panel-section">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(labels["route"])}</p><h2>{escape(route["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(labels["deeper_route"])}</p><h2>{escape(route["title"])}</h2></div>
     <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(LANGS[lang]["resources"])}</a>
   </div>
   <p class="section-intro">{escape(route["desc"])}</p>
@@ -2169,6 +2180,45 @@ def character_supply_panel(lang: str, slug: str) -> str:
     <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
     <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+  </div>
+</section>
+"""
+
+
+def character_route_snapshot(lang: str, slug: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    route = supply_route(lang, slug)
+    guide = route["guide"]
+    book = route["book"]
+    guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
+    guide_title, guide_desc = guide[lang]
+    intro_joiner = "。" if lang == "zh" else ". "
+    return f"""
+<section class="section guardian-route-snapshot">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(labels["quick_route"])}</p><h2>{escape(route["title"])}</h2></div>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["fit_supply"])}</a>
+  </div>
+  <p class="section-intro">{escape(guardian_name)} · {escape(guardian_type)}{intro_joiner}{escape(route["desc"])}</p>
+  <div class="guardian-route-grid">
+    <article>
+      <span>{escape(labels["guide"])}</span>
+      <h3>{escape(guide_title)}</h3>
+      <p>{escape(guide_desc)}</p>
+      <a href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
+    </article>
+    <article>
+      <span>{escape(labels["repair"])}</span>
+      <h3>{escape(REPAIR_PLAN[lang]["title"])}</h3>
+      <p>{escape(route["mission"])}</p>
+      <a href="{lang_url(lang, "repair-plan")}#plan-{slug}">{escape(REPAIR_PLAN[lang]["title"])}</a>
+    </article>
+    <article>
+      <span>{escape(labels["supply"])}</span>
+      <h3>{escape(book["title"][lang])}</h3>
+      <p>{escape(route["supply"])}</p>
+      <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
+    </article>
   </div>
 </section>
 """
@@ -2946,6 +2996,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False)}
 </section>
+{character_route_snapshot(lang, slug)}
 <section class="section intro-grid">
   <div><h2>{escape(labels["how"])}</h2><p>{escape(detail["how"])}</p><p>{escape(desc)}</p></div>
   <div class="text-stack"><h2>{escape(labels["need"])}</h2><p>{escape(detail["need"])}</p><p>{escape(detail["practice"])}</p></div>

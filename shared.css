@@ -1826,6 +1826,58 @@ button.secondary-btn {
     linear-gradient(120deg, #fff8f2, #eef5ef);
 }
 
+.guardian-route-snapshot {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(183, 139, 69, .1), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
+.guardian-route-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.guardian-route-grid article {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(236, 216, 213, .92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 30px rgba(76, 42, 43, .05);
+}
+
+.guardian-route-grid span {
+  color: var(--rose);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.guardian-route-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  line-height: 1.22;
+}
+
+.guardian-route-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guardian-route-grid a {
+  margin-top: auto;
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .guardian-nav-section {
   background:
     radial-gradient(circle at 82% 14%, rgba(118, 102, 168, .08), transparent 28%),
@@ -1948,6 +2000,7 @@ button.secondary-btn {
 @media (max-width: 1180px) {
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .supply-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
@@ -2045,6 +2098,48 @@ button.secondary-btn {
 
   .section-head { display: block; }
 
+  .guardian-route-snapshot {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .guardian-route-snapshot .section-intro {
+    display: none;
+  }
+
+  .guardian-route-grid {
+    gap: 10px;
+  }
+
+  .guardian-route-grid article {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+  }
+
+  .guardian-route-grid span {
+    display: none;
+  }
+
+  .guardian-route-grid h3 {
+    flex: 1 1 auto;
+    font-size: 1.08rem;
+  }
+
+  .guardian-route-grid a {
+    flex: 0 1 42%;
+    margin-top: 0;
+    text-align: right;
+    font-size: .86rem;
+    line-height: 1.25;
+  }
+
+  .guardian-route-grid p {
+    display: none;
+  }
+
   .worksheet-meta,
   .worksheet-meta div {
     justify-content: flex-start;
@@ -2069,6 +2164,7 @@ button.secondary-btn {
 
   .supply-route-grid,
   .supply-panel-grid,
+  .guardian-route-grid,
   .luna-use-grid,
   .collector-grid,
   .repair-day-grid,

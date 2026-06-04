@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-headers"
+ASSET_VERSION = "20260604-universe"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2894,15 +2894,7 @@ def write(path: Path, html: str) -> None:
 
 
 def cleanup_versioned_assets() -> None:
-    keep = {
-        CSS_ASSET.lstrip("/"),
-        INTERACTIONS_ASSET.lstrip("/"),
-        AFFILIATE_ASSET.lstrip("/"),
-    }
-    for pattern in ("shared-*.css", "site-interactions-*.js", "deferred-external-*.js"):
-        for path in ROOT.glob(pattern):
-            if path.name not in keep:
-                path.unlink()
+    return
 
 
 def guide_card(lang: str, guide: dict) -> str:
@@ -3053,11 +3045,15 @@ def universe_gate_section(lang: str) -> str:
         name, typ, _desc = guardian[lang]
         domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
         domain = GUARDIAN_DOMAINS[slug]
+        prop = img_tag(guardian["prop"], f"{name} {domain_title}", "universe-gate-prop")
         cards.append(f"""
 <a class="universe-gate-card" href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
-  <span>{escape(typ)}</span>
-  <strong>{escape(domain_title)}</strong>
-  <p>{escape(domain_desc)}</p>
+  <div class="universe-gate-art">{prop}</div>
+  <div class="universe-gate-copy">
+    <span>{escape(typ)}</span>
+    <strong>{escape(domain_title)}</strong>
+    <p>{escape(domain_desc)}</p>
+  </div>
   <small>{escape(domain_cta)} · {escape(name)}</small>
 </a>
 """)

@@ -19,6 +19,7 @@ PYTHON_TOOLS = [
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
     "tools/performance_budget_audit.py",
+    "tools/public_deploy_smoke.py",
 ]
 
 

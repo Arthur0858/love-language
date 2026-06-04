@@ -71,6 +71,8 @@ function summarizeConversionFailures(results) {
     if (result.name.includes('repair') && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
     if (result.name.includes('supply') && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
     if (result.name.includes('repair') && !result.repairResumeVisible) failures.push('missing personalized repair resume');
+    if (result.name.includes('repair') && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
+    if (result.name.includes('repair') && !result.repairFilled) failures.push('repair worksheet was not filled from result');
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -291,6 +293,18 @@ for (const item of conversionCases) {
   const resumeSelector = item.target === 'plan' ? '[data-repair-saved]:not([hidden])' : '[data-supply-saved]:not([hidden])';
   await page.locator(resumeSelector).waitFor({ state: 'visible' });
   await page.waitForFunction(() => window.scrollY < 1200);
+  const resumeScrollY = await page.evaluate(() => window.scrollY);
+  let repairFillPrimary = false;
+  let repairFilled = false;
+  if (item.target === 'plan') {
+    repairFillPrimary = await page.locator('[data-repair-saved] .primary-btn[data-fill-repair]').isVisible().catch(() => false);
+    await page.locator('[data-repair-saved] [data-fill-repair]').click();
+    await page.waitForFunction(() => {
+      const fields = [...document.querySelectorAll('[data-repair-worksheet] textarea[data-field]')];
+      return fields.length >= 4 && fields.every((field) => field.value.trim().length > 0);
+    });
+    repairFilled = true;
+  }
 
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
@@ -310,7 +324,10 @@ for (const item of conversionCases) {
     pageErrors,
     supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible().catch(() => false),
     repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
-    scrollY: await page.evaluate(() => window.scrollY),
+    repairFillPrimary,
+    repairFilled,
+    scrollY: resumeScrollY,
+    finalScrollY: await page.evaluate(() => window.scrollY),
     screenshot,
   });
   await page.close();
@@ -320,9 +337,9 @@ await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-flow-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
-  ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-flow-'))),
+  ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
 ];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);

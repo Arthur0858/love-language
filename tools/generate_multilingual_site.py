@@ -11,6 +11,7 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
+CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
 ASSET_VERSION = "20260604-itemlists"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
@@ -2652,6 +2653,36 @@ def json_ld(data: dict) -> str:
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False, separators=(",", ":"))}</script>'
 
 
+def organization_ref() -> dict:
+    return {"@type": "Organization", "@id": f"{DOMAIN}/#organization", "name": "LoveTypes", "url": f"{DOMAIN}/"}
+
+
+def website_ref(lang: str) -> dict:
+    return {"@type": "WebSite", "@id": f"{abs_url(lang)}#website", "name": LANGS[lang]["brand"], "url": abs_url(lang)}
+
+
+def organization_schema(lang: str) -> str:
+    t = LANGS[lang]
+    return json_ld({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": f"{DOMAIN}/#organization",
+        "name": "LoveTypes",
+        "url": f"{DOMAIN}/",
+        "logo": f"{DOMAIN}/apple-touch-icon.png",
+        "email": CONTACT_EMAIL,
+        "description": t["trust_intro"],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": CONTACT_EMAIL,
+            "contactType": "content corrections and privacy inquiries",
+            "availableLanguage": ["zh-TW", "en", "ja", "ko", "es"],
+        },
+        "publishingPrinciples": abs_url(lang, "about"),
+        "privacyPolicy": abs_url(lang, "privacy"),
+    })
+
+
 def item_list_schema(name: str, description: str, items: list[tuple[str, str]]) -> str:
     return json_ld({
         "@context": "https://schema.org",
@@ -2737,6 +2768,7 @@ def layout(
     return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path) + f"""<body>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
 {nav(lang, active, path, alternate_path)}
+{organization_schema(lang)}
 {schema}
 {breadcrumb_schema(lang, path, title)}
 {breadcrumb_nav(lang, path, title)}
@@ -3986,7 +4018,15 @@ def home(lang: str) -> None:
   </div>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebSite","name":"{escape(t["brand"])}","url":"{DOMAIN}{lang_url(lang).rstrip("/")}/","inLanguage":"{t["code"]}"}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": f"{abs_url(lang)}#website",
+        "name": t["brand"],
+        "url": abs_url(lang),
+        "inLanguage": t["code"],
+        "publisher": organization_ref(),
+    })
     write(page_path(lang), layout(lang, t["home_title"], t["home_desc"], "", body + quiz_script(lang), "", "website", "/og-cover.jpg", schema))
 
 
@@ -4070,7 +4110,20 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
   </aside>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, "guides/" + guide["slug"])}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": title,
+        "description": desc,
+        "url": abs_url(lang, "guides/" + guide["slug"]),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
+        "author": organization_ref(),
+        "publisher": organization_ref(),
+        "isPartOf": website_ref(lang),
+        "mainEntityOfPage": {"@type": "WebPage", "@id": abs_url(lang, "guides/" + guide["slug"])},
+    })
     write(page_path(lang, "guides/" + guide["slug"]), layout(lang, title, desc, "guides/" + guide["slug"], body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
@@ -4103,7 +4156,20 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 </section>
 """
     canonical_path = "guides/" + canonical_target
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, canonical_path)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": title,
+        "description": desc,
+        "url": abs_url(lang, canonical_path),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
+        "author": organization_ref(),
+        "publisher": organization_ref(),
+        "isPartOf": website_ref(lang),
+        "mainEntityOfPage": {"@type": "WebPage", "@id": abs_url(lang, canonical_path)},
+    })
     write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, alternate_path=canonical_path, canonical_path=canonical_path))
 
 
@@ -4141,7 +4207,18 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 <section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
 <section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","name":"{escape(name)}","description":"{escape(desc)}","url":"{abs_url(lang, "characters/" + slug)}","inLanguage":"{t["code"]}","about":{{"@type":"Thing","name":"{escape(typ)}"}},"dateModified":"{UPDATED}"}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "name": name,
+        "description": desc,
+        "url": abs_url(lang, "characters/" + slug),
+        "inLanguage": t["code"],
+        "image": f"{DOMAIN}/assets/lovetypes/share/{slug}-og.jpg",
+        "about": {"@type": "Thing", "name": typ},
+        "dateModified": UPDATED,
+        "isPartOf": website_ref(lang),
+    })
     write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", f"/assets/lovetypes/share/{slug}-og.jpg", schema))
 
 

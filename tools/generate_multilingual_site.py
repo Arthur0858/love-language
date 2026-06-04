@@ -3714,6 +3714,8 @@ def quiz_script(lang: str) -> str:
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
   const sharedStorageKey = "lovetypes:{lang}:quiz-result";
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
   let selected = null;
   const answers = [];
@@ -3994,7 +3996,7 @@ def quiz_script(lang: str) -> str:
       hide(savedBox);
       savedBox.innerHTML = '';
     }}
-    resultBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+    resultBox.scrollIntoView({{ behavior: scrollBehavior, block: 'start' }});
   }}
   function startQuiz() {{
     preloadResultImages();
@@ -4005,7 +4007,7 @@ def quiz_script(lang: str) -> str:
     hide(resultBox);
     show(quizBox);
     renderQuestion();
-    quizBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+    quizBox.scrollIntoView({{ behavior: scrollBehavior, block: 'start' }});
   }}
   startButtons.forEach((button) => button.addEventListener('click', startQuiz));
   renderSavedResult();
@@ -4616,6 +4618,8 @@ def repair_worksheet_script(lang: str) -> str:
   const key = `lovetypes:${{location.pathname}}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
   const resultKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{homePath}}:quiz-result`];
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let timer = 0;
 
   function setStatus(message) {{
@@ -4661,7 +4665,7 @@ def repair_worksheet_script(lang: str) -> str:
       if (!field.value.trim()) field.value = values[index] || '';
     }});
     writeStorage();
-    form.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+    form.scrollIntoView({{ behavior: scrollBehavior, block: 'start' }});
   }}
 
   async function copyText(text) {{

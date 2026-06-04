@@ -158,6 +158,8 @@
   const key = `lovetypes:${location.pathname}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
   const resultKeys = ["lovetypes:zh:quiz-result", `lovetypes:${homePath}:quiz-result`];
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let timer = 0;
 
   function setStatus(message) {
@@ -203,7 +205,7 @@
       if (!field.value.trim()) field.value = values[index] || '';
     });
     writeStorage();
-    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    form.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
   }
 
   async function copyText(text) {

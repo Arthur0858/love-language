@@ -255,6 +255,8 @@
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${location.pathname}:quiz-result`;
   const sharedStorageKey = "lovetypes:zh:quiz-result";
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
   let selected = null;
   const answers = [];
@@ -535,7 +537,7 @@
       hide(savedBox);
       savedBox.innerHTML = '';
     }
-    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    resultBox.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
   }
   function startQuiz() {
     preloadResultImages();
@@ -546,7 +548,7 @@
     hide(resultBox);
     show(quizBox);
     renderQuestion();
-    quizBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    quizBox.scrollIntoView({ behavior: scrollBehavior, block: 'start' });
   }
   startButtons.forEach((button) => button.addEventListener('click', startQuiz));
   renderSavedResult();

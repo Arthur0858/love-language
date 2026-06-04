@@ -1529,6 +1529,15 @@ def main() -> int:
             if 'data-worksheet-status role="status" aria-live="polite"' not in parser.source:
                 issues.append(f"{page}: worksheet status should use role=status and aria-live=polite")
 
+        if "scrollIntoView" in parser.source:
+            stats["scroll_scripts"] += 1
+            if "scrollBehavior" in parser.source and "prefers-reduced-motion: reduce" in parser.source:
+                stats["reduced_motion_scroll_scripts"] += 1
+            if "behavior: 'smooth'" in parser.source or 'behavior: "smooth"' in parser.source:
+                issues.append(f"{page}: scrollIntoView should not hard-code smooth behavior")
+            if "behavior: scrollBehavior" in parser.source and "prefers-reduced-motion: reduce" not in parser.source:
+                issues.append(f"{page}: variable scroll behavior should respect prefers-reduced-motion")
+
         for anchor in parser.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)
@@ -1663,6 +1672,8 @@ def main() -> int:
     print(f"progressbars={stats['progressbars']}")
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
+    print(f"scroll_scripts={stats['scroll_scripts']}")
+    print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")

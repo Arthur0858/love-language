@@ -71,20 +71,22 @@ function summarizeConversionFailures(results) {
     const target = result.target || '';
     if (!result.status || result.status >= 400) failures.push('bad status');
     if (target === 'route' && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
-    if (['plan', 'keepsake-plan'].includes(target) && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
+    if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
     if (target === 'luna' && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
     if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
     if (target === 'keepsake' && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
     if (target === 'route' && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
-    if (['plan', 'keepsake-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
+    if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (target === 'luna' && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
     if (target === 'guide' && !result.guideResumeVisible) failures.push('missing personalized guide resume');
     if (target === 'keepsake' && !result.keepsakeResumeVisible) failures.push('missing personalized keepsake resume');
-    if (['plan', 'keepsake-plan'].includes(target) && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
-    if (['plan', 'keepsake-plan'].includes(target) && !result.repairFilled) failures.push('repair worksheet was not filled from result');
+    if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
+    if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairFilled) failures.push('repair worksheet was not filled from result');
     if (target === 'luna' && !result.lunaPrimaryHref?.includes('/repair-plan/#plan-')) failures.push('Luna primary action does not continue repair plan');
     if (target === 'guide' && !result.guidePlanHref?.includes('/repair-plan/#plan-')) failures.push('guide resume does not continue repair plan');
     if (['keepsake', 'keepsake-plan'].includes(target) && !result.keepsakePrimaryHref?.includes('/repair-plan/#plan-')) failures.push('keepsake primary action does not continue repair plan');
+    if (target === 'home-saved-plan' && !result.homeSavedVisible) failures.push('missing returning visitor saved result');
+    if (target === 'home-saved-plan' && !result.homeSavedKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('home saved card does not continue keepsake hall');
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -165,6 +167,7 @@ const conversionCases = [
   { name: 'conversion-guide-mobile', target: 'guide', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-home-saved-to-repair-mobile', target: 'home-saved-plan', path: '/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -304,6 +307,8 @@ for (const item of conversionCases) {
     await page.locator('.quiz-next').click();
   }
 
+  let homeSavedVisible = false;
+  let homeSavedKeepsakeHref = '';
   if (item.target === 'plan') {
     await page.locator('[data-conversion-plan]').click();
   } else if (item.target === 'luna') {
@@ -312,6 +317,12 @@ for (const item of conversionCases) {
     await page.locator('[data-conversion-guide]').click();
   } else if (item.target === 'keepsake-plan') {
     await page.locator('[data-conversion-keepsake]').click();
+  } else if (item.target === 'home-saved-plan') {
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.locator('[data-quiz-saved]:not([hidden])').waitFor({ state: 'visible' });
+    homeSavedVisible = true;
+    homeSavedKeepsakeHref = await page.locator('[data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
+    await page.locator('[data-home-saved-plan]').click();
   } else if (item.target === 'keepsake') {
     await page.locator('[data-conversion-keepsake]').click();
   } else {
@@ -325,7 +336,7 @@ for (const item of conversionCases) {
     await page.locator('[data-keepsake-plan]').click();
     await page.waitForLoadState('networkidle');
   }
-  const finalTarget = item.target === 'keepsake-plan' ? 'plan' : item.target;
+  const finalTarget = ['keepsake-plan', 'home-saved-plan'].includes(item.target) ? 'plan' : item.target;
   const resumeSelector = finalTarget === 'plan'
     ? '[data-repair-saved]:not([hidden])'
     : finalTarget === 'luna'
@@ -385,6 +396,8 @@ for (const item of conversionCases) {
     lunaPrimaryHref,
     guidePlanHref,
     keepsakePrimaryHref,
+    homeSavedVisible,
+    homeSavedKeepsakeHref,
     scrollY: resumeScrollY,
     finalScrollY: await page.evaluate(() => window.scrollY),
     screenshot,

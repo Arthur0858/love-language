@@ -239,10 +239,10 @@
           <h3>${result.name} · ${result.type}</h3>
           <p>${quiz.labels.saved_intro}</p>
           <div class="quiz-saved-actions">
-            <a href="${result.planUrl}">${quiz.labels.saved_plan}</a>
+            <a href="${result.planUrl}" data-home-saved-plan>${quiz.labels.saved_plan}</a>
             <a href="${result.lunaUrl}">${quiz.labels.saved_luna}</a>
             <a href="${result.resourceUrl}">${quiz.labels.saved_route}</a>
-            <a href="${result.storyImage}" target="_blank" rel="noopener noreferrer">${quiz.labels.saved_card}</a>
+            <a href="${result.collectorHallUrl}" data-home-saved-keepsake>${quiz.labels.saved_card}</a>
             <button type="button" data-result-action="story" data-story-name="${result.name}" data-story-title="${result.type}" data-story-quote="${result.supplyMission}" data-story-image="${result.image}" data-story-slug="${result.slug}" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
             <button type="button" data-share-saved-result>${quiz.labels.share}</button>
             <button type="button" data-copy-saved-result>${quiz.labels.saved_copy}</button>

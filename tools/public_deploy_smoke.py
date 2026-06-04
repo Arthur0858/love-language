@@ -16,6 +16,8 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
+EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
+LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 PUBLIC_PATHS = [
     "/",
     "/characters/",
@@ -117,6 +119,7 @@ class HeadAssetParser(HTMLParser):
         self.canonical = ""
         self.html_lang = ""
         self.robots = ""
+        self.hreflang_links: list[tuple[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
@@ -126,6 +129,8 @@ class HeadAssetParser(HTMLParser):
             self.stylesheets.append(data["href"])
         if tag == "link" and data.get("rel") == "canonical" and data.get("href"):
             self.canonical = data["href"]
+        if tag == "link" and data.get("rel") == "alternate" and data.get("hreflang") and data.get("href"):
+            self.hreflang_links.append((data["hreflang"], data["href"]))
         if tag == "meta" and data.get("name") == "robots":
             self.robots = data.get("content", "")
         if tag == "script" and data.get("src"):
@@ -193,6 +198,27 @@ def expected_html_lang(path: str) -> str:
 
 def expected_canonical(path: str) -> str:
     return urljoin(DEFAULT_BASE_URL, path)
+
+
+def public_url_for_path(path: str) -> str:
+    return DEFAULT_BASE_URL + (path if path != "/" else "/")
+
+
+def localized_path(path: str, lang: str) -> str:
+    parts = [part for part in path.split("/") if part]
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts = parts[1:]
+    prefix = LOCALE_PREFIXES[lang]
+    localized_parts = ([prefix] if prefix else []) + parts
+    if not localized_parts:
+        return "/"
+    return "/" + "/".join(localized_parts) + "/"
+
+
+def expected_hreflang_map(path: str) -> dict[str, str]:
+    values = {lang: public_url_for_path(localized_path(path, lang)) for lang in LOCALE_PREFIXES}
+    values["x-default"] = values["zh-TW"]
+    return values
 
 
 def header_matches(headers: dict[str, str], name: str, expected: str) -> bool:
@@ -299,6 +325,8 @@ def main() -> int:
     public_canonicals_checked = 0
     public_robots_checked = 0
     public_lang_checked = 0
+    public_hreflang_sets_checked = 0
+    public_hreflang_links_checked = 0
     public_versioned_asset_refs_checked = 0
     page_asset_refs: list[str] = []
 
@@ -330,6 +358,28 @@ def main() -> int:
         expected_lang = expected_html_lang(path)
         if assets.html_lang != expected_lang:
             issues.append(f"{path}: html lang should be {expected_lang!r}, got {assets.html_lang!r}")
+
+        public_hreflang_sets_checked += 1
+        hreflang_map: dict[str, str] = {}
+        duplicate_hreflangs: list[str] = []
+        for lang, href in assets.hreflang_links:
+            if lang in hreflang_map:
+                duplicate_hreflangs.append(lang)
+            hreflang_map[lang] = href
+        public_hreflang_links_checked += len(assets.hreflang_links)
+        expected_hreflangs = expected_hreflang_map(path)
+        missing_hreflangs = sorted(set(EXPECTED_HREFLANGS).difference(hreflang_map))
+        extra_hreflangs = sorted(set(hreflang_map).difference(EXPECTED_HREFLANGS))
+        if missing_hreflangs:
+            issues.append(f"{path}: missing hreflang links {', '.join(missing_hreflangs)}")
+        if extra_hreflangs:
+            issues.append(f"{path}: unexpected hreflang links {', '.join(extra_hreflangs)}")
+        if duplicate_hreflangs:
+            issues.append(f"{path}: duplicate hreflang links {', '.join(sorted(set(duplicate_hreflangs)))}")
+        for lang, expected_href in expected_hreflangs.items():
+            actual_href = hreflang_map.get(lang)
+            if actual_href and actual_href != expected_href:
+                issues.append(f"{path}: hreflang {lang} should be {expected_href!r}, got {actual_href!r}")
 
         versioned_stylesheets = [href for href in assets.stylesheets if VERSIONED_CSS_RE.match(href)]
         versioned_interactions = [src for src in assets.scripts if VERSIONED_INTERACTIONS_RE.match(src)]
@@ -395,6 +445,8 @@ def main() -> int:
     print(f"public_canonicals_checked={public_canonicals_checked}")
     print(f"public_robots_checked={public_robots_checked}")
     print(f"public_lang_checked={public_lang_checked}")
+    print(f"public_hreflang_sets_checked={public_hreflang_sets_checked}")
+    print(f"public_hreflang_links_checked={public_hreflang_links_checked}")
     print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")

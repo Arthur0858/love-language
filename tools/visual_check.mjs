@@ -151,6 +151,23 @@ function summarizeRedirectFailures(results) {
   });
 }
 
+function summarizeLanguageMenuFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.menuOpened) failures.push('language menu did not open');
+    if (result.linkCount !== 5) failures.push(`expected 5 language links, got ${result.linkCount}`);
+    if (!result.activeLangOk) failures.push('active language was not marked');
+    if (result.finalUrl !== result.expectedFinalPath) {
+      failures.push(`expected final path ${result.expectedFinalPath}, got ${result.finalUrl}`);
+    }
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 function summarizeWorksheetFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
@@ -266,6 +283,12 @@ const redirectCases = shouldCheckCloudflareRedirects()
       { name: 'redirect-luna-es', path: '/es/luna/', expectedFinalPath: '/es/luna-yoga-music/' },
     ]
   : [];
+
+const languageMenuCases = [
+  { name: 'language-menu-home-mobile', path: '/', currentLang: 'zh-TW', targetLang: 'en', expectedFinalPath: '/en/' },
+  { name: 'language-menu-resources-mobile', path: '/resources/', currentLang: 'zh-TW', targetLang: 'ja', expectedFinalPath: '/ja/resources/' },
+  { name: 'language-menu-guide-mobile', path: '/es/guides/words-of-affirmation-scripts/', currentLang: 'es', targetLang: 'ko', expectedFinalPath: '/ko/guides/words-of-affirmation-scripts/' },
+];
 
 const quizCases = [
   { name: 'quiz-flow-desktop', path: '/', viewport: { width: 1280, height: 900 } },
@@ -418,6 +441,57 @@ for (const item of redirectCases) {
     title: await page.title(),
     consoleErrors,
     pageErrors,
+  });
+  await page.close();
+}
+
+for (const item of languageMenuCases) {
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  const menu = page.locator('.language-menu').first();
+  await menu.locator('summary').click();
+  const menuOpened = await menu.evaluate((node) => node.hasAttribute('open')).catch(() => false);
+  const linkCount = await menu.locator('.language-switcher a').count();
+  const activeLangOk = await menu
+    .locator(`.language-switcher a[lang="${item.currentLang}"][aria-current="page"]`)
+    .count()
+    .then((count) => count === 1)
+    .catch(() => false);
+  await menu.locator(`.language-switcher a[lang="${item.targetLang}"]`).first().click();
+  await waitForSoftIdle(page);
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    url,
+    finalUrl: finalPath(page),
+    expectedFinalPath: item.expectedFinalPath,
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    menuOpened,
+    linkCount,
+    activeLangOk,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    screenshot,
   });
   await page.close();
 }
@@ -842,8 +916,9 @@ await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('worksheet-') && !result.name.startsWith('copy-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('language-menu-') && !result.name.startsWith('worksheet-') && !result.name.startsWith('copy-'))),
   ...summarizeRedirectFailures(results.filter((result) => result.name.startsWith('redirect-'))),
+  ...summarizeLanguageMenuFailures(results.filter((result) => result.name.startsWith('language-menu-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
   ...summarizeWorksheetFailures(results.filter((result) => result.name.startsWith('worksheet-'))),

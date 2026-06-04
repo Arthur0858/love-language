@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-supply-book-cta"
+ASSET_VERSION = "20260604-character-supply-cta"
 
 
 FONT_CSS = ""
@@ -2058,6 +2058,8 @@ def character_supply_panel(lang: str, slug: str) -> str:
   <div class="supply-panel-actions">
     <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(labels["open_luna"])}</a>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </section>
 """

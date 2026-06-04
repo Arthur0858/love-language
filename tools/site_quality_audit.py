@@ -72,10 +72,16 @@ class PageParser(HTMLParser):
         self.anchors: list[dict[str, str]] = []
         self.buttons: list[list[object]] = []
         self.controls: list[tuple[str, dict[str, str]]] = []
+        self.headings: list[tuple[int, str, bool]] = []
         self.images: list[dict[str, str]] = []
         self.links: list[dict[str, str]] = []
+        self.mains: list[dict[str, str]] = []
+        self.navs: list[dict[str, str]] = []
+        self.details: list[dict[str, str]] = []
+        self.summaries: list[list[object]] = []
         self.ids: list[str] = []
         self.metas: list[dict[str, str]] = []
+        self.tag_counts = Counter()
         self.title_parts: list[str] = []
         self.jsonld_blocks: list[str] = []
         self.html_lang: str | None = None
@@ -86,6 +92,7 @@ class PageParser(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
+        self.tag_counts[tag] += 1
         self._stack.append((tag, data, []))
         if tag == "html":
             self.html_lang = data.get("lang")
@@ -100,6 +107,14 @@ class PageParser(HTMLParser):
             self.anchors.append(data)
         if tag == "button":
             self.buttons.append([data, ""])
+        if tag == "main":
+            self.mains.append(data)
+        if tag == "nav":
+            self.navs.append(data)
+        if tag == "details":
+            self.details.append(data)
+        if tag == "summary":
+            self.summaries.append([data, ""])
         if tag in ("input", "select", "textarea"):
             self.controls.append((tag, data))
         if tag == "img":
@@ -130,6 +145,14 @@ class PageParser(HTMLParser):
                 if button[0] is data:
                     button[1] = text
                     break
+        if current_tag == "summary":
+            for summary in reversed(self.summaries):
+                if summary[0] is data:
+                    summary[1] = text
+                    break
+        if current_tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
+            in_main = any(stack_tag == "main" for stack_tag, _, _ in self._stack)
+            self.headings.append((int(current_tag[1]), text, in_main))
         if self._stack and text:
             self._stack[-1][2].append(text)
 
@@ -201,6 +224,17 @@ def public_url_for_page(page: Path) -> str:
 
 def is_noindex(parser: PageParser) -> bool:
     return "noindex" in parser.meta_content("robots").lower()
+
+
+def is_locale_home(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    if relative == Path("index.html"):
+        return True
+    return len(relative.parts) == 2 and relative.parts[1] == "index.html" and relative.parts[0] in {"en", "ja", "ko", "es"}
+
+
+def class_tokens(attrs: dict[str, str]) -> set[str]:
+    return set(attrs.get("class", "").split())
 
 
 def local_path_for_public_url(value: str) -> Path | None:
@@ -644,6 +678,9 @@ def main() -> int:
         stats["pages"] += 1
         stats["images"] += len(parser.images)
         stats["jsonld_blocks"] += len(parser.jsonld_blocks)
+        stats["h1_tags"] += sum(1 for level, _, _ in parser.headings if level == 1)
+        stats["main_landmarks"] += len(parser.mains)
+        stats["nav_landmarks"] += len(parser.navs)
         if is_noindex(parser):
             stats["noindex_pages"] += 1
         else:
@@ -660,6 +697,54 @@ def main() -> int:
 
         page_title = "".join(parser.title_parts).strip()
         page_description = parser.meta_content("description")
+
+        if len(parser.mains) != 1:
+            issues.append(f"{page}: expected one <main> landmark, found {len(parser.mains)}")
+        elif parser.mains[0].get("id") != "main":
+            issues.append(f"{page}: <main> should use id=\"main\" for the skip link target")
+
+        skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
+        if not skip_links:
+            issues.append(f"{page}: missing skip link")
+        for anchor in skip_links:
+            href = anchor.get("href", "")
+            if not href.startswith("#"):
+                issues.append(f"{page}: skip link should point to a same-page anchor: {href}")
+            elif href[1:] not in parser.ids:
+                issues.append(f"{page}: skip link target missing: {href}")
+
+        h1s = [(text, in_main) for level, text, in_main in parser.headings if level == 1]
+        if len(h1s) != 1:
+            issues.append(f"{page}: expected one <h1>, found {len(h1s)}")
+        elif not h1s[0][1]:
+            issues.append(f"{page}: <h1> should be inside <main>")
+
+        previous_level = 0
+        for level, text, _ in parser.headings:
+            if previous_level and level > previous_level + 1:
+                label = text[:60] or f"h{level}"
+                issues.append(f"{page}: heading level jumps from h{previous_level} to h{level}: {label}")
+            previous_level = level
+
+        primary_navs = [nav for nav in parser.navs if "nav-links" in class_tokens(nav)]
+        if len(primary_navs) != 1:
+            issues.append(f"{page}: expected one primary navigation, found {len(primary_navs)}")
+        elif not primary_navs[0].get("aria-label"):
+            issues.append(f"{page}: primary navigation missing aria-label")
+
+        language_details = [details for details in parser.details if "language-menu" in class_tokens(details)]
+        if len(language_details) != 1:
+            issues.append(f"{page}: expected one language menu, found {len(language_details)}")
+        language_summaries = [summary for summary in parser.summaries if summary[0].get("aria-label")]
+        if not language_summaries:
+            issues.append(f"{page}: language menu summary missing accessible label")
+
+        breadcrumbs = [nav for nav in parser.navs if "breadcrumb" in class_tokens(nav)]
+        if not is_locale_home(page) and page.name != "404.html":
+            if len(breadcrumbs) != 1:
+                issues.append(f"{page}: expected one breadcrumb navigation, found {len(breadcrumbs)}")
+            elif not breadcrumbs[0].get("aria-label"):
+                issues.append(f"{page}: breadcrumb navigation missing aria-label")
 
         for rel, href in REQUIRED_HEAD_ASSETS.items():
             matching_links = [link for link in parser.links_with_rel(rel) if link.get("href") == href]
@@ -874,6 +959,9 @@ def main() -> int:
     print(f"indexable_pages={stats['indexable_pages']}")
     print(f"noindex_pages={stats['noindex_pages']}")
     print(f"images={stats['images']}")
+    print(f"h1_tags={stats['h1_tags']}")
+    print(f"main_landmarks={stats['main_landmarks']}")
+    print(f"nav_landmarks={stats['nav_landmarks']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")

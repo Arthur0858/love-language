@@ -21,6 +21,9 @@ Run quality checks first:
 python3 tools/predeploy_check.py
 ```
 
+This includes SEO, multilingual route, conversion path, accessibility, image
+asset, performance budget, and deploy manifest checks.
+
 Dry-run the Cloudflare manifest and remote hash check:
 
 ```bash

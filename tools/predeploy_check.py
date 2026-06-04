@@ -21,6 +21,7 @@ PYTHON_TOOLS = [
     "tools/multilingual_route_audit.py",
     "tools/guardian_conversion_audit.py",
     "tools/accessibility_audit.py",
+    "tools/image_asset_audit.py",
     "tools/performance_budget_audit.py",
     "tools/public_deploy_smoke.py",
     "tools/public_sitemap_smoke.py",
@@ -116,6 +117,7 @@ def main() -> int:
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
         run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
+        run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
 

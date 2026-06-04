@@ -2649,6 +2649,7 @@ def img_tag(src: str, alt: str, class_name: str = "", lazy: bool = True, priorit
     if width and height:
         attrs += [f'width="{width}"', f'height="{height}"']
     if priority:
+        attrs.append('loading="eager"')
         attrs.append('fetchpriority="high"')
         attrs.append('decoding="async"')
     elif lazy:
@@ -4351,7 +4352,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
-  {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False)}
+  {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False, priority=True)}
 </section>
 <section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">
@@ -4457,7 +4458,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     body = f"""
 <section class="guardian-hero guardian-domain-hero" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p class="domain-title">{escape(domain_title)}</p><p>{escape(desc)}</p><p>{escape(domain_desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
-  {img_tag(data["asset"], name, lazy=False)}
+  {img_tag(data["asset"], name, lazy=False, priority=True)}
 </section>
 <section class="section domain-rune-section" data-domain-marker>
   <div class="domain-rune-card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">

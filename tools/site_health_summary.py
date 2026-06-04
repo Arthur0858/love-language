@@ -69,6 +69,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "multilingual_route_issues",
         "guardian_conversion_issues",
         "accessibility_issues",
+        "image_asset_issues",
         "performance_budget_issues",
         "deploy_manifest_issues",
         "public_deploy_issues",
@@ -86,6 +87,9 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_affiliate_links_checked",
         "public_sitemap_pages_checked",
         "public_sitemap_hreflang_links_checked",
+        "image_assets_checked",
+        "priority_images_checked",
+        "image_preloads_checked",
         "deploy_manifest_files",
     ]
     for key in important_keys:

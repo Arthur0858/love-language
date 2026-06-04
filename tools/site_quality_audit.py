@@ -78,6 +78,11 @@ LEGACY_ROOT_STATIC_ASSETS = {
     "site-interactions.js",
     "deferred-external.js",
 }
+CURRENT_STATIC_ASSETS = {
+    "css": "/shared-20260605-affiliate-note.css",
+    "interactions": "/site-interactions-20260605-affiliate-note.js",
+    "affiliate": "/deferred-external-20260605-affiliate-note.js",
+}
 EXPECTED_REDIRECTS = {
     "/.well-known/security.txt": ("/security.txt", "200"),
     "/luna/": ("/luna-yoga-music/", "301"),
@@ -349,6 +354,14 @@ def expected_primary_nav_href(page: Path) -> str | None:
     if section not in {"guides", "characters", "theory", "resources", "about"}:
         return None
     return f"/{prefix}/{section}/" if prefix else f"/{section}/"
+
+
+def is_resources_page(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts == ["resources", "index.html"]
 
 
 def class_tokens(attrs: dict[str, str]) -> set[str]:
@@ -927,12 +940,15 @@ def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str],
         ("site-interactions-", ".js"),
         ("deferred-external-", ".js"),
     )
+    expected_versioned_assets = {Path(value.lstrip("/")).name for value in CURRENT_STATIC_ASSETS.values()}
     for asset in sorted(ROOT.iterdir()):
         if not asset.is_file():
             continue
         if not any(asset.name.startswith(prefix) and asset.name.endswith(suffix) for prefix, suffix in patterns):
             continue
         stats["versioned_static_assets"] += 1
+        if asset.name not in expected_versioned_assets:
+            issues.append(f"{asset}: unexpected root versioned static asset")
         if asset.name not in referenced:
             issues.append(f"{asset}: versioned static asset is not referenced by any generated HTML page")
     return issues, stats
@@ -1199,6 +1215,44 @@ def main() -> int:
             target, _ = target_for(page, href)
             if target is None or not target.exists():
                 issues.append(f"{page}: head asset target missing: {href}")
+
+        css_assets = [
+            link.get("href", "")
+            for link in parser.links_with_rel("stylesheet")
+            if link.get("href", "").startswith("/shared-") and link.get("href", "").endswith(".css")
+        ]
+        stats["current_css_asset_refs"] += css_assets.count(CURRENT_STATIC_ASSETS["css"])
+        if css_assets != [CURRENT_STATIC_ASSETS["css"]]:
+            issues.append(f"{page}: expected current CSS asset {CURRENT_STATIC_ASSETS['css']}, found {css_assets}")
+
+        interaction_assets = [
+            raw
+            for tag, attr, raw in parser.refs
+            if tag == "script"
+            and attr == "src"
+            and raw.startswith("/site-interactions-")
+            and raw.endswith(".js")
+        ]
+        stats["current_interaction_asset_refs"] += interaction_assets.count(CURRENT_STATIC_ASSETS["interactions"])
+        if interaction_assets != [CURRENT_STATIC_ASSETS["interactions"]]:
+            issues.append(
+                f"{page}: expected current interaction asset {CURRENT_STATIC_ASSETS['interactions']}, found {interaction_assets}"
+            )
+
+        affiliate_assets = [
+            raw
+            for tag, attr, raw in parser.refs
+            if tag == "script"
+            and attr == "src"
+            and raw.startswith("/deferred-external-")
+            and raw.endswith(".js")
+        ]
+        stats["current_affiliate_asset_refs"] += affiliate_assets.count(CURRENT_STATIC_ASSETS["affiliate"])
+        expected_affiliate_assets = [CURRENT_STATIC_ASSETS["affiliate"]] if is_resources_page(page) else []
+        if affiliate_assets != expected_affiliate_assets:
+            issues.append(
+                f"{page}: expected affiliate script assets {expected_affiliate_assets}, found {affiliate_assets}"
+            )
 
         rss_links = [
             link
@@ -1513,6 +1567,9 @@ def main() -> int:
     print(f"hreflang_links={stats['hreflang_links']}")
     print(f"head_asset_links={stats['head_asset_links']}")
     print(f"rss_head_links={stats['rss_head_links']}")
+    print(f"current_css_asset_refs={stats['current_css_asset_refs']}")
+    print(f"current_interaction_asset_refs={stats['current_interaction_asset_refs']}")
+    print(f"current_affiliate_asset_refs={stats['current_affiliate_asset_refs']}")
     print(f"social_cards={stats['social_cards']}")
     print(f"social_locale_tags={stats['social_locale_tags']}")
     print(f"social_images={stats['social_images']}")

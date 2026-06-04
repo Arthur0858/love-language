@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_DIRS = {".git", ".github", ".wrangler", "__pycache__", "output"}
+EXCLUDED_DIRS = {".git", ".github", ".wrangler", "__pycache__", "node_modules", "output"}
 EXCLUDED_SUFFIXES = {".pyc"}
 
 

@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-quiz-story-card" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-saved-story-card" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -234,6 +234,7 @@
             <a href="${result.lunaUrl}">${quiz.labels.saved_luna}</a>
             <a href="${result.resourceUrl}">${quiz.labels.saved_route}</a>
             <a href="${result.storyImage}" target="_blank" rel="noopener">${quiz.labels.saved_card}</a>
+            <button type="button" data-result-action="story" data-story-name="${result.name}" data-story-title="${result.type}" data-story-quote="${result.supplyMission}" data-story-image="${result.image}" data-story-slug="${result.slug}" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
             <button type="button" data-share-saved-result>${quiz.labels.share}</button>
             <button type="button" data-copy-saved-result>${quiz.labels.saved_copy}</button>
             <button type="button" data-clear-saved-result>${quiz.labels.saved_clear}</button>
@@ -413,7 +414,7 @@
   <p>© 2026 LoveTypes · <a href="/es/privacy/">Privacidad</a> · <a href="/es/terms/">Términos</a> · <a href="/es/contact/">Contacto</a></p>
 </footer>
 
-<script src="/site-interactions.js?v=20260604-quiz-story-card" defer></script>
+<script src="/site-interactions.js?v=20260604-saved-story-card" defer></script>
 
 </body>
 </html>

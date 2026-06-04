@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-quiz-story-card"
+ASSET_VERSION = "20260604-saved-story-card"
 
 
 FONT_CSS = ""
@@ -2890,6 +2890,7 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
             <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
             <a href="${{result.storyImage}}" target="_blank" rel="noopener">${{quiz.labels.saved_card}}</a>
+            <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
             <button type="button" data-clear-saved-result>${{quiz.labels.saved_clear}}</button>

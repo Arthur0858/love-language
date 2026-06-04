@@ -28,6 +28,14 @@ PUBLIC_PATHS = [
     "/about/",
     "/theory/",
     "/contact/",
+    "/en/",
+    "/ja/",
+    "/ko/",
+    "/es/",
+    "/en/characters/",
+    "/ja/resources/",
+    "/ko/repair-plan/",
+    "/es/guides/",
 ]
 EXPECTED_TEXT = {
     "/": "LoveTypes 情感守護者宇宙",
@@ -36,6 +44,14 @@ EXPECTED_TEXT = {
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
     "/contact/": "contact@lovetypes.tw",
+    "/en/": "LoveTypes Emotion Guardians",
+    "/ja/": "LoveTypes 感情の守護者",
+    "/ko/": "LoveTypes 감정 수호자",
+    "/es/": "LoveTypes Guardianas Emocionales",
+    "/en/characters/": "Five Emotion Guardians Overview",
+    "/ja/resources/": "リソース",
+    "/ko/repair-plan/": "7일 마음 언어 회복 계획",
+    "/es/guides/": "Guías de Guardianas LoveTypes",
 }
 REDIRECTS = {
     "/luna/": "/luna-yoga-music/",
@@ -192,7 +208,15 @@ def check_sitemap(response: Response) -> list[str]:
     locs = [node.findtext("sm:loc", default="", namespaces=SITEMAP_NS) for node in urls]
     if len(locs) < 140:
         issues.append(f"{path}: expected at least 140 sitemap URLs, found {len(locs)}")
-    for expected in ("https://lovetypes.tw/", "https://lovetypes.tw/resources/", "https://lovetypes.tw/characters/iris/"):
+    for expected in (
+        "https://lovetypes.tw/",
+        "https://lovetypes.tw/en/",
+        "https://lovetypes.tw/ja/",
+        "https://lovetypes.tw/ko/",
+        "https://lovetypes.tw/es/",
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/characters/iris/",
+    ):
         if expected not in locs:
             issues.append(f"{path}: missing sitemap URL {expected}")
     return issues

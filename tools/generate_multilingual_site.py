@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-supply-resume"
+ASSET_VERSION = "20260604-supply-book-cta"
 
 
 FONT_CSS = ""
@@ -2278,6 +2278,7 @@ def quiz_payload(lang: str) -> str:
             "supplyMission": route["mission"],
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
+            "supplyBookUrl": route["book"]["url"],
             "lunaUrl": lang_url(lang, "luna-yoga-music"),
             "storyImage": guardian_story_image(lang, meta["slug"]),
             "collectorTitle": COLLECTOR_LABELS[lang]["card"],
@@ -2503,10 +2504,12 @@ def quiz_script(lang: str) -> str:
 
 def supply_resume_script(lang: str) -> str:
     data = quiz_payload(lang)
+    bookstore_label = AFFILIATE_COPY[lang]["button"]
     return f"""
 <script>
 (() => {{
   const quiz = {data};
+  const bookstoreLabel = "{escape(bookstore_label)}";
   const box = document.querySelector('[data-supply-saved]');
   if (!box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -2542,6 +2545,7 @@ def supply_resume_script(lang: str) -> str:
           <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
           <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
           <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <a href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{bookstoreLabel}}</a>
           <button type="button" data-clear-supply-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>

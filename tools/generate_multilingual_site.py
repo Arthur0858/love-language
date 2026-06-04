@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-quiz-resume"
+ASSET_VERSION = "20260604-supply-resume"
 
 
 FONT_CSS = ""
@@ -2312,6 +2312,7 @@ def quiz_script(lang: str) -> str:
   const savedBox = root.querySelector('[data-quiz-saved]');
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
+  const sharedStorageKey = "lovetypes:{lang}:quiz-result";
   let current = 0;
   let selected = null;
   const answers = [];
@@ -2320,7 +2321,7 @@ def quiz_script(lang: str) -> str:
   function hide(el) {{ el.hidden = true; }}
   function readSavedResult() {{
     try {{
-      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      const saved = JSON.parse(localStorage.getItem(sharedStorageKey) || localStorage.getItem(storageKey) || 'null');
       return saved && quiz.results[saved.primaryKey] ? saved : null;
     }} catch (error) {{
       return null;
@@ -2353,6 +2354,7 @@ def quiz_script(lang: str) -> str:
     show(savedBox);
     savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {{
       localStorage.removeItem(storageKey);
+      localStorage.removeItem(sharedStorageKey);
       renderSavedResult();
     }});
   }}
@@ -2400,6 +2402,7 @@ def quiz_script(lang: str) -> str:
     const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{quiz.shareUrl}}`;
     try {{
       localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
+      localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
     }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card" style="--result-accent:${{result.color}}">
@@ -2493,6 +2496,58 @@ def quiz_script(lang: str) -> str:
   }}
   startButtons.forEach((button) => button.addEventListener('click', startQuiz));
   renderSavedResult();
+}})();
+</script>
+"""
+
+
+def supply_resume_script(lang: str) -> str:
+    data = quiz_payload(lang)
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const box = document.querySelector('[data-supply-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{location.pathname}}:quiz-result`, `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        if (saved && quiz.results[saved.primaryKey]) return saved;
+      }}
+    }} catch (error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  box.innerHTML = `
+    <article class="quiz-saved-card supply-resume-card" style="--result-accent:${{result.color}}">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <div>
+        <p class="eyebrow">${{quiz.labels.saved_title}}</p>
+        <h2>${{result.supplyTitle}}</h2>
+        <p>${{result.supplyDesc}}</p>
+        <div class="quiz-saved-actions">
+          <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
+          <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+          <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <button type="button" data-clear-supply-result>${{quiz.labels.saved_clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-clear-supply-result]').addEventListener('click', clearSavedResult);
 }})();
 </script>
 """
@@ -2718,6 +2773,7 @@ def resources_page(lang: str) -> None:
 """)
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+<section class="section quiz-saved supply-personal-resume" data-supply-saved hidden></section>
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
   <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>
@@ -2737,6 +2793,7 @@ def resources_page(lang: str) -> None:
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
 <section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+{supply_resume_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["resources"])}","description":"{escape(t["resources_desc"])}","url":"{abs_url(lang, "resources")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{t['resources']} | LoveTypes" if lang == "zh" else f"{t['resources']} | LoveTypes {t['name']}"

@@ -1292,6 +1292,13 @@ button.secondary-btn {
   font-size: 1.22rem;
 }
 
+.quiz-saved-card h2 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+}
+
 .quiz-saved-card p {
   margin: 0;
   color: #f4dfdc;
@@ -1316,6 +1323,18 @@ button.secondary-btn {
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
   cursor: pointer;
+}
+
+.supply-personal-resume {
+  padding-top: 24px;
+  padding-bottom: 0;
+}
+
+.supply-personal-resume .quiz-saved-card {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--result-accent), transparent 70%), rgba(70, 56, 50, .9)),
+    #493631;
+  box-shadow: 0 18px 48px rgba(72, 47, 45, .16);
 }
 
 .quiz-progress {

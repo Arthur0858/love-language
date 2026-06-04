@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-quiz-resume" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-supply-resume" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -148,6 +148,7 @@
   const savedBox = root.querySelector('[data-quiz-saved]');
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${location.pathname}:quiz-result`;
+  const sharedStorageKey = "lovetypes:en:quiz-result";
   let current = 0;
   let selected = null;
   const answers = [];
@@ -156,7 +157,7 @@
   function hide(el) { el.hidden = true; }
   function readSavedResult() {
     try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      const saved = JSON.parse(localStorage.getItem(sharedStorageKey) || localStorage.getItem(storageKey) || 'null');
       return saved && quiz.results[saved.primaryKey] ? saved : null;
     } catch (error) {
       return null;
@@ -189,6 +190,7 @@
     show(savedBox);
     savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {
       localStorage.removeItem(storageKey);
+      localStorage.removeItem(sharedStorageKey);
       renderSavedResult();
     });
   }
@@ -236,6 +238,7 @@
     const shareText = `${quiz.labels.share_prefix}：${result.name}｜${result.type} ${quiz.shareUrl}`;
     try {
       localStorage.setItem(storageKey, JSON.stringify({ primaryKey, savedAt: new Date().toISOString() }));
+      localStorage.setItem(sharedStorageKey, JSON.stringify({ primaryKey, savedAt: new Date().toISOString() }));
     } catch (error) {}
     resultBox.innerHTML = `
       <article class="quiz-result-card" style="--result-accent:${result.color}">

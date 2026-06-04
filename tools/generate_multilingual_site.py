@@ -13,7 +13,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-itemlists"
+ASSET_VERSION = "20260604-headers"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -4876,7 +4876,30 @@ def write_support_files() -> None:
     sitemap.append("</urlset>")
     write(ROOT / "sitemap.xml", "\n".join(sitemap) + "\n")
     write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")
-    write(ROOT / "_headers", "/*\n  Cache-Control: public, max-age=600\n\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n/shared-*.css\n  Cache-Control: public, max-age=31536000, immutable\n\n/site-interactions-*.js\n  Cache-Control: public, max-age=31536000, immutable\n\n/deferred-external-*.js\n  Cache-Control: public, max-age=31536000, immutable\n")
+    headers = """/*
+  Cache-Control: public, max-age=600
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+/assets/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/shared-*.css
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/site-interactions-*.js
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/deferred-external-*.js
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+"""
+    write(ROOT / "_headers", headers)
 
 
 def main() -> None:

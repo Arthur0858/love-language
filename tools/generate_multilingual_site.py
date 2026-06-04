@@ -18,6 +18,12 @@ ASSET_VERSION = "20260605-affiliate-note"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
+STATIC_SOURCE_DIR = ROOT / "tools" / "static"
+STATIC_ASSET_SOURCES = {
+    "shared.css": CSS_ASSET,
+    "site-interactions.js": INTERACTIONS_ASSET,
+    "deferred-external.js": AFFILIATE_ASSET,
+}
 
 
 FONT_CSS = ""
@@ -2925,7 +2931,16 @@ def write(path: Path, html: str) -> None:
 
 
 def cleanup_versioned_assets() -> None:
-    return
+    for legacy_name in STATIC_ASSET_SOURCES:
+        legacy_path = ROOT / legacy_name
+        if legacy_path.exists():
+            legacy_path.unlink()
+    for source_name, target in STATIC_ASSET_SOURCES.items():
+        prefix, suffix = source_name.rsplit(".", 1)
+        current_name = Path(target.lstrip("/")).name
+        for asset in ROOT.glob(f"{prefix}-*.{suffix}"):
+            if asset.name != current_name:
+                asset.unlink()
 
 
 def guide_card(lang: str, guide: dict) -> str:
@@ -5147,9 +5162,8 @@ def simple_page(lang: str, slug: str) -> None:
 
 
 def write_css() -> None:
-    css_path = ROOT / "shared.css"
+    css_path = STATIC_SOURCE_DIR / "shared.css"
     css = css_path.read_text(encoding="utf-8")
-    write(css_path, css.strip() + "\n")
     write(ROOT / CSS_ASSET.lstrip("/"), css.strip() + "\n")
 
 
@@ -5158,7 +5172,7 @@ def write_versioned_scripts() -> None:
         ("site-interactions.js", INTERACTIONS_ASSET),
         ("deferred-external.js", AFFILIATE_ASSET),
     ):
-        script = (ROOT / source).read_text(encoding="utf-8")
+        script = (STATIC_SOURCE_DIR / source).read_text(encoding="utf-8")
         write(ROOT / target.lstrip("/"), script.strip() + "\n")
 
 

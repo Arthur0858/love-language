@@ -73,6 +73,11 @@ IMMUTABLE_HEADER_PATHS = {
     "/site-interactions-*.js",
     "/deferred-external-*.js",
 }
+LEGACY_ROOT_STATIC_ASSETS = {
+    "shared.css",
+    "site-interactions.js",
+    "deferred-external.js",
+}
 EXPECTED_REDIRECTS = {
     "/.well-known/security.txt": ("/security.txt", "200"),
     "/luna/": ("/luna-yoga-music/", "301"),
@@ -912,6 +917,11 @@ def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str],
                 if name:
                     referenced.add(name)
 
+    for name in sorted(LEGACY_ROOT_STATIC_ASSETS):
+        stats["legacy_static_assets_checked"] += 1
+        if (ROOT / name).exists():
+            issues.append(f"{ROOT / name}: legacy unversioned root asset should not be deployed")
+
     patterns = (
         ("shared-", ".css"),
         ("site-interactions-", ".js"),
@@ -1520,6 +1530,7 @@ def main() -> int:
     print(f"mailto_links={stats['mailto_links']}")
     print(f"anchor_accessible_names={stats['anchor_accessible_names']}")
     print(f"versioned_static_assets={stats['versioned_static_assets']}")
+    print(f"legacy_static_assets_checked={stats['legacy_static_assets_checked']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

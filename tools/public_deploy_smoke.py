@@ -373,7 +373,7 @@ def check_external_links(path: str, assets: HeadAssetParser, html: str) -> tuple
             if "utm_campaign=ap-202604" not in parsed.query:
                 issues.append(f"{path}: affiliate link missing expected campaign tag: {href}")
     if affiliate_links_checked:
-        if AFFILIATE_DISCLOSURE_SNIPPET not in html and 'class="affiliate-disclosure"' not in html and "affiliateDisclosure" not in html:
+        if AFFILIATE_DISCLOSURE_SNIPPET not in html and 'class="affiliate-disclosure"' not in html:
             issues.append(f"{path}: missing affiliate disclosure")
     if resources_page:
         if affiliate_links_checked < len(GUARDIAN_SLUGS):

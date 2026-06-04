@@ -5029,6 +5029,23 @@ def write_feed_xml() -> None:
     write(ROOT / "feed.xml", feed)
 
 
+def write_security_txt() -> None:
+    content = f"""Contact: mailto:{CONTACT_EMAIL}
+Expires: 2027-05-31T00:00:00Z
+Preferred-Languages: zh-TW, en
+Canonical: {DOMAIN}/.well-known/security.txt
+Policy: {DOMAIN}/privacy/
+"""
+    write(ROOT / ".well-known/security.txt", content)
+    write(ROOT / "security.txt", content)
+
+
+def write_redirects() -> None:
+    redirects = """/.well-known/security.txt /security.txt 200
+"""
+    write(ROOT / "_redirects", redirects)
+
+
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
@@ -5077,6 +5094,8 @@ https://:version.lovetypes.pages.dev/*
     write_llms_txt()
     write_site_manifest()
     write_feed_xml()
+    write_security_txt()
+    write_redirects()
 
 
 def main() -> None:

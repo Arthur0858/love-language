@@ -1,0 +1,5 @@
+Contact: mailto:contact@lovetypes.tw
+Expires: 2027-05-31T00:00:00Z
+Preferred-Languages: zh-TW, en
+Canonical: https://lovetypes.tw/.well-known/security.txt
+Policy: https://lovetypes.tw/privacy/

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-repair-keepsake"
+ASSET_VERSION = "20260604-book-route-match"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -339,6 +339,7 @@ AFFILIATE_COPY = {
         "button": "前往博客來",
         "fit": "適合",
         "limit": "使用提醒",
+        "routes": "對應守護者路線",
     },
     "en": {
         "eyebrow": "BOOK RELICS",
@@ -347,6 +348,7 @@ AFFILIATE_COPY = {
         "button": "Open bookstore",
         "fit": "Best for",
         "limit": "Use with",
+        "routes": "Guardian routes",
     },
     "ja": {
         "eyebrow": "BOOK RELICS",
@@ -355,6 +357,7 @@ AFFILIATE_COPY = {
         "button": "書店を見る",
         "fit": "向いている人",
         "limit": "使い方",
+        "routes": "対応する守護者ルート",
     },
     "ko": {
         "eyebrow": "BOOK RELICS",
@@ -363,6 +366,7 @@ AFFILIATE_COPY = {
         "button": "서점 열기",
         "fit": "추천 대상",
         "limit": "사용 팁",
+        "routes": "연결 수호자 루트",
     },
     "es": {
         "eyebrow": "BOOK RELICS",
@@ -371,6 +375,7 @@ AFFILIATE_COPY = {
         "button": "Abrir librería",
         "fit": "Ideal para",
         "limit": "Úsalo con",
+        "routes": "Rutas de guardianas",
     },
 }
 
@@ -3738,7 +3743,15 @@ def resources_page(lang: str) -> None:
 </a>
 """)
     book_cards = []
-    for book in AFFILIATE_BOOKS:
+    for book_index, book in enumerate(AFFILIATE_BOOKS):
+        matching_routes = []
+        for slug in GUARDIANS:
+            if SUPPLY_ROUTES[slug]["book"] != book_index:
+                continue
+            route = supply_route(lang, slug)
+            guardian_name, _guardian_type, _guardian_desc = route["guardian"][lang]
+            matching_routes.append(f'<a class="affiliate-route-tag" href="#supply-{slug}">{escape(guardian_name)} · {escape(route["title"])}</a>')
+        route_tags = "".join(matching_routes)
         book_cards.append(f"""
 <article class="affiliate-book-card">
   <div class="affiliate-book-icon">{escape(book["emoji"])}</div>
@@ -3748,6 +3761,7 @@ def resources_page(lang: str) -> None:
   <p>{escape(book["desc"][lang])}</p>
   <p><strong>{escape(affiliate_labels["fit"])}:</strong> {escape(book["fit"][lang])}</p>
   <p><strong>{escape(affiliate_labels["limit"])}:</strong> {escape(book["limit"][lang])}</p>
+  <div class="affiliate-route-match"><span>{escape(affiliate_labels["routes"])}</span><div>{route_tags}</div></div>
   <a class="primary-btn affiliate-book-link" href="{book["url"]}" target="_blank" rel="noopener sponsored">{escape(affiliate_labels["button"])}</a>
 </article>
 """)

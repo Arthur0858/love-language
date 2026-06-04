@@ -5342,6 +5342,11 @@ Policy: {DOMAIN}/privacy/
     write(ROOT / "security.txt", content)
 
 
+def write_ads_txt() -> None:
+    publisher_id = ADSENSE_ACCOUNT.removeprefix("ca-")
+    write(ROOT / "ads.txt", f"google.com, {publisher_id}, DIRECT, f08c47fec0942fa0\n")
+
+
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
@@ -5417,6 +5422,7 @@ https://:version.lovetypes.pages.dev/*
     write_site_manifest()
     write_feed_xml()
     write_security_txt()
+    write_ads_txt()
     write_redirects()
 
 

@@ -17,6 +17,13 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 CONTACT_EMAIL = "contact@lovetypes.tw"
+ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
+ADS_TXT_PATH = ROOT / "ads.txt"
+EXPECTED_ADS_TXT = "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS = {
+    "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+    "adsbygoogle",
+}
 FORBIDDEN_CONTACT_SNIPPETS = {
     "contact@parenttechchecklist.com",
     "parenttechchecklist.com",
@@ -885,6 +892,22 @@ def parse_security_txt(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
     return issues, stats
 
 
+def parse_ads_txt() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not ADS_TXT_PATH.exists():
+        return [f"{ADS_TXT_PATH}: missing ads.txt"], stats
+    lines = [
+        line.strip()
+        for line in ADS_TXT_PATH.read_text(encoding="utf-8", errors="ignore").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    stats["ads_txt_records"] = len(lines)
+    if lines != [EXPECTED_ADS_TXT]:
+        issues.append(f"{ADS_TXT_PATH}: expected exact AdSense seller record {EXPECTED_ADS_TXT!r}, found {lines}")
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -1121,6 +1144,16 @@ def main() -> int:
                     end = min(len(visible_text), script_match.end() + 32)
                     excerpt = visible_text[start:end]
                     issues.append(f"{page}: unexpected {script_name} text outside language menu: {excerpt}")
+
+        adsense_metas = [meta for meta in parser.metas if meta.get("name") == "google-adsense-account"]
+        stats["adsense_account_meta_tags"] += len(adsense_metas)
+        if len(adsense_metas) != 1:
+            issues.append(f"{page}: expected one google-adsense-account meta tag, found {len(adsense_metas)}")
+        elif adsense_metas[0].get("content") != ADSENSE_ACCOUNT:
+            issues.append(f"{page}: google-adsense-account should be {ADSENSE_ACCOUNT}")
+        for forbidden in FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS:
+            if forbidden in parser.source:
+                issues.append(f"{page}: full AdSense script should not load before approval: {forbidden}")
 
         page_title = "".join(parser.title_parts).strip()
         page_description = parser.meta_content("description")
@@ -1504,6 +1537,9 @@ def main() -> int:
     security_issues, security_stats = parse_security_txt(parsers)
     issues.extend(security_issues)
     stats.update(security_stats)
+    ads_issues, ads_stats = parse_ads_txt()
+    issues.extend(ads_issues)
+    stats.update(ads_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -1583,6 +1619,8 @@ def main() -> int:
     print(f"redirect_rules={stats['redirect_rules']}")
     print(f"security_txt_files={stats['security_txt_files']}")
     print(f"security_txt_fields={stats['security_txt_fields']}")
+    print(f"ads_txt_records={stats['ads_txt_records']}")
+    print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"mailto_links={stats['mailto_links']}")
     print(f"anchor_accessible_names={stats['anchor_accessible_names']}")

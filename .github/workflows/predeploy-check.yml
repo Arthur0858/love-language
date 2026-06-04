@@ -45,6 +45,14 @@ jobs:
           python tools/predeploy_check.py --visual-only 2>&1 | tee output/predeploy-check.log
           test ${PIPESTATUS[0]} -eq 0
 
+      - name: Run production public smoke
+        if: github.event_name == 'push'
+        run: |
+          python tools/public_deploy_smoke.py 2>&1 | tee output/public-deploy-smoke.log
+          test ${PIPESTATUS[0]} -eq 0
+          python tools/public_sitemap_smoke.py 2>&1 | tee output/public-sitemap-smoke.log
+          test ${PIPESTATUS[0]} -eq 0
+
       - name: Upload predeploy evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -52,5 +60,7 @@ jobs:
           name: predeploy-evidence
           path: |
             output/predeploy-check.log
+            output/public-deploy-smoke.log
+            output/public-sitemap-smoke.log
             output/playwright
           if-no-files-found: ignore

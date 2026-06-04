@@ -60,6 +60,10 @@ python3 tools/site_health_summary.py
 The summary is written to `output/site-health.md`. It is local evidence for the
 current machine and is intentionally not committed or deployed.
 
+GitHub Actions also runs the structural and browser smoke checks on pull
+requests. On pushes to `main`, it additionally runs the production public smoke
+and full sitemap smoke checks, then uploads those logs as workflow evidence.
+
 ## Deployment Scope
 
 The deploy script uploads only public static site output. It excludes local
@@ -85,5 +89,7 @@ A production deploy is not considered verified until all of these are true:
 - `python3 tools/public_deploy_smoke.py` returns `public_deploy_issues=0`.
 - `python3 tools/public_sitemap_smoke.py` returns `public_sitemap_issues=0`.
 - `python3 tools/site_health_summary.py` returns `site_health_status=ok`.
+- The `LoveTypes predeploy check` GitHub workflow for the pushed commit shows
+  `completed/success`, including the production public smoke steps on `main`.
 - `git status --short --branch` shows `main...origin/main` with no local
   changes after the intended commit has been pushed.

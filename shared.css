@@ -981,6 +981,48 @@ button.secondary-btn {
   border: 1px solid rgba(189, 82, 96, .62);
 }
 
+.worksheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid rgba(236, 216, 213, .92);
+  border-radius: 8px;
+  background: rgba(255, 253, 249, .86);
+}
+
+.worksheet-meta p {
+  flex: 1 1 280px;
+  margin: 0;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+.worksheet-meta div {
+  display: flex;
+  flex: 1 1 230px;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.worksheet-meta span {
+  color: var(--rose);
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.worksheet-meta .secondary-btn {
+  min-height: 38px;
+  padding: 9px 13px;
+}
+
 .repair-worksheet {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1645,6 +1687,11 @@ button.secondary-btn {
 
   .section-head { display: block; }
 
+  .worksheet-meta,
+  .worksheet-meta div {
+    justify-content: flex-start;
+  }
+
   .guardian-card img {
     height: 260px;
     object-position: center 16%;
@@ -1834,6 +1881,7 @@ button.secondary-btn {
   .hero-actions,
   .section-head > a,
   .print-button,
+  .worksheet-meta,
   .repair-guardian-section,
   .collector-section,
   .affiliate-books {

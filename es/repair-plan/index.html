@@ -22,7 +22,7 @@
   <meta property="og:description" content="Después del test, no hace falta reparar toda la relación de una vez. Usa siete días para convertir tu resultado en una ruta revisitable: mira la herida, pide una acción pequeña y elige un recurso para practicar." />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-repair-worksheet" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-repair-autosave" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -94,28 +94,82 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>Hoja de trabajo de esta semana</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">Imprimir / guardar PDF</button></div>
   <p class="section-intro">Completa estos cuatro campos y luego imprime o guarda como PDF. No busca resolver toda la relación de una vez; deja pistas de reparación para volver a mirar.</p>
-  <form class="repair-worksheet">
+  <div class="worksheet-meta"><p>Esta hoja se guarda solo en este navegador y dispositivo. No se envía a LoveTypes.</p><div><span data-worksheet-status>Autoguardado</span><button class="secondary-btn" type="button" data-clear-worksheet>Borrar notas locales</button></div></div>
+  <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>Mi resultado de guardiana</span>
-  <textarea placeholder="Ejemplo: Iris, palabras de afirmación"></textarea>
+  <textarea data-field="0" placeholder="Ejemplo: Iris, palabras de afirmación"></textarea>
 </label>
 
 <label>
   <span>El desajuste más claro de esta semana</span>
-  <textarea placeholder="Nombra una escena concreta, no todas las heridas"></textarea>
+  <textarea data-field="1" placeholder="Nombra una escena concreta, no todas las heridas"></textarea>
 </label>
 
 <label>
   <span>La petición pequeña que quiero hacer</span>
-  <textarea placeholder="Redúcela a un paso posible dentro de 24 horas"></textarea>
+  <textarea data-field="2" placeholder="Redúcela a un paso posible dentro de 24 horas"></textarea>
 </label>
 
 <label>
   <span>El recurso que elijo</span>
-  <textarea placeholder="Guía, Luna, libro o tarjeta de recuerdo"></textarea>
+  <textarea data-field="3" placeholder="Guía, Luna, libro o tarjeta de recuerdo"></textarea>
 </label>
 </form>
 </section>
+
+<script>
+(() => {
+  const form = document.querySelector('[data-repair-worksheet]');
+  if (!form) return;
+  const fields = [...form.querySelectorAll('textarea[data-field]')];
+  const status = document.querySelector('[data-worksheet-status]');
+  const clearButton = document.querySelector('[data-clear-worksheet]');
+  const key = `lovetypes:${location.pathname}:repair-worksheet`;
+  let timer = 0;
+
+  function setStatus(message) {
+    if (status) status.textContent = message;
+  }
+
+  function readStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function writeStorage() {
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+      setStatus("Autoguardado");
+    } catch (_error) {
+      return;
+    }
+  }
+
+  readStorage().forEach((value, index) => {
+    if (fields[index]) fields[index].value = value;
+  });
+
+  form.addEventListener('input', () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(writeStorage, 140);
+  });
+
+  clearButton?.addEventListener('click', () => {
+    fields.forEach((field) => field.value = '');
+    try {
+      localStorage.removeItem(key);
+    } catch (_error) {
+      return;
+    }
+    setStatus("Borrado");
+  });
+})();
+</script>
+
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>Ajusta por guardiana</h2></div><a href="/es/#quiz-section">Iniciar test</a></div>
   <div class="repair-guardian-grid">

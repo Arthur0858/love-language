@@ -22,7 +22,7 @@
   <meta property="og:description" content="테스트 뒤 관계 전체를 한 번에 고칠 필요는 없습니다. 일주일 동안 수호자 결과를 다시 볼 수 있는 연습 루트로 바꾸세요. 상처를 보고, 작은 요청을 만들고, 보급 하나를 선택합니다." />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-repair-worksheet" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-repair-autosave" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -94,28 +94,82 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>이번 주 마음 언어 워크시트</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">인쇄 / PDF 저장</button></div>
   <p class="section-intro">네 칸을 채운 뒤 인쇄하거나 PDF로 저장하세요. 모든 관계 문제를 한 번에 해결하려는 것이 아니라 다시 볼 수 있는 회복 단서를 남기는 도구입니다.</p>
-  <form class="repair-worksheet">
+  <div class="worksheet-meta"><p>이 워크시트는 이 기기의 브라우저에만 저장되며 LoveTypes로 전송되지 않습니다.</p><div><span data-worksheet-status>자동 저장됨</span><button class="secondary-btn" type="button" data-clear-worksheet>로컬 내용 지우기</button></div></div>
+  <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>나의 수호자 결과</span>
-  <textarea placeholder="예: 아이리스, 인정의 말"></textarea>
+  <textarea data-field="0" placeholder="예: 아이리스, 인정의 말"></textarea>
 </label>
 
 <label>
   <span>이번 주 가장 분명한 어긋남</span>
-  <textarea placeholder="구체적인 장면 하나만 씁니다"></textarea>
+  <textarea data-field="1" placeholder="구체적인 장면 하나만 씁니다"></textarea>
 </label>
 
 <label>
   <span>내가 실제로 말하고 싶은 작은 요청</span>
-  <textarea placeholder="24시간 안에 가능한 한 걸음으로 줄입니다"></textarea>
+  <textarea data-field="2" placeholder="24시간 안에 가능한 한 걸음으로 줄입니다"></textarea>
 </label>
 
 <label>
   <span>내가 선택한 보급</span>
-  <textarea placeholder="가이드, Luna, 책, 수호자 카드"></textarea>
+  <textarea data-field="3" placeholder="가이드, Luna, 책, 수호자 카드"></textarea>
 </label>
 </form>
 </section>
+
+<script>
+(() => {
+  const form = document.querySelector('[data-repair-worksheet]');
+  if (!form) return;
+  const fields = [...form.querySelectorAll('textarea[data-field]')];
+  const status = document.querySelector('[data-worksheet-status]');
+  const clearButton = document.querySelector('[data-clear-worksheet]');
+  const key = `lovetypes:${location.pathname}:repair-worksheet`;
+  let timer = 0;
+
+  function setStatus(message) {
+    if (status) status.textContent = message;
+  }
+
+  function readStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function writeStorage() {
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+      setStatus("자동 저장됨");
+    } catch (_error) {
+      return;
+    }
+  }
+
+  readStorage().forEach((value, index) => {
+    if (fields[index]) fields[index].value = value;
+  });
+
+  form.addEventListener('input', () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(writeStorage, 140);
+  });
+
+  clearButton?.addEventListener('click', () => {
+    fields.forEach((field) => field.value = '');
+    try {
+      localStorage.removeItem(key);
+    } catch (_error) {
+      return;
+    }
+    setStatus("지워짐");
+  });
+})();
+</script>
+
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>수호자별 조정</h2></div><a href="/ko/#quiz-section">테스트 시작</a></div>
   <div class="repair-guardian-grid">

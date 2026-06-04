@@ -22,7 +22,7 @@
   <meta property="og:description" content="After the quiz, you do not need to repair the whole relationship at once. Use seven days to turn your guardian result into a route you can revisit: notice the wound, ask for one small action, then choose one supply to support practice." />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-repair-worksheet" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-repair-autosave" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -94,28 +94,82 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>This Week&#x27;s Heart-Language Worksheet</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">Print / save as PDF</button></div>
   <p class="section-intro">Fill these four fields, then print or save as PDF. It is not meant to solve every relationship issue at once; it leaves repair clues you can revisit.</p>
-  <form class="repair-worksheet">
+  <div class="worksheet-meta"><p>This worksheet is saved only in this browser on this device. It is not sent to LoveTypes.</p><div><span data-worksheet-status>Autosaved</span><button class="secondary-btn" type="button" data-clear-worksheet>Clear local notes</button></div></div>
+  <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>My guardian result</span>
-  <textarea placeholder="Example: Iris, words of affirmation"></textarea>
+  <textarea data-field="0" placeholder="Example: Iris, words of affirmation"></textarea>
 </label>
 
 <label>
   <span>This week&#x27;s clearest misfrequency</span>
-  <textarea placeholder="Name one concrete scene, not every old wound"></textarea>
+  <textarea data-field="1" placeholder="Name one concrete scene, not every old wound"></textarea>
 </label>
 
 <label>
   <span>The small request I actually want to make</span>
-  <textarea placeholder="Shrink it into one step possible within 24 hours"></textarea>
+  <textarea data-field="2" placeholder="Shrink it into one step possible within 24 hours"></textarea>
 </label>
 
 <label>
   <span>The supply I choose</span>
-  <textarea placeholder="Guide, Luna, book, or keepsake card"></textarea>
+  <textarea data-field="3" placeholder="Guide, Luna, book, or keepsake card"></textarea>
 </label>
 </form>
 </section>
+
+<script>
+(() => {
+  const form = document.querySelector('[data-repair-worksheet]');
+  if (!form) return;
+  const fields = [...form.querySelectorAll('textarea[data-field]')];
+  const status = document.querySelector('[data-worksheet-status]');
+  const clearButton = document.querySelector('[data-clear-worksheet]');
+  const key = `lovetypes:${location.pathname}:repair-worksheet`;
+  let timer = 0;
+
+  function setStatus(message) {
+    if (status) status.textContent = message;
+  }
+
+  function readStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function writeStorage() {
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+      setStatus("Autosaved");
+    } catch (_error) {
+      return;
+    }
+  }
+
+  readStorage().forEach((value, index) => {
+    if (fields[index]) fields[index].value = value;
+  });
+
+  form.addEventListener('input', () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(writeStorage, 140);
+  });
+
+  clearButton?.addEventListener('click', () => {
+    fields.forEach((field) => field.value = '');
+    try {
+      localStorage.removeItem(key);
+    } catch (_error) {
+      return;
+    }
+    setStatus("Cleared");
+  });
+})();
+</script>
+
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>Adjust by guardian</h2></div><a href="/en/#quiz-section">Start quiz</a></div>
   <div class="repair-guardian-grid">

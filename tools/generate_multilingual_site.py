@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-repair-worksheet"
+ASSET_VERSION = "20260604-repair-autosave"
 
 
 FONT_CSS = ""
@@ -1079,6 +1079,10 @@ REPAIR_PLAN = {
         "worksheet_title": "本週心語工作表",
         "worksheet_intro": "填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。",
         "print": "列印 / 存成 PDF",
+        "autosave": "此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。",
+        "saved": "已自動保存",
+        "clear": "清除本機內容",
+        "cleared": "已清除",
         "fields": [("我的守護者結果", "例如：艾莉絲，肯定的言詞"), ("這週最明顯的錯頻", "寫一個具體場景，不寫全部舊帳"), ("我真正想提出的小請求", "縮成 24 小時內可做到的一步"), ("我選擇的補給", "指南、Luna、書卷或一張收藏卡")],
         "days": [
             ("第 1 天", "認領你的守護者", "寫下結果、分數最高的愛之語，以及最近一次感覺沒被接住的場景。"),
@@ -1102,6 +1106,10 @@ REPAIR_PLAN = {
         "worksheet_title": "This Week's Heart-Language Worksheet",
         "worksheet_intro": "Fill these four fields, then print or save as PDF. It is not meant to solve every relationship issue at once; it leaves repair clues you can revisit.",
         "print": "Print / save as PDF",
+        "autosave": "This worksheet is saved only in this browser on this device. It is not sent to LoveTypes.",
+        "saved": "Autosaved",
+        "clear": "Clear local notes",
+        "cleared": "Cleared",
         "fields": [("My guardian result", "Example: Iris, words of affirmation"), ("This week's clearest misfrequency", "Name one concrete scene, not every old wound"), ("The small request I actually want to make", "Shrink it into one step possible within 24 hours"), ("The supply I choose", "Guide, Luna, book, or keepsake card")],
         "days": [
             ("Day 1", "Claim your guardian", "Write down the result, the strongest love language, and one recent moment when you did not feel received."),
@@ -1125,6 +1133,10 @@ REPAIR_PLAN = {
         "worksheet_title": "今週の心語ワークシート",
         "worksheet_intro": "四つの欄を埋め、印刷または PDF として保存します。すべての問題を一度に扱うのではなく、戻って見られる修復の手がかりを残します。",
         "print": "印刷 / PDF 保存",
+        "autosave": "このワークシートはこの端末のブラウザ内にだけ保存され、LoveTypes へ送信されません。",
+        "saved": "自動保存済み",
+        "clear": "ローカル内容を消去",
+        "cleared": "消去しました",
         "fields": [("私の守護者結果", "例：アイリス、肯定の言葉"), ("今週いちばん明確なすれ違い", "具体的な場面を一つだけ書きます"), ("本当に伝えたい小さなお願い", "二十四時間以内にできる一歩へ縮めます"), ("選ぶ補給", "ガイド、Luna、本、守護者カード")],
         "days": [
             ("1日目", "守護者を認領する", "結果、もっとも強い愛の言語、最近受け取られなかった場面を書きます。"),
@@ -1148,6 +1160,10 @@ REPAIR_PLAN = {
         "worksheet_title": "이번 주 마음 언어 워크시트",
         "worksheet_intro": "네 칸을 채운 뒤 인쇄하거나 PDF로 저장하세요. 모든 관계 문제를 한 번에 해결하려는 것이 아니라 다시 볼 수 있는 회복 단서를 남기는 도구입니다.",
         "print": "인쇄 / PDF 저장",
+        "autosave": "이 워크시트는 이 기기의 브라우저에만 저장되며 LoveTypes로 전송되지 않습니다.",
+        "saved": "자동 저장됨",
+        "clear": "로컬 내용 지우기",
+        "cleared": "지워짐",
         "fields": [("나의 수호자 결과", "예: 아이리스, 인정의 말"), ("이번 주 가장 분명한 어긋남", "구체적인 장면 하나만 씁니다"), ("내가 실제로 말하고 싶은 작은 요청", "24시간 안에 가능한 한 걸음으로 줄입니다"), ("내가 선택한 보급", "가이드, Luna, 책, 수호자 카드")],
         "days": [
             ("1일차", "수호자 인정하기", "결과, 가장 강한 사랑의 언어, 최근 받지 못했다고 느낀 장면을 적습니다."),
@@ -1171,6 +1187,10 @@ REPAIR_PLAN = {
         "worksheet_title": "Hoja de trabajo de esta semana",
         "worksheet_intro": "Completa estos cuatro campos y luego imprime o guarda como PDF. No busca resolver toda la relación de una vez; deja pistas de reparación para volver a mirar.",
         "print": "Imprimir / guardar PDF",
+        "autosave": "Esta hoja se guarda solo en este navegador y dispositivo. No se envía a LoveTypes.",
+        "saved": "Autoguardado",
+        "clear": "Borrar notas locales",
+        "cleared": "Borrado",
         "fields": [("Mi resultado de guardiana", "Ejemplo: Iris, palabras de afirmación"), ("El desajuste más claro de esta semana", "Nombra una escena concreta, no todas las heridas"), ("La petición pequeña que quiero hacer", "Redúcela a un paso posible dentro de 24 horas"), ("El recurso que elijo", "Guía, Luna, libro o tarjeta de recuerdo")],
         "days": [
             ("Día 1", "Reclama tu guardiana", "Escribe el resultado, el lenguaje más fuerte y un momento reciente en que no te sentiste recibida."),
@@ -2506,6 +2526,65 @@ def resources_page(lang: str) -> None:
     write(page_path(lang, "resources"), layout(lang, page_title, t["resources_desc"], "resources", body, t["resources"], "website", "/og-cover.jpg", schema, affiliate=True))
 
 
+def repair_worksheet_script(lang: str) -> str:
+    plan = REPAIR_PLAN[lang]
+    saved = json.dumps(plan["saved"], ensure_ascii=False)
+    cleared = json.dumps(plan["cleared"], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const form = document.querySelector('[data-repair-worksheet]');
+  if (!form) return;
+  const fields = [...form.querySelectorAll('textarea[data-field]')];
+  const status = document.querySelector('[data-worksheet-status]');
+  const clearButton = document.querySelector('[data-clear-worksheet]');
+  const key = `lovetypes:${{location.pathname}}:repair-worksheet`;
+  let timer = 0;
+
+  function setStatus(message) {{
+    if (status) status.textContent = message;
+  }}
+
+  function readStorage() {{
+    try {{
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    }} catch (_error) {{
+      return [];
+    }}
+  }}
+
+  function writeStorage() {{
+    try {{
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+      setStatus({saved});
+    }} catch (_error) {{
+      return;
+    }}
+  }}
+
+  readStorage().forEach((value, index) => {{
+    if (fields[index]) fields[index].value = value;
+  }});
+
+  form.addEventListener('input', () => {{
+    window.clearTimeout(timer);
+    timer = window.setTimeout(writeStorage, 140);
+  }});
+
+  clearButton?.addEventListener('click', () => {{
+    fields.forEach((field) => field.value = '');
+    try {{
+      localStorage.removeItem(key);
+    }} catch (_error) {{
+      return;
+    }}
+    setStatus({cleared});
+  }});
+}})();
+</script>
+"""
+
+
 def repair_plan_page(lang: str) -> None:
     t = LANGS[lang]
     plan = REPAIR_PLAN[lang]
@@ -2519,9 +2598,9 @@ def repair_plan_page(lang: str) -> None:
     worksheet_fields = "".join(f"""
 <label>
   <span>{escape(label)}</span>
-  <textarea placeholder="{escape(placeholder)}"></textarea>
+  <textarea data-field="{idx}" placeholder="{escape(placeholder)}"></textarea>
 </label>
-""" for label, placeholder in plan["fields"])
+""" for idx, (label, placeholder) in enumerate(plan["fields"]))
     guardian_rows = []
     for slug in GUARDIANS:
         route = supply_route(lang, slug)
@@ -2555,8 +2634,10 @@ def repair_plan_page(lang: str) -> None:
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
   <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
-  <form class="repair-worksheet">{worksheet_fields}</form>
+  <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status>{escape(plan["saved"])}</span><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
+  <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
+{repair_worksheet_script(lang)}
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>
   <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>

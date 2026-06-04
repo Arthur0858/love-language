@@ -22,7 +22,7 @@
   <meta property="og:description" content="完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。" />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared.css?v=20260604-repair-worksheet" />
+  <link rel="stylesheet" href="/shared.css?v=20260604-repair-autosave" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -94,28 +94,82 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>本週心語工作表</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">列印 / 存成 PDF</button></div>
   <p class="section-intro">填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。</p>
-  <form class="repair-worksheet">
+  <div class="worksheet-meta"><p>此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。</p><div><span data-worksheet-status>已自動保存</span><button class="secondary-btn" type="button" data-clear-worksheet>清除本機內容</button></div></div>
+  <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>我的守護者結果</span>
-  <textarea placeholder="例如：艾莉絲，肯定的言詞"></textarea>
+  <textarea data-field="0" placeholder="例如：艾莉絲，肯定的言詞"></textarea>
 </label>
 
 <label>
   <span>這週最明顯的錯頻</span>
-  <textarea placeholder="寫一個具體場景，不寫全部舊帳"></textarea>
+  <textarea data-field="1" placeholder="寫一個具體場景，不寫全部舊帳"></textarea>
 </label>
 
 <label>
   <span>我真正想提出的小請求</span>
-  <textarea placeholder="縮成 24 小時內可做到的一步"></textarea>
+  <textarea data-field="2" placeholder="縮成 24 小時內可做到的一步"></textarea>
 </label>
 
 <label>
   <span>我選擇的補給</span>
-  <textarea placeholder="指南、Luna、書卷或一張收藏卡"></textarea>
+  <textarea data-field="3" placeholder="指南、Luna、書卷或一張收藏卡"></textarea>
 </label>
 </form>
 </section>
+
+<script>
+(() => {
+  const form = document.querySelector('[data-repair-worksheet]');
+  if (!form) return;
+  const fields = [...form.querySelectorAll('textarea[data-field]')];
+  const status = document.querySelector('[data-worksheet-status]');
+  const clearButton = document.querySelector('[data-clear-worksheet]');
+  const key = `lovetypes:${location.pathname}:repair-worksheet`;
+  let timer = 0;
+
+  function setStatus(message) {
+    if (status) status.textContent = message;
+  }
+
+  function readStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function writeStorage() {
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+      setStatus("已自動保存");
+    } catch (_error) {
+      return;
+    }
+  }
+
+  readStorage().forEach((value, index) => {
+    if (fields[index]) fields[index].value = value;
+  });
+
+  form.addEventListener('input', () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(writeStorage, 140);
+  });
+
+  clearButton?.addEventListener('click', () => {
+    fields.forEach((field) => field.value = '');
+    try {
+      localStorage.removeItem(key);
+    } catch (_error) {
+      return;
+    }
+    setStatus("已清除");
+  });
+})();
+</script>
+
 <section class="section repair-guardian-section">
   <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>依守護者調整任務</h2></div><a href="/#quiz-section">開始測驗</a></div>
   <div class="repair-guardian-grid">

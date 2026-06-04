@@ -4898,6 +4898,12 @@ def write_support_files() -> None:
 /deferred-external-*.js
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
+
+https://lovetypes.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.lovetypes.pages.dev/*
+  X-Robots-Tag: noindex
 """
     write(ROOT / "_headers", headers)
 

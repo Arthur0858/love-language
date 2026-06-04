@@ -11,6 +11,7 @@ from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
+EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 
 
 class PageParser(HTMLParser):
@@ -21,6 +22,7 @@ class PageParser(HTMLParser):
         self.buttons: list[list[object]] = []
         self.controls: list[tuple[str, dict[str, str]]] = []
         self.images: list[dict[str, str]] = []
+        self.links: list[dict[str, str]] = []
         self.ids: list[str] = []
         self.metas: list[dict[str, str]] = []
         self.title_parts: list[str] = []
@@ -51,6 +53,8 @@ class PageParser(HTMLParser):
             self.controls.append((tag, data))
         if tag == "img":
             self.images.append(data)
+        if tag == "link":
+            self.links.append(data)
         if tag == "meta":
             self.metas.append(data)
         for attr in ("href", "src", "poster"):
@@ -92,6 +96,9 @@ class PageParser(HTMLParser):
                 return meta.get("content", "")
         return ""
 
+    def links_with_rel(self, rel: str) -> list[dict[str, str]]:
+        return [link for link in self.links if rel in link.get("rel", "").split()]
+
 
 def html_pages() -> list[Path]:
     return sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts)
@@ -120,6 +127,18 @@ def target_for(page: Path, value: str) -> tuple[Path | None, str]:
     return target, parsed.fragment
 
 
+def local_html_target_exists(page: Path, value: str, parsers: dict[Path, PageParser]) -> bool:
+    target, fragment = target_for(page, value)
+    if target is None:
+        return True
+    if not target.exists():
+        return False
+    if fragment and target.suffix == ".html":
+        target_parser = parsers.get(target)
+        return bool(target_parser and fragment in target_parser.ids)
+    return True
+
+
 def main() -> int:
     pages = html_pages()
     parsers: dict[Path, PageParser] = {}
@@ -144,6 +163,44 @@ def main() -> int:
             issues.append(f"{page}: missing robots meta")
         if not parser.html_lang:
             issues.append(f"{page}: missing html lang")
+
+        canonicals = parser.links_with_rel("canonical")
+        stats["canonical_links"] += len(canonicals)
+        if len(canonicals) != 1:
+            issues.append(f"{page}: expected one canonical link, found {len(canonicals)}")
+        else:
+            canonical = canonicals[0].get("href", "")
+            parsed_canonical = urlparse(canonical)
+            if parsed_canonical.scheme != "https" or parsed_canonical.netloc != "lovetypes.tw":
+                issues.append(f"{page}: canonical must be absolute https lovetypes.tw URL: {canonical}")
+            if parsed_canonical.fragment:
+                issues.append(f"{page}: canonical should not contain fragment: {canonical}")
+            if not local_html_target_exists(page, canonical, parsers):
+                issues.append(f"{page}: canonical target missing: {canonical}")
+            if parser.meta_content("og:url") != canonical:
+                issues.append(f"{page}: og:url does not match canonical")
+
+        alternate_links = parser.links_with_rel("alternate")
+        hreflang_links = [link for link in alternate_links if link.get("hreflang")]
+        stats["hreflang_links"] += len(hreflang_links)
+        hreflangs = [link.get("hreflang", "") for link in hreflang_links]
+        missing_hreflangs = sorted(EXPECTED_HREFLANGS.difference(hreflangs))
+        duplicate_hreflangs = [value for value, count in Counter(hreflangs).items() if count > 1]
+        if missing_hreflangs:
+            issues.append(f"{page}: missing hreflang alternates {', '.join(missing_hreflangs)}")
+        if duplicate_hreflangs:
+            issues.append(f"{page}: duplicate hreflang alternates {', '.join(duplicate_hreflangs)}")
+        for link in hreflang_links:
+            href = link.get("href", "")
+            parsed_href = urlparse(href)
+            if parsed_href.scheme != "https" or parsed_href.netloc != "lovetypes.tw":
+                issues.append(f"{page}: hreflang must be absolute https lovetypes.tw URL: {href}")
+            if not local_html_target_exists(page, href, parsers):
+                issues.append(f"{page}: hreflang target missing: {href}")
+        hreflang_map = {link.get("hreflang", ""): link.get("href", "") for link in hreflang_links}
+        if hreflang_map.get("x-default") and hreflang_map.get("zh-TW") and hreflang_map["x-default"] != hreflang_map["zh-TW"]:
+            issues.append(f"{page}: x-default hreflang should match zh-TW alternate")
+
         duplicate_ids = [value for value, count in Counter(parser.ids).items() if count > 1]
         if duplicate_ids:
             issues.append(f"{page}: duplicate ids {', '.join(duplicate_ids[:10])}")
@@ -211,6 +268,8 @@ def main() -> int:
     print(f"pages={stats['pages']}")
     print(f"images={stats['images']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
+    print(f"canonical_links={stats['canonical_links']}")
+    print(f"hreflang_links={stats['hreflang_links']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

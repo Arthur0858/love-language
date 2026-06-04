@@ -1040,6 +1040,53 @@ button.secondary-btn {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.luna-offer-section {
+  background:
+    radial-gradient(circle at 86% 14%, rgba(221, 182, 255, .2), transparent 28%),
+    linear-gradient(180deg, #f8f4ff, #fffdf9);
+}
+
+.luna-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.luna-offer-grid article {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(218, 204, 242, .92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 30px rgba(46, 27, 82, .06);
+}
+
+.luna-offer-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  line-height: 1.18;
+}
+
+.luna-offer-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.luna-offer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.luna-offer-actions .primary-btn,
+.luna-offer-actions .secondary-btn {
+  flex: 1 1 190px;
+  min-width: 0;
+}
+
 .luna-guardian-flow {
   background:
     radial-gradient(circle at 14% 18%, rgba(118, 102, 168, .12), transparent 28%),
@@ -2349,6 +2396,7 @@ button.secondary-btn {
   .quiz-starter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .luna-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
   .luna-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
@@ -2556,6 +2604,7 @@ button.secondary-btn {
   .guide-compass-grid,
   .luna-protocol-grid,
   .luna-use-grid,
+  .luna-offer-grid,
   .keepsake-use-grid,
   .collector-grid,
   .repair-day-grid,

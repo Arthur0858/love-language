@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-result-starter-kit"
+ASSET_VERSION = "20260604-luna-offer"
 
 
 FONT_CSS = ""
@@ -1051,6 +1051,75 @@ LUNA_GUARDIAN_FLOW = {
             "claire": "Convierte el cansancio en una petición concreta con tiempo, acción y condición de terminado.",
             "dora": "Nota si tu cuerpo se siente seguro y escribe una frase de consentimiento y límite de cercanía.",
         },
+    },
+}
+
+
+LUNA_OFFER = {
+    "zh": {
+        "eyebrow": "LUNA SUPPLY ENTRY",
+        "title": "先免費聆聽，再決定是否需要夜間補給套裝",
+        "intro": "Luna 目前先作為免費聆聽與關係整理入口。若未來推出下載包、練習卡或睡前流程，會以不承諾療效、不取代諮商的方式呈現。",
+        "items": [
+            ("免費聆聽", "先用公開音樂陪你睡前書寫、吵架後冷卻，確認這種節奏是否真的適合你。"),
+            ("接回守護者路線", "聽完後回到你的守護者補給路線，只選一個小任務，不把所有問題一次修完。"),
+            ("未來補給通知", "如果你想要下載包、PDF 練習卡或睡前流程，可以先用聯絡信箱留下需求。"),
+        ],
+        "listen": "免費聆聽 Luna",
+        "resources": "回到補給站",
+        "contact": "告訴我們你需要的補給",
+    },
+    "en": {
+        "eyebrow": "LUNA SUPPLY ENTRY",
+        "title": "Listen free first, then decide whether a night supply pack fits",
+        "intro": "Luna is currently a free listening and reflection doorway. If future downloads, practice cards, or bedtime flows become available, they will support repair without promising outcomes or replacing counseling.",
+        "items": [
+            ("Free listening", "Use the public music for bedtime journaling or post-conflict cooling, then notice whether the rhythm truly fits you."),
+            ("Return to your route", "After listening, return to your guardian supply route and choose one small task instead of repairing everything at once."),
+            ("Future supply note", "If you want downloads, PDF practice cards, or bedtime flows, use the contact inbox to tell us what would help."),
+        ],
+        "listen": "Listen to Luna free",
+        "resources": "Return to supplies",
+        "contact": "Tell us what supply you need",
+    },
+    "ja": {
+        "eyebrow": "LUNA SUPPLY ENTRY",
+        "title": "まず無料で聴き、夜の補給セットが必要か決める",
+        "intro": "Luna は現在、無料で聴ける内省の入口です。将来ダウンロード、練習カード、就寝前フローを出す場合も、効果を約束せず、相談支援の代わりにはしません。",
+        "items": [
+            ("無料で聴く", "公開音楽を就寝前の日記や衝突後の静けさに使い、このリズムが自分に合うか確かめます。"),
+            ("守護者ルートへ戻る", "聴いた後は守護者の補給ルートへ戻り、一つの小さな課題だけを選びます。"),
+            ("今後の補給希望", "ダウンロード、PDF 練習カード、就寝前フローが必要なら、連絡先へ希望を送れます。"),
+        ],
+        "listen": "Luna を無料で聴く",
+        "resources": "補給へ戻る",
+        "contact": "必要な補給を伝える",
+    },
+    "ko": {
+        "eyebrow": "LUNA SUPPLY ENTRY",
+        "title": "먼저 무료로 듣고 밤 보급 세트가 맞는지 결정하기",
+        "intro": "Luna는 현재 무료 청취와 관계 성찰의 입구입니다. 향후 다운로드, 연습 카드, 잠들기 전 흐름이 나오더라도 결과를 약속하거나 상담을 대신하지 않습니다.",
+        "items": [
+            ("무료 청취", "공개 음악을 잠들기 전 기록이나 다툼 뒤 진정에 사용하고, 이 리듬이 정말 맞는지 확인합니다."),
+            ("수호자 루트로 돌아가기", "들은 뒤에는 수호자 보급 루트로 돌아가 작은 과제 하나만 고릅니다."),
+            ("미래 보급 알림", "다운로드, PDF 연습 카드, 잠들기 전 흐름이 필요하다면 연락 메일로 알려 주세요."),
+        ],
+        "listen": "Luna 무료 듣기",
+        "resources": "보급소로 돌아가기",
+        "contact": "필요한 보급 알려주기",
+    },
+    "es": {
+        "eyebrow": "LUNA SUPPLY ENTRY",
+        "title": "Escucha gratis primero y decide si un pack nocturno encaja",
+        "intro": "Luna funciona ahora como entrada gratuita de escucha y reflexión. Si más adelante hay descargas, tarjetas o rutinas nocturnas, serán apoyo para practicar, no promesa de resultado ni reemplazo de terapia.",
+        "items": [
+            ("Escucha gratis", "Usa la música pública para escribir antes de dormir o enfriar después de un conflicto y nota si el ritmo te sirve."),
+            ("Vuelve a tu ruta", "Después de escuchar, vuelve a la ruta de tu guardiana y elige una tarea pequeña, no todo a la vez."),
+            ("Aviso de recursos futuros", "Si quieres descargas, tarjetas PDF o rutinas nocturnas, usa el correo de contacto para decirnos qué ayudaría."),
+        ],
+        "listen": "Escuchar Luna gratis",
+        "resources": "Volver a recursos",
+        "contact": "Decir qué recurso necesitas",
     },
 }
 
@@ -3817,6 +3886,28 @@ def luna_night_protocol(lang: str) -> str:
 """
 
 
+def luna_offer_section(lang: str) -> str:
+    offer = LUNA_OFFER[lang]
+    cards = "".join(f"""
+<article>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+""" for title, desc in offer["items"])
+    return f"""
+<section class="section luna-offer-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(offer["eyebrow"])}</p><h2>{escape(offer["title"])}</h2></div></div>
+  <p class="section-intro">{escape(offer["intro"])}</p>
+  <div class="luna-offer-grid">{cards}</div>
+  <div class="luna-offer-actions">
+    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener">{escape(offer["listen"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(offer["resources"])}</a>
+    <a class="secondary-btn" href="mailto:contact@lovetypes.tw?subject=Luna%20night%20supply">{escape(offer["contact"])}</a>
+  </div>
+</section>
+"""
+
+
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
@@ -3868,6 +3959,7 @@ def luna_page(lang: str) -> None:
   <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
 </section>
+{luna_offer_section(lang)}
 <section class="section luna-guardian-flow">
   <div class="section-head"><div><p class="eyebrow">{escape(flow["eyebrow"])}</p><h2>{escape(flow["title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div>
   <p class="section-intro">{escape(flow["intro"])}</p>

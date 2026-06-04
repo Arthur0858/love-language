@@ -10,7 +10,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 from PIL import Image
 
@@ -29,6 +29,21 @@ FORBIDDEN_CONTACT_SNIPPETS = {
     "s755102@gmail.com",
 }
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
+AFFILIATE_HOST = "www.books.com.tw"
+AFFILIATE_PATH_PREFIX = "/exep/assp.php/arthur0858/products/"
+AFFILIATE_REQUIRED_QUERY = {
+    "utm_source": "arthur0858",
+    "utm_medium": "ap-books",
+    "utm_content": "recommend",
+    "utm_campaign": "ap-202604",
+}
+AFFILIATE_DISCLOSURE_SNIPPETS = {
+    "聯盟行銷",
+    "affiliate links",
+    "アフィリエイト",
+    "제휴",
+    "afiliado",
+}
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 EXPECTED_OG_LOCALES = {
     "zh-TW": "zh_TW",
@@ -1581,6 +1596,7 @@ def main() -> int:
         if duplicate_ids:
             issues.append(f"{page}: duplicate ids {', '.join(duplicate_ids[:10])}")
 
+        page_affiliate_links = 0
         jsonld_page_entities: list[dict] = []
         if not parser.jsonld_blocks:
             issues.append(f"{page}: missing JSON-LD")
@@ -1699,8 +1715,24 @@ def main() -> int:
                 rel = set(anchor.get("rel", "").split())
                 if anchor.get("target") == "_blank" and not {"noopener", "noreferrer"}.issubset(rel):
                     issues.append(f"{page}: external _blank link missing noopener/noreferrer: {href}")
-                if "books.com.tw" in parsed.netloc and "sponsored" not in rel:
-                    issues.append(f"{page}: affiliate link missing sponsored rel: {href}")
+                if parsed.netloc == AFFILIATE_HOST:
+                    page_affiliate_links += 1
+                    stats["affiliate_links"] += 1
+                    if "sponsored" not in rel:
+                        issues.append(f"{page}: affiliate link missing sponsored rel: {href}")
+                    if not parsed.path.startswith(AFFILIATE_PATH_PREFIX):
+                        issues.append(f"{page}: affiliate link should use tracking path {AFFILIATE_PATH_PREFIX}: {href}")
+                    query = parse_qs(parsed.query)
+                    for key, expected_value in AFFILIATE_REQUIRED_QUERY.items():
+                        if query.get(key, [""])[0] != expected_value:
+                            issues.append(f"{page}: affiliate link missing {key}={expected_value}: {href}")
+
+        if page_affiliate_links:
+            stats["affiliate_pages"] += 1
+            has_disclosure_class = 'class="affiliate-disclosure"' in parser.source
+            has_disclosure_text = any(snippet in parser.source for snippet in AFFILIATE_DISCLOSURE_SNIPPETS)
+            if not has_disclosure_class and not has_disclosure_text:
+                issues.append(f"{page}: affiliate links require a visible affiliate disclosure")
 
         for tag, attr, raw in parser.refs:
             values = [raw]
@@ -1851,6 +1883,8 @@ def main() -> int:
     print(f"legacy_static_assets_checked={stats['legacy_static_assets_checked']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
+    print(f"affiliate_pages={stats['affiliate_pages']}")
+    print(f"affiliate_links={stats['affiliate_links']}")
     print(f"issues={len(issues)}")
     for issue in issues[:200]:
         print(issue)

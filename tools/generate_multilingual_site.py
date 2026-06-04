@@ -70,6 +70,10 @@ LANGS = {
         "read": "閱讀指南",
         "learn_more": "了解更多",
         "practice": "今日練習",
+        "skip_content": "跳到主要內容",
+        "primary_nav": "主要導覽",
+        "language_menu": "語言選單",
+        "breadcrumb_label": "頁面路徑",
         "boundary": "內容邊界",
         "boundary_text": "LoveTypes 的守護者與心語庭園是自我理解與關係溝通的隱喻工具，不提供心理諮商、醫療建議、法律建議或個別關係診斷。若你正面臨暴力、控制、創傷或高風險處境，請先離開高風險場域，尋求可信任的人與專業支援。",
         "home_title": "LoveTypes｜五種愛之語測驗與關係溝通指南",
@@ -102,6 +106,10 @@ LANGS = {
         "read": "Read guide",
         "learn_more": "Learn more",
         "practice": "Today practice",
+        "skip_content": "Skip to content",
+        "primary_nav": "Primary navigation",
+        "language_menu": "Language menu",
+        "breadcrumb_label": "Breadcrumb",
         "boundary": "Editorial boundary",
         "boundary_text": "The LoveTypes guardians and Heart Garden are metaphor tools for self-reflection and relationship communication. They are not therapy, medical advice, legal advice, or a relationship diagnosis. If you are facing violence, coercive control, trauma, or urgent risk, seek trusted local and professional support first.",
         "home_title": "LoveTypes | Love Language Quiz and Relationship Guides",
@@ -134,6 +142,10 @@ LANGS = {
         "read": "ガイドを読む",
         "learn_more": "詳しく見る",
         "practice": "今日の練習",
+        "skip_content": "本文へ移動",
+        "primary_nav": "主要ナビゲーション",
+        "language_menu": "言語メニュー",
+        "breadcrumb_label": "パンくずリスト",
         "boundary": "内容の範囲",
         "boundary_text": "LoveTypes の守護者と心語の庭は、自己理解と関係コミュニケーションのための比喩ツールです。心理療法、医療助言、法律助言、個別の関係診断ではありません。暴力、支配、トラウマ、緊急の危険がある場合は、まず信頼できる人や専門機関に相談してください。",
         "home_title": "LoveTypes｜愛の言語診断と関係コミュニケーションガイド",
@@ -166,6 +178,10 @@ LANGS = {
         "read": "가이드 읽기",
         "learn_more": "더 알아보기",
         "practice": "오늘의 연습",
+        "skip_content": "본문으로 이동",
+        "primary_nav": "주요 탐색",
+        "language_menu": "언어 메뉴",
+        "breadcrumb_label": "이동 경로",
         "boundary": "콘텐츠 범위",
         "boundary_text": "LoveTypes의 수호자와 마음의 정원은 자기 이해와 관계 대화를 위한 은유적 도구입니다. 심리상담, 의료 조언, 법률 조언, 개별 관계 진단을 제공하지 않습니다. 폭력, 통제, 트라우마, 긴급 위험이 있다면 먼저 신뢰할 수 있는 사람과 전문 기관의 도움을 받으세요.",
         "home_title": "LoveTypes｜사랑의 언어 테스트와 관계 대화 가이드",
@@ -198,6 +214,10 @@ LANGS = {
         "read": "Leer guía",
         "learn_more": "Ver más",
         "practice": "Práctica de hoy",
+        "skip_content": "Saltar al contenido",
+        "primary_nav": "Navegación principal",
+        "language_menu": "Menú de idioma",
+        "breadcrumb_label": "Ruta de navegación",
         "boundary": "Límite editorial",
         "boundary_text": "Las guardianas de LoveTypes y el Jardín del Corazón son herramientas metafóricas para la autorreflexión y la comunicación relacional. No ofrecen terapia, consejo médico, consejo legal ni diagnóstico individual. Si enfrentas violencia, control, trauma o riesgo urgente, busca primero apoyo profesional y personas de confianza.",
         "home_title": "LoveTypes | Test de lenguajes del amor y guías de relación",
@@ -2496,9 +2516,9 @@ def nav(lang: str, active: str = "", path: str = "") -> str:
     return f"""
 <header class="site-nav">
   <a class="brand" href="{lang_url(lang)}" aria-label="{escape(t["brand"])}"><span>LoveTypes</span></a>
-  <nav class="nav-links" aria-label="Primary navigation">{links}</nav>
+  <nav class="nav-links" aria-label="{escape(t["primary_nav"])}">{links}</nav>
   <details class="language-menu">
-    <summary aria-label="Language menu"><span></span></summary>
+    <summary aria-label="{escape(t["language_menu"])}"><span></span></summary>
     <div class="language-switcher">{lang_links}</div>
   </details>
 </header>
@@ -2560,7 +2580,7 @@ def breadcrumb_nav(lang: str, path: str, title: str) -> str:
             links.append(f'<span aria-current="page">{escape(label)}</span>')
         else:
             links.append(f'<a href="{href}">{escape(label)}</a>')
-    return f'<nav class="breadcrumb" aria-label="Breadcrumb">{"<span>/</span>".join(links)}</nav>'
+    return f'<nav class="breadcrumb" aria-label="{escape(LANGS[lang]["breadcrumb_label"])}">{"<span>/</span>".join(links)}</nav>'
 
 
 def breadcrumb_schema(lang: str, path: str, title: str) -> str:
@@ -2647,7 +2667,7 @@ def layout(lang: str, title: str, desc: str, path: str, body: str, active: str =
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
     return head(lang, title, desc, path, page_type, image) + f"""<body>
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
 {nav(lang, active, path)}
 {schema}
 {breadcrumb_schema(lang, path, title)}

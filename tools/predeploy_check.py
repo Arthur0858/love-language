@@ -24,6 +24,7 @@ PYTHON_TOOLS = [
     "tools/performance_budget_audit.py",
     "tools/public_deploy_smoke.py",
     "tools/public_sitemap_smoke.py",
+    "tools/site_health_summary.py",
     "tools/deploy_cloudflare_pages.py",
     "tools/deploy_manifest_audit.py",
 ]

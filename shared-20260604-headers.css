@@ -1939,6 +1939,7 @@ button.secondary-btn {
 .quiz-result {
   display: grid;
   gap: 18px;
+  scroll-margin-top: 96px;
 }
 
 .quiz-stage[hidden],
@@ -2279,11 +2280,14 @@ button.secondary-btn {
 .quiz-result-card img {
   display: block;
   width: 100%;
-  max-height: 240px;
+  height: min(30vw, 260px);
+  min-height: 220px;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 36%;
   border-radius: 8px;
-  background: rgba(255, 253, 249, .76);
+  background: rgba(255, 253, 249, .92);
+  box-shadow: 0 14px 34px rgba(34, 20, 22, .24);
+  filter: saturate(1.08) contrast(1.06);
 }
 
 .quiz-result-copy h3 {
@@ -3126,7 +3130,10 @@ button.secondary-btn {
 
   .quiz-result-card img {
     max-width: 190px;
-    max-height: 210px;
+    width: min(100%, 220px);
+    height: 238px;
+    min-height: 238px;
+    justify-self: center;
   }
 
   .quiz-saved-card {

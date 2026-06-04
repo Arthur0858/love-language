@@ -63,6 +63,20 @@ function summarizeQuizFailures(results) {
   });
 }
 
+function summarizeConversionFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
+    if (!result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (result.scrollY > 1200) failures.push('resume scrolled too far');
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 async function firstExistingPath(paths) {
   for (const path of paths) {
     try {
@@ -126,6 +140,10 @@ const cases = [
 const quizCases = [
   { name: 'quiz-flow-desktop', path: '/', viewport: { width: 1280, height: 900 } },
   { name: 'quiz-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
+];
+
+const conversionCases = [
+  { name: 'conversion-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -237,12 +255,65 @@ for (const item of quizCases) {
   await page.close();
 }
 
+for (const item of conversionCases) {
+  const page = await browser.newPage({ viewport: item.viewport });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  await page.evaluate(() => localStorage.clear());
+  await page.locator('[data-quiz-start]').first().click();
+
+  for (let index = 0; index < 15; index += 1) {
+    await page.locator('.quiz-option').first().click();
+    await page.locator('.quiz-next').click();
+  }
+
+  await page.locator('[data-conversion-route]').click();
+  await page.waitForLoadState('networkidle');
+  await page.locator('[data-supply-saved]:not([hidden])').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => window.scrollY < 1200);
+
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    url: `${new URL(page.url()).pathname}${new URL(page.url()).hash}`,
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    navCount: await page.locator('.nav-links a').count(),
+    textLength: (await page.locator('body').innerText()).length,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible(),
+    scrollY: await page.evaluate(() => window.scrollY),
+    screenshot,
+  });
+  await page.close();
+}
+
 await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-flow-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
+  ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-flow-'))),
 ];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);

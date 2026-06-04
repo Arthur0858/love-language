@@ -18,6 +18,7 @@
 
   function loadExternalScripts() {
     if (shouldLoadAffiliate) {
+      if (document.querySelector('a[rel~="sponsored"]')) return;
       window.ConverlyCustomData = window.ConverlyCustomData || { channelId: null };
       loadScript(affiliateSrc, { defer: true });
     }

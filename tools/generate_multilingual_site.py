@@ -3923,6 +3923,12 @@ def supply_resume_script(lang: str) -> str:
     </article>`;
   box.hidden = false;
   box.querySelector('[data-clear-supply-result]').addEventListener('click', clearSavedResult);
+  if (location.hash === `#supply-${{result.slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
 }})();
 </script>
 """

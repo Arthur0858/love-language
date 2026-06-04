@@ -22,7 +22,7 @@
   <meta property="og:description" content="診断後、関係全体をすぐ修復する必要はありません。七日間で守護者の結果を見返せる練習ルートにします。傷を見つけ、小さなお願いにし、補給を一つ選びます。" />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared-20260604-supply-wishlist.css" />
+  <link rel="stylesheet" href="/shared-20260604-repair-summary.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -95,7 +95,7 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>今週の心語ワークシート</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">印刷 / PDF 保存</button></div>
   <p class="section-intro">四つの欄を埋め、印刷または PDF として保存します。すべての問題を一度に扱うのではなく、戻って見られる修復の手がかりを残します。</p>
-  <div class="worksheet-meta"><p>このワークシートはこの端末のブラウザ内にだけ保存され、LoveTypes へ送信されません。</p><div><span data-worksheet-status>自動保存済み</span><button class="secondary-btn" type="button" data-clear-worksheet>ローカル内容を消去</button></div></div>
+  <div class="worksheet-meta"><p>このワークシートはこの端末のブラウザ内にだけ保存され、LoveTypes へ送信されません。</p><div><span data-worksheet-status>自動保存済み</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>今週の振り返りをコピー</button><button class="secondary-btn" type="button" data-clear-worksheet>ローカル内容を消去</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>私の守護者結果</span>
@@ -127,11 +127,19 @@
   const resumeFill = "ワークシートへ入れる";
   const resumePlan = "守護者課題へ移動";
   const bookstoreLabel = "書店を見る";
+  const copySummaryLabel = "今週の振り返りをコピー";
+  const summaryTitle = "LoveTypes 今週の心語レビュー";
+  const summaryGuardian = "守護者ルート";
+  const summaryNext = "次の補給";
+  const summaryCopied = "振り返りをコピーしました";
+  const summaryEmpty = "一つ以上入力してからコピーしてください";
+  const fieldLabels = ["私の守護者結果", "今週いちばん明確なすれ違い", "本当に伝えたい小さなお願い", "選ぶ補給"];
   const form = document.querySelector('[data-repair-worksheet]');
   if (!form) return;
   const fields = [...form.querySelectorAll('textarea[data-field]')];
   const status = document.querySelector('[data-worksheet-status]');
   const clearButton = document.querySelector('[data-clear-worksheet]');
+  const copyButton = document.querySelector('[data-copy-worksheet-summary]');
   const resumeBox = document.querySelector('[data-repair-saved]');
   const key = `lovetypes:${location.pathname}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -184,6 +192,58 @@
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  async function copyText(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+
+  function buildSummary() {
+    const savedResult = readSavedResult();
+    const result = savedResult ? quiz.results[savedResult.primaryKey] : null;
+    const values = fields.map((field) => field.value.trim());
+    if (!values.some(Boolean) && !result) return '';
+    const lines = [summaryTitle];
+    if (result) {
+      lines.push(`${summaryGuardian}: ${result.name} · ${result.type}`);
+      lines.push(`${summaryNext}: ${result.supplyTitle} · ${result.supplyMission}`);
+    }
+    values.forEach((value, index) => {
+      if (value) lines.push(`${fieldLabels[index]}: ${value}`);
+    });
+    lines.push(location.href);
+    return lines.join('\n');
+  }
+
+  async function copySummary() {
+    window.clearTimeout(timer);
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+    } catch (_error) {}
+    const summary = buildSummary();
+    if (!summary) {
+      setStatus(summaryEmpty);
+      fields[0]?.focus();
+      return;
+    }
+    try {
+      await copyText(summary);
+      setStatus(summaryCopied);
+    } catch (_error) {
+      setStatus(summaryEmpty);
+    }
+  }
+
   function renderResume() {
     if (!resumeBox) return;
     const savedResult = readSavedResult();
@@ -229,6 +289,8 @@
     }
     setStatus("消去しました");
   });
+  copyButton?.addEventListener('click', copySummary);
+  if (copyButton) copyButton.textContent = copySummaryLabel;
   renderResume();
 })();
 </script>
@@ -329,7 +391,7 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-supply-wishlist.js" defer></script>
+<script src="/site-interactions-20260604-repair-summary.js" defer></script>
 
 </body>
 </html>

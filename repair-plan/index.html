@@ -22,7 +22,7 @@
   <meta property="og:description" content="完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。" />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared-20260604-supply-wishlist.css" />
+  <link rel="stylesheet" href="/shared-20260604-repair-summary.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -95,7 +95,7 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>本週心語工作表</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">列印 / 存成 PDF</button></div>
   <p class="section-intro">填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。</p>
-  <div class="worksheet-meta"><p>此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。</p><div><span data-worksheet-status>已自動保存</span><button class="secondary-btn" type="button" data-clear-worksheet>清除本機內容</button></div></div>
+  <div class="worksheet-meta"><p>此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。</p><div><span data-worksheet-status>已自動保存</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>複製本週回顧</button><button class="secondary-btn" type="button" data-clear-worksheet>清除本機內容</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>我的守護者結果</span>
@@ -127,11 +127,19 @@
   const resumeFill = "帶入工作表";
   const resumePlan = "跳到守護者任務";
   const bookstoreLabel = "前往博客來";
+  const copySummaryLabel = "複製本週回顧";
+  const summaryTitle = "LoveTypes 本週心語回顧";
+  const summaryGuardian = "守護者路線";
+  const summaryNext = "下一步補給";
+  const summaryCopied = "已複製回顧";
+  const summaryEmpty = "先填寫一格，再複製回顧";
+  const fieldLabels = ["我的守護者結果", "這週最明顯的錯頻", "我真正想提出的小請求", "我選擇的補給"];
   const form = document.querySelector('[data-repair-worksheet]');
   if (!form) return;
   const fields = [...form.querySelectorAll('textarea[data-field]')];
   const status = document.querySelector('[data-worksheet-status]');
   const clearButton = document.querySelector('[data-clear-worksheet]');
+  const copyButton = document.querySelector('[data-copy-worksheet-summary]');
   const resumeBox = document.querySelector('[data-repair-saved]');
   const key = `lovetypes:${location.pathname}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -184,6 +192,58 @@
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  async function copyText(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+
+  function buildSummary() {
+    const savedResult = readSavedResult();
+    const result = savedResult ? quiz.results[savedResult.primaryKey] : null;
+    const values = fields.map((field) => field.value.trim());
+    if (!values.some(Boolean) && !result) return '';
+    const lines = [summaryTitle];
+    if (result) {
+      lines.push(`${summaryGuardian}: ${result.name} · ${result.type}`);
+      lines.push(`${summaryNext}: ${result.supplyTitle} · ${result.supplyMission}`);
+    }
+    values.forEach((value, index) => {
+      if (value) lines.push(`${fieldLabels[index]}: ${value}`);
+    });
+    lines.push(location.href);
+    return lines.join('\n');
+  }
+
+  async function copySummary() {
+    window.clearTimeout(timer);
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+    } catch (_error) {}
+    const summary = buildSummary();
+    if (!summary) {
+      setStatus(summaryEmpty);
+      fields[0]?.focus();
+      return;
+    }
+    try {
+      await copyText(summary);
+      setStatus(summaryCopied);
+    } catch (_error) {
+      setStatus(summaryEmpty);
+    }
+  }
+
   function renderResume() {
     if (!resumeBox) return;
     const savedResult = readSavedResult();
@@ -229,6 +289,8 @@
     }
     setStatus("已清除");
   });
+  copyButton?.addEventListener('click', copySummary);
+  if (copyButton) copyButton.textContent = copySummaryLabel;
   renderResume();
 })();
 </script>
@@ -329,7 +391,7 @@
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-supply-wishlist.js" defer></script>
+<script src="/site-interactions-20260604-repair-summary.js" defer></script>
 
 </body>
 </html>

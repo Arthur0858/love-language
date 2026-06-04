@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-supply-wishlist"
+ASSET_VERSION = "20260604-repair-summary"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1804,6 +1804,12 @@ REPAIR_PLAN = {
         "saved": "已自動保存",
         "clear": "清除本機內容",
         "cleared": "已清除",
+        "copy_summary": "複製本週回顧",
+        "summary_title": "LoveTypes 本週心語回顧",
+        "summary_guardian": "守護者路線",
+        "summary_next": "下一步補給",
+        "summary_copied": "已複製回顧",
+        "summary_empty": "先填寫一格，再複製回顧",
         "resume_title": "繼續你的 7 日路線",
         "resume_intro": "你上次認領的守護者可以直接帶入這份工作表。先做今天的小任務，再視情況選 Luna、補給站或延伸書卷。",
         "resume_fill": "帶入工作表",
@@ -1835,6 +1841,12 @@ REPAIR_PLAN = {
         "saved": "Autosaved",
         "clear": "Clear local notes",
         "cleared": "Cleared",
+        "copy_summary": "Copy weekly review",
+        "summary_title": "LoveTypes weekly heart-language review",
+        "summary_guardian": "Guardian route",
+        "summary_next": "Next supply",
+        "summary_copied": "Review copied",
+        "summary_empty": "Fill at least one field before copying",
         "resume_title": "Continue your 7-day route",
         "resume_intro": "Your last guardian result can be carried into this worksheet. Start with today's small task, then choose Luna, the supply station, or an extended book only if it fits.",
         "resume_fill": "Fill worksheet",
@@ -1866,6 +1878,12 @@ REPAIR_PLAN = {
         "saved": "自動保存済み",
         "clear": "ローカル内容を消去",
         "cleared": "消去しました",
+        "copy_summary": "今週の振り返りをコピー",
+        "summary_title": "LoveTypes 今週の心語レビュー",
+        "summary_guardian": "守護者ルート",
+        "summary_next": "次の補給",
+        "summary_copied": "振り返りをコピーしました",
+        "summary_empty": "一つ以上入力してからコピーしてください",
         "resume_title": "7日間のルートを続ける",
         "resume_intro": "前回の守護者結果をこのワークシートへ引き継げます。今日の小さな課題から始め、必要なら Luna、補給ステーション、または本を一つ選びます。",
         "resume_fill": "ワークシートへ入れる",
@@ -1897,6 +1915,12 @@ REPAIR_PLAN = {
         "saved": "자동 저장됨",
         "clear": "로컬 내용 지우기",
         "cleared": "지워짐",
+        "copy_summary": "이번 주 회고 복사",
+        "summary_title": "LoveTypes 이번 주 마음 언어 회고",
+        "summary_guardian": "수호자 루트",
+        "summary_next": "다음 보급",
+        "summary_copied": "회고가 복사됨",
+        "summary_empty": "한 칸 이상 입력한 뒤 복사하세요",
         "resume_title": "7일 루트 이어가기",
         "resume_intro": "마지막 수호자 결과를 이 워크시트로 가져올 수 있습니다. 오늘의 작은 과제부터 시작하고, 필요할 때 Luna, 보급소, 책 중 하나를 선택하세요.",
         "resume_fill": "워크시트에 넣기",
@@ -1928,6 +1952,12 @@ REPAIR_PLAN = {
         "saved": "Autoguardado",
         "clear": "Borrar notas locales",
         "cleared": "Borrado",
+        "copy_summary": "Copiar revisión semanal",
+        "summary_title": "Revisión semanal LoveTypes",
+        "summary_guardian": "Ruta de guardiana",
+        "summary_next": "Próximo recurso",
+        "summary_copied": "Revisión copiada",
+        "summary_empty": "Completa al menos un campo antes de copiar",
         "resume_title": "Continúa tu ruta de 7 días",
         "resume_intro": "Tu última guardiana puede entrar en esta hoja. Empieza con la tarea pequeña de hoy y luego elige Luna, recursos o un libro solo si encaja.",
         "resume_fill": "Completar hoja",
@@ -3881,6 +3911,13 @@ def repair_worksheet_script(lang: str) -> str:
     data = quiz_payload(lang)
     saved = json.dumps(plan["saved"], ensure_ascii=False)
     cleared = json.dumps(plan["cleared"], ensure_ascii=False)
+    copy_summary = json.dumps(plan["copy_summary"], ensure_ascii=False)
+    summary_title = json.dumps(plan["summary_title"], ensure_ascii=False)
+    summary_guardian = json.dumps(plan["summary_guardian"], ensure_ascii=False)
+    summary_next = json.dumps(plan["summary_next"], ensure_ascii=False)
+    summary_copied = json.dumps(plan["summary_copied"], ensure_ascii=False)
+    summary_empty = json.dumps(plan["summary_empty"], ensure_ascii=False)
+    field_labels = json.dumps([field[0] for field in plan["fields"]], ensure_ascii=False)
     resume_title = json.dumps(plan["resume_title"], ensure_ascii=False)
     resume_intro = json.dumps(plan["resume_intro"], ensure_ascii=False)
     resume_fill = json.dumps(plan["resume_fill"], ensure_ascii=False)
@@ -3895,11 +3932,19 @@ def repair_worksheet_script(lang: str) -> str:
   const resumeFill = {resume_fill};
   const resumePlan = {resume_plan};
   const bookstoreLabel = {bookstore_label};
+  const copySummaryLabel = {copy_summary};
+  const summaryTitle = {summary_title};
+  const summaryGuardian = {summary_guardian};
+  const summaryNext = {summary_next};
+  const summaryCopied = {summary_copied};
+  const summaryEmpty = {summary_empty};
+  const fieldLabels = {field_labels};
   const form = document.querySelector('[data-repair-worksheet]');
   if (!form) return;
   const fields = [...form.querySelectorAll('textarea[data-field]')];
   const status = document.querySelector('[data-worksheet-status]');
   const clearButton = document.querySelector('[data-clear-worksheet]');
+  const copyButton = document.querySelector('[data-copy-worksheet-summary]');
   const resumeBox = document.querySelector('[data-repair-saved]');
   const key = `lovetypes:${{location.pathname}}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -3952,6 +3997,58 @@ def repair_worksheet_script(lang: str) -> str:
     form.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
 
+  async function copyText(text) {{
+    if (navigator.clipboard?.writeText && window.isSecureContext) {{
+      await navigator.clipboard.writeText(text);
+      return;
+    }}
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }}
+
+  function buildSummary() {{
+    const savedResult = readSavedResult();
+    const result = savedResult ? quiz.results[savedResult.primaryKey] : null;
+    const values = fields.map((field) => field.value.trim());
+    if (!values.some(Boolean) && !result) return '';
+    const lines = [summaryTitle];
+    if (result) {{
+      lines.push(`${{summaryGuardian}}: ${{result.name}} · ${{result.type}}`);
+      lines.push(`${{summaryNext}}: ${{result.supplyTitle}} · ${{result.supplyMission}}`);
+    }}
+    values.forEach((value, index) => {{
+      if (value) lines.push(`${{fieldLabels[index]}}: ${{value}}`);
+    }});
+    lines.push(location.href);
+    return lines.join('\\n');
+  }}
+
+  async function copySummary() {{
+    window.clearTimeout(timer);
+    try {{
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+    }} catch (_error) {{}}
+    const summary = buildSummary();
+    if (!summary) {{
+      setStatus(summaryEmpty);
+      fields[0]?.focus();
+      return;
+    }}
+    try {{
+      await copyText(summary);
+      setStatus(summaryCopied);
+    }} catch (_error) {{
+      setStatus(summaryEmpty);
+    }}
+  }}
+
   function renderResume() {{
     if (!resumeBox) return;
     const savedResult = readSavedResult();
@@ -3997,6 +4094,8 @@ def repair_worksheet_script(lang: str) -> str:
     }}
     setStatus({cleared});
   }});
+  copyButton?.addEventListener('click', copySummary);
+  if (copyButton) copyButton.textContent = copySummaryLabel;
   renderResume();
 }})();
 </script>
@@ -4056,7 +4155,7 @@ def repair_plan_page(lang: str) -> None:
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
   <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
-  <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status>{escape(plan["saved"])}</span><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
+  <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status>{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
 {repair_worksheet_script(lang)}

@@ -22,7 +22,7 @@
   <meta property="og:description" content="After the quiz, you do not need to repair the whole relationship at once. Use seven days to turn your guardian result into a route you can revisit: notice the wound, ask for one small action, then choose one supply to support practice." />
   <meta property="og:image" content="https://lovetypes.tw/assets/lovetypes/share/guide-toolkit-og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="/shared-20260604-supply-wishlist.css" />
+  <link rel="stylesheet" href="/shared-20260604-repair-summary.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -95,7 +95,7 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>This Week&#x27;s Heart-Language Worksheet</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">Print / save as PDF</button></div>
   <p class="section-intro">Fill these four fields, then print or save as PDF. It is not meant to solve every relationship issue at once; it leaves repair clues you can revisit.</p>
-  <div class="worksheet-meta"><p>This worksheet is saved only in this browser on this device. It is not sent to LoveTypes.</p><div><span data-worksheet-status>Autosaved</span><button class="secondary-btn" type="button" data-clear-worksheet>Clear local notes</button></div></div>
+  <div class="worksheet-meta"><p>This worksheet is saved only in this browser on this device. It is not sent to LoveTypes.</p><div><span data-worksheet-status>Autosaved</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>Copy weekly review</button><button class="secondary-btn" type="button" data-clear-worksheet>Clear local notes</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>My guardian result</span>
@@ -127,11 +127,19 @@
   const resumeFill = "Fill worksheet";
   const resumePlan = "Jump to guardian task";
   const bookstoreLabel = "Open bookstore";
+  const copySummaryLabel = "Copy weekly review";
+  const summaryTitle = "LoveTypes weekly heart-language review";
+  const summaryGuardian = "Guardian route";
+  const summaryNext = "Next supply";
+  const summaryCopied = "Review copied";
+  const summaryEmpty = "Fill at least one field before copying";
+  const fieldLabels = ["My guardian result", "This week's clearest misfrequency", "The small request I actually want to make", "The supply I choose"];
   const form = document.querySelector('[data-repair-worksheet]');
   if (!form) return;
   const fields = [...form.querySelectorAll('textarea[data-field]')];
   const status = document.querySelector('[data-worksheet-status]');
   const clearButton = document.querySelector('[data-clear-worksheet]');
+  const copyButton = document.querySelector('[data-copy-worksheet-summary]');
   const resumeBox = document.querySelector('[data-repair-saved]');
   const key = `lovetypes:${location.pathname}:repair-worksheet`;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -184,6 +192,58 @@
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  async function copyText(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.left = '-9999px';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+
+  function buildSummary() {
+    const savedResult = readSavedResult();
+    const result = savedResult ? quiz.results[savedResult.primaryKey] : null;
+    const values = fields.map((field) => field.value.trim());
+    if (!values.some(Boolean) && !result) return '';
+    const lines = [summaryTitle];
+    if (result) {
+      lines.push(`${summaryGuardian}: ${result.name} · ${result.type}`);
+      lines.push(`${summaryNext}: ${result.supplyTitle} · ${result.supplyMission}`);
+    }
+    values.forEach((value, index) => {
+      if (value) lines.push(`${fieldLabels[index]}: ${value}`);
+    });
+    lines.push(location.href);
+    return lines.join('\n');
+  }
+
+  async function copySummary() {
+    window.clearTimeout(timer);
+    try {
+      localStorage.setItem(key, JSON.stringify(fields.map((field) => field.value)));
+    } catch (_error) {}
+    const summary = buildSummary();
+    if (!summary) {
+      setStatus(summaryEmpty);
+      fields[0]?.focus();
+      return;
+    }
+    try {
+      await copyText(summary);
+      setStatus(summaryCopied);
+    } catch (_error) {
+      setStatus(summaryEmpty);
+    }
+  }
+
   function renderResume() {
     if (!resumeBox) return;
     const savedResult = readSavedResult();
@@ -229,6 +289,8 @@
     }
     setStatus("Cleared");
   });
+  copyButton?.addEventListener('click', copySummary);
+  if (copyButton) copyButton.textContent = copySummaryLabel;
   renderResume();
 })();
 </script>
@@ -329,7 +391,7 @@
   <p>© 2026 LoveTypes · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a> · <a href="/en/contact/">Contact</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-supply-wishlist.js" defer></script>
+<script src="/site-interactions-20260604-repair-summary.js" defer></script>
 
 </body>
 </html>

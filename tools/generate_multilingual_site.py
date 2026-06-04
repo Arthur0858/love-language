@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-saved-result-card-share"
+ASSET_VERSION = "20260604-clipboard-fallback"
 
 
 FONT_CSS = ""
@@ -519,6 +519,8 @@ QUIZ_LABELS = {
         "retake": "重新測驗",
         "copy": "複製結果",
         "copied": "已複製",
+        "copy_manual": "無法自動複製，請手動複製這段文字",
+        "copy_unavailable": "請手動複製",
         "share_prefix": "我的 LoveTypes 情感守護者是",
         "tie": "雙重愛之語訊號",
         "boundary": "這是自我理解工具，不是診斷。若關係中有暴力、控制或高風險處境，請優先尋求可信任的人與專業協助。",
@@ -558,6 +560,8 @@ QUIZ_LABELS = {
         "retake": "Retake",
         "copy": "Copy result",
         "copied": "Copied",
+        "copy_manual": "Automatic copy is unavailable. Copy this text manually.",
+        "copy_unavailable": "Copy manually",
         "share_prefix": "My LoveTypes emotion guardian is",
         "tie": "Blended love-language signal",
         "boundary": "This is a reflection tool, not a diagnosis. If a relationship includes violence, control, or urgent risk, seek trusted and professional support first.",
@@ -597,6 +601,8 @@ QUIZ_LABELS = {
         "retake": "もう一度",
         "copy": "結果をコピー",
         "copied": "コピー済み",
+        "copy_manual": "自動コピーできません。手動でこの文をコピーしてください。",
+        "copy_unavailable": "手動でコピー",
         "share_prefix": "私の LoveTypes 感情の守護者は",
         "tie": "混合した愛の言語シグナル",
         "boundary": "これは自己理解の道具であり、診断ではありません。暴力、支配、緊急の危険がある場合は、まず信頼できる人や専門機関に相談してください。",
@@ -636,6 +642,8 @@ QUIZ_LABELS = {
         "retake": "다시 하기",
         "copy": "결과 복사",
         "copied": "복사됨",
+        "copy_manual": "자동 복사가 어렵습니다. 이 문구를 직접 복사해 주세요.",
+        "copy_unavailable": "직접 복사",
         "share_prefix": "나의 LoveTypes 감정 수호자는",
         "tie": "혼합 사랑의 언어 신호",
         "boundary": "이것은 자기 이해 도구이며 진단이 아닙니다. 폭력, 통제, 긴급 위험이 있다면 먼저 신뢰할 수 있는 사람과 전문 지원을 찾으세요.",
@@ -675,6 +683,8 @@ QUIZ_LABELS = {
         "retake": "Repetir",
         "copy": "Copiar resultado",
         "copied": "Copiado",
+        "copy_manual": "La copia automática no está disponible. Copia este texto manualmente.",
+        "copy_unavailable": "Copia manual",
         "share_prefix": "Mi guardiana emocional LoveTypes es",
         "tie": "Señal combinada de lenguajes",
         "boundary": "Esto es una herramienta de reflexión, no un diagnóstico. Si hay violencia, control o riesgo urgente, busca primero apoyo profesional y de confianza.",
@@ -2409,6 +2419,37 @@ def quiz_script(lang: str) -> str:
       return null;
     }}
   }}
+  async function copyShareText(text, button) {{
+    const originalText = button.textContent;
+    const mark = (label) => {{
+      button.textContent = label;
+      window.setTimeout(() => {{ button.textContent = originalText; }}, 2400);
+    }};
+    try {{
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('clipboard-unavailable');
+      await navigator.clipboard.writeText(text);
+      mark(quiz.labels.copied);
+      return;
+    }} catch (error) {{
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      textarea.style.pointerEvents = 'none';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {{
+        const copied = document.execCommand('copy');
+        mark(copied ? quiz.labels.copied : quiz.labels.copy_unavailable);
+      }} catch (fallbackError) {{
+        window.prompt(quiz.labels.copy_manual, text);
+        mark(quiz.labels.copy_unavailable);
+      }} finally {{
+        textarea.remove();
+      }}
+    }}
+  }}
   function renderSavedResult() {{
     if (!savedBox) return;
     const saved = readSavedResult();
@@ -2439,8 +2480,7 @@ def quiz_script(lang: str) -> str:
       </article>`;
     show(savedBox);
     savedBox.querySelector('[data-copy-saved-result]').addEventListener('click', async (event) => {{
-      await navigator.clipboard.writeText(savedShareText);
-      event.currentTarget.textContent = quiz.labels.copied;
+      await copyShareText(savedShareText, event.currentTarget);
     }});
     savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {{
       localStorage.removeItem(storageKey);
@@ -2569,8 +2609,7 @@ def quiz_script(lang: str) -> str:
     show(resultBox);
     resultBox.querySelector('[data-retake]').addEventListener('click', startQuiz);
     resultBox.querySelector('[data-copy-result]').addEventListener('click', async (event) => {{
-      await navigator.clipboard.writeText(shareText);
-      event.currentTarget.textContent = quiz.labels.copied;
+      await copyShareText(shareText, event.currentTarget);
     }});
     renderSavedResult();
     resultBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});

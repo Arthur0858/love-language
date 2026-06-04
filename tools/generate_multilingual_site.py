@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-result-polish"
+ASSET_VERSION = "20260604-accessibility-polish"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2657,7 +2657,11 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
         (lang_url(lang, "resources"), t["resources"]),
         (lang_url(lang, "about"), t["about"]),
     ]
-    links = "".join(f'<a class="{"active" if active == label else ""}" href="{href}">{escape(label)}</a>' for href, label in items)
+    links = "".join(
+        f'<a class="active" href="{href}" aria-current="page">{escape(label)}</a>' if active == label
+        else f'<a href="{href}">{escape(label)}</a>'
+        for href, label in items
+    )
     lang_links = "".join(f'<a href="{lang_url(code, language_path)}" lang="{cfg["code"]}">{cfg["name"]}</a>' for code, cfg in LANGS.items())
     return f"""
 <header class="site-nav">
@@ -3673,6 +3677,7 @@ def quiz_script(lang: str) -> str:
       preloadedResultImages.add(result.image);
       const image = new Image();
       image.decoding = 'async';
+      image.fetchPriority = 'high';
       image.src = result.image;
     }});
   }}
@@ -3831,7 +3836,7 @@ def quiz_script(lang: str) -> str:
     }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card ritual-reveal-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async" fetchpriority="high">
         <div class="quiz-result-copy">
           <p class="eyebrow">${{quiz.labels.result_label}}</p>
           <h3>${{result.name}}</h3>

@@ -270,6 +270,10 @@ const redirectCases = shouldCheckCloudflareRedirects()
 const quizCases = [
   { name: 'quiz-flow-desktop', path: '/', viewport: { width: 1280, height: 900 } },
   { name: 'quiz-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'quiz-flow-en-mobile', path: '/en/', viewport: { width: 390, height: 844 } },
+  { name: 'quiz-flow-ja-mobile', path: '/ja/', viewport: { width: 390, height: 844 } },
+  { name: 'quiz-flow-ko-mobile', path: '/ko/', viewport: { width: 390, height: 844 } },
+  { name: 'quiz-flow-es-mobile', path: '/es/', viewport: { width: 390, height: 844 } },
 ];
 
 const conversionCases = [

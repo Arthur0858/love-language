@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-repair-plan-resume"
+ASSET_VERSION = "20260604-luna-personal-resume"
 
 
 FONT_CSS = ""
@@ -952,6 +952,55 @@ LUNA_GUARDIAN_FLOW = {
             "claire": "Convierte el cansancio en una petición concreta con tiempo, acción y condición de terminado.",
             "dora": "Nota si tu cuerpo se siente seguro y escribe una frase de consentimiento y límite de cercanía.",
         },
+    },
+}
+
+
+LUNA_RESUME = {
+    "zh": {
+        "eyebrow": "YOUR NIGHT SUPPLY",
+        "title": "今晚跟著你的守護者降噪",
+        "intro": "你上次的測驗結果可以直接變成今晚的整理方式。先讓情緒安靜，再把一個小任務寫進修復計畫。",
+        "practice": "今晚練習",
+        "repair": "寫進修復計畫",
+        "route": "查看補給路線",
+        "book": "延伸書卷",
+    },
+    "en": {
+        "eyebrow": "YOUR NIGHT SUPPLY",
+        "title": "Let your guardian guide tonight's calm",
+        "intro": "Your last quiz result can become tonight's reflection path. Lower the noise first, then place one small task into the repair plan.",
+        "practice": "Tonight's practice",
+        "repair": "Add to repair plan",
+        "route": "View supply route",
+        "book": "Extended book",
+    },
+    "ja": {
+        "eyebrow": "YOUR NIGHT SUPPLY",
+        "title": "今夜は守護者に合わせて静める",
+        "intro": "前回の診断結果を、今夜の内省ルートにできます。まず感情の音量を下げ、小さな課題を修復プランへ置きます。",
+        "practice": "今夜の練習",
+        "repair": "修復プランへ書く",
+        "route": "補給ルートを見る",
+        "book": "本で深める",
+    },
+    "ko": {
+        "eyebrow": "YOUR NIGHT SUPPLY",
+        "title": "오늘 밤은 수호자에 맞춰 낮추기",
+        "intro": "마지막 테스트 결과를 오늘 밤 성찰 루트로 바꿀 수 있습니다. 먼저 소음을 낮추고 작은 과제 하나를 회복 계획에 적으세요.",
+        "practice": "오늘 밤 연습",
+        "repair": "회복 계획에 쓰기",
+        "route": "보급 루트 보기",
+        "book": "책으로 더 보기",
+    },
+    "es": {
+        "eyebrow": "YOUR NIGHT SUPPLY",
+        "title": "Deja que tu guardiana calme esta noche",
+        "intro": "Tu último resultado puede convertirse en la ruta de reflexión de esta noche. Baja el ruido primero y coloca una tarea pequeña en el plan.",
+        "practice": "Práctica de esta noche",
+        "repair": "Añadir al plan",
+        "route": "Ver ruta",
+        "book": "Libro para seguir",
     },
 }
 
@@ -3021,6 +3070,58 @@ def repair_plan_page(lang: str) -> None:
     write(page_path(lang, "repair-plan"), layout(lang, page_title, plan["desc"], "repair-plan", body, plan["title"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
+def luna_resume_script(lang: str) -> str:
+    data = quiz_payload(lang)
+    labels = LUNA_RESUME[lang]
+    flow = LUNA_GUARDIAN_FLOW[lang]
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const labels = {json.dumps(labels, ensure_ascii=False)};
+  const practices = {json.dumps(flow["items"], ensure_ascii=False)};
+  const box = document.querySelector('[data-luna-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        if (saved && quiz.results[saved.primaryKey]) return saved;
+      }}
+    }} catch (_error) {{}}
+    return null;
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  const slug = result.resourceUrl.split('#supply-')[1] || '';
+  const practice = practices[slug] || result.supplyMission;
+  box.innerHTML = `
+    <article class="luna-resume-card" style="--result-accent:${{result.color}}">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <div>
+        <p class="eyebrow">${{labels.eyebrow}}</p>
+        <h2>${{labels.title}}</h2>
+        <p>${{labels.intro}}</p>
+        <p><strong>${{result.name}} · ${{result.type}}</strong></p>
+        <p><strong>${{labels.practice}}:</strong> ${{practice}}</p>
+        <div class="luna-resume-actions">
+          <a class="primary-btn" href="${{result.planUrl}}">${{labels.repair}}</a>
+          <a class="secondary-btn" href="${{result.resourceUrl}}">${{labels.route}}</a>
+          <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener sponsored">${{labels.book}}</a>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+}})();
+</script>
+"""
+
+
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
@@ -3062,6 +3163,7 @@ def luna_page(lang: str) -> None:
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>
+<section class="section luna-result-resume" data-luna-saved hidden></section>
 <section class="section luna-strip">
   <div><p class="eyebrow">CALM PATHS</p><h2>{escape(t["luna_desc"])}</h2></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>
@@ -3079,6 +3181,7 @@ def luna_page(lang: str) -> None:
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
   <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["use"])}</h2><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
 </section>
+{luna_resume_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"

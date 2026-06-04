@@ -486,6 +486,64 @@ button.secondary-btn {
     #fffdf9;
 }
 
+.luna-result-resume {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(118, 102, 168, .16), transparent 30%),
+    linear-gradient(180deg, #fffdf9, #f8f4ff);
+}
+
+.luna-result-resume[hidden] {
+  display: none;
+}
+
+.luna-resume-card {
+  display: grid;
+  grid-template-columns: minmax(118px, 180px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--result-accent), white 60%);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--result-accent), transparent 78%), rgba(255, 255, 255, .92)),
+    #fff;
+  box-shadow: 0 16px 38px rgba(46, 27, 82, .1);
+}
+
+.luna-resume-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 8px;
+  background: #fff8f4;
+}
+
+.luna-resume-card h2 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  line-height: 1.12;
+}
+
+.luna-resume-card p {
+  max-width: 780px;
+  color: var(--muted);
+}
+
+.luna-resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.luna-resume-actions .primary-btn,
+.luna-resume-actions .secondary-btn {
+  flex: 1 1 150px;
+  min-width: 0;
+}
+
 .luna-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1874,6 +1932,7 @@ button.secondary-btn {
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
+  .luna-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
   .collector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .repair-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
   .repair-day-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2167,6 +2226,21 @@ button.secondary-btn {
 
   .luna-guardian-card img {
     width: 86px;
+  }
+
+  .luna-resume-card {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .luna-resume-card img {
+    width: min(72vw, 220px);
+    justify-self: center;
+  }
+
+  .luna-resume-actions .primary-btn,
+  .luna-resume-actions .secondary-btn {
+    flex-basis: 100%;
   }
 
   .guardian-card h3 { margin-bottom: 6px; }

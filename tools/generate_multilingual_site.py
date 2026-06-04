@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-repair-autosave"
+ASSET_VERSION = "20260604-result-compass"
 
 
 FONT_CSS = ""
@@ -496,6 +496,13 @@ QUIZ_LABELS = {
         "result_label": "你的情感守護者",
         "score_title": "五種愛之語分布",
         "tips_title": "下一步練習",
+        "compass_title": "結果行動羅盤",
+        "free_step": "先做免費練習",
+        "luna_step": "情緒太滿時",
+        "book_step": "準備深讀時",
+        "book_intro": "延伸書卷",
+        "luna_action": "開啟 Luna 夜間補給",
+        "book_action": "查看補給書卷",
         "routes_title": "延伸路線",
         "guardian_link": "閱讀守護者頁",
         "guide_link": "閱讀對應指南",
@@ -520,6 +527,13 @@ QUIZ_LABELS = {
         "result_label": "Your emotion guardian",
         "score_title": "Five love-language signal",
         "tips_title": "Next practices",
+        "compass_title": "Result action compass",
+        "free_step": "Start with a free practice",
+        "luna_step": "When feelings are loud",
+        "book_step": "When ready to go deeper",
+        "book_intro": "Extended book supply",
+        "luna_action": "Open Luna night supply",
+        "book_action": "View supply book",
         "routes_title": "Continue the path",
         "guardian_link": "Read guardian page",
         "guide_link": "Read matching guide",
@@ -544,6 +558,13 @@ QUIZ_LABELS = {
         "result_label": "あなたの感情の守護者",
         "score_title": "五つの愛の言語の分布",
         "tips_title": "次の練習",
+        "compass_title": "結果アクションコンパス",
+        "free_step": "まず無料の練習",
+        "luna_step": "感情が大きい時",
+        "book_step": "深く読みたい時",
+        "book_intro": "補給の本",
+        "luna_action": "Luna の夜の補給を開く",
+        "book_action": "補給の本を見る",
         "routes_title": "続きを読む道筋",
         "guardian_link": "守護者ページを読む",
         "guide_link": "対応ガイドを読む",
@@ -568,6 +589,13 @@ QUIZ_LABELS = {
         "result_label": "나의 감정 수호자",
         "score_title": "다섯 사랑의 언어 분포",
         "tips_title": "다음 연습",
+        "compass_title": "결과 행동 나침반",
+        "free_step": "무료 연습부터",
+        "luna_step": "감정이 클 때",
+        "book_step": "더 깊이 읽을 때",
+        "book_intro": "확장 보급 책",
+        "luna_action": "Luna 밤 보급 열기",
+        "book_action": "보급 책 보기",
         "routes_title": "이어 갈 길",
         "guardian_link": "수호자 페이지 읽기",
         "guide_link": "관련 가이드 읽기",
@@ -592,6 +620,13 @@ QUIZ_LABELS = {
         "result_label": "Tu guardiana emocional",
         "score_title": "Distribución de lenguajes del amor",
         "tips_title": "Próximas prácticas",
+        "compass_title": "Brújula de acción del resultado",
+        "free_step": "Empieza con práctica gratuita",
+        "luna_step": "Cuando la emoción está alta",
+        "book_step": "Cuando quieras profundizar",
+        "book_intro": "Libro de suministro",
+        "luna_action": "Abrir suministro nocturno Luna",
+        "book_action": "Ver libro de suministro",
         "routes_title": "Continuar el camino",
         "guardian_link": "Leer página de guardiana",
         "guide_link": "Leer guía relacionada",
@@ -2134,6 +2169,7 @@ def quiz_payload(lang: str) -> str:
             "supplyMission": route["mission"],
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
+            "lunaUrl": lang_url(lang, "luna-yoga-music"),
             "storyImage": guardian_story_image(lang, meta["slug"]),
             "collectorTitle": COLLECTOR_LABELS[lang]["card"],
             "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
@@ -2231,6 +2267,32 @@ def quiz_script(lang: str) -> str:
         }}).join('')}}
       </section>
       <section class="quiz-advice-card"><h3>${{quiz.labels.tips_title}}</h3><ul>${{result.tips.map((tip) => `<li>${{tip}}</li>`).join('')}}</ul></section>
+      <section class="quiz-action-compass" aria-label="${{quiz.labels.compass_title}}">
+        <div class="quiz-action-head">
+          <p class="eyebrow">${{quiz.labels.compass_title}}</p>
+          <h3>${{result.name}} ${{quiz.labels.routes_title}}</h3>
+        </div>
+        <div class="quiz-action-grid">
+          <article>
+            <span>1</span>
+            <h4>${{quiz.labels.free_step}}</h4>
+            <p>${{result.supplyMission}}</p>
+            <a href="${{result.planUrl}}">${{result.planLabel}}</a>
+          </article>
+          <article>
+            <span>2</span>
+            <h4>${{quiz.labels.luna_step}}</h4>
+            <p>${{result.supplyText}}</p>
+            <a href="${{result.lunaUrl}}">${{quiz.labels.luna_action}}</a>
+          </article>
+          <article>
+            <span>3</span>
+            <h4>${{quiz.labels.book_step}}</h4>
+            <p>${{quiz.labels.book_intro}}：${{result.supplyBook}}</p>
+            <a href="${{result.resourceUrl}}">${{quiz.labels.book_action}}</a>
+          </article>
+        </div>
+      </section>
       <section class="quiz-supply-card">
         <p class="eyebrow">${{quiz.labels.resources_link}}</p>
         <h3>${{result.supplyTitle}}</h3>

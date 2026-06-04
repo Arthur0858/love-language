@@ -1472,6 +1472,61 @@ button.secondary-btn {
   box-shadow: 0 18px 48px rgba(72, 47, 45, .14);
 }
 
+.guide-index-compass {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(107, 127, 106, .1), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
+.guide-compass-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.guide-compass-grid article {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(236, 216, 213, .92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 30px rgba(76, 42, 43, .05);
+}
+
+.guide-compass-grid span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--rose);
+  color: #fff;
+  font-weight: 900;
+}
+
+.guide-compass-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  line-height: 1.22;
+}
+
+.guide-compass-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guide-compass-grid a {
+  margin-top: auto;
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .quiz-progress {
   display: grid;
   gap: 8px;
@@ -2001,6 +2056,7 @@ button.secondary-btn {
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .supply-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
@@ -2111,6 +2167,44 @@ button.secondary-btn {
     gap: 10px;
   }
 
+  .guide-index-compass {
+    padding-top: 38px;
+    padding-bottom: 38px;
+  }
+
+  .guide-index-compass .section-intro {
+    display: none;
+  }
+
+  .guide-compass-grid {
+    gap: 10px;
+  }
+
+  .guide-compass-grid article {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 8px 12px;
+    padding: 14px;
+  }
+
+  .guide-compass-grid h3 {
+    align-self: center;
+    font-size: 1.05rem;
+  }
+
+  .guide-compass-grid p,
+  .guide-compass-grid a {
+    grid-column: 2;
+  }
+
+  .guide-compass-grid p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-size: .92rem;
+    line-height: 1.5;
+  }
+
   .guardian-route-grid article {
     display: flex;
     gap: 12px;
@@ -2165,6 +2259,7 @@ button.secondary-btn {
   .supply-route-grid,
   .supply-panel-grid,
   .guardian-route-grid,
+  .guide-compass-grid,
   .luna-use-grid,
   .collector-grid,
   .repair-day-grid,

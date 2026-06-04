@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-guardian-route-snapshot"
+ASSET_VERSION = "20260604-guide-index-compass"
 
 
 FONT_CSS = ""
@@ -1052,6 +1052,61 @@ RESOURCE_PATHS = {
     "ko": [("먼저 의식", "15문항으로 지금 가장 받고 싶은 사랑의 언어를 봅니다."), ("수호자 읽기", "결과 페이지에서 왜 이 영역이 예민한지 이해합니다."), ("자료 선택", "지금 상태에 맞는 가이드, 책, Luna 음악 중 하나를 고릅니다.")],
     "es": [("Primero ritual", "Responde 15 señales para ver qué lenguaje necesitas recibir ahora."), ("Lee la guardiana", "Desde el resultado entiende por qué esa zona puede doler."), ("Elige recursos", "Toma una guía, libro o audio Luna para el momento actual, no toda la relación de una vez.")],
 }
+
+
+GUIDE_INDEX_COMPASS = {
+    "zh": {
+        "eyebrow": "READING COMPASS",
+        "title": "先找到守護者，再選一篇指南",
+        "intro": "指南不是一次讀完的文章庫。先確認你的心語入口，再把閱讀接到一個可執行的小任務。",
+        "steps": [
+            ("1", "還不知道自己是哪位守護者", "先完成 15 道心語命運儀式，再回來讀對應指南。", "開始測驗", ""),
+            ("2", "已經知道守護者", "進入角色頁，看你的錯頻傷口、修復任務與專屬補給路線。", "查看守護者", "characters"),
+            ("3", "準備把閱讀變成行動", "把指南裡的一句話放進 7 日修復計畫，再選一本書卷或 Luna 夜間補給。", "打開修復計畫", "repair-plan"),
+        ],
+    },
+    "en": {
+        "eyebrow": "READING COMPASS",
+        "title": "Find your guardian before choosing a guide",
+        "intro": "The guides are not a pile to finish. Start with your heart-language doorway, then turn one page into one doable task.",
+        "steps": [
+            ("1", "If you do not know your guardian yet", "Answer the 15 prompts first, then return to the matching guide.", "Start quiz", ""),
+            ("2", "If you already know your guardian", "Open the character page to see the wound, repair task, and personal supply route.", "View guardians", "characters"),
+            ("3", "If you are ready to act", "Put one sentence from a guide into the 7-day repair plan, then choose a book or Luna night supply.", "Open repair plan", "repair-plan"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "READING COMPASS",
+        "title": "守護者を見つけてからガイドを選ぶ",
+        "intro": "ガイドは全部読むための倉庫ではありません。まず心語の入口を確認し、一つのページを一つの小さな行動へつなげます。",
+        "steps": [
+            ("1", "まだ守護者が分からない時", "15問の心語リチュアルを行い、対応するガイドへ戻ります。", "診断を始める", ""),
+            ("2", "守護者が分かっている時", "キャラクターページで、すれ違いの傷、修復課題、補給ルートを確認します。", "守護者を見る", "characters"),
+            ("3", "行動へ移したい時", "ガイドの一文を7日間の修復プランへ入れ、本または Luna の夜の補給を一つ選びます。", "修復プランを開く", "repair-plan"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "READING COMPASS",
+        "title": "수호자를 찾고 가이드를 고르기",
+        "intro": "가이드는 한 번에 다 읽는 목록이 아닙니다. 먼저 나의 마음 언어 입구를 확인하고, 한 페이지를 작은 행동 하나로 이어가세요.",
+        "steps": [
+            ("1", "아직 수호자를 모른다면", "15문항 의식을 먼저 완료한 뒤 연결 가이드로 돌아오세요.", "테스트 시작", ""),
+            ("2", "이미 수호자를 안다면", "캐릭터 페이지에서 어긋남 상처, 회복 과제, 개인 보급 루트를 확인하세요.", "수호자 보기", "characters"),
+            ("3", "읽은 내용을 행동으로 옮긴다면", "가이드의 한 문장을 7일 회복 계획에 넣고 책이나 Luna 밤 보급 하나를 고르세요.", "회복 계획 열기", "repair-plan"),
+        ],
+    },
+    "es": {
+        "eyebrow": "READING COMPASS",
+        "title": "Encuentra tu guardiana antes de elegir guía",
+        "intro": "Las guías no son una lista para terminar. Empieza por tu puerta de lenguaje del corazón y convierte una página en una tarea posible.",
+        "steps": [
+            ("1", "Si aún no conoces tu guardiana", "Responde las 15 señales primero y vuelve a la guía correspondiente.", "Iniciar test", ""),
+            ("2", "Si ya conoces tu guardiana", "Abre la página de personaje para ver herida, tarea de reparación y ruta de suministro.", "Ver guardianas", "characters"),
+            ("3", "Si estás lista para actuar", "Pon una frase de la guía en el plan de 7 días y elige un libro o suministro Luna.", "Abrir plan", "repair-plan"),
+        ],
+    },
+}
+
 
 SUPPLY_DECISION = {
     "zh": {
@@ -2158,6 +2213,31 @@ def collector_section(lang: str, current_slug: str = "") -> str:
 """
 
 
+def guide_index_compass(lang: str) -> str:
+    compass = GUIDE_INDEX_COMPASS[lang]
+    cards = []
+    for number, title, desc, action, target in compass["steps"]:
+        href = f"{lang_url(lang)}#quiz-section" if not target else lang_url(lang, target)
+        cards.append(f"""
+    <article>
+      <span>{escape(number)}</span>
+      <h3>{escape(title)}</h3>
+      <p>{escape(desc)}</p>
+      <a href="{href}">{escape(action)}</a>
+    </article>
+""")
+    return f"""
+<section class="section guide-index-compass">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(compass["eyebrow"])}</p><h2>{escape(compass["title"])}</h2></div>
+    <a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a>
+  </div>
+  <p class="section-intro">{escape(compass["intro"])}</p>
+  <div class="guide-compass-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def character_supply_panel(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     route = supply_route(lang, slug)
@@ -2902,6 +2982,7 @@ def guides_index(lang: str) -> None:
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN FIELD GUIDE</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p></section>
+{guide_index_compass(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """

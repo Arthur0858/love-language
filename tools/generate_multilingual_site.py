@@ -2710,6 +2710,7 @@ def head(
     image: str = "/og-cover.jpg",
     alternate_path: str | None = None,
     canonical_path: str | None = None,
+    robots: str = "index, follow, max-image-preview:large",
 ) -> str:
     canonical = abs_url(lang, canonical_path if canonical_path is not None else path)
     alternate_target = alternate_path if alternate_path is not None else path
@@ -2729,7 +2730,7 @@ def head(
   <meta name="google-adsense-account" content="{ADSENSE_ACCOUNT}" />
   <title>{escape(title)}</title>
   <meta name="description" content="{escape(desc)}" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="robots" content="{escape(robots)}" />
   <link rel="canonical" href="{canonical}" />
 {alternates}
   <link rel="icon" href="/favicon.ico" />
@@ -2761,11 +2762,12 @@ def layout(
     affiliate: bool = False,
     alternate_path: str | None = None,
     canonical_path: str | None = None,
+    robots: str = "index, follow, max-image-preview:large",
 ) -> str:
     external_script = ""
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
-    return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path) + f"""<body>
+    return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path, robots) + f"""<body>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
 {nav(lang, active, path, alternate_path)}
 {organization_schema(lang)}
@@ -4862,6 +4864,41 @@ def write_versioned_scripts() -> None:
         write(ROOT / target.lstrip("/"), script.strip() + "\n")
 
 
+def write_404_page() -> None:
+    lang = "zh"
+    t = LANGS[lang]
+    title = "這盞燈暫時不在地圖上 | LoveTypes"
+    desc = "LoveTypes 自訂 404 頁面，協助迷路的旅人回到測驗、守護者總覽、旅人補給或聯絡頁。"
+    routes = [
+        (lang_url(lang), t["start"], "回到首頁完成 15 道心語認領儀式。"),
+        (lang_url(lang, "characters"), "查看五位守護者", "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉重新找到入口。"),
+        (lang_url(lang, "resources"), t["resources"], "前往守護者補給路線，選一個可實作的下一步。"),
+        (lang_url(lang, "contact"), t["contact"], "如果這是壞連結，告訴我們需要修復的頁面。"),
+    ]
+    cards = "".join(f"""
+<a class="content-card" href="{href}">
+  <span class="eyebrow">RETURN PATH</span>
+  <h3>{escape(label)}</h3>
+  <p>{escape(text)}</p>
+</a>
+""" for href, label, text in routes)
+    body = f"""
+<section class="page-hero compact">
+  <p class="eyebrow">404 HEART GARDEN</p>
+  <h1>這盞燈暫時不在地圖上</h1>
+  <p>你抵達的路徑可能已移動、改名，或還沒有被放進心語庭園。先回到一條可靠的路線，不需要在迷霧裡停太久。</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+</section>
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">SAFE ROUTES</p><h2>選一條回到庭園的路</h2></div><a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></div>
+  <div class="card-grid">{cards}</div>
+</section>
+<section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+"""
+    page = layout(lang, title, desc, "", body, "", "website", "/og-cover.jpg", "", robots="noindex, follow")
+    write(ROOT / "404.html", page)
+
+
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
@@ -4906,6 +4943,7 @@ https://:version.lovetypes.pages.dev/*
   X-Robots-Tag: noindex
 """
     write(ROOT / "_headers", headers)
+    write_404_page()
 
 
 def main() -> None:

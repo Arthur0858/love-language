@@ -434,6 +434,15 @@ def is_resources_page(page: Path) -> bool:
     return parts == ["resources", "index.html"]
 
 
+def lang_url_for_page(page: Path, target: str = "") -> str:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    prefix = parts[0] if parts and parts[0] in {"en", "ja", "ko", "es"} else ""
+    if not target:
+        return f"/{prefix}/" if prefix else "/"
+    return f"/{prefix}/{target}/" if prefix else f"/{target}/"
+
+
 def class_tokens(attrs: dict[str, str]) -> set[str]:
     return set(attrs.get("class", "").split())
 
@@ -1373,6 +1382,20 @@ def main() -> int:
                 issues.append(f"{page}: home page missing quiz root")
             if 'class="primary-btn" href="#quiz-section"' not in parser.source:
                 issues.append(f"{page}: home hero primary CTA should point to #quiz-section")
+        if is_resources_page(page):
+            stats["resources_supply_entry_pages"] += 1
+            for target_id in ("supply-start", "supply-routes"):
+                if target_id not in parser.ids:
+                    issues.append(f"{page}: resources page missing #{target_id}")
+            resource_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_resource_hrefs = {
+                lang_url_for_page(page) + "#quiz-section",
+                "#supply-routes",
+                lang_url_for_page(page, "luna-yoga-music"),
+            }
+            missing_resource_hrefs = sorted(required_resource_hrefs.difference(resource_hrefs))
+            if missing_resource_hrefs:
+                issues.append(f"{page}: resources supply entry missing hrefs {', '.join(missing_resource_hrefs)}")
 
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
@@ -1870,6 +1893,7 @@ def main() -> int:
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
+    print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

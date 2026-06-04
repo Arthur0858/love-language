@@ -72,11 +72,11 @@ EXPECTED_TEXT = {
     "/es/guides/": "Guías de Guardianas LoveTypes",
 }
 EXPECTED_ANCHOR_TARGETS = {
-    "/resources/": ("supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
+    "/resources/": ("supply-start", "supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
 }
 EXPECTED_HREF_TARGETS = {
-    "/resources/": tuple(f"#supply-{slug}" for slug in GUARDIAN_SLUGS),
+    "/resources/": ("/#quiz-section", "#supply-routes", "/luna-yoga-music/", *(f"#supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"/resources/#supply-{slug}" for slug in GUARDIAN_SLUGS),
     "/luna-yoga-music/": tuple(
         target

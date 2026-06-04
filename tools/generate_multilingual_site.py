@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-anchor-focus"
+ASSET_VERSION = "20260605-supply-entry"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1348,6 +1348,60 @@ RESOURCE_PATHS = {
     "ja": [("まず診断", "15問で今いちばん受け取りたい愛の言語を見ます。"), ("守護者を読む", "結果ページから、その領域がなぜ傷つきやすいかを理解します。"), ("補給を選ぶ", "今の状態に合うガイド、本、Luna 音楽を一つ選びます。")],
     "ko": [("먼저 의식", "15문항으로 지금 가장 받고 싶은 사랑의 언어를 봅니다."), ("수호자 읽기", "결과 페이지에서 왜 이 영역이 예민한지 이해합니다."), ("자료 선택", "지금 상태에 맞는 가이드, 책, Luna 음악 중 하나를 고릅니다.")],
     "es": [("Primero ritual", "Responde 15 señales para ver qué lenguaje necesitas recibir ahora."), ("Lee la guardiana", "Desde el resultado entiende por qué esa zona puede doler."), ("Elige recursos", "Toma una guía, libro o audio Luna para el momento actual, no toda la relación de una vez.")],
+}
+
+
+SUPPLY_ENTRY = {
+    "zh": {
+        "eyebrow": "START FROM YOUR RESULT",
+        "title": "先取得路線，再選補給",
+        "intro": "旅人補給不是書單入口，而是把你的守護者結果接到一個可執行的小任務。先確認路線，再慢慢選指南、Luna 或延伸書卷。",
+        "items": [
+            ("還沒有結果", "先完成 15 道心語，讓補給站知道該把你帶往哪位守護者。", "開始認領儀式", ""),
+            ("已經知道守護者", "直接跳到五條補給路線，選最符合此刻狀態的一條。", "查看五路線", "#supply-routes"),
+            ("現在需要安定", "先進入 Luna 夜間補給，把情緒降噪後再決定是否閱讀或購買。", "開啟 Luna", "luna-yoga-music"),
+        ],
+    },
+    "en": {
+        "eyebrow": "START FROM YOUR RESULT",
+        "title": "Get your route before choosing supplies",
+        "intro": "Resources are not just a book list. They turn your guardian result into one doable task, then help you choose a guide, Luna, or an extended book slowly.",
+        "items": [
+            ("No result yet", "Answer the 15 prompts first so the station knows which guardian route to open.", "Start quiz", ""),
+            ("I know my guardian", "Jump to the five supply routes and choose the one that fits this moment.", "View routes", "#supply-routes"),
+            ("I need calm first", "Open Luna night supply, lower the noise, then decide whether to read or buy.", "Open Luna", "luna-yoga-music"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "START FROM YOUR RESULT",
+        "title": "結果からルートを決めて補給を選ぶ",
+        "intro": "リソースは本の一覧ではありません。守護者の結果を小さな行動へつなぎ、ガイド、Luna、本をゆっくり選ぶための入口です。",
+        "items": [
+            ("まだ結果がない", "まず15問に答え、どの守護者ルートを開くかを確認します。", "診断を始める", ""),
+            ("守護者が分かっている", "五つの補給ルートへ進み、今に合う一つを選びます。", "ルートを見る", "#supply-routes"),
+            ("先に落ち着きたい", "Luna の夜の補給で感情のノイズを下げてから、読むか購入するかを決めます。", "Luna を開く", "luna-yoga-music"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "START FROM YOUR RESULT",
+        "title": "결과로 루트를 정한 뒤 보급을 고르기",
+        "intro": "자료는 단순한 책 목록이 아닙니다. 수호자 결과를 작은 행동 하나로 연결하고, 가이드, Luna, 책을 천천히 고르게 합니다.",
+        "items": [
+            ("아직 결과가 없다면", "먼저 15문항을 완료해 어떤 수호자 루트를 열지 확인하세요.", "테스트 시작", ""),
+            ("수호자를 알고 있다면", "다섯 보급 루트로 이동해 지금 상태에 맞는 하나를 고르세요.", "루트 보기", "#supply-routes"),
+            ("먼저 안정이 필요하다면", "Luna 밤 보급으로 감정의 소음을 낮춘 뒤 읽거나 구매할지 결정하세요.", "Luna 열기", "luna-yoga-music"),
+        ],
+    },
+    "es": {
+        "eyebrow": "START FROM YOUR RESULT",
+        "title": "Obtén tu ruta antes de elegir recursos",
+        "intro": "Recursos no es solo una lista de libros. Convierte tu resultado de guardiana en una tarea posible y luego te ayuda a elegir guía, Luna o libro con calma.",
+        "items": [
+            ("Aún no tengo resultado", "Responde primero las 15 señales para saber qué ruta de guardiana abrir.", "Iniciar test", ""),
+            ("Ya conozco mi guardiana", "Salta a las cinco rutas y elige la que encaja con este momento.", "Ver rutas", "#supply-routes"),
+            ("Necesito calma primero", "Abre Luna nocturna, baja el ruido y después decide si leer o comprar.", "Abrir Luna", "luna-yoga-music"),
+        ],
+    },
 }
 
 
@@ -3078,6 +3132,32 @@ def supply_quick_route_nav(lang: str) -> str:
 """
 
 
+def supply_entry_section(lang: str) -> str:
+    entry = SUPPLY_ENTRY[lang]
+    cards = []
+    for title, desc, action, target in entry["items"]:
+        if target.startswith("#"):
+            href = target
+        elif target:
+            href = lang_url(lang, target)
+        else:
+            href = lang_url(lang) + "#quiz-section"
+        cards.append(f"""
+<article>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}">{escape(action)}</a>
+</article>
+""")
+    return f"""
+<section class="section supply-entry" id="supply-start">
+  <div class="section-head"><div><p class="eyebrow">{escape(entry["eyebrow"])}</p><h2>{escape(entry["title"])}</h2></div></div>
+  <p class="section-intro">{escape(entry["intro"])}</p>
+  <div class="supply-entry-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 UNIVERSE_COPY = {
     "zh": ("五域宇宙入口", "從心語庭園進入五個分域，選一盞最像你此刻需要的光。", "五域星圖", "每位守護者不是分類標籤，而是一個可以進入、停留、練習的情感分域。"),
     "en": ("Five Universe Gates", "Enter five domains from the Heart Garden and choose the light closest to what you need now.", "Five-Domain Star Map", "Each guardian is not a label, but an emotional domain you can enter, stay in, and practice with."),
@@ -4548,6 +4628,7 @@ def resources_page(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
+{supply_entry_section(lang)}
 {supply_quick_route_nav(lang)}
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">

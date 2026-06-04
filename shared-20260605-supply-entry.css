@@ -944,6 +944,52 @@ button.secondary-btn {
     linear-gradient(180deg, #fff, #fffdf9);
 }
 
+.supply-entry {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(122, 159, 151, .14), transparent 30%),
+    radial-gradient(circle at 86% 18%, rgba(183, 139, 69, .12), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
+.supply-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.supply-entry-grid article {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(236, 216, 213, .92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 12px 32px rgba(76, 42, 43, .06);
+}
+
+.supply-entry-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  line-height: 1.2;
+}
+
+.supply-entry-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.supply-entry-grid a {
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.supply-entry-grid a:hover,
+.supply-entry-grid a:focus-visible {
+  text-decoration: underline;
+}
+
 .supply-quick-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3102,6 +3148,7 @@ button.secondary-btn {
 @media (max-width: 1180px) {
   .universe-gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .supply-entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-wishlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3169,6 +3216,7 @@ button.secondary-btn {
   .hero,
   .luna-hero,
   .intro-grid,
+  .supply-entry-grid,
   .supply-compass-grid,
   .contact-request-grid,
   .starter-kit-grid,

@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-performance-polish"
+ASSET_VERSION = "20260604-dynamic-image-polish"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3245,7 +3245,7 @@ def keepsake_resume_script(lang: str) -> str:
   box.innerHTML = `
     <article class="keepsake-resume-card" id="keepsake-${{result.slug}}" style="--result-accent:${{result.color}}">
       <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">
-        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="eager" decoding="async">
+        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       </a>
       <div>
         <p class="eyebrow">${{result.collectorTitle}}</p>
@@ -3604,11 +3604,16 @@ def quiz_payload(lang: str) -> str:
         guide = next(g for g in GUIDES if g["slug"] == meta["guide"])
         route = supply_route(lang, meta["slug"])
         resource_url = lang_url(lang, "resources") + f"#supply-{meta['slug']}"
+        image_width, image_height = IMAGE_DIMENSIONS.get(guardian["asset"], ("", ""))
+        story_image = guardian_story_image(lang, meta["slug"])
+        story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
         results[key] = {
             "name": name,
             "type": typ,
             "desc": desc,
             "image": guardian["asset"],
+            "imageWidth": image_width,
+            "imageHeight": image_height,
             "color": meta["color"],
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
@@ -3621,7 +3626,9 @@ def quiz_payload(lang: str) -> str:
             "supplyBook": route["book"]["title"][lang],
             "supplyBookUrl": route["book"]["url"],
             "lunaUrl": lang_url(lang, "luna-yoga-music") + f"#luna-{meta['slug']}",
-            "storyImage": guardian_story_image(lang, meta["slug"]),
+            "storyImage": story_image,
+            "storyImageWidth": story_width,
+            "storyImageHeight": story_height,
             "slug": meta["slug"],
             "collectorTitle": COLLECTOR_LABELS[lang]["card"],
             "collectorHint": COLLECTOR_LABELS[lang]["share_hint"],
@@ -3751,7 +3758,7 @@ def quiz_script(lang: str) -> str:
     const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     savedBox.innerHTML = `
       <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
+        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{quiz.labels.saved_title}}</p>
           <h3>${{result.name}} · ${{result.type}}</h3>
@@ -3837,7 +3844,7 @@ def quiz_script(lang: str) -> str:
     }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card ritual-reveal-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async" fetchpriority="high">
+        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="eager" decoding="async" fetchpriority="high">
         <div class="quiz-result-copy">
           <p class="eyebrow">${{quiz.labels.result_label}}</p>
           <h3>${{result.name}}</h3>
@@ -3913,7 +3920,7 @@ def quiz_script(lang: str) -> str:
         <a class="primary-btn" href="${{result.resourceUrl}}">${{quiz.labels.primary_route}}</a>
       </section>
       <section class="quiz-collector-card">
-        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
+        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{result.collectorTitle}}</p>
           <h3>${{result.name}}</h3>
@@ -4022,7 +4029,7 @@ def supply_resume_script(lang: str) -> str:
   ];
   box.innerHTML = `
     <article class="quiz-saved-card supply-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async">
+      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       <div>
         <p class="eyebrow">${{quiz.labels.saved_title}}</p>
         <h2>${{result.supplyTitle}}</h2>
@@ -4164,7 +4171,7 @@ def guide_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="quiz-saved-card guide-resume-card" id="guide-${{result.slug}}" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
+      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
@@ -4669,7 +4676,7 @@ def repair_worksheet_script(lang: str) -> str:
     const result = quiz.results[savedResult.primaryKey];
     resumeBox.innerHTML = `
       <article class="repair-resume-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
+        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{resumeTitle}}</p>
           <h2>${{result.name}} · ${{result.type}}</h2>
@@ -4825,7 +4832,7 @@ def luna_resume_script(lang: str) -> str:
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
     <article class="luna-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async" fetchpriority="low">
+      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{labels.eyebrow}}</p>
         <h2>${{labels.title}}</h2>

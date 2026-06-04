@@ -64,6 +64,7 @@ function summarizeQuizFailures(results) {
     if (!result.keepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('missing personalized keepsake route');
     if (!result.bookHref?.startsWith('https://')) failures.push('missing affiliate book route');
     if (!result.bookRel?.includes('sponsored')) failures.push('missing sponsored rel');
+    if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
     if (result.pageErrors.length) failures.push('page errors');
@@ -93,6 +94,7 @@ function summarizeConversionFailures(results) {
     if (['keepsake', 'keepsake-plan'].includes(target) && !result.keepsakePrimaryHref?.includes('/repair-plan/#plan-')) failures.push('keepsake primary action does not continue repair plan');
     if (target === 'home-saved-plan' && !result.homeSavedVisible) failures.push('missing returning visitor saved result');
     if (target === 'home-saved-plan' && !result.homeSavedKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('home saved card does not continue keepsake hall');
+    if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -282,6 +284,15 @@ for (const item of quizCases) {
   const book = page.locator('[data-conversion-book]').first();
   const bookHref = await book.getAttribute('href');
   const bookRel = await book.getAttribute('rel');
+  const dynamicImageIssues = await page.locator('.quiz-result-card img, .quiz-collector-card img').evaluateAll((images) => images.flatMap((image) => {
+    const issues = [];
+    const label = image.getAttribute('alt') || image.getAttribute('src') || 'dynamic image';
+    if (!image.getAttribute('width') || !image.getAttribute('height')) issues.push(`${label} missing width/height`);
+    if (image.getAttribute('decoding') !== 'async') issues.push(`${label} missing async decoding`);
+    if (image.closest('.quiz-result-card') && image.getAttribute('fetchpriority') !== 'high') issues.push(`${label} result image not high priority`);
+    if (image.closest('.quiz-collector-card') && image.getAttribute('fetchpriority') !== 'low') issues.push(`${label} collector image not low priority`);
+    return issues;
+  }));
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
@@ -306,6 +317,7 @@ for (const item of quizCases) {
     keepsakeHref,
     bookHref,
     bookRel,
+    dynamicImageIssues,
     screenshot,
   });
   await page.close();
@@ -397,6 +409,13 @@ for (const item of conversionCases) {
     keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
   }
 
+  const dynamicImageIssues = await page.locator(`${resumeSelector} img`).evaluateAll((images) => images.flatMap((image) => {
+    const issues = [];
+    const label = image.getAttribute('alt') || image.getAttribute('src') || 'resume image';
+    if (!image.getAttribute('width') || !image.getAttribute('height')) issues.push(`${label} missing width/height`);
+    if (image.getAttribute('decoding') !== 'async') issues.push(`${label} missing async decoding`);
+    return issues;
+  }));
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
@@ -426,6 +445,7 @@ for (const item of conversionCases) {
     keepsakePrimaryHref,
     homeSavedVisible,
     homeSavedKeepsakeHref,
+    dynamicImageIssues,
     scrollY: resumeScrollY,
     finalScrollY: await page.evaluate(() => window.scrollY),
     screenshot,

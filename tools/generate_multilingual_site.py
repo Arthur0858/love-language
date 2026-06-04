@@ -2352,6 +2352,50 @@ PAGE_SECTIONS = {
 }
 
 
+CHARACTER_INDEX_COPY = {
+    "zh": {
+        "title": "五位情感守護者總覽 | LoveTypes",
+        "desc": "認識艾莉絲、諾雅、薇薇安、克萊兒與朵拉五位情感守護者，對應肯定言詞、優質時光、接受禮物、服務行動與身體接觸，找到你的測驗結果、錯頻傷口、修復任務與下一條補給路線。",
+        "h1": "五位情感守護者總覽",
+        "intro": "每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。",
+        "map_title": "從守護者進入你的下一步",
+        "map_intro": "如果你已完成測驗，直接打開結果對應的守護者；如果還沒有，先從五位角色的語氣與傷口辨認哪一盞燈最像你。",
+    },
+    "en": {
+        "title": "Five Emotion Guardians Overview | LoveTypes",
+        "desc": "Meet Iris, Noah, Vivian, Claire, and Dora, the five LoveTypes emotion guardians for words of affirmation, quality time, receiving gifts, acts of service, and physical touch, then choose the guide, wound, and supply route that fits your result.",
+        "h1": "Five Emotion Guardians Overview",
+        "intro": "Each guardian is a doorway for receiving love and a route for repair. Start with the love language that feels most tender, then continue into a guide, practice, or supply path.",
+        "map_title": "Use the guardians to choose your next step",
+        "map_intro": "If you already took the quiz, open the matching guardian. If not, read the five voices and wounds first, then begin with the lamp that feels closest.",
+    },
+    "ja": {
+        "title": "五人の感情の守護者一覧 | LoveTypes",
+        "desc": "アイリス、ノア、ヴィヴィアン、クレア、ドラの五人の感情の守護者を紹介します。肯定の言葉、上質な時間、贈り物、奉仕の行動、身体的なふれあいから、診断結果、すれ違いの傷、次の補給ルートを選べます。",
+        "h1": "五人の感情の守護者一覧",
+        "intro": "それぞれの守護者は、愛を受け取る入口であり、修復へ向かう道です。いちばん傷つきやすい愛の言語から、ガイド、練習、補給ルートへ進めます。",
+        "map_title": "守護者から次の一歩を選ぶ",
+        "map_intro": "すでに診断を終えたなら、結果に合う守護者を開いてください。まだなら、五人の声と傷を読み、近く感じる灯りから始めます。",
+    },
+    "ko": {
+        "title": "다섯 감정 수호자 한눈에 보기 | LoveTypes",
+        "desc": "아이리스, 노아, 비비안, 클레어, 도라 다섯 감정 수호자를 소개합니다. 인정의 말, 함께하는 시간, 선물 받기, 봉사의 행동, 스킨십에 맞춰 테스트 결과, 어긋남의 상처, 다음 보급 루트를 찾을 수 있습니다.",
+        "h1": "다섯 감정 수호자 한눈에 보기",
+        "intro": "각 수호자는 사랑을 받는 입구이자 회복으로 이어지는 길입니다. 가장 예민하게 느껴지는 사랑의 언어에서 가이드, 연습, 보급 루트로 이어가세요.",
+        "map_title": "수호자로 다음 단계를 고르기",
+        "map_intro": "이미 테스트를 했다면 결과에 맞는 수호자를 여세요. 아직이라면 다섯 목소리와 상처를 읽고 가장 가까운 등불부터 시작하세요.",
+    },
+    "es": {
+        "title": "Resumen de las Cinco Guardianas Emocionales | LoveTypes",
+        "desc": "Conoce a Iris, Noah, Vivian, Claire y Dora, las cinco guardianas emocionales de LoveTypes para palabras de afirmación, tiempo de calidad, recibir regalos, actos de servicio y contacto físico, y elige la guía, herida y ruta de suministro que corresponde a tu resultado.",
+        "h1": "Resumen de las Cinco Guardianas Emocionales",
+        "intro": "Cada guardiana es una entrada para recibir amor y una ruta de reparación. Empieza por el lenguaje que se siente más sensible y continúa hacia una guía, práctica o suministro.",
+        "map_title": "Usa las guardianas para elegir tu siguiente paso",
+        "map_intro": "Si ya hiciste el test, abre la guardiana que corresponde. Si no, lee primero las cinco voces y heridas, y empieza por la luz que se sienta más cercana.",
+    },
+}
+
+
 SITE_COPY = {
     "zh": {
         "guardian_use": "{name}是心語庭園裡的一扇門，不是固定身份。你可以用這位守護者說明什麼讓你感到安全、哪一種錯頻最容易刺痛你，以及哪一個小行動能讓關心更容易被你收到。",
@@ -3948,18 +3992,20 @@ def home(lang: str) -> None:
 
 def characters_index_page(lang: str) -> None:
     t = LANGS[lang]
+    copy = CHARACTER_INDEX_COPY[lang]
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
-    title = f"{t['guardians']} | LoveTypes"
-    desc = t["trust_intro"]
+    title = copy["title"]
+    desc = copy["desc"]
     body = f"""
 <section class="page-hero compact guardian-index-hero">
   <p class="eyebrow">FIVE GUARDIANS</p>
-  <h1>{escape(t["guardians"])}</h1>
-  <p>{escape(desc)}</p>
+  <h1>{escape(copy["h1"])}</h1>
+  <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
 <section class="section">
-  <div class="section-head"><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(copy["map_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <p class="section-intro">{escape(copy["map_intro"])}</p>
   <div class="guardian-grid">{guardian_cards}</div>
 </section>
 <section class="section intro-grid">
@@ -3967,9 +4013,9 @@ def characters_index_page(lang: str) -> None:
   <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["need"])}</h2><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guardians"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["h1"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     guardian_items = [(data[lang][0], abs_url(lang, "characters/" + slug)) for slug, data in GUARDIANS.items()]
-    schema += item_list_schema(t["guardians"], desc, guardian_items)
+    schema += item_list_schema(copy["h1"], desc, guardian_items)
     write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body, t["guardians"], "website", "/og-cover.jpg", schema))
 
 

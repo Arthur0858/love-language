@@ -919,6 +919,75 @@ button.secondary-btn {
   color: var(--muted);
 }
 
+.contact-request-section {
+  background:
+    radial-gradient(circle at 84% 14%, rgba(122, 159, 151, .12), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #f7fbf8);
+}
+
+.contact-request-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.contact-request-grid article {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(213, 231, 226, .94);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 30px rgba(54, 83, 77, .06);
+}
+
+.contact-request-grid span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--sage);
+  color: #fff;
+  font-weight: 900;
+}
+
+.contact-request-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  line-height: 1.18;
+}
+
+.contact-request-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.contact-request-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid rgba(236, 216, 213, .9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .88);
+}
+
+.contact-request-note p {
+  flex: 1 1 380px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.contact-request-note .primary-btn {
+  flex: 0 1 250px;
+  min-width: 0;
+}
+
 .starter-kit-section {
   background:
     radial-gradient(circle at 80% 12%, rgba(122, 159, 151, .14), transparent 28%),
@@ -2392,6 +2461,7 @@ button.secondary-btn {
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact-request-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .starter-kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .quiz-starter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2448,6 +2518,7 @@ button.secondary-btn {
   .luna-hero,
   .intro-grid,
   .supply-compass-grid,
+  .contact-request-grid,
   .starter-kit-grid,
   .luna-guardian-grid,
   .quiz-band,
@@ -2602,6 +2673,7 @@ button.secondary-btn {
   .supply-panel-grid,
   .guardian-route-grid,
   .guide-compass-grid,
+  .contact-request-grid,
   .luna-protocol-grid,
   .luna-use-grid,
   .luna-offer-grid,
@@ -2630,6 +2702,14 @@ button.secondary-btn {
 
   .quiz-result-card img {
     max-width: 220px;
+  }
+
+  .contact-request-note {
+    align-items: stretch;
+  }
+
+  .contact-request-note .primary-btn {
+    flex-basis: 100%;
   }
 }
 

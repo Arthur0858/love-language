@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-luna-offer"
+ASSET_VERSION = "20260604-contact-requests"
 
 
 FONT_CSS = ""
@@ -1169,6 +1169,75 @@ LUNA_RESUME = {
         "repair": "Añadir al plan",
         "route": "Ver ruta",
         "book": "Libro para seguir",
+    },
+}
+
+
+CONTACT_REQUESTS = {
+    "zh": {
+        "eyebrow": "REQUEST COMPASS",
+        "title": "告訴我們你需要哪一種 Luna 補給",
+        "intro": "如果你是從 Luna 或守護者補給路線來到這裡，請先選一種需求寄信。這能幫我們判斷下一批應優先整理下載包、PDF 練習卡，還是睡前流程。",
+        "items": [
+            ("下載包", "希望能離線聆聽、收藏音檔，或把 Luna 放進固定睡前儀式。"),
+            ("PDF 練習卡", "希望把測驗結果、守護者任務與錯頻修復寫成可列印的短卡。"),
+            ("睡前流程", "希望有 5 到 10 分鐘的步驟，陪你在吵架後冷卻、睡前整理或寫關係日記。"),
+        ],
+        "note": "來信時可附上你的守護者、想使用的情境與裝置。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
+        "cta": "寄出 Luna 補給需求",
+        "subject": "Luna%20night%20supply%20request",
+    },
+    "en": {
+        "eyebrow": "REQUEST COMPASS",
+        "title": "Tell us which Luna supply would help",
+        "intro": "If you arrived from Luna or a guardian supply route, choose one request before writing. It helps us decide whether downloads, PDF practice cards, or bedtime flows should be prepared first.",
+        "items": [
+            ("Download pack", "You want offline listening, a saved audio set, or a stable bedtime ritual with Luna."),
+            ("PDF practice cards", "You want printable cards that connect your quiz result, guardian task, and repair prompt."),
+            ("Bedtime flow", "You want a 5 to 10 minute sequence for cooling down after conflict, bedtime reflection, or relationship journaling."),
+        ],
+        "note": "Include your guardian, use case, and device if relevant. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
+        "cta": "Send Luna supply request",
+        "subject": "Luna%20night%20supply%20request",
+    },
+    "ja": {
+        "eyebrow": "REQUEST COMPASS",
+        "title": "必要な Luna 補給を教えてください",
+        "intro": "Luna や守護者の補給ルートから来た場合は、まず一つの希望を選んで送ってください。ダウンロード、PDF 練習カード、就寝前フローのどれを先に整えるべきか判断しやすくなります。",
+        "items": [
+            ("ダウンロードパック", "オフラインで聴きたい、音源を保存したい、Luna を就寝前の儀式に入れたい。"),
+            ("PDF 練習カード", "診断結果、守護者の課題、修復プロンプトを印刷できる短いカードにしたい。"),
+            ("就寝前フロー", "衝突後のクールダウン、寝る前の内省、関係日記に使える 5 から 10 分の手順がほしい。"),
+        ],
+        "note": "守護者、使いたい場面、端末を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
+        "cta": "Luna 補給希望を送る",
+        "subject": "Luna%20night%20supply%20request",
+    },
+    "ko": {
+        "eyebrow": "REQUEST COMPASS",
+        "title": "필요한 Luna 보급을 알려 주세요",
+        "intro": "Luna나 수호자 보급 루트에서 왔다면 먼저 한 가지 요청을 골라 보내 주세요. 다운로드, PDF 연습 카드, 잠들기 전 흐름 중 무엇을 먼저 준비할지 판단하는 데 도움이 됩니다.",
+        "items": [
+            ("다운로드 팩", "오프라인으로 듣거나 음원을 보관하고, Luna를 고정된 잠들기 전 의식에 넣고 싶을 때."),
+            ("PDF 연습 카드", "테스트 결과, 수호자 과제, 회복 질문을 인쇄 가능한 짧은 카드로 정리하고 싶을 때."),
+            ("잠들기 전 흐름", "다툼 뒤 진정, 잠들기 전 정리, 관계 일기에 쓸 5-10분 순서가 필요할 때."),
+        ],
+        "note": "가능하다면 수호자, 사용 장면, 기기를 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
+        "cta": "Luna 보급 요청 보내기",
+        "subject": "Luna%20night%20supply%20request",
+    },
+    "es": {
+        "eyebrow": "REQUEST COMPASS",
+        "title": "Cuéntanos qué recurso Luna necesitas",
+        "intro": "Si llegaste desde Luna o desde una ruta de guardiana, elige una petición antes de escribir. Así sabremos si conviene preparar primero descargas, tarjetas PDF o rutinas nocturnas.",
+        "items": [
+            ("Pack de descarga", "Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir."),
+            ("Tarjetas PDF", "Quieres tarjetas imprimibles que unan tu resultado, tarea de guardiana y pregunta de reparación."),
+            ("Rutina nocturna", "Quieres una secuencia de 5 a 10 minutos para calmarte tras un conflicto, reflexionar o escribir un diario de relación."),
+        ],
+        "note": "Incluye tu guardiana, situación de uso y dispositivo si ayuda. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
+        "cta": "Enviar petición Luna",
+        "subject": "Luna%20night%20supply%20request",
     },
 }
 
@@ -3976,6 +4045,25 @@ def luna_page(lang: str) -> None:
     write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/luna-yoga-music/images/hero.webp", schema))
 
 
+def contact_request_section(lang: str) -> str:
+    request = CONTACT_REQUESTS[lang]
+    cards = "".join(
+        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
+        for idx, (title, body) in enumerate(request["items"], 1)
+    )
+    return f"""
+<section class="section contact-request-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
+  <p class="section-intro">{escape(request["intro"])}</p>
+  <div class="contact-request-grid">{cards}</div>
+  <div class="contact-request-note">
+    <p>{escape(request["note"])}</p>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request["subject"]}">{escape(request["cta"])}</a>
+  </div>
+</section>
+"""
+
+
 def simple_page(lang: str, slug: str) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
@@ -4031,8 +4119,10 @@ def simple_page(lang: str, slug: str) -> None:
     if slug in {"contact", "privacy", "terms"}:
         policy_items = "".join(f"<h2>{escape(heading)}</h2><p>{escape(body_text)}</p>" for heading, body_text in POLICY_SECTIONS[lang][slug])
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
+        contact_requests = contact_request_section(lang) if slug == "contact" else ""
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
+{contact_requests}
 <section class="section article-body standalone">
   {policy_items}
   <h2>{escape(t["boundary"])}</h2>

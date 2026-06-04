@@ -117,6 +117,9 @@ function summarizeConversionFailures(results) {
     if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
     if (target === 'keepsake' && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
     if (target === 'route' && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (target === 'route' && !result.supplyResumeImageHiddenOk) failures.push('personalized supply resume image is visible on mobile');
+    if (target === 'route' && result.supplyResumeActionCount < 3) failures.push('personalized supply resume is missing next-step actions');
+    if (target === 'route' && !result.supplyResumeFirstActionInViewport) failures.push('personalized supply resume first action is below the mobile viewport');
     if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (target === 'luna' && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
     if (target === 'guide' && !result.guideResumeVisible) failures.push('missing personalized guide resume');
@@ -723,6 +726,22 @@ for (const item of conversionCases) {
     if (image.getAttribute('decoding') !== 'async') issues.push(`${label} missing async decoding`);
     return issues;
   }));
+  const supplyResumeImageHiddenOk = finalTarget !== 'route'
+    ? true
+    : await page.locator(`${resumeSelector} img`).evaluateAll((images) => images.length === 0 || images.every((image) => {
+      const style = window.getComputedStyle(image);
+      const rect = image.getBoundingClientRect();
+      return style.display === 'none' || style.visibility === 'hidden' || rect.width === 0 || rect.height === 0;
+    }));
+  const supplyResumeActionCount = finalTarget === 'route'
+    ? await page.locator(`${resumeSelector} .supply-resume-next a`).count()
+    : 0;
+  const supplyResumeFirstActionInViewport = finalTarget !== 'route'
+    ? true
+    : await page.locator(`${resumeSelector} .supply-resume-next a`).first().evaluate((link) => {
+      const rect = link.getBoundingClientRect();
+      return rect.top >= 0 && rect.top < window.innerHeight && rect.left >= 0 && rect.right <= window.innerWidth;
+    }).catch(() => false);
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
@@ -742,6 +761,9 @@ for (const item of conversionCases) {
     consoleErrors,
     pageErrors,
     supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible().catch(() => false),
+    supplyResumeImageHiddenOk,
+    supplyResumeActionCount,
+    supplyResumeFirstActionInViewport,
     repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
     lunaResumeVisible: await page.locator('[data-luna-saved]:not([hidden])').isVisible().catch(() => false),
     guideResumeVisible: await page.locator('[data-guide-saved]:not([hidden])').isVisible().catch(() => false),

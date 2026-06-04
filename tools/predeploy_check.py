@@ -8,6 +8,7 @@ import socket
 import subprocess
 import sys
 import time
+import shutil
 from pathlib import Path
 
 
@@ -39,6 +40,21 @@ def wait_for_server(port: int) -> None:
                 return
         time.sleep(0.1)
     raise RuntimeError(f"Local preview server did not start on port {port}")
+
+
+def find_node() -> str:
+    if os.environ.get("NODE_BIN"):
+        return os.environ["NODE_BIN"]
+
+    candidates = [
+        shutil.which("node"),
+        "/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    ]
+    for candidate in candidates:
+        if candidate and Path(candidate).exists():
+            return candidate
+
+    raise RuntimeError("Node.js was not found. Install Node.js or set NODE_BIN.")
 
 
 @contextlib.contextmanager
@@ -82,7 +98,7 @@ def main() -> int:
     run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
 
     if args.visual:
-        node = "/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
+        node = find_node()
         env = os.environ.copy()
         if args.base_url:
             env["BASE_URL"] = args.base_url

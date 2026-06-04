@@ -1196,6 +1196,8 @@ def main() -> int:
             src = image.get("src", "")
             if "alt" not in image:
                 issues.append(f"{page}: image missing alt: {src}")
+            if "guardian-prop" in class_tokens(image) and not image.get("alt", "").strip():
+                issues.append(f"{page}: guardian prop image should have descriptive alt: {src}")
             if not image.get("width") or not image.get("height"):
                 issues.append(f"{page}: image missing width/height: {src}")
             if not image.get("decoding"):

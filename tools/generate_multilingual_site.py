@@ -2921,6 +2921,7 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     domain = GUARDIAN_DOMAINS[slug]
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
+    prop_alt = f"{name} {domain_title}"
     return f"""
 <a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {img_tag(data["asset"], name)}
@@ -2930,7 +2931,7 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     <p class="domain-title">{escape(domain_title)}</p>
     <p>{escape(domain_desc)}</p>
     <small>{escape(domain_cta)}</small>
-    <img class="guardian-prop" src="{data["prop"]}" alt="" loading="lazy" decoding="async" fetchpriority="low" width="90" height="90">
+    {img_tag(data["prop"], prop_alt, "guardian-prop")}
   </div>
 </a>
 """

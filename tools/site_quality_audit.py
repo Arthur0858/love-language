@@ -1644,6 +1644,8 @@ def main() -> int:
                 issues.append(f"{page}: quiz options should expose aria-pressed selected state")
             else:
                 stats["quiz_pressed_state_scripts"] += 1
+            if 'class="quiz-options" role="group" aria-labelledby="${questionId}"' not in parser.source:
+                issues.append(f"{page}: quiz options should be grouped and labelled by the current question")
             expected_quiz_live_regions = {
                 "data-quiz-saved": "quiz saved result",
                 "data-quiz-box": "quiz question stage",

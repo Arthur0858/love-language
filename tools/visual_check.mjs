@@ -86,6 +86,11 @@ function summarizeQuizFailures(results) {
     const failures = [];
     if (!result.status || result.status >= 400) failures.push('bad status');
     if (!result.resultName) failures.push('missing result name');
+    if (!result.progressbarOk) failures.push('quiz progressbar ARIA did not initialize');
+    if (!result.optionGroupOk) failures.push('quiz options are not labelled by the question');
+    if (!result.optionPressedOk) failures.push('quiz option aria-pressed did not update');
+    if (!result.nextDisabledOk) failures.push('quiz next button was not disabled before selecting');
+    if (!result.nextEnabledOk) failures.push('quiz next button did not enable after selecting');
     if (!result.primaryRouteHref?.includes('/resources/#supply-')) failures.push('missing primary supply route');
     if (!result.planHref?.includes('/repair-plan/#plan-')) failures.push('missing repair plan route');
     if (!result.lunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('missing personalized Luna route');
@@ -387,7 +392,30 @@ for (const item of quizCases) {
   await page.evaluate(() => localStorage.clear());
   await page.locator('[data-quiz-start]').first().click();
 
-  for (let index = 0; index < 15; index += 1) {
+  const firstProgress = page.locator('.quiz-progress-bar[role="progressbar"]').first();
+  const progressbarOk = await firstProgress.evaluate((node) =>
+    node.getAttribute('aria-valuemin') === '0'
+    && node.getAttribute('aria-valuemax') === '15'
+    && node.getAttribute('aria-valuenow') === '1'
+    && Boolean(node.getAttribute('aria-label'))
+  ).catch(() => false);
+  const optionGroupOk = await page.locator('.quiz-options').first().evaluate((node) => {
+    const labelId = node.getAttribute('aria-labelledby');
+    return node.getAttribute('role') === 'group'
+      && Boolean(labelId)
+      && Boolean(document.getElementById(labelId));
+  }).catch(() => false);
+  const firstOption = page.locator('.quiz-option').first();
+  const nextButton = page.locator('.quiz-next').first();
+  const nextDisabledOk = await nextButton.isDisabled().catch(() => false);
+  const optionInitiallyFalse = await firstOption.getAttribute('aria-pressed').then((value) => value === 'false').catch(() => false);
+  await firstOption.click();
+  const optionPressedTrue = await firstOption.getAttribute('aria-pressed').then((value) => value === 'true').catch(() => false);
+  const nextEnabledOk = await nextButton.isEnabled().catch(() => false);
+  const optionPressedOk = optionInitiallyFalse && optionPressedTrue;
+  await nextButton.click();
+
+  for (let index = 1; index < 15; index += 1) {
     await page.locator('.quiz-option').first().click();
     await page.locator('.quiz-next').click();
   }
@@ -433,6 +461,11 @@ for (const item of quizCases) {
     consoleErrors,
     pageErrors,
     resultName,
+    progressbarOk,
+    optionGroupOk,
+    optionPressedOk,
+    nextDisabledOk,
+    nextEnabledOk,
     primaryRouteHref,
     planHref,
     lunaHref,

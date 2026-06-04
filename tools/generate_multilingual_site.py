@@ -3839,13 +3839,14 @@ def quiz_script(lang: str) -> str:
   }}
   function renderQuestion() {{
     const q = quiz.questions[current];
+    const questionId = `quiz-question-${{current + 1}}`;
     const progressPercent = Math.round((current + 1) / quiz.questions.length * 100);
     quizBox.innerHTML = `
       <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${{quiz.questions.length}}" aria-valuenow="${{current + 1}}" aria-label="${{progressText()}}"><span style="width:${{progressPercent}}%"></span></div><p>${{progressText()}}</p></div>
-      <article class="quiz-card ritual-question-card">
+      <article class="quiz-card ritual-question-card" aria-labelledby="${{questionId}}">
         <p class="eyebrow">${{quiz.labels.question}} ${{current + 1}}</p>
-        <h3>${{q.text}}</h3>
-        <div class="quiz-options">
+        <h3 id="${{questionId}}">${{q.text}}</h3>
+        <div class="quiz-options" role="group" aria-labelledby="${{questionId}}">
           ${{q.options.map((opt, idx) => `<button type="button" class="quiz-option" data-type="${{opt.type}}" aria-pressed="false"><span>${{idx + 1}}</span>${{opt.text}}</button>`).join('')}}
         </div>
         <button type="button" class="primary-btn quiz-next" disabled>${{current === quiz.questions.length - 1 ? quiz.labels.see : quiz.labels.next}}</button>

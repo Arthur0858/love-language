@@ -42,6 +42,21 @@ function hasBlockingConsoleMessage(message) {
   return ['error'].includes(message.type());
 }
 
+function isRetriableNavigationError(error) {
+  const message = String(error?.message || error || '');
+  return [
+    'ERR_TIMED_OUT',
+    'ERR_CONNECTION_RESET',
+    'ERR_CONNECTION_CLOSED',
+    'ERR_HTTP2_PROTOCOL_ERROR',
+    'Timeout',
+  ].some((token) => message.includes(token));
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function summarizeFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
@@ -228,14 +243,29 @@ const browser = await chromium.launch({ headless: true, executablePath });
 const results = [];
 
 async function openPage(page, url) {
-  const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
-  await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
-  return response;
+  const maxAttempts = Number(process.env.VISUAL_CHECK_NAV_ATTEMPTS || 3);
+  let lastError;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
+      await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+      return response;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= maxAttempts || !isRetriableNavigationError(error)) {
+        throw error;
+      }
+      console.warn(`Retrying navigation ${attempt + 1}/${maxAttempts}: ${url}`);
+      await delay(1000 * attempt);
+    }
+  }
+  throw lastError;
 }
 
 async function waitForSoftIdle(page) {
   await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
+  await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
   await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
 }
 

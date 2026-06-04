@@ -1453,6 +1453,25 @@ button.secondary-btn {
   box-shadow: 0 18px 48px rgba(72, 47, 45, .16);
 }
 
+.guide-personal-resume {
+  padding-top: 30px;
+  padding-bottom: 0;
+  background: linear-gradient(180deg, #fffaf6, #fff);
+}
+
+.guide-personal-resume[hidden] {
+  display: none;
+}
+
+.guide-resume-card {
+  max-width: 980px;
+  margin: 0 auto;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--result-accent), transparent 72%), rgba(71, 52, 49, .92)),
+    #493631;
+  box-shadow: 0 18px 48px rgba(72, 47, 45, .14);
+}
+
 .quiz-progress {
   display: grid;
   gap: 8px;
@@ -2201,6 +2220,47 @@ button.secondary-btn {
 
   .quiz-saved-card img {
     width: 76px;
+  }
+
+  .guide-personal-resume {
+    padding-top: 18px;
+  }
+
+  .guide-resume-card {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 12px;
+  }
+
+  .guide-resume-card img {
+    width: 58px;
+  }
+
+  .guide-resume-card h2 {
+    margin-bottom: 6px;
+    font-size: 1.06rem;
+    line-height: 1.18;
+  }
+
+  .guide-resume-card p {
+    font-size: .9rem;
+    line-height: 1.55;
+  }
+
+  .guide-resume-card .eyebrow {
+    font-size: .68rem;
+  }
+
+  .guide-resume-card .quiz-saved-actions {
+    gap: 6px 10px;
+    margin-top: 8px;
+  }
+
+  .guide-resume-card .quiz-saved-actions a,
+  .guide-resume-card .quiz-saved-actions button {
+    font-size: .86rem;
+    line-height: 1.22;
   }
 
   .repair-resume-card {

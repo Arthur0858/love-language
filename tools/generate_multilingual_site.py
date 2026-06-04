@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-native-share"
+ASSET_VERSION = "20260604-guide-personal-resume"
 
 
 FONT_CSS = ""
@@ -505,6 +505,8 @@ QUIZ_LABELS = {
         "book_action": "查看補給書卷",
         "saved_title": "繼續上次的守護者路線",
         "saved_intro": "你的上次結果只保存在這台裝置的瀏覽器。可以直接回到修復計畫、Luna 或補給路線。",
+        "guide_resume_title": "帶著上次守護者讀這篇",
+        "guide_resume_intro": "讀完這篇後，可以回到你的修復計畫、守護者頁或個人補給路線，把靈感接成下一步。",
         "saved_plan": "回到修復計畫",
         "saved_luna": "開啟 Luna",
         "saved_route": "查看補給路線",
@@ -548,6 +550,8 @@ QUIZ_LABELS = {
         "book_action": "View supply book",
         "saved_title": "Continue your last guardian route",
         "saved_intro": "Your last result is saved only in this browser on this device. Return to the repair plan, Luna, or your supply route.",
+        "guide_resume_title": "Read this with your last guardian",
+        "guide_resume_intro": "After this guide, return to your repair plan, guardian page, or personal supply route so the insight becomes a next step.",
         "saved_plan": "Return to repair plan",
         "saved_luna": "Open Luna",
         "saved_route": "View supply route",
@@ -591,6 +595,8 @@ QUIZ_LABELS = {
         "book_action": "補給の本を見る",
         "saved_title": "前回の守護者ルートを続ける",
         "saved_intro": "前回の結果はこの端末のブラウザだけに保存されています。修復プラン、Luna、補給ルートへ戻れます。",
+        "guide_resume_title": "前回の守護者と一緒に読む",
+        "guide_resume_intro": "読み終えたら、修復プラン、守護者ページ、補給ルートへ戻り、気づきを次の一歩につなげられます。",
         "saved_plan": "修復プランへ戻る",
         "saved_luna": "Luna を開く",
         "saved_route": "補給ルートを見る",
@@ -634,6 +640,8 @@ QUIZ_LABELS = {
         "book_action": "보급 책 보기",
         "saved_title": "지난 수호자 루트 이어가기",
         "saved_intro": "지난 결과는 이 기기의 브라우저에만 저장됩니다. 회복 계획, Luna, 보급 루트로 바로 돌아갈 수 있습니다.",
+        "guide_resume_title": "지난 수호자와 함께 읽기",
+        "guide_resume_intro": "이 글을 읽은 뒤 회복 계획, 수호자 페이지, 개인 보급 루트로 돌아가 다음 행동으로 이어갈 수 있습니다.",
         "saved_plan": "회복 계획으로 돌아가기",
         "saved_luna": "Luna 열기",
         "saved_route": "보급 루트 보기",
@@ -677,6 +685,8 @@ QUIZ_LABELS = {
         "book_action": "Ver libro de suministro",
         "saved_title": "Continuar tu última ruta",
         "saved_intro": "Tu último resultado se guarda solo en este navegador y dispositivo. Puedes volver al plan, Luna o tu ruta de suministro.",
+        "guide_resume_title": "Lee esto con tu última guardiana",
+        "guide_resume_intro": "Después de la guía, vuelve a tu plan, página de guardiana o ruta de suministro para convertir la idea en siguiente paso.",
         "saved_plan": "Volver al plan",
         "saved_luna": "Abrir Luna",
         "saved_route": "Ver ruta",
@@ -2720,6 +2730,59 @@ def supply_resume_script(lang: str) -> str:
 """
 
 
+def guide_resume_script(lang: str) -> str:
+    data = quiz_payload(lang)
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const box = document.querySelector('[data-guide-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{location.pathname}}:quiz-result`, `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        if (saved && quiz.results[saved.primaryKey]) return saved;
+      }}
+    }} catch (error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  box.innerHTML = `
+    <article class="quiz-saved-card guide-resume-card" style="--result-accent:${{result.color}}">
+      <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+      <div>
+        <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
+        <h2>${{result.name}} · ${{result.type}}</h2>
+        <p>${{quiz.labels.guide_resume_intro}}</p>
+        <div class="quiz-saved-actions">
+          <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
+          <a href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+          <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+          <button type="button" data-clear-guide-result>${{quiz.labels.saved_clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-clear-guide-result]').addEventListener('click', clearSavedResult);
+}})();
+</script>
+"""
+
+
 def home(lang: str) -> None:
     t = LANGS[lang]
     quiz = QUIZ_LABELS[lang]
@@ -2812,6 +2875,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
   {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False)}
 </section>
+<section class="section guide-personal-resume" data-guide-saved hidden></section>
 <section class="article-shell">
   <article class="article-body">
     <p class="lede">{escape(detail["lede"])}</p>
@@ -2832,7 +2896,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
 </section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, "guides/" + guide["slug"])}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
-    write(page_path(lang, "guides/" + guide["slug"]), layout(lang, title, desc, "guides/" + guide["slug"], body, t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+    write(page_path(lang, "guides/" + guide["slug"]), layout(lang, title, desc, "guides/" + guide["slug"], body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
 def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str) -> None:
@@ -2846,6 +2910,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <div><p class="eyebrow">HEART GARDEN ARCHIVE</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
   {img_tag("/assets/lovetypes/share/guide-toolkit-og.jpg", "LoveTypes guide", lazy=False)}
 </section>
+<section class="section guide-personal-resume" data-guide-saved hidden></section>
 <section class="article-shell">
   <article class="article-body">
     <p class="lede">{escape(desc)} 這一頁保留原有主題，並把它放回心語庭園的語境：先辨認錯頻，再找到能被接收的修復方式。</p>
@@ -2863,7 +2928,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 </section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, "guides/" + slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","author":{{"@type":"Organization","name":"LoveTypes"}},"publisher":{{"@type":"Organization","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
-    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body, t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+    write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:

@@ -39,6 +39,12 @@ function summarizeFailures(results) {
     if (!result.h1) failures.push('missing h1');
     if (result.navCount < 4) failures.push('navigation too small');
     if (result.textLength < 120) failures.push('page text too short');
+    if (result.name.startsWith('home-') && result.universeGateCount !== 5) failures.push('missing five universe gates');
+    if (result.name.startsWith('characters-') && result.universeMapCount !== 1) failures.push('missing universe map');
+    if (result.name.startsWith('characters-') && result.guardianCardCount !== 5) failures.push('missing guardian universe cards');
+    if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
+    if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
+    if (result.name.startsWith('guardian-') && result.supplyCtaCount < 1) failures.push('missing guardian supply CTA');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
     if (result.pageErrors.length) failures.push('page errors');
@@ -144,12 +150,18 @@ const chromium = await getChromium();
 const cases = [
   { name: 'home-desktop', path: '/', viewport: { width: 1440, height: 1000 } },
   { name: 'home-mobile', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'characters-desktop', path: '/characters/', viewport: { width: 1280, height: 900 } },
+  { name: 'characters-mobile', path: '/characters/', viewport: { width: 390, height: 844 } },
   { name: 'resources-desktop', path: '/resources/', viewport: { width: 1280, height: 900 } },
   { name: 'resources-mobile', path: '/resources/', viewport: { width: 390, height: 844 } },
   { name: 'repair-plan-mobile', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'keepsakes-mobile', path: '/keepsakes/', viewport: { width: 390, height: 844 } },
   { name: 'luna-mobile', path: '/luna/', viewport: { width: 390, height: 844 } },
-  { name: 'guardian-mobile', path: '/characters/iris/', viewport: { width: 390, height: 844 } },
+  { name: 'guardian-iris-mobile', path: '/characters/iris/', viewport: { width: 390, height: 844 } },
+  { name: 'guardian-noah-mobile', path: '/characters/noah/', viewport: { width: 390, height: 844 } },
+  { name: 'guardian-vivian-mobile', path: '/characters/vivian/', viewport: { width: 390, height: 844 } },
+  { name: 'guardian-claire-mobile', path: '/characters/claire/', viewport: { width: 390, height: 844 } },
+  { name: 'guardian-dora-mobile', path: '/characters/dora/', viewport: { width: 390, height: 844 } },
   { name: 'en-home-mobile', path: '/en/', viewport: { width: 390, height: 844 } },
   { name: 'ja-repair-plan-mobile', path: '/ja/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'es-guides-desktop', path: '/es/guides/', viewport: { width: 1280, height: 900 } },
@@ -195,6 +207,16 @@ for (const item of cases) {
   const h1 = await page.locator('h1').first().innerText().catch(() => '');
   const navCount = await page.locator('.nav-links a').count();
   const bodyText = await page.locator('body').innerText();
+  const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
+  const universeMapCount = await page.locator('[data-universe-map]').count();
+  const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
+  const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
+    if (!cards.length) return 0;
+    const heights = cards.map((card) => card.getBoundingClientRect().height);
+    return Math.round(Math.max(...heights) - Math.min(...heights));
+  }).catch(() => 0);
+  const domainMarkerCount = await page.locator('[data-domain-marker]').count();
+  const supplyCtaCount = await page.locator('.guardian-domain-hero .primary-btn[href*="/resources/#supply-"]').count();
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
@@ -208,6 +230,12 @@ for (const item of cases) {
     h1,
     navCount,
     textLength: bodyText.length,
+    universeGateCount,
+    universeMapCount,
+    guardianCardCount,
+    guardianCardHeightSpread,
+    domainMarkerCount,
+    supplyCtaCount,
     horizontalOverflow,
     consoleErrors,
     pageErrors,

@@ -2132,6 +2132,60 @@ GUARDIANS = {
 }
 
 
+GUARDIAN_DOMAINS = {
+    "iris": {
+        "accent": "#bd5260",
+        "glow": "#f0c778",
+        "motif": "dawn-glass-garden",
+        "zh": ("晨曦玻璃花園", "羽筆與手寫光會把等很久的話照亮。", "進入艾莉絲的語言宇宙"),
+        "en": ("Dawn-Glass Garden", "Feather-pen light gives shape to words that waited too long.", "Enter Iris' word universe"),
+        "ja": ("夜明けのガラス庭園", "羽根ペンと手書きの光が、長く待った言葉を照らします。", "アイリスの言葉の宇宙へ"),
+        "ko": ("새벽 유리 정원", "깃펜과 손글씨 빛이 오래 기다린 말을 밝힙니다.", "아이리스의 말 우주로"),
+        "es": ("Jardín de cristal del amanecer", "La luz de pluma da forma a palabras que esperaron demasiado.", "Entrar al universo de Iris"),
+    },
+    "noah": {
+        "accent": "#7666a8",
+        "glow": "#b8c7e8",
+        "motif": "star-sea-library",
+        "zh": ("星海圖書館", "星圖與安靜海面保存真正留在彼此身邊的時間。", "進入諾雅的時間宇宙"),
+        "en": ("Star-Sea Library", "Star maps and quiet water preserve time where two people truly stay.", "Enter Noah's time universe"),
+        "ja": ("星海の図書館", "星図と静かな水面が、二人が本当に留まる時間を守ります。", "ノアの時間の宇宙へ"),
+        "ko": ("별바다 도서관", "별지도와 고요한 수면이 진짜 머무는 시간을 지킵니다.", "노아의 시간 우주로"),
+        "es": ("Biblioteca del mar estelar", "Mapas de estrellas y agua quieta guardan el tiempo de quedarse.", "Entrar al universo de Noah"),
+    },
+    "vivian": {
+        "accent": "#b78b45",
+        "glow": "#e9b2a0",
+        "motif": "moonlit-memory-workshop",
+        "zh": ("月光記憶工坊", "緞帶、票根與禮物盒收藏被想起的證據。", "進入薇薇安的記憶宇宙"),
+        "en": ("Moonlit Memory Workshop", "Ribbons, ticket stubs, and boxes keep proof of being remembered.", "Enter Vivian's memory universe"),
+        "ja": ("月光の記憶工房", "リボン、半券、小箱が思い出された証を集めます。", "ヴィヴィアンの記憶の宇宙へ"),
+        "ko": ("달빛 기억 공방", "리본, 표 조각, 상자가 떠올려졌다는 증거를 모읍니다.", "비비안의 기억 우주로"),
+        "es": ("Taller de memoria lunar", "Cintas, boletos y cajas guardan pruebas de haber sido recordada.", "Entrar al universo de Vivian"),
+    },
+    "claire": {
+        "accent": "#6b7f6a",
+        "glow": "#d8c79a",
+        "motif": "greenhouse-repair-room",
+        "zh": ("溫室修復間", "工具袋與暖白燈把承諾放回日常。", "進入克萊兒的行動宇宙"),
+        "en": ("Greenhouse Repair Room", "Tool pouches and warm work lights return promises to daily life.", "Enter Claire's action universe"),
+        "ja": ("温室の修復室", "道具袋と暖かな作業灯が、約束を日常へ戻します。", "クレアの行動の宇宙へ"),
+        "ko": ("온실 수리실", "도구 주머니와 따뜻한 작업등이 약속을 일상으로 돌립니다.", "클레어의 행동 우주로"),
+        "es": ("Invernadero de reparación", "Herramientas y luz cálida devuelven promesas a lo cotidiano.", "Entrar al universo de Claire"),
+    },
+    "dora": {
+        "accent": "#c66b72",
+        "glow": "#f0b49c",
+        "motif": "rose-gold-safe-sanctuary",
+        "zh": ("玫瑰金安全聖域", "柔軟布料與暖光守護經過同意的靠近。", "進入朵拉的溫度宇宙"),
+        "en": ("Rose-Gold Safe Sanctuary", "Soft fabric and warm light guard closeness after consent.", "Enter Dora's warmth universe"),
+        "ja": ("ローズゴールドの安全な聖域", "柔らかな布と暖光が、同意のある近さを守ります。", "ドーラの温度の宇宙へ"),
+        "ko": ("로즈골드 안전 성역", "부드러운 천과 따뜻한 빛이 동의 이후의 가까움을 지킵니다.", "도라의 온기 우주로"),
+        "es": ("Santuario seguro rosa dorado", "Tela suave y luz cálida protegen la cercanía con consentimiento.", "Entrar al universo de Dora"),
+    },
+}
+
+
 GUIDES = [
     {
         "slug": "share-your-result",
@@ -2866,24 +2920,35 @@ def guide_card(lang: str, guide: dict) -> str:
 
 def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> str:
     name, typ, desc = data[lang]
+    domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
+    domain = GUARDIAN_DOMAINS[slug]
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
     return f"""
-<a {attrs} href="{lang_url(lang, "characters/" + slug)}">
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {img_tag(data["asset"], name)}
-  <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p>{escape(desc)}</p></div>
+  <div>
+    <span>{escape(typ)}</span>
+    <h3>{escape(name)}</h3>
+    <p class="domain-title">{escape(domain_title)}</p>
+    <p>{escape(domain_desc)}</p>
+    <small>{escape(domain_cta)}</small>
+    <img class="guardian-prop" src="{data["prop"]}" alt="" loading="lazy" decoding="async" width="90" height="90">
+  </div>
 </a>
 """
 
 
 def character_link_card(lang: str, slug: str, data: dict, current_slug: str = "") -> str:
     name, typ, _desc = data[lang]
+    domain_title, _domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
+    domain = GUARDIAN_DOMAINS[slug]
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
     return f"""
-<a {attrs} href="{lang_url(lang, "characters/" + slug)}">
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {img_tag(data["asset"], name)}
-  <div><span>{escape(typ)}</span><h3>{escape(name)}</h3></div>
+  <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p class="domain-title">{escape(domain_title)}</p><small>{escape(domain_cta)}</small></div>
 </a>
 """
 
@@ -2968,6 +3033,51 @@ def supply_quick_route_nav(lang: str) -> str:
   </div>
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="supply-quick-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+UNIVERSE_COPY = {
+    "zh": ("五域宇宙入口", "從心語庭園進入五個分域，選一盞最像你此刻需要的光。", "五域星圖", "每位守護者不是分類標籤，而是一個可以進入、停留、練習的情感分域。"),
+    "en": ("Five Universe Gates", "Enter five domains from the Heart Garden and choose the light closest to what you need now.", "Five-Domain Star Map", "Each guardian is not a label, but an emotional domain you can enter, stay in, and practice with."),
+    "ja": ("五つの宇宙入口", "心語の庭から五つの領域へ入り、今必要な光を一つ選びます。", "五領域の星図", "守護者は分類ではなく、入って留まり、練習できる感情の領域です。"),
+    "ko": ("다섯 우주 입구", "마음의 정원에서 다섯 영역으로 들어가 지금 필요한 빛을 하나 고릅니다.", "다섯 영역 별지도", "수호자는 분류표가 아니라 들어가 머물고 연습하는 감정 영역입니다."),
+    "es": ("Cinco portales de universo", "Entra a cinco dominios desde el Jardín del Corazón y elige la luz que más necesitas ahora.", "Mapa estelar de cinco dominios", "Cada guardiana no es una etiqueta, sino un dominio emocional para entrar, quedarse y practicar."),
+}
+
+
+def universe_gate_section(lang: str) -> str:
+    title, intro, _map_title, _map_intro = UNIVERSE_COPY[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        cards.append(f"""
+<a class="universe-gate-card" href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  <span>{escape(typ)}</span>
+  <strong>{escape(domain_title)}</strong>
+  <p>{escape(domain_desc)}</p>
+  <small>{escape(domain_cta)} · {escape(name)}</small>
+</a>
+""")
+    return f"""
+<section class="section universe-gates" data-universe-gates>
+  <div class="section-head"><div><p class="eyebrow">HEART GARDEN PORTALS</p><h2>{escape(title)}</h2></div><a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a></div>
+  <p class="section-intro">{escape(intro)}</p>
+  <div class="universe-gate-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+def universe_map_section(lang: str) -> str:
+    _title, _intro, map_title, map_intro = UNIVERSE_COPY[lang]
+    cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
+    return f"""
+<section class="section universe-map-section" data-universe-map>
+  <div class="section-head"><div><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(map_title)}</h2></div><a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a></div>
+  <p class="section-intro">{escape(map_intro)}</p>
+  <div class="guardian-grid universe-map-grid">{cards}</div>
 </section>
 """
 
@@ -3665,8 +3775,8 @@ def quiz_script(lang: str) -> str:
   function renderQuestion() {{
     const q = quiz.questions[current];
     quizBox.innerHTML = `
-      <div class="quiz-progress"><div class="quiz-progress-bar"><span style="width:${{Math.round(current / quiz.questions.length * 100)}}%"></span></div><p>${{progressText()}}</p></div>
-      <article class="quiz-card">
+      <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar"><span style="width:${{Math.round(current / quiz.questions.length * 100)}}%"></span></div><p>${{progressText()}}</p></div>
+      <article class="quiz-card ritual-question-card">
         <p class="eyebrow">${{quiz.labels.question}} ${{current + 1}}</p>
         <h3>${{q.text}}</h3>
         <div class="quiz-options">
@@ -3714,7 +3824,7 @@ def quiz_script(lang: str) -> str:
       localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
     }} catch (error) {{}}
     resultBox.innerHTML = `
-      <article class="quiz-result-card" style="--result-accent:${{result.color}}">
+      <article class="quiz-result-card ritual-reveal-card" style="--result-accent:${{result.color}}">
         <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async">
         <div class="quiz-result-copy">
           <p class="eyebrow">${{quiz.labels.result_label}}</p>
@@ -4083,6 +4193,7 @@ def home(lang: str) -> None:
   </div>
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
+{universe_gate_section(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">UNIVERSE PROMISE</p><h2>{escape(t["trust_intro"])}</h2></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>
@@ -4118,7 +4229,6 @@ def home(lang: str) -> None:
 def characters_index_page(lang: str) -> None:
     t = LANGS[lang]
     copy = CHARACTER_INDEX_COPY[lang]
-    guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     title = copy["title"]
     desc = copy["desc"]
     body = f"""
@@ -4128,11 +4238,7 @@ def characters_index_page(lang: str) -> None:
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
-<section class="section">
-  <div class="section-head"><div><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(copy["map_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
-  <p class="section-intro">{escape(copy["map_intro"])}</p>
-  <div class="guardian-grid">{guardian_cards}</div>
-</section>
+{universe_map_section(lang)}
 <section class="section intro-grid">
   <div><h2>{escape(PAGE_SECTIONS[lang]["how"])}</h2><p>{escape(PRACTICAL_COPY[lang]["why"])}</p></div>
   <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["need"])}</h2><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
@@ -4268,6 +4374,8 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
     name, typ, desc = data[lang]
+    domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
+    domain = GUARDIAN_DOMAINS[slug]
     detail = character_detail_copy(lang, name, typ, desc)
     related_guides = [g for g in GUIDES if g["guardian"] == slug][:3]
     related_html = "".join(guide_card(lang, g) for g in related_guides)
@@ -4275,9 +4383,15 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
     reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     body = f"""
-<section class="guardian-hero">
-  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
+<section class="guardian-hero guardian-domain-hero" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p class="domain-title">{escape(domain_title)}</p><p>{escape(desc)}</p><p>{escape(domain_desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False)}
+</section>
+<section class="section domain-rune-section" data-domain-marker>
+  <div class="domain-rune-card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+    {img_tag(data["prop"], domain_title)}
+    <div><p class="eyebrow">{escape(domain["motif"])}</p><h2>{escape(domain_cta)}</h2><p>{escape(domain_desc)}</p></div>
+  </div>
 </section>
 {character_route_snapshot(lang, slug)}
 <section class="section intro-grid">

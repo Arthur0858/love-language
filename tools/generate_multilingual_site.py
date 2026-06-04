@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-route-receipt"
+ASSET_VERSION = "20260604-breadcrumbs"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2516,6 +2516,68 @@ def footer(lang: str) -> str:
 """
 
 
+def crumb_title(title: str) -> str:
+    return title.split(" | ")[0].split("｜")[0].strip()
+
+
+def breadcrumb_items(lang: str, path: str, title: str) -> list[tuple[str, str]]:
+    if not path:
+        return []
+    t = LANGS[lang]
+    section_titles = {
+        "guides": t["guides"],
+        "characters": t["guardians"],
+        "resources": t["resources"],
+        "repair-plan": REPAIR_PLAN[lang]["title"],
+        "keepsakes": KEEPSAKES_PAGE[lang]["title"],
+        "luna-yoga-music": t["luna_title"],
+        "theory": t["theory"],
+        "about": t["about"],
+        "contact": t["contact"],
+        "privacy": t["privacy"],
+        "terms": t["terms"],
+    }
+    parts = path.strip("/").split("/")
+    items = [(t["brand"], lang_url(lang))]
+    if len(parts) > 1 and parts[0] in section_titles:
+        items.append((section_titles[parts[0]], lang_url(lang, parts[0])))
+    items.append((crumb_title(title) or section_titles.get(parts[0], title), lang_url(lang, path)))
+    return items
+
+
+def breadcrumb_nav(lang: str, path: str, title: str) -> str:
+    items = breadcrumb_items(lang, path, title)
+    if not items:
+        return ""
+    links = []
+    for idx, (label, href) in enumerate(items):
+        if idx == len(items) - 1:
+            links.append(f'<span aria-current="page">{escape(label)}</span>')
+        else:
+            links.append(f'<a href="{href}">{escape(label)}</a>')
+    return f'<nav class="breadcrumb" aria-label="Breadcrumb">{"<span>/</span>".join(links)}</nav>'
+
+
+def breadcrumb_schema(lang: str, path: str, title: str) -> str:
+    items = breadcrumb_items(lang, path, title)
+    if not items:
+        return ""
+    data = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": index,
+                "name": label,
+                "item": f"{DOMAIN}{href}",
+            }
+            for index, (label, href) in enumerate(items, start=1)
+        ],
+    }
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False, separators=(",", ":"))}</script>'
+
+
 def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "website", image: str = "/og-cover.jpg") -> str:
     canonical = abs_url(lang, path)
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, path)}" />' for code, cfg in LANGS.items())
@@ -2557,6 +2619,8 @@ def layout(lang: str, title: str, desc: str, path: str, body: str, active: str =
 <a class="skip-link" href="#main">Skip to content</a>
 {nav(lang, active, path)}
 {schema}
+{breadcrumb_schema(lang, path, title)}
+{breadcrumb_nav(lang, path, title)}
 <main id="main">
 {body}
 </main>

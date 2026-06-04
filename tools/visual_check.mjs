@@ -167,6 +167,19 @@ function summarizeWorksheetFailures(results) {
   });
 }
 
+function summarizeCopyFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.copyOk) failures.push('copy action did not write expected text');
+    if (!result.feedbackOk) failures.push('copy action did not show feedback');
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 async function firstExistingPath(paths) {
   for (const path of paths) {
     try {
@@ -272,6 +285,12 @@ const conversionCases = [
 const worksheetCases = [
   { name: 'worksheet-autosave-mobile', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'worksheet-autosave-en-desktop', path: '/en/repair-plan/', viewport: { width: 1280, height: 900 } },
+];
+
+const copyCases = [
+  { name: 'copy-quiz-result-mobile', target: 'quiz-result', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'copy-supply-route-mobile', target: 'supply-route', path: '/resources/', viewport: { width: 390, height: 844 } },
+  { name: 'copy-repair-summary-mobile', target: 'repair-summary', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -719,15 +738,107 @@ for (const item of worksheetCases) {
   await page.close();
 }
 
+for (const item of copyCases) {
+  const page = await browser.newPage({ viewport: item.viewport });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  await page.addInitScript(() => {
+    window.__lovetypesCopiedText = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (text) => {
+          window.__lovetypesCopiedText = String(text || '');
+        },
+      },
+    });
+  });
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  await page.evaluate(() => localStorage.clear());
+  let copyOk = false;
+  let feedbackOk = false;
+
+  if (item.target === 'quiz-result') {
+    await page.locator('[data-quiz-start]').first().click();
+    for (let index = 0; index < 15; index += 1) {
+      await page.locator('.quiz-option').first().click();
+      await page.locator('.quiz-next').click();
+    }
+    await page.locator('.quiz-result-card').waitFor({ state: 'visible' });
+    const button = page.locator('[data-copy-result]').first();
+    const original = await button.innerText();
+    await button.click();
+    await page.waitForFunction(() => Boolean(window.__lovetypesCopiedText), undefined, { timeout: 5000 });
+    const copiedText = await page.evaluate(() => window.__lovetypesCopiedText);
+    const updated = await button.innerText();
+    copyOk = copiedText.includes('艾莉絲') && copiedText.includes('/assets/lovetypes/share/iris-story-zh.webp');
+    feedbackOk = updated !== original;
+  } else if (item.target === 'supply-route') {
+    const button = page.locator('[data-copy-supply-route]').first();
+    const original = await button.innerText();
+    await button.click();
+    await page.waitForFunction(() => Boolean(window.__lovetypesCopiedText), undefined, { timeout: 5000 });
+    const copiedText = await page.evaluate(() => window.__lovetypesCopiedText);
+    const updated = await button.innerText();
+    copyOk = copiedText.includes('LoveTypes') || copiedText.includes('補給路線');
+    feedbackOk = updated !== original;
+  } else if (item.target === 'repair-summary') {
+    const fields = page.locator('[data-repair-worksheet] textarea[data-field]');
+    await fields.nth(0).fill('copy smoke guardian');
+    await fields.nth(1).fill('copy smoke wound');
+    const button = page.locator('[data-copy-worksheet-summary]').first();
+    await button.click();
+    await page.waitForFunction(() => Boolean(window.__lovetypesCopiedText), undefined, { timeout: 5000 });
+    const copiedText = await page.evaluate(() => window.__lovetypesCopiedText);
+    const statusText = await page.locator('[data-worksheet-status]').innerText().catch(() => '');
+    copyOk = copiedText.includes('copy smoke guardian') && copiedText.includes('/repair-plan/');
+    feedbackOk = statusText.trim().length > 0 && !statusText.includes('至少');
+  }
+
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    target: item.target,
+    url,
+    finalUrl: finalPath(page),
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    copyOk,
+    feedbackOk,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    screenshot,
+  });
+  await page.close();
+}
+
 await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [
-  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('worksheet-'))),
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-') && !result.name.startsWith('conversion-') && !result.name.startsWith('redirect-') && !result.name.startsWith('worksheet-') && !result.name.startsWith('copy-'))),
   ...summarizeRedirectFailures(results.filter((result) => result.name.startsWith('redirect-'))),
   ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
   ...summarizeWorksheetFailures(results.filter((result) => result.name.startsWith('worksheet-'))),
+  ...summarizeCopyFailures(results.filter((result) => result.name.startsWith('copy-'))),
 ];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);

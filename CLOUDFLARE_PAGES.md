@@ -45,6 +45,21 @@ After deployment, run the public smoke test:
 python3 tools/public_deploy_smoke.py
 ```
 
+Then run the full sitemap public smoke test:
+
+```bash
+python3 tools/public_sitemap_smoke.py
+```
+
+Generate a local health summary:
+
+```bash
+python3 tools/site_health_summary.py
+```
+
+The summary is written to `output/site-health.md`. It is local evidence for the
+current machine and is intentionally not committed or deployed.
+
 ## Deployment Scope
 
 The deploy script uploads only public static site output. It excludes local
@@ -68,5 +83,7 @@ A production deploy is not considered verified until all of these are true:
   manifest and query missing hashes.
 - The real deploy reaches a Cloudflare deployment stage of `deploy success`.
 - `python3 tools/public_deploy_smoke.py` returns `public_deploy_issues=0`.
+- `python3 tools/public_sitemap_smoke.py` returns `public_sitemap_issues=0`.
+- `python3 tools/site_health_summary.py` returns `site_health_status=ok`.
 - `git status --short --branch` shows `main...origin/main` with no local
   changes after the intended commit has been pushed.

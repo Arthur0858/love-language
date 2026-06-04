@@ -102,6 +102,12 @@ EXPECTED_REDIRECTS = {
     "/ko/luna/": ("/ko/luna-yoga-music/", "301"),
     "/es/luna/": ("/es/luna-yoga-music/", "301"),
 }
+NOT_FOUND_SAFE_ROUTE_HREFS = {
+    "/#quiz-section",
+    "/characters/",
+    "/resources/",
+    "/contact/",
+}
 PAGE_SCHEMA_TYPES = {
     "AboutPage",
     "Article",
@@ -1162,6 +1168,17 @@ def main() -> int:
         else:
             stats["indexable_pages"] += 1
 
+        if page.name == "404.html":
+            stats["not_found_pages"] += 1
+            if not is_noindex(parser):
+                issues.append(f"{page}: 404 page should be noindex")
+            if "404 HEART GARDEN" not in parser.source:
+                issues.append(f"{page}: custom 404 page missing Heart Garden marker")
+            not_found_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            missing_safe_routes = sorted(NOT_FOUND_SAFE_ROUTE_HREFS.difference(not_found_hrefs))
+            if missing_safe_routes:
+                issues.append(f"{page}: custom 404 page missing safe route links {', '.join(missing_safe_routes)}")
+
         if not "".join(parser.title_parts).strip():
             issues.append(f"{page}: missing <title>")
         if not parser.meta_content("description"):
@@ -1661,6 +1678,7 @@ def main() -> int:
     print(f"generator_config_loaded={stats['generator_config_loaded']}")
     print(f"indexable_pages={stats['indexable_pages']}")
     print(f"noindex_pages={stats['noindex_pages']}")
+    print(f"not_found_pages={stats['not_found_pages']}")
     print(f"indexable_unique_titles={stats['indexable_unique_titles']}")
     print(f"indexable_unique_descriptions={stats['indexable_unique_descriptions']}")
     print(f"images={stats['images']}")

@@ -50,6 +50,15 @@ SUPPORT_FILES = {
     "/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
     "/.well-known/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
 }
+NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
+NOT_FOUND_REQUIRED_TEXT = [
+    "404 HEART GARDEN",
+    "這盞燈暫時不在地圖上",
+    "/#quiz-section",
+    "/characters/",
+    "/resources/",
+    "/contact/",
+]
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 REQUIRED_GLOBAL_HEADERS = {
     "x-content-type-options": "nosniff",
@@ -225,6 +234,7 @@ def main() -> int:
     issues: list[str] = []
     pages_checked = 0
     redirects_checked = 0
+    not_found_checked = 0
     support_files_checked = 0
     immutable_assets_checked = 0
     first_page_assets: HeadAssetParser | None = None
@@ -257,6 +267,15 @@ def main() -> int:
             issues.append(f"{source}: expected 301 redirect, got {response.status}")
         if location not in {target, expected_location}:
             issues.append(f"{source}: expected redirect to {target}, got {location!r}")
+
+    not_found_response = request_url(urljoin(base_url, NOT_FOUND_PATH))
+    not_found_checked += 1
+    if not_found_response.status != 404:
+        issues.append(f"{NOT_FOUND_PATH}: expected custom 404 status, got {not_found_response.status}")
+    issues.extend(check_global_headers(NOT_FOUND_PATH, not_found_response))
+    for snippet in NOT_FOUND_REQUIRED_TEXT:
+        if snippet not in not_found_response.text:
+            issues.append(f"{NOT_FOUND_PATH}: custom 404 missing required text {snippet!r}")
 
     for path, snippets in SUPPORT_FILES.items():
         response = request_url(urljoin(base_url, path))
@@ -293,6 +312,7 @@ def main() -> int:
 
     print(f"public_pages_checked={pages_checked}")
     print(f"public_redirects_checked={redirects_checked}")
+    print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")
     print(f"public_immutable_assets_checked={immutable_assets_checked}")
     print(f"public_deploy_issues={len(issues)}")

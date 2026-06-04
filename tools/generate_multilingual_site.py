@@ -24,7 +24,12 @@ FONT_CSS = ""
 IMAGE_DIMENSIONS = {
     "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp": (900, 506),
     "/assets/lovetypes/backgrounds/guardian-garden.webp": (1920, 1080),
+    "/assets/lovetypes/share/claire-og.jpg": (1200, 630),
+    "/assets/lovetypes/share/dora-og.jpg": (1200, 630),
     "/assets/lovetypes/share/guide-toolkit-og.jpg": (1200, 630),
+    "/assets/lovetypes/share/iris-og.jpg": (1200, 630),
+    "/assets/lovetypes/share/noah-og.jpg": (1200, 630),
+    "/assets/lovetypes/share/vivian-og.jpg": (1200, 630),
     "/assets/lovetypes/guardians/claire.webp": (720, 1007),
     "/assets/lovetypes/guardians/dora.webp": (736, 1007),
     "/assets/lovetypes/guardians/iris.webp": (966, 1024),
@@ -2604,6 +2609,7 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
     canonical = abs_url(lang, path)
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, path)}" />' for code, cfg in LANGS.items())
     alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", path)}" />'
+    image_width, image_height = IMAGE_DIMENSIONS.get(image, (1200, 630))
     hero_preload = ""
     if path == "":
         hero_preload = """  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
@@ -2627,7 +2633,10 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
   <meta property="og:title" content="{escape(title)}" />
   <meta property="og:description" content="{escape(desc)}" />
   <meta property="og:image" content="{DOMAIN}{image}" />
+  <meta property="og:image:width" content="{image_width}" />
+  <meta property="og:image:height" content="{image_height}" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="{DOMAIN}{image}" />
 {hero_preload}  <link rel="stylesheet" href="{CSS_ASSET}" />
 </head>
 """
@@ -4042,7 +4051,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 <section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","name":"{escape(name)}","description":"{escape(desc)}","url":"{abs_url(lang, "characters/" + slug)}","inLanguage":"{t["code"]}","about":{{"@type":"Thing","name":"{escape(typ)}"}},"dateModified":"{UPDATED}"}}</script>'
-    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", data["asset"], schema))
+    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", f"/assets/lovetypes/share/{slug}-og.jpg", schema))
 
 
 def resources_page(lang: str) -> None:

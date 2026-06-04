@@ -5047,16 +5047,27 @@ def write_redirects() -> None:
 
 
 def write_support_files() -> None:
-    urls = []
-    for lang in LANGS:
-        paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
-        paths += [f"guides/{g['slug']}" for g in GUIDES]
-        paths += [f"characters/{slug}" for slug in GUARDIANS]
-        for path in paths:
-            urls.append(abs_url(lang, path))
-    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url in urls:
-        sitemap.append(f"  <url><loc>{url}</loc><lastmod>{UPDATED}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>")
+    paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths += [f"guides/{g['slug']}" for g in GUIDES]
+    paths += [f"characters/{slug}" for slug in GUARDIANS]
+    sitemap = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    ]
+    for path in paths:
+        alternates = [f'    <xhtml:link rel="alternate" hreflang="{cfg["code"]}" href="{xml_escape(abs_url(code, path))}" />' for code, cfg in LANGS.items()]
+        alternates.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{xml_escape(abs_url("zh", path))}" />')
+        for lang in LANGS:
+            url = abs_url(lang, path)
+            sitemap.append(
+                "  <url>\n"
+                f"    <loc>{xml_escape(url)}</loc>\n"
+                f"    <lastmod>{UPDATED}</lastmod>\n"
+                "    <changefreq>weekly</changefreq>\n"
+                "    <priority>0.8</priority>\n"
+                + "\n".join(alternates)
+                + "\n  </url>"
+            )
     sitemap.append("</urlset>")
     write(ROOT / "sitemap.xml", "\n".join(sitemap) + "\n")
     write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")

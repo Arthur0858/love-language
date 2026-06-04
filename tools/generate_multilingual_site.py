@@ -6,6 +6,7 @@ from datetime import date
 from html import escape
 from pathlib import Path
 from urllib.parse import quote
+from xml.sax.saxutils import escape as xml_escape
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -2736,6 +2737,7 @@ def head(
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="application/rss+xml" title="LoveTypes 守護者指南" href="/feed.xml" />
   <meta name="theme-color" content="#7a4d6d" />
   <meta property="og:type" content="{page_type}" />
   <meta property="og:url" content="{canonical}" />
@@ -4997,6 +4999,36 @@ def write_site_manifest() -> None:
     write(ROOT / "site.webmanifest", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
 
 
+def write_feed_xml() -> None:
+    items = []
+    for guide in GUIDES:
+        title, desc = guide["zh"]
+        guardian_name, guardian_language, guardian_desc = GUARDIANS[guide["guardian"]]["zh"]
+        url = abs_url("zh", f"guides/{guide['slug']}")
+        item_desc = f"{desc} 對應守護者：{guardian_name}（{guardian_language}）。{guardian_desc}"
+        items.append(f"""    <item>
+      <title>{xml_escape(title)}</title>
+      <link>{xml_escape(url)}</link>
+      <guid isPermaLink="true">{xml_escape(url)}</guid>
+      <description>{xml_escape(item_desc)}</description>
+      <category>{xml_escape(guardian_name)}</category>
+      <pubDate>{date.fromisoformat(UPDATED).strftime("%a, %d %b %Y 00:00:00 +0000")}</pubDate>
+    </item>""")
+    feed = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>LoveTypes 守護者指南</title>
+    <link>{DOMAIN}/guides/</link>
+    <description>LoveTypes 心語庭園的五種愛之語、情感守護者、錯頻修復與關係練習指南。</description>
+    <language>zh-TW</language>
+    <lastBuildDate>{date.fromisoformat(UPDATED).strftime("%a, %d %b %Y 00:00:00 +0000")}</lastBuildDate>
+{chr(10).join(items)}
+  </channel>
+</rss>
+"""
+    write(ROOT / "feed.xml", feed)
+
+
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
@@ -5044,6 +5076,7 @@ https://:version.lovetypes.pages.dev/*
     write_404_page()
     write_llms_txt()
     write_site_manifest()
+    write_feed_xml()
 
 
 def main() -> None:

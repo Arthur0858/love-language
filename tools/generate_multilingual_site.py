@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-luna-guardian-flow"
+ASSET_VERSION = "20260604-quiz-resume"
 
 
 FONT_CSS = ""
@@ -503,6 +503,12 @@ QUIZ_LABELS = {
         "book_intro": "延伸書卷",
         "luna_action": "開啟 Luna 夜間補給",
         "book_action": "查看補給書卷",
+        "saved_title": "繼續上次的守護者路線",
+        "saved_intro": "你的上次結果只保存在這台裝置的瀏覽器。可以直接回到修復計畫、Luna 或補給路線。",
+        "saved_plan": "回到修復計畫",
+        "saved_luna": "開啟 Luna",
+        "saved_route": "查看補給路線",
+        "saved_clear": "清除上次結果",
         "routes_title": "延伸路線",
         "guardian_link": "閱讀守護者頁",
         "guide_link": "閱讀對應指南",
@@ -534,6 +540,12 @@ QUIZ_LABELS = {
         "book_intro": "Extended book supply",
         "luna_action": "Open Luna night supply",
         "book_action": "View supply book",
+        "saved_title": "Continue your last guardian route",
+        "saved_intro": "Your last result is saved only in this browser on this device. Return to the repair plan, Luna, or your supply route.",
+        "saved_plan": "Return to repair plan",
+        "saved_luna": "Open Luna",
+        "saved_route": "View supply route",
+        "saved_clear": "Clear last result",
         "routes_title": "Continue the path",
         "guardian_link": "Read guardian page",
         "guide_link": "Read matching guide",
@@ -565,6 +577,12 @@ QUIZ_LABELS = {
         "book_intro": "補給の本",
         "luna_action": "Luna の夜の補給を開く",
         "book_action": "補給の本を見る",
+        "saved_title": "前回の守護者ルートを続ける",
+        "saved_intro": "前回の結果はこの端末のブラウザだけに保存されています。修復プラン、Luna、補給ルートへ戻れます。",
+        "saved_plan": "修復プランへ戻る",
+        "saved_luna": "Luna を開く",
+        "saved_route": "補給ルートを見る",
+        "saved_clear": "前回の結果を消す",
         "routes_title": "続きを読む道筋",
         "guardian_link": "守護者ページを読む",
         "guide_link": "対応ガイドを読む",
@@ -596,6 +614,12 @@ QUIZ_LABELS = {
         "book_intro": "확장 보급 책",
         "luna_action": "Luna 밤 보급 열기",
         "book_action": "보급 책 보기",
+        "saved_title": "지난 수호자 루트 이어가기",
+        "saved_intro": "지난 결과는 이 기기의 브라우저에만 저장됩니다. 회복 계획, Luna, 보급 루트로 바로 돌아갈 수 있습니다.",
+        "saved_plan": "회복 계획으로 돌아가기",
+        "saved_luna": "Luna 열기",
+        "saved_route": "보급 루트 보기",
+        "saved_clear": "지난 결과 지우기",
         "routes_title": "이어 갈 길",
         "guardian_link": "수호자 페이지 읽기",
         "guide_link": "관련 가이드 읽기",
@@ -627,6 +651,12 @@ QUIZ_LABELS = {
         "book_intro": "Libro de suministro",
         "luna_action": "Abrir suministro nocturno Luna",
         "book_action": "Ver libro de suministro",
+        "saved_title": "Continuar tu última ruta",
+        "saved_intro": "Tu último resultado se guarda solo en este navegador y dispositivo. Puedes volver al plan, Luna o tu ruta de suministro.",
+        "saved_plan": "Volver al plan",
+        "saved_luna": "Abrir Luna",
+        "saved_route": "Ver ruta",
+        "saved_clear": "Borrar resultado",
         "routes_title": "Continuar el camino",
         "guardian_link": "Leer página de guardiana",
         "guide_link": "Leer guía relacionada",
@@ -2279,13 +2309,53 @@ def quiz_script(lang: str) -> str:
   const intro = root.querySelector('[data-quiz-intro]');
   const quizBox = root.querySelector('[data-quiz-box]');
   const resultBox = root.querySelector('[data-quiz-result]');
+  const savedBox = root.querySelector('[data-quiz-saved]');
   const startButtons = root.querySelectorAll('[data-quiz-start]');
+  const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
   let current = 0;
   let selected = null;
   const answers = [];
 
   function show(el) {{ el.hidden = false; }}
   function hide(el) {{ el.hidden = true; }}
+  function readSavedResult() {{
+    try {{
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      return saved && quiz.results[saved.primaryKey] ? saved : null;
+    }} catch (error) {{
+      return null;
+    }}
+  }}
+  function renderSavedResult() {{
+    if (!savedBox) return;
+    const saved = readSavedResult();
+    if (!saved) {{
+      hide(savedBox);
+      savedBox.innerHTML = '';
+      return;
+    }}
+    const result = quiz.results[saved.primaryKey];
+    savedBox.innerHTML = `
+      <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+        <div>
+          <p class="eyebrow">${{quiz.labels.saved_title}}</p>
+          <h3>${{result.name}} · ${{result.type}}</h3>
+          <p>${{quiz.labels.saved_intro}}</p>
+          <div class="quiz-saved-actions">
+            <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
+            <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+            <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+            <button type="button" data-clear-saved-result>${{quiz.labels.saved_clear}}</button>
+          </div>
+        </div>
+      </article>`;
+    show(savedBox);
+    savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {{
+      localStorage.removeItem(storageKey);
+      renderSavedResult();
+    }});
+  }}
   function progressText() {{
     return quiz.labels.progress.replace('{{current}}', String(current + 1)).replace('{{total}}', String(quiz.questions.length));
   }}
@@ -2328,6 +2398,9 @@ def quiz_script(lang: str) -> str:
     const result = quiz.results[primaryKey];
     const total = answers.length || 1;
     const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{quiz.shareUrl}}`;
+    try {{
+      localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
+    }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card" style="--result-accent:${{result.color}}">
         <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
@@ -2405,6 +2478,7 @@ def quiz_script(lang: str) -> str:
       await navigator.clipboard.writeText(shareText);
       event.currentTarget.textContent = quiz.labels.copied;
     }});
+    renderSavedResult();
     resultBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
   function startQuiz() {{
@@ -2418,6 +2492,7 @@ def quiz_script(lang: str) -> str:
     quizBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
   startButtons.forEach((button) => button.addEventListener('click', startQuiz));
+  renderSavedResult();
 }})();
 </script>
 """
@@ -2452,6 +2527,7 @@ def home(lang: str) -> None:
       <p>{escape(quiz["intro"])}</p>
       <button type="button" class="primary-btn" data-quiz-start>{escape(quiz["start"])}</button>
     </div>
+    <div class="quiz-saved" data-quiz-saved hidden></div>
     <div class="quiz-stage" data-quiz-box hidden></div>
     <div class="quiz-result" data-quiz-result hidden></div>
   </div>

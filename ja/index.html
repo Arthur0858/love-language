@@ -30,7 +30,7 @@
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared-20260604-universe.css" />
+  <link rel="stylesheet" href="/shared-20260604-result-polish.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
@@ -253,9 +253,19 @@
   let current = 0;
   let selected = null;
   const answers = [];
+  const preloadedResultImages = new Set();
 
   function show(el) { el.hidden = false; }
   function hide(el) { el.hidden = true; }
+  function preloadResultImages() {
+    Object.values(quiz.results).forEach((result) => {
+      if (!result.image || preloadedResultImages.has(result.image)) return;
+      preloadedResultImages.add(result.image);
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = result.image;
+    });
+  }
   function readSavedResult() {
     try {
       const saved = JSON.parse(localStorage.getItem(sharedStorageKey) || localStorage.getItem(storageKey) || 'null');
@@ -517,6 +527,7 @@
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   function startQuiz() {
+    preloadResultImages();
     current = 0;
     selected = null;
     answers.length = 0;
@@ -538,7 +549,7 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260604-universe.js" defer></script>
+<script src="/site-interactions-20260604-result-polish.js" defer></script>
 
 </body>
 </html>

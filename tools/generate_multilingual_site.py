@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-universe"
+ASSET_VERSION = "20260604-result-polish"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3663,9 +3663,19 @@ def quiz_script(lang: str) -> str:
   let current = 0;
   let selected = null;
   const answers = [];
+  const preloadedResultImages = new Set();
 
   function show(el) {{ el.hidden = false; }}
   function hide(el) {{ el.hidden = true; }}
+  function preloadResultImages() {{
+    Object.values(quiz.results).forEach((result) => {{
+      if (!result.image || preloadedResultImages.has(result.image)) return;
+      preloadedResultImages.add(result.image);
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = result.image;
+    }});
+  }}
   function readSavedResult() {{
     try {{
       const saved = JSON.parse(localStorage.getItem(sharedStorageKey) || localStorage.getItem(storageKey) || 'null');
@@ -3927,6 +3937,7 @@ def quiz_script(lang: str) -> str:
     resultBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
   function startQuiz() {{
+    preloadResultImages();
     current = 0;
     selected = null;
     answers.length = 0;

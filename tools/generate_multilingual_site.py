@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-breadcrumbs"
+ASSET_VERSION = "20260604-itemlists"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2578,6 +2578,28 @@ def breadcrumb_schema(lang: str, path: str, title: str) -> str:
     return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False, separators=(",", ":"))}</script>'
 
 
+def json_ld(data: dict) -> str:
+    return f'<script type="application/ld+json">{json.dumps(data, ensure_ascii=False, separators=(",", ":"))}</script>'
+
+
+def item_list_schema(name: str, description: str, items: list[tuple[str, str]]) -> str:
+    return json_ld({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": name,
+        "description": description,
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": index,
+                "name": item_name,
+                "url": item_url,
+            }
+            for index, (item_name, item_url) in enumerate(items, start=1)
+        ],
+    })
+
+
 def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "website", image: str = "/og-cover.jpg") -> str:
     canonical = abs_url(lang, path)
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, path)}" />' for code, cfg in LANGS.items())
@@ -3893,6 +3915,8 @@ def characters_index_page(lang: str) -> None:
 </section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guardians"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    guardian_items = [(data[lang][0], abs_url(lang, "characters/" + slug)) for slug, data in GUARDIANS.items()]
+    schema += item_list_schema(t["guardians"], desc, guardian_items)
     write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body, t["guardians"], "website", "/og-cover.jpg", schema))
 
 
@@ -3906,6 +3930,8 @@ def guides_index(lang: str) -> None:
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guide_index_title"])}","description":"{escape(t["guide_index_desc"])}","url":"{abs_url(lang, "guides")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    guide_items = [(guide[lang][0], abs_url(lang, "guides/" + guide["slug"])) for guide in GUIDES]
+    schema += item_list_schema(t["guide_index_title"], t["guide_index_desc"], guide_items)
     write(page_path(lang, "guides"), layout(lang, t["guide_index_title"], t["guide_index_desc"], "guides", body, t["guides"], "website", "/og-cover.jpg", schema))
 
 
@@ -4092,6 +4118,8 @@ def resources_page(lang: str) -> None:
 {supply_route_receipt_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["resources"])}","description":"{escape(t["resources_desc"])}","url":"{abs_url(lang, "resources")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    route_items = [(supply_route(lang, slug)["title"], abs_url(lang, "resources") + f"#supply-{slug}") for slug in GUARDIANS]
+    schema += item_list_schema(supply_labels["title"], supply_labels["intro"], route_items)
     page_title = f"{t['resources']} | LoveTypes" if lang == "zh" else f"{t['resources']} | LoveTypes {t['name']}"
     write(page_path(lang, "resources"), layout(lang, page_title, t["resources_desc"], "resources", body, t["resources"], "website", "/og-cover.jpg", schema, affiliate=True))
 

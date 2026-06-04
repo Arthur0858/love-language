@@ -141,6 +141,8 @@ class PageParser(HTMLParser):
         if "id" in data:
             self.ids.append(data["id"])
         if tag == "a":
+            data["_text"] = ""
+            data["_image_alt"] = ""
             self.anchors.append(data)
         if tag == "button":
             self.buttons.append([data, ""])
@@ -156,6 +158,12 @@ class PageParser(HTMLParser):
             self.controls.append((tag, data))
         if tag == "img":
             self.images.append(data)
+            alt = data.get("alt", "")
+            if alt:
+                for stack_tag, stack_attrs, _ in reversed(self._stack):
+                    if stack_tag == "a":
+                        stack_attrs["_image_alt"] = f"{stack_attrs.get('_image_alt', '')} {alt}".strip()
+                        break
         if tag == "link":
             self.links.append(data)
         if tag == "meta":
@@ -187,6 +195,8 @@ class PageParser(HTMLParser):
                 if summary[0] is data:
                     summary[1] = text
                     break
+        if current_tag == "a":
+            data["_text"] = text
         if current_tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
             in_main = any(stack_tag == "main" for stack_tag, _, _ in self._stack)
             self.headings.append((int(current_tag[1]), text, in_main))
@@ -1266,6 +1276,22 @@ def main() -> int:
         for anchor in parser.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)
+            if href:
+                accessible_name = " ".join(
+                    part.strip()
+                    for part in (
+                        anchor.get("aria-label", ""),
+                        anchor.get("aria-labelledby", ""),
+                        anchor.get("title", ""),
+                        anchor.get("_text", ""),
+                        anchor.get("_image_alt", ""),
+                    )
+                    if part.strip()
+                )
+                if accessible_name:
+                    stats["anchor_accessible_names"] += 1
+                elif not href.startswith("#"):
+                    issues.append(f"{page}: link missing accessible name: {href}")
             if parsed.scheme == "mailto":
                 stats["mailto_links"] += 1
                 if parsed.path.lower() != CONTACT_EMAIL:
@@ -1374,6 +1400,7 @@ def main() -> int:
     print(f"security_txt_fields={stats['security_txt_fields']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"mailto_links={stats['mailto_links']}")
+    print(f"anchor_accessible_names={stats['anchor_accessible_names']}")
     print(f"versioned_static_assets={stats['versioned_static_assets']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")

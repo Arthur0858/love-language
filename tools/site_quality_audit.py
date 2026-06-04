@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import sys
+import xml.etree.ElementTree as ET
 from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
@@ -10,8 +11,15 @@ from urllib.parse import unquote, urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DOMAIN = "https://lovetypes.tw"
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
+SITEMAP_PATH = ROOT / "sitemap.xml"
+ROBOTS_PATH = ROOT / "robots.txt"
+SITEMAP_NS = {
+    "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
+    "xhtml": "http://www.w3.org/1999/xhtml",
+}
 
 
 class PageParser(HTMLParser):
@@ -139,6 +147,123 @@ def local_html_target_exists(page: Path, value: str, parsers: dict[Path, PagePar
     return True
 
 
+def public_url_for_page(page: Path) -> str:
+    rel = page.relative_to(ROOT).as_posix()
+    if rel == "index.html":
+        return f"{DOMAIN}/"
+    if rel.endswith("/index.html"):
+        return f"{DOMAIN}/{rel[: -len('index.html')]}"
+    return f"{DOMAIN}/{rel}"
+
+
+def is_noindex(parser: PageParser) -> bool:
+    return "noindex" in parser.meta_content("robots").lower()
+
+
+def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SITEMAP_PATH.exists():
+        return set(), [f"{SITEMAP_PATH}: missing sitemap.xml"], stats
+
+    try:
+        root = ET.parse(SITEMAP_PATH).getroot()
+    except ET.ParseError as exc:
+        return set(), [f"{SITEMAP_PATH}: invalid XML: {exc}"], stats
+
+    if root.tag != f"{{{SITEMAP_NS['sm']}}}urlset":
+        issues.append(f"{SITEMAP_PATH}: root element should be urlset")
+
+    urls: set[str] = set()
+    for url_node in root.findall("sm:url", SITEMAP_NS):
+        loc_nodes = url_node.findall("sm:loc", SITEMAP_NS)
+        if len(loc_nodes) != 1:
+            issues.append(f"{SITEMAP_PATH}: expected one loc per url entry, found {len(loc_nodes)}")
+            continue
+
+        loc = (loc_nodes[0].text or "").strip()
+        stats["sitemap_urls"] += 1
+        parsed_loc = urlparse(loc)
+        if parsed_loc.scheme != "https" or parsed_loc.netloc != "lovetypes.tw":
+            issues.append(f"{SITEMAP_PATH}: loc must be absolute https lovetypes.tw URL: {loc}")
+        if parsed_loc.fragment:
+            issues.append(f"{SITEMAP_PATH}: loc should not contain fragment: {loc}")
+        if loc in urls:
+            issues.append(f"{SITEMAP_PATH}: duplicate loc: {loc}")
+        urls.add(loc)
+
+        target, _ = target_for(ROOT / "index.html", loc)
+        if target is None or not target.exists():
+            issues.append(f"{SITEMAP_PATH}: loc target missing: {loc}")
+
+        if url_node.find("sm:lastmod", SITEMAP_NS) is None:
+            issues.append(f"{SITEMAP_PATH}: missing lastmod for {loc}")
+        if url_node.find("sm:changefreq", SITEMAP_NS) is None:
+            issues.append(f"{SITEMAP_PATH}: missing changefreq for {loc}")
+        priority_node = url_node.find("sm:priority", SITEMAP_NS)
+        if priority_node is None:
+            issues.append(f"{SITEMAP_PATH}: missing priority for {loc}")
+        else:
+            try:
+                priority = float((priority_node.text or "").strip())
+            except ValueError:
+                issues.append(f"{SITEMAP_PATH}: invalid priority for {loc}")
+            else:
+                if not 0 <= priority <= 1:
+                    issues.append(f"{SITEMAP_PATH}: priority out of range for {loc}")
+
+        alternates = url_node.findall("xhtml:link", SITEMAP_NS)
+        stats["sitemap_alternates"] += len(alternates)
+        hreflang_map: dict[str, str] = {}
+        for link in alternates:
+            if link.attrib.get("rel") != "alternate":
+                issues.append(f"{SITEMAP_PATH}: sitemap xhtml link must use rel=alternate for {loc}")
+            hreflang = link.attrib.get("hreflang", "")
+            href = link.attrib.get("href", "")
+            if hreflang in hreflang_map:
+                issues.append(f"{SITEMAP_PATH}: duplicate sitemap hreflang {hreflang} for {loc}")
+            hreflang_map[hreflang] = href
+            parsed_href = urlparse(href)
+            if parsed_href.scheme != "https" or parsed_href.netloc != "lovetypes.tw":
+                issues.append(f"{SITEMAP_PATH}: alternate href must be absolute https lovetypes.tw URL: {href}")
+            href_target, _ = target_for(ROOT / "index.html", href)
+            if href_target is None or not href_target.exists():
+                issues.append(f"{SITEMAP_PATH}: alternate href target missing: {href}")
+            elif href_target.suffix == ".html" and is_noindex(parsers.get(href_target, PageParser())):
+                issues.append(f"{SITEMAP_PATH}: alternate href points to noindex page: {href}")
+
+        missing_hreflangs = sorted(EXPECTED_HREFLANGS.difference(hreflang_map))
+        extra_hreflangs = sorted(set(hreflang_map).difference(EXPECTED_HREFLANGS))
+        if missing_hreflangs:
+            issues.append(f"{SITEMAP_PATH}: missing sitemap hreflang alternates for {loc}: {', '.join(missing_hreflangs)}")
+        if extra_hreflangs:
+            issues.append(f"{SITEMAP_PATH}: unexpected sitemap hreflang alternates for {loc}: {', '.join(extra_hreflangs)}")
+        if hreflang_map.get("x-default") and hreflang_map.get("zh-TW") and hreflang_map["x-default"] != hreflang_map["zh-TW"]:
+            issues.append(f"{SITEMAP_PATH}: x-default sitemap alternate should match zh-TW for {loc}")
+
+    return urls, issues, stats
+
+
+def check_robots(sitemap_urls: set[str]) -> list[str]:
+    issues: list[str] = []
+    if not ROBOTS_PATH.exists():
+        return [f"{ROBOTS_PATH}: missing robots.txt"]
+    lines = [line.strip() for line in ROBOTS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
+    lower_lines = [line.lower() for line in lines]
+    if "user-agent: *" not in lower_lines:
+        issues.append(f"{ROBOTS_PATH}: missing User-agent: *")
+    if "allow: /" not in lower_lines:
+        issues.append(f"{ROBOTS_PATH}: missing Allow: /")
+    if "disallow: /" in lower_lines:
+        issues.append(f"{ROBOTS_PATH}: should not globally disallow /")
+    sitemap_line = f"Sitemap: {DOMAIN}/sitemap.xml"
+    if sitemap_line not in lines:
+        issues.append(f"{ROBOTS_PATH}: missing exact sitemap declaration {sitemap_line}")
+    if not sitemap_urls:
+        issues.append(f"{ROBOTS_PATH}: referenced sitemap has no URLs")
+    return issues
+
+
 def main() -> int:
     pages = html_pages()
     parsers: dict[Path, PageParser] = {}
@@ -154,6 +279,10 @@ def main() -> int:
         stats["pages"] += 1
         stats["images"] += len(parser.images)
         stats["jsonld_blocks"] += len(parser.jsonld_blocks)
+        if is_noindex(parser):
+            stats["noindex_pages"] += 1
+        else:
+            stats["indexable_pages"] += 1
 
         if not "".join(parser.title_parts).strip():
             issues.append(f"{page}: missing <title>")
@@ -265,11 +394,39 @@ def main() -> int:
                     if target_parser and fragment not in target_parser.ids:
                         issues.append(f"{page}: missing anchor #{fragment} in {target}")
 
+    sitemap_urls, sitemap_issues, sitemap_stats = parse_sitemap(parsers)
+    issues.extend(sitemap_issues)
+    stats.update(sitemap_stats)
+    issues.extend(check_robots(sitemap_urls))
+
+    indexable_canonicals: set[str] = set()
+    for page, parser in parsers.items():
+        canonicals = parser.links_with_rel("canonical")
+        if len(canonicals) == 1 and not is_noindex(parser):
+            indexable_canonicals.add(canonicals[0].get("href", ""))
+        if is_noindex(parser) and public_url_for_page(page) in sitemap_urls:
+            issues.append(f"{SITEMAP_PATH}: noindex page should not be listed: {public_url_for_page(page)}")
+
+    missing_sitemap_urls = sorted(indexable_canonicals.difference(sitemap_urls))
+    unexpected_sitemap_urls = sorted(sitemap_urls.difference(indexable_canonicals))
+    for url in missing_sitemap_urls[:50]:
+        issues.append(f"{SITEMAP_PATH}: indexable canonical missing from sitemap: {url}")
+    if len(missing_sitemap_urls) > 50:
+        issues.append(f"{SITEMAP_PATH}: {len(missing_sitemap_urls) - 50} more indexable canonical URL(s) missing from sitemap")
+    for url in unexpected_sitemap_urls[:50]:
+        issues.append(f"{SITEMAP_PATH}: sitemap URL is not an indexable canonical: {url}")
+    if len(unexpected_sitemap_urls) > 50:
+        issues.append(f"{SITEMAP_PATH}: {len(unexpected_sitemap_urls) - 50} more unexpected sitemap URL(s)")
+
     print(f"pages={stats['pages']}")
+    print(f"indexable_pages={stats['indexable_pages']}")
+    print(f"noindex_pages={stats['noindex_pages']}")
     print(f"images={stats['images']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")
+    print(f"sitemap_urls={stats['sitemap_urls']}")
+    print(f"sitemap_alternates={stats['sitemap_alternates']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

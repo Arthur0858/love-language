@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-supply-resume"
+ASSET_VERSION = "20260604-keepsake-resume"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2663,6 +2663,64 @@ def collector_section(lang: str, current_slug: str = "") -> str:
 """
 
 
+def keepsake_resume_script(lang: str) -> str:
+    data = quiz_payload(lang)
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const box = document.querySelector('[data-keepsake-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{location.pathname}}:quiz-result`, `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        const primaryKey = saved && (saved.primaryKey || saved.type);
+        if (primaryKey && quiz.results[primaryKey]) return {{ ...saved, primaryKey }};
+      }}
+    }} catch (error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  box.innerHTML = `
+    <article class="keepsake-resume-card" style="--result-accent:${{result.color}}">
+      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener">
+        <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="eager" decoding="async">
+      </a>
+      <div>
+        <p class="eyebrow">${{result.collectorTitle}}</p>
+        <h2>${{result.name}} · ${{result.type}}</h2>
+        <p>${{result.collectorHint}}</p>
+        <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
+        <div class="keepsake-resume-actions">
+          <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener">${{result.collectorOpen}}</a>
+          <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
+          <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+          <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
+          <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-clear-keepsake-result]').addEventListener('click', clearSavedResult);
+}})();
+</script>
+"""
+
+
 def keepsakes_page(lang: str) -> None:
     labels = KEEPSAKES_PAGE[lang]
     t = LANGS[lang]
@@ -2683,6 +2741,7 @@ def keepsakes_page(lang: str) -> None:
     <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(labels["resources"])}</a>
   </div>
 </section>
+<section class="section keepsake-personal-resume" data-keepsake-saved hidden></section>
 {collector_section(lang)}
 <section class="section keepsake-use-section">
   <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>
@@ -2692,6 +2751,7 @@ def keepsakes_page(lang: str) -> None:
   <div><h2>{escape(labels["safety_title"])}</h2><p>{escape(labels["safety_text"])}</p></div>
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
 </section>
+{keepsake_resume_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(labels["title"])}","description":"{escape(labels["desc"])}","url":"{abs_url(lang, "keepsakes")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{labels['title']} | LoveTypes" if lang == "zh" else f"{labels['title']} | LoveTypes {t['name']}"

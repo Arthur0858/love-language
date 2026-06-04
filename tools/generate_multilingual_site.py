@@ -2704,9 +2704,10 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
 def footer(lang: str) -> str:
     t = LANGS[lang]
     cards = [
+        (lang_url(lang, "resources"), t["resources"], t["resources_desc"]),
         (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
+        (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
         (lang_url(lang, "theory"), t["theory"], t["tagline"]),
-        (lang_url(lang, "about"), t["about"], t["trust_intro"]),
     ]
     card_html = "".join(f'<a href="{href}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a>' for href, title, desc in cards)
     return f"""
@@ -4262,7 +4263,7 @@ def home(lang: str) -> None:
     <p class="eyebrow">HEART GARDEN FIELD NOTES</p>
     <h1>{escape(t["brand"])}</h1>
     <p class="lead">{escape(t["tagline"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a><a class="secondary-btn" href="#quiz-section">{escape(t["start"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
   </div>
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>

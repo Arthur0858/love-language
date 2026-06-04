@@ -3494,7 +3494,7 @@ def quiz_payload(lang: str) -> str:
             "image": guardian["asset"],
             "color": meta["color"],
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
-            "guideUrl": lang_url(lang, "guides/" + meta["guide"]),
+            "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
             "guideTitle": guide[lang][0],
             "resourceUrl": resource_url,
             "supplyTitle": route["title"],
@@ -3721,6 +3721,7 @@ def quiz_script(lang: str) -> str:
         <a class="primary-btn" href="${{result.resourceUrl}}" data-conversion-route>${{quiz.labels.primary_route}}</a>
         <a class="secondary-btn" href="${{result.planUrl}}" data-conversion-plan>${{quiz.labels.secondary_plan}}</a>
         <a class="secondary-btn" href="${{result.lunaUrl}}" data-conversion-luna>${{quiz.labels.luna_action}}</a>
+        <a class="secondary-btn" href="${{result.guideUrl}}" data-conversion-guide>${{quiz.labels.guide_link}}</a>
         <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
       </nav>
       <section class="quiz-score-card"><h3>${{quiz.labels.score_title}}</h3>
@@ -4033,7 +4034,7 @@ def guide_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="quiz-saved-card guide-resume-card" style="--result-accent:${{result.color}}">
+    <article class="quiz-saved-card guide-resume-card" id="guide-${{result.slug}}" style="--result-accent:${{result.color}}">
       <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
       <div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
@@ -4050,6 +4051,12 @@ def guide_resume_script(lang: str) -> str:
     </article>`;
   box.hidden = false;
   box.querySelector('[data-clear-guide-result]').addEventListener('click', clearSavedResult);
+  if (location.hash === `#guide-${{result.slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
 }})();
 </script>
 """

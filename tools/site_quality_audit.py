@@ -63,6 +63,23 @@ EXPECTED_REDIRECTS = {
     "/ko/luna/": ("/ko/luna-yoga-music/", "301"),
     "/es/luna/": ("/es/luna-yoga-music/", "301"),
 }
+PAGE_SCHEMA_TYPES = {
+    "AboutPage",
+    "Article",
+    "CollectionPage",
+    "ContactPage",
+    "HowTo",
+    "ProfilePage",
+    "WebPage",
+    "WebSite",
+}
+EXPECTED_ORGANIZATION = {
+    "@id": f"{DOMAIN}/#organization",
+    "name": "LoveTypes",
+    "url": f"{DOMAIN}/",
+    "logo": f"{DOMAIN}/apple-touch-icon.png",
+    "email": "contact@lovetypes.tw",
+}
 
 
 class PageParser(HTMLParser):
@@ -235,6 +252,165 @@ def is_locale_home(page: Path) -> bool:
 
 def class_tokens(attrs: dict[str, str]) -> set[str]:
     return set(attrs.get("class", "").split())
+
+
+def jsonld_type_set(item: dict) -> set[str]:
+    value = item.get("@type")
+    if isinstance(value, str):
+        return {value}
+    if isinstance(value, list):
+        return {entry for entry in value if isinstance(entry, str)}
+    return set()
+
+
+def jsonld_entities(data: object) -> list[dict]:
+    if isinstance(data, dict):
+        graph = data.get("@graph")
+        if isinstance(graph, list):
+            return [entry for entry in graph if isinstance(entry, dict)]
+        return [data]
+    if isinstance(data, list):
+        return [entry for entry in data if isinstance(entry, dict)]
+    return []
+
+
+def jsonld_target_exists(page: Path, value: object, parsers: dict[Path, PageParser]) -> bool:
+    if not isinstance(value, str) or not value.startswith(f"{DOMAIN}/"):
+        return False
+    return local_html_target_exists(page, value, parsers)
+
+
+def validate_positioned_items(page: Path, label: str, items: object) -> list[str]:
+    issues: list[str] = []
+    if not isinstance(items, list) or not items:
+        return [f"{page}: {label} should include a non-empty itemListElement list"]
+    positions: list[int] = []
+    for item in items:
+        if not isinstance(item, dict):
+            issues.append(f"{page}: {label} entry should be an object")
+            continue
+        position = item.get("position")
+        if not isinstance(position, int):
+            issues.append(f"{page}: {label} entry missing numeric position")
+            continue
+        positions.append(position)
+    if positions and positions != list(range(1, len(positions) + 1)):
+        issues.append(f"{page}: {label} positions should be contiguous from 1")
+    return issues
+
+
+def validate_jsonld(
+    page: Path,
+    parser: PageParser,
+    page_title: str,
+    page_description: str,
+    canonical: str,
+    entities: list[dict],
+    parsers: dict[Path, PageParser],
+) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    for item in entities:
+        for item_type in jsonld_type_set(item):
+            stats[f"jsonld_type_{item_type}"] += 1
+
+    organizations = [item for item in entities if "Organization" in jsonld_type_set(item)]
+    if len(organizations) != 1:
+        issues.append(f"{page}: expected one Organization JSON-LD entity, found {len(organizations)}")
+    elif any(organizations[0].get(key) != value for key, value in EXPECTED_ORGANIZATION.items()):
+        issues.append(f"{page}: Organization JSON-LD does not match canonical LoveTypes identity")
+    else:
+        contact_point = organizations[0].get("contactPoint", {})
+        if not isinstance(contact_point, dict) or contact_point.get("email") != EXPECTED_ORGANIZATION["email"]:
+            issues.append(f"{page}: Organization contactPoint email should be contact@lovetypes.tw")
+        for key in ("logo", "publishingPrinciples", "privacyPolicy"):
+            if key in organizations[0] and not jsonld_target_exists(page, organizations[0][key], parsers):
+                issues.append(f"{page}: Organization JSON-LD {key} target missing: {organizations[0][key]}")
+
+    primary_entities = [item for item in entities if jsonld_type_set(item).intersection(PAGE_SCHEMA_TYPES)]
+    if page.name != "404.html":
+        if len(primary_entities) != 1:
+            issues.append(f"{page}: expected one primary page JSON-LD entity, found {len(primary_entities)}")
+        else:
+            primary = primary_entities[0]
+            primary_types = jsonld_type_set(primary)
+            stats["primary_jsonld_entities"] += 1
+            if primary.get("url") != canonical:
+                issues.append(f"{page}: primary JSON-LD url should match canonical: {canonical}")
+            if parser.html_lang and primary.get("inLanguage") != parser.html_lang:
+                issues.append(f"{page}: primary JSON-LD inLanguage should match html lang {parser.html_lang}")
+            primary_name = primary.get("headline") if "Article" in primary_types else primary.get("name")
+            if not primary_name:
+                issues.append(f"{page}: primary JSON-LD missing name/headline")
+            if "WebSite" not in primary_types and primary.get("description") != page_description:
+                issues.append(f"{page}: primary JSON-LD description should match meta description")
+            if "Article" in primary_types:
+                if primary.get("headline") not in {page_title, page_title.split(" | ")[0]}:
+                    issues.append(f"{page}: Article headline should match page title")
+                main_entity = primary.get("mainEntityOfPage", {})
+                if not isinstance(main_entity, dict) or main_entity.get("@id") != canonical:
+                    issues.append(f"{page}: Article mainEntityOfPage @id should match canonical")
+                for role in ("author", "publisher"):
+                    role_entity = primary.get(role, {})
+                    if not isinstance(role_entity, dict) or role_entity.get("@id") != EXPECTED_ORGANIZATION["@id"]:
+                        issues.append(f"{page}: Article {role} should reference LoveTypes organization")
+            if "HowTo" in primary_types:
+                steps = primary.get("step")
+                if not isinstance(steps, list) or len(steps) < 2:
+                    issues.append(f"{page}: HowTo JSON-LD should include multiple steps")
+                else:
+                    positions = []
+                    for step in steps:
+                        if not isinstance(step, dict):
+                            issues.append(f"{page}: HowTo step should be an object")
+                            continue
+                        if step.get("@type") != "HowToStep":
+                            issues.append(f"{page}: HowTo step should use @type=HowToStep")
+                        if not step.get("name") or not step.get("text"):
+                            issues.append(f"{page}: HowTo step missing name or text")
+                        if isinstance(step.get("position"), int):
+                            positions.append(step["position"])
+                    if positions != list(range(1, len(steps) + 1)):
+                        issues.append(f"{page}: HowTo step positions should be contiguous from 1")
+            image = primary.get("image")
+            if image and not jsonld_target_exists(page, image, parsers):
+                issues.append(f"{page}: primary JSON-LD image target missing: {image}")
+
+    breadcrumbs = [item for item in entities if "BreadcrumbList" in jsonld_type_set(item)]
+    if not is_locale_home(page) and page.name != "404.html":
+        if len(breadcrumbs) != 1:
+            issues.append(f"{page}: expected one BreadcrumbList JSON-LD entity, found {len(breadcrumbs)}")
+        else:
+            elements = breadcrumbs[0].get("itemListElement")
+            issues.extend(validate_positioned_items(page, "BreadcrumbList", elements))
+            if isinstance(elements, list):
+                for entry in elements:
+                    if not isinstance(entry, dict):
+                        continue
+                    if entry.get("@type") != "ListItem" or not entry.get("name"):
+                        issues.append(f"{page}: BreadcrumbList entry missing ListItem type or name")
+                    if not jsonld_target_exists(page, entry.get("item"), parsers):
+                        issues.append(f"{page}: BreadcrumbList target missing: {entry.get('item')}")
+
+    item_lists = [item for item in entities if "ItemList" in jsonld_type_set(item)]
+    for item_list in item_lists:
+        elements = item_list.get("itemListElement")
+        issues.extend(validate_positioned_items(page, "ItemList", elements))
+        urls: list[str] = []
+        if isinstance(elements, list):
+            for entry in elements:
+                if not isinstance(entry, dict):
+                    continue
+                url = entry.get("url")
+                if not jsonld_target_exists(page, url, parsers):
+                    issues.append(f"{page}: ItemList URL target missing: {url}")
+                elif isinstance(url, str):
+                    urls.append(url)
+        duplicates = [url for url, count in Counter(urls).items() if count > 1]
+        if duplicates:
+            issues.append(f"{page}: ItemList duplicate URL(s): {', '.join(duplicates[:5])}")
+
+    return issues, stats
 
 
 def local_path_for_public_url(value: str) -> Path | None:
@@ -772,6 +948,7 @@ def main() -> int:
             issues.append(f"{page}: RSS target missing: /feed.xml")
 
         canonicals = parser.links_with_rel("canonical")
+        canonical_url = canonicals[0].get("href", "") if len(canonicals) == 1 else public_url_for_page(page)
         stats["canonical_links"] += len(canonicals)
         if len(canonicals) != 1:
             issues.append(f"{page}: expected one canonical link, found {len(canonicals)}")
@@ -859,13 +1036,30 @@ def main() -> int:
         if duplicate_ids:
             issues.append(f"{page}: duplicate ids {', '.join(duplicate_ids[:10])}")
 
+        jsonld_page_entities: list[dict] = []
         if not parser.jsonld_blocks:
             issues.append(f"{page}: missing JSON-LD")
         for block in parser.jsonld_blocks:
             try:
-                json.loads(block)
+                data = json.loads(block)
             except json.JSONDecodeError as exc:
                 issues.append(f"{page}: invalid JSON-LD: {exc}")
+                continue
+            entities = jsonld_entities(data)
+            if not entities:
+                issues.append(f"{page}: JSON-LD block should contain an object or graph")
+            jsonld_page_entities.extend(entities)
+        jsonld_issues, jsonld_stats = validate_jsonld(
+            page,
+            parser,
+            page_title,
+            page_description,
+            canonical_url,
+            jsonld_page_entities,
+            parsers,
+        )
+        issues.extend(jsonld_issues)
+        stats.update(jsonld_stats)
 
         for image in parser.images:
             src = image.get("src", "")
@@ -963,6 +1157,7 @@ def main() -> int:
     print(f"main_landmarks={stats['main_landmarks']}")
     print(f"nav_landmarks={stats['nav_landmarks']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
+    print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")
     print(f"head_asset_links={stats['head_asset_links']}")

@@ -4795,7 +4795,20 @@ def repair_plan_page(lang: str) -> None:
   <div class="text-stack"><h2>{escape(SUPPLY_LABELS[lang]["not_now"])}</h2><p>{escape(SUPPLY_LABELS[lang]["not_now_text"])}</p></div>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"HowTo","name":"{escape(plan["title"])}","description":"{escape(plan["desc"])}","url":"{abs_url(lang, "repair-plan")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": plan["title"],
+        "description": plan["desc"],
+        "url": abs_url(lang, "repair-plan"),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "isPartOf": {"@type": "WebSite", "name": "LoveTypes", "url": f"{DOMAIN}/"},
+        "step": [
+            {"@type": "HowToStep", "position": idx, "name": title, "text": desc}
+            for idx, (_day, title, desc) in enumerate(plan["days"], start=1)
+        ],
+    })
     page_title = f"{plan['title']} | LoveTypes" if lang == "zh" else f"{plan['title']} | LoveTypes {t['name']}"
     write(page_path(lang, "repair-plan"), layout(lang, page_title, plan["desc"], "repair-plan", body, plan["title"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 

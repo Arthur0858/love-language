@@ -810,6 +810,40 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
     return issues, stats
 
 
+def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    referenced: set[str] = set()
+    for parser in parsers.values():
+        for _tag, attr, raw in parser.refs:
+            values = [raw]
+            if attr == "srcset":
+                values = [part.strip().split()[0] for part in raw.split(",") if part.strip()]
+            for value in values:
+                parsed = urlparse(value)
+                if parsed.scheme in ("http", "https") and parsed.netloc not in LOCAL_HOSTS:
+                    continue
+                path = parsed.path if parsed.scheme else value
+                name = Path(unquote(path)).name
+                if name:
+                    referenced.add(name)
+
+    patterns = (
+        ("shared-", ".css"),
+        ("site-interactions-", ".js"),
+        ("deferred-external-", ".js"),
+    )
+    for asset in sorted(ROOT.iterdir()):
+        if not asset.is_file():
+            continue
+        if not any(asset.name.startswith(prefix) and asset.name.endswith(suffix) for prefix, suffix in patterns):
+            continue
+        stats["versioned_static_assets"] += 1
+        if asset.name not in referenced:
+            issues.append(f"{asset}: versioned static asset is not referenced by any generated HTML page")
+    return issues, stats
+
+
 def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -1238,6 +1272,9 @@ def main() -> int:
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
+    static_asset_issues, static_asset_stats = check_static_asset_refs(parsers)
+    issues.extend(static_asset_issues)
+    stats.update(static_asset_stats)
 
     indexable_canonicals: set[str] = set()
     for page, parser in parsers.items():
@@ -1285,6 +1322,7 @@ def main() -> int:
     print(f"security_txt_fields={stats['security_txt_fields']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"mailto_links={stats['mailto_links']}")
+    print(f"versioned_static_assets={stats['versioned_static_assets']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"issues={len(issues)}")

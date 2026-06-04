@@ -2735,6 +2735,8 @@ def head(
 {alternates}
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#7a4d6d" />
   <meta property="og:type" content="{page_type}" />
   <meta property="og:url" content="{canonical}" />
   <meta property="og:title" content="{escape(title)}" />
@@ -4967,6 +4969,34 @@ LoveTypes uses the five love languages as reflective communication tools, not as
     write(ROOT / "llms.txt", content)
 
 
+def write_site_manifest() -> None:
+    manifest = {
+        "name": "LoveTypes 情感守護者宇宙",
+        "short_name": "LoveTypes",
+        "description": "五種愛之語測驗、情感守護者、錯頻修復與旅人補給。",
+        "start_url": "/",
+        "scope": "/",
+        "display": "standalone",
+        "background_color": "#fff7fb",
+        "theme_color": "#7a4d6d",
+        "orientation": "portrait-primary",
+        "lang": "zh-TW",
+        "categories": ["lifestyle", "education"],
+        "icons": [
+            {"src": "/favicon.ico", "sizes": "16x16 24x24 32x32", "type": "image/x-icon"},
+            {"src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+            {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
+        ],
+        "shortcuts": [
+            {"name": "開始認領儀式", "url": "/#quiz-section", "description": "完成 15 道心語題目，找到你的情感守護者。"},
+            {"name": "五位守護者", "url": "/characters/", "description": "查看艾莉絲、諾雅、薇薇安、克萊兒與朵拉。"},
+            {"name": "旅人補給", "url": "/resources/", "description": "依守護者路線選擇指南、練習與補給資源。"},
+        ],
+    }
+    write(ROOT / "site.webmanifest", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+
+
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
@@ -5013,6 +5043,7 @@ https://:version.lovetypes.pages.dev/*
     write(ROOT / "_headers", headers)
     write_404_page()
     write_llms_txt()
+    write_site_manifest()
 
 
 def main() -> None:

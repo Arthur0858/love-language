@@ -919,6 +919,61 @@ button.secondary-btn {
   color: var(--muted);
 }
 
+.starter-kit-section {
+  background:
+    radial-gradient(circle at 80% 12%, rgba(122, 159, 151, .14), transparent 28%),
+    linear-gradient(180deg, #fff, #f7fbf8);
+}
+
+.starter-kit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.starter-kit-card {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(213, 231, 226, .95);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 30px rgba(54, 83, 77, .06);
+}
+
+.starter-kit-card span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--sage);
+  color: #fff;
+  font-weight: 900;
+}
+
+.starter-kit-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  line-height: 1.18;
+}
+
+.starter-kit-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.starter-kit-card a {
+  align-self: end;
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .supply-panel-section {
   background:
     radial-gradient(circle at 82% 18%, rgba(189, 82, 96, .1), transparent 28%),
@@ -2229,6 +2284,7 @@ button.secondary-btn {
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .starter-kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2282,6 +2338,7 @@ button.secondary-btn {
   .luna-hero,
   .intro-grid,
   .supply-compass-grid,
+  .starter-kit-grid,
   .luna-guardian-grid,
   .quiz-band,
   .quiz-intro,
@@ -2591,6 +2648,10 @@ button.secondary-btn {
 
   .supply-quick-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .starter-kit-grid {
+    grid-template-columns: 1fr;
   }
 
   .supply-quick-routes .section-intro {

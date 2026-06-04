@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-saved-story-card"
+ASSET_VERSION = "20260604-starter-kit"
 
 
 FONT_CSS = ""
@@ -1221,6 +1221,65 @@ SUPPLY_DECISION = {
 }
 
 
+STARTER_KIT = {
+    "zh": {
+        "eyebrow": "STARTER KIT",
+        "title": "你的守護者初始補給包",
+        "intro": "不要一次把所有補給都帶走。先收下一張守護者卡、一個 24 小時任務、一盞夜間低光，再決定是否需要書卷。",
+        "steps": [
+            ("1", "先保存身分", "把守護者卡存起來，讓結果從一段文字變成可以回訪與分享的標記。", "打開收藏室", "keepsakes"),
+            ("2", "做一個小任務", "把你的補給任務放進 7 日修復計畫，只選一件 24 小時內能完成的事。", "使用修復計畫", "repair-plan"),
+            ("3", "夜晚先降噪", "情緒太滿時先用 Luna 整理，再決定要開口、等待，還是回到補給路線。", "開啟 Luna", "luna-yoga-music"),
+            ("4", "再選延伸補給", "如果你願意慢慢練，再依守護者選一條路線與一本書卷，不需要全部購買。", "查看五路線", "#supply-routes"),
+        ],
+    },
+    "en": {
+        "eyebrow": "STARTER KIT",
+        "title": "Your guardian starter kit",
+        "intro": "Do not carry every supply at once. Save one guardian card, choose one 24-hour task, use one night light, then decide whether a book fits.",
+        "steps": [
+            ("1", "Save the identity", "Keep your guardian card so the result becomes something revisitable and shareable.", "Open keepsakes", "keepsakes"),
+            ("2", "Do one small task", "Place your supply mission inside the 7-day repair plan and choose one action possible within 24 hours.", "Use repair plan", "repair-plan"),
+            ("3", "Lower the night noise", "When feelings are loud, use Luna first, then decide whether to speak, wait, or return to the route.", "Open Luna", "luna-yoga-music"),
+            ("4", "Choose deeper supply", "If you are ready to practice slowly, choose one guardian route and one book. You do not need all of them.", "View routes", "#supply-routes"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "STARTER KIT",
+        "title": "守護者の初期補給セット",
+        "intro": "すべての補給を一度に持たなくて大丈夫です。守護者カード、一つの24時間課題、一つの夜の灯りを選び、その後で本が必要か決めます。",
+        "steps": [
+            ("1", "まず結果を保存する", "守護者カードを保存し、結果を戻って見られ、共有できる印にします。", "コレクション室へ", "keepsakes"),
+            ("2", "小さな課題を一つ行う", "補給ミッションを7日間の修復プランに入れ、24時間以内にできる行動だけを選びます。", "修復プランを使う", "repair-plan"),
+            ("3", "夜の雑音を下げる", "感情が大きい時は Luna で整え、話すか、待つか、補給ルートに戻るかを選びます。", "Luna を開く", "luna-yoga-music"),
+            ("4", "深い補給を選ぶ", "ゆっくり練習する準備ができたら、守護者ルートと本を一つだけ選びます。全部は必要ありません。", "五つのルートを見る", "#supply-routes"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "STARTER KIT",
+        "title": "나의 수호자 시작 보급 세트",
+        "intro": "모든 보급을 한 번에 가져가지 않아도 됩니다. 수호자 카드 하나, 24시간 과제 하나, 밤의 등불 하나를 고른 뒤 책이 필요한지 결정하세요.",
+        "steps": [
+            ("1", "정체성 먼저 저장", "수호자 카드를 저장해 결과를 다시 보고 공유할 수 있는 표시로 만듭니다.", "소장실 열기", "keepsakes"),
+            ("2", "작은 과제 하나 하기", "보급 미션을 7일 회복 계획에 넣고 24시간 안에 가능한 행동 하나만 고릅니다.", "회복 계획 쓰기", "repair-plan"),
+            ("3", "밤의 소음 낮추기", "감정이 클 때는 Luna로 먼저 정리한 뒤 말할지, 기다릴지, 보급 루트로 돌아갈지 고릅니다.", "Luna 열기", "luna-yoga-music"),
+            ("4", "깊은 보급 선택", "천천히 연습할 준비가 되었다면 수호자 루트 하나와 책 한 권만 고르세요. 전부 필요하지 않습니다.", "다섯 루트 보기", "#supply-routes"),
+        ],
+    },
+    "es": {
+        "eyebrow": "STARTER KIT",
+        "title": "Tu kit inicial de guardiana",
+        "intro": "No lleves todos los recursos a la vez. Guarda una tarjeta, elige una tarea de 24 horas, usa una luz nocturna y luego decide si un libro encaja.",
+        "steps": [
+            ("1", "Guarda la identidad", "Conserva tu tarjeta de guardiana para que el resultado sea algo que puedas revisar y compartir.", "Abrir recuerdos", "keepsakes"),
+            ("2", "Haz una tarea pequeña", "Lleva tu misión al plan de 7 días y elige una acción posible dentro de 24 horas.", "Usar plan", "repair-plan"),
+            ("3", "Baja el ruido nocturno", "Cuando la emoción esté alta, usa Luna primero y luego decide si hablar, esperar o volver a la ruta.", "Abrir Luna", "luna-yoga-music"),
+            ("4", "Elige recurso profundo", "Si estás lista para practicar despacio, elige una ruta de guardiana y un libro. No necesitas todos.", "Ver rutas", "#supply-routes"),
+        ],
+    },
+}
+
+
 SUPPLY_LABELS = {
     "zh": {
         "eyebrow": "GUARDIAN SUPPLY ROUTES",
@@ -2364,6 +2423,28 @@ def supply_quick_route_nav(lang: str) -> str:
 """
 
 
+def starter_kit_section(lang: str) -> str:
+    labels = STARTER_KIT[lang]
+    cards = []
+    for number, title, desc, action, target in labels["steps"]:
+        href = target if target.startswith("#") else lang_url(lang, target)
+        cards.append(f"""
+<article class="starter-kit-card">
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}">{escape(action)}</a>
+</article>
+""")
+    return f"""
+<section class="section starter-kit-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div></div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="starter-kit-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def guardian_story_image(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
@@ -3405,7 +3486,8 @@ def resources_page(lang: str) -> None:
   <p class="section-intro">{escape(decision["intro"])}</p>
   <div class="supply-compass-grid">{decision_steps}</div>
 </section>
-<section class="section supply-routes">
+{starter_kit_section(lang)}
+<section class="section supply-routes" id="supply-routes">
   <div class="section-head"><div><p class="eyebrow">{escape(supply_labels["eyebrow"])}</p><h2>{escape(supply_labels["title"])}</h2></div></div>
   <p class="section-intro">{escape(supply_labels["intro"])}</p>
   <div class="supply-route-grid">{supply_cards}</div>

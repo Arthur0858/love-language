@@ -1045,6 +1045,21 @@ def main() -> int:
         language_summaries = [summary for summary in parser.summaries if summary[0].get("aria-label")]
         if not language_summaries:
             issues.append(f"{page}: language menu summary missing accessible label")
+        language_links = [anchor for anchor in parser.anchors if anchor.get("lang") in {code for code in EXPECTED_HREFLANGS if code != "x-default"}]
+        stats["language_menu_links"] += len(language_links)
+        language_link_codes = [anchor.get("lang", "") for anchor in language_links]
+        expected_language_codes = {code for code in EXPECTED_HREFLANGS if code != "x-default"}
+        missing_language_codes = sorted(expected_language_codes.difference(language_link_codes))
+        duplicate_language_codes = [value for value, count in Counter(language_link_codes).items() if count > 1]
+        if missing_language_codes:
+            issues.append(f"{page}: language menu missing links for {', '.join(missing_language_codes)}")
+        if duplicate_language_codes:
+            issues.append(f"{page}: duplicate language menu links for {', '.join(duplicate_language_codes)}")
+        current_language_links = [anchor for anchor in language_links if anchor.get("aria-current") == "page"]
+        if len(current_language_links) != 1:
+            issues.append(f"{page}: expected one current language menu link, found {len(current_language_links)}")
+        elif parser.html_lang and current_language_links[0].get("lang") != parser.html_lang:
+            issues.append(f"{page}: current language menu link should match html lang {parser.html_lang}")
 
         breadcrumbs = [nav for nav in parser.navs if "breadcrumb" in class_tokens(nav)]
         if not is_locale_home(page) and page.name != "404.html":
@@ -1305,6 +1320,7 @@ def main() -> int:
     print(f"h1_tags={stats['h1_tags']}")
     print(f"main_landmarks={stats['main_landmarks']}")
     print(f"nav_landmarks={stats['nav_landmarks']}")
+    print(f"language_menu_links={stats['language_menu_links']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
     print(f"canonical_links={stats['canonical_links']}")

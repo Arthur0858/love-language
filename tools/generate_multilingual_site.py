@@ -2663,7 +2663,12 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
         else f'<a href="{href}">{escape(label)}</a>'
         for href, label in items
     )
-    lang_links = "".join(f'<a href="{lang_url(code, language_path)}" lang="{cfg["code"]}">{cfg["name"]}</a>' for code, cfg in LANGS.items())
+    lang_links = "".join(
+        f'<a class="active" href="{lang_url(code, language_path)}" lang="{cfg["code"]}" aria-current="page">{cfg["name"]}</a>'
+        if code == lang
+        else f'<a href="{lang_url(code, language_path)}" lang="{cfg["code"]}">{cfg["name"]}</a>'
+        for code, cfg in LANGS.items()
+    )
     return f"""
 <header class="site-nav">
   <a class="brand" href="{lang_url(lang)}" aria-label="{escape(t["brand"])}"><span>LoveTypes</span></a>

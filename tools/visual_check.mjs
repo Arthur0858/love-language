@@ -189,6 +189,18 @@ const executablePath = await findCachedChromium();
 const browser = await chromium.launch({ headless: true, executablePath });
 const results = [];
 
+async function openPage(page, url) {
+  const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
+  await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+  return response;
+}
+
+async function waitForSoftIdle(page) {
+  await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
+  await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+}
+
 for (const item of cases) {
   const page = await browser.newPage({ viewport: item.viewport });
   const consoleErrors = [];
@@ -204,7 +216,7 @@ for (const item of cases) {
   });
 
   const url = makeUrl(item.path);
-  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  const response = await openPage(page, url);
   const title = await page.title();
   const h1 = await page.locator('h1').first().innerText().catch(() => '');
   const navCount = await page.locator('.nav-links a').count();
@@ -261,7 +273,7 @@ for (const item of quizCases) {
   });
 
   const url = makeUrl(item.path);
-  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  const response = await openPage(page, url);
   await page.evaluate(() => localStorage.clear());
   await page.locator('[data-quiz-start]').first().click();
 
@@ -338,7 +350,7 @@ for (const item of conversionCases) {
   });
 
   const url = makeUrl(item.path);
-  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  const response = await openPage(page, url);
   await page.evaluate(() => localStorage.clear());
   await page.locator('[data-quiz-start]').first().click();
 
@@ -358,7 +370,7 @@ for (const item of conversionCases) {
   } else if (item.target === 'keepsake-plan') {
     await page.locator('[data-conversion-keepsake]').click();
   } else if (item.target === 'home-saved-plan') {
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await openPage(page, url);
     await page.locator('[data-quiz-saved]:not([hidden])').waitFor({ state: 'visible' });
     homeSavedVisible = true;
     homeSavedKeepsakeHref = await page.locator('[data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
@@ -368,13 +380,13 @@ for (const item of conversionCases) {
   } else {
     await page.locator('[data-conversion-route]').click();
   }
-  await page.waitForLoadState('networkidle');
+  await waitForSoftIdle(page);
   let keepsakePrimaryHref = '';
   if (item.target === 'keepsake-plan') {
     await page.locator('[data-keepsake-saved]:not([hidden])').waitFor({ state: 'visible' });
     keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
     await page.locator('[data-keepsake-plan]').click();
-    await page.waitForLoadState('networkidle');
+    await waitForSoftIdle(page);
   }
   const finalTarget = ['keepsake-plan', 'home-saved-plan'].includes(item.target) ? 'plan' : item.target;
   const resumeSelector = finalTarget === 'plan'

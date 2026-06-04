@@ -170,6 +170,7 @@ GENERATOR_CONFIG = load_generator_config()
 ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
 EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT.removeprefix('ca-')}, DIRECT, f08c47fec0942fa0"
 FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
+LEGACY_ZH_GUIDE_TARGETS = {slug: target for slug, _title, _desc, target in GENERATOR_CONFIG.LEGACY_ZH_GUIDES}
 CURRENT_STATIC_ASSETS = {
     "css": GENERATOR_CONFIG.CSS_ASSET,
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
@@ -459,6 +460,14 @@ def formal_guide_slug_for_page(page: Path) -> str:
         parts.pop(0)
     if len(parts) == 3 and parts[0] == "guides" and parts[2] == "index.html" and parts[1] in FORMAL_GUIDE_GUARDIANS:
         return parts[1]
+    return ""
+
+
+def legacy_zh_guide_target_for_page(page: Path) -> str:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if len(parts) == 3 and parts[0] == "guides" and parts[2] == "index.html" and parts[1] in LEGACY_ZH_GUIDE_TARGETS:
+        return LEGACY_ZH_GUIDE_TARGETS[parts[1]]
     return ""
 
 
@@ -1474,6 +1483,28 @@ def main() -> int:
             if missing_guide_hrefs:
                 issues.append(f"{page}: guide action bridge missing continuation hrefs {', '.join(missing_guide_hrefs)}")
 
+        legacy_target = legacy_zh_guide_target_for_page(page)
+        if legacy_target:
+            stats["legacy_guide_action_bridge_pages"] += 1
+            if not is_noindex(parser):
+                issues.append(f"{page}: legacy guide page should remain noindex")
+            if "archive-forward" not in parser.source:
+                issues.append(f"{page}: legacy guide missing archive-forward notice")
+            guardian_slug = FORMAL_GUIDE_GUARDIANS[legacy_target]
+            bridge_count = parser.ids.count("guide-action-bridge")
+            if bridge_count != 1:
+                issues.append(f"{page}: expected one legacy #guide-action-bridge target, found {bridge_count}")
+            legacy_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_legacy_hrefs = {
+                lang_url_for_page(page, f"guides/{legacy_target}"),
+                lang_url_for_page(page, f"characters/{guardian_slug}"),
+                f"{lang_url_for_page(page, 'resources')}#supply-{guardian_slug}",
+                f"{lang_url_for_page(page, 'repair-plan')}#plan-{guardian_slug}",
+            }
+            missing_legacy_hrefs = sorted(required_legacy_hrefs.difference(legacy_hrefs))
+            if missing_legacy_hrefs:
+                issues.append(f"{page}: legacy guide bridge missing continuation hrefs {', '.join(missing_legacy_hrefs)}")
+
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
             issues.append(f"{page}: missing skip link")
@@ -1974,6 +2005,7 @@ def main() -> int:
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
+    print(f"legacy_guide_action_bridge_pages={stats['legacy_guide_action_bridge_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

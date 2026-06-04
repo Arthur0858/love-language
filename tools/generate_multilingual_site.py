@@ -4727,6 +4727,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   </article>
   <aside class="article-side"><h2>延伸閱讀</h2>{guide_card(lang, related)}</aside>
 </section>
+{guide_action_bridge(lang, related)}
 """
     schema = json_ld({
         "@context": "https://schema.org",

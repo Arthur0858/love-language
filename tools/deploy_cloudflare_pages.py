@@ -17,15 +17,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
-try:
-    from blake3 import blake3
-except ImportError as exc:
-    raise SystemExit(
-        "Missing dependency: blake3\n"
-        "Install once with:\n"
-        "  python3 -m pip install --user blake3"
-    ) from exc
-
 
 API_BASE = "https://api.cloudflare.com/client/v4"
 DEFAULT_ACCOUNT_ID = "e6780ef96bb6f53eba1dbc4d6dfa7376"
@@ -170,6 +161,15 @@ def detect_git_metadata(
 
 
 def hash_file(path: Path) -> str:
+    try:
+        from blake3 import blake3
+    except ImportError as exc:
+        raise SystemExit(
+            "Missing dependency: blake3\n"
+            "Install once with:\n"
+            "  python3 -m pip install --user blake3"
+        ) from exc
+
     contents = path.read_bytes()
     base64_contents = base64.b64encode(contents).decode("ascii")
     extension = path.suffix[1:]
@@ -190,8 +190,8 @@ def should_skip_file(rel_path: str) -> bool:
     return False
 
 
-def collect_site_files(site_dir: Path) -> dict[str, FileEntry]:
-    file_map: dict[str, FileEntry] = {}
+def collect_manifest_paths(site_dir: Path) -> list[Path]:
+    paths: list[Path] = []
     for root, dirs, files in os.walk(site_dir, topdown=True):
         root_path = Path(root)
         dirs[:] = [name for name in dirs if name not in EXCLUDED_DIR_NAMES and not name.startswith(".")]
@@ -202,16 +202,24 @@ def collect_site_files(site_dir: Path) -> dict[str, FileEntry]:
             rel_path = path.relative_to(site_dir).as_posix()
             if should_skip_file(rel_path):
                 continue
-            size_in_bytes = path.stat().st_size
-            if size_in_bytes > MAX_ASSET_SIZE:
-                raise DeployError(f"Pages asset too large: {rel_path} ({size_in_bytes} bytes)")
-            file_map[rel_path] = FileEntry(
-                rel_path=rel_path,
-                path=path,
-                content_type=mimetypes.guess_type(rel_path)[0] or "application/octet-stream",
-                size_in_bytes=size_in_bytes,
-                hash_value=hash_file(path),
-            )
+            paths.append(path)
+    return sorted(paths)
+
+
+def collect_site_files(site_dir: Path) -> dict[str, FileEntry]:
+    file_map: dict[str, FileEntry] = {}
+    for path in collect_manifest_paths(site_dir):
+        rel_path = path.relative_to(site_dir).as_posix()
+        size_in_bytes = path.stat().st_size
+        if size_in_bytes > MAX_ASSET_SIZE:
+            raise DeployError(f"Pages asset too large: {rel_path} ({size_in_bytes} bytes)")
+        file_map[rel_path] = FileEntry(
+            rel_path=rel_path,
+            path=path,
+            content_type=mimetypes.guess_type(rel_path)[0] or "application/octet-stream",
+            size_in_bytes=size_in_bytes,
+            hash_value=hash_file(path),
+        )
     return file_map
 
 

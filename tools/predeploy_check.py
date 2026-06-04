@@ -22,6 +22,8 @@ PYTHON_TOOLS = [
     "tools/guardian_conversion_audit.py",
     "tools/performance_budget_audit.py",
     "tools/public_deploy_smoke.py",
+    "tools/deploy_cloudflare_pages.py",
+    "tools/deploy_manifest_audit.py",
 ]
 
 
@@ -111,6 +113,7 @@ def main() -> int:
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
         run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
+        run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
 
     if args.visual or args.visual_only:
         node = find_node()

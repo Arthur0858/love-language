@@ -4,5 +4,11 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-/shared.css*
+/shared-*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/site-interactions-*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/deferred-external-*.js
   Cache-Control: public, max-age=31536000, immutable

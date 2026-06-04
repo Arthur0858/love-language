@@ -12,6 +12,9 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
 ASSET_VERSION = "20260604-supply-resume"
+CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
+INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
+AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 
 
 FONT_CSS = ""
@@ -2421,7 +2424,7 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
   <meta property="og:description" content="{escape(desc)}" />
   <meta property="og:image" content="{DOMAIN}{image}" />
   <meta name="twitter:card" content="summary_large_image" />
-{hero_preload}  <link rel="stylesheet" href="/shared.css?v={ASSET_VERSION}" />
+{hero_preload}  <link rel="stylesheet" href="{CSS_ASSET}" />
 </head>
 """
 
@@ -2429,7 +2432,7 @@ def head(lang: str, title: str, desc: str, path: str = "", page_type: str = "web
 def layout(lang: str, title: str, desc: str, path: str, body: str, active: str = "", page_type: str = "website", image: str = "/og-cover.jpg", schema: str = "", affiliate: bool = False) -> str:
     external_script = ""
     if affiliate:
-        external_script = f'\n<script src="/deferred-external.js?v={ASSET_VERSION}" data-affiliate defer></script>'
+        external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
     return head(lang, title, desc, path, page_type, image) + f"""<body>
 <a class="skip-link" href="#main">Skip to content</a>
 {nav(lang, active, path)}
@@ -2438,7 +2441,7 @@ def layout(lang: str, title: str, desc: str, path: str, body: str, active: str =
 {body}
 </main>
 {footer(lang)}
-<script src="/site-interactions.js?v={ASSET_VERSION}" defer></script>
+<script src="{INTERACTIONS_ASSET}" defer></script>
 {external_script}
 </body>
 </html>
@@ -4196,6 +4199,16 @@ def write_css() -> None:
     css_path = ROOT / "shared.css"
     css = css_path.read_text(encoding="utf-8")
     write(css_path, css.strip() + "\n")
+    write(ROOT / CSS_ASSET.lstrip("/"), css.strip() + "\n")
+
+
+def write_versioned_scripts() -> None:
+    for source, target in (
+        ("site-interactions.js", INTERACTIONS_ASSET),
+        ("deferred-external.js", AFFILIATE_ASSET),
+    ):
+        script = (ROOT / source).read_text(encoding="utf-8")
+        write(ROOT / target.lstrip("/"), script.strip() + "\n")
 
 
 def write_support_files() -> None:
@@ -4212,11 +4225,12 @@ def write_support_files() -> None:
     sitemap.append("</urlset>")
     write(ROOT / "sitemap.xml", "\n".join(sitemap) + "\n")
     write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")
-    write(ROOT / "_headers", "/*\n  Cache-Control: public, max-age=600\n\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n/shared.css*\n  Cache-Control: public, max-age=31536000, immutable\n")
+    write(ROOT / "_headers", "/*\n  Cache-Control: public, max-age=600\n\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n/shared-*.css\n  Cache-Control: public, max-age=31536000, immutable\n\n/site-interactions-*.js\n  Cache-Control: public, max-age=31536000, immutable\n\n/deferred-external-*.js\n  Cache-Control: public, max-age=31536000, immutable\n")
 
 
 def main() -> None:
     write_css()
+    write_versioned_scripts()
     for lang in LANGS:
         home(lang)
         guides_index(lang)

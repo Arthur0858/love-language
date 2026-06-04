@@ -249,13 +249,33 @@ def check_robots(sitemap_urls: set[str]) -> list[str]:
     if not ROBOTS_PATH.exists():
         return [f"{ROBOTS_PATH}: missing robots.txt"]
     lines = [line.strip() for line in ROBOTS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines() if line.strip()]
-    lower_lines = [line.lower() for line in lines]
-    if "user-agent: *" not in lower_lines:
+    groups: list[tuple[list[str], list[tuple[str, str]]]] = []
+    current_agents: list[str] = []
+    current_directives: list[tuple[str, str]] = []
+    for line in lines:
+        if line.startswith("#") or ":" not in line:
+            continue
+        key, value = [part.strip() for part in line.split(":", 1)]
+        key = key.lower()
+        value_lower = value.lower()
+        if key == "user-agent":
+            if current_directives:
+                groups.append((current_agents, current_directives))
+                current_agents = []
+                current_directives = []
+            current_agents.append(value_lower)
+        else:
+            current_directives.append((key, value_lower))
+    if current_agents or current_directives:
+        groups.append((current_agents, current_directives))
+
+    wildcard_directives = [directives for agents, directives in groups if "*" in agents]
+    if not wildcard_directives:
         issues.append(f"{ROBOTS_PATH}: missing User-agent: *")
-    if "allow: /" not in lower_lines:
+    if not any(("allow", "/") in directives for directives in wildcard_directives):
         issues.append(f"{ROBOTS_PATH}: missing Allow: /")
-    if "disallow: /" in lower_lines:
-        issues.append(f"{ROBOTS_PATH}: should not globally disallow /")
+    if any(("disallow", "/") in directives for directives in wildcard_directives):
+        issues.append(f"{ROBOTS_PATH}: User-agent: * should not globally disallow /")
     sitemap_line = f"Sitemap: {DOMAIN}/sitemap.xml"
     if sitemap_line not in lines:
         issues.append(f"{ROBOTS_PATH}: missing exact sitemap declaration {sitemap_line}")

@@ -5346,6 +5346,7 @@ def write_support_files() -> None:
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
 
 /assets/*
   ! Cache-Control

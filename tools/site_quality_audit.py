@@ -57,6 +57,7 @@ REQUIRED_GLOBAL_HEADERS = {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "X-Frame-Options": "SAMEORIGIN",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+    "Strict-Transport-Security": "max-age=31536000",
 }
 IMMUTABLE_HEADER_PATHS = {
     "/assets/*",

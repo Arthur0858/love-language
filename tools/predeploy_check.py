@@ -23,6 +23,7 @@ PYTHON_TOOLS = [
     "tools/accessibility_audit.py",
     "tools/performance_budget_audit.py",
     "tools/public_deploy_smoke.py",
+    "tools/public_sitemap_smoke.py",
     "tools/deploy_cloudflare_pages.py",
     "tools/deploy_manifest_audit.py",
 ]

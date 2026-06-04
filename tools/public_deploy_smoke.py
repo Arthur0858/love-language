@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import re
 import ssl
@@ -10,12 +11,14 @@ import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from html.parser import HTMLParser
+from pathlib import Path
 from typing import Iterable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
+ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
@@ -126,6 +129,24 @@ IMMUTABLE_CACHE_RE = re.compile(r"max-age=31536000.*immutable", re.I)
 VERSIONED_CSS_RE = re.compile(r"^/shared-[^/]+\.css$")
 VERSIONED_INTERACTIONS_RE = re.compile(r"^/site-interactions-[^/]+\.js$")
 VERSIONED_AFFILIATE_RE = re.compile(r"^/deferred-external-[^/]+\.js$")
+
+
+def load_generator_config():
+    generator_path = ROOT / "tools" / "generate_multilingual_site.py"
+    spec = importlib.util.spec_from_file_location("lovetypes_site_generator", generator_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generator config from {generator_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+GENERATOR_CONFIG = load_generator_config()
+CURRENT_STATIC_ASSETS = {
+    "css": GENERATOR_CONFIG.CSS_ASSET,
+    "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
+    "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
+}
 
 
 @dataclass
@@ -513,6 +534,7 @@ def main() -> int:
     public_jsonld_blocks_checked = 0
     public_jsonld_entities_checked = 0
     public_versioned_asset_refs_checked = 0
+    public_current_asset_refs_checked = 0
     public_sitemap_urls_checked = 0
     public_sitemap_alternates_total = 0
     public_sitemap_alternates_checked = 0
@@ -600,11 +622,29 @@ def main() -> int:
         public_versioned_asset_refs_checked += len(versioned_stylesheets) + len(versioned_interactions) + len(versioned_affiliate)
         if len(versioned_stylesheets) != 1:
             issues.append(f"{path}: expected one versioned shared CSS asset, found {versioned_stylesheets}")
+        elif versioned_stylesheets[0] != CURRENT_STATIC_ASSETS["css"]:
+            issues.append(
+                f"{path}: expected current CSS asset {CURRENT_STATIC_ASSETS['css']}, found {versioned_stylesheets[0]}"
+            )
+        else:
+            public_current_asset_refs_checked += 1
         if len(versioned_interactions) != 1:
             issues.append(f"{path}: expected one versioned interaction JS asset, found {versioned_interactions}")
+        elif versioned_interactions[0] != CURRENT_STATIC_ASSETS["interactions"]:
+            issues.append(
+                f"{path}: expected current interaction asset {CURRENT_STATIC_ASSETS['interactions']}, found {versioned_interactions[0]}"
+            )
+        else:
+            public_current_asset_refs_checked += 1
         expected_affiliate_count = 1 if path.endswith("/resources/") else 0
         if len(versioned_affiliate) != expected_affiliate_count:
             issues.append(f"{path}: expected {expected_affiliate_count} versioned affiliate JS asset(s), found {versioned_affiliate}")
+        elif expected_affiliate_count and versioned_affiliate[0] != CURRENT_STATIC_ASSETS["affiliate"]:
+            issues.append(
+                f"{path}: expected current affiliate asset {CURRENT_STATIC_ASSETS['affiliate']}, found {versioned_affiliate[0]}"
+            )
+        elif expected_affiliate_count:
+            public_current_asset_refs_checked += 1
         page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate])
 
     for source, target in REDIRECTS.items():
@@ -673,6 +713,7 @@ def main() -> int:
     print(f"public_jsonld_blocks_checked={public_jsonld_blocks_checked}")
     print(f"public_jsonld_entities_checked={public_jsonld_entities_checked}")
     print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
+    print(f"public_current_asset_refs_checked={public_current_asset_refs_checked}")
     print(f"public_sitemap_urls_checked={public_sitemap_urls_checked}")
     print(f"public_sitemap_alternates_total={public_sitemap_alternates_total}")
     print(f"public_sitemap_alternates_checked={public_sitemap_alternates_checked}")

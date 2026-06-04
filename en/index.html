@@ -237,9 +237,9 @@
       <p>No signup. Choose the response that most helps you feel loved. At the end you claim an emotion guardian, scores, next practice, and a route to keep reading.</p>
       <button type="button" class="primary-btn" data-quiz-start>Start 15 prompts</button>
     </div>
-    <div class="quiz-saved" data-quiz-saved hidden></div>
-    <div class="quiz-stage" data-quiz-box hidden></div>
-    <div class="quiz-result" data-quiz-result hidden></div>
+    <div class="quiz-saved" data-quiz-saved hidden aria-live="polite"></div>
+    <div class="quiz-stage" data-quiz-box hidden aria-live="polite"></div>
+    <div class="quiz-result" data-quiz-result hidden aria-live="polite"></div>
   </div>
 </section>
 
@@ -376,13 +376,14 @@
   }
   function renderQuestion() {
     const q = quiz.questions[current];
+    const progressPercent = Math.round((current + 1) / quiz.questions.length * 100);
     quizBox.innerHTML = `
-      <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar"><span style="width:${Math.round(current / quiz.questions.length * 100)}%"></span></div><p>${progressText()}</p></div>
+      <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${quiz.questions.length}" aria-valuenow="${current + 1}" aria-label="${progressText()}"><span style="width:${progressPercent}%"></span></div><p>${progressText()}</p></div>
       <article class="quiz-card ritual-question-card">
         <p class="eyebrow">${quiz.labels.question} ${current + 1}</p>
         <h3>${q.text}</h3>
         <div class="quiz-options">
-          ${q.options.map((opt, idx) => `<button type="button" class="quiz-option" data-type="${opt.type}"><span>${idx + 1}</span>${opt.text}</button>`).join('')}
+          ${q.options.map((opt, idx) => `<button type="button" class="quiz-option" data-type="${opt.type}" aria-pressed="false"><span>${idx + 1}</span>${opt.text}</button>`).join('')}
         </div>
         <button type="button" class="primary-btn quiz-next" disabled>${current === quiz.questions.length - 1 ? quiz.labels.see : quiz.labels.next}</button>
       </article>`;
@@ -390,8 +391,12 @@
     quizBox.querySelectorAll('.quiz-option').forEach((button) => {
       button.addEventListener('click', () => {
         selected = button.dataset.type;
-        quizBox.querySelectorAll('.quiz-option').forEach((item) => item.classList.remove('selected'));
+        quizBox.querySelectorAll('.quiz-option').forEach((item) => {
+          item.classList.remove('selected');
+          item.setAttribute('aria-pressed', 'false');
+        });
         button.classList.add('selected');
+        button.setAttribute('aria-pressed', 'true');
         quizBox.querySelector('.quiz-next').disabled = false;
       });
     });

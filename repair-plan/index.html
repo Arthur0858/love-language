@@ -59,7 +59,7 @@
   <p>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</p>
   <div class="hero-actions"><a class="primary-btn" href="/#quiz-section">開始測驗</a><a class="secondary-btn" href="/resources/">打開補給站</a></div>
 </section>
-<section class="section repair-result-resume" data-repair-saved hidden></section>
+<section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-plan-section">
   <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>一週練習路線</h2></div><a href="/resources/">打開補給站</a></div>
   <div class="repair-day-grid">
@@ -109,7 +109,7 @@
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>本週心語工作表</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">列印 / 存成 PDF</button></div>
   <p class="section-intro">填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。</p>
-  <div class="worksheet-meta"><p>此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。</p><div><span data-worksheet-status>已自動保存</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>複製本週回顧</button><button class="secondary-btn" type="button" data-clear-worksheet>清除本機內容</button></div></div>
+  <div class="worksheet-meta"><p>此工作表只會暫存在這台裝置的瀏覽器，不會送出到 LoveTypes。</p><div><span data-worksheet-status role="status" aria-live="polite">已自動保存</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>複製本週回顧</button><button class="secondary-btn" type="button" data-clear-worksheet>清除本機內容</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>
 <label>
   <span>我的守護者結果</span>

@@ -84,6 +84,16 @@ LEGACY_ROOT_STATIC_ASSETS = {
     "site-interactions.js",
     "deferred-external.js",
 }
+LIVE_REGION_DATA_ATTRS = {
+    "data-guide-saved",
+    "data-keepsake-saved",
+    "data-luna-saved",
+    "data-quiz-box",
+    "data-quiz-result",
+    "data-quiz-saved",
+    "data-repair-saved",
+    "data-supply-saved",
+}
 EXPECTED_REDIRECTS = {
     "/.well-known/security.txt": ("/security.txt", "200"),
     "/luna/": ("/luna-yoga-music/", "301"),
@@ -156,6 +166,9 @@ class PageParser(HTMLParser):
         self.navs: list[dict[str, str]] = []
         self.details: list[dict[str, str]] = []
         self.summaries: list[list[object]] = []
+        self.live_regions: list[dict[str, str]] = []
+        self.dynamic_regions: list[dict[str, str]] = []
+        self.progressbars: list[dict[str, str]] = []
         self.ids: list[str] = []
         self.metas: list[dict[str, str]] = []
         self.tag_counts = Counter()
@@ -198,6 +211,12 @@ class PageParser(HTMLParser):
             self.details.append(data)
         if tag == "summary":
             self.summaries.append([data, ""])
+        if data.get("aria-live") or data.get("role") == "status":
+            self.live_regions.append(data)
+        if data.get("role") == "progressbar":
+            self.progressbars.append(data)
+        if any(attr in data for attr in LIVE_REGION_DATA_ATTRS):
+            self.dynamic_regions.append(data)
         if tag in ("input", "select", "textarea"):
             self.controls.append((tag, data))
         if tag == "img":
@@ -1135,6 +1154,9 @@ def main() -> int:
         stats["h1_tags"] += sum(1 for level, _, _ in parser.headings if level == 1)
         stats["main_landmarks"] += len(parser.mains)
         stats["nav_landmarks"] += len(parser.navs)
+        stats["live_regions"] += len(parser.live_regions)
+        stats["dynamic_live_regions"] += len(parser.dynamic_regions)
+        stats["progressbars"] += len(parser.progressbars)
         if is_noindex(parser):
             stats["noindex_pages"] += 1
         else:
@@ -1480,6 +1502,33 @@ def main() -> int:
             if tag == "textarea" and attrs.get("autocomplete") != "off":
                 issues.append(f"{page}: textarea should use autocomplete=off")
 
+        for attrs in parser.dynamic_regions:
+            matching_attrs = sorted(attr for attr in LIVE_REGION_DATA_ATTRS if attr in attrs)
+            if not attrs.get("aria-live"):
+                issues.append(f"{page}: dynamic region missing aria-live: {','.join(matching_attrs)}")
+
+        if "data-quiz-root" in parser.source:
+            if "role=\"progressbar\"" not in parser.source or "aria-valuenow" not in parser.source:
+                issues.append(f"{page}: quiz progress should expose role=progressbar with aria-valuenow")
+            else:
+                stats["quiz_progressbar_scripts"] += 1
+            if "aria-pressed=\"false\"" not in parser.source or "setAttribute('aria-pressed', 'true')" not in parser.source:
+                issues.append(f"{page}: quiz options should expose aria-pressed selected state")
+            else:
+                stats["quiz_pressed_state_scripts"] += 1
+            expected_quiz_live_regions = {
+                "data-quiz-saved": "quiz saved result",
+                "data-quiz-box": "quiz question stage",
+                "data-quiz-result": "quiz result",
+            }
+            for data_attr, label in expected_quiz_live_regions.items():
+                if data_attr in parser.source and f"{data_attr} hidden aria-live=\"polite\"" not in parser.source:
+                    issues.append(f"{page}: {label} should use aria-live=polite")
+
+        if "data-worksheet-status" in parser.source:
+            if 'data-worksheet-status role="status" aria-live="polite"' not in parser.source:
+                issues.append(f"{page}: worksheet status should use role=status and aria-live=polite")
+
         for anchor in parser.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)
@@ -1609,6 +1658,11 @@ def main() -> int:
     print(f"h1_tags={stats['h1_tags']}")
     print(f"main_landmarks={stats['main_landmarks']}")
     print(f"nav_landmarks={stats['nav_landmarks']}")
+    print(f"live_regions={stats['live_regions']}")
+    print(f"dynamic_live_regions={stats['dynamic_live_regions']}")
+    print(f"progressbars={stats['progressbars']}")
+    print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
+    print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")

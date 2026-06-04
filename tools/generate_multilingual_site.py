@@ -3337,7 +3337,7 @@ def keepsakes_page(lang: str) -> None:
     <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(labels["resources"])}</a>
   </div>
 </section>
-<section class="section keepsake-personal-resume" data-keepsake-saved hidden></section>
+<section class="section keepsake-personal-resume" data-keepsake-saved hidden aria-live="polite"></section>
 {collector_section(lang)}
 <section class="section keepsake-use-section">
   <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>
@@ -3835,13 +3835,14 @@ def quiz_script(lang: str) -> str:
   }}
   function renderQuestion() {{
     const q = quiz.questions[current];
+    const progressPercent = Math.round((current + 1) / quiz.questions.length * 100);
     quizBox.innerHTML = `
-      <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar"><span style="width:${{Math.round(current / quiz.questions.length * 100)}}%"></span></div><p>${{progressText()}}</p></div>
+      <div class="quiz-progress ritual-progress"><div class="quiz-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${{quiz.questions.length}}" aria-valuenow="${{current + 1}}" aria-label="${{progressText()}}"><span style="width:${{progressPercent}}%"></span></div><p>${{progressText()}}</p></div>
       <article class="quiz-card ritual-question-card">
         <p class="eyebrow">${{quiz.labels.question}} ${{current + 1}}</p>
         <h3>${{q.text}}</h3>
         <div class="quiz-options">
-          ${{q.options.map((opt, idx) => `<button type="button" class="quiz-option" data-type="${{opt.type}}"><span>${{idx + 1}}</span>${{opt.text}}</button>`).join('')}}
+          ${{q.options.map((opt, idx) => `<button type="button" class="quiz-option" data-type="${{opt.type}}" aria-pressed="false"><span>${{idx + 1}}</span>${{opt.text}}</button>`).join('')}}
         </div>
         <button type="button" class="primary-btn quiz-next" disabled>${{current === quiz.questions.length - 1 ? quiz.labels.see : quiz.labels.next}}</button>
       </article>`;
@@ -3849,8 +3850,12 @@ def quiz_script(lang: str) -> str:
     quizBox.querySelectorAll('.quiz-option').forEach((button) => {{
       button.addEventListener('click', () => {{
         selected = button.dataset.type;
-        quizBox.querySelectorAll('.quiz-option').forEach((item) => item.classList.remove('selected'));
+        quizBox.querySelectorAll('.quiz-option').forEach((item) => {{
+          item.classList.remove('selected');
+          item.setAttribute('aria-pressed', 'false');
+        }});
         button.classList.add('selected');
+        button.setAttribute('aria-pressed', 'true');
         quizBox.querySelector('.quiz-next').disabled = false;
       }});
     }});
@@ -4270,9 +4275,9 @@ def home(lang: str) -> None:
       <p>{escape(quiz["intro"])}</p>
       <button type="button" class="primary-btn" data-quiz-start>{escape(quiz["start"])}</button>
     </div>
-    <div class="quiz-saved" data-quiz-saved hidden></div>
-    <div class="quiz-stage" data-quiz-box hidden></div>
-    <div class="quiz-result" data-quiz-result hidden></div>
+    <div class="quiz-saved" data-quiz-saved hidden aria-live="polite"></div>
+    <div class="quiz-stage" data-quiz-box hidden aria-live="polite"></div>
+    <div class="quiz-result" data-quiz-result hidden aria-live="polite"></div>
   </div>
 </section>
 """
@@ -4343,7 +4348,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
   {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False)}
 </section>
-<section class="section guide-personal-resume" data-guide-saved hidden></section>
+<section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">
   <article class="article-body">
     <p class="lede">{escape(detail["lede"])}</p>
@@ -4398,7 +4403,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
   <p>這一頁保留給從舊連結抵達的旅人；目前主要路線已整理到「{escape(related_title)}」。如果你想閱讀最新版本、切換語言或接到守護者補給，請先前往正式指南。</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, canonical_path)}">前往正式指南</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
-<section class="section guide-personal-resume" data-guide-saved hidden></section>
+<section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">
   <article class="article-body">
     <p class="lede">{escape(desc)} 這一頁保留原有主題，並把它放回心語庭園的語境：先辨認錯頻，再找到能被接收的修復方式。</p>
@@ -4535,7 +4540,7 @@ def resources_page(lang: str) -> None:
 """)
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
-<section class="section quiz-saved supply-personal-resume" data-supply-saved hidden></section>
+<section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
 {supply_quick_route_nav(lang)}
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
@@ -4816,7 +4821,7 @@ def repair_plan_page(lang: str) -> None:
   <p>{escape(plan["desc"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
 </section>
-<section class="section repair-result-resume" data-repair-saved hidden></section>
+<section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-plan-section">
   <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
@@ -4824,7 +4829,7 @@ def repair_plan_page(lang: str) -> None:
 <section class="section repair-worksheet-section">
   <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
   <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
-  <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status>{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
+  <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status role="status" aria-live="polite">{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
 {repair_worksheet_script(lang)}
@@ -5001,7 +5006,7 @@ def luna_page(lang: str) -> None:
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>
-<section class="section luna-result-resume" data-luna-saved hidden></section>
+<section class="section luna-result-resume" data-luna-saved hidden aria-live="polite"></section>
 {luna_night_protocol(lang)}
 <section class="section luna-strip">
   <div><p class="eyebrow">CALM PATHS</p><h2>{escape(t["luna_desc"])}</h2></div>

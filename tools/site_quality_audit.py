@@ -40,6 +40,7 @@ EXPECTED_OG_LOCALES = {
 SITEMAP_PATH = ROOT / "sitemap.xml"
 ROBOTS_PATH = ROOT / "robots.txt"
 FEED_PATH = ROOT / "feed.xml"
+LLMS_PATH = ROOT / "llms.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
@@ -128,6 +129,7 @@ EXPECTED_ORGANIZATION = {
 POLICY_PAGE_SLUGS = {"contact", "privacy", "terms"}
 LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
+LLMS_URL_RE = re.compile(r"https://lovetypes\.tw/[^\s)>,]+")
 HANGUL_RE = re.compile(r"[\uac00-\ud7af]")
 KANA_RE = re.compile(r"[\u3040-\u30ff]")
 UNEXPECTED_SCRIPT_CHECKS = {
@@ -747,6 +749,115 @@ def parse_feed(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple
                 issues.append(f"{FEED_PATH}: item link should match target canonical: {link}")
         if link and link not in sitemap_urls:
             issues.append(f"{FEED_PATH}: feed item link missing from sitemap: {link}")
+
+    return issues, stats
+
+
+def extract_llms_urls(text: str) -> list[str]:
+    return [match.group(0).rstrip(".,;") for match in LLMS_URL_RE.finditer(text)]
+
+
+def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not LLMS_PATH.exists():
+        return [f"{LLMS_PATH}: missing llms.txt"], stats
+
+    text = LLMS_PATH.read_text(encoding="utf-8", errors="ignore")
+    stats["llms_files_checked"] = 1
+    stats["llms_lines"] = len(text.splitlines())
+
+    required_sections = [
+        "# LoveTypes - Heart Garden Emotion Guardians",
+        "## Canonical Site",
+        "## Core Concept",
+        "## Five Guardians",
+        "## High-Value Pages",
+        "## Guide Index",
+        "## Commercial and Safety Boundaries",
+    ]
+    for section in required_sections:
+        stats["llms_sections_checked"] += 1
+        if section not in text:
+            issues.append(f"{LLMS_PATH}: missing required section {section!r}")
+
+    required_snippets = {
+        f"Production: {DOMAIN}/": "production URL",
+        f"Last updated: {GENERATOR_CONFIG.UPDATED}": "generator updated date",
+        f"Contact email: {CONTACT_EMAIL}": "contact email",
+        "relationship reflection and practical repair support": "safety positioning",
+        "No full-site advertising script is enabled": "ad approval boundary",
+        "Affiliate links are kept on the Resources page": "affiliate boundary",
+    }
+    for snippet, label in required_snippets.items():
+        stats["llms_snippets_checked"] += 1
+        if snippet not in text:
+            issues.append(f"{LLMS_PATH}: missing {label}: {snippet!r}")
+
+    high_value_urls = {
+        f"{DOMAIN}/",
+        f"{DOMAIN}/characters/",
+        f"{DOMAIN}/guides/",
+        f"{DOMAIN}/resources/",
+        f"{DOMAIN}/repair-plan/",
+        f"{DOMAIN}/keepsakes/",
+        f"{DOMAIN}/luna-yoga-music/",
+        f"{DOMAIN}/about/",
+        f"{DOMAIN}/theory/",
+        f"{DOMAIN}/contact/",
+        f"{DOMAIN}/privacy/",
+        f"{DOMAIN}/terms/",
+    }
+    for url in high_value_urls:
+        stats["llms_high_value_urls_checked"] += 1
+        if url not in text:
+            issues.append(f"{LLMS_PATH}: missing high-value URL {url}")
+
+    for slug, data in GENERATOR_CONFIG.GUARDIANS.items():
+        zh_name, zh_language, _ = data["zh"]
+        en_name, en_language, _ = data["en"]
+        guardian_url = f"{DOMAIN}/characters/{slug}/"
+        stats["llms_guardians_checked"] += 1
+        for value, label in (
+            (zh_name, "zh guardian name"),
+            (en_name, "en guardian name"),
+            (zh_language, "zh love language"),
+            (en_language, "en love language"),
+            (guardian_url, "guardian URL"),
+        ):
+            if value not in text:
+                issues.append(f"{LLMS_PATH}: {slug} missing {label}: {value}")
+
+    for guide in GENERATOR_CONFIG.GUIDES:
+        title, description = guide["zh"]
+        guide_url = f"{DOMAIN}/guides/{guide['slug']}/"
+        stats["llms_guides_checked"] += 1
+        for value, label in ((title, "guide title"), (description, "guide description"), (guide_url, "guide URL")):
+            if value not in text:
+                issues.append(f"{LLMS_PATH}: {guide['slug']} missing {label}: {value}")
+
+    for forbidden in FORBIDDEN_CONTACT_SNIPPETS | FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS:
+        if forbidden in text:
+            issues.append(f"{LLMS_PATH}: forbidden snippet should not appear: {forbidden}")
+
+    llms_urls = sorted(set(extract_llms_urls(text)))
+    stats["llms_urls_checked"] = len(llms_urls)
+    for url in llms_urls:
+        target, fragment = target_for(ROOT / "index.html", url)
+        if target is None or not target.exists():
+            issues.append(f"{LLMS_PATH}: listed URL target missing: {url}")
+            continue
+        if fragment:
+            issues.append(f"{LLMS_PATH}: listed URL should not include fragment: {url}")
+        if target.suffix == ".html":
+            target_parser = parsers.get(target)
+            if target_parser and is_noindex(target_parser):
+                issues.append(f"{LLMS_PATH}: listed URL should not point to noindex page: {url}")
+            canonicals = target_parser.links_with_rel("canonical") if target_parser else []
+            if len(canonicals) == 1 and canonicals[0].get("href") != url:
+                issues.append(f"{LLMS_PATH}: listed URL should match target canonical: {url}")
+        if url not in sitemap_urls:
+            issues.append(f"{LLMS_PATH}: listed URL missing from sitemap: {url}")
 
     return issues, stats
 
@@ -1618,6 +1729,9 @@ def main() -> int:
     feed_issues, feed_stats = parse_feed(parsers, sitemap_urls)
     issues.extend(feed_issues)
     stats.update(feed_stats)
+    llms_issues, llms_stats = parse_llms_txt(parsers, sitemap_urls)
+    issues.extend(llms_issues)
+    stats.update(llms_stats)
     header_issues, header_stats = parse_headers()
     issues.extend(header_issues)
     stats.update(header_stats)
@@ -1713,6 +1827,14 @@ def main() -> int:
     print(f"manifest_icons={stats['manifest_icons']}")
     print(f"manifest_shortcuts={stats['manifest_shortcuts']}")
     print(f"feed_items={stats['feed_items']}")
+    print(f"llms_files_checked={stats['llms_files_checked']}")
+    print(f"llms_lines={stats['llms_lines']}")
+    print(f"llms_sections_checked={stats['llms_sections_checked']}")
+    print(f"llms_snippets_checked={stats['llms_snippets_checked']}")
+    print(f"llms_high_value_urls_checked={stats['llms_high_value_urls_checked']}")
+    print(f"llms_guardians_checked={stats['llms_guardians_checked']}")
+    print(f"llms_guides_checked={stats['llms_guides_checked']}")
+    print(f"llms_urls_checked={stats['llms_urls_checked']}")
     print(f"header_blocks={stats['header_blocks']}")
     print(f"header_rules={stats['header_rules']}")
     print(f"redirect_rules={stats['redirect_rules']}")

@@ -49,6 +49,16 @@ SUPPORT_FILES = {
     "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
     "/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
     "/.well-known/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
+    "/llms.txt": [
+        "# LoveTypes - Heart Garden Emotion Guardians",
+        "Production: https://lovetypes.tw/",
+        "## Five Guardians",
+        "## Guide Index",
+        "## Commercial and Safety Boundaries",
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/luna-yoga-music/",
+        "Contact email: contact@lovetypes.tw",
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

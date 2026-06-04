@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-supply-quick-routes"
+ASSET_VERSION = "20260604-luna-night-protocol"
 
 
 FONT_CSS = ""
@@ -914,6 +914,60 @@ LUNA_USE_CASES = {
         ("Diario relacional", "Usa Luna de fondo mientras anotas qué lenguaje del amor necesitó cuidado hoy."),
         ("Después del ritual", "Después del test, convierte el resultado de guardiana en un siguiente paso."),
     ],
+}
+
+
+LUNA_NIGHT_PROTOCOL = {
+    "zh": {
+        "eyebrow": "NIGHT SUPPLY PROTOCOL",
+        "title": "三種時刻，選一盞 Luna 低光",
+        "intro": "Luna 的用途不是把關係問題聽到消失，而是讓你在情緒最滿的時候，還能選一個可行的下一步。",
+        "steps": [
+            ("1", "睡前整理", "先聽一段安定音樂，把今天最刺的一句話寫成感受，不急著傳出去。", "寫進修復計畫", "repair-plan"),
+            ("2", "衝突後降噪", "讓身體慢下來，再把抱怨翻成一句可被接住的小請求。", "閱讀修復指南", "guides/repair-after-conflict"),
+            ("3", "測驗後承接", "如果剛認領守護者，先選對應補給路線，不一次買齊或修完整段關係。", "選補給路線", "resources"),
+        ],
+    },
+    "en": {
+        "eyebrow": "NIGHT SUPPLY PROTOCOL",
+        "title": "Three moments, one low Luna light",
+        "intro": "Luna is not for listening relationship problems away. It helps you choose one doable next step when feelings are loud.",
+        "steps": [
+            ("1", "Before sleep", "Listen briefly, then write the sharpest sentence of the day as a feeling before sending nothing yet.", "Use repair plan", "repair-plan"),
+            ("2", "After conflict", "Slow the body down, then translate one complaint into a small request someone can receive.", "Read repair guide", "guides/repair-after-conflict"),
+            ("3", "After the quiz", "If you just recognized a guardian, choose the matching supply route instead of trying to fix everything.", "Choose supply route", "resources"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "NIGHT SUPPLY PROTOCOL",
+        "title": "三つの場面に、Luna の低い灯りを一つ",
+        "intro": "Luna は関係の問題を音楽で消すためではありません。感情が大きい時に、できる次の一歩を選ぶための灯りです。",
+        "steps": [
+            ("1", "眠る前の整理", "短く聴いてから、今日いちばん刺さった言葉を送らずに感情として書きます。", "修復プランへ", "repair-plan"),
+            ("2", "衝突後の静けさ", "身体をゆっくりさせ、文句を相手が受け取れる小さなお願いへ翻訳します。", "修復ガイドを読む", "guides/repair-after-conflict"),
+            ("3", "診断後の受け止め", "守護者を認領したら、すべてを直そうとせず対応する補給ルートを一つ選びます。", "補給ルートを選ぶ", "resources"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "NIGHT SUPPLY PROTOCOL",
+        "title": "세 순간에 Luna의 낮은 등불 하나",
+        "intro": "Luna는 관계 문제를 음악으로 없애는 도구가 아닙니다. 감정이 클 때 가능한 다음 한 걸음을 고르게 돕습니다.",
+        "steps": [
+            ("1", "잠들기 전 정리", "짧게 들은 뒤 오늘 가장 아팠던 문장을 보내지 말고 감정으로 적습니다.", "회복 계획 쓰기", "repair-plan"),
+            ("2", "다툼 뒤 낮추기", "몸을 늦춘 다음 불평 하나를 받을 수 있는 작은 요청으로 바꿉니다.", "회복 가이드 읽기", "guides/repair-after-conflict"),
+            ("3", "테스트 뒤 연결", "수호자를 확인했다면 모든 것을 고치려 하지 말고 맞는 보급 루트를 하나 고릅니다.", "보급 루트 선택", "resources"),
+        ],
+    },
+    "es": {
+        "eyebrow": "NIGHT SUPPLY PROTOCOL",
+        "title": "Tres momentos, una luz baja de Luna",
+        "intro": "Luna no sirve para borrar problemas de relación con música. Ayuda a elegir un siguiente paso posible cuando las emociones están altas.",
+        "steps": [
+            ("1", "Antes de dormir", "Escucha un momento y escribe la frase más punzante del día como emoción, sin enviarla todavía.", "Usar plan", "repair-plan"),
+            ("2", "Después del conflicto", "Baja el ritmo del cuerpo y traduce una queja en una petición pequeña y recibible.", "Leer reparación", "guides/repair-after-conflict"),
+            ("3", "Después del test", "Si acabas de reconocer una guardiana, elige su ruta de suministro sin intentar arreglar todo.", "Elegir ruta", "resources"),
+        ],
+    },
 }
 
 
@@ -3440,6 +3494,30 @@ def luna_resume_script(lang: str) -> str:
 """
 
 
+def luna_night_protocol(lang: str) -> str:
+    protocol = LUNA_NIGHT_PROTOCOL[lang]
+    cards = []
+    for number, title, desc, action, target in protocol["steps"]:
+        cards.append(f"""
+<article>
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{lang_url(lang, target)}">{escape(action)}</a>
+</article>
+""")
+    return f"""
+<section class="section luna-night-protocol">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(protocol["eyebrow"])}</p><h2>{escape(protocol["title"])}</h2></div>
+    <a href="{lang_url(lang)}#quiz-section">{escape(LANGS[lang]["start"])}</a>
+  </div>
+  <p class="section-intro">{escape(protocol["intro"])}</p>
+  <div class="luna-protocol-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
@@ -3482,6 +3560,7 @@ def luna_page(lang: str) -> None:
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>
 <section class="section luna-result-resume" data-luna-saved hidden></section>
+{luna_night_protocol(lang)}
 <section class="section luna-strip">
   <div><p class="eyebrow">CALM PATHS</p><h2>{escape(t["luna_desc"])}</h2></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>

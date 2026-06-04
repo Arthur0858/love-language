@@ -580,6 +580,61 @@ button.secondary-btn {
   color: var(--muted);
 }
 
+.luna-night-protocol {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(118, 102, 168, .12), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #f8f4ff);
+}
+
+.luna-protocol-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.luna-protocol-grid article {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(214, 198, 236, .94);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 12px 32px rgba(46, 27, 82, .07);
+}
+
+.luna-protocol-grid span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #7666a8;
+  color: #fff;
+  font-weight: 900;
+}
+
+.luna-protocol-grid h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  line-height: 1.18;
+}
+
+.luna-protocol-grid p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.luna-protocol-grid a {
+  align-self: end;
+  color: #5f4e91;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .affiliate-disclosure {
   display: inline-block;
   margin-top: 18px;
@@ -2124,6 +2179,7 @@ button.secondary-btn {
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
   .luna-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
@@ -2327,6 +2383,7 @@ button.secondary-btn {
   .supply-panel-grid,
   .guardian-route-grid,
   .guide-compass-grid,
+  .luna-protocol-grid,
   .luna-use-grid,
   .collector-grid,
   .repair-day-grid,
@@ -2594,6 +2651,41 @@ button.secondary-btn {
   .luna-resume-card img {
     width: min(72vw, 220px);
     justify-self: center;
+  }
+
+  .luna-night-protocol .section-intro {
+    display: none;
+  }
+
+  .luna-protocol-grid {
+    gap: 10px;
+  }
+
+  .luna-protocol-grid article {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 6px 12px;
+    padding: 14px;
+  }
+
+  .luna-protocol-grid span {
+    grid-row: 1 / 4;
+  }
+
+  .luna-protocol-grid h3 {
+    font-size: 1rem;
+  }
+
+  .luna-protocol-grid p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: .9rem;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .luna-protocol-grid a {
+    font-size: .88rem;
   }
 
   .luna-resume-actions .primary-btn,

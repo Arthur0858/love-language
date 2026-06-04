@@ -156,6 +156,8 @@ function summarizeLanguageMenuFailures(results) {
     const failures = [];
     if (!result.status || result.status >= 400) failures.push('bad status');
     if (!result.menuOpened) failures.push('language menu did not open');
+    if (!result.outsideCloseOk) failures.push('language menu did not close on outside click');
+    if (!result.escapeCloseOk) failures.push('language menu did not close on Escape');
     if (result.linkCount !== 5) failures.push(`expected 5 language links, got ${result.linkCount}`);
     if (!result.activeLangOk) failures.push('active language was not marked');
     if (result.finalUrl !== result.expectedFinalPath) {
@@ -464,6 +466,12 @@ for (const item of languageMenuCases) {
   const menu = page.locator('.language-menu').first();
   await menu.locator('summary').click();
   const menuOpened = await menu.evaluate((node) => node.hasAttribute('open')).catch(() => false);
+  await page.locator('main').click({ position: { x: 8, y: 8 } });
+  const outsideCloseOk = await menu.evaluate((node) => !node.hasAttribute('open')).catch(() => false);
+  await menu.locator('summary').click();
+  await page.keyboard.press('Escape');
+  const escapeCloseOk = await menu.evaluate((node) => !node.hasAttribute('open')).catch(() => false);
+  await menu.locator('summary').click();
   const linkCount = await menu.locator('.language-switcher a').count();
   const activeLangOk = await menu
     .locator(`.language-switcher a[lang="${item.currentLang}"][aria-current="page"]`)
@@ -486,6 +494,8 @@ for (const item of languageMenuCases) {
     title: await page.title(),
     h1: await page.locator('h1').first().innerText().catch(() => ''),
     menuOpened,
+    outsideCloseOk,
+    escapeCloseOk,
     linkCount,
     activeLangOk,
     horizontalOverflow,

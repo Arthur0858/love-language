@@ -26,13 +26,6 @@
       }
     }
 
-    var langToggle = closest(event.target, '[data-lang-toggle]');
-    if (langToggle) {
-      var langMenu = langToggle.closest('.lang-menu') || document.getElementById('lang-menu');
-      if (langMenu) langMenu.classList.toggle('open');
-      return;
-    }
-
     var startQuizButton = closest(event.target, '[data-start-quiz]');
     if (startQuizButton && typeof window.startQuiz === 'function') {
       window.startQuiz();
@@ -75,8 +68,18 @@
   });
 
   document.addEventListener('click', function (event) {
-    document.querySelectorAll('.lang-menu.open').forEach(function (menu) {
-      if (!menu.contains(event.target)) menu.classList.remove('open');
+    document.querySelectorAll('.language-menu[open]').forEach(function (menu) {
+      if (!menu.contains(event.target)) menu.removeAttribute('open');
+    });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape') return;
+
+    document.querySelectorAll('.language-menu[open]').forEach(function (menu) {
+      menu.removeAttribute('open');
+      var summary = menu.querySelector('summary');
+      if (summary && menu.contains(document.activeElement)) summary.focus();
     });
   });
 })();

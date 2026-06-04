@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-luna-night-protocol"
+ASSET_VERSION = "20260604-keepsakes-hall"
 
 
 FONT_CSS = ""
@@ -210,6 +210,7 @@ RESOURCE_CARDS = {
     "zh": [
         ("guides", "守護者深度指南", "把測驗結果、錯頻、界線與修復練習整理成可直接閱讀的路線。"),
         ("repair-plan", "7 日心語修復計畫", "把守護者結果帶進一週練習：整理傷口、開口請求、選擇補給與回顧修復。"),
+        ("keepsakes", "守護者收藏室", "保存五位守護者故事卡，作為分享、日記與未來收藏型補給的入口。"),
         ("characters/iris", "五位情感守護者", "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉開始，找到你最容易接收愛的入口。"),
         ("luna-yoga-music", "Luna Yoga Music", "夜晚、書寫、伸展與關係反思時可使用的安定音樂補給。"),
         ("theory", "愛之語理論", "回到五種愛之語的基礎，理解為什麼有愛仍可能錯頻。"),
@@ -218,6 +219,7 @@ RESOURCE_CARDS = {
     "en": [
         ("guides", "Guardian guides", "Read paths for results, misfrequency, boundaries, and repair practices."),
         ("repair-plan", "7-Day Heart-Language Repair Plan", "Carry your guardian result through one week of reflection, requests, supplies, and repair review."),
+        ("keepsakes", "Guardian Keepsake Hall", "Save the five guardian story cards for sharing, journaling, and future collectible supplies."),
         ("characters/iris", "Five emotion guardians", "Begin with Iris, Noah, Vivian, Claire, and Dora to find your doorway to receiving love."),
         ("luna-yoga-music", "Luna Yoga Music", "Calm audio supplies for night reflection, journaling, stretching, and relationship review."),
         ("theory", "Love-language theory", "Return to the five love languages and why love can still arrive out of frequency."),
@@ -226,6 +228,7 @@ RESOURCE_CARDS = {
     "ja": [
         ("guides", "守護者ガイド", "診断結果、すれ違い、境界線、修復練習を読むための入口です。"),
         ("repair-plan", "7日間の心語修復プラン", "守護者の結果を一週間の内省、お願い、補給、修復レビューへつなげます。"),
+        ("keepsakes", "守護者コレクション室", "五人の守護者ストーリーカードを保存し、共有、日記、今後のコレクション補給の入口にします。"),
         ("characters/iris", "五人の感情の守護者", "アイリス、ノア、ヴィヴィアン、クレア、ドラから、愛を受け取る入口を探します。"),
         ("luna-yoga-music", "Luna Yoga Music", "夜の内省、日記、ストレッチ、関係のふり返りに寄り添う静かな音楽。"),
         ("theory", "愛の言語の理論", "五つの愛の言語と、愛があってもすれ違う理由に戻ります。"),
@@ -234,6 +237,7 @@ RESOURCE_CARDS = {
     "ko": [
         ("guides", "수호자 가이드", "결과, 어긋남, 경계, 회복 연습을 읽기 쉽게 모은 입구입니다."),
         ("repair-plan", "7일 마음 언어 회복 계획", "수호자 결과를 일주일의 성찰, 요청, 보급, 회복 점검으로 이어 갑니다."),
+        ("keepsakes", "수호자 소장실", "다섯 수호자 스토리 카드를 저장해 공유, 관계 일기, 향후 소장형 보급의 입구로 사용합니다."),
         ("characters/iris", "다섯 감정 수호자", "아이리스, 노아, 비비안, 클레어, 도라에서 사랑을 받는 입구를 찾습니다."),
         ("luna-yoga-music", "Luna Yoga Music", "밤의 성찰, 기록, 스트레칭, 관계 돌아보기에 어울리는 차분한 음악입니다."),
         ("theory", "사랑의 언어 이론", "다섯 가지 사랑의 언어와 사랑이 있어도 어긋나는 이유로 돌아갑니다."),
@@ -242,6 +246,7 @@ RESOURCE_CARDS = {
     "es": [
         ("guides", "Guías de guardianas", "Entradas para resultados, desajustes, límites y prácticas de reparación."),
         ("repair-plan", "Plan de reparación de 7 días", "Lleva tu resultado por una semana de reflexión, petición, recursos y revisión de reparación."),
+        ("keepsakes", "Sala de recuerdos", "Guarda las cinco tarjetas de guardianas para compartir, escribir y preparar futuros recursos coleccionables."),
         ("characters/iris", "Cinco guardianas emocionales", "Empieza con Iris, Noah, Vivian, Claire y Dora para encontrar tu entrada al amor."),
         ("luna-yoga-music", "Luna Yoga Music", "Audio tranquilo para reflexión nocturna, escritura, estiramiento y revisión relacional."),
         ("theory", "Teoría de lenguajes del amor", "Vuelve a los cinco lenguajes del amor y a por qué el amor puede llegar desajustado."),
@@ -1418,6 +1423,90 @@ COLLECTOR_LABELS = {
 }
 
 
+KEEPSAKES_PAGE = {
+    "zh": {
+        "title": "守護者收藏室",
+        "desc": "集中保存 LoveTypes 五位守護者故事卡，讓測驗結果成為可以分享、回看與延伸補給的收藏入口。",
+        "eyebrow": "GUARDIAN KEEPSAKE HALL",
+        "intro": "每張卡都是一個心語入口：適合發限動、傳給伴侶、放進關係日記，或作為未來守護者補給與低價收藏商品的基礎。",
+        "how_title": "怎麼使用收藏卡",
+        "steps": [
+            ("保存", "先保存最像你的守護者卡，讓測驗結果不只是一次性的答案。"),
+            ("分享", "分享時補上一句具體請求：我想被理解的是哪一種愛的入口。"),
+            ("回訪", "一週後回來看同一張卡，檢查你是否真的完成一個小修復任務。"),
+        ],
+        "safety_title": "收藏不是要求",
+        "safety_text": "收藏卡是提醒與對話入口，不是要求伴侶立刻照做的憑證。若你正處在不安全、被控制或被逼迫的關係裡，請先尋求可信任的人與專業支援。",
+        "quiz": "重新測驗",
+        "resources": "回到補給站",
+    },
+    "en": {
+        "title": "Guardian Keepsake Hall",
+        "desc": "Save the five LoveTypes guardian story cards so your quiz result becomes something shareable, revisitable, and ready for future supply assets.",
+        "eyebrow": "GUARDIAN KEEPSAKE HALL",
+        "intro": "Each card is a heart-language doorway: use it in Stories, send it to a partner, place it in a relationship journal, or keep it as the base for future collectible supplies.",
+        "how_title": "How to use the cards",
+        "steps": [
+            ("Save", "Keep the guardian card that feels most like you so the result is not a one-time answer."),
+            ("Share", "Add one concrete request when you share: what doorway to feeling loved do you want understood?"),
+            ("Return", "Come back after a week and check whether you completed one small repair task."),
+        ],
+        "safety_title": "A keepsake is not a demand",
+        "safety_text": "The card is a reminder and conversation doorway, not proof that a partner must immediately comply. If the relationship is unsafe, controlling, or coercive, seek trusted and professional support first.",
+        "quiz": "Retake quiz",
+        "resources": "Return to supplies",
+    },
+    "ja": {
+        "title": "守護者コレクション室",
+        "desc": "LoveTypes の五人の守護者ストーリーカードを保存し、診断結果を共有、再訪、今後の補給資産へつなげる入口にします。",
+        "eyebrow": "GUARDIAN KEEPSAKE HALL",
+        "intro": "それぞれのカードは心語の入口です。ストーリー、パートナーへの共有、関係日記、今後のコレクション補給の土台として使えます。",
+        "how_title": "カードの使い方",
+        "steps": [
+            ("保存", "一番自分に近い守護者カードを保存し、結果を一回きりの答えで終わらせません。"),
+            ("共有", "共有するときは、理解してほしい愛の入口を一つ具体的なお願いにします。"),
+            ("再訪", "一週間後に同じカードへ戻り、小さな修復課題を一つ実行できたか確認します。"),
+        ],
+        "safety_title": "コレクションは要求ではありません",
+        "safety_text": "カードは思い出すための入口であり、相手にすぐ従わせる証明ではありません。不安全、支配、強制がある場合は、まず信頼できる人や専門機関に相談してください。",
+        "quiz": "もう一度診断",
+        "resources": "補給へ戻る",
+    },
+    "ko": {
+        "title": "수호자 소장실",
+        "desc": "LoveTypes 다섯 수호자 스토리 카드를 저장해 테스트 결과를 공유, 재방문, 향후 보급 자산으로 이어지는 입구로 만듭니다.",
+        "eyebrow": "GUARDIAN KEEPSAKE HALL",
+        "intro": "각 카드는 마음 언어의 입구입니다. 스토리, 파트너에게 보내기, 관계 일기, 향후 소장형 보급의 기반으로 사용할 수 있습니다.",
+        "how_title": "카드 사용법",
+        "steps": [
+            ("저장", "가장 나다운 수호자 카드를 저장해 결과가 한 번의 답으로 끝나지 않게 합니다."),
+            ("공유", "공유할 때 이해받고 싶은 사랑의 입구를 한 가지 구체적인 요청으로 덧붙입니다."),
+            ("다시 보기", "일주일 뒤 같은 카드로 돌아와 작은 회복 과제를 하나 했는지 확인합니다."),
+        ],
+        "safety_title": "소장은 요구가 아닙니다",
+        "safety_text": "카드는 기억과 대화의 입구이지, 파트너가 즉시 따라야 한다는 증거가 아닙니다. 안전하지 않거나 통제, 강요가 있다면 먼저 믿을 수 있는 사람과 전문 지원을 찾으세요.",
+        "quiz": "다시 테스트",
+        "resources": "보급으로 돌아가기",
+    },
+    "es": {
+        "title": "Sala de recuerdos de guardianas",
+        "desc": "Guarda las cinco tarjetas de guardianas LoveTypes para convertir tu resultado en algo compartible, revisitable y listo para futuros recursos coleccionables.",
+        "eyebrow": "GUARDIAN KEEPSAKE HALL",
+        "intro": "Cada tarjeta es una puerta de lenguaje del corazón: úsala en historias, envíala a una pareja, ponla en tu diario relacional o guárdala como base para futuros recursos coleccionables.",
+        "how_title": "Cómo usar las tarjetas",
+        "steps": [
+            ("Guardar", "Conserva la tarjeta que más se parece a ti para que el resultado no sea una respuesta de una sola vez."),
+            ("Compartir", "Añade una petición concreta al compartir: qué entrada al amor quieres que se entienda?"),
+            ("Volver", "Regresa después de una semana y revisa si completaste una pequeña tarea de reparación."),
+        ],
+        "safety_title": "Un recuerdo no es una exigencia",
+        "safety_text": "La tarjeta es recordatorio y puerta de conversación, no prueba de que una pareja deba obedecer de inmediato. Si hay inseguridad, control o coerción, busca primero apoyo confiable y profesional.",
+        "quiz": "Repetir test",
+        "resources": "Volver a recursos",
+    },
+}
+
+
 REPAIR_PLAN = {
     "zh": {
         "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
@@ -2293,6 +2382,41 @@ def collector_section(lang: str, current_slug: str = "") -> str:
   <div class="collector-grid">{cards}</div>
 </section>
 """
+
+
+def keepsakes_page(lang: str) -> None:
+    labels = KEEPSAKES_PAGE[lang]
+    t = LANGS[lang]
+    steps = "".join(f"""
+<article>
+  <span>{idx}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+""" for idx, (title, desc) in enumerate(labels["steps"], start=1))
+    body = f"""
+<section class="page-hero compact keepsake-hero">
+  <p class="eyebrow">{escape(labels["eyebrow"])}</p>
+  <h1>{escape(labels["title"])}</h1>
+  <p>{escape(labels["intro"])}</p>
+  <div class="hero-actions">
+    <a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(labels["quiz"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(labels["resources"])}</a>
+  </div>
+</section>
+{collector_section(lang)}
+<section class="section keepsake-use-section">
+  <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>
+  <div class="keepsake-use-grid">{steps}</div>
+</section>
+<section class="section intro-grid keepsake-safety">
+  <div><h2>{escape(labels["safety_title"])}</h2><p>{escape(labels["safety_text"])}</p></div>
+  <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
+</section>
+"""
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(labels["title"])}","description":"{escape(labels["desc"])}","url":"{abs_url(lang, "keepsakes")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    page_title = f"{labels['title']} | LoveTypes" if lang == "zh" else f"{labels['title']} | LoveTypes {t['name']}"
+    write(page_path(lang, "keepsakes"), layout(lang, page_title, labels["desc"], "keepsakes", body, t["resources"], "website", "/og-cover.jpg", schema))
 
 
 def guide_index_compass(lang: str) -> str:
@@ -3685,7 +3809,7 @@ def write_css() -> None:
 def write_support_files() -> None:
     urls = []
     for lang in LANGS:
-        paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+        paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
         paths += [f"guides/{g['slug']}" for g in GUIDES]
         paths += [f"characters/{slug}" for slug in GUARDIANS]
         for path in paths:
@@ -3711,6 +3835,7 @@ def main() -> None:
             character_page(lang, slug, data)
         resources_page(lang)
         repair_plan_page(lang)
+        keepsakes_page(lang)
         luna_page(lang)
         for slug in ["theory", "about", "contact", "privacy", "terms"]:
             simple_page(lang, slug)

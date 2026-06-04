@@ -1051,6 +1051,13 @@ button.secondary-btn {
     linear-gradient(180deg, #fff, #fffaf6);
 }
 
+.keepsake-hero {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(122, 159, 151, .14), transparent 30%),
+    radial-gradient(circle at 84% 18%, rgba(183, 139, 69, .12), transparent 28%),
+    linear-gradient(135deg, #fffaf6, #f3faf7);
+}
+
 .collector-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1150,6 +1157,49 @@ button.secondary-btn {
 .quiz-collector-card h3 {
   color: #fff;
   font-size: 1.45rem;
+}
+
+.keepsake-use-section {
+  background:
+    linear-gradient(180deg, #fff, #f7fbf8);
+}
+
+.keepsake-use-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.keepsake-use-grid article {
+  min-height: 100%;
+  padding: 22px;
+  border: 1px solid rgba(207, 224, 216, .9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 10px 28px rgba(60, 80, 70, .06);
+}
+
+.keepsake-use-grid span {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 14px;
+  place-items: center;
+  border-radius: 999px;
+  background: #eef7f2;
+  color: var(--sage);
+  font-weight: 900;
+}
+
+.keepsake-use-grid h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 1.28rem;
+}
+
+.keepsake-use-grid p,
+.keepsake-safety p {
+  color: var(--muted);
 }
 
 .repair-plan-hero {
@@ -2181,6 +2231,7 @@ button.secondary-btn {
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
   .luna-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
   .collector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2385,6 +2436,7 @@ button.secondary-btn {
   .guide-compass-grid,
   .luna-protocol-grid,
   .luna-use-grid,
+  .keepsake-use-grid,
   .collector-grid,
   .repair-day-grid,
   .repair-guardian-grid,
@@ -2709,6 +2761,68 @@ button.secondary-btn {
 
   .affiliate-book-grid {
     grid-template-columns: 1fr;
+  }
+
+  .collector-card {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .collector-card img,
+  .collector-card.compact img {
+    height: 100%;
+    min-height: 164px;
+    aspect-ratio: auto;
+    object-position: center top;
+  }
+
+  .collector-card > div {
+    padding: 14px;
+  }
+
+  .collector-card p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .9rem;
+    line-height: 1.45;
+  }
+
+  .collector-actions {
+    gap: 8px;
+  }
+
+  .collector-actions .primary-btn,
+  .collector-actions .secondary-btn {
+    flex-basis: 100%;
+    padding: 10px 12px;
+    font-size: .82rem;
+  }
+
+  .keepsake-use-grid article {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 8px 12px;
+    padding: 14px;
+  }
+
+  .keepsake-use-grid span {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0;
+  }
+
+  .keepsake-use-grid h3 {
+    align-self: center;
+    font-size: 1.04rem;
+  }
+
+  .keepsake-use-grid p {
+    grid-column: 2;
+    font-size: .9rem;
+    line-height: 1.5;
   }
 }
 

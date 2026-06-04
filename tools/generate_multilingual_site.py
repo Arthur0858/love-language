@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-guardian-entry"
+ASSET_VERSION = "20260605-keepsake-routes"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1872,6 +1872,7 @@ COLLECTOR_LABELS = {
         "story_cta": "lovetypes.tw/keepsakes",
         "story_error": "生成失敗",
         "route": "回到補給路線",
+        "plan": "填入修復計畫",
         "share_hint": "適合發限動、傳給伴侶，或放進關係日記作為今天的心語入口。",
     },
     "en": {
@@ -1887,6 +1888,7 @@ COLLECTOR_LABELS = {
         "story_cta": "lovetypes.tw/keepsakes",
         "story_error": "Image failed",
         "route": "Return to supply route",
+        "plan": "Fill repair plan",
         "share_hint": "Use it in Stories, send it to a partner, or place it in a relationship journal as today's heart-language doorway.",
     },
     "ja": {
@@ -1902,6 +1904,7 @@ COLLECTOR_LABELS = {
         "story_cta": "lovetypes.tw/keepsakes",
         "story_error": "生成できません",
         "route": "補給ルートへ戻る",
+        "plan": "修復プランへ",
         "share_hint": "ストーリー、パートナーへの共有、関係日記の今日の入口として使えます。",
     },
     "ko": {
@@ -1917,6 +1920,7 @@ COLLECTOR_LABELS = {
         "story_cta": "lovetypes.tw/keepsakes",
         "story_error": "생성 실패",
         "route": "보급 루트로 돌아가기",
+        "plan": "회복 계획 쓰기",
         "share_hint": "스토리, 파트너에게 보내기, 관계 일기의 오늘 마음 언어 입구로 사용할 수 있습니다.",
     },
     "es": {
@@ -1932,6 +1936,7 @@ COLLECTOR_LABELS = {
         "story_cta": "lovetypes.tw/keepsakes",
         "story_error": "No se pudo crear",
         "route": "Volver a la ruta",
+        "plan": "Usar plan",
         "share_hint": "Úsala en historias, envíala a una pareja o ponla en tu diario relacional como puerta de lenguaje del corazón.",
     },
 }
@@ -3344,6 +3349,8 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     class_name = "collector-card compact" if compact else "collector-card"
     image = guardian_story_image(lang, slug)
     image_label = f"{labels['open']}：{name} {labels['card']}"
+    route_href = f"{lang_url(lang, 'resources')}#supply-{slug}"
+    plan_href = f"{lang_url(lang, 'repair-plan')}#plan-{slug}"
     data_attrs = (
         f'data-story-name="{escape(name)}" '
         f'data-story-title="{escape(typ)}" '
@@ -3355,7 +3362,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
         f'data-story-error="{escape(labels["story_error"])}"'
     )
     return f"""
-<article class="{class_name}">
+<article class="{class_name}" id="keepsake-card-{slug}">
   <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer" aria-label="{escape(image_label)}">
     {img_tag(image, f"{name} {labels['card']}")}
   </a>
@@ -3364,7 +3371,9 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     <h3>{escape(name)}</h3>
     <p>{escape(route["desc"])}</p>
     <div class="collector-actions">
-      <a class="primary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
+      <a class="primary-btn" href="{route_href}">{escape(labels["route"])}</a>
+      <a class="secondary-btn" href="{plan_href}">{escape(labels["plan"])}</a>
+      <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
       <button class="secondary-btn" type="button" data-result-action="story" {data_attrs}>{escape(labels["story"])}</button>
     </div>

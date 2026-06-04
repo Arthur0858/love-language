@@ -467,9 +467,14 @@ button:focus-visible {
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
 }
 
-button.primary-btn,
-button.secondary-btn {
+button.primary-btn {
   border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.secondary-btn {
+  border: 1px solid rgba(189, 82, 96, .62);
   font: inherit;
   cursor: pointer;
 }
@@ -1721,6 +1726,10 @@ button.secondary-btn {
 .quiz-collector-actions .secondary-btn {
   flex: 1 1 130px;
   min-width: 0;
+}
+
+.collector-actions .primary-btn {
+  flex-basis: 100%;
 }
 
 .quiz-collector-card {

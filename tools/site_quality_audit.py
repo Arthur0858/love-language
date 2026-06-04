@@ -29,6 +29,7 @@ FORBIDDEN_CONTACT_SNIPPETS = {
     "s755102@gmail.com",
 }
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
+GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 AFFILIATE_HOST = "www.books.com.tw"
 AFFILIATE_PATH_PREFIX = "/exep/assp.php/arthur0858/products/"
 AFFILIATE_REQUIRED_QUERY = {
@@ -440,6 +441,14 @@ def is_characters_index_page(page: Path) -> bool:
     if parts and parts[0] in {"en", "ja", "ko", "es"}:
         parts.pop(0)
     return parts == ["characters", "index.html"]
+
+
+def is_keepsakes_page(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts == ["keepsakes", "index.html"]
 
 
 def lang_url_for_page(page: Path, target: str = "") -> str:
@@ -1418,6 +1427,24 @@ def main() -> int:
             missing_character_hrefs = sorted(required_character_hrefs.difference(character_hrefs))
             if missing_character_hrefs:
                 issues.append(f"{page}: characters guardian entry missing hrefs {', '.join(missing_character_hrefs)}")
+        if is_keepsakes_page(page):
+            stats["keepsake_route_action_pages"] += 1
+            keepsake_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            for slug in GUARDIAN_SLUGS:
+                card_id = f"keepsake-card-{slug}"
+                if card_id not in parser.ids:
+                    issues.append(f"{page}: keepsakes page missing #{card_id}")
+            required_keepsake_hrefs = {
+                target
+                for slug in GUARDIAN_SLUGS
+                for target in (
+                    f"{lang_url_for_page(page, 'resources')}#supply-{slug}",
+                    f"{lang_url_for_page(page, 'repair-plan')}#plan-{slug}",
+                )
+            }
+            missing_keepsake_hrefs = sorted(required_keepsake_hrefs.difference(keepsake_hrefs))
+            if missing_keepsake_hrefs:
+                issues.append(f"{page}: keepsake cards missing continuation hrefs {', '.join(missing_keepsake_hrefs)}")
 
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
@@ -1917,6 +1944,7 @@ def main() -> int:
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
+    print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

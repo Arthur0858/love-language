@@ -58,6 +58,7 @@ EXPECTED_TEXT = {
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
     "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
+    "/keepsakes/": "守護者收藏室",
     "/contact/": "contact@lovetypes.tw",
     "/en/": "LoveTypes Emotion Guardians",
     "/en/resources/": "Resources",
@@ -67,6 +68,7 @@ EXPECTED_TEXT = {
     "/es/": "LoveTypes Guardianas Emocionales",
     "/es/resources/": "Recursos",
     "/en/characters/": "Five Emotion Guardians Overview",
+    "/en/keepsakes/": "Guardian Keepsake Hall",
     "/ja/resources/": "リソース",
     "/ko/repair-plan/": "7일 마음 언어 회복 계획",
     "/es/guides/": "Guías de Guardianas LoveTypes",
@@ -74,12 +76,24 @@ EXPECTED_TEXT = {
 EXPECTED_ANCHOR_TARGETS = {
     "/characters/": ("guardian-start", "guardian-map"),
     "/en/characters/": ("guardian-start", "guardian-map"),
+    "/keepsakes/": tuple(f"keepsake-card-{slug}" for slug in GUARDIAN_SLUGS),
+    "/en/keepsakes/": tuple(f"keepsake-card-{slug}" for slug in GUARDIAN_SLUGS),
     "/resources/": ("supply-start", "supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
 }
 EXPECTED_HREF_TARGETS = {
     "/characters/": ("/#quiz-section", "#guardian-map", "/resources/"),
     "/en/characters/": ("/en/#quiz-section", "#guardian-map", "/en/resources/"),
+    "/keepsakes/": tuple(
+        target
+        for slug in GUARDIAN_SLUGS
+        for target in (f"/resources/#supply-{slug}", f"/repair-plan/#plan-{slug}")
+    ),
+    "/en/keepsakes/": tuple(
+        target
+        for slug in GUARDIAN_SLUGS
+        for target in (f"/en/resources/#supply-{slug}", f"/en/repair-plan/#plan-{slug}")
+    ),
     "/resources/": ("/#quiz-section", "#supply-routes", "/luna-yoga-music/", *(f"#supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"/resources/#supply-{slug}" for slug in GUARDIAN_SLUGS),
     "/luna-yoga-music/": tuple(

@@ -4522,7 +4522,7 @@ def repair_plan_page(lang: str) -> None:
     worksheet_fields = "".join(f"""
 <label>
   <span>{escape(label)}</span>
-  <textarea data-field="{idx}" placeholder="{escape(placeholder)}"></textarea>
+  <textarea data-field="{idx}" aria-label="{escape(label)}" autocomplete="off" placeholder="{escape(placeholder)}"></textarea>
 </label>
 """ for idx, (label, placeholder) in enumerate(plan["fields"]))
     guardian_rows = []

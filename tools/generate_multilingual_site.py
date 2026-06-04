@@ -3132,7 +3132,7 @@ def keepsake_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" style="--result-accent:${{result.color}}">
+    <article class="keepsake-resume-card" id="keepsake-${{result.slug}}" style="--result-accent:${{result.color}}">
       <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="eager" decoding="async">
       </a>
@@ -3153,6 +3153,12 @@ def keepsake_resume_script(lang: str) -> str:
     </article>`;
   box.hidden = false;
   box.querySelector('[data-clear-keepsake-result]').addEventListener('click', clearSavedResult);
+  if (location.hash === `#keepsake-${{result.slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
 }})();
 </script>
 """
@@ -3511,7 +3517,7 @@ def quiz_payload(lang: str) -> str:
             "collectorOpen": COLLECTOR_LABELS[lang]["open"],
             "collectorSave": COLLECTOR_LABELS[lang]["download"],
             "collectorHall": COLLECTOR_LABELS[lang]["hall"],
-            "collectorHallUrl": lang_url(lang, "keepsakes"),
+            "collectorHallUrl": lang_url(lang, "keepsakes") + f"#keepsake-{meta['slug']}",
             "collectorStory": COLLECTOR_LABELS[lang]["story"],
             "collectorStoryKicker": COLLECTOR_LABELS[lang]["story_kicker"],
             "collectorStoryCta": COLLECTOR_LABELS[lang]["story_cta"],
@@ -3794,7 +3800,7 @@ def quiz_script(lang: str) -> str:
             <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
             <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
-            <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-keepsake>${{result.collectorHall}}</a>
           </div>
         </div>
       </section>

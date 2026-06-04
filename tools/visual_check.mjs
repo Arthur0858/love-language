@@ -55,6 +55,7 @@ function summarizeQuizFailures(results) {
     if (!result.planHref?.includes('/repair-plan/#plan-')) failures.push('missing repair plan route');
     if (!result.lunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('missing personalized Luna route');
     if (!result.guideHref?.includes('/guides/') || !result.guideHref?.includes('#guide-')) failures.push('missing personalized guide route');
+    if (!result.keepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('missing personalized keepsake route');
     if (!result.bookHref?.startsWith('https://')) failures.push('missing affiliate book route');
     if (!result.bookRel?.includes('sponsored')) failures.push('missing sponsored rel');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
@@ -72,14 +73,17 @@ function summarizeConversionFailures(results) {
     if (result.name.includes('repair') && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
     if (result.name.includes('luna') && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
     if (result.name.includes('guide') && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
+    if (result.name.includes('keepsake') && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
     if (result.name.includes('supply') && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
     if (result.name.includes('repair') && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (result.name.includes('luna') && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
     if (result.name.includes('guide') && !result.guideResumeVisible) failures.push('missing personalized guide resume');
+    if (result.name.includes('keepsake') && !result.keepsakeResumeVisible) failures.push('missing personalized keepsake resume');
     if (result.name.includes('repair') && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
     if (result.name.includes('repair') && !result.repairFilled) failures.push('repair worksheet was not filled from result');
     if (result.name.includes('luna') && !result.lunaPrimaryHref?.includes('/repair-plan/#plan-')) failures.push('Luna primary action does not continue repair plan');
     if (result.name.includes('guide') && !result.guidePlanHref?.includes('/repair-plan/#plan-')) failures.push('guide resume does not continue repair plan');
+    if (result.name.includes('keepsake') && !result.keepsakePrimaryHref?.includes('/assets/lovetypes/share/')) failures.push('keepsake primary action does not open story card');
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -158,6 +162,7 @@ const conversionCases = [
   { name: 'conversion-repair-mobile', target: 'plan', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-luna-mobile', target: 'luna', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-guide-mobile', target: 'guide', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -240,6 +245,7 @@ for (const item of quizCases) {
   const planHref = await page.locator('[data-conversion-plan]').first().getAttribute('href');
   const lunaHref = await page.locator('[data-conversion-luna]').first().getAttribute('href');
   const guideHref = await page.locator('[data-conversion-guide]').first().getAttribute('href');
+  const keepsakeHref = await page.locator('[data-conversion-keepsake]').first().getAttribute('href');
   const book = page.locator('[data-conversion-book]').first();
   const bookHref = await book.getAttribute('href');
   const bookRel = await book.getAttribute('rel');
@@ -264,6 +270,7 @@ for (const item of quizCases) {
     planHref,
     lunaHref,
     guideHref,
+    keepsakeHref,
     bookHref,
     bookRel,
     screenshot,
@@ -301,6 +308,8 @@ for (const item of conversionCases) {
     await page.locator('[data-conversion-luna]').click();
   } else if (item.target === 'guide') {
     await page.locator('[data-conversion-guide]').click();
+  } else if (item.target === 'keepsake') {
+    await page.locator('[data-conversion-keepsake]').click();
   } else {
     await page.locator('[data-conversion-route]').click();
   }
@@ -311,6 +320,8 @@ for (const item of conversionCases) {
       ? '[data-luna-saved]:not([hidden])'
       : item.target === 'guide'
         ? '[data-guide-saved]:not([hidden])'
+        : item.target === 'keepsake'
+          ? '[data-keepsake-saved]:not([hidden])'
       : '[data-supply-saved]:not([hidden])';
   await page.locator(resumeSelector).waitFor({ state: 'visible' });
   await page.waitForFunction(() => window.scrollY < 1200);
@@ -319,6 +330,7 @@ for (const item of conversionCases) {
   let repairFilled = false;
   let lunaPrimaryHref = '';
   let guidePlanHref = '';
+  let keepsakePrimaryHref = '';
   if (item.target === 'plan') {
     repairFillPrimary = await page.locator('[data-repair-saved] .primary-btn[data-fill-repair]').isVisible().catch(() => false);
     await page.locator('[data-repair-saved] [data-fill-repair]').click();
@@ -331,6 +343,8 @@ for (const item of conversionCases) {
     lunaPrimaryHref = await page.locator('[data-luna-saved] .primary-btn').first().getAttribute('href').catch(() => '');
   } else if (item.target === 'guide') {
     guidePlanHref = await page.locator('[data-guide-saved] a').first().getAttribute('href').catch(() => '');
+  } else if (item.target === 'keepsake') {
+    keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
   }
 
   const horizontalOverflow = await page.evaluate(() =>
@@ -353,10 +367,12 @@ for (const item of conversionCases) {
     repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
     lunaResumeVisible: await page.locator('[data-luna-saved]:not([hidden])').isVisible().catch(() => false),
     guideResumeVisible: await page.locator('[data-guide-saved]:not([hidden])').isVisible().catch(() => false),
+    keepsakeResumeVisible: await page.locator('[data-keepsake-saved]:not([hidden])').isVisible().catch(() => false),
     repairFillPrimary,
     repairFilled,
     lunaPrimaryHref,
     guidePlanHref,
+    keepsakePrimaryHref,
     scrollY: resumeScrollY,
     finalScrollY: await page.evaluate(() => window.scrollY),
     screenshot,

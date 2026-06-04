@@ -46,6 +46,23 @@ function summarizeFailures(results) {
   });
 }
 
+function summarizeQuizFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.resultName) failures.push('missing result name');
+    if (!result.primaryRouteHref?.includes('/resources/#supply-')) failures.push('missing primary supply route');
+    if (!result.planHref?.includes('/repair-plan/#plan-')) failures.push('missing repair plan route');
+    if (!result.lunaHref?.includes('/luna-yoga-music/')) failures.push('missing Luna route');
+    if (!result.bookHref?.startsWith('https://')) failures.push('missing affiliate book route');
+    if (!result.bookRel?.includes('sponsored')) failures.push('missing sponsored rel');
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 async function firstExistingPath(paths) {
   for (const path of paths) {
     try {
@@ -106,6 +123,11 @@ const cases = [
   { name: 'es-guides-desktop', path: '/es/guides/', viewport: { width: 1280, height: 900 } },
 ];
 
+const quizCases = [
+  { name: 'quiz-flow-desktop', path: '/', viewport: { width: 1280, height: 900 } },
+  { name: 'quiz-flow-mobile', path: '/', viewport: { width: 390, height: 844 } },
+];
+
 await mkdir('output/playwright', { recursive: true });
 const executablePath = await findCachedChromium();
 const browser = await chromium.launch({ headless: true, executablePath });
@@ -152,10 +174,76 @@ for (const item of cases) {
   await page.close();
 }
 
+for (const item of quizCases) {
+  const page = await browser.newPage({ viewport: item.viewport });
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await page.goto(url, { waitUntil: 'networkidle' });
+  await page.evaluate(() => localStorage.clear());
+  await page.locator('[data-quiz-start]').first().click();
+
+  for (let index = 0; index < 15; index += 1) {
+    await page.locator('.quiz-option').first().click();
+    await page.locator('.quiz-next').click();
+  }
+
+  await page.locator('.quiz-result-card').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => {
+    const image = document.querySelector('.quiz-result-card img');
+    return image && image.complete && image.naturalWidth > 0;
+  });
+  const resultName = await page.locator('.quiz-result-card h3').first().innerText().catch(() => '');
+  const primaryRouteHref = await page.locator('[data-conversion-route]').first().getAttribute('href');
+  const planHref = await page.locator('[data-conversion-plan]').first().getAttribute('href');
+  const lunaHref = await page.locator('[data-conversion-luna]').first().getAttribute('href');
+  const book = page.locator('[data-conversion-book]').first();
+  const bookHref = await book.getAttribute('href');
+  const bookRel = await book.getAttribute('rel');
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    url,
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    navCount: await page.locator('.nav-links a').count(),
+    textLength: (await page.locator('body').innerText()).length,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    resultName,
+    primaryRouteHref,
+    planHref,
+    lunaHref,
+    bookHref,
+    bookRel,
+    screenshot,
+  });
+  await page.close();
+}
+
 await browser.close();
 console.log(JSON.stringify(results, null, 2));
 
-const failures = summarizeFailures(results);
+const failures = [
+  ...summarizeFailures(results.filter((result) => !result.name.startsWith('quiz-flow-'))),
+  ...summarizeQuizFailures(results.filter((result) => result.name.startsWith('quiz-flow-'))),
+];
 if (failures.length) {
   console.error(`Visual check failed:\n${failures.join('\n')}`);
   process.exit(1);

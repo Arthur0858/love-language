@@ -584,6 +584,10 @@ QUIZ_LABELS = {
         "guide_link": "閱讀對應指南",
         "resources_link": "開啟旅人補給",
         "supply_action": "選擇這條補給路線",
+        "primary_route": "取得我的守護者補給路線",
+        "secondary_plan": "填入 7 日修復計畫",
+        "next_pack_title": "你的下一步補給包",
+        "next_pack_intro": "先做一個免費任務，再用 Luna 降噪，最後只在合適時選一個延伸書卷。",
         "retake": "重新測驗",
         "copy": "複製結果",
         "copied": "已複製",
@@ -629,6 +633,10 @@ QUIZ_LABELS = {
         "guide_link": "Read matching guide",
         "resources_link": "Open resources",
         "supply_action": "Choose this supply route",
+        "primary_route": "Get my guardian supply route",
+        "secondary_plan": "Fill the 7-day repair plan",
+        "next_pack_title": "Your next-step supply pack",
+        "next_pack_intro": "Start with one free task, use Luna to lower the noise, then choose one extended book only if it fits.",
         "retake": "Retake",
         "copy": "Copy result",
         "copied": "Copied",
@@ -674,6 +682,10 @@ QUIZ_LABELS = {
         "guide_link": "対応ガイドを読む",
         "resources_link": "リソースを開く",
         "supply_action": "この補給ルートを選ぶ",
+        "primary_route": "守護者の補給ルートを受け取る",
+        "secondary_plan": "7日間の修復プランへ記入",
+        "next_pack_title": "次の一歩の補給パック",
+        "next_pack_intro": "まず無料の課題を一つ行い、Luna で感情の音量を下げ、合う時だけ本を一つ選びます。",
         "retake": "もう一度",
         "copy": "結果をコピー",
         "copied": "コピー済み",
@@ -719,6 +731,10 @@ QUIZ_LABELS = {
         "guide_link": "관련 가이드 읽기",
         "resources_link": "자료 열기",
         "supply_action": "이 보급 루트 선택",
+        "primary_route": "내 수호자 보급 루트 받기",
+        "secondary_plan": "7일 회복 계획 채우기",
+        "next_pack_title": "나의 다음 단계 보급 팩",
+        "next_pack_intro": "무료 과제 하나부터 시작하고 Luna로 감정 소음을 낮춘 뒤, 맞을 때만 책 하나를 고르세요.",
         "retake": "다시 하기",
         "copy": "결과 복사",
         "copied": "복사됨",
@@ -764,6 +780,10 @@ QUIZ_LABELS = {
         "guide_link": "Leer guía relacionada",
         "resources_link": "Abrir recursos",
         "supply_action": "Elegir esta ruta",
+        "primary_route": "Obtener mi ruta de guardiana",
+        "secondary_plan": "Completar plan de 7 días",
+        "next_pack_title": "Tu pack de siguiente paso",
+        "next_pack_intro": "Empieza con una tarea gratuita, usa Luna para bajar el ruido y elige un libro solo si encaja.",
         "retake": "Repetir",
         "copy": "Copiar resultado",
         "copied": "Copiado",
@@ -3507,6 +3527,8 @@ def quiz_payload(lang: str) -> str:
         "results": results,
         "order": type_order,
         "shareUrl": DOMAIN + lang_url(lang).rstrip("/") + "/",
+        "affiliateDisclosure": AFFILIATE_DISCLOSURE[lang],
+        "affiliateButton": AFFILIATE_COPY[lang]["button"],
     }
     return json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
 
@@ -3687,7 +3709,7 @@ def quiz_script(lang: str) -> str:
     }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" loading="lazy" decoding="async">
+        <img src="${{result.image}}" alt="${{result.name}}" loading="eager" decoding="async">
         <div class="quiz-result-copy">
           <p class="eyebrow">${{quiz.labels.result_label}}</p>
           <h3>${{result.name}}</h3>
@@ -3695,6 +3717,12 @@ def quiz_script(lang: str) -> str:
           <p>${{result.desc}}</p>
         </div>
       </article>
+      <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
+        <a class="primary-btn" href="${{result.resourceUrl}}" data-conversion-route>${{quiz.labels.primary_route}}</a>
+        <a class="secondary-btn" href="${{result.planUrl}}" data-conversion-plan>${{quiz.labels.secondary_plan}}</a>
+        <a class="secondary-btn" href="${{result.lunaUrl}}" data-conversion-luna>${{quiz.labels.luna_action}}</a>
+        <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+      </nav>
       <section class="quiz-score-card"><h3>${{quiz.labels.score_title}}</h3>
         ${{sorted.map(([key, count]) => {{
           const item = quiz.results[key];
@@ -3706,8 +3734,9 @@ def quiz_script(lang: str) -> str:
       <section class="quiz-action-compass" aria-label="${{quiz.labels.compass_title}}">
         <div class="quiz-action-head">
           <p class="eyebrow">${{quiz.labels.compass_title}}</p>
-          <h3>${{result.name}} ${{quiz.labels.routes_title}}</h3>
+          <h3>${{quiz.labels.next_pack_title}}</h3>
         </div>
+        <p>${{quiz.labels.next_pack_intro}}</p>
         <div class="quiz-action-grid">
           <article>
             <span>1</span>
@@ -3725,7 +3754,7 @@ def quiz_script(lang: str) -> str:
             <span>3</span>
             <h4>${{quiz.labels.book_step}}</h4>
             <p>${{quiz.labels.book_intro}}：${{result.supplyBook}}</p>
-            <a href="${{result.resourceUrl}}">${{quiz.labels.book_action}}</a>
+            <a href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored" data-conversion-book>${{quiz.affiliateButton}}</a>
           </article>
         </div>
       </section>
@@ -3751,7 +3780,8 @@ def quiz_script(lang: str) -> str:
         <h3>${{result.supplyTitle}}</h3>
         <p>${{result.supplyDesc}}</p>
         <ul><li>${{result.supplyMission}}</li><li>${{result.supplyText}}</li><li>${{result.supplyBook}}</li></ul>
-        <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.supply_action}}</a>
+        <p class="affiliate-disclosure">${{quiz.affiliateDisclosure}}</p>
+        <a class="primary-btn" href="${{result.resourceUrl}}">${{quiz.labels.primary_route}}</a>
       </section>
       <section class="quiz-collector-card">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" loading="lazy" decoding="async">
@@ -3767,12 +3797,6 @@ def quiz_script(lang: str) -> str:
           </div>
         </div>
       </section>
-      <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
-        <a class="primary-btn" href="${{result.planUrl}}">${{result.planLabel}}</a>
-        <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.resources_link}}</a>
-        <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
-        <a class="secondary-btn" href="${{result.guideUrl}}">${{quiz.labels.guide_link}}</a>
-      </nav>
       <div class="quiz-tools"><button type="button" class="secondary-btn" data-share-result>${{quiz.labels.share}}</button><button type="button" class="secondary-btn" data-copy-result>${{quiz.labels.copy}}</button><button type="button" class="secondary-btn" data-retake>${{quiz.labels.retake}}</button></div>
       <p class="quiz-boundary">${{quiz.labels.boundary}}</p>`;
     show(resultBox);
@@ -3783,7 +3807,10 @@ def quiz_script(lang: str) -> str:
     resultBox.querySelector('[data-copy-result]').addEventListener('click', async (event) => {{
       await copyShareText(shareText, event.currentTarget);
     }});
-    renderSavedResult();
+    if (savedBox) {{
+      hide(savedBox);
+      savedBox.innerHTML = '';
+    }}
     resultBox.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
   }}
   function startQuiz() {{
@@ -3806,11 +3833,15 @@ def quiz_script(lang: str) -> str:
 def supply_resume_script(lang: str) -> str:
     data = quiz_payload(lang)
     bookstore_label = AFFILIATE_COPY[lang]["button"]
+    not_now_title = json.dumps(SUPPLY_LABELS[lang]["not_now"], ensure_ascii=False)
+    not_now_text = json.dumps(SUPPLY_LABELS[lang]["not_now_text"], ensure_ascii=False)
     return f"""
 <script>
 (() => {{
   const quiz = {data};
   const bookstoreLabel = "{escape(bookstore_label)}";
+  const notNowTitle = {not_now_title};
+  const notNowText = {not_now_text};
   const box = document.querySelector('[data-supply-saved]');
   if (!box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -3876,6 +3907,10 @@ def supply_resume_script(lang: str) -> str:
               <a href="${{step.href}}" ${{step.external ? 'target="_blank" rel="noopener noreferrer sponsored"' : ''}}>${{step.action}}</a>
             </section>
           `).join('')}}
+        </div>
+        <div class="callout safety">
+          <strong>${{notNowTitle}}</strong>
+          <p>${{notNowText}}</p>
         </div>
         <div class="quiz-saved-actions">
           <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
@@ -4222,7 +4257,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     body = f"""
 <section class="guardian-hero">
-  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
+  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False)}
 </section>
 {character_route_snapshot(lang, slug)}
@@ -4707,6 +4742,7 @@ def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
     flow = LUNA_GUARDIAN_FLOW[lang]
+    offer = LUNA_OFFER[lang]
     use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
     guardian_flow_cards = []
     for slug, data in GUARDIANS.items():
@@ -4740,7 +4776,7 @@ def luna_page(lang: str) -> None:
     <h1>{escape(t["luna_title"])}</h1>
     <p class="lead">{escape(luna["headline"])}</p>
     <p>{escape(luna["intro"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides/repair-after-conflict")}">{escape(luna["secondary"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides/repair-after-conflict")}">{escape(luna["secondary"])}</a></div>
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>

@@ -1786,6 +1786,7 @@ button.secondary-btn {
 .quiz-score-card,
 .quiz-advice-card,
 .quiz-action-compass,
+.quiz-starter-kit,
 .quiz-route-card {
   background: rgba(255, 255, 255, .1);
   border: 1px solid rgba(255, 255, 255, .2);
@@ -1986,6 +1987,66 @@ button.secondary-btn {
 }
 
 .quiz-action-grid a {
+  align-self: end;
+  color: #fff;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.quiz-starter-kit {
+  display: grid;
+  gap: 16px;
+}
+
+.quiz-starter-kit > p {
+  margin: 0;
+  color: #f4dfdc;
+}
+
+.quiz-starter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quiz-starter-grid article {
+  display: grid;
+  gap: 9px;
+  align-content: start;
+  min-height: 100%;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .09);
+}
+
+.quiz-starter-grid span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(122, 159, 151, .32);
+  color: #e6fff8;
+  font-weight: 900;
+}
+
+.quiz-starter-grid h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.quiz-starter-grid p {
+  margin: 0;
+  color: #f4dfdc;
+  font-size: .92rem;
+  line-height: 1.65;
+}
+
+.quiz-starter-grid a {
   align-self: end;
   color: #fff;
   font-weight: 900;
@@ -2285,6 +2346,7 @@ button.secondary-btn {
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .starter-kit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quiz-starter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -2344,6 +2406,7 @@ button.secondary-btn {
   .quiz-intro,
   .quiz-result-card,
   .quiz-action-grid,
+  .quiz-starter-grid,
   .resource-path,
   .article-hero,
   .guardian-hero,

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 UPDATED = "2026-06-04"
-ASSET_VERSION = "20260604-starter-kit"
+ASSET_VERSION = "20260604-result-starter-kit"
 
 
 FONT_CSS = ""
@@ -2449,6 +2449,26 @@ def guardian_story_image(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
 
+def starter_kit_payload(lang: str, supply_url: str = "#supply-routes") -> dict:
+    labels = STARTER_KIT[lang]
+    steps = []
+    for number, title, desc, action, target in labels["steps"]:
+        href = supply_url if target.startswith("#") else lang_url(lang, target)
+        steps.append({
+            "number": number,
+            "title": title,
+            "desc": desc,
+            "action": action,
+            "href": href,
+        })
+    return {
+        "eyebrow": labels["eyebrow"],
+        "title": labels["title"],
+        "intro": labels["intro"],
+        "steps": steps,
+    }
+
+
 def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     labels = COLLECTOR_LABELS[lang]
     guardian = GUARDIANS[slug]
@@ -2828,6 +2848,7 @@ def quiz_payload(lang: str) -> str:
         name, typ, desc = guardian[lang]
         guide = next(g for g in GUIDES if g["slug"] == meta["guide"])
         route = supply_route(lang, meta["slug"])
+        resource_url = lang_url(lang, "resources") + f"#supply-{meta['slug']}"
         results[key] = {
             "name": name,
             "type": typ,
@@ -2837,7 +2858,7 @@ def quiz_payload(lang: str) -> str:
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]),
             "guideTitle": guide[lang][0],
-            "resourceUrl": lang_url(lang, "resources") + f"#supply-{meta['slug']}",
+            "resourceUrl": resource_url,
             "supplyTitle": route["title"],
             "supplyDesc": route["desc"],
             "supplyMission": route["mission"],
@@ -2860,6 +2881,7 @@ def quiz_payload(lang: str) -> str:
             "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
+            "starterKit": starter_kit_payload(lang, resource_url),
         }
     payload = {
         "labels": QUIZ_LABELS[lang],
@@ -3087,6 +3109,23 @@ def quiz_script(lang: str) -> str:
             <p>${{quiz.labels.book_intro}}：${{result.supplyBook}}</p>
             <a href="${{result.resourceUrl}}">${{quiz.labels.book_action}}</a>
           </article>
+        </div>
+      </section>
+      <section class="quiz-starter-kit" aria-label="${{result.starterKit.title}}">
+        <div class="quiz-action-head">
+          <p class="eyebrow">${{result.starterKit.eyebrow}}</p>
+          <h3>${{result.starterKit.title}}</h3>
+        </div>
+        <p>${{result.starterKit.intro}}</p>
+        <div class="quiz-starter-grid">
+          ${{result.starterKit.steps.map((step) => `
+            <article>
+              <span>${{step.number}}</span>
+              <h4>${{step.title}}</h4>
+              <p>${{step.desc}}</p>
+              <a href="${{step.href}}">${{step.action}}</a>
+            </article>
+          `).join('')}}
         </div>
       </section>
       <section class="quiz-supply-card">

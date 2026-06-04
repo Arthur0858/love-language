@@ -68,22 +68,23 @@ function summarizeQuizFailures(results) {
 function summarizeConversionFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
+    const target = result.target || '';
     if (!result.status || result.status >= 400) failures.push('bad status');
-    if (result.name.includes('supply') && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
-    if (result.name.includes('repair') && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
-    if (result.name.includes('luna') && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
-    if (result.name.includes('guide') && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
-    if (result.name.includes('keepsake') && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
-    if (result.name.includes('supply') && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
-    if (result.name.includes('repair') && !result.repairResumeVisible) failures.push('missing personalized repair resume');
-    if (result.name.includes('luna') && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
-    if (result.name.includes('guide') && !result.guideResumeVisible) failures.push('missing personalized guide resume');
-    if (result.name.includes('keepsake') && !result.keepsakeResumeVisible) failures.push('missing personalized keepsake resume');
-    if (result.name.includes('repair') && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
-    if (result.name.includes('repair') && !result.repairFilled) failures.push('repair worksheet was not filled from result');
-    if (result.name.includes('luna') && !result.lunaPrimaryHref?.includes('/repair-plan/#plan-')) failures.push('Luna primary action does not continue repair plan');
-    if (result.name.includes('guide') && !result.guidePlanHref?.includes('/repair-plan/#plan-')) failures.push('guide resume does not continue repair plan');
-    if (result.name.includes('keepsake') && !result.keepsakePrimaryHref?.includes('/assets/lovetypes/share/')) failures.push('keepsake primary action does not open story card');
+    if (target === 'route' && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
+    if (['plan', 'keepsake-plan'].includes(target) && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
+    if (target === 'luna' && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
+    if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
+    if (target === 'keepsake' && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
+    if (target === 'route' && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (['plan', 'keepsake-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
+    if (target === 'luna' && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
+    if (target === 'guide' && !result.guideResumeVisible) failures.push('missing personalized guide resume');
+    if (target === 'keepsake' && !result.keepsakeResumeVisible) failures.push('missing personalized keepsake resume');
+    if (['plan', 'keepsake-plan'].includes(target) && !result.repairFillPrimary) failures.push('repair fill is not the primary action');
+    if (['plan', 'keepsake-plan'].includes(target) && !result.repairFilled) failures.push('repair worksheet was not filled from result');
+    if (target === 'luna' && !result.lunaPrimaryHref?.includes('/repair-plan/#plan-')) failures.push('Luna primary action does not continue repair plan');
+    if (target === 'guide' && !result.guidePlanHref?.includes('/repair-plan/#plan-')) failures.push('guide resume does not continue repair plan');
+    if (['keepsake', 'keepsake-plan'].includes(target) && !result.keepsakePrimaryHref?.includes('/repair-plan/#plan-')) failures.push('keepsake primary action does not continue repair plan');
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -163,6 +164,7 @@ const conversionCases = [
   { name: 'conversion-luna-mobile', target: 'luna', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-guide-mobile', target: 'guide', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
 ];
 
 await mkdir('output/playwright', { recursive: true });
@@ -308,19 +310,29 @@ for (const item of conversionCases) {
     await page.locator('[data-conversion-luna]').click();
   } else if (item.target === 'guide') {
     await page.locator('[data-conversion-guide]').click();
+  } else if (item.target === 'keepsake-plan') {
+    await page.locator('[data-conversion-keepsake]').click();
   } else if (item.target === 'keepsake') {
     await page.locator('[data-conversion-keepsake]').click();
   } else {
     await page.locator('[data-conversion-route]').click();
   }
   await page.waitForLoadState('networkidle');
-  const resumeSelector = item.target === 'plan'
+  let keepsakePrimaryHref = '';
+  if (item.target === 'keepsake-plan') {
+    await page.locator('[data-keepsake-saved]:not([hidden])').waitFor({ state: 'visible' });
+    keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
+    await page.locator('[data-keepsake-plan]').click();
+    await page.waitForLoadState('networkidle');
+  }
+  const finalTarget = item.target === 'keepsake-plan' ? 'plan' : item.target;
+  const resumeSelector = finalTarget === 'plan'
     ? '[data-repair-saved]:not([hidden])'
-    : item.target === 'luna'
+    : finalTarget === 'luna'
       ? '[data-luna-saved]:not([hidden])'
-      : item.target === 'guide'
+      : finalTarget === 'guide'
         ? '[data-guide-saved]:not([hidden])'
-        : item.target === 'keepsake'
+        : finalTarget === 'keepsake'
           ? '[data-keepsake-saved]:not([hidden])'
       : '[data-supply-saved]:not([hidden])';
   await page.locator(resumeSelector).waitFor({ state: 'visible' });
@@ -330,8 +342,7 @@ for (const item of conversionCases) {
   let repairFilled = false;
   let lunaPrimaryHref = '';
   let guidePlanHref = '';
-  let keepsakePrimaryHref = '';
-  if (item.target === 'plan') {
+  if (finalTarget === 'plan') {
     repairFillPrimary = await page.locator('[data-repair-saved] .primary-btn[data-fill-repair]').isVisible().catch(() => false);
     await page.locator('[data-repair-saved] [data-fill-repair]').click();
     await page.waitForFunction(() => {
@@ -339,11 +350,11 @@ for (const item of conversionCases) {
       return fields.length >= 4 && fields.every((field) => field.value.trim().length > 0);
     });
     repairFilled = true;
-  } else if (item.target === 'luna') {
+  } else if (finalTarget === 'luna') {
     lunaPrimaryHref = await page.locator('[data-luna-saved] .primary-btn').first().getAttribute('href').catch(() => '');
-  } else if (item.target === 'guide') {
+  } else if (finalTarget === 'guide') {
     guidePlanHref = await page.locator('[data-guide-saved] a').first().getAttribute('href').catch(() => '');
-  } else if (item.target === 'keepsake') {
+  } else if (finalTarget === 'keepsake') {
     keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
   }
 
@@ -354,6 +365,7 @@ for (const item of conversionCases) {
   await page.screenshot({ path: screenshot, fullPage: false });
   results.push({
     name: item.name,
+    target: item.target,
     url: `${new URL(page.url()).pathname}${new URL(page.url()).hash}`,
     status: response?.status(),
     title: await page.title(),

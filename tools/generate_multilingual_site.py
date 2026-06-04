@@ -3142,11 +3142,11 @@ def keepsake_resume_script(lang: str) -> str:
         <p>${{result.collectorHint}}</p>
         <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
         <div class="keepsake-resume-actions">
-          <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
+          <a class="primary-btn" href="${{result.planUrl}}" data-keepsake-plan>${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
           <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-          <a class="secondary-btn" href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
           <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import ssl
 import sys
@@ -120,6 +121,9 @@ class HeadAssetParser(HTMLParser):
         self.html_lang = ""
         self.robots = ""
         self.hreflang_links: list[tuple[str, str]] = []
+        self.metas: list[dict[str, str]] = []
+        self.jsonld_blocks: list[str] = []
+        self._in_jsonld_script = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key: value or "" for key, value in attrs}
@@ -133,8 +137,27 @@ class HeadAssetParser(HTMLParser):
             self.hreflang_links.append((data["hreflang"], data["href"]))
         if tag == "meta" and data.get("name") == "robots":
             self.robots = data.get("content", "")
+        if tag == "meta":
+            self.metas.append(data)
         if tag == "script" and data.get("src"):
             self.scripts.append(data["src"])
+        if tag == "script" and data.get("type") == "application/ld+json":
+            self._in_jsonld_script = True
+            self.jsonld_blocks.append("")
+
+    def handle_data(self, data: str) -> None:
+        if self._in_jsonld_script and self.jsonld_blocks:
+            self.jsonld_blocks[-1] += data
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "script":
+            self._in_jsonld_script = False
+
+    def meta_content(self, key: str) -> str:
+        for meta in self.metas:
+            if meta.get("property") == key or meta.get("name") == key:
+                return meta.get("content", "")
+        return ""
 
 
 def normalize_base_url(value: str) -> str:
@@ -219,6 +242,72 @@ def expected_hreflang_map(path: str) -> dict[str, str]:
     values = {lang: public_url_for_path(localized_path(path, lang)) for lang in LOCALE_PREFIXES}
     values["x-default"] = values["zh-TW"]
     return values
+
+
+def jsonld_entities(data: object) -> list[dict]:
+    if isinstance(data, dict):
+        graph = data.get("@graph")
+        if isinstance(graph, list):
+            return [item for item in graph if isinstance(item, dict)]
+        return [data]
+    if isinstance(data, list):
+        return [item for item in data if isinstance(item, dict)]
+    return []
+
+
+def check_social_metadata(path: str, assets: HeadAssetParser, canonical_url: str) -> tuple[list[str], list[str], int]:
+    issues: list[str] = []
+    social_image_urls: list[str] = []
+    required_keys = (
+        "og:type",
+        "og:title",
+        "og:description",
+        "og:image",
+        "og:url",
+        "twitter:card",
+        "twitter:image",
+    )
+    checked = 0
+    values = {key: assets.meta_content(key) for key in required_keys}
+    for key, value in values.items():
+        checked += 1
+        if not value:
+            issues.append(f"{path}: missing social metadata {key}")
+    if values["og:url"] and values["og:url"] != canonical_url:
+        issues.append(f"{path}: og:url should match canonical {canonical_url!r}, got {values['og:url']!r}")
+    if values["twitter:card"] and values["twitter:card"] != "summary_large_image":
+        issues.append(f"{path}: twitter:card should be summary_large_image, got {values['twitter:card']!r}")
+    if values["twitter:image"] and values["og:image"] and values["twitter:image"] != values["og:image"]:
+        issues.append(f"{path}: twitter:image should match og:image")
+    if values["og:image"]:
+        social_image_urls.append(values["og:image"])
+        if not values["og:image"].startswith(f"{DEFAULT_BASE_URL}/"):
+            issues.append(f"{path}: og:image should use {DEFAULT_BASE_URL}, got {values['og:image']!r}")
+    return issues, social_image_urls, checked
+
+
+def check_jsonld(path: str, assets: HeadAssetParser) -> tuple[list[str], int, int]:
+    issues: list[str] = []
+    entities_checked = 0
+    if not assets.jsonld_blocks:
+        return [f"{path}: missing JSON-LD"], 0, 0
+    for block in assets.jsonld_blocks:
+        try:
+            data = json.loads(block)
+        except json.JSONDecodeError as error:
+            issues.append(f"{path}: invalid JSON-LD: {error}")
+            continue
+        entities = jsonld_entities(data)
+        if not entities:
+            issues.append(f"{path}: JSON-LD block should contain an object or graph")
+            continue
+        for entity in entities:
+            entities_checked += 1
+            if not entity.get("@type"):
+                issues.append(f"{path}: JSON-LD entity missing @type")
+            if entity.get("@context") and entity.get("@context") != "https://schema.org":
+                issues.append(f"{path}: JSON-LD @context should be https://schema.org")
+    return issues, len(assets.jsonld_blocks), entities_checked
 
 
 def header_matches(headers: dict[str, str], name: str, expected: str) -> bool:
@@ -327,8 +416,12 @@ def main() -> int:
     public_lang_checked = 0
     public_hreflang_sets_checked = 0
     public_hreflang_links_checked = 0
+    public_social_meta_checked = 0
+    public_jsonld_blocks_checked = 0
+    public_jsonld_entities_checked = 0
     public_versioned_asset_refs_checked = 0
     page_asset_refs: list[str] = []
+    social_image_urls: list[str] = []
 
     for path in PUBLIC_PATHS:
         response = request_url(urljoin(base_url, path))
@@ -348,6 +441,14 @@ def main() -> int:
         expected_canonical_url = expected_canonical(path)
         if assets.canonical != expected_canonical_url:
             issues.append(f"{path}: canonical should be {expected_canonical_url!r}, got {assets.canonical!r}")
+        social_issues, page_social_images, social_checked = check_social_metadata(path, assets, expected_canonical_url)
+        issues.extend(social_issues)
+        social_image_urls.extend(page_social_images)
+        public_social_meta_checked += social_checked
+        jsonld_issues, jsonld_blocks_checked, jsonld_entities_checked = check_jsonld(path, assets)
+        issues.extend(jsonld_issues)
+        public_jsonld_blocks_checked += jsonld_blocks_checked
+        public_jsonld_entities_checked += jsonld_entities_checked
         public_robots_checked += 1
         robots_tokens = {token.strip().lower() for token in assets.robots.split(",") if token.strip()}
         if "noindex" in robots_tokens:
@@ -441,12 +542,20 @@ def main() -> int:
         if not IMMUTABLE_CACHE_RE.search(cache_control):
             issues.append(f"{asset}: expected immutable cache header, got {cache_control!r}")
 
+    for image_url in unique_assets(social_image_urls):
+        response = request_url(image_url)
+        if response.status != 200:
+            issues.append(f"{image_url}: expected social image status 200, got {response.status}")
+
     print(f"public_pages_checked={pages_checked}")
     print(f"public_canonicals_checked={public_canonicals_checked}")
     print(f"public_robots_checked={public_robots_checked}")
     print(f"public_lang_checked={public_lang_checked}")
     print(f"public_hreflang_sets_checked={public_hreflang_sets_checked}")
     print(f"public_hreflang_links_checked={public_hreflang_links_checked}")
+    print(f"public_social_meta_checked={public_social_meta_checked}")
+    print(f"public_jsonld_blocks_checked={public_jsonld_blocks_checked}")
+    print(f"public_jsonld_entities_checked={public_jsonld_entities_checked}")
     print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")

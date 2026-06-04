@@ -40,6 +40,7 @@ PUBLIC_PATHS = [
     "/theory/",
     "/contact/",
     "/en/",
+    "/en/guides/words-of-affirmation-scripts/",
     "/en/resources/",
     "/ja/",
     "/ko/",
@@ -58,6 +59,7 @@ EXPECTED_TEXT = {
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
     "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
+    "/en/guides/words-of-affirmation-scripts/": "Practical Scripts for Words of Affirmation",
     "/keepsakes/": "守護者收藏室",
     "/contact/": "contact@lovetypes.tw",
     "/en/": "LoveTypes Emotion Guardians",
@@ -80,6 +82,8 @@ EXPECTED_ANCHOR_TARGETS = {
     "/en/keepsakes/": tuple(f"keepsake-card-{slug}" for slug in GUARDIAN_SLUGS),
     "/resources/": ("supply-start", "supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
+    "/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
+    "/en/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
 }
 EXPECTED_HREF_TARGETS = {
     "/characters/": ("/#quiz-section", "#guardian-map", "/resources/"),
@@ -100,6 +104,16 @@ EXPECTED_HREF_TARGETS = {
         target
         for slug in GUARDIAN_SLUGS
         for target in (f"/repair-plan/#plan-{slug}", f"/resources/#supply-{slug}")
+    ),
+    "/guides/words-of-affirmation-scripts/": (
+        "/characters/iris/",
+        "/resources/#supply-iris",
+        "/repair-plan/#plan-iris",
+    ),
+    "/en/guides/words-of-affirmation-scripts/": (
+        "/en/characters/iris/",
+        "/en/resources/#supply-iris",
+        "/en/repair-plan/#plan-iris",
     ),
 }
 REDIRECTS = {

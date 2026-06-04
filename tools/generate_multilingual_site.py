@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-keepsake-routes"
+ASSET_VERSION = "20260605-guide-actions"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2497,6 +2497,80 @@ TOPIC_DETAILS = {
 }
 
 
+GUIDE_ACTION_BRIDGE = {
+    "zh": {
+        "eyebrow": "把這篇指南帶進守護者路線",
+        "title": "下一步，讓這盞燈變成可執行的修復",
+        "intro": "如果這篇指南點中了你的狀態，先認回守護者，再拿一份補給與一個 7 日練習。不要一次修完整座庭園，先讓一條路變清楚。",
+        "guardian_label": "認回守護者",
+        "guardian_text": "看懂這位守護者守護的需求、錯頻傷口與修復任務。",
+        "route_label": "取得補給路線",
+        "route_text": "依照這位守護者選一份免費任務、Luna 使用場景與延伸書卷。",
+        "plan_label": "填入 7 日修復",
+        "plan_text": "把今天讀到的句子放進一週內可完成的小約定。",
+        "guardian_cta": "進入守護者頁",
+        "route_cta": "查看補給路線",
+        "plan_cta": "開始修復計畫",
+    },
+    "en": {
+        "eyebrow": "Carry this guide into a guardian route",
+        "title": "Next, turn this lamp into a practical repair",
+        "intro": "If this guide names your current state, return to the guardian first, then take one supply route and one 7-day practice. Do not repair the whole garden at once; make one path clear.",
+        "guardian_label": "Return to the guardian",
+        "guardian_text": "Understand the need, misfrequency wound, and repair mission this guardian protects.",
+        "route_label": "Get the supply route",
+        "route_text": "Choose one free task, Luna use case, and deeper book scroll for this guardian.",
+        "plan_label": "Fill the 7-day repair",
+        "plan_text": "Place the sentence you found today into a small agreement you can practice this week.",
+        "guardian_cta": "Enter guardian page",
+        "route_cta": "View supply route",
+        "plan_cta": "Start repair plan",
+    },
+    "ja": {
+        "eyebrow": "このガイドを守護者ルートへつなぐ",
+        "title": "次に、この灯りを実行できる修復へ変える",
+        "intro": "このガイドが今の状態に触れたなら、まず守護者へ戻り、補給ルートと 7 日の練習を一つ選びます。庭全体を一度に直さず、一つの道を見えやすくします。",
+        "guardian_label": "守護者へ戻る",
+        "guardian_text": "この守護者が守るニーズ、すれ違いの傷、修復任務を理解します。",
+        "route_label": "補給ルートを受け取る",
+        "route_text": "この守護者に合う無料タスク、Luna の使い方、深める本を一つ選びます。",
+        "plan_label": "7 日修復に入れる",
+        "plan_text": "今日見つけた言葉を、今週練習できる小さな約束へ置きます。",
+        "guardian_cta": "守護者ページへ",
+        "route_cta": "補給ルートを見る",
+        "plan_cta": "修復計画を始める",
+    },
+    "ko": {
+        "eyebrow": "이 가이드를 수호자 루트로 이어가기",
+        "title": "다음으로, 이 등불을 실행 가능한 회복으로 바꾸기",
+        "intro": "이 가이드가 지금의 상태를 짚었다면 먼저 수호자에게 돌아가고, 보급 루트 하나와 7일 연습 하나를 가져가세요. 정원 전체를 한 번에 고치기보다 한 길을 선명하게 만드세요.",
+        "guardian_label": "수호자 다시 보기",
+        "guardian_text": "이 수호자가 지키는 욕구, 어긋남의 상처, 회복 과제를 이해합니다.",
+        "route_label": "보급 루트 받기",
+        "route_text": "이 수호자에게 맞는 무료 과제, Luna 사용 장면, 더 깊은 책 한 권을 고릅니다.",
+        "plan_label": "7일 회복에 넣기",
+        "plan_text": "오늘 찾은 문장을 이번 주 실천할 수 있는 작은 약속에 넣습니다.",
+        "guardian_cta": "수호자 페이지로",
+        "route_cta": "보급 루트 보기",
+        "plan_cta": "회복 계획 시작",
+    },
+    "es": {
+        "eyebrow": "Lleva esta guía a una ruta de guardiana",
+        "title": "Después, convierte esta luz en una reparación práctica",
+        "intro": "Si esta guía nombra tu estado actual, vuelve primero a la guardiana y toma una ruta de recursos y una práctica de 7 días. No repares todo el jardín a la vez; aclara un camino.",
+        "guardian_label": "Volver a la guardiana",
+        "guardian_text": "Comprende la necesidad, herida de desajuste y misión de reparación que protege esta guardiana.",
+        "route_label": "Tomar la ruta de recursos",
+        "route_text": "Elige una tarea gratis, un uso de Luna y un libro para profundizar con esta guardiana.",
+        "plan_label": "Completar la reparación de 7 días",
+        "plan_text": "Coloca la frase de hoy en un pequeño acuerdo que puedas practicar esta semana.",
+        "guardian_cta": "Entrar a la guardiana",
+        "route_cta": "Ver ruta de recursos",
+        "plan_cta": "Iniciar plan de reparación",
+    },
+}
+
+
 PRACTICAL_COPY = {
     "zh": {
         "why": "在心語庭園裡，關係裡的痛感常不是沒有愛，而是愛在抵達前就錯頻了。你用自己的方式努力發光，對方卻沒有接收到那盞燈。LoveTypes 把五種愛之語化為五位守護者，目的不是替人貼標籤，而是幫你看見：此刻最需要被翻譯的愛，是話語、時間、心意、行動，還是安全的靠近。",
@@ -4513,6 +4587,58 @@ def guides_index(lang: str) -> None:
     write(page_path(lang, "guides"), layout(lang, t["guide_index_title"], t["guide_index_desc"], "guides", body, t["guides"], "website", "/og-cover.jpg", schema))
 
 
+def guide_action_bridge(lang: str, guide: dict) -> str:
+    copy = GUIDE_ACTION_BRIDGE[lang]
+    slug = guide["guardian"]
+    guardian_name = GUARDIANS[slug][lang][0]
+    route = supply_route(lang, slug)
+    actions = [
+        (
+            "01",
+            copy["guardian_label"],
+            copy["guardian_text"],
+            copy["guardian_cta"],
+            lang_url(lang, f"characters/{slug}"),
+        ),
+        (
+            "02",
+            copy["route_label"],
+            f'{copy["route_text"]} {route["title"]}',
+            copy["route_cta"],
+            f'{lang_url(lang, "resources")}#supply-{slug}',
+        ),
+        (
+            "03",
+            copy["plan_label"],
+            copy["plan_text"],
+            copy["plan_cta"],
+            f'{lang_url(lang, "repair-plan")}#plan-{slug}',
+        ),
+    ]
+    cards = "".join(
+        f"""
+<article class="guide-action-card">
+  <span>{step}</span>
+  <h3>{escape(label)}</h3>
+  <p>{escape(text)}</p>
+  <a href="{href}">{escape(cta)}</a>
+</article>
+"""
+        for step, label, text, cta, href in actions
+    )
+    return f"""
+<section class="section guide-action-bridge" id="guide-action-bridge" style="--guardian-accent:{GUARDIAN_DOMAINS[slug]["accent"]}">
+  <div class="section-intro">
+    <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+    <h2>{escape(copy["title"])}</h2>
+    <p>{escape(copy["intro"])}</p>
+    <p class="guide-action-guardian">{escape(guardian_name)}</p>
+  </div>
+  <div class="guide-action-grid">{cards}</div>
+</section>
+"""
+
+
 def guide_page(lang: str, guide: dict, index: int) -> None:
     t = LANGS[lang]
     labels = TOPIC_DETAILS[lang]
@@ -4548,6 +4674,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     {guide_card(lang, next_b)}
   </aside>
 </section>
+{guide_action_bridge(lang, guide)}
 """
     schema = json_ld({
         "@context": "https://schema.org",

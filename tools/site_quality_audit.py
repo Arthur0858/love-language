@@ -169,6 +169,7 @@ def load_generator_config():
 GENERATOR_CONFIG = load_generator_config()
 ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
 EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT.removeprefix('ca-')}, DIRECT, f08c47fec0942fa0"
+FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
 CURRENT_STATIC_ASSETS = {
     "css": GENERATOR_CONFIG.CSS_ASSET,
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
@@ -449,6 +450,16 @@ def is_keepsakes_page(page: Path) -> bool:
     if parts and parts[0] in {"en", "ja", "ko", "es"}:
         parts.pop(0)
     return parts == ["keepsakes", "index.html"]
+
+
+def formal_guide_slug_for_page(page: Path) -> str:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    if len(parts) == 3 and parts[0] == "guides" and parts[2] == "index.html" and parts[1] in FORMAL_GUIDE_GUARDIANS:
+        return parts[1]
+    return ""
 
 
 def lang_url_for_page(page: Path, target: str = "") -> str:
@@ -1446,6 +1457,23 @@ def main() -> int:
             if missing_keepsake_hrefs:
                 issues.append(f"{page}: keepsake cards missing continuation hrefs {', '.join(missing_keepsake_hrefs)}")
 
+        guide_slug = formal_guide_slug_for_page(page)
+        if guide_slug:
+            stats["guide_action_bridge_pages"] += 1
+            guardian_slug = FORMAL_GUIDE_GUARDIANS[guide_slug]
+            bridge_count = parser.ids.count("guide-action-bridge")
+            if bridge_count != 1:
+                issues.append(f"{page}: expected one #guide-action-bridge target, found {bridge_count}")
+            guide_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_guide_hrefs = {
+                lang_url_for_page(page, f"characters/{guardian_slug}"),
+                f"{lang_url_for_page(page, 'resources')}#supply-{guardian_slug}",
+                f"{lang_url_for_page(page, 'repair-plan')}#plan-{guardian_slug}",
+            }
+            missing_guide_hrefs = sorted(required_guide_hrefs.difference(guide_hrefs))
+            if missing_guide_hrefs:
+                issues.append(f"{page}: guide action bridge missing continuation hrefs {', '.join(missing_guide_hrefs)}")
+
         skip_links = [anchor for anchor in parser.anchors if "skip-link" in class_tokens(anchor)]
         if not skip_links:
             issues.append(f"{page}: missing skip link")
@@ -1945,6 +1973,7 @@ def main() -> int:
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
+    print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

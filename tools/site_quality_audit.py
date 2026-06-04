@@ -143,6 +143,8 @@ class PageParser(HTMLParser):
         if tag == "a":
             data["_text"] = ""
             data["_image_alt"] = ""
+            if any(stack_tag == "nav" and "nav-links" in class_tokens(stack_attrs) for stack_tag, stack_attrs, _ in self._stack):
+                data["_primary_nav"] = "1"
             self.anchors.append(data)
         if tag == "button":
             self.buttons.append([data, ""])
@@ -285,6 +287,27 @@ def is_locale_home(page: Path) -> bool:
     if relative == Path("index.html"):
         return True
     return len(relative.parts) == 2 and relative.parts[1] == "index.html" and relative.parts[0] in {"en", "ja", "ko", "es"}
+
+
+def expected_primary_nav_href(page: Path) -> str | None:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts == ["index.html"]:
+        return None
+    prefix = ""
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        prefix = parts.pop(0)
+    if len(parts) == 1 and parts[0] == "index.html":
+        return None
+    section = parts[0] if parts else ""
+    section = {
+        "keepsakes": "resources",
+        "luna": "resources",
+        "luna-yoga-music": "resources",
+    }.get(section, section)
+    if section not in {"guides", "characters", "theory", "resources", "about"}:
+        return None
+    return f"/{prefix}/{section}/" if prefix else f"/{section}/"
 
 
 def class_tokens(attrs: dict[str, str]) -> set[str]:
@@ -1062,6 +1085,24 @@ def main() -> int:
             issues.append(f"{page}: expected one primary navigation, found {len(primary_navs)}")
         elif not primary_navs[0].get("aria-label"):
             issues.append(f"{page}: primary navigation missing aria-label")
+        primary_nav_links = [anchor for anchor in parser.anchors if anchor.get("_primary_nav") == "1"]
+        stats["primary_nav_links"] += len(primary_nav_links)
+        if len(primary_nav_links) != 5:
+            issues.append(f"{page}: expected five primary navigation links, found {len(primary_nav_links)}")
+        primary_current_links = [anchor for anchor in primary_nav_links if anchor.get("aria-current") == "page"]
+        primary_active_links = [anchor for anchor in primary_nav_links if "active" in class_tokens(anchor)]
+        expected_nav_href = expected_primary_nav_href(page)
+        if expected_nav_href:
+            if len(primary_current_links) != 1:
+                issues.append(f"{page}: expected one current primary navigation link, found {len(primary_current_links)}")
+            elif primary_current_links[0].get("href") != expected_nav_href:
+                issues.append(f"{page}: current primary navigation link should be {expected_nav_href}: {primary_current_links[0].get('href', '')}")
+            if len(primary_active_links) != 1:
+                issues.append(f"{page}: expected one active primary navigation link, found {len(primary_active_links)}")
+            elif primary_active_links[0].get("href") != expected_nav_href:
+                issues.append(f"{page}: active primary navigation link should be {expected_nav_href}: {primary_active_links[0].get('href', '')}")
+        elif primary_current_links or primary_active_links:
+            issues.append(f"{page}: primary navigation should not mark a current section")
 
         language_details = [details for details in parser.details if "language-menu" in class_tokens(details)]
         if len(language_details) != 1:
@@ -1378,6 +1419,7 @@ def main() -> int:
     print(f"h1_tags={stats['h1_tags']}")
     print(f"main_landmarks={stats['main_landmarks']}")
     print(f"nav_landmarks={stats['nav_landmarks']}")
+    print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")

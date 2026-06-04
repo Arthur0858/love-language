@@ -3754,11 +3754,26 @@ button.secondary-btn {
 
   .supply-resume-card {
     grid-template-columns: 1fr;
+    gap: 0;
+    align-items: start;
   }
 
   .supply-resume-card img {
-    width: min(140px, 100%);
-    justify-self: start;
+    display: none;
+  }
+
+  .supply-resume-card h2 {
+    font-size: 1.18rem;
+    line-height: 1.18;
+  }
+
+  .supply-resume-next {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .supply-resume-next section {
+    padding: 10px;
   }
 
   .supply-quick-grid {

@@ -1448,12 +1448,30 @@ def main() -> int:
     stats.update(static_asset_stats)
 
     indexable_canonicals: set[str] = set()
+    indexable_titles: dict[str, list[Path]] = {}
+    indexable_descriptions: dict[str, list[Path]] = {}
     for page, parser in parsers.items():
         canonicals = parser.links_with_rel("canonical")
-        if len(canonicals) == 1 and not is_noindex(parser):
-            indexable_canonicals.add(canonicals[0].get("href", ""))
+        if not is_noindex(parser):
+            if len(canonicals) == 1:
+                indexable_canonicals.add(canonicals[0].get("href", ""))
+            page_title = "".join(parser.title_parts).strip()
+            page_description = parser.meta_content("description")
+            indexable_titles.setdefault(page_title, []).append(page)
+            indexable_descriptions.setdefault(page_description, []).append(page)
         if is_noindex(parser) and public_url_for_page(page) in sitemap_urls:
             issues.append(f"{SITEMAP_PATH}: noindex page should not be listed: {public_url_for_page(page)}")
+
+    stats["indexable_unique_titles"] = len(indexable_titles)
+    stats["indexable_unique_descriptions"] = len(indexable_descriptions)
+    for value, duplicate_pages in sorted(indexable_titles.items()):
+        if len(duplicate_pages) > 1:
+            issue_pages = ", ".join(str(item) for item in duplicate_pages[:5])
+            issues.append(f"indexable pages share duplicate <title> {value!r}: {issue_pages}")
+    for value, duplicate_pages in sorted(indexable_descriptions.items()):
+        if len(duplicate_pages) > 1:
+            issue_pages = ", ".join(str(item) for item in duplicate_pages[:5])
+            issues.append(f"indexable pages share duplicate meta description {value!r}: {issue_pages}")
 
     missing_sitemap_urls = sorted(indexable_canonicals.difference(sitemap_urls))
     unexpected_sitemap_urls = sorted(sitemap_urls.difference(indexable_canonicals))
@@ -1469,6 +1487,8 @@ def main() -> int:
     print(f"pages={stats['pages']}")
     print(f"indexable_pages={stats['indexable_pages']}")
     print(f"noindex_pages={stats['noindex_pages']}")
+    print(f"indexable_unique_titles={stats['indexable_unique_titles']}")
+    print(f"indexable_unique_descriptions={stats['indexable_unique_descriptions']}")
     print(f"images={stats['images']}")
     print(f"h1_tags={stats['h1_tags']}")
     print(f"main_landmarks={stats['main_landmarks']}")

@@ -278,6 +278,18 @@ def public_url_for_page(page: Path) -> str:
     return f"{DOMAIN}/{rel}"
 
 
+def public_url_for_href(page: Path, href: str) -> str:
+    parsed = urlparse(href)
+    if parsed.scheme in ("http", "https"):
+        return href
+    if href.startswith("//"):
+        return href
+    target, _ = target_for(page, href)
+    if target is None:
+        return href
+    return public_url_for_page(target)
+
+
 def is_noindex(parser: PageParser) -> bool:
     return "noindex" in parser.meta_content("robots").lower()
 
@@ -1260,6 +1272,13 @@ def main() -> int:
         hreflang_map = {link.get("hreflang", ""): link.get("href", "") for link in hreflang_links}
         if hreflang_map.get("x-default") and hreflang_map.get("zh-TW") and hreflang_map["x-default"] != hreflang_map["zh-TW"]:
             issues.append(f"{page}: x-default hreflang should match zh-TW alternate")
+        for anchor in language_links:
+            lang = anchor.get("lang", "")
+            menu_href = public_url_for_href(page, anchor.get("href", ""))
+            hreflang_href = hreflang_map.get(lang)
+            stats["language_hreflang_matches"] += 1
+            if hreflang_href != menu_href:
+                issues.append(f"{page}: language menu link for {lang} should match hreflang {hreflang_href}: {menu_href}")
 
         duplicate_ids = [value for value, count in Counter(parser.ids).items() if count > 1]
         if duplicate_ids:
@@ -1421,6 +1440,7 @@ def main() -> int:
     print(f"nav_landmarks={stats['nav_landmarks']}")
     print(f"primary_nav_links={stats['primary_nav_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
+    print(f"language_hreflang_matches={stats['language_hreflang_matches']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
     print(f"canonical_links={stats['canonical_links']}")

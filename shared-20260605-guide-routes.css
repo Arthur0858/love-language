@@ -2566,6 +2566,99 @@ button.secondary-btn {
   text-underline-offset: 4px;
 }
 
+.guide-domain-section {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(189, 82, 96, .1), transparent 28%),
+    radial-gradient(circle at 88% 10%, rgba(118, 102, 168, .1), transparent 30%),
+    linear-gradient(180deg, #fff, #fffaf6);
+}
+
+.guide-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.guide-domain-card {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto auto;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--domain-accent, var(--rose)), white 62%);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 84% 6%, color-mix(in srgb, var(--domain-glow, var(--gold)), transparent 48%), transparent 38%),
+    linear-gradient(145deg, color-mix(in srgb, var(--domain-accent, var(--rose)), white 90%), rgba(255, 255, 255, .95) 68%);
+  box-shadow: 0 12px 30px rgba(76, 42, 43, .06);
+}
+
+.guide-domain-prop {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 10px 16px color-mix(in srgb, var(--domain-accent, var(--rose)), transparent 76%));
+}
+
+.guide-domain-card span {
+  color: color-mix(in srgb, var(--domain-accent, var(--rose)), #302425 18%);
+  font-size: .78rem;
+  font-weight: 900;
+  line-height: 1.32;
+}
+
+.guide-domain-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.13rem;
+  line-height: 1.2;
+}
+
+.guide-domain-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .93rem;
+  line-height: 1.55;
+}
+
+.guide-domain-card dl {
+  display: grid;
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--domain-accent, var(--rose)), white 72%);
+}
+
+.guide-domain-card dt {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: .76rem;
+  font-weight: 900;
+}
+
+.guide-domain-card dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.48;
+}
+
+.guide-domain-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.guide-domain-actions a {
+  color: var(--rose);
+  font-size: .9rem;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .quiz-progress {
   display: grid;
   gap: 8px;
@@ -3693,6 +3786,7 @@ button.secondary-btn {
   .supply-wishlist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-need-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trust-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3920,6 +4014,7 @@ button.secondary-btn {
   .supply-panel-grid,
   .guardian-route-grid,
   .guardian-need-grid,
+  .guide-domain-grid,
   .guide-action-grid,
   .trust-action-grid,
   .about-trust-grid,
@@ -4091,6 +4186,38 @@ button.secondary-btn {
 
   .guardian-need-card div {
     grid-column: 2;
+  }
+
+  .guide-domain-card {
+    grid-template-columns: 46px minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    gap: 7px 12px;
+    padding: 14px;
+  }
+
+  .guide-domain-prop {
+    grid-row: 1 / 4;
+    width: 46px;
+    height: 46px;
+  }
+
+  .guide-domain-card span {
+    font-size: .74rem;
+  }
+
+  .guide-domain-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .guide-domain-card p,
+  .guide-domain-card dl,
+  .guide-domain-actions {
+    grid-column: 2;
+  }
+
+  .guide-domain-actions {
+    display: grid;
+    gap: 7px;
   }
 
   .guardian-card {

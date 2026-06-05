@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-guardian-needs"
+ASSET_VERSION = "20260605-guide-routes"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1586,6 +1586,55 @@ GUIDE_INDEX_COMPASS = {
             ("2", "Si ya conoces tu guardiana", "Abre la página de personaje para ver herida, tarea de reparación y ruta de suministro.", "Ver guardianas", "characters"),
             ("3", "Si estás lista para actuar", "Pon una frase de la guía en el plan de 7 días y elige un libro o suministro Luna.", "Abrir plan", "repair-plan"),
         ],
+    },
+}
+
+
+GUIDE_DOMAIN_ROUTES = {
+    "zh": {
+        "eyebrow": "GUARDIAN READING ROUTES",
+        "title": "五條守護者閱讀路線",
+        "intro": "如果你已經感覺到自己的缺口，可以直接從守護者分域進入對應指南。每條路線都接上角色、練習與補給，不會只停在閱讀。",
+        "read": "閱讀指南",
+        "guardian": "進入分域",
+        "supply": "補給路線",
+        "practice": "先做這一步",
+    },
+    "en": {
+        "eyebrow": "GUARDIAN READING ROUTES",
+        "title": "Five Guardian Reading Routes",
+        "intro": "If you already feel the gap, enter through the matching guardian domain. Each route connects a guide, character page, practice, and supply path.",
+        "read": "Read guide",
+        "guardian": "Enter domain",
+        "supply": "Supply route",
+        "practice": "First practice",
+    },
+    "ja": {
+        "eyebrow": "GUARDIAN READING ROUTES",
+        "title": "五つの守護者読書ルート",
+        "intro": "すでに欠けが見えているなら、対応する守護者の分域から入れます。各ルートはガイド、人物ページ、練習、補給へつながります。",
+        "read": "ガイドを読む",
+        "guardian": "分域へ入る",
+        "supply": "補給ルート",
+        "practice": "最初の練習",
+    },
+    "ko": {
+        "eyebrow": "GUARDIAN READING ROUTES",
+        "title": "다섯 수호자 읽기 루트",
+        "intro": "이미 빈틈이 느껴진다면 맞는 수호자 영역에서 시작하세요. 각 루트는 가이드, 캐릭터 페이지, 연습, 보급 길로 이어집니다.",
+        "read": "가이드 읽기",
+        "guardian": "영역으로 들어가기",
+        "supply": "보급 루트",
+        "practice": "먼저 할 연습",
+    },
+    "es": {
+        "eyebrow": "GUARDIAN READING ROUTES",
+        "title": "Cinco rutas de lectura guardiana",
+        "intro": "Si ya sientes la falta principal, entra por el dominio guardián correspondiente. Cada ruta conecta guía, personaje, práctica y suministro.",
+        "read": "Leer guía",
+        "guardian": "Entrar al dominio",
+        "supply": "Ruta de suministro",
+        "practice": "Primera práctica",
     },
 }
 
@@ -4126,6 +4175,43 @@ def guide_index_compass(lang: str) -> str:
 """
 
 
+def guide_domain_routes_section(lang: str) -> str:
+    copy = GUIDE_DOMAIN_ROUTES[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        route = supply_route(lang, slug)
+        guide = route["guide"]
+        name, typ, _desc = guardian[lang]
+        guide_title, guide_desc = guide[lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        cards.append(f"""
+<article class="guide-domain-card" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(guardian["prop"], f"{name} {guide_title}", "guide-domain-prop")}
+  <span>{escape(name)} · {escape(typ)}</span>
+  <h3>{escape(guide_title)}</h3>
+  <p>{escape(guide_desc)}</p>
+  <dl>
+    <div><dt>{escape(copy["practice"])}</dt><dd>{escape(route["mission"])}</dd></div>
+  </dl>
+  <div class="guide-domain-actions">
+    <a href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(copy["read"])}</a>
+    <a href="{lang_url(lang, "characters/" + slug)}">{escape(copy["guardian"])}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(copy["supply"])}</a>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section guide-domain-section" data-guide-domain-routes>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
+    <a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a>
+  </div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="guide-domain-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def character_supply_panel(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     route = supply_route(lang, slug)
@@ -5142,6 +5228,7 @@ def guides_index(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">HEART GARDEN FIELD GUIDE</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p></section>
 {guide_index_compass(lang)}
+{guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """

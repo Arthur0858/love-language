@@ -70,6 +70,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('characters-') && result.guardianCardCount !== 5) failures.push('missing guardian universe cards');
     if (result.name.startsWith('characters-') && result.guardianNeedCardCount !== 5) failures.push('missing guardian need router cards');
     if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
+    if (result.name.startsWith('guides-') && result.guideDomainRouteCount !== 5) failures.push('missing guide guardian reading routes');
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
     if (result.name.startsWith('keepsakes-') && result.keepsakeRitualCount !== 4) failures.push('missing keepsake ritual route');
@@ -296,6 +297,7 @@ const cases = [
   { name: 'guardian-vivian-mobile', path: '/characters/vivian/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-claire-mobile', path: '/characters/claire/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-dora-mobile', path: '/characters/dora/', viewport: { width: 390, height: 844 } },
+  { name: 'guides-mobile', path: '/guides/', viewport: { width: 390, height: 844 } },
   { name: 'en-home-mobile', path: '/en/', viewport: { width: 390, height: 844 } },
   { name: 'ja-repair-plan-mobile', path: '/ja/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'es-guides-desktop', path: '/es/guides/', viewport: { width: 1280, height: 900 } },
@@ -413,6 +415,7 @@ for (const item of cases) {
   const universeMapCount = await page.locator('[data-universe-map]').count();
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
   const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
+  const guideDomainRouteCount = await page.locator('[data-guide-domain-routes] .guide-domain-card').count();
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
@@ -444,6 +447,7 @@ for (const item of cases) {
     universeMapCount,
     guardianCardCount,
     guardianNeedCardCount,
+    guideDomainRouteCount,
     supplyDomainRouteCount,
     keepsakeShelfCount,
     keepsakeRitualCount,

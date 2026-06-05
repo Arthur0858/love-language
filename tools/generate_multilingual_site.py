@@ -6760,7 +6760,7 @@ def luna_offer_section(lang: str) -> str:
   <div class="luna-offer-actions">
     <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(offer["resources"])}</a>
-    <a class="secondary-btn" href="mailto:contact@lovetypes.tw?subject=Luna%20night%20supply">{escape(offer["contact"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request">{escape(offer["contact"])}</a>
   </div>
 </section>
 """
@@ -6879,7 +6879,7 @@ def contact_request_section(lang: str) -> str:
         for idx, (title, body) in enumerate(repair["items"], 1)
     )
     return f"""
-<section class="section contact-request-section">
+<section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
   <p class="section-intro">{escape(request["intro"])}</p>
   <div class="contact-request-grid">{request_cards}</div>
@@ -6889,7 +6889,7 @@ def contact_request_section(lang: str) -> str:
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request["subject"]}">{escape(request["cta"])}</a>
   </div>
 </section>
-<section class="section contact-request-section">
+<section class="section contact-request-section" id="site-repair-report">
   <div class="section-head"><div><p class="eyebrow">{escape(repair["eyebrow"])}</p><h2>{escape(repair["title"])}</h2></div></div>
   <p class="section-intro">{escape(repair["intro"])}</p>
   <div class="contact-request-grid">{repair_cards}</div>

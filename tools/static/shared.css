@@ -1,14 +1,14 @@
 :root {
-  --rose: #bd5260;
-  --rose-deep: #93404b;
+  --rose: #943743;
+  --rose-deep: #742a35;
   --ink: #302425;
-  --muted: #766160;
+  --muted: #66504f;
   --cream: #fff8f2;
   --paper: #fffdf9;
   --line: #ecd8d5;
-  --sage: #6b7f6a;
-  --gold: #b78b45;
-  --lilac: #7666a8;
+  --sage: #435a43;
+  --gold: #76501c;
+  --lilac: #50417b;
   --shadow: 0 18px 54px rgba(76, 42, 43, .11);
   --shadow-lift: 0 22px 56px rgba(76, 42, 43, .16);
   --serif: Georgia, 'Times New Roman', 'Songti TC', 'Yu Mincho', 'Batang', serif;
@@ -2593,8 +2593,8 @@ button.secondary-btn {
 
 .guardian-card[href*="noah"] span { color: var(--lilac); }
 .guardian-card[href*="claire"] span { color: var(--sage); }
-.guardian-card[href*="dora"] span { color: #c66b72; }
-.guardian-card[href*="vivian"] span { color: #b77a45; }
+.guardian-card[href*="dora"] span { color: #923e4a; }
+.guardian-card[href*="vivian"] span { color: #76501c; }
 
 .universe-map-section {
   background:

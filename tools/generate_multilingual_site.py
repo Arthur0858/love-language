@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-tap-targets"
+ASSET_VERSION = "20260605-contrast"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2886,7 +2886,7 @@ GUARDIANS = {
 
 GUARDIAN_DOMAINS = {
     "iris": {
-        "accent": "#bd5260",
+        "accent": "#943743",
         "glow": "#f0c778",
         "motif": "dawn-glass-garden",
         "zh": ("晨曦玻璃花園", "羽筆與手寫光會把等很久的話照亮。", "進入艾莉絲的語言宇宙"),
@@ -2896,7 +2896,7 @@ GUARDIAN_DOMAINS = {
         "es": ("Jardín de cristal del amanecer", "La luz de pluma da forma a palabras que esperaron demasiado.", "Entrar al universo de Iris"),
     },
     "noah": {
-        "accent": "#7666a8",
+        "accent": "#50417b",
         "glow": "#b8c7e8",
         "motif": "star-sea-library",
         "zh": ("星海圖書館", "星圖與安靜海面保存真正留在彼此身邊的時間。", "進入諾雅的時間宇宙"),
@@ -2906,7 +2906,7 @@ GUARDIAN_DOMAINS = {
         "es": ("Biblioteca del mar estelar", "Mapas de estrellas y agua quieta guardan el tiempo de quedarse.", "Entrar al universo de Noah"),
     },
     "vivian": {
-        "accent": "#b78b45",
+        "accent": "#76501c",
         "glow": "#e9b2a0",
         "motif": "moonlit-memory-workshop",
         "zh": ("月光記憶工坊", "緞帶、票根與禮物盒收藏被想起的證據。", "進入薇薇安的記憶宇宙"),
@@ -2916,7 +2916,7 @@ GUARDIAN_DOMAINS = {
         "es": ("Taller de memoria lunar", "Cintas, boletos y cajas guardan pruebas de haber sido recordada.", "Entrar al universo de Vivian"),
     },
     "claire": {
-        "accent": "#6b7f6a",
+        "accent": "#435a43",
         "glow": "#d8c79a",
         "motif": "greenhouse-repair-room",
         "zh": ("溫室修復間", "工具袋與暖白燈把承諾放回日常。", "進入克萊兒的行動宇宙"),
@@ -2926,7 +2926,7 @@ GUARDIAN_DOMAINS = {
         "es": ("Invernadero de reparación", "Herramientas y luz cálida devuelven promesas a lo cotidiano.", "Entrar al universo de Claire"),
     },
     "dora": {
-        "accent": "#c66b72",
+        "accent": "#923e4a",
         "glow": "#f0b49c",
         "motif": "rose-gold-safe-sanctuary",
         "zh": ("玫瑰金安全聖域", "柔軟布料與暖光守護經過同意的靠近。", "進入朵拉的溫度宇宙"),

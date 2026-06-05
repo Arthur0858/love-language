@@ -142,7 +142,7 @@ REDIRECTS = {
     "/assets/lovetypes/share/vivian-story.webp": "/assets/lovetypes/share/vivian-story-zh.webp",
     "/assets/lovetypes/share/claire-story.webp": "/assets/lovetypes/share/claire-story-zh.webp",
     "/assets/lovetypes/share/dora-story.webp": "/assets/lovetypes/share/dora-story-zh.webp",
-    "/luna-yoga-music/luna.css": "/shared-20260605-asset-audit.css",
+        "/luna-yoga-music/luna.css": "/shared-20260605-label-typography.css",
     "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp": "/assets/lovetypes/share/guide-toolkit-og.jpg",
     "/assets/lovetypes/backgrounds/quiz-desk.webp": "/assets/lovetypes/backgrounds/guardian-garden.webp",
     "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp": "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp",

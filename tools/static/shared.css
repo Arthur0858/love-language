@@ -556,6 +556,79 @@ button.secondary-btn {
 
 .section { padding: 64px min(7vw, 92px); }
 
+.garden-map-hero {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(183, 139, 69, .12), transparent 32%),
+    linear-gradient(135deg, #fff7f4, #f7fbf4);
+}
+
+.garden-map-routes,
+.garden-map-guides {
+  background: #fff;
+}
+
+.garden-map-route-grid,
+.garden-map-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.garden-map-route-card,
+.garden-map-trust-card {
+  display: grid;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(224, 199, 182, .88);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(255, 248, 241, .86));
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(76, 42, 43, .055);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.garden-map-route-card span {
+  width: fit-content;
+  color: var(--rose);
+  font-size: .82rem;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.garden-map-route-card h3,
+.garden-map-trust-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  line-height: 1.24;
+}
+
+.garden-map-route-card p,
+.garden-map-trust-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
+.garden-map-route-card:hover,
+.garden-map-trust-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(189, 82, 96, .42);
+  box-shadow: var(--shadow-lift);
+}
+
+.garden-map-guardians,
+.garden-map-trust {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(117, 140, 106, .08), transparent 28%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
 .section-head {
   display: flex;
   align-items: end;
@@ -4015,6 +4088,8 @@ button.secondary-btn {
 @media (max-width: 1180px) {
   .universe-gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .home-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .garden-map-route-grid,
+  .garden-map-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .supply-entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4260,6 +4335,8 @@ button.secondary-btn {
   .about-trust-grid,
   .policy-compass-grid,
   .guide-compass-grid,
+  .garden-map-route-grid,
+  .garden-map-trust-grid,
   .contact-request-grid,
   .luna-protocol-grid,
   .luna-use-grid,
@@ -4362,6 +4439,11 @@ button.secondary-btn {
   }
 
   .home-journey-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .garden-map-route-grid,
+  .garden-map-trust-grid {
     grid-template-columns: 1fr;
   }
 

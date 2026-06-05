@@ -24,6 +24,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 ## High-Value Pages
 
 - Quiz and home entrance: https://lovetypes.tw/
+- Human-readable Heart Garden map: https://lovetypes.tw/garden-map/
 - Guardian overview: https://lovetypes.tw/characters/
 - Field guides: https://lovetypes.tw/guides/
 - Guardian supply routes and affiliate resources: https://lovetypes.tw/resources/

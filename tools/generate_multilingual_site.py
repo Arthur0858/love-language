@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-home-journey-map"
+ASSET_VERSION = "20260605-garden-map"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3491,10 +3491,10 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
 def footer(lang: str) -> str:
     t = LANGS[lang]
     cards = [
+        (lang_url(lang, "garden-map"), GARDEN_MAP[lang]["title"], GARDEN_MAP[lang]["desc"]),
         (lang_url(lang, "resources"), t["resources"], t["resources_desc"]),
         (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
         (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
-        (lang_url(lang, "theory"), t["theory"], t["tagline"]),
     ]
     card_html = "".join(f'<a href="{href}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a>' for href, title, desc in cards)
     return f"""
@@ -3517,6 +3517,7 @@ def breadcrumb_items(lang: str, path: str, title: str) -> list[tuple[str, str]]:
         "guides": t["guides"],
         "characters": t["guardians"],
         "resources": t["resources"],
+        "garden-map": GARDEN_MAP[lang]["title"],
         "repair-plan": REPAIR_PLAN[lang]["title"],
         "keepsakes": KEEPSAKES_PAGE[lang]["title"],
         "luna-yoga-music": t["luna_title"],
@@ -3960,6 +3961,120 @@ HOME_JOURNEY = {
 }
 
 
+GARDEN_MAP = {
+    "zh": {
+        "title": "心語庭園地圖",
+        "desc": "把 LoveTypes 的測驗、五位守護者、深度指南、旅人補給、Luna、修復計畫與信任頁整理成一張可探索的地圖。",
+        "eyebrow": "HEART GARDEN MAP",
+        "intro": "如果你不知道下一步該去哪裡，先從這張地圖選一盞燈。每條路都會回到同一個核心：辨認需求、說清楚、做一個小修復。",
+        "routes_title": "四條主要路線",
+        "guardians_title": "五個分域入口",
+        "guides_title": "常用指南燈塔",
+        "trust_title": "信任與邊界",
+        "routes": [
+            ("認領守護者", "從首頁測驗開始，取得你的主要守護者與個人化下一步。", "開始測驗", "#quiz-section"),
+            ("走進五域", "直接查看五位守護者與各自的錯頻傷口、修復任務。", "查看守護者", "characters"),
+            ("拿一份補給", "依照守護者選指南、任務、Luna 或延伸書卷。", "前往補給站", "resources"),
+            ("寫成修復週期", "把情緒整理成 7 日練習，不一次修完整段關係。", "打開修復計畫", "repair-plan"),
+        ],
+        "trust_routes": [
+            ("關於心語庭園", "理解 LoveTypes 的宇宙觀、內容邊界與適合使用方式。", "about"),
+            ("愛之語理論", "回到五種愛之語的溝通框架，理解它不是人格標籤。", "theory"),
+            ("聯絡與修復頁面", "回報錯誤、合作、素材授權或需要修復的頁面。", "contact"),
+            ("隱私與條款", "查看資料、聯盟揭露、內容限制與使用邊界。", "privacy"),
+        ],
+    },
+    "en": {
+        "title": "Heart Garden Map",
+        "desc": "A readable map of the LoveTypes quiz, five guardians, field guides, supplies, Luna, repair plan, and trust pages.",
+        "eyebrow": "HEART GARDEN MAP",
+        "intro": "If you are not sure where to go next, choose one lamp from this map. Every route returns to the same core: name the need, say it clearly, and practice one small repair.",
+        "routes_title": "Four main routes",
+        "guardians_title": "Five domain gates",
+        "guides_title": "Useful guide lamps",
+        "trust_title": "Trust and boundaries",
+        "routes": [
+            ("Recognize your guardian", "Start with the homepage quiz and receive a guardian plus personal next steps.", "Start quiz", "#quiz-section"),
+            ("Enter five domains", "See the five guardians, misfrequency wounds, and repair missions.", "View guardians", "characters"),
+            ("Take one supply", "Choose a guide, task, Luna path, or book route by guardian.", "Open supplies", "resources"),
+            ("Make a repair week", "Turn the emotion into seven days of practice without repairing everything at once.", "Open repair plan", "repair-plan"),
+        ],
+        "trust_routes": [
+            ("About the Heart Garden", "Understand the LoveTypes universe, content boundary, and best use cases.", "about"),
+            ("Love-language theory", "Return to the communication framework behind the five languages.", "theory"),
+            ("Contact and page repair", "Report mistakes, partnerships, asset permissions, or pages that need repair.", "contact"),
+            ("Privacy and terms", "Review data, affiliate disclosure, content limits, and usage boundaries.", "privacy"),
+        ],
+    },
+    "ja": {
+        "title": "心語の庭マップ",
+        "desc": "LoveTypes の診断、五人の守護者、ガイド、補給、Luna、修復プラン、信頼ページを一枚の地図にまとめます。",
+        "eyebrow": "HEART GARDEN MAP",
+        "intro": "次にどこへ進むか迷ったら、この地図から一つの灯りを選んでください。どの道も、必要を名づけ、言葉にし、小さな修復へ戻ります。",
+        "routes_title": "四つの主要ルート",
+        "guardians_title": "五つの領域入口",
+        "guides_title": "よく使うガイド",
+        "trust_title": "信頼と境界",
+        "routes": [
+            ("守護者を認領する", "ホームの診断から、主な守護者と個人の次の一歩を受け取ります。", "診断を始める", "#quiz-section"),
+            ("五つの領域へ入る", "五人の守護者、すれ違いの傷、修復課題を見ます。", "守護者を見る", "characters"),
+            ("補給を一つ選ぶ", "守護者に合わせて、ガイド、課題、Luna、本のルートを選びます。", "補給へ", "resources"),
+            ("修復週間にする", "感情を七日間の練習へ変え、一度にすべてを直そうとしません。", "修復プランへ", "repair-plan"),
+        ],
+        "trust_routes": [
+            ("心語の庭について", "LoveTypes の世界観、内容の範囲、使い方を理解します。", "about"),
+            ("愛の言語理論", "五つの言語の背後にあるコミュニケーション枠組みに戻ります。", "theory"),
+            ("連絡とページ修復", "誤り、協力、素材許可、修復が必要なページを知らせます。", "contact"),
+            ("プライバシーと規約", "データ、アフィリエイト開示、内容制限、利用境界を確認します。", "privacy"),
+        ],
+    },
+    "ko": {
+        "title": "마음의 정원 지도",
+        "desc": "LoveTypes 테스트, 다섯 수호자, 가이드, 보급, Luna, 회복 계획, 신뢰 페이지를 한 장의 지도로 정리합니다.",
+        "eyebrow": "HEART GARDEN MAP",
+        "intro": "다음에 어디로 갈지 모르겠다면 이 지도에서 등불 하나를 고르세요. 모든 길은 필요를 이름 붙이고, 분명히 말하고, 작은 회복을 연습하는 곳으로 돌아옵니다.",
+        "routes_title": "네 가지 주요 길",
+        "guardians_title": "다섯 영역 입구",
+        "guides_title": "자주 쓰는 가이드 등불",
+        "trust_title": "신뢰와 경계",
+        "routes": [
+            ("수호자 알아보기", "홈 테스트에서 주요 수호자와 개인 다음 단계를 받습니다.", "테스트 시작", "#quiz-section"),
+            ("다섯 영역 들어가기", "다섯 수호자, 어긋남의 상처, 회복 임무를 봅니다.", "수호자 보기", "characters"),
+            ("보급 하나 선택", "수호자에 맞는 가이드, 과제, Luna, 책 루트를 고릅니다.", "보급 열기", "resources"),
+            ("회복 주간 만들기", "감정을 7일 연습으로 바꾸고 한 번에 모든 것을 고치려 하지 않습니다.", "회복 계획 열기", "repair-plan"),
+        ],
+        "trust_routes": [
+            ("마음의 정원 소개", "LoveTypes 세계관, 콘텐츠 범위, 사용 방식을 이해합니다.", "about"),
+            ("사랑의 언어 이론", "다섯 언어 뒤의 대화 프레임으로 돌아갑니다.", "theory"),
+            ("연락과 페이지 수정", "오류, 협업, 자료 허가, 수정이 필요한 페이지를 알립니다.", "contact"),
+            ("개인정보와 약관", "자료, 제휴 공개, 콘텐츠 제한, 이용 경계를 확인합니다.", "privacy"),
+        ],
+    },
+    "es": {
+        "title": "Mapa del Jardin del Corazon",
+        "desc": "Un mapa legible del test LoveTypes, las cinco guardianas, guias, recursos, Luna, plan de reparacion y paginas de confianza.",
+        "eyebrow": "HEART GARDEN MAP",
+        "intro": "Si no sabes a donde ir despues, elige una luz en este mapa. Cada ruta vuelve al mismo centro: nombrar la necesidad, decirla con claridad y practicar una reparacion pequena.",
+        "routes_title": "Cuatro rutas principales",
+        "guardians_title": "Cinco puertas de dominio",
+        "guides_title": "Guias utiles",
+        "trust_title": "Confianza y limites",
+        "routes": [
+            ("Reconocer tu guardiana", "Empieza con el test de inicio y recibe una guardiana con siguientes pasos.", "Empezar test", "#quiz-section"),
+            ("Entrar a cinco dominios", "Ve las cinco guardianas, heridas de desajuste y misiones de reparacion.", "Ver guardianas", "characters"),
+            ("Tomar un recurso", "Elige guia, tarea, Luna o libro segun tu guardiana.", "Abrir recursos", "resources"),
+            ("Crear una semana", "Convierte la emocion en siete dias de practica sin arreglar todo a la vez.", "Abrir plan", "repair-plan"),
+        ],
+        "trust_routes": [
+            ("Sobre el Jardin", "Entiende el universo LoveTypes, sus limites y mejores usos.", "about"),
+            ("Teoria de lenguajes", "Vuelve al marco de comunicacion detras de los cinco lenguajes.", "theory"),
+            ("Contacto y reparacion", "Reporta errores, colaboraciones, permisos de recursos o paginas por corregir.", "contact"),
+            ("Privacidad y terminos", "Revisa datos, afiliados, limites de contenido y condiciones de uso.", "privacy"),
+        ],
+    },
+}
+
+
 def home_journey_section(lang: str) -> str:
     copy = HOME_JOURNEY[lang]
     cards = []
@@ -4020,6 +4135,66 @@ def universe_map_section(lang: str) -> str:
   <div class="guardian-grid universe-map-grid">{cards}</div>
 </section>
 """
+
+
+def garden_map_page(lang: str) -> None:
+    t = LANGS[lang]
+    copy = GARDEN_MAP[lang]
+
+    def map_href(target: str) -> str:
+        return lang_url(lang) + target if target.startswith("#") else lang_url(lang, target)
+
+    def abs_map_href(target: str) -> str:
+        return abs_url(lang) + target if target.startswith("#") else abs_url(lang, target)
+
+    route_cards = "".join(f"""
+<a class="garden-map-route-card" href="{map_href(target)}">
+  <span>{escape(action)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""" for title, desc, action, target in copy["routes"])
+
+    guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
+    guide_cards = "".join(guide_card(lang, guide) for guide in GUIDES)
+
+    trust_cards = "".join(f"""
+<a class="garden-map-trust-card" href="{lang_url(lang, path)}">
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""" for title, desc, path in copy["trust_routes"])
+
+    body = f"""
+<section class="page-hero compact garden-map-hero">
+  <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h1>{escape(copy["title"])}</h1>
+  <p>{escape(copy["intro"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
+</section>
+<section class="section garden-map-routes" data-garden-map-routes>
+  <div class="section-head"><div><p class="eyebrow">MAIN ROUTES</p><h2>{escape(copy["routes_title"])}</h2></div></div>
+  <div class="garden-map-route-grid">{route_cards}</div>
+</section>
+<section class="section garden-map-guardians" data-garden-map-guardians>
+  <div class="section-head"><div><p class="eyebrow">FIVE DOMAINS</p><h2>{escape(copy["guardians_title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
+  <div class="guardian-grid compact">{guardian_cards}</div>
+</section>
+<section class="section garden-map-guides" data-garden-map-guides>
+  <div class="section-head"><div><p class="eyebrow">FIELD GUIDES</p><h2>{escape(copy["guides_title"])}</h2></div><a href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+  <div class="card-grid">{guide_cards}</div>
+</section>
+<section class="section garden-map-trust" data-garden-map-trust>
+  <div class="section-head"><div><p class="eyebrow">TRUST ROUTES</p><h2>{escape(copy["trust_title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></div>
+  <div class="garden-map-trust-grid">{trust_cards}</div>
+</section>
+<section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+"""
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["title"])}","description":"{escape(copy["desc"])}","url":"{abs_url(lang, "garden-map")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    list_items = [(title, abs_map_href(target)) for title, _desc, _action, target in copy["routes"]]
+    schema += item_list_schema(copy["routes_title"], copy["intro"], list_items)
+    page_title = f"{copy['title']} | LoveTypes" if lang == "zh" else f"{copy['title']} | LoveTypes {t['name']}"
+    write(page_path(lang, "garden-map"), layout(lang, page_title, copy["desc"], "garden-map", body, copy["title"], "website", "/og-cover.jpg", schema))
 
 
 def supply_wishlist_section(lang: str) -> str:
@@ -6532,6 +6707,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 ## High-Value Pages
 
 - Quiz and home entrance: {DOMAIN}/
+- Human-readable Heart Garden map: {DOMAIN}/garden-map/
 - Guardian overview: {DOMAIN}/characters/
 - Field guides: {DOMAIN}/guides/
 - Guardian supply routes and affiliate resources: {DOMAIN}/resources/
@@ -6580,8 +6756,8 @@ def write_site_manifest() -> None:
         ],
         "shortcuts": [
             {"name": "開始認領儀式", "url": "/#quiz-section", "description": "完成 15 道心語題目，找到你的情感守護者。"},
+            {"name": "心語庭園地圖", "url": "/garden-map/", "description": "查看測驗、守護者、指南、補給與修復計畫的完整入口。"},
             {"name": "五位守護者", "url": "/characters/", "description": "查看艾莉絲、諾雅、薇薇安、克萊兒與朵拉。"},
-            {"name": "旅人補給", "url": "/resources/", "description": "依守護者路線選擇指南、練習與補給資源。"},
         ],
     }
     write(ROOT / "site.webmanifest", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
@@ -6648,7 +6824,7 @@ def write_redirects() -> None:
 
 
 def write_support_files() -> None:
-    paths = ["", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths = ["", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{g['slug']}" for g in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     sitemap = [
@@ -6718,6 +6894,7 @@ def main() -> None:
     write_versioned_scripts()
     for lang in LANGS:
         home(lang)
+        garden_map_page(lang)
         guides_index(lang)
         characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):

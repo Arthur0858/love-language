@@ -85,6 +85,10 @@ function summarizeFailures(results) {
     if (!result.h1) failures.push('missing h1');
     if (result.navCount < 4) failures.push('navigation too small');
     if (result.textLength < 120) failures.push('page text too short');
+    if (result.name.startsWith('garden-map-') && result.gardenMapRouteCount !== 4) failures.push('missing four garden map routes');
+    if (result.name.startsWith('garden-map-') && result.gardenMapGuardianCount !== 5) failures.push('missing five garden map guardian cards');
+    if (result.name.startsWith('garden-map-') && result.gardenMapGuideCount < 10) failures.push('missing garden map guide lamps');
+    if (result.name.startsWith('garden-map-') && result.gardenMapTrustCount !== 4) failures.push('missing four garden map trust routes');
     if (result.name.startsWith('home-') && result.universeGateCount !== 5) failures.push('missing five universe gates');
     if (result.name.startsWith('home-') && result.homeJourneyCardCount !== 4) failures.push('missing four home journey cards');
     if (result.name.startsWith('characters-') && result.universeMapCount !== 1) failures.push('missing universe map');
@@ -298,6 +302,8 @@ const chromium = await getChromium();
 const cases = [
   { name: 'home-desktop', path: '/', viewport: { width: 1440, height: 1000 } },
   { name: 'home-mobile', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'garden-map-desktop', path: '/garden-map/', viewport: { width: 1280, height: 900 } },
+  { name: 'garden-map-mobile', path: '/garden-map/', viewport: { width: 390, height: 844 } },
   { name: 'characters-desktop', path: '/characters/', viewport: { width: 1280, height: 900 } },
   { name: 'characters-mobile', path: '/characters/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-iris-desktop', path: '/characters/iris/', viewport: { width: 1280, height: 900 } },
@@ -454,6 +460,10 @@ for (const item of cases) {
   const bodyText = await page.locator('body').innerText();
   const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
   const homeJourneyCardCount = await page.locator('[data-home-journey] .home-journey-card').count();
+  const gardenMapRouteCount = await page.locator('[data-garden-map-routes] .garden-map-route-card').count();
+  const gardenMapGuardianCount = await page.locator('[data-garden-map-guardians] .guardian-card').count();
+  const gardenMapGuideCount = await page.locator('[data-garden-map-guides] .content-card').count();
+  const gardenMapTrustCount = await page.locator('[data-garden-map-trust] .garden-map-trust-card').count();
   const universeMapCount = await page.locator('[data-universe-map]').count();
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
   const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
@@ -492,6 +502,10 @@ for (const item of cases) {
     textLength: bodyText.length,
     universeGateCount,
     homeJourneyCardCount,
+    gardenMapRouteCount,
+    gardenMapGuardianCount,
+    gardenMapGuideCount,
+    gardenMapTrustCount,
     universeMapCount,
     guardianCardCount,
     guardianNeedCardCount,

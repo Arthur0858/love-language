@@ -61,6 +61,66 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/" />
   </url>
   <url>
+    <loc>https://lovetypes.tw/garden-map/</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/garden-map/" />
+  </url>
+  <url>
+    <loc>https://lovetypes.tw/en/garden-map/</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/garden-map/" />
+  </url>
+  <url>
+    <loc>https://lovetypes.tw/ja/garden-map/</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/garden-map/" />
+  </url>
+  <url>
+    <loc>https://lovetypes.tw/ko/garden-map/</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/garden-map/" />
+  </url>
+  <url>
+    <loc>https://lovetypes.tw/es/garden-map/</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lovetypes.tw/en/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://lovetypes.tw/ja/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://lovetypes.tw/ko/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://lovetypes.tw/es/garden-map/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/garden-map/" />
+  </url>
+  <url>
     <loc>https://lovetypes.tw/guides/</loc>
     <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>

@@ -437,6 +437,14 @@ def is_resources_page(page: Path) -> bool:
     return parts == ["resources", "index.html"]
 
 
+def is_garden_map_page(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts == ["garden-map", "index.html"]
+
+
 def is_characters_index_page(page: Path) -> bool:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -880,6 +888,7 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
 
     high_value_urls = {
         f"{DOMAIN}/",
+        f"{DOMAIN}/garden-map/",
         f"{DOMAIN}/characters/",
         f"{DOMAIN}/guides/",
         f"{DOMAIN}/resources/",
@@ -1453,6 +1462,44 @@ def main() -> int:
                 issues.append(f"{page}: home page missing quiz root")
             if 'class="primary-btn" href="#quiz-section"' not in parser.source:
                 issues.append(f"{page}: home hero primary CTA should point to #quiz-section")
+        if is_garden_map_page(page):
+            stats["garden_map_pages"] += 1
+            route_section_count = parser.source.count("data-garden-map-routes")
+            route_card_count = parser.source.count('class="garden-map-route-card"')
+            guardian_section_count = parser.source.count("data-garden-map-guardians")
+            guardian_card_count = parser.source.count('class="guardian-card"')
+            guide_section_count = parser.source.count("data-garden-map-guides")
+            trust_section_count = parser.source.count("data-garden-map-trust")
+            trust_card_count = parser.source.count('class="garden-map-trust-card"')
+            if route_section_count != 1:
+                issues.append(f"{page}: expected one garden map routes section, found {route_section_count}")
+            if route_card_count != 4:
+                issues.append(f"{page}: expected 4 garden map route cards, found {route_card_count}")
+            if guardian_section_count != 1:
+                issues.append(f"{page}: expected one garden map guardians section, found {guardian_section_count}")
+            if guardian_card_count != 5:
+                issues.append(f"{page}: expected 5 garden map guardian cards, found {guardian_card_count}")
+            if guide_section_count != 1:
+                issues.append(f"{page}: expected one garden map guides section, found {guide_section_count}")
+            if trust_section_count != 1:
+                issues.append(f"{page}: expected one garden map trust section, found {trust_section_count}")
+            if trust_card_count != 4:
+                issues.append(f"{page}: expected 4 garden map trust cards, found {trust_card_count}")
+            map_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_map_hrefs = {
+                lang_url_for_page(page) + "#quiz-section",
+                lang_url_for_page(page, "characters"),
+                lang_url_for_page(page, "guides"),
+                lang_url_for_page(page, "resources"),
+                lang_url_for_page(page, "repair-plan"),
+                lang_url_for_page(page, "about"),
+                lang_url_for_page(page, "theory"),
+                lang_url_for_page(page, "contact"),
+                lang_url_for_page(page, "privacy"),
+            }
+            missing_map_hrefs = sorted(required_map_hrefs.difference(map_hrefs))
+            if missing_map_hrefs:
+                issues.append(f"{page}: garden map missing hrefs {', '.join(missing_map_hrefs)}")
         if is_resources_page(page):
             stats["resources_supply_entry_pages"] += 1
             owned_signal_count = parser.source.count("data-supply-owned-signal")
@@ -2084,6 +2131,7 @@ def main() -> int:
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"home_journey_pages={stats['home_journey_pages']}")
+    print(f"garden_map_pages={stats['garden_map_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")

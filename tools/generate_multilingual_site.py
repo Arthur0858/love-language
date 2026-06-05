@@ -5,7 +5,7 @@ import json
 from datetime import date
 from html import escape
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 from xml.sax.saxutils import escape as xml_escape
 
 
@@ -1368,6 +1368,15 @@ CONTACT_REQUESTS = {
         "cta": "Enviar petición Luna",
         "subject": "Luna%20night%20supply%20request",
     },
+}
+
+
+CONTACT_SUBJECT_LABELS = {
+    "zh": "建議郵件主旨",
+    "en": "Suggested email subject",
+    "ja": "推奨メール件名",
+    "ko": "권장 메일 제목",
+    "es": "Asunto sugerido",
 }
 
 
@@ -6857,6 +6866,9 @@ def luna_alias_page(lang: str) -> None:
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
+    subject_label = CONTACT_SUBJECT_LABELS[lang]
+    request_subject = unquote(request["subject"])
+    repair_subject = unquote(repair["subject"])
 
     request_cards = "".join(
         f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
@@ -6873,6 +6885,7 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-grid">{request_cards}</div>
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
+    <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request["subject"]}">{escape(request["cta"])}</a>
   </div>
 </section>
@@ -6882,6 +6895,7 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-grid">{repair_cards}</div>
   <div class="contact-request-note">
     <p>{escape(repair["note"])}</p>
+    <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(repair_subject)}</code></p>
     <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair["subject"]}">{escape(repair["cta"])}</a>
   </div>
 </section>

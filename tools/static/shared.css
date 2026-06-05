@@ -1630,6 +1630,34 @@ button.secondary-btn {
   color: var(--muted);
 }
 
+.contact-request-subject {
+  display: grid;
+  gap: 4px;
+  flex: 1 1 260px;
+  min-width: 0;
+  font-size: .88rem;
+}
+
+.contact-request-subject strong {
+  color: var(--ink);
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.contact-request-subject code {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(236, 216, 213, .85);
+  border-radius: 6px;
+  background: rgba(255, 250, 248, .92);
+  color: var(--ink);
+  font-family: inherit;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .contact-request-note .primary-btn {
   flex: 0 1 250px;
   min-width: 0;

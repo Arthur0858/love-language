@@ -1,0 +1,323 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import ssl
+import time
+import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from email.utils import parsedate_to_datetime
+from urllib.error import HTTPError, URLError
+from urllib.parse import urljoin, urlparse
+from urllib.request import Request, urlopen
+
+
+DEFAULT_BASE_URL = "https://lovetypes.tw"
+CANONICAL_HOST = "lovetypes.tw"
+EXPECTED_FEED_ITEMS = 12
+EXPECTED_MANIFEST_LANG = "zh-TW"
+EXPECTED_MANIFEST_SHORTCUTS = 3
+EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+REQUIRED_LLMS_SECTIONS = (
+    "# LoveTypes - Heart Garden Emotion Guardians",
+    "## Canonical Site",
+    "## Core Concept",
+    "## Five Guardians",
+    "## High-Value Pages",
+    "## Guide Index",
+    "## Commercial and Safety Boundaries",
+)
+REQUIRED_LLMS_SNIPPETS = (
+    "Production: https://lovetypes.tw/",
+    "Primary language: Traditional Chinese",
+    "Affiliate links are kept on the Resources page",
+    "No full-site advertising script is enabled",
+    "Contact email: contact@lovetypes.tw",
+)
+REQUIRED_SECURITY_FIELDS = (
+    "Contact: mailto:contact@lovetypes.tw",
+    "Policy: https://lovetypes.tw/privacy/",
+    "Canonical: https://lovetypes.tw/.well-known/security.txt",
+)
+URL_RE = re.compile(r"https://lovetypes\.tw/[^\s),]+")
+
+
+@dataclass(frozen=True)
+class Response:
+    url: str
+    status: int
+    headers: dict[str, str]
+    body: bytes
+
+    @property
+    def text(self) -> str:
+        return self.body.decode("utf-8", errors="replace")
+
+
+def normalize_base_url(value: str) -> str:
+    return value.rstrip("/") or DEFAULT_BASE_URL
+
+
+def request_url(url: str, attempts: int = 3) -> Response:
+    last_error: Exception | None = None
+    context = ssl.create_default_context()
+    for attempt in range(1, attempts + 1):
+        try:
+            request = Request(url, headers={"User-Agent": "LoveTypes public discovery smoke/1.0"})
+            with urlopen(request, timeout=20, context=context) as raw:
+                headers = {key.lower(): value for key, value in raw.headers.items()}
+                return Response(raw.geturl(), raw.status, headers, raw.read())
+        except HTTPError as error:
+            return Response(error.geturl(), error.code, {key.lower(): value for key, value in error.headers.items()}, error.read())
+        except (URLError, TimeoutError, OSError) as error:
+            last_error = error
+            if attempt < attempts:
+                time.sleep(0.5 * attempt)
+    raise RuntimeError(f"Failed to fetch {url}: {last_error}")
+
+
+def is_lovetypes_url(value: str) -> bool:
+    parsed = urlparse(value)
+    return parsed.scheme == "https" and parsed.netloc == CANONICAL_HOST
+
+
+def cache_is_reasonable(path: str, response: Response) -> list[str]:
+    issues: list[str] = []
+    host = urlparse(response.url).netloc
+    if host.startswith(("127.0.0.1", "localhost")):
+        return issues
+    cache_control = response.headers.get("cache-control", "")
+    if "max-age=600" not in cache_control:
+        issues.append(f"{path}: expected short HTML/XML discovery cache, got {cache_control!r}")
+    return issues
+
+
+def check_feed(base_url: str) -> tuple[list[str], int, int]:
+    path = "/feed.xml"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0
+    if "xml" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected XML content type, got {response.headers.get('content-type')!r}")
+    issues.extend(cache_is_reasonable(path, response))
+    try:
+        root = ET.fromstring(response.body)
+    except ET.ParseError as error:
+        return [f"{path}: invalid XML: {error}"], 0, 0
+    if root.tag != "rss" or root.attrib.get("version") != "2.0":
+        issues.append(f"{path}: expected RSS 2.0 root")
+    channel = root.find("channel")
+    if channel is None:
+        return [f"{path}: missing channel"], 0, 0
+    for tag in ("title", "link", "description", "language", "lastBuildDate"):
+        if not (channel.findtext(tag) or "").strip():
+            issues.append(f"{path}: channel missing {tag}")
+    if channel.findtext("language") != "zh-TW":
+        issues.append(f"{path}: channel language should be zh-TW")
+    if channel.findtext("link") != "https://lovetypes.tw/guides/":
+        issues.append(f"{path}: channel link should be https://lovetypes.tw/guides/")
+    last_build = (channel.findtext("lastBuildDate") or "").strip()
+    try:
+        parsedate_to_datetime(last_build)
+    except (TypeError, ValueError):
+        issues.append(f"{path}: invalid lastBuildDate {last_build!r}")
+
+    items = channel.findall("item")
+    if len(items) != EXPECTED_FEED_ITEMS:
+        issues.append(f"{path}: expected {EXPECTED_FEED_ITEMS} items, found {len(items)}")
+    seen_links: set[str] = set()
+    links_checked = 0
+    for item in items:
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        guid = (item.findtext("guid") or "").strip()
+        description = (item.findtext("description") or "").strip()
+        category = (item.findtext("category") or "").strip()
+        pub_date = (item.findtext("pubDate") or "").strip()
+        if not title or not link or not guid or not description or not category or not pub_date:
+            issues.append(f"{path}: feed item missing required fields: {link or title or '<unknown>'}")
+        if link in seen_links:
+            issues.append(f"{path}: duplicate feed item link: {link}")
+        seen_links.add(link)
+        guid_node = item.find("guid")
+        if guid_node is None or guid_node.attrib.get("isPermaLink") != "true" or guid != link:
+            issues.append(f"{path}: guid should be permalink matching link: {link}")
+        if not is_lovetypes_url(link):
+            issues.append(f"{path}: feed item link should be absolute production URL: {link}")
+            continue
+        try:
+            parsedate_to_datetime(pub_date)
+        except (TypeError, ValueError):
+            issues.append(f"{path}: invalid pubDate for {link}: {pub_date!r}")
+        item_response = request_url(link)
+        links_checked += 1
+        if item_response.status != 200:
+            issues.append(f"{path}: item link {link} expected status 200, got {item_response.status}")
+        if "<meta name=\"robots\" content=\"noindex" in item_response.text:
+            issues.append(f"{path}: item link should not point to noindex page: {link}")
+    return issues, len(items), links_checked
+
+
+def check_manifest(base_url: str) -> tuple[list[str], int, int, int]:
+    path = "/site.webmanifest"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+    if "json" not in response.headers.get("content-type", "") and "manifest" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected manifest/json content type, got {response.headers.get('content-type')!r}")
+    issues.extend(cache_is_reasonable(path, response))
+    try:
+        manifest = json.loads(response.text)
+    except json.JSONDecodeError as error:
+        return [f"{path}: invalid JSON: {error}"], 0, 0, 0
+    for field in ("name", "short_name", "description", "start_url", "scope", "display", "theme_color", "icons"):
+        if not manifest.get(field):
+            issues.append(f"{path}: missing required field {field}")
+    if manifest.get("start_url") != "/" or manifest.get("scope") != "/":
+        issues.append(f"{path}: start_url and scope should both be /")
+    if manifest.get("lang") != EXPECTED_MANIFEST_LANG:
+        issues.append(f"{path}: lang should be {EXPECTED_MANIFEST_LANG}")
+    shortcuts = manifest.get("shortcuts", [])
+    if not isinstance(shortcuts, list) or len(shortcuts) != EXPECTED_MANIFEST_SHORTCUTS:
+        issues.append(f"{path}: expected {EXPECTED_MANIFEST_SHORTCUTS} shortcuts, got {len(shortcuts) if isinstance(shortcuts, list) else 'invalid'}")
+        shortcuts = []
+    shortcut_links_checked = 0
+    for shortcut in shortcuts:
+        url = shortcut.get("url") if isinstance(shortcut, dict) else ""
+        name = shortcut.get("name") if isinstance(shortcut, dict) else ""
+        if not name or not url:
+            issues.append(f"{path}: shortcut missing name or url: {shortcut!r}")
+            continue
+        target = request_url(urljoin(base_url + "/", url.lstrip("/")))
+        shortcut_links_checked += 1
+        if target.status != 200:
+            issues.append(f"{path}: shortcut {url} expected status 200, got {target.status}")
+    icons = manifest.get("icons", [])
+    if not isinstance(icons, list) or not icons:
+        issues.append(f"{path}: icons should be a non-empty list")
+        icons = []
+    icons_checked = 0
+    for icon in icons:
+        src = icon.get("src") if isinstance(icon, dict) else ""
+        sizes = icon.get("sizes") if isinstance(icon, dict) else ""
+        icon_type = icon.get("type") if isinstance(icon, dict) else ""
+        if not src or not sizes or not icon_type:
+            issues.append(f"{path}: icon missing src, sizes, or type: {icon!r}")
+            continue
+        icon_response = request_url(urljoin(base_url + "/", src.lstrip("/")))
+        icons_checked += 1
+        if icon_response.status != 200:
+            issues.append(f"{path}: icon {src} expected status 200, got {icon_response.status}")
+        content_type = icon_response.headers.get("content-type", "")
+        if icon_type not in content_type:
+            issues.append(f"{path}: icon {src} expected content type containing {icon_type!r}, got {content_type!r}")
+    return issues, icons_checked, len(shortcuts), shortcut_links_checked
+
+
+def check_llms(base_url: str) -> tuple[list[str], int, int, int]:
+    path = "/llms.txt"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+    if not response.headers.get("content-type", "").startswith("text/plain"):
+        issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
+    issues.extend(cache_is_reasonable(path, response))
+    text = response.text
+    sections_checked = 0
+    for section in REQUIRED_LLMS_SECTIONS:
+        sections_checked += 1
+        if section not in text:
+            issues.append(f"{path}: missing required section {section!r}")
+    snippets_checked = 0
+    for snippet in REQUIRED_LLMS_SNIPPETS:
+        snippets_checked += 1
+        if snippet not in text:
+            issues.append(f"{path}: missing required snippet {snippet!r}")
+    urls = sorted(set(match.group(0).rstrip(".,;") for match in URL_RE.finditer(text)))
+    urls_checked = 0
+    for url in urls:
+        target = request_url(url)
+        urls_checked += 1
+        if target.status != 200:
+            issues.append(f"{path}: listed URL {url} expected status 200, got {target.status}")
+        if "<meta name=\"robots\" content=\"noindex" in target.text:
+            issues.append(f"{path}: listed URL should not point to noindex page: {url}")
+    return issues, sections_checked, snippets_checked, urls_checked
+
+
+def check_text_files(base_url: str) -> tuple[list[str], int, int]:
+    issues: list[str] = []
+    text_files_checked = 0
+    security_fields_checked = 0
+    security = request_url(urljoin(base_url + "/", "security.txt"))
+    well_known = request_url(urljoin(base_url + "/", ".well-known/security.txt"))
+    for path, response in (("/security.txt", security), ("/.well-known/security.txt", well_known)):
+        text_files_checked += 1
+        if response.status != 200:
+            issues.append(f"{path}: expected status 200, got {response.status}")
+            continue
+        if not response.headers.get("content-type", "").startswith("text/plain"):
+            issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
+        issues.extend(cache_is_reasonable(path, response))
+        for field in REQUIRED_SECURITY_FIELDS:
+            security_fields_checked += 1
+            if field not in response.text:
+                issues.append(f"{path}: missing required field {field!r}")
+    if security.status == 200 and well_known.status == 200 and security.text != well_known.text:
+        issues.append("/.well-known/security.txt: body should match /security.txt")
+
+    ads = request_url(urljoin(base_url + "/", "ads.txt"))
+    text_files_checked += 1
+    if ads.status != 200:
+        issues.append(f"/ads.txt: expected status 200, got {ads.status}")
+    else:
+        if not ads.headers.get("content-type", "").startswith("text/plain"):
+            issues.append(f"/ads.txt: expected text/plain content type, got {ads.headers.get('content-type')!r}")
+        issues.extend(cache_is_reasonable("/ads.txt", ads))
+        records = [line.strip() for line in ads.text.splitlines() if line.strip() and not line.strip().startswith("#")]
+        if records != [EXPECTED_ADS_RECORD]:
+            issues.append(f"/ads.txt: expected only {EXPECTED_ADS_RECORD!r}, got {records!r}")
+    return issues, text_files_checked, security_fields_checked
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
+    args = parser.parse_args()
+    base_url = normalize_base_url(args.base_url)
+
+    issues: list[str] = []
+    feed_issues, feed_items, feed_links_checked = check_feed(base_url)
+    manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked = check_manifest(base_url)
+    llms_issues, llms_sections_checked, llms_snippets_checked, llms_urls_checked = check_llms(base_url)
+    text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
+    issues.extend(feed_issues)
+    issues.extend(manifest_issues)
+    issues.extend(llms_issues)
+    issues.extend(text_issues)
+
+    print(f"public_discovery_feed_items={feed_items}")
+    print(f"public_discovery_feed_links_checked={feed_links_checked}")
+    print(f"public_discovery_manifest_icons_checked={manifest_icons_checked}")
+    print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
+    print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")
+    print(f"public_discovery_llms_sections_checked={llms_sections_checked}")
+    print(f"public_discovery_llms_snippets_checked={llms_snippets_checked}")
+    print(f"public_discovery_llms_urls_checked={llms_urls_checked}")
+    print(f"public_discovery_text_files_checked={text_files_checked}")
+    print(f"public_discovery_security_fields_checked={security_fields_checked}")
+    print(f"public_discovery_issues={len(issues)}")
+    for issue in issues[:100]:
+        print(issue)
+    if len(issues) > 100:
+        print(f"... {len(issues) - 100} more issue(s)")
+    return 1 if issues else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

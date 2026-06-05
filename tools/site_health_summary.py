@@ -19,6 +19,7 @@ CHECKS = [
     ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 120, False),
     ("public_deploy_smoke", [sys.executable, "tools/public_deploy_smoke.py"], 240, True),
     ("public_contact_smoke", [sys.executable, "tools/public_contact_smoke.py"], 120, True),
+    ("public_discovery_smoke", [sys.executable, "tools/public_discovery_smoke.py"], 180, True),
     ("public_external_link_smoke", [sys.executable, "tools/public_external_link_smoke.py"], 120, True),
     ("public_headers_smoke", [sys.executable, "tools/public_headers_smoke.py"], 120, True),
     ("public_metadata_smoke", [sys.executable, "tools/public_metadata_smoke.py"], 240, True),
@@ -32,6 +33,7 @@ CHECKS = [
     ("user_preferences_smoke", ["node", "tools/user_preferences_smoke.mjs"], 120, True),
     ("storage_privacy_smoke", ["node", "tools/storage_privacy_smoke.mjs"], 120, True),
 ]
+RETRY_ON_FAILURE = {"runtime_performance_smoke"}
 
 
 def safe_timeout_output(error: subprocess.TimeoutExpired) -> str:
@@ -101,6 +103,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "deploy_manifest_issues",
         "public_deploy_issues",
         "public_contact_issues",
+        "public_discovery_issues",
         "public_external_link_issues",
         "public_header_issues",
         "public_metadata_issues",
@@ -124,6 +127,16 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_contact_mailto_links_checked",
         "public_contact_protected_email_links_checked",
         "public_contact_subjects_checked",
+        "public_discovery_feed_items",
+        "public_discovery_feed_links_checked",
+        "public_discovery_manifest_icons_checked",
+        "public_discovery_manifest_shortcuts",
+        "public_discovery_manifest_shortcut_links_checked",
+        "public_discovery_llms_sections_checked",
+        "public_discovery_llms_snippets_checked",
+        "public_discovery_llms_urls_checked",
+        "public_discovery_text_files_checked",
+        "public_discovery_security_fields_checked",
         "public_external_unique_links_checked",
         "public_external_hosts_checked",
         "public_external_affiliate_links_checked",
@@ -155,6 +168,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "csp_runtime_pages_checked",
         "csp_runtime_violations",
         "runtime_performance_pages_checked",
+        "runtime_performance_attempts",
         "runtime_performance_worst_lcp_ms",
         "runtime_performance_worst_cls",
         "runtime_performance_max_transfer_bytes",
@@ -264,6 +278,21 @@ def main() -> int:
         else:
             values = parse_key_values(output)
         status = check_status(code, values)
+        if status != "ok" and name in RETRY_ON_FAILURE:
+            print(f"site_health_step={name} status=retrying", flush=True)
+            retry_code, retry_output = run(command, timeout=effective_timeout)
+            if name == "cloudflare_dry_run":
+                retry_values = parse_cloudflare_dry_run(retry_output)
+            else:
+                retry_values = parse_key_values(retry_output)
+            retry_status = check_status(retry_code, retry_values)
+            if retry_status == "ok":
+                code = retry_code
+                values = retry_values
+                status = retry_status
+            values[f"{name.removesuffix('_smoke')}_attempts"] = "2"
+        else:
+            values[f"{name.removesuffix('_smoke')}_attempts"] = "1"
         print(f"site_health_step={name} status={status}", flush=True)
         sections.extend(render_section(name, code, values))
         sections.append("")

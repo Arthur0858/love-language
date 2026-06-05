@@ -7865,8 +7865,7 @@ Policy: {DOMAIN}/privacy/
 
 
 def write_ads_txt() -> None:
-    publisher_id = ADSENSE_ACCOUNT.removeprefix("ca-")
-    write(ROOT / "ads.txt", f"google.com, {publisher_id}, DIRECT, f08c47fec0942fa0\n")
+    write(ROOT / "ads.txt", f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0\n")
 
 
 def write_redirects() -> None:

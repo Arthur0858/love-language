@@ -271,7 +271,7 @@ def load_generator_config():
 
 GENERATOR_CONFIG = load_generator_config()
 ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
-EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT.removeprefix('ca-')}, DIRECT, f08c47fec0942fa0"
+EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0"
 FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
 LEGACY_ZH_GUIDE_TARGETS = {slug: target for slug, _title, _desc, target in GENERATOR_CONFIG.LEGACY_ZH_GUIDES}
 CURRENT_STATIC_ASSETS = {

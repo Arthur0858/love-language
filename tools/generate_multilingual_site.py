@@ -3973,6 +3973,8 @@ GARDEN_MAP = {
         "desc": "把 LoveTypes 的測驗、五位守護者、深度指南、旅人補給、Luna、修復計畫與信任頁整理成一張可探索的地圖。",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "如果你不知道下一步該去哪裡，先從這張地圖選一盞燈。每條路都會回到同一個核心：辨認需求、說清楚、做一個小修復。",
+        "resume_title": "你的守護者地圖已亮起",
+        "resume_intro": "這台裝置保留了上次測驗結果。可以直接回到你的補給路線、修復計畫、收藏卡或 Luna，不必重新找入口。",
         "handoff_title": "認領守護者後，照這個順序走",
         "handoff_intro": "測驗結果不是終點，而是一張通行證。先接住當下的需求，再把它放進可回訪、可練習、可冷卻的路線。",
         "routes_title": "四條主要路線",
@@ -4009,6 +4011,8 @@ GARDEN_MAP = {
         "desc": "A readable map of the LoveTypes quiz, five guardians, field guides, supplies, Luna, repair plan, and trust pages.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "If you are not sure where to go next, choose one lamp from this map. Every route returns to the same core: name the need, say it clearly, and practice one small repair.",
+        "resume_title": "Your guardian map is lit",
+        "resume_intro": "This device has your last quiz result. Return directly to your supply route, repair plan, keepsake card, or Luna without finding the doorway again.",
         "handoff_title": "After recognizing your guardian, follow this order",
         "handoff_intro": "The quiz result is not the finish line. It is a pass that helps you hold the current need, then place it into a route you can revisit, practice, and cool down with.",
         "routes_title": "Four main routes",
@@ -4045,6 +4049,8 @@ GARDEN_MAP = {
         "desc": "LoveTypes の診断、五人の守護者、ガイド、補給、Luna、修復プラン、信頼ページを一枚の地図にまとめます。",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "次にどこへ進むか迷ったら、この地図から一つの灯りを選んでください。どの道も、必要を名づけ、言葉にし、小さな修復へ戻ります。",
+        "resume_title": "あなたの守護者地図が灯っています",
+        "resume_intro": "この端末には前回の診断結果が残っています。補給ルート、修復プラン、カード、Luna へすぐ戻れます。",
         "handoff_title": "守護者を認領した後は、この順番で進みます",
         "handoff_intro": "診断結果は終点ではなく通行証です。今の必要を受け止め、戻れて、練習でき、冷却できる道へ置きます。",
         "routes_title": "四つの主要ルート",
@@ -4081,6 +4087,8 @@ GARDEN_MAP = {
         "desc": "LoveTypes 테스트, 다섯 수호자, 가이드, 보급, Luna, 회복 계획, 신뢰 페이지를 한 장의 지도로 정리합니다.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "다음에 어디로 갈지 모르겠다면 이 지도에서 등불 하나를 고르세요. 모든 길은 필요를 이름 붙이고, 분명히 말하고, 작은 회복을 연습하는 곳으로 돌아옵니다.",
+        "resume_title": "나의 수호자 지도가 켜졌습니다",
+        "resume_intro": "이 기기에 지난 테스트 결과가 남아 있습니다. 보급 루트, 회복 계획, 소장 카드, Luna 로 바로 돌아갈 수 있습니다.",
         "handoff_title": "수호자를 알아본 뒤에는 이 순서로 가세요",
         "handoff_intro": "테스트 결과는 끝이 아니라 통행증입니다. 지금의 필요를 붙잡고 다시 보고, 연습하고, 식힐 수 있는 길에 놓으세요.",
         "routes_title": "네 가지 주요 길",
@@ -4117,6 +4125,8 @@ GARDEN_MAP = {
         "desc": "Un mapa legible del test LoveTypes, las cinco guardianas, guias, recursos, Luna, plan de reparacion y paginas de confianza.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "Si no sabes a donde ir despues, elige una luz en este mapa. Cada ruta vuelve al mismo centro: nombrar la necesidad, decirla con claridad y practicar una reparacion pequena.",
+        "resume_title": "Tu mapa de guardiana esta encendido",
+        "resume_intro": "Este dispositivo conserva tu ultimo resultado. Vuelve directo a tu ruta, plan, tarjeta o Luna sin buscar la puerta otra vez.",
         "handoff_title": "Despues de reconocer tu guardiana, sigue este orden",
         "handoff_intro": "El resultado no es el final. Es un pase para sostener la necesidad actual y llevarla a una ruta que puedas revisar, practicar y enfriar.",
         "routes_title": "Cuatro rutas principales",
@@ -4264,6 +4274,7 @@ def garden_map_page(lang: str) -> None:
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
 </section>
+<section class="section garden-map-result-resume" data-garden-map-saved hidden aria-live="polite"></section>
 <section class="section garden-map-handoff" data-garden-map-handoff>
   <div class="section-head"><div><p class="eyebrow">AFTER THE RITUAL</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
   <p class="section-intro">{escape(copy["handoff_intro"])}</p>
@@ -4290,12 +4301,80 @@ def garden_map_page(lang: str) -> None:
   <div class="garden-map-trust-grid">{trust_cards}</div>
 </section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+{garden_map_resume_script(lang)}
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["title"])}","description":"{escape(copy["desc"])}","url":"{abs_url(lang, "garden-map")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     list_items = [(title, abs_map_href(target)) for title, _desc, _action, target in copy["routes"]]
     schema += item_list_schema(copy["routes_title"], copy["intro"], list_items)
     page_title = f"{copy['title']} | LoveTypes" if lang == "zh" else f"{copy['title']} | LoveTypes {t['name']}"
     write(page_path(lang, "garden-map"), layout(lang, page_title, copy["desc"], "garden-map", body, t["map"], "website", "/og-cover.jpg", schema))
+
+
+def garden_map_resume_script(lang: str) -> str:
+    data = quiz_payload(lang)
+    copy = GARDEN_MAP[lang]
+    resume_title = json.dumps(copy["resume_title"], ensure_ascii=False)
+    resume_intro = json.dumps(copy["resume_intro"], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const resumeTitle = {resume_title};
+  const resumeIntro = {resume_intro};
+  const box = document.querySelector('[data-garden-map-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        const primaryKey = saved && (saved.primaryKey || saved.type);
+        if (primaryKey && quiz.results[primaryKey]) return {{ ...saved, primaryKey }};
+      }}
+    }} catch (_error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  box.innerHTML = `
+    <article class="garden-map-resume-card" id="map-${{result.slug}}" style="--result-accent:${{result.color}}">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+      <div>
+        <p class="eyebrow">${{resumeTitle}}</p>
+        <h2>${{result.name}} · ${{result.type}}</h2>
+        <p>${{resumeIntro}}</p>
+        <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
+        <div class="garden-map-resume-actions">
+          <a class="primary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{quiz.labels.saved_card}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+          <button class="secondary-btn" type="button" data-clear-garden-map-result>${{quiz.labels.saved_clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-clear-garden-map-result]')?.addEventListener('click', clearSavedResult);
+  if (location.hash === `#map-${{result.slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
+}})();
+</script>
+"""
 
 
 def supply_wishlist_section(lang: str) -> str:

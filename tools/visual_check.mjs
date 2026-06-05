@@ -152,6 +152,7 @@ function summarizeConversionFailures(results) {
     const target = result.target || '';
     if (!result.status || result.status >= 400) failures.push('bad status');
     if (target === 'route' && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
+    if (target === 'map' && !result.url?.includes('/garden-map/')) failures.push('did not land on garden map');
     if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
     if (target === 'luna' && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
     if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
@@ -160,6 +161,12 @@ function summarizeConversionFailures(results) {
     if (target === 'route' && !result.supplyResumeImageHiddenOk) failures.push('personalized supply resume image is visible on mobile');
     if (target === 'route' && result.supplyResumeActionCount < 3) failures.push('personalized supply resume is missing next-step actions');
     if (target === 'route' && !result.supplyResumeFirstActionInViewport) failures.push('personalized supply resume first action is below the mobile viewport');
+    if (target === 'map' && !result.gardenMapResumeVisible) failures.push('missing personalized garden map resume');
+    if (target === 'map' && result.gardenMapResumeActionCount < 5) failures.push('personalized garden map resume is missing next-step actions');
+    if (target === 'map' && !result.gardenMapPrimaryHref?.includes('/resources/#supply-')) failures.push('garden map primary action does not continue supply route');
+    if (target === 'map' && !result.gardenMapPlanHref?.includes('/repair-plan/#plan-')) failures.push('garden map resume missing repair plan');
+    if (target === 'map' && !result.gardenMapKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('garden map resume missing keepsake hall');
+    if (target === 'map' && !result.gardenMapLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('garden map resume missing Luna route');
     if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (target === 'luna' && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
     if (target === 'guide' && !result.guideResumeVisible) failures.push('missing personalized guide resume');
@@ -369,6 +376,7 @@ const conversionCases = [
   { name: 'conversion-supply-mobile', target: 'route', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-repair-mobile', target: 'plan', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-luna-mobile', target: 'luna', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-garden-map-mobile', target: 'map', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-guide-mobile', target: 'guide', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
@@ -771,6 +779,10 @@ for (const item of conversionCases) {
     await page.locator('[data-conversion-plan]').click();
   } else if (item.target === 'luna') {
     await page.locator('[data-conversion-luna]').click();
+  } else if (item.target === 'map') {
+    const basePath = new URL(url).pathname.replace(/\/$/, '');
+    const mapPath = `${basePath || ''}/garden-map/`;
+    await openPage(page, makeUrl(mapPath));
   } else if (item.target === 'guide') {
     await page.locator('[data-conversion-guide]').click();
   } else if (item.target === 'keepsake-plan') {
@@ -803,6 +815,8 @@ for (const item of conversionCases) {
         ? '[data-guide-saved]:not([hidden])'
         : finalTarget === 'keepsake'
           ? '[data-keepsake-saved]:not([hidden])'
+          : finalTarget === 'map'
+            ? '[data-garden-map-saved]:not([hidden])'
       : '[data-supply-saved]:not([hidden])';
   await page.locator(resumeSelector).waitFor({ state: 'visible' });
   await page.waitForFunction(() => window.scrollY < 1200);
@@ -811,6 +825,10 @@ for (const item of conversionCases) {
   let repairFilled = false;
   let lunaPrimaryHref = '';
   let guidePlanHref = '';
+  let gardenMapPrimaryHref = '';
+  let gardenMapPlanHref = '';
+  let gardenMapKeepsakeHref = '';
+  let gardenMapLunaHref = '';
   if (finalTarget === 'plan') {
     repairFillPrimary = await page.locator('[data-repair-saved] .primary-btn[data-fill-repair]').isVisible().catch(() => false);
     await page.locator('[data-repair-saved] [data-fill-repair]').click();
@@ -825,6 +843,11 @@ for (const item of conversionCases) {
     guidePlanHref = await page.locator('[data-guide-saved] a').first().getAttribute('href').catch(() => '');
   } else if (finalTarget === 'keepsake') {
     keepsakePrimaryHref = await page.locator('[data-keepsake-saved] .primary-btn').first().getAttribute('href').catch(() => '');
+  } else if (finalTarget === 'map') {
+    gardenMapPrimaryHref = await page.locator('[data-garden-map-saved] .primary-btn').first().getAttribute('href').catch(() => '');
+    gardenMapPlanHref = await page.locator('[data-garden-map-saved] a[href*="/repair-plan/#plan-"]').first().getAttribute('href').catch(() => '');
+    gardenMapKeepsakeHref = await page.locator('[data-garden-map-saved] a[href*="/keepsakes/#keepsake-"]').first().getAttribute('href').catch(() => '');
+    gardenMapLunaHref = await page.locator('[data-garden-map-saved] a[href*="/luna-yoga-music/#luna-"]').first().getAttribute('href').catch(() => '');
   }
 
   const dynamicImageIssues = await page.locator(`${resumeSelector} img`).evaluateAll((images) => images.flatMap((image) => {
@@ -873,6 +896,12 @@ for (const item of conversionCases) {
     supplyResumeActionCount,
     supplyResumeFirstActionInViewport,
     repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
+    gardenMapResumeVisible: await page.locator('[data-garden-map-saved]:not([hidden])').isVisible().catch(() => false),
+    gardenMapResumeActionCount: await page.locator('[data-garden-map-saved] .garden-map-resume-actions a').count().catch(() => 0),
+    gardenMapPrimaryHref,
+    gardenMapPlanHref,
+    gardenMapKeepsakeHref,
+    gardenMapLunaHref,
     lunaResumeVisible: await page.locator('[data-luna-saved]:not([hidden])').isVisible().catch(() => false),
     guideResumeVisible: await page.locator('[data-guide-saved]:not([hidden])').isVisible().catch(() => false),
     keepsakeResumeVisible: await page.locator('[data-keepsake-saved]:not([hidden])').isVisible().catch(() => false),

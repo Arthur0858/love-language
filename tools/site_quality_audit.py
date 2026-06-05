@@ -1465,6 +1465,7 @@ def main() -> int:
                 issues.append(f"{page}: home hero primary CTA should point to #quiz-section")
         if is_garden_map_page(page):
             stats["garden_map_pages"] += 1
+            saved_section_count = parser.source.count('class="section garden-map-result-resume" data-garden-map-saved')
             handoff_section_count = parser.source.count("data-garden-map-handoff")
             handoff_card_count = parser.source.count('class="garden-map-handoff-card"')
             route_section_count = parser.source.count("data-garden-map-routes")
@@ -1476,6 +1477,8 @@ def main() -> int:
             guide_section_count = parser.source.count("data-garden-map-guides")
             trust_section_count = parser.source.count("data-garden-map-trust")
             trust_card_count = parser.source.count('class="garden-map-trust-card"')
+            if saved_section_count != 1:
+                issues.append(f"{page}: expected one garden map saved-result section, found {saved_section_count}")
             if handoff_section_count != 1:
                 issues.append(f"{page}: expected one garden map handoff section, found {handoff_section_count}")
             if handoff_card_count != 4:

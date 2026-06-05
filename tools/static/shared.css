@@ -949,6 +949,20 @@ button.secondary-btn {
     linear-gradient(180deg, #fff, #fffdf9);
 }
 
+.supply-domain-routes {
+  padding-top: 34px;
+  padding-bottom: 48px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(183, 139, 69, .1), transparent 28%),
+    radial-gradient(circle at 86% 18%, rgba(118, 102, 168, .12), transparent 30%),
+    linear-gradient(180deg, #fffdf9, #f8f2ee);
+}
+
+.supply-domain-routes .section-head {
+  align-items: center;
+  margin-bottom: 14px;
+}
+
 .supply-entry {
   background:
     radial-gradient(circle at 12% 18%, rgba(122, 159, 151, .14), transparent 30%),
@@ -1007,9 +1021,11 @@ button.secondary-btn {
   gap: 8px;
   min-height: 100%;
   padding: 14px;
-  border: 1px solid rgba(236, 216, 213, .94);
+  border: 1px solid color-mix(in srgb, var(--domain-accent, #bd5260), white 64%);
   border-radius: 8px;
-  background: rgba(255, 255, 255, .9);
+  background:
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--domain-glow, #f6c5c9), transparent 46%), transparent 36%),
+    linear-gradient(145deg, color-mix(in srgb, var(--domain-accent, #bd5260), white 88%), rgba(255, 255, 255, .96) 64%);
   color: var(--ink);
   text-decoration: none;
   box-shadow: 0 10px 26px rgba(76, 42, 43, .055);
@@ -1019,7 +1035,7 @@ button.secondary-btn {
 .supply-quick-card:hover,
 .supply-quick-card:focus-visible {
   transform: translateY(-2px);
-  border-color: rgba(189, 82, 96, .46);
+  border-color: color-mix(in srgb, var(--domain-accent, #bd5260), white 24%);
   box-shadow: 0 14px 34px rgba(76, 42, 43, .09);
 }
 
@@ -1028,6 +1044,7 @@ button.secondary-btn {
   height: 116px;
   object-fit: contain;
   object-position: center top;
+  filter: drop-shadow(0 12px 20px color-mix(in srgb, var(--domain-accent, #bd5260), transparent 72%));
 }
 
 .supply-quick-card h3 {
@@ -1050,7 +1067,7 @@ button.secondary-btn {
 }
 
 .supply-quick-card strong {
-  color: var(--rose);
+  color: color-mix(in srgb, var(--domain-accent, #bd5260), #302425 18%);
   font-size: .9rem;
 }
 

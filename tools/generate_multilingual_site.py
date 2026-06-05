@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-result-portraits"
+ASSET_VERSION = "20260605-supply-domains"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3371,17 +3371,18 @@ def supply_quick_route_nav(lang: str) -> str:
     for slug, data in GUARDIANS.items():
         route = supply_route(lang, slug)
         name, typ, _desc = data[lang]
+        domain = GUARDIAN_DOMAINS[slug]
         cards.append(f"""
-<a class="supply-quick-card" href="#supply-{slug}">
-  {img_tag(data["asset"], name)}
-  <span class="eyebrow">{escape(typ)}</span>
+<a class="supply-quick-card" href="#supply-{slug}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(data["prop"], f"{name} {route['title']}", "supply-quick-prop")}
+  <span class="eyebrow">{escape(name)} · {escape(typ)}</span>
   <h3>{escape(route["title"])}</h3>
   <p>{escape(route["desc"])}</p>
   <strong>{escape(labels["route"])}</strong>
 </a>
 """)
     return f"""
-<section class="section supply-quick-routes">
+<section class="section supply-quick-routes supply-domain-routes" data-supply-domain-strip>
   <div class="section-head">
     <div><p class="eyebrow">{escape(labels["quick_route"])}</p><h2>{escape(labels["title"])}</h2></div>
     <a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a>
@@ -5020,10 +5021,10 @@ def resources_page(lang: str) -> None:
 </article>
 """)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+<section class="page-hero compact supply-hero"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
-{supply_entry_section(lang)}
 {supply_quick_route_nav(lang)}
+{supply_entry_section(lang)}
 <section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
   <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>

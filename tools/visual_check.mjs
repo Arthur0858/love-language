@@ -74,6 +74,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('keepsakes-') && result.keepsakeRitualCount !== 4) failures.push('missing keepsake ritual route');
     if (result.name.startsWith('about-') && result.aboutTrustCardCount !== 4) failures.push('missing about trust charter cards');
     if ((result.name.startsWith('contact-') || result.name.startsWith('privacy-') || result.name.startsWith('terms-')) && result.policyCompassCardCount !== 3) failures.push('missing policy compass cards');
+    if ((result.name.startsWith('contact-') || result.name.startsWith('privacy-') || result.name.startsWith('terms-')) && result.policyDetailCardCount !== 3) failures.push('missing policy detail cards');
     if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
     if (result.name.startsWith('guardian-') && result.supplyCtaCount < 1) failures.push('missing guardian supply CTA');
     if (result.expectedFinalPath && result.finalUrl !== result.expectedFinalPath) {
@@ -415,6 +416,7 @@ for (const item of cases) {
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
   const aboutTrustCardCount = await page.locator('[data-about-trust] .about-trust-card').count();
   const policyCompassCardCount = await page.locator('[data-policy-compass] .policy-compass-card').count();
+  const policyDetailCardCount = await page.locator('[data-policy-detail] .policy-detail-card').count();
   const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
     if (!cards.length) return 0;
     const heights = cards.map((card) => card.getBoundingClientRect().height);
@@ -444,6 +446,7 @@ for (const item of cases) {
     keepsakeRitualCount,
     aboutTrustCardCount,
     policyCompassCardCount,
+    policyDetailCardCount,
     guardianCardHeightSpread,
     domainMarkerCount,
     supplyCtaCount,

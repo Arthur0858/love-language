@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-keepsake-ritual"
+ASSET_VERSION = "20260605-policy-detail"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3101,7 +3101,7 @@ def policy_compass_section(lang: str, slug: str) -> str:
 <article class="policy-compass-card">
   <span>{idx:02d}</span>
   <h3>{escape(heading)}</h3>
-  <p>{escape(body_text)}</p>
+  <p>{escape(copy["card_hint"].format(number=idx))}</p>
 </article>
 """
         )
@@ -3116,6 +3116,37 @@ def policy_compass_section(lang: str, slug: str) -> str:
   </div>
   <div class="policy-compass-grid">
     {''.join(cards)}
+  </div>
+</section>
+"""
+
+
+def policy_detail_section(lang: str, slug: str) -> str:
+    copy = POLICY_COMPASS_COPY[lang]
+    articles = []
+    for idx, (heading, body_text) in enumerate(POLICY_SECTIONS[lang][slug], start=1):
+        articles.append(
+            f"""
+<article class="policy-detail-card">
+  <span>{idx:02d}</span>
+  <div>
+    <h3>{escape(heading)}</h3>
+    <p>{escape(body_text)}</p>
+  </div>
+</article>
+"""
+        )
+    return f"""
+<section class="section policy-detail-section" data-policy-detail>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">{escape(copy["detail_eyebrow"])}</p>
+      <h2>{escape(copy["detail_title"])}</h2>
+      <p>{escape(copy["detail_intro"])}</p>
+    </div>
+  </div>
+  <div class="policy-detail-list">
+    {''.join(articles)}
   </div>
 </section>
 """
@@ -4248,26 +4279,46 @@ POLICY_COMPASS_COPY = {
         "eyebrow": "SAFETY BOUNDARY MAP",
         "title": "安全邊界星圖",
         "intro": "先用三個邊界看清楚這座心語庭園如何處理聯絡、資料、內容責任與外部連結，再往下閱讀完整條文。",
+        "card_hint": "這是本頁第 {number} 個信任邊界，完整說明在下方條文。",
+        "detail_eyebrow": "FULL POLICY NOTES",
+        "detail_title": "完整條文",
+        "detail_intro": "以下內容把導讀星圖展開成可執行的規則，方便你判斷什麼可以期待、什麼需要改走專業支援。",
     },
     "en": {
         "eyebrow": "SAFETY BOUNDARY MAP",
         "title": "Safety boundary map",
         "intro": "Start with three boundaries for contact, data, responsibility, and external links before reading the full policy details below.",
+        "card_hint": "This is trust boundary {number}; the full note appears below.",
+        "detail_eyebrow": "FULL POLICY NOTES",
+        "detail_title": "Full policy notes",
+        "detail_intro": "The notes below expand the map into usable rules, so you can see what to expect and when professional support is the right path.",
     },
     "ja": {
         "eyebrow": "SAFETY BOUNDARY MAP",
         "title": "安全境界の星図",
         "intro": "連絡、データ、内容責任、外部リンクについて、この庭が守る三つの境界を先に確認してから詳細を読めます。",
+        "card_hint": "これは本ページの信頼境界 {number} です。詳しい説明は下の条文にあります。",
+        "detail_eyebrow": "FULL POLICY NOTES",
+        "detail_title": "詳細条文",
+        "detail_intro": "下の内容では星図を具体的な規則に展開し、期待できることと専門支援へ進むべき場面を確認できます。",
     },
     "ko": {
         "eyebrow": "SAFETY BOUNDARY MAP",
         "title": "안전 경계 지도",
         "intro": "연락, 데이터, 콘텐츠 책임, 외부 링크에 대해 이 정원이 지키는 세 가지 경계를 먼저 보고 자세한 내용을 읽을 수 있습니다.",
+        "card_hint": "이 항목은 본 페이지의 신뢰 경계 {number}입니다. 자세한 설명은 아래 조항에 있습니다.",
+        "detail_eyebrow": "FULL POLICY NOTES",
+        "detail_title": "전체 조항",
+        "detail_intro": "아래 내용은 지도를 실행 가능한 규칙으로 풀어, 무엇을 기대할 수 있고 언제 전문 지원이 필요한지 확인하게 합니다.",
     },
     "es": {
         "eyebrow": "SAFETY BOUNDARY MAP",
         "title": "Mapa de límites seguros",
         "intro": "Empieza con tres límites sobre contacto, datos, responsabilidad y enlaces externos antes de leer los detalles completos.",
+        "card_hint": "Este es el límite de confianza {number}; la nota completa aparece abajo.",
+        "detail_eyebrow": "FULL POLICY NOTES",
+        "detail_title": "Notas completas de política",
+        "detail_intro": "Las notas siguientes convierten el mapa en reglas utilizables, para saber qué esperar y cuándo corresponde apoyo profesional.",
     },
 }
 
@@ -5879,6 +5930,7 @@ def simple_page(lang: str, slug: str) -> None:
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
 {contact_requests}
 {policy_compass_section(lang, slug)}
+{policy_detail_section(lang, slug)}
 <section class="section article-body standalone policy-boundary-note">
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>

@@ -95,6 +95,7 @@ IMMUTABLE_HEADER_PATHS = {
     "/shared-*.css",
     "/site-interactions-*.js",
     "/deferred-external-*.js",
+    "/quiz-data-*.js",
 }
 LEGACY_ROOT_STATIC_ASSETS = {
     "shared.css",
@@ -102,6 +103,7 @@ LEGACY_ROOT_STATIC_ASSETS = {
     "deferred-external.js",
 }
 LIVE_REGION_DATA_ATTRS = {
+    "data-garden-map-saved",
     "data-guide-saved",
     "data-guardian-saved",
     "data-keepsake-saved",
@@ -177,6 +179,7 @@ CURRENT_STATIC_ASSETS = {
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
     "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
 }
+CURRENT_QUIZ_DATA_ASSETS = GENERATOR_CONFIG.QUIZ_DATA_ASSETS
 REQUIRED_INTERACTION_HASH_SNIPPETS = {
     "samePageHash": "same-page hash link detection",
     "focusHashTarget": "hash target focus handoff",
@@ -508,6 +511,12 @@ def lang_url_for_page(page: Path, target: str = "") -> str:
     if not target:
         return f"/{prefix}/" if prefix else "/"
     return f"/{prefix}/{target}/" if prefix else f"/{target}/"
+
+
+def lang_key_for_page(page: Path) -> str:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    return parts[0] if parts and parts[0] in {"en", "ja", "ko", "es"} else "zh"
 
 
 def class_tokens(attrs: dict[str, str]) -> set[str]:
@@ -1211,8 +1220,10 @@ def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str],
         ("shared-", ".css"),
         ("site-interactions-", ".js"),
         ("deferred-external-", ".js"),
+        ("quiz-data-", ".js"),
     )
     expected_versioned_assets = {Path(value.lstrip("/")).name for value in CURRENT_STATIC_ASSETS.values()}
+    expected_versioned_assets.update(Path(value.lstrip("/")).name for value in CURRENT_QUIZ_DATA_ASSETS.values())
     for asset in sorted(ROOT.iterdir()):
         if not asset.is_file():
             continue
@@ -1792,6 +1803,22 @@ def main() -> int:
                 f"{page}: expected affiliate script assets {expected_affiliate_assets}, found {affiliate_assets}"
             )
 
+        quiz_data_assets = [
+            raw
+            for tag, attr, raw in parser.refs
+            if tag == "script"
+            and attr == "src"
+            and raw.startswith("/quiz-data-")
+            and raw.endswith(".js")
+        ]
+        needs_quiz_data = any(attr in parser.source for attr in LIVE_REGION_DATA_ATTRS)
+        expected_quiz_data_assets = [CURRENT_QUIZ_DATA_ASSETS[lang_key_for_page(page)]] if needs_quiz_data else []
+        stats["current_quiz_data_asset_refs"] += quiz_data_assets.count(expected_quiz_data_assets[0]) if expected_quiz_data_assets else 0
+        if quiz_data_assets != expected_quiz_data_assets:
+            issues.append(
+                f"{page}: expected quiz data assets {expected_quiz_data_assets}, found {quiz_data_assets}"
+            )
+
         rss_links = [
             link
             for link in parser.links_with_rel("alternate")
@@ -2192,6 +2219,7 @@ def main() -> int:
     print(f"current_css_asset_refs={stats['current_css_asset_refs']}")
     print(f"current_interaction_asset_refs={stats['current_interaction_asset_refs']}")
     print(f"current_affiliate_asset_refs={stats['current_affiliate_asset_refs']}")
+    print(f"current_quiz_data_asset_refs={stats['current_quiz_data_asset_refs']}")
     print(f"social_cards={stats['social_cards']}")
     print(f"social_locale_tags={stats['social_locale_tags']}")
     print(f"social_images={stats['social_images']}")

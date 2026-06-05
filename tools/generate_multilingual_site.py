@@ -18,6 +18,8 @@ ASSET_VERSION = "20260605-garden-map"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
+QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
+QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{ASSET_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
@@ -3757,6 +3759,14 @@ def cleanup_versioned_assets() -> None:
         for asset in ROOT.glob(f"{prefix}-*.{suffix}"):
             if asset.name != current_name:
                 asset.unlink()
+    current_quiz_names = {Path(asset.lstrip("/")).name for asset in QUIZ_DATA_ASSETS.values()}
+    for asset in ROOT.glob("quiz-data-*.js"):
+        if asset.name not in current_quiz_names:
+            asset.unlink()
+
+
+def quiz_data_script_tag(lang: str) -> str:
+    return f'<script src="{QUIZ_DATA_ASSETS[lang]}"></script>'
 
 
 def guide_card(lang: str, guide: dict) -> str:
@@ -4331,14 +4341,15 @@ def garden_map_page(lang: str) -> None:
 
 
 def garden_map_resume_script(lang: str) -> str:
-    data = quiz_payload(lang)
     copy = GARDEN_MAP[lang]
     resume_title = json.dumps(copy["resume_title"], ensure_ascii=False)
     resume_intro = json.dumps(copy["resume_intro"], ensure_ascii=False)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const resumeTitle = {resume_title};
   const resumeIntro = {resume_intro};
   const box = document.querySelector('[data-garden-map-saved]');
@@ -4594,11 +4605,12 @@ def keepsake_ritual_section(lang: str) -> str:
 
 
 def keepsake_resume_script(lang: str) -> str:
-    data = quiz_payload(lang)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const box = document.querySelector('[data-keepsake-saved]');
   if (!box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -5195,11 +5207,12 @@ def quiz_payload(lang: str) -> str:
 
 
 def quiz_script(lang: str) -> str:
-    data = quiz_payload(lang)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const root = document.querySelector('[data-quiz-root]');
   if (!root) return;
   const intro = root.querySelector('[data-quiz-intro]');
@@ -5525,14 +5538,15 @@ def quiz_script(lang: str) -> str:
 
 
 def supply_resume_script(lang: str) -> str:
-    data = quiz_payload(lang)
     bookstore_label = AFFILIATE_COPY[lang]["button"]
     not_now_title = json.dumps(SUPPLY_LABELS[lang]["not_now"], ensure_ascii=False)
     not_now_text = json.dumps(SUPPLY_LABELS[lang]["not_now_text"], ensure_ascii=False)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const bookstoreLabel = "{escape(bookstore_label)}";
   const notNowTitle = {not_now_title};
   const notNowText = {not_now_text};
@@ -5697,11 +5711,12 @@ def supply_route_receipt_script(lang: str) -> str:
 
 
 def guide_resume_script(lang: str) -> str:
-    data = quiz_payload(lang)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const box = document.querySelector('[data-guide-saved]');
   if (!box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -5756,12 +5771,13 @@ def guide_resume_script(lang: str) -> str:
 
 
 def guardian_resume_script(lang: str, current_slug: str = "") -> str:
-    data = quiz_payload(lang)
     current = json.dumps(current_slug)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const currentSlug = {current};
   const box = document.querySelector('[data-guardian-saved]');
   if (!box) return;
@@ -6252,7 +6268,6 @@ def resources_page(lang: str) -> None:
 
 def repair_worksheet_script(lang: str) -> str:
     plan = REPAIR_PLAN[lang]
-    data = quiz_payload(lang)
     saved = json.dumps(plan["saved"], ensure_ascii=False)
     cleared = json.dumps(plan["cleared"], ensure_ascii=False)
     copy_summary = json.dumps(plan["copy_summary"], ensure_ascii=False)
@@ -6268,9 +6283,11 @@ def repair_worksheet_script(lang: str) -> str:
     resume_plan = json.dumps(plan["resume_plan"], ensure_ascii=False)
     bookstore_label = json.dumps(AFFILIATE_COPY[lang]["button"], ensure_ascii=False)
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const resumeTitle = {resume_title};
   const resumeIntro = {resume_intro};
   const resumeFill = {resume_fill};
@@ -6541,13 +6558,14 @@ def repair_plan_page(lang: str) -> None:
 
 
 def luna_resume_script(lang: str) -> str:
-    data = quiz_payload(lang)
     labels = LUNA_RESUME[lang]
     flow = LUNA_GUARDIAN_FLOW[lang]
     return f"""
+{quiz_data_script_tag(lang)}
 <script>
 (() => {{
-  const quiz = {data};
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  if (!quiz) return;
   const labels = {json.dumps(labels, ensure_ascii=False)};
   const practices = {json.dumps(flow["items"], ensure_ascii=False)};
   const box = document.querySelector('[data-luna-saved]');
@@ -6914,6 +6932,17 @@ def write_versioned_scripts() -> None:
         write(ROOT / target.lstrip("/"), script.strip() + "\n")
 
 
+def write_quiz_data_assets() -> None:
+    for lang in LANGS:
+        payload = quiz_payload(lang)
+        script = (
+            "window.__LOVETYPES_QUIZ_DATA = "
+            + payload
+            + ";\n"
+        )
+        write(ROOT / QUIZ_DATA_ASSETS[lang].lstrip("/"), script)
+
+
 def write_404_page() -> None:
     lang = "zh"
     t = LANGS[lang]
@@ -7149,6 +7178,10 @@ def write_support_files() -> None:
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
+/quiz-data-*.js
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
 https://lovetypes.pages.dev/*
   X-Robots-Tag: noindex
 
@@ -7169,6 +7202,7 @@ def main() -> None:
     cleanup_versioned_assets()
     write_css()
     write_versioned_scripts()
+    write_quiz_data_assets()
     for lang in LANGS:
         home(lang)
         garden_map_page(lang)

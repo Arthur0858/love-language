@@ -65,7 +65,7 @@ def required_manifest_files() -> set[str]:
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
-    }
+    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()}
 
 
 def main() -> int:

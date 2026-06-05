@@ -3948,6 +3948,71 @@ button.secondary-btn {
     linear-gradient(180deg, #fffdf9, #fff);
 }
 
+.guardian-result-resume {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  background:
+    radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--result-accent, var(--rose)) 12%, transparent), transparent 30%),
+    linear-gradient(180deg, #fffdf9, #fff);
+}
+
+.guardian-result-resume[hidden] {
+  display: none;
+}
+
+.guardian-resume-card {
+  display: grid;
+  grid-template-columns: minmax(118px, 160px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--result-accent, var(--rose)) 34%, #ecd8d5);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 9% 13%, color-mix(in srgb, var(--result-accent, var(--rose)) 16%, transparent), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, .95), #fff8f2);
+  box-shadow: 0 18px 42px rgba(76, 42, 43, .08);
+}
+
+.guardian-resume-card img {
+  width: min(100%, 160px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 18%;
+  border: 1px solid color-mix(in srgb, var(--result-accent, var(--rose)) 26%, transparent);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.guardian-resume-card h2 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.guardian-resume-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.guardian-resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.guardian-resume-actions .primary-btn,
+.guardian-resume-actions .secondary-btn {
+  min-height: 42px;
+  padding: 10px 16px;
+  font-size: .9rem;
+}
+
 .guardian-route-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4227,6 +4292,7 @@ button.secondary-btn {
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-resume-card { grid-template-columns: minmax(120px, 170px) minmax(0, 1fr); }
   .garden-map-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
+  .guardian-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
   .luna-resume-card { grid-template-columns: 140px minmax(0, 1fr); }
   .collector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4902,6 +4968,39 @@ button.secondary-btn {
 
   .garden-map-resume-actions .primary-btn,
   .garden-map-resume-actions .secondary-btn {
+    flex-basis: 100%;
+  }
+
+  .guardian-result-resume {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .guardian-resume-card {
+    grid-template-columns: 82px minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .guardian-resume-card img {
+    width: 82px;
+    height: 82px;
+    justify-self: start;
+  }
+
+  .guardian-resume-card h2 {
+    font-size: 1.1rem;
+    line-height: 1.18;
+  }
+
+  .guardian-resume-card p {
+    font-size: .9rem;
+    line-height: 1.55;
+  }
+
+  .guardian-resume-actions .primary-btn,
+  .guardian-resume-actions .secondary-btn {
     flex-basis: 100%;
   }
 

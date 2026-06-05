@@ -103,6 +103,7 @@ LEGACY_ROOT_STATIC_ASSETS = {
 }
 LIVE_REGION_DATA_ATTRS = {
     "data-guide-saved",
+    "data-guardian-saved",
     "data-keepsake-saved",
     "data-luna-saved",
     "data-quiz-box",
@@ -451,6 +452,11 @@ def is_characters_index_page(page: Path) -> bool:
     if parts and parts[0] in {"en", "ja", "ko", "es"}:
         parts.pop(0)
     return parts == ["characters", "index.html"]
+
+
+def is_character_detail_page(page: Path) -> bool:
+    parts = normalized_page_parts(page)
+    return len(parts) == 3 and parts[0] == "characters" and parts[1] in GUARDIAN_SLUGS and parts[2] == "index.html"
 
 
 def is_keepsakes_page(page: Path) -> bool:
@@ -1542,6 +1548,9 @@ def main() -> int:
                 issues.append(f"{page}: resources supply entry missing hrefs {', '.join(missing_resource_hrefs)}")
         if is_characters_index_page(page):
             stats["characters_guardian_entry_pages"] += 1
+            saved_section_count = parser.source.count('class="section guardian-result-resume" data-guardian-saved')
+            if saved_section_count != 1:
+                issues.append(f"{page}: expected one guardian saved-result section, found {saved_section_count}")
             for target_id in ("guardian-start", "guardian-map"):
                 if target_id not in parser.ids:
                     issues.append(f"{page}: characters page missing #{target_id}")
@@ -1554,6 +1563,13 @@ def main() -> int:
             missing_character_hrefs = sorted(required_character_hrefs.difference(character_hrefs))
             if missing_character_hrefs:
                 issues.append(f"{page}: characters guardian entry missing hrefs {', '.join(missing_character_hrefs)}")
+        if is_character_detail_page(page):
+            stats["character_result_resume_pages"] += 1
+            saved_section_count = parser.source.count('class="section guardian-result-resume" data-guardian-saved')
+            if saved_section_count != 1:
+                issues.append(f"{page}: expected one character saved-result section, found {saved_section_count}")
+            if "guardian_resume_match" not in parser.source or "guardian_resume_other" not in parser.source:
+                issues.append(f"{page}: character page missing guardian result branch copy")
         if is_keepsakes_page(page):
             stats["keepsake_route_action_pages"] += 1
             keepsake_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
@@ -2153,6 +2169,7 @@ def main() -> int:
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
+    print(f"character_result_resume_pages={stats['character_result_resume_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
     print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")

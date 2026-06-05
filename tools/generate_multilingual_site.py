@@ -600,6 +600,10 @@ QUIZ_LABELS = {
         "saved_intro": "你的上次結果只保存在這台裝置的瀏覽器。可以直接回到修復計畫、Luna 或補給路線。",
         "guide_resume_title": "帶著上次守護者讀這篇",
         "guide_resume_intro": "讀完這篇後，可以回到你的修復計畫、守護者頁或個人補給路線，把靈感接成下一步。",
+        "guardian_resume_title": "你的守護者已認領",
+        "guardian_resume_intro": "這台裝置保留了上次測驗結果。從這裡回到你的守護者、補給路線、修復計畫與收藏卡。",
+        "guardian_resume_match": "這是你上次認領的守護者。先看傷口與修復任務，再決定下一步補給。",
+        "guardian_resume_other": "你正在閱讀另一位守護者。若要回到自己的路線，可以從這裡返回上次結果。",
         "saved_plan": "回到修復計畫",
         "saved_luna": "開啟 Luna",
         "saved_route": "查看補給路線",
@@ -649,6 +653,10 @@ QUIZ_LABELS = {
         "saved_intro": "Your last result is saved only in this browser on this device. Return to the repair plan, Luna, or your supply route.",
         "guide_resume_title": "Read this with your last guardian",
         "guide_resume_intro": "After this guide, return to your repair plan, guardian page, or personal supply route so the insight becomes a next step.",
+        "guardian_resume_title": "Your guardian is claimed",
+        "guardian_resume_intro": "This device has your last quiz result. Return to your guardian, supply route, repair plan, and keepsake card from here.",
+        "guardian_resume_match": "This is the guardian you claimed last time. Read the wound and repair task first, then choose the next supply.",
+        "guardian_resume_other": "You are reading another guardian. Use this doorway to return to your own route.",
         "saved_plan": "Return to repair plan",
         "saved_luna": "Open Luna",
         "saved_route": "View supply route",
@@ -698,6 +706,10 @@ QUIZ_LABELS = {
         "saved_intro": "前回の結果はこの端末のブラウザだけに保存されています。修復プラン、Luna、補給ルートへ戻れます。",
         "guide_resume_title": "前回の守護者と一緒に読む",
         "guide_resume_intro": "読み終えたら、修復プラン、守護者ページ、補給ルートへ戻り、気づきを次の一歩につなげられます。",
+        "guardian_resume_title": "守護者を認領済みです",
+        "guardian_resume_intro": "この端末には前回の診断結果が残っています。守護者、補給ルート、修復プラン、カードへ戻れます。",
+        "guardian_resume_match": "これは前回認領した守護者です。傷口と修復課題を読んでから、次の補給を選べます。",
+        "guardian_resume_other": "別の守護者を読んでいます。自分のルートへ戻る時は、ここから前回の結果へ戻れます。",
         "saved_plan": "修復プランへ戻る",
         "saved_luna": "Luna を開く",
         "saved_route": "補給ルートを見る",
@@ -747,6 +759,10 @@ QUIZ_LABELS = {
         "saved_intro": "지난 결과는 이 기기의 브라우저에만 저장됩니다. 회복 계획, Luna, 보급 루트로 바로 돌아갈 수 있습니다.",
         "guide_resume_title": "지난 수호자와 함께 읽기",
         "guide_resume_intro": "이 글을 읽은 뒤 회복 계획, 수호자 페이지, 개인 보급 루트로 돌아가 다음 행동으로 이어갈 수 있습니다.",
+        "guardian_resume_title": "나의 수호자가 선택되었습니다",
+        "guardian_resume_intro": "이 기기에 지난 테스트 결과가 남아 있습니다. 수호자, 보급 루트, 회복 계획, 카드로 돌아갈 수 있습니다.",
+        "guardian_resume_match": "지난번 선택한 수호자입니다. 상처와 회복 과제를 먼저 읽고 다음 보급을 고르세요.",
+        "guardian_resume_other": "다른 수호자 페이지를 읽고 있습니다. 내 루트로 돌아가려면 여기에서 지난 결과로 이동하세요.",
         "saved_plan": "회복 계획으로 돌아가기",
         "saved_luna": "Luna 열기",
         "saved_route": "보급 루트 보기",
@@ -796,6 +812,10 @@ QUIZ_LABELS = {
         "saved_intro": "Tu último resultado se guarda solo en este navegador y dispositivo. Puedes volver al plan, Luna o tu ruta de suministro.",
         "guide_resume_title": "Lee esto con tu última guardiana",
         "guide_resume_intro": "Después de la guía, vuelve a tu plan, página de guardiana o ruta de suministro para convertir la idea en siguiente paso.",
+        "guardian_resume_title": "Tu guardiana está reclamada",
+        "guardian_resume_intro": "Este dispositivo conserva tu último resultado. Vuelve a tu guardiana, ruta, plan y tarjeta desde aquí.",
+        "guardian_resume_match": "Esta es la guardiana que reclamaste. Lee la herida y la tarea de reparación antes de elegir el siguiente recurso.",
+        "guardian_resume_other": "Estás leyendo otra guardiana. Usa esta puerta para volver a tu propia ruta.",
         "saved_plan": "Volver al plan",
         "saved_luna": "Abrir Luna",
         "saved_route": "Ver ruta",
@@ -5735,6 +5755,81 @@ def guide_resume_script(lang: str) -> str:
 """
 
 
+def guardian_resume_script(lang: str, current_slug: str = "") -> str:
+    data = quiz_payload(lang)
+    current = json.dumps(current_slug)
+    return f"""
+<script>
+(() => {{
+  const quiz = {data};
+  const currentSlug = {current};
+  const box = document.querySelector('[data-guardian-saved]');
+  if (!box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{location.pathname}}:quiz-result`, `lovetypes:${{homePath}}:quiz-result`];
+
+  function normalizeSaved(saved) {{
+    if (!saved || typeof saved !== 'object') return null;
+    const primaryKey = saved.primaryKey || saved.type;
+    if (!primaryKey || !quiz.results[primaryKey]) return null;
+    return {{ ...saved, primaryKey }};
+  }}
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = normalizeSaved(JSON.parse(localStorage.getItem(key) || 'null'));
+        if (saved) return saved;
+      }}
+    }} catch (error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  const isCurrent = currentSlug && currentSlug === result.slug;
+  const intro = currentSlug
+    ? (isCurrent ? quiz.labels.guardian_resume_match : quiz.labels.guardian_resume_other)
+    : quiz.labels.guardian_resume_intro;
+  const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.resourceUrl;
+  const primaryLabel = currentSlug && !isCurrent ? quiz.labels.guardian_link : quiz.labels.saved_route;
+  box.innerHTML = `
+    <article class="guardian-resume-card" id="guardian-result-${{result.slug}}" style="--result-accent:${{result.color}}">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+      <div>
+        <p class="eyebrow">${{quiz.labels.guardian_resume_title}}</p>
+        <h2>${{result.name}} · ${{result.type}}</h2>
+        <p>${{intro}}</p>
+        <div class="guardian-resume-actions">
+          <a class="primary-btn" href="${{primaryHref}}" data-guardian-resume-primary>${{primaryLabel}}</a>
+          <a class="secondary-btn" href="${{result.guardianUrl}}" data-guardian-resume-guardian>${{quiz.labels.guardian_link}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}" data-guardian-resume-plan>${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-guardian-resume-keepsake>${{quiz.labels.saved_card}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-guardian-resume-luna>${{quiz.labels.saved_luna}}</a>
+          <button class="secondary-btn" type="button" data-clear-guardian-result>${{quiz.labels.saved_clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-clear-guardian-result]').addEventListener('click', clearSavedResult);
+  if (location.hash === `#guardian-result-${{result.slug}}`) {{
+    const focusResume = () => box.scrollIntoView({{ behavior: 'auto', block: 'start' }});
+    window.requestAnimationFrame(focusResume);
+    window.setTimeout(focusResume, 120);
+    window.setTimeout(focusResume, 420);
+  }}
+}})();
+</script>
+"""
+
+
 def home(lang: str) -> None:
     t = LANGS[lang]
     quiz = QUIZ_LABELS[lang]
@@ -5796,6 +5891,7 @@ def characters_index_page(lang: str) -> None:
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
+<section class="section guardian-result-resume" data-guardian-saved hidden aria-live="polite"></section>
 {guardian_entry_section(lang)}
 {guardian_need_router_section(lang)}
 {universe_map_section(lang)}
@@ -5807,7 +5903,7 @@ def characters_index_page(lang: str) -> None:
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["h1"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     guardian_items = [(data[lang][0], abs_url(lang, "characters/" + slug)) for slug, data in GUARDIANS.items()]
     schema += item_list_schema(copy["h1"], desc, guardian_items)
-    write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body, t["guardians"], "website", "/og-cover.jpg", schema))
+    write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body + guardian_resume_script(lang), t["guardians"], "website", "/og-cover.jpg", schema))
 
 
 def guides_index(lang: str) -> None:
@@ -6033,6 +6129,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p class="domain-title">{escape(domain_title)}</p><p>{escape(desc)}</p><p>{escape(domain_desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False, priority=True)}
 </section>
+<section class="section guardian-result-resume" data-guardian-saved hidden aria-live="polite"></section>
 <section class="section domain-rune-section" data-domain-marker>
   <div class="domain-rune-card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
     {img_tag(data["prop"], domain_title)}
@@ -6070,7 +6167,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
         "dateModified": UPDATED,
         "isPartOf": website_ref(lang),
     })
-    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body, t["guardians"], "profile", f"/assets/lovetypes/share/{slug}-og.jpg", schema))
+    write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body + guardian_resume_script(lang, slug), t["guardians"], "profile", f"/assets/lovetypes/share/{slug}-og.jpg", schema))
 
 
 def resources_page(lang: str) -> None:

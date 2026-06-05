@@ -153,6 +153,7 @@ function summarizeConversionFailures(results) {
     if (!result.status || result.status >= 400) failures.push('bad status');
     if (target === 'route' && !result.url?.includes('/resources/#supply-')) failures.push('did not land on supply route');
     if (target === 'map' && !result.url?.includes('/garden-map/')) failures.push('did not land on garden map');
+    if (target === 'guardian' && !result.url?.includes('/characters/')) failures.push('did not land on guardians overview');
     if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.url?.includes('/repair-plan/#plan-')) failures.push('did not land on repair plan');
     if (target === 'luna' && !result.url?.includes('/luna-yoga-music/#luna-')) failures.push('did not land on Luna route');
     if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
@@ -167,6 +168,11 @@ function summarizeConversionFailures(results) {
     if (target === 'map' && !result.gardenMapPlanHref?.includes('/repair-plan/#plan-')) failures.push('garden map resume missing repair plan');
     if (target === 'map' && !result.gardenMapKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('garden map resume missing keepsake hall');
     if (target === 'map' && !result.gardenMapLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('garden map resume missing Luna route');
+    if (target === 'guardian' && !result.guardianResumeVisible) failures.push('missing personalized guardian resume');
+    if (target === 'guardian' && !result.guardianResumePrimaryHref?.includes('/resources/#supply-')) failures.push('guardian resume primary action does not continue supply route');
+    if (target === 'guardian' && !result.guardianResumeGuardianHref?.includes('/characters/')) failures.push('guardian resume missing guardian page link');
+    if (target === 'guardian' && !result.guardianResumePlanHref?.includes('/repair-plan/#plan-')) failures.push('guardian resume missing repair plan');
+    if (target === 'guardian' && !result.guardianResumeKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('guardian resume missing keepsake hall');
     if (['plan', 'keepsake-plan', 'home-saved-plan'].includes(target) && !result.repairResumeVisible) failures.push('missing personalized repair resume');
     if (target === 'luna' && !result.lunaResumeVisible) failures.push('missing personalized Luna resume');
     if (target === 'guide' && !result.guideResumeVisible) failures.push('missing personalized guide resume');
@@ -377,6 +383,7 @@ const conversionCases = [
   { name: 'conversion-repair-mobile', target: 'plan', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-luna-mobile', target: 'luna', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-garden-map-mobile', target: 'map', path: '/', viewport: { width: 390, height: 844 } },
+  { name: 'conversion-guardian-mobile', target: 'guardian', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-guide-mobile', target: 'guide', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-mobile', target: 'keepsake', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'conversion-keepsake-to-repair-mobile', target: 'keepsake-plan', path: '/', viewport: { width: 390, height: 844 } },
@@ -783,6 +790,10 @@ for (const item of conversionCases) {
     const basePath = new URL(url).pathname.replace(/\/$/, '');
     const mapPath = `${basePath || ''}/garden-map/`;
     await openPage(page, makeUrl(mapPath));
+  } else if (item.target === 'guardian') {
+    const basePath = new URL(url).pathname.replace(/\/$/, '');
+    const charactersPath = `${basePath || ''}/characters/`;
+    await openPage(page, makeUrl(charactersPath));
   } else if (item.target === 'guide') {
     await page.locator('[data-conversion-guide]').click();
   } else if (item.target === 'keepsake-plan') {
@@ -817,6 +828,8 @@ for (const item of conversionCases) {
           ? '[data-keepsake-saved]:not([hidden])'
           : finalTarget === 'map'
             ? '[data-garden-map-saved]:not([hidden])'
+            : finalTarget === 'guardian'
+              ? '[data-guardian-saved]:not([hidden])'
       : '[data-supply-saved]:not([hidden])';
   await page.locator(resumeSelector).waitFor({ state: 'visible' });
   await page.waitForFunction(() => window.scrollY < 1200);
@@ -829,6 +842,10 @@ for (const item of conversionCases) {
   let gardenMapPlanHref = '';
   let gardenMapKeepsakeHref = '';
   let gardenMapLunaHref = '';
+  let guardianResumePrimaryHref = '';
+  let guardianResumeGuardianHref = '';
+  let guardianResumePlanHref = '';
+  let guardianResumeKeepsakeHref = '';
   if (finalTarget === 'plan') {
     repairFillPrimary = await page.locator('[data-repair-saved] .primary-btn[data-fill-repair]').isVisible().catch(() => false);
     await page.locator('[data-repair-saved] [data-fill-repair]').click();
@@ -848,6 +865,11 @@ for (const item of conversionCases) {
     gardenMapPlanHref = await page.locator('[data-garden-map-saved] a[href*="/repair-plan/#plan-"]').first().getAttribute('href').catch(() => '');
     gardenMapKeepsakeHref = await page.locator('[data-garden-map-saved] a[href*="/keepsakes/#keepsake-"]').first().getAttribute('href').catch(() => '');
     gardenMapLunaHref = await page.locator('[data-garden-map-saved] a[href*="/luna-yoga-music/#luna-"]').first().getAttribute('href').catch(() => '');
+  } else if (finalTarget === 'guardian') {
+    guardianResumePrimaryHref = await page.locator('[data-guardian-saved] .primary-btn').first().getAttribute('href').catch(() => '');
+    guardianResumeGuardianHref = await page.locator('[data-guardian-saved] [data-guardian-resume-guardian]').first().getAttribute('href').catch(() => '');
+    guardianResumePlanHref = await page.locator('[data-guardian-saved] [data-guardian-resume-plan]').first().getAttribute('href').catch(() => '');
+    guardianResumeKeepsakeHref = await page.locator('[data-guardian-saved] [data-guardian-resume-keepsake]').first().getAttribute('href').catch(() => '');
   }
 
   const dynamicImageIssues = await page.locator(`${resumeSelector} img`).evaluateAll((images) => images.flatMap((image) => {
@@ -902,6 +924,11 @@ for (const item of conversionCases) {
     gardenMapPlanHref,
     gardenMapKeepsakeHref,
     gardenMapLunaHref,
+    guardianResumeVisible: await page.locator('[data-guardian-saved]:not([hidden])').isVisible().catch(() => false),
+    guardianResumePrimaryHref,
+    guardianResumeGuardianHref,
+    guardianResumePlanHref,
+    guardianResumeKeepsakeHref,
     lunaResumeVisible: await page.locator('[data-luna-saved]:not([hidden])').isVisible().catch(() => false),
     guideResumeVisible: await page.locator('[data-guide-saved]:not([hidden])').isVisible().catch(() => false),
     keepsakeResumeVisible: await page.locator('[data-keepsake-saved]:not([hidden])').isVisible().catch(() => false),

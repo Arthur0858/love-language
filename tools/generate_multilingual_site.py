@@ -156,10 +156,10 @@ LANGS = {
         "boundary": "Editorial boundary",
         "boundary_text": "The LoveTypes guardians and Heart Garden are metaphor tools for self-reflection and relationship communication. They are not therapy, medical advice, legal advice, or a relationship diagnosis. If you are facing violence, coercive control, trauma, or urgent risk, seek trusted local and professional support first.",
         "home_title": "LoveTypes | Love Language Quiz and Relationship Guides",
-        "home_desc": "LoveTypes turns the five love languages into five emotion guardians, helping you enter the Heart Garden, recognize your doorway to feeling loved, name misfrequency, and practice repair.",
+        "home_desc": "LoveTypes turns the five love languages into emotion guardians, helping you enter the Heart Garden, name your loved doorway, spot misfrequency, and practice repair.",
         "guide_index_title": "LoveTypes Guardian Guides | Bring Love Languages Into Real Relationships",
         "guide_index_desc": "Explore Heart Garden guides for quiz results, conflict repair, long-distance presence, boundaries, emotional needs, and partner conversations.",
-        "trust_intro": "LoveTypes is a Heart Garden mapped by the five love languages. Through five emotion guardians, scenario-based reflection, and practical guides, it helps you name your need to feel loved, your misfrequency wounds, and the next words you can actually say.",
+        "trust_intro": "LoveTypes is a Heart Garden mapped by the five love languages. Guardians, scenario prompts, and practical guides help you name needs, wounds, and next words.",
         "resources_desc": "Browse Heart Garden guide paths, guardian profiles, love-language theory notes, and practical exercises so you can find the next lamp on the path.",
         "contact_desc": "Contact LoveTypes for content corrections, privacy questions, partnership concerns, or pages in the Heart Garden that need repair.",
         "privacy_desc": f"LoveTypes privacy policy covering data use, third-party services, and contact options. Updated {UPDATED}.",
@@ -270,10 +270,10 @@ LANGS = {
         "boundary": "Límite editorial",
         "boundary_text": "Las guardianas de LoveTypes y el Jardín del Corazón son herramientas metafóricas para la autorreflexión y la comunicación relacional. No ofrecen terapia, consejo médico, consejo legal ni diagnóstico individual. Si enfrentas violencia, control, trauma o riesgo urgente, busca primero apoyo profesional y personas de confianza.",
         "home_title": "LoveTypes | Test de lenguajes del amor y guías de relación",
-        "home_desc": "LoveTypes transforma los cinco lenguajes del amor en cinco guardianas emocionales para entrar al Jardín del Corazón, reconocer tu entrada al amor, nombrar desajustes y practicar reparación.",
+        "home_desc": "LoveTypes convierte los cinco lenguajes del amor en guardianas emocionales para entrar al Jardín del Corazón, reconocer tu entrada al amor y practicar reparación.",
         "guide_index_title": "Guías de Guardianas LoveTypes | Lleva los lenguajes del amor a la vida real",
         "guide_index_desc": "Explora las guías del Jardín del Corazón sobre resultados, reparación de conflictos, presencia a distancia, límites, seguridad emocional y conversaciones de pareja.",
-        "trust_intro": "LoveTypes es un Jardín del Corazón trazado por los cinco lenguajes del amor. Con cinco guardianas emocionales, reflexión situacional y guías prácticas, ayuda a nombrar la necesidad de sentirse amada, las heridas de desajuste y la próxima frase que sí puede decirse.",
+        "trust_intro": "LoveTypes es un Jardín del Corazón guiado por cinco lenguajes del amor. Sus guardianas, escenas y guías ayudan a nombrar necesidades, heridas y próximas palabras.",
         "resources_desc": "Encuentra entradas del Jardín del Corazón, perfiles de guardianas, teoría de lenguajes del amor y ejercicios prácticos para hallar la siguiente luz del camino.",
         "contact_desc": "Contacta a LoveTypes para correcciones de contenido, privacidad, colaboraciones o páginas del Jardín del Corazón que necesiten reparación.",
         "privacy_desc": f"Política de privacidad de LoveTypes sobre datos, servicios de terceros y contacto. Actualizada {UPDATED}.",
@@ -2682,7 +2682,7 @@ REPAIR_PLAN = {
     "en": {
         "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
         "title": "7-Day Heart-Language Repair Plan",
-        "desc": "After the quiz, you do not need to repair the whole relationship at once. Use seven days to turn your guardian result into a route you can revisit: notice the wound, ask for one small action, then choose one supply to support practice.",
+        "desc": "After the quiz, use seven days to turn your guardian result into a revisitable route: notice the wound, ask for one small action, and choose one supply for practice.",
         "days_title": "One-week practice route",
         "guardian_title": "Adjust by guardian",
         "start": "Start quiz",
@@ -2793,7 +2793,7 @@ REPAIR_PLAN = {
     "es": {
         "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
         "title": "Plan de reparación de 7 días",
-        "desc": "Después del test, no hace falta reparar toda la relación de una vez. Usa siete días para convertir tu resultado en una ruta revisitable: mira la herida, pide una acción pequeña y elige un recurso para practicar.",
+        "desc": "Después del test, usa siete días para convertir tu resultado en una ruta revisitable: mira la herida, pide una acción pequeña y elige un recurso.",
         "days_title": "Ruta de práctica semanal",
         "guardian_title": "Ajusta por guardiana",
         "start": "Iniciar test",
@@ -3541,7 +3541,7 @@ CHARACTER_INDEX_COPY = {
     },
     "en": {
         "title": "Five Emotion Guardians Overview | LoveTypes",
-        "desc": "Meet Iris, Noah, Vivian, Claire, and Dora, the five LoveTypes emotion guardians for words of affirmation, quality time, receiving gifts, acts of service, and physical touch, then choose the guide, wound, and supply route that fits your result.",
+        "desc": "Meet Iris, Noah, Vivian, Claire, and Dora, then choose the guide, wound, repair mission, and supply route that fit your LoveTypes result.",
         "h1": "Five Emotion Guardians Overview",
         "intro": "Each guardian is a doorway for receiving love and a route for repair. Start with the love language that feels most tender, then continue into a guide, practice, or supply path.",
         "map_title": "Use the guardians to choose your next step",
@@ -3565,7 +3565,7 @@ CHARACTER_INDEX_COPY = {
     },
     "es": {
         "title": "Resumen de las Cinco Guardianas Emocionales | LoveTypes",
-        "desc": "Conoce a Iris, Noah, Vivian, Claire y Dora, las cinco guardianas emocionales de LoveTypes para palabras de afirmación, tiempo de calidad, recibir regalos, actos de servicio y contacto físico, y elige la guía, herida y ruta de suministro que corresponde a tu resultado.",
+        "desc": "Conoce a Iris, Noah, Vivian, Claire y Dora, y elige la guía, herida, misión de reparación y ruta de suministro que corresponde a tu resultado LoveTypes.",
         "h1": "Resumen de las Cinco Guardianas Emocionales",
         "intro": "Cada guardiana es una entrada para recibir amor y una ruta de reparación. Empieza por el lenguaje que se siente más sensible y continúa hacia una guía, práctica o suministro.",
         "map_title": "Usa las guardianas para elegir tu siguiente paso",
@@ -7374,7 +7374,7 @@ def luna_page(lang: str) -> None:
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"
-    write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/luna-yoga-music/images/hero.webp", schema))
+    write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/og-cover.jpg", schema))
 
 
 def luna_alias_page(lang: str) -> None:
@@ -7403,7 +7403,7 @@ def luna_alias_page(lang: str) -> None:
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"
-    write(page_path(lang, "luna"), layout(lang, page_title, t["luna_desc"], "luna", body, t["resources"], "website", "/luna-yoga-music/images/hero.webp", schema, alternate_path="luna", canonical_path="luna-yoga-music", robots="noindex, follow"))
+    write(page_path(lang, "luna"), layout(lang, page_title, t["luna_desc"], "luna", body, t["resources"], "website", "/og-cover.jpg", schema, alternate_path="luna", canonical_path="luna-yoga-music", robots="noindex, follow"))
 
 
 def contact_request_section(lang: str) -> str:

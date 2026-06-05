@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-owned-supply-signal"
+ASSET_VERSION = "20260605-home-journey-map"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3901,6 +3901,87 @@ UNIVERSE_COPY = {
 }
 
 
+HOME_JOURNEY = {
+    "zh": {
+        "eyebrow": "GARDEN JOURNEY",
+        "title": "第一次進入心語庭園，可以照這條路走",
+        "intro": "不需要一次讀完整座宇宙。先完成命運儀式，再認出守護者，接著選一個補給，最後把它放進一個可執行的修復週期。",
+        "steps": [
+            ("01", "完成命運儀式", "用 15 道心語辨認你最容易感到被愛的入口。", "開始測驗", "#quiz-section"),
+            ("02", "拜訪五個分域", "看見艾莉絲、諾雅、薇薇安、克萊兒、朵拉各自守護的關係語言。", "看守護者", "characters"),
+            ("03", "領取一個補給", "依照結果拿走對應指南、小任務、書卷或 Luna 夜間補給。", "前往補給站", "resources"),
+            ("04", "寫下 7 日修復", "把感受變成一次小請求、一段冷卻時間與一個可完成行動。", "打開修復計畫", "repair-plan"),
+        ],
+    },
+    "en": {
+        "eyebrow": "GARDEN JOURNEY",
+        "title": "If this is your first time in the Heart Garden, follow this route",
+        "intro": "You do not need to read the whole universe at once. Complete the ritual, recognize your guardian, choose one supply, then place it into a practical repair week.",
+        "steps": [
+            ("01", "Complete the ritual", "Use 15 heart-language prompts to recognize the doorway where love reaches you fastest.", "Start quiz", "#quiz-section"),
+            ("02", "Visit five domains", "Meet Iris, Noah, Vivian, Claire, and Dora as five relationship languages you can enter.", "See guardians", "characters"),
+            ("03", "Take one supply", "Carry the matching guide, small task, book route, or Luna night support from your result.", "Open supplies", "resources"),
+            ("04", "Write a 7-day repair", "Turn the feeling into one small request, a cool-down rhythm, and one doable action.", "Open repair plan", "repair-plan"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "GARDEN JOURNEY",
+        "title": "初めて心語の庭に入るなら、この順番で進みます",
+        "intro": "宇宙全体を一度に読む必要はありません。儀式を終え、守護者を認め、補給を一つ選び、それを実行できる修復週間に入れます。",
+        "steps": [
+            ("01", "儀式を完了する", "15 の心語で、愛が届きやすい入口を見つけます。", "診断を始める", "#quiz-section"),
+            ("02", "五つの領域を訪れる", "アイリス、ノア、ヴィヴィアン、クレア、ドラが守る関係の言語を見ます。", "守護者を見る", "characters"),
+            ("03", "補給を一つ受け取る", "結果に合わせて、ガイド、小さな課題、本、または Luna の夜の補給を選びます。", "補給站へ", "resources"),
+            ("04", "7日間の修復を書く", "感情を小さな依頼、冷却の時間、実行できる行動に変えます。", "修復プランへ", "repair-plan"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "GARDEN JOURNEY",
+        "title": "마음의 정원에 처음 들어온다면 이 길을 따라가세요",
+        "intro": "우주 전체를 한 번에 읽지 않아도 됩니다. 의식을 마치고, 수호자를 알아본 뒤, 보급 하나를 고르고 실행 가능한 회복 주간에 넣으세요.",
+        "steps": [
+            ("01", "운명 의식 완료", "15개의 마음 언어 질문으로 사랑이 가장 빨리 닿는 입구를 알아봅니다.", "테스트 시작", "#quiz-section"),
+            ("02", "다섯 영역 방문", "아이리스, 노아, 비비안, 클레어, 도라가 지키는 관계 언어를 봅니다.", "수호자 보기", "characters"),
+            ("03", "보급 하나 받기", "결과에 맞는 가이드, 작은 과제, 책 루트, Luna 밤 보급을 하나 고릅니다.", "보급소 열기", "resources"),
+            ("04", "7일 회복 쓰기", "감정을 작은 요청, 식히는 리듬, 실행 가능한 행동으로 바꿉니다.", "회복 계획 열기", "repair-plan"),
+        ],
+    },
+    "es": {
+        "eyebrow": "GARDEN JOURNEY",
+        "title": "Si entras por primera vez al Jardin del Corazon, sigue esta ruta",
+        "intro": "No necesitas leer todo el universo de una vez. Completa el ritual, reconoce tu guardiana, elige un recurso y llevalo a una semana de reparacion practica.",
+        "steps": [
+            ("01", "Completa el ritual", "Usa 15 preguntas de lenguaje del corazon para reconocer la puerta donde el amor llega mas rapido.", "Empezar test", "#quiz-section"),
+            ("02", "Visita cinco dominios", "Conoce a Iris, Noah, Vivian, Claire y Dora como cinco lenguajes relacionales.", "Ver guardianas", "characters"),
+            ("03", "Toma un recurso", "Lleva una guia, tarea, libro o apoyo nocturno de Luna segun tu resultado.", "Abrir recursos", "resources"),
+            ("04", "Escribe 7 dias", "Convierte la emocion en una peticion pequena, un ritmo de calma y una accion posible.", "Abrir plan", "repair-plan"),
+        ],
+    },
+}
+
+
+def home_journey_section(lang: str) -> str:
+    copy = HOME_JOURNEY[lang]
+    cards = []
+    for number, title, desc, action, target in copy["steps"]:
+        href = target if target.startswith("#") else lang_url(lang, target)
+        cards.append(f"""
+<article class="home-journey-card">
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}">{escape(action)}</a>
+</article>
+""")
+    return f"""
+<section class="section home-journey-section" data-home-journey>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="home-journey-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def universe_gate_section(lang: str) -> str:
     title, intro, _map_title, _map_intro = UNIVERSE_COPY[lang]
     cards = []
@@ -5315,6 +5396,7 @@ def home(lang: str) -> None:
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
 {universe_gate_section(lang)}
+{home_journey_section(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">UNIVERSE PROMISE</p><h2>{escape(t["trust_intro"])}</h2></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>

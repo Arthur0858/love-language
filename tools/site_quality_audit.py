@@ -1426,6 +1426,24 @@ def main() -> int:
 
         if is_locale_home(page):
             stats["home_quiz_entry_pages"] += 1
+            journey_section_count = parser.source.count("data-home-journey")
+            journey_card_count = parser.source.count('class="home-journey-card"')
+            if journey_section_count != 1:
+                issues.append(f"{page}: expected one home journey section, found {journey_section_count}")
+            if journey_card_count != 4:
+                issues.append(f"{page}: expected 4 home journey cards, found {journey_card_count}")
+            if journey_section_count == 1 and journey_card_count == 4:
+                stats["home_journey_pages"] += 1
+            home_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_home_hrefs = {
+                "#quiz-section",
+                lang_url_for_page(page, "characters"),
+                lang_url_for_page(page, "resources"),
+                lang_url_for_page(page, "repair-plan"),
+            }
+            missing_home_hrefs = sorted(required_home_hrefs.difference(home_hrefs))
+            if missing_home_hrefs:
+                issues.append(f"{page}: home journey missing hrefs {', '.join(missing_home_hrefs)}")
             quiz_section_count = parser.ids.count("quiz-section")
             if quiz_section_count != 1:
                 issues.append(f"{page}: expected one #quiz-section target, found {quiz_section_count}")
@@ -2065,6 +2083,7 @@ def main() -> int:
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
+    print(f"home_journey_pages={stats['home_journey_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")

@@ -402,6 +402,62 @@ button:focus-visible {
   border-color: color-mix(in srgb, var(--domain-accent), white 26%);
 }
 
+.home-journey-section {
+  background:
+    radial-gradient(circle at 88% 14%, rgba(117, 140, 106, .11), transparent 30%),
+    linear-gradient(180deg, #fff, #fbf7f2);
+}
+
+.home-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.home-journey-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(224, 199, 182, .86);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 12px 30px rgba(76, 42, 43, .055);
+}
+
+.home-journey-card span {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #f4e7de;
+  color: var(--rose);
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.home-journey-card h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  line-height: 1.22;
+}
+
+.home-journey-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.58;
+}
+
+.home-journey-card a {
+  justify-self: start;
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .hero-copy {
   max-width: 760px;
   position: relative;
@@ -3958,6 +4014,7 @@ button.secondary-btn {
 
 @media (max-width: 1180px) {
   .universe-gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .home-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .supply-entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .supply-quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4302,6 +4359,14 @@ button.secondary-btn {
 
   .universe-gate-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-journey-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-journey-card {
+    min-height: auto;
   }
 
   .universe-gate-card {

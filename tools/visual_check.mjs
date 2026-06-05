@@ -86,6 +86,7 @@ function summarizeFailures(results) {
     if (result.navCount < 4) failures.push('navigation too small');
     if (result.textLength < 120) failures.push('page text too short');
     if (result.name.startsWith('home-') && result.universeGateCount !== 5) failures.push('missing five universe gates');
+    if (result.name.startsWith('home-') && result.homeJourneyCardCount !== 4) failures.push('missing four home journey cards');
     if (result.name.startsWith('characters-') && result.universeMapCount !== 1) failures.push('missing universe map');
     if (result.name.startsWith('characters-') && result.guardianCardCount !== 5) failures.push('missing guardian universe cards');
     if (result.name.startsWith('characters-') && result.guardianNeedCardCount !== 5) failures.push('missing guardian need router cards');
@@ -452,6 +453,7 @@ for (const item of cases) {
   const navCount = await page.locator('.nav-links a').count();
   const bodyText = await page.locator('body').innerText();
   const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
+  const homeJourneyCardCount = await page.locator('[data-home-journey] .home-journey-card').count();
   const universeMapCount = await page.locator('[data-universe-map]').count();
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
   const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
@@ -489,6 +491,7 @@ for (const item of cases) {
     navCount,
     textLength: bodyText.length,
     universeGateCount,
+    homeJourneyCardCount,
     universeMapCount,
     guardianCardCount,
     guardianNeedCardCount,

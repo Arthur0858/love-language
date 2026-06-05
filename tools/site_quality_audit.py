@@ -424,7 +424,7 @@ def expected_primary_nav_href(page: Path) -> str | None:
         "luna": "resources",
         "luna-yoga-music": "resources",
     }.get(section, section)
-    if section not in {"guides", "characters", "theory", "resources", "about"}:
+    if section not in {"garden-map", "guides", "characters", "theory", "resources", "about"}:
         return None
     return f"/{prefix}/{section}/" if prefix else f"/{section}/"
 
@@ -1446,6 +1446,7 @@ def main() -> int:
             home_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
             required_home_hrefs = {
                 "#quiz-section",
+                lang_url_for_page(page, "garden-map"),
                 lang_url_for_page(page, "characters"),
                 lang_url_for_page(page, "resources"),
                 lang_url_for_page(page, "repair-plan"),
@@ -1664,8 +1665,8 @@ def main() -> int:
             issues.append(f"{page}: primary navigation missing aria-label")
         primary_nav_links = [anchor for anchor in parser.anchors if anchor.get("_primary_nav") == "1"]
         stats["primary_nav_links"] += len(primary_nav_links)
-        if len(primary_nav_links) != 5:
-            issues.append(f"{page}: expected five primary navigation links, found {len(primary_nav_links)}")
+        if len(primary_nav_links) != 6:
+            issues.append(f"{page}: expected six primary navigation links, found {len(primary_nav_links)}")
         primary_current_links = [anchor for anchor in primary_nav_links if anchor.get("aria-current") == "page"]
         primary_active_links = [anchor for anchor in primary_nav_links if "active" in class_tokens(anchor)]
         expected_nav_href = expected_primary_nav_href(page)

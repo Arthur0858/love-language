@@ -349,6 +349,7 @@ const redirectCases = shouldCheckCloudflareRedirects()
 
 const languageMenuCases = [
   { name: 'language-menu-home-mobile', path: '/', currentLang: 'zh-TW', targetLang: 'en', expectedFinalPath: '/en/' },
+  { name: 'language-menu-garden-map-mobile', path: '/garden-map/', currentLang: 'zh-TW', targetLang: 'es', expectedFinalPath: '/es/garden-map/' },
   { name: 'language-menu-resources-mobile', path: '/resources/', currentLang: 'zh-TW', targetLang: 'ja', expectedFinalPath: '/ja/resources/' },
   { name: 'language-menu-guide-mobile', path: '/es/guides/words-of-affirmation-scripts/', currentLang: 'es', targetLang: 'ko', expectedFinalPath: '/ko/guides/words-of-affirmation-scripts/' },
 ];

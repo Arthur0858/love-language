@@ -95,6 +95,7 @@ LANGS = {
         "brand": "LoveTypes 情感守護者宇宙",
         "tagline": "走進心語庭園，把愛之語測驗結果翻成聽得懂、做得到、能修復錯頻的關係練習。",
         "start": "開始認領儀式",
+        "map": "地圖",
         "guides": "深度指南",
         "guardians": "守護者",
         "theory": "理論",
@@ -131,6 +132,7 @@ LANGS = {
         "brand": "LoveTypes Emotion Guardians",
         "tagline": "Step into the Heart Garden and translate your love-language result into clear words, small actions, boundaries, and repair for emotional misfrequency.",
         "start": "Begin recognition",
+        "map": "Map",
         "guides": "Guides",
         "guardians": "Guardians",
         "theory": "Theory",
@@ -167,6 +169,7 @@ LANGS = {
         "brand": "LoveTypes 感情の守護者",
         "tagline": "心語の庭に入り、愛の言語の結果を、伝わる言葉・小さな行動・境界線・すれ違いの修復へ翻訳するガイド。",
         "start": "認領の儀式を始める",
+        "map": "マップ",
         "guides": "ガイド",
         "guardians": "守護者",
         "theory": "理論",
@@ -203,6 +206,7 @@ LANGS = {
         "brand": "LoveTypes 감정 수호자",
         "tagline": "마음의 정원에 들어가 사랑의 언어 결과를 들리는 말, 작은 행동, 경계, 어긋남의 회복으로 번역하는 가이드.",
         "start": "인정 의식 시작하기",
+        "map": "지도",
         "guides": "가이드",
         "guardians": "수호자",
         "theory": "이론",
@@ -239,6 +243,7 @@ LANGS = {
         "brand": "LoveTypes Guardianas Emocionales",
         "tagline": "Entra al Jardín del Corazón y traduce tu resultado de lenguaje del amor en palabras claras, acciones pequeñas, límites y reparación del desajuste.",
         "start": "Iniciar reconocimiento",
+        "map": "Mapa",
         "guides": "Guías",
         "guardians": "Guardianas",
         "theory": "Teoría",
@@ -3459,6 +3464,7 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
     t = LANGS[lang]
     language_path = alternate_path if alternate_path is not None else path
     items = [
+        (lang_url(lang, "garden-map"), t["map"]),
         (lang_url(lang, "guides"), t["guides"]),
         (lang_url(lang, "characters"), t["guardians"]),
         (lang_url(lang, "theory"), t["theory"]),
@@ -4090,7 +4096,7 @@ def home_journey_section(lang: str) -> str:
 """)
     return f"""
 <section class="section home-journey-section" data-home-journey>
-  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "garden-map")}">{escape(GARDEN_MAP[lang]["title"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="home-journey-grid">{"".join(cards)}</div>
 </section>
@@ -4194,7 +4200,7 @@ def garden_map_page(lang: str) -> None:
     list_items = [(title, abs_map_href(target)) for title, _desc, _action, target in copy["routes"]]
     schema += item_list_schema(copy["routes_title"], copy["intro"], list_items)
     page_title = f"{copy['title']} | LoveTypes" if lang == "zh" else f"{copy['title']} | LoveTypes {t['name']}"
-    write(page_path(lang, "garden-map"), layout(lang, page_title, copy["desc"], "garden-map", body, copy["title"], "website", "/og-cover.jpg", schema))
+    write(page_path(lang, "garden-map"), layout(lang, page_title, copy["desc"], "garden-map", body, t["map"], "website", "/og-cover.jpg", schema))
 
 
 def supply_wishlist_section(lang: str) -> str:
@@ -5566,7 +5572,7 @@ def home(lang: str) -> None:
     <p class="eyebrow">HEART GARDEN FIELD NOTES</p>
     <h1>{escape(t["brand"])}</h1>
     <p class="lead">{escape(t["tagline"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(t["map"])}</a></div>
   </div>
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>

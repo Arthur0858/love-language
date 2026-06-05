@@ -127,7 +127,7 @@ EXPECTED_REDIRECTS = {
     "/assets/lovetypes/share/vivian-story.webp": ("/assets/lovetypes/share/vivian-story-zh.webp", "301"),
     "/assets/lovetypes/share/claire-story.webp": ("/assets/lovetypes/share/claire-story-zh.webp", "301"),
     "/assets/lovetypes/share/dora-story.webp": ("/assets/lovetypes/share/dora-story-zh.webp", "301"),
-    "/luna-yoga-music/luna.css": ("/shared-20260605-garden-map.css", "301"),
+    "/luna-yoga-music/luna.css": ("/shared-20260605-asset-audit.css", "301"),
     "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp": ("/assets/lovetypes/share/guide-toolkit-og.jpg", "301"),
     "/assets/lovetypes/backgrounds/quiz-desk.webp": ("/assets/lovetypes/backgrounds/guardian-garden.webp", "301"),
     "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp": ("/assets/lovetypes/backgrounds/guardian-garden-mobile.webp", "301"),

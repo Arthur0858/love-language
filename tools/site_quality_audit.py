@@ -1665,6 +1665,12 @@ def main() -> int:
                 issues.append(f"{page}: garden map missing hrefs {', '.join(missing_map_hrefs)}")
         if is_resources_page(page):
             stats["resources_supply_entry_pages"] += 1
+            hero_action_count = parser.source.count("data-supply-hero-actions")
+            if hero_action_count != 1:
+                issues.append(f"{page}: expected one resources hero action cluster, found {hero_action_count}")
+            for link_key in ("quiz", "routes", "luna"):
+                if f'data-supply-hero-link="{link_key}"' not in parser.source:
+                    issues.append(f"{page}: resources hero actions missing {link_key} link")
             owned_signal_count = parser.source.count("data-supply-owned-signal")
             owned_card_count = parser.source.count("data-supply-owned-card")
             if owned_signal_count != 1:
@@ -1687,6 +1693,8 @@ def main() -> int:
                 "#supply-routes",
                 lang_url_for_page(page, "luna-yoga-music"),
             }
+            if hero_action_count == 1:
+                stats["resources_hero_action_pages"] += 1
             missing_resource_hrefs = sorted(required_resource_hrefs.difference(resource_hrefs))
             if missing_resource_hrefs:
                 issues.append(f"{page}: resources supply entry missing hrefs {', '.join(missing_resource_hrefs)}")
@@ -2352,6 +2360,7 @@ def main() -> int:
     print(f"home_journey_pages={stats['home_journey_pages']}")
     print(f"garden_map_pages={stats['garden_map_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
+    print(f"resources_hero_action_pages={stats['resources_hero_action_pages']}")
     print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"character_result_resume_pages={stats['character_result_resume_pages']}")

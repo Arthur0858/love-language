@@ -4349,6 +4349,25 @@ def supply_entry_section(lang: str) -> str:
 """
 
 
+def supply_hero_actions(lang: str) -> str:
+    actions = []
+    for index, (_title, _desc, action, target) in enumerate(SUPPLY_ENTRY[lang]["items"]):
+        if target.startswith("#"):
+            href = target
+            action_key = "routes" if target == "#supply-routes" else "anchor"
+        elif target:
+            href = lang_url(lang, target)
+            action_key = "luna" if target == "luna-yoga-music" else target
+        else:
+            href = lang_url(lang) + "#quiz-section"
+            action_key = "quiz"
+        button_class = "primary-btn" if index == 0 else "secondary-btn"
+        actions.append(
+            f'<a class="{button_class}" href="{href}" data-supply-hero-link="{escape(action_key)}">{escape(action)}</a>'
+        )
+    return f'<div class="hero-actions" data-supply-hero-actions>{"".join(actions)}</div>'
+
+
 UNIVERSE_COPY = {
     "zh": ("五域宇宙入口", "從心語庭園進入五個分域，選一盞最像你此刻需要的光。", "五域星圖", "每位守護者不是分類標籤，而是一個可以進入、停留、練習的情感分域。"),
     "en": ("Five Universe Gates", "Enter five domains from the Heart Garden and choose the light closest to what you need now.", "Five-Domain Star Map", "Each guardian is not a label, but an emotional domain you can enter, stay in, and practice with."),
@@ -6811,7 +6830,7 @@ def resources_page(lang: str) -> None:
 </article>
 """)
     body = f"""
-<section class="page-hero compact supply-hero"><p class="eyebrow">{escape(section_labels["heart_garden_supplies"])}</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+<section class="page-hero compact supply-hero"><p class="eyebrow">{escape(section_labels["heart_garden_supplies"])}</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p>{supply_hero_actions(lang)}<p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
 {supply_quick_route_nav(lang)}
 {supply_entry_section(lang)}

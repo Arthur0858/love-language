@@ -142,6 +142,7 @@ REDIRECTS = {
     "/assets/lovetypes/share/vivian-story.webp": "/assets/lovetypes/share/vivian-story-zh.webp",
     "/assets/lovetypes/share/claire-story.webp": "/assets/lovetypes/share/claire-story-zh.webp",
     "/assets/lovetypes/share/dora-story.webp": "/assets/lovetypes/share/dora-story-zh.webp",
+    "/luna-yoga-music/luna.css": "/shared-20260605-garden-map.css",
     "/en/luna/": "/en/luna-yoga-music/",
     "/ja/luna/": "/ja/luna-yoga-music/",
     "/ko/luna/": "/ko/luna-yoga-music/",

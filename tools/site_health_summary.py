@@ -19,6 +19,7 @@ CHECKS = [
     ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 120, False),
     ("public_deploy_smoke", [sys.executable, "tools/public_deploy_smoke.py"], 240, True),
     ("public_sitemap_smoke", [sys.executable, "tools/public_sitemap_smoke.py"], 240, True),
+    ("runtime_performance_smoke", ["node", "tools/runtime_performance_smoke.mjs"], 120, True),
 ]
 
 
@@ -81,6 +82,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "accessibility_issues",
         "image_asset_issues",
         "performance_budget_issues",
+        "runtime_performance_issues",
         "deploy_manifest_issues",
         "public_deploy_issues",
         "public_sitemap_issues",
@@ -97,6 +99,10 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_affiliate_links_checked",
         "public_sitemap_pages_checked",
         "public_sitemap_hreflang_links_checked",
+        "runtime_performance_pages_checked",
+        "runtime_performance_worst_lcp_ms",
+        "runtime_performance_worst_cls",
+        "runtime_performance_max_transfer_bytes",
         "image_assets_checked",
         "priority_images_checked",
         "image_preloads_checked",

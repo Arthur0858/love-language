@@ -66,13 +66,15 @@ IMAGE_DIMENSIONS = {
     "/assets/lovetypes/share/vivian-story-ko.webp": (1080, 1920),
     "/assets/lovetypes/share/vivian-story-zh.webp": (1080, 1920),
     "/assets/lovetypes/guardians/claire.webp": (720, 1007),
+    "/assets/lovetypes/guardians/cards/claire-card.webp": (400, 560),
+    "/assets/lovetypes/guardians/cards/dora-card.webp": (409, 560),
+    "/assets/lovetypes/guardians/cards/iris-card.webp": (528, 560),
+    "/assets/lovetypes/guardians/cards/noah-card.webp": (560, 538),
+    "/assets/lovetypes/guardians/cards/vivian-card.webp": (450, 560),
     "/assets/lovetypes/guardians/dora.webp": (736, 1007),
     "/assets/lovetypes/guardians/iris.webp": (966, 1024),
-    "/assets/lovetypes/guardians/iris-mobile.webp": (640, 678),
     "/assets/lovetypes/guardians/noah.webp": (1066, 1024),
-    "/assets/lovetypes/guardians/noah-mobile.webp": (460, 442),
     "/assets/lovetypes/guardians/vivian.webp": (823, 1024),
-    "/assets/lovetypes/guardians/vivian-mobile.webp": (430, 535),
     "/assets/lovetypes/props/affirmation-feather-pen.webp": (285, 235),
     "/assets/lovetypes/props/gifts-ribboned-gift-box.webp": (215, 190),
     "/assets/lovetypes/props/quality-time-lantern.webp": (100, 195),
@@ -2831,7 +2833,7 @@ REPAIR_PLAN = {
 GUARDIANS = {
     "iris": {
         "asset": "/assets/lovetypes/guardians/iris.webp",
-        "mobile_asset": "/assets/lovetypes/guardians/iris-mobile.webp",
+        "card_asset": "/assets/lovetypes/guardians/cards/iris-card.webp",
         "prop": "/assets/lovetypes/props/affirmation-feather-pen.webp",
         "zh": ("艾莉絲", "肯定的言詞", "她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。"),
         "en": ("Iris", "Words of affirmation", "In the dawn-glass garden, she guards the heart that longs to be seen clearly and gives names to words that waited too long."),
@@ -2841,7 +2843,7 @@ GUARDIANS = {
     },
     "noah": {
         "asset": "/assets/lovetypes/guardians/noah.webp",
-        "mobile_asset": "/assets/lovetypes/guardians/noah-mobile.webp",
+        "card_asset": "/assets/lovetypes/guardians/cards/noah-card.webp",
         "prop": "/assets/lovetypes/props/quality-time-lantern.webp",
         "zh": ("諾雅", "優質的時光", "她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。"),
         "en": ("Noah", "Quality time", "Between the star-sea library and a quiet shore, she guards the kind of time where two people truly stay."),
@@ -2851,7 +2853,7 @@ GUARDIANS = {
     },
     "vivian": {
         "asset": "/assets/lovetypes/guardians/vivian.webp",
-        "mobile_asset": "/assets/lovetypes/guardians/vivian-mobile.webp",
+        "card_asset": "/assets/lovetypes/guardians/cards/vivian-card.webp",
         "prop": "/assets/lovetypes/props/gifts-ribboned-gift-box.webp",
         "zh": ("薇薇安", "接受禮物", "她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。"),
         "en": ("Vivian", "Receiving gifts", "In the moonlit memory workshop, she collects proof of being remembered and keeps meaning in details, not price."),
@@ -2861,6 +2863,7 @@ GUARDIANS = {
     },
     "claire": {
         "asset": "/assets/lovetypes/guardians/claire.webp",
+        "card_asset": "/assets/lovetypes/guardians/cards/claire-card.webp",
         "prop": "/assets/lovetypes/props/service-tool-pouch.webp",
         "zh": ("克萊兒", "服務的行動", "她守著不停修復的溫室，把承諾放回日常，讓疲憊不再只由一個人撐住。"),
         "en": ("Claire", "Acts of service", "In a greenhouse of ongoing repair, she returns promises to daily life so one tired person does not hold everything alone."),
@@ -2870,6 +2873,7 @@ GUARDIANS = {
     },
     "dora": {
         "asset": "/assets/lovetypes/guardians/dora.webp",
+        "card_asset": "/assets/lovetypes/guardians/cards/dora-card.webp",
         "prop": "/assets/lovetypes/props/touch-golden-hug-glow.webp",
         "zh": ("朵拉", "身體的接觸", "她在柔暖聖域守護經過同意的靠近，讓身體重新記得安全的溫度。"),
         "en": ("Dora", "Physical touch", "In a warm sanctuary, she guards closeness after consent and helps the body remember the temperature of safety."),
@@ -4239,7 +4243,8 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
     prop_alt = f"{name} {domain_title}"
-    guardian_image = responsive_img_tag(data["asset"], data.get("mobile_asset", data["asset"]), name)
+    card_asset = data.get("card_asset", data["asset"])
+    guardian_image = img_tag(card_asset, name)
     return f"""
 <a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {guardian_image}
@@ -4261,7 +4266,8 @@ def character_link_card(lang: str, slug: str, data: dict, current_slug: str = ""
     domain = GUARDIAN_DOMAINS[slug]
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
-    guardian_image = responsive_img_tag(data["asset"], data.get("mobile_asset", data["asset"]), name)
+    card_asset = data.get("card_asset", data["asset"])
+    guardian_image = img_tag(card_asset, name)
     return f"""
 <a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {guardian_image}

@@ -186,6 +186,10 @@ function summarizeConversionFailures(results) {
     if (['keepsake', 'keepsake-plan'].includes(target) && !result.keepsakePrimaryHref?.includes('/repair-plan/#plan-')) failures.push('keepsake primary action does not continue repair plan');
     if (target === 'home-saved-plan' && !result.homeSavedVisible) failures.push('missing returning visitor saved result');
     if (target === 'home-saved-plan' && !result.homeSavedKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('home saved card does not continue keepsake hall');
+    if (target === 'home-saved-plan' && !result.homeTopResumeVisible) failures.push('missing top returning visitor resume');
+    if (target === 'home-saved-plan' && !result.homeTopRouteHref?.includes('/resources/#supply-')) failures.push('top returning resume missing supply route');
+    if (target === 'home-saved-plan' && !result.homeTopPlanHref?.includes('/repair-plan/#plan-')) failures.push('top returning resume missing repair plan');
+    if (target === 'home-saved-plan' && !result.homeTopLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('top returning resume missing Luna route');
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
@@ -792,6 +796,10 @@ for (const item of conversionCases) {
 
   let homeSavedVisible = false;
   let homeSavedKeepsakeHref = '';
+  let homeTopResumeVisible = false;
+  let homeTopRouteHref = '';
+  let homeTopPlanHref = '';
+  let homeTopLunaHref = '';
   if (item.target === 'plan') {
     await page.locator('[data-conversion-plan]').click();
   } else if (item.target === 'luna') {
@@ -810,10 +818,15 @@ for (const item of conversionCases) {
     await page.locator('[data-conversion-keepsake]').click();
   } else if (item.target === 'home-saved-plan') {
     await openPage(page, url);
+    await page.locator('[data-home-saved]:not([hidden])').waitFor({ state: 'visible' });
+    homeTopResumeVisible = true;
+    homeTopRouteHref = await page.locator('[data-home-saved] [data-home-resume-route]').first().getAttribute('href').catch(() => '');
+    homeTopPlanHref = await page.locator('[data-home-saved] [data-home-resume-plan]').first().getAttribute('href').catch(() => '');
+    homeTopLunaHref = await page.locator('[data-home-saved] [data-home-resume-luna]').first().getAttribute('href').catch(() => '');
     await page.locator('[data-quiz-saved]:not([hidden])').waitFor({ state: 'visible' });
     homeSavedVisible = true;
-    homeSavedKeepsakeHref = await page.locator('[data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
-    await page.locator('[data-home-saved-plan]').click();
+    homeSavedKeepsakeHref = await page.locator('[data-home-saved] [data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
+    await page.locator('[data-home-saved] [data-home-resume-plan]').click();
   } else if (item.target === 'keepsake') {
     await page.locator('[data-conversion-keepsake]').click();
   } else {
@@ -949,6 +962,10 @@ for (const item of conversionCases) {
     keepsakePrimaryHref,
     homeSavedVisible,
     homeSavedKeepsakeHref,
+    homeTopResumeVisible,
+    homeTopRouteHref,
+    homeTopPlanHref,
+    homeTopLunaHref,
     dynamicImageIssues,
     scrollY: resumeScrollY,
     finalScrollY: await page.evaluate(() => window.scrollY),

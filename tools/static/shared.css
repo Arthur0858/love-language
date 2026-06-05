@@ -2723,6 +2723,33 @@ button.secondary-btn {
   cursor: pointer;
 }
 
+.home-result-resume {
+  padding-top: 18px;
+  padding-bottom: 0;
+}
+
+.home-result-resume .home-resume-card {
+  grid-template-columns: 118px minmax(0, 1fr);
+  align-items: start;
+  background:
+    radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--result-accent), transparent 64%), transparent 36%),
+    linear-gradient(135deg, rgba(78, 48, 54, .94), rgba(47, 39, 50, .9));
+  box-shadow: 0 18px 48px rgba(72, 47, 45, .18);
+}
+
+.home-result-resume .home-resume-card img {
+  width: 118px;
+  aspect-ratio: 1;
+}
+
+.home-result-resume .home-resume-card .eyebrow {
+  color: #ffe9dc;
+}
+
+.home-resume-actions a:first-child {
+  color: #ffe0a8;
+}
+
 .supply-personal-resume {
   padding-top: 24px;
   padding-bottom: 0;

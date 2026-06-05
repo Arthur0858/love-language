@@ -5439,6 +5439,7 @@ def quiz_script(lang: str) -> str:
   const quizBox = root.querySelector('[data-quiz-box]');
   const resultBox = root.querySelector('[data-quiz-result]');
   const savedBox = root.querySelector('[data-quiz-saved]');
+  const homeResumeBox = document.querySelector('[data-home-saved]');
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
   const sharedStorageKey = "lovetypes:{lang}:quiz-result";
@@ -5528,29 +5529,27 @@ def quiz_script(lang: str) -> str:
     }}
     await copyShareText(text, button);
   }}
-  function renderSavedResult() {{
-    if (!savedBox) return;
-    const saved = readSavedResult();
-    if (!saved) {{
-      hide(savedBox);
-      savedBox.innerHTML = '';
-      return;
-    }}
-    const result = quiz.results[saved.primaryKey];
-    const cardUrl = new URL(result.storyImage, location.origin).href;
-    const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
-    savedBox.innerHTML = `
-      <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
+  function renderSavedResultCard(box, result, savedShareText, cardUrl, variant) {{
+    if (!box) return;
+    const articleClass = variant === 'home'
+      ? 'quiz-saved-card home-resume-card'
+      : 'quiz-saved-card';
+    const actionsClass = variant === 'home'
+      ? 'quiz-saved-actions home-resume-actions'
+      : 'quiz-saved-actions';
+    box.innerHTML = `
+      <article class="${{articleClass}}" style="--result-accent:${{result.color}}">
         <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{quiz.labels.saved_title}}</p>
           <h3>${{result.name}} · ${{result.type}}</h3>
           <p>${{quiz.labels.saved_intro}}</p>
-          <div class="quiz-saved-actions">
-            <a href="${{result.planUrl}}" data-home-saved-plan>${{quiz.labels.saved_plan}}</a>
-            <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
-            <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-            <a href="${{result.collectorHallUrl}}" data-home-saved-keepsake>${{quiz.labels.saved_card}}</a>
+          <div class="${{actionsClass}}">
+            <a href="${{result.resourceUrl}}" data-home-resume-route>${{quiz.labels.saved_route}}</a>
+            <a href="${{result.planUrl}}" data-home-saved-plan data-home-resume-plan>${{quiz.labels.saved_plan}}</a>
+            <a href="${{result.lunaUrl}}" data-home-resume-luna>${{quiz.labels.saved_luna}}</a>
+            <a href="${{result.guardianUrl}}" data-home-resume-guardian>${{quiz.labels.guardian_link}}</a>
+            <a href="${{result.collectorHallUrl}}" data-home-saved-keepsake data-home-resume-keepsake>${{quiz.labels.saved_card}}</a>
             <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
@@ -5558,18 +5557,35 @@ def quiz_script(lang: str) -> str:
           </div>
         </div>
       </article>`;
-    show(savedBox);
-    savedBox.querySelector('[data-share-saved-result]').addEventListener('click', async (event) => {{
+    show(box);
+    box.querySelector('[data-share-saved-result]')?.addEventListener('click', async (event) => {{
       await shareGuardianResult(result, savedShareText, cardUrl, event.currentTarget);
     }});
-    savedBox.querySelector('[data-copy-saved-result]').addEventListener('click', async (event) => {{
+    box.querySelector('[data-copy-saved-result]')?.addEventListener('click', async (event) => {{
       await copyShareText(savedShareText, event.currentTarget);
     }});
-    savedBox.querySelector('[data-clear-saved-result]').addEventListener('click', () => {{
-      localStorage.removeItem(storageKey);
-      localStorage.removeItem(sharedStorageKey);
-      renderSavedResult();
-    }});
+    box.querySelector('[data-clear-saved-result]')?.addEventListener('click', clearSavedResult);
+  }}
+  function clearSavedResult() {{
+    localStorage.removeItem(storageKey);
+    localStorage.removeItem(sharedStorageKey);
+    renderSavedResult();
+  }}
+  function renderSavedResult() {{
+    const saved = readSavedResult();
+    if (!saved) {{
+      [savedBox, homeResumeBox].forEach((box) => {{
+        if (!box) return;
+        hide(box);
+        box.innerHTML = '';
+      }});
+      return;
+    }}
+    const result = quiz.results[saved.primaryKey];
+    const cardUrl = new URL(result.storyImage, location.origin).href;
+    const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
+    renderSavedResultCard(homeResumeBox, result, savedShareText, cardUrl, 'home');
+    renderSavedResultCard(savedBox, result, savedShareText, cardUrl, 'quiz');
   }}
   function progressText() {{
     return quiz.labels.progress.replace('{{current}}', String(current + 1)).replace('{{total}}', String(quiz.questions.length));
@@ -6082,6 +6098,7 @@ def home(lang: str) -> None:
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
 {universe_gate_section(lang)}
+<section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">UNIVERSE PROMISE</p><h2>{escape(t["trust_intro"])}</h2></div>

@@ -57,6 +57,26 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function networkIdleTimeout() {
+  return Number(process.env.VISUAL_CHECK_NETWORKIDLE_TIMEOUT_MS || 1000);
+}
+
+function actionTimeout() {
+  return Number(process.env.VISUAL_CHECK_ACTION_TIMEOUT_MS || 10000);
+}
+
+function navigationTimeout() {
+  return Number(process.env.VISUAL_CHECK_NAVIGATION_TIMEOUT_MS || 45000);
+}
+
+function totalTimeout() {
+  return Number(process.env.VISUAL_CHECK_TOTAL_TIMEOUT_MS || 540000);
+}
+
+function logCase(name) {
+  console.error(`[visual] ${name}`);
+}
+
 function summarizeFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
@@ -367,15 +387,27 @@ await mkdir('output/playwright', { recursive: true });
 const executablePath = await findCachedChromium();
 const browser = await chromium.launch({ headless: true, executablePath });
 const results = [];
+const watchdog = setTimeout(() => {
+  console.error(`Visual check exceeded ${totalTimeout()}ms.`);
+  process.exit(124);
+}, totalTimeout());
+watchdog.unref?.();
+
+async function createPage(viewport) {
+  const page = await browser.newPage({ viewport });
+  page.setDefaultTimeout(actionTimeout());
+  page.setDefaultNavigationTimeout(navigationTimeout());
+  return page;
+}
 
 async function openPage(page, url) {
   const maxAttempts = Number(process.env.VISUAL_CHECK_NAV_ATTEMPTS || 3);
   let lastError;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: navigationTimeout() });
       await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
-      await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+      await page.waitForLoadState('networkidle', { timeout: networkIdleTimeout() }).catch(() => {});
       return response;
     } catch (error) {
       lastError = error;
@@ -392,11 +424,12 @@ async function openPage(page, url) {
 async function waitForSoftIdle(page) {
   await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
   await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
-  await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
+  await page.waitForLoadState('networkidle', { timeout: networkIdleTimeout() }).catch(() => {});
 }
 
 for (const item of cases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -474,7 +507,8 @@ for (const item of cases) {
 }
 
 for (const item of redirectCases) {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  logCase(item.name);
+  const page = await createPage({ width: 390, height: 844 });
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -504,7 +538,8 @@ for (const item of redirectCases) {
 }
 
 for (const item of languageMenuCases) {
-  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  logCase(item.name);
+  const page = await createPage({ width: 390, height: 844 });
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -563,7 +598,8 @@ for (const item of languageMenuCases) {
 }
 
 for (const item of quizCases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -672,7 +708,8 @@ for (const item of quizCases) {
 }
 
 for (const item of conversionCases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -822,7 +859,8 @@ for (const item of conversionCases) {
 }
 
 for (const item of worksheetCases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -910,7 +948,8 @@ for (const item of worksheetCases) {
 }
 
 for (const item of copyCases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -1001,7 +1040,8 @@ for (const item of copyCases) {
 }
 
 for (const item of anchorFocusCases) {
-  const page = await browser.newPage({ viewport: item.viewport });
+  logCase(item.name);
+  const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
@@ -1055,6 +1095,7 @@ for (const item of anchorFocusCases) {
 }
 
 await browser.close();
+clearTimeout(watchdog);
 console.log(JSON.stringify(results, null, 2));
 
 const failures = [

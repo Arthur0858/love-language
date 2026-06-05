@@ -1778,6 +1778,11 @@ def main() -> int:
             if "archive-forward" not in parser.source:
                 issues.append(f"{page}: legacy guide missing archive-forward notice")
             guardian_slug = FORMAL_GUIDE_GUARDIANS[legacy_target]
+            if parser.source.count("data-legacy-forward-actions") != 1:
+                issues.append(f"{page}: expected one legacy forward action cluster")
+            for link_key in ("formal", "supply", "repair"):
+                if f'data-legacy-forward-link="{link_key}"' not in parser.source:
+                    issues.append(f"{page}: legacy forward cluster missing {link_key} link")
             bridge_count = parser.ids.count("guide-action-bridge")
             if bridge_count != 1:
                 issues.append(f"{page}: expected one legacy #guide-action-bridge target, found {bridge_count}")

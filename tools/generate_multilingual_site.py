@@ -6648,9 +6648,13 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
     t = LANGS[lang]
     related = next(g for g in GUIDES if g["slug"] == canonical_target)
     related_title, _related_desc = related[lang]
+    guardian_slug = related["guardian"]
+    guardian_name = GUARDIANS[guardian_slug][lang][0]
     guardian = GUARDIANS[related["guardian"]][lang]
     detail = guide_detail_copy(lang, title, desc, guardian)
     canonical_path = "guides/" + canonical_target
+    supply_href = f'{lang_url(lang, "resources")}#supply-{guardian_slug}'
+    plan_href = f'{lang_url(lang, "repair-plan")}#plan-{guardian_slug}'
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(SECTION_LABELS[lang]["heart_garden_archive"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -6658,8 +6662,12 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 </section>
 <section class="section note-section archive-forward">
   <h2>這是舊版心語入口</h2>
-  <p>這一頁保留給從舊連結抵達的旅人；目前主要路線已整理到「{escape(related_title)}」。如果你想閱讀最新版本、切換語言或接到守護者補給，請先前往正式指南。</p>
-  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, canonical_path)}">前往正式指南</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+  <p>這一頁保留給從舊連結抵達的旅人；目前主要路線已整理到「{escape(related_title)}」。如果你已經知道自己靠近 {escape(guardian_name)} 的分域，也可以直接接上補給或修復計畫。</p>
+  <div class="hero-actions legacy-forward-actions" data-legacy-forward-actions>
+    <a class="primary-btn" data-legacy-forward-link="formal" href="{lang_url(lang, canonical_path)}">前往正式指南</a>
+    <a class="secondary-btn" data-legacy-forward-link="supply" href="{supply_href}">取得{escape(guardian_name)}補給</a>
+    <a class="secondary-btn" data-legacy-forward-link="repair" href="{plan_href}">填入 7 日修復</a>
+  </div>
 </section>
 <section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">

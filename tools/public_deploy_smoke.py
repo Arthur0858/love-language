@@ -491,6 +491,44 @@ def check_global_headers(path: str, response: Response) -> list[str]:
     return issues
 
 
+def content_type(response: Response) -> str:
+    return response.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+
+
+def expected_asset_content_type(path: str) -> str | None:
+    if path.endswith(".css"):
+        return "text/css"
+    if path.endswith(".js"):
+        return "javascript"
+    return None
+
+
+def check_static_asset_response(path: str, response: Response) -> list[str]:
+    issues: list[str] = []
+    expected = expected_asset_content_type(path)
+    actual = content_type(response)
+    if expected == "javascript":
+        if actual not in {"text/javascript", "application/javascript"}:
+            issues.append(f"{path}: expected JavaScript content type, got {response.headers.get('content-type', '')!r}")
+    elif expected and actual != expected:
+        issues.append(f"{path}: expected content type {expected!r}, got {response.headers.get('content-type', '')!r}")
+    return issues
+
+
+def check_social_image_response(image_url: str, response: Response) -> tuple[list[str], bool]:
+    issues: list[str] = []
+    actual = content_type(response)
+    if not actual.startswith("image/"):
+        issues.append(f"{image_url}: expected image content type, got {response.headers.get('content-type', '')!r}")
+    parsed = urlparse(image_url)
+    requires_immutable = parsed.path.startswith("/assets/")
+    if requires_immutable:
+        cache_control = response.headers.get("cache-control", "")
+        if not IMMUTABLE_CACHE_RE.search(cache_control):
+            issues.append(f"{image_url}: expected immutable cache header, got {cache_control!r}")
+    return issues, requires_immutable
+
+
 def check_text_support_file(path: str, response: Response, required_snippets: list[str]) -> list[str]:
     issues: list[str] = []
     if response.status != 200:
@@ -620,6 +658,8 @@ def main() -> int:
     public_conversion_hrefs_checked = 0
     public_external_links_checked = 0
     public_affiliate_links_checked = 0
+    public_social_images_checked = 0
+    public_social_immutable_images_checked = 0
     page_asset_refs: list[str] = []
     social_image_urls: list[str] = []
 
@@ -790,11 +830,18 @@ def main() -> int:
             issues.append(f"{asset}: expected status 200, got {response.status}")
         if not IMMUTABLE_CACHE_RE.search(cache_control):
             issues.append(f"{asset}: expected immutable cache header, got {cache_control!r}")
+        issues.extend(check_static_asset_response(asset, response))
 
     for image_url in unique_assets(social_image_urls):
         response = request_url(image_url)
+        public_social_images_checked += 1
         if response.status != 200:
             issues.append(f"{image_url}: expected social image status 200, got {response.status}")
+            continue
+        image_issues, checked_immutable = check_social_image_response(image_url, response)
+        issues.extend(image_issues)
+        if checked_immutable:
+            public_social_immutable_images_checked += 1
 
     print(f"public_pages_checked={pages_checked}")
     print(f"public_canonicals_checked={public_canonicals_checked}")
@@ -815,6 +862,8 @@ def main() -> int:
     print(f"public_conversion_hrefs_checked={public_conversion_hrefs_checked}")
     print(f"public_external_links_checked={public_external_links_checked}")
     print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
+    print(f"public_social_images_checked={public_social_images_checked}")
+    print(f"public_social_immutable_images_checked={public_social_immutable_images_checked}")
     print(f"public_redirects_checked={redirects_checked}")
     print(f"public_not_found_checked={not_found_checked}")
     print(f"public_support_files_checked={support_files_checked}")

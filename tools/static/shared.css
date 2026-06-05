@@ -563,18 +563,25 @@ button.secondary-btn {
 }
 
 .garden-map-routes,
+.garden-map-tools,
 .garden-map-guides {
   background: #fff;
 }
 
 .garden-map-route-grid,
+.garden-map-tool-grid,
 .garden-map-trust-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
+.garden-map-tool-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .garden-map-route-card,
+.garden-map-tool-card,
 .garden-map-trust-card {
   display: grid;
   gap: 10px;
@@ -590,7 +597,15 @@ button.secondary-btn {
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-.garden-map-route-card span {
+.garden-map-tool-card {
+  border-color: rgba(117, 140, 106, .26);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(117, 140, 106, .10), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(247, 251, 244, .90));
+}
+
+.garden-map-route-card span,
+.garden-map-tool-card span {
   width: fit-content;
   color: var(--rose);
   font-size: .82rem;
@@ -601,6 +616,7 @@ button.secondary-btn {
 }
 
 .garden-map-route-card h3,
+.garden-map-tool-card h3,
 .garden-map-trust-card h3 {
   margin: 0;
   font-family: var(--serif);
@@ -609,6 +625,7 @@ button.secondary-btn {
 }
 
 .garden-map-route-card p,
+.garden-map-tool-card p,
 .garden-map-trust-card p {
   margin: 0;
   color: var(--muted);
@@ -616,6 +633,7 @@ button.secondary-btn {
 }
 
 .garden-map-route-card:hover,
+.garden-map-tool-card:hover,
 .garden-map-trust-card:hover {
   transform: translateY(-2px);
   border-color: rgba(189, 82, 96, .42);
@@ -4089,6 +4107,7 @@ button.secondary-btn {
   .universe-gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .home-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .garden-map-route-grid,
+  .garden-map-tool-grid,
   .garden-map-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guardian-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .supply-entry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4336,6 +4355,7 @@ button.secondary-btn {
   .policy-compass-grid,
   .guide-compass-grid,
   .garden-map-route-grid,
+  .garden-map-tool-grid,
   .garden-map-trust-grid,
   .contact-request-grid,
   .luna-protocol-grid,
@@ -4443,6 +4463,7 @@ button.secondary-btn {
   }
 
   .garden-map-route-grid,
+  .garden-map-tool-grid,
   .garden-map-trust-grid {
     grid-template-columns: 1fr;
   }

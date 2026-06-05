@@ -3974,6 +3974,7 @@ GARDEN_MAP = {
         "eyebrow": "HEART GARDEN MAP",
         "intro": "如果你不知道下一步該去哪裡，先從這張地圖選一盞燈。每條路都會回到同一個核心：辨認需求、說清楚、做一個小修復。",
         "routes_title": "四條主要路線",
+        "tools_title": "三個功能房間",
         "guardians_title": "五個分域入口",
         "guides_title": "常用指南燈塔",
         "trust_title": "信任與邊界",
@@ -3982,6 +3983,11 @@ GARDEN_MAP = {
             ("走進五域", "直接查看五位守護者與各自的錯頻傷口、修復任務。", "查看守護者", "characters"),
             ("拿一份補給", "依照守護者選指南、任務、Luna 或延伸書卷。", "前往補給站", "resources"),
             ("寫成修復週期", "把情緒整理成 7 日練習，不一次修完整段關係。", "打開修復計畫", "repair-plan"),
+        ],
+        "tools": [
+            ("7 日修復計畫", "把測驗結果寫成一週內能完成的小修復。", "打開修復計畫", "repair-plan"),
+            ("守護者收藏室", "保存五位守護者卡片，讓結果變成可回訪、可分享的標記。", "前往收藏室", "keepsakes"),
+            ("Luna 夜間補給", "睡前、冷卻或書寫時，用低光音樂先降低情緒噪音。", "開啟 Luna", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("關於心語庭園", "理解 LoveTypes 的宇宙觀、內容邊界與適合使用方式。", "about"),
@@ -3996,6 +4002,7 @@ GARDEN_MAP = {
         "eyebrow": "HEART GARDEN MAP",
         "intro": "If you are not sure where to go next, choose one lamp from this map. Every route returns to the same core: name the need, say it clearly, and practice one small repair.",
         "routes_title": "Four main routes",
+        "tools_title": "Three function rooms",
         "guardians_title": "Five domain gates",
         "guides_title": "Useful guide lamps",
         "trust_title": "Trust and boundaries",
@@ -4004,6 +4011,11 @@ GARDEN_MAP = {
             ("Enter five domains", "See the five guardians, misfrequency wounds, and repair missions.", "View guardians", "characters"),
             ("Take one supply", "Choose a guide, task, Luna path, or book route by guardian.", "Open supplies", "resources"),
             ("Make a repair week", "Turn the emotion into seven days of practice without repairing everything at once.", "Open repair plan", "repair-plan"),
+        ],
+        "tools": [
+            ("7-Day Repair Plan", "Turn your result into one week of small repair practice.", "Open repair plan", "repair-plan"),
+            ("Guardian Keepsake Hall", "Save the five guardian cards as a revisitable and shareable marker.", "Open keepsakes", "keepsakes"),
+            ("Luna Night Supply", "Use low-light audio before sleep, cooling down, or journaling.", "Open Luna", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("About the Heart Garden", "Understand the LoveTypes universe, content boundary, and best use cases.", "about"),
@@ -4018,6 +4030,7 @@ GARDEN_MAP = {
         "eyebrow": "HEART GARDEN MAP",
         "intro": "次にどこへ進むか迷ったら、この地図から一つの灯りを選んでください。どの道も、必要を名づけ、言葉にし、小さな修復へ戻ります。",
         "routes_title": "四つの主要ルート",
+        "tools_title": "三つの機能室",
         "guardians_title": "五つの領域入口",
         "guides_title": "よく使うガイド",
         "trust_title": "信頼と境界",
@@ -4026,6 +4039,11 @@ GARDEN_MAP = {
             ("五つの領域へ入る", "五人の守護者、すれ違いの傷、修復課題を見ます。", "守護者を見る", "characters"),
             ("補給を一つ選ぶ", "守護者に合わせて、ガイド、課題、Luna、本のルートを選びます。", "補給へ", "resources"),
             ("修復週間にする", "感情を七日間の練習へ変え、一度にすべてを直そうとしません。", "修復プランへ", "repair-plan"),
+        ],
+        "tools": [
+            ("7日間の修復プラン", "結果を一週間でできる小さな修復練習へ変えます。", "修復プランへ", "repair-plan"),
+            ("守護者コレクション室", "五人の守護者カードを保存し、戻って見られる印にします。", "コレクション室へ", "keepsakes"),
+            ("Luna 夜の補給", "眠る前、冷却、日記の時間に、低い音で感情のノイズを下げます。", "Luna を開く", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("心語の庭について", "LoveTypes の世界観、内容の範囲、使い方を理解します。", "about"),
@@ -4040,6 +4058,7 @@ GARDEN_MAP = {
         "eyebrow": "HEART GARDEN MAP",
         "intro": "다음에 어디로 갈지 모르겠다면 이 지도에서 등불 하나를 고르세요. 모든 길은 필요를 이름 붙이고, 분명히 말하고, 작은 회복을 연습하는 곳으로 돌아옵니다.",
         "routes_title": "네 가지 주요 길",
+        "tools_title": "세 가지 기능실",
         "guardians_title": "다섯 영역 입구",
         "guides_title": "자주 쓰는 가이드 등불",
         "trust_title": "신뢰와 경계",
@@ -4048,6 +4067,11 @@ GARDEN_MAP = {
             ("다섯 영역 들어가기", "다섯 수호자, 어긋남의 상처, 회복 임무를 봅니다.", "수호자 보기", "characters"),
             ("보급 하나 선택", "수호자에 맞는 가이드, 과제, Luna, 책 루트를 고릅니다.", "보급 열기", "resources"),
             ("회복 주간 만들기", "감정을 7일 연습으로 바꾸고 한 번에 모든 것을 고치려 하지 않습니다.", "회복 계획 열기", "repair-plan"),
+        ],
+        "tools": [
+            ("7일 회복 계획", "결과를 일주일 안에 해볼 작은 회복 연습으로 바꿉니다.", "회복 계획 열기", "repair-plan"),
+            ("수호자 소장실", "다섯 수호자 카드를 저장해 다시 보고 공유할 표시로 만듭니다.", "소장실 열기", "keepsakes"),
+            ("Luna 밤 보급", "잠들기 전, 식히는 시간, 기록할 때 낮은 음악으로 감정 소음을 낮춥니다.", "Luna 열기", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("마음의 정원 소개", "LoveTypes 세계관, 콘텐츠 범위, 사용 방식을 이해합니다.", "about"),
@@ -4062,6 +4086,7 @@ GARDEN_MAP = {
         "eyebrow": "HEART GARDEN MAP",
         "intro": "Si no sabes a donde ir despues, elige una luz en este mapa. Cada ruta vuelve al mismo centro: nombrar la necesidad, decirla con claridad y practicar una reparacion pequena.",
         "routes_title": "Cuatro rutas principales",
+        "tools_title": "Tres salas funcionales",
         "guardians_title": "Cinco puertas de dominio",
         "guides_title": "Guias utiles",
         "trust_title": "Confianza y limites",
@@ -4070,6 +4095,11 @@ GARDEN_MAP = {
             ("Entrar a cinco dominios", "Ve las cinco guardianas, heridas de desajuste y misiones de reparacion.", "Ver guardianas", "characters"),
             ("Tomar un recurso", "Elige guia, tarea, Luna o libro segun tu guardiana.", "Abrir recursos", "resources"),
             ("Crear una semana", "Convierte la emocion en siete dias de practica sin arreglar todo a la vez.", "Abrir plan", "repair-plan"),
+        ],
+        "tools": [
+            ("Plan de 7 dias", "Convierte tu resultado en una semana de reparacion pequena.", "Abrir plan", "repair-plan"),
+            ("Sala de recuerdos", "Guarda las cinco tarjetas para volver a ellas y compartirlas.", "Abrir recuerdos", "keepsakes"),
+            ("Luna nocturna", "Usa audio de baja luz antes de dormir, enfriar o escribir.", "Abrir Luna", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("Sobre el Jardin", "Entiende el universo LoveTypes, sus limites y mejores usos.", "about"),
@@ -4161,6 +4191,14 @@ def garden_map_page(lang: str) -> None:
 </a>
 """ for title, desc, action, target in copy["routes"])
 
+    tool_cards = "".join(f"""
+<a class="garden-map-tool-card" href="{lang_url(lang, target)}">
+  <span>{escape(action)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""" for title, desc, action, target in copy["tools"])
+
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     guide_cards = "".join(guide_card(lang, guide) for guide in GUIDES)
 
@@ -4181,6 +4219,10 @@ def garden_map_page(lang: str) -> None:
 <section class="section garden-map-routes" data-garden-map-routes>
   <div class="section-head"><div><p class="eyebrow">MAIN ROUTES</p><h2>{escape(copy["routes_title"])}</h2></div></div>
   <div class="garden-map-route-grid">{route_cards}</div>
+</section>
+<section class="section garden-map-tools" data-garden-map-tools>
+  <div class="section-head"><div><p class="eyebrow">FUNCTION ROOMS</p><h2>{escape(copy["tools_title"])}</h2></div><a href="{lang_url(lang, "repair-plan")}">{escape(REPAIR_PLAN[lang]["title"])}</a></div>
+  <div class="garden-map-tool-grid">{tool_cards}</div>
 </section>
 <section class="section garden-map-guardians" data-garden-map-guardians>
   <div class="section-head"><div><p class="eyebrow">FIVE DOMAINS</p><h2>{escape(copy["guardians_title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>

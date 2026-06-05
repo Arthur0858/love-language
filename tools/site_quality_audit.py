@@ -1467,6 +1467,8 @@ def main() -> int:
             stats["garden_map_pages"] += 1
             route_section_count = parser.source.count("data-garden-map-routes")
             route_card_count = parser.source.count('class="garden-map-route-card"')
+            tool_section_count = parser.source.count("data-garden-map-tools")
+            tool_card_count = parser.source.count('class="garden-map-tool-card"')
             guardian_section_count = parser.source.count("data-garden-map-guardians")
             guardian_card_count = parser.source.count('class="guardian-card"')
             guide_section_count = parser.source.count("data-garden-map-guides")
@@ -1476,6 +1478,10 @@ def main() -> int:
                 issues.append(f"{page}: expected one garden map routes section, found {route_section_count}")
             if route_card_count != 4:
                 issues.append(f"{page}: expected 4 garden map route cards, found {route_card_count}")
+            if tool_section_count != 1:
+                issues.append(f"{page}: expected one garden map tools section, found {tool_section_count}")
+            if tool_card_count != 3:
+                issues.append(f"{page}: expected 3 garden map tool cards, found {tool_card_count}")
             if guardian_section_count != 1:
                 issues.append(f"{page}: expected one garden map guardians section, found {guardian_section_count}")
             if guardian_card_count != 5:
@@ -1493,6 +1499,8 @@ def main() -> int:
                 lang_url_for_page(page, "guides"),
                 lang_url_for_page(page, "resources"),
                 lang_url_for_page(page, "repair-plan"),
+                lang_url_for_page(page, "keepsakes"),
+                lang_url_for_page(page, "luna-yoga-music"),
                 lang_url_for_page(page, "about"),
                 lang_url_for_page(page, "theory"),
                 lang_url_for_page(page, "contact"),

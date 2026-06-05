@@ -6741,7 +6741,7 @@ def repair_plan_page(lang: str) -> None:
     <div class="repair-plan-actions">
       <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(REPAIR_PLAN[lang]["resources"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}">{escape(t["guardians"])}</a>
-      <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
       <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
     </div>
   </div>

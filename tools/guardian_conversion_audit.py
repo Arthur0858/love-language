@@ -197,6 +197,10 @@ def audit_guardian(config, lang: str, result_key: str, meta: dict, issues: list[
         checks += 1
         require_local_target(config, lang, href, f"{label} {url_label}", issues)
 
+    checks += 1
+    if plan_parser is not None and result_urls["lunaUrl"] not in plan_parser.hrefs:
+        issues.append(f"{label} repair plan missing guardian Luna route: {result_urls['lunaUrl']}")
+
     starter_kit = config.starter_kit_payload(lang, result_urls["resourceUrl"])
     steps = starter_kit.get("steps", [])
     checks += 1

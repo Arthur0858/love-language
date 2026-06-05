@@ -1415,6 +1415,31 @@ def check_static_asset_refs(parsers: dict[Path, PageParser]) -> tuple[list[str],
     return issues, stats
 
 
+def check_design_css_rules() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    css_paths = [
+        ROOT / "tools" / "static" / "shared.css",
+        ROOT / GENERATOR_CONFIG.CSS_ASSET.lstrip("/"),
+    ]
+    for path in css_paths:
+        stats["design_css_files_checked"] += 1
+        if not path.exists():
+            issues.append(f"{path}: design CSS target missing")
+            continue
+        source = path.read_text(encoding="utf-8", errors="ignore")
+        for match in re.finditer(r"letter-spacing\s*:\s*([^;]+);", source):
+            stats["design_letter_spacing_rules_checked"] += 1
+            value = match.group(1).strip().lower()
+            if value not in {"0", "0em", "0rem", "0px"}:
+                line = source.count("\n", 0, match.start()) + 1
+                issues.append(f"{path}:{line}: letter-spacing should be 0, found {value}")
+        for match in re.finditer(r"text-transform\s*:\s*uppercase\s*;", source):
+            line = source.count("\n", 0, match.start()) + 1
+            issues.append(f"{path}:{line}: avoid CSS-forced uppercase for multilingual labels")
+    return issues, stats
+
+
 def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2400,6 +2425,9 @@ def main() -> int:
     static_asset_issues, static_asset_stats = check_static_asset_refs(parsers)
     issues.extend(static_asset_issues)
     stats.update(static_asset_stats)
+    design_css_issues, design_css_stats = check_design_css_rules()
+    issues.extend(design_css_issues)
+    stats.update(design_css_stats)
 
     indexable_canonicals: set[str] = set()
     indexable_titles: dict[str, list[Path]] = {}
@@ -2523,6 +2551,8 @@ def main() -> int:
     print(f"anchor_accessible_names={stats['anchor_accessible_names']}")
     print(f"versioned_static_assets={stats['versioned_static_assets']}")
     print(f"legacy_static_assets_checked={stats['legacy_static_assets_checked']}")
+    print(f"design_css_files_checked={stats['design_css_files_checked']}")
+    print(f"design_letter_spacing_rules_checked={stats['design_letter_spacing_rules_checked']}")
     print(f"internal_refs={stats['internal_refs']}")
     print(f"external_links={stats['external_links']}")
     print(f"affiliate_pages={stats['affiliate_pages']}")

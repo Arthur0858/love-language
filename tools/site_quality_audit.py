@@ -106,6 +106,7 @@ FORBIDDEN_NON_EN_UNIVERSE_LABELS = {
 }
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
+MAX_H2_TEXT_LENGTH = 72
 AFFILIATE_HOST = "www.books.com.tw"
 AFFILIATE_PATH_PREFIX = "/exep/assp.php/arthur0858/products/"
 AFFILIATE_REQUIRED_QUERY = {
@@ -1551,6 +1552,17 @@ def main() -> int:
         elif parser.mains[0].get("tabindex") != "-1":
             issues.append(f"{page}: <main> should use tabindex=\"-1\" so skip links can move focus")
 
+        h2_headings = [" ".join(text.split()) for level, text, in_main in parser.headings if level == 2 and in_main]
+        h2_counts = Counter(h2_headings)
+        stats["semantic_heading_pages_checked"] += 1
+        stats["semantic_h2_headings_checked"] += len(h2_headings)
+        for heading, count in sorted(h2_counts.items()):
+            if count > 1:
+                issues.append(f"{page}: duplicate H2 heading {heading!r}")
+        for heading in h2_headings:
+            if len(heading) > MAX_H2_TEXT_LENGTH:
+                issues.append(f"{page}: H2 heading is too long for scan navigation ({len(heading)} chars): {heading!r}")
+
         page_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
         footer_guardian_href = lang_url_for_page(page, "characters")
         if footer_guardian_href in page_hrefs:
@@ -2305,6 +2317,8 @@ def main() -> int:
     print(f"nav_landmarks={stats['nav_landmarks']}")
     print(f"live_regions={stats['live_regions']}")
     print(f"dynamic_live_regions={stats['dynamic_live_regions']}")
+    print(f"semantic_heading_pages_checked={stats['semantic_heading_pages_checked']}")
+    print(f"semantic_h2_headings_checked={stats['semantic_h2_headings_checked']}")
     print(f"progressbars={stats['progressbars']}")
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")

@@ -4311,7 +4311,7 @@ def supply_quick_route_nav(lang: str) -> str:
     return f"""
 <section class="section supply-quick-routes supply-domain-routes" data-supply-domain-strip>
   <div class="section-head">
-    <div><p class="eyebrow">{escape(labels["quick_route"])}</p><h2>{escape(labels["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(labels["title"])}</p><h2>{escape(labels["quick_route"])}</h2></div>
     <a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a>
   </div>
   <p class="section-intro">{escape(labels["intro"])}</p>
@@ -5262,7 +5262,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
     return f"""
 <section class="section supply-panel-section">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(labels["deeper_route"])}</p><h2>{escape(route["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["deeper_route"])}</h2></div>
     <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(LANGS[lang]["resources"])}</a>
   </div>
   <p class="section-intro">{escape(route["desc"])}</p>
@@ -5293,7 +5293,7 @@ def character_route_snapshot(lang: str, slug: str) -> str:
     return f"""
 <section class="section guardian-route-snapshot">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(labels["quick_route"])}</p><h2>{escape(route["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["quick_route"])}</h2></div>
     <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["fit_supply"])}</a>
   </div>
   <p class="section-intro">{escape(guardian_name)} · {escape(guardian_type)}{intro_joiner}{escape(route["desc"])}</p>
@@ -6430,10 +6430,10 @@ def home(lang: str) -> None:
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
 <section class="section intro-grid">
-  <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(t["trust_intro"])}</h2></div>
+  <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(section_labels["home_field_notes"])}</h2><p>{escape(t["trust_intro"])}</p></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>
 </section>
-<section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["guardian_field_guides"])}</p><h2>{escape(t["guide_index_title"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
+<section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["guardian_field_guides"])}</p><h2>{escape(t["guides"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
 <section class="section" id="types-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
 <section class="quiz-band" id="quiz-section" tabindex="-1">
   <div class="quiz-shell" data-quiz-root>
@@ -6567,6 +6567,8 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
 
 def trust_action_routes(lang: str, slug: str) -> str:
     copy = TRUST_ACTION_ROUTES[lang][slug]
+    section_labels = SECTION_LABELS[lang]
+    heading = section_labels["trust_routes"] if slug == "about" else section_labels["week_route"]
     cards = []
     for step, title, desc, cta, target in copy["items"]:
         href = f"{lang_url(lang)}#quiz-section" if not target else lang_url(lang, target)
@@ -6581,7 +6583,7 @@ def trust_action_routes(lang: str, slug: str) -> str:
     return f"""
 <section class="section trust-action-section" id="trust-action-routes">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(heading)}</h2><p>{escape(copy["title"])}</p></div>
   </div>
   <p class="trust-action-intro">{escape(copy["intro"])}</p>
   <div class="trust-action-grid">{"".join(cards)}</div>
@@ -6813,7 +6815,7 @@ def resources_page(lang: str) -> None:
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
 {supply_quick_route_nav(lang)}
 {supply_entry_section(lang)}
-<section class="section resource-path"><div><p class="eyebrow">{escape(section_labels["supply_route"])}</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
+<section class="section resource-path"><div><p class="eyebrow">{escape(section_labels["supply_route"])}</p><h2>{escape(section_labels["main_routes"])}</h2><p class="section-intro">{escape(t["resources_desc"])}</p></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
   <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>
   <p class="section-intro">{escape(decision["intro"])}</p>
@@ -7287,11 +7289,11 @@ def luna_page(lang: str) -> None:
 <section class="section luna-result-resume" data-luna-saved hidden aria-live="polite"></section>
 {luna_night_protocol(lang)}
 <section class="section luna-strip">
-  <div><p class="eyebrow">{escape(section_labels["calm_paths"])}</p><h2>{escape(t["luna_desc"])}</h2></div>
+  <div><p class="eyebrow">{escape(section_labels["calm_paths"])}</p><h2>{escape(t["luna_title"])}</h2><p class="section-intro">{escape(t["luna_desc"])}</p></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>
 </section>
 <section class="section luna-use-cases">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(section_labels["luna_night_supply"])}</h2><p>{escape(luna["headline"])}</p></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 {luna_offer_section(lang)}
@@ -7331,7 +7333,7 @@ def luna_alias_page(lang: str) -> None:
 </section>
 {luna_night_protocol(lang)}
 <section class="section luna-use-cases">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(t["luna_desc"])}</h2></div><a href="{target}">{escape(t["luna_title"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(section_labels["luna_night_supply"])}</h2><p>{escape(t["luna_desc"])}</p></div><a href="{target}">{escape(t["luna_title"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 """

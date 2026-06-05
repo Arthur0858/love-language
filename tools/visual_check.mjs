@@ -94,6 +94,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('guide-detail-') && result.guideActionCardCount !== 4) failures.push('missing guide action bridge cards');
     if (result.name.startsWith('guide-detail-') && !result.guideActionLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('missing guide Luna bridge');
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
+    if (result.name.startsWith('resources-') && result.supplyOwnedCardCount !== 5) failures.push('missing five owned supply signal cards');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
     if (result.name.startsWith('keepsakes-') && result.keepsakeRitualCount !== 4) failures.push('missing keepsake ritual route');
     if (result.name.startsWith('about-') && result.gardenPassCardCount !== 3) failures.push('missing about garden pass cards');
@@ -458,6 +459,7 @@ for (const item of cases) {
   const guideActionCardCount = await page.locator('[data-guide-action-bridge] .guide-action-card').count();
   const guideActionLunaHref = await page.locator('[data-guide-action-bridge] a[href*="/luna-yoga-music/#luna-"]').first().getAttribute('href').catch(() => '');
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
+  const supplyOwnedCardCount = await page.locator('[data-supply-owned-signal] [data-supply-owned-card]').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
   const gardenPassCardCount = await page.locator('[data-about-garden-pass] .garden-pass-card').count();
@@ -494,6 +496,7 @@ for (const item of cases) {
     guideActionCardCount,
     guideActionLunaHref,
     supplyDomainRouteCount,
+    supplyOwnedCardCount,
     keepsakeShelfCount,
     keepsakeRitualCount,
     gardenPassCardCount,

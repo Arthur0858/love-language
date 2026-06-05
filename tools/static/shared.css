@@ -1215,7 +1215,7 @@ button.secondary-btn {
   line-height: 1.22;
 }
 
-.supply-wishlist-card p {
+.supply-wishlist-mission {
   display: -webkit-box;
   margin: 0 0 12px;
   overflow: hidden;
@@ -1226,7 +1226,45 @@ button.secondary-btn {
   -webkit-line-clamp: 3;
 }
 
-.supply-wishlist-card a {
+.supply-format-block {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--route-accent), white 78%);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--route-accent), white 94%);
+}
+
+.supply-format-block span {
+  color: var(--ink);
+  font-size: .74rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.supply-format-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.supply-format-list li {
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, .7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .72);
+  color: var(--ink);
+  font-size: .78rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.supply-signal-link {
   display: inline-flex;
   color: var(--rose);
   font-size: .9rem;

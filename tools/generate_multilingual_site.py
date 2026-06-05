@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-trust-domain-compass"
+ASSET_VERSION = "20260605-owned-supply-signal"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1755,48 +1755,63 @@ STARTER_KIT = {
 SUPPLY_WISHLIST = {
     "zh": {
         "eyebrow": "SUPPLY WISHLIST",
-        "title": "想要哪一種守護者補給？",
-        "intro": "如果書卷還不是你現在需要的補給，可以先告訴我們你想要哪位守護者的可下載素材、PDF 練習卡、桌布或短流程。這會幫助我們決定下一批自有補給優先做什麼。",
-        "request": "提出補給願望",
+        "title": "下一批自有補給，先開哪一道門？",
+        "intro": "如果書卷還不是你現在需要的補給，可以直接選一位守護者，告訴我們你會留下哪種可下載素材。這會成為 LoveTypes 下一批 PDF、桌布、練習卡與短儀式的優先訊號。",
+        "format_label": "可做成",
+        "formats": ["PDF 練習卡", "手機桌布", "7 分鐘短儀式"],
+        "request": "投票給這條補給",
         "note": "來信不需要提供測驗分數；寫下守護者、使用情境與你希望帶走的素材即可。LoveTypes 不承諾療效，也不取代諮商。",
         "subject": "LoveTypes%20guardian%20supply%20wishlist",
-        "body": "我想要的守護者補給：",
+        "body": "我想優先看到的守護者補給：",
+        "body_context": "我會在這個情境使用：",
     },
     "en": {
         "eyebrow": "SUPPLY WISHLIST",
-        "title": "Which guardian supply should exist next?",
-        "intro": "If a book is not the supply you need right now, tell us which guardian should receive a download, PDF practice card, wallpaper, or short ritual first. This helps us prioritize future LoveTypes-owned supplies.",
-        "request": "Send supply wish",
+        "title": "Which owned supply gate should open next?",
+        "intro": "If a book is not the supply you need right now, choose one guardian and tell us which downloadable material you would actually keep. That signal helps prioritize future LoveTypes PDFs, wallpapers, practice cards, and short rituals.",
+        "format_label": "Could become",
+        "formats": ["PDF practice card", "Phone wallpaper", "7-minute ritual"],
+        "request": "Vote for this supply",
         "note": "You do not need to send quiz scores. Include the guardian, use case, and the material you would actually keep. LoveTypes does not promise outcomes or replace counseling.",
         "subject": "LoveTypes%20guardian%20supply%20wishlist",
-        "body": "The guardian supply I want:",
+        "body": "The guardian supply I want prioritized:",
+        "body_context": "I would use it when:",
     },
     "ja": {
         "eyebrow": "SUPPLY WISHLIST",
-        "title": "次にほしい守護者補給は？",
-        "intro": "本が今の補給ではない場合、どの守護者のダウンロード、PDF 練習カード、壁紙、短い儀式がほしいか教えてください。今後の LoveTypes 自有補給の優先順位を決める助けになります。",
-        "request": "補給の希望を送る",
+        "title": "次に開く自有補給の扉は？",
+        "intro": "本が今の補給ではない場合、守護者を一人選び、実際に保存したいダウンロード素材を教えてください。その声は LoveTypes の PDF、壁紙、練習カード、短い儀式の優先順位になります。",
+        "format_label": "制作候補",
+        "formats": ["PDF 練習カード", "スマホ壁紙", "7分の短い儀式"],
+        "request": "この補給に投票する",
         "note": "診断スコアは不要です。守護者、使いたい場面、実際に保存したい素材を書いてください。LoveTypes は効果を約束せず、相談支援の代わりにもなりません。",
         "subject": "LoveTypes%20guardian%20supply%20wishlist",
-        "body": "ほしい守護者補給：",
+        "body": "優先してほしい守護者補給：",
+        "body_context": "使いたい場面：",
     },
     "ko": {
         "eyebrow": "SUPPLY WISHLIST",
-        "title": "다음에 어떤 수호자 보급이 필요할까요?",
-        "intro": "지금 책이 필요한 보급이 아니라면, 어떤 수호자의 다운로드, PDF 연습 카드, 배경화면, 짧은 의식이 먼저 필요할지 알려 주세요. 향후 LoveTypes 자체 보급 우선순위를 정하는 데 도움이 됩니다.",
-        "request": "보급 희망 보내기",
+        "title": "다음 자체 보급 문은 어디를 먼저 열까요?",
+        "intro": "지금 책이 필요한 보급이 아니라면, 수호자 한 명을 고르고 실제로 보관할 다운로드 자료를 알려 주세요. 그 신호가 LoveTypes PDF, 배경화면, 연습 카드, 짧은 의식의 우선순위가 됩니다.",
+        "format_label": "제작 후보",
+        "formats": ["PDF 연습 카드", "휴대폰 배경화면", "7분 짧은 의식"],
+        "request": "이 보급에 투표하기",
         "note": "테스트 점수는 보내지 않아도 됩니다. 수호자, 사용 장면, 실제로 보관하고 싶은 자료를 적어 주세요. LoveTypes는 결과를 약속하거나 상담을 대신하지 않습니다.",
         "subject": "LoveTypes%20guardian%20supply%20wishlist",
-        "body": "내가 원하는 수호자 보급:",
+        "body": "우선 제작되길 바라는 수호자 보급:",
+        "body_context": "이럴 때 사용하고 싶어요:",
     },
     "es": {
         "eyebrow": "SUPPLY WISHLIST",
-        "title": "Qué recurso de guardiana debería existir después?",
-        "intro": "Si un libro no es el recurso que necesitas ahora, cuéntanos qué guardiana debería tener primero una descarga, tarjeta PDF, fondo de pantalla o ritual corto. Esto ayuda a priorizar futuros recursos propios de LoveTypes.",
-        "request": "Enviar deseo",
+        "title": "Qué puerta de recursos propios debería abrirse después?",
+        "intro": "Si un libro no es el recurso que necesitas ahora, elige una guardiana y dinos qué material descargable guardarías de verdad. Esa señal ayuda a priorizar futuros PDFs, fondos, tarjetas y rituales breves de LoveTypes.",
+        "format_label": "Podría ser",
+        "formats": ["Tarjeta PDF", "Fondo móvil", "Ritual de 7 minutos"],
+        "request": "Votar por este recurso",
         "note": "No necesitas enviar puntajes. Incluye la guardiana, el uso y el material que realmente guardarías. LoveTypes no promete resultados ni reemplaza terapia.",
         "subject": "LoveTypes%20guardian%20supply%20wishlist",
-        "body": "El recurso de guardiana que quiero:",
+        "body": "El recurso de guardiana que quiero priorizar:",
+        "body_context": "Lo usaría cuando:",
     },
 }
 
@@ -3933,20 +3948,29 @@ def supply_wishlist_section(lang: str) -> str:
         route = supply_route(lang, slug)
         guardian_name, guardian_type, _guardian_desc = data[lang]
         accent = next(meta["color"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
-        body = quote(f'{labels["body"]} {guardian_name} · {route["title"]}\n\n')
+        format_items = "".join(f"<li>{escape(item)}</li>" for item in labels["formats"])
+        body = quote(
+            f'{labels["body"]} {guardian_name} · {route["title"]}\n'
+            f'{labels["format_label"]}: {", ".join(labels["formats"])}\n'
+            f'{labels["body_context"]} \n\n'
+        )
         cards.append(f"""
-<article class="supply-wishlist-card" style="--route-accent:{accent}">
+<article class="supply-wishlist-card" data-supply-owned-card style="--route-accent:{accent}">
   {img_tag(data["prop"], route["title"])}
   <div>
     <p class="eyebrow">{escape(guardian_name)} · {escape(guardian_type)}</p>
     <h3>{escape(route["title"])}</h3>
-    <p>{escape(route["mission"])}</p>
-    <a href="mailto:contact@lovetypes.tw?subject={labels["subject"]}&body={body}">{escape(labels["request"])}</a>
+    <p class="supply-wishlist-mission">{escape(route["mission"])}</p>
+    <div class="supply-format-block">
+      <span>{escape(labels["format_label"])}</span>
+      <ul class="supply-format-list">{format_items}</ul>
+    </div>
+    <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={labels["subject"]}&body={body}">{escape(labels["request"])}</a>
   </div>
 </article>
 """)
     return f"""
-<section class="section supply-wishlist-section">
+<section class="section supply-wishlist-section" data-supply-owned-signal>
   <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(LANGS[lang]["contact"])}</a></div>
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="supply-wishlist-grid">{"".join(cards)}</div>

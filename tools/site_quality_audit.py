@@ -1437,6 +1437,14 @@ def main() -> int:
                 issues.append(f"{page}: home hero primary CTA should point to #quiz-section")
         if is_resources_page(page):
             stats["resources_supply_entry_pages"] += 1
+            owned_signal_count = parser.source.count("data-supply-owned-signal")
+            owned_card_count = parser.source.count("data-supply-owned-card")
+            if owned_signal_count != 1:
+                issues.append(f"{page}: expected one supply owned signal section, found {owned_signal_count}")
+            if owned_card_count != 5:
+                issues.append(f"{page}: expected 5 supply owned signal cards, found {owned_card_count}")
+            if owned_signal_count == 1 and owned_card_count == 5:
+                stats["resources_owned_signal_pages"] += 1
             for target_id in ("supply-start", "supply-routes"):
                 if target_id not in parser.ids:
                     issues.append(f"{page}: resources page missing #{target_id}")
@@ -2058,6 +2066,7 @@ def main() -> int:
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
+    print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")

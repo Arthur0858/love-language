@@ -138,6 +138,8 @@ function summarizeQuizFailures(results) {
     if (!result.keepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('missing personalized keepsake route');
     if (!result.bookHref?.startsWith('https://')) failures.push('missing affiliate book route');
     if (!result.bookRel?.includes('sponsored')) failures.push('missing sponsored rel');
+    if (!result.quizAffiliateDisclosureVisible) failures.push('missing visible quiz affiliate disclosure');
+    if (!result.quizAffiliateDisclosureTextOk) failures.push('quiz affiliate disclosure text is not localized');
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.horizontalOverflow) failures.push('horizontal overflow');
     if (result.consoleErrors.length) failures.push('console errors');
@@ -710,6 +712,12 @@ for (const item of quizCases) {
   const book = page.locator('[data-conversion-book]').first();
   const bookHref = await book.getAttribute('href');
   const bookRel = await book.getAttribute('rel');
+  const affiliateDisclosure = page.locator('.quiz-supply-card .affiliate-disclosure').first();
+  const quizAffiliateDisclosureVisible = await affiliateDisclosure.isVisible().catch(() => false);
+  const quizAffiliateDisclosureTextOk = await affiliateDisclosure.evaluate((node) => {
+    const text = node.textContent || '';
+    return /聯盟行銷|affiliate links|アフィリエイト|제휴|afiliado/i.test(text);
+  }).catch(() => false);
   const dynamicImageIssues = await page.locator('.quiz-result-card img, .quiz-collector-card img').evaluateAll((images) => images.flatMap((image) => {
     const issues = [];
     const label = image.getAttribute('alt') || image.getAttribute('src') || 'dynamic image';
@@ -749,6 +757,8 @@ for (const item of quizCases) {
     keepsakeHref,
     bookHref,
     bookRel,
+    quizAffiliateDisclosureVisible,
+    quizAffiliateDisclosureTextOk,
     dynamicImageIssues,
     screenshot,
   });

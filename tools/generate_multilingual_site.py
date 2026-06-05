@@ -1524,6 +1524,52 @@ SECTION_LABELS = {
         "traveler_supply": "旅人補給",
         "related_guides": "相關指南",
         "five_guardians": "五位守護者",
+        "moonlight_supply": "月光補給",
+        "book_relics": "延伸書卷",
+        "destiny_ritual": "命運儀式",
+        "night_supply_protocol": "夜間補給流程",
+        "guardian_night_supply": "守護者夜間補給",
+        "luna_supply_entry": "Luna 補給入口",
+        "your_night_supply": "你的夜間補給",
+        "request_compass": "需求羅盤",
+        "garden_repair_desk": "庭園修復台",
+        "guardian_compass": "守護者羅盤",
+        "choose_by_current_need": "依此刻需求選擇",
+        "reading_compass": "閱讀羅盤",
+        "guardian_reading_routes": "守護者閱讀路線",
+        "supply_compass": "補給羅盤",
+        "starter_kit": "初始補給包",
+        "supply_wishlist": "補給願望清單",
+        "guardian_keepsakes": "守護者收藏卡",
+        "guardian_keepsake_hall": "守護者收藏室",
+        "heart_garden_pass": "心語庭園通行印",
+        "five_domain_theory_compass": "五分域理論羅盤",
+        "heart_garden_trust_charter": "心語庭園信任憑證",
+        "garden_journey": "庭園旅程",
+        "heart_garden_map": "心語庭園地圖",
+        "heart_garden_portals": "心語庭園入口",
+        "after_ritual": "儀式之後",
+        "main_routes": "主要路線",
+        "function_rooms": "功能房間",
+        "five_domains": "五個分域",
+        "field_guides": "分域指南",
+        "trust_routes": "信任路線",
+        "return_path": "返回路線",
+        "safety_boundary_map": "安全邊界地圖",
+        "full_policy_notes": "完整政策筆記",
+        "home_field_notes": "心語庭園筆記",
+        "universe_promise": "宇宙承諾",
+        "guardian_field_guides": "守護者分域指南",
+        "heart_garden_field_guide": "心語庭園指南",
+        "week_route": "一週練習路線",
+        "printable_worksheet": "可列印練習表",
+        "guardian_routes": "守護者路線",
+        "calm_paths": "安定路徑",
+        "night_heart_supply": "夜間心語補給",
+        "luna_night_supply": "Luna 夜間補給",
+        "about_lovetypes": "關於 LoveTypes",
+        "love_language_theory": "愛之語理論",
+        "love_language_faq": "愛之語 FAQ",
     },
     "en": {
         "heart_garden_supplies": "HEART GARDEN SUPPLIES",
@@ -1531,6 +1577,52 @@ SECTION_LABELS = {
         "traveler_supply": "TRAVELER SUPPLY",
         "related_guides": "RELATED GUIDES",
         "five_guardians": "FIVE GUARDIANS",
+        "moonlight_supply": "MOONLIGHT SUPPLY",
+        "book_relics": "BOOK RELICS",
+        "destiny_ritual": "DESTINY RITUAL",
+        "night_supply_protocol": "NIGHT SUPPLY PROTOCOL",
+        "guardian_night_supply": "GUARDIAN NIGHT SUPPLY",
+        "luna_supply_entry": "LUNA SUPPLY ENTRY",
+        "your_night_supply": "YOUR NIGHT SUPPLY",
+        "request_compass": "REQUEST COMPASS",
+        "garden_repair_desk": "GARDEN REPAIR DESK",
+        "guardian_compass": "GUARDIAN COMPASS",
+        "choose_by_current_need": "CHOOSE BY CURRENT NEED",
+        "reading_compass": "READING COMPASS",
+        "guardian_reading_routes": "GUARDIAN READING ROUTES",
+        "supply_compass": "SUPPLY COMPASS",
+        "starter_kit": "STARTER KIT",
+        "supply_wishlist": "SUPPLY WISHLIST",
+        "guardian_keepsakes": "GUARDIAN KEEPSAKES",
+        "guardian_keepsake_hall": "GUARDIAN KEEPSAKE HALL",
+        "heart_garden_pass": "HEART GARDEN PASS",
+        "five_domain_theory_compass": "FIVE-DOMAIN THEORY COMPASS",
+        "heart_garden_trust_charter": "HEART GARDEN TRUST CHARTER",
+        "garden_journey": "GARDEN JOURNEY",
+        "heart_garden_map": "HEART GARDEN MAP",
+        "heart_garden_portals": "HEART GARDEN PORTALS",
+        "after_ritual": "AFTER THE RITUAL",
+        "main_routes": "MAIN ROUTES",
+        "function_rooms": "FUNCTION ROOMS",
+        "five_domains": "FIVE DOMAINS",
+        "field_guides": "FIELD GUIDES",
+        "trust_routes": "TRUST ROUTES",
+        "return_path": "RETURN PATH",
+        "safety_boundary_map": "SAFETY BOUNDARY MAP",
+        "full_policy_notes": "FULL POLICY NOTES",
+        "home_field_notes": "HEART GARDEN FIELD NOTES",
+        "universe_promise": "UNIVERSE PROMISE",
+        "guardian_field_guides": "GUARDIAN FIELD GUIDES",
+        "heart_garden_field_guide": "HEART GARDEN FIELD GUIDE",
+        "week_route": "WEEK ROUTE",
+        "printable_worksheet": "PRINTABLE WORKSHEET",
+        "guardian_routes": "GUARDIAN ROUTES",
+        "calm_paths": "CALM PATHS",
+        "night_heart_supply": "NIGHT HEART SUPPLY",
+        "luna_night_supply": "LUNA NIGHT SUPPLY",
+        "about_lovetypes": "ABOUT LOVETYPES",
+        "love_language_theory": "LOVE LANGUAGE THEORY",
+        "love_language_faq": "LOVE LANGUAGE FAQ",
     },
     "ja": {
         "heart_garden_supplies": "心語の庭の補給所",
@@ -1538,6 +1630,52 @@ SECTION_LABELS = {
         "traveler_supply": "旅人の補給",
         "related_guides": "関連ガイド",
         "five_guardians": "五人の守護者",
+        "moonlight_supply": "月光の補給",
+        "book_relics": "本の遺物",
+        "destiny_ritual": "運命の儀式",
+        "night_supply_protocol": "夜の補給手順",
+        "guardian_night_supply": "守護者の夜の補給",
+        "luna_supply_entry": "Luna 補給入口",
+        "your_night_supply": "あなたの夜の補給",
+        "request_compass": "リクエスト羅針盤",
+        "garden_repair_desk": "庭の修復デスク",
+        "guardian_compass": "守護者羅針盤",
+        "choose_by_current_need": "今の必要から選ぶ",
+        "reading_compass": "読書羅針盤",
+        "guardian_reading_routes": "守護者の読書ルート",
+        "supply_compass": "補給羅針盤",
+        "starter_kit": "初期補給セット",
+        "supply_wishlist": "補給ウィッシュリスト",
+        "guardian_keepsakes": "守護者コレクション",
+        "guardian_keepsake_hall": "守護者コレクション室",
+        "heart_garden_pass": "心語の庭の通行印",
+        "five_domain_theory_compass": "五分域の理論羅針盤",
+        "heart_garden_trust_charter": "心語の庭の信頼憲章",
+        "garden_journey": "庭の旅路",
+        "heart_garden_map": "心語の庭マップ",
+        "heart_garden_portals": "心語の庭の入口",
+        "after_ritual": "儀式のあと",
+        "main_routes": "主要ルート",
+        "function_rooms": "機能室",
+        "five_domains": "五つの分域",
+        "field_guides": "分域ガイド",
+        "trust_routes": "信頼ルート",
+        "return_path": "戻る道",
+        "safety_boundary_map": "安全境界マップ",
+        "full_policy_notes": "詳しいポリシー",
+        "home_field_notes": "心語の庭ノート",
+        "universe_promise": "宇宙の約束",
+        "guardian_field_guides": "守護者分域ガイド",
+        "heart_garden_field_guide": "心語の庭ガイド",
+        "week_route": "一週間の練習ルート",
+        "printable_worksheet": "印刷できるワークシート",
+        "guardian_routes": "守護者ルート",
+        "calm_paths": "静けさの道",
+        "night_heart_supply": "夜の心語補給",
+        "luna_night_supply": "Luna 夜の補給",
+        "about_lovetypes": "LoveTypes について",
+        "love_language_theory": "愛の言語の理論",
+        "love_language_faq": "愛の言語 FAQ",
     },
     "ko": {
         "heart_garden_supplies": "마음의 정원 보급소",
@@ -1545,6 +1683,52 @@ SECTION_LABELS = {
         "traveler_supply": "여행자 보급",
         "related_guides": "관련 가이드",
         "five_guardians": "다섯 수호자",
+        "moonlight_supply": "달빛 보급",
+        "book_relics": "확장 서책",
+        "destiny_ritual": "운명 의식",
+        "night_supply_protocol": "밤 보급 절차",
+        "guardian_night_supply": "수호자 밤 보급",
+        "luna_supply_entry": "Luna 보급 입구",
+        "your_night_supply": "나의 밤 보급",
+        "request_compass": "요청 나침반",
+        "garden_repair_desk": "정원 수리 데스크",
+        "guardian_compass": "수호자 나침반",
+        "choose_by_current_need": "지금 필요한 것으로 선택",
+        "reading_compass": "읽기 나침반",
+        "guardian_reading_routes": "수호자 읽기 루트",
+        "supply_compass": "보급 나침반",
+        "starter_kit": "시작 보급 세트",
+        "supply_wishlist": "보급 위시리스트",
+        "guardian_keepsakes": "수호자 소장 카드",
+        "guardian_keepsake_hall": "수호자 소장실",
+        "heart_garden_pass": "마음 정원 통행 표식",
+        "five_domain_theory_compass": "다섯 영역 이론 나침반",
+        "heart_garden_trust_charter": "마음 정원 신뢰 헌장",
+        "garden_journey": "정원 여정",
+        "heart_garden_map": "마음의 정원 지도",
+        "heart_garden_portals": "마음 정원 입구",
+        "after_ritual": "의식 이후",
+        "main_routes": "주요 루트",
+        "function_rooms": "기능 방",
+        "five_domains": "다섯 영역",
+        "field_guides": "영역 가이드",
+        "trust_routes": "신뢰 루트",
+        "return_path": "돌아가는 길",
+        "safety_boundary_map": "안전 경계 지도",
+        "full_policy_notes": "전체 정책 안내",
+        "home_field_notes": "마음 정원 노트",
+        "universe_promise": "세계관의 약속",
+        "guardian_field_guides": "수호자 영역 가이드",
+        "heart_garden_field_guide": "마음 정원 가이드",
+        "week_route": "일주일 연습 루트",
+        "printable_worksheet": "인쇄용 연습지",
+        "guardian_routes": "수호자 루트",
+        "calm_paths": "차분한 경로",
+        "night_heart_supply": "밤 마음 보급",
+        "luna_night_supply": "Luna 밤 보급",
+        "about_lovetypes": "LoveTypes 소개",
+        "love_language_theory": "사랑의 언어 이론",
+        "love_language_faq": "사랑의 언어 FAQ",
     },
     "es": {
         "heart_garden_supplies": "SUMINISTROS DEL JARDÍN",
@@ -1552,6 +1736,52 @@ SECTION_LABELS = {
         "traveler_supply": "PROVISIÓN DE VIAJE",
         "related_guides": "GUÍAS RELACIONADAS",
         "five_guardians": "CINCO GUARDIANAS",
+        "moonlight_supply": "SUMINISTRO DE LUNA",
+        "book_relics": "LIBROS RELICARIO",
+        "destiny_ritual": "RITUAL DE DESTINO",
+        "night_supply_protocol": "PROTOCOLO NOCTURNO",
+        "guardian_night_supply": "SUMINISTRO NOCTURNO",
+        "luna_supply_entry": "ENTRADA LUNA",
+        "your_night_supply": "TU SUMINISTRO NOCTURNO",
+        "request_compass": "BRÚJULA DE PETICIONES",
+        "garden_repair_desk": "MESA DE REPARACIÓN",
+        "guardian_compass": "BRÚJULA GUARDIANA",
+        "choose_by_current_need": "ELIGE POR NECESIDAD",
+        "reading_compass": "BRÚJULA DE LECTURA",
+        "guardian_reading_routes": "RUTAS DE LECTURA",
+        "supply_compass": "BRÚJULA DE RECURSOS",
+        "starter_kit": "KIT INICIAL",
+        "supply_wishlist": "LISTA DE RECURSOS",
+        "guardian_keepsakes": "RECUERDOS DE GUARDIANAS",
+        "guardian_keepsake_hall": "SALA DE RECUERDOS",
+        "heart_garden_pass": "PASE DEL JARDÍN",
+        "five_domain_theory_compass": "BRÚJULA DE CINCO DOMINIOS",
+        "heart_garden_trust_charter": "CARTA DE CONFIANZA",
+        "garden_journey": "VIAJE DEL JARDÍN",
+        "heart_garden_map": "MAPA DEL JARDÍN",
+        "heart_garden_portals": "PORTALES DEL JARDÍN",
+        "after_ritual": "DESPUÉS DEL RITUAL",
+        "main_routes": "RUTAS PRINCIPALES",
+        "function_rooms": "SALAS FUNCIONALES",
+        "five_domains": "CINCO DOMINIOS",
+        "field_guides": "GUÍAS DE DOMINIO",
+        "trust_routes": "RUTAS DE CONFIANZA",
+        "return_path": "CAMINO DE VUELTA",
+        "safety_boundary_map": "MAPA DE LÍMITES",
+        "full_policy_notes": "NOTAS DE POLÍTICA",
+        "home_field_notes": "NOTAS DEL JARDÍN",
+        "universe_promise": "PROMESA DEL UNIVERSO",
+        "guardian_field_guides": "GUÍAS DE GUARDIANAS",
+        "heart_garden_field_guide": "GUÍA DEL JARDÍN",
+        "week_route": "RUTA SEMANAL",
+        "printable_worksheet": "HOJA IMPRIMIBLE",
+        "guardian_routes": "RUTAS DE GUARDIANAS",
+        "calm_paths": "RUTAS DE CALMA",
+        "night_heart_supply": "SUMINISTRO NOCTURNO",
+        "luna_night_supply": "LUNA NOCTURNA",
+        "about_lovetypes": "ACERCA DE LOVETYPES",
+        "love_language_theory": "TEORÍA DE LENGUAJES",
+        "love_language_faq": "FAQ DE LENGUAJES",
     },
 }
 
@@ -4375,6 +4605,7 @@ def home_journey_section(lang: str) -> str:
 
 def universe_gate_section(lang: str) -> str:
     title, intro, _map_title, _map_intro = UNIVERSE_COPY[lang]
+    section_labels = SECTION_LABELS[lang]
     cards = []
     for slug, guardian in GUARDIANS.items():
         name, typ, _desc = guardian[lang]
@@ -4394,7 +4625,7 @@ def universe_gate_section(lang: str) -> str:
 """)
     return f"""
 <section class="section universe-gates" data-universe-gates>
-  <div class="section-head"><div><p class="eyebrow">HEART GARDEN PORTALS</p><h2>{escape(title)}</h2></div><a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["heart_garden_portals"])}</p><h2>{escape(title)}</h2></div><a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a></div>
   <p class="section-intro">{escape(intro)}</p>
   <div class="universe-gate-grid">{"".join(cards)}</div>
 </section>
@@ -4403,10 +4634,11 @@ def universe_gate_section(lang: str) -> str:
 
 def universe_map_section(lang: str) -> str:
     _title, _intro, map_title, map_intro = UNIVERSE_COPY[lang]
+    section_labels = SECTION_LABELS[lang]
     cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     return f"""
 <section class="section universe-map-section" id="guardian-map" data-universe-map>
-  <div class="section-head"><div><p class="eyebrow">HEART GARDEN MAP</p><h2>{escape(map_title)}</h2></div><a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["heart_garden_map"])}</p><h2>{escape(map_title)}</h2></div><a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a></div>
   <p class="section-intro">{escape(map_intro)}</p>
   <div class="guardian-grid universe-map-grid">{cards}</div>
 </section>
@@ -4416,6 +4648,7 @@ def universe_map_section(lang: str) -> str:
 def garden_map_page(lang: str) -> None:
     t = LANGS[lang]
     copy = GARDEN_MAP[lang]
+    section_labels = SECTION_LABELS[lang]
 
     def map_href(target: str) -> str:
         return lang_url(lang) + target if target.startswith("#") else lang_url(lang, target)
@@ -4466,28 +4699,28 @@ def garden_map_page(lang: str) -> None:
 </section>
 <section class="section garden-map-result-resume" data-garden-map-saved hidden aria-live="polite"></section>
 <section class="section garden-map-handoff" data-garden-map-handoff>
-  <div class="section-head"><div><p class="eyebrow">AFTER THE RITUAL</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["after_ritual"])}</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
   <p class="section-intro">{escape(copy["handoff_intro"])}</p>
   <div class="garden-map-handoff-grid">{handoff_cards}</div>
 </section>
 <section class="section garden-map-routes" data-garden-map-routes>
-  <div class="section-head"><div><p class="eyebrow">MAIN ROUTES</p><h2>{escape(copy["routes_title"])}</h2></div></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["main_routes"])}</p><h2>{escape(copy["routes_title"])}</h2></div></div>
   <div class="garden-map-route-grid">{route_cards}</div>
 </section>
 <section class="section garden-map-tools" data-garden-map-tools>
-  <div class="section-head"><div><p class="eyebrow">FUNCTION ROOMS</p><h2>{escape(copy["tools_title"])}</h2></div><a href="{lang_url(lang, "repair-plan")}">{escape(REPAIR_PLAN[lang]["title"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["function_rooms"])}</p><h2>{escape(copy["tools_title"])}</h2></div><a href="{lang_url(lang, "repair-plan")}">{escape(REPAIR_PLAN[lang]["title"])}</a></div>
   <div class="garden-map-tool-grid">{tool_cards}</div>
 </section>
 <section class="section garden-map-guardians" data-garden-map-guardians>
-  <div class="section-head"><div><p class="eyebrow">FIVE DOMAINS</p><h2>{escape(copy["guardians_title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["five_domains"])}</p><h2>{escape(copy["guardians_title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
   <div class="guardian-grid compact">{guardian_cards}</div>
 </section>
 <section class="section garden-map-guides" data-garden-map-guides>
-  <div class="section-head"><div><p class="eyebrow">FIELD GUIDES</p><h2>{escape(copy["guides_title"])}</h2></div><a href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["field_guides"])}</p><h2>{escape(copy["guides_title"])}</h2></div><a href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
   <div class="card-grid">{guide_cards}</div>
 </section>
 <section class="section garden-map-trust" data-garden-map-trust>
-  <div class="section-head"><div><p class="eyebrow">TRUST ROUTES</p><h2>{escape(copy["trust_title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["trust_routes"])}</p><h2>{escape(copy["trust_title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></div>
   <div class="garden-map-trust-grid">{trust_cards}</div>
 </section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
@@ -6150,12 +6383,13 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
 def home(lang: str) -> None:
     t = LANGS[lang]
     quiz = QUIZ_LABELS[lang]
+    section_labels = SECTION_LABELS[lang]
     guide_cards = "".join(guide_card(lang, g) for g in GUIDES[:6])
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     body = f"""
 <section class="hero">
   <div class="hero-copy">
-    <p class="eyebrow">HEART GARDEN FIELD NOTES</p>
+    <p class="eyebrow">{escape(section_labels["home_field_notes"])}</p>
     <h1>{escape(t["brand"])}</h1>
     <p class="lead">{escape(t["tagline"])}</p>
     <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(t["map"])}</a></div>
@@ -6166,11 +6400,11 @@ def home(lang: str) -> None:
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
 <section class="section intro-grid">
-  <div><p class="eyebrow">UNIVERSE PROMISE</p><h2>{escape(t["trust_intro"])}</h2></div>
+  <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(t["trust_intro"])}</h2></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>
 </section>
-<section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">GUARDIAN FIELD GUIDES</p><h2>{escape(t["guide_index_title"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
-<section class="section" id="types-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
+<section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["guardian_field_guides"])}</p><h2>{escape(t["guide_index_title"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
+<section class="section" id="types-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
 <section class="quiz-band" id="quiz-section" tabindex="-1">
   <div class="quiz-shell" data-quiz-root>
     <div class="quiz-intro" data-quiz-intro>
@@ -6200,11 +6434,12 @@ def home(lang: str) -> None:
 def characters_index_page(lang: str) -> None:
     t = LANGS[lang]
     copy = CHARACTER_INDEX_COPY[lang]
+    section_labels = SECTION_LABELS[lang]
     title = copy["title"]
     desc = copy["desc"]
     body = f"""
 <section class="page-hero compact guardian-index-hero">
-  <p class="eyebrow">FIVE GUARDIANS</p>
+  <p class="eyebrow">{escape(section_labels["five_guardians"])}</p>
   <h1>{escape(copy["h1"])}</h1>
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
@@ -6226,9 +6461,10 @@ def characters_index_page(lang: str) -> None:
 
 def guides_index(lang: str) -> None:
     t = LANGS[lang]
+    section_labels = SECTION_LABELS[lang]
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">HEART GARDEN FIELD GUIDE</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p></section>
 {guide_index_compass(lang)}
 {guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
@@ -6779,6 +7015,7 @@ def repair_worksheet_script(lang: str) -> str:
 def repair_plan_page(lang: str) -> None:
     t = LANGS[lang]
     plan = REPAIR_PLAN[lang]
+    section_labels = SECTION_LABELS[lang]
     days = "".join(f"""
 <article>
   <span>{escape(day)}</span>
@@ -6823,18 +7060,18 @@ def repair_plan_page(lang: str) -> None:
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-plan-section">
-  <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["week_route"])}</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
 </section>
 <section class="section repair-worksheet-section">
-  <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
   <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
   <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status role="status" aria-live="polite">{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>
   <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
 {repair_worksheet_script(lang)}
 <section class="section repair-guardian-section">
-  <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["guardian_routes"])}</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>
   <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>
   <p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p>
 </section>
@@ -6971,6 +7208,7 @@ def luna_page(lang: str) -> None:
     luna = LUNA_CONTENT[lang]
     flow = LUNA_GUARDIAN_FLOW[lang]
     offer = LUNA_OFFER[lang]
+    section_labels = SECTION_LABELS[lang]
     use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
     guardian_flow_cards = []
     for slug, data in GUARDIANS.items():
@@ -7011,11 +7249,11 @@ def luna_page(lang: str) -> None:
 <section class="section luna-result-resume" data-luna-saved hidden aria-live="polite"></section>
 {luna_night_protocol(lang)}
 <section class="section luna-strip">
-  <div><p class="eyebrow">CALM PATHS</p><h2>{escape(t["luna_desc"])}</h2></div>
+  <div><p class="eyebrow">{escape(section_labels["calm_paths"])}</p><h2>{escape(t["luna_desc"])}</h2></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>
 </section>
 <section class="section luna-use-cases">
-  <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(luna["headline"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 {luna_offer_section(lang)}
@@ -7038,11 +7276,12 @@ def luna_page(lang: str) -> None:
 def luna_alias_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
+    section_labels = SECTION_LABELS[lang]
     target = lang_url(lang, "luna-yoga-music")
     use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
     body = f"""
 <section class="page-hero compact">
-  <p class="eyebrow">LUNA NIGHT SUPPLY</p>
+  <p class="eyebrow">{escape(section_labels["luna_night_supply"])}</p>
   <h1>{escape(t["luna_title"])}</h1>
   <p>{escape(luna["headline"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{target}">{escape(t["luna_title"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a><a class="secondary-btn" href="{lang_url(lang, "repair-plan")}">{escape(REPAIR_PLAN[lang]["title"])}</a></div>
@@ -7054,7 +7293,7 @@ def luna_alias_page(lang: str) -> None:
 </section>
 {luna_night_protocol(lang)}
 <section class="section luna-use-cases">
-  <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(t["luna_desc"])}</h2></div><a href="{target}">{escape(t["luna_title"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(t["luna_desc"])}</h2></div><a href="{target}">{escape(t["luna_title"])}</a></div>
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 """
@@ -7154,6 +7393,7 @@ def simple_page(lang: str, slug: str) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
     copy = PRACTICAL_COPY[lang]
+    section_labels = SECTION_LABELS[lang]
     titles = {
         "theory": (SIMPLE_PAGE_DISPLAY_TITLES[lang]["theory"], t["tagline"]),
         "resources": (t["resources"], t["resources_desc"]),
@@ -7167,7 +7407,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "about":
         about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">ABOUT LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></section>
 {about_garden_pass(lang)}
 <section class="section article-body standalone">
   {about_items}
@@ -7187,15 +7427,15 @@ def simple_page(lang: str, slug: str) -> None:
         guardian_cards = "".join(character_card(lang, guardian_slug, guardian_data) for guardian_slug, guardian_data in GUARDIANS.items())
         faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">LOVE LANGUAGE THEORY</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></section>
 {theory_domain_compass(lang)}
 <section class="section article-body standalone">
   {theory_items}
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
 </section>
-<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_cards}</div></section>
-<section class="section faq-section"><div class="section-head"><p class="eyebrow">LOVE LANGUAGE FAQ</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
+<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_cards}</div></section>
+<section class="section faq-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["love_language_faq"])}</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
 {trust_action_routes(lang, "theory")}
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
@@ -7619,7 +7859,45 @@ https://:version.lovetypes.pages.dev/*
     write_redirects()
 
 
+def apply_section_label_localization() -> None:
+    """Keep visible universe labels localized while preserving English as the canonical style."""
+    eyebrow_targets = [
+        (QUIZ_LABELS, "destiny_ritual"),
+        (AFFILIATE_COPY, "book_relics"),
+        (LUNA_NIGHT_PROTOCOL, "night_supply_protocol"),
+        (LUNA_GUARDIAN_FLOW, "guardian_night_supply"),
+        (LUNA_OFFER, "luna_supply_entry"),
+        (LUNA_RESUME, "your_night_supply"),
+        (CONTACT_REQUESTS, "request_compass"),
+        (CONTACT_REPAIR_REPORTS, "garden_repair_desk"),
+        (GUARDIAN_ENTRY, "guardian_compass"),
+        (GUARDIAN_NEED_ROUTER, "choose_by_current_need"),
+        (GUIDE_INDEX_COMPASS, "reading_compass"),
+        (GUIDE_DOMAIN_ROUTES, "guardian_reading_routes"),
+        (SUPPLY_DECISION, "supply_compass"),
+        (STARTER_KIT, "starter_kit"),
+        (SUPPLY_WISHLIST, "supply_wishlist"),
+        (COLLECTOR_LABELS, "guardian_keepsakes"),
+        (KEEPSAKES_PAGE, "guardian_keepsake_hall"),
+        (ABOUT_GARDEN_PASS, "heart_garden_pass"),
+        (THEORY_DOMAIN_COMPASS, "five_domain_theory_compass"),
+        (ABOUT_TRUST_CHARTER, "heart_garden_trust_charter"),
+        (HOME_JOURNEY, "garden_journey"),
+        (GARDEN_MAP, "heart_garden_map"),
+    ]
+    for table, label_key in eyebrow_targets:
+        for lang in LANGS:
+            table[lang]["eyebrow"] = SECTION_LABELS[lang][label_key]
+
+    for lang in LANGS:
+        LUNA_CONTENT[lang]["badge"] = SECTION_LABELS[lang]["moonlight_supply"]
+        NOT_FOUND_COPY[lang]["return_path"] = SECTION_LABELS[lang]["return_path"]
+        POLICY_COMPASS_COPY[lang]["eyebrow"] = SECTION_LABELS[lang]["safety_boundary_map"]
+        POLICY_COMPASS_COPY[lang]["detail_eyebrow"] = SECTION_LABELS[lang]["full_policy_notes"]
+
+
 def main() -> None:
+    apply_section_label_localization()
     cleanup_versioned_assets()
     write_css()
     write_versioned_scripts()

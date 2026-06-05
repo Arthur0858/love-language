@@ -44,13 +44,59 @@ FORBIDDEN_SPANISH_VISIBLE_SNIPPETS = {
     "Teoria de lenguajes",
     "Privacidad y terminos",
 }
-FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS = {
+FORBIDDEN_NON_EN_UNIVERSE_LABELS = {
+    "AFTER THE RITUAL",
+    "ABOUT LOVETYPES",
+    "BOOK RELICS",
+    "CALM PATHS",
+    "CHOOSE BY CURRENT NEED",
+    "DESTINY RITUAL",
+    "FIELD GUIDES",
+    "FIVE DOMAINS",
+    "FIVE GUARDIANS",
+    "FIVE-DOMAIN THEORY COMPASS",
+    "FULL POLICY NOTES",
+    "FUNCTION ROOMS",
+    "GARDEN JOURNEY",
+    "GARDEN REPAIR DESK",
+    "GUARDIAN COMPASS",
+    "GUARDIAN FIELD GUIDES",
+    "GUARDIAN KEEPSAKE HALL",
+    "GUARDIAN KEEPSAKES",
+    "GUARDIAN NIGHT SUPPLY",
+    "GUARDIAN READING ROUTES",
+    "GUARDIAN ROUTES",
     "HEART GARDEN SUPPLIES",
+    "HEART GARDEN FIELD GUIDE",
+    "HEART GARDEN FIELD NOTES",
+    "HEART GARDEN MAP",
+    "HEART GARDEN PASS",
+    "HEART GARDEN PORTALS",
+    "HEART GARDEN TRUST CHARTER",
+    "LOVE LANGUAGE FAQ",
+    "LOVE LANGUAGE THEORY",
+    "LUNA NIGHT SUPPLY",
+    "LUNA SUPPLY ENTRY",
+    "MAIN ROUTES",
+    "MOONLIGHT SUPPLY",
+    "NIGHT HEART SUPPLY",
+    "NIGHT SUPPLY PROTOCOL",
+    "PRINTABLE WORKSHEET",
+    "READING COMPASS",
+    "REQUEST COMPASS",
+    "RETURN PATH",
+    "SAFETY BOUNDARY MAP",
     "START FROM YOUR RESULT",
+    "STARTER KIT",
+    "SUPPLY COMPASS",
     "SUPPLY ROUTE",
+    "SUPPLY WISHLIST",
     "TRAVELER SUPPLY",
     "RELATED GUIDES",
-    "FIVE GUARDIANS",
+    "TRUST ROUTES",
+    "UNIVERSE PROMISE",
+    "WEEK ROUTE",
+    "YOUR NIGHT SUPPLY",
 }
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
@@ -1437,6 +1483,11 @@ def main() -> int:
             stats["noindex_pages"] += 1
         else:
             stats["indexable_pages"] += 1
+        if lang_key_for_page(page) != "en":
+            visible_text = parser.visible_text()
+            for snippet in sorted(FORBIDDEN_NON_EN_UNIVERSE_LABELS):
+                if snippet in visible_text:
+                    issues.append(f"{page}: non-English page still contains English universe label {snippet!r}")
 
         if page.name == "404.html":
             stats["not_found_pages"] += 1
@@ -1588,10 +1639,6 @@ def main() -> int:
                 issues.append(f"{page}: garden map missing hrefs {', '.join(missing_map_hrefs)}")
         if is_resources_page(page):
             stats["resources_supply_entry_pages"] += 1
-            if lang_key_for_page(page) != "en":
-                for snippet in FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS:
-                    if snippet in parser.source:
-                        issues.append(f"{page}: non-English resources page still contains English universe label {snippet!r}")
             owned_signal_count = parser.source.count("data-supply-owned-signal")
             owned_card_count = parser.source.count("data-supply-owned-card")
             if owned_signal_count != 1:
@@ -1636,10 +1683,6 @@ def main() -> int:
                 issues.append(f"{page}: characters guardian entry missing hrefs {', '.join(missing_character_hrefs)}")
         if is_character_detail_page(page):
             stats["character_result_resume_pages"] += 1
-            if lang_key_for_page(page) != "en":
-                for snippet in FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS:
-                    if snippet in parser.source:
-                        issues.append(f"{page}: non-English character page still contains English universe label {snippet!r}")
             saved_section_count = parser.source.count('class="section guardian-result-resume" data-guardian-saved')
             if saved_section_count != 1:
                 issues.append(f"{page}: expected one character saved-result section, found {saved_section_count}")

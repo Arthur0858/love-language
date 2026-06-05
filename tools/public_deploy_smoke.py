@@ -190,6 +190,16 @@ IMMUTABLE_CACHE_RE = re.compile(r"max-age=31536000.*immutable", re.I)
 VERSIONED_CSS_RE = re.compile(r"^/shared-[^/]+\.css$")
 VERSIONED_INTERACTIONS_RE = re.compile(r"^/site-interactions-[^/]+\.js$")
 VERSIONED_AFFILIATE_RE = re.compile(r"^/deferred-external-[^/]+\.js$")
+VERSIONED_QUIZ_DATA_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
+QUIZ_DATA_REQUIRED_MARKERS = (
+    "data-quiz-root",
+    "data-supply-saved",
+    "data-repair-saved",
+    "data-keepsake-saved",
+    "data-luna-saved",
+    "data-guardian-saved",
+    "data-guide-saved",
+)
 
 
 def load_generator_config():
@@ -208,6 +218,7 @@ CURRENT_STATIC_ASSETS = {
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
     "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
 }
+CURRENT_QUIZ_DATA_ASSETS = GENERATOR_CONFIG.QUIZ_DATA_ASSETS
 
 
 @dataclass
@@ -335,6 +346,11 @@ def expected_html_lang(path: str) -> str:
         if path.startswith(prefix):
             return lang
     return "zh-TW"
+
+
+def expected_quiz_lang(path: str) -> str:
+    html_lang = expected_html_lang(path)
+    return "zh" if html_lang == "zh-TW" else html_lang
 
 
 def expected_canonical(path: str) -> str:
@@ -596,6 +612,7 @@ def main() -> int:
     public_jsonld_entities_checked = 0
     public_versioned_asset_refs_checked = 0
     public_current_asset_refs_checked = 0
+    public_quiz_data_asset_refs_checked = 0
     public_sitemap_urls_checked = 0
     public_sitemap_alternates_total = 0
     public_sitemap_alternates_checked = 0
@@ -680,7 +697,13 @@ def main() -> int:
         versioned_stylesheets = [href for href in assets.stylesheets if VERSIONED_CSS_RE.match(href)]
         versioned_interactions = [src for src in assets.scripts if VERSIONED_INTERACTIONS_RE.match(src)]
         versioned_affiliate = [src for src in assets.scripts if VERSIONED_AFFILIATE_RE.match(src)]
-        public_versioned_asset_refs_checked += len(versioned_stylesheets) + len(versioned_interactions) + len(versioned_affiliate)
+        versioned_quiz_data = [src for src in assets.scripts if VERSIONED_QUIZ_DATA_RE.match(src)]
+        public_versioned_asset_refs_checked += (
+            len(versioned_stylesheets)
+            + len(versioned_interactions)
+            + len(versioned_affiliate)
+            + len(versioned_quiz_data)
+        )
         if len(versioned_stylesheets) != 1:
             issues.append(f"{path}: expected one versioned shared CSS asset, found {versioned_stylesheets}")
         elif versioned_stylesheets[0] != CURRENT_STATIC_ASSETS["css"]:
@@ -706,7 +729,16 @@ def main() -> int:
             )
         elif expected_affiliate_count:
             public_current_asset_refs_checked += 1
-        page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate])
+
+        needs_quiz_data = any(marker in response.text for marker in QUIZ_DATA_REQUIRED_MARKERS)
+        expected_quiz_data = [CURRENT_QUIZ_DATA_ASSETS[expected_quiz_lang(path)]] if needs_quiz_data else []
+        public_quiz_data_asset_refs_checked += len(versioned_quiz_data)
+        if versioned_quiz_data != expected_quiz_data:
+            issues.append(f"{path}: expected quiz data assets {expected_quiz_data}, found {versioned_quiz_data}")
+        elif expected_quiz_data:
+            public_current_asset_refs_checked += 1
+
+        page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate, *versioned_quiz_data])
 
     for source, target in REDIRECTS.items():
         response = request_url(urljoin(base_url, source), follow_redirects=False)
@@ -775,6 +807,7 @@ def main() -> int:
     print(f"public_jsonld_entities_checked={public_jsonld_entities_checked}")
     print(f"public_versioned_asset_refs_checked={public_versioned_asset_refs_checked}")
     print(f"public_current_asset_refs_checked={public_current_asset_refs_checked}")
+    print(f"public_quiz_data_asset_refs_checked={public_quiz_data_asset_refs_checked}")
     print(f"public_sitemap_urls_checked={public_sitemap_urls_checked}")
     print(f"public_sitemap_alternates_total={public_sitemap_alternates_total}")
     print(f"public_sitemap_alternates_checked={public_sitemap_alternates_checked}")

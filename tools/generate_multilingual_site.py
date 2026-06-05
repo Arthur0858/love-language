@@ -7119,6 +7119,11 @@ def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
         "/luna/ /luna-yoga-music/ 301",
+        "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",
+        "/images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301",
+        "/images/characters/vivian.webp /assets/lovetypes/guardians/vivian.webp 301",
+        "/images/characters/claire.webp /assets/lovetypes/guardians/claire.webp 301",
+        "/images/characters/dora.webp /assets/lovetypes/guardians/dora.webp 301",
     ]
     redirect_lines += [
         f"/{cfg['prefix']}/luna/ /{cfg['prefix']}/luna-yoga-music/ 301"

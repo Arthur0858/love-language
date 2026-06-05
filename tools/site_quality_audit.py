@@ -117,6 +117,11 @@ LIVE_REGION_DATA_ATTRS = {
 EXPECTED_REDIRECTS = {
     "/.well-known/security.txt": ("/security.txt", "200"),
     "/luna/": ("/luna-yoga-music/", "301"),
+    "/images/characters/iris.webp": ("/assets/lovetypes/guardians/iris.webp", "301"),
+    "/images/characters/noah.webp": ("/assets/lovetypes/guardians/noah.webp", "301"),
+    "/images/characters/vivian.webp": ("/assets/lovetypes/guardians/vivian.webp", "301"),
+    "/images/characters/claire.webp": ("/assets/lovetypes/guardians/claire.webp", "301"),
+    "/images/characters/dora.webp": ("/assets/lovetypes/guardians/dora.webp", "301"),
     "/en/luna/": ("/en/luna-yoga-music/", "301"),
     "/ja/luna/": ("/ja/luna-yoga-music/", "301"),
     "/ko/luna/": ("/ko/luna-yoga-music/", "301"),

@@ -132,6 +132,11 @@ EXPECTED_HREF_TARGETS = {
 }
 REDIRECTS = {
     "/luna/": "/luna-yoga-music/",
+    "/images/characters/iris.webp": "/assets/lovetypes/guardians/iris.webp",
+    "/images/characters/noah.webp": "/assets/lovetypes/guardians/noah.webp",
+    "/images/characters/vivian.webp": "/assets/lovetypes/guardians/vivian.webp",
+    "/images/characters/claire.webp": "/assets/lovetypes/guardians/claire.webp",
+    "/images/characters/dora.webp": "/assets/lovetypes/guardians/dora.webp",
     "/en/luna/": "/en/luna-yoga-music/",
     "/ja/luna/": "/ja/luna-yoga-music/",
     "/ko/luna/": "/ko/luna-yoga-music/",

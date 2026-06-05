@@ -72,6 +72,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
     if (result.name.startsWith('about-') && result.aboutTrustCardCount !== 4) failures.push('missing about trust charter cards');
+    if ((result.name.startsWith('contact-') || result.name.startsWith('privacy-') || result.name.startsWith('terms-')) && result.policyCompassCardCount !== 3) failures.push('missing policy compass cards');
     if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
     if (result.name.startsWith('guardian-') && result.supplyCtaCount < 1) failures.push('missing guardian supply CTA');
     if (result.expectedFinalPath && result.finalUrl !== result.expectedFinalPath) {
@@ -285,6 +286,8 @@ const cases = [
   { name: 'about-mobile', path: '/about/', viewport: { width: 390, height: 844 } },
   { name: 'contact-desktop', path: '/contact/', viewport: { width: 1280, height: 900 } },
   { name: 'contact-mobile', path: '/contact/', viewport: { width: 390, height: 844 } },
+  { name: 'privacy-mobile', path: '/privacy/', viewport: { width: 390, height: 844 } },
+  { name: 'terms-mobile', path: '/terms/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-iris-mobile', path: '/characters/iris/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-noah-mobile', path: '/characters/noah/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-vivian-mobile', path: '/characters/vivian/', viewport: { width: 390, height: 844 } },
@@ -409,6 +412,7 @@ for (const item of cases) {
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const aboutTrustCardCount = await page.locator('[data-about-trust] .about-trust-card').count();
+  const policyCompassCardCount = await page.locator('[data-policy-compass] .policy-compass-card').count();
   const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
     if (!cards.length) return 0;
     const heights = cards.map((card) => card.getBoundingClientRect().height);
@@ -436,6 +440,7 @@ for (const item of cases) {
     supplyDomainRouteCount,
     keepsakeShelfCount,
     aboutTrustCardCount,
+    policyCompassCardCount,
     guardianCardHeightSpread,
     domainMarkerCount,
     supplyCtaCount,

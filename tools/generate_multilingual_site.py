@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-about-trust"
+ASSET_VERSION = "20260605-policy-map"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3033,6 +3033,35 @@ def about_trust_charter(lang: str) -> str:
 """
 
 
+def policy_compass_section(lang: str, slug: str) -> str:
+    copy = POLICY_COMPASS_COPY[lang]
+    cards = []
+    for idx, (heading, body_text) in enumerate(POLICY_SECTIONS[lang][slug], start=1):
+        cards.append(
+            f"""
+<article class="policy-compass-card">
+  <span>{idx:02d}</span>
+  <h3>{escape(heading)}</h3>
+  <p>{escape(body_text)}</p>
+</article>
+"""
+        )
+    return f"""
+<section class="section policy-compass-section" data-policy-compass>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+      <h2>{escape(copy["title"])}</h2>
+      <p>{escape(copy["intro"])}</p>
+    </div>
+  </div>
+  <div class="policy-compass-grid">
+    {''.join(cards)}
+  </div>
+</section>
+"""
+
+
 def page_path(lang: str, path: str = "") -> Path:
     prefix = LANGS[lang]["prefix"]
     parts = []
@@ -4121,6 +4150,35 @@ POLICY_SECTIONS = {
             ("Límite de Responsabilidad", "El sitio no reemplaza terapia, atención médica, asesoría legal, financiera ni apoyo de crisis. Toda acción basada en este contenido debe considerar el contexto real, el consentimiento de las personas involucradas y apoyo profesional cuando haga falta."),
             ("Propiedad Intelectual y Enlaces", "Los textos, personajes, imágenes y diseños de LoveTypes son activos del sitio. No los reproduzcas a gran escala sin permiso más allá de una cita razonable. Los enlaces externos y afiliados te llevan fuera del sitio, y sus compras o términos dependen de cada servicio."),
         ],
+    },
+}
+
+
+POLICY_COMPASS_COPY = {
+    "zh": {
+        "eyebrow": "SAFETY BOUNDARY MAP",
+        "title": "安全邊界星圖",
+        "intro": "先用三個邊界看清楚這座心語庭園如何處理聯絡、資料、內容責任與外部連結，再往下閱讀完整條文。",
+    },
+    "en": {
+        "eyebrow": "SAFETY BOUNDARY MAP",
+        "title": "Safety boundary map",
+        "intro": "Start with three boundaries for contact, data, responsibility, and external links before reading the full policy details below.",
+    },
+    "ja": {
+        "eyebrow": "SAFETY BOUNDARY MAP",
+        "title": "安全境界の星図",
+        "intro": "連絡、データ、内容責任、外部リンクについて、この庭が守る三つの境界を先に確認してから詳細を読めます。",
+    },
+    "ko": {
+        "eyebrow": "SAFETY BOUNDARY MAP",
+        "title": "안전 경계 지도",
+        "intro": "연락, 데이터, 콘텐츠 책임, 외부 링크에 대해 이 정원이 지키는 세 가지 경계를 먼저 보고 자세한 내용을 읽을 수 있습니다.",
+    },
+    "es": {
+        "eyebrow": "SAFETY BOUNDARY MAP",
+        "title": "Mapa de límites seguros",
+        "intro": "Empieza con tres límites sobre contacto, datos, responsabilidad y enlaces externos antes de leer los detalles completos.",
     },
 }
 
@@ -5726,14 +5784,13 @@ def simple_page(lang: str, slug: str) -> None:
     if slug in {"privacy", "terms"}:
         extra = f"<p><strong>Updated:</strong> {UPDATED}</p>"
     if slug in {"contact", "privacy", "terms"}:
-        policy_items = "".join(f"<h2>{escape(heading)}</h2><p>{escape(body_text)}</p>" for heading, body_text in POLICY_SECTIONS[lang][slug])
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
         contact_requests = contact_request_section(lang) if slug == "contact" else ""
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
 {contact_requests}
-<section class="section article-body standalone">
-  {policy_items}
+{policy_compass_section(lang, slug)}
+<section class="section article-body standalone policy-boundary-note">
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
 </section>

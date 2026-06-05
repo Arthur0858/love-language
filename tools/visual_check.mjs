@@ -96,7 +96,9 @@ function summarizeFailures(results) {
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
     if (result.name.startsWith('keepsakes-') && result.keepsakeRitualCount !== 4) failures.push('missing keepsake ritual route');
+    if (result.name.startsWith('about-') && result.gardenPassCardCount !== 3) failures.push('missing about garden pass cards');
     if (result.name.startsWith('about-') && result.aboutTrustCardCount !== 4) failures.push('missing about trust charter cards');
+    if (result.name.startsWith('theory-') && result.theoryDomainCardCount !== 5) failures.push('missing theory domain compass cards');
     if ((result.name.startsWith('contact-') || result.name.startsWith('privacy-') || result.name.startsWith('terms-')) && result.policyCompassCardCount !== 3) failures.push('missing policy compass cards');
     if ((result.name.startsWith('contact-') || result.name.startsWith('privacy-') || result.name.startsWith('terms-')) && result.policyDetailCardCount !== 3) failures.push('missing policy detail cards');
     if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
@@ -458,7 +460,9 @@ for (const item of cases) {
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
+  const gardenPassCardCount = await page.locator('[data-about-garden-pass] .garden-pass-card').count();
   const aboutTrustCardCount = await page.locator('[data-about-trust] .about-trust-card').count();
+  const theoryDomainCardCount = await page.locator('[data-theory-domain-compass] .theory-domain-card').count();
   const policyCompassCardCount = await page.locator('[data-policy-compass] .policy-compass-card').count();
   const policyDetailCardCount = await page.locator('[data-policy-detail] .policy-detail-card').count();
   const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
@@ -492,7 +496,9 @@ for (const item of cases) {
     supplyDomainRouteCount,
     keepsakeShelfCount,
     keepsakeRitualCount,
+    gardenPassCardCount,
     aboutTrustCardCount,
+    theoryDomainCardCount,
     policyCompassCardCount,
     policyDetailCardCount,
     guardianCardHeightSpread,

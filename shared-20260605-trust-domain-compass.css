@@ -3521,6 +3521,147 @@ button.secondary-btn {
   text-underline-offset: 4px;
 }
 
+.garden-pass-section,
+.theory-domain-compass {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(183, 139, 69, .12), transparent 28%),
+    linear-gradient(135deg, #fffdf9, #f2f7f3);
+  border-top: 1px solid rgba(236, 216, 213, .86);
+  border-bottom: 1px solid rgba(236, 216, 213, .86);
+}
+
+.garden-pass-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.garden-pass-card {
+  position: relative;
+  min-height: 100%;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(236, 216, 213, .94);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(250, 246, 241, .9)),
+    #fff;
+  box-shadow: 0 16px 38px rgba(76, 42, 43, .07);
+}
+
+.garden-pass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--rose), var(--gold), var(--sage));
+}
+
+.garden-pass-card span {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 18px;
+  place-items: center;
+  border-radius: 999px;
+  background: #fff8ec;
+  color: var(--gold);
+  font-size: .78rem;
+  font-weight: 900;
+  box-shadow: inset 0 0 0 1px rgba(183, 139, 69, .28);
+}
+
+.garden-pass-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.14rem;
+  line-height: 1.32;
+}
+
+.garden-pass-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.68;
+}
+
+.theory-domain-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.theory-domain-card {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  min-height: 100%;
+  padding: 18px;
+  overflow: hidden;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--domain-accent) 26%, #ead8d5);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 88% 10%, var(--domain-glow), transparent 30%),
+    linear-gradient(180deg, #fff, #fffaf4);
+  box-shadow: 0 14px 34px rgba(76, 42, 43, .06);
+}
+
+.theory-domain-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--domain-accent) 13%, transparent), transparent 42%);
+  opacity: .76;
+}
+
+.theory-domain-prop {
+  position: relative;
+  z-index: 1;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(76, 42, 43, .13));
+}
+
+.theory-domain-card div {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 7px;
+}
+
+.theory-domain-card span {
+  color: var(--domain-accent);
+  font-size: .75rem;
+  font-weight: 900;
+}
+
+.theory-domain-card h3 {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.32;
+}
+
+.theory-domain-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.theory-domain-card small {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.theory-domain-card:hover,
+.theory-domain-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--domain-accent) 45%, #ead8d5);
+}
+
 .guardian-hero {
   background:
     radial-gradient(circle at 80% 18%, rgba(107, 127, 106, .14), transparent 30%),
@@ -3789,6 +3930,8 @@ button.secondary-btn {
   .guide-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trust-action-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .garden-pass-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .theory-domain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .about-trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .policy-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .guide-compass-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4017,6 +4160,8 @@ button.secondary-btn {
   .guide-domain-grid,
   .guide-action-grid,
   .trust-action-grid,
+  .garden-pass-grid,
+  .theory-domain-grid,
   .about-trust-grid,
   .policy-compass-grid,
   .guide-compass-grid,

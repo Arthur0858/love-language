@@ -1487,6 +1487,22 @@ def main() -> int:
             route_count = parser.ids.count("trust-action-routes")
             if route_count != 1:
                 issues.append(f"{page}: expected one #trust-action-routes target, found {route_count}")
+            if is_about_page(page):
+                stats["about_garden_pass_pages"] += 1
+                pass_section_count = parser.source.count("data-about-garden-pass")
+                pass_card_count = parser.source.count('class="garden-pass-card"')
+                if pass_section_count != 1:
+                    issues.append(f"{page}: expected one about garden pass section, found {pass_section_count}")
+                if pass_card_count != 3:
+                    issues.append(f"{page}: expected 3 about garden pass cards, found {pass_card_count}")
+            if is_theory_page(page):
+                stats["theory_domain_compass_pages"] += 1
+                compass_section_count = parser.source.count("data-theory-domain-compass")
+                compass_card_count = parser.source.count('class="theory-domain-card"')
+                if compass_section_count != 1:
+                    issues.append(f"{page}: expected one theory domain compass section, found {compass_section_count}")
+                if compass_card_count != 5:
+                    issues.append(f"{page}: expected 5 theory domain compass cards, found {compass_card_count}")
             trust_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
             required_trust_hrefs = {
                 lang_url_for_page(page) + "#quiz-section",
@@ -2045,6 +2061,8 @@ def main() -> int:
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
+    print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")
+    print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"legacy_guide_action_bridge_pages={stats['legacy_guide_action_bridge_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")

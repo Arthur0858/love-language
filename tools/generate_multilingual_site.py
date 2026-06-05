@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-guide-luna-bridge"
+ASSET_VERSION = "20260605-trust-domain-compass"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2891,6 +2891,118 @@ TRUST_ACTION_ROUTES = {
                 ("04", "Elige una ruta de recursos", "Cuando necesites libro, Luna o tarea gratis, toma un recurso de guardiana.", "Abrir recursos", "resources"),
             ],
         },
+    },
+}
+
+
+ABOUT_GARDEN_PASS = {
+    "zh": {
+        "eyebrow": "HEART GARDEN PASS",
+        "title": "進入心語庭園前，先拿到三枚通行印",
+        "intro": "關於頁不只是網站說明，而是讓旅人知道這座守護者宇宙怎麼被維護、怎麼使用、哪些地方不能被拿來取代真實求助。",
+        "cards": [
+            ("01", "內容來源印", "每一盞燈都要回到真實關係情境、五種愛之語與可練習的小行動。"),
+            ("02", "旅程路線印", "測驗結果會接到守護者、指南、7 日修復、旅人補給與 Luna，而不是停在一張標籤。"),
+            ("03", "安全邊界印", "LoveTypes 不承諾療效、不取代諮商；遇到暴力、控制、創傷或急迫危險時，先找可信任的人與專業支援。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "HEART GARDEN PASS",
+        "title": "Before entering the Heart Garden, collect three passage marks",
+        "intro": "The about page is not only site information. It tells travelers how this guardian universe is maintained, how to use it, and where it must not replace real-world support.",
+        "cards": [
+            ("01", "Source mark", "Every lamp should return to a real relationship situation, the five love languages, and one small practice."),
+            ("02", "Journey mark", "A quiz result connects to a guardian, guides, the 7-day repair plan, supplies, and Luna instead of stopping at a label."),
+            ("03", "Safety mark", "LoveTypes does not promise outcomes or replace counseling. For violence, control, trauma, or urgent danger, seek trusted people and professional support first."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "HEART GARDEN PASS",
+        "title": "心語の庭に入る前に、三つの通行印を確認する",
+        "intro": "このページはサイト説明だけではありません。守護者の宇宙がどう維持され、どう使われ、どこで現実の支援を優先すべきかを示します。",
+        "cards": [
+            ("01", "内容の印", "すべての灯りは実際の関係場面、五つの愛の言語、小さな練習へ戻ります。"),
+            ("02", "旅路の印", "診断結果は守護者、ガイド、7日間修復、補給、Luna へつながり、ラベルで止まりません。"),
+            ("03", "安全の印", "LoveTypes は効果を約束せず、相談支援の代わりではありません。暴力、支配、トラウマ、緊急の危険では信頼できる人と専門家を優先してください。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "HEART GARDEN PASS",
+        "title": "마음의 정원에 들어가기 전 세 가지 통행 표식을 확인하기",
+        "intro": "소개 페이지는 단순한 사이트 설명이 아닙니다. 이 수호자 세계가 어떻게 관리되고, 어떻게 쓰이며, 어디에서 실제 지원을 우선해야 하는지 보여 줍니다.",
+        "cards": [
+            ("01", "내용 표식", "모든 등불은 실제 관계 상황, 다섯 가지 사랑의 언어, 작은 연습으로 돌아가야 합니다."),
+            ("02", "여정 표식", "테스트 결과는 수호자, 가이드, 7일 회복, 보급, Luna로 이어지며 라벨에서 멈추지 않습니다."),
+            ("03", "안전 표식", "LoveTypes는 결과를 약속하거나 상담을 대신하지 않습니다. 폭력, 통제, 트라우마, 긴급 위험에서는 신뢰할 사람과 전문가 지원을 먼저 찾으세요."),
+        ],
+    },
+    "es": {
+        "eyebrow": "HEART GARDEN PASS",
+        "title": "Antes de entrar al Jardín, reúne tres marcas de paso",
+        "intro": "La página acerca de no es solo información del sitio. Explica cómo se mantiene este universo de guardianas, cómo usarlo y dónde no debe reemplazar apoyo real.",
+        "cards": [
+            ("01", "Marca de origen", "Cada luz debe volver a una situación real de relación, los cinco lenguajes del amor y una práctica pequeña."),
+            ("02", "Marca de viaje", "El resultado del test conecta con guardiana, guías, plan de 7 días, recursos y Luna; no termina en una etiqueta."),
+            ("03", "Marca de seguridad", "LoveTypes no promete resultados ni reemplaza terapia. Ante violencia, control, trauma o peligro urgente, busca primero personas de confianza y apoyo profesional."),
+        ],
+    },
+}
+
+
+SIMPLE_PAGE_DISPLAY_TITLES = {
+    "zh": {
+        "about": "關於心語庭園",
+        "theory": "愛之語理論",
+    },
+    "en": {
+        "about": "About the Heart Garden",
+        "theory": "Love-Language Theory",
+    },
+    "ja": {
+        "about": "心語の庭について",
+        "theory": "愛の言語の理論",
+    },
+    "ko": {
+        "about": "마음의 정원 소개",
+        "theory": "사랑의 언어 이론",
+    },
+    "es": {
+        "about": "Acerca del Jardín del Corazón",
+        "theory": "Teoría de los lenguajes del amor",
+    },
+}
+
+
+THEORY_DOMAIN_COMPASS = {
+    "zh": {
+        "eyebrow": "FIVE-DOMAIN THEORY COMPASS",
+        "title": "把五種愛之語放進五個守護者分域",
+        "intro": "理論如果停在名詞，很快會變成考題。把它放回分域，就能看見每一種愛之語需要被怎麼接收、怎麼修復、怎麼選補給。",
+        "cta": "進入分域",
+    },
+    "en": {
+        "eyebrow": "FIVE-DOMAIN THEORY COMPASS",
+        "title": "Place the five love languages inside five guardian domains",
+        "intro": "When theory stays as vocabulary, it becomes a quiz. Put it back into the domains so each love language shows how it is received, repaired, and supplied.",
+        "cta": "Enter domain",
+    },
+    "ja": {
+        "eyebrow": "FIVE-DOMAIN THEORY COMPASS",
+        "title": "五つの愛の言語を五つの守護者分域へ置く",
+        "intro": "理論が言葉だけで止まると、テストの答えになってしまいます。分域へ戻すと、受け取り方、修復、補給の選び方が見えます。",
+        "cta": "分域へ",
+    },
+    "ko": {
+        "eyebrow": "FIVE-DOMAIN THEORY COMPASS",
+        "title": "다섯 가지 사랑의 언어를 다섯 수호자 영역에 놓기",
+        "intro": "이론이 용어로만 남으면 시험 문제가 됩니다. 영역으로 돌려놓으면 각 언어를 어떻게 받고, 회복하고, 보급할지 보입니다.",
+        "cta": "영역으로",
+    },
+    "es": {
+        "eyebrow": "FIVE-DOMAIN THEORY COMPASS",
+        "title": "Coloca los cinco lenguajes dentro de cinco dominios guardianes",
+        "intro": "Cuando la teoría queda como vocabulario, se vuelve examen. Al devolverla a los dominios, cada lenguaje muestra cómo recibirlo, repararlo y elegir recursos.",
+        "cta": "Entrar al dominio",
     },
 }
 
@@ -6083,14 +6195,62 @@ def contact_request_section(lang: str) -> str:
 """
 
 
+def about_garden_pass(lang: str) -> str:
+    copy = ABOUT_GARDEN_PASS[lang]
+    cards = "".join(
+        f"""
+<article class="garden-pass-card">
+  <span>{escape(idx)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+"""
+        for idx, title, desc in copy["cards"]
+    )
+    return f"""
+<section class="section garden-pass-section" data-about-garden-pass>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="garden-pass-grid">{cards}</div>
+</section>
+"""
+
+
+def theory_domain_compass(lang: str) -> str:
+    copy = THEORY_DOMAIN_COMPASS[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        domain_title, domain_desc, _domain_cta = GUARDIAN_DOMAINS[slug][lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        cards.append(f"""
+<a class="theory-domain-card" href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(guardian["prop"], f"{name} {domain_title}", "theory-domain-prop")}
+  <div>
+    <span>{escape(typ)}</span>
+    <h3>{escape(domain_title)}</h3>
+    <p>{escape(domain_desc)}</p>
+    <small>{escape(copy["cta"])} · {escape(name)}</small>
+  </div>
+</a>
+""")
+    return f"""
+<section class="section theory-domain-compass" data-theory-domain-compass>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="theory-domain-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def simple_page(lang: str, slug: str) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
     copy = PRACTICAL_COPY[lang]
     titles = {
-        "theory": (t["theory"], t["tagline"]),
+        "theory": (SIMPLE_PAGE_DISPLAY_TITLES[lang]["theory"], t["tagline"]),
         "resources": (t["resources"], t["resources_desc"]),
-        "about": (t["about"], t["trust_intro"]),
+        "about": (SIMPLE_PAGE_DISPLAY_TITLES[lang]["about"], t["trust_intro"]),
         "contact": (t["contact"], t["contact_desc"]),
         "privacy": (t["privacy"], t["privacy_desc"]),
         "terms": (t["terms"], t["terms_desc"]),
@@ -6101,6 +6261,7 @@ def simple_page(lang: str, slug: str) -> None:
         about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">ABOUT LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></section>
+{about_garden_pass(lang)}
 <section class="section article-body standalone">
   {about_items}
   <h2>{escape(t["boundary"])}</h2>
@@ -6112,7 +6273,7 @@ def simple_page(lang: str, slug: str) -> None:
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"AboutPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
-        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
+        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, t["about"], "website", "/og-cover.jpg", schema))
         return
     if slug == "theory":
         theory_items = "".join(f"<h2>{escape(heading)}</h2><p>{escape(body_text)}</p>" for heading, body_text in THEORY_SECTIONS[lang])
@@ -6120,6 +6281,7 @@ def simple_page(lang: str, slug: str) -> None:
         faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVE LANGUAGE THEORY</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></section>
+{theory_domain_compass(lang)}
 <section class="section article-body standalone">
   {theory_items}
   <h2>{escape(t["boundary"])}</h2>
@@ -6131,7 +6293,7 @@ def simple_page(lang: str, slug: str) -> None:
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
-        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
+        write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, t["theory"], "website", "/og-cover.jpg", schema))
         return
     extra = ""
     if slug == "contact":

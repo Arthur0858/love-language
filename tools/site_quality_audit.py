@@ -28,6 +28,22 @@ FORBIDDEN_CONTACT_SNIPPETS = {
     "parenttechchecklist.com",
     "s755102@gmail.com",
 }
+FORBIDDEN_SPANISH_VISIBLE_SNIPPETS = {
+    "Jardin del Corazon",
+    "guias, recursos",
+    "plan de reparacion",
+    "paginas de confianza",
+    "a donde ir despues",
+    "reparacion pequena",
+    "peticion pequena",
+    "7 dias",
+    "segun tu",
+    "mas rapido",
+    "Confianza y limites",
+    "Sobre el Jardin",
+    "Teoria de lenguajes",
+    "Privacidad y terminos",
+}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 AFFILIATE_HOST = "www.books.com.tw"
@@ -1444,6 +1460,11 @@ def main() -> int:
                     end = min(len(visible_text), script_match.end() + 32)
                     excerpt = visible_text[start:end]
                     issues.append(f"{page}: unexpected {script_name} text outside language menu: {excerpt}")
+            if parser.html_lang == "es":
+                stats["spanish_polish_pages"] += 1
+                for snippet in sorted(FORBIDDEN_SPANISH_VISIBLE_SNIPPETS):
+                    if snippet in visible_text:
+                        issues.append(f"{page}: Spanish visible text missing expected accents: {snippet}")
 
         adsense_metas = [meta for meta in parser.metas if meta.get("name") == "google-adsense-account"]
         stats["adsense_account_meta_tags"] += len(adsense_metas)
@@ -2233,6 +2254,7 @@ def main() -> int:
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")
     print(f"language_script_checks={stats['language_script_checks']}")
+    print(f"spanish_polish_pages={stats['spanish_polish_pages']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
     print(f"canonical_links={stats['canonical_links']}")

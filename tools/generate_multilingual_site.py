@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-policy-detail"
+ASSET_VERSION = "20260605-guardian-needs"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1458,6 +1458,80 @@ GUARDIAN_ENTRY = {
             ("Quiero mirar primero", "Explora el mapa de cinco dominios y elige la guardiana más cercana a tu necesidad actual.", "Ver mapa", "#guardian-map"),
             ("Ya conozco mi guardiana", "Ve a recursos y continúa con guías, plan de 7 días y suministro nocturno Luna.", "Abrir recursos", "resources"),
         ],
+    },
+}
+
+
+GUARDIAN_NEED_ROUTER = {
+    "zh": {
+        "eyebrow": "CHOOSE BY CURRENT NEED",
+        "title": "如果你現在需要的是……",
+        "intro": "不用先背五種愛之語。從此刻最明顯的缺口出發，進入對應守護者分域，再接上修復任務與補給路線。",
+        "open": "進入分域",
+        "supply": "補給路線",
+        "items": {
+            "iris": ("想被一句話穩穩接住", "當沉默讓你懷疑自己是否重要，先進入艾莉絲的晨曦玻璃花園。"),
+            "noah": ("想要完整陪伴與專注", "當碎片時間讓你覺得孤單，諾雅會把你帶到安靜的星海圖書館。"),
+            "vivian": ("想確認對方真的記得你", "當重要細節被遺忘，薇薇安的月光記憶工坊會整理心意與線索。"),
+            "claire": ("想把承諾變成行動", "當照顧都落在你身上，克萊兒的溫室修復間會把需求翻成可做的一步。"),
+            "dora": ("想在安全界線裡靠近", "當身體先緊繃或退後，朵拉的玫瑰金聖域會先確認同意與節奏。"),
+        },
+    },
+    "en": {
+        "eyebrow": "CHOOSE BY CURRENT NEED",
+        "title": "If what you need right now is...",
+        "intro": "You do not need to memorize the five love languages first. Start from the clearest gap, enter the guardian domain, then continue to a repair task and supply route.",
+        "open": "Enter domain",
+        "supply": "Supply route",
+        "items": {
+            "iris": ("To feel held by one sentence", "When silence makes you doubt your importance, enter Iris's dawn glass garden first."),
+            "noah": ("Focused time and presence", "When fragmented attention feels lonely, Noah opens the quiet star-sea library."),
+            "vivian": ("Proof that you are remembered", "When meaningful details are missed, Vivian's moonlit memory workshop gathers the signs."),
+            "claire": ("Promises turned into action", "When care falls only on you, Claire's greenhouse repair room turns need into one doable step."),
+            "dora": ("Closeness within safe boundaries", "When the body tightens or steps back first, Dora's rose-gold sanctuary begins with consent and rhythm."),
+        },
+    },
+    "ja": {
+        "eyebrow": "CHOOSE BY CURRENT NEED",
+        "title": "今必要なのが……なら",
+        "intro": "先に五つの愛の言語を覚える必要はありません。今いちばん目立つ欠けから入り、守護者の分域、修復課題、補給ルートへ進みます。",
+        "open": "分域へ入る",
+        "supply": "補給ルート",
+        "items": {
+            "iris": ("一言でしっかり受け止められたい", "沈黙で自分の大切さを疑う時は、アイリスの朝光ガラス庭園へ。"),
+            "noah": ("集中した時間と同席がほしい", "細切れの時間が孤独に感じる時、ノアの静かな星海図書館が入口になります。"),
+            "vivian": ("覚えていてくれた証がほしい", "大切な細部が抜け落ちる時、ヴィヴィアンの月光記憶工房が心意を整理します。"),
+            "claire": ("約束を行動にしてほしい", "ケアが自分だけに偏る時、クレアの温室修復室が願いを一つの行動へ変えます。"),
+            "dora": ("安全な境界の中で近づきたい", "身体が先にこわばる時、ドラのローズゴールド聖域は同意とリズムから始めます。"),
+        },
+    },
+    "ko": {
+        "eyebrow": "CHOOSE BY CURRENT NEED",
+        "title": "지금 필요한 것이……라면",
+        "intro": "다섯 사랑의 언어를 먼저 외울 필요는 없습니다. 지금 가장 분명한 빈틈에서 시작해 수호자 영역, 회복 과제, 보급 루트로 이어가세요.",
+        "open": "영역으로 들어가기",
+        "supply": "보급 루트",
+        "items": {
+            "iris": ("한 문장으로 단단히 받아들여지고 싶다", "침묵 때문에 내가 중요한지 의심될 때는 아이리스의 새벽 유리 정원으로 들어가세요."),
+            "noah": ("온전한 시간과 집중이 필요하다", "조각난 시간이 외롭게 느껴질 때 노아의 조용한 별바다 도서관이 입구가 됩니다."),
+            "vivian": ("나를 기억한다는 표시가 필요하다", "중요한 세부가 잊힐 때 비비안의 달빛 기억 공방이 마음의 단서를 정리합니다."),
+            "claire": ("약속이 행동이 되길 바란다", "돌봄이 나에게만 쏠릴 때 클레어의 온실 회복실이 요구를 실행 가능한 한 걸음으로 바꿉니다."),
+            "dora": ("안전한 경계 안에서 가까워지고 싶다", "몸이 먼저 긴장하거나 물러설 때 도라의 로즈골드 성역은 동의와 리듬에서 시작합니다."),
+        },
+    },
+    "es": {
+        "eyebrow": "CHOOSE BY CURRENT NEED",
+        "title": "Si ahora necesitas...",
+        "intro": "No necesitas memorizar primero los cinco lenguajes del amor. Empieza por la falta más clara, entra al dominio guardián y continúa con reparación y suministro.",
+        "open": "Entrar al dominio",
+        "supply": "Ruta de suministro",
+        "items": {
+            "iris": ("Sentirte sostenida por una frase", "Cuando el silencio te hace dudar de tu importancia, entra primero al jardín de cristal de Iris."),
+            "noah": ("Tiempo completo y presencia", "Cuando la atención fragmentada se siente sola, Noah abre la biblioteca tranquila del mar de estrellas."),
+            "vivian": ("Señales de que te recuerdan", "Cuando se olvidan detalles importantes, el taller lunar de Vivian reúne las pistas del cariño."),
+            "claire": ("Promesas convertidas en acción", "Cuando el cuidado cae solo sobre ti, el invernadero de Claire vuelve la necesidad un paso posible."),
+            "dora": ("Cercanía con límites seguros", "Cuando el cuerpo se tensa o retrocede primero, el santuario rosa dorado de Dora empieza por consentimiento y ritmo."),
+        },
     },
 }
 
@@ -3996,6 +4070,37 @@ def guardian_entry_section(lang: str) -> str:
 """
 
 
+def guardian_need_router_section(lang: str) -> str:
+    copy = GUARDIAN_NEED_ROUTER[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        need, body_text = copy["items"][slug]
+        cards.append(f"""
+<article class="guardian-need-card" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(guardian["prop"], f"{name} {need}", "guardian-need-prop")}
+  <span>{escape(typ)}</span>
+  <h3>{escape(need)}</h3>
+  <p>{escape(body_text)}</p>
+  <div>
+    <a href="{lang_url(lang, "characters/" + slug)}">{escape(copy["open"])}：{escape(name)}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(copy["supply"])}</a>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section guardian-need-section" data-guardian-need-router>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
+    <a href="{lang_url(lang)}#quiz-section">{escape(LANGS[lang]["start"])}</a>
+  </div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="guardian-need-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def guide_index_compass(lang: str) -> str:
     compass = GUIDE_INDEX_COMPASS[lang]
     cards = []
@@ -5018,6 +5123,7 @@ def characters_index_page(lang: str) -> None:
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
 {guardian_entry_section(lang)}
+{guardian_need_router_section(lang)}
 {universe_map_section(lang)}
 <section class="section intro-grid">
   <div><h2>{escape(PAGE_SECTIONS[lang]["how"])}</h2><p>{escape(PRACTICAL_COPY[lang]["why"])}</p></div>

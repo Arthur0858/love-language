@@ -68,6 +68,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('home-') && result.universeGateCount !== 5) failures.push('missing five universe gates');
     if (result.name.startsWith('characters-') && result.universeMapCount !== 1) failures.push('missing universe map');
     if (result.name.startsWith('characters-') && result.guardianCardCount !== 5) failures.push('missing guardian universe cards');
+    if (result.name.startsWith('characters-') && result.guardianNeedCardCount !== 5) failures.push('missing guardian need router cards');
     if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
@@ -411,6 +412,7 @@ for (const item of cases) {
   const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
   const universeMapCount = await page.locator('[data-universe-map]').count();
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
+  const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
@@ -441,6 +443,7 @@ for (const item of cases) {
     universeGateCount,
     universeMapCount,
     guardianCardCount,
+    guardianNeedCardCount,
     supplyDomainRouteCount,
     keepsakeShelfCount,
     keepsakeRitualCount,

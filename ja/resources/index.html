@@ -110,22 +110,22 @@
   <div class="section-head"><div><p class="eyebrow">START FROM YOUR RESULT</p><h2>結果からルートを決めて補給を選ぶ</h2></div></div>
   <p class="section-intro">リソースは本の一覧ではありません。守護者の結果を小さな行動へつなぎ、ガイド、Luna、本をゆっくり選ぶための入口です。</p>
   <div class="supply-entry-grid">
-<article>
+<article data-supply-entry-card="quiz">
   <h3>まだ結果がない</h3>
   <p>まず15問に答え、どの守護者ルートを開くかを確認します。</p>
-  <a href="/ja/#quiz-section">診断を始める</a>
+  <a href="/ja/#quiz-section" data-supply-entry-link="quiz" data-default-href="/ja/#quiz-section">診断を始める</a>
 </article>
 
-<article>
+<article data-supply-entry-card="routes">
   <h3>守護者が分かっている</h3>
   <p>五つの補給ルートへ進み、今に合う一つを選びます。</p>
-  <a href="#supply-routes">ルートを見る</a>
+  <a href="#supply-routes" data-supply-entry-link="routes" data-default-href="#supply-routes">ルートを見る</a>
 </article>
 
-<article>
+<article data-supply-entry-card="luna">
   <h3>先に落ち着きたい</h3>
   <p>Luna の夜の補給で感情のノイズを下げてから、読むか購入するかを決めます。</p>
-  <a href="/ja/luna-yoga-music/">Luna を開く</a>
+  <a href="/ja/luna-yoga-music/" data-supply-entry-link="luna" data-default-href="/ja/luna-yoga-music/">Luna を開く</a>
 </article>
 </div>
 </section>
@@ -583,15 +583,37 @@
     return null;
   }
 
+  function resetEntryLinks() {
+    document.querySelectorAll('[data-supply-entry-link][data-default-href]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-default-href'));
+      link.closest('[data-supply-entry-card]')?.removeAttribute('data-supply-entry-personalized');
+    });
+  }
+
   function clearSavedResult() {
     storageKeys.forEach((key) => localStorage.removeItem(key));
     box.hidden = true;
     box.innerHTML = '';
+    resetEntryLinks();
+  }
+
+  function personalizeEntryLinks(result) {
+    const routeLink = document.querySelector('[data-supply-entry-link="routes"]');
+    const lunaLink = document.querySelector('[data-supply-entry-link="luna"]');
+    if (routeLink) {
+      routeLink.setAttribute('href', result.resourceUrl);
+      routeLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
+    if (lunaLink) {
+      lunaLink.setAttribute('href', result.lunaUrl);
+      lunaLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
   }
 
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  personalizeEntryLinks(result);
   const resumeSteps = [
     {
       number: "1",

@@ -4027,15 +4027,18 @@ def supply_entry_section(lang: str) -> str:
     for title, desc, action, target in entry["items"]:
         if target.startswith("#"):
             href = target
+            action_key = "routes" if target == "#supply-routes" else "anchor"
         elif target:
             href = lang_url(lang, target)
+            action_key = "luna" if target == "luna-yoga-music" else target
         else:
             href = lang_url(lang) + "#quiz-section"
+            action_key = "quiz"
         cards.append(f"""
-<article>
+<article data-supply-entry-card="{escape(action_key)}">
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
-  <a href="{href}">{escape(action)}</a>
+  <a href="{href}" data-supply-entry-link="{escape(action_key)}" data-default-href="{href}">{escape(action)}</a>
 </article>
 """)
     return f"""
@@ -5802,15 +5805,37 @@ def supply_resume_script(lang: str) -> str:
     return null;
   }}
 
+  function resetEntryLinks() {{
+    document.querySelectorAll('[data-supply-entry-link][data-default-href]').forEach((link) => {{
+      link.setAttribute('href', link.getAttribute('data-default-href'));
+      link.closest('[data-supply-entry-card]')?.removeAttribute('data-supply-entry-personalized');
+    }});
+  }}
+
   function clearSavedResult() {{
     storageKeys.forEach((key) => localStorage.removeItem(key));
     box.hidden = true;
     box.innerHTML = '';
+    resetEntryLinks();
+  }}
+
+  function personalizeEntryLinks(result) {{
+    const routeLink = document.querySelector('[data-supply-entry-link="routes"]');
+    const lunaLink = document.querySelector('[data-supply-entry-link="luna"]');
+    if (routeLink) {{
+      routeLink.setAttribute('href', result.resourceUrl);
+      routeLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }}
+    if (lunaLink) {{
+      lunaLink.setAttribute('href', result.lunaUrl);
+      lunaLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }}
   }}
 
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  personalizeEntryLinks(result);
   const resumeSteps = [
     {{
       number: "1",

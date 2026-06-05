@@ -164,6 +164,9 @@ function summarizeConversionFailures(results) {
     if (target === 'route' && !result.supplyResumeImageHiddenOk) failures.push('personalized supply resume image is visible on mobile');
     if (target === 'route' && result.supplyResumeActionCount < 3) failures.push('personalized supply resume is missing next-step actions');
     if (target === 'route' && !result.supplyResumeFirstActionInViewport) failures.push('personalized supply resume first action is below the mobile viewport');
+    if (target === 'route' && !result.supplyEntryRouteHref?.includes('/resources/#supply-')) failures.push('supply entry route card is not personalized');
+    if (target === 'route' && !result.supplyEntryLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('supply entry Luna card is not personalized');
+    if (target === 'route' && result.supplyEntryPersonalizedCount < 2) failures.push('supply entry personalized state is incomplete');
     if (target === 'map' && !result.gardenMapResumeVisible) failures.push('missing personalized garden map resume');
     if (target === 'map' && result.gardenMapResumeActionCount < 5) failures.push('personalized garden map resume is missing next-step actions');
     if (target === 'map' && !result.gardenMapPrimaryHref?.includes('/resources/#supply-')) failures.push('garden map primary action does not continue supply route');
@@ -918,6 +921,15 @@ for (const item of conversionCases) {
       const rect = link.getBoundingClientRect();
       return rect.top >= 0 && rect.top < window.innerHeight && rect.left >= 0 && rect.right <= window.innerWidth;
     }).catch(() => false);
+  const supplyEntryRouteHref = finalTarget === 'route'
+    ? await page.locator('[data-supply-entry-link="routes"]').first().getAttribute('href').catch(() => '')
+    : '';
+  const supplyEntryLunaHref = finalTarget === 'route'
+    ? await page.locator('[data-supply-entry-link="luna"]').first().getAttribute('href').catch(() => '')
+    : '';
+  const supplyEntryPersonalizedCount = finalTarget === 'route'
+    ? await page.locator('[data-supply-entry-personalized="true"]').count().catch(() => 0)
+    : 0;
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
@@ -940,6 +952,9 @@ for (const item of conversionCases) {
     supplyResumeImageHiddenOk,
     supplyResumeActionCount,
     supplyResumeFirstActionInViewport,
+    supplyEntryRouteHref,
+    supplyEntryLunaHref,
+    supplyEntryPersonalizedCount,
     repairResumeVisible: await page.locator('[data-repair-saved]:not([hidden])').isVisible().catch(() => false),
     gardenMapResumeVisible: await page.locator('[data-garden-map-saved]:not([hidden])').isVisible().catch(() => false),
     gardenMapResumeActionCount: await page.locator('[data-garden-map-saved] .garden-map-resume-actions a').count().catch(() => 0),

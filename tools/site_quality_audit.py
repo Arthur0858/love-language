@@ -1591,6 +1591,11 @@ def main() -> int:
             for target_id in ("supply-start", "supply-routes"):
                 if target_id not in parser.ids:
                     issues.append(f"{page}: resources page missing #{target_id}")
+            for entry_key in ("quiz", "routes", "luna"):
+                if f'data-supply-entry-link="{entry_key}"' not in parser.source:
+                    issues.append(f"{page}: resources supply entry missing data-supply-entry-link={entry_key}")
+                if f'data-supply-entry-card="{entry_key}"' not in parser.source:
+                    issues.append(f"{page}: resources supply entry missing data-supply-entry-card={entry_key}")
             resource_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
             required_resource_hrefs = {
                 lang_url_for_page(page) + "#quiz-section",

@@ -110,22 +110,22 @@
   <div class="section-head"><div><p class="eyebrow">START FROM YOUR RESULT</p><h2>先取得路線，再選補給</h2></div></div>
   <p class="section-intro">旅人補給不是書單入口，而是把你的守護者結果接到一個可執行的小任務。先確認路線，再慢慢選指南、Luna 或延伸書卷。</p>
   <div class="supply-entry-grid">
-<article>
+<article data-supply-entry-card="quiz">
   <h3>還沒有結果</h3>
   <p>先完成 15 道心語，讓補給站知道該把你帶往哪位守護者。</p>
-  <a href="/#quiz-section">開始認領儀式</a>
+  <a href="/#quiz-section" data-supply-entry-link="quiz" data-default-href="/#quiz-section">開始認領儀式</a>
 </article>
 
-<article>
+<article data-supply-entry-card="routes">
   <h3>已經知道守護者</h3>
   <p>直接跳到五條補給路線，選最符合此刻狀態的一條。</p>
-  <a href="#supply-routes">查看五路線</a>
+  <a href="#supply-routes" data-supply-entry-link="routes" data-default-href="#supply-routes">查看五路線</a>
 </article>
 
-<article>
+<article data-supply-entry-card="luna">
   <h3>現在需要安定</h3>
   <p>先進入 Luna 夜間補給，把情緒降噪後再決定是否閱讀或購買。</p>
-  <a href="/luna-yoga-music/">開啟 Luna</a>
+  <a href="/luna-yoga-music/" data-supply-entry-link="luna" data-default-href="/luna-yoga-music/">開啟 Luna</a>
 </article>
 </div>
 </section>
@@ -583,15 +583,37 @@
     return null;
   }
 
+  function resetEntryLinks() {
+    document.querySelectorAll('[data-supply-entry-link][data-default-href]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-default-href'));
+      link.closest('[data-supply-entry-card]')?.removeAttribute('data-supply-entry-personalized');
+    });
+  }
+
   function clearSavedResult() {
     storageKeys.forEach((key) => localStorage.removeItem(key));
     box.hidden = true;
     box.innerHTML = '';
+    resetEntryLinks();
+  }
+
+  function personalizeEntryLinks(result) {
+    const routeLink = document.querySelector('[data-supply-entry-link="routes"]');
+    const lunaLink = document.querySelector('[data-supply-entry-link="luna"]');
+    if (routeLink) {
+      routeLink.setAttribute('href', result.resourceUrl);
+      routeLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
+    if (lunaLink) {
+      lunaLink.setAttribute('href', result.lunaUrl);
+      lunaLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
   }
 
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  personalizeEntryLinks(result);
   const resumeSteps = [
     {
       number: "1",

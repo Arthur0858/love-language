@@ -110,22 +110,22 @@
   <div class="section-head"><div><p class="eyebrow">START FROM YOUR RESULT</p><h2>Get your route before choosing supplies</h2></div></div>
   <p class="section-intro">Resources are not just a book list. They turn your guardian result into one doable task, then help you choose a guide, Luna, or an extended book slowly.</p>
   <div class="supply-entry-grid">
-<article>
+<article data-supply-entry-card="quiz">
   <h3>No result yet</h3>
   <p>Answer the 15 prompts first so the station knows which guardian route to open.</p>
-  <a href="/en/#quiz-section">Start quiz</a>
+  <a href="/en/#quiz-section" data-supply-entry-link="quiz" data-default-href="/en/#quiz-section">Start quiz</a>
 </article>
 
-<article>
+<article data-supply-entry-card="routes">
   <h3>I know my guardian</h3>
   <p>Jump to the five supply routes and choose the one that fits this moment.</p>
-  <a href="#supply-routes">View routes</a>
+  <a href="#supply-routes" data-supply-entry-link="routes" data-default-href="#supply-routes">View routes</a>
 </article>
 
-<article>
+<article data-supply-entry-card="luna">
   <h3>I need calm first</h3>
   <p>Open Luna night supply, lower the noise, then decide whether to read or buy.</p>
-  <a href="/en/luna-yoga-music/">Open Luna</a>
+  <a href="/en/luna-yoga-music/" data-supply-entry-link="luna" data-default-href="/en/luna-yoga-music/">Open Luna</a>
 </article>
 </div>
 </section>
@@ -583,15 +583,37 @@
     return null;
   }
 
+  function resetEntryLinks() {
+    document.querySelectorAll('[data-supply-entry-link][data-default-href]').forEach((link) => {
+      link.setAttribute('href', link.getAttribute('data-default-href'));
+      link.closest('[data-supply-entry-card]')?.removeAttribute('data-supply-entry-personalized');
+    });
+  }
+
   function clearSavedResult() {
     storageKeys.forEach((key) => localStorage.removeItem(key));
     box.hidden = true;
     box.innerHTML = '';
+    resetEntryLinks();
+  }
+
+  function personalizeEntryLinks(result) {
+    const routeLink = document.querySelector('[data-supply-entry-link="routes"]');
+    const lunaLink = document.querySelector('[data-supply-entry-link="luna"]');
+    if (routeLink) {
+      routeLink.setAttribute('href', result.resourceUrl);
+      routeLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
+    if (lunaLink) {
+      lunaLink.setAttribute('href', result.lunaUrl);
+      lunaLink.closest('[data-supply-entry-card]')?.setAttribute('data-supply-entry-personalized', 'true');
+    }
   }
 
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  personalizeEntryLinks(result);
   const resumeSteps = [
     {
       number: "1",

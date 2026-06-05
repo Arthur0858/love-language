@@ -6756,16 +6756,23 @@ def luna_alias_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
     target = lang_url(lang, "luna-yoga-music")
+    use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
     body = f"""
 <section class="page-hero compact">
   <p class="eyebrow">LUNA NIGHT SUPPLY</p>
   <h1>{escape(t["luna_title"])}</h1>
-  <p>{escape(t["luna_desc"])}</p>
-  <div class="hero-actions"><a class="primary-btn" href="{target}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <p>{escape(luna["headline"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{target}">{escape(t["luna_title"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a><a class="secondary-btn" href="{lang_url(lang, "repair-plan")}">{escape(REPAIR_PLAN[lang]["title"])}</a></div>
 </section>
 <section class="section note-section">
   <h2>{escape(luna["headline"])}</h2>
   <p>{escape(luna["intro"])}</p>
+  <p>{escape(t["luna_desc"])}</p>
+</section>
+{luna_night_protocol(lang)}
+<section class="section luna-use-cases">
+  <div class="section-head"><div><p class="eyebrow">NIGHT HEART SUPPLY</p><h2>{escape(t["luna_desc"])}</h2></div><a href="{target}">{escape(t["luna_title"])}</a></div>
+  <div class="luna-use-grid">{use_cases}</div>
 </section>
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'

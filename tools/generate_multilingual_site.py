@@ -1570,6 +1570,12 @@ SECTION_LABELS = {
         "about_lovetypes": "關於 LoveTypes",
         "love_language_theory": "愛之語理論",
         "love_language_faq": "愛之語 FAQ",
+        "keepsake_ritual_route": "收藏祝福返回",
+        "keepsake_use_route": "保存分享返回",
+        "seven_day_heart_plan": "7 日心語修復計畫",
+        "heart_garden_archive": "心語庭園歸檔",
+        "not_found_garden": "404 心語庭園",
+        "safe_routes": "安全返回路線",
     },
     "en": {
         "heart_garden_supplies": "HEART GARDEN SUPPLIES",
@@ -1623,6 +1629,12 @@ SECTION_LABELS = {
         "about_lovetypes": "ABOUT LOVETYPES",
         "love_language_theory": "LOVE LANGUAGE THEORY",
         "love_language_faq": "LOVE LANGUAGE FAQ",
+        "keepsake_ritual_route": "SAVE · BLESS · RETURN",
+        "keepsake_use_route": "SAVE · SHARE · RETURN",
+        "seven_day_heart_plan": "7-DAY HEART-LANGUAGE PLAN",
+        "heart_garden_archive": "HEART GARDEN ARCHIVE",
+        "not_found_garden": "404 HEART GARDEN",
+        "safe_routes": "SAFE ROUTES",
     },
     "ja": {
         "heart_garden_supplies": "心語の庭の補給所",
@@ -1676,6 +1688,12 @@ SECTION_LABELS = {
         "about_lovetypes": "LoveTypes について",
         "love_language_theory": "愛の言語の理論",
         "love_language_faq": "愛の言語 FAQ",
+        "keepsake_ritual_route": "保存・祝福・戻る",
+        "keepsake_use_route": "保存・共有・戻る",
+        "seven_day_heart_plan": "7日間の心語修復プラン",
+        "heart_garden_archive": "心語の庭アーカイブ",
+        "not_found_garden": "404 心語の庭",
+        "safe_routes": "安全な戻り道",
     },
     "ko": {
         "heart_garden_supplies": "마음의 정원 보급소",
@@ -1729,6 +1747,12 @@ SECTION_LABELS = {
         "about_lovetypes": "LoveTypes 소개",
         "love_language_theory": "사랑의 언어 이론",
         "love_language_faq": "사랑의 언어 FAQ",
+        "keepsake_ritual_route": "저장 · 축복 · 복귀",
+        "keepsake_use_route": "저장 · 공유 · 복귀",
+        "seven_day_heart_plan": "7일 마음 언어 회복 계획",
+        "heart_garden_archive": "마음 정원 보관소",
+        "not_found_garden": "404 마음 정원",
+        "safe_routes": "안전한 복귀 루트",
     },
     "es": {
         "heart_garden_supplies": "SUMINISTROS DEL JARDÍN",
@@ -1782,6 +1806,12 @@ SECTION_LABELS = {
         "about_lovetypes": "ACERCA DE LOVETYPES",
         "love_language_theory": "TEORÍA DE LENGUAJES",
         "love_language_faq": "FAQ DE LENGUAJES",
+        "keepsake_ritual_route": "GUARDAR · BENDECIR · VOLVER",
+        "keepsake_use_route": "GUARDAR · COMPARTIR · VOLVER",
+        "seven_day_heart_plan": "PLAN DE 7 DÍAS",
+        "heart_garden_archive": "ARCHIVO DEL JARDÍN",
+        "not_found_garden": "404 JARDÍN DEL CORAZÓN",
+        "safe_routes": "RUTAS SEGURAS",
     },
 }
 
@@ -5087,7 +5117,7 @@ def keepsakes_page(lang: str) -> None:
 {keepsake_ritual_section(lang)}
 {collector_section(lang)}
 <section class="section keepsake-use-section">
-  <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(SECTION_LABELS[lang]["keepsake_use_route"])}</p><h2>{escape(labels["how_title"])}</h2></div></div>
   <div class="keepsake-use-grid">{steps}</div>
 </section>
 <section class="section intro-grid keepsake-safety">
@@ -6623,7 +6653,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
     canonical_path = "guides/" + canonical_target
     body = f"""
 <section class="article-hero">
-  <div><p class="eyebrow">HEART GARDEN ARCHIVE</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
+  <div><p class="eyebrow">{escape(SECTION_LABELS[lang]["heart_garden_archive"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
   {img_tag("/assets/lovetypes/share/guide-toolkit-og.jpg", "LoveTypes guide", lazy=False)}
 </section>
 <section class="section note-section archive-forward">
@@ -7543,6 +7573,7 @@ def write_404_page() -> None:
             "contact": LANGS[code]["contact"],
             "boundary": LANGS[code]["boundary"],
             "boundary_text": LANGS[code]["boundary_text"],
+            "safe_routes_eyebrow": SECTION_LABELS[code]["safe_routes"],
             "guides_href": lang_url(code, "guides"),
             "quiz_href": lang_url(code) + "#quiz-section",
             "contact_href": lang_url(code, "contact"),
@@ -7585,6 +7616,7 @@ def write_404_page() -> None:
   setText('[data-not-found-field="intro"]', data.intro);
   setText('[data-not-found-field="start"]', data.start);
   setText('[data-not-found-field="guides"]', data.guides);
+  setText('[data-not-found-field="safe_routes_eyebrow"]', data.safe_routes_eyebrow);
   setText('[data-not-found-field="safe_routes"]', data.safe_routes);
   setText('[data-not-found-field="contact_link"]', data.contact);
   setText('[data-not-found-field="boundary"]', data.boundary);
@@ -7614,7 +7646,7 @@ def write_404_page() -> None:
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-not-found-field="start">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}" data-not-found-field="guides">{escape(t["guides"])}</a></div>
 </section>
 <section class="section">
-  <div class="section-head"><div><p class="eyebrow">SAFE ROUTES</p><h2 data-not-found-field="safe_routes">{escape(copy["safe_routes"])}</h2></div><a href="{lang_url(lang, "contact")}" data-not-found-field="contact_link">{escape(t["contact"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow" data-not-found-field="safe_routes_eyebrow">{escape(SECTION_LABELS[lang]["safe_routes"])}</p><h2 data-not-found-field="safe_routes">{escape(copy["safe_routes"])}</h2></div><a href="{lang_url(lang, "contact")}" data-not-found-field="contact_link">{escape(t["contact"])}</a></div>
   <div class="card-grid">{cards}</div>
 </section>
 <section class="section note-section"><h2 data-not-found-field="boundary">{escape(t["boundary"])}</h2><p data-not-found-field="boundary_text">{escape(t["boundary_text"])}</p></section>
@@ -7879,6 +7911,8 @@ def apply_section_label_localization() -> None:
         (SUPPLY_WISHLIST, "supply_wishlist"),
         (COLLECTOR_LABELS, "guardian_keepsakes"),
         (KEEPSAKES_PAGE, "guardian_keepsake_hall"),
+        (KEEPSAKE_RITUAL, "keepsake_ritual_route"),
+        (REPAIR_PLAN, "seven_day_heart_plan"),
         (ABOUT_GARDEN_PASS, "heart_garden_pass"),
         (THEORY_DOMAIN_COMPASS, "five_domain_theory_compass"),
         (ABOUT_TRUST_CHARTER, "heart_garden_trust_charter"),
@@ -7891,6 +7925,7 @@ def apply_section_label_localization() -> None:
 
     for lang in LANGS:
         LUNA_CONTENT[lang]["badge"] = SECTION_LABELS[lang]["moonlight_supply"]
+        NOT_FOUND_COPY[lang]["eyebrow"] = SECTION_LABELS[lang]["not_found_garden"]
         NOT_FOUND_COPY[lang]["return_path"] = SECTION_LABELS[lang]["return_path"]
         POLICY_COMPASS_COPY[lang]["eyebrow"] = SECTION_LABELS[lang]["safety_boundary_map"]
         POLICY_COMPASS_COPY[lang]["detail_eyebrow"] = SECTION_LABELS[lang]["full_policy_notes"]

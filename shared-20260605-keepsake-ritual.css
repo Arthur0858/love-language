@@ -1674,6 +1674,66 @@ button.secondary-btn {
   line-height: 1.18;
 }
 
+.keepsake-ritual-section {
+  background:
+    radial-gradient(circle at 86% 14%, rgba(183, 139, 69, .12), transparent 30%),
+    linear-gradient(180deg, #fffaf6, #fff);
+}
+
+.keepsake-ritual-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.keepsake-ritual-card {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(219, 195, 180, .9);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(249, 243, 236, .82)),
+    #fff;
+  box-shadow: 0 12px 30px rgba(76, 42, 43, .06);
+}
+
+.keepsake-ritual-card span {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 999px;
+  background: #fff2e3;
+  color: var(--gold);
+  font-weight: 900;
+  box-shadow: inset 0 0 0 1px rgba(183, 139, 69, .22);
+}
+
+.keepsake-ritual-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.18;
+}
+
+.keepsake-ritual-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.keepsake-ritual-card a {
+  color: var(--rose);
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .keepsake-resume-card {
   display: grid;
   grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
@@ -3516,6 +3576,7 @@ button.secondary-btn {
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-shelf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .keepsake-ritual-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-resume-card { grid-template-columns: minmax(120px, 170px) minmax(0, 1fr); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
@@ -4240,6 +4301,31 @@ button.secondary-btn {
     flex-basis: 100%;
     padding: 10px 12px;
     font-size: .84rem;
+  }
+
+  .keepsake-ritual-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .keepsake-ritual-card {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .keepsake-ritual-card span {
+    width: 34px;
+    height: 34px;
+  }
+
+  .keepsake-ritual-card h3 {
+    font-size: 1.04rem;
+  }
+
+  .keepsake-ritual-card p {
+    font-size: .9rem;
+    line-height: 1.5;
   }
 
   .keepsake-use-grid article {

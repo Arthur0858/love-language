@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-policy-map"
+ASSET_VERSION = "20260605-keepsake-ritual"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2029,6 +2029,65 @@ KEEPSAKES_PAGE = {
 }
 
 
+KEEPSAKE_RITUAL = {
+    "zh": {
+        "eyebrow": "SAVE · BLESS · RETURN",
+        "title": "收藏儀式路線",
+        "intro": "收藏卡不是終點，而是一張可回訪的心語通行證。把它放進日常前，先完成四個輕量步驟。",
+        "steps": [
+            ("保存身分", "選一張最像你的守護者卡，讓測驗結果成為可回看的身分標記。", "查看五張卡", "#keepsake-card-iris"),
+            ("寫下一句心語", "把今天最想被理解的一句話寫進日記，避免只丟出結果讓對方猜。", "填入修復計畫", "repair-plan"),
+            ("分享前補上界線", "傳給伴侶或發限動前，加上一句：這是我的入口，不是你的考卷。", "閱讀關係邊界", "about"),
+            ("回到補給任務", "收藏後回到對應補給路線，完成一個免費任務，再決定是否需要書卷或 Luna。", "前往補給站", "resources"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SAVE · BLESS · RETURN",
+        "title": "Keepsake ritual route",
+        "intro": "A card is not the endpoint. It is a heart-language pass you can return to, after four light steps.",
+        "steps": [
+            ("Save the identity", "Choose the guardian card that feels closest to you, so the result becomes a revisitable identity mark.", "View cards", "#keepsake-card-iris"),
+            ("Write one line", "Put the sentence you most want understood into a journal instead of making the result do all the work.", "Use repair plan", "repair-plan"),
+            ("Add a boundary", "Before sending or posting, add: this is my doorway, not your exam.", "Read boundaries", "about"),
+            ("Return to supplies", "After saving, go back to the matching supply route, do one free task, then decide whether a book or Luna helps.", "Open supplies", "resources"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SAVE · BLESS · RETURN",
+        "title": "コレクション儀式ルート",
+        "intro": "カードは終点ではなく、戻ってこられる心語の通行証です。日常に置く前に、四つの軽い手順を通します。",
+        "steps": [
+            ("身分を保存", "一番自分に近い守護者カードを選び、結果を見返せる身分の印にします。", "五枚を見る", "#keepsake-card-iris"),
+            ("一文を書く", "理解してほしい一文を日記に書き、結果だけを相手に渡して推測させません。", "修復プランへ", "repair-plan"),
+            ("境界を添える", "送る前に、これは私の入口であって、あなたへの試験ではない、と一言添えます。", "境界を読む", "about"),
+            ("補給へ戻る", "保存したら対応する補給ルートへ戻り、無料課題を一つ行ってから本や Luna を選びます。", "補給へ", "resources"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SAVE · BLESS · RETURN",
+        "title": "소장 의식 루트",
+        "intro": "카드는 끝이 아니라 다시 돌아올 수 있는 마음 언어 통행증입니다. 일상에 두기 전 네 단계를 가볍게 지나가세요.",
+        "steps": [
+            ("정체성 저장", "가장 나다운 수호자 카드를 골라 결과를 다시 볼 수 있는 정체성 표식으로 만듭니다.", "카드 보기", "#keepsake-card-iris"),
+            ("한 줄 쓰기", "가장 이해받고 싶은 문장을 일기에 적어 결과만 던지고 상대가 맞히게 하지 않습니다.", "회복 계획 쓰기", "repair-plan"),
+            ("경계 덧붙이기", "보내거나 올리기 전에 덧붙이세요. 이것은 나의 입구이지 당신의 시험지가 아니야.", "경계 읽기", "about"),
+            ("보급으로 복귀", "저장 후 맞는 보급 루트로 돌아가 무료 과제를 하나 하고 책이나 Luna가 필요한지 정하세요.", "보급 열기", "resources"),
+        ],
+    },
+    "es": {
+        "eyebrow": "SAVE · BLESS · RETURN",
+        "title": "Ruta ritual del recuerdo",
+        "intro": "La tarjeta no es el final. Es un pase de lenguaje del corazón al que puedes volver después de cuatro pasos ligeros.",
+        "steps": [
+            ("Guardar identidad", "Elige la tarjeta que más se parece a ti para que el resultado sea una marca revisitable.", "Ver tarjetas", "#keepsake-card-iris"),
+            ("Escribir una línea", "Lleva al diario la frase que más quieres que se entienda, en vez de hacer que el resultado cargue todo.", "Usar plan", "repair-plan"),
+            ("Añadir límite", "Antes de enviar o publicar, añade: esta es mi puerta, no tu examen.", "Leer límites", "about"),
+            ("Volver a recursos", "Después de guardar, vuelve a la ruta de suministro, haz una tarea gratuita y decide si un libro o Luna ayuda.", "Abrir recursos", "resources"),
+        ],
+    },
+}
+
+
 REPAIR_PLAN = {
     "zh": {
         "eyebrow": "7-DAY HEART-LANGUAGE PLAN",
@@ -3744,6 +3803,35 @@ def keepsake_shelf_section(lang: str) -> str:
 """
 
 
+def keepsake_ritual_section(lang: str) -> str:
+    labels = KEEPSAKE_RITUAL[lang]
+    cards = []
+    for idx, (title, desc, action, target) in enumerate(labels["steps"], start=1):
+        href = target if target.startswith("#") else lang_url(lang, target)
+        cards.append(f"""
+<article class="keepsake-ritual-card">
+  <span>{idx}</span>
+  <div>
+    <h3>{escape(title)}</h3>
+    <p>{escape(desc)}</p>
+    <a href="{href}">{escape(action)}</a>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section keepsake-ritual-section" data-keepsake-ritual>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">{escape(labels["eyebrow"])}</p>
+      <h2>{escape(labels["title"])}</h2>
+    </div>
+  </div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="keepsake-ritual-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def keepsake_resume_script(lang: str) -> str:
     data = quiz_payload(lang)
     return f"""
@@ -3830,6 +3918,7 @@ def keepsakes_page(lang: str) -> None:
 </section>
 <section class="section keepsake-personal-resume" data-keepsake-saved hidden aria-live="polite"></section>
 {keepsake_shelf_section(lang)}
+{keepsake_ritual_section(lang)}
 {collector_section(lang)}
 <section class="section keepsake-use-section">
   <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>

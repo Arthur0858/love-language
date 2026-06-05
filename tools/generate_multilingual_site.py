@@ -6123,6 +6123,9 @@ def quiz_script(lang: str) -> str:
     resultBox.scrollIntoView({{ behavior: scrollBehavior, block: 'start' }});
   }}
   function startQuiz() {{
+    localStorage.removeItem(storageKey);
+    localStorage.removeItem(sharedStorageKey);
+    renderSavedResult();
     preloadResultImages();
     current = 0;
     selected = null;

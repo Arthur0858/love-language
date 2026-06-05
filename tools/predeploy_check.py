@@ -130,12 +130,14 @@ def main() -> int:
             run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
             run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
             run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
+            run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)
         else:
             with local_preview_server() as base_url:
                 env["BASE_URL"] = base_url
                 run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
                 run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
                 run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
+                run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)
 
     print("predeploy_checks=ok", flush=True)
     return 0

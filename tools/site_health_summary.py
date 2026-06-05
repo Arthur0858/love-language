@@ -22,6 +22,7 @@ CHECKS = [
     ("runtime_performance_smoke", ["node", "tools/runtime_performance_smoke.mjs"], 120, True),
     ("tap_target_smoke", ["node", "tools/tap_target_smoke.mjs"], 120, True),
     ("contrast_smoke", ["node", "tools/contrast_smoke.mjs"], 120, True),
+    ("user_preferences_smoke", ["node", "tools/user_preferences_smoke.mjs"], 120, True),
 ]
 
 
@@ -87,6 +88,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "runtime_performance_issues",
         "tap_target_issues",
         "contrast_issues",
+        "user_preference_issues",
         "deploy_manifest_issues",
         "public_deploy_issues",
         "public_sitemap_issues",
@@ -111,6 +113,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "tap_targets_checked",
         "contrast_pages_checked",
         "contrast_text_nodes_checked",
+        "user_preference_checks",
         "image_assets_checked",
         "priority_images_checked",
         "image_preloads_checked",

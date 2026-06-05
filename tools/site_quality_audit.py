@@ -104,6 +104,13 @@ FORBIDDEN_NON_EN_UNIVERSE_LABELS = {
     "WEEK ROUTE",
     "YOUR NIGHT SUPPLY",
 }
+POLICY_UPDATED_LABELS = {
+    "zh": "更新日期:",
+    "en": "Updated:",
+    "ja": "更新日:",
+    "ko": "업데이트:",
+    "es": "Actualización:",
+}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 MAX_H2_TEXT_LENGTH = 72
@@ -1269,7 +1276,7 @@ def parse_ads_txt() -> tuple[list[str], Counter]:
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
-    for _lang, prefix in LOCALE_PREFIXES.items():
+    for lang, prefix in LOCALE_PREFIXES.items():
         for slug in POLICY_PAGE_SLUGS:
             path = ROOT / (f"{prefix}/{slug}/index.html" if prefix else f"{slug}/index.html")
             parser = parsers.get(path)
@@ -1296,6 +1303,14 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
             missing_hrefs = sorted(required_hrefs.difference(page_hrefs))
             if missing_hrefs:
                 issues.append(f"{path}: {slug} trust hero actions missing hrefs {', '.join(missing_hrefs)}")
+            if slug in {"privacy", "terms"}:
+                expected_updated_label = POLICY_UPDATED_LABELS[lang]
+                visible_text = parser.visible_text()
+                if expected_updated_label not in visible_text:
+                    issues.append(f"{path}: policy page missing localized updated label {expected_updated_label!r}")
+                if lang != "en" and "Updated:" in visible_text:
+                    issues.append(f"{path}: non-English policy page contains hard-coded Updated: label")
+                stats["policy_updated_labels_checked"] += 1
             if CONTACT_EMAIL not in parser.source:
                 issues.append(f"{path}: policy page missing contact email {CONTACT_EMAIL}")
             for forbidden in FORBIDDEN_CONTACT_SNIPPETS:
@@ -2443,6 +2458,7 @@ def main() -> int:
     print(f"ads_txt_records={stats['ads_txt_records']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
+    print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")
     print(f"mailto_links={stats['mailto_links']}")
     print(f"anchor_accessible_names={stats['anchor_accessible_names']}")
     print(f"versioned_static_assets={stats['versioned_static_assets']}")

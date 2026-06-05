@@ -112,6 +112,7 @@ LANGS = {
         "primary_nav": "主要導覽",
         "language_menu": "語言選單",
         "breadcrumb_label": "頁面路徑",
+        "updated_label": "更新日期",
         "boundary": "內容邊界",
         "boundary_text": "LoveTypes 的守護者與心語庭園是自我理解與關係溝通的隱喻工具，不提供心理諮商、醫療建議、法律建議或個別關係診斷。若你正面臨暴力、控制、創傷或高風險處境，請先離開高風險場域，尋求可信任的人與專業支援。",
         "home_title": "LoveTypes｜五種愛之語測驗與關係溝通指南",
@@ -149,6 +150,7 @@ LANGS = {
         "primary_nav": "Primary navigation",
         "language_menu": "Language menu",
         "breadcrumb_label": "Breadcrumb",
+        "updated_label": "Updated",
         "boundary": "Editorial boundary",
         "boundary_text": "The LoveTypes guardians and Heart Garden are metaphor tools for self-reflection and relationship communication. They are not therapy, medical advice, legal advice, or a relationship diagnosis. If you are facing violence, coercive control, trauma, or urgent risk, seek trusted local and professional support first.",
         "home_title": "LoveTypes | Love Language Quiz and Relationship Guides",
@@ -186,6 +188,7 @@ LANGS = {
         "primary_nav": "主要ナビゲーション",
         "language_menu": "言語メニュー",
         "breadcrumb_label": "パンくずリスト",
+        "updated_label": "更新日",
         "boundary": "内容の範囲",
         "boundary_text": "LoveTypes の守護者と心語の庭は、自己理解と関係コミュニケーションのための比喩ツールです。心理療法、医療助言、法律助言、個別の関係診断ではありません。暴力、支配、トラウマ、緊急の危険がある場合は、まず信頼できる人や専門機関に相談してください。",
         "home_title": "LoveTypes｜愛の言語診断と関係コミュニケーションガイド",
@@ -223,6 +226,7 @@ LANGS = {
         "primary_nav": "주요 탐색",
         "language_menu": "언어 메뉴",
         "breadcrumb_label": "이동 경로",
+        "updated_label": "업데이트",
         "boundary": "콘텐츠 범위",
         "boundary_text": "LoveTypes의 수호자와 마음의 정원은 자기 이해와 관계 대화를 위한 은유적 도구입니다. 심리상담, 의료 조언, 법률 조언, 개별 관계 진단을 제공하지 않습니다. 폭력, 통제, 트라우마, 긴급 위험이 있다면 먼저 신뢰할 수 있는 사람과 전문 기관의 도움을 받으세요.",
         "home_title": "LoveTypes｜사랑의 언어 테스트와 관계 대화 가이드",
@@ -260,6 +264,7 @@ LANGS = {
         "primary_nav": "Navegación principal",
         "language_menu": "Menú de idioma",
         "breadcrumb_label": "Ruta de navegación",
+        "updated_label": "Actualización",
         "boundary": "Límite editorial",
         "boundary_text": "Las guardianas de LoveTypes y el Jardín del Corazón son herramientas metafóricas para la autorreflexión y la comunicación relacional. No ofrecen terapia, consejo médico, consejo legal ni diagnóstico individual. Si enfrentas violencia, control, trauma o riesgo urgente, busca primero apoyo profesional y personas de confianza.",
         "home_title": "LoveTypes | Test de lenguajes del amor y guías de relación",
@@ -7535,7 +7540,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "contact":
         extra = '<p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p>'
     if slug in {"privacy", "terms"}:
-        extra = f"<p><strong>Updated:</strong> {UPDATED}</p>"
+        extra = f"<p><strong>{escape(t['updated_label'])}:</strong> {UPDATED}</p>"
     if slug in {"contact", "privacy", "terms"}:
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
         contact_requests = contact_request_section(lang) if slug == "contact" else ""

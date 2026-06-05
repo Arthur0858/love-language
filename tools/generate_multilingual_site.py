@@ -3271,31 +3271,31 @@ SITE_COPY = {
         "guardian_use": "{name}是心語庭園裡的一扇門，不是固定身份。你可以用這位守護者說明什麼讓你感到安全、哪一種錯頻最容易刺痛你，以及哪一個小行動能讓關心更容易被你收到。",
         "editorial": "每一個 LoveTypes 頁面都先從一個真實關係問題出發，再把問題帶回五種愛之語、心語庭園的守護者隱喻，以及讀者不需要註冊帳號也能嘗試的小練習。我們維持反思式語氣，而不是診斷式語氣；當頁面太薄、太重複，或太偏向導流而不是讀者價值時，就會重新整理，讓每盞燈都能指向實際修復。",
         "disclosure": "LoveTypes 會在相關頁面揭露流量分析、聯盟連結或廣告資訊。旅人補給頁可能包含聯盟連結；若你透過這些連結購買，本站可能獲得少量佣金，但不影響你的購買價格。網站仍保留清楚的所有權、聯絡、sitemap 與政策資訊，方便讀者與搜尋/廣告審核系統確認這座心語庭園的來源與邊界。",
-        "contact": "若要回報內容修正、隱私問題、合作疑慮或壞頁面，請寄到 <a href=\"mailto:contact@lovetypes.tw\">contact@lovetypes.tw</a> 或使用聯絡頁。有效回報最好附上頁面網址、裝置、瀏覽器，以及你認為需要重新點亮或修復的句子或段落。",
+        "contact": "若要回報內容修正、隱私問題、合作疑慮或壞頁面，請使用 <a href=\"/contact/#site-repair-report\">聯絡頁修復回報入口</a>。有效回報最好附上頁面網址、裝置、瀏覽器，以及你認為需要重新點亮或修復的句子或段落。",
     },
     "en": {
         "guardian_use": "{name} is a doorway in the Heart Garden, not a fixed identity. Use this guardian to describe what helps you feel safe, which misfrequency hurts most, and what small action would make care easier to receive.",
         "editorial": "Every LoveTypes page begins with a real relationship question, then brings it back to the five love languages, the Heart Garden guardian metaphor, and a small exercise a reader can try without an account. We keep the tone reflective rather than diagnostic; when a page is thin, repetitive, or too promotional, we revise it so every lamp points toward practical repair.",
         "disclosure": "LoveTypes discloses measurement, affiliate links, or advertising information where those services are used. The Resources page may contain affiliate links; if you purchase through them, this site may earn a small commission at no extra cost to you. Clear ownership, contact, sitemap, and policy information remain available so readers and crawlers can understand the source and boundary of this Heart Garden.",
-        "contact": "For content corrections, privacy questions, partnership concerns, or broken-page reports, contact <a href=\"mailto:contact@lovetypes.tw\">contact@lovetypes.tw</a> or use the contact page. Helpful reports include the page URL, device, browser, and the sentence or section you believe should be relit or repaired.",
+        "contact": "For content corrections, privacy questions, partnership concerns, or broken-page reports, use the <a href=\"/en/contact/#site-repair-report\">site repair report route</a>. Helpful reports include the page URL, device, browser, and the sentence or section you believe should be relit or repaired.",
     },
     "ja": {
         "guardian_use": "{name} は心語の庭にある一つの扉であり、固定された身分ではありません。この守護者を使って、何が安心につながるのか、どのすれ違いがいちばん痛むのか、どんな小さな行動なら思いやりを受け取りやすいのかを説明できます。",
         "editorial": "LoveTypes の各ページは、実際の関係で起こる問いから始まり、五つの愛の言語、心語の庭の守護者の比喩、そして登録なしで試せる小さな練習へつなげます。診断ではなく内省の語り口を保ち、内容が薄い、重複している、読者価値より誘導が強いと判断したページは、実際の修復に向かう灯りになるよう更新します。",
         "disclosure": "LoveTypes では、利用しているページでアクセス解析、アフィリエイトリンク、広告に関する情報を開示します。リソースページにはアフィリエイトリンクが含まれる場合があり、購入時に価格は変わりませんが、当サイトに少額の報酬が入ることがあります。所有者情報、連絡先、サイトマップ、ポリシー情報も確認できるようにしています。",
-        "contact": "内容修正、プライバシー、提携、ページ不具合に関する連絡は <a href=\"mailto:contact@lovetypes.tw\">contact@lovetypes.tw</a> または連絡ページからお願いします。ページ URL、端末、ブラウザ、もう一度灯すべき、または修復すべき文や段落があると確認しやすくなります。",
+        "contact": "内容修正、プライバシー、提携、ページ不具合に関する連絡は <a href=\"/ja/contact/#site-repair-report\">サイト修復の報告入口</a> からお願いします。ページ URL、端末、ブラウザ、もう一度灯すべき、または修復すべき文や段落があると確認しやすくなります。",
     },
     "ko": {
         "guardian_use": "{name}는 마음의 정원에 있는 하나의 문이지 고정된 정체성이 아닙니다. 이 수호자를 통해 무엇이 나를 안전하게 하는지, 어떤 어긋남이 가장 아픈지, 어떤 작은 행동이 배려를 더 쉽게 받게 하는지 말할 수 있습니다.",
         "editorial": "LoveTypes의 각 페이지는 실제 관계 질문에서 시작해 다섯 가지 사랑의 언어, 마음의 정원 수호자 은유, 계정 없이도 시도할 수 있는 작은 연습으로 이어집니다. 진단이 아니라 성찰의 어조를 유지하며, 내용이 얇거나 반복적이거나 독자 가치보다 홍보가 강한 페이지는 실제 회복을 향한 등불이 되도록 다시 정리합니다.",
         "disclosure": "LoveTypes는 해당 서비스가 사용되는 페이지에서 분석, 제휴 링크, 광고 관련 정보를 고지합니다. 자료 페이지에는 제휴 링크가 포함될 수 있으며, 이를 통해 구매하면 구매 가격은 변하지 않지만 사이트가 소정의 수수료를 받을 수 있습니다. 소유권, 연락처, 사이트맵, 정책 정보도 계속 확인할 수 있습니다.",
-        "contact": "콘텐츠 수정, 개인정보, 협업 문의, 깨진 페이지 신고는 <a href=\"mailto:contact@lovetypes.tw\">contact@lovetypes.tw</a> 또는 연락 페이지로 보내 주세요. 페이지 URL, 기기, 브라우저, 다시 켜거나 수리해야 할 문장이나 단락을 함께 보내면 확인이 빠릅니다.",
+        "contact": "콘텐츠 수정, 개인정보, 협업 문의, 깨진 페이지 신고는 <a href=\"/ko/contact/#site-repair-report\">사이트 수리 제보 입구</a>로 보내 주세요. 페이지 URL, 기기, 브라우저, 다시 켜거나 수리해야 할 문장이나 단락을 함께 보내면 확인이 빠릅니다.",
     },
     "es": {
         "guardian_use": "{name} es una puerta del Jardín del Corazón, no una identidad fija. Puedes usar esta guardiana para explicar qué te ayuda a sentir seguridad, qué desajuste te duele más y qué pequeña acción vuelve el cuidado más fácil de recibir.",
         "editorial": "Cada página de LoveTypes empieza con una pregunta real de relación y la lleva de vuelta a los cinco lenguajes del amor, la metáfora de las guardianas del Jardín del Corazón y un ejercicio pequeño que la persona puede probar sin crear una cuenta. Mantenemos un tono reflexivo, no diagnóstico, y revisamos las páginas demasiado delgadas, repetitivas o promocionales para que cada luz apunte a una reparación práctica.",
         "disclosure": "LoveTypes divulga información sobre medición, enlaces afiliados o publicidad en las páginas donde se usan esos servicios. La página de Recursos puede contener enlaces afiliados; si compras a través de ellos, el sitio puede recibir una pequeña comisión sin cambiar tu precio. La propiedad, contacto, sitemap y políticas siguen disponibles para explicar el origen y los límites de este Jardín del Corazón.",
-        "contact": "Para correcciones de contenido, privacidad, colaboraciones o páginas rotas, escribe a <a href=\"mailto:contact@lovetypes.tw\">contact@lovetypes.tw</a> o usa la página de contacto. Un reporte útil incluye URL, dispositivo, navegador y la frase o sección que debería volver a encenderse o repararse.",
+        "contact": "Para correcciones de contenido, privacidad, colaboraciones o páginas rotas, usa la <a href=\"/es/contact/#site-repair-report\">ruta de reporte de reparación</a>. Un reporte útil incluye URL, dispositivo, navegador y la frase o sección que debería volver a encenderse o repararse.",
     },
 }
 

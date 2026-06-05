@@ -7124,6 +7124,11 @@ def write_redirects() -> None:
         "/images/characters/vivian.webp /assets/lovetypes/guardians/vivian.webp 301",
         "/images/characters/claire.webp /assets/lovetypes/guardians/claire.webp 301",
         "/images/characters/dora.webp /assets/lovetypes/guardians/dora.webp 301",
+        "/assets/lovetypes/share/iris-story.webp /assets/lovetypes/share/iris-story-zh.webp 301",
+        "/assets/lovetypes/share/noah-story.webp /assets/lovetypes/share/noah-story-zh.webp 301",
+        "/assets/lovetypes/share/vivian-story.webp /assets/lovetypes/share/vivian-story-zh.webp 301",
+        "/assets/lovetypes/share/claire-story.webp /assets/lovetypes/share/claire-story-zh.webp 301",
+        "/assets/lovetypes/share/dora-story.webp /assets/lovetypes/share/dora-story-zh.webp 301",
     ]
     redirect_lines += [
         f"/{cfg['prefix']}/luna/ /{cfg['prefix']}/luna-yoga-music/ 301"

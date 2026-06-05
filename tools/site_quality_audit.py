@@ -1277,6 +1277,25 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                 issues.append(f"{path}: missing {slug} policy page")
                 continue
             stats["policy_pages"] += 1
+            hero_action_count = parser.source.count(f'data-trust-hero-actions="{slug}"')
+            if hero_action_count != 1:
+                issues.append(f"{path}: expected one {slug} trust hero action cluster, found {hero_action_count}")
+            else:
+                stats["trust_hero_action_pages"] += 1
+            expected_keys = {"contact": ("luna-request", "site-repair", "map")}.get(slug, ("site-repair", "map", "about"))
+            for key in expected_keys:
+                if f'data-trust-hero-link="{key}"' not in parser.source:
+                    issues.append(f"{path}: {slug} trust hero actions missing {key} link")
+            locale_path = lambda value: f"/{prefix}/{value}/" if prefix else f"/{value}/"
+            required_hrefs = {
+                "contact": {"#luna-supply-request", "#site-repair-report", locale_path("garden-map")},
+                "privacy": {locale_path("contact") + "#site-repair-report", locale_path("garden-map"), locale_path("about")},
+                "terms": {locale_path("contact") + "#site-repair-report", locale_path("garden-map"), locale_path("about")},
+            }[slug]
+            page_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            missing_hrefs = sorted(required_hrefs.difference(page_hrefs))
+            if missing_hrefs:
+                issues.append(f"{path}: {slug} trust hero actions missing hrefs {', '.join(missing_hrefs)}")
             if CONTACT_EMAIL not in parser.source:
                 issues.append(f"{path}: policy page missing contact email {CONTACT_EMAIL}")
             for forbidden in FORBIDDEN_CONTACT_SNIPPETS:
@@ -1766,6 +1785,14 @@ def main() -> int:
                 issues.append(f"{page}: expected one #trust-action-routes target, found {route_count}")
             if is_about_page(page):
                 stats["about_garden_pass_pages"] += 1
+                about_hero_action_count = parser.source.count('data-trust-hero-actions="about"')
+                if about_hero_action_count != 1:
+                    issues.append(f"{page}: expected one about trust hero action cluster, found {about_hero_action_count}")
+                else:
+                    stats["trust_hero_action_pages"] += 1
+                for link_key in ("quiz", "guardians", "theory"):
+                    if f'data-trust-hero-link="{link_key}"' not in parser.source:
+                        issues.append(f"{page}: about trust hero actions missing {link_key} link")
                 pass_section_count = parser.source.count("data-about-garden-pass")
                 pass_card_count = parser.source.count('class="garden-pass-card"')
                 if pass_section_count != 1:
@@ -1789,6 +1816,7 @@ def main() -> int:
                 required_trust_hrefs.update({
                     lang_url_for_page(page, "guides"),
                     lang_url_for_page(page, "contact"),
+                    lang_url_for_page(page, "theory"),
                 })
             else:
                 required_trust_hrefs.update({
@@ -2366,6 +2394,7 @@ def main() -> int:
     print(f"character_result_resume_pages={stats['character_result_resume_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
+    print(f"trust_hero_action_pages={stats['trust_hero_action_pages']}")
     print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")

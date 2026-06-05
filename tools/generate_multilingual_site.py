@@ -3841,6 +3841,36 @@ def policy_contact_route(lang: str, slug: str) -> str:
 """
 
 
+def trust_hero_actions(lang: str, slug: str) -> str:
+    t = LANGS[lang]
+    if slug == "about":
+        actions = [
+            ("primary-btn", "quiz", lang_url(lang) + "#quiz-section", t["start"]),
+            ("secondary-btn", "guardians", lang_url(lang, "characters"), t["guardians"]),
+            ("secondary-btn", "theory", lang_url(lang, "theory"), t["theory"]),
+        ]
+    elif slug == "contact":
+        request = CONTACT_REQUESTS[lang]
+        repair = CONTACT_REPAIR_REPORTS[lang]
+        actions = [
+            ("primary-btn", "luna-request", "#luna-supply-request", request["cta"]),
+            ("secondary-btn", "site-repair", "#site-repair-report", repair["cta"]),
+            ("secondary-btn", "map", lang_url(lang, "garden-map"), t["map"]),
+        ]
+    else:
+        copy = POLICY_CONTACT_CTA[lang]
+        actions = [
+            ("primary-btn", "site-repair", lang_url(lang, "contact") + "#site-repair-report", copy["cta"]),
+            ("secondary-btn", "map", lang_url(lang, "garden-map"), t["map"]),
+            ("secondary-btn", "about", lang_url(lang, "about"), t["about"]),
+        ]
+    links = "".join(
+        f'<a class="{button_class}" href="{href}" data-trust-hero-link="{escape(key)}">{escape(label)}</a>'
+        for button_class, key, href, label in actions
+    )
+    return f'<div class="hero-actions" data-trust-hero-actions="{escape(slug)}">{links}</div>'
+
+
 def page_path(lang: str, path: str = "") -> Path:
     prefix = LANGS[lang]["prefix"]
     parts = []
@@ -7466,7 +7496,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "about":
         about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{trust_hero_actions(lang, slug)}</section>
 {about_garden_pass(lang)}
 <section class="section article-body standalone">
   {about_items}
@@ -7512,7 +7542,7 @@ def simple_page(lang: str, slug: str) -> None:
         policy_contact = policy_contact_route(lang, slug)
         policy_contact_markup = f"{policy_contact}\n" if policy_contact else ""
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
+<section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{trust_hero_actions(lang, slug)}{extra}</section>
 {contact_requests}
 {policy_compass_section(lang, slug)}
 {policy_detail_section(lang, slug)}

@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-supply-resume"
+ASSET_VERSION = "20260605-result-portraits"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -66,8 +66,11 @@ IMAGE_DIMENSIONS = {
     "/assets/lovetypes/guardians/claire.webp": (720, 1007),
     "/assets/lovetypes/guardians/dora.webp": (736, 1007),
     "/assets/lovetypes/guardians/iris.webp": (966, 1024),
+    "/assets/lovetypes/guardians/iris-mobile.webp": (640, 678),
     "/assets/lovetypes/guardians/noah.webp": (1066, 1024),
+    "/assets/lovetypes/guardians/noah-mobile.webp": (460, 442),
     "/assets/lovetypes/guardians/vivian.webp": (823, 1024),
+    "/assets/lovetypes/guardians/vivian-mobile.webp": (430, 535),
     "/assets/lovetypes/props/affirmation-feather-pen.webp": (285, 235),
     "/assets/lovetypes/props/gifts-ribboned-gift-box.webp": (215, 190),
     "/assets/lovetypes/props/quality-time-lantern.webp": (100, 195),
@@ -3519,6 +3522,10 @@ def guardian_story_image(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
 
+def guardian_result_image(slug: str, fallback: str) -> str:
+    return fallback
+
+
 def starter_kit_payload(lang: str, supply_url: str = "#supply-routes") -> dict:
     labels = STARTER_KIT[lang]
     steps = []
@@ -3642,7 +3649,7 @@ def keepsake_resume_script(lang: str) -> str:
           <a class="primary-btn" href="${{result.planUrl}}" data-keepsake-plan>${{quiz.labels.saved_plan}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
-          <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+          <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
           <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
           <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>
         </div>
@@ -4022,6 +4029,8 @@ def quiz_payload(lang: str) -> str:
         route = supply_route(lang, meta["slug"])
         resource_url = lang_url(lang, "resources") + f"#supply-{meta['slug']}"
         image_width, image_height = IMAGE_DIMENSIONS.get(guardian["asset"], ("", ""))
+        result_image = guardian_result_image(meta["slug"], guardian["asset"])
+        result_image_width, result_image_height = IMAGE_DIMENSIONS.get(result_image, (image_width, image_height))
         story_image = guardian_story_image(lang, meta["slug"])
         story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
         results[key] = {
@@ -4031,6 +4040,9 @@ def quiz_payload(lang: str) -> str:
             "image": guardian["asset"],
             "imageWidth": image_width,
             "imageHeight": image_height,
+            "resultImage": result_image,
+            "resultImageWidth": result_image_width,
+            "resultImageHeight": result_image_height,
             "color": meta["color"],
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
@@ -4094,18 +4106,29 @@ def quiz_script(lang: str) -> str:
   let current = 0;
   let selected = null;
   const answers = [];
-  const preloadedResultImages = new Set();
+  const preloadedResultImages = new Map();
 
   function show(el) {{ el.hidden = false; }}
   function hide(el) {{ el.hidden = true; }}
+  function primeResultImage(result) {{
+    if (!result.resultImage) return Promise.resolve();
+    if (preloadedResultImages.has(result.resultImage)) return preloadedResultImages.get(result.resultImage);
+    const image = new Image();
+    image.decoding = 'async';
+    image.fetchPriority = 'high';
+    image.src = result.resultImage;
+    const ready = image.decode
+      ? image.decode().catch(() => undefined)
+      : new Promise((resolve) => {{
+          image.onload = resolve;
+          image.onerror = resolve;
+        }});
+    preloadedResultImages.set(result.resultImage, ready);
+    return ready;
+  }}
   function preloadResultImages() {{
     Object.values(quiz.results).forEach((result) => {{
-      if (!result.image || preloadedResultImages.has(result.image)) return;
-      preloadedResultImages.add(result.image);
-      const image = new Image();
-      image.decoding = 'async';
-      image.fetchPriority = 'high';
-      image.src = result.image;
+      primeResultImage(result);
     }});
   }}
   function readSavedResult() {{
@@ -4177,7 +4200,7 @@ def quiz_script(lang: str) -> str:
     const savedShareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     savedBox.innerHTML = `
       <article class="quiz-saved-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+        <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{quiz.labels.saved_title}}</p>
           <h3>${{result.name}} · ${{result.type}}</h3>
@@ -4187,7 +4210,7 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
             <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
             <a href="${{result.collectorHallUrl}}" data-home-saved-keepsake>${{quiz.labels.saved_card}}</a>
-            <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.image}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+            <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
             <button type="button" data-clear-saved-result>${{quiz.labels.saved_clear}}</button>
@@ -4245,8 +4268,7 @@ def quiz_script(lang: str) -> str:
       else renderResult();
     }});
   }}
-  function renderResult() {{
-    hide(quizBox);
+  async function renderResult() {{
     const counts = Object.fromEntries(quiz.order.map((key) => [key, 0]));
     answers.forEach((key) => counts[key] += 1);
     const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
@@ -4256,11 +4278,13 @@ def quiz_script(lang: str) -> str:
     const total = answers.length || 1;
     const cardUrl = new URL(result.storyImage, location.origin).href;
     const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
+    await primeResultImage(result);
+    hide(quizBox);
     window.lovetypesLastResult = {{
       name: result.name,
       title: result.type,
       quote: result.supplyMission,
-      image: result.image,
+      image: result.resultImage,
       slug: result.slug
     }};
     try {{
@@ -4268,8 +4292,8 @@ def quiz_script(lang: str) -> str:
       localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
     }} catch (error) {{}}
     resultBox.innerHTML = `
-      <article class="quiz-result-card ritual-reveal-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="eager" decoding="async" fetchpriority="high">
+      <article class="quiz-result-card ritual-reveal-card" data-result-guardian="${{result.slug}}" style="--result-accent:${{result.color}}">
+        <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
         <div class="quiz-result-copy">
           <p class="eyebrow">${{quiz.labels.result_label}}</p>
           <h3>${{result.name}}</h3>
@@ -4454,7 +4478,7 @@ def supply_resume_script(lang: str) -> str:
   ];
   box.innerHTML = `
     <article class="quiz-saved-card supply-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="eager" decoding="async" fetchpriority="high">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       <div>
         <p class="eyebrow">${{quiz.labels.saved_title}}</p>
         <h2>${{result.supplyTitle}}</h2>
@@ -4596,7 +4620,7 @@ def guide_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="quiz-saved-card guide-resume-card" id="guide-${{result.slug}}" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
@@ -5183,7 +5207,7 @@ def repair_worksheet_script(lang: str) -> str:
     const result = quiz.results[savedResult.primaryKey];
     resumeBox.innerHTML = `
       <article class="repair-resume-card" style="--result-accent:${{result.color}}">
-        <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+        <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
           <p class="eyebrow">${{resumeTitle}}</p>
           <h2>${{result.name}} · ${{result.type}}</h2>
@@ -5353,7 +5377,7 @@ def luna_resume_script(lang: str) -> str:
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
     <article class="luna-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.image}}" alt="${{result.name}}" width="${{result.imageWidth}}" height="${{result.imageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{labels.eyebrow}}</p>
         <h2>${{labels.title}}</h2>

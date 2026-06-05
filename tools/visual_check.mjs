@@ -579,6 +579,9 @@ for (const item of quizCases) {
     const image = document.querySelector('.quiz-result-card img');
     return image && image.complete && image.naturalWidth > 0;
   });
+  await page.evaluate(() => new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  }));
   const resultName = await page.locator('.quiz-result-card h3').first().innerText().catch(() => '');
   const primaryRouteHref = await page.locator('[data-conversion-route]').first().getAttribute('href');
   const planHref = await page.locator('[data-conversion-plan]').first().getAttribute('href');

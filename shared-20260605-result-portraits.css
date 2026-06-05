@@ -2610,17 +2610,23 @@ button.secondary-btn {
   z-index: 1;
   display: block;
   width: 100%;
-  height: min(30vw, 260px);
-  min-height: 220px;
-  padding: 8px;
-  object-fit: contain;
-  object-position: center bottom;
+  height: min(32vw, 286px);
+  min-height: 236px;
+  padding: 6px;
+  object-fit: cover;
+  object-position: center 18%;
   border-radius: 8px;
   background:
-    radial-gradient(circle at 50% 22%, rgba(255, 245, 226, .86), rgba(255, 253, 249, .46) 54%, rgba(255, 255, 255, .1));
+    radial-gradient(circle at 50% 18%, rgba(255, 245, 226, .9), rgba(255, 253, 249, .42) 56%, rgba(255, 255, 255, .08));
   box-shadow: 0 14px 34px rgba(34, 20, 22, .24);
   filter: saturate(1.08) contrast(1.06);
 }
+
+.quiz-result-card[data-result-guardian="iris"] img { object-position: 68% 20%; }
+.quiz-result-card[data-result-guardian="noah"] img { object-position: 50% 18%; }
+.quiz-result-card[data-result-guardian="vivian"] img { object-position: 54% 16%; }
+.quiz-result-card[data-result-guardian="claire"] img { object-position: 50% 15%; }
+.quiz-result-card[data-result-guardian="dora"] img { object-position: 52% 14%; }
 
 .quiz-result-copy {
   position: relative;
@@ -3728,10 +3734,10 @@ button.secondary-btn {
   }
 
   .quiz-result-card img {
-    max-width: 178px;
-    width: min(100%, 198px);
-    height: 204px;
-    min-height: 204px;
+    max-width: 214px;
+    width: min(100%, 214px);
+    height: 220px;
+    min-height: 220px;
     justify-self: center;
   }
 

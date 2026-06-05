@@ -2491,6 +2491,10 @@ button.secondary-btn {
   box-shadow: 0 14px 30px color-mix(in srgb, var(--domain-accent, var(--rose)), transparent 78%);
 }
 
+.guardian-card picture {
+  display: block;
+}
+
 .guardian-card img {
   display: block;
   width: 100%;

@@ -79,7 +79,6 @@ IMAGE_DIMENSIONS = {
     "/assets/lovetypes/props/service-tool-pouch.webp": (250, 135),
     "/assets/lovetypes/props/touch-golden-hug-glow.webp": (305, 180),
     "/luna-yoga-music/images/feminine.webp": (1536, 1024),
-    "/luna-yoga-music/images/flow.webp": (1536, 1024),
     "/luna-yoga-music/images/healing.webp": (1536, 1024),
     "/luna-yoga-music/images/hero.webp": (881, 881),
     "/luna-yoga-music/images/icon.webp": (1024, 1024),
@@ -2445,6 +2444,7 @@ REPAIR_PLAN = {
 GUARDIANS = {
     "iris": {
         "asset": "/assets/lovetypes/guardians/iris.webp",
+        "mobile_asset": "/assets/lovetypes/guardians/iris-mobile.webp",
         "prop": "/assets/lovetypes/props/affirmation-feather-pen.webp",
         "zh": ("艾莉絲", "肯定的言詞", "她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。"),
         "en": ("Iris", "Words of affirmation", "In the dawn-glass garden, she guards the heart that longs to be seen clearly and gives names to words that waited too long."),
@@ -2454,6 +2454,7 @@ GUARDIANS = {
     },
     "noah": {
         "asset": "/assets/lovetypes/guardians/noah.webp",
+        "mobile_asset": "/assets/lovetypes/guardians/noah-mobile.webp",
         "prop": "/assets/lovetypes/props/quality-time-lantern.webp",
         "zh": ("諾雅", "優質的時光", "她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。"),
         "en": ("Noah", "Quality time", "Between the star-sea library and a quiet shore, she guards the kind of time where two people truly stay."),
@@ -2463,6 +2464,7 @@ GUARDIANS = {
     },
     "vivian": {
         "asset": "/assets/lovetypes/guardians/vivian.webp",
+        "mobile_asset": "/assets/lovetypes/guardians/vivian-mobile.webp",
         "prop": "/assets/lovetypes/props/gifts-ribboned-gift-box.webp",
         "zh": ("薇薇安", "接受禮物", "她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。"),
         "en": ("Vivian", "Receiving gifts", "In the moonlit memory workshop, she collects proof of being remembered and keeps meaning in details, not price."),
@@ -3478,6 +3480,23 @@ def img_tag(src: str, alt: str, class_name: str = "", lazy: bool = True, priorit
     return "<img " + " ".join(attrs) + " />"
 
 
+def responsive_img_tag(
+    src: str,
+    mobile_src: str,
+    alt: str,
+    class_name: str = "",
+    lazy: bool = True,
+    priority: bool = False,
+) -> str:
+    if mobile_src == src:
+        return img_tag(src, alt, class_name, lazy, priority)
+    mobile_width, mobile_height = IMAGE_DIMENSIONS.get(mobile_src, ("", ""))
+    source_attrs = ['media="(max-width: 720px)"', f'srcset="{mobile_src}"']
+    if mobile_width and mobile_height:
+        source_attrs += [f'width="{mobile_width}"', f'height="{mobile_height}"']
+    return f"<picture><source {' '.join(source_attrs)} />{img_tag(src, alt, class_name, lazy, priority)}</picture>"
+
+
 def json_text(value: str) -> str:
     return escape(value).replace('"', '\\"')
 
@@ -3789,9 +3808,10 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
     prop_alt = f"{name} {domain_title}"
+    guardian_image = responsive_img_tag(data["asset"], data.get("mobile_asset", data["asset"]), name)
     return f"""
 <a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
-  {img_tag(data["asset"], name)}
+  {guardian_image}
   <div>
     <span>{escape(typ)}</span>
     <h3>{escape(name)}</h3>
@@ -3810,9 +3830,10 @@ def character_link_card(lang: str, slug: str, data: dict, current_slug: str = ""
     domain = GUARDIAN_DOMAINS[slug]
     current = slug == current_slug
     attrs = 'class="guardian-card is-current" aria-current="page"' if current else 'class="guardian-card"'
+    guardian_image = responsive_img_tag(data["asset"], data.get("mobile_asset", data["asset"]), name)
     return f"""
 <a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
-  {img_tag(data["asset"], name)}
+  {guardian_image}
   <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p class="domain-title">{escape(domain_title)}</p><small>{escape(domain_cta)}</small></div>
 </a>
 """

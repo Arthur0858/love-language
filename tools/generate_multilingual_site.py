@@ -5230,6 +5230,80 @@ POLICY_CONTACT_CTA = {
 }
 
 
+NOT_FOUND_COPY = {
+    "zh": {
+        "title": "這盞燈暫時不在地圖上 | LoveTypes",
+        "desc": "LoveTypes 自訂 404 頁面，協助迷路的旅人回到測驗、守護者總覽、旅人補給或聯絡頁。",
+        "eyebrow": "404 HEART GARDEN",
+        "heading": "這盞燈暫時不在地圖上",
+        "intro": "你抵達的路徑可能已移動、改名，或還沒有被放進心語庭園。先回到一條可靠的路線，不需要在迷霧裡停太久。",
+        "safe_routes": "選一條回到庭園的路",
+        "return_path": "RETURN PATH",
+        "guardians": "查看五位守護者",
+        "home_text": "回到首頁完成 15 道心語認領儀式。",
+        "guardians_text": "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉重新找到入口。",
+        "resources_text": "前往守護者補給路線，選一個可實作的下一步。",
+        "contact_text": "如果這是壞連結，告訴我們需要修復的頁面。",
+    },
+    "en": {
+        "title": "This light is not on the map yet | LoveTypes",
+        "desc": "LoveTypes custom 404 page that guides lost travelers back to the quiz, guardians, resources, or contact route.",
+        "eyebrow": "404 HEART GARDEN",
+        "heading": "This light is not on the map yet",
+        "intro": "The path you reached may have moved, changed names, or not yet been placed in the Heart Garden. Choose a reliable route instead of staying in the fog.",
+        "safe_routes": "Choose a route back to the garden",
+        "return_path": "RETURN PATH",
+        "guardians": "View the five guardians",
+        "home_text": "Return home and complete the 15-question claiming ritual.",
+        "guardians_text": "Find your way back through Iris, Noah, Vivian, Claire, and Dora.",
+        "resources_text": "Open a guardian supply route and choose one practical next step.",
+        "contact_text": "If this is a broken link, tell us which page needs repair.",
+    },
+    "ja": {
+        "title": "この灯りはまだ地図にありません | LoveTypes",
+        "desc": "LoveTypes のカスタム 404 ページ。迷った旅人を測定、守護者、リソース、連絡ページへ案内します。",
+        "eyebrow": "404 HEART GARDEN",
+        "heading": "この灯りはまだ地図にありません",
+        "intro": "到着した道は移動したか、名前が変わったか、まだ心語庭園に置かれていない可能性があります。霧の中に留まらず、確かな道へ戻りましょう。",
+        "safe_routes": "庭園へ戻る道を選ぶ",
+        "return_path": "RETURN PATH",
+        "guardians": "五人の守護者を見る",
+        "home_text": "ホームへ戻り、15問の認領儀式を完了します。",
+        "guardians_text": "アイリス、ノア、ヴィヴィアン、クレア、ドラから入口を探します。",
+        "resources_text": "守護者の補給ルートへ進み、実行できる次の一歩を選びます。",
+        "contact_text": "壊れたリンクなら、修復が必要なページを教えてください。",
+    },
+    "ko": {
+        "title": "이 불빛은 아직 지도에 없습니다 | LoveTypes",
+        "desc": "LoveTypes 맞춤 404 페이지입니다. 길을 잃은 여행자를 테스트, 수호자, 자료, 연락 경로로 안내합니다.",
+        "eyebrow": "404 HEART GARDEN",
+        "heading": "이 불빛은 아직 지도에 없습니다",
+        "intro": "도착한 길이 이동되었거나 이름이 바뀌었거나 아직 마음 언어 정원에 놓이지 않았을 수 있습니다. 안개 속에 오래 머물지 말고 확실한 길로 돌아가세요.",
+        "safe_routes": "정원으로 돌아갈 길 선택하기",
+        "return_path": "RETURN PATH",
+        "guardians": "다섯 수호자 보기",
+        "home_text": "홈으로 돌아가 15문항 인정 의식을 완료합니다.",
+        "guardians_text": "아이리스, 노아, 비비안, 클레어, 도라를 통해 다시 입구를 찾습니다.",
+        "resources_text": "수호자 보급 루트로 이동해 실행 가능한 다음 한 걸음을 고릅니다.",
+        "contact_text": "깨진 링크라면 수리가 필요한 페이지를 알려 주세요.",
+    },
+    "es": {
+        "title": "Esta luz aún no está en el mapa | LoveTypes",
+        "desc": "Página 404 personalizada de LoveTypes para guiar a visitantes perdidos hacia el test, las guardianas, recursos o contacto.",
+        "eyebrow": "404 HEART GARDEN",
+        "heading": "Esta luz aún no está en el mapa",
+        "intro": "La ruta que abriste quizá se movió, cambió de nombre o todavía no está dentro del Jardín del Corazón. Vuelve a un camino confiable sin quedarte en la niebla.",
+        "safe_routes": "Elige una ruta para volver al jardín",
+        "return_path": "RETURN PATH",
+        "guardians": "Ver las cinco guardianas",
+        "home_text": "Volver al inicio y completar el ritual de 15 preguntas.",
+        "guardians_text": "Reencuentra la entrada con Iris, Noah, Vivian, Claire y Dora.",
+        "resources_text": "Abre una ruta de recursos de guardiana y elige un siguiente paso práctico.",
+        "contact_text": "Si es un enlace roto, dinos qué página necesita reparación.",
+    },
+}
+
+
 POLICY_COMPASS_COPY = {
     "zh": {
         "eyebrow": "SAFETY BOUNDARY MAP",
@@ -7121,33 +7195,106 @@ def write_quiz_data_assets() -> None:
 def write_404_page() -> None:
     lang = "zh"
     t = LANGS[lang]
-    title = "這盞燈暫時不在地圖上 | LoveTypes"
-    desc = "LoveTypes 自訂 404 頁面，協助迷路的旅人回到測驗、守護者總覽、旅人補給或聯絡頁。"
-    routes = [
-        (lang_url(lang), t["start"], "回到首頁完成 15 道心語認領儀式。"),
-        (lang_url(lang, "characters"), "查看五位守護者", "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉重新找到入口。"),
-        (lang_url(lang, "resources"), t["resources"], "前往守護者補給路線，選一個可實作的下一步。"),
-        (lang_url(lang, "contact"), t["contact"], "如果這是壞連結，告訴我們需要修復的頁面。"),
-    ]
+    copy = NOT_FOUND_COPY[lang]
+    title = copy["title"]
+    desc = copy["desc"]
+
+    def route_set(code: str) -> list[dict]:
+        labels = LANGS[code]
+        not_found = NOT_FOUND_COPY[code]
+        return [
+            {"key": "home", "href": lang_url(code), "label": labels["start"], "text": not_found["home_text"]},
+            {"key": "guardians", "href": lang_url(code, "characters"), "label": not_found["guardians"], "text": not_found["guardians_text"]},
+            {"key": "resources", "href": lang_url(code, "resources"), "label": labels["resources"], "text": not_found["resources_text"]},
+            {"key": "contact", "href": lang_url(code, "contact"), "label": labels["contact"], "text": not_found["contact_text"]},
+        ]
+
+    routes = route_set(lang)
+    route_payload = {
+        code: {
+            **NOT_FOUND_COPY[code],
+            "html_lang": LANGS[code]["code"],
+            "start": LANGS[code]["start"],
+            "guides": LANGS[code]["guides"],
+            "contact": LANGS[code]["contact"],
+            "boundary": LANGS[code]["boundary"],
+            "boundary_text": LANGS[code]["boundary_text"],
+            "guides_href": lang_url(code, "guides"),
+            "quiz_href": lang_url(code) + "#quiz-section",
+            "contact_href": lang_url(code, "contact"),
+            "routes": route_set(code),
+        }
+        for code in LANGS
+    }
+    copy_json = json.dumps(route_payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     cards = "".join(f"""
-<a class="content-card" href="{href}">
-  <span class="eyebrow">RETURN PATH</span>
-  <h3>{escape(label)}</h3>
-  <p>{escape(text)}</p>
+<a class="content-card" href="{route["href"]}" data-not-found-route="{route["key"]}">
+  <span class="eyebrow" data-not-found-field="return_path">{escape(copy["return_path"])}</span>
+  <h3 data-not-found-field="route_label">{escape(route["label"])}</h3>
+  <p data-not-found-field="route_text">{escape(route["text"])}</p>
 </a>
-""" for href, label, text in routes)
+""" for route in routes)
+    script = f"""
+<script type="application/json" id="not-found-copy">{copy_json}</script>
+<script>
+(() => {{
+  const el = document.getElementById('not-found-copy');
+  if (!el) return;
+  const copy = JSON.parse(el.textContent || '{{}}');
+  const segment = window.location.pathname.split('/').filter(Boolean)[0];
+  const lang = Object.prototype.hasOwnProperty.call(copy, segment) ? segment : 'zh';
+  const data = copy[lang] || copy.zh;
+  const setText = (selector, value) => {{
+    const node = document.querySelector(selector);
+    if (node && value) node.textContent = value;
+  }};
+  const setHref = (selector, value) => {{
+    const node = document.querySelector(selector);
+    if (node && value) node.setAttribute('href', value);
+  }};
+  document.documentElement.lang = data.html_lang || 'zh-TW';
+  if (data.title) document.title = data.title;
+  const description = document.querySelector('meta[name="description"]');
+  if (description && data.desc) description.setAttribute('content', data.desc);
+  setText('[data-not-found-field="eyebrow"]', data.eyebrow);
+  setText('[data-not-found-field="heading"]', data.heading);
+  setText('[data-not-found-field="intro"]', data.intro);
+  setText('[data-not-found-field="start"]', data.start);
+  setText('[data-not-found-field="guides"]', data.guides);
+  setText('[data-not-found-field="safe_routes"]', data.safe_routes);
+  setText('[data-not-found-field="contact_link"]', data.contact);
+  setText('[data-not-found-field="boundary"]', data.boundary);
+  setText('[data-not-found-field="boundary_text"]', data.boundary_text);
+  setHref('[data-not-found-field="start"]', data.quiz_href);
+  setHref('[data-not-found-field="guides"]', data.guides_href);
+  setHref('[data-not-found-field="contact_link"]', data.contact_href);
+  (data.routes || []).forEach((route) => {{
+    const card = document.querySelector(`[data-not-found-route="${{route.key}}"]`);
+    if (!card) return;
+    card.setAttribute('href', route.href);
+    const returnPath = card.querySelector('[data-not-found-field="return_path"]');
+    const label = card.querySelector('[data-not-found-field="route_label"]');
+    const text = card.querySelector('[data-not-found-field="route_text"]');
+    if (returnPath) returnPath.textContent = data.return_path;
+    if (label) label.textContent = route.label;
+    if (text) text.textContent = route.text;
+  }});
+}})();
+</script>
+"""
     body = f"""
 <section class="page-hero compact">
-  <p class="eyebrow">404 HEART GARDEN</p>
-  <h1>這盞燈暫時不在地圖上</h1>
-  <p>你抵達的路徑可能已移動、改名，或還沒有被放進心語庭園。先回到一條可靠的路線，不需要在迷霧裡停太久。</p>
-  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+  <p class="eyebrow" data-not-found-field="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h1 data-not-found-field="heading">{escape(copy["heading"])}</h1>
+  <p data-not-found-field="intro">{escape(copy["intro"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-not-found-field="start">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}" data-not-found-field="guides">{escape(t["guides"])}</a></div>
 </section>
 <section class="section">
-  <div class="section-head"><div><p class="eyebrow">SAFE ROUTES</p><h2>選一條回到庭園的路</h2></div><a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">SAFE ROUTES</p><h2 data-not-found-field="safe_routes">{escape(copy["safe_routes"])}</h2></div><a href="{lang_url(lang, "contact")}" data-not-found-field="contact_link">{escape(t["contact"])}</a></div>
   <div class="card-grid">{cards}</div>
 </section>
-<section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+<section class="section note-section"><h2 data-not-found-field="boundary">{escape(t["boundary"])}</h2><p data-not-found-field="boundary_text">{escape(t["boundary_text"])}</p></section>
+{script}
 """
     page = layout(lang, title, desc, "", body, "", "website", "/og-cover.jpg", "", robots="noindex, follow")
     write(ROOT / "404.html", page)

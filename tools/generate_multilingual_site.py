@@ -1371,6 +1371,80 @@ CONTACT_REQUESTS = {
 }
 
 
+CONTACT_REPAIR_REPORTS = {
+    "zh": {
+        "eyebrow": "GARDEN REPAIR DESK",
+        "title": "回報庭園中需要修復的地方",
+        "intro": "如果你在 LoveTypes 途中遇到斷掉的路、錯頻的翻譯、無法點開的補給，或手機版閱讀不順，請把位置寄給我們。這會直接進入下一輪網站修復清單。",
+        "items": [
+            ("頁面或測驗異常", "例如按鈕無反應、結果沒有顯示、頁面跳轉錯誤，或某個守護者入口無法開啟。"),
+            ("補給或聯盟連結問題", "例如書卷連結失效、導向不明、價格或地區資訊看起來不一致。"),
+            ("翻譯與語氣錯頻", "例如多語頁內容重複、角色語氣不一致，或某段文字不符合守護者宇宙設定。"),
+            ("手機版與無障礙", "例如文字太擠、卡片過長、焦點不清楚、圖片遮住內容，或螢幕閱讀體驗不佳。"),
+        ],
+        "note": "來信時請附上頁面網址、裝置與瀏覽器、你預期看到什麼、實際發生什麼。這個信箱處理網站修復與內容回報，不提供緊急支援或諮商替代。",
+        "cta": "回報網站修復線索",
+        "subject": "LoveTypes%20site%20repair%20report",
+    },
+    "en": {
+        "eyebrow": "GARDEN REPAIR DESK",
+        "title": "Report a place in the garden that needs repair",
+        "intro": "If a path breaks while you move through LoveTypes, send us the location. Broken pages, off-tone translations, stuck supply links, and rough mobile reading all go into the next repair pass.",
+        "items": [
+            ("Page or quiz issue", "A button does not respond, the result does not appear, navigation lands in the wrong place, or a guardian entrance will not open."),
+            ("Supply or affiliate link", "A book link is broken, the destination feels unclear, or price and regional information look inconsistent."),
+            ("Translation or tone mismatch", "A multilingual page repeats content, a guardian voice feels inconsistent, or a paragraph does not fit the guardian universe."),
+            ("Mobile and accessibility", "Text feels cramped, cards run too long, focus is unclear, images cover content, or screen-reader flow feels rough."),
+        ],
+        "note": "Please include the page URL, device and browser, what you expected, and what happened instead. This inbox handles site repair and content reports, not emergency support or counseling replacement.",
+        "cta": "Send site repair report",
+        "subject": "LoveTypes%20site%20repair%20report",
+    },
+    "ja": {
+        "eyebrow": "GARDEN REPAIR DESK",
+        "title": "庭園で修復が必要な場所を知らせる",
+        "intro": "LoveTypes を歩く途中で道が途切れたら、その場所を送ってください。壊れたページ、声のずれた翻訳、開けない補給リンク、読みにくいモバイル表示を次の修復リストに入れます。",
+        "items": [
+            ("ページや診断の不具合", "ボタンが反応しない、結果が出ない、遷移先が違う、守護者入口が開かない場合。"),
+            ("補給やアフィリエイトリンク", "本のリンク切れ、遷移先が分かりにくい、価格や地域情報が合わないように見える場合。"),
+            ("翻訳や語り口のずれ", "多言語ページの内容が重複している、守護者の声が揃っていない、世界観に合わない段落がある場合。"),
+            ("モバイルとアクセシビリティ", "文字が詰まる、カードが長すぎる、フォーカスが分かりにくい、画像が内容を隠す、読み上げの流れが悪い場合。"),
+        ],
+        "note": "ページ URL、端末とブラウザ、期待した表示、実際に起きたことを添えてください。この窓口はサイト修復と内容回報用で、緊急支援や相談支援の代替ではありません。",
+        "cta": "サイト修復を報告する",
+        "subject": "LoveTypes%20site%20repair%20report",
+    },
+    "ko": {
+        "eyebrow": "GARDEN REPAIR DESK",
+        "title": "정원이 수리해야 할 곳을 알려 주세요",
+        "intro": "LoveTypes를 지나가다 길이 끊기거나 번역의 결이 어긋나거나 보급 링크가 열리지 않거나 모바일 읽기가 불편하면 위치를 보내 주세요. 다음 수리 목록에 반영합니다.",
+        "items": [
+            ("페이지나 테스트 오류", "버튼이 반응하지 않거나 결과가 나오지 않거나 이동 경로가 잘못되거나 수호자 입구가 열리지 않을 때."),
+            ("보급 또는 제휴 링크 문제", "책 링크가 끊겼거나 목적지가 불분명하거나 가격과 지역 정보가 맞지 않아 보일 때."),
+            ("번역과 목소리의 어긋남", "다국어 페이지 내용이 반복되거나 수호자의 말투가 맞지 않거나 세계관과 맞지 않는 문장이 있을 때."),
+            ("모바일과 접근성", "글자가 답답하거나 카드가 너무 길거나 초점이 불명확하거나 이미지가 내용을 가리거나 스크린 리더 흐름이 불편할 때."),
+        ],
+        "note": "페이지 URL, 기기와 브라우저, 기대한 모습, 실제로 일어난 일을 함께 적어 주세요. 이 메일은 사이트 수리와 콘텐츠 제보용이며 긴급 지원이나 상담 대체를 제공하지 않습니다.",
+        "cta": "사이트 수리 제보 보내기",
+        "subject": "LoveTypes%20site%20repair%20report",
+    },
+    "es": {
+        "eyebrow": "GARDEN REPAIR DESK",
+        "title": "Avisa qué parte del jardín necesita reparación",
+        "intro": "Si un camino se rompe dentro de LoveTypes, envíanos la ubicación. Páginas rotas, traducciones fuera de tono, enlaces de recursos atascados y lectura móvil incómoda entran en la siguiente reparación.",
+        "items": [
+            ("Problema de página o test", "Un botón no responde, el resultado no aparece, la navegación llega a un lugar incorrecto o una entrada de guardiana no abre."),
+            ("Recurso o enlace afiliado", "Un enlace de libro está roto, el destino no queda claro o la información de precio y región parece inconsistente."),
+            ("Traducción o tono desalineado", "Una página multilingüe repite contenido, la voz de una guardiana no coincide o un párrafo no encaja con el universo."),
+            ("Móvil y accesibilidad", "El texto queda apretado, las tarjetas son demasiado largas, el foco no es claro, una imagen tapa contenido o la lectura asistida se siente difícil."),
+        ],
+        "note": "Incluye la URL, dispositivo y navegador, qué esperabas ver y qué ocurrió. Este buzón atiende reparación del sitio y reportes de contenido; no ofrece apoyo de emergencia ni sustituye terapia.",
+        "cta": "Enviar reporte de reparación",
+        "subject": "LoveTypes%20site%20repair%20report",
+    },
+}
+
+
 RESOURCE_PATHS = {
     "zh": [("先測驗", "完成 15 道心語，確認目前最需要被接收的愛之語。"), ("再讀守護者", "從結果頁進入對應角色，理解自己為什麼容易在這裡受傷。"), ("最後選補給", "依照當下狀態選擇指南、書卷或 Luna 音樂，不一次修完整座庭園。")],
     "en": [("Take the ritual", "Answer 15 prompts to see the love language you most need received now."), ("Read the guardian", "Use the result page to understand why this area can feel tender."), ("Choose supplies", "Pick a guide, book, or Luna audio for the current moment, not the whole relationship at once.")],
@@ -6782,18 +6856,33 @@ def luna_alias_page(lang: str) -> None:
 
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
-    cards = "".join(
+    repair = CONTACT_REPAIR_REPORTS[lang]
+
+    request_cards = "".join(
         f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
         for idx, (title, body) in enumerate(request["items"], 1)
+    )
+    repair_cards = "".join(
+        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
+        for idx, (title, body) in enumerate(repair["items"], 1)
     )
     return f"""
 <section class="section contact-request-section">
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
   <p class="section-intro">{escape(request["intro"])}</p>
-  <div class="contact-request-grid">{cards}</div>
+  <div class="contact-request-grid">{request_cards}</div>
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request["subject"]}">{escape(request["cta"])}</a>
+  </div>
+</section>
+<section class="section contact-request-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(repair["eyebrow"])}</p><h2>{escape(repair["title"])}</h2></div></div>
+  <p class="section-intro">{escape(repair["intro"])}</p>
+  <div class="contact-request-grid">{repair_cards}</div>
+  <div class="contact-request-note">
+    <p>{escape(repair["note"])}</p>
+    <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair["subject"]}">{escape(repair["cta"])}</a>
   </div>
 </section>
 """

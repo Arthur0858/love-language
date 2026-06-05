@@ -1,0 +1,123 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import importlib.util
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from urllib.parse import parse_qs, urljoin, urlparse
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_BASE_URL = "https://lovetypes.tw"
+CONTACT_EMAIL = "contact@lovetypes.tw"
+LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+
+
+@dataclass(frozen=True)
+class LocaleExpectation:
+    lang: str
+    path: str
+    html_lang: str
+    subjects: set[str]
+
+
+def load_module(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot import {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def normalize_base_url(value: str) -> str:
+    return value.rstrip("/") or DEFAULT_BASE_URL
+
+
+def expectations() -> list[LocaleExpectation]:
+    generator = load_module("lovetypes_generator_contact_smoke", ROOT / "tools" / "generate_multilingual_site.py")
+    return [
+        LocaleExpectation(
+            lang=lang,
+            path=f"/{prefix}/contact/" if prefix else "/contact/",
+            html_lang=generator.LANGS[lang]["code"],
+            subjects={
+                generator.CONTACT_REQUESTS[lang]["subject"],
+                generator.CONTACT_REPAIR_REPORTS[lang]["subject"],
+            },
+        )
+        for lang, prefix in LOCALE_PREFIXES.items()
+    ]
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Check public contact repair and mailto routes.")
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
+    args = parser.parse_args()
+    base_url = normalize_base_url(args.base_url)
+
+    deploy_smoke = load_module("public_deploy_smoke_contact_import", ROOT / "tools" / "public_deploy_smoke.py")
+    issues: list[str] = []
+    pages_checked = 0
+    mailto_links_checked = 0
+    contact_subjects_checked = 0
+    anchor_targets_checked = 0
+    protected_email_links_checked = 0
+
+    for item in expectations():
+        response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
+        pages_checked += 1
+        if response.status != 200:
+            issues.append(f"{item.path}: expected status 200, got {response.status}")
+            continue
+        assets = deploy_smoke.extract_head_assets(response.text)
+        if assets.html_lang != item.html_lang:
+            issues.append(f"{item.path}: expected html lang {item.html_lang}, got {assets.html_lang}")
+        for target in ("luna-supply-request", "site-repair-report"):
+            anchor_targets_checked += 1
+            if target not in assets.ids:
+                issues.append(f"{item.path}: missing #{target}")
+        mailto_subjects: set[str] = set()
+        protected_email_links = 0
+        for anchor in assets.anchors:
+            href = anchor.get("href", "")
+            parsed = urlparse(href)
+            if href.startswith("/cdn-cgi/l/email-protection"):
+                protected_email_links += 1
+                protected_email_links_checked += 1
+                continue
+            if parsed.scheme != "mailto":
+                continue
+            mailto_links_checked += 1
+            if parsed.path.lower() != CONTACT_EMAIL:
+                issues.append(f"{item.path}: mailto should use {CONTACT_EMAIL}, got {href}")
+            mailto_subjects.update(parse_qs(parsed.query).get("subject", []))
+        email_protection_active = protected_email_links >= 3 and "__cf_email__" in response.text
+        missing_subjects = sorted(item.subjects.difference(mailto_subjects))
+        if missing_subjects and not email_protection_active:
+            issues.append(f"{item.path}: missing mailto subjects {', '.join(missing_subjects)}")
+        else:
+            contact_subjects_checked += len(item.subjects)
+        visible_text = response.text
+        for subject in item.subjects:
+            if subject not in visible_text:
+                issues.append(f"{item.path}: missing visible suggested subject {subject}")
+        if not mailto_subjects and not email_protection_active:
+            issues.append(f"{item.path}: expected mailto links or Cloudflare email protection links")
+
+    print(f"public_contact_pages_checked={pages_checked}")
+    print(f"public_contact_anchor_targets_checked={anchor_targets_checked}")
+    print(f"public_contact_mailto_links_checked={mailto_links_checked}")
+    print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
+    print(f"public_contact_subjects_checked={contact_subjects_checked}")
+    print(f"public_contact_issues={len(issues)}")
+    for issue in issues:
+        print(issue)
+    return 1 if issues else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

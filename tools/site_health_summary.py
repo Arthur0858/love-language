@@ -15,22 +15,32 @@ KEY_VALUE_RE = re.compile(r"^([A-Za-z0-9_:-]+)=(.*)$")
 
 
 CHECKS = [
-    ("predeploy", [sys.executable, "tools/predeploy_check.py"]),
-    ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"]),
-    ("public_deploy_smoke", [sys.executable, "tools/public_deploy_smoke.py"]),
-    ("public_sitemap_smoke", [sys.executable, "tools/public_sitemap_smoke.py"]),
+    ("predeploy", [sys.executable, "tools/predeploy_check.py"], 180, False),
+    ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 120, False),
+    ("public_deploy_smoke", [sys.executable, "tools/public_deploy_smoke.py"], 240, True),
+    ("public_sitemap_smoke", [sys.executable, "tools/public_sitemap_smoke.py"], 240, True),
 ]
 
 
+def safe_timeout_output(error: subprocess.TimeoutExpired) -> str:
+    output = error.stdout or ""
+    if isinstance(output, bytes):
+        output = output.decode("utf-8", errors="replace")
+    return output.rstrip() + f"\ntimed_out=1\nerror=command timed out after {error.timeout} seconds\n"
+
+
 def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
-    result = subprocess.run(
-        command,
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        timeout=timeout,
-    )
+    try:
+        result = subprocess.run(
+            command,
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        return 124, safe_timeout_output(error)
     return result.returncode, result.stdout
 
 
@@ -91,6 +101,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "priority_images_checked",
         "image_preloads_checked",
         "deploy_manifest_files",
+        "timed_out",
+        "error",
     ]
     for key in important_keys:
         if key in values:
@@ -111,6 +123,17 @@ def parse_cloudflare_dry_run(output: str) -> dict[str, str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate a LoveTypes health summary from current checks.")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT), help="Markdown output path.")
+    parser.add_argument(
+        "--skip-public",
+        action="store_true",
+        help="Skip public smoke checks and only summarize local checks plus Cloudflare dry-run.",
+    )
+    parser.add_argument(
+        "--timeout-scale",
+        type=float,
+        default=1.0,
+        help="Multiplier applied to per-check timeouts. Use 0.5 for faster failure or 2 for slow networks.",
+    )
     args = parser.parse_args()
     output_path = Path(args.output)
     if not output_path.is_absolute():
@@ -137,15 +160,23 @@ def main() -> int:
     ]
 
     failed = False
-    for name, command in CHECKS:
-        code, output = run(command)
+    for name, command, timeout, is_public in CHECKS:
+        if args.skip_public and is_public:
+            print(f"site_health_step={name} status=skipped", flush=True)
+            sections.extend([f"## {name}", "", "- status: `skipped`", ""])
+            continue
+        effective_timeout = max(1, int(timeout * args.timeout_scale))
+        print(f"site_health_step={name} status=running timeout={effective_timeout}", flush=True)
+        code, output = run(command, timeout=effective_timeout)
         if name == "cloudflare_dry_run":
             values = parse_cloudflare_dry_run(output)
         else:
             values = parse_key_values(output)
+        status = check_status(code, values)
+        print(f"site_health_step={name} status={status}", flush=True)
         sections.extend(render_section(name, code, values))
         sections.append("")
-        if check_status(code, values) != "ok":
+        if status != "ok":
             failed = True
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -3529,6 +3529,19 @@ def policy_detail_section(lang: str, slug: str) -> str:
 """
 
 
+def policy_contact_route(lang: str, slug: str) -> str:
+    if slug not in {"privacy", "terms"}:
+        return ""
+    copy = POLICY_CONTACT_CTA[lang]
+    return f"""
+<section class="section article-body standalone policy-contact-route">
+  <h2>{escape(copy["title"])}</h2>
+  <p>{escape(copy["intro"])}</p>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "contact")}#site-repair-report">{escape(copy["cta"])}</a></div>
+</section>
+"""
+
+
 def page_path(lang: str, path: str = "") -> Path:
     prefix = LANGS[lang]["prefix"]
     parts = []
@@ -5184,6 +5197,35 @@ POLICY_SECTIONS = {
             ("Límite de Responsabilidad", "El sitio no reemplaza terapia, atención médica, asesoría legal, financiera ni apoyo de crisis. Toda acción basada en este contenido debe considerar el contexto real, el consentimiento de las personas involucradas y apoyo profesional cuando haga falta."),
             ("Propiedad Intelectual y Enlaces", "Los textos, personajes, imágenes y diseños de LoveTypes son activos del sitio. No los reproduzcas a gran escala sin permiso más allá de una cita razonable. Los enlaces externos y afiliados te llevan fuera del sitio, y sus compras o términos dependen de cada servicio."),
         ],
+    },
+}
+
+
+POLICY_CONTACT_CTA = {
+    "zh": {
+        "title": "需要我們修復某個角落？",
+        "intro": "如果你想要求資料修正、刪除通信紀錄、回報條款不清楚，或指出外部連結與可用性問題，請走同一個修復回報入口。",
+        "cta": "前往修復回報入口",
+    },
+    "en": {
+        "title": "Need us to repair a corner of the site?",
+        "intro": "For data corrections, deletion requests, unclear terms, external-link issues, or accessibility problems, use the same repair report route.",
+        "cta": "Open repair report route",
+    },
+    "ja": {
+        "title": "サイト内で修復が必要な場所がありますか？",
+        "intro": "データ修正、通信記録の削除依頼、規約の不明点、外部リンクや使いやすさの問題は、同じ修復報告入口から送れます。",
+        "cta": "修復報告入口へ",
+    },
+    "ko": {
+        "title": "사이트에서 수리할 곳이 있나요?",
+        "intro": "자료 수정, 통신 기록 삭제 요청, 약관의 불명확한 부분, 외부 링크나 접근성 문제는 같은 수리 제보 입구로 보낼 수 있습니다.",
+        "cta": "수리 제보 입구 열기",
+    },
+    "es": {
+        "title": "¿Necesitas que reparemos una parte del sitio?",
+        "intro": "Para correcciones de datos, solicitudes de eliminación, términos poco claros, enlaces externos o problemas de accesibilidad, usa la misma ruta de reporte.",
+        "cta": "Abrir ruta de reparación",
     },
 }
 
@@ -7010,12 +7052,14 @@ def simple_page(lang: str, slug: str) -> None:
     if slug in {"contact", "privacy", "terms"}:
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
         contact_requests = contact_request_section(lang) if slug == "contact" else ""
+        policy_contact = policy_contact_route(lang, slug)
+        policy_contact_markup = f"{policy_contact}\n" if policy_contact else ""
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{extra}</section>
 {contact_requests}
 {policy_compass_section(lang, slug)}
 {policy_detail_section(lang, slug)}
-<section class="section article-body standalone policy-boundary-note">
+{policy_contact_markup}<section class="section article-body standalone policy-boundary-note">
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
 </section>

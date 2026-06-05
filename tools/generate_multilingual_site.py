@@ -7130,6 +7130,10 @@ def write_redirects() -> None:
         "/assets/lovetypes/share/claire-story.webp /assets/lovetypes/share/claire-story-zh.webp 301",
         "/assets/lovetypes/share/dora-story.webp /assets/lovetypes/share/dora-story-zh.webp 301",
         f"/luna-yoga-music/luna.css {CSS_ASSET} 301",
+        "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp /assets/lovetypes/share/guide-toolkit-og.jpg 301",
+        "/assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden.webp 301",
+        "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp /assets/lovetypes/backgrounds/guardian-garden-mobile.webp 301",
+        "/og-cover.webp /og-cover.jpg 301",
     ]
     redirect_lines += [
         f"/{cfg['prefix']}/luna/ /{cfg['prefix']}/luna-yoga-music/ 301"

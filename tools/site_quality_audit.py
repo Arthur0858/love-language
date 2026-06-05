@@ -1465,6 +1465,13 @@ def main() -> int:
         elif parser.mains[0].get("tabindex") != "-1":
             issues.append(f"{page}: <main> should use tabindex=\"-1\" so skip links can move focus")
 
+        page_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+        footer_guardian_href = lang_url_for_page(page, "characters")
+        if footer_guardian_href in page_hrefs:
+            stats["footer_guardian_links"] += 1
+        else:
+            issues.append(f"{page}: footer missing guardian overview link {footer_guardian_href}")
+
         if is_locale_home(page):
             stats["home_quiz_entry_pages"] += 1
             journey_section_count = parser.source.count("data-home-journey")
@@ -2222,6 +2229,7 @@ def main() -> int:
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")
     print(f"primary_nav_links={stats['primary_nav_links']}")
+    print(f"footer_guardian_links={stats['footer_guardian_links']}")
     print(f"language_menu_links={stats['language_menu_links']}")
     print(f"language_hreflang_matches={stats['language_hreflang_matches']}")
     print(f"language_script_checks={stats['language_script_checks']}")

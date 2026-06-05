@@ -3635,6 +3635,7 @@ def footer(lang: str) -> str:
     t = LANGS[lang]
     cards = [
         (lang_url(lang, "garden-map"), GARDEN_MAP[lang]["title"], GARDEN_MAP[lang]["desc"]),
+        (lang_url(lang, "characters"), CHARACTER_INDEX_COPY[lang]["h1"], CHARACTER_INDEX_COPY[lang]["intro"]),
         (lang_url(lang, "resources"), t["resources"], t["resources_desc"]),
         (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
         (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),

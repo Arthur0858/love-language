@@ -1465,7 +1465,7 @@ RESOURCE_PATHS = {
 
 SUPPLY_ENTRY = {
     "zh": {
-        "eyebrow": "START FROM YOUR RESULT",
+        "eyebrow": "從結果出發",
         "title": "先取得路線，再選補給",
         "intro": "旅人補給不是書單入口，而是把你的守護者結果接到一個可執行的小任務。先確認路線，再慢慢選指南、Luna 或延伸書卷。",
         "items": [
@@ -1485,7 +1485,7 @@ SUPPLY_ENTRY = {
         ],
     },
     "ja": {
-        "eyebrow": "START FROM YOUR RESULT",
+        "eyebrow": "結果から始める",
         "title": "結果からルートを決めて補給を選ぶ",
         "intro": "リソースは本の一覧ではありません。守護者の結果を小さな行動へつなぎ、ガイド、Luna、本をゆっくり選ぶための入口です。",
         "items": [
@@ -1495,7 +1495,7 @@ SUPPLY_ENTRY = {
         ],
     },
     "ko": {
-        "eyebrow": "START FROM YOUR RESULT",
+        "eyebrow": "결과에서 시작",
         "title": "결과로 루트를 정한 뒤 보급을 고르기",
         "intro": "자료는 단순한 책 목록이 아닙니다. 수호자 결과를 작은 행동 하나로 연결하고, 가이드, Luna, 책을 천천히 고르게 합니다.",
         "items": [
@@ -1505,7 +1505,7 @@ SUPPLY_ENTRY = {
         ],
     },
     "es": {
-        "eyebrow": "START FROM YOUR RESULT",
+        "eyebrow": "EMPIEZA DESDE TU RESULTADO",
         "title": "Obtén tu ruta antes de elegir recursos",
         "intro": "Recursos no es solo una lista de libros. Convierte tu resultado de guardiana en una tarea posible y luego te ayuda a elegir guía, Luna o libro con calma.",
         "items": [
@@ -1513,6 +1513,45 @@ SUPPLY_ENTRY = {
             ("Ya conozco mi guardiana", "Salta a las cinco rutas y elige la que encaja con este momento.", "Ver rutas", "#supply-routes"),
             ("Necesito calma primero", "Abre Luna nocturna, baja el ruido y después decide si leer o comprar.", "Abrir Luna", "luna-yoga-music"),
         ],
+    },
+}
+
+
+SECTION_LABELS = {
+    "zh": {
+        "heart_garden_supplies": "心語庭園補給站",
+        "supply_route": "補給路線",
+        "traveler_supply": "旅人補給",
+        "related_guides": "相關指南",
+        "five_guardians": "五位守護者",
+    },
+    "en": {
+        "heart_garden_supplies": "HEART GARDEN SUPPLIES",
+        "supply_route": "SUPPLY ROUTE",
+        "traveler_supply": "TRAVELER SUPPLY",
+        "related_guides": "RELATED GUIDES",
+        "five_guardians": "FIVE GUARDIANS",
+    },
+    "ja": {
+        "heart_garden_supplies": "心語の庭の補給所",
+        "supply_route": "補給ルート",
+        "traveler_supply": "旅人の補給",
+        "related_guides": "関連ガイド",
+        "five_guardians": "五人の守護者",
+    },
+    "ko": {
+        "heart_garden_supplies": "마음의 정원 보급소",
+        "supply_route": "보급 루트",
+        "traveler_supply": "여행자 보급",
+        "related_guides": "관련 가이드",
+        "five_guardians": "다섯 수호자",
+    },
+    "es": {
+        "heart_garden_supplies": "SUMINISTROS DEL JARDÍN",
+        "supply_route": "RUTA DE SUMINISTRO",
+        "traveler_supply": "PROVISIÓN DE VIAJE",
+        "related_guides": "GUÍAS RELACIONADAS",
+        "five_guardians": "CINCO GUARDIANAS",
     },
 }
 
@@ -1927,7 +1966,7 @@ SUPPLY_WISHLIST = {
 
 SUPPLY_LABELS = {
     "zh": {
-        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "eyebrow": "守護者補給路線",
         "title": "五位守護者補給站",
         "intro": "依照你的守護者選一條路線：先讀對應指南，再做一個小任務，最後選擇書卷或 Luna 夜間補給。補給是輔助修復，不是療效承諾。",
         "route": "你的補給路線",
@@ -1981,7 +2020,7 @@ SUPPLY_LABELS = {
         "not_now_text": "Pause if you want a product to replace an apology, force someone to change, or soothe a purchase impulse. LoveTypes supplies are for reflection and practice.",
     },
     "ja": {
-        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "eyebrow": "守護者の補給ルート",
         "title": "五人の守護者の補給ルート",
         "intro": "守護者ごとに、対応ガイド、小さな練習、本または Luna の夜の補給を選びます。補給は修復を支えるもので、結果を約束するものではありません。",
         "route": "あなたの補給ルート",
@@ -2008,7 +2047,7 @@ SUPPLY_LABELS = {
         "not_now_text": "謝罪の代わりに商品を使いたい、相手を変えたい、衝動で買いたい時は一度止まります。LoveTypes の補給は気づきと練習を支えるものです。",
     },
     "ko": {
-        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "eyebrow": "수호자 보급 루트",
         "title": "다섯 수호자 보급 루트",
         "intro": "수호자에 맞춰 가이드, 작은 연습, 책 또는 Luna 밤 보급을 고르세요. 보급은 회복을 돕는 도구이며 결과를 약속하지 않습니다.",
         "route": "나의 보급 루트",
@@ -2035,7 +2074,7 @@ SUPPLY_LABELS = {
         "not_now_text": "상품으로 사과를 대신하거나 상대를 바꾸려 하거나 감정이 큰 상태에서 충동 구매하려 한다면 멈추세요. LoveTypes 보급은 성찰과 연습을 돕는 도구입니다.",
     },
     "es": {
-        "eyebrow": "GUARDIAN SUPPLY ROUTES",
+        "eyebrow": "RUTAS DE SUMINISTRO",
         "title": "Rutas de suministro de las cinco guardianas",
         "intro": "Elige una ruta por guardiana: guía correspondiente, una práctica pequeña y luego un libro o suministro nocturno Luna. Los recursos apoyan la reparación; no prometen resultados.",
         "route": "Tu ruta de suministro",
@@ -6394,6 +6433,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 def character_page(lang: str, slug: str, data: dict) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
+    section_labels = SECTION_LABELS[lang]
     name, typ, desc = data[lang]
     domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
     domain = GUARDIAN_DOMAINS[slug]
@@ -6431,8 +6471,8 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 </section>
 {character_supply_panel(lang, slug)}
 {collector_section(lang, slug)}
-<section class="section"><div class="section-head"><p class="eyebrow">RELATED GUIDES</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
-<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">FIVE GUARDIANS</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
+<section class="section"><div class="section-head"><p class="eyebrow">{escape(section_labels["related_guides"])}</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
+<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
     schema = json_ld({
         "@context": "https://schema.org",
@@ -6451,6 +6491,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 
 def resources_page(lang: str) -> None:
     t = LANGS[lang]
+    section_labels = SECTION_LABELS[lang]
     affiliate_labels = AFFILIATE_COPY[lang]
     supply_labels = SUPPLY_LABELS[lang]
     decision = SUPPLY_DECISION[lang]
@@ -6464,7 +6505,7 @@ def resources_page(lang: str) -> None:
             image = f'  {img_tag("/luna-yoga-music/images/icon.webp", title)}\n'
         cards.append(f"""
 <a class="content-card resource-card" href="{lang_url(lang, path)}">
-{image}  <span class="eyebrow">TRAVELER SUPPLY</span>
+{image}  <span class="eyebrow">{escape(section_labels["traveler_supply"])}</span>
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
   <span class="card-link">{escape(t["learn_more"])}</span>
@@ -6494,11 +6535,11 @@ def resources_page(lang: str) -> None:
 </article>
 """)
     body = f"""
-<section class="page-hero compact supply-hero"><p class="eyebrow">HEART GARDEN SUPPLIES</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+<section class="page-hero compact supply-hero"><p class="eyebrow">{escape(section_labels["heart_garden_supplies"])}</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
 {supply_quick_route_nav(lang)}
 {supply_entry_section(lang)}
-<section class="section resource-path"><div><p class="eyebrow">SUPPLY ROUTE</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
+<section class="section resource-path"><div><p class="eyebrow">{escape(section_labels["supply_route"])}</p><h2>{escape(t["resources_desc"])}</h2></div><div class="resource-steps">{resource_steps}</div></section>
 <section class="section supply-compass">
   <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["title"])}</h2></div></div>
   <p class="section-intro">{escape(decision["intro"])}</p>

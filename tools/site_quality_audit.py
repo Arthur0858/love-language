@@ -44,6 +44,14 @@ FORBIDDEN_SPANISH_VISIBLE_SNIPPETS = {
     "Teoria de lenguajes",
     "Privacidad y terminos",
 }
+FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS = {
+    "HEART GARDEN SUPPLIES",
+    "START FROM YOUR RESULT",
+    "SUPPLY ROUTE",
+    "TRAVELER SUPPLY",
+    "RELATED GUIDES",
+    "FIVE GUARDIANS",
+}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 AFFILIATE_HOST = "www.books.com.tw"
@@ -1580,6 +1588,10 @@ def main() -> int:
                 issues.append(f"{page}: garden map missing hrefs {', '.join(missing_map_hrefs)}")
         if is_resources_page(page):
             stats["resources_supply_entry_pages"] += 1
+            if lang_key_for_page(page) != "en":
+                for snippet in FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS:
+                    if snippet in parser.source:
+                        issues.append(f"{page}: non-English resources page still contains English universe label {snippet!r}")
             owned_signal_count = parser.source.count("data-supply-owned-signal")
             owned_card_count = parser.source.count("data-supply-owned-card")
             if owned_signal_count != 1:
@@ -1624,6 +1636,10 @@ def main() -> int:
                 issues.append(f"{page}: characters guardian entry missing hrefs {', '.join(missing_character_hrefs)}")
         if is_character_detail_page(page):
             stats["character_result_resume_pages"] += 1
+            if lang_key_for_page(page) != "en":
+                for snippet in FORBIDDEN_NON_EN_RESOURCE_CHARACTER_LABELS:
+                    if snippet in parser.source:
+                        issues.append(f"{page}: non-English character page still contains English universe label {snippet!r}")
             saved_section_count = parser.source.count('class="section guardian-result-resume" data-guardian-saved')
             if saved_section_count != 1:
                 issues.append(f"{page}: expected one character saved-result section, found {saved_section_count}")

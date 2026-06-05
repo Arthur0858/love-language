@@ -119,8 +119,8 @@ button:focus-visible {
 }
 
 .language-menu summary {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(189, 82, 96, .28);
@@ -197,7 +197,9 @@ button:focus-visible {
 }
 
 .language-switcher a {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
   padding: 8px 10px;
   border-radius: 6px;
   white-space: nowrap;
@@ -2405,8 +2407,8 @@ button.secondary-btn {
 
 .worksheet-meta .primary-btn,
 .worksheet-meta .secondary-btn {
-  min-height: 38px;
-  padding: 9px 13px;
+  min-height: 44px;
+  padding: 10px 14px;
   font-size: .86rem;
   line-height: 1.15;
 }
@@ -4657,8 +4659,8 @@ button.secondary-btn {
   }
 
   .language-menu summary {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
   }
 
   .nav-links a,

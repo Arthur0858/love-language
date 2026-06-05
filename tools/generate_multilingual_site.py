@@ -5,7 +5,7 @@ import json
 from datetime import date
 from html import escape
 from pathlib import Path
-from urllib.parse import quote, unquote
+from urllib.parse import quote
 from xml.sax.saxutils import escape as xml_escape
 
 
@@ -1319,7 +1319,7 @@ CONTACT_REQUESTS = {
         ],
         "note": "來信時可附上你的守護者、想使用的情境與裝置。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
         "cta": "寄出 Luna 補給需求",
-        "subject": "Luna%20night%20supply%20request",
+        "subject": "Luna 夜間補給需求",
     },
     "en": {
         "eyebrow": "REQUEST COMPASS",
@@ -1332,7 +1332,7 @@ CONTACT_REQUESTS = {
         ],
         "note": "Include your guardian, use case, and device if relevant. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
         "cta": "Send Luna supply request",
-        "subject": "Luna%20night%20supply%20request",
+        "subject": "Luna night supply request",
     },
     "ja": {
         "eyebrow": "REQUEST COMPASS",
@@ -1345,7 +1345,7 @@ CONTACT_REQUESTS = {
         ],
         "note": "守護者、使いたい場面、端末を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
         "cta": "Luna 補給希望を送る",
-        "subject": "Luna%20night%20supply%20request",
+        "subject": "Luna 夜間補給の希望",
     },
     "ko": {
         "eyebrow": "REQUEST COMPASS",
@@ -1358,7 +1358,7 @@ CONTACT_REQUESTS = {
         ],
         "note": "가능하다면 수호자, 사용 장면, 기기를 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
         "cta": "Luna 보급 요청 보내기",
-        "subject": "Luna%20night%20supply%20request",
+        "subject": "Luna 야간 보급 요청",
     },
     "es": {
         "eyebrow": "REQUEST COMPASS",
@@ -1371,7 +1371,7 @@ CONTACT_REQUESTS = {
         ],
         "note": "Incluye tu guardiana, situación de uso y dispositivo si ayuda. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
         "cta": "Enviar petición Luna",
-        "subject": "Luna%20night%20supply%20request",
+        "subject": "Petición de recurso nocturno Luna",
     },
 }
 
@@ -1398,7 +1398,7 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "來信時請附上頁面網址、裝置與瀏覽器、你預期看到什麼、實際發生什麼。這個信箱處理網站修復與內容回報，不提供緊急支援或諮商替代。",
         "cta": "回報網站修復線索",
-        "subject": "LoveTypes%20site%20repair%20report",
+        "subject": "LoveTypes 網站修復回報",
     },
     "en": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -1412,7 +1412,7 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "Please include the page URL, device and browser, what you expected, and what happened instead. This inbox handles site repair and content reports, not emergency support or counseling replacement.",
         "cta": "Send site repair report",
-        "subject": "LoveTypes%20site%20repair%20report",
+        "subject": "LoveTypes site repair report",
     },
     "ja": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -1426,7 +1426,7 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "ページ URL、端末とブラウザ、期待した表示、実際に起きたことを添えてください。この窓口はサイト修復と内容回報用で、緊急支援や相談支援の代替ではありません。",
         "cta": "サイト修復を報告する",
-        "subject": "LoveTypes%20site%20repair%20report",
+        "subject": "LoveTypes サイト修復の報告",
     },
     "ko": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -1440,7 +1440,7 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "페이지 URL, 기기와 브라우저, 기대한 모습, 실제로 일어난 일을 함께 적어 주세요. 이 메일은 사이트 수리와 콘텐츠 제보용이며 긴급 지원이나 상담 대체를 제공하지 않습니다.",
         "cta": "사이트 수리 제보 보내기",
-        "subject": "LoveTypes%20site%20repair%20report",
+        "subject": "LoveTypes 사이트 수리 제보",
     },
     "es": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -1454,7 +1454,7 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "Incluye la URL, dispositivo y navegador, qué esperabas ver y qué ocurrió. Este buzón atiende reparación del sitio y reportes de contenido; no ofrece apoyo de emergencia ni sustituye terapia.",
         "cta": "Enviar reporte de reparación",
-        "subject": "LoveTypes%20site%20repair%20report",
+        "subject": "Reporte de reparación del sitio LoveTypes",
     },
 }
 
@@ -2174,7 +2174,7 @@ SUPPLY_WISHLIST = {
         "formats": ["PDF 練習卡", "手機桌布", "7 分鐘短儀式"],
         "request": "投票給這條補給",
         "note": "來信不需要提供測驗分數；寫下守護者、使用情境與你希望帶走的素材即可。LoveTypes 不承諾療效，也不取代諮商。",
-        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "subject": "LoveTypes 守護者補給願望清單",
         "body": "我想優先看到的守護者補給：",
         "body_context": "我會在這個情境使用：",
     },
@@ -2186,7 +2186,7 @@ SUPPLY_WISHLIST = {
         "formats": ["PDF practice card", "Phone wallpaper", "7-minute ritual"],
         "request": "Vote for this supply",
         "note": "You do not need to send quiz scores. Include the guardian, use case, and the material you would actually keep. LoveTypes does not promise outcomes or replace counseling.",
-        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "subject": "LoveTypes guardian supply wishlist",
         "body": "The guardian supply I want prioritized:",
         "body_context": "I would use it when:",
     },
@@ -2198,7 +2198,7 @@ SUPPLY_WISHLIST = {
         "formats": ["PDF 練習カード", "スマホ壁紙", "7分の短い儀式"],
         "request": "この補給に投票する",
         "note": "診断スコアは不要です。守護者、使いたい場面、実際に保存したい素材を書いてください。LoveTypes は効果を約束せず、相談支援の代わりにもなりません。",
-        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "subject": "LoveTypes 守護者補給の希望リスト",
         "body": "優先してほしい守護者補給：",
         "body_context": "使いたい場面：",
     },
@@ -2210,7 +2210,7 @@ SUPPLY_WISHLIST = {
         "formats": ["PDF 연습 카드", "휴대폰 배경화면", "7분 짧은 의식"],
         "request": "이 보급에 투표하기",
         "note": "테스트 점수는 보내지 않아도 됩니다. 수호자, 사용 장면, 실제로 보관하고 싶은 자료를 적어 주세요. LoveTypes는 결과를 약속하거나 상담을 대신하지 않습니다.",
-        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "subject": "LoveTypes 수호자 보급 희망 목록",
         "body": "우선 제작되길 바라는 수호자 보급:",
         "body_context": "이럴 때 사용하고 싶어요:",
     },
@@ -2222,7 +2222,7 @@ SUPPLY_WISHLIST = {
         "formats": ["Tarjeta PDF", "Fondo móvil", "Ritual de 7 minutos"],
         "request": "Votar por este recurso",
         "note": "No necesitas enviar puntajes. Incluye la guardiana, el uso y el material que realmente guardarías. LoveTypes no promete resultados ni reemplaza terapia.",
-        "subject": "LoveTypes%20guardian%20supply%20wishlist",
+        "subject": "Lista de deseos de recursos de guardiana LoveTypes",
         "body": "El recurso de guardiana que quiero priorizar:",
         "body_context": "Lo usaría cuando:",
     },
@@ -4893,6 +4893,7 @@ def supply_wishlist_section(lang: str) -> str:
         guardian_name, guardian_type, _guardian_desc = data[lang]
         accent = next(meta["color"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
         format_items = "".join(f"<li>{escape(item)}</li>" for item in labels["formats"])
+        subject = quote(labels["subject"])
         body = quote(
             f'{labels["body"]} {guardian_name} · {route["title"]}\n'
             f'{labels["format_label"]}: {", ".join(labels["formats"])}\n'
@@ -4909,7 +4910,7 @@ def supply_wishlist_section(lang: str) -> str:
       <span>{escape(labels["format_label"])}</span>
       <ul class="supply-format-list">{format_items}</ul>
     </div>
-    <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={labels["subject"]}&body={body}">{escape(labels["request"])}</a>
+    <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={subject}&body={body}">{escape(labels["request"])}</a>
   </div>
 </article>
 """)
@@ -6782,7 +6783,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 <section class="section domain-rune-section" data-domain-marker>
   <div class="domain-rune-card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
     {img_tag(data["prop"], domain_title)}
-    <div><p class="eyebrow">{escape(domain["motif"])}</p><h2>{escape(domain_cta)}</h2><p>{escape(domain_desc)}</p></div>
+    <div><p class="eyebrow">{escape(domain_title)}</p><h2>{escape(domain_cta)}</h2><p>{escape(domain_desc)}</p></div>
   </div>
 </section>
 {character_route_snapshot(lang, slug)}
@@ -7400,8 +7401,10 @@ def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
     subject_label = CONTACT_SUBJECT_LABELS[lang]
-    request_subject = unquote(request["subject"])
-    repair_subject = unquote(repair["subject"])
+    request_subject = request["subject"]
+    repair_subject = repair["subject"]
+    request_subject_href = quote(request_subject)
+    repair_subject_href = quote(repair_subject)
 
     request_cards = "".join(
         f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
@@ -7419,7 +7422,7 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
-    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request["subject"]}">{escape(request["cta"])}</a>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}">{escape(request["cta"])}</a>
   </div>
 </section>
 <section class="section contact-request-section" id="site-repair-report">
@@ -7429,7 +7432,7 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(repair["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(repair_subject)}</code></p>
-    <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair["subject"]}">{escape(repair["cta"])}</a>
+    <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair_subject_href}">{escape(repair["cta"])}</a>
   </div>
 </section>
 """

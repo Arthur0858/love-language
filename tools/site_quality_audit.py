@@ -279,6 +279,25 @@ CURRENT_STATIC_ASSETS = {
     "affiliate": GENERATOR_CONFIG.AFFILIATE_ASSET,
 }
 CURRENT_QUIZ_DATA_ASSETS = GENERATOR_CONFIG.QUIZ_DATA_ASSETS
+CONTACT_REQUEST_SUBJECTS = {
+    lang: {
+        GENERATOR_CONFIG.CONTACT_REQUESTS[lang]["subject"],
+        GENERATOR_CONFIG.CONTACT_REPAIR_REPORTS[lang]["subject"],
+    }
+    for lang in LOCALE_PREFIXES
+}
+SUPPLY_WISHLIST_SUBJECTS = {
+    lang: GENERATOR_CONFIG.SUPPLY_WISHLIST[lang]["subject"]
+    for lang in LOCALE_PREFIXES
+}
+GUARDIAN_DOMAIN_TITLES = {
+    (lang, slug): data[lang][0]
+    for slug, data in GENERATOR_CONFIG.GUARDIAN_DOMAINS.items()
+    for lang in LOCALE_PREFIXES
+}
+GUARDIAN_DOMAIN_MOTIFS = {
+    data["motif"] for data in GENERATOR_CONFIG.GUARDIAN_DOMAINS.values()
+}
 REQUIRED_INTERACTION_HASH_SNIPPETS = {
     "samePageHash": "same-page hash link detection",
     "focusHashTarget": "hash target focus handoff",
@@ -1324,6 +1343,21 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                 ]
                 if not contact_mailtos:
                     issues.append(f"{path}: contact page missing mailto:{CONTACT_EMAIL}")
+                expected_subjects = CONTACT_REQUEST_SUBJECTS[lang]
+                visible_text = parser.visible_text()
+                for expected_subject in sorted(expected_subjects):
+                    if expected_subject not in visible_text:
+                        issues.append(f"{path}: contact page missing localized visible email subject {expected_subject!r}")
+                mailto_subjects = {
+                    value
+                    for href in contact_mailtos
+                    for value in parse_qs(urlparse(href).query).get("subject", [])
+                }
+                missing_subjects = sorted(expected_subjects.difference(mailto_subjects))
+                if missing_subjects:
+                    issues.append(f"{path}: contact mailto links missing localized subjects {', '.join(missing_subjects)}")
+                if expected_subjects.issubset(mailto_subjects):
+                    stats["contact_localized_subject_pages"] += 1
     return issues, stats
 
 
@@ -1713,6 +1747,18 @@ def main() -> int:
                 issues.append(f"{page}: expected 5 supply owned signal cards, found {owned_card_count}")
             if owned_signal_count == 1 and owned_card_count == 5:
                 stats["resources_owned_signal_pages"] += 1
+            expected_wishlist_subject = SUPPLY_WISHLIST_SUBJECTS[lang_key_for_page(page)]
+            supply_mailto_subjects = {
+                value
+                for anchor in parser.anchors
+                for href in [anchor.get("href", "")]
+                if href.lower().startswith(f"mailto:{CONTACT_EMAIL}")
+                for value in parse_qs(urlparse(href).query).get("subject", [])
+            }
+            if expected_wishlist_subject not in supply_mailto_subjects:
+                issues.append(f"{page}: supply wishlist mailto missing localized subject {expected_wishlist_subject!r}")
+            else:
+                stats["resources_wishlist_subject_pages"] += 1
             for target_id in ("supply-start", "supply-routes"):
                 if target_id not in parser.ids:
                     issues.append(f"{page}: resources page missing #{target_id}")
@@ -1756,6 +1802,17 @@ def main() -> int:
                 issues.append(f"{page}: expected one character saved-result section, found {saved_section_count}")
             if "guardian_resume_match" not in parser.source or "guardian_resume_other" not in parser.source:
                 issues.append(f"{page}: character page missing guardian result branch copy")
+            lang = lang_key_for_page(page)
+            guardian_slug = normalized_page_parts(page)[1]
+            domain_title = GUARDIAN_DOMAIN_TITLES[(lang, guardian_slug)]
+            visible_text = parser.visible_text()
+            if domain_title not in visible_text:
+                issues.append(f"{page}: character page missing localized guardian domain title {domain_title!r}")
+            leaked_motifs = sorted(motif for motif in GUARDIAN_DOMAIN_MOTIFS if motif in visible_text)
+            if leaked_motifs:
+                issues.append(f"{page}: character page exposes internal guardian domain motif(s): {', '.join(leaked_motifs)}")
+            if domain_title in visible_text and not leaked_motifs:
+                stats["character_domain_label_pages"] += 1
         if is_keepsakes_page(page):
             stats["keepsake_route_action_pages"] += 1
             keepsake_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
@@ -2405,8 +2462,10 @@ def main() -> int:
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"resources_hero_action_pages={stats['resources_hero_action_pages']}")
     print(f"resources_owned_signal_pages={stats['resources_owned_signal_pages']}")
+    print(f"resources_wishlist_subject_pages={stats['resources_wishlist_subject_pages']}")
     print(f"characters_guardian_entry_pages={stats['characters_guardian_entry_pages']}")
     print(f"character_result_resume_pages={stats['character_result_resume_pages']}")
+    print(f"character_domain_label_pages={stats['character_domain_label_pages']}")
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
     print(f"trust_hero_action_pages={stats['trust_hero_action_pages']}")
@@ -2459,6 +2518,7 @@ def main() -> int:
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")
+    print(f"contact_localized_subject_pages={stats['contact_localized_subject_pages']}")
     print(f"mailto_links={stats['mailto_links']}")
     print(f"anchor_accessible_names={stats['anchor_accessible_names']}")
     print(f"versioned_static_assets={stats['versioned_static_assets']}")

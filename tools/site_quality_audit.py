@@ -541,6 +541,14 @@ def is_garden_map_page(page: Path) -> bool:
     return parts == ["garden-map", "index.html"]
 
 
+def is_guides_index_page(page: Path) -> bool:
+    relative = page.relative_to(ROOT)
+    parts = list(relative.parts)
+    if parts and parts[0] in {"en", "ja", "ko", "es"}:
+        parts.pop(0)
+    return parts == ["guides", "index.html"]
+
+
 def is_characters_index_page(page: Path) -> bool:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -1725,6 +1733,24 @@ def main() -> int:
             if missing_keepsake_hrefs:
                 issues.append(f"{page}: keepsake cards missing continuation hrefs {', '.join(missing_keepsake_hrefs)}")
 
+        if is_guides_index_page(page):
+            stats["guide_index_action_pages"] += 1
+            guide_action_count = parser.source.count("data-guide-index-actions")
+            if guide_action_count != 1:
+                issues.append(f"{page}: expected one guide index hero action cluster, found {guide_action_count}")
+            for link_key in ("quiz", "guardians", "resources"):
+                if f'data-guide-index-link="{link_key}"' not in parser.source:
+                    issues.append(f"{page}: guide index hero actions missing {link_key} link")
+            guide_index_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
+            required_guide_index_hrefs = {
+                lang_url_for_page(page) + "#quiz-section",
+                lang_url_for_page(page, "characters"),
+                lang_url_for_page(page, "resources"),
+            }
+            missing_guide_index_hrefs = sorted(required_guide_index_hrefs.difference(guide_index_hrefs))
+            if missing_guide_index_hrefs:
+                issues.append(f"{page}: guide index hero actions missing hrefs {', '.join(missing_guide_index_hrefs)}")
+
         if is_about_page(page) or is_theory_page(page):
             stats["trust_action_route_pages"] += 1
             route_count = parser.ids.count("trust-action-routes")
@@ -2333,6 +2359,7 @@ def main() -> int:
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
     print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
+    print(f"guide_index_action_pages={stats['guide_index_action_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"legacy_guide_action_bridge_pages={stats['legacy_guide_action_bridge_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")

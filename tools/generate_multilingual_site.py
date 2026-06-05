@@ -6494,7 +6494,7 @@ def guides_index(lang: str) -> None:
     section_labels = SECTION_LABELS[lang]
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="resources" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div></section>
 {guide_index_compass(lang)}
 {guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>

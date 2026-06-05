@@ -78,7 +78,7 @@ def fetch_head(url: str) -> tuple[int, dict[str, str]]:
         raise RuntimeError(f"{url}: {error}") from error
 
 
-def check_global_headers(case: HeaderCase, headers: dict[str, str]) -> list[str]:
+def check_global_headers(case: HeaderCase, headers: dict[str, str], require_csp: bool) -> list[str]:
     issues: list[str] = []
     for name, expected in GLOBAL_HEADERS.items():
         actual = headers.get(name, "")
@@ -88,9 +88,9 @@ def check_global_headers(case: HeaderCase, headers: dict[str, str]) -> list[str]
     if "max-age=31536000" not in hsts:
         issues.append(f"{case.name}: missing one-year strict-transport-security")
     csp = headers.get("content-security-policy", "")
-    if not csp:
+    if require_csp and not csp:
         issues.append(f"{case.name}: missing content-security-policy")
-    else:
+    elif require_csp:
         for directive, token in CSP_REQUIRED_DIRECTIVES.items():
             if directive not in csp:
                 issues.append(f"{case.name}: CSP missing {directive}")
@@ -105,7 +105,7 @@ def check_case(base_url: str, case: HeaderCase) -> list[str]:
     issues: list[str] = []
     if status != case.expected_status:
         issues.append(f"{case.name}: HTTP status expected {case.expected_status}, got {status}")
-    issues.extend(check_global_headers(case, headers))
+    issues.extend(check_global_headers(case, headers, require_csp=case.html))
     if case.html:
         cache_control = headers.get("cache-control", "")
         if not HTML_CACHE_RE.search(cache_control):

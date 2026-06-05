@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-guide-routes"
+ASSET_VERSION = "20260605-guide-luna-bridge"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2693,9 +2693,12 @@ GUIDE_ACTION_BRIDGE = {
         "route_text": "依照這位守護者選一份免費任務、Luna 使用場景與延伸書卷。",
         "plan_label": "填入 7 日修復",
         "plan_text": "把今天讀到的句子放進一週內可完成的小約定。",
+        "luna_label": "夜晚先降噪",
+        "luna_text": "如果讀完後情緒太滿，先用 Luna 把這份理解整理成一句可寫下的心語。",
         "guardian_cta": "進入守護者頁",
         "route_cta": "查看補給路線",
         "plan_cta": "開始修復計畫",
+        "luna_cta": "開啟 Luna",
     },
     "en": {
         "eyebrow": "Carry this guide into a guardian route",
@@ -2707,9 +2710,12 @@ GUIDE_ACTION_BRIDGE = {
         "route_text": "Choose one free task, Luna use case, and deeper book scroll for this guardian.",
         "plan_label": "Fill the 7-day repair",
         "plan_text": "Place the sentence you found today into a small agreement you can practice this week.",
+        "luna_label": "Lower the night noise",
+        "luna_text": "If feelings are loud after reading, use Luna to turn this insight into one line you can write down.",
         "guardian_cta": "Enter guardian page",
         "route_cta": "View supply route",
         "plan_cta": "Start repair plan",
+        "luna_cta": "Open Luna",
     },
     "ja": {
         "eyebrow": "このガイドを守護者ルートへつなぐ",
@@ -2721,9 +2727,12 @@ GUIDE_ACTION_BRIDGE = {
         "route_text": "この守護者に合う無料タスク、Luna の使い方、深める本を一つ選びます。",
         "plan_label": "7 日修復に入れる",
         "plan_text": "今日見つけた言葉を、今週練習できる小さな約束へ置きます。",
+        "luna_label": "夜の雑音を下げる",
+        "luna_text": "読んだ後に感情が大きい時は、Luna でこの理解を一文に整えます。",
         "guardian_cta": "守護者ページへ",
         "route_cta": "補給ルートを見る",
         "plan_cta": "修復計画を始める",
+        "luna_cta": "Luna を開く",
     },
     "ko": {
         "eyebrow": "이 가이드를 수호자 루트로 이어가기",
@@ -2735,9 +2744,12 @@ GUIDE_ACTION_BRIDGE = {
         "route_text": "이 수호자에게 맞는 무료 과제, Luna 사용 장면, 더 깊은 책 한 권을 고릅니다.",
         "plan_label": "7일 회복에 넣기",
         "plan_text": "오늘 찾은 문장을 이번 주 실천할 수 있는 작은 약속에 넣습니다.",
+        "luna_label": "밤의 소음 낮추기",
+        "luna_text": "읽은 뒤 감정이 크다면 Luna로 이 이해를 적을 수 있는 한 문장으로 정리하세요.",
         "guardian_cta": "수호자 페이지로",
         "route_cta": "보급 루트 보기",
         "plan_cta": "회복 계획 시작",
+        "luna_cta": "Luna 열기",
     },
     "es": {
         "eyebrow": "Lleva esta guía a una ruta de guardiana",
@@ -2749,9 +2761,12 @@ GUIDE_ACTION_BRIDGE = {
         "route_text": "Elige una tarea gratis, un uso de Luna y un libro para profundizar con esta guardiana.",
         "plan_label": "Completar la reparación de 7 días",
         "plan_text": "Coloca la frase de hoy en un pequeño acuerdo que puedas practicar esta semana.",
+        "luna_label": "Bajar el ruido nocturno",
+        "luna_text": "Si la emoción queda alta después de leer, usa Luna para convertir esta idea en una línea escrita.",
         "guardian_cta": "Entrar a la guardiana",
         "route_cta": "Ver ruta de recursos",
         "plan_cta": "Iniciar plan de reparación",
+        "luna_cta": "Abrir Luna",
     },
 }
 
@@ -5265,6 +5280,13 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
             copy["plan_cta"],
             f'{lang_url(lang, "repair-plan")}#plan-{slug}',
         ),
+        (
+            "04",
+            copy["luna_label"],
+            copy["luna_text"],
+            copy["luna_cta"],
+            f'{lang_url(lang, "luna-yoga-music")}#luna-{slug}',
+        ),
     ]
     cards = "".join(
         f"""
@@ -5278,7 +5300,7 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
         for step, label, text, cta, href in actions
     )
     return f"""
-<section class="section guide-action-bridge" id="guide-action-bridge" style="--guardian-accent:{GUARDIAN_DOMAINS[slug]["accent"]}">
+<section class="section guide-action-bridge" id="guide-action-bridge" data-guide-action-bridge style="--guardian-accent:{GUARDIAN_DOMAINS[slug]["accent"]}">
   <div class="section-intro">
     <p class="eyebrow">{escape(copy["eyebrow"])}</p>
     <h2>{escape(copy["title"])}</h2>
@@ -5962,7 +5984,7 @@ def luna_page(lang: str) -> None:
     for slug, data in GUARDIANS.items():
         name, typ, _desc = data[lang]
         guardian_flow_cards.append(f"""
-<article class="luna-guardian-card">
+<article class="luna-guardian-card" id="luna-{slug}">
   {img_tag(data["asset"], name)}
   <div>
     <p class="eyebrow">{escape(typ)}</p>

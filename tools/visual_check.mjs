@@ -71,6 +71,8 @@ function summarizeFailures(results) {
     if (result.name.startsWith('characters-') && result.guardianNeedCardCount !== 5) failures.push('missing guardian need router cards');
     if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
     if (result.name.startsWith('guides-') && result.guideDomainRouteCount !== 5) failures.push('missing guide guardian reading routes');
+    if (result.name.startsWith('guide-detail-') && result.guideActionCardCount !== 4) failures.push('missing guide action bridge cards');
+    if (result.name.startsWith('guide-detail-') && !result.guideActionLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('missing guide Luna bridge');
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
     if (result.name.startsWith('keepsakes-') && result.keepsakeRitualCount !== 4) failures.push('missing keepsake ritual route');
@@ -298,6 +300,8 @@ const cases = [
   { name: 'guardian-claire-mobile', path: '/characters/claire/', viewport: { width: 390, height: 844 } },
   { name: 'guardian-dora-mobile', path: '/characters/dora/', viewport: { width: 390, height: 844 } },
   { name: 'guides-mobile', path: '/guides/', viewport: { width: 390, height: 844 } },
+  { name: 'guide-detail-mobile', path: '/guides/words-of-affirmation-scripts/', viewport: { width: 390, height: 844 } },
+  { name: 'guide-detail-en-desktop', path: '/en/guides/quality-time-long-distance/', viewport: { width: 1280, height: 900 } },
   { name: 'en-home-mobile', path: '/en/', viewport: { width: 390, height: 844 } },
   { name: 'ja-repair-plan-mobile', path: '/ja/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'es-guides-desktop', path: '/es/guides/', viewport: { width: 1280, height: 900 } },
@@ -416,6 +420,8 @@ for (const item of cases) {
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
   const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
   const guideDomainRouteCount = await page.locator('[data-guide-domain-routes] .guide-domain-card').count();
+  const guideActionCardCount = await page.locator('[data-guide-action-bridge] .guide-action-card').count();
+  const guideActionLunaHref = await page.locator('[data-guide-action-bridge] a[href*="/luna-yoga-music/#luna-"]').first().getAttribute('href').catch(() => '');
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
   const keepsakeRitualCount = await page.locator('[data-keepsake-ritual] .keepsake-ritual-card').count();
@@ -448,6 +454,8 @@ for (const item of cases) {
     guardianCardCount,
     guardianNeedCardCount,
     guideDomainRouteCount,
+    guideActionCardCount,
+    guideActionLunaHref,
     supplyDomainRouteCount,
     keepsakeShelfCount,
     keepsakeRitualCount,

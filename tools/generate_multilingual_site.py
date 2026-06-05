@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-keepsake-shelf"
+ASSET_VERSION = "20260605-about-trust"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2898,6 +2898,65 @@ ABOUT_SECTIONS = {
 }
 
 
+ABOUT_TRUST_CHARTER = {
+    "zh": {
+        "eyebrow": "HEART GARDEN TRUST CHARTER",
+        "title": "心語庭園信任憑證",
+        "intro": "進入守護者宇宙前，先看清楚這座庭園如何照顧內容、測驗、補給與聯絡修正。信任感本身也是關係修復的一部分。",
+        "cards": [
+            ("01", "內容會回到真實情境", "指南必須能對應實際關係困惑，並提供可練習的小行動；太薄、重複或只剩氣氛的頁面會被整理。", "guides", "閱讀指南"),
+            ("02", "測驗不是診斷", "15 道心語只指出此刻最容易被點亮的愛之語入口，不用來貼標籤、要求伴侶照單全收，或取代專業協助。", "theory", "了解理論"),
+            ("03", "補給不鼓勵過度購買", "旅人補給與延伸書卷會標示聯盟揭露，購買只應作為修復輔助；若你正在衝動消費，先使用免費任務。", "resources", "查看補給"),
+            ("04", "可以要求修正", "若你發現錯字、過時資訊、破圖、無法開啟的連結，或需要合作與隱私聯絡，可以直接回報給庭園維護者。", "contact", "聯絡我們"),
+        ],
+    },
+    "en": {
+        "eyebrow": "HEART GARDEN TRUST CHARTER",
+        "title": "Heart Garden trust charter",
+        "intro": "Before entering the guardian universe, this charter shows how LoveTypes handles content, quiz boundaries, supplies, and corrections. Trust is part of repair.",
+        "cards": [
+            ("01", "Content returns to real situations", "Guides must connect to a relationship question and offer a small practice. Thin, repetitive, or atmosphere-only pages are revised.", "guides", "Read guides"),
+            ("02", "The quiz is not diagnosis", "The 15 prompts point to the love-language doorway that feels lit right now. They are not labels, demands, or substitutes for professional care.", "theory", "Learn theory"),
+            ("03", "Supplies should not push overbuying", "Traveler supplies and book scrolls keep affiliate disclosure visible. Purchases are repair aids; if you feel impulsive, start with a free task.", "resources", "View supplies"),
+            ("04", "Corrections are welcome", "Report typos, outdated passages, broken images, broken links, privacy questions, or collaboration requests to the garden maintainer.", "contact", "Contact us"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "HEART GARDEN TRUST CHARTER",
+        "title": "心語の庭の信頼憲章",
+        "intro": "守護者の宇宙に入る前に、この庭が内容、診断結果の境界、補給、修正依頼をどう扱うかを示します。信頼も修復の一部です。",
+        "cards": [
+            ("01", "内容は現実の場面へ戻る", "ガイドは関係の悩みとつながり、小さな練習を提示します。薄い、重複する、雰囲気だけのページは見直します。", "guides", "ガイドを読む"),
+            ("02", "診断ではありません", "15 問は今もっとも灯りやすい愛の言語の入口を示します。固定ラベル、要求、専門的支援の代わりにはしません。", "theory", "理論を見る"),
+            ("03", "補給は買いすぎを促しません", "旅人補給と書卷にはアフィリエイト開示を残します。購入は修復の補助であり、衝動的な時は無料タスクから始めてください。", "resources", "補給を見る"),
+            ("04", "修正を受け付けます", "誤字、古い情報、画像やリンクの不具合、プライバシー、協業の相談は庭の管理者へ連絡できます。", "contact", "連絡する"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "HEART GARDEN TRUST CHARTER",
+        "title": "마음 정원 신뢰 헌장",
+        "intro": "수호자 세계에 들어가기 전에 이 정원이 콘텐츠, 결과의 경계, 보급, 수정 요청을 어떻게 다루는지 보여 줍니다. 신뢰도 회복의 일부입니다.",
+        "cards": [
+            ("01", "콘텐츠는 실제 상황으로 돌아갑니다", "가이드는 관계 질문과 연결되고 작은 연습을 제공해야 합니다. 얇거나 반복적이거나 분위기만 있는 페이지는 정리합니다.", "guides", "가이드 읽기"),
+            ("02", "퀴즈는 진단이 아닙니다", "15문항은 지금 가장 쉽게 켜지는 사랑의 언어 입구를 가리킵니다. 고정 라벨, 요구, 전문 지원의 대체물이 아닙니다.", "theory", "이론 보기"),
+            ("03", "보급은 과소비를 권하지 않습니다", "여행자 보급과 책 추천에는 제휴 고지를 유지합니다. 구매는 회복 보조이며, 충동적이라면 무료 과제부터 시작하세요.", "resources", "보급 보기"),
+            ("04", "수정을 요청할 수 있습니다", "오타, 오래된 정보, 깨진 이미지나 링크, 개인정보, 협업 문의는 정원 관리자에게 보낼 수 있습니다.", "contact", "연락하기"),
+        ],
+    },
+    "es": {
+        "eyebrow": "HEART GARDEN TRUST CHARTER",
+        "title": "Carta de confianza del Jardín",
+        "intro": "Antes de entrar al universo de guardianas, esta carta explica cómo LoveTypes cuida contenido, límites del resultado, recursos y correcciones. La confianza también repara.",
+        "cards": [
+            ("01", "El contenido vuelve a situaciones reales", "Las guías deben responder a una duda de relación y ofrecer una práctica pequeña. Las páginas delgadas, repetidas o solo atmosféricas se revisan.", "guides", "Leer guías"),
+            ("02", "El test no es diagnóstico", "Las 15 señales muestran la puerta de lenguaje del amor más encendida ahora. No son etiquetas, exigencias ni sustituto de apoyo profesional.", "theory", "Ver teoría"),
+            ("03", "Los recursos no empujan compras excesivas", "Los suministros y libros mantienen divulgación de afiliados. Comprar solo debe apoyar la reparación; si hay impulso, empieza gratis.", "resources", "Ver recursos"),
+            ("04", "Puedes pedir correcciones", "Reporta erratas, información antigua, imágenes o enlaces rotos, privacidad o colaboraciones a quien mantiene el Jardín.", "contact", "Contactar"),
+        ],
+    },
+}
+
+
 THEORY_SECTIONS = {
     "zh": [
         ("五種愛之語是什麼", "五種愛之語把人們表達與接收愛的常見方式整理成五個入口：肯定言詞、優質時光、接受禮物、服務行動與身體接觸。它不是人格分類，而是一套關係溝通語彙，幫助你把模糊的委屈翻成可討論的需求。"),
@@ -2942,6 +3001,36 @@ def lang_url(lang: str, path: str = "") -> str:
 
 def abs_url(lang: str, path: str = "") -> str:
     return DOMAIN + lang_url(lang, path).rstrip("/") + "/"
+
+
+def about_trust_charter(lang: str) -> str:
+    copy = ABOUT_TRUST_CHARTER[lang]
+    cards = []
+    for mark, title, text, slug, cta in copy["cards"]:
+        cards.append(
+            f"""
+<article class="about-trust-card">
+  <span>{escape(mark)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+  <a href="{lang_url(lang, slug)}">{escape(cta)}</a>
+</article>
+"""
+        )
+    return f"""
+<section class="section about-trust-charter" data-about-trust>
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+      <h2>{escape(copy["title"])}</h2>
+      <p>{escape(copy["intro"])}</p>
+    </div>
+  </div>
+  <div class="about-trust-grid">
+    {''.join(cards)}
+  </div>
+</section>
+"""
 
 
 def page_path(lang: str, path: str = "") -> Path:
@@ -5605,6 +5694,7 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{escape(t["boundary_text"])}</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
 </section>
+{about_trust_charter(lang)}
 {trust_action_routes(lang, "about")}
 """
         schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"AboutPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'

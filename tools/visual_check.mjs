@@ -71,6 +71,7 @@ function summarizeFailures(results) {
     if (result.name.startsWith('characters-') && result.guardianCardHeightSpread > 120) failures.push('guardian cards have unstable heights');
     if (result.name.startsWith('resources-') && result.supplyDomainRouteCount !== 5) failures.push('missing five supply domain routes');
     if (result.name.startsWith('keepsakes-') && result.keepsakeShelfCount !== 5) failures.push('missing five keepsake shelf cards');
+    if (result.name.startsWith('about-') && result.aboutTrustCardCount !== 4) failures.push('missing about trust charter cards');
     if (result.name.startsWith('guardian-') && result.domainMarkerCount < 1) failures.push('missing guardian domain marker');
     if (result.name.startsWith('guardian-') && result.supplyCtaCount < 1) failures.push('missing guardian supply CTA');
     if (result.expectedFinalPath && result.finalUrl !== result.expectedFinalPath) {
@@ -407,6 +408,7 @@ for (const item of cases) {
   const guardianCardCount = await page.locator('[data-universe-map] .guardian-card').count();
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();
+  const aboutTrustCardCount = await page.locator('[data-about-trust] .about-trust-card').count();
   const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
     if (!cards.length) return 0;
     const heights = cards.map((card) => card.getBoundingClientRect().height);
@@ -433,6 +435,7 @@ for (const item of cases) {
     guardianCardCount,
     supplyDomainRouteCount,
     keepsakeShelfCount,
+    aboutTrustCardCount,
     guardianCardHeightSpread,
     domainMarkerCount,
     supplyCtaCount,

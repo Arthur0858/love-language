@@ -3973,6 +3973,8 @@ GARDEN_MAP = {
         "desc": "把 LoveTypes 的測驗、五位守護者、深度指南、旅人補給、Luna、修復計畫與信任頁整理成一張可探索的地圖。",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "如果你不知道下一步該去哪裡，先從這張地圖選一盞燈。每條路都會回到同一個核心：辨認需求、說清楚、做一個小修復。",
+        "handoff_title": "認領守護者後，照這個順序走",
+        "handoff_intro": "測驗結果不是終點，而是一張通行證。先接住當下的需求，再把它放進可回訪、可練習、可冷卻的路線。",
         "routes_title": "四條主要路線",
         "tools_title": "三個功能房間",
         "guardians_title": "五個分域入口",
@@ -3989,6 +3991,12 @@ GARDEN_MAP = {
             ("守護者收藏室", "保存五位守護者卡片，讓結果變成可回訪、可分享的標記。", "前往收藏室", "keepsakes"),
             ("Luna 夜間補給", "睡前、冷卻或書寫時，用低光音樂先降低情緒噪音。", "開啟 Luna", "luna-yoga-music"),
         ],
+        "handoff": [
+            ("01", "先拿專屬補給", "依守護者進入補給站，取得一個任務、一篇指南與一份延伸書卷。", "resources"),
+            ("02", "寫成七日修復", "把情緒翻成小請求與可完成行動，避免只停在結果標籤。", "repair-plan"),
+            ("03", "收藏你的守護者", "把守護者卡片留下來，之後回訪時能快速找回自己的入口。", "keepsakes"),
+            ("04", "夜間低光整理", "睡前或爭執後，用 Luna 降低情緒噪音，再回到修復計畫。", "luna-yoga-music"),
+        ],
         "trust_routes": [
             ("關於心語庭園", "理解 LoveTypes 的宇宙觀、內容邊界與適合使用方式。", "about"),
             ("愛之語理論", "回到五種愛之語的溝通框架，理解它不是人格標籤。", "theory"),
@@ -4001,6 +4009,8 @@ GARDEN_MAP = {
         "desc": "A readable map of the LoveTypes quiz, five guardians, field guides, supplies, Luna, repair plan, and trust pages.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "If you are not sure where to go next, choose one lamp from this map. Every route returns to the same core: name the need, say it clearly, and practice one small repair.",
+        "handoff_title": "After recognizing your guardian, follow this order",
+        "handoff_intro": "The quiz result is not the finish line. It is a pass that helps you hold the current need, then place it into a route you can revisit, practice, and cool down with.",
         "routes_title": "Four main routes",
         "tools_title": "Three function rooms",
         "guardians_title": "Five domain gates",
@@ -4017,6 +4027,12 @@ GARDEN_MAP = {
             ("Guardian Keepsake Hall", "Save the five guardian cards as a revisitable and shareable marker.", "Open keepsakes", "keepsakes"),
             ("Luna Night Supply", "Use low-light audio before sleep, cooling down, or journaling.", "Open Luna", "luna-yoga-music"),
         ],
+        "handoff": [
+            ("01", "Take your supply first", "Enter the supply station by guardian and receive one task, one guide, and one book route.", "resources"),
+            ("02", "Write a 7-day repair", "Translate emotion into one small request and one doable action, instead of stopping at a label.", "repair-plan"),
+            ("03", "Save your guardian", "Keep the guardian card so returning visitors can find their doorway quickly.", "keepsakes"),
+            ("04", "Cool down at night", "Use Luna before sleep or after conflict, then return to the repair plan.", "luna-yoga-music"),
+        ],
         "trust_routes": [
             ("About the Heart Garden", "Understand the LoveTypes universe, content boundary, and best use cases.", "about"),
             ("Love-language theory", "Return to the communication framework behind the five languages.", "theory"),
@@ -4029,6 +4045,8 @@ GARDEN_MAP = {
         "desc": "LoveTypes の診断、五人の守護者、ガイド、補給、Luna、修復プラン、信頼ページを一枚の地図にまとめます。",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "次にどこへ進むか迷ったら、この地図から一つの灯りを選んでください。どの道も、必要を名づけ、言葉にし、小さな修復へ戻ります。",
+        "handoff_title": "守護者を認領した後は、この順番で進みます",
+        "handoff_intro": "診断結果は終点ではなく通行証です。今の必要を受け止め、戻れて、練習でき、冷却できる道へ置きます。",
         "routes_title": "四つの主要ルート",
         "tools_title": "三つの機能室",
         "guardians_title": "五つの領域入口",
@@ -4045,6 +4063,12 @@ GARDEN_MAP = {
             ("守護者コレクション室", "五人の守護者カードを保存し、戻って見られる印にします。", "コレクション室へ", "keepsakes"),
             ("Luna 夜の補給", "眠る前、冷却、日記の時間に、低い音で感情のノイズを下げます。", "Luna を開く", "luna-yoga-music"),
         ],
+        "handoff": [
+            ("01", "まず補給を受け取る", "守護者に合わせて補給站へ入り、課題、ガイド、本のルートを一つ受け取ります。", "resources"),
+            ("02", "7日間の修復を書く", "結果のラベルで止まらず、感情を小さな依頼と実行できる行動へ変えます。", "repair-plan"),
+            ("03", "守護者を保存する", "守護者カードを残し、次に戻った時すぐ入口を見つけます。", "keepsakes"),
+            ("04", "夜に冷却する", "眠る前や衝突後に Luna で感情のノイズを下げ、修復プランへ戻ります。", "luna-yoga-music"),
+        ],
         "trust_routes": [
             ("心語の庭について", "LoveTypes の世界観、内容の範囲、使い方を理解します。", "about"),
             ("愛の言語理論", "五つの言語の背後にあるコミュニケーション枠組みに戻ります。", "theory"),
@@ -4057,6 +4081,8 @@ GARDEN_MAP = {
         "desc": "LoveTypes 테스트, 다섯 수호자, 가이드, 보급, Luna, 회복 계획, 신뢰 페이지를 한 장의 지도로 정리합니다.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "다음에 어디로 갈지 모르겠다면 이 지도에서 등불 하나를 고르세요. 모든 길은 필요를 이름 붙이고, 분명히 말하고, 작은 회복을 연습하는 곳으로 돌아옵니다.",
+        "handoff_title": "수호자를 알아본 뒤에는 이 순서로 가세요",
+        "handoff_intro": "테스트 결과는 끝이 아니라 통행증입니다. 지금의 필요를 붙잡고 다시 보고, 연습하고, 식힐 수 있는 길에 놓으세요.",
         "routes_title": "네 가지 주요 길",
         "tools_title": "세 가지 기능실",
         "guardians_title": "다섯 영역 입구",
@@ -4073,6 +4099,12 @@ GARDEN_MAP = {
             ("수호자 소장실", "다섯 수호자 카드를 저장해 다시 보고 공유할 표시로 만듭니다.", "소장실 열기", "keepsakes"),
             ("Luna 밤 보급", "잠들기 전, 식히는 시간, 기록할 때 낮은 음악으로 감정 소음을 낮춥니다.", "Luna 열기", "luna-yoga-music"),
         ],
+        "handoff": [
+            ("01", "먼저 보급 받기", "수호자에 맞춰 보급소로 들어가 과제 하나, 가이드 하나, 책 루트 하나를 받습니다.", "resources"),
+            ("02", "7일 회복 쓰기", "결과 이름에서 멈추지 않고 감정을 작은 요청과 가능한 행동으로 바꿉니다.", "repair-plan"),
+            ("03", "수호자 저장하기", "수호자 카드를 남겨 다음 방문 때 자신의 입구를 빠르게 찾습니다.", "keepsakes"),
+            ("04", "밤에 낮추기", "잠들기 전이나 다툰 뒤 Luna 로 감정 소음을 낮추고 회복 계획으로 돌아갑니다.", "luna-yoga-music"),
+        ],
         "trust_routes": [
             ("마음의 정원 소개", "LoveTypes 세계관, 콘텐츠 범위, 사용 방식을 이해합니다.", "about"),
             ("사랑의 언어 이론", "다섯 언어 뒤의 대화 프레임으로 돌아갑니다.", "theory"),
@@ -4085,6 +4117,8 @@ GARDEN_MAP = {
         "desc": "Un mapa legible del test LoveTypes, las cinco guardianas, guias, recursos, Luna, plan de reparacion y paginas de confianza.",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "Si no sabes a donde ir despues, elige una luz en este mapa. Cada ruta vuelve al mismo centro: nombrar la necesidad, decirla con claridad y practicar una reparacion pequena.",
+        "handoff_title": "Despues de reconocer tu guardiana, sigue este orden",
+        "handoff_intro": "El resultado no es el final. Es un pase para sostener la necesidad actual y llevarla a una ruta que puedas revisar, practicar y enfriar.",
         "routes_title": "Cuatro rutas principales",
         "tools_title": "Tres salas funcionales",
         "guardians_title": "Cinco puertas de dominio",
@@ -4100,6 +4134,12 @@ GARDEN_MAP = {
             ("Plan de 7 dias", "Convierte tu resultado en una semana de reparacion pequena.", "Abrir plan", "repair-plan"),
             ("Sala de recuerdos", "Guarda las cinco tarjetas para volver a ellas y compartirlas.", "Abrir recuerdos", "keepsakes"),
             ("Luna nocturna", "Usa audio de baja luz antes de dormir, enfriar o escribir.", "Abrir Luna", "luna-yoga-music"),
+        ],
+        "handoff": [
+            ("01", "Toma tu recurso", "Entra al puesto de recursos por guardiana y recibe una tarea, una guia y una ruta de libro.", "resources"),
+            ("02", "Escribe 7 dias", "Traduce la emocion en una peticion pequena y una accion posible, no solo en una etiqueta.", "repair-plan"),
+            ("03", "Guarda tu guardiana", "Conserva la tarjeta para encontrar rapido tu puerta cuando vuelvas.", "keepsakes"),
+            ("04", "Enfria por la noche", "Usa Luna antes de dormir o despues de un conflicto, y vuelve al plan de reparacion.", "luna-yoga-music"),
         ],
         "trust_routes": [
             ("Sobre el Jardin", "Entiende el universo LoveTypes, sus limites y mejores usos.", "about"),
@@ -4191,6 +4231,14 @@ def garden_map_page(lang: str) -> None:
 </a>
 """ for title, desc, action, target in copy["routes"])
 
+    handoff_cards = "".join(f"""
+<a class="garden-map-handoff-card" href="{lang_url(lang, target)}">
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""" for number, title, desc, target in copy["handoff"])
+
     tool_cards = "".join(f"""
 <a class="garden-map-tool-card" href="{lang_url(lang, target)}">
   <span>{escape(action)}</span>
@@ -4215,6 +4263,11 @@ def garden_map_page(lang: str) -> None:
   <h1>{escape(copy["title"])}</h1>
   <p>{escape(copy["intro"])}</p>
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
+</section>
+<section class="section garden-map-handoff" data-garden-map-handoff>
+  <div class="section-head"><div><p class="eyebrow">AFTER THE RITUAL</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <p class="section-intro">{escape(copy["handoff_intro"])}</p>
+  <div class="garden-map-handoff-grid">{handoff_cards}</div>
 </section>
 <section class="section garden-map-routes" data-garden-map-routes>
   <div class="section-head"><div><p class="eyebrow">MAIN ROUTES</p><h2>{escape(copy["routes_title"])}</h2></div></div>

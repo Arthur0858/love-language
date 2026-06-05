@@ -85,6 +85,7 @@ function summarizeFailures(results) {
     if (!result.h1) failures.push('missing h1');
     if (result.navCount < 4) failures.push('navigation too small');
     if (result.textLength < 120) failures.push('page text too short');
+    if (result.name.startsWith('garden-map-') && result.gardenMapHandoffCount !== 4) failures.push('missing four garden map handoff steps');
     if (result.name.startsWith('garden-map-') && result.gardenMapRouteCount !== 4) failures.push('missing four garden map routes');
     if (result.name.startsWith('garden-map-') && result.gardenMapToolCount !== 3) failures.push('missing three garden map function rooms');
     if (result.name.startsWith('garden-map-') && result.gardenMapGuardianCount !== 5) failures.push('missing five garden map guardian cards');
@@ -462,6 +463,7 @@ for (const item of cases) {
   const bodyText = await page.locator('body').innerText();
   const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
   const homeJourneyCardCount = await page.locator('[data-home-journey] .home-journey-card').count();
+  const gardenMapHandoffCount = await page.locator('[data-garden-map-handoff] .garden-map-handoff-card').count();
   const gardenMapRouteCount = await page.locator('[data-garden-map-routes] .garden-map-route-card').count();
   const gardenMapToolCount = await page.locator('[data-garden-map-tools] .garden-map-tool-card').count();
   const gardenMapGuardianCount = await page.locator('[data-garden-map-guardians] .guardian-card').count();
@@ -505,6 +507,7 @@ for (const item of cases) {
     textLength: bodyText.length,
     universeGateCount,
     homeJourneyCardCount,
+    gardenMapHandoffCount,
     gardenMapRouteCount,
     gardenMapToolCount,
     gardenMapGuardianCount,

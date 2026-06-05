@@ -119,6 +119,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_not_found_cases_checked",
         "public_not_found_localized_cases",
         "public_not_found_safe_route_links_checked",
+        "public_visual_attempts",
         "public_visual_cases_checked",
         "public_visual_screenshots",
         "public_visual_quiz_flow_cases",

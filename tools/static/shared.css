@@ -1611,6 +1611,68 @@ button.secondary-btn {
   display: none;
 }
 
+.keepsake-shelf-section {
+  padding-top: 26px;
+  padding-bottom: 34px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(183, 139, 69, .12), transparent 30%),
+    linear-gradient(180deg, #f3faf7, #fffaf6);
+}
+
+.keepsake-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.keepsake-shelf-card {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 8px;
+  min-height: 238px;
+  padding: 10px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--domain-accent, #bd5260), white 62%);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 72% 10%, color-mix(in srgb, var(--domain-glow, #f6c5c9), transparent 48%), transparent 36%),
+    linear-gradient(150deg, color-mix(in srgb, var(--domain-accent, #bd5260), white 86%), rgba(255, 255, 255, .94) 68%);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 14px 34px rgba(76, 42, 43, .07);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.keepsake-shelf-card:hover,
+.keepsake-shelf-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--domain-accent, #bd5260), white 24%);
+  box-shadow: var(--shadow-lift);
+}
+
+.keepsake-shelf-image {
+  display: block;
+  width: 100%;
+  height: 156px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 6px;
+  box-shadow: 0 10px 20px rgba(76, 42, 43, .08);
+}
+
+.keepsake-shelf-card span {
+  color: color-mix(in srgb, var(--domain-accent, #bd5260), #302425 18%);
+  font-size: .82rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.keepsake-shelf-card strong {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  line-height: 1.18;
+}
+
 .keepsake-resume-card {
   display: grid;
   grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
@@ -3352,6 +3414,7 @@ button.secondary-btn {
   .luna-protocol-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .luna-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .keepsake-shelf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keepsake-resume-card { grid-template-columns: minmax(120px, 170px) minmax(0, 1fr); }
   .luna-guardian-grid { grid-template-columns: 1fr; }
@@ -3968,6 +4031,31 @@ button.secondary-btn {
   .luna-resume-actions .primary-btn,
   .luna-resume-actions .secondary-btn {
     flex-basis: 100%;
+  }
+
+  .keepsake-shelf-section {
+    padding-inline: 0;
+  }
+
+  .keepsake-shelf-grid {
+    display: grid;
+    grid-auto-columns: minmax(138px, 42vw);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0 7vw 8px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .keepsake-shelf-card {
+    min-height: 216px;
+    scroll-snap-align: start;
+  }
+
+  .keepsake-shelf-image {
+    height: 138px;
   }
 
   .guardian-card h3 { margin-bottom: 6px; }

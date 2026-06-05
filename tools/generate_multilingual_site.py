@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-supply-domains"
+ASSET_VERSION = "20260605-keepsake-shelf"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -3605,6 +3605,27 @@ def collector_section(lang: str, current_slug: str = "") -> str:
 """
 
 
+def keepsake_shelf_section(lang: str) -> str:
+    labels = COLLECTOR_LABELS[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        image = guardian_story_image(lang, slug)
+        cards.append(f"""
+<a class="keepsake-shelf-card" href="#keepsake-card-{slug}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(image, f"{name} {labels['card']}", "keepsake-shelf-image")}
+  <span>{escape(typ)}</span>
+  <strong>{escape(name)}</strong>
+</a>
+""")
+    return f"""
+<section class="section keepsake-shelf-section" data-keepsake-shelf>
+  <div class="keepsake-shelf-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def keepsake_resume_script(lang: str) -> str:
     data = quiz_payload(lang)
     return f"""
@@ -3690,6 +3711,7 @@ def keepsakes_page(lang: str) -> None:
   </div>
 </section>
 <section class="section keepsake-personal-resume" data-keepsake-saved hidden aria-live="polite"></section>
+{keepsake_shelf_section(lang)}
 {collector_section(lang)}
 <section class="section keepsake-use-section">
   <div class="section-head"><div><p class="eyebrow">SAVE · SHARE · RETURN</p><h2>{escape(labels["how_title"])}</h2></div></div>

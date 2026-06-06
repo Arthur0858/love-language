@@ -118,7 +118,11 @@ def main() -> int:
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
+    missing_predeploy_scripts = sorted(path for path in predeploy_script_paths if not (ROOT / path).exists())
+    if missing_predeploy_scripts:
+        issues.append(f"missing predeploy PYTHON_TOOLS scripts: {', '.join(missing_predeploy_scripts)}")
     compiled_python_scripts = 0
+    compiled_predeploy_python_scripts = 0
     checked_node_scripts = 0
     node_bin = find_node()
     for path in sorted(set(check_script_paths)):
@@ -129,6 +133,14 @@ def main() -> int:
             compiled_python_scripts += 1
         except py_compile.PyCompileError as error:
             issues.append(f"{path}: py_compile failed: {error.msg}")
+    for path in sorted(set(predeploy_script_paths)):
+        if not path.endswith(".py") or not (ROOT / path).exists():
+            continue
+        try:
+            py_compile.compile(str(ROOT / path), doraise=True)
+            compiled_predeploy_python_scripts += 1
+        except py_compile.PyCompileError as error:
+            issues.append(f"{path}: predeploy py_compile failed: {error.msg}")
     node_script_paths = sorted({path for path in check_script_paths if path.endswith((".js", ".mjs"))})
     if node_script_paths and not node_bin:
         issues.append("node executable not found for CHECKS JavaScript syntax checks")
@@ -164,6 +176,8 @@ def main() -> int:
     print(f"site_health_config_important_keys={len(important_keys)}")
     print(f"site_health_config_retry_names={len(retry_names)}")
     print(f"site_health_config_predeploy_scripts={len(predeploy_script_paths)}")
+    print(f"site_health_config_predeploy_python_scripts_compiled={compiled_predeploy_python_scripts}")
+    print(f"site_health_config_missing_predeploy_scripts={len(missing_predeploy_scripts)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")

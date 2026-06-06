@@ -486,6 +486,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_important_keys",
         "site_health_config_retry_names",
         "site_health_config_predeploy_scripts",
+        "site_health_config_predeploy_python_scripts_compiled",
+        "site_health_config_missing_predeploy_scripts",
         "site_health_config_issue_metric_keys",
         "site_health_config_duplicate_check_names",
         "site_health_config_duplicate_check_commands",

@@ -19,7 +19,9 @@ TYPE_SLUGS = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
 INTERNAL_RESULT_URL_FIELDS = ("guardianUrl", "guideUrl", "resourceUrl", "lunaUrl", "collectorHallUrl", "planUrl")
-RESULT_IMAGE_FIELDS = ("image", "resultImage", "storyImage")
+RESULT_IMAGE_FIELDS = ("image", "resultImage", "storyImage", "domainProp")
+RESULT_TEXT_FIELDS = ("domainTitle", "domainDesc", "domainCta", "domainAccent", "domainGlow", "domainMotif")
+RESULT_NUMBER_FIELDS = ("domainPropWidth", "domainPropHeight")
 ACCEPTED_EXTERNAL_STATUSES = set(range(200, 400)) | {403, 405, 429}
 
 
@@ -220,6 +222,7 @@ def main() -> int:
     result_anchor_targets_checked = 0
     result_images_checked = 0
     result_affiliate_links_checked = 0
+    result_pass_fields_checked = 0
 
     for lang, home_path in LANG_PATHS.items():
         script, discovery_issues = discover_quiz_asset(base_url, lang, home_path)
@@ -234,6 +237,14 @@ def main() -> int:
         issues.extend(parse_issues)
         if parse_issues:
             continue
+        labels = data.get("labels", {})
+        if not isinstance(labels, dict):
+            issues.append(f"{script}: labels should be an object")
+        else:
+            for label in ("pass_title", "pass_code", "next_pack_title", "primary_route"):
+                result_pass_fields_checked += 1
+                if not isinstance(labels.get(label), str) or not labels[label].strip():
+                    issues.append(f"{script}: labels missing {label}")
         assets_checked += 1
         results = data.get("results")
         if not isinstance(results, dict) or set(results) != EXPECTED_TYPES:
@@ -247,6 +258,14 @@ def main() -> int:
                 issues.append(f"{source}: result should be an object")
                 continue
             results_checked += 1
+            for field in RESULT_TEXT_FIELDS:
+                result_pass_fields_checked += 1
+                if not isinstance(result.get(field), str) or not result[field].strip():
+                    issues.append(f"{source}: missing {field}")
+            for field in RESULT_NUMBER_FIELDS:
+                result_pass_fields_checked += 1
+                if not isinstance(result.get(field), int) or result[field] <= 0:
+                    issues.append(f"{source}: missing numeric {field}")
             for field in INTERNAL_RESULT_URL_FIELDS:
                 value = result.get(field, "")
                 if not isinstance(value, str) or not value:
@@ -268,6 +287,7 @@ def main() -> int:
     print(f"public_quiz_conversion_anchor_targets_checked={result_anchor_targets_checked}")
     print(f"public_quiz_conversion_images_checked={result_images_checked}")
     print(f"public_quiz_conversion_affiliate_links_checked={result_affiliate_links_checked}")
+    print(f"public_quiz_conversion_pass_fields_checked={result_pass_fields_checked}")
     print(f"public_quiz_conversion_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

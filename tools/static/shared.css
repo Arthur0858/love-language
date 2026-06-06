@@ -3264,6 +3264,93 @@ button.secondary-btn {
   gap: 16px;
 }
 
+.guardian-supply-pass {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--result-accent), white 44%);
+  background:
+    radial-gradient(circle at 86% 16%, color-mix(in srgb, var(--domain-glow), transparent 28%), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .075)),
+    rgba(30, 21, 23, .62);
+}
+
+.guardian-supply-pass::before,
+.guardian-supply-pass::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #4c3437;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.guardian-supply-pass::before { left: -12px; }
+.guardian-supply-pass::after { right: -12px; }
+
+.supply-pass-head {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 210px);
+  gap: 18px;
+  align-items: center;
+}
+
+.supply-pass-head h3 {
+  max-width: 640px;
+  margin: 0;
+  color: #fff;
+  font-family: var(--serif);
+  font-size: clamp(1.45rem, 2.5vw, 2.25rem);
+  line-height: 1.12;
+}
+
+.supply-pass-head p:not(.eyebrow),
+.supply-pass-domain {
+  margin: 8px 0 0;
+  color: #fff2ec;
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.supply-pass-stamp {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, .26), transparent 54%),
+    color-mix(in srgb, var(--result-accent), transparent 68%);
+}
+
+.supply-pass-stamp img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(22, 11, 12, .28));
+}
+
+.supply-pass-stamp span {
+  color: #fff9f3;
+  font-size: .86rem;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.supply-pass-domain {
+  position: relative;
+  z-index: 1;
+  padding: 11px 14px;
+  border-left: 3px solid color-mix(in srgb, var(--result-accent), white 28%);
+  background: rgba(255, 255, 255, .09);
+}
+
 .quiz-action-head {
   display: flex;
   align-items: end;
@@ -4429,6 +4516,25 @@ button.secondary-btn {
   }
 
   .quiz-action-head h3 {
+    text-align: left;
+  }
+
+  .supply-pass-head {
+    grid-template-columns: 1fr;
+  }
+
+  .supply-pass-stamp {
+    grid-template-columns: 52px minmax(0, 1fr);
+    justify-items: start;
+    align-items: center;
+  }
+
+  .supply-pass-stamp img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .supply-pass-stamp span {
     text-align: left;
   }
 

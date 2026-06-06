@@ -35,7 +35,7 @@
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared-20260605-contrast.css" />
+  <link rel="stylesheet" href="/shared-20260606-pass.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">본문으로 이동</a>
@@ -279,7 +279,7 @@
   </div>
 </section>
 
-<script src="/quiz-data-ko-20260605-contrast.js"></script>
+<script src="/quiz-data-ko-20260606-pass.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -524,12 +524,19 @@
         }).join('')}
       </section>
       <section class="quiz-advice-card"><h3>${quiz.labels.tips_title}</h3><ul>${result.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul></section>
-      <section class="quiz-action-compass" aria-label="${quiz.labels.compass_title}">
-        <div class="quiz-action-head">
-          <p class="eyebrow">${quiz.labels.compass_title}</p>
-          <h3>${quiz.labels.next_pack_title}</h3>
+      <section class="quiz-action-compass guardian-supply-pass" aria-label="${quiz.labels.compass_title}" data-supply-pass style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
+        <div class="supply-pass-head">
+          <div>
+            <p class="eyebrow">${quiz.labels.pass_title}</p>
+            <h3>${quiz.labels.next_pack_title}</h3>
+            <p>${quiz.labels.next_pack_intro}</p>
+          </div>
+          <div class="supply-pass-stamp" aria-label="${quiz.labels.pass_code}">
+            <img src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
+            <span>${result.domainTitle}</span>
+          </div>
         </div>
-        <p>${quiz.labels.next_pack_intro}</p>
+        <p class="supply-pass-domain">${result.domainDesc}</p>
         <div class="quiz-action-grid">
           <article>
             <span>1</span>
@@ -550,6 +557,7 @@
             <a href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored" data-conversion-book>${quiz.affiliateButton}</a>
           </article>
         </div>
+        <p class="affiliate-disclosure">${quiz.affiliateDisclosure}</p>
       </section>
       <section class="quiz-starter-kit" aria-label="${result.starterKit.title}">
         <div class="quiz-action-head">
@@ -632,7 +640,7 @@
   <p>© 2026 LoveTypes · <a href="/ko/privacy/">개인정보</a> · <a href="/ko/terms/">이용약관</a> · <a href="/ko/contact/">연락</a></p>
 </footer>
 
-<script src="/site-interactions-20260605-contrast.js" defer></script>
+<script src="/site-interactions-20260606-pass.js" defer></script>
 
 </body>
 </html>

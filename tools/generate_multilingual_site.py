@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260605-contrast"
+ASSET_VERSION = "20260606-pass"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -598,6 +598,8 @@ QUIZ_LABELS = {
         "score_title": "五種愛之語分布",
         "tips_title": "下一步練習",
         "compass_title": "結果行動羅盤",
+        "pass_title": "守護者補給通行證",
+        "pass_code": "通行域",
         "free_step": "先做免費練習",
         "luna_step": "情緒太滿時",
         "book_step": "準備深讀時",
@@ -651,6 +653,8 @@ QUIZ_LABELS = {
         "score_title": "Five love-language signal",
         "tips_title": "Next practices",
         "compass_title": "Result action compass",
+        "pass_title": "Guardian supply pass",
+        "pass_code": "Domain pass",
         "free_step": "Start with a free practice",
         "luna_step": "When feelings are loud",
         "book_step": "When ready to go deeper",
@@ -704,6 +708,8 @@ QUIZ_LABELS = {
         "score_title": "五つの愛の言語の分布",
         "tips_title": "次の練習",
         "compass_title": "結果アクションコンパス",
+        "pass_title": "守護者の補給パス",
+        "pass_code": "通行する分域",
         "free_step": "まず無料の練習",
         "luna_step": "感情が大きい時",
         "book_step": "深く読みたい時",
@@ -757,6 +763,8 @@ QUIZ_LABELS = {
         "score_title": "다섯 사랑의 언어 분포",
         "tips_title": "다음 연습",
         "compass_title": "결과 행동 나침반",
+        "pass_title": "수호자 보급 패스",
+        "pass_code": "통행 분역",
         "free_step": "무료 연습부터",
         "luna_step": "감정이 클 때",
         "book_step": "더 깊이 읽을 때",
@@ -810,6 +818,8 @@ QUIZ_LABELS = {
         "score_title": "Distribución de lenguajes del amor",
         "tips_title": "Próximas prácticas",
         "compass_title": "Brújula de acción del resultado",
+        "pass_title": "Pase de suministro de guardiana",
+        "pass_code": "Dominio de paso",
         "free_step": "Empieza con práctica gratuita",
         "luna_step": "Cuando la emoción está alta",
         "book_step": "Cuando quieras profundizar",
@@ -5733,6 +5743,8 @@ def quiz_payload(lang: str) -> str:
     for key, meta in QUIZ_TYPES.items():
         guardian = GUARDIANS[meta["slug"]]
         name, typ, desc = guardian[lang]
+        domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[meta["slug"]][lang]
+        domain = GUARDIAN_DOMAINS[meta["slug"]]
         guide = next(g for g in GUIDES if g["slug"] == meta["guide"])
         route = supply_route(lang, meta["slug"])
         resource_url = lang_url(lang, "resources") + f"#supply-{meta['slug']}"
@@ -5741,6 +5753,7 @@ def quiz_payload(lang: str) -> str:
         result_image_width, result_image_height = IMAGE_DIMENSIONS.get(result_image, (image_width, image_height))
         story_image = guardian_story_image(lang, meta["slug"])
         story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
+        domain_prop_width, domain_prop_height = IMAGE_DIMENSIONS.get(guardian["prop"], ("", ""))
         results[key] = {
             "name": name,
             "type": typ,
@@ -5752,6 +5765,15 @@ def quiz_payload(lang: str) -> str:
             "resultImageWidth": result_image_width,
             "resultImageHeight": result_image_height,
             "color": meta["color"],
+            "domainTitle": domain_title,
+            "domainDesc": domain_desc,
+            "domainCta": domain_cta,
+            "domainAccent": domain["accent"],
+            "domainGlow": domain["glow"],
+            "domainMotif": domain["motif"],
+            "domainProp": guardian["prop"],
+            "domainPropWidth": domain_prop_width,
+            "domainPropHeight": domain_prop_height,
             "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
             "guideTitle": guide[lang][0],
@@ -6041,12 +6063,19 @@ def quiz_script(lang: str) -> str:
         }}).join('')}}
       </section>
       <section class="quiz-advice-card"><h3>${{quiz.labels.tips_title}}</h3><ul>${{result.tips.map((tip) => `<li>${{tip}}</li>`).join('')}}</ul></section>
-      <section class="quiz-action-compass" aria-label="${{quiz.labels.compass_title}}">
-        <div class="quiz-action-head">
-          <p class="eyebrow">${{quiz.labels.compass_title}}</p>
-          <h3>${{quiz.labels.next_pack_title}}</h3>
+      <section class="quiz-action-compass guardian-supply-pass" aria-label="${{quiz.labels.compass_title}}" data-supply-pass style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
+        <div class="supply-pass-head">
+          <div>
+            <p class="eyebrow">${{quiz.labels.pass_title}}</p>
+            <h3>${{quiz.labels.next_pack_title}}</h3>
+            <p>${{quiz.labels.next_pack_intro}}</p>
+          </div>
+          <div class="supply-pass-stamp" aria-label="${{quiz.labels.pass_code}}">
+            <img src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+            <span>${{result.domainTitle}}</span>
+          </div>
         </div>
-        <p>${{quiz.labels.next_pack_intro}}</p>
+        <p class="supply-pass-domain">${{result.domainDesc}}</p>
         <div class="quiz-action-grid">
           <article>
             <span>1</span>
@@ -6067,6 +6096,7 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored" data-conversion-book>${{quiz.affiliateButton}}</a>
           </article>
         </div>
+        <p class="affiliate-disclosure">${{quiz.affiliateDisclosure}}</p>
       </section>
       <section class="quiz-starter-kit" aria-label="${{result.starterKit.title}}">
         <div class="quiz-action-head">

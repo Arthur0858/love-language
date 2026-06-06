@@ -138,6 +138,9 @@ function summarizeQuizFailures(results) {
     if (!result.keepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('missing personalized keepsake route');
     if (!result.bookHref?.startsWith('https://')) failures.push('missing affiliate book route');
     if (!result.bookRel?.includes('sponsored')) failures.push('missing sponsored rel');
+    if (!result.supplyPassVisible) failures.push('missing guardian supply pass');
+    if (!result.supplyPassStampVisible) failures.push('missing guardian supply pass stamp');
+    if (!result.supplyPassDomainTextOk) failures.push('missing guardian supply domain text');
     if (!result.quizAffiliateDisclosureVisible) failures.push('missing visible quiz affiliate disclosure');
     if (!result.quizAffiliateDisclosureTextOk) failures.push('quiz affiliate disclosure text is not localized');
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
@@ -719,19 +722,24 @@ for (const item of quizCases) {
   const book = page.locator('[data-conversion-book]').first();
   const bookHref = await book.getAttribute('href');
   const bookRel = await book.getAttribute('rel');
+  const supplyPass = page.locator('[data-supply-pass]').first();
+  const supplyPassVisible = await supplyPass.isVisible().catch(() => false);
+  const supplyPassStampVisible = await supplyPass.locator('.supply-pass-stamp img').first().isVisible().catch(() => false);
+  const supplyPassDomainTextOk = await supplyPass.locator('.supply-pass-domain').first().evaluate((node) => (node.textContent || '').trim().length >= 12).catch(() => false);
   const affiliateDisclosure = page.locator('.quiz-supply-card .affiliate-disclosure').first();
   const quizAffiliateDisclosureVisible = await affiliateDisclosure.isVisible().catch(() => false);
   const quizAffiliateDisclosureTextOk = await affiliateDisclosure.evaluate((node) => {
     const text = node.textContent || '';
     return /聯盟行銷|affiliate links|アフィリエイト|제휴|afiliado/i.test(text);
   }).catch(() => false);
-  const dynamicImageIssues = await page.locator('.quiz-result-card img, .quiz-collector-card img').evaluateAll((images) => images.flatMap((image) => {
+  const dynamicImageIssues = await page.locator('.quiz-result-card img, .quiz-collector-card img, .supply-pass-stamp img').evaluateAll((images) => images.flatMap((image) => {
     const issues = [];
     const label = image.getAttribute('alt') || image.getAttribute('src') || 'dynamic image';
     if (!image.getAttribute('width') || !image.getAttribute('height')) issues.push(`${label} missing width/height`);
     if (image.getAttribute('decoding') !== 'async') issues.push(`${label} missing async decoding`);
     if (image.closest('.quiz-result-card') && image.getAttribute('fetchpriority') !== 'high') issues.push(`${label} result image not high priority`);
     if (image.closest('.quiz-collector-card') && image.getAttribute('fetchpriority') !== 'low') issues.push(`${label} collector image not low priority`);
+    if (image.closest('.supply-pass-stamp') && image.getAttribute('fetchpriority') !== 'low') issues.push(`${label} supply pass image not low priority`);
     return issues;
   }));
   const horizontalOverflow = await page.evaluate(() =>
@@ -764,6 +772,9 @@ for (const item of quizCases) {
     keepsakeHref,
     bookHref,
     bookRel,
+    supplyPassVisible,
+    supplyPassStampVisible,
+    supplyPassDomainTextOk,
     quizAffiliateDisclosureVisible,
     quizAffiliateDisclosureTextOk,
     dynamicImageIssues,

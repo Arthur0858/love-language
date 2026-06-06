@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import re
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
@@ -12,6 +14,19 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 PREVIEW_BASE_URL = "https://lovetypes.pages.dev"
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def load_generator_config():
+    spec = importlib.util.spec_from_file_location("lovetypes_generator", ROOT / "tools" / "generate_multilingual_site.py")
+    if spec is None or spec.loader is None:
+        raise RuntimeError("Unable to load generate_multilingual_site.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+GENERATOR_CONFIG = load_generator_config()
 CSP_REQUIRED_DIRECTIVES = {
     "default-src": "'self'",
     "script-src": "https://static.cloudflareinsights.com",
@@ -47,9 +62,9 @@ CASES = [
     HeaderCase("home", "/", html=True),
     HeaderCase("characters", "/characters/", html=True),
     HeaderCase("resources", "/resources/", html=True),
-    HeaderCase("css", "/shared-20260605-contrast.css", immutable=True),
-    HeaderCase("interactions", "/site-interactions-20260605-contrast.js", immutable=True),
-    HeaderCase("quiz-data", "/quiz-data-zh-20260605-contrast.js", immutable=True),
+    HeaderCase("css", GENERATOR_CONFIG.CSS_ASSET, immutable=True),
+    HeaderCase("interactions", GENERATOR_CONFIG.INTERACTIONS_ASSET, immutable=True),
+    HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
     HeaderCase("image", "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp", immutable=True),
     HeaderCase("luna-redirect", "/luna/", expected_status=301, expected_location="/luna-yoga-music/"),
 ]

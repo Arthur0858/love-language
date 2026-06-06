@@ -210,6 +210,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_quiz_conversion_anchor_targets_checked",
         "public_quiz_conversion_images_checked",
         "public_quiz_conversion_affiliate_links_checked",
+        "public_quiz_conversion_pass_fields_checked",
         "public_quiz_assets_checked",
         "public_quiz_questions_checked",
         "public_quiz_results_checked",

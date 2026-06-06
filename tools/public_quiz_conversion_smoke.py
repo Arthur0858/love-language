@@ -14,6 +14,13 @@ from urllib.request import Request, urlopen
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 LANG_PATHS = {"zh": "/", "en": "/en/", "ja": "/ja/", "ko": "/ko/", "es": "/es/"}
+GUIDE_PATHS = {
+    "zh": "/guides/share-your-result/",
+    "en": "/en/guides/share-your-result/",
+    "ja": "/ja/guides/share-your-result/",
+    "ko": "/ko/guides/share-your-result/",
+    "es": "/es/guides/share-your-result/",
+}
 EXPECTED_TYPES = {"W", "T", "G", "S", "P"}
 TYPE_SLUGS = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora"}
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
@@ -228,6 +235,36 @@ def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple
     return issues, len(checks)
 
 
+def check_guide_resume_template(base_url: str, lang: str, guide_path: str) -> tuple[list[str], int]:
+    response = request_url(urljoin(base_url + "/", guide_path.lstrip("/")))
+    source = f"{guide_path}:guide-resume-template"
+    if response.status != 200:
+        return [f"{source}: expected status 200, got {response.status}"], 0
+    checks = {
+        "resume container": "data-guide-saved",
+        "guide resume card": "guide-resume-card",
+        "pass stamp": "data-resume-pass-stamp",
+        "guide resume label": "quiz.labels.guide_resume_title",
+        "guide resume intro": "quiz.labels.guide_resume_intro",
+        "plan action": "result.planUrl",
+        "guardian action": "result.guardianUrl",
+        "supply action": "result.resourceUrl",
+        "luna action": "result.lunaUrl",
+        "clear action": "data-clear-guide-result",
+        "hash focus": "#guide-${result.slug}",
+    }
+    issues = [
+        f"{source}: missing {label}"
+        for label, snippet in checks.items()
+        if snippet not in response.text
+    ]
+    expected_quiz_lang = "zh" if lang == "zh" else lang
+    expected_quiz_pattern = f"/quiz-data-{expected_quiz_lang}-"
+    if expected_quiz_pattern not in response.text:
+        issues.append(f"{source}: missing localized quiz data script {expected_quiz_pattern}")
+    return issues, len(checks) + 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public quiz result conversion URLs, anchors, images, and affiliate resources.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
@@ -246,11 +283,15 @@ def main() -> int:
     result_affiliate_links_checked = 0
     result_pass_fields_checked = 0
     home_saved_template_checks = 0
+    guide_resume_template_checks = 0
 
     for lang, home_path in LANG_PATHS.items():
         template_issues, template_checks = check_home_saved_template(base_url, lang, home_path)
         issues.extend(template_issues)
         home_saved_template_checks += template_checks
+        guide_template_issues, guide_template_checks = check_guide_resume_template(base_url, lang, GUIDE_PATHS[lang])
+        issues.extend(guide_template_issues)
+        guide_resume_template_checks += guide_template_checks
         script, discovery_issues = discover_quiz_asset(base_url, lang, home_path)
         issues.extend(discovery_issues)
         if not script:
@@ -315,6 +356,7 @@ def main() -> int:
     print(f"public_quiz_conversion_affiliate_links_checked={result_affiliate_links_checked}")
     print(f"public_quiz_conversion_pass_fields_checked={result_pass_fields_checked}")
     print(f"public_quiz_conversion_home_saved_template_checks={home_saved_template_checks}")
+    print(f"public_quiz_conversion_guide_resume_template_checks={guide_resume_template_checks}")
     print(f"public_quiz_conversion_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

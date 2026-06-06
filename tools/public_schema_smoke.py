@@ -6,6 +6,7 @@ import json
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
+from datetime import date
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
@@ -242,6 +243,7 @@ def validate_schema(path: str, parser: SchemaParser, entities: list[dict], sitem
     stats = {
         "organizations": 0,
         "primary_entities": 0,
+        "date_modified": 0,
         "breadcrumbs": 0,
         "article_entities": 0,
         "howto_entities": 0,
@@ -278,6 +280,18 @@ def validate_schema(path: str, parser: SchemaParser, entities: list[dict], sitem
             issues.append(f"{path}: primary entity url should match canonical {canonical!r}, got {primary.get('url')!r}")
         if parser.html_lang and primary.get("inLanguage") != parser.html_lang:
             issues.append(f"{path}: primary entity inLanguage should match html lang {parser.html_lang!r}")
+        date_modified = primary.get("dateModified")
+        if not isinstance(date_modified, str) or not date_modified:
+            issues.append(f"{path}: primary entity missing dateModified")
+        else:
+            try:
+                parsed_date_modified = date.fromisoformat(date_modified)
+            except ValueError:
+                issues.append(f"{path}: primary entity dateModified should be ISO date, got {date_modified!r}")
+            else:
+                stats["date_modified"] += 1
+                if parsed_date_modified > date.today():
+                    issues.append(f"{path}: primary entity dateModified should not be in the future: {date_modified}")
         if "WebSite" not in primary_types and primary.get("description") != parser.description:
             issues.append(f"{path}: primary entity description should match meta description")
         primary_name = primary.get("headline") if "Article" in primary_types else primary.get("name")
@@ -341,6 +355,7 @@ def main() -> int:
     organization_entities_checked = 0
     primary_entities_checked = 0
     breadcrumb_entities_checked = 0
+    date_modified_entities_checked = 0
     article_entities_checked = 0
     howto_entities_checked = 0
     itemlist_entities_checked = 0
@@ -379,6 +394,7 @@ def main() -> int:
         jsonld_blocks_checked += parsed_blocks
         organization_entities_checked += stats["organizations"]
         primary_entities_checked += stats["primary_entities"]
+        date_modified_entities_checked += stats["date_modified"]
         breadcrumb_entities_checked += stats["breadcrumbs"]
         article_entities_checked += stats["article_entities"]
         howto_entities_checked += stats["howto_entities"]
@@ -388,6 +404,7 @@ def main() -> int:
     print(f"public_schema_jsonld_blocks_checked={jsonld_blocks_checked}")
     print(f"public_schema_organization_entities_checked={organization_entities_checked}")
     print(f"public_schema_primary_entities_checked={primary_entities_checked}")
+    print(f"public_schema_date_modified_entities_checked={date_modified_entities_checked}")
     print(f"public_schema_breadcrumb_entities_checked={breadcrumb_entities_checked}")
     print(f"public_schema_article_entities_checked={article_entities_checked}")
     print(f"public_schema_howto_entities_checked={howto_entities_checked}")

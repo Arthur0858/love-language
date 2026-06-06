@@ -249,6 +249,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_schema_jsonld_blocks_checked",
         "public_schema_organization_entities_checked",
         "public_schema_primary_entities_checked",
+        "public_schema_date_modified_entities_checked",
         "public_schema_breadcrumb_entities_checked",
         "public_schema_article_entities_checked",
         "public_schema_howto_entities_checked",

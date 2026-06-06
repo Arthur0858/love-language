@@ -6584,6 +6584,7 @@ def home(lang: str) -> None:
         "name": t["brand"],
         "url": abs_url(lang),
         "inLanguage": t["code"],
+        "dateModified": UPDATED,
         "publisher": organization_ref(),
     })
     write(page_path(lang), layout(lang, t["home_title"], t["home_desc"], "", body + quiz_script(lang), "", "website", "/og-cover.jpg", schema))

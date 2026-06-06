@@ -3,12 +3,15 @@ from __future__ import annotations
 
 import ast
 import py_compile
+import re
 from collections import Counter
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
+PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
+ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
 
 
 def literal_strings(node: ast.AST) -> list[str]:
@@ -51,6 +54,27 @@ def parse_summary() -> tuple[list[str], list[str], list[str], list[str], list[st
     return check_names, check_commands, check_script_paths, important_keys, retry_names
 
 
+def parse_predeploy_script_paths() -> list[str]:
+    tree = ast.parse(PREDEPLOY_PATH.read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign):
+            continue
+        if any(isinstance(target, ast.Name) and target.id == "PYTHON_TOOLS" for target in node.targets):
+            return [path for path in literal_strings(node.value) if path.startswith("tools/")]
+    return []
+
+
+def emitted_issue_keys(script_paths: list[str]) -> list[str]:
+    keys: set[str] = set()
+    for path in sorted(set(script_paths)):
+        source_path = ROOT / path
+        if not source_path.exists():
+            continue
+        source = source_path.read_text(encoding="utf-8", errors="replace")
+        keys.update(match.group(1) for match in ISSUE_KEY_RE.finditer(source))
+    return sorted(keys)
+
+
 def duplicates(values: list[str]) -> list[str]:
     counts = Counter(values)
     return sorted(value for value, count in counts.items() if count > 1)
@@ -59,11 +83,14 @@ def duplicates(values: list[str]) -> list[str]:
 def main() -> int:
     issues: list[str] = []
     check_names, check_commands, check_script_paths, important_keys, retry_names = parse_summary()
+    predeploy_script_paths = parse_predeploy_script_paths()
+    issue_keys = emitted_issue_keys(check_script_paths + predeploy_script_paths)
     duplicate_check_names = duplicates(check_names)
     duplicate_check_commands = duplicates(check_commands)
     duplicate_script_paths = duplicates(check_script_paths)
     duplicate_important_keys = duplicates(important_keys)
     unknown_retry_names = sorted(set(retry_names).difference(check_names))
+    missing_issue_important_keys = sorted(set(issue_keys).difference(important_keys))
     if duplicate_check_names:
         issues.append(f"duplicate CHECKS names: {', '.join(duplicate_check_names)}")
     if duplicate_check_commands:
@@ -74,6 +101,8 @@ def main() -> int:
         issues.append(f"duplicate important_keys: {', '.join(duplicate_important_keys)}")
     if unknown_retry_names:
         issues.append(f"unknown RETRY_ON_FAILURE names: {', '.join(unknown_retry_names)}")
+    if missing_issue_important_keys:
+        issues.append(f"issue metrics missing from important_keys: {', '.join(missing_issue_important_keys)}")
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
@@ -99,12 +128,15 @@ def main() -> int:
     print(f"site_health_config_python_scripts_compiled={compiled_python_scripts}")
     print(f"site_health_config_important_keys={len(important_keys)}")
     print(f"site_health_config_retry_names={len(retry_names)}")
+    print(f"site_health_config_predeploy_scripts={len(predeploy_script_paths)}")
+    print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")
     print(f"site_health_config_duplicate_script_paths={len(duplicate_script_paths)}")
     print(f"site_health_config_missing_scripts={len(missing_scripts)}")
     print(f"site_health_config_duplicate_important_keys={len(duplicate_important_keys)}")
     print(f"site_health_config_unknown_retry_names={len(unknown_retry_names)}")
+    print(f"site_health_config_missing_issue_important_keys={len(missing_issue_important_keys)}")
     print(f"site_health_config_issues={len(issues)}")
     for issue in issues:
         print(issue)

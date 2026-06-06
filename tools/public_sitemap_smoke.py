@@ -7,6 +7,7 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
+from datetime import date
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
@@ -40,6 +41,8 @@ REQUIRED_GLOBAL_HEADERS = {
     "referrer-policy": "strict-origin-when-cross-origin",
     "x-frame-options": "SAMEORIGIN",
 }
+EXPECTED_CHANGEFREQ = "weekly"
+EXPECTED_PRIORITY = "0.8"
 
 
 @dataclass
@@ -161,15 +164,56 @@ def expected_core_universe_paths() -> set[str]:
     }
 
 
-def sitemap_paths(base_url: str, canonical_base_url: str) -> tuple[list[str], list[str]]:
+def validate_sitemap_metadata(node: ET.Element, loc: str) -> tuple[list[str], dict[str, int]]:
+    issues: list[str] = []
+    stats = {
+        "lastmod": 0,
+        "changefreq": 0,
+        "priority": 0,
+    }
+
+    lastmod = (node.findtext("sm:lastmod", default="", namespaces=SITEMAP_NS) or "").strip()
+    if not lastmod:
+        issues.append(f"/sitemap.xml: missing lastmod for {loc}")
+    else:
+        try:
+            parsed_lastmod = date.fromisoformat(lastmod)
+        except ValueError:
+            issues.append(f"/sitemap.xml: invalid lastmod for {loc}: {lastmod!r}")
+        else:
+            stats["lastmod"] += 1
+            if parsed_lastmod > date.today():
+                issues.append(f"/sitemap.xml: lastmod should not be in the future for {loc}: {lastmod}")
+
+    changefreq = (node.findtext("sm:changefreq", default="", namespaces=SITEMAP_NS) or "").strip()
+    if changefreq != EXPECTED_CHANGEFREQ:
+        issues.append(f"/sitemap.xml: changefreq should be {EXPECTED_CHANGEFREQ!r} for {loc}, got {changefreq!r}")
+    else:
+        stats["changefreq"] += 1
+
+    priority = (node.findtext("sm:priority", default="", namespaces=SITEMAP_NS) or "").strip()
+    if priority != EXPECTED_PRIORITY:
+        issues.append(f"/sitemap.xml: priority should be {EXPECTED_PRIORITY!r} for {loc}, got {priority!r}")
+    else:
+        stats["priority"] += 1
+
+    return issues, stats
+
+
+def sitemap_paths(base_url: str, canonical_base_url: str) -> tuple[list[str], list[str], dict[str, int]]:
     response = request_url(urljoin(base_url + "/", "sitemap.xml"))
     issues: list[str] = []
+    metadata_stats = {
+        "lastmod": 0,
+        "changefreq": 0,
+        "priority": 0,
+    }
     if response.status != 200:
-        return [], [f"/sitemap.xml: expected status 200, got {response.status}"]
+        return [], [f"/sitemap.xml: expected status 200, got {response.status}"], metadata_stats
     try:
         root = ET.fromstring(response.body)
     except ET.ParseError as error:
-        return [], [f"/sitemap.xml: invalid XML: {error}"]
+        return [], [f"/sitemap.xml: invalid XML: {error}"], metadata_stats
     paths: list[str] = []
     canonical_host = urlparse(canonical_base_url).netloc
     for node in root.findall("sm:url", SITEMAP_NS):
@@ -181,9 +225,13 @@ def sitemap_paths(base_url: str, canonical_base_url: str) -> tuple[list[str], li
         if parsed.scheme != "https" or parsed.netloc != canonical_host:
             issues.append(f"/sitemap.xml: loc should use https {canonical_host}: {loc}")
         paths.append(public_path(loc))
+        metadata_issues, stats = validate_sitemap_metadata(node, loc)
+        issues.extend(metadata_issues)
+        for key, value in stats.items():
+            metadata_stats[key] += value
     if len(set(paths)) != len(paths):
         issues.append("/sitemap.xml: duplicate loc values")
-    return paths, issues
+    return paths, issues, metadata_stats
 
 
 def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[str], int, int]:
@@ -247,7 +295,7 @@ def main() -> int:
     base_url = normalize_base_url(args.base_url)
     canonical_base_url = normalize_base_url(args.canonical_base_url)
 
-    paths, issues = sitemap_paths(base_url, canonical_base_url)
+    paths, issues, sitemap_metadata_stats = sitemap_paths(base_url, canonical_base_url)
     expected_core_paths = expected_core_universe_paths()
     core_paths_present = expected_core_paths.intersection(paths)
     missing_core_paths = sorted(expected_core_paths.difference(paths))
@@ -264,6 +312,9 @@ def main() -> int:
     print(f"public_sitemap_urls_listed={len(paths)}")
     print(f"public_sitemap_core_universe_routes_expected={len(expected_core_paths)}")
     print(f"public_sitemap_core_universe_routes_checked={len(core_paths_present)}")
+    print(f"public_sitemap_lastmod_checked={sitemap_metadata_stats['lastmod']}")
+    print(f"public_sitemap_changefreq_checked={sitemap_metadata_stats['changefreq']}")
+    print(f"public_sitemap_priority_checked={sitemap_metadata_stats['priority']}")
     print(f"public_sitemap_pages_checked={pages_checked}")
     print(f"public_sitemap_hreflang_links_checked={hreflang_links_checked}")
     print(f"public_sitemap_issues={len(issues)}")

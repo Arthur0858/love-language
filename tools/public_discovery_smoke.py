@@ -9,10 +9,13 @@ import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
+from io import BytesIO
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
+
+from PIL import Image
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
@@ -230,19 +233,38 @@ def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, len(items), links_checked, item_metadata_checked
 
 
-def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
+def parse_icon_sizes(value: str) -> set[tuple[int, int]]:
+    sizes: set[tuple[int, int]] = set()
+    for token in value.split():
+        if token.lower() == "any":
+            continue
+        match = re.fullmatch(r"(\d+)x(\d+)", token.lower())
+        if match:
+            sizes.add((int(match.group(1)), int(match.group(2))))
+    return sizes
+
+
+def image_declared_sizes(body: bytes) -> set[tuple[int, int]]:
+    with Image.open(BytesIO(body)) as image:
+        ico_sizes = getattr(getattr(image, "ico", None), "sizes", None)
+        if callable(ico_sizes):
+            return {(int(width), int(height)) for width, height in ico_sizes()}
+        return {(int(image.size[0]), int(image.size[1]))}
+
+
+def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     path = "/site.webmanifest"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", "") and "manifest" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected manifest/json content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         manifest = json.loads(response.text)
     except json.JSONDecodeError as error:
-        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0, 0
     for field in ("name", "short_name", "description", "start_url", "scope", "display", "theme_color", "icons"):
         if not manifest.get(field):
             issues.append(f"{path}: missing required field {field}")
@@ -281,6 +303,7 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
         issues.append(f"{path}: icons should be a non-empty list")
         icons = []
     icons_checked = 0
+    icon_dimensions_checked = 0
     for icon in icons:
         src = icon.get("src") if isinstance(icon, dict) else ""
         sizes = icon.get("sizes") if isinstance(icon, dict) else ""
@@ -295,7 +318,21 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
         content_type = icon_response.headers.get("content-type", "")
         if icon_type not in content_type:
             issues.append(f"{path}: icon {src} expected content type containing {icon_type!r}, got {content_type!r}")
-    return issues, icons_checked, len(shortcuts), shortcut_links_checked, manifest_expected_shortcuts_checked
+        expected_sizes = parse_icon_sizes(sizes)
+        if not expected_sizes:
+            issues.append(f"{path}: icon {src} should declare concrete sizes, got {sizes!r}")
+            continue
+        try:
+            actual_sizes = image_declared_sizes(icon_response.body)
+        except OSError as error:
+            issues.append(f"{path}: icon {src} could not be decoded: {error}")
+            continue
+        icon_dimensions_checked += 1
+        if not expected_sizes.issubset(actual_sizes):
+            issues.append(
+                f"{path}: icon {src} declared sizes {sorted(expected_sizes)} should exist in file sizes {sorted(actual_sizes)}"
+            )
+    return issues, icons_checked, icon_dimensions_checked, len(shortcuts), shortcut_links_checked, manifest_expected_shortcuts_checked
 
 
 def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
@@ -437,7 +474,14 @@ def main() -> int:
 
     issues: list[str] = []
     feed_issues, feed_items, feed_links_checked, feed_item_metadata_checked = check_feed(base_url)
-    manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked, manifest_expected_shortcuts_checked = check_manifest(base_url)
+    (
+        manifest_issues,
+        manifest_icons_checked,
+        manifest_icon_dimensions_checked,
+        manifest_shortcuts,
+        manifest_shortcut_links_checked,
+        manifest_expected_shortcuts_checked,
+    ) = check_manifest(base_url)
     (
         llms_issues,
         llms_sections_checked,
@@ -458,6 +502,7 @@ def main() -> int:
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
     print(f"public_discovery_feed_item_metadata_checked={feed_item_metadata_checked}")
     print(f"public_discovery_manifest_icons_checked={manifest_icons_checked}")
+    print(f"public_discovery_manifest_icon_dimensions_checked={manifest_icon_dimensions_checked}")
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
     print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")
     print(f"public_discovery_manifest_expected_shortcuts_checked={manifest_expected_shortcuts_checked}")

@@ -244,6 +244,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_schema_url_sitemap_page_urls_checked",
         "public_schema_url_unique_targets_checked",
         "public_sitemap_pages_checked",
+        "public_sitemap_core_universe_routes_expected",
+        "public_sitemap_core_universe_routes_checked",
         "public_sitemap_hreflang_links_checked",
         "public_not_found_cases_checked",
         "public_not_found_localized_cases",

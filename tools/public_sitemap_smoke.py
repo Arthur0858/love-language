@@ -16,6 +16,21 @@ from urllib.request import Request, urlopen
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+CORE_UNIVERSE_ROUTES = (
+    "",
+    "garden-map",
+    "guides",
+    "characters",
+    "theory",
+    "resources",
+    "repair-plan",
+    "keepsakes",
+    "luna-yoga-music",
+    "about",
+    "contact",
+    "privacy",
+    "terms",
+)
 SITEMAP_NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
     "xhtml": "http://www.w3.org/1999/xhtml",
@@ -132,6 +147,20 @@ def expected_hreflang_map(canonical_base_url: str, path: str) -> dict[str, str]:
     return result
 
 
+def localized_path(lang: str, route: str) -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    parts = [part for part in (prefix, route) if part]
+    return "/" + "/".join(parts) + "/" if parts else "/"
+
+
+def expected_core_universe_paths() -> set[str]:
+    return {
+        localized_path(lang, route)
+        for lang in LOCALE_PREFIXES
+        for route in CORE_UNIVERSE_ROUTES
+    }
+
+
 def sitemap_paths(base_url: str, canonical_base_url: str) -> tuple[list[str], list[str]]:
     response = request_url(urljoin(base_url + "/", "sitemap.xml"))
     issues: list[str] = []
@@ -219,6 +248,11 @@ def main() -> int:
     canonical_base_url = normalize_base_url(args.canonical_base_url)
 
     paths, issues = sitemap_paths(base_url, canonical_base_url)
+    expected_core_paths = expected_core_universe_paths()
+    core_paths_present = expected_core_paths.intersection(paths)
+    missing_core_paths = sorted(expected_core_paths.difference(paths))
+    for path in missing_core_paths:
+        issues.append(f"/sitemap.xml: missing core universe route {path}")
     pages_checked = 0
     hreflang_links_checked = 0
     for path in paths:
@@ -228,6 +262,8 @@ def main() -> int:
         hreflang_links_checked += hreflang_count
 
     print(f"public_sitemap_urls_listed={len(paths)}")
+    print(f"public_sitemap_core_universe_routes_expected={len(expected_core_paths)}")
+    print(f"public_sitemap_core_universe_routes_checked={len(core_paths_present)}")
     print(f"public_sitemap_pages_checked={pages_checked}")
     print(f"public_sitemap_hreflang_links_checked={hreflang_links_checked}")
     print(f"public_sitemap_issues={len(issues)}")

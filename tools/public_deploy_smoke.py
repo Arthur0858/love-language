@@ -39,17 +39,22 @@ PUBLIC_PATHS = [
     "/about/",
     "/theory/",
     "/contact/",
+    "/garden-map/",
     "/en/",
     "/en/guides/words-of-affirmation-scripts/",
     "/en/resources/",
     "/en/characters/",
+    "/en/garden-map/",
     "/ja/",
     "/ja/characters/",
+    "/ja/garden-map/",
     "/ko/",
     "/ko/characters/",
+    "/ko/garden-map/",
     "/ko/resources/",
     "/es/",
     "/es/characters/",
+    "/es/garden-map/",
     "/es/resources/",
     "/ja/resources/",
     "/ko/repair-plan/",
@@ -65,12 +70,17 @@ EXPECTED_TEXT = {
     "/en/guides/words-of-affirmation-scripts/": "Practical Scripts for Words of Affirmation",
     "/keepsakes/": "守護者收藏室",
     "/contact/": "contact@lovetypes.tw",
+    "/garden-map/": "心語庭園地圖",
     "/en/": "LoveTypes Emotion Guardians",
     "/en/resources/": "Resources",
+    "/en/garden-map/": "Heart Garden Map",
     "/ja/": "LoveTypes 感情の守護者",
+    "/ja/garden-map/": "心語の庭マップ",
     "/ko/": "LoveTypes 감정 수호자",
+    "/ko/garden-map/": "마음의 정원 지도",
     "/ko/resources/": "자료",
     "/es/": "LoveTypes Guardianas Emocionales",
+    "/es/garden-map/": "Mapa del Jardín del Corazón",
     "/es/resources/": "Recursos",
     "/en/characters/": "Five Emotion Guardians Overview",
     "/ja/characters/": "五人の感情の守護者一覧",
@@ -140,6 +150,71 @@ EXPECTED_HREF_TARGETS = {
         "/characters/",
         "/repair-plan/",
         "/resources/",
+    ),
+    "/garden-map/": (
+        "/#quiz-section",
+        "/characters/",
+        "/resources/",
+        "/repair-plan/",
+        "/keepsakes/",
+        "/luna-yoga-music/",
+        "/guides/",
+        "/about/",
+        "/theory/",
+        "/contact/",
+        "/privacy/",
+    ),
+    "/en/garden-map/": (
+        "/en/#quiz-section",
+        "/en/characters/",
+        "/en/resources/",
+        "/en/repair-plan/",
+        "/en/keepsakes/",
+        "/en/luna-yoga-music/",
+        "/en/guides/",
+        "/en/about/",
+        "/en/theory/",
+        "/en/contact/",
+        "/en/privacy/",
+    ),
+    "/ja/garden-map/": (
+        "/ja/#quiz-section",
+        "/ja/characters/",
+        "/ja/resources/",
+        "/ja/repair-plan/",
+        "/ja/keepsakes/",
+        "/ja/luna-yoga-music/",
+        "/ja/guides/",
+        "/ja/about/",
+        "/ja/theory/",
+        "/ja/contact/",
+        "/ja/privacy/",
+    ),
+    "/ko/garden-map/": (
+        "/ko/#quiz-section",
+        "/ko/characters/",
+        "/ko/resources/",
+        "/ko/repair-plan/",
+        "/ko/keepsakes/",
+        "/ko/luna-yoga-music/",
+        "/ko/guides/",
+        "/ko/about/",
+        "/ko/theory/",
+        "/ko/contact/",
+        "/ko/privacy/",
+    ),
+    "/es/garden-map/": (
+        "/es/#quiz-section",
+        "/es/characters/",
+        "/es/resources/",
+        "/es/repair-plan/",
+        "/es/keepsakes/",
+        "/es/luna-yoga-music/",
+        "/es/guides/",
+        "/es/about/",
+        "/es/theory/",
+        "/es/contact/",
+        "/es/privacy/",
     ),
 }
 REDIRECTS = {
@@ -211,6 +286,7 @@ QUIZ_DATA_REQUIRED_MARKERS = (
     "data-luna-saved",
     "data-guardian-saved",
     "data-guide-saved",
+    "data-garden-map-saved",
 )
 RESOURCE_SUPPLY_SAFETY_MARKERS = (
     ("supply compass", 'class="section supply-compass"'),
@@ -221,6 +297,18 @@ RESOURCE_EXPECTED_STARTER_CARDS = 4
 RESOURCE_EXPECTED_WISHLIST_CARDS = len(GUARDIAN_SLUGS)
 HOME_EXPECTED_UNIVERSE_GATE_CARDS = len(GUARDIAN_SLUGS)
 CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS = len(GUARDIAN_SLUGS)
+GARDEN_MAP_PATHS = {"/garden-map/", "/en/garden-map/", "/ja/garden-map/", "/ko/garden-map/", "/es/garden-map/"}
+GARDEN_MAP_SECTION_MARKERS = (
+    "data-garden-map-handoff",
+    "data-garden-map-routes",
+    "data-garden-map-tools",
+    "data-garden-map-guardians",
+    "data-garden-map-guides",
+    "data-garden-map-trust",
+)
+GARDEN_MAP_EXPECTED_GUARDIAN_CARDS = len(GUARDIAN_SLUGS)
+GARDEN_MAP_EXPECTED_GUIDE_CARDS = 12
+GARDEN_MAP_EXPECTED_ROUTE_CARDS = 4
 
 
 def load_generator_config():
@@ -684,6 +772,10 @@ def main() -> int:
     public_home_universe_gate_cards_checked = 0
     public_characters_universe_map_sections_checked = 0
     public_characters_universe_map_cards_checked = 0
+    public_garden_map_sections_checked = 0
+    public_garden_map_guardian_cards_checked = 0
+    public_garden_map_guide_cards_checked = 0
+    public_garden_map_route_cards_checked = 0
     public_supply_safety_sections_checked = 0
     public_supply_starter_cards_checked = 0
     public_supply_wishlist_cards_checked = 0
@@ -724,6 +816,29 @@ def main() -> int:
             if guardian_card_count != CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS:
                 issues.append(
                     f"{path}: expected {CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS} guardian map cards, found {guardian_card_count}"
+                )
+        if path in GARDEN_MAP_PATHS:
+            for marker in GARDEN_MAP_SECTION_MARKERS:
+                public_garden_map_sections_checked += 1
+                if marker not in response.text:
+                    issues.append(f"{path}: missing garden map section marker {marker}")
+            garden_guardian_card_count = response.text.count('class="guardian-card"')
+            public_garden_map_guardian_cards_checked += garden_guardian_card_count
+            if garden_guardian_card_count != GARDEN_MAP_EXPECTED_GUARDIAN_CARDS:
+                issues.append(
+                    f"{path}: expected {GARDEN_MAP_EXPECTED_GUARDIAN_CARDS} garden map guardian cards, found {garden_guardian_card_count}"
+                )
+            garden_guide_card_count = response.text.count('class="content-card"')
+            public_garden_map_guide_cards_checked += garden_guide_card_count
+            if garden_guide_card_count != GARDEN_MAP_EXPECTED_GUIDE_CARDS:
+                issues.append(
+                    f"{path}: expected {GARDEN_MAP_EXPECTED_GUIDE_CARDS} garden map guide cards, found {garden_guide_card_count}"
+                )
+            garden_route_card_count = response.text.count('class="garden-map-route-card"')
+            public_garden_map_route_cards_checked += garden_route_card_count
+            if garden_route_card_count != GARDEN_MAP_EXPECTED_ROUTE_CARDS:
+                issues.append(
+                    f"{path}: expected {GARDEN_MAP_EXPECTED_ROUTE_CARDS} garden map route cards, found {garden_route_card_count}"
                 )
         if path.endswith("/resources/"):
             for label, marker in RESOURCE_SUPPLY_SAFETY_MARKERS:
@@ -932,6 +1047,10 @@ def main() -> int:
     print(f"public_home_universe_gate_cards_checked={public_home_universe_gate_cards_checked}")
     print(f"public_characters_universe_map_sections_checked={public_characters_universe_map_sections_checked}")
     print(f"public_characters_universe_map_cards_checked={public_characters_universe_map_cards_checked}")
+    print(f"public_garden_map_sections_checked={public_garden_map_sections_checked}")
+    print(f"public_garden_map_guardian_cards_checked={public_garden_map_guardian_cards_checked}")
+    print(f"public_garden_map_guide_cards_checked={public_garden_map_guide_cards_checked}")
+    print(f"public_garden_map_route_cards_checked={public_garden_map_route_cards_checked}")
     print(f"public_supply_safety_sections_checked={public_supply_safety_sections_checked}")
     print(f"public_supply_starter_cards_checked={public_supply_starter_cards_checked}")
     print(f"public_supply_wishlist_cards_checked={public_supply_wishlist_cards_checked}")

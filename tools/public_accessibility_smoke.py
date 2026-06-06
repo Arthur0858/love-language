@@ -41,8 +41,10 @@ class AccessibilityParser(HTMLParser):
         self.ids: list[str] = []
         self.h1_count = 0
         self.main_count = 0
+        self.main_ids: list[str] = []
         self.navs: list[dict[str, str]] = []
         self.links: list[dict[str, str]] = []
+        self.skip_links: list[dict[str, str]] = []
         self.buttons: list[dict[str, object]] = []
         self.images: list[dict[str, str]] = []
         self.controls: list[dict[str, str]] = []
@@ -65,12 +67,15 @@ class AccessibilityParser(HTMLParser):
             self.h1_count += 1
         elif tag == "main":
             self.main_count += 1
+            self.main_ids.append(data.get("id", ""))
         elif tag == "nav":
             self.navs.append(data)
         elif tag == "a":
             data["_text"] = ""
             data["_image_alt"] = ""
             self.links.append(data)
+            if data.get("class", "").split() and "skip-link" in data.get("class", "").split():
+                self.skip_links.append(data)
         elif tag == "button":
             self.buttons.append({"attrs": data, "text": []})
         elif tag == "img":
@@ -190,6 +195,8 @@ def audit_page(url: str, html: str) -> tuple[list[str], dict[str, int]]:
         "buttons": 0,
         "images": 0,
         "controls": 0,
+        "skip_links": 0,
+        "main_targets": 0,
         "navs": 0,
         "idrefs": 0,
         "aria_current": 0,
@@ -206,8 +213,22 @@ def audit_page(url: str, html: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{url}: missing title")
     if parser.main_count != 1:
         issues.append(f"{url}: expected one main landmark, found {parser.main_count}")
+    if "main" not in parser.main_ids:
+        issues.append(f"{url}: main landmark should include id=\"main\" for skip link target")
+    else:
+        stats["main_targets"] += 1
     if parser.h1_count != 1:
         issues.append(f"{url}: expected one h1, found {parser.h1_count}")
+
+    if not parser.skip_links:
+        issues.append(f"{url}: missing skip link")
+    else:
+        stats["skip_links"] = len(parser.skip_links)
+        first_skip = parser.skip_links[0]
+        if first_skip.get("href") != "#main":
+            issues.append(f"{url}: first skip link should point to #main, got {first_skip.get('href')!r}")
+        if not accessible_name(first_skip, first_skip.get("_text", "")):
+            issues.append(f"{url}: skip link missing accessible name")
 
     stats["navs"] = len(parser.navs)
     for nav in parser.navs:
@@ -297,6 +318,8 @@ def main() -> int:
     print(f"public_accessibility_buttons_checked={totals['buttons']}")
     print(f"public_accessibility_images_checked={totals['images']}")
     print(f"public_accessibility_controls_checked={totals['controls']}")
+    print(f"public_accessibility_skip_links_checked={totals['skip_links']}")
+    print(f"public_accessibility_main_targets_checked={totals['main_targets']}")
     print(f"public_accessibility_navs_checked={totals['navs']}")
     print(f"public_accessibility_idrefs_checked={totals['idrefs']}")
     print(f"public_accessibility_aria_current_checked={totals['aria_current']}")

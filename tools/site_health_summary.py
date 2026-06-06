@@ -150,6 +150,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_accessibility_buttons_checked",
         "public_accessibility_images_checked",
         "public_accessibility_controls_checked",
+        "public_accessibility_skip_links_checked",
+        "public_accessibility_main_targets_checked",
         "public_accessibility_navs_checked",
         "public_accessibility_idrefs_checked",
         "public_accessibility_aria_current_checked",

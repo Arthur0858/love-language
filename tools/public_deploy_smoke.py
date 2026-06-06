@@ -42,12 +42,15 @@ PUBLIC_PATHS = [
     "/en/",
     "/en/guides/words-of-affirmation-scripts/",
     "/en/resources/",
+    "/en/characters/",
     "/ja/",
+    "/ja/characters/",
     "/ko/",
+    "/ko/characters/",
     "/ko/resources/",
     "/es/",
+    "/es/characters/",
     "/es/resources/",
-    "/en/characters/",
     "/ja/resources/",
     "/ko/repair-plan/",
     "/es/guides/",
@@ -70,6 +73,9 @@ EXPECTED_TEXT = {
     "/es/": "LoveTypes Guardianas Emocionales",
     "/es/resources/": "Recursos",
     "/en/characters/": "Five Emotion Guardians Overview",
+    "/ja/characters/": "五人の感情の守護者一覧",
+    "/ko/characters/": "다섯 감정 수호자 한눈에 보기",
+    "/es/characters/": "Resumen de las Cinco Guardianas Emocionales",
     "/en/keepsakes/": "Guardian Keepsake Hall",
     "/ja/resources/": "リソース",
     "/ko/repair-plan/": "7일 마음 언어 회복 계획",
@@ -78,6 +84,9 @@ EXPECTED_TEXT = {
 EXPECTED_ANCHOR_TARGETS = {
     "/characters/": ("guardian-start", "guardian-map"),
     "/en/characters/": ("guardian-start", "guardian-map"),
+    "/ja/characters/": ("guardian-start", "guardian-map"),
+    "/ko/characters/": ("guardian-start", "guardian-map"),
+    "/es/characters/": ("guardian-start", "guardian-map"),
     "/keepsakes/": tuple(f"keepsake-card-{slug}" for slug in GUARDIAN_SLUGS),
     "/en/keepsakes/": tuple(f"keepsake-card-{slug}" for slug in GUARDIAN_SLUGS),
     "/resources/": ("supply-start", "supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
@@ -90,6 +99,9 @@ EXPECTED_ANCHOR_TARGETS = {
 EXPECTED_HREF_TARGETS = {
     "/characters/": ("/#quiz-section", "#guardian-map", "/resources/"),
     "/en/characters/": ("/en/#quiz-section", "#guardian-map", "/en/resources/"),
+    "/ja/characters/": ("/ja/#quiz-section", "#guardian-map", "/ja/resources/"),
+    "/ko/characters/": ("/ko/#quiz-section", "#guardian-map", "/ko/resources/"),
+    "/es/characters/": ("/es/#quiz-section", "#guardian-map", "/es/resources/"),
     "/keepsakes/": tuple(
         target
         for slug in GUARDIAN_SLUGS
@@ -208,6 +220,7 @@ RESOURCE_SUPPLY_SAFETY_MARKERS = (
 RESOURCE_EXPECTED_STARTER_CARDS = 4
 RESOURCE_EXPECTED_WISHLIST_CARDS = len(GUARDIAN_SLUGS)
 HOME_EXPECTED_UNIVERSE_GATE_CARDS = len(GUARDIAN_SLUGS)
+CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS = len(GUARDIAN_SLUGS)
 
 
 def load_generator_config():
@@ -669,6 +682,8 @@ def main() -> int:
     public_affiliate_links_checked = 0
     public_home_universe_gate_sections_checked = 0
     public_home_universe_gate_cards_checked = 0
+    public_characters_universe_map_sections_checked = 0
+    public_characters_universe_map_cards_checked = 0
     public_supply_safety_sections_checked = 0
     public_supply_starter_cards_checked = 0
     public_supply_wishlist_cards_checked = 0
@@ -699,6 +714,16 @@ def main() -> int:
             if universe_gate_count != HOME_EXPECTED_UNIVERSE_GATE_CARDS:
                 issues.append(
                     f"{path}: expected {HOME_EXPECTED_UNIVERSE_GATE_CARDS} universe gate cards, found {universe_gate_count}"
+                )
+        if path in {"/characters/", "/en/characters/", "/ja/characters/", "/ko/characters/", "/es/characters/"}:
+            public_characters_universe_map_sections_checked += 1
+            if "data-universe-map" not in response.text:
+                issues.append(f"{path}: missing characters five-domain universe map section")
+            guardian_card_count = response.text.count('class="guardian-card"')
+            public_characters_universe_map_cards_checked += guardian_card_count
+            if guardian_card_count != CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS:
+                issues.append(
+                    f"{path}: expected {CHARACTERS_EXPECTED_UNIVERSE_MAP_CARDS} guardian map cards, found {guardian_card_count}"
                 )
         if path.endswith("/resources/"):
             for label, marker in RESOURCE_SUPPLY_SAFETY_MARKERS:
@@ -905,6 +930,8 @@ def main() -> int:
     print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
     print(f"public_home_universe_gate_sections_checked={public_home_universe_gate_sections_checked}")
     print(f"public_home_universe_gate_cards_checked={public_home_universe_gate_cards_checked}")
+    print(f"public_characters_universe_map_sections_checked={public_characters_universe_map_sections_checked}")
+    print(f"public_characters_universe_map_cards_checked={public_characters_universe_map_cards_checked}")
     print(f"public_supply_safety_sections_checked={public_supply_safety_sections_checked}")
     print(f"public_supply_starter_cards_checked={public_supply_starter_cards_checked}")
     print(f"public_supply_wishlist_cards_checked={public_supply_wishlist_cards_checked}")

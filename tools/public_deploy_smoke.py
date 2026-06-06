@@ -200,6 +200,13 @@ QUIZ_DATA_REQUIRED_MARKERS = (
     "data-guardian-saved",
     "data-guide-saved",
 )
+RESOURCE_SUPPLY_SAFETY_MARKERS = (
+    ("supply compass", 'class="section supply-compass"'),
+    ("starter kit", 'class="section starter-kit-section"'),
+    ("owned supply signal", "data-supply-owned-signal"),
+)
+RESOURCE_EXPECTED_STARTER_CARDS = 4
+RESOURCE_EXPECTED_WISHLIST_CARDS = len(GUARDIAN_SLUGS)
 
 
 def load_generator_config():
@@ -659,6 +666,9 @@ def main() -> int:
     public_conversion_hrefs_checked = 0
     public_external_links_checked = 0
     public_affiliate_links_checked = 0
+    public_supply_safety_sections_checked = 0
+    public_supply_starter_cards_checked = 0
+    public_supply_wishlist_cards_checked = 0
     public_social_images_checked = 0
     public_social_immutable_images_checked = 0
     page_asset_refs: list[str] = []
@@ -677,6 +687,23 @@ def main() -> int:
         expected_text = EXPECTED_TEXT.get(path)
         if expected_text and expected_text not in response.text:
             issues.append(f"{path}: missing expected text {expected_text!r}")
+        if path.endswith("/resources/"):
+            for label, marker in RESOURCE_SUPPLY_SAFETY_MARKERS:
+                public_supply_safety_sections_checked += 1
+                if marker not in response.text:
+                    issues.append(f"{path}: missing resource conversion safety marker {label}")
+            starter_card_count = response.text.count('class="starter-kit-card"')
+            public_supply_starter_cards_checked += starter_card_count
+            if starter_card_count != RESOURCE_EXPECTED_STARTER_CARDS:
+                issues.append(
+                    f"{path}: expected {RESOURCE_EXPECTED_STARTER_CARDS} starter kit cards, found {starter_card_count}"
+                )
+            wishlist_card_count = response.text.count("data-supply-owned-card")
+            public_supply_wishlist_cards_checked += wishlist_card_count
+            if wishlist_card_count != RESOURCE_EXPECTED_WISHLIST_CARDS:
+                issues.append(
+                    f"{path}: expected {RESOURCE_EXPECTED_WISHLIST_CARDS} owned supply wishlist cards, found {wishlist_card_count}"
+                )
         assets = extract_head_assets(response.text)
         external_issues, external_links_checked, affiliate_links_checked = check_external_links(path, assets, response.text)
         issues.extend(external_issues)
@@ -863,6 +890,9 @@ def main() -> int:
     print(f"public_conversion_hrefs_checked={public_conversion_hrefs_checked}")
     print(f"public_external_links_checked={public_external_links_checked}")
     print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
+    print(f"public_supply_safety_sections_checked={public_supply_safety_sections_checked}")
+    print(f"public_supply_starter_cards_checked={public_supply_starter_cards_checked}")
+    print(f"public_supply_wishlist_cards_checked={public_supply_wishlist_cards_checked}")
     print(f"public_social_images_checked={public_social_images_checked}")
     print(f"public_social_immutable_images_checked={public_social_immutable_images_checked}")
     print(f"public_redirects_checked={redirects_checked}")

@@ -58,6 +58,11 @@ REQUIRED_SECURITY_FIELDS = (
     "Policy: https://lovetypes.tw/privacy/",
     "Canonical: https://lovetypes.tw/.well-known/security.txt",
 )
+REQUIRED_ROBOTS_LINES = (
+    "User-agent: *",
+    "Allow: /",
+    "Sitemap: https://lovetypes.tw/sitemap.xml",
+)
 URL_RE = re.compile(r"https://lovetypes\.tw/[^\s),]+")
 
 
@@ -344,6 +349,53 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int]:
     return issues, text_files_checked, security_fields_checked
 
 
+def check_robots(base_url: str) -> tuple[list[str], int, int]:
+    path = "/robots.txt"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    robots_lines_checked = 0
+    sitemap_links_checked = 0
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], robots_lines_checked, sitemap_links_checked
+    if not response.headers.get("content-type", "").startswith("text/plain"):
+        issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
+
+    lines = [line.strip() for line in response.text.splitlines() if line.strip() and not line.strip().startswith("#")]
+    for required_line in REQUIRED_ROBOTS_LINES:
+        robots_lines_checked += 1
+        if required_line not in lines:
+            issues.append(f"{path}: missing required line {required_line!r}")
+    wildcard_directives: list[str] = []
+    in_wildcard_group = False
+    for line in lines:
+        key = line.split(":", 1)[0].strip().lower() if ":" in line else ""
+        value = line.split(":", 1)[1].strip().lower() if ":" in line else ""
+        if key == "user-agent":
+            in_wildcard_group = value == "*"
+            continue
+        if in_wildcard_group and key in {"allow", "disallow"}:
+            wildcard_directives.append(f"{key}: {value}")
+    if "allow: /" not in wildcard_directives:
+        issues.append(f"{path}: User-agent * should allow /")
+    if "disallow: /" in wildcard_directives:
+        issues.append(f"{path}: User-agent * should not disallow /")
+
+    sitemap_urls = [line.split(":", 1)[1].strip() for line in lines if line.lower().startswith("sitemap:")]
+    for sitemap_url in sitemap_urls:
+        sitemap_links_checked += 1
+        if sitemap_url != DEFAULT_BASE_URL + "/sitemap.xml":
+            issues.append(f"{path}: sitemap should be {DEFAULT_BASE_URL}/sitemap.xml, got {sitemap_url!r}")
+            continue
+        sitemap_response = request_url(sitemap_url)
+        if sitemap_response.status != 200:
+            issues.append(f"{path}: sitemap {sitemap_url} expected status 200, got {sitemap_response.status}")
+        if "xml" not in sitemap_response.headers.get("content-type", ""):
+            issues.append(f"{path}: sitemap {sitemap_url} expected XML content type, got {sitemap_response.headers.get('content-type')!r}")
+    if not sitemap_urls:
+        issues.append(f"{path}: missing Sitemap directive")
+    return issues, robots_lines_checked, sitemap_links_checked
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -362,10 +414,12 @@ def main() -> int:
         llms_url_canonicals_checked,
     ) = check_llms(base_url)
     text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
+    robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
     issues.extend(text_issues)
+    issues.extend(robots_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -380,6 +434,8 @@ def main() -> int:
     print(f"public_discovery_llms_url_canonicals_checked={llms_url_canonicals_checked}")
     print(f"public_discovery_text_files_checked={text_files_checked}")
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
+    print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
+    print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

@@ -27,6 +27,7 @@ PYTHON_TOOLS = [
     "tools/public_deploy_smoke.py",
     "tools/public_headers_smoke.py",
     "tools/public_sitemap_smoke.py",
+    "tools/site_health_config_audit.py",
     "tools/site_health_summary.py",
     "tools/deploy_cloudflare_pages.py",
     "tools/deploy_manifest_audit.py",
@@ -122,6 +123,7 @@ def main() -> int:
         run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
+        run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])
 
     if args.visual or args.visual_only:
         node = find_node()

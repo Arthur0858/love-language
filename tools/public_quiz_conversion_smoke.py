@@ -14,13 +14,119 @@ from urllib.request import Request, urlopen
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 LANG_PATHS = {"zh": "/", "en": "/en/", "ja": "/ja/", "ko": "/ko/", "es": "/es/"}
-GUIDE_PATHS = {
-    "zh": "/guides/share-your-result/",
-    "en": "/en/guides/share-your-result/",
-    "ja": "/ja/guides/share-your-result/",
-    "ko": "/ko/guides/share-your-result/",
-    "es": "/es/guides/share-your-result/",
-}
+LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+RESUME_TEMPLATE_CASES = (
+    (
+        "garden-map",
+        "garden-map",
+        {
+            "resume container": "data-garden-map-saved",
+            "resume card": "garden-map-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "supply action": "result.resourceUrl",
+            "plan action": "result.planUrl",
+            "keepsake action": "result.collectorHallUrl",
+            "luna action": "result.lunaUrl",
+            "guardian action": "result.guardianUrl",
+            "clear action": "data-clear-garden-map-result",
+            "hash focus": "#map-${result.slug}",
+        },
+    ),
+    (
+        "guardian",
+        "characters",
+        {
+            "resume container": "data-guardian-saved",
+            "resume card": "guardian-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "primary action": "data-guardian-resume-primary",
+            "guardian action": "data-guardian-resume-guardian",
+            "plan action": "data-guardian-resume-plan",
+            "keepsake action": "data-guardian-resume-keepsake",
+            "luna action": "data-guardian-resume-luna",
+            "clear action": "data-clear-guardian-result",
+            "hash focus": "#guardian-result-${result.slug}",
+        },
+    ),
+    (
+        "guide",
+        "guides/share-your-result",
+        {
+            "resume container": "data-guide-saved",
+            "resume card": "guide-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "guide resume label": "quiz.labels.guide_resume_title",
+            "guide resume intro": "quiz.labels.guide_resume_intro",
+            "plan action": "result.planUrl",
+            "guardian action": "result.guardianUrl",
+            "supply action": "result.resourceUrl",
+            "luna action": "result.lunaUrl",
+            "clear action": "data-clear-guide-result",
+            "hash focus": "#guide-${result.slug}",
+        },
+    ),
+    (
+        "supply",
+        "resources",
+        {
+            "resume container": "data-supply-saved",
+            "resume card": "supply-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "personalized entry links": "personalizeEntryLinks(result)",
+            "plan action": "result.planUrl",
+            "luna action": "result.lunaUrl",
+            "book action": "result.supplyBookUrl",
+            "affiliate rel": 'rel="noopener noreferrer sponsored"',
+            "clear action": "data-clear-supply-result",
+            "hash focus": "#supply-${result.slug}",
+        },
+    ),
+    (
+        "keepsake",
+        "keepsakes",
+        {
+            "resume container": "data-keepsake-saved",
+            "resume card": "keepsake-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "plan action": "data-keepsake-plan",
+            "story image": "result.storyImage",
+            "story action": 'data-result-action="story"',
+            "supply action": "result.resourceUrl",
+            "clear action": "data-clear-keepsake-result",
+            "hash focus": "#keepsake-${result.slug}",
+        },
+    ),
+    (
+        "repair-plan",
+        "repair-plan",
+        {
+            "resume container": "data-repair-saved",
+            "resume card": "repair-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "fill action": "data-fill-repair",
+            "copy worksheet": "data-copy-worksheet-summary",
+            "clear worksheet": "data-clear-worksheet",
+            "keepsake action": "result.collectorHallUrl",
+            "luna action": "result.lunaUrl",
+            "book action": "result.supplyBookUrl",
+            "hash focus": "#plan-${slug}",
+        },
+    ),
+    (
+        "luna",
+        "luna-yoga-music",
+        {
+            "resume container": "data-luna-saved",
+            "resume card": "luna-resume-card",
+            "pass stamp": "data-resume-pass-stamp",
+            "plan action": "result.planUrl",
+            "supply action": "result.resourceUrl",
+            "book action": "result.supplyBookUrl",
+            "affiliate rel": 'rel="noopener noreferrer sponsored"',
+            "hash focus": "#luna-${slug}",
+        },
+    ),
+)
 EXPECTED_TYPES = {"W", "T", "G", "S", "P"}
 TYPE_SLUGS = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora"}
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
@@ -68,6 +174,13 @@ class IdParser(HTMLParser):
 
 def normalize_base_url(value: str) -> str:
     return value.rstrip("/") or DEFAULT_BASE_URL
+
+
+def localized_path(lang: str, route: str = "") -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    route = route.strip("/")
+    parts = [part for part in (prefix, route) if part]
+    return "/" + "/".join(parts) + ("/" if parts else "")
 
 
 def request_url(url: str, *, method: str = "GET", attempts: int = 3) -> Response:
@@ -235,31 +348,18 @@ def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple
     return issues, len(checks)
 
 
-def check_guide_resume_template(base_url: str, lang: str, guide_path: str) -> tuple[list[str], int]:
-    response = request_url(urljoin(base_url + "/", guide_path.lstrip("/")))
-    source = f"{guide_path}:guide-resume-template"
+def check_resume_template(base_url: str, lang: str, case_name: str, route: str, checks: dict[str, str]) -> tuple[list[str], int]:
+    path = localized_path(lang, route)
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    source = f"{path}:{case_name}-resume-template"
     if response.status != 200:
         return [f"{source}: expected status 200, got {response.status}"], 0
-    checks = {
-        "resume container": "data-guide-saved",
-        "guide resume card": "guide-resume-card",
-        "pass stamp": "data-resume-pass-stamp",
-        "guide resume label": "quiz.labels.guide_resume_title",
-        "guide resume intro": "quiz.labels.guide_resume_intro",
-        "plan action": "result.planUrl",
-        "guardian action": "result.guardianUrl",
-        "supply action": "result.resourceUrl",
-        "luna action": "result.lunaUrl",
-        "clear action": "data-clear-guide-result",
-        "hash focus": "#guide-${result.slug}",
-    }
     issues = [
         f"{source}: missing {label}"
         for label, snippet in checks.items()
         if snippet not in response.text
     ]
-    expected_quiz_lang = "zh" if lang == "zh" else lang
-    expected_quiz_pattern = f"/quiz-data-{expected_quiz_lang}-"
+    expected_quiz_pattern = f"/quiz-data-{lang}-"
     if expected_quiz_pattern not in response.text:
         issues.append(f"{source}: missing localized quiz data script {expected_quiz_pattern}")
     return issues, len(checks) + 1
@@ -283,15 +383,18 @@ def main() -> int:
     result_affiliate_links_checked = 0
     result_pass_fields_checked = 0
     home_saved_template_checks = 0
-    guide_resume_template_checks = 0
+    resume_template_pages_checked = 0
+    resume_template_checks = 0
 
     for lang, home_path in LANG_PATHS.items():
         template_issues, template_checks = check_home_saved_template(base_url, lang, home_path)
         issues.extend(template_issues)
         home_saved_template_checks += template_checks
-        guide_template_issues, guide_template_checks = check_guide_resume_template(base_url, lang, GUIDE_PATHS[lang])
-        issues.extend(guide_template_issues)
-        guide_resume_template_checks += guide_template_checks
+        for case_name, route, checks in RESUME_TEMPLATE_CASES:
+            resume_issues, resume_checks = check_resume_template(base_url, lang, case_name, route, checks)
+            issues.extend(resume_issues)
+            resume_template_pages_checked += 1
+            resume_template_checks += resume_checks
         script, discovery_issues = discover_quiz_asset(base_url, lang, home_path)
         issues.extend(discovery_issues)
         if not script:
@@ -356,7 +459,8 @@ def main() -> int:
     print(f"public_quiz_conversion_affiliate_links_checked={result_affiliate_links_checked}")
     print(f"public_quiz_conversion_pass_fields_checked={result_pass_fields_checked}")
     print(f"public_quiz_conversion_home_saved_template_checks={home_saved_template_checks}")
-    print(f"public_quiz_conversion_guide_resume_template_checks={guide_resume_template_checks}")
+    print(f"public_quiz_conversion_resume_template_pages_checked={resume_template_pages_checked}")
+    print(f"public_quiz_conversion_resume_template_checks={resume_template_checks}")
     print(f"public_quiz_conversion_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

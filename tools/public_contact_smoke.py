@@ -13,6 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+CONTACT_SOURCE_ROUTES = {
+    "luna-yoga-music": "luna-supply-request",
+    "about": "site-repair-report",
+    "privacy": "site-repair-report",
+    "terms": "site-repair-report",
+}
 
 
 @dataclass(frozen=True)
@@ -35,6 +41,16 @@ def load_module(name: str, path: Path):
 
 def normalize_base_url(value: str) -> str:
     return value.rstrip("/") or DEFAULT_BASE_URL
+
+
+def localized_path(lang: str, route: str) -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    parts = [part for part in (prefix, route.strip("/")) if part]
+    return "/" + "/".join(parts) + "/"
+
+
+def localized_contact_anchor(lang: str, target: str) -> str:
+    return localized_path(lang, "contact") + f"#{target}"
 
 
 def expectations() -> list[LocaleExpectation]:
@@ -66,6 +82,7 @@ def main() -> int:
     contact_subjects_checked = 0
     anchor_targets_checked = 0
     protected_email_links_checked = 0
+    source_routes_checked = 0
 
     for item in expectations():
         response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
@@ -108,11 +125,25 @@ def main() -> int:
         if not mailto_subjects and not email_protection_active:
             issues.append(f"{item.path}: expected mailto links or Cloudflare email protection links")
 
+        for route, target in CONTACT_SOURCE_ROUTES.items():
+            source_path = localized_path(item.lang, route)
+            expected_href = localized_contact_anchor(item.lang, target)
+            source_response = deploy_smoke.request_url(urljoin(base_url + "/", source_path.lstrip("/")))
+            source_routes_checked += 1
+            if source_response.status != 200:
+                issues.append(f"{source_path}: expected status 200, got {source_response.status}")
+                continue
+            source_assets = deploy_smoke.extract_head_assets(source_response.text)
+            hrefs = {anchor.get("href", "") for anchor in source_assets.anchors}
+            if expected_href not in hrefs:
+                issues.append(f"{source_path}: missing contact route {expected_href}")
+
     print(f"public_contact_pages_checked={pages_checked}")
     print(f"public_contact_anchor_targets_checked={anchor_targets_checked}")
     print(f"public_contact_mailto_links_checked={mailto_links_checked}")
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
+    print(f"public_contact_source_routes_checked={source_routes_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:
         print(issue)

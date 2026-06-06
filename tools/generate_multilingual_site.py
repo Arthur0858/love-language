@@ -5949,6 +5949,7 @@ def quiz_script(lang: str) -> str:
           <p class="eyebrow">${{quiz.labels.saved_title}}</p>
           <h3>${{result.name}} · ${{result.type}}</h3>
           <p>${{quiz.labels.saved_intro}}</p>
+          <p><strong>${{quiz.labels.next_pack_title}}</strong> · ${{result.supplyTitle}}</p>
           <div class="${{actionsClass}}">
             <a href="${{result.resourceUrl}}" data-home-resume-route>${{quiz.labels.saved_route}}</a>
             <a href="${{result.planUrl}}" data-home-saved-plan data-home-resume-plan>${{quiz.labels.saved_plan}}</a>

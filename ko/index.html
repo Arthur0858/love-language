@@ -410,7 +410,7 @@
             <button type="button" data-result-action="story" data-story-name="${result.name}" data-story-title="${result.type}" data-story-quote="${result.supplyMission}" data-story-image="${result.resultImage}" data-story-slug="${result.slug}" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
             <button type="button" data-share-saved-result>${quiz.labels.share}</button>
             <button type="button" data-copy-saved-result>${quiz.labels.saved_copy}</button>
-            <button type="button" data-clear-saved-result>${quiz.labels.saved_clear}</button>
+            <button type="button" data-clear-saved-result ${variant === 'home' ? 'data-clear-home-result' : ''}>${quiz.labels.saved_clear}</button>
           </div>
         </div>
       </article>`;

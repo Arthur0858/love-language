@@ -4,6 +4,8 @@ from __future__ import annotations
 import ast
 import py_compile
 import re
+import shutil
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -12,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
+NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
 
 
 def literal_strings(node: ast.AST) -> list[str]:
@@ -75,6 +78,15 @@ def emitted_issue_keys(script_paths: list[str]) -> list[str]:
     return sorted(keys)
 
 
+def find_node() -> str:
+    candidate = shutil.which("node")
+    if candidate:
+        return candidate
+    if NODE_FALLBACK_PATH.exists():
+        return str(NODE_FALLBACK_PATH)
+    return ""
+
+
 def duplicates(values: list[str]) -> list[str]:
     counts = Counter(values)
     return sorted(value for value, count in counts.items() if count > 1)
@@ -107,6 +119,8 @@ def main() -> int:
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
     compiled_python_scripts = 0
+    checked_node_scripts = 0
+    node_bin = find_node()
     for path in sorted(set(check_script_paths)):
         if not path.endswith(".py"):
             continue
@@ -115,6 +129,24 @@ def main() -> int:
             compiled_python_scripts += 1
         except py_compile.PyCompileError as error:
             issues.append(f"{path}: py_compile failed: {error.msg}")
+    node_script_paths = sorted({path for path in check_script_paths if path.endswith((".js", ".mjs"))})
+    if node_script_paths and not node_bin:
+        issues.append("node executable not found for CHECKS JavaScript syntax checks")
+    if node_bin:
+        for path in node_script_paths:
+            result = subprocess.run(
+                [node_bin, "--check", str(ROOT / path)],
+                cwd=ROOT,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                check=False,
+            )
+            if result.returncode == 0:
+                checked_node_scripts += 1
+            else:
+                output = " ".join(result.stdout.split())
+                issues.append(f"{path}: node --check failed: {output}")
     if not check_names:
         issues.append("CHECKS list not found")
     if not important_keys:
@@ -126,6 +158,9 @@ def main() -> int:
     print(f"site_health_config_commands={len(check_commands)}")
     print(f"site_health_config_scripts={len(check_script_paths)}")
     print(f"site_health_config_python_scripts_compiled={compiled_python_scripts}")
+    print(f"site_health_config_node_scripts={len(node_script_paths)}")
+    print(f"site_health_config_node_scripts_checked={checked_node_scripts}")
+    print(f"site_health_config_node_missing={0 if node_bin else 1}")
     print(f"site_health_config_important_keys={len(important_keys)}")
     print(f"site_health_config_retry_names={len(retry_names)}")
     print(f"site_health_config_predeploy_scripts={len(predeploy_script_paths)}")

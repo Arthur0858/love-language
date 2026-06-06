@@ -207,6 +207,7 @@ RESOURCE_SUPPLY_SAFETY_MARKERS = (
 )
 RESOURCE_EXPECTED_STARTER_CARDS = 4
 RESOURCE_EXPECTED_WISHLIST_CARDS = len(GUARDIAN_SLUGS)
+HOME_EXPECTED_UNIVERSE_GATE_CARDS = len(GUARDIAN_SLUGS)
 
 
 def load_generator_config():
@@ -666,6 +667,8 @@ def main() -> int:
     public_conversion_hrefs_checked = 0
     public_external_links_checked = 0
     public_affiliate_links_checked = 0
+    public_home_universe_gate_sections_checked = 0
+    public_home_universe_gate_cards_checked = 0
     public_supply_safety_sections_checked = 0
     public_supply_starter_cards_checked = 0
     public_supply_wishlist_cards_checked = 0
@@ -687,6 +690,16 @@ def main() -> int:
         expected_text = EXPECTED_TEXT.get(path)
         if expected_text and expected_text not in response.text:
             issues.append(f"{path}: missing expected text {expected_text!r}")
+        if path in {"/", "/en/", "/ja/", "/ko/", "/es/"}:
+            public_home_universe_gate_sections_checked += 1
+            if "data-universe-gates" not in response.text:
+                issues.append(f"{path}: missing home five-domain universe gate section")
+            universe_gate_count = response.text.count('class="universe-gate-card"')
+            public_home_universe_gate_cards_checked += universe_gate_count
+            if universe_gate_count != HOME_EXPECTED_UNIVERSE_GATE_CARDS:
+                issues.append(
+                    f"{path}: expected {HOME_EXPECTED_UNIVERSE_GATE_CARDS} universe gate cards, found {universe_gate_count}"
+                )
         if path.endswith("/resources/"):
             for label, marker in RESOURCE_SUPPLY_SAFETY_MARKERS:
                 public_supply_safety_sections_checked += 1
@@ -890,6 +903,8 @@ def main() -> int:
     print(f"public_conversion_hrefs_checked={public_conversion_hrefs_checked}")
     print(f"public_external_links_checked={public_external_links_checked}")
     print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
+    print(f"public_home_universe_gate_sections_checked={public_home_universe_gate_sections_checked}")
+    print(f"public_home_universe_gate_cards_checked={public_home_universe_gate_cards_checked}")
     print(f"public_supply_safety_sections_checked={public_supply_safety_sections_checked}")
     print(f"public_supply_starter_cards_checked={public_supply_starter_cards_checked}")
     print(f"public_supply_wishlist_cards_checked={public_supply_wishlist_cards_checked}")

@@ -82,14 +82,29 @@ class HeadParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.canonical = ""
+        self.description = ""
         self.robots = ""
+        self.title = ""
+        self._in_title = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
-        if tag == "link" and data.get("rel") == "canonical":
+        if tag == "title":
+            self._in_title = True
+        elif tag == "link" and data.get("rel") == "canonical":
             self.canonical = data.get("href", "")
+        elif tag == "meta" and data.get("name", "").lower() == "description":
+            self.description = data.get("content", "")
         elif tag == "meta" and data.get("name", "").lower() == "robots":
             self.robots = data.get("content", "")
+
+    def handle_data(self, data: str) -> None:
+        if self._in_title:
+            self.title += data
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "title":
+            self._in_title = False
 
 
 def normalize_base_url(value: str) -> str:
@@ -130,24 +145,28 @@ def cache_is_reasonable(path: str, response: Response) -> list[str]:
     return issues
 
 
-def check_feed(base_url: str) -> tuple[list[str], int, int]:
+def page_title_without_brand(title: str) -> str:
+    return title.strip().split(" | ", 1)[0].split("｜", 1)[0].strip()
+
+
+def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
     path = "/feed.xml"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
     if "xml" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected XML content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         root = ET.fromstring(response.body)
     except ET.ParseError as error:
-        return [f"{path}: invalid XML: {error}"], 0, 0
+        return [f"{path}: invalid XML: {error}"], 0, 0, 0
     if root.tag != "rss" or root.attrib.get("version") != "2.0":
         issues.append(f"{path}: expected RSS 2.0 root")
     channel = root.find("channel")
     if channel is None:
-        return [f"{path}: missing channel"], 0, 0
+        return [f"{path}: missing channel"], 0, 0, 0
     for tag in ("title", "link", "description", "language", "lastBuildDate"):
         if not (channel.findtext(tag) or "").strip():
             issues.append(f"{path}: channel missing {tag}")
@@ -166,6 +185,7 @@ def check_feed(base_url: str) -> tuple[list[str], int, int]:
         issues.append(f"{path}: expected {EXPECTED_FEED_ITEMS} items, found {len(items)}")
     seen_links: set[str] = set()
     links_checked = 0
+    item_metadata_checked = 0
     for item in items:
         title = (item.findtext("title") or "").strip()
         link = (item.findtext("link") or "").strip()
@@ -192,9 +212,22 @@ def check_feed(base_url: str) -> tuple[list[str], int, int]:
         links_checked += 1
         if item_response.status != 200:
             issues.append(f"{path}: item link {link} expected status 200, got {item_response.status}")
-        if "<meta name=\"robots\" content=\"noindex" in item_response.text:
+            continue
+        head = HeadParser()
+        head.feed(item_response.text)
+        robots_tokens = {token.strip().lower() for token in head.robots.split(",") if token.strip()}
+        if "noindex" in robots_tokens:
             issues.append(f"{path}: item link should not point to noindex page: {link}")
-    return issues, len(items), links_checked
+        if head.canonical != link:
+            issues.append(f"{path}: item link {link} canonical should match, got {head.canonical!r}")
+        else:
+            item_metadata_checked += 1
+        page_title = page_title_without_brand(head.title)
+        if page_title != title:
+            issues.append(f"{path}: item title {title!r} should match page title {page_title!r} for {link}")
+        if description and head.description and not description.startswith(head.description):
+            issues.append(f"{path}: item description should start with page description for {link}")
+    return issues, len(items), links_checked, item_metadata_checked
 
 
 def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -403,7 +436,7 @@ def main() -> int:
     base_url = normalize_base_url(args.base_url)
 
     issues: list[str] = []
-    feed_issues, feed_items, feed_links_checked = check_feed(base_url)
+    feed_issues, feed_items, feed_links_checked, feed_item_metadata_checked = check_feed(base_url)
     manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked, manifest_expected_shortcuts_checked = check_manifest(base_url)
     (
         llms_issues,
@@ -423,6 +456,7 @@ def main() -> int:
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
+    print(f"public_discovery_feed_item_metadata_checked={feed_item_metadata_checked}")
     print(f"public_discovery_manifest_icons_checked={manifest_icons_checked}")
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
     print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")

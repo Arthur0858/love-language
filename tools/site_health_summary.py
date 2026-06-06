@@ -179,6 +179,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_contact_source_routes_checked",
         "public_discovery_feed_items",
         "public_discovery_feed_links_checked",
+        "public_discovery_feed_item_metadata_checked",
         "public_discovery_manifest_icons_checked",
         "public_discovery_manifest_shortcuts",
         "public_discovery_manifest_shortcut_links_checked",

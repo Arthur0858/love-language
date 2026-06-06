@@ -229,6 +229,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_metadata_hreflang_links_checked",
         "public_metadata_jsonld_blocks_checked",
         "public_metadata_images_checked",
+        "public_metadata_image_dimensions_checked",
         "public_quiz_conversion_assets_checked",
         "public_quiz_conversion_results_checked",
         "public_quiz_conversion_internal_urls_checked",

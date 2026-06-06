@@ -7,10 +7,13 @@ import ssl
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
+from io import BytesIO
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
+
+from PIL import Image
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
@@ -280,9 +283,10 @@ def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[
     return issues, parser, jsonld_count
 
 
-def check_images(image_urls: list[str], canonical_base_url: str) -> tuple[list[str], int]:
+def check_images(image_urls: list[str], canonical_base_url: str) -> tuple[list[str], int, int]:
     issues: list[str] = []
     checked = 0
+    dimensions_checked = 0
     for image_url in image_urls[:IMAGE_SAMPLE_LIMIT]:
         response = request_url(image_url)
         checked += 1
@@ -294,7 +298,16 @@ def check_images(image_urls: list[str], canonical_base_url: str) -> tuple[list[s
             issues.append(f"{image_url}: expected image content-type, got {content_type!r}")
         if not response.url.startswith(canonical_base_url + "/"):
             issues.append(f"{image_url}: should stay on canonical host, got {response.url}")
-    return issues, checked
+        try:
+            with Image.open(BytesIO(response.body)) as image:
+                width, height = image.size
+        except OSError as error:
+            issues.append(f"{image_url}: could not read image dimensions: {error}")
+            continue
+        dimensions_checked += 1
+        if (width, height) != (1200, 630):
+            issues.append(f"{image_url}: social image should be 1200x630, got {width}x{height}")
+    return issues, checked, dimensions_checked
 
 
 def main() -> int:
@@ -327,7 +340,7 @@ def main() -> int:
         if og_image and og_image not in image_urls:
             image_urls.append(og_image)
 
-    image_issues, images_checked = check_images(image_urls, canonical_base_url)
+    image_issues, images_checked, image_dimensions_checked = check_images(image_urls, canonical_base_url)
     issues.extend(image_issues)
 
     print(f"public_metadata_pages_checked={pages_checked}")
@@ -335,6 +348,7 @@ def main() -> int:
     print(f"public_metadata_hreflang_links_checked={hreflang_links_checked}")
     print(f"public_metadata_jsonld_blocks_checked={jsonld_blocks_checked}")
     print(f"public_metadata_images_checked={images_checked}")
+    print(f"public_metadata_image_dimensions_checked={image_dimensions_checked}")
     print(f"public_metadata_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

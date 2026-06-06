@@ -194,6 +194,7 @@ function summarizeConversionFailures(results) {
     if (target === 'guide' && !result.guidePlanHref?.includes('/repair-plan/#plan-')) failures.push('guide resume does not continue repair plan');
     if (['keepsake', 'keepsake-plan'].includes(target) && !result.keepsakePrimaryHref?.includes('/repair-plan/#plan-')) failures.push('keepsake primary action does not continue repair plan');
     if (target === 'home-saved-plan' && !result.homeSavedVisible) failures.push('missing returning visitor saved result');
+    if (target === 'home-saved-plan' && !result.homeSavedPassStampVisible) failures.push('home saved card missing pass stamp');
     if (target === 'home-saved-plan' && !result.homeSavedKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('home saved card does not continue keepsake hall');
     if (target === 'home-saved-plan' && !result.homeTopResumeVisible) failures.push('missing top returning visitor resume');
     if (target === 'home-saved-plan' && !result.homeTopRouteHref?.includes('/resources/#supply-')) failures.push('top returning resume missing supply route');
@@ -812,6 +813,7 @@ for (const item of conversionCases) {
   }
 
   let homeSavedVisible = false;
+  let homeSavedPassStampVisible = false;
   let homeSavedKeepsakeHref = '';
   let homeTopResumeVisible = false;
   let homeTopRouteHref = '';
@@ -837,6 +839,7 @@ for (const item of conversionCases) {
     await openPage(page, url);
     await page.locator('[data-home-saved]:not([hidden])').waitFor({ state: 'visible' });
     homeTopResumeVisible = true;
+    homeSavedPassStampVisible = await page.locator('[data-home-saved] [data-resume-pass-stamp]').isVisible().catch(() => false);
     homeTopRouteHref = await page.locator('[data-home-saved] [data-home-resume-route]').first().getAttribute('href').catch(() => '');
     homeTopPlanHref = await page.locator('[data-home-saved] [data-home-resume-plan]').first().getAttribute('href').catch(() => '');
     homeTopLunaHref = await page.locator('[data-home-saved] [data-home-resume-luna]').first().getAttribute('href').catch(() => '');
@@ -994,6 +997,7 @@ for (const item of conversionCases) {
     guidePlanHref,
     keepsakePrimaryHref,
     homeSavedVisible,
+    homeSavedPassStampVisible,
     homeSavedKeepsakeHref,
     homeTopResumeVisible,
     homeTopRouteHref,

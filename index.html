@@ -383,15 +383,20 @@
   function renderSavedResultCard(box, result, savedShareText, cardUrl, variant) {
     if (!box) return;
     const articleClass = variant === 'home'
-      ? 'quiz-saved-card home-resume-card'
-      : 'quiz-saved-card';
+      ? 'quiz-saved-card home-resume-card pass-resume-card'
+      : 'quiz-saved-card pass-resume-card';
     const actionsClass = variant === 'home'
       ? 'quiz-saved-actions home-resume-actions'
       : 'quiz-saved-actions';
     box.innerHTML = `
-      <article class="${articleClass}" style="--result-accent:${result.color}">
+      <article class="${articleClass}" style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
         <img src="${result.resultImage}" alt="${result.name}" width="${result.resultImageWidth}" height="${result.resultImageHeight}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
+          <div class="resume-pass-stamp" data-resume-pass-stamp>
+            <img class="resume-pass-prop" src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
+            <span>${quiz.labels.pass_title}</span>
+            <strong>${result.domainTitle}</strong>
+          </div>
           <p class="eyebrow">${quiz.labels.saved_title}</p>
           <h3>${result.name} · ${result.type}</h3>
           <p>${quiz.labels.saved_intro}</p>

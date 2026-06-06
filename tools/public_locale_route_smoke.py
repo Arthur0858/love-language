@@ -175,6 +175,7 @@ def check_page(url: str) -> tuple[list[str], dict[str, int]]:
         "language_route_matches": 0,
         "localized_nav_route_matches": 0,
         "localized_footer_route_matches": 0,
+        "localized_footer_exact_matches": 0,
     }
     response = request_url(url)
     path = public_path(response.url)
@@ -201,10 +202,21 @@ def check_page(url: str) -> tuple[list[str], dict[str, int]]:
     stats["footer_links"] = len(footer_paths)
     expected_footer = expected_route_set(page_lang, FOOTER_ROUTES)
     missing_footer = sorted(expected_footer.difference(footer_paths))
-    if missing_footer:
-        issues.append(f"{path}: footer missing localized routes {missing_footer}")
+    extra_footer = sorted(set(footer_paths).difference(expected_footer))
+    duplicate_footer = sorted(item for item in set(footer_paths) if footer_paths.count(item) > 1)
+    if set(footer_paths) != expected_footer or len(footer_paths) != len(FOOTER_ROUTES):
+        issues.append(
+            f"{path}: footer routes should be exactly {sorted(expected_footer)}, got {footer_paths}"
+        )
+        if missing_footer:
+            issues.append(f"{path}: footer missing localized routes {missing_footer}")
+        if extra_footer:
+            issues.append(f"{path}: footer has unexpected localized routes {extra_footer}")
+        if duplicate_footer:
+            issues.append(f"{path}: footer has duplicate localized routes {duplicate_footer}")
     else:
         stats["localized_footer_route_matches"] = len(expected_footer)
+        stats["localized_footer_exact_matches"] = 1
 
     expected_language_hrefs = expected_language_href_map(path)
     language_by_lang = {anchor.lang: href_path(anchor.href, response.url) for anchor in parser.language_links}
@@ -244,6 +256,7 @@ def main() -> int:
         "language_route_matches": 0,
         "localized_nav_route_matches": 0,
         "localized_footer_route_matches": 0,
+        "localized_footer_exact_matches": 0,
     }
     for loc in locations:
         page_issues, page_stats = check_page(loc)
@@ -258,6 +271,7 @@ def main() -> int:
     print(f"public_locale_route_language_matches_checked={totals['language_route_matches']}")
     print(f"public_locale_route_nav_matches_checked={totals['localized_nav_route_matches']}")
     print(f"public_locale_route_footer_matches_checked={totals['localized_footer_route_matches']}")
+    print(f"public_locale_route_footer_exact_pages_checked={totals['localized_footer_exact_matches']}")
     print(f"public_locale_route_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

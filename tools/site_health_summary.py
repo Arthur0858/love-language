@@ -222,6 +222,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_locale_route_language_matches_checked",
         "public_locale_route_nav_matches_checked",
         "public_locale_route_footer_matches_checked",
+        "public_locale_route_footer_exact_pages_checked",
         "public_locale_pages_checked",
         "public_locale_nav_labels_checked",
         "public_locale_footer_labels_checked",

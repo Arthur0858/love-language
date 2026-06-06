@@ -42,6 +42,7 @@ const BASE_URL = process.env.BASE_URL || 'https://lovetypes.tw';
 const CASES = [
   { name: 'home-mobile', path: '/', width: 390, height: 844 },
   { name: 'home-desktop', path: '/', width: 1366, height: 900 },
+  { name: 'garden-map-mobile', path: '/garden-map/', width: 390, height: 844 },
   { name: 'characters-mobile', path: '/characters/', width: 390, height: 844 },
   { name: 'resources-mobile', path: '/resources/', width: 390, height: 844 },
   { name: 'repair-plan-mobile', path: '/repair-plan/', width: 390, height: 844 },

@@ -41,6 +41,7 @@ async function browserLaunchOptions() {
 const BASE_URL = process.env.BASE_URL || 'https://lovetypes.tw';
 const CASES = [
   { name: 'home-mobile', path: '/' },
+  { name: 'garden-map-mobile', path: '/garden-map/' },
   { name: 'characters-mobile', path: '/characters/' },
   { name: 'resources-mobile', path: '/resources/' },
   { name: 'repair-plan-mobile', path: '/repair-plan/' },

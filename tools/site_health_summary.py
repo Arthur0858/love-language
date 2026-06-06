@@ -253,6 +253,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_visual_screenshots",
         "public_visual_quiz_flow_cases",
         "public_visual_conversion_cases",
+        "public_visual_garden_map_cases",
         "public_visual_language_menu_cases",
         "public_visual_redirect_cases",
         "public_visual_worksheet_cases",

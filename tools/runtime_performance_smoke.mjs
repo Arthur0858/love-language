@@ -45,6 +45,7 @@ const IS_PUBLIC = MODE === 'public';
 const CASES = [
   { name: 'home-desktop', path: '/', width: 1366, height: 900 },
   { name: 'home-mobile', path: '/', width: 390, height: 844, isMobile: true },
+  { name: 'garden-map-mobile', path: '/garden-map/', width: 390, height: 844, isMobile: true },
   { name: 'characters-mobile', path: '/characters/', width: 390, height: 844, isMobile: true },
   { name: 'iris-mobile', path: '/characters/iris/', width: 390, height: 844, isMobile: true },
   { name: 'resources-mobile', path: '/resources/', width: 390, height: 844, isMobile: true },

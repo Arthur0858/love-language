@@ -56,7 +56,13 @@ CHECKS = [
     ("user_preferences_smoke", ["node", "tools/user_preferences_smoke.mjs"], 120, True),
     ("storage_privacy_smoke", ["node", "tools/storage_privacy_smoke.mjs"], 120, True),
 ]
-RETRY_ON_FAILURE = {"csp_runtime_smoke", "public_locale_ui_smoke", "runtime_performance_smoke", "tap_target_smoke"}
+RETRY_ON_FAILURE = {
+    "csp_runtime_smoke",
+    "public_locale_ui_smoke",
+    "public_quiz_flow_smoke",
+    "runtime_performance_smoke",
+    "tap_target_smoke",
+}
 
 
 def safe_timeout_output(error: subprocess.TimeoutExpired) -> str:

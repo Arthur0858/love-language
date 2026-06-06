@@ -526,8 +526,15 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "timed_out",
         "error",
     ]
+    emitted_keys: set[str] = set()
     for key in important_keys:
         if key in values:
+            lines.append(f"- {key}: `{values[key]}`")
+            emitted_keys.add(key)
+    for key in sorted(values):
+        if key in emitted_keys:
+            continue
+        if key.endswith("_attempts") or key.endswith("_retry_status"):
             lines.append(f"- {key}: `{values[key]}`")
     return lines
 
@@ -607,6 +614,7 @@ def main() -> int:
                 code = retry_code
                 values = retry_values
                 status = retry_status
+            values[f"{name.removesuffix('_smoke')}_retry_status"] = retry_status
             values[f"{name.removesuffix('_smoke')}_attempts"] = "2"
         else:
             values[f"{name.removesuffix('_smoke')}_attempts"] = "1"

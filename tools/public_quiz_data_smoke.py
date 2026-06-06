@@ -36,6 +36,7 @@ TYPE_GUIDE_ROUTES = {
     "S": "guides/acts-of-service-boundaries",
     "P": "guides/physical-touch-consent-safety",
 }
+STORY_IMAGE_DIMENSIONS = (1080, 1920)
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
 
@@ -197,9 +198,17 @@ def validate_result(path: str, lang: str, result_type: str, result: object) -> l
         image = result.get(image_key, "")
         if not isinstance(image, str) or not image.startswith("/assets/lovetypes/"):
             issues.append(f"{path}: {result_type} {image_key} should use LoveTypes asset path")
+    expected_story_image = f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
+    if result.get("storyImage") != expected_story_image:
+        issues.append(f"{path}: {result_type} storyImage should be {expected_story_image}")
     for size_key in ("imageWidth", "imageHeight", "resultImageWidth", "resultImageHeight", "storyImageWidth", "storyImageHeight"):
         if not isinstance(result.get(size_key), int) or result[size_key] <= 0:
             issues.append(f"{path}: {result_type} {size_key} should be a positive integer")
+    expected_story_width, expected_story_height = STORY_IMAGE_DIMENSIONS
+    if result.get("storyImageWidth") != expected_story_width:
+        issues.append(f"{path}: {result_type} storyImageWidth should be {expected_story_width}")
+    if result.get("storyImageHeight") != expected_story_height:
+        issues.append(f"{path}: {result_type} storyImageHeight should be {expected_story_height}")
     issues.extend(validate_starter_kit(path, lang, result_type, result.get("starterKit")))
     return issues
 
@@ -263,6 +272,7 @@ def main() -> int:
     quiz_questions_checked = 0
     quiz_results_checked = 0
     quiz_guide_urls_checked = 0
+    quiz_story_images_checked = 0
     quiz_starter_steps_checked = 0
     seen_assets: set[str] = set()
 
@@ -294,6 +304,15 @@ def main() -> int:
                 and is_localized_href(result.get("guideUrl", ""), lang, TYPE_GUIDE_ROUTES[result_type])
                 and f"#guide-{TYPE_SLUGS[result_type]}" in result.get("guideUrl", "")
             )
+            quiz_story_images_checked += sum(
+                1
+                for result_type, result in data["results"].items()
+                if result_type in TYPE_SLUGS
+                and isinstance(result, dict)
+                and result.get("storyImage") == f"/assets/lovetypes/share/{TYPE_SLUGS[result_type]}-story-{lang}.webp"
+                and result.get("storyImageWidth") == STORY_IMAGE_DIMENSIONS[0]
+                and result.get("storyImageHeight") == STORY_IMAGE_DIMENSIONS[1]
+            )
         if isinstance(data.get("results"), dict):
             for result in data["results"].values():
                 if isinstance(result, dict) and isinstance(result.get("starterKit"), dict):
@@ -308,6 +327,7 @@ def main() -> int:
     print(f"public_quiz_questions_checked={quiz_questions_checked}")
     print(f"public_quiz_results_checked={quiz_results_checked}")
     print(f"public_quiz_guide_urls_checked={quiz_guide_urls_checked}")
+    print(f"public_quiz_story_images_checked={quiz_story_images_checked}")
     print(f"public_quiz_starter_steps_checked={quiz_starter_steps_checked}")
     print(f"public_quiz_issues={len(issues)}")
     for issue in issues[:100]:

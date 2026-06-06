@@ -19,6 +19,7 @@ CANONICAL_HOST = "lovetypes.tw"
 EXPECTED_FEED_ITEMS = 12
 EXPECTED_MANIFEST_LANG = "zh-TW"
 EXPECTED_MANIFEST_SHORTCUTS = 3
+EXPECTED_MANIFEST_SHORTCUT_URLS = ("/#quiz-section", "/garden-map/", "/characters/")
 EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 REQUIRED_LLMS_SECTIONS = (
     "# LoveTypes - Heart Garden Emotion Guardians",
@@ -35,6 +36,21 @@ REQUIRED_LLMS_SNIPPETS = (
     "Affiliate links are kept on the Resources page",
     "No full-site advertising script is enabled",
     "Contact email: contact@lovetypes.tw",
+)
+REQUIRED_LLMS_HIGH_VALUE_URLS = (
+    "https://lovetypes.tw/",
+    "https://lovetypes.tw/garden-map/",
+    "https://lovetypes.tw/characters/",
+    "https://lovetypes.tw/guides/",
+    "https://lovetypes.tw/resources/",
+    "https://lovetypes.tw/repair-plan/",
+    "https://lovetypes.tw/keepsakes/",
+    "https://lovetypes.tw/luna-yoga-music/",
+    "https://lovetypes.tw/about/",
+    "https://lovetypes.tw/theory/",
+    "https://lovetypes.tw/contact/",
+    "https://lovetypes.tw/privacy/",
+    "https://lovetypes.tw/terms/",
 )
 REQUIRED_SECURITY_FIELDS = (
     "Contact: mailto:contact@lovetypes.tw",
@@ -161,19 +177,19 @@ def check_feed(base_url: str) -> tuple[list[str], int, int]:
     return issues, len(items), links_checked
 
 
-def check_manifest(base_url: str) -> tuple[list[str], int, int, int]:
+def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
     path = "/site.webmanifest"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", "") and "manifest" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected manifest/json content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         manifest = json.loads(response.text)
     except json.JSONDecodeError as error:
-        return [f"{path}: invalid JSON: {error}"], 0, 0, 0
+        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0
     for field in ("name", "short_name", "description", "start_url", "scope", "display", "theme_color", "icons"):
         if not manifest.get(field):
             issues.append(f"{path}: missing required field {field}")
@@ -185,6 +201,17 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int]:
     if not isinstance(shortcuts, list) or len(shortcuts) != EXPECTED_MANIFEST_SHORTCUTS:
         issues.append(f"{path}: expected {EXPECTED_MANIFEST_SHORTCUTS} shortcuts, got {len(shortcuts) if isinstance(shortcuts, list) else 'invalid'}")
         shortcuts = []
+    shortcut_urls = {
+        shortcut.get("url")
+        for shortcut in shortcuts
+        if isinstance(shortcut, dict) and isinstance(shortcut.get("url"), str)
+    }
+    manifest_expected_shortcuts_checked = 0
+    for expected_url in EXPECTED_MANIFEST_SHORTCUT_URLS:
+        if expected_url in shortcut_urls:
+            manifest_expected_shortcuts_checked += 1
+        else:
+            issues.append(f"{path}: missing expected shortcut URL {expected_url}")
     shortcut_links_checked = 0
     for shortcut in shortcuts:
         url = shortcut.get("url") if isinstance(shortcut, dict) else ""
@@ -215,15 +242,15 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int]:
         content_type = icon_response.headers.get("content-type", "")
         if icon_type not in content_type:
             issues.append(f"{path}: icon {src} expected content type containing {icon_type!r}, got {content_type!r}")
-    return issues, icons_checked, len(shortcuts), shortcut_links_checked
+    return issues, icons_checked, len(shortcuts), shortcut_links_checked, manifest_expected_shortcuts_checked
 
 
-def check_llms(base_url: str) -> tuple[list[str], int, int, int]:
+def check_llms(base_url: str) -> tuple[list[str], int, int, int, int]:
     path = "/llms.txt"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if not response.headers.get("content-type", "").startswith("text/plain"):
         issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
@@ -238,6 +265,12 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int]:
         snippets_checked += 1
         if snippet not in text:
             issues.append(f"{path}: missing required snippet {snippet!r}")
+    high_value_urls_checked = 0
+    for url in REQUIRED_LLMS_HIGH_VALUE_URLS:
+        if url in text:
+            high_value_urls_checked += 1
+        else:
+            issues.append(f"{path}: missing high-value URL {url}")
     urls = sorted(set(match.group(0).rstrip(".,;") for match in URL_RE.finditer(text)))
     urls_checked = 0
     for url in urls:
@@ -247,7 +280,7 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int]:
             issues.append(f"{path}: listed URL {url} expected status 200, got {target.status}")
         if "<meta name=\"robots\" content=\"noindex" in target.text:
             issues.append(f"{path}: listed URL should not point to noindex page: {url}")
-    return issues, sections_checked, snippets_checked, urls_checked
+    return issues, sections_checked, snippets_checked, urls_checked, high_value_urls_checked
 
 
 def check_text_files(base_url: str) -> tuple[list[str], int, int]:
@@ -293,8 +326,8 @@ def main() -> int:
 
     issues: list[str] = []
     feed_issues, feed_items, feed_links_checked = check_feed(base_url)
-    manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked = check_manifest(base_url)
-    llms_issues, llms_sections_checked, llms_snippets_checked, llms_urls_checked = check_llms(base_url)
+    manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked, manifest_expected_shortcuts_checked = check_manifest(base_url)
+    llms_issues, llms_sections_checked, llms_snippets_checked, llms_urls_checked, llms_high_value_urls_checked = check_llms(base_url)
     text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
@@ -306,8 +339,10 @@ def main() -> int:
     print(f"public_discovery_manifest_icons_checked={manifest_icons_checked}")
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
     print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")
+    print(f"public_discovery_manifest_expected_shortcuts_checked={manifest_expected_shortcuts_checked}")
     print(f"public_discovery_llms_sections_checked={llms_sections_checked}")
     print(f"public_discovery_llms_snippets_checked={llms_snippets_checked}")
+    print(f"public_discovery_llms_high_value_urls_checked={llms_high_value_urls_checked}")
     print(f"public_discovery_llms_urls_checked={llms_urls_checked}")
     print(f"public_discovery_text_files_checked={text_files_checked}")
     print(f"public_discovery_security_fields_checked={security_fields_checked}")

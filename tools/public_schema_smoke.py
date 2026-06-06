@@ -20,6 +20,23 @@ EXPECTED_ORGANIZATION = {
     "logo": "https://lovetypes.tw/apple-touch-icon.png",
     "email": "contact@lovetypes.tw",
 }
+LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
+CORE_PAGE_SCHEMA_TYPES = {
+    "": "WebSite",
+    "garden-map": "CollectionPage",
+    "guides": "CollectionPage",
+    "characters": "CollectionPage",
+    "theory": "WebPage",
+    "resources": "CollectionPage",
+    "repair-plan": "HowTo",
+    "keepsakes": "CollectionPage",
+    "luna-yoga-music": "WebPage",
+    "about": "AboutPage",
+    "contact": "ContactPage",
+    "privacy": "WebPage",
+    "terms": "WebPage",
+}
 PAGE_SCHEMA_TYPES = {
     "AboutPage",
     "Article",
@@ -113,6 +130,28 @@ def is_locale_home(path: str) -> bool:
     return path in {"/", "/en/", "/ja/", "/ko/", "/es/"}
 
 
+def localized_path(lang: str, route: str) -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    parts = [part for part in (prefix, route) if part]
+    return "/" + "/".join(parts) + "/" if parts else "/"
+
+
+def expected_core_page_schema_types() -> dict[str, str]:
+    return {
+        localized_path(lang, route): schema_type
+        for lang in LOCALE_PREFIXES
+        for route, schema_type in CORE_PAGE_SCHEMA_TYPES.items()
+    }
+
+
+def expected_guardian_profile_paths() -> set[str]:
+    return {
+        localized_path(lang, f"characters/{slug}")
+        for lang in LOCALE_PREFIXES
+        for slug in GUARDIAN_SLUGS
+    }
+
+
 def sitemap_locations(base_url: str) -> tuple[list[str], list[str]]:
     response = request_url(urljoin(base_url + "/", "sitemap.xml"))
     if response.status != 200:
@@ -170,6 +209,13 @@ def type_set(item: dict) -> set[str]:
     if isinstance(value, list):
         return {entry for entry in value if isinstance(entry, str)}
     return set()
+
+
+def primary_schema_types(entities: list[dict]) -> set[str]:
+    primary_entities = [entity for entity in entities if type_set(entity).intersection(PAGE_SCHEMA_TYPES)]
+    if len(primary_entities) != 1:
+        return set()
+    return type_set(primary_entities[0])
 
 
 def validate_positions(path: str, label: str, items: object) -> list[str]:
@@ -298,6 +344,10 @@ def main() -> int:
     article_entities_checked = 0
     howto_entities_checked = 0
     itemlist_entities_checked = 0
+    core_page_schema_types_checked = 0
+    guardian_profile_schema_types_checked = 0
+    expected_core_types = expected_core_page_schema_types()
+    expected_guardian_profiles = expected_guardian_profile_paths()
 
     for loc in locations:
         path = public_path(loc)
@@ -313,6 +363,18 @@ def main() -> int:
         issues.extend(parse_issues)
         schema_issues, stats = validate_schema(path, page_parser, entities, sitemap_set)
         issues.extend(schema_issues)
+        primary_types = primary_schema_types(entities)
+        expected_core_type = expected_core_types.get(path)
+        if expected_core_type:
+            if expected_core_type in primary_types:
+                core_page_schema_types_checked += 1
+            else:
+                issues.append(f"{path}: primary schema type should include {expected_core_type}, got {sorted(primary_types)}")
+        if path in expected_guardian_profiles:
+            if "ProfilePage" in primary_types:
+                guardian_profile_schema_types_checked += 1
+            else:
+                issues.append(f"{path}: guardian page primary schema type should include ProfilePage, got {sorted(primary_types)}")
         pages_checked += 1
         jsonld_blocks_checked += parsed_blocks
         organization_entities_checked += stats["organizations"]
@@ -330,6 +392,8 @@ def main() -> int:
     print(f"public_schema_article_entities_checked={article_entities_checked}")
     print(f"public_schema_howto_entities_checked={howto_entities_checked}")
     print(f"public_schema_itemlist_entities_checked={itemlist_entities_checked}")
+    print(f"public_schema_core_page_types_checked={core_page_schema_types_checked}")
+    print(f"public_schema_guardian_profile_types_checked={guardian_profile_schema_types_checked}")
     print(f"public_schema_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

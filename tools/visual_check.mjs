@@ -165,6 +165,7 @@ function summarizeConversionFailures(results) {
     if (target === 'keepsake' && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
     if (target === 'route' && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
     if (target === 'route' && !result.supplyResumePassStampVisible) failures.push('missing personalized supply pass stamp');
+    if (['plan', 'keepsake-plan', 'home-saved-plan', 'map', 'luna', 'guide', 'keepsake'].includes(target) && !result.activeResumePassStampVisible) failures.push('missing active resume pass stamp');
     if (target === 'route' && !result.supplyResumeImageHiddenOk) failures.push('personalized supply resume image is visible on mobile');
     if (target === 'route' && result.supplyResumeActionCount < 3) failures.push('personalized supply resume is missing next-step actions');
     if (target === 'route' && !result.supplyResumeFirstActionInViewport) failures.push('personalized supply resume first action is below the mobile viewport');
@@ -918,6 +919,7 @@ for (const item of conversionCases) {
     if (image.getAttribute('decoding') !== 'async') issues.push(`${label} missing async decoding`);
     return issues;
   }));
+  const activeResumePassStampVisible = await page.locator(`${resumeSelector} [data-resume-pass-stamp]`).isVisible().catch(() => false);
   const supplyResumeImageHiddenOk = finalTarget !== 'route'
     ? true
     : await page.locator(`${resumeSelector} img:not(.resume-pass-prop)`).evaluateAll((images) => images.length === 0 || images.every((image) => {
@@ -963,6 +965,7 @@ for (const item of conversionCases) {
     pageErrors,
     supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible().catch(() => false),
     supplyResumePassStampVisible: await page.locator('[data-supply-saved] [data-resume-pass-stamp]').isVisible().catch(() => false),
+    activeResumePassStampVisible,
     supplyResumeImageHiddenOk,
     supplyResumeActionCount,
     supplyResumeFirstActionInViewport,

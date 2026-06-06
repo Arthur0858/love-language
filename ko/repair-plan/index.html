@@ -268,9 +268,14 @@
     if (!savedResult) return;
     const result = quiz.results[savedResult.primaryKey];
     resumeBox.innerHTML = `
-      <article class="repair-resume-card" style="--result-accent:${result.color}">
+      <article class="repair-resume-card pass-resume-card" style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
         <img src="${result.resultImage}" alt="${result.name}" width="${result.resultImageWidth}" height="${result.resultImageHeight}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
+          <div class="resume-pass-stamp" data-resume-pass-stamp>
+            <img class="resume-pass-prop" src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
+            <span>${quiz.labels.pass_title}</span>
+            <strong>${result.domainTitle}</strong>
+          </div>
           <p class="eyebrow">${resumeTitle}</p>
           <h2>${result.name} · ${result.type}</h2>
           <p>${resumeIntro}</p>

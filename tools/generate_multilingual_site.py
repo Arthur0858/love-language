@@ -4871,9 +4871,14 @@ def garden_map_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="garden-map-resume-card" id="map-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="garden-map-resume-card pass-resume-card" id="map-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
       <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{resumeTitle}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{resumeIntro}}</p>
@@ -5132,11 +5137,16 @@ def keepsake_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" id="keepsake-resume-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="keepsake-resume-card pass-resume-card" id="keepsake-resume-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
       <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" aria-label="${{result.collectorOpen}}：${{result.name}} ${{result.collectorTitle}}">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       </a>
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{result.collectorTitle}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{result.collectorHint}}</p>
@@ -6407,9 +6417,14 @@ def guide_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="quiz-saved-card guide-resume-card" id="guide-resume-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="quiz-saved-card guide-resume-card pass-resume-card" id="guide-resume-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
       <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{quiz.labels.guide_resume_intro}}</p>
@@ -7106,9 +7121,14 @@ def repair_worksheet_script(lang: str) -> str:
     if (!savedResult) return;
     const result = quiz.results[savedResult.primaryKey];
     resumeBox.innerHTML = `
-      <article class="repair-resume-card" style="--result-accent:${{result.color}}">
+      <article class="repair-resume-card pass-resume-card" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
         <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
         <div>
+          <div class="resume-pass-stamp" data-resume-pass-stamp>
+            <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+            <span>${{quiz.labels.pass_title}}</span>
+            <strong>${{result.domainTitle}}</strong>
+          </div>
           <p class="eyebrow">${{resumeTitle}}</p>
           <h2>${{result.name}} · ${{result.type}}</h2>
           <p>${{resumeIntro}}</p>
@@ -7278,9 +7298,14 @@ def luna_resume_script(lang: str) -> str:
   const slug = result.resourceUrl.split('#supply-')[1] || '';
   const practice = practices[slug] || result.supplyMission;
   box.innerHTML = `
-    <article class="luna-resume-card" style="--result-accent:${{result.color}}">
+    <article class="luna-resume-card pass-resume-card" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
       <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{labels.eyebrow}}</p>
         <h2>${{labels.title}}</h2>
         <p>${{labels.intro}}</p>

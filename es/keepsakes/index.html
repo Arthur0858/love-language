@@ -309,11 +309,16 @@
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" id="keepsake-resume-${result.slug}" style="--result-accent:${result.color}">
+    <article class="keepsake-resume-card pass-resume-card" id="keepsake-resume-${result.slug}" style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
       <a class="keepsake-resume-image" href="${result.storyImage}" target="_blank" rel="noopener noreferrer" aria-label="${result.collectorOpen}：${result.name} ${result.collectorTitle}">
         <img src="${result.storyImage}" alt="${result.collectorTitle} ${result.name}" width="${result.storyImageWidth}" height="${result.storyImageHeight}" loading="eager" decoding="async" fetchpriority="high">
       </a>
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${quiz.labels.pass_title}</span>
+          <strong>${result.domainTitle}</strong>
+        </div>
         <p class="eyebrow">${result.collectorTitle}</p>
         <h2>${result.name} · ${result.type}</h2>
         <p>${result.collectorHint}</p>

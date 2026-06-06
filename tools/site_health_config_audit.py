@@ -12,17 +12,18 @@ SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 
 
 def literal_strings(node: ast.AST) -> list[str]:
-    if not isinstance(node, ast.List):
+    if not isinstance(node, (ast.List, ast.Set)):
         return []
     return [item.value for item in node.elts if isinstance(item, ast.Constant) and isinstance(item.value, str)]
 
 
-def parse_summary() -> tuple[list[str], list[str], list[str], list[str]]:
+def parse_summary() -> tuple[list[str], list[str], list[str], list[str], list[str]]:
     tree = ast.parse(SUMMARY_PATH.read_text(encoding="utf-8"))
     check_names: list[str] = []
     check_commands: list[str] = []
     check_script_paths: list[str] = []
     important_keys: list[str] = []
+    retry_names: list[str] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Assign):
             continue
@@ -45,7 +46,9 @@ def parse_summary() -> tuple[list[str], list[str], list[str], list[str]]:
                         check_script_paths.extend(part for part in parts if part.startswith("tools/"))
             if isinstance(target, ast.Name) and target.id == "important_keys":
                 important_keys.extend(literal_strings(node.value))
-    return check_names, check_commands, check_script_paths, important_keys
+            if isinstance(target, ast.Name) and target.id == "RETRY_ON_FAILURE":
+                retry_names.extend(literal_strings(node.value))
+    return check_names, check_commands, check_script_paths, important_keys, retry_names
 
 
 def duplicates(values: list[str]) -> list[str]:
@@ -55,11 +58,12 @@ def duplicates(values: list[str]) -> list[str]:
 
 def main() -> int:
     issues: list[str] = []
-    check_names, check_commands, check_script_paths, important_keys = parse_summary()
+    check_names, check_commands, check_script_paths, important_keys, retry_names = parse_summary()
     duplicate_check_names = duplicates(check_names)
     duplicate_check_commands = duplicates(check_commands)
     duplicate_script_paths = duplicates(check_script_paths)
     duplicate_important_keys = duplicates(important_keys)
+    unknown_retry_names = sorted(set(retry_names).difference(check_names))
     if duplicate_check_names:
         issues.append(f"duplicate CHECKS names: {', '.join(duplicate_check_names)}")
     if duplicate_check_commands:
@@ -68,6 +72,8 @@ def main() -> int:
         issues.append(f"duplicate CHECKS script paths: {', '.join(duplicate_script_paths)}")
     if duplicate_important_keys:
         issues.append(f"duplicate important_keys: {', '.join(duplicate_important_keys)}")
+    if unknown_retry_names:
+        issues.append(f"unknown RETRY_ON_FAILURE names: {', '.join(unknown_retry_names)}")
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
@@ -84,17 +90,21 @@ def main() -> int:
         issues.append("CHECKS list not found")
     if not important_keys:
         issues.append("important_keys list not found")
+    if not retry_names:
+        issues.append("RETRY_ON_FAILURE set not found")
 
     print(f"site_health_config_checks={len(check_names)}")
     print(f"site_health_config_commands={len(check_commands)}")
     print(f"site_health_config_scripts={len(check_script_paths)}")
     print(f"site_health_config_python_scripts_compiled={compiled_python_scripts}")
     print(f"site_health_config_important_keys={len(important_keys)}")
+    print(f"site_health_config_retry_names={len(retry_names)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")
     print(f"site_health_config_duplicate_script_paths={len(duplicate_script_paths)}")
     print(f"site_health_config_missing_scripts={len(missing_scripts)}")
     print(f"site_health_config_duplicate_important_keys={len(duplicate_important_keys)}")
+    print(f"site_health_config_unknown_retry_names={len(unknown_retry_names)}")
     print(f"site_health_config_issues={len(issues)}")
     for issue in issues:
         print(issue)

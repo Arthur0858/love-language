@@ -482,11 +482,13 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_scripts",
         "site_health_config_python_scripts_compiled",
         "site_health_config_important_keys",
+        "site_health_config_retry_names",
         "site_health_config_duplicate_check_names",
         "site_health_config_duplicate_check_commands",
         "site_health_config_duplicate_script_paths",
         "site_health_config_missing_scripts",
         "site_health_config_duplicate_important_keys",
+        "site_health_config_unknown_retry_names",
         "timed_out",
         "error",
     ]

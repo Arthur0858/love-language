@@ -206,6 +206,28 @@ def check_affiliate_url(source: str, value: str, affiliate_cache: dict[str, Resp
     return issues
 
 
+def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple[list[str], int]:
+    response = request_url(urljoin(base_url + "/", home_path.lstrip("/")))
+    source = f"{home_path}:home-saved-template"
+    if response.status != 200:
+        return [f"{source}: expected status 200, got {response.status}"], 0
+    checks = {
+        "saved result container": 'data-home-saved',
+        "pass stamp": 'data-resume-pass-stamp',
+        "next pack label": 'quiz.labels.next_pack_title',
+        "supply title": 'result.supplyTitle',
+        "route action": 'data-home-resume-route',
+        "plan action": 'data-home-resume-plan',
+        "luna action": 'data-home-resume-luna',
+    }
+    issues = [
+        f"{source}: missing {label}"
+        for label, snippet in checks.items()
+        if snippet not in response.text
+    ]
+    return issues, len(checks)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public quiz result conversion URLs, anchors, images, and affiliate resources.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
@@ -223,8 +245,12 @@ def main() -> int:
     result_images_checked = 0
     result_affiliate_links_checked = 0
     result_pass_fields_checked = 0
+    home_saved_template_checks = 0
 
     for lang, home_path in LANG_PATHS.items():
+        template_issues, template_checks = check_home_saved_template(base_url, lang, home_path)
+        issues.extend(template_issues)
+        home_saved_template_checks += template_checks
         script, discovery_issues = discover_quiz_asset(base_url, lang, home_path)
         issues.extend(discovery_issues)
         if not script:
@@ -288,6 +314,7 @@ def main() -> int:
     print(f"public_quiz_conversion_images_checked={result_images_checked}")
     print(f"public_quiz_conversion_affiliate_links_checked={result_affiliate_links_checked}")
     print(f"public_quiz_conversion_pass_fields_checked={result_pass_fields_checked}")
+    print(f"public_quiz_conversion_home_saved_template_checks={home_saved_template_checks}")
     print(f"public_quiz_conversion_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

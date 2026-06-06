@@ -164,6 +164,7 @@ function summarizeConversionFailures(results) {
     if (target === 'guide' && (!result.url?.includes('/guides/') || !result.url?.includes('#guide-'))) failures.push('did not land on guide route');
     if (target === 'keepsake' && !result.url?.includes('/keepsakes/#keepsake-')) failures.push('did not land on keepsake route');
     if (target === 'route' && !result.supplyResumeVisible) failures.push('missing personalized supply resume');
+    if (target === 'route' && !result.supplyResumePassStampVisible) failures.push('missing personalized supply pass stamp');
     if (target === 'route' && !result.supplyResumeImageHiddenOk) failures.push('personalized supply resume image is visible on mobile');
     if (target === 'route' && result.supplyResumeActionCount < 3) failures.push('personalized supply resume is missing next-step actions');
     if (target === 'route' && !result.supplyResumeFirstActionInViewport) failures.push('personalized supply resume first action is below the mobile viewport');
@@ -177,6 +178,7 @@ function summarizeConversionFailures(results) {
     if (target === 'map' && !result.gardenMapKeepsakeHref?.includes('/keepsakes/#keepsake-')) failures.push('garden map resume missing keepsake hall');
     if (target === 'map' && !result.gardenMapLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('garden map resume missing Luna route');
     if (target === 'guardian' && !result.guardianResumeVisible) failures.push('missing personalized guardian resume');
+    if (target === 'guardian' && !result.guardianResumePassStampVisible) failures.push('missing personalized guardian pass stamp');
     if (target === 'guardian' && !result.guardianResumePrimaryHref?.includes('/resources/#supply-')) failures.push('guardian resume primary action does not continue supply route');
     if (target === 'guardian' && !result.guardianResumeGuardianHref?.includes('/characters/')) failures.push('guardian resume missing guardian page link');
     if (target === 'guardian' && !result.guardianResumePlanHref?.includes('/repair-plan/#plan-')) failures.push('guardian resume missing repair plan');
@@ -918,7 +920,7 @@ for (const item of conversionCases) {
   }));
   const supplyResumeImageHiddenOk = finalTarget !== 'route'
     ? true
-    : await page.locator(`${resumeSelector} img`).evaluateAll((images) => images.length === 0 || images.every((image) => {
+    : await page.locator(`${resumeSelector} img:not(.resume-pass-prop)`).evaluateAll((images) => images.length === 0 || images.every((image) => {
       const style = window.getComputedStyle(image);
       const rect = image.getBoundingClientRect();
       return style.display === 'none' || style.visibility === 'hidden' || rect.width === 0 || rect.height === 0;
@@ -960,6 +962,7 @@ for (const item of conversionCases) {
     consoleErrors,
     pageErrors,
     supplyResumeVisible: await page.locator('[data-supply-saved]:not([hidden])').isVisible().catch(() => false),
+    supplyResumePassStampVisible: await page.locator('[data-supply-saved] [data-resume-pass-stamp]').isVisible().catch(() => false),
     supplyResumeImageHiddenOk,
     supplyResumeActionCount,
     supplyResumeFirstActionInViewport,
@@ -974,6 +977,7 @@ for (const item of conversionCases) {
     gardenMapKeepsakeHref,
     gardenMapLunaHref,
     guardianResumeVisible: await page.locator('[data-guardian-saved]:not([hidden])').isVisible().catch(() => false),
+    guardianResumePassStampVisible: await page.locator('[data-guardian-saved] [data-resume-pass-stamp]').isVisible().catch(() => false),
     guardianResumePrimaryHref,
     guardianResumeGuardianHref,
     guardianResumePlanHref,

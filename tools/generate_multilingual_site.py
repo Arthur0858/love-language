@@ -6258,12 +6258,18 @@ def supply_resume_script(lang: str) -> str:
     }}
   ];
   box.innerHTML = `
-    <article class="quiz-saved-card supply-resume-card" style="--result-accent:${{result.color}}">
-      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
+    <article class="quiz-saved-card supply-resume-card pass-resume-card" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
+      <img class="supply-resume-portrait" src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{quiz.labels.saved_title}}</p>
         <h2>${{result.supplyTitle}}</h2>
         <p>${{result.name}} · ${{result.type}}</p>
+        <p class="resume-domain-line">${{result.domainDesc}}</p>
         <p>${{result.supplyDesc}}</p>
         <div class="supply-resume-next">
           ${{resumeSteps.map((step) => `
@@ -6476,12 +6482,18 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
   const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.resourceUrl;
   const primaryLabel = currentSlug && !isCurrent ? quiz.labels.guardian_link : quiz.labels.saved_route;
   box.innerHTML = `
-    <article class="guardian-resume-card" id="guardian-result-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="guardian-resume-card pass-resume-card" id="guardian-result-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
       <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
         <p class="eyebrow">${{quiz.labels.guardian_resume_title}}</p>
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{intro}}</p>
+        <p class="resume-domain-line">${{result.domainDesc}}</p>
         <div class="guardian-resume-actions">
           <a class="primary-btn" href="${{primaryHref}}" data-guardian-resume-primary>${{primaryLabel}}</a>
           <a class="secondary-btn" href="${{result.guardianUrl}}" data-guardian-resume-guardian>${{quiz.labels.guardian_link}}</a>

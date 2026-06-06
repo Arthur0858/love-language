@@ -184,6 +184,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_discovery_llms_snippets_checked",
         "public_discovery_llms_high_value_urls_checked",
         "public_discovery_llms_urls_checked",
+        "public_discovery_llms_url_canonicals_checked",
         "public_discovery_text_files_checked",
         "public_discovery_security_fields_checked",
         "public_external_unique_links_checked",

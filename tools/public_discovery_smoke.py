@@ -9,6 +9,7 @@ import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from email.utils import parsedate_to_datetime
+from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
@@ -70,6 +71,20 @@ class Response:
     @property
     def text(self) -> str:
         return self.body.decode("utf-8", errors="replace")
+
+
+class HeadParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.canonical = ""
+        self.robots = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        data = {key.lower(): value or "" for key, value in attrs}
+        if tag == "link" and data.get("rel") == "canonical":
+            self.canonical = data.get("href", "")
+        elif tag == "meta" and data.get("name", "").lower() == "robots":
+            self.robots = data.get("content", "")
 
 
 def normalize_base_url(value: str) -> str:
@@ -245,12 +260,12 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, icons_checked, len(shortcuts), shortcut_links_checked, manifest_expected_shortcuts_checked
 
 
-def check_llms(base_url: str) -> tuple[list[str], int, int, int, int]:
+def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     path = "/llms.txt"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
     if not response.headers.get("content-type", "").startswith("text/plain"):
         issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
@@ -273,14 +288,25 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int, int]:
             issues.append(f"{path}: missing high-value URL {url}")
     urls = sorted(set(match.group(0).rstrip(".,;") for match in URL_RE.finditer(text)))
     urls_checked = 0
+    url_canonicals_checked = 0
     for url in urls:
         target = request_url(url)
         urls_checked += 1
         if target.status != 200:
             issues.append(f"{path}: listed URL {url} expected status 200, got {target.status}")
-        if "<meta name=\"robots\" content=\"noindex" in target.text:
+            continue
+        head = HeadParser()
+        head.feed(target.text)
+        robots_tokens = {token.strip().lower() for token in head.robots.split(",") if token.strip()}
+        if "noindex" in robots_tokens:
             issues.append(f"{path}: listed URL should not point to noindex page: {url}")
-    return issues, sections_checked, snippets_checked, urls_checked, high_value_urls_checked
+        if head.canonical:
+            url_canonicals_checked += 1
+            if head.canonical != url:
+                issues.append(f"{path}: listed URL {url} canonical should match, got {head.canonical!r}")
+        else:
+            issues.append(f"{path}: listed URL {url} missing canonical")
+    return issues, sections_checked, snippets_checked, urls_checked, high_value_urls_checked, url_canonicals_checked
 
 
 def check_text_files(base_url: str) -> tuple[list[str], int, int]:
@@ -327,7 +353,14 @@ def main() -> int:
     issues: list[str] = []
     feed_issues, feed_items, feed_links_checked = check_feed(base_url)
     manifest_issues, manifest_icons_checked, manifest_shortcuts, manifest_shortcut_links_checked, manifest_expected_shortcuts_checked = check_manifest(base_url)
-    llms_issues, llms_sections_checked, llms_snippets_checked, llms_urls_checked, llms_high_value_urls_checked = check_llms(base_url)
+    (
+        llms_issues,
+        llms_sections_checked,
+        llms_snippets_checked,
+        llms_urls_checked,
+        llms_high_value_urls_checked,
+        llms_url_canonicals_checked,
+    ) = check_llms(base_url)
     text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
@@ -344,6 +377,7 @@ def main() -> int:
     print(f"public_discovery_llms_snippets_checked={llms_snippets_checked}")
     print(f"public_discovery_llms_high_value_urls_checked={llms_high_value_urls_checked}")
     print(f"public_discovery_llms_urls_checked={llms_urls_checked}")
+    print(f"public_discovery_llms_url_canonicals_checked={llms_url_canonicals_checked}")
     print(f"public_discovery_text_files_checked={text_files_checked}")
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
     print(f"public_discovery_issues={len(issues)}")

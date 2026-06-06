@@ -477,6 +477,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "image_preloads_checked",
         "deploy_manifest_files",
         "site_health_config_checks",
+        "site_health_config_check_tuples_parsed",
         "site_health_config_commands",
         "site_health_config_scripts",
         "site_health_config_python_scripts_compiled",
@@ -496,6 +497,9 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_duplicate_important_keys",
         "site_health_config_unknown_retry_names",
         "site_health_config_missing_issue_important_keys",
+        "site_health_config_malformed_checks",
+        "site_health_config_invalid_timeouts",
+        "site_health_config_public_flag_mismatches",
         "timed_out",
         "error",
     ]

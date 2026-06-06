@@ -91,6 +91,7 @@
   </aside>
 </section>
 
+<span id="guide-dora" class="anchor-offset" aria-hidden="true"></span>
 <section class="section guide-action-bridge" id="guide-action-bridge" data-guide-action-bridge style="--guardian-accent:#923e4a">
   <div class="section-intro">
     <p class="eyebrow">Carry this guide into a guardian route</p>
@@ -160,7 +161,7 @@
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="quiz-saved-card guide-resume-card" id="guide-${result.slug}" style="--result-accent:${result.color}">
+    <article class="quiz-saved-card guide-resume-card" id="guide-resume-${result.slug}" style="--result-accent:${result.color}">
       <img src="${result.resultImage}" alt="${result.name}" width="${result.resultImageWidth}" height="${result.resultImageHeight}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${quiz.labels.guide_resume_title}</p>

@@ -10,8 +10,8 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DYNAMIC_RESUME_MARKERS = {
-    "guide": 'id="guide-${result.slug}"',
-    "keepsake": 'id="keepsake-${result.slug}"',
+    "guide": 'id="guide-resume-${result.slug}"',
+    "keepsake": 'id="keepsake-resume-${result.slug}"',
     "luna": "#luna-${slug}",
 }
 
@@ -175,6 +175,8 @@ def audit_guardian(config, lang: str, result_key: str, meta: dict, issues: list[
     checks += 6
     require_static_id(resource_parser, f"supply-{slug}", f"{label} resources", issues)
     require_static_id(plan_parser, f"plan-{slug}", f"{label} repair plan", issues)
+    require_static_id(guide_parser, f"guide-{slug}", f"{label} guide", issues)
+    require_static_id(keepsake_parser, f"keepsake-{slug}", f"{label} keepsakes", issues)
     require_dynamic_marker(guide_source, "guide", f"{label} guide", issues)
     require_dynamic_marker(keepsake_source, "keepsake", f"{label} keepsakes", issues)
     require_dynamic_marker(luna_source, "luna", f"{label} luna", issues)

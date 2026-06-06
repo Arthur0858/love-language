@@ -154,6 +154,7 @@
   </div>
   <p class="section-intro">把測驗結果從一個答案變成可以保存、分享與回看的入口。先收藏你的守護者卡，再回到補給路線做一個小任務。 適合發限動、傳給伴侶，或放進關係日記作為今天的心語入口。</p>
   <div class="collector-grid">
+<span id="keepsake-iris" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-iris">
   <a class="collector-image-link" href="/assets/lovetypes/share/iris-story-zh.webp" target="_blank" rel="noopener noreferrer" aria-label="開啟收藏卡：艾莉絲 你的守護者卡">
     <img src="/assets/lovetypes/share/iris-story-zh.webp" alt="艾莉絲 你的守護者卡" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -172,6 +173,7 @@
   </div>
 </article>
 
+<span id="keepsake-noah" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-noah">
   <a class="collector-image-link" href="/assets/lovetypes/share/noah-story-zh.webp" target="_blank" rel="noopener noreferrer" aria-label="開啟收藏卡：諾雅 你的守護者卡">
     <img src="/assets/lovetypes/share/noah-story-zh.webp" alt="諾雅 你的守護者卡" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -190,6 +192,7 @@
   </div>
 </article>
 
+<span id="keepsake-vivian" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-vivian">
   <a class="collector-image-link" href="/assets/lovetypes/share/vivian-story-zh.webp" target="_blank" rel="noopener noreferrer" aria-label="開啟收藏卡：薇薇安 你的守護者卡">
     <img src="/assets/lovetypes/share/vivian-story-zh.webp" alt="薇薇安 你的守護者卡" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -208,6 +211,7 @@
   </div>
 </article>
 
+<span id="keepsake-claire" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-claire">
   <a class="collector-image-link" href="/assets/lovetypes/share/claire-story-zh.webp" target="_blank" rel="noopener noreferrer" aria-label="開啟收藏卡：克萊兒 你的守護者卡">
     <img src="/assets/lovetypes/share/claire-story-zh.webp" alt="克萊兒 你的守護者卡" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -226,6 +230,7 @@
   </div>
 </article>
 
+<span id="keepsake-dora" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-dora">
   <a class="collector-image-link" href="/assets/lovetypes/share/dora-story-zh.webp" target="_blank" rel="noopener noreferrer" aria-label="開啟收藏卡：朵拉 你的守護者卡">
     <img src="/assets/lovetypes/share/dora-story-zh.webp" alt="朵拉 你的守護者卡" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -304,7 +309,7 @@
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" id="keepsake-${result.slug}" style="--result-accent:${result.color}">
+    <article class="keepsake-resume-card" id="keepsake-resume-${result.slug}" style="--result-accent:${result.color}">
       <a class="keepsake-resume-image" href="${result.storyImage}" target="_blank" rel="noopener noreferrer" aria-label="${result.collectorOpen}：${result.name} ${result.collectorTitle}">
         <img src="${result.storyImage}" alt="${result.collectorTitle} ${result.name}" width="${result.storyImageWidth}" height="${result.storyImageHeight}" loading="eager" decoding="async" fetchpriority="high">
       </a>

@@ -5001,6 +5001,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
         f'data-story-error="{escape(labels["story_error"])}"'
     )
     return f"""
+<span id="keepsake-{slug}" class="anchor-offset" aria-hidden="true"></span>
 <article class="{class_name}" id="keepsake-card-{slug}">
   <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer" aria-label="{escape(image_label)}">
     {img_tag(image, f"{name} {labels['card']}")}
@@ -5121,7 +5122,7 @@ def keepsake_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" id="keepsake-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="keepsake-resume-card" id="keepsake-resume-${{result.slug}}" style="--result-accent:${{result.color}}">
       <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" aria-label="${{result.collectorOpen}}：${{result.name}} ${{result.collectorTitle}}">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       </a>
@@ -6370,7 +6371,7 @@ def guide_resume_script(lang: str) -> str:
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="quiz-saved-card guide-resume-card" id="guide-${{result.slug}}" style="--result-accent:${{result.color}}">
+    <article class="quiz-saved-card guide-resume-card" id="guide-resume-${{result.slug}}" style="--result-accent:${{result.color}}">
       <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
       <div>
         <p class="eyebrow">${{quiz.labels.guide_resume_title}}</p>
@@ -6617,6 +6618,7 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
         for step, label, text, cta, href in actions
     )
     return f"""
+<span id="guide-{slug}" class="anchor-offset" aria-hidden="true"></span>
 <section class="section guide-action-bridge" id="guide-action-bridge" data-guide-action-bridge style="--guardian-accent:{GUARDIAN_DOMAINS[slug]["accent"]}">
   <div class="section-intro">
     <p class="eyebrow">{escape(copy["eyebrow"])}</p>

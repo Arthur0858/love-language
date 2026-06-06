@@ -154,6 +154,7 @@
   </div>
   <p class="section-intro">테스트 결과를 저장하고 공유하고 다시 볼 수 있는 입구로 바꿉니다. 수호자 카드를 남기고 작은 보급 과제로 돌아가세요. 스토리, 파트너에게 보내기, 관계 일기의 오늘 마음 언어 입구로 사용할 수 있습니다.</p>
   <div class="collector-grid">
+<span id="keepsake-iris" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-iris">
   <a class="collector-image-link" href="/assets/lovetypes/share/iris-story-ko.webp" target="_blank" rel="noopener noreferrer" aria-label="카드 열기：아이리스 나의 수호자 카드">
     <img src="/assets/lovetypes/share/iris-story-ko.webp" alt="아이리스 나의 수호자 카드" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -172,6 +173,7 @@
   </div>
 </article>
 
+<span id="keepsake-noah" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-noah">
   <a class="collector-image-link" href="/assets/lovetypes/share/noah-story-ko.webp" target="_blank" rel="noopener noreferrer" aria-label="카드 열기：노아 나의 수호자 카드">
     <img src="/assets/lovetypes/share/noah-story-ko.webp" alt="노아 나의 수호자 카드" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -190,6 +192,7 @@
   </div>
 </article>
 
+<span id="keepsake-vivian" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-vivian">
   <a class="collector-image-link" href="/assets/lovetypes/share/vivian-story-ko.webp" target="_blank" rel="noopener noreferrer" aria-label="카드 열기：비비안 나의 수호자 카드">
     <img src="/assets/lovetypes/share/vivian-story-ko.webp" alt="비비안 나의 수호자 카드" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -208,6 +211,7 @@
   </div>
 </article>
 
+<span id="keepsake-claire" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-claire">
   <a class="collector-image-link" href="/assets/lovetypes/share/claire-story-ko.webp" target="_blank" rel="noopener noreferrer" aria-label="카드 열기：클레어 나의 수호자 카드">
     <img src="/assets/lovetypes/share/claire-story-ko.webp" alt="클레어 나의 수호자 카드" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -226,6 +230,7 @@
   </div>
 </article>
 
+<span id="keepsake-dora" class="anchor-offset" aria-hidden="true"></span>
 <article class="collector-card" id="keepsake-card-dora">
   <a class="collector-image-link" href="/assets/lovetypes/share/dora-story-ko.webp" target="_blank" rel="noopener noreferrer" aria-label="카드 열기：도라 나의 수호자 카드">
     <img src="/assets/lovetypes/share/dora-story-ko.webp" alt="도라 나의 수호자 카드" width="1080" height="1920" loading="lazy" decoding="async" fetchpriority="low" />
@@ -304,7 +309,7 @@
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
-    <article class="keepsake-resume-card" id="keepsake-${result.slug}" style="--result-accent:${result.color}">
+    <article class="keepsake-resume-card" id="keepsake-resume-${result.slug}" style="--result-accent:${result.color}">
       <a class="keepsake-resume-image" href="${result.storyImage}" target="_blank" rel="noopener noreferrer" aria-label="${result.collectorOpen}：${result.name} ${result.collectorTitle}">
         <img src="${result.storyImage}" alt="${result.collectorTitle} ${result.name}" width="${result.storyImageWidth}" height="${result.storyImageHeight}" loading="eager" decoding="async" fetchpriority="high">
       </a>

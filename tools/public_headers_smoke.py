@@ -45,6 +45,22 @@ GLOBAL_HEADERS = {
 }
 IMMUTABLE_CACHE_RE = re.compile(r"max-age=31536000.*immutable", re.I)
 HTML_CACHE_RE = re.compile(r"max-age=600", re.I)
+LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+CORE_HTML_ROUTES = (
+    "",
+    "garden-map",
+    "guides",
+    "characters",
+    "theory",
+    "resources",
+    "repair-plan",
+    "keepsakes",
+    "luna-yoga-music",
+    "about",
+    "contact",
+    "privacy",
+    "terms",
+)
 
 
 @dataclass(frozen=True)
@@ -58,10 +74,21 @@ class HeaderCase:
     expected_location: str = ""
 
 
+def localized_path(lang: str, route: str) -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    parts = [part for part in (prefix, route) if part]
+    return "/" + "/".join(parts) + "/" if parts else "/"
+
+
+CORE_HTML_CASES = [
+    HeaderCase(f"core-{lang}-{route or 'home'}", localized_path(lang, route), html=True)
+    for lang in LOCALE_PREFIXES
+    for route in CORE_HTML_ROUTES
+]
+
+
 CASES = [
-    HeaderCase("home", "/", html=True),
-    HeaderCase("characters", "/characters/", html=True),
-    HeaderCase("resources", "/resources/", html=True),
+    *CORE_HTML_CASES,
     HeaderCase("css", GENERATOR_CONFIG.CSS_ASSET, immutable=True),
     HeaderCase("interactions", GENERATOR_CONFIG.INTERACTIONS_ASSET, immutable=True),
     HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
@@ -148,8 +175,11 @@ def main() -> int:
 
     issues: list[str] = []
     checked = 0
+    core_html_cases_checked = 0
     for case in CASES:
         checked += 1
+        if case.html and case.name.startswith("core-"):
+            core_html_cases_checked += 1
         issues.extend(check_case(args.base_url, case))
 
     preview_cases = [
@@ -160,6 +190,7 @@ def main() -> int:
         issues.extend(check_case(args.preview_base_url, case))
 
     print(f"public_header_cases_checked={checked}")
+    print(f"public_header_core_html_cases_checked={core_html_cases_checked}")
     print(f"public_header_issues={len(issues)}")
     for issue in issues:
         print(issue)

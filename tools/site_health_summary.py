@@ -35,13 +35,14 @@ CHECKS = [
     ("public_visual_smoke", ["node", "tools/public_visual_smoke.mjs"], 1500, True),
     ("csp_runtime_smoke", ["node", "tools/csp_runtime_smoke.mjs"], 120, True),
     ("public_trust_smoke", [sys.executable, "tools/public_trust_smoke.py"], 180, True),
+    ("public_versioned_asset_smoke", [sys.executable, "tools/public_versioned_asset_smoke.py"], 240, True),
     ("runtime_performance_smoke", ["node", "tools/runtime_performance_smoke.mjs"], 120, True),
     ("tap_target_smoke", ["node", "tools/tap_target_smoke.mjs"], 120, True),
     ("contrast_smoke", ["node", "tools/contrast_smoke.mjs"], 120, True),
     ("user_preferences_smoke", ["node", "tools/user_preferences_smoke.mjs"], 120, True),
     ("storage_privacy_smoke", ["node", "tools/storage_privacy_smoke.mjs"], 120, True),
 ]
-RETRY_ON_FAILURE = {"runtime_performance_smoke"}
+RETRY_ON_FAILURE = {"csp_runtime_smoke", "runtime_performance_smoke"}
 
 
 def safe_timeout_output(error: subprocess.TimeoutExpired) -> str:
@@ -127,6 +128,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_visual_issues",
         "csp_runtime_issues",
         "public_trust_issues",
+        "public_versioned_asset_issues",
         "Remote missing hashes",
         "Commit dirty",
         "pages",
@@ -231,6 +233,13 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_trust_action_routes_checked",
         "public_trust_contact_route_anchors_checked",
         "public_trust_noncommercial_pages_checked",
+        "public_versioned_asset_pages_checked",
+        "public_versioned_asset_css_refs_checked",
+        "public_versioned_asset_interaction_refs_checked",
+        "public_versioned_asset_affiliate_refs_checked",
+        "public_versioned_asset_quiz_data_refs_checked",
+        "public_versioned_asset_root_refs_checked",
+        "public_versioned_asset_stale_refs",
         "runtime_performance_pages_checked",
         "runtime_performance_attempts",
         "runtime_performance_worst_lcp_ms",

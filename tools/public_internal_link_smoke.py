@@ -42,6 +42,8 @@ class AnchorParser(HTMLParser):
         super().__init__()
         self.hrefs: list[str] = []
         self.ids: set[str] = set()
+        self.canonical = ""
+        self.robots = ""
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
@@ -49,6 +51,10 @@ class AnchorParser(HTMLParser):
             self.ids.add(data["id"])
         if tag == "a" and data.get("href"):
             self.hrefs.append(data["href"])
+        elif tag == "link" and data.get("rel") == "canonical":
+            self.canonical = data.get("href", "")
+        elif tag == "meta" and data.get("name", "").lower() == "robots":
+            self.robots = data.get("content", "")
 
 
 def normalize_base_url(value: str) -> str:
@@ -205,6 +211,8 @@ def main() -> int:
     parser_cache: dict[str, AnchorParser] = dict(page_parsers)
     redirects_followed = 0
     anchor_targets_checked = 0
+    html_targets_checked = 0
+    canonical_targets_checked = 0
 
     for link in links:
         target_without_fragment, fragment = urldefrag(link.url)
@@ -227,11 +235,31 @@ def main() -> int:
         if strip_fragment(normalize_check_url(response.final_url)) != target_without_fragment:
             redirects_followed += 1
 
-        if fragment and is_html(response):
+        if is_html(response):
             final_base = strip_fragment(normalize_check_url(response.final_url))
             if final_base not in parser_cache:
                 parser_cache[final_base] = parse_html(response)
-            ids = parser_cache[final_base].ids
+            target_parser = parser_cache[final_base]
+            html_targets_checked += 1
+            robots_tokens = {token.strip().lower() for token in target_parser.robots.split(",") if token.strip()}
+            if "noindex" in robots_tokens:
+                sources = ", ".join(link.source_paths)
+                issues.append(f"{link.url}: internal HTML link should not target noindex page from {sources}")
+            if target_parser.canonical:
+                canonical_targets_checked += 1
+                if normalize_check_url(target_parser.canonical) != final_base:
+                    sources = ", ".join(link.source_paths)
+                    issues.append(
+                        f"{link.url}: internal HTML link final canonical should be {final_base}, got {target_parser.canonical} from {sources}"
+                    )
+            else:
+                sources = ", ".join(link.source_paths)
+                issues.append(f"{link.url}: internal HTML target missing canonical from {sources}")
+
+        if fragment and is_html(response):
+            final_base = strip_fragment(normalize_check_url(response.final_url))
+            target_parser = parser_cache[final_base]
+            ids = target_parser.ids
             anchor_targets_checked += 1
             decoded_fragment = unquote(fragment)
             if decoded_fragment not in ids and fragment not in ids:
@@ -241,6 +269,8 @@ def main() -> int:
     print(f"public_internal_link_pages_checked={len(page_urls)}")
     print(f"public_internal_links_seen={links_seen}")
     print(f"public_internal_unique_links_checked={len(links)}")
+    print(f"public_internal_html_targets_checked={html_targets_checked}")
+    print(f"public_internal_canonical_targets_checked={canonical_targets_checked}")
     print(f"public_internal_anchor_targets_checked={anchor_targets_checked}")
     print(f"public_internal_redirects_followed={redirects_followed}")
     print(f"public_internal_link_issues={len(issues)}")

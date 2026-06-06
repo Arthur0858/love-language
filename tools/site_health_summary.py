@@ -214,6 +214,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_internal_link_pages_checked",
         "public_internal_links_seen",
         "public_internal_unique_links_checked",
+        "public_internal_html_targets_checked",
+        "public_internal_canonical_targets_checked",
         "public_internal_anchor_targets_checked",
         "public_internal_redirects_followed",
         "public_locale_route_pages_checked",

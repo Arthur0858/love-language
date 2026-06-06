@@ -25,6 +25,14 @@ class ExternalLink:
     source_paths: tuple[str, ...]
 
 
+@dataclass
+class ExternalLinkStats:
+    anchors_checked: int = 0
+    blank_target_rel_checked: int = 0
+    affiliate_anchors_checked: int = 0
+    affiliate_disclosure_pages_checked: int = 0
+
+
 def load_public_deploy_smoke():
     module_path = ROOT / "tools" / "public_deploy_smoke.py"
     spec = importlib.util.spec_from_file_location("public_deploy_smoke_import", module_path)
@@ -76,22 +84,64 @@ def resilient_status(url: str, attempts: int = 2) -> tuple[int, str]:
     raise last_error
 
 
-def collect_external_links(base_url: str) -> list[ExternalLink]:
+def resource_lang(path: str) -> str:
+    if path.startswith("/en/"):
+        return "en"
+    if path.startswith("/ja/"):
+        return "ja"
+    if path.startswith("/ko/"):
+        return "ko"
+    if path.startswith("/es/"):
+        return "es"
+    return "zh"
+
+
+def rel_tokens(anchor: dict[str, str]) -> set[str]:
+    return {token.strip().lower() for token in anchor.get("rel", "").split() if token.strip()}
+
+
+def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalLinkStats, list[str]]:
     smoke = load_public_deploy_smoke()
+    generator = smoke.GENERATOR_CONFIG
+    issues: list[str] = []
+    stats = ExternalLinkStats()
     sources_by_url: dict[str, set[str]] = {}
     for path in smoke.PUBLIC_PATHS:
         response = smoke.request_url(urljoin(base_url + "/", path.lstrip("/")))
         assets = smoke.extract_head_assets(response.text)
+        if path.endswith("/resources/"):
+            expected_disclosure = generator.AFFILIATE_DISCLOSURE[resource_lang(path)]
+            if expected_disclosure not in response.text:
+                issues.append(f"{path}: missing localized affiliate disclosure")
+            elif "affiliate-disclosure" not in response.text:
+                issues.append(f"{path}: affiliate disclosure should use affiliate-disclosure class")
+            else:
+                stats.affiliate_disclosure_pages_checked += 1
+            if "affiliate-link-note" not in response.text:
+                issues.append(f"{path}: missing external bookstore fallback note")
         for anchor in assets.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)
             if parsed.scheme not in {"http", "https"} or parsed.hostname in LOCAL_HOSTS:
                 continue
+            stats.anchors_checked += 1
+            rel = rel_tokens(anchor)
+            if anchor.get("target") != "_blank":
+                issues.append(f"{path}: external link should open in a new tab: {href}")
+            elif {"noopener", "noreferrer"}.issubset(rel):
+                stats.blank_target_rel_checked += 1
+            else:
+                issues.append(f"{path}: external new-tab link should include noopener noreferrer: {href}")
+            if parsed.hostname == "www.books.com.tw":
+                if "sponsored" not in rel:
+                    issues.append(f"{path}: affiliate link should include sponsored rel: {href}")
+                else:
+                    stats.affiliate_anchors_checked += 1
             sources_by_url.setdefault(href, set()).add(path)
     return [
         ExternalLink(url=url, source_paths=tuple(sorted(source_paths)))
         for url, source_paths in sorted(sources_by_url.items())
-    ]
+    ], stats, issues
 
 
 def main() -> int:
@@ -101,7 +151,8 @@ def main() -> int:
 
     base_url = normalize_base_url(args.base_url)
     issues: list[str] = []
-    links = collect_external_links(base_url)
+    links, stats, safety_issues = collect_external_links(base_url)
+    issues.extend(safety_issues)
     hosts: set[str] = set()
     affiliate_links_checked = 0
 
@@ -118,9 +169,13 @@ def main() -> int:
         if status not in ACCEPTED_STATUSES:
             issues.append(f"{link.url}: expected reachable status, got {status} final={final_url}")
 
+    print(f"public_external_anchors_checked={stats.anchors_checked}")
+    print(f"public_external_blank_target_rel_checked={stats.blank_target_rel_checked}")
     print(f"public_external_unique_links_checked={len(links)}")
     print(f"public_external_hosts_checked={len(hosts)}")
     print(f"public_external_affiliate_links_checked={affiliate_links_checked}")
+    print(f"public_external_affiliate_anchors_checked={stats.affiliate_anchors_checked}")
+    print(f"public_external_affiliate_disclosure_pages_checked={stats.affiliate_disclosure_pages_checked}")
     print(f"public_external_link_issues={len(issues)}")
     for issue in issues:
         print(issue)

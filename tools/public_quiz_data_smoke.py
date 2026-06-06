@@ -29,6 +29,13 @@ TYPE_SLUGS = {
     "S": "claire",
     "P": "dora",
 }
+TYPE_GUIDE_ROUTES = {
+    "W": "guides/words-of-affirmation-scripts",
+    "T": "guides/quality-time-long-distance",
+    "G": "guides/gifts-are-not-materialism",
+    "S": "guides/acts-of-service-boundaries",
+    "P": "guides/physical-touch-consent-safety",
+}
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
 
@@ -161,6 +168,11 @@ def validate_result(path: str, lang: str, result_type: str, result: object) -> l
             issues.append(f"{path}: {result_type} missing text field {key}")
     if result.get("slug") != slug:
         issues.append(f"{path}: {result_type} slug should be {slug!r}, got {result.get('slug')!r}")
+    guide_route = TYPE_GUIDE_ROUTES[result_type]
+    if not is_localized_href(result.get("guideUrl", ""), lang, guide_route):
+        issues.append(f"{path}: {result_type} guideUrl should point to localized {guide_route}")
+    if f"#guide-{slug}" not in result.get("guideUrl", ""):
+        issues.append(f"{path}: {result_type} guideUrl should target #guide-{slug}")
     if not is_localized_href(result.get("guardianUrl", ""), lang, f"characters/{slug}"):
         issues.append(f"{path}: {result_type} guardianUrl not localized for {slug}")
     if not is_localized_href(result.get("resourceUrl", ""), lang, "resources"):
@@ -250,6 +262,7 @@ def main() -> int:
     quiz_assets_checked = 0
     quiz_questions_checked = 0
     quiz_results_checked = 0
+    quiz_guide_urls_checked = 0
     quiz_starter_steps_checked = 0
     seen_assets: set[str] = set()
 
@@ -273,6 +286,15 @@ def main() -> int:
         quiz_questions_checked += questions_checked
         quiz_results_checked += results_checked
         if isinstance(data.get("results"), dict):
+            quiz_guide_urls_checked += sum(
+                1
+                for result_type, result in data["results"].items()
+                if result_type in TYPE_GUIDE_ROUTES
+                and isinstance(result, dict)
+                and is_localized_href(result.get("guideUrl", ""), lang, TYPE_GUIDE_ROUTES[result_type])
+                and f"#guide-{TYPE_SLUGS[result_type]}" in result.get("guideUrl", "")
+            )
+        if isinstance(data.get("results"), dict):
             for result in data["results"].values():
                 if isinstance(result, dict) and isinstance(result.get("starterKit"), dict):
                     steps = result["starterKit"].get("steps")
@@ -285,6 +307,7 @@ def main() -> int:
     print(f"public_quiz_assets_checked={quiz_assets_checked}")
     print(f"public_quiz_questions_checked={quiz_questions_checked}")
     print(f"public_quiz_results_checked={quiz_results_checked}")
+    print(f"public_quiz_guide_urls_checked={quiz_guide_urls_checked}")
     print(f"public_quiz_starter_steps_checked={quiz_starter_steps_checked}")
     print(f"public_quiz_issues={len(issues)}")
     for issue in issues[:100]:

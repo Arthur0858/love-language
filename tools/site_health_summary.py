@@ -205,6 +205,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_external_affiliate_disclosure_pages_checked",
         "public_header_cases_checked",
         "public_header_core_html_cases_checked",
+        "public_header_csp_tokens_checked",
         "public_indexability_sitemap_urls_listed",
         "public_indexability_sitemap_pages_checked",
         "public_indexability_noindex_pages_checked",

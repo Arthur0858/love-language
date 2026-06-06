@@ -28,14 +28,17 @@ def load_generator_config():
 
 GENERATOR_CONFIG = load_generator_config()
 CSP_REQUIRED_DIRECTIVES = {
-    "default-src": "'self'",
-    "script-src": "https://static.cloudflareinsights.com",
-    "style-src": "'unsafe-inline'",
-    "object-src": "'none'",
-    "base-uri": "'self'",
-    "frame-ancestors": "'self'",
-    "form-action": "mailto:",
-    "upgrade-insecure-requests": "",
+    "default-src": ("'self'",),
+    "script-src": ("'self'", "'unsafe-inline'", "https://static.cloudflareinsights.com"),
+    "style-src": ("'self'", "'unsafe-inline'"),
+    "img-src": ("'self'", "data:", "https:"),
+    "font-src": ("'self'",),
+    "connect-src": ("'self'",),
+    "object-src": ("'none'",),
+    "base-uri": ("'self'",),
+    "frame-ancestors": ("'self'",),
+    "form-action": ("'self'", "mailto:"),
+    "upgrade-insecure-requests": (),
 }
 GLOBAL_HEADERS = {
     "x-content-type-options": "nosniff",
@@ -120,8 +123,9 @@ def fetch_head(url: str) -> tuple[int, dict[str, str]]:
         raise RuntimeError(f"{url}: {error}") from error
 
 
-def check_global_headers(case: HeaderCase, headers: dict[str, str], require_csp: bool) -> list[str]:
+def check_global_headers(case: HeaderCase, headers: dict[str, str], require_csp: bool) -> tuple[list[str], int]:
     issues: list[str] = []
+    csp_tokens_checked = 0
     for name, expected in GLOBAL_HEADERS.items():
         actual = headers.get(name, "")
         if actual != expected:
@@ -133,21 +137,27 @@ def check_global_headers(case: HeaderCase, headers: dict[str, str], require_csp:
     if require_csp and not csp:
         issues.append(f"{case.name}: missing content-security-policy")
     elif require_csp:
-        for directive, token in CSP_REQUIRED_DIRECTIVES.items():
+        for directive, tokens in CSP_REQUIRED_DIRECTIVES.items():
             if directive not in csp:
                 issues.append(f"{case.name}: CSP missing {directive}")
-            elif token and token not in csp:
-                issues.append(f"{case.name}: CSP {directive} missing {token}")
-    return issues
+                continue
+            csp_tokens_checked += 1
+            for token in tokens:
+                if token not in csp:
+                    issues.append(f"{case.name}: CSP {directive} missing {token}")
+                else:
+                    csp_tokens_checked += 1
+    return issues, csp_tokens_checked
 
 
-def check_case(base_url: str, case: HeaderCase) -> list[str]:
+def check_case(base_url: str, case: HeaderCase) -> tuple[list[str], int]:
     url = urljoin(normalize_base_url(base_url), case.path.lstrip("/"))
     status, headers = fetch_head(url)
     issues: list[str] = []
     if status != case.expected_status:
         issues.append(f"{case.name}: HTTP status expected {case.expected_status}, got {status}")
-    issues.extend(check_global_headers(case, headers, require_csp=case.html))
+    global_issues, csp_tokens_checked = check_global_headers(case, headers, require_csp=case.html)
+    issues.extend(global_issues)
     if case.html:
         cache_control = headers.get("cache-control", "")
         if not HTML_CACHE_RE.search(cache_control):
@@ -164,7 +174,7 @@ def check_case(base_url: str, case: HeaderCase) -> list[str]:
             issues.append(f"{case.name}: location expected {case.expected_location}, got {location!r}")
     if case.expect_noindex and headers.get("x-robots-tag", "").lower() != "noindex":
         issues.append(f"{case.name}: expected x-robots-tag noindex")
-    return issues
+    return issues, csp_tokens_checked
 
 
 def main() -> int:
@@ -176,21 +186,27 @@ def main() -> int:
     issues: list[str] = []
     checked = 0
     core_html_cases_checked = 0
+    csp_tokens_checked = 0
     for case in CASES:
         checked += 1
         if case.html and case.name.startswith("core-"):
             core_html_cases_checked += 1
-        issues.extend(check_case(args.base_url, case))
+        case_issues, case_csp_tokens = check_case(args.base_url, case)
+        issues.extend(case_issues)
+        csp_tokens_checked += case_csp_tokens
 
     preview_cases = [
         HeaderCase("pages-preview-home", "/", html=True, expect_noindex=True),
     ]
     for case in preview_cases:
         checked += 1
-        issues.extend(check_case(args.preview_base_url, case))
+        case_issues, case_csp_tokens = check_case(args.preview_base_url, case)
+        issues.extend(case_issues)
+        csp_tokens_checked += case_csp_tokens
 
     print(f"public_header_cases_checked={checked}")
     print(f"public_header_core_html_cases_checked={core_html_cases_checked}")
+    print(f"public_header_csp_tokens_checked={csp_tokens_checked}")
     print(f"public_header_issues={len(issues)}")
     for issue in issues:
         print(issue)

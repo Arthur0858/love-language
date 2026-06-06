@@ -49,6 +49,13 @@ def page_path(prefix: str, slug: str) -> str:
     return f"/{prefix}/{slug}/" if prefix else f"/{slug}/"
 
 
+def localized_path(lang: str, route: str = "") -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    route = route.strip("/")
+    parts = [part for part in (prefix, route) if part]
+    return "/" + "/".join(parts) + ("/" if parts else "")
+
+
 def expectations() -> list[TrustPage]:
     generator = load_module("lovetypes_generator_trust_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     pages: list[TrustPage] = []
@@ -85,7 +92,13 @@ def main() -> int:
     trust_action_routes_checked = 0
     contact_route_anchors_checked = 0
     about_trust_cards_checked = 0
+    about_garden_pass_cards_checked = 0
+    about_hero_actions_checked = 0
     theory_domain_cards_checked = 0
+    theory_guardian_cards_checked = 0
+    theory_faq_cards_checked = 0
+    theory_hero_actions_checked = 0
+    about_theory_distinction_checks = 0
     noncommercial_pages_checked = 0
 
     for page in expectations():
@@ -126,17 +139,50 @@ def main() -> int:
             if page.slug in {"privacy", "terms"} and "2026-06-05" not in response.text:
                 issues.append(f"{page.path}: missing updated date")
         elif page.slug == "about":
+            if 'data-trust-hero-actions="about"' not in response.text:
+                issues.append(f"{page.path}: missing about-specific trust hero actions")
+            else:
+                for key in ("quiz", "guardians", "theory"):
+                    if f'data-trust-hero-link="{key}"' not in response.text:
+                        issues.append(f"{page.path}: about hero missing {key} action")
+                    else:
+                        about_hero_actions_checked += 1
+            garden_pass_count = count_substring(response.text, 'class="garden-pass-card"')
+            about_garden_pass_cards_checked += garden_pass_count
+            if garden_pass_count != 3:
+                issues.append(f"{page.path}: expected 3 about garden pass cards, got {garden_pass_count}")
             card_count = count_substring(response.text, 'class="about-trust-card"')
             about_trust_cards_checked += card_count
             if card_count != 4:
                 issues.append(f"{page.path}: expected 4 about trust cards, got {card_count}")
             if 'data-about-garden-pass' not in response.text:
                 issues.append(f"{page.path}: missing garden pass section")
+            if 'data-theory-domain-compass' in response.text or 'class="faq-section"' in response.text:
+                issues.append(f"{page.path}: about page should not include theory-only compass or FAQ sections")
+            else:
+                about_theory_distinction_checks += 1
         elif page.slug == "theory":
+            if 'data-trust-hero-actions="about"' in response.text or 'data-about-garden-pass' in response.text:
+                issues.append(f"{page.path}: theory page should not include about-only hero or garden pass")
+            else:
+                about_theory_distinction_checks += 1
+            for expected in (f'href="{localized_path(page.lang)}#quiz-section"', f'href="{localized_path(page.lang, "characters")}"'):
+                if expected not in response.text:
+                    issues.append(f"{page.path}: theory hero missing action {expected}")
+                else:
+                    theory_hero_actions_checked += 1
             domain_count = count_substring(response.text, 'class="theory-domain-card"')
             theory_domain_cards_checked += domain_count
             if domain_count != 5:
                 issues.append(f"{page.path}: expected 5 theory domain cards, got {domain_count}")
+            guardian_count = count_substring(response.text, 'class="guardian-card"')
+            theory_guardian_cards_checked += guardian_count
+            if guardian_count != 5:
+                issues.append(f"{page.path}: expected 5 theory guardian cards, got {guardian_count}")
+            faq_count = count_substring(response.text, "<article><h3>")
+            theory_faq_cards_checked += faq_count
+            if faq_count != 4:
+                issues.append(f"{page.path}: expected 4 theory FAQ cards, got {faq_count}")
 
         if page.slug in {"about", "theory"}:
             action_count = count_substring(response.text, 'class="trust-action-card"')
@@ -158,8 +204,14 @@ def main() -> int:
     print(f"public_trust_boundary_texts_checked={boundary_texts_checked}")
     print(f"public_trust_policy_compass_cards_checked={policy_compass_cards_checked}")
     print(f"public_trust_policy_detail_cards_checked={policy_detail_cards_checked}")
+    print(f"public_trust_about_garden_pass_cards_checked={about_garden_pass_cards_checked}")
+    print(f"public_trust_about_hero_actions_checked={about_hero_actions_checked}")
     print(f"public_trust_about_cards_checked={about_trust_cards_checked}")
     print(f"public_trust_theory_domain_cards_checked={theory_domain_cards_checked}")
+    print(f"public_trust_theory_guardian_cards_checked={theory_guardian_cards_checked}")
+    print(f"public_trust_theory_faq_cards_checked={theory_faq_cards_checked}")
+    print(f"public_trust_theory_hero_actions_checked={theory_hero_actions_checked}")
+    print(f"public_trust_about_theory_distinction_checks={about_theory_distinction_checks}")
     print(f"public_trust_action_routes_checked={trust_action_routes_checked}")
     print(f"public_trust_contact_route_anchors_checked={contact_route_anchors_checked}")
     print(f"public_trust_noncommercial_pages_checked={noncommercial_pages_checked}")

@@ -5,6 +5,7 @@ import argparse
 import re
 import subprocess
 import sys
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / "output" / "site-health.md"
 KEY_VALUE_RE = re.compile(r"^([A-Za-z0-9_:-]+)=(.*)$")
+PROGRESS_PREFIXES = ("[visual]", "[public-quiz-flow]", "[perf]", "[tap]", "[public-visual]")
 
 
 CHECKS = [
@@ -65,26 +67,39 @@ RETRY_ON_FAILURE = {
 }
 
 
-def safe_timeout_output(error: subprocess.TimeoutExpired) -> str:
-    output = error.stdout or ""
-    if isinstance(output, bytes):
-        output = output.decode("utf-8", errors="replace")
-    return output.rstrip() + f"\ntimed_out=1\nerror=command timed out after {error.timeout} seconds\n"
+def should_stream_progress(line: str) -> bool:
+    stripped = line.strip()
+    return any(stripped.startswith(prefix) for prefix in PROGRESS_PREFIXES)
 
 
 def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
+    process = subprocess.Popen(
+        command,
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        bufsize=1,
+    )
+    output_lines: list[str] = []
+
+    def collect_output() -> None:
+        assert process.stdout is not None
+        for line in process.stdout:
+            output_lines.append(line)
+            if should_stream_progress(line):
+                print(line.rstrip(), flush=True)
+
+    reader = threading.Thread(target=collect_output, daemon=True)
+    reader.start()
     try:
-        result = subprocess.run(
-            command,
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            timeout=timeout,
-        )
-    except subprocess.TimeoutExpired as error:
-        return 124, safe_timeout_output(error)
-    return result.returncode, result.stdout
+        code = process.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        code = 124
+        output_lines.append(f"\ntimed_out=1\nerror=command timed out after {timeout} seconds\n")
+    reader.join(timeout=5)
+    return code, "".join(output_lines)
 
 
 def git_value(*args: str) -> str:

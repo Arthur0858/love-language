@@ -30,7 +30,9 @@ function runVisualCheck() {
       stdout += chunk.toString();
     });
     child.stderr.on('data', (chunk) => {
-      stderr += chunk.toString();
+      const text = chunk.toString();
+      stderr += text;
+      process.stderr.write(text);
     });
     child.on('close', (code) => {
       clearTimeout(timer);

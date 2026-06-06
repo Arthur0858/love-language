@@ -303,6 +303,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "tap_targets_checked",
         "contrast_pages_checked",
         "contrast_text_nodes_checked",
+        "user_preference_pages_checked",
         "user_preference_checks",
         "storage_privacy_checks",
         "storage_privacy_local_keys_checked",

@@ -39,19 +39,38 @@ async function browserLaunchOptions() {
 }
 
 const BASE_URL = process.env.BASE_URL || 'https://lovetypes.tw';
+const LOCALE_PREFIXES = ['', 'en', 'ja', 'ko', 'es'];
+const REDUCED_MOTION_CASES = [
+  ...LOCALE_PREFIXES.map((prefix) => ({ name: `${prefix || 'zh'}-home-reduced-motion`, path: localizedPath(prefix) })),
+  { name: 'zh-garden-map-reduced-motion', path: '/garden-map/' },
+  { name: 'zh-characters-reduced-motion', path: '/characters/' },
+  { name: 'zh-resources-reduced-motion', path: '/resources/' },
+  { name: 'zh-repair-plan-reduced-motion', path: '/repair-plan/' },
+  { name: 'zh-luna-reduced-motion', path: '/luna-yoga-music/' },
+];
+const PRINT_CASES = LOCALE_PREFIXES.map((prefix) => ({
+  name: `${prefix || 'zh'}-repair-plan-print`,
+  path: localizedPath(prefix, 'repair-plan'),
+}));
+
+function localizedPath(prefix, route = '') {
+  const cleanRoute = route.replace(/^\/|\/$/g, '');
+  const parts = [prefix, cleanRoute].filter(Boolean);
+  return `/${parts.join('/')}${parts.length ? '/' : ''}`;
+}
 
 function makeUrl(path) {
   return new URL(path, BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`).toString();
 }
 
-async function reducedMotionCheck(browser) {
+async function reducedMotionCheck(browser, item) {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
     reducedMotion: 'reduce',
   });
   const page = await context.newPage();
-  const response = await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  const response = await page.goto(makeUrl(item.path), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
   const result = await page.evaluate(() => {
     const rootStyle = window.getComputedStyle(document.documentElement);
@@ -81,13 +100,13 @@ async function reducedMotionCheck(browser) {
     return trimmed.endsWith('ms') ? Number.parseFloat(trimmed) : Number.parseFloat(trimmed) * 1000;
   }));
   if (transitionMs > 1) issues.push(`reduced-motion transition duration too high: ${result.transitionDuration}`);
-  return { name: 'reduced-motion-mobile', checked: 1, issues };
+  return { name: item.name, checked: 1, pagesChecked: 1, issues };
 }
 
-async function printCheck(browser) {
+async function printCheck(browser, item) {
   const context = await browser.newContext({ viewport: { width: 960, height: 1200 } });
   const page = await context.newPage();
-  const response = await page.goto(makeUrl('/repair-plan/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  const response = await page.goto(makeUrl(item.path), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
   await page.emulateMedia({ media: 'print' });
   const result = await page.evaluate(() => {
@@ -123,7 +142,7 @@ async function printCheck(browser) {
   if (!['rgb(255, 255, 255)', '#fff', 'white'].includes(result.bodyBackground)) {
     issues.push(`print body background should be white, got ${result.bodyBackground}`);
   }
-  return { name: 'repair-plan-print', checked: 1, issues };
+  return { name: item.name, checked: 1, pagesChecked: 1, issues };
 }
 
 async function main() {
@@ -131,16 +150,22 @@ async function main() {
   const browser = await playwright.chromium.launch(await browserLaunchOptions());
   let results = [];
   try {
-    console.error('[preferences] reduced-motion-mobile');
-    results.push(await reducedMotionCheck(browser));
-    console.error('[preferences] repair-plan-print');
-    results.push(await printCheck(browser));
+    for (const item of REDUCED_MOTION_CASES) {
+      console.error(`[preferences] ${item.name}`);
+      results.push(await reducedMotionCheck(browser, item));
+    }
+    for (const item of PRINT_CASES) {
+      console.error(`[preferences] ${item.name}`);
+      results.push(await printCheck(browser, item));
+    }
   } finally {
     await browser.close();
   }
 
   const issues = results.flatMap((result) => result.issues.map((issue) => `${result.name}: ${issue}`));
   const checks = results.reduce((sum, result) => sum + result.checked, 0);
+  const pagesChecked = results.reduce((sum, result) => sum + result.pagesChecked, 0);
+  console.log(`user_preference_pages_checked=${pagesChecked}`);
   console.log(`user_preference_checks=${checks}`);
   console.log(`user_preference_issues=${issues.length}`);
   for (const issue of issues.slice(0, 100)) console.log(issue);

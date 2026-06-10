@@ -62,6 +62,17 @@
   <div class="contact-request-note">
     <p>Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.</p>
     <p class="contact-request-subject"><strong>Suggested email subject</strong><code>LoveTypes guardian supply waitlist</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Copyable email template</strong><code>My guardian:
+Supply I want first: Luna download pack / PDF practice cards / wallpaper or short ritual
+Use case:
+Device:
+Format I would actually keep:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="My guardian:
+Supply I want first: Luna download pack / PDF practice cards / wallpaper or short ritual
+Use case:
+Device:
+Format I would actually keep:
+">Copy template</button></div>
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20guardian%20supply%20waitlist&body=My%20guardian%3A%0ASupply%20I%20want%20first%3A%20Luna%20download%20pack%20/%20PDF%20practice%20cards%20/%20wallpaper%20or%20short%20ritual%0AUse%20case%3A%0ADevice%3A%0AFormat%20I%20would%20actually%20keep%3A%0A">Send supply waitlist request</a>
   </div>
 </section>
@@ -72,9 +83,50 @@
   <div class="contact-request-note">
     <p>Please include the page URL, device and browser, what you expected, and what happened instead. This inbox handles site repair and content reports, not emergency support or counseling replacement.</p>
     <p class="contact-request-subject"><strong>Suggested email subject</strong><code>LoveTypes site repair report</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Copyable email template</strong><code>Page URL:
+Device and browser:
+What I expected:
+What happened instead:
+Extra screenshot or notes:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="Page URL:
+Device and browser:
+What I expected:
+What happened instead:
+Extra screenshot or notes:
+">Copy template</button></div>
     <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20site%20repair%20report&body=Page%20URL%3A%0ADevice%20and%20browser%3A%0AWhat%20I%20expected%3A%0AWhat%20happened%20instead%3A%0AExtra%20screenshot%20or%20notes%3A%0A">Send site repair report</a>
   </div>
 </section>
+<script>
+(() => {
+  const copied = "Copied";
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy-text') || '';
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      } catch (_error) {
+        window.prompt(original, text);
+      }
+    });
+  });
+})();
+</script>
 
 
 <section class="section policy-compass-section" data-policy-compass>

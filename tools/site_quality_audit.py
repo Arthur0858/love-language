@@ -1350,6 +1350,10 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                 for expected_subject in sorted(expected_subjects):
                     if expected_subject not in visible_text:
                         issues.append(f"{path}: contact page missing localized visible email subject {expected_subject!r}")
+                if parser.source.count("contact-request-template") < 2:
+                    issues.append(f"{path}: contact page missing copyable email templates")
+                if parser.source.count(" data-copy-contact-template ") != 2:
+                    issues.append(f"{path}: contact page should include two copy-template buttons")
                 mailto_subjects = {
                     value
                     for href in contact_mailtos

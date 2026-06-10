@@ -213,6 +213,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_contact_anchor_targets_checked",
         "public_contact_mailto_links_checked",
         "public_contact_mailto_bodies_checked",
+        "public_contact_template_blocks_checked",
+        "public_contact_template_buttons_checked",
         "public_contact_protected_email_links_checked",
         "public_contact_source_routes_checked",
         "public_discovery_feed_items",

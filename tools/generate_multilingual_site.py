@@ -1401,6 +1401,14 @@ CONTACT_SUBJECT_LABELS = {
     "es": "Asunto sugerido",
 }
 
+CONTACT_TEMPLATE_LABELS = {
+    "zh": {"label": "可複製信件模板", "copy": "複製模板", "copied": "已複製"},
+    "en": {"label": "Copyable email template", "copy": "Copy template", "copied": "Copied"},
+    "ja": {"label": "コピーできるメール本文", "copy": "本文をコピー", "copied": "コピーしました"},
+    "ko": {"label": "복사 가능한 메일 템플릿", "copy": "템플릿 복사", "copied": "복사됨"},
+    "es": {"label": "Plantilla copiable", "copy": "Copiar plantilla", "copied": "Copiado"},
+}
+
 
 CONTACT_REPAIR_REPORTS = {
     "zh": {
@@ -7615,12 +7623,16 @@ def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
     subject_label = CONTACT_SUBJECT_LABELS[lang]
+    template_labels = CONTACT_TEMPLATE_LABELS[lang]
     request_subject = request["subject"]
     repair_subject = repair["subject"]
     request_subject_href = quote(request_subject)
     repair_subject_href = quote(repair_subject)
     request_body_href = quote(request["body"])
     repair_body_href = quote(repair["body"])
+    copy_label = escape(template_labels["copy"])
+    template_label = escape(template_labels["label"])
+    copied = json.dumps(template_labels["copied"], ensure_ascii=False)
 
     request_cards = "".join(
         f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
@@ -7638,6 +7650,7 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(request["body"])}">{copy_label}</button></div>
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}">{escape(request["cta"])}</a>
   </div>
 </section>
@@ -7648,9 +7661,40 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(repair["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(repair_subject)}</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(repair["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(repair["body"])}">{copy_label}</button></div>
     <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair_subject_href}&body={repair_body_href}">{escape(repair["cta"])}</a>
   </div>
 </section>
+<script>
+(() => {{
+  const copied = {copied};
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {{
+    const original = button.textContent;
+    button.addEventListener('click', async () => {{
+      const text = button.getAttribute('data-copy-text') || '';
+      try {{
+        if (navigator.clipboard?.writeText && window.isSecureContext) {{
+          await navigator.clipboard.writeText(text);
+        }} else {{
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }}
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      }} catch (_error) {{
+        window.prompt(original, text);
+      }}
+    }});
+  }});
+}})();
+</script>
 """
 
 

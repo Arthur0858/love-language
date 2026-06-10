@@ -80,6 +80,8 @@ def main() -> int:
     pages_checked = 0
     mailto_links_checked = 0
     mailto_bodies_checked = 0
+    template_blocks_checked = 0
+    template_buttons_checked = 0
     contact_subjects_checked = 0
     anchor_targets_checked = 0
     protected_email_links_checked = 0
@@ -136,6 +138,24 @@ def main() -> int:
         for subject in item.subjects:
             if subject not in visible_text:
                 issues.append(f"{item.path}: missing visible suggested subject {subject}")
+        template_blocks = response.text.count("contact-request-template")
+        template_buttons = response.text.count(" data-copy-contact-template ")
+        if template_blocks < 2:
+            issues.append(f"{item.path}: expected two copyable contact templates, got {template_blocks}")
+        else:
+            template_blocks_checked += 2
+        if template_buttons != 2:
+            issues.append(f"{item.path}: expected two copy contact template buttons, got {template_buttons}")
+        else:
+            template_buttons_checked += 2
+        generator = load_module("lovetypes_generator_contact_expectations", ROOT / "tools" / "generate_multilingual_site.py")
+        expected_bodies = {
+            generator.CONTACT_REQUESTS[item.lang]["body"],
+            generator.CONTACT_REPAIR_REPORTS[item.lang]["body"],
+        }
+        for expected_body in expected_bodies:
+            if expected_body.strip() not in visible_text:
+                issues.append(f"{item.path}: missing visible copyable email template")
         if not mailto_subjects and not email_protection_active:
             issues.append(f"{item.path}: expected mailto links or Cloudflare email protection links")
 
@@ -156,6 +176,8 @@ def main() -> int:
     print(f"public_contact_anchor_targets_checked={anchor_targets_checked}")
     print(f"public_contact_mailto_links_checked={mailto_links_checked}")
     print(f"public_contact_mailto_bodies_checked={mailto_bodies_checked}")
+    print(f"public_contact_template_blocks_checked={template_blocks_checked}")
+    print(f"public_contact_template_buttons_checked={template_buttons_checked}")
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")

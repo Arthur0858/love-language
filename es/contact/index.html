@@ -62,6 +62,17 @@
   <div class="contact-request-note">
     <p>Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.</p>
     <p class="contact-request-subject"><strong>Asunto sugerido</strong><code>Lista de espera de recursos LoveTypes</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Plantilla copiable</strong><code>Mi guardiana:
+Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Situación de uso:
+Dispositivo:
+Formato que guardaría de verdad:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="Mi guardiana:
+Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Situación de uso:
+Dispositivo:
+Formato que guardaría de verdad:
+">Copiar plantilla</button></div>
     <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=Lista%20de%20espera%20de%20recursos%20LoveTypes&body=Mi%20guardiana%3A%0ARecurso%20que%20quiero%20primero%3A%20Pack%20Luna%20descargable%20/%20tarjetas%20PDF%20/%20fondo%20o%20ritual%20breve%0ASituaci%C3%B3n%20de%20uso%3A%0ADispositivo%3A%0AFormato%20que%20guardar%C3%ADa%20de%20verdad%3A%0A">Enviar petición de lista</a>
   </div>
 </section>
@@ -72,9 +83,50 @@
   <div class="contact-request-note">
     <p>Incluye la URL, dispositivo y navegador, qué esperabas ver y qué ocurrió. Este buzón atiende reparación del sitio y reportes de contenido; no ofrece apoyo de emergencia ni sustituye terapia.</p>
     <p class="contact-request-subject"><strong>Asunto sugerido</strong><code>Reporte de reparación del sitio LoveTypes</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Plantilla copiable</strong><code>URL de la página:
+Dispositivo y navegador:
+Qué esperaba ver:
+Qué ocurrió:
+Captura o notas extra:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="URL de la página:
+Dispositivo y navegador:
+Qué esperaba ver:
+Qué ocurrió:
+Captura o notas extra:
+">Copiar plantilla</button></div>
     <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject=Reporte%20de%20reparaci%C3%B3n%20del%20sitio%20LoveTypes&body=URL%20de%20la%20p%C3%A1gina%3A%0ADispositivo%20y%20navegador%3A%0AQu%C3%A9%20esperaba%20ver%3A%0AQu%C3%A9%20ocurri%C3%B3%3A%0ACaptura%20o%20notas%20extra%3A%0A">Enviar reporte de reparación</a>
   </div>
 </section>
+<script>
+(() => {
+  const copied = "Copiado";
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy-text') || '';
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      } catch (_error) {
+        window.prompt(original, text);
+      }
+    });
+  });
+})();
+</script>
 
 
 <section class="section policy-compass-section" data-policy-compass>

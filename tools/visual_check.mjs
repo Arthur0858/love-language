@@ -421,6 +421,7 @@ const copyCases = [
   { name: 'copy-supply-route-mobile', target: 'supply-route', path: '/resources/', viewport: { width: 390, height: 844 } },
   { name: 'copy-repair-summary-mobile', target: 'repair-summary', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'copy-contact-template-mobile', target: 'contact-template', path: '/contact/', viewport: { width: 390, height: 844 } },
+  { name: 'copy-keepsake-waitlist-template-mobile', target: 'contact-template', path: '/keepsakes/', viewport: { width: 390, height: 844 } },
 ];
 
 const anchorFocusCases = [

@@ -167,6 +167,61 @@
 </section>
 
 
+<section class="section contact-request-section keepsake-waitlist-section" id="keepsake-supply-waitlist" data-keepsake-waitlist>
+  <div class="section-head"><div><p class="eyebrow">需求羅盤</p><h2>加入守護者補給等待清單</h2></div><a href="/contact/#luna-supply-request">聯絡</a></div>
+  <p class="section-intro">如果你是從 Luna、收藏室或守護者補給路線來到這裡，請先選一種需求寄信。這會幫我們判斷下一批自有補給應優先整理音檔、PDF 練習卡、桌布，還是睡前流程。</p>
+  <div class="contact-request-grid"><article><span>1</span><h3>Luna 下載包</h3><p>希望能離線聆聽、收藏音檔，或把 Luna 放進固定睡前儀式。</p></article><article><span>2</span><h3>PDF 練習卡</h3><p>希望把測驗結果、守護者任務與錯頻修復寫成可列印的短卡。</p></article><article><span>3</span><h3>桌布或短儀式</h3><p>希望有手機桌布、5 到 10 分鐘流程，陪你在吵架後冷卻、睡前整理或寫關係日記。</p></article></div>
+  <div class="contact-request-note">
+    <p>來信時可附上你的守護者、想使用的情境、裝置與願意收藏的格式。LoveTypes 不提供緊急支援、醫療建議或諮商替代。</p>
+    <p class="contact-request-subject"><strong>建議郵件主旨</strong><code>LoveTypes 守護者補給等待清單</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>可複製信件模板</strong><code>我的守護者：
+我想優先收到的補給：Luna 下載包 / PDF 練習卡 / 桌布或短儀式
+使用情境：
+使用裝置：
+我會願意收藏的格式：
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="我的守護者：
+我想優先收到的補給：Luna 下載包 / PDF 練習卡 / 桌布或短儀式
+使用情境：
+使用裝置：
+我會願意收藏的格式：
+">複製模板</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20%E5%AE%88%E8%AD%B7%E8%80%85%E8%A3%9C%E7%B5%A6%E7%AD%89%E5%BE%85%E6%B8%85%E5%96%AE&body=%E6%88%91%E7%9A%84%E5%AE%88%E8%AD%B7%E8%80%85%EF%BC%9A%0A%E6%88%91%E6%83%B3%E5%84%AA%E5%85%88%E6%94%B6%E5%88%B0%E7%9A%84%E8%A3%9C%E7%B5%A6%EF%BC%9ALuna%20%E4%B8%8B%E8%BC%89%E5%8C%85%20/%20PDF%20%E7%B7%B4%E7%BF%92%E5%8D%A1%20/%20%E6%A1%8C%E5%B8%83%E6%88%96%E7%9F%AD%E5%84%80%E5%BC%8F%0A%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%EF%BC%9A%0A%E4%BD%BF%E7%94%A8%E8%A3%9D%E7%BD%AE%EF%BC%9A%0A%E6%88%91%E6%9C%83%E9%A1%98%E6%84%8F%E6%94%B6%E8%97%8F%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A%0A">寄出補給等待清單需求</a>
+  </div>
+</section>
+
+<script>
+(() => {
+  const copied = "已複製";
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy-text') || '';
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      } catch (_error) {
+        window.prompt(original, text);
+      }
+    });
+  });
+})();
+</script>
+
+
+
 <section class="section collector-section">
   <div class="section-head">
     <div><p class="eyebrow">守護者收藏卡</p><h2>守護者收藏卡</h2></div>

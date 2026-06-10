@@ -167,6 +167,61 @@
 </section>
 
 
+<section class="section contact-request-section keepsake-waitlist-section" id="keepsake-supply-waitlist" data-keepsake-waitlist>
+  <div class="section-head"><div><p class="eyebrow">BRÚJULA DE PETICIONES</p><h2>Únete a la lista de recursos de guardianas</h2></div><a href="/es/contact/#luna-supply-request">Contacto</a></div>
+  <p class="section-intro">Si llegaste desde Luna, recuerdos o una ruta de guardiana, elige una petición antes de escribir. Así sabremos si preparar primero descargas de audio, tarjetas PDF, fondos o rutinas nocturnas.</p>
+  <div class="contact-request-grid"><article><span>1</span><h3>Pack Luna descargable</h3><p>Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir.</p></article><article><span>2</span><h3>Tarjetas PDF</h3><p>Quieres tarjetas imprimibles que unan tu resultado, tarea de guardiana y pregunta de reparación.</p></article><article><span>3</span><h3>Fondo o ritual breve</h3><p>Quieres fondos móviles o una secuencia de 5 a 10 minutos para calmarte, reflexionar o escribir un diario de relación.</p></article></div>
+  <div class="contact-request-note">
+    <p>Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.</p>
+    <p class="contact-request-subject"><strong>Asunto sugerido</strong><code>Lista de espera de recursos LoveTypes</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Plantilla copiable</strong><code>Mi guardiana:
+Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Situación de uso:
+Dispositivo:
+Formato que guardaría de verdad:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="Mi guardiana:
+Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Situación de uso:
+Dispositivo:
+Formato que guardaría de verdad:
+">Copiar plantilla</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=Lista%20de%20espera%20de%20recursos%20LoveTypes&body=Mi%20guardiana%3A%0ARecurso%20que%20quiero%20primero%3A%20Pack%20Luna%20descargable%20/%20tarjetas%20PDF%20/%20fondo%20o%20ritual%20breve%0ASituaci%C3%B3n%20de%20uso%3A%0ADispositivo%3A%0AFormato%20que%20guardar%C3%ADa%20de%20verdad%3A%0A">Enviar petición de lista</a>
+  </div>
+</section>
+
+<script>
+(() => {
+  const copied = "Copiado";
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy-text') || '';
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      } catch (_error) {
+        window.prompt(original, text);
+      }
+    });
+  });
+})();
+</script>
+
+
+
 <section class="section collector-section">
   <div class="section-head">
     <div><p class="eyebrow">RECUERDOS DE GUARDIANAS</p><h2>Tarjetas de recuerdo de guardianas</h2></div>

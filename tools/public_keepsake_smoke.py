@@ -6,7 +6,7 @@ import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -154,6 +154,9 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "route_links": 0,
         "plan_links": 0,
         "story_images": 0,
+        "waitlist_cards": 0,
+        "waitlist_mailtos": 0,
+        "waitlist_copy_buttons": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     source = path
@@ -225,6 +228,35 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             if not story_button.attrs.get("data-story-cta", "").endswith("/keepsakes"):
                 issues.append(f"{source}: {slug} story button should carry keepsakes CTA")
 
+    waitlist = find_by_id(root, "keepsake-supply-waitlist")
+    if waitlist is None:
+        issues.append(f"{source}: missing keepsake supply waitlist section")
+    else:
+        waitlist_cards = [item for item in descendants(waitlist, "article") if has_class(item, "contact-request-grid") is False]
+        if len(waitlist_cards) != 3:
+            issues.append(f"{source}: expected three keepsake waitlist request cards, got {len(waitlist_cards)}")
+        else:
+            stats["waitlist_cards"] += len(waitlist_cards)
+        waitlist_links = descendants(waitlist, "a")
+        if not any(link.attrs.get("href") == localized_route(lang, "contact", "luna-supply-request") for link in waitlist_links):
+            issues.append(f"{source}: keepsake waitlist missing contact page bridge")
+        mailto_links = [link for link in waitlist_links if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")]
+        if len(mailto_links) != 1:
+            issues.append(f"{source}: keepsake waitlist should include one contact mailto, got {len(mailto_links)}")
+        else:
+            query = parse_qs(urlparse(mailto_links[0].attrs["href"]).query)
+            if not query.get("subject") or not query.get("body"):
+                issues.append(f"{source}: keepsake waitlist mailto should include subject and body")
+            else:
+                stats["waitlist_mailtos"] += 1
+        copy_buttons = [button for button in descendants(waitlist, "button") if "data-copy-contact-template" in button.attrs]
+        if len(copy_buttons) != 1:
+            issues.append(f"{source}: keepsake waitlist should include one copy template button, got {len(copy_buttons)}")
+        elif not copy_buttons[0].attrs.get("data-copy-text"):
+            issues.append(f"{source}: keepsake waitlist copy template button missing data-copy-text")
+        else:
+            stats["waitlist_copy_buttons"] += 1
+
     return issues, stats
 
 
@@ -244,6 +276,9 @@ def main() -> int:
         "route_links": 0,
         "plan_links": 0,
         "story_images": 0,
+        "waitlist_cards": 0,
+        "waitlist_mailtos": 0,
+        "waitlist_copy_buttons": 0,
     }
     for lang, path in LANG_PATHS.items():
         page_issues, stats = validate_page(base_url, lang, path, image_cache)
@@ -259,6 +294,9 @@ def main() -> int:
     print(f"public_keepsake_story_buttons_checked={totals['story_buttons']}")
     print(f"public_keepsake_route_links_checked={totals['route_links']}")
     print(f"public_keepsake_plan_links_checked={totals['plan_links']}")
+    print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
+    print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
+    print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")
     print(f"public_keepsake_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

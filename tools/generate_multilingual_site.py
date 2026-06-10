@@ -5209,6 +5209,69 @@ def keepsake_ritual_section(lang: str) -> str:
 """
 
 
+def contact_template_copy_script(lang: str) -> str:
+    copied = json.dumps(CONTACT_TEMPLATE_LABELS[lang]["copied"], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const copied = {copied};
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {{
+    const original = button.textContent;
+    button.addEventListener('click', async () => {{
+      const text = button.getAttribute('data-copy-text') || '';
+      try {{
+        if (navigator.clipboard?.writeText && window.isSecureContext) {{
+          await navigator.clipboard.writeText(text);
+        }} else {{
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }}
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      }} catch (_error) {{
+        window.prompt(original, text);
+      }}
+    }});
+  }});
+}})();
+</script>
+"""
+
+
+def keepsake_waitlist_section(lang: str) -> str:
+    request = CONTACT_REQUESTS[lang]
+    subject_label = CONTACT_SUBJECT_LABELS[lang]
+    template_labels = CONTACT_TEMPLATE_LABELS[lang]
+    request_subject = request["subject"]
+    request_subject_href = quote(request_subject)
+    request_body_href = quote(request["body"])
+    request_cards = "".join(
+        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
+        for idx, (title, body) in enumerate(request["items"], 1)
+    )
+    return f"""
+<section class="section contact-request-section keepsake-waitlist-section" id="keepsake-supply-waitlist" data-keepsake-waitlist>
+  <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div><a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(LANGS[lang]["contact"])}</a></div>
+  <p class="section-intro">{escape(request["intro"])}</p>
+  <div class="contact-request-grid">{request_cards}</div>
+  <div class="contact-request-note">
+    <p>{escape(request["note"])}</p>
+    <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>{escape(template_labels["label"])}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(request["body"])}">{escape(template_labels["copy"])}</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}">{escape(request["cta"])}</a>
+  </div>
+</section>
+{contact_template_copy_script(lang)}
+"""
+
+
 def keepsake_resume_script(lang: str) -> str:
     return f"""
 {quiz_data_script_tag(lang)}
@@ -5313,6 +5376,7 @@ def keepsakes_page(lang: str) -> None:
 </section>
 {keepsake_shelf_section(lang)}
 {keepsake_ritual_section(lang)}
+{keepsake_waitlist_section(lang)}
 {collector_section(lang)}
 <section class="section keepsake-use-section">
   <div class="section-head"><div><p class="eyebrow">{escape(SECTION_LABELS[lang]["keepsake_use_route"])}</p><h2>{escape(labels["how_title"])}</h2></div></div>
@@ -7632,7 +7696,6 @@ def contact_request_section(lang: str) -> str:
     repair_body_href = quote(repair["body"])
     copy_label = escape(template_labels["copy"])
     template_label = escape(template_labels["label"])
-    copied = json.dumps(template_labels["copied"], ensure_ascii=False)
 
     request_cards = "".join(
         f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
@@ -7665,36 +7728,7 @@ def contact_request_section(lang: str) -> str:
     <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair_subject_href}&body={repair_body_href}">{escape(repair["cta"])}</a>
   </div>
 </section>
-<script>
-(() => {{
-  const copied = {copied};
-  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {{
-    const original = button.textContent;
-    button.addEventListener('click', async () => {{
-      const text = button.getAttribute('data-copy-text') || '';
-      try {{
-        if (navigator.clipboard?.writeText && window.isSecureContext) {{
-          await navigator.clipboard.writeText(text);
-        }} else {{
-          const area = document.createElement('textarea');
-          area.value = text;
-          area.setAttribute('readonly', '');
-          area.style.position = 'fixed';
-          area.style.left = '-9999px';
-          document.body.appendChild(area);
-          area.select();
-          document.execCommand('copy');
-          area.remove();
-        }}
-        button.textContent = copied;
-        window.setTimeout(() => button.textContent = original, 1600);
-      }} catch (_error) {{
-        window.prompt(original, text);
-      }}
-    }});
-  }});
-}})();
-</script>
+{contact_template_copy_script(lang)}
 """
 
 

@@ -167,6 +167,61 @@
 </section>
 
 
+<section class="section contact-request-section keepsake-waitlist-section" id="keepsake-supply-waitlist" data-keepsake-waitlist>
+  <div class="section-head"><div><p class="eyebrow">REQUEST COMPASS</p><h2>Join the guardian supply waitlist</h2></div><a href="/en/contact/#luna-supply-request">Contact</a></div>
+  <p class="section-intro">If you arrived from Luna, keepsakes, or a guardian supply route, choose one request before writing. It helps us decide whether audio downloads, PDF practice cards, wallpapers, or bedtime flows should be prepared first.</p>
+  <div class="contact-request-grid"><article><span>1</span><h3>Luna download pack</h3><p>You want offline listening, a saved audio set, or a stable bedtime ritual with Luna.</p></article><article><span>2</span><h3>PDF practice cards</h3><p>You want printable cards that connect your quiz result, guardian task, and repair prompt.</p></article><article><span>3</span><h3>Wallpaper or short ritual</h3><p>You want mobile wallpapers or a 5 to 10 minute sequence for cooling down, bedtime reflection, or relationship journaling.</p></article></div>
+  <div class="contact-request-note">
+    <p>Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.</p>
+    <p class="contact-request-subject"><strong>Suggested email subject</strong><code>LoveTypes guardian supply waitlist</code></p>
+    <div class="contact-request-subject contact-request-template"><strong>Copyable email template</strong><code>My guardian:
+Supply I want first: Luna download pack / PDF practice cards / wallpaper or short ritual
+Use case:
+Device:
+Format I would actually keep:
+</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="My guardian:
+Supply I want first: Luna download pack / PDF practice cards / wallpaper or short ritual
+Use case:
+Device:
+Format I would actually keep:
+">Copy template</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20guardian%20supply%20waitlist&body=My%20guardian%3A%0ASupply%20I%20want%20first%3A%20Luna%20download%20pack%20/%20PDF%20practice%20cards%20/%20wallpaper%20or%20short%20ritual%0AUse%20case%3A%0ADevice%3A%0AFormat%20I%20would%20actually%20keep%3A%0A">Send supply waitlist request</a>
+  </div>
+</section>
+
+<script>
+(() => {
+  const copied = "Copied";
+  document.querySelectorAll('[data-copy-contact-template]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      const text = button.getAttribute('data-copy-text') || '';
+      try {
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.left = '-9999px';
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand('copy');
+          area.remove();
+        }
+        button.textContent = copied;
+        window.setTimeout(() => button.textContent = original, 1600);
+      } catch (_error) {
+        window.prompt(original, text);
+      }
+    });
+  });
+})();
+</script>
+
+
+
 <section class="section collector-section">
   <div class="section-head">
     <div><p class="eyebrow">GUARDIAN KEEPSAKES</p><h2>Guardian Keepsake Cards</h2></div>

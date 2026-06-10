@@ -5700,6 +5700,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
 
 def character_route_snapshot(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
+    collector = COLLECTOR_LABELS[lang]
     route = supply_route(lang, slug)
     guide = route["guide"]
     book = route["book"]
@@ -5731,6 +5732,13 @@ def character_route_snapshot(lang: str, slug: str) -> str:
       <h3>{escape(book["title"][lang])}</h3>
       <p>{escape(route["supply"])}</p>
       <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
+    </article>
+    <article>
+      <span>{escape(collector["eyebrow"])}</span>
+      <h3>{escape(labels["free_keepsake"])}</h3>
+      <p>{escape(collector["share_hint"])}</p>
+      <a href="{lang_url(lang, "keepsakes")}#keepsake-{slug}">{escape(collector["open"])}</a>
+      <a href="{supply_request_href(lang, slug)}">{escape(labels["request_supply"])}</a>
     </article>
   </div>
 </section>

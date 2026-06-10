@@ -194,6 +194,8 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         "guide_links": 0,
         "repair_links": 0,
         "supply_links": 0,
+        "keepsake_links": 0,
+        "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
         "nav_cards": 0,
@@ -239,6 +241,7 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         expected_guide = localized_path(lang, TYPE_GUIDE_ROUTES[slug])
         expected_repair = localized_path(lang, "repair-plan") + f"#plan-{slug}"
         expected_supply = localized_path(lang, "resources") + f"#supply-{slug}"
+        expected_keepsake = localized_path(lang, "keepsakes") + f"#keepsake-{slug}"
         if expected_guide in hrefs:
             stats["guide_links"] += 1
         else:
@@ -251,6 +254,17 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
             stats["supply_links"] += 1
         else:
             issues.append(f"{path}: route snapshot missing supply link")
+        if expected_keepsake in hrefs:
+            stats["keepsake_links"] += 1
+        else:
+            issues.append(f"{path}: route snapshot missing keepsake link")
+        request_links = [href for href in hrefs if href.startswith("mailto:contact@lovetypes.tw")]
+        if len(request_links) != 1:
+            issues.append(f"{path}: route snapshot should include one supply request mailto, got {len(request_links)}")
+        elif "subject=" not in request_links[0] or "body=" not in request_links[0]:
+            issues.append(f"{path}: supply request mailto should include subject and body")
+        else:
+            stats["request_mailtos"] += 1
 
     supply_panel = find_by_class(root, "supply-panel-section")
     if supply_panel is None:
@@ -311,6 +325,8 @@ def main() -> int:
         "guide_links": 0,
         "repair_links": 0,
         "supply_links": 0,
+        "keepsake_links": 0,
+        "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
         "nav_cards": 0,
@@ -338,6 +354,8 @@ def main() -> int:
     print(f"public_guardian_guide_links_checked={totals['guide_links']}")
     print(f"public_guardian_repair_links_checked={totals['repair_links']}")
     print(f"public_guardian_supply_links_checked={totals['supply_links']}")
+    print(f"public_guardian_keepsake_links_checked={totals['keepsake_links']}")
+    print(f"public_guardian_request_mailtos_checked={totals['request_mailtos']}")
     print(f"public_guardian_luna_links_checked={totals['luna_links']}")
     print(f"public_guardian_affiliate_links_checked={totals['affiliate_links']}")
     print(f"public_guardian_nav_cards_checked={totals['nav_cards']}")

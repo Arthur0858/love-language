@@ -122,6 +122,13 @@ def public_path(url: str) -> str:
     return path if path.endswith("/") or "." in path.rsplit("/", 1)[-1] else f"{path}/"
 
 
+def loc_to_base_url(base_url: str, loc: str) -> str:
+    parsed = urlparse(loc)
+    path = parsed.path or "/"
+    query = f"?{parsed.query}" if parsed.query else ""
+    return urljoin(base_url + "/", path.lstrip("/") + query)
+
+
 def public_asset_path(raw: str, page_url: str) -> str:
     parsed = urlparse(urljoin(page_url, raw))
     return parsed.path or "/"
@@ -221,7 +228,7 @@ def main() -> int:
     }
 
     for loc in locations:
-        page_issues, page_stats = check_page(loc)
+        page_issues, page_stats = check_page(loc_to_base_url(base_url, loc))
         issues.extend(page_issues)
         totals["pages"] += 1
         for key, value in page_stats.items():

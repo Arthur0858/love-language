@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260610-supply-pack"
+ASSET_VERSION = "20260610-quiz-pack"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -4456,10 +4456,53 @@ def supply_route(lang: str, slug: str) -> dict:
     }
 
 
+def supply_request_href(lang: str, slug: str) -> str:
+    labels = SUPPLY_LABELS[lang]
+    wishlist = SUPPLY_WISHLIST[lang]
+    route = supply_route(lang, slug)
+    guardian_name, _guardian_type, _guardian_desc = route["guardian"][lang]
+    request_subject = quote(wishlist["subject"])
+    request_body = quote(
+        f'{wishlist["body"]} {guardian_name} · {route["title"]}\n'
+        f'{labels["practice"]}: {route["mission"]}\n'
+        f'{labels["supply"]}: {route["supply"]}\n'
+        f'{wishlist["format_label"]}: {", ".join(wishlist["formats"])}\n'
+        f'{wishlist["body_context"]} \n\n'
+    )
+    return f"mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}"
+
+
+def supply_product_pack(lang: str, slug: str) -> dict:
+    product = SUPPLY_PRODUCT_STACK[lang]
+    return {
+        "label": product["label"],
+        "note": product["template_note"],
+        "items": [
+            {
+                "number": "1",
+                "title": product["free"],
+                "desc": product["free_desc"],
+                "href": lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}",
+            },
+            {
+                "number": "2",
+                "title": product["owned"],
+                "desc": product["owned_desc"],
+                "href": supply_request_href(lang, slug),
+            },
+            {
+                "number": "3",
+                "title": product["night"],
+                "desc": product["night_desc"],
+                "href": lang_url(lang, "luna-yoga-music") + f"#luna-{slug}",
+            },
+        ],
+    }
+
+
 def supply_route_card(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     product = SUPPLY_PRODUCT_STACK[lang]
-    wishlist = SUPPLY_WISHLIST[lang]
     route = supply_route(lang, slug)
     guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
     book = route["book"]
@@ -4473,17 +4516,10 @@ def supply_route_card(lang: str, slug: str) -> str:
         "url": abs_url(lang, "resources") + f"#supply-{slug}",
     }
     summary_json = escape(json.dumps(summary, ensure_ascii=False))
-    request_subject = quote(wishlist["subject"])
-    request_body = quote(
-        f'{wishlist["body"]} {guardian_name} · {route["title"]}\n'
-        f'{labels["practice"]}: {route["mission"]}\n'
-        f'{labels["supply"]}: {route["supply"]}\n'
-        f'{wishlist["format_label"]}: {", ".join(wishlist["formats"])}\n'
-        f'{wishlist["body_context"]} \n\n'
-    )
+    request_href = supply_request_href(lang, slug)
     product_items = [
         (product["free"], product["free_desc"], lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}"),
-        (product["owned"], product["owned_desc"], f"mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}"),
+        (product["owned"], product["owned_desc"], request_href),
         (product["night"], product["night_desc"], lang_url(lang, "luna-yoga-music") + f"#luna-{slug}"),
     ]
     product_cards = "".join(
@@ -4512,7 +4548,7 @@ def supply_route_card(lang: str, slug: str) -> str:
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(labels["open_luna"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}">{escape(labels["free_keepsake"])}</a>
-    <a class="secondary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}">{escape(labels["request_supply"])}</a>
+    <a class="secondary-btn" href="{request_href}">{escape(labels["request_supply"])}</a>
     <button class="secondary-btn" type="button" data-copy-supply-route data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
     <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
@@ -6071,6 +6107,7 @@ def quiz_payload(lang: str) -> str:
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
             "starterKit": starter_kit_payload(lang, resource_url),
+            "supplyProductPack": supply_product_pack(lang, meta["slug"]),
         }
     payload = {
         "labels": QUIZ_LABELS[lang],
@@ -6371,6 +6408,23 @@ def quiz_script(lang: str) -> str:
           </article>
         </div>
         <p class="affiliate-disclosure">${{quiz.affiliateDisclosure}}</p>
+      </section>
+      <section class="quiz-action-compass guardian-supply-pass" aria-label="${{result.supplyProductPack.label}}" data-quiz-product-pack style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
+        <div class="quiz-action-head">
+          <p class="eyebrow">${{result.supplyProductPack.label}}</p>
+          <h3>${{result.supplyTitle}}</h3>
+        </div>
+        <p class="supply-pass-domain">${{result.supplyProductPack.note}}</p>
+        <div class="quiz-action-grid">
+          ${{result.supplyProductPack.items.map((item) => `
+            <article>
+              <span>${{item.number}}</span>
+              <h4>${{item.title}}</h4>
+              <p>${{item.desc}}</p>
+              <a href="${{item.href}}" data-quiz-product-pack-link>${{item.title}}</a>
+            </article>
+          `).join('')}}
+        </div>
       </section>
       <section class="quiz-starter-kit" aria-label="${{result.starterKit.title}}">
         <div class="quiz-action-head">

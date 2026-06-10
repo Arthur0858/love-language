@@ -129,6 +129,13 @@ def is_affiliate_url(value: str) -> bool:
     return parsed.scheme == "https" and parsed.hostname == AFFILIATE_HOST and all(token in value for token in AFFILIATE_TOKENS)
 
 
+def is_supply_request(value: str) -> bool:
+    parsed = urlparse(value)
+    if parsed.scheme != "mailto" or parsed.path != "contact@lovetypes.tw":
+        return False
+    return "subject=" in parsed.query and "body=" in parsed.query
+
+
 def validate_target(base_url: str, source: str, value: str, cache: dict[str, tuple[int, set[str]]]) -> list[str]:
     issues: list[str] = []
     path, fragment = urldefrag(value)
@@ -152,6 +159,7 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
         "internal_targets": 0,
         "affiliate_links": 0,
         "starter_kits": 0,
+        "supply_product_packs": 0,
     }
     source = f"{lang}:{result_key}"
     slug = result.get("slug", "")
@@ -204,6 +212,34 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
                         issues.append(f"{source}: starterKit step {index} missing {key}")
             if len(issues) == starter_issue_count and not missing_text:
                 stats["starter_kits"] += 1
+    pack = result.get("supplyProductPack")
+    if not isinstance(pack, dict):
+        issues.append(f"{source}: missing supplyProductPack")
+    else:
+        pack_issue_count = len(issues)
+        for key in ("label", "note"):
+            if not isinstance(pack.get(key), str) or not pack[key].strip():
+                issues.append(f"{source}: supplyProductPack missing {key}")
+        items = pack.get("items")
+        if not isinstance(items, list) or len(items) != 3:
+            issues.append(f"{source}: supplyProductPack should contain three product paths")
+        else:
+            hrefs = [item.get("href", "") for item in items if isinstance(item, dict)]
+            expected_internal = ("/keepsakes/#keepsake-card-", "/luna-yoga-music/#luna-")
+            for fragment in expected_internal:
+                if not any(fragment in href for href in hrefs):
+                    issues.append(f"{source}: supplyProductPack missing route containing {fragment}")
+            if not any(is_supply_request(href) for href in hrefs):
+                issues.append(f"{source}: supplyProductPack missing contact request mailto")
+            for index, item in enumerate(items, start=1):
+                if not isinstance(item, dict):
+                    issues.append(f"{source}: supplyProductPack item {index} should be an object")
+                    continue
+                for key in ("number", "title", "desc", "href"):
+                    if not isinstance(item.get(key), str) or not item[key].strip():
+                        issues.append(f"{source}: supplyProductPack item {index} missing {key}")
+        if len(issues) == pack_issue_count:
+            stats["supply_product_packs"] += 1
     return issues, stats
 
 
@@ -218,6 +254,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         "internal_targets_checked": 0,
         "affiliate_links_checked": 0,
         "starter_kits_checked": 0,
+        "supply_product_packs_checked": 0,
     }
     target_cache: dict[str, tuple[int, set[str]]] = {}
     for lang, path in LANG_PATHS.items():
@@ -246,6 +283,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
             stats["internal_targets_checked"] += result_stats["internal_targets"]
             stats["affiliate_links_checked"] += result_stats["affiliate_links"]
             stats["starter_kits_checked"] += result_stats["starter_kits"]
+            stats["supply_product_packs_checked"] += result_stats["supply_product_packs"]
     return issues, stats
 
 

@@ -415,6 +415,11 @@ def main() -> int:
                 result_pass_fields_checked += 1
                 if not isinstance(labels.get(label), str) or not labels[label].strip():
                     issues.append(f"{script}: labels missing {label}")
+        home_response = request_url(urljoin(base_url + "/", home_path.lstrip("/")))
+        if "data-quiz-product-pack" not in home_response.text or "data-quiz-product-pack-link" not in home_response.text:
+            issues.append(f"{home_path}: quiz result template missing product pack hooks")
+        else:
+            result_pass_fields_checked += 2
         assets_checked += 1
         results = data.get("results")
         if not isinstance(results, dict) or set(results) != EXPECTED_TYPES:
@@ -450,6 +455,15 @@ def main() -> int:
                 issues.extend(check_image_url(base_url, source, field, result.get(field, ""), image_cache))
             result_affiliate_links_checked += 1
             issues.extend(check_affiliate_url(source, result.get("supplyBookUrl", ""), affiliate_cache))
+            pack = result.get("supplyProductPack")
+            if not isinstance(pack, dict):
+                issues.append(f"{source}: missing supplyProductPack")
+            else:
+                items = pack.get("items")
+                if not isinstance(items, list) or len(items) != 3:
+                    issues.append(f"{source}: supplyProductPack should contain three items")
+                else:
+                    result_pass_fields_checked += 1
 
     print(f"public_quiz_conversion_assets_checked={assets_checked}")
     print(f"public_quiz_conversion_results_checked={results_checked}")

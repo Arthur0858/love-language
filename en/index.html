@@ -35,7 +35,7 @@
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared-20260610-supply-pack.css" />
+  <link rel="stylesheet" href="/shared-20260610-quiz-pack.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -279,7 +279,7 @@
   </div>
 </section>
 
-<script src="/quiz-data-en-20260610-supply-pack.js"></script>
+<script src="/quiz-data-en-20260610-quiz-pack.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -565,6 +565,23 @@
         </div>
         <p class="affiliate-disclosure">${quiz.affiliateDisclosure}</p>
       </section>
+      <section class="quiz-action-compass guardian-supply-pass" aria-label="${result.supplyProductPack.label}" data-quiz-product-pack style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
+        <div class="quiz-action-head">
+          <p class="eyebrow">${result.supplyProductPack.label}</p>
+          <h3>${result.supplyTitle}</h3>
+        </div>
+        <p class="supply-pass-domain">${result.supplyProductPack.note}</p>
+        <div class="quiz-action-grid">
+          ${result.supplyProductPack.items.map((item) => `
+            <article>
+              <span>${item.number}</span>
+              <h4>${item.title}</h4>
+              <p>${item.desc}</p>
+              <a href="${item.href}" data-quiz-product-pack-link>${item.title}</a>
+            </article>
+          `).join('')}
+        </div>
+      </section>
       <section class="quiz-starter-kit" aria-label="${result.starterKit.title}">
         <div class="quiz-action-head">
           <p class="eyebrow">${result.starterKit.eyebrow}</p>
@@ -646,7 +663,7 @@
   <p>© 2026 LoveTypes · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a> · <a href="/en/contact/">Contact</a></p>
 </footer>
 
-<script src="/site-interactions-20260610-supply-pack.js" defer></script>
+<script src="/site-interactions-20260610-quiz-pack.js" defer></script>
 
 </body>
 </html>

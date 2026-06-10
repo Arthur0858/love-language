@@ -86,6 +86,11 @@ def localized_path(lang: str, route: str) -> str:
     return f"{prefix}/{route}/" if prefix else f"/{route}/"
 
 
+def expected_story_cta(lang: str, slug: str) -> str:
+    prefix = "" if lang == "zh" else f"/{lang}"
+    return f"lovetypes.tw{prefix}/keepsakes/#keepsake-{slug}"
+
+
 def discover_quiz_asset(base_url: str, lang: str, path: str) -> tuple[str, list[str]]:
     issues: list[str] = []
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
@@ -209,6 +214,8 @@ def validate_result(path: str, lang: str, result_type: str, result: object) -> l
         issues.append(f"{path}: {result_type} storyImageWidth should be {expected_story_width}")
     if result.get("storyImageHeight") != expected_story_height:
         issues.append(f"{path}: {result_type} storyImageHeight should be {expected_story_height}")
+    if result.get("collectorStoryCta") != expected_story_cta(lang, slug):
+        issues.append(f"{path}: {result_type} collectorStoryCta should target localized keepsake {slug}")
     issues.extend(validate_starter_kit(path, lang, result_type, result.get("starterKit")))
     return issues
 
@@ -273,6 +280,7 @@ def main() -> int:
     quiz_results_checked = 0
     quiz_guide_urls_checked = 0
     quiz_story_images_checked = 0
+    quiz_story_ctas_checked = 0
     quiz_starter_steps_checked = 0
     seen_assets: set[str] = set()
 
@@ -313,6 +321,13 @@ def main() -> int:
                 and result.get("storyImageWidth") == STORY_IMAGE_DIMENSIONS[0]
                 and result.get("storyImageHeight") == STORY_IMAGE_DIMENSIONS[1]
             )
+            quiz_story_ctas_checked += sum(
+                1
+                for result_type, result in data["results"].items()
+                if result_type in TYPE_SLUGS
+                and isinstance(result, dict)
+                and result.get("collectorStoryCta") == expected_story_cta(lang, TYPE_SLUGS[result_type])
+            )
         if isinstance(data.get("results"), dict):
             for result in data["results"].values():
                 if isinstance(result, dict) and isinstance(result.get("starterKit"), dict):
@@ -328,6 +343,7 @@ def main() -> int:
     print(f"public_quiz_results_checked={quiz_results_checked}")
     print(f"public_quiz_guide_urls_checked={quiz_guide_urls_checked}")
     print(f"public_quiz_story_images_checked={quiz_story_images_checked}")
+    print(f"public_quiz_story_ctas_checked={quiz_story_ctas_checked}")
     print(f"public_quiz_starter_steps_checked={quiz_starter_steps_checked}")
     print(f"public_quiz_issues={len(issues)}")
     for issue in issues[:100]:

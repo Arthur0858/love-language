@@ -122,6 +122,11 @@ def expected_story(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
 
+def expected_story_cta(lang: str, slug: str) -> str:
+    prefix = "" if lang == "zh" else f"/{lang}"
+    return f"lovetypes.tw{prefix}/keepsakes/#keepsake-{slug}"
+
+
 def localized_route(lang: str, route: str, anchor: str) -> str:
     prefix = "" if lang == "zh" else f"/{lang}"
     return f"{prefix}/{route}/#{anchor}" if prefix else f"/{route}/#{anchor}"
@@ -225,8 +230,9 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             stats["story_buttons"] += 1
             if story_button.attrs.get("data-story-slug") != slug:
                 issues.append(f"{source}: {slug} story button should carry data-story-slug={slug}")
-            if not story_button.attrs.get("data-story-cta", "").endswith("/keepsakes"):
-                issues.append(f"{source}: {slug} story button should carry keepsakes CTA")
+            expected_cta = expected_story_cta(lang, slug)
+            if story_button.attrs.get("data-story-cta", "") != expected_cta:
+                issues.append(f"{source}: {slug} story button should carry localized keepsake CTA {expected_cta}")
 
     waitlist = find_by_id(root, "keepsake-supply-waitlist")
     if waitlist is None:

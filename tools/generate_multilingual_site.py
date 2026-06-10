@@ -5076,6 +5076,10 @@ def guardian_story_image(lang: str, slug: str) -> str:
     return f"/assets/lovetypes/share/{slug}-story-{lang}.webp"
 
 
+def guardian_story_cta(lang: str, slug: str) -> str:
+    return "lovetypes.tw" + lang_url(lang, "keepsakes").rstrip("/") + f"/#keepsake-{slug}"
+
+
 def guardian_result_image(slug: str, fallback: str) -> str:
     return fallback
 
@@ -5110,6 +5114,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     image_label = f"{labels['open']}：{name} {labels['card']}"
     route_href = f"{lang_url(lang, 'resources')}#supply-{slug}"
     plan_href = f"{lang_url(lang, 'repair-plan')}#plan-{slug}"
+    story_cta = guardian_story_cta(lang, slug)
     data_attrs = (
         f'data-story-name="{escape(name)}" '
         f'data-story-title="{escape(typ)}" '
@@ -5117,7 +5122,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
         f'data-story-image="{escape(guardian["asset"])}" '
         f'data-story-slug="{escape(slug)}" '
         f'data-story-kicker="{escape(labels["story_kicker"])}" '
-        f'data-story-cta="{escape(labels["story_cta"])}" '
+        f'data-story-cta="{escape(story_cta)}" '
         f'data-story-error="{escape(labels["story_error"])}"'
     )
     return f"""
@@ -5987,7 +5992,7 @@ def quiz_payload(lang: str) -> str:
             "collectorHallUrl": lang_url(lang, "keepsakes") + f"#keepsake-{meta['slug']}",
             "collectorStory": COLLECTOR_LABELS[lang]["story"],
             "collectorStoryKicker": COLLECTOR_LABELS[lang]["story_kicker"],
-            "collectorStoryCta": COLLECTOR_LABELS[lang]["story_cta"],
+            "collectorStoryCta": guardian_story_cta(lang, meta["slug"]),
             "collectorStoryError": COLLECTOR_LABELS[lang]["story_error"],
             "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
             "planLabel": REPAIR_PLAN[lang]["title"],

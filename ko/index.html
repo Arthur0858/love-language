@@ -405,6 +405,10 @@
           <div class="${actionsClass}" data-home-saved-product-pack>
             ${result.supplyProductPack.items.map((item) => `<a href="${item.href}" data-home-saved-product-link>${item.title}</a>`).join('')}
           </div>
+          <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
+            <strong>${quiz.supplySafety.notNowTitle}</strong>
+            <p>${quiz.supplySafety.notNowText}</p>
+          </div>
           <div class="${actionsClass}">
             <a href="${result.resourceUrl}" data-home-resume-route>${quiz.labels.saved_route}</a>
             <a href="${result.planUrl}" data-home-saved-plan data-home-resume-plan>${quiz.labels.saved_plan}</a>
@@ -584,6 +588,12 @@
               <a href="${item.href}" data-quiz-product-pack-link>${item.title}</a>
             </article>
           `).join('')}
+        </div>
+        <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
+          <strong>${quiz.supplySafety.chooseTitle}</strong>
+          <p>${quiz.supplySafety.chooseText}</p>
+          <strong>${quiz.supplySafety.notNowTitle}</strong>
+          <p>${quiz.supplySafety.notNowText}</p>
         </div>
       </section>
       <section class="quiz-starter-kit" aria-label="${result.starterKit.title}">

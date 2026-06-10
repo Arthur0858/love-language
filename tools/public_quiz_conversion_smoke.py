@@ -339,6 +339,9 @@ def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple
         "saved product pack label": "result.supplyProductPack.label",
         "saved product pack container": "data-home-saved-product-pack",
         "saved product pack links": "data-home-saved-product-link",
+        "saved supply safety": "data-home-saved-supply-safety",
+        "saved supply not-buy title": "quiz.supplySafety.notNowTitle",
+        "saved supply not-buy text": "quiz.supplySafety.notNowText",
         "route action": 'data-home-resume-route',
         "plan action": 'data-home-resume-plan',
         "luna action": 'data-home-resume-luna',
@@ -418,11 +421,23 @@ def main() -> int:
                 result_pass_fields_checked += 1
                 if not isinstance(labels.get(label), str) or not labels[label].strip():
                     issues.append(f"{script}: labels missing {label}")
+        supply_safety = data.get("supplySafety")
+        if not isinstance(supply_safety, dict):
+            issues.append(f"{script}: missing supplySafety")
+        else:
+            for field in ("chooseTitle", "chooseText", "notNowTitle", "notNowText"):
+                result_pass_fields_checked += 1
+                if not isinstance(supply_safety.get(field), str) or not supply_safety[field].strip():
+                    issues.append(f"{script}: supplySafety missing {field}")
         home_response = request_url(urljoin(base_url + "/", home_path.lstrip("/")))
         if "data-quiz-product-pack" not in home_response.text or "data-quiz-product-pack-link" not in home_response.text:
             issues.append(f"{home_path}: quiz result template missing product pack hooks")
         else:
             result_pass_fields_checked += 2
+        if "data-quiz-supply-safety" not in home_response.text:
+            issues.append(f"{home_path}: quiz result template missing supply safety note")
+        else:
+            result_pass_fields_checked += 1
         assets_checked += 1
         results = data.get("results")
         if not isinstance(results, dict) or set(results) != EXPECTED_TYPES:

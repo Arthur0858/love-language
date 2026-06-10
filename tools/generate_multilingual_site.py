@@ -6117,6 +6117,12 @@ def quiz_payload(lang: str) -> str:
         "shareUrl": DOMAIN + lang_url(lang).rstrip("/") + "/",
         "affiliateDisclosure": AFFILIATE_DISCLOSURE[lang],
         "affiliateButton": AFFILIATE_COPY[lang]["button"],
+        "supplySafety": {
+            "chooseTitle": SUPPLY_LABELS[lang]["choose"],
+            "chooseText": SUPPLY_LABELS[lang]["choose_text"],
+            "notNowTitle": SUPPLY_LABELS[lang]["not_now"],
+            "notNowText": SUPPLY_LABELS[lang]["not_now_text"],
+        },
     }
     return json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
 
@@ -6248,6 +6254,10 @@ def quiz_script(lang: str) -> str:
           <p class="eyebrow">${{result.supplyProductPack.label}}</p>
           <div class="${{actionsClass}}" data-home-saved-product-pack>
             ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link>${{item.title}}</a>`).join('')}}
+          </div>
+          <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
+            <strong>${{quiz.supplySafety.notNowTitle}}</strong>
+            <p>${{quiz.supplySafety.notNowText}}</p>
           </div>
           <div class="${{actionsClass}}">
             <a href="${{result.resourceUrl}}" data-home-resume-route>${{quiz.labels.saved_route}}</a>
@@ -6428,6 +6438,12 @@ def quiz_script(lang: str) -> str:
               <a href="${{item.href}}" data-quiz-product-pack-link>${{item.title}}</a>
             </article>
           `).join('')}}
+        </div>
+        <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
+          <strong>${{quiz.supplySafety.chooseTitle}}</strong>
+          <p>${{quiz.supplySafety.chooseText}}</p>
+          <strong>${{quiz.supplySafety.notNowTitle}}</strong>
+          <p>${{quiz.supplySafety.notNowText}}</p>
         </div>
       </section>
       <section class="quiz-starter-kit" aria-label="${{result.starterKit.title}}">

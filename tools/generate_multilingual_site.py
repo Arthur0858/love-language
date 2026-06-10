@@ -2706,6 +2706,13 @@ REPAIR_PLAN = {
         "start": "開始測驗",
         "resources": "打開補給站",
         "download": "保存這週路線",
+        "asset_title": "免費修復卡包",
+        "asset_intro": "把這週路線整理成三份可以帶走的工具：先收下守護者卡，再填工作表，最後只在需要時申請補給。這是進入守護者宇宙後最輕量的實作包。",
+        "asset_items": [
+            ("守護者收藏卡", "保存你的守護者故事圖，作為本週修復路線的入口。", "keepsakes", "打開收藏室"),
+            ("7 日可列印工作表", "把錯頻、請求與補給寫成一頁，列印或存成 PDF。", "#repair-worksheet", "填寫工作表"),
+            ("補給申請", "需要更明確的下一步時，留下你的守護者路線與想要的補給。", "contact#luna-supply-request", "申請補給"),
+        ],
         "worksheet_title": "本週心語工作表",
         "worksheet_intro": "填下這四格，再列印或存成 PDF。它不是要你一次處理所有關係問題，而是留下下一次可以回來看的修復線索。",
         "print": "列印 / 存成 PDF",
@@ -2743,6 +2750,13 @@ REPAIR_PLAN = {
         "start": "Start quiz",
         "resources": "Open supply station",
         "download": "Save this route",
+        "asset_title": "Free Repair Card Pack",
+        "asset_intro": "Turn this week into three portable tools: save your guardian card, fill the worksheet, then request supply only when it truly helps. This is the lightest take-away from the guardian universe.",
+        "asset_items": [
+            ("Guardian keepsake card", "Save your guardian story image as the doorway back into this week's route.", "keepsakes", "Open keepsakes"),
+            ("7-day printable worksheet", "Put the misfrequency, request, and chosen supply onto one page for print or PDF.", "#repair-worksheet", "Fill worksheet"),
+            ("Supply request", "When you need a clearer next step, send your guardian route and the supply you want.", "contact#luna-supply-request", "Request supply"),
+        ],
         "worksheet_title": "This Week's Heart-Language Worksheet",
         "worksheet_intro": "Fill these four fields, then print or save as PDF. It is not meant to solve every relationship issue at once; it leaves repair clues you can revisit.",
         "print": "Print / save as PDF",
@@ -2780,6 +2794,13 @@ REPAIR_PLAN = {
         "start": "診断を始める",
         "resources": "補給ステーションを開く",
         "download": "このルートを保存",
+        "asset_title": "無料修復カードパック",
+        "asset_intro": "今週のルートを持ち帰れる三つの道具にします。守護者カードを保存し、ワークシートを埋め、必要な時だけ補給を申請します。",
+        "asset_items": [
+            ("守護者コレクションカード", "守護者のストーリー画像を保存し、今週のルートへ戻る入口にします。", "keepsakes", "コレクション室を開く"),
+            ("7日間の印刷ワークシート", "すれ違い、お願い、選ぶ補給を一枚にまとめ、印刷または PDF 保存します。", "#repair-worksheet", "ワークシートを書く"),
+            ("補給リクエスト", "次の一歩をより明確にしたい時、守護者ルートと欲しい補給を送ります。", "contact#luna-supply-request", "補給を申請"),
+        ],
         "worksheet_title": "今週の心語ワークシート",
         "worksheet_intro": "四つの欄を埋め、印刷または PDF として保存します。すべての問題を一度に扱うのではなく、戻って見られる修復の手がかりを残します。",
         "print": "印刷 / PDF 保存",
@@ -2817,6 +2838,13 @@ REPAIR_PLAN = {
         "start": "테스트 시작",
         "resources": "보급소 열기",
         "download": "이 루트 저장",
+        "asset_title": "무료 회복 카드 팩",
+        "asset_intro": "이번 주 루트를 가져갈 수 있는 세 가지 도구로 정리합니다. 수호자 카드를 저장하고, 워크시트를 채운 뒤, 필요할 때만 보급을 신청하세요.",
+        "asset_items": [
+            ("수호자 소장 카드", "수호자 이야기 이미지를 저장해 이번 주 루트로 돌아오는 입구로 둡니다.", "keepsakes", "소장실 열기"),
+            ("7일 인쇄 워크시트", "어긋남, 요청, 선택한 보급을 한 장에 적어 인쇄하거나 PDF로 저장합니다.", "#repair-worksheet", "워크시트 작성"),
+            ("보급 신청", "다음 한 걸음이 더 필요할 때 수호자 루트와 원하는 보급을 보냅니다.", "contact#luna-supply-request", "보급 신청"),
+        ],
         "worksheet_title": "이번 주 마음 언어 워크시트",
         "worksheet_intro": "네 칸을 채운 뒤 인쇄하거나 PDF로 저장하세요. 모든 관계 문제를 한 번에 해결하려는 것이 아니라 다시 볼 수 있는 회복 단서를 남기는 도구입니다.",
         "print": "인쇄 / PDF 저장",
@@ -2854,6 +2882,13 @@ REPAIR_PLAN = {
         "start": "Iniciar test",
         "resources": "Abrir recursos",
         "download": "Guardar esta ruta",
+        "asset_title": "Pack gratuito de reparación",
+        "asset_intro": "Convierte esta semana en tres herramientas portátiles: guarda tu tarjeta de guardiana, completa la hoja y pide apoyo solo cuando de verdad ayude.",
+        "asset_items": [
+            ("Tarjeta de guardiana", "Guarda la imagen de historia de tu guardiana como puerta de regreso a esta ruta.", "keepsakes", "Abrir colección"),
+            ("Hoja imprimible de 7 días", "Pon el desajuste, la petición y el recurso elegido en una página para imprimir o PDF.", "#repair-worksheet", "Completar hoja"),
+            ("Solicitud de recurso", "Cuando necesites un siguiente paso más claro, envía tu ruta de guardiana y el apoyo que quieres.", "contact#luna-supply-request", "Pedir recurso"),
+        ],
         "worksheet_title": "Hoja de trabajo de esta semana",
         "worksheet_intro": "Completa estos cuatro campos y luego imprime o guarda como PDF. No busca resolver toda la relación de una vez; deja pistas de reparación para volver a mirar.",
         "print": "Imprimir / guardar PDF",
@@ -7254,6 +7289,22 @@ def repair_plan_page(lang: str) -> None:
     t = LANGS[lang]
     plan = REPAIR_PLAN[lang]
     section_labels = SECTION_LABELS[lang]
+    def repair_asset_url(route: str) -> str:
+        if route.startswith("#"):
+            return route
+        if "#" in route:
+            page, anchor = route.split("#", 1)
+            return f"{lang_url(lang, page).rstrip('/')}#{anchor}"
+        return lang_url(lang, route)
+
+    asset_cards = "".join(f"""
+<article class="repair-asset-card">
+  <span>{escape(label)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a class="secondary-btn" href="{repair_asset_url(route)}">{escape(cta)}</a>
+</article>
+""" for label, (title, desc, route, cta) in zip(("01", "02", "03"), plan["asset_items"]))
     days = "".join(f"""
 <article>
   <span>{escape(day)}</span>
@@ -7294,14 +7345,19 @@ def repair_plan_page(lang: str) -> None:
   <p class="eyebrow">{escape(plan["eyebrow"])}</p>
   <h1>{escape(plan["title"])}</h1>
   <p>{escape(plan["desc"])}</p>
-  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
+  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a><a class="secondary-btn" href="#repair-card-pack">{escape(plan["download"])}</a></div>
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
+<section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["asset_title"])}</h2></div><a href="{lang_url(lang, "contact").rstrip('/')}#luna-supply-request">{escape(plan["asset_items"][2][3])}</a></div>
+  <p class="section-intro">{escape(plan["asset_intro"])}</p>
+  <div class="supply-panel-grid repair-asset-grid">{asset_cards}</div>
+</section>
 <section class="section repair-plan-section">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["week_route"])}</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
 </section>
-<section class="section repair-worksheet-section">
+<section class="section repair-worksheet-section" id="repair-worksheet">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div>
   <p class="section-intro">{escape(plan["worksheet_intro"])}</p>
   <div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status role="status" aria-live="polite">{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div>

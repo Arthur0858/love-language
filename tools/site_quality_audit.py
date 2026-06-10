@@ -1358,6 +1358,18 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                 missing_subjects = sorted(expected_subjects.difference(mailto_subjects))
                 if missing_subjects:
                     issues.append(f"{path}: contact mailto links missing localized subjects {', '.join(missing_subjects)}")
+                mailto_bodies_by_subject: dict[str, list[str]] = {}
+                for href in contact_mailtos:
+                    query = parse_qs(urlparse(href).query)
+                    for subject in query.get("subject", []):
+                        mailto_bodies_by_subject.setdefault(subject, []).extend(query.get("body", []))
+                missing_bodies = sorted(
+                    subject
+                    for subject in expected_subjects
+                    if not any(body.strip() for body in mailto_bodies_by_subject.get(subject, []))
+                )
+                if missing_bodies:
+                    issues.append(f"{path}: contact mailto links missing prefilled bodies for {', '.join(missing_bodies)}")
                 if expected_subjects.issubset(mailto_subjects):
                     stats["contact_localized_subject_pages"] += 1
     return issues, stats

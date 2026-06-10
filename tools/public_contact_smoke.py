@@ -79,6 +79,7 @@ def main() -> int:
     issues: list[str] = []
     pages_checked = 0
     mailto_links_checked = 0
+    mailto_bodies_checked = 0
     contact_subjects_checked = 0
     anchor_targets_checked = 0
     protected_email_links_checked = 0
@@ -98,6 +99,7 @@ def main() -> int:
             if target not in assets.ids:
                 issues.append(f"{item.path}: missing #{target}")
         mailto_subjects: set[str] = set()
+        mailto_bodies_by_subject: dict[str, list[str]] = {}
         protected_email_links = 0
         for anchor in assets.anchors:
             href = anchor.get("href", "")
@@ -111,13 +113,25 @@ def main() -> int:
             mailto_links_checked += 1
             if parsed.path.lower() != CONTACT_EMAIL:
                 issues.append(f"{item.path}: mailto should use {CONTACT_EMAIL}, got {href}")
-            mailto_subjects.update(parse_qs(parsed.query).get("subject", []))
+            query = parse_qs(parsed.query)
+            subjects = query.get("subject", [])
+            bodies = query.get("body", [])
+            mailto_subjects.update(subjects)
+            for subject in subjects:
+                mailto_bodies_by_subject.setdefault(subject, []).extend(bodies)
         email_protection_active = protected_email_links >= 3 and "__cf_email__" in response.text
         missing_subjects = sorted(item.subjects.difference(mailto_subjects))
         if missing_subjects and not email_protection_active:
             issues.append(f"{item.path}: missing mailto subjects {', '.join(missing_subjects)}")
         else:
             contact_subjects_checked += len(item.subjects)
+        if not email_protection_active:
+            for subject in sorted(item.subjects):
+                bodies = mailto_bodies_by_subject.get(subject, [])
+                if any(body.strip() for body in bodies):
+                    mailto_bodies_checked += 1
+                else:
+                    issues.append(f"{item.path}: mailto subject {subject} should include a prefilled body")
         visible_text = response.text
         for subject in item.subjects:
             if subject not in visible_text:
@@ -141,6 +155,7 @@ def main() -> int:
     print(f"public_contact_pages_checked={pages_checked}")
     print(f"public_contact_anchor_targets_checked={anchor_targets_checked}")
     print(f"public_contact_mailto_links_checked={mailto_links_checked}")
+    print(f"public_contact_mailto_bodies_checked={mailto_bodies_checked}")
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")

@@ -271,6 +271,20 @@ function summarizeCopyFailures(results) {
   });
 }
 
+function summarizeStoryCardFailures(results) {
+  return results.flatMap((result) => {
+    const failures = [];
+    if (!result.status || result.status >= 400) failures.push('bad status');
+    if (!result.downloadOk) failures.push('story card did not download as expected');
+    if (!result.fileNameOk) failures.push(`unexpected story download filename ${result.suggestedFilename || 'none'}`);
+    if (!result.ctaOk) failures.push(`story CTA mismatch ${result.storyCta || 'none'}`);
+    if (result.horizontalOverflow) failures.push('horizontal overflow');
+    if (result.consoleErrors.length) failures.push('console errors');
+    if (result.pageErrors.length) failures.push('page errors');
+    return failures.map((failure) => `${result.name}: ${failure}`);
+  });
+}
+
 function summarizeAnchorFocusFailures(results) {
   return results.flatMap((result) => {
     const failures = [];
@@ -422,6 +436,11 @@ const copyCases = [
   { name: 'copy-repair-summary-mobile', target: 'repair-summary', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
   { name: 'copy-contact-template-mobile', target: 'contact-template', path: '/contact/', viewport: { width: 390, height: 844 } },
   { name: 'copy-keepsake-waitlist-template-mobile', target: 'contact-template', path: '/keepsakes/', viewport: { width: 390, height: 844 } },
+];
+
+const storyCardCases = [
+  { name: 'story-card-keepsake-iris-mobile', slug: 'iris', path: '/keepsakes/', viewport: { width: 390, height: 844 }, expectedCta: 'lovetypes.tw/keepsakes/#keepsake-iris' },
+  { name: 'story-card-en-keepsake-iris-mobile', slug: 'iris', path: '/en/keepsakes/', viewport: { width: 390, height: 844 }, expectedCta: 'lovetypes.tw/en/keepsakes/#keepsake-iris' },
 ];
 
 const anchorFocusCases = [
@@ -1203,6 +1222,66 @@ for (const item of copyCases) {
   await page.close();
 }
 
+for (const item of storyCardCases) {
+  logCase(item.name);
+  const page = await createPage(item.viewport);
+  const consoleErrors = [];
+  const pageErrors = [];
+
+  page.on('console', (message) => {
+    if (hasBlockingConsoleMessage(message)) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
+  const url = makeUrl(item.path);
+  const response = await openPage(page, url);
+  const button = page.locator(`#keepsake-card-${item.slug} [data-result-action="story"]`).first();
+  const storyCta = await button.getAttribute('data-story-cta').catch(() => '');
+  const ctaOk = storyCta === item.expectedCta;
+  let suggestedFilename = '';
+  let downloadOk = false;
+  let fileNameOk = false;
+  try {
+    const downloadPromise = page.waitForEvent('download', { timeout: 10000 });
+    await button.click();
+    const download = await downloadPromise;
+    suggestedFilename = download.suggestedFilename();
+    downloadOk = suggestedFilename.endsWith('.png');
+    fileNameOk = suggestedFilename === `lovetypes-${item.slug}-story.png`;
+    await download.cancel().catch(() => {});
+  } catch (error) {
+    pageErrors.push(`story download failed: ${error.message}`);
+  }
+  const horizontalOverflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+  );
+  const screenshot = `output/playwright/${item.name}.png`;
+  await page.screenshot({ path: screenshot, fullPage: false });
+  results.push({
+    name: item.name,
+    slug: item.slug,
+    url,
+    finalUrl: finalPath(page),
+    status: response?.status(),
+    title: await page.title(),
+    h1: await page.locator('h1').first().innerText().catch(() => ''),
+    storyCta,
+    ctaOk,
+    suggestedFilename,
+    downloadOk,
+    fileNameOk,
+    horizontalOverflow,
+    consoleErrors,
+    pageErrors,
+    screenshot,
+  });
+  await page.close();
+}
+
 for (const item of anchorFocusCases) {
   logCase(item.name);
   const page = await createPage(item.viewport);
@@ -1270,6 +1349,7 @@ const failures = [
   ...summarizeConversionFailures(results.filter((result) => result.name.startsWith('conversion-'))),
   ...summarizeWorksheetFailures(results.filter((result) => result.name.startsWith('worksheet-'))),
   ...summarizeCopyFailures(results.filter((result) => result.name.startsWith('copy-'))),
+  ...summarizeStoryCardFailures(results.filter((result) => result.name.startsWith('story-card-'))),
   ...summarizeAnchorFocusFailures(results.filter((result) => result.name.startsWith('anchor-focus-'))),
 ];
 if (failures.length) {

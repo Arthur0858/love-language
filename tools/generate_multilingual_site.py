@@ -5289,6 +5289,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
       <a class="secondary-btn" href="{plan_href}">{escape(labels["plan"])}</a>
       <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
+      <a class="secondary-btn" href="{supply_request_href(lang, slug)}">{escape(SUPPLY_LABELS[lang]["request_supply"])}</a>
       <button class="secondary-btn" type="button" data-result-action="story" {data_attrs}>{escape(labels["story"])}</button>
     </div>
   </div>

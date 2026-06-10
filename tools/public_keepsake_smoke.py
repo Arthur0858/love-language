@@ -159,6 +159,7 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "route_links": 0,
         "plan_links": 0,
         "story_images": 0,
+        "collector_request_mailtos": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -223,6 +224,17 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             stats["download_links"] += 1
         else:
             issues.append(f"{source}: {slug} collector card missing story image download link")
+        request_links = [
+            link.attrs.get("href", "")
+            for link in links
+            if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
+        ]
+        if len(request_links) != 1:
+            issues.append(f"{source}: {slug} collector card should include one supply request mailto, got {len(request_links)}")
+        elif "subject=" not in request_links[0] or "body=" not in request_links[0]:
+            issues.append(f"{source}: {slug} collector request mailto should include subject and body")
+        else:
+            stats["collector_request_mailtos"] += 1
         story_button = next((button for button in buttons if button.attrs.get("data-result-action") == "story"), None)
         if story_button is None:
             issues.append(f"{source}: {slug} collector card missing story button")
@@ -288,6 +300,7 @@ def main() -> int:
         "route_links": 0,
         "plan_links": 0,
         "story_images": 0,
+        "collector_request_mailtos": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -306,6 +319,7 @@ def main() -> int:
     print(f"public_keepsake_story_buttons_checked={totals['story_buttons']}")
     print(f"public_keepsake_route_links_checked={totals['route_links']}")
     print(f"public_keepsake_plan_links_checked={totals['plan_links']}")
+    print(f"public_keepsake_collector_request_mailtos_checked={totals['collector_request_mailtos']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
     print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
     print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")

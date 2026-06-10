@@ -2406,6 +2406,8 @@ SUPPLY_PRODUCT_STACK = {
         "owned_desc": "投票給 PDF、桌布或短儀式，告訴我們哪個素材值得優先製作。",
         "night": "Luna 夜間承接",
         "night_desc": "情緒太滿時先降噪，再回到一個小任務。",
+        "contact": "帶著結果寄出需求",
+        "contact_desc": "把守護者、補給路線與想要的素材格式一起帶進聯絡信。",
         "template_note": "信件會自帶守護者、今日任務與想要的素材格式。",
     },
     "en": {
@@ -2416,6 +2418,8 @@ SUPPLY_PRODUCT_STACK = {
         "owned_desc": "Vote for a PDF, wallpaper, or short ritual so we know what to build first.",
         "night": "Luna night handoff",
         "night_desc": "Lower the emotional noise first, then return to one small task.",
+        "contact": "Send request with result",
+        "contact_desc": "Carry your guardian, supply route, and preferred asset format into one email.",
         "template_note": "The email carries your guardian, today task, and preferred asset format.",
     },
     "ja": {
@@ -2426,6 +2430,8 @@ SUPPLY_PRODUCT_STACK = {
         "owned_desc": "PDF、壁紙、短い儀式のどれを先に作るべきか投票できます。",
         "night": "Luna 夜の受け皿",
         "night_desc": "感情の音量を下げてから、小さな課題へ戻ります。",
+        "contact": "結果と一緒に希望を送る",
+        "contact_desc": "守護者、補給ルート、希望素材形式を一つのメールに入れます。",
         "template_note": "メールには守護者、今日の課題、希望素材形式が入ります。",
     },
     "ko": {
@@ -2436,6 +2442,8 @@ SUPPLY_PRODUCT_STACK = {
         "owned_desc": "PDF, 배경화면, 짧은 의식 중 무엇을 먼저 만들지 투표합니다.",
         "night": "Luna 밤 연결",
         "night_desc": "감정의 소음을 낮춘 뒤 작은 과제 하나로 돌아갑니다.",
+        "contact": "결과와 함께 요청 보내기",
+        "contact_desc": "수호자, 보급 루트, 원하는 자료 형식을 한 메일에 담습니다.",
         "template_note": "메일에는 수호자, 오늘 과제, 원하는 자료 형식이 담깁니다.",
     },
     "es": {
@@ -2446,6 +2454,8 @@ SUPPLY_PRODUCT_STACK = {
         "owned_desc": "Vota por PDF, fondo o ritual breve para decidir qué crear primero.",
         "night": "Paso nocturno Luna",
         "night_desc": "Baja el ruido emocional y vuelve a una tarea pequeña.",
+        "contact": "Enviar solicitud con resultado",
+        "contact_desc": "Lleva tu guardiana, ruta y formato preferido a un solo correo.",
         "template_note": "El correo incluye tu guardiana, tarea de hoy y formato preferido.",
     },
 }
@@ -4634,6 +4644,12 @@ def supply_product_pack(lang: str, slug: str) -> dict:
                 "desc": product["night_desc"],
                 "href": lang_url(lang, "luna-yoga-music") + f"#luna-{slug}",
             },
+            {
+                "number": "4",
+                "title": product["contact"],
+                "desc": product["contact_desc"],
+                "href": lang_url(lang, "contact") + "#luna-supply-request",
+            },
         ],
     }
 
@@ -4659,6 +4675,7 @@ def supply_route_card(lang: str, slug: str) -> str:
         (product["free"], product["free_desc"], lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}"),
         (product["owned"], product["owned_desc"], request_href),
         (product["night"], product["night_desc"], lang_url(lang, "luna-yoga-music") + f"#luna-{slug}"),
+        (product["contact"], product["contact_desc"], lang_url(lang, "contact") + "#luna-supply-request"),
     ]
     product_cards = "".join(
         f'<li><a href="{escape(href)}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a></li>'

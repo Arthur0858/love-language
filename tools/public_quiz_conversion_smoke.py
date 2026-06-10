@@ -478,10 +478,24 @@ def main() -> int:
                 issues.append(f"{source}: missing supplyProductPack")
             else:
                 items = pack.get("items")
-                if not isinstance(items, list) or len(items) != 3:
-                    issues.append(f"{source}: supplyProductPack should contain three items")
+                if not isinstance(items, list) or len(items) != 4:
+                    issues.append(f"{source}: supplyProductPack should contain four items")
                 else:
                     result_pass_fields_checked += 1
+                    expected_hrefs = [
+                        localized_path(lang, "keepsakes") + f"#keepsake-card-{slug}",
+                        "mailto:contact@lovetypes.tw",
+                        localized_path(lang, "luna-yoga-music") + f"#luna-{slug}",
+                        localized_path(lang, "contact") + "#luna-supply-request",
+                    ]
+                    for index, (item, expected_href) in enumerate(zip(items, expected_hrefs), start=1):
+                        result_pass_fields_checked += 1
+                        href = item.get("href", "") if isinstance(item, dict) else ""
+                        if expected_href == "mailto:contact@lovetypes.tw":
+                            if not href.startswith(expected_href) or "subject=" not in href or "body=" not in href:
+                                issues.append(f"{source}: supplyProductPack item {index} should include request mailto with subject/body")
+                        elif href != expected_href:
+                            issues.append(f"{source}: supplyProductPack item {index} expected href {expected_href!r}, got {href!r}")
 
     print(f"public_quiz_conversion_assets_checked={assets_checked}")
     print(f"public_quiz_conversion_results_checked={results_checked}")

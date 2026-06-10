@@ -200,7 +200,8 @@ function summarizeConversionFailures(results) {
     if (target === 'home-saved-plan' && !result.homeTopRouteHref?.includes('/resources/#supply-')) failures.push('top returning resume missing supply route');
     if (target === 'home-saved-plan' && !result.homeTopPlanHref?.includes('/repair-plan/#plan-')) failures.push('top returning resume missing repair plan');
     if (target === 'home-saved-plan' && !result.homeTopLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('top returning resume missing Luna route');
-    if (target === 'home-saved-plan' && result.homeSavedProductLinkCount !== 3) failures.push('home saved product pack should expose three links');
+    if (target === 'home-saved-plan' && result.homeSavedProductLinkCount !== 4) failures.push('home saved product pack should expose four links');
+    if (target === 'home-saved-plan' && !result.homeSavedContactHref?.includes('/contact/#luna-supply-request')) failures.push('home saved product pack missing contact handoff');
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
@@ -837,6 +838,7 @@ for (const item of conversionCases) {
   let homeSavedVisible = false;
   let homeSavedPassStampVisible = false;
   let homeSavedKeepsakeHref = '';
+  let homeSavedContactHref = '';
   let homeTopResumeVisible = false;
   let homeTopRouteHref = '';
   let homeTopPlanHref = '';
@@ -867,6 +869,7 @@ for (const item of conversionCases) {
     homeTopPlanHref = await page.locator('[data-home-saved] [data-home-resume-plan]').first().getAttribute('href').catch(() => '');
     homeTopLunaHref = await page.locator('[data-home-saved] [data-home-resume-luna]').first().getAttribute('href').catch(() => '');
     homeSavedProductLinkCount = await page.locator('[data-home-saved] [data-home-saved-product-link]').count().catch(() => 0);
+    homeSavedContactHref = await page.locator('[data-home-saved] [data-home-saved-product-link][href*="/contact/#luna-supply-request"]').first().getAttribute('href').catch(() => '');
     await page.locator('[data-quiz-saved]:not([hidden])').waitFor({ state: 'visible' });
     homeSavedVisible = true;
     homeSavedKeepsakeHref = await page.locator('[data-home-saved] [data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
@@ -1023,6 +1026,7 @@ for (const item of conversionCases) {
     homeSavedVisible,
     homeSavedPassStampVisible,
     homeSavedKeepsakeHref,
+    homeSavedContactHref,
     homeTopResumeVisible,
     homeTopRouteHref,
     homeTopPlanHref,

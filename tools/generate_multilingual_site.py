@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260610-story-cta"
+ASSET_VERSION = "20260610-supply-pack"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2259,6 +2259,60 @@ SUPPLY_WISHLIST = {
 }
 
 
+SUPPLY_PRODUCT_STACK = {
+    "zh": {
+        "label": "可帶走的補給包",
+        "free": "免費收藏物",
+        "free_desc": "先保存守護者卡，讓結果變成可回訪的入口。",
+        "owned": "自有素材需求",
+        "owned_desc": "投票給 PDF、桌布或短儀式，告訴我們哪個素材值得優先製作。",
+        "night": "Luna 夜間承接",
+        "night_desc": "情緒太滿時先降噪，再回到一個小任務。",
+        "template_note": "信件會自帶守護者、今日任務與想要的素材格式。",
+    },
+    "en": {
+        "label": "Supply pack to take with you",
+        "free": "Free keepsake",
+        "free_desc": "Save the guardian card first so the result becomes a route you can revisit.",
+        "owned": "Owned asset request",
+        "owned_desc": "Vote for a PDF, wallpaper, or short ritual so we know what to build first.",
+        "night": "Luna night handoff",
+        "night_desc": "Lower the emotional noise first, then return to one small task.",
+        "template_note": "The email carries your guardian, today task, and preferred asset format.",
+    },
+    "ja": {
+        "label": "持ち帰れる補給セット",
+        "free": "無料コレクション",
+        "free_desc": "まず守護者カードを保存し、結果を戻れる入口にします。",
+        "owned": "自有素材の希望",
+        "owned_desc": "PDF、壁紙、短い儀式のどれを先に作るべきか投票できます。",
+        "night": "Luna 夜の受け皿",
+        "night_desc": "感情の音量を下げてから、小さな課題へ戻ります。",
+        "template_note": "メールには守護者、今日の課題、希望素材形式が入ります。",
+    },
+    "ko": {
+        "label": "가져갈 수 있는 보급 팩",
+        "free": "무료 소장물",
+        "free_desc": "먼저 수호자 카드를 저장해 결과를 다시 찾을 수 있는 입구로 만듭니다.",
+        "owned": "자체 자료 요청",
+        "owned_desc": "PDF, 배경화면, 짧은 의식 중 무엇을 먼저 만들지 투표합니다.",
+        "night": "Luna 밤 연결",
+        "night_desc": "감정의 소음을 낮춘 뒤 작은 과제 하나로 돌아갑니다.",
+        "template_note": "메일에는 수호자, 오늘 과제, 원하는 자료 형식이 담깁니다.",
+    },
+    "es": {
+        "label": "Paquete de recursos para llevar",
+        "free": "Recuerdo gratis",
+        "free_desc": "Guarda primero la tarjeta para volver a tu resultado cuando lo necesites.",
+        "owned": "Solicitud de recurso propio",
+        "owned_desc": "Vota por PDF, fondo o ritual breve para decidir qué crear primero.",
+        "night": "Paso nocturno Luna",
+        "night_desc": "Baja el ruido emocional y vuelve a una tarea pequeña.",
+        "template_note": "El correo incluye tu guardiana, tarea de hoy y formato preferido.",
+    },
+}
+
+
 SUPPLY_LABELS = {
     "zh": {
         "eyebrow": "守護者補給路線",
@@ -4404,6 +4458,8 @@ def supply_route(lang: str, slug: str) -> dict:
 
 def supply_route_card(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
+    product = SUPPLY_PRODUCT_STACK[lang]
+    wishlist = SUPPLY_WISHLIST[lang]
     route = supply_route(lang, slug)
     guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
     book = route["book"]
@@ -4417,10 +4473,22 @@ def supply_route_card(lang: str, slug: str) -> str:
         "url": abs_url(lang, "resources") + f"#supply-{slug}",
     }
     summary_json = escape(json.dumps(summary, ensure_ascii=False))
-    request_subject = quote(SUPPLY_WISHLIST[lang]["subject"])
+    request_subject = quote(wishlist["subject"])
     request_body = quote(
-        f'{SUPPLY_WISHLIST[lang]["body"]} {guardian_name} · {route["title"]}\n'
-        f'{SUPPLY_WISHLIST[lang]["body_context"]} \n\n'
+        f'{wishlist["body"]} {guardian_name} · {route["title"]}\n'
+        f'{labels["practice"]}: {route["mission"]}\n'
+        f'{labels["supply"]}: {route["supply"]}\n'
+        f'{wishlist["format_label"]}: {", ".join(wishlist["formats"])}\n'
+        f'{wishlist["body_context"]} \n\n'
+    )
+    product_items = [
+        (product["free"], product["free_desc"], lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}"),
+        (product["owned"], product["owned_desc"], f"mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}"),
+        (product["night"], product["night_desc"], lang_url(lang, "luna-yoga-music") + f"#luna-{slug}"),
+    ]
+    product_cards = "".join(
+        f'<li><a href="{escape(href)}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a></li>'
+        for title, desc, href in product_items
     )
     return f"""
 <article class="supply-route-card" id="supply-{slug}">
@@ -4434,6 +4502,11 @@ def supply_route_card(lang: str, slug: str) -> str:
       <div><dt>{escape(labels["supply"])}</dt><dd>{escape(route["supply"])}</dd></div>
     </dl>
     <p class="supply-book-note"><strong>{escape(book["title"][lang])}</strong> · {escape(book["author"])}</p>
+    <div class="supply-format-block supply-product-stack" data-supply-product-stack>
+      <span>{escape(product["label"])}</span>
+      <ul class="supply-format-list">{product_cards}</ul>
+      <small>{escape(product["template_note"])}</small>
+    </div>
   </div>
   <div class="supply-route-actions">
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>

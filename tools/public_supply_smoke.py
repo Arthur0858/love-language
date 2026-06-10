@@ -134,6 +134,13 @@ def is_affiliate_url(value: str) -> bool:
     return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
 
 
+def mailto_query(value: str) -> dict[str, list[str]]:
+    if not value.startswith("mailto:"):
+        return {}
+    _head, _sep, query = value.partition("?")
+    return parse_qs(query)
+
+
 def validate_summary(source: str, slug: str, value: str) -> list[str]:
     issues: list[str] = []
     try:
@@ -157,6 +164,8 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "guide_links": 0,
         "luna_links": 0,
         "route_request_mailtos": 0,
+        "route_product_stacks": 0,
+        "route_product_links": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -221,14 +230,39 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
             or link.attrs.get("href", "").startswith("/cdn-cgi/l/email-protection")
         ]
-        if len(request_links) != 1:
-            issues.append(f"{path}: {slug} route should include one contact request mailto or protected email link")
+        if not request_links:
+            issues.append(f"{path}: {slug} route should include a contact request mailto or protected email link")
         else:
-            stats["route_request_mailtos"] += 1
-            href = request_links[0].attrs["href"]
-            query = parse_qs(urlparse(href).query)
-            if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
-                issues.append(f"{path}: {slug} route contact request should include subject and body")
+            stats["route_request_mailtos"] += len(request_links)
+            for request_link in request_links:
+                href = request_link.attrs["href"]
+                query = mailto_query(href)
+                if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
+                    issues.append(f"{path}: {slug} route contact request should include subject and body")
+        product_stacks = [item for item in descendants(card) if has_class(item, "supply-product-stack")]
+        if len(product_stacks) != 1:
+            issues.append(f"{path}: {slug} route should include one supply product stack, got {len(product_stacks)}")
+        else:
+            stats["route_product_stacks"] += 1
+            product_hrefs = [link.attrs.get("href", "") for link in descendants(product_stacks[0], "a")]
+            expected_product_targets = (
+                localized_path(lang, "keepsakes") + f"#keepsake-card-{slug}",
+                localized_path(lang, "luna-yoga-music") + f"#luna-{slug}",
+            )
+            for expected in expected_product_targets:
+                if expected not in product_hrefs:
+                    issues.append(f"{path}: {slug} product stack missing {expected}")
+                else:
+                    stats["route_product_links"] += 1
+            product_request_links = [
+                href
+                for href in product_hrefs
+                if href.startswith("mailto:contact@lovetypes.tw") or href.startswith("/cdn-cgi/l/email-protection")
+            ]
+            if len(product_request_links) != 1:
+                issues.append(f"{path}: {slug} product stack should include one request mailto or protected email link")
+            else:
+                stats["route_product_links"] += 1
         affiliate_links = [link for link in links if is_affiliate_url(link.attrs.get("href", ""))]
         if len(affiliate_links) != 1:
             issues.append(f"{path}: {slug} route should include one tracked books.com.tw link, got {len(affiliate_links)}")
@@ -300,6 +334,8 @@ def main() -> int:
         "guide_links": 0,
         "luna_links": 0,
         "route_request_mailtos": 0,
+        "route_product_stacks": 0,
+        "route_product_links": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -320,6 +356,8 @@ def main() -> int:
     print(f"public_supply_guide_links_checked={totals['guide_links']}")
     print(f"public_supply_luna_links_checked={totals['luna_links']}")
     print(f"public_supply_route_request_mailtos_checked={totals['route_request_mailtos']}")
+    print(f"public_supply_route_product_stacks_checked={totals['route_product_stacks']}")
+    print(f"public_supply_route_product_links_checked={totals['route_product_links']}")
     print(f"public_supply_copy_buttons_checked={totals['copy_buttons']}")
     print(f"public_supply_affiliate_links_checked={totals['affiliate_links']}")
     print(f"public_supply_affiliate_book_cards_checked={totals['affiliate_book_cards']}")

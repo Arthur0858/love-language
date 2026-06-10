@@ -180,6 +180,7 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "hero_ctas": 0,
         "offer_ctas": 0,
         "resume_templates": 0,
+        "use_case_ctas": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     if response.status != 200:
@@ -222,6 +223,17 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         stats["use_cases"] += len(use_items)
         if len(use_items) != 4:
             issues.append(f"{path}: expected four Luna use cases, got {len(use_items)}")
+        use_hrefs = [link.attrs.get("href", "") for link in descendants(use_section, "a")]
+        for expected in (
+            localized_path(lang, "repair-plan"),
+            localized_path(lang, "guides/repair-after-conflict"),
+            localized_path(lang, "resources"),
+            localized_path(lang, "") + "#quiz-section",
+        ):
+            if expected not in use_hrefs:
+                issues.append(f"{path}: Luna use cases missing CTA {expected}")
+            else:
+                stats["use_case_ctas"] += 1
 
     offer_section = next((item for item in walk(root) if has_class(item, "luna-offer-section")), None)
     if offer_section is None:
@@ -285,6 +297,7 @@ def main() -> int:
         "hero_ctas": 0,
         "offer_ctas": 0,
         "resume_templates": 0,
+        "use_case_ctas": 0,
     }
     for lang, path in LANG_PATHS.items():
         page_issues, stats = validate_page(base_url, lang, path)
@@ -302,6 +315,7 @@ def main() -> int:
     print(f"public_luna_guardian_supply_links_checked={totals['guardian_supply_links']}")
     print(f"public_luna_hero_ctas_checked={totals['hero_ctas']}")
     print(f"public_luna_offer_ctas_checked={totals['offer_ctas']}")
+    print(f"public_luna_use_case_ctas_checked={totals['use_case_ctas']}")
     print(f"public_luna_resume_templates_checked={totals['resume_templates']}")
     print(f"public_luna_issues={len(issues)}")
     for issue in issues[:100]:

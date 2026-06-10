@@ -1068,6 +1068,40 @@ LUNA_USE_CASES = {
 }
 
 
+LUNA_USE_CASE_ACTIONS = {
+    "zh": [
+        ("寫進修復計畫", "repair-plan"),
+        ("閱讀修復指南", "guides/repair-after-conflict"),
+        ("查看補給路線", "resources"),
+        ("回到命運儀式", "#quiz-section"),
+    ],
+    "en": [
+        ("Use repair plan", "repair-plan"),
+        ("Read repair guide", "guides/repair-after-conflict"),
+        ("View supply route", "resources"),
+        ("Return to ritual", "#quiz-section"),
+    ],
+    "ja": [
+        ("修復プランへ", "repair-plan"),
+        ("修復ガイドを読む", "guides/repair-after-conflict"),
+        ("補給ルートを見る", "resources"),
+        ("リチュアルへ戻る", "#quiz-section"),
+    ],
+    "ko": [
+        ("회복 계획 쓰기", "repair-plan"),
+        ("회복 가이드 읽기", "guides/repair-after-conflict"),
+        ("보급 루트 보기", "resources"),
+        ("의식으로 돌아가기", "#quiz-section"),
+    ],
+    "es": [
+        ("Usar plan", "repair-plan"),
+        ("Leer reparación", "guides/repair-after-conflict"),
+        ("Ver ruta", "resources"),
+        ("Volver al ritual", "#quiz-section"),
+    ],
+}
+
+
 LUNA_NIGHT_PROTOCOL = {
     "zh": {
         "eyebrow": "NIGHT SUPPLY PROTOCOL",
@@ -7748,7 +7782,13 @@ def luna_page(lang: str) -> None:
     flow = LUNA_GUARDIAN_FLOW[lang]
     offer = LUNA_OFFER[lang]
     section_labels = SECTION_LABELS[lang]
-    use_cases = "".join(f"<article><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>" for title, desc in LUNA_USE_CASES[lang])
+    use_case_actions = LUNA_USE_CASE_ACTIONS[lang]
+    def use_case_href(target: str) -> str:
+        return f"{lang_url(lang)}{target}" if target.startswith("#") else lang_url(lang, target)
+    use_cases = "".join(
+        f'<article><h3>{escape(title)}</h3><p>{escape(desc)}</p><a class="supply-signal-link" href="{use_case_href(target)}">{escape(action)}</a></article>'
+        for (title, desc), (action, target) in zip(LUNA_USE_CASES[lang], use_case_actions)
+    )
     guardian_flow_cards = []
     for slug, data in GUARDIANS.items():
         name, typ, _desc = data[lang]

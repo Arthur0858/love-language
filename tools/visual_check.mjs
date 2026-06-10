@@ -420,6 +420,7 @@ const copyCases = [
   { name: 'copy-quiz-result-mobile', target: 'quiz-result', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'copy-supply-route-mobile', target: 'supply-route', path: '/resources/', viewport: { width: 390, height: 844 } },
   { name: 'copy-repair-summary-mobile', target: 'repair-summary', path: '/repair-plan/', viewport: { width: 390, height: 844 } },
+  { name: 'copy-contact-template-mobile', target: 'contact-template', path: '/contact/', viewport: { width: 390, height: 844 } },
 ];
 
 const anchorFocusCases = [
@@ -1167,6 +1168,15 @@ for (const item of copyCases) {
     const statusText = await page.locator('[data-worksheet-status]').innerText().catch(() => '');
     copyOk = copiedText.includes('copy smoke guardian') && copiedText.includes('/repair-plan/');
     feedbackOk = statusText.trim().length > 0 && !statusText.includes('至少');
+  } else if (item.target === 'contact-template') {
+    const button = page.locator('[data-copy-contact-template]').first();
+    const original = await button.innerText();
+    await button.click();
+    await page.waitForFunction(() => Boolean(window.__lovetypesCopiedText), undefined, { timeout: 5000 });
+    const copiedText = await page.evaluate(() => window.__lovetypesCopiedText);
+    const updated = await button.innerText();
+    copyOk = copiedText.includes('我的守護者') && copiedText.includes('我想優先收到的補給');
+    feedbackOk = updated !== original;
   }
 
   const horizontalOverflow = await page.evaluate(() =>

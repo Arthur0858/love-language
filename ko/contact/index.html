@@ -55,6 +55,7 @@
 
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>연락</h1><p>콘텐츠 수정, 개인정보 문의, 협업, 또는 마음의 정원에서 수리가 필요한 페이지를 LoveTypes에 알릴 수 있습니다.</p><div class="hero-actions" data-trust-hero-actions="contact"><a class="primary-btn" href="#luna-supply-request" data-trust-hero-link="luna-request">보급 대기 목록 요청 보내기</a><a class="secondary-btn" href="#site-repair-report" data-trust-hero-link="site-repair">사이트 수리 제보 보내기</a><a class="secondary-btn" href="/ko/garden-map/" data-trust-hero-link="map">지도</a></div><p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p></section>
 
+<section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">요청 나침반</p><h2>수호자 보급 대기 목록에 요청 남기기</h2></div></div>
   <p class="section-intro">Luna, 소장실, 수호자 보급 루트에서 왔다면 한 가지 요청을 골라 보내 주세요. 오디오 다운로드, PDF 연습 카드, 배경화면, 잠들기 전 흐름 중 무엇을 먼저 준비할지 판단하는 데 도움이 됩니다.</p>
@@ -126,6 +127,102 @@
       }
     });
   });
+})();
+</script>
+
+
+<script src="/quiz-data-ko-20260610-quiz-pack.js"></script>
+<script>
+(() => {
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  const labels = {"eyebrow": "RESULT HANDOFF", "title": "지난 결과로 보급 요청 보내기", "intro": "이 기기에 수호자 결과가 남아 있습니다. 결과, 보급 루트, 원하는 소장물을 한 메일에 담을 수 있습니다.", "subject": "LoveTypes 수호자 보급 요청", "send": "개인화 보급 요청 보내기", "copy": "개인화 요청 복사", "copied": "요청 복사됨", "route": "보급 루트 보기", "card": "소장 카드 열기", "plan": "회복 계획으로 돌아가기", "clear": "지난 결과 지우기", "guardian": "나의 수호자", "supply": "보급 루트", "mission": "무료 과제", "luna": "Luna 사용 장면", "keepsake": "원하는 소장물", "context": "이 상황에서 사용하고 싶어요", "keepsake_hint": "PDF 연습 카드 / 모바일 배경화면 / 7분 짧은 의식 / Luna 다운로드 팩"};
+  const box = document.querySelector('[data-contact-saved]');
+  if (!quiz || !box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:ko:quiz-result", `lovetypes:${location.pathname}:quiz-result`, `lovetypes:${homePath}:quiz-result`];
+
+  function readSavedResult() {
+    try {
+      for (const key of storageKeys) {
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        const primaryKey = saved && (saved.primaryKey || saved.type);
+        if (primaryKey && quiz.results[primaryKey]) return { ...saved, primaryKey };
+      }
+    } catch (_error) {}
+    return null;
+  }
+
+  function clearSavedResult() {
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(labels.copy, text);
+    }
+  }
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  const body = [
+    `${labels.guardian}: ${result.name} · ${result.type}`,
+    `${labels.supply}: ${result.supplyTitle}`,
+    `${labels.mission}: ${result.supplyMission}`,
+    `${labels.luna}: ${result.lunaUrl}`,
+    `${labels.keepsake}: ${labels.keepsake_hint}`,
+    `${labels.context}: `,
+    '',
+    `${labels.route}: ${result.resourceUrl}`,
+    `${labels.card}: ${result.collectorHallUrl}`,
+    `${labels.plan}: ${result.planUrl}`
+  ].join('\n');
+  const href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(body)}`;
+  box.innerHTML = `
+    <article class="contact-result-card garden-map-resume-card pass-resume-card" id="contact-result-${result.slug}" style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
+      <img src="${result.resultImage}" alt="${result.name}" width="${result.resultImageWidth}" height="${result.resultImageHeight}" loading="lazy" decoding="async" fetchpriority="low">
+      <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${quiz.labels.pass_title}</span>
+          <strong>${result.domainTitle}</strong>
+        </div>
+        <p class="eyebrow">${labels.eyebrow}</p>
+        <h2>${result.name} · ${result.type}</h2>
+        <p>${labels.intro}</p>
+        <p><strong>${result.supplyTitle}</strong> · ${result.supplyMission}</p>
+        <div class="contact-result-actions garden-map-resume-actions">
+          <a class="primary-btn" href="${href}">${labels.send}</a>
+          <button class="secondary-btn" type="button" data-contact-copy-result>${labels.copy}</button>
+          <a class="secondary-btn" href="${result.resourceUrl}">${labels.route}</a>
+          <a class="secondary-btn" href="${result.collectorHallUrl}">${labels.card}</a>
+          <a class="secondary-btn" href="${result.planUrl}">${labels.plan}</a>
+          <button class="secondary-btn" type="button" data-clear-contact-result>${labels.clear}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-contact-copy-result]')?.addEventListener('click', (event) => copyText(body, event.currentTarget));
+  box.querySelector('[data-clear-contact-result]')?.addEventListener('click', clearSavedResult);
 })();
 </script>
 

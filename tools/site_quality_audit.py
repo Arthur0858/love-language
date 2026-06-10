@@ -188,6 +188,7 @@ LEGACY_ROOT_STATIC_ASSETS = {
     "deferred-external.js",
 }
 LIVE_REGION_DATA_ATTRS = {
+    "data-contact-saved",
     "data-garden-map-saved",
     "data-guide-saved",
     "data-guardian-saved",

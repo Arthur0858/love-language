@@ -76,6 +76,7 @@ def main() -> int:
     base_url = normalize_base_url(args.base_url)
 
     deploy_smoke = load_module("public_deploy_smoke_contact_import", ROOT / "tools" / "public_deploy_smoke.py")
+    generator = load_module("lovetypes_generator_contact_expectations", ROOT / "tools" / "generate_multilingual_site.py")
     issues: list[str] = []
     pages_checked = 0
     mailto_links_checked = 0
@@ -86,6 +87,8 @@ def main() -> int:
     anchor_targets_checked = 0
     protected_email_links_checked = 0
     source_routes_checked = 0
+    saved_result_sections_checked = 0
+    contact_quiz_data_refs_checked = 0
 
     for item in expectations():
         response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
@@ -100,6 +103,15 @@ def main() -> int:
             anchor_targets_checked += 1
             if target not in assets.ids:
                 issues.append(f"{item.path}: missing #{target}")
+        if "data-contact-saved" not in response.text:
+            issues.append(f"{item.path}: missing saved result contact handoff section")
+        else:
+            saved_result_sections_checked += 1
+        expected_quiz_data = generator.QUIZ_DATA_ASSETS[item.lang]
+        if expected_quiz_data not in response.text:
+            issues.append(f"{item.path}: missing localized quiz data for saved result handoff")
+        else:
+            contact_quiz_data_refs_checked += 1
         mailto_subjects: set[str] = set()
         mailto_bodies_by_subject: dict[str, list[str]] = {}
         protected_email_links = 0
@@ -148,7 +160,6 @@ def main() -> int:
             issues.append(f"{item.path}: expected two copy contact template buttons, got {template_buttons}")
         else:
             template_buttons_checked += 2
-        generator = load_module("lovetypes_generator_contact_expectations", ROOT / "tools" / "generate_multilingual_site.py")
         expected_bodies = {
             generator.CONTACT_REQUESTS[item.lang]["body"],
             generator.CONTACT_REPAIR_REPORTS[item.lang]["body"],
@@ -181,6 +192,8 @@ def main() -> int:
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")
+    print(f"public_contact_saved_result_sections_checked={saved_result_sections_checked}")
+    print(f"public_contact_quiz_data_refs_checked={contact_quiz_data_refs_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:
         print(issue)

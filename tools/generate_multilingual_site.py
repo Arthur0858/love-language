@@ -1444,6 +1444,110 @@ CONTACT_TEMPLATE_LABELS = {
 }
 
 
+CONTACT_RESULT_HANDOFF = {
+    "zh": {
+        "eyebrow": "RESULT HANDOFF",
+        "title": "用上次測驗結果寄出補給需求",
+        "intro": "這台裝置保存了你的守護者結果。你可以把結果、補給路線與想要的收藏物一起帶進信件，不必重新整理。",
+        "subject": "LoveTypes 守護者補給需求",
+        "send": "寄出個人化補給需求",
+        "copy": "複製個人化需求",
+        "copied": "已複製需求",
+        "route": "查看補給路線",
+        "card": "開啟收藏卡",
+        "plan": "回到修復計畫",
+        "clear": "清除上次結果",
+        "guardian": "我的守護者",
+        "supply": "補給路線",
+        "mission": "免費任務",
+        "luna": "Luna 使用場景",
+        "keepsake": "想要的收藏物",
+        "context": "我想使用在這個情境",
+        "keepsake_hint": "PDF 練習卡 / 手機桌布 / 7 分鐘短儀式 / Luna 下載包",
+    },
+    "en": {
+        "eyebrow": "RESULT HANDOFF",
+        "title": "Send a supply request from your last result",
+        "intro": "This device has your guardian result. Carry the result, route, and collectible request into one email without rebuilding the context.",
+        "subject": "LoveTypes guardian supply request",
+        "send": "Send personalized supply request",
+        "copy": "Copy personalized request",
+        "copied": "Request copied",
+        "route": "View supply route",
+        "card": "Open keepsake card",
+        "plan": "Return to repair plan",
+        "clear": "Clear last result",
+        "guardian": "My guardian",
+        "supply": "Supply route",
+        "mission": "Free task",
+        "luna": "Luna use case",
+        "keepsake": "Collectible I want",
+        "context": "I would use it in this situation",
+        "keepsake_hint": "PDF practice card / mobile wallpaper / 7-minute ritual / Luna download pack",
+    },
+    "ja": {
+        "eyebrow": "RESULT HANDOFF",
+        "title": "前回の結果から補給リクエストを送る",
+        "intro": "この端末には守護者の結果が残っています。結果、補給ルート、欲しいコレクションを一つのメールに入れられます。",
+        "subject": "LoveTypes 守護者の補給リクエスト",
+        "send": "個別補給リクエストを送る",
+        "copy": "個別リクエストをコピー",
+        "copied": "コピーしました",
+        "route": "補給ルートを見る",
+        "card": "コレクションカードを開く",
+        "plan": "修復プランへ戻る",
+        "clear": "前回の結果を消す",
+        "guardian": "私の守護者",
+        "supply": "補給ルート",
+        "mission": "無料の課題",
+        "luna": "Luna の使用場面",
+        "keepsake": "欲しいコレクション",
+        "context": "この場面で使いたい",
+        "keepsake_hint": "PDF 練習カード / スマホ壁紙 / 7分の短い儀式 / Luna ダウンロード",
+    },
+    "ko": {
+        "eyebrow": "RESULT HANDOFF",
+        "title": "지난 결과로 보급 요청 보내기",
+        "intro": "이 기기에 수호자 결과가 남아 있습니다. 결과, 보급 루트, 원하는 소장물을 한 메일에 담을 수 있습니다.",
+        "subject": "LoveTypes 수호자 보급 요청",
+        "send": "개인화 보급 요청 보내기",
+        "copy": "개인화 요청 복사",
+        "copied": "요청 복사됨",
+        "route": "보급 루트 보기",
+        "card": "소장 카드 열기",
+        "plan": "회복 계획으로 돌아가기",
+        "clear": "지난 결과 지우기",
+        "guardian": "나의 수호자",
+        "supply": "보급 루트",
+        "mission": "무료 과제",
+        "luna": "Luna 사용 장면",
+        "keepsake": "원하는 소장물",
+        "context": "이 상황에서 사용하고 싶어요",
+        "keepsake_hint": "PDF 연습 카드 / 모바일 배경화면 / 7분 짧은 의식 / Luna 다운로드 팩",
+    },
+    "es": {
+        "eyebrow": "RESULT HANDOFF",
+        "title": "Enviar una solicitud desde tu último resultado",
+        "intro": "Este dispositivo conserva tu resultado. Puedes llevar la guardiana, ruta y recurso coleccionable a un solo correo.",
+        "subject": "Solicitud de recurso de guardiana LoveTypes",
+        "send": "Enviar solicitud personalizada",
+        "copy": "Copiar solicitud personalizada",
+        "copied": "Solicitud copiada",
+        "route": "Ver ruta",
+        "card": "Abrir tarjeta",
+        "plan": "Volver al plan",
+        "clear": "Borrar resultado",
+        "guardian": "Mi guardiana",
+        "supply": "Ruta de recurso",
+        "mission": "Tarea gratuita",
+        "luna": "Uso de Luna",
+        "keepsake": "Recurso coleccionable que quiero",
+        "context": "Lo usaría en esta situación",
+        "keepsake_hint": "Tarjeta PDF / fondo móvil / ritual de 7 minutos / pack Luna",
+    },
+}
+
+
 CONTACT_REPAIR_REPORTS = {
     "zh": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -5400,6 +5504,106 @@ def contact_template_copy_script(lang: str) -> str:
 """
 
 
+def contact_result_handoff_script(lang: str) -> str:
+    labels = json.dumps(CONTACT_RESULT_HANDOFF[lang], ensure_ascii=False)
+    return f"""
+{quiz_data_script_tag(lang)}
+<script>
+(() => {{
+  const quiz = window.__LOVETYPES_QUIZ_DATA;
+  const labels = {labels};
+  const box = document.querySelector('[data-contact-saved]');
+  if (!quiz || !box) return;
+  const homePath = new URL(quiz.shareUrl).pathname;
+  const storageKeys = ["lovetypes:{lang}:quiz-result", `lovetypes:${{location.pathname}}:quiz-result`, `lovetypes:${{homePath}}:quiz-result`];
+
+  function readSavedResult() {{
+    try {{
+      for (const key of storageKeys) {{
+        const saved = JSON.parse(localStorage.getItem(key) || 'null');
+        const primaryKey = saved && (saved.primaryKey || saved.type);
+        if (primaryKey && quiz.results[primaryKey]) return {{ ...saved, primaryKey }};
+      }}
+    }} catch (_error) {{}}
+    return null;
+  }}
+
+  function clearSavedResult() {{
+    storageKeys.forEach((key) => localStorage.removeItem(key));
+    box.hidden = true;
+    box.innerHTML = '';
+  }}
+
+  async function copyText(text, button) {{
+    const original = button.textContent;
+    try {{
+      if (navigator.clipboard?.writeText && window.isSecureContext) {{
+        await navigator.clipboard.writeText(text);
+      }} else {{
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }}
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    }} catch (_error) {{
+      window.prompt(labels.copy, text);
+    }}
+  }}
+
+  const saved = readSavedResult();
+  if (!saved) return;
+  const result = quiz.results[saved.primaryKey];
+  const body = [
+    `${{labels.guardian}}: ${{result.name}} · ${{result.type}}`,
+    `${{labels.supply}}: ${{result.supplyTitle}}`,
+    `${{labels.mission}}: ${{result.supplyMission}}`,
+    `${{labels.luna}}: ${{result.lunaUrl}}`,
+    `${{labels.keepsake}}: ${{labels.keepsake_hint}}`,
+    `${{labels.context}}: `,
+    '',
+    `${{labels.route}}: ${{result.resourceUrl}}`,
+    `${{labels.card}}: ${{result.collectorHallUrl}}`,
+    `${{labels.plan}}: ${{result.planUrl}}`
+  ].join('\\n');
+  const href = `mailto:contact@lovetypes.tw?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(body)}}`;
+  box.innerHTML = `
+    <article class="contact-result-card garden-map-resume-card pass-resume-card" id="contact-result-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
+      <img src="${{result.resultImage}}" alt="${{result.name}}" width="${{result.resultImageWidth}}" height="${{result.resultImageHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+      <div>
+        <div class="resume-pass-stamp" data-resume-pass-stamp>
+          <img class="resume-pass-prop" src="${{result.domainProp}}" alt="${{result.domainTitle}}" width="${{result.domainPropWidth}}" height="${{result.domainPropHeight}}" loading="lazy" decoding="async" fetchpriority="low">
+          <span>${{quiz.labels.pass_title}}</span>
+          <strong>${{result.domainTitle}}</strong>
+        </div>
+        <p class="eyebrow">${{labels.eyebrow}}</p>
+        <h2>${{result.name}} · ${{result.type}}</h2>
+        <p>${{labels.intro}}</p>
+        <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
+        <div class="contact-result-actions garden-map-resume-actions">
+          <a class="primary-btn" href="${{href}}">${{labels.send}}</a>
+          <button class="secondary-btn" type="button" data-contact-copy-result>${{labels.copy}}</button>
+          <a class="secondary-btn" href="${{result.resourceUrl}}">${{labels.route}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{labels.card}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}">${{labels.plan}}</a>
+          <button class="secondary-btn" type="button" data-clear-contact-result>${{labels.clear}}</button>
+        </div>
+      </div>
+    </article>`;
+  box.hidden = false;
+  box.querySelector('[data-contact-copy-result]')?.addEventListener('click', (event) => copyText(body, event.currentTarget));
+  box.querySelector('[data-clear-contact-result]')?.addEventListener('click', clearSavedResult);
+}})();
+</script>
+"""
+
+
 def keepsake_waitlist_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     subject_label = CONTACT_SUBJECT_LABELS[lang]
@@ -7913,6 +8117,7 @@ def contact_request_section(lang: str) -> str:
         for idx, (title, body) in enumerate(repair["items"], 1)
     )
     return f"""
+<section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
   <p class="section-intro">{escape(request["intro"])}</p>
@@ -7936,6 +8141,7 @@ def contact_request_section(lang: str) -> str:
   </div>
 </section>
 {contact_template_copy_script(lang)}
+{contact_result_handoff_script(lang)}
 """
 
 

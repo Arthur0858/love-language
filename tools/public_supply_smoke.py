@@ -156,6 +156,7 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "route_cards": 0,
         "guide_links": 0,
         "luna_links": 0,
+        "route_request_mailtos": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -214,6 +215,20 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             stats["luna_links"] += 1
         else:
             issues.append(f"{path}: {slug} route missing Luna link {expected_luna}")
+        request_links = [
+            link
+            for link in links
+            if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
+            or link.attrs.get("href", "").startswith("/cdn-cgi/l/email-protection")
+        ]
+        if len(request_links) != 1:
+            issues.append(f"{path}: {slug} route should include one contact request mailto or protected email link")
+        else:
+            stats["route_request_mailtos"] += 1
+            href = request_links[0].attrs["href"]
+            query = parse_qs(urlparse(href).query)
+            if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
+                issues.append(f"{path}: {slug} route contact request should include subject and body")
         affiliate_links = [link for link in links if is_affiliate_url(link.attrs.get("href", ""))]
         if len(affiliate_links) != 1:
             issues.append(f"{path}: {slug} route should include one tracked books.com.tw link, got {len(affiliate_links)}")
@@ -284,6 +299,7 @@ def main() -> int:
         "route_cards": 0,
         "guide_links": 0,
         "luna_links": 0,
+        "route_request_mailtos": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -303,6 +319,7 @@ def main() -> int:
     print(f"public_supply_route_cards_checked={totals['route_cards']}")
     print(f"public_supply_guide_links_checked={totals['guide_links']}")
     print(f"public_supply_luna_links_checked={totals['luna_links']}")
+    print(f"public_supply_route_request_mailtos_checked={totals['route_request_mailtos']}")
     print(f"public_supply_copy_buttons_checked={totals['copy_buttons']}")
     print(f"public_supply_affiliate_links_checked={totals['affiliate_links']}")
     print(f"public_supply_affiliate_book_cards_checked={totals['affiliate_book_cards']}")

@@ -89,6 +89,8 @@ RESUME_TEMPLATE_CASES = (
             "resume card": "keepsake-resume-card",
             "pass stamp": "data-resume-pass-stamp",
             "plan action": "data-keepsake-plan",
+            "contact action": "data-keepsake-contact",
+            "luna action": "data-keepsake-luna",
             "story image": "result.storyImage",
             "story action": 'data-result-action="story"',
             "supply action": "result.resourceUrl",

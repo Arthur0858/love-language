@@ -5649,11 +5649,15 @@ def keepsake_waitlist_section(lang: str) -> str:
 
 
 def keepsake_resume_script(lang: str) -> str:
+    request_supply_label = json.dumps(SUPPLY_LABELS[lang]["request_supply"], ensure_ascii=False)
+    contact_request_url = json.dumps(lang_url(lang, "contact") + "#luna-supply-request", ensure_ascii=False)
     return f"""
 {quiz_data_script_tag(lang)}
 <script>
 (() => {{
   const quiz = window.__LOVETYPES_QUIZ_DATA;
+  const requestSupplyLabel = {request_supply_label};
+  const contactRequestUrl = {contact_request_url};
   if (!quiz) return;
   const box = document.querySelector('[data-keepsake-saved]');
   if (!box) return;
@@ -5697,6 +5701,8 @@ def keepsake_resume_script(lang: str) -> str:
         <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
         <div class="keepsake-resume-actions">
           <a class="primary-btn" href="${{result.planUrl}}" data-keepsake-plan>${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.contactUrl || contactRequestUrl}}" data-keepsake-contact>${{requestSupplyLabel}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-keepsake-luna>${{quiz.labels.saved_luna}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>

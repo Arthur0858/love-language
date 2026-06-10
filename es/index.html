@@ -401,6 +401,10 @@
           <h3>${result.name} · ${result.type}</h3>
           <p>${quiz.labels.saved_intro}</p>
           <p><strong>${quiz.labels.next_pack_title}</strong> · ${result.supplyTitle}</p>
+          <p class="eyebrow">${result.supplyProductPack.label}</p>
+          <div class="${actionsClass}" data-home-saved-product-pack>
+            ${result.supplyProductPack.items.map((item) => `<a href="${item.href}" data-home-saved-product-link>${item.title}</a>`).join('')}
+          </div>
           <div class="${actionsClass}">
             <a href="${result.resourceUrl}" data-home-resume-route>${quiz.labels.saved_route}</a>
             <a href="${result.planUrl}" data-home-saved-plan data-home-resume-plan>${quiz.labels.saved_plan}</a>

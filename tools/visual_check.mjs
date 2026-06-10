@@ -200,6 +200,7 @@ function summarizeConversionFailures(results) {
     if (target === 'home-saved-plan' && !result.homeTopRouteHref?.includes('/resources/#supply-')) failures.push('top returning resume missing supply route');
     if (target === 'home-saved-plan' && !result.homeTopPlanHref?.includes('/repair-plan/#plan-')) failures.push('top returning resume missing repair plan');
     if (target === 'home-saved-plan' && !result.homeTopLunaHref?.includes('/luna-yoga-music/#luna-')) failures.push('top returning resume missing Luna route');
+    if (target === 'home-saved-plan' && result.homeSavedProductLinkCount !== 3) failures.push('home saved product pack should expose three links');
     if (result.dynamicImageIssues?.length) failures.push(`dynamic image issues: ${result.dynamicImageIssues.join('; ')}`);
     if (result.scrollY > 1200) failures.push('resume scrolled too far');
     if (result.horizontalOverflow) failures.push('horizontal overflow');
@@ -840,6 +841,7 @@ for (const item of conversionCases) {
   let homeTopRouteHref = '';
   let homeTopPlanHref = '';
   let homeTopLunaHref = '';
+  let homeSavedProductLinkCount = 0;
   if (item.target === 'plan') {
     await page.locator('[data-conversion-plan]').click();
   } else if (item.target === 'luna') {
@@ -864,6 +866,7 @@ for (const item of conversionCases) {
     homeTopRouteHref = await page.locator('[data-home-saved] [data-home-resume-route]').first().getAttribute('href').catch(() => '');
     homeTopPlanHref = await page.locator('[data-home-saved] [data-home-resume-plan]').first().getAttribute('href').catch(() => '');
     homeTopLunaHref = await page.locator('[data-home-saved] [data-home-resume-luna]').first().getAttribute('href').catch(() => '');
+    homeSavedProductLinkCount = await page.locator('[data-home-saved] [data-home-saved-product-link]').count().catch(() => 0);
     await page.locator('[data-quiz-saved]:not([hidden])').waitFor({ state: 'visible' });
     homeSavedVisible = true;
     homeSavedKeepsakeHref = await page.locator('[data-home-saved] [data-home-saved-keepsake]').first().getAttribute('href').catch(() => '');
@@ -1024,6 +1027,7 @@ for (const item of conversionCases) {
     homeTopRouteHref,
     homeTopPlanHref,
     homeTopLunaHref,
+    homeSavedProductLinkCount,
     dynamicImageIssues,
     scrollY: resumeScrollY,
     finalScrollY: await page.evaluate(() => window.scrollY),

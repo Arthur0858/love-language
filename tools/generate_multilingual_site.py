@@ -1204,8 +1204,8 @@ LUNA_GUARDIAN_FLOW = {
 LUNA_OFFER = {
     "zh": {
         "eyebrow": "LUNA SUPPLY ENTRY",
-        "title": "先免費聆聽，再決定是否需要夜間補給套裝",
-        "intro": "Luna 目前先作為免費聆聽與關係整理入口。若未來推出下載包、練習卡或睡前流程，會以不承諾療效、不取代諮商的方式呈現。",
+        "title": "先免費聆聽，再留下夜間補給需求",
+        "intro": "Luna 目前先作為免費聆聽與關係整理入口。若你需要下載包、練習卡或睡前流程，請用信箱留下需求；未來補給會以不承諾療效、不取代諮商的方式呈現。",
         "items": [
             ("免費聆聽", "先用公開音樂陪你睡前書寫、吵架後冷卻，確認這種節奏是否真的適合你。"),
             ("接回守護者路線", "聽完後回到你的守護者補給路線，只選一個小任務，不把所有問題一次修完。"),
@@ -1213,12 +1213,12 @@ LUNA_OFFER = {
         ],
         "listen": "免費聆聽 Luna",
         "resources": "回到補給站",
-        "contact": "告訴我們你需要的補給",
+        "contact": "加入夜間補給需求",
     },
     "en": {
         "eyebrow": "LUNA SUPPLY ENTRY",
-        "title": "Listen free first, then decide whether a night supply pack fits",
-        "intro": "Luna is currently a free listening and reflection doorway. If future downloads, practice cards, or bedtime flows become available, they will support repair without promising outcomes or replacing counseling.",
+        "title": "Listen free first, then request a night supply pack",
+        "intro": "Luna is currently a free listening and reflection doorway. If you want downloads, practice cards, or bedtime flows, use the contact inbox; future supplies will support repair without promising outcomes or replacing counseling.",
         "items": [
             ("Free listening", "Use the public music for bedtime journaling or post-conflict cooling, then notice whether the rhythm truly fits you."),
             ("Return to your route", "After listening, return to your guardian supply route and choose one small task instead of repairing everything at once."),
@@ -1226,12 +1226,12 @@ LUNA_OFFER = {
         ],
         "listen": "Listen to Luna free",
         "resources": "Return to supplies",
-        "contact": "Tell us what supply you need",
+        "contact": "Request night supply",
     },
     "ja": {
         "eyebrow": "LUNA SUPPLY ENTRY",
-        "title": "まず無料で聴き、夜の補給セットが必要か決める",
-        "intro": "Luna は現在、無料で聴ける内省の入口です。将来ダウンロード、練習カード、就寝前フローを出す場合も、効果を約束せず、相談支援の代わりにはしません。",
+        "title": "まず無料で聴き、夜の補給希望を送る",
+        "intro": "Luna は現在、無料で聴ける内省の入口です。ダウンロード、練習カード、就寝前フローが必要なら連絡先へ希望を送れます。今後の補給も効果を約束せず、相談支援の代わりにはしません。",
         "items": [
             ("無料で聴く", "公開音楽を就寝前の日記や衝突後の静けさに使い、このリズムが自分に合うか確かめます。"),
             ("守護者ルートへ戻る", "聴いた後は守護者の補給ルートへ戻り、一つの小さな課題だけを選びます。"),
@@ -1239,12 +1239,12 @@ LUNA_OFFER = {
         ],
         "listen": "Luna を無料で聴く",
         "resources": "補給へ戻る",
-        "contact": "必要な補給を伝える",
+        "contact": "夜の補給を希望する",
     },
     "ko": {
         "eyebrow": "LUNA SUPPLY ENTRY",
-        "title": "먼저 무료로 듣고 밤 보급 세트가 맞는지 결정하기",
-        "intro": "Luna는 현재 무료 청취와 관계 성찰의 입구입니다. 향후 다운로드, 연습 카드, 잠들기 전 흐름이 나오더라도 결과를 약속하거나 상담을 대신하지 않습니다.",
+        "title": "먼저 무료로 듣고 밤 보급 요청 남기기",
+        "intro": "Luna는 현재 무료 청취와 관계 성찰의 입구입니다. 다운로드, 연습 카드, 잠들기 전 흐름이 필요하다면 연락 메일로 알려 주세요. 향후 보급도 결과를 약속하거나 상담을 대신하지 않습니다.",
         "items": [
             ("무료 청취", "공개 음악을 잠들기 전 기록이나 다툼 뒤 진정에 사용하고, 이 리듬이 정말 맞는지 확인합니다."),
             ("수호자 루트로 돌아가기", "들은 뒤에는 수호자 보급 루트로 돌아가 작은 과제 하나만 고릅니다."),
@@ -1252,12 +1252,12 @@ LUNA_OFFER = {
         ],
         "listen": "Luna 무료 듣기",
         "resources": "보급소로 돌아가기",
-        "contact": "필요한 보급 알려주기",
+        "contact": "밤 보급 요청하기",
     },
     "es": {
         "eyebrow": "LUNA SUPPLY ENTRY",
-        "title": "Escucha gratis primero y decide si un pack nocturno encaja",
-        "intro": "Luna funciona ahora como entrada gratuita de escucha y reflexión. Si más adelante hay descargas, tarjetas o rutinas nocturnas, serán apoyo para practicar, no promesa de resultado ni reemplazo de terapia.",
+        "title": "Escucha gratis primero y pide un recurso nocturno",
+        "intro": "Luna funciona ahora como entrada gratuita de escucha y reflexión. Si quieres descargas, tarjetas o rutinas nocturnas, usa el correo de contacto; cualquier recurso futuro apoyará la práctica sin prometer resultados ni reemplazar terapia.",
         "items": [
             ("Escucha gratis", "Usa la música pública para escribir antes de dormir o enfriar después de un conflicto y nota si el ritmo te sirve."),
             ("Vuelve a tu ruta", "Después de escuchar, vuelve a la ruta de tu guardiana y elige una tarea pequeña, no todo a la vez."),
@@ -1265,7 +1265,7 @@ LUNA_OFFER = {
         ],
         "listen": "Escuchar Luna gratis",
         "resources": "Volver a recursos",
-        "contact": "Decir qué recurso necesitas",
+        "contact": "Pedir recurso nocturno",
     },
 }
 
@@ -1322,68 +1322,68 @@ LUNA_RESUME = {
 CONTACT_REQUESTS = {
     "zh": {
         "eyebrow": "REQUEST COMPASS",
-        "title": "告訴我們你需要哪一種 Luna 補給",
-        "intro": "如果你是從 Luna 或守護者補給路線來到這裡，請先選一種需求寄信。這能幫我們判斷下一批應優先整理下載包、PDF 練習卡，還是睡前流程。",
+        "title": "加入守護者補給等待清單",
+        "intro": "如果你是從 Luna、收藏室或守護者補給路線來到這裡，請先選一種需求寄信。這會幫我們判斷下一批自有補給應優先整理音檔、PDF 練習卡、桌布，還是睡前流程。",
         "items": [
-            ("下載包", "希望能離線聆聽、收藏音檔，或把 Luna 放進固定睡前儀式。"),
+            ("Luna 下載包", "希望能離線聆聽、收藏音檔，或把 Luna 放進固定睡前儀式。"),
             ("PDF 練習卡", "希望把測驗結果、守護者任務與錯頻修復寫成可列印的短卡。"),
-            ("睡前流程", "希望有 5 到 10 分鐘的步驟，陪你在吵架後冷卻、睡前整理或寫關係日記。"),
+            ("桌布或短儀式", "希望有手機桌布、5 到 10 分鐘流程，陪你在吵架後冷卻、睡前整理或寫關係日記。"),
         ],
-        "note": "來信時可附上你的守護者、想使用的情境與裝置。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
-        "cta": "寄出 Luna 補給需求",
-        "subject": "Luna 夜間補給需求",
+        "note": "來信時可附上你的守護者、想使用的情境、裝置與願意收藏的格式。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
+        "cta": "寄出補給等待清單需求",
+        "subject": "LoveTypes 守護者補給等待清單",
     },
     "en": {
         "eyebrow": "REQUEST COMPASS",
-        "title": "Tell us which Luna supply would help",
-        "intro": "If you arrived from Luna or a guardian supply route, choose one request before writing. It helps us decide whether downloads, PDF practice cards, or bedtime flows should be prepared first.",
+        "title": "Join the guardian supply waitlist",
+        "intro": "If you arrived from Luna, keepsakes, or a guardian supply route, choose one request before writing. It helps us decide whether audio downloads, PDF practice cards, wallpapers, or bedtime flows should be prepared first.",
         "items": [
-            ("Download pack", "You want offline listening, a saved audio set, or a stable bedtime ritual with Luna."),
+            ("Luna download pack", "You want offline listening, a saved audio set, or a stable bedtime ritual with Luna."),
             ("PDF practice cards", "You want printable cards that connect your quiz result, guardian task, and repair prompt."),
-            ("Bedtime flow", "You want a 5 to 10 minute sequence for cooling down after conflict, bedtime reflection, or relationship journaling."),
+            ("Wallpaper or short ritual", "You want mobile wallpapers or a 5 to 10 minute sequence for cooling down, bedtime reflection, or relationship journaling."),
         ],
-        "note": "Include your guardian, use case, and device if relevant. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
-        "cta": "Send Luna supply request",
-        "subject": "Luna night supply request",
+        "note": "Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
+        "cta": "Send supply waitlist request",
+        "subject": "LoveTypes guardian supply waitlist",
     },
     "ja": {
         "eyebrow": "REQUEST COMPASS",
-        "title": "必要な Luna 補給を教えてください",
-        "intro": "Luna や守護者の補給ルートから来た場合は、まず一つの希望を選んで送ってください。ダウンロード、PDF 練習カード、就寝前フローのどれを先に整えるべきか判断しやすくなります。",
+        "title": "守護者補給の待機リストへ希望を送る",
+        "intro": "Luna、コレクション室、守護者の補給ルートから来た場合は、一つの希望を選んで送ってください。音源ダウンロード、PDF 練習カード、壁紙、就寝前フローの優先順位を判断しやすくなります。",
         "items": [
-            ("ダウンロードパック", "オフラインで聴きたい、音源を保存したい、Luna を就寝前の儀式に入れたい。"),
+            ("Luna ダウンロードパック", "オフラインで聴きたい、音源を保存したい、Luna を就寝前の儀式に入れたい。"),
             ("PDF 練習カード", "診断結果、守護者の課題、修復プロンプトを印刷できる短いカードにしたい。"),
-            ("就寝前フロー", "衝突後のクールダウン、寝る前の内省、関係日記に使える 5 から 10 分の手順がほしい。"),
+            ("壁紙や短い儀式", "スマホ壁紙、衝突後のクールダウン、寝る前の内省、関係日記に使える 5 から 10 分の手順がほしい。"),
         ],
-        "note": "守護者、使いたい場面、端末を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
-        "cta": "Luna 補給希望を送る",
-        "subject": "Luna 夜間補給の希望",
+        "note": "守護者、使いたい場面、端末、実際に保存したい形式を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
+        "cta": "補給待機リストへ送る",
+        "subject": "LoveTypes 守護者補給の待機リスト",
     },
     "ko": {
         "eyebrow": "REQUEST COMPASS",
-        "title": "필요한 Luna 보급을 알려 주세요",
-        "intro": "Luna나 수호자 보급 루트에서 왔다면 먼저 한 가지 요청을 골라 보내 주세요. 다운로드, PDF 연습 카드, 잠들기 전 흐름 중 무엇을 먼저 준비할지 판단하는 데 도움이 됩니다.",
+        "title": "수호자 보급 대기 목록에 요청 남기기",
+        "intro": "Luna, 소장실, 수호자 보급 루트에서 왔다면 한 가지 요청을 골라 보내 주세요. 오디오 다운로드, PDF 연습 카드, 배경화면, 잠들기 전 흐름 중 무엇을 먼저 준비할지 판단하는 데 도움이 됩니다.",
         "items": [
-            ("다운로드 팩", "오프라인으로 듣거나 음원을 보관하고, Luna를 고정된 잠들기 전 의식에 넣고 싶을 때."),
+            ("Luna 다운로드 팩", "오프라인으로 듣거나 음원을 보관하고, Luna를 고정된 잠들기 전 의식에 넣고 싶을 때."),
             ("PDF 연습 카드", "테스트 결과, 수호자 과제, 회복 질문을 인쇄 가능한 짧은 카드로 정리하고 싶을 때."),
-            ("잠들기 전 흐름", "다툼 뒤 진정, 잠들기 전 정리, 관계 일기에 쓸 5-10분 순서가 필요할 때."),
+            ("배경화면 또는 짧은 의식", "휴대폰 배경화면, 다툼 뒤 진정, 잠들기 전 정리, 관계 일기에 쓸 5-10분 순서가 필요할 때."),
         ],
-        "note": "가능하다면 수호자, 사용 장면, 기기를 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
-        "cta": "Luna 보급 요청 보내기",
-        "subject": "Luna 야간 보급 요청",
+        "note": "가능하다면 수호자, 사용 장면, 기기, 실제로 보관할 형식을 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
+        "cta": "보급 대기 목록 요청 보내기",
+        "subject": "LoveTypes 수호자 보급 대기 목록",
     },
     "es": {
         "eyebrow": "REQUEST COMPASS",
-        "title": "Cuéntanos qué recurso Luna necesitas",
-        "intro": "Si llegaste desde Luna o desde una ruta de guardiana, elige una petición antes de escribir. Así sabremos si conviene preparar primero descargas, tarjetas PDF o rutinas nocturnas.",
+        "title": "Únete a la lista de recursos de guardianas",
+        "intro": "Si llegaste desde Luna, recuerdos o una ruta de guardiana, elige una petición antes de escribir. Así sabremos si preparar primero descargas de audio, tarjetas PDF, fondos o rutinas nocturnas.",
         "items": [
-            ("Pack de descarga", "Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir."),
+            ("Pack Luna descargable", "Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir."),
             ("Tarjetas PDF", "Quieres tarjetas imprimibles que unan tu resultado, tarea de guardiana y pregunta de reparación."),
-            ("Rutina nocturna", "Quieres una secuencia de 5 a 10 minutos para calmarte tras un conflicto, reflexionar o escribir un diario de relación."),
+            ("Fondo o ritual breve", "Quieres fondos móviles o una secuencia de 5 a 10 minutos para calmarte, reflexionar o escribir un diario de relación."),
         ],
-        "note": "Incluye tu guardiana, situación de uso y dispositivo si ayuda. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
-        "cta": "Enviar petición Luna",
-        "subject": "Petición de recurso nocturno Luna",
+        "note": "Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
+        "cta": "Enviar petición de lista",
+        "subject": "Lista de espera de recursos LoveTypes",
     },
 }
 
@@ -2255,6 +2255,8 @@ SUPPLY_LABELS = {
         "supply": "補給建議",
         "read_guide": "閱讀對應指南",
         "open_luna": "開啟 Luna",
+        "free_keepsake": "免費收藏卡",
+        "request_supply": "提出補給需求",
         "copy_route": "複製此路線",
         "route_copied": "已複製補給路線",
         "route_summary_title": "LoveTypes 守護者補給路線",
@@ -2282,6 +2284,8 @@ SUPPLY_LABELS = {
         "supply": "Supply suggestion",
         "read_guide": "Read guide",
         "open_luna": "Open Luna",
+        "free_keepsake": "Free keepsake card",
+        "request_supply": "Request this supply",
         "copy_route": "Copy this route",
         "route_copied": "Supply route copied",
         "route_summary_title": "LoveTypes guardian supply route",
@@ -2309,6 +2313,8 @@ SUPPLY_LABELS = {
         "supply": "補給の提案",
         "read_guide": "ガイドを読む",
         "open_luna": "Luna を開く",
+        "free_keepsake": "無料カード",
+        "request_supply": "補給を希望する",
         "copy_route": "このルートをコピー",
         "route_copied": "補給ルートをコピーしました",
         "route_summary_title": "LoveTypes 守護者の補給ルート",
@@ -2336,6 +2342,8 @@ SUPPLY_LABELS = {
         "supply": "보급 제안",
         "read_guide": "가이드 읽기",
         "open_luna": "Luna 열기",
+        "free_keepsake": "무료 소장 카드",
+        "request_supply": "보급 요청하기",
         "copy_route": "이 루트 복사",
         "route_copied": "보급 루트가 복사됨",
         "route_summary_title": "LoveTypes 수호자 보급 루트",
@@ -2363,6 +2371,8 @@ SUPPLY_LABELS = {
         "supply": "Sugerencia de recurso",
         "read_guide": "Leer guía",
         "open_luna": "Abrir Luna",
+        "free_keepsake": "Tarjeta gratis",
+        "request_supply": "Pedir este recurso",
         "copy_route": "Copiar esta ruta",
         "route_copied": "Ruta copiada",
         "route_summary_title": "Ruta de suministro LoveTypes",
@@ -2514,6 +2524,13 @@ KEEPSAKES_PAGE = {
         "desc": "集中保存 LoveTypes 五位守護者故事卡，讓測驗結果成為可以分享、回看與延伸補給的收藏入口。",
         "eyebrow": "GUARDIAN KEEPSAKE HALL",
         "intro": "每張卡都是一個心語入口：適合發限動、傳給伴侶、放進關係日記，或作為未來守護者補給與低價收藏商品的基礎。",
+        "free_title": "免費帶走五張守護者收藏物",
+        "free_intro": "目前所有守護者故事卡都可免費開啟與保存。先把最像你的那張留下來，未來若推出桌布、PDF 或印刷卡，也會從這裡延伸。",
+        "free_items": [
+            ("保存圖片", "每張卡都可直接開啟原圖或下載，適合放進手機相簿與關係日記。"),
+            ("分享入口", "可生成分享卡，把守護者結果變成一句可被理解的心語。"),
+            ("未來收藏基底", "桌布、PDF 練習卡與短儀式會優先從這五張免費收藏物延伸。"),
+        ],
         "how_title": "怎麼使用收藏卡",
         "steps": [
             ("保存", "先保存最像你的守護者卡，讓測驗結果不只是一次性的答案。"),
@@ -2530,6 +2547,13 @@ KEEPSAKES_PAGE = {
         "desc": "Save the five LoveTypes guardian story cards so your quiz result becomes something shareable, revisitable, and ready for future supply assets.",
         "eyebrow": "GUARDIAN KEEPSAKE HALL",
         "intro": "Each card is a heart-language doorway: use it in Stories, send it to a partner, place it in a relationship journal, or keep it as the base for future collectible supplies.",
+        "free_title": "Take five free guardian keepsakes",
+        "free_intro": "All guardian story cards are free to open and save now. Keep the one that feels closest to you; future wallpapers, PDFs, or printed cards can grow from this hall.",
+        "free_items": [
+            ("Save the image", "Open or download each card for your phone album or relationship journal."),
+            ("Share doorway", "Create a story card so the result becomes one heart-language sentence someone can understand."),
+            ("Future collectible base", "Wallpapers, PDF practice cards, and short rituals will grow from these free keepsakes first."),
+        ],
         "how_title": "How to use the cards",
         "steps": [
             ("Save", "Keep the guardian card that feels most like you so the result is not a one-time answer."),
@@ -2546,6 +2570,13 @@ KEEPSAKES_PAGE = {
         "desc": "LoveTypes の五人の守護者ストーリーカードを保存し、診断結果を共有、再訪、今後の補給資産へつなげる入口にします。",
         "eyebrow": "GUARDIAN KEEPSAKE HALL",
         "intro": "それぞれのカードは心語の入口です。ストーリー、パートナーへの共有、関係日記、今後のコレクション補給の土台として使えます。",
+        "free_title": "五枚の守護者カードを無料で持ち帰る",
+        "free_intro": "現在、すべての守護者ストーリーカードを無料で開き、保存できます。一番近い一枚を残し、今後の壁紙、PDF、印刷カードの土台にできます。",
+        "free_items": [
+            ("画像を保存", "各カードは開く、またはダウンロードして、スマホや関係日記に残せます。"),
+            ("共有入口", "共有カードを作り、結果を理解されやすい心語の一文にします。"),
+            ("今後の土台", "壁紙、PDF 練習カード、短い儀式はこの無料カードから優先して広げます。"),
+        ],
         "how_title": "カードの使い方",
         "steps": [
             ("保存", "一番自分に近い守護者カードを保存し、結果を一回きりの答えで終わらせません。"),
@@ -2562,6 +2593,13 @@ KEEPSAKES_PAGE = {
         "desc": "LoveTypes 다섯 수호자 스토리 카드를 저장해 테스트 결과를 공유, 재방문, 향후 보급 자산으로 이어지는 입구로 만듭니다.",
         "eyebrow": "GUARDIAN KEEPSAKE HALL",
         "intro": "각 카드는 마음 언어의 입구입니다. 스토리, 파트너에게 보내기, 관계 일기, 향후 소장형 보급의 기반으로 사용할 수 있습니다.",
+        "free_title": "다섯 수호자 소장물을 무료로 가져가기",
+        "free_intro": "현재 모든 수호자 스토리 카드는 무료로 열고 저장할 수 있습니다. 가장 나다운 한 장을 남기고, 향후 배경화면, PDF, 인쇄 카드의 기반으로 사용할 수 있습니다.",
+        "free_items": [
+            ("이미지 저장", "각 카드는 열거나 내려받아 휴대폰 앨범과 관계 일기에 둘 수 있습니다."),
+            ("공유 입구", "공유 카드를 만들어 결과를 이해 가능한 마음 언어 한 문장으로 바꿉니다."),
+            ("미래 소장 기반", "배경화면, PDF 연습 카드, 짧은 의식은 이 무료 소장물에서 먼저 확장됩니다."),
+        ],
         "how_title": "카드 사용법",
         "steps": [
             ("저장", "가장 나다운 수호자 카드를 저장해 결과가 한 번의 답으로 끝나지 않게 합니다."),
@@ -2578,6 +2616,13 @@ KEEPSAKES_PAGE = {
         "desc": "Guarda las cinco tarjetas de guardianas LoveTypes para convertir tu resultado en algo compartible, revisitable y listo para futuros recursos coleccionables.",
         "eyebrow": "GUARDIAN KEEPSAKE HALL",
         "intro": "Cada tarjeta es una puerta de lenguaje del corazón: úsala en historias, envíala a una pareja, ponla en tu diario relacional o guárdala como base para futuros recursos coleccionables.",
+        "free_title": "Llévate cinco recuerdos gratis",
+        "free_intro": "Todas las tarjetas de guardianas pueden abrirse y guardarse gratis. Conserva la que más se parece a ti; futuros fondos, PDFs o tarjetas impresas pueden crecer desde aquí.",
+        "free_items": [
+            ("Guardar imagen", "Abre o descarga cada tarjeta para tu álbum móvil o diario relacional."),
+            ("Puerta para compartir", "Crea una historia para convertir el resultado en una frase de lenguaje del corazón."),
+            ("Base coleccionable futura", "Fondos, tarjetas PDF y rituales breves crecerán primero desde estos recuerdos gratis."),
+        ],
         "how_title": "Cómo usar las tarjetas",
         "steps": [
             ("Guardar", "Conserva la tarjeta que más se parece a ti para que el resultado no sea una respuesta de una sola vez."),
@@ -4319,6 +4364,11 @@ def supply_route_card(lang: str, slug: str) -> str:
         "url": abs_url(lang, "resources") + f"#supply-{slug}",
     }
     summary_json = escape(json.dumps(summary, ensure_ascii=False))
+    request_subject = quote(SUPPLY_WISHLIST[lang]["subject"])
+    request_body = quote(
+        f'{SUPPLY_WISHLIST[lang]["body"]} {guardian_name} · {route["title"]}\n'
+        f'{SUPPLY_WISHLIST[lang]["body_context"]} \n\n'
+    )
     return f"""
 <article class="supply-route-card" id="supply-{slug}">
   {img_tag(route["guardian"]["prop"], route["title"])}
@@ -4335,6 +4385,8 @@ def supply_route_card(lang: str, slug: str) -> str:
   <div class="supply-route-actions">
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(labels["open_luna"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}">{escape(labels["free_keepsake"])}</a>
+    <a class="secondary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}">{escape(labels["request_supply"])}</a>
     <button class="secondary-btn" type="button" data-copy-supply-route data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
     <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
@@ -5177,6 +5229,12 @@ def keepsake_resume_script(lang: str) -> str:
 def keepsakes_page(lang: str) -> None:
     labels = KEEPSAKES_PAGE[lang]
     t = LANGS[lang]
+    free_cards = "".join(f"""
+<article>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+""" for title, desc in labels["free_items"])
     steps = "".join(f"""
 <article>
   <span>{idx}</span>
@@ -5195,6 +5253,11 @@ def keepsakes_page(lang: str) -> None:
   </div>
 </section>
 <section class="section keepsake-personal-resume" data-keepsake-saved hidden aria-live="polite"></section>
+<section class="section keepsake-free-section supply-panel-section">
+  <div class="section-head"><div><p class="eyebrow">{escape(SECTION_LABELS[lang]["guardian_keepsakes"])}</p><h2>{escape(labels["free_title"])}</h2></div><a href="#keepsake-card-iris">{escape(COLLECTOR_LABELS[lang]["open"])}</a></div>
+  <p class="section-intro">{escape(labels["free_intro"])}</p>
+  <div class="supply-panel-grid">{free_cards}</div>
+</section>
 {keepsake_shelf_section(lang)}
 {keepsake_ritual_section(lang)}
 {collector_section(lang)}
@@ -7422,7 +7485,7 @@ def luna_page(lang: str) -> None:
     <h1>{escape(t["luna_title"])}</h1>
     <p class="lead">{escape(luna["headline"])}</p>
     <p>{escape(luna["intro"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides/repair-after-conflict")}">{escape(luna["secondary"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request">{escape(offer["contact"])}</a></div>
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>

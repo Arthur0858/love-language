@@ -5122,6 +5122,7 @@ def garden_map_resume_script(lang: str) -> str:
 
 def supply_wishlist_section(lang: str) -> str:
     labels = SUPPLY_WISHLIST[lang]
+    template_labels = CONTACT_TEMPLATE_LABELS[lang]
     cards = []
     for slug, data in GUARDIANS.items():
         route = supply_route(lang, slug)
@@ -5129,11 +5130,12 @@ def supply_wishlist_section(lang: str) -> str:
         accent = next(meta["color"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
         format_items = "".join(f"<li>{escape(item)}</li>" for item in labels["formats"])
         subject = quote(labels["subject"])
-        body = quote(
+        body_text = (
             f'{labels["body"]} {guardian_name} · {route["title"]}\n'
             f'{labels["format_label"]}: {", ".join(labels["formats"])}\n'
             f'{labels["body_context"]} \n\n'
         )
+        body = quote(body_text)
         cards.append(f"""
 <article class="supply-wishlist-card" data-supply-owned-card style="--route-accent:{accent}">
   {img_tag(data["prop"], route["title"])}
@@ -5145,7 +5147,10 @@ def supply_wishlist_section(lang: str) -> str:
       <span>{escape(labels["format_label"])}</span>
       <ul class="supply-format-list">{format_items}</ul>
     </div>
-    <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={subject}&body={body}">{escape(labels["request"])}</a>
+    <div class="supply-route-actions">
+      <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={subject}&body={body}">{escape(labels["request"])}</a>
+      <button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(body_text)}">{escape(template_labels["copy"])}</button>
+    </div>
   </div>
 </article>
 """)
@@ -5156,6 +5161,7 @@ def supply_wishlist_section(lang: str) -> str:
   <div class="supply-wishlist-grid">{"".join(cards)}</div>
   <p class="supply-wishlist-note">{escape(labels["note"])}</p>
 </section>
+{contact_template_copy_script(lang)}
 """
 
 

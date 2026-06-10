@@ -172,6 +172,7 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "route_tags": 0,
         "wishlist_cards": 0,
         "wishlist_mailtos": 0,
+        "wishlist_copy_buttons": 0,
         "safety_sections": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
@@ -317,6 +318,13 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         query = parse_qs(urlparse(href).query)
         if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
             issues.append(f"{path}: wishlist mailto should include subject and body")
+        copy_buttons = [button for button in descendants(card, "button") if "data-copy-contact-template" in button.attrs]
+        if len(copy_buttons) != 1:
+            issues.append(f"{path}: wishlist card should include one copy template button")
+        elif not copy_buttons[0].attrs.get("data-copy-text"):
+            issues.append(f"{path}: wishlist copy template button missing data-copy-text")
+        else:
+            stats["wishlist_copy_buttons"] += 1
 
     return issues, stats
 
@@ -342,6 +350,7 @@ def main() -> int:
         "route_tags": 0,
         "wishlist_cards": 0,
         "wishlist_mailtos": 0,
+        "wishlist_copy_buttons": 0,
         "safety_sections": 0,
     }
     for lang, path in LANG_PATHS.items():
@@ -364,6 +373,7 @@ def main() -> int:
     print(f"public_supply_affiliate_route_tags_checked={totals['route_tags']}")
     print(f"public_supply_wishlist_cards_checked={totals['wishlist_cards']}")
     print(f"public_supply_wishlist_mailtos_checked={totals['wishlist_mailtos']}")
+    print(f"public_supply_wishlist_copy_buttons_checked={totals['wishlist_copy_buttons']}")
     print(f"public_supply_safety_sections_checked={totals['safety_sections']}")
     print(f"public_supply_issues={len(issues)}")
     for issue in issues[:100]:

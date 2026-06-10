@@ -240,12 +240,18 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         waitlist_links = descendants(waitlist, "a")
         if not any(link.attrs.get("href") == localized_route(lang, "contact", "luna-supply-request") for link in waitlist_links):
             issues.append(f"{source}: keepsake waitlist missing contact page bridge")
-        mailto_links = [link for link in waitlist_links if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")]
+        mailto_links = [
+            link
+            for link in waitlist_links
+            if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
+            or link.attrs.get("href", "").startswith("/cdn-cgi/l/email-protection")
+        ]
         if len(mailto_links) != 1:
-            issues.append(f"{source}: keepsake waitlist should include one contact mailto, got {len(mailto_links)}")
+            issues.append(f"{source}: keepsake waitlist should include one contact mailto or protected email link, got {len(mailto_links)}")
         else:
-            query = parse_qs(urlparse(mailto_links[0].attrs["href"]).query)
-            if not query.get("subject") or not query.get("body"):
+            href = mailto_links[0].attrs["href"]
+            query = parse_qs(urlparse(href).query)
+            if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
                 issues.append(f"{source}: keepsake waitlist mailto should include subject and body")
             else:
                 stats["waitlist_mailtos"] += 1

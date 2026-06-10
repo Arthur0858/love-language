@@ -132,6 +132,29 @@ def localized_route(lang: str, route: str, anchor: str) -> str:
     return f"{prefix}/{route}/#{anchor}" if prefix else f"/{route}/#{anchor}"
 
 
+def decode_cloudflare_email_href(href: str) -> str:
+    if not href.startswith("/cdn-cgi/l/email-protection#"):
+        return href
+    encoded = href.split("#", 1)[1]
+    try:
+        data = bytes.fromhex(encoded)
+    except ValueError:
+        return href
+    if not data:
+        return href
+    key = data[0]
+    return "".join(chr(byte ^ key) for byte in data[1:])
+
+
+def contact_request_hrefs(links: list[Element]) -> list[str]:
+    hrefs = [decode_cloudflare_email_href(link.attrs.get("href", "")) for link in links]
+    return [
+        href
+        for href in hrefs
+        if href.startswith("mailto:contact@lovetypes.tw") or href.startswith("contact@lovetypes.tw")
+    ]
+
+
 def check_story_asset(base_url: str, source: str, path: str, image_cache: dict[str, Response]) -> list[str]:
     issues: list[str] = []
     absolute = urljoin(base_url + "/", path.lstrip("/"))
@@ -224,11 +247,7 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             stats["download_links"] += 1
         else:
             issues.append(f"{source}: {slug} collector card missing story image download link")
-        request_links = [
-            link.attrs.get("href", "")
-            for link in links
-            if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
-        ]
+        request_links = contact_request_hrefs(links)
         if len(request_links) != 1:
             issues.append(f"{source}: {slug} collector card should include one supply request mailto, got {len(request_links)}")
         elif "subject=" not in request_links[0] or "body=" not in request_links[0]:
@@ -258,18 +277,13 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         waitlist_links = descendants(waitlist, "a")
         if not any(link.attrs.get("href") == localized_route(lang, "contact", "luna-supply-request") for link in waitlist_links):
             issues.append(f"{source}: keepsake waitlist missing contact page bridge")
-        mailto_links = [
-            link
-            for link in waitlist_links
-            if link.attrs.get("href", "").startswith("mailto:contact@lovetypes.tw")
-            or link.attrs.get("href", "").startswith("/cdn-cgi/l/email-protection")
-        ]
-        if len(mailto_links) != 1:
-            issues.append(f"{source}: keepsake waitlist should include one contact mailto or protected email link, got {len(mailto_links)}")
+        mailto_hrefs = contact_request_hrefs(waitlist_links)
+        if len(mailto_hrefs) != 1:
+            issues.append(f"{source}: keepsake waitlist should include one contact mailto or protected email link, got {len(mailto_hrefs)}")
         else:
-            href = mailto_links[0].attrs["href"]
+            href = mailto_hrefs[0]
             query = parse_qs(urlparse(href).query)
-            if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
+            if not query.get("subject") or not query.get("body"):
                 issues.append(f"{source}: keepsake waitlist mailto should include subject and body")
             else:
                 stats["waitlist_mailtos"] += 1

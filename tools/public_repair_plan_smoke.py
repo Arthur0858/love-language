@@ -134,6 +134,9 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "day_cards": 0,
         "worksheet_fields": 0,
         "worksheet_actions": 0,
+        "asset_sections": 0,
+        "asset_cards": 0,
+        "asset_links": 0,
         "guardian_cards": 0,
         "guardian_supply_links": 0,
         "guardian_character_links": 0,
@@ -154,6 +157,32 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: missing saved result repair resume template")
     else:
         stats["resume_templates"] += 1
+
+    asset_section = find_by_id(root, "repair-card-pack")
+    if asset_section is None:
+        issues.append(f"{path}: missing repair card pack asset section")
+    else:
+        stats["asset_sections"] += 1
+        if not has_class(asset_section, "repair-asset-section"):
+            issues.append(f"{path}: #repair-card-pack should be repair-asset-section")
+        asset_cards = [card for card in descendants(asset_section, "article") if has_class(card, "repair-asset-card")]
+        stats["asset_cards"] += len(asset_cards)
+        if len(asset_cards) != 3:
+            issues.append(f"{path}: expected three repair asset cards, got {len(asset_cards)}")
+        asset_hrefs = [link.attrs.get("href", "") for link in descendants(asset_section, "a")]
+        expected_asset_links = {
+            localized_path(lang, "keepsakes"),
+            "#repair-worksheet",
+            localized_path(lang, "contact").rstrip("/") + "#luna-supply-request",
+        }
+        for expected in expected_asset_links:
+            if expected in asset_hrefs:
+                stats["asset_links"] += 1
+            else:
+                issues.append(f"{path}: repair asset pack missing link {expected}")
+        hero_hrefs = [link.attrs.get("href", "") for link in descendants(root, "a")]
+        if "#repair-card-pack" not in hero_hrefs:
+            issues.append(f"{path}: missing hero link to repair card pack")
 
     day_section = next((item for item in walk(root) if has_class(item, "repair-plan-section")), None)
     if day_section is None:
@@ -248,6 +277,9 @@ def main() -> int:
         "day_cards": 0,
         "worksheet_fields": 0,
         "worksheet_actions": 0,
+        "asset_sections": 0,
+        "asset_cards": 0,
+        "asset_links": 0,
         "guardian_cards": 0,
         "guardian_supply_links": 0,
         "guardian_character_links": 0,
@@ -266,6 +298,9 @@ def main() -> int:
     print(f"public_repair_plan_day_cards_checked={totals['day_cards']}")
     print(f"public_repair_plan_worksheet_fields_checked={totals['worksheet_fields']}")
     print(f"public_repair_plan_worksheet_actions_checked={totals['worksheet_actions']}")
+    print(f"public_repair_plan_asset_sections_checked={totals['asset_sections']}")
+    print(f"public_repair_plan_asset_cards_checked={totals['asset_cards']}")
+    print(f"public_repair_plan_asset_links_checked={totals['asset_links']}")
     print(f"public_repair_plan_guardian_cards_checked={totals['guardian_cards']}")
     print(f"public_repair_plan_guardian_supply_links_checked={totals['guardian_supply_links']}")
     print(f"public_repair_plan_guardian_character_links_checked={totals['guardian_character_links']}")

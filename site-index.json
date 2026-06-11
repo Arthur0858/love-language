@@ -1,0 +1,1290 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "languages": [
+    {
+      "id": "zh",
+      "hreflang": "zh-TW",
+      "prefix": "/",
+      "name": "繁體中文"
+    },
+    {
+      "id": "en",
+      "hreflang": "en",
+      "prefix": "en",
+      "name": "English"
+    },
+    {
+      "id": "ja",
+      "hreflang": "ja",
+      "prefix": "ja",
+      "name": "日本語"
+    },
+    {
+      "id": "ko",
+      "hreflang": "ko",
+      "prefix": "ko",
+      "name": "한국어"
+    },
+    {
+      "id": "es",
+      "hreflang": "es",
+      "prefix": "es",
+      "name": "Español"
+    }
+  ],
+  "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
+  "totals": {
+    "pages": 150,
+    "paths": 30,
+    "languages": 5,
+    "groups": {
+      "content": 80,
+      "conversion": 20,
+      "guardians": 30,
+      "home": 5,
+      "trust": 15
+    }
+  },
+  "coreFlows": [
+    {
+      "id": "quiz_to_guardian",
+      "entry": "https://lovetypes.tw/#quiz-section",
+      "next": [
+        "https://lovetypes.tw/characters/",
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/repair-plan/"
+      ]
+    },
+    {
+      "id": "guardian_supply",
+      "entry": "https://lovetypes.tw/characters/",
+      "next": [
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/keepsakes/",
+        "https://lovetypes.tw/luna-yoga-music/"
+      ]
+    },
+    {
+      "id": "supply_to_contact",
+      "entry": "https://lovetypes.tw/resources/",
+      "next": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/commerce-catalog.json"
+      ]
+    },
+    {
+      "id": "trust_boundary",
+      "entry": "https://lovetypes.tw/about/",
+      "next": [
+        "https://lovetypes.tw/privacy/",
+        "https://lovetypes.tw/terms/",
+        "https://lovetypes.tw/humans.txt"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/",
+      "canonical": "https://lovetypes.tw/",
+      "group": "home",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/garden-map/",
+      "canonical": "https://lovetypes.tw/garden-map/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/",
+      "canonical": "https://lovetypes.tw/guides/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/",
+      "canonical": "https://lovetypes.tw/characters/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/theory/",
+      "canonical": "https://lovetypes.tw/theory/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/resources/",
+      "canonical": "https://lovetypes.tw/resources/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/repair-plan/",
+      "canonical": "https://lovetypes.tw/repair-plan/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/keepsakes/",
+      "canonical": "https://lovetypes.tw/keepsakes/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/luna-yoga-music/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/about/",
+      "canonical": "https://lovetypes.tw/about/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/contact/",
+      "canonical": "https://lovetypes.tw/contact/",
+      "group": "trust",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/privacy/",
+      "canonical": "https://lovetypes.tw/privacy/",
+      "group": "trust",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/terms/",
+      "canonical": "https://lovetypes.tw/terms/",
+      "group": "trust",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/share-your-result/",
+      "canonical": "https://lovetypes.tw/guides/share-your-result/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/repair-after-conflict/",
+      "canonical": "https://lovetypes.tw/guides/repair-after-conflict/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/words-of-affirmation-scripts/",
+      "canonical": "https://lovetypes.tw/guides/words-of-affirmation-scripts/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/acts-of-service-boundaries/",
+      "canonical": "https://lovetypes.tw/guides/acts-of-service-boundaries/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/gifts-are-not-materialism/",
+      "canonical": "https://lovetypes.tw/guides/gifts-are-not-materialism/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/quality-time-long-distance/",
+      "canonical": "https://lovetypes.tw/guides/quality-time-long-distance/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/physical-touch-consent-safety/",
+      "canonical": "https://lovetypes.tw/guides/physical-touch-consent-safety/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/weekly-relationship-review/",
+      "canonical": "https://lovetypes.tw/guides/weekly-relationship-review/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/emotional-needs-checklist/",
+      "canonical": "https://lovetypes.tw/guides/emotional-needs-checklist/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/misfrequency-examples/",
+      "canonical": "https://lovetypes.tw/guides/misfrequency-examples/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/relationship-stages/",
+      "canonical": "https://lovetypes.tw/guides/relationship-stages/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/guides/healthy-boundaries/",
+      "canonical": "https://lovetypes.tw/guides/healthy-boundaries/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/iris/",
+      "canonical": "https://lovetypes.tw/characters/iris/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/noah/",
+      "canonical": "https://lovetypes.tw/characters/noah/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/vivian/",
+      "canonical": "https://lovetypes.tw/characters/vivian/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/claire/",
+      "canonical": "https://lovetypes.tw/characters/claire/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/characters/dora/",
+      "canonical": "https://lovetypes.tw/characters/dora/",
+      "group": "guardians",
+      "primary": true
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/",
+      "canonical": "https://lovetypes.tw/en/",
+      "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/garden-map/",
+      "canonical": "https://lovetypes.tw/en/garden-map/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/",
+      "canonical": "https://lovetypes.tw/en/guides/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/",
+      "canonical": "https://lovetypes.tw/en/characters/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/theory/",
+      "canonical": "https://lovetypes.tw/en/theory/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/resources/",
+      "canonical": "https://lovetypes.tw/en/resources/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/repair-plan/",
+      "canonical": "https://lovetypes.tw/en/repair-plan/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/keepsakes/",
+      "canonical": "https://lovetypes.tw/en/keepsakes/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/en/luna-yoga-music/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/about/",
+      "canonical": "https://lovetypes.tw/en/about/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/contact/",
+      "canonical": "https://lovetypes.tw/en/contact/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/privacy/",
+      "canonical": "https://lovetypes.tw/en/privacy/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/terms/",
+      "canonical": "https://lovetypes.tw/en/terms/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/share-your-result/",
+      "canonical": "https://lovetypes.tw/en/guides/share-your-result/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/repair-after-conflict/",
+      "canonical": "https://lovetypes.tw/en/guides/repair-after-conflict/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/words-of-affirmation-scripts/",
+      "canonical": "https://lovetypes.tw/en/guides/words-of-affirmation-scripts/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/acts-of-service-boundaries/",
+      "canonical": "https://lovetypes.tw/en/guides/acts-of-service-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/gifts-are-not-materialism/",
+      "canonical": "https://lovetypes.tw/en/guides/gifts-are-not-materialism/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/quality-time-long-distance/",
+      "canonical": "https://lovetypes.tw/en/guides/quality-time-long-distance/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/physical-touch-consent-safety/",
+      "canonical": "https://lovetypes.tw/en/guides/physical-touch-consent-safety/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/weekly-relationship-review/",
+      "canonical": "https://lovetypes.tw/en/guides/weekly-relationship-review/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/emotional-needs-checklist/",
+      "canonical": "https://lovetypes.tw/en/guides/emotional-needs-checklist/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/misfrequency-examples/",
+      "canonical": "https://lovetypes.tw/en/guides/misfrequency-examples/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/relationship-stages/",
+      "canonical": "https://lovetypes.tw/en/guides/relationship-stages/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/guides/healthy-boundaries/",
+      "canonical": "https://lovetypes.tw/en/guides/healthy-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/iris/",
+      "canonical": "https://lovetypes.tw/en/characters/iris/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/noah/",
+      "canonical": "https://lovetypes.tw/en/characters/noah/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/vivian/",
+      "canonical": "https://lovetypes.tw/en/characters/vivian/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/claire/",
+      "canonical": "https://lovetypes.tw/en/characters/claire/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/characters/dora/",
+      "canonical": "https://lovetypes.tw/en/characters/dora/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/",
+      "canonical": "https://lovetypes.tw/ja/",
+      "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/garden-map/",
+      "canonical": "https://lovetypes.tw/ja/garden-map/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/",
+      "canonical": "https://lovetypes.tw/ja/guides/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/",
+      "canonical": "https://lovetypes.tw/ja/characters/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/theory/",
+      "canonical": "https://lovetypes.tw/ja/theory/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/resources/",
+      "canonical": "https://lovetypes.tw/ja/resources/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/repair-plan/",
+      "canonical": "https://lovetypes.tw/ja/repair-plan/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/keepsakes/",
+      "canonical": "https://lovetypes.tw/ja/keepsakes/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/ja/luna-yoga-music/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/about/",
+      "canonical": "https://lovetypes.tw/ja/about/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/contact/",
+      "canonical": "https://lovetypes.tw/ja/contact/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/privacy/",
+      "canonical": "https://lovetypes.tw/ja/privacy/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/terms/",
+      "canonical": "https://lovetypes.tw/ja/terms/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/share-your-result/",
+      "canonical": "https://lovetypes.tw/ja/guides/share-your-result/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/repair-after-conflict/",
+      "canonical": "https://lovetypes.tw/ja/guides/repair-after-conflict/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/words-of-affirmation-scripts/",
+      "canonical": "https://lovetypes.tw/ja/guides/words-of-affirmation-scripts/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/acts-of-service-boundaries/",
+      "canonical": "https://lovetypes.tw/ja/guides/acts-of-service-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/gifts-are-not-materialism/",
+      "canonical": "https://lovetypes.tw/ja/guides/gifts-are-not-materialism/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/quality-time-long-distance/",
+      "canonical": "https://lovetypes.tw/ja/guides/quality-time-long-distance/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/physical-touch-consent-safety/",
+      "canonical": "https://lovetypes.tw/ja/guides/physical-touch-consent-safety/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/weekly-relationship-review/",
+      "canonical": "https://lovetypes.tw/ja/guides/weekly-relationship-review/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/emotional-needs-checklist/",
+      "canonical": "https://lovetypes.tw/ja/guides/emotional-needs-checklist/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/misfrequency-examples/",
+      "canonical": "https://lovetypes.tw/ja/guides/misfrequency-examples/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/relationship-stages/",
+      "canonical": "https://lovetypes.tw/ja/guides/relationship-stages/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/guides/healthy-boundaries/",
+      "canonical": "https://lovetypes.tw/ja/guides/healthy-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/iris/",
+      "canonical": "https://lovetypes.tw/ja/characters/iris/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/noah/",
+      "canonical": "https://lovetypes.tw/ja/characters/noah/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/vivian/",
+      "canonical": "https://lovetypes.tw/ja/characters/vivian/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/claire/",
+      "canonical": "https://lovetypes.tw/ja/characters/claire/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/characters/dora/",
+      "canonical": "https://lovetypes.tw/ja/characters/dora/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/",
+      "canonical": "https://lovetypes.tw/ko/",
+      "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/garden-map/",
+      "canonical": "https://lovetypes.tw/ko/garden-map/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/",
+      "canonical": "https://lovetypes.tw/ko/guides/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/",
+      "canonical": "https://lovetypes.tw/ko/characters/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/theory/",
+      "canonical": "https://lovetypes.tw/ko/theory/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/resources/",
+      "canonical": "https://lovetypes.tw/ko/resources/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/repair-plan/",
+      "canonical": "https://lovetypes.tw/ko/repair-plan/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/keepsakes/",
+      "canonical": "https://lovetypes.tw/ko/keepsakes/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/ko/luna-yoga-music/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/about/",
+      "canonical": "https://lovetypes.tw/ko/about/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/contact/",
+      "canonical": "https://lovetypes.tw/ko/contact/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/privacy/",
+      "canonical": "https://lovetypes.tw/ko/privacy/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/terms/",
+      "canonical": "https://lovetypes.tw/ko/terms/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/share-your-result/",
+      "canonical": "https://lovetypes.tw/ko/guides/share-your-result/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/repair-after-conflict/",
+      "canonical": "https://lovetypes.tw/ko/guides/repair-after-conflict/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/words-of-affirmation-scripts/",
+      "canonical": "https://lovetypes.tw/ko/guides/words-of-affirmation-scripts/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/acts-of-service-boundaries/",
+      "canonical": "https://lovetypes.tw/ko/guides/acts-of-service-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/gifts-are-not-materialism/",
+      "canonical": "https://lovetypes.tw/ko/guides/gifts-are-not-materialism/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/quality-time-long-distance/",
+      "canonical": "https://lovetypes.tw/ko/guides/quality-time-long-distance/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/physical-touch-consent-safety/",
+      "canonical": "https://lovetypes.tw/ko/guides/physical-touch-consent-safety/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/weekly-relationship-review/",
+      "canonical": "https://lovetypes.tw/ko/guides/weekly-relationship-review/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/emotional-needs-checklist/",
+      "canonical": "https://lovetypes.tw/ko/guides/emotional-needs-checklist/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/misfrequency-examples/",
+      "canonical": "https://lovetypes.tw/ko/guides/misfrequency-examples/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/relationship-stages/",
+      "canonical": "https://lovetypes.tw/ko/guides/relationship-stages/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/guides/healthy-boundaries/",
+      "canonical": "https://lovetypes.tw/ko/guides/healthy-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/iris/",
+      "canonical": "https://lovetypes.tw/ko/characters/iris/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/noah/",
+      "canonical": "https://lovetypes.tw/ko/characters/noah/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/vivian/",
+      "canonical": "https://lovetypes.tw/ko/characters/vivian/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/claire/",
+      "canonical": "https://lovetypes.tw/ko/characters/claire/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/characters/dora/",
+      "canonical": "https://lovetypes.tw/ko/characters/dora/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/",
+      "canonical": "https://lovetypes.tw/es/",
+      "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/garden-map/",
+      "canonical": "https://lovetypes.tw/es/garden-map/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/",
+      "canonical": "https://lovetypes.tw/es/guides/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/",
+      "canonical": "https://lovetypes.tw/es/characters/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/theory/",
+      "canonical": "https://lovetypes.tw/es/theory/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/resources/",
+      "canonical": "https://lovetypes.tw/es/resources/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/repair-plan/",
+      "canonical": "https://lovetypes.tw/es/repair-plan/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/keepsakes/",
+      "canonical": "https://lovetypes.tw/es/keepsakes/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/es/luna-yoga-music/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/about/",
+      "canonical": "https://lovetypes.tw/es/about/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/contact/",
+      "canonical": "https://lovetypes.tw/es/contact/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/privacy/",
+      "canonical": "https://lovetypes.tw/es/privacy/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/terms/",
+      "canonical": "https://lovetypes.tw/es/terms/",
+      "group": "trust",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/share-your-result/",
+      "canonical": "https://lovetypes.tw/es/guides/share-your-result/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/repair-after-conflict/",
+      "canonical": "https://lovetypes.tw/es/guides/repair-after-conflict/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/words-of-affirmation-scripts/",
+      "canonical": "https://lovetypes.tw/es/guides/words-of-affirmation-scripts/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/acts-of-service-boundaries/",
+      "canonical": "https://lovetypes.tw/es/guides/acts-of-service-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/gifts-are-not-materialism/",
+      "canonical": "https://lovetypes.tw/es/guides/gifts-are-not-materialism/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/quality-time-long-distance/",
+      "canonical": "https://lovetypes.tw/es/guides/quality-time-long-distance/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/physical-touch-consent-safety/",
+      "canonical": "https://lovetypes.tw/es/guides/physical-touch-consent-safety/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/weekly-relationship-review/",
+      "canonical": "https://lovetypes.tw/es/guides/weekly-relationship-review/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/emotional-needs-checklist/",
+      "canonical": "https://lovetypes.tw/es/guides/emotional-needs-checklist/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/misfrequency-examples/",
+      "canonical": "https://lovetypes.tw/es/guides/misfrequency-examples/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/relationship-stages/",
+      "canonical": "https://lovetypes.tw/es/guides/relationship-stages/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/guides/healthy-boundaries/",
+      "canonical": "https://lovetypes.tw/es/guides/healthy-boundaries/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/iris/",
+      "canonical": "https://lovetypes.tw/es/characters/iris/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/noah/",
+      "canonical": "https://lovetypes.tw/es/characters/noah/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/vivian/",
+      "canonical": "https://lovetypes.tw/es/characters/vivian/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/claire/",
+      "canonical": "https://lovetypes.tw/es/characters/claire/",
+      "group": "guardians",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/characters/dora/",
+      "canonical": "https://lovetypes.tw/es/characters/dora/",
+      "group": "guardians",
+      "primary": false
+    }
+  ]
+}

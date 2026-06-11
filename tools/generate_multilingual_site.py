@@ -9690,6 +9690,66 @@ def write_commerce_catalog() -> None:
     write(ROOT / "commerce-catalog.json", json.dumps(collect_commerce_catalog(), ensure_ascii=False, indent=2) + "\n")
 
 
+def site_index_paths() -> list[str]:
+    paths = ["", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths += [f"guides/{guide['slug']}" for guide in GUIDES]
+    paths += [f"characters/{slug}" for slug in GUARDIANS]
+    return paths
+
+
+def site_index_group(path: str) -> str:
+    if path == "":
+        return "home"
+    if path in {"garden-map", "guides", "theory", "about"} or path.startswith("guides/"):
+        return "content"
+    if path == "characters" or path.startswith("characters/"):
+        return "guardians"
+    if path in {"resources", "repair-plan", "keepsakes", "luna-yoga-music"}:
+        return "conversion"
+    if path in {"contact", "privacy", "terms"}:
+        return "trust"
+    return "support"
+
+
+def collect_site_index() -> dict:
+    pages = []
+    paths = site_index_paths()
+    for lang, cfg in LANGS.items():
+        for path in paths:
+            pages.append({
+                "lang": lang,
+                "hreflang": cfg["code"],
+                "path": "/" + (f"{cfg['prefix']}/" if cfg["prefix"] else "") + (f"{path}/" if path else ""),
+                "canonical": abs_url(lang, path),
+                "group": site_index_group(path),
+                "primary": lang == "zh",
+            })
+    groups = Counter(page["group"] for page in pages)
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "languages": [
+            {"id": lang, "hreflang": cfg["code"], "prefix": cfg["prefix"] or "/", "name": cfg["name"]}
+            for lang, cfg in LANGS.items()
+        ],
+        "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
+        "totals": {"pages": len(pages), "paths": len(paths), "languages": len(LANGS), "groups": dict(sorted(groups.items()))},
+        "coreFlows": [
+            {"id": "quiz_to_guardian", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"]},
+            {"id": "guardian_supply", "entry": f"{DOMAIN}/characters/", "next": [f"{DOMAIN}/resources/", f"{DOMAIN}/keepsakes/", f"{DOMAIN}/luna-yoga-music/"]},
+            {"id": "supply_to_contact", "entry": f"{DOMAIN}/resources/", "next": [f"{DOMAIN}/contact/#luna-supply-request", f"{DOMAIN}/commerce-catalog.json"]},
+            {"id": "trust_boundary", "entry": f"{DOMAIN}/about/", "next": [f"{DOMAIN}/privacy/", f"{DOMAIN}/terms/", f"{DOMAIN}/humans.txt"]},
+        ],
+        "pages": pages,
+    }
+
+
+def write_site_index() -> None:
+    write(ROOT / "site-index.json", json.dumps(collect_site_index(), ensure_ascii=False, indent=2) + "\n")
+
+
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
@@ -9720,9 +9780,7 @@ def write_redirects() -> None:
 
 
 def write_support_files() -> None:
-    paths = ["", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
-    paths += [f"guides/{g['slug']}" for g in GUIDES]
-    paths += [f"characters/{slug}" for slug in GUARDIANS]
+    paths = site_index_paths()
     sitemap = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
@@ -9790,6 +9848,7 @@ https://:version.lovetypes.pages.dev/*
     write_redirects()
     write_funnel_event_catalog()
     write_commerce_catalog()
+    write_site_index()
 
 
 def apply_section_label_localization() -> None:

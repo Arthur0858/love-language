@@ -146,6 +146,7 @@ HUMANS_PATH = ROOT / "humans.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
+SITE_INDEX_PATH = ROOT / "site-index.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1648,6 +1649,94 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
     return issues, stats
 
 
+def parse_site_index(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SITE_INDEX_PATH.exists():
+        return [f"{SITE_INDEX_PATH}: missing site-index.json"], stats
+    try:
+        data = json.loads(SITE_INDEX_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{SITE_INDEX_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{SITE_INDEX_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{SITE_INDEX_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{SITE_INDEX_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{SITE_INDEX_PATH}: production should be {DOMAIN}/")
+    languages = data.get("languages")
+    expected_langs = set(GENERATOR_CONFIG.LANGS)
+    if not isinstance(languages, list) or len(languages) != len(expected_langs):
+        issues.append(f"{SITE_INDEX_PATH}: expected {len(expected_langs)} languages")
+    else:
+        seen_langs = {item.get("id") for item in languages if isinstance(item, dict)}
+        stats["site_index_languages_checked"] = len(seen_langs)
+        if seen_langs != expected_langs:
+            issues.append(f"{SITE_INDEX_PATH}: language ids should be {sorted(expected_langs)}, got {sorted(seen_langs)}")
+    core_flows = data.get("coreFlows")
+    if not isinstance(core_flows, list) or len(core_flows) != 4:
+        issues.append(f"{SITE_INDEX_PATH}: expected four core flows")
+    else:
+        stats["site_index_core_flows_checked"] = len(core_flows)
+        expected_flows = {"quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
+        seen_flows = {flow.get("id") for flow in core_flows if isinstance(flow, dict)}
+        if seen_flows != expected_flows:
+            issues.append(f"{SITE_INDEX_PATH}: core flow ids should be {sorted(expected_flows)}, got {sorted(seen_flows)}")
+    pages = data.get("pages")
+    if not isinstance(pages, list) or not pages:
+        issues.append(f"{SITE_INDEX_PATH}: pages should be a non-empty list")
+        return issues, stats
+    stats["site_index_pages_checked"] = len(pages)
+    if len(pages) != len(sitemap_urls):
+        issues.append(f"{SITE_INDEX_PATH}: expected {len(sitemap_urls)} pages to match sitemap, got {len(pages)}")
+    groups = Counter()
+    canonicals: set[str] = set()
+    valid_groups = {"home", "content", "guardians", "conversion", "trust"}
+    for page in pages:
+        if not isinstance(page, dict):
+            issues.append(f"{SITE_INDEX_PATH}: page entry should be an object")
+            continue
+        canonical = page.get("canonical")
+        lang = page.get("lang")
+        group = page.get("group")
+        if lang not in expected_langs:
+            issues.append(f"{SITE_INDEX_PATH}: unexpected page language {lang!r}")
+        if group not in valid_groups:
+            issues.append(f"{SITE_INDEX_PATH}: unexpected page group {group!r}")
+        else:
+            groups[group] += 1
+        if not isinstance(canonical, str) or not canonical:
+            issues.append(f"{SITE_INDEX_PATH}: page missing canonical")
+            continue
+        if canonical in canonicals:
+            issues.append(f"{SITE_INDEX_PATH}: duplicate canonical {canonical}")
+        canonicals.add(canonical)
+        target, fragment = target_for(ROOT / "index.html", canonical)
+        if target is None or not target.exists():
+            issues.append(f"{SITE_INDEX_PATH}: canonical target missing: {canonical}")
+            continue
+        if fragment:
+            issues.append(f"{SITE_INDEX_PATH}: page canonical should not include fragment: {canonical}")
+        parser = parsers.get(target)
+        if parser and is_noindex(parser):
+            issues.append(f"{SITE_INDEX_PATH}: canonical should not point to noindex page: {canonical}")
+    stats["site_index_groups_checked"] = len(groups)
+    missing_from_index = sorted(sitemap_urls.difference(canonicals))
+    extra_in_index = sorted(canonicals.difference(sitemap_urls))
+    for url in missing_from_index[:20]:
+        issues.append(f"{SITE_INDEX_PATH}: sitemap URL missing from site index: {url}")
+    for url in extra_in_index[:20]:
+        issues.append(f"{SITE_INDEX_PATH}: site index canonical missing from sitemap: {url}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("pages") != len(pages):
+        issues.append(f"{SITE_INDEX_PATH}: totals.pages should match page count")
+    if isinstance(totals, dict) and totals.get("languages") != len(expected_langs):
+        issues.append(f"{SITE_INDEX_PATH}: totals.languages should match language count")
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2818,6 +2907,9 @@ def main() -> int:
     commerce_issues, commerce_stats = parse_commerce_catalog(parsers)
     issues.extend(commerce_issues)
     stats.update(commerce_stats)
+    site_index_issues, site_index_stats = parse_site_index(parsers, sitemap_urls)
+    issues.extend(site_index_issues)
+    stats.update(site_index_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -2960,6 +3052,10 @@ def main() -> int:
     print(f"commerce_types_checked={stats['commerce_types_checked']}")
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
+    print(f"site_index_pages_checked={stats['site_index_pages_checked']}")
+    print(f"site_index_languages_checked={stats['site_index_languages_checked']}")
+    print(f"site_index_groups_checked={stats['site_index_groups_checked']}")
+    print(f"site_index_core_flows_checked={stats['site_index_core_flows_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

@@ -284,6 +284,16 @@ SUPPORT_FILES = {
         '"luna_gumroad_pack_click"',
         '"No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims."',
     ],
+    "/site-index.json": [
+        '"schemaVersion": 1',
+        '"production": "https://lovetypes.tw/"',
+        '"quiz_to_guardian"',
+        '"guardian_supply"',
+        '"supply_to_contact"',
+        '"trust_boundary"',
+        '"canonical": "https://lovetypes.tw/characters/iris/"',
+        '"canonical": "https://lovetypes.tw/en/resources/"',
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

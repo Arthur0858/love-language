@@ -20,6 +20,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "humans.txt",
     "funnel-events.json",
     "commerce-catalog.json",
+    "site-index.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}
 FORBIDDEN_PREFIXES = {

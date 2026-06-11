@@ -107,6 +107,8 @@ EXPECTED_COMMERCE_TYPE_COUNTS = {
     "luna_gumroad_pack": 6,
 }
 EXPECTED_COMMERCE_ROLE_COUNTS = {"lead": 5, "retention": 5, "revenue": 10}
+EXPECTED_SITE_INDEX_LANGS = {"zh", "en", "ja", "ko", "es"}
+EXPECTED_SITE_INDEX_FLOWS = {"quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
 
 
 @dataclass(frozen=True)
@@ -671,6 +673,54 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, len(items), len(type_counts), len(role_counts)
 
 
+def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
+    path = "/site-index.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("production") != "https://lovetypes.tw/":
+        issues.append(f"{path}: production should be https://lovetypes.tw/")
+    pages = data.get("pages", [])
+    languages = data.get("languages", [])
+    core_flows = data.get("coreFlows", [])
+    if not isinstance(pages, list):
+        return [f"{path}: pages should be a list"], 0, 0, 0, 0
+    if len(pages) != 150:
+        issues.append(f"{path}: expected 150 pages, got {len(pages)}")
+    seen_langs = {item.get("id") for item in languages if isinstance(item, dict)}
+    if seen_langs != EXPECTED_SITE_INDEX_LANGS:
+        issues.append(f"{path}: language ids should be {sorted(EXPECTED_SITE_INDEX_LANGS)}, got {sorted(seen_langs)}")
+    flow_ids = {item.get("id") for item in core_flows if isinstance(item, dict)}
+    if flow_ids != EXPECTED_SITE_INDEX_FLOWS:
+        issues.append(f"{path}: core flow ids should be {sorted(EXPECTED_SITE_INDEX_FLOWS)}, got {sorted(flow_ids)}")
+    groups = {page.get("group") for page in pages if isinstance(page, dict) and page.get("group")}
+    canonicals = {page.get("canonical") for page in pages if isinstance(page, dict) and page.get("canonical")}
+    for required_url in (
+        "https://lovetypes.tw/",
+        "https://lovetypes.tw/characters/iris/",
+        "https://lovetypes.tw/en/resources/",
+        "https://lovetypes.tw/ja/luna-yoga-music/",
+        "https://lovetypes.tw/es/contact/",
+    ):
+        if required_url not in canonicals:
+            issues.append(f"{path}: missing canonical {required_url}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("pages") != len(pages):
+        issues.append(f"{path}: totals.pages should match page count")
+    return issues, len(pages), len(seen_langs), len(groups), len(flow_ids)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -701,6 +751,7 @@ def main() -> int:
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
+    site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -708,6 +759,7 @@ def main() -> int:
     issues.extend(robots_issues)
     issues.extend(funnel_issues)
     issues.extend(commerce_issues)
+    issues.extend(site_index_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -735,6 +787,10 @@ def main() -> int:
     print(f"public_discovery_commerce_items_checked={commerce_items_checked}")
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
+    print(f"public_discovery_site_index_pages_checked={site_index_pages_checked}")
+    print(f"public_discovery_site_index_languages_checked={site_index_languages_checked}")
+    print(f"public_discovery_site_index_groups_checked={site_index_groups_checked}")
+    print(f"public_discovery_site_index_flows_checked={site_index_flows_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

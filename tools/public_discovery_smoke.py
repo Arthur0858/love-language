@@ -22,8 +22,15 @@ DEFAULT_BASE_URL = "https://lovetypes.tw"
 CANONICAL_HOST = "lovetypes.tw"
 EXPECTED_FEED_ITEMS = 12
 EXPECTED_MANIFEST_LANG = "zh-TW"
-EXPECTED_MANIFEST_SHORTCUTS = 3
-EXPECTED_MANIFEST_SHORTCUT_URLS = ("/#quiz-section", "/garden-map/", "/characters/")
+EXPECTED_MANIFEST_SHORTCUTS = 6
+EXPECTED_MANIFEST_SHORTCUT_URLS = (
+    "/#quiz-section",
+    "/garden-map/",
+    "/characters/",
+    "/resources/",
+    "/keepsakes/",
+    "/luna-yoga-music/",
+)
 EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 REQUIRED_LLMS_SECTIONS = (
     "# LoveTypes - Heart Garden Emotion Guardians",

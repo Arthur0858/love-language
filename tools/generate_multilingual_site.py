@@ -9244,6 +9244,9 @@ def write_site_manifest() -> None:
             {"name": "開始認領儀式", "url": "/#quiz-section", "description": "完成 15 道心語題目，找到你的情感守護者。"},
             {"name": "心語庭園地圖", "url": "/garden-map/", "description": "查看測驗、守護者、指南、補給與修復計畫的完整入口。"},
             {"name": "五位守護者", "url": "/characters/", "description": "查看艾莉絲、諾雅、薇薇安、克萊兒與朵拉。"},
+            {"name": "旅人補給站", "url": "/resources/", "description": "依守護者路線選擇免費任務、Luna 場景與延伸書卷。"},
+            {"name": "守護者收藏室", "url": "/keepsakes/", "description": "保存故事卡、練習卡與未來收藏型補給入口。"},
+            {"name": "Luna 夜間補給", "url": "/luna-yoga-music/", "description": "睡前整理、衝突後冷卻與測驗後承接的低光入口。"},
         ],
     }
     write(ROOT / "site.webmanifest", json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")

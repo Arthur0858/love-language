@@ -166,6 +166,14 @@ REQUIRED_MANIFEST_FIELDS = {
     "theme_color",
     "icons",
 }
+EXPECTED_MANIFEST_SHORTCUT_URLS = {
+    "/#quiz-section",
+    "/garden-map/",
+    "/characters/",
+    "/resources/",
+    "/keepsakes/",
+    "/luna-yoga-music/",
+}
 REQUIRED_GLOBAL_HEADERS = {
     "Cache-Control": "public, max-age=600",
     "X-Content-Type-Options": "nosniff",
@@ -904,6 +912,14 @@ def parse_manifest() -> tuple[list[str], Counter]:
     if shortcuts and not isinstance(shortcuts, list):
         issues.append(f"{MANIFEST_PATH}: shortcuts should be a list")
         shortcuts = []
+    shortcut_urls = {
+        shortcut.get("url")
+        for shortcut in shortcuts
+        if isinstance(shortcut, dict) and isinstance(shortcut.get("url"), str)
+    }
+    missing_shortcuts = sorted(EXPECTED_MANIFEST_SHORTCUT_URLS.difference(shortcut_urls))
+    if missing_shortcuts:
+        issues.append(f"{MANIFEST_PATH}: missing expected shortcut URLs {', '.join(missing_shortcuts)}")
     for shortcut in shortcuts:
         stats["manifest_shortcuts"] += 1
         if not isinstance(shortcut, dict):

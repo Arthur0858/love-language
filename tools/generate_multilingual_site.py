@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-supply-pdf"
+ASSET_VERSION = "20260611-resume-funnel"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -6914,7 +6914,7 @@ def quiz_script(lang: str) -> str:
           <p><strong>${{quiz.labels.next_pack_title}}</strong> · ${{result.supplyTitle}}</p>
           <p class="eyebrow">${{result.supplyProductPack.label}}</p>
           <div class="${{actionsClass}}" data-home-saved-product-pack>
-            ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link>${{item.title}}</a>`).join('')}}
+            ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link data-funnel-event="${{['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}}">${{item.title}}</a>`).join('')}}
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${{quiz.supplySafety.notNowTitle}}</strong>

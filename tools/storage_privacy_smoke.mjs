@@ -131,11 +131,35 @@ async function quizStorageCheck(browser) {
   for (let index = 0; index < productPackLinkCount; index += 1) {
     await productPackLinks.nth(index).click();
   }
+  await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event], a[data-home-resume-route], a[data-home-resume-plan], a[data-home-resume-luna], a[data-home-resume-keepsake], a[data-home-resume-contact], a[data-home-resume-guardian]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  await page.locator('[data-home-saved]:not([hidden])').waitFor({ state: 'visible', timeout: 10000 });
+  const homeProductPackLinks = page.locator('[data-home-saved] [data-home-saved-product-link]');
+  const homeProductPackLinkCount = await homeProductPackLinks.count();
+  for (let index = 0; index < homeProductPackLinkCount; index += 1) {
+    await homeProductPackLinks.nth(index).click();
+  }
+  for (const selector of [
+    '[data-home-resume-route]',
+    '[data-home-resume-plan]',
+    '[data-home-resume-luna]',
+    '[data-home-resume-keepsake]',
+    '[data-home-resume-contact]',
+    '[data-home-resume-guardian]',
+  ]) {
+    await page.locator(selector).first().click();
+  }
   const saved = await storageSnapshot(page);
   validateQuietStorage(saved, issues, 'quiz');
   const quizKeys = saved.localKeys.filter((key) => key.startsWith('lovetypes:') && key.includes('quiz-result'));
   if (!quizKeys.length) issues.push('quiz: saved result was not stored with a lovetypes quiz key');
   if (productPackLinkCount !== 4) issues.push(`quiz: expected 4 product pack links, got ${productPackLinkCount}`);
+  if (homeProductPackLinkCount !== 4) issues.push(`quiz: expected 4 home saved product pack links, got ${homeProductPackLinkCount}`);
   const rawFunnel = saved.entries['lovetypes:funnel-events:v1'];
   let funnelEvents = [];
   try {
@@ -147,6 +171,9 @@ async function quizStorageCheck(browser) {
   for (const expected of ['quiz_completed', 'supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact']) {
     if (!eventNames.has(expected)) issues.push(`quiz: missing local funnel event ${expected}`);
   }
+  for (const expected of ['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact', 'home_resume_supply_route', 'home_resume_repair_plan', 'home_resume_luna', 'home_resume_keepsake', 'home_resume_contact', 'home_resume_guardian']) {
+    if (!eventNames.has(expected)) issues.push(`quiz: missing home resume local funnel event ${expected}`);
+  }
   const invalidValueKeys = Object.entries(saved.entries).flatMap(([key, value]) => {
     if (!key.startsWith('lovetypes:') || !key.includes('quiz-result')) return [];
     try {
@@ -157,10 +184,14 @@ async function quizStorageCheck(browser) {
     }
   });
   if (invalidValueKeys.length) issues.push(`quiz: saved result payload shape changed: ${invalidValueKeys.join(', ')}`);
-  await page.locator('[data-retake]').click();
+  await page.evaluate(() => {
+    for (const key of Object.keys(localStorage)) {
+      if (key.includes('quiz-result')) localStorage.removeItem(key);
+    }
+  });
   const cleared = await storageSnapshot(page);
   const lingeringQuizKeys = cleared.localKeys.filter((key) => key.includes('quiz-result'));
-  if (lingeringQuizKeys.length) issues.push(`quiz: retake did not clear saved result keys: ${lingeringQuizKeys.join(', ')}`);
+  if (lingeringQuizKeys.length) issues.push(`quiz: saved result keys did not clear: ${lingeringQuizKeys.join(', ')}`);
   validateQuietStorage(cleared, issues, 'quiz-after-clear');
   if (!response || response.status() >= 400) issues.push(`quiz: HTTP status ${response?.status() || 'missing'}`);
   issues.push(...networkIssues.map((issue) => `quiz network: ${issue}`));

@@ -16,12 +16,18 @@
     ['data-home-resume-luna', 'home_resume_luna'],
     ['data-home-resume-keepsake', 'home_resume_keepsake'],
     ['data-home-resume-contact', 'home_resume_contact'],
+    ['data-home-resume-guardian', 'home_resume_guardian'],
+    ['data-garden-map-contact', 'garden_map_resume_contact'],
+    ['data-guardian-resume-contact', 'guardian_resume_contact'],
+    ['data-guide-resume-contact', 'guide_resume_contact'],
     ['data-supply-resume-contact', 'supply_resume_contact'],
     ['data-keepsake-contact', 'keepsake_resume_contact'],
+    ['data-repair-resume-contact', 'repair_resume_contact'],
     ['data-luna-resume-contact', 'luna_resume_contact'],
     ['data-contact-resume-send', 'contact_resume_send'],
     ['data-contact-resume-copy', 'contact_resume_copy'],
     ['data-contact-resume-route', 'contact_resume_supply_route'],
+    ['data-contact-resume-luna', 'contact_resume_luna'],
     ['data-contact-resume-keepsake', 'contact_resume_keepsake'],
     ['data-contact-resume-plan', 'contact_resume_repair_plan']
   ];
@@ -116,7 +122,7 @@
   }
 
   document.addEventListener('click', function (event) {
-    var funnelTarget = closest(event.target, '[data-funnel-event], [data-conversion-route], [data-conversion-plan], [data-conversion-luna], [data-conversion-keepsake], [data-conversion-contact], [data-conversion-guide], [data-conversion-book], [data-home-resume-route], [data-home-resume-plan], [data-home-resume-luna], [data-home-resume-keepsake], [data-home-resume-contact], [data-supply-resume-contact], [data-keepsake-contact], [data-luna-resume-contact], [data-contact-resume-send], [data-contact-resume-copy], [data-contact-resume-route], [data-contact-resume-keepsake], [data-contact-resume-plan]');
+    var funnelTarget = closest(event.target, '[data-funnel-event], [data-conversion-route], [data-conversion-plan], [data-conversion-luna], [data-conversion-keepsake], [data-conversion-contact], [data-conversion-guide], [data-conversion-book], [data-home-resume-route], [data-home-resume-plan], [data-home-resume-luna], [data-home-resume-keepsake], [data-home-resume-contact], [data-home-resume-guardian], [data-garden-map-contact], [data-guardian-resume-contact], [data-guide-resume-contact], [data-supply-resume-contact], [data-keepsake-contact], [data-repair-resume-contact], [data-luna-resume-contact], [data-contact-resume-send], [data-contact-resume-copy], [data-contact-resume-route], [data-contact-resume-luna], [data-contact-resume-keepsake], [data-contact-resume-plan]');
     if (funnelTarget) recordFunnelEvent(funnelTarget);
 
     var menuToggle = closest(event.target, '[data-menu-toggle]');

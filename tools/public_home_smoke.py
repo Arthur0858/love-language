@@ -219,6 +219,7 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "quiz_start_buttons": 0,
         "saved_templates": 0,
         "saved_actions": 0,
+        "saved_funnel_events": 0,
         "universe_gate_sections": 0,
         "universe_gate_cards": 0,
         "journey_sections": 0,
@@ -272,6 +273,17 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             issues.append(f"{path}: missing saved-result action {attr}")
         else:
             stats["saved_actions"] += 1
+    for event in (
+        "home_saved_pack_free_keepsake",
+        "home_saved_pack_owned_request",
+        "home_saved_pack_luna",
+        "home_saved_pack_contact",
+        "home_resume_story_generate",
+    ):
+        if event not in response.text:
+            issues.append(f"{path}: missing saved-result funnel event {event}")
+        else:
+            stats["saved_funnel_events"] += 1
 
     hero = find_by_class(root, "hero")
     if hero is None:
@@ -346,6 +358,7 @@ def main() -> int:
         "quiz_start_buttons": 0,
         "saved_templates": 0,
         "saved_actions": 0,
+        "saved_funnel_events": 0,
         "universe_gate_sections": 0,
         "universe_gate_cards": 0,
         "journey_sections": 0,
@@ -370,6 +383,7 @@ def main() -> int:
     print(f"public_home_quiz_start_buttons_checked={totals['quiz_start_buttons']}")
     print(f"public_home_saved_templates_checked={totals['saved_templates']}")
     print(f"public_home_saved_actions_checked={totals['saved_actions']}")
+    print(f"public_home_saved_funnel_events_checked={totals['saved_funnel_events']}")
     print(f"public_home_universe_gate_sections_checked={totals['universe_gate_sections']}")
     print(f"public_home_universe_gate_cards_checked={totals['universe_gate_cards']}")
     print(f"public_home_journey_sections_checked={totals['journey_sections']}")

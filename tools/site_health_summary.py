@@ -305,6 +305,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_home_quiz_start_buttons_checked",
         "public_home_saved_templates_checked",
         "public_home_saved_actions_checked",
+        "public_home_saved_funnel_events_checked",
         "public_home_universe_gate_sections_checked",
         "public_home_universe_gate_cards_checked",
         "public_home_journey_sections_checked",

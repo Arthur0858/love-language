@@ -394,6 +394,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_luna_hero_ctas_checked",
         "public_luna_use_case_ctas_checked",
         "public_luna_offer_ctas_checked",
+        "public_luna_product_pack_cards_checked",
+        "public_luna_product_pack_ctas_checked",
         "public_luna_resume_templates_checked",
         "public_metadata_pages_checked",
         "public_metadata_social_cards_checked",

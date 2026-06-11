@@ -6,7 +6,7 @@ import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
@@ -27,6 +27,14 @@ ALIAS_PATHS = {
 }
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
+EXPECTED_GUMROAD_PRODUCTS = {
+    "healing-vibes-starter",
+    "sleep-deep-rest",
+    "morning-awakening",
+    "stress-relief-yin",
+    "feminine-healing",
+    "luna-flow-sessions",
+}
 
 
 @dataclass(frozen=True)
@@ -181,6 +189,8 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "offer_ctas": 0,
         "resume_templates": 0,
         "use_case_ctas": 0,
+        "product_pack_cards": 0,
+        "product_pack_ctas": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     if response.status != 200:
@@ -250,6 +260,46 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             else:
                 stats["offer_ctas"] += 1
 
+    product_section = find_by_id(root, "luna-download-packs")
+    if product_section is None:
+        issues.append(f"{path}: missing Luna download pack section")
+    else:
+        product_cards = descendants(product_section, "article")
+        stats["product_pack_cards"] += len(product_cards)
+        if len(product_cards) != len(EXPECTED_GUMROAD_PRODUCTS):
+            issues.append(f"{path}: expected {len(EXPECTED_GUMROAD_PRODUCTS)} Luna product cards, got {len(product_cards)}")
+        product_links = descendants(product_section, "a")
+        seen_products: set[str] = set()
+        for link in product_links:
+            href = link.attrs.get("href", "")
+            parsed = urlparse(href)
+            product_slug = link.attrs.get("data-luna-product", "")
+            seen_products.add(product_slug)
+            if parsed.scheme != "https" or parsed.netloc != "lunayogamusic.gumroad.com":
+                issues.append(f"{path}: Luna product link should point to lunayogamusic.gumroad.com, got {href}")
+            rel_tokens = set(link.attrs.get("rel", "").split())
+            if {"noopener", "noreferrer", "sponsored"}.difference(rel_tokens):
+                issues.append(f"{path}: Luna product link missing noopener noreferrer sponsored rel: {href}")
+            if link.attrs.get("target") != "_blank":
+                issues.append(f"{path}: Luna product link should open in a new tab: {href}")
+            if link.attrs.get("data-funnel-event") != "luna_gumroad_pack_click":
+                issues.append(f"{path}: Luna product link should track luna_gumroad_pack_click: {href}")
+            query = parse_qs(parsed.query)
+            expected_query = {
+                "utm_source": "lovetypes",
+                "utm_medium": "luna-page",
+                "utm_campaign": "luna_gumroad_offer",
+                "utm_content": product_slug,
+            }
+            for key, expected in expected_query.items():
+                if query.get(key, [""])[0] != expected:
+                    issues.append(f"{path}: Luna product link {key} should be {expected!r}: {href}")
+            if product_slug in EXPECTED_GUMROAD_PRODUCTS:
+                stats["product_pack_ctas"] += 1
+        missing_products = sorted(EXPECTED_GUMROAD_PRODUCTS.difference(seen_products))
+        if missing_products:
+            issues.append(f"{path}: missing Luna product slugs {', '.join(missing_products)}")
+
     hero_section = next((item for item in walk(root) if has_class(item, "luna-hero")), None)
     if hero_section is None:
         issues.append(f"{path}: missing Luna hero section")
@@ -313,6 +363,8 @@ def main() -> int:
         "offer_ctas": 0,
         "resume_templates": 0,
         "use_case_ctas": 0,
+        "product_pack_cards": 0,
+        "product_pack_ctas": 0,
     }
     for lang, path in LANG_PATHS.items():
         page_issues, stats = validate_page(base_url, lang, path)
@@ -331,6 +383,8 @@ def main() -> int:
     print(f"public_luna_hero_ctas_checked={totals['hero_ctas']}")
     print(f"public_luna_offer_ctas_checked={totals['offer_ctas']}")
     print(f"public_luna_use_case_ctas_checked={totals['use_case_ctas']}")
+    print(f"public_luna_product_pack_cards_checked={totals['product_pack_cards']}")
+    print(f"public_luna_product_pack_ctas_checked={totals['product_pack_ctas']}")
     print(f"public_luna_resume_templates_checked={totals['resume_templates']}")
     print(f"public_luna_issues={len(issues)}")
     for issue in issues[:100]:

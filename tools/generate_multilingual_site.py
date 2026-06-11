@@ -8789,7 +8789,7 @@ def luna_product_url(product: dict) -> str:
 def luna_product_offer_section(lang: str) -> str:
     labels = LUNA_PRODUCT_OFFER[lang]
     cards = "".join(f"""
-<article>
+<article id="luna-pack-{escape(product["slug"])}">
   <p class="eyebrow">{escape(product["price"])}</p>
   <h3>{escape(product["title"])}</h3>
   <a class="secondary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_gumroad_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["cta"])}</a>
@@ -8803,6 +8803,39 @@ def luna_product_offer_section(lang: str) -> str:
   <p class="section-intro">{escape(labels["note"])}</p>
 </section>
 """
+
+
+def luna_product_item_list_schema(lang: str) -> str:
+    return json_ld({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": LUNA_PRODUCT_OFFER[lang]["title"],
+        "description": LUNA_PRODUCT_OFFER[lang]["intro"],
+        "url": abs_url(lang, "luna-yoga-music") + "#luna-download-packs",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": index,
+                "name": product["title"],
+                "url": abs_url(lang, "luna-yoga-music") + f"#luna-pack-{product['slug']}",
+                "item": {
+                    "@type": "Product",
+                    "name": product["title"],
+                    "url": luna_product_url(product),
+                    "brand": organization_ref(),
+                    "category": "Meditation and yoga music download",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": product["price"].replace("US$", ""),
+                        "priceCurrency": "USD",
+                        "url": luna_product_url(product),
+                        "availability": "https://schema.org/InStock",
+                    },
+                },
+            }
+            for index, product in enumerate(LUNA_GUMROAD_PRODUCTS, start=1)
+        ],
+    })
 
 
 def luna_page(lang: str) -> None:
@@ -8877,7 +8910,7 @@ def luna_page(lang: str) -> None:
 </section>
 {luna_resume_script(lang)}
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>{luna_product_item_list_schema(lang)}'
     page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"
     write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/og-cover.jpg", schema))
 

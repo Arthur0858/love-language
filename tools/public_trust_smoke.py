@@ -91,14 +91,18 @@ def main() -> int:
     policy_compass_cards_checked = 0
     policy_detail_cards_checked = 0
     trust_action_routes_checked = 0
+    trust_action_events_checked = 0
     contact_route_anchors_checked = 0
     about_trust_cards_checked = 0
     about_garden_pass_cards_checked = 0
     about_hero_actions_checked = 0
+    about_hero_events_checked = 0
     theory_domain_cards_checked = 0
+    theory_domain_events_checked = 0
     theory_guardian_cards_checked = 0
     theory_faq_cards_checked = 0
     theory_hero_actions_checked = 0
+    theory_hero_events_checked = 0
     about_theory_distinction_checks = 0
     noncommercial_pages_checked = 0
 
@@ -148,6 +152,11 @@ def main() -> int:
                         issues.append(f"{page.path}: about hero missing {key} action")
                     else:
                         about_hero_actions_checked += 1
+                    event = f'trust_hero_about_{key}'
+                    if f'data-funnel-event="{event}"' not in response.text:
+                        issues.append(f"{page.path}: about hero missing event {event}")
+                    else:
+                        about_hero_events_checked += 1
             garden_pass_count = count_substring(response.text, 'class="garden-pass-card"')
             about_garden_pass_cards_checked += garden_pass_count
             if garden_pass_count != 3:
@@ -172,10 +181,21 @@ def main() -> int:
                     issues.append(f"{page.path}: theory hero missing action {expected}")
                 else:
                     theory_hero_actions_checked += 1
+            for event in ("trust_hero_theory_quiz", "trust_hero_theory_guardians"):
+                if f'data-funnel-event="{event}"' not in response.text:
+                    issues.append(f"{page.path}: theory hero missing event {event}")
+                else:
+                    theory_hero_events_checked += 1
             domain_count = count_substring(response.text, 'class="theory-domain-card"')
             theory_domain_cards_checked += domain_count
             if domain_count != 5:
                 issues.append(f"{page.path}: expected 5 theory domain cards, got {domain_count}")
+            domain_event_count = count_substring(response.text, 'data-funnel-event="theory_domain_guardian"')
+            theory_domain_events_checked += domain_event_count
+            if domain_event_count != 5:
+                issues.append(f"{page.path}: expected 5 theory domain events, got {domain_event_count}")
+            if 'data-funnel-event="theory_domain_section_guardians"' not in response.text:
+                issues.append(f"{page.path}: theory domain section missing guardians event")
             guardian_count = count_substring(response.text, 'class="guardian-card"')
             theory_guardian_cards_checked += guardian_count
             if guardian_count != 5:
@@ -193,6 +213,10 @@ def main() -> int:
                 issues.append(f"{page.path}: expected 4 trust action cards, got {action_count}")
             else:
                 trust_action_routes_checked += action_count
+            action_event_count = count_substring(response.text, f'data-funnel-event="trust_action_{page.slug}_')
+            trust_action_events_checked += action_event_count
+            if action_event_count != 4:
+                issues.append(f"{page.path}: expected 4 trust action events, got {action_event_count}")
         if page.slug == "contact":
             for target in ("luna-supply-request", "site-repair-report"):
                 contact_route_anchors_checked += 1
@@ -207,13 +231,17 @@ def main() -> int:
     print(f"public_trust_policy_detail_cards_checked={policy_detail_cards_checked}")
     print(f"public_trust_about_garden_pass_cards_checked={about_garden_pass_cards_checked}")
     print(f"public_trust_about_hero_actions_checked={about_hero_actions_checked}")
+    print(f"public_trust_about_hero_events_checked={about_hero_events_checked}")
     print(f"public_trust_about_cards_checked={about_trust_cards_checked}")
     print(f"public_trust_theory_domain_cards_checked={theory_domain_cards_checked}")
+    print(f"public_trust_theory_domain_events_checked={theory_domain_events_checked}")
     print(f"public_trust_theory_guardian_cards_checked={theory_guardian_cards_checked}")
     print(f"public_trust_theory_faq_cards_checked={theory_faq_cards_checked}")
     print(f"public_trust_theory_hero_actions_checked={theory_hero_actions_checked}")
+    print(f"public_trust_theory_hero_events_checked={theory_hero_events_checked}")
     print(f"public_trust_about_theory_distinction_checks={about_theory_distinction_checks}")
     print(f"public_trust_action_routes_checked={trust_action_routes_checked}")
+    print(f"public_trust_action_events_checked={trust_action_events_checked}")
     print(f"public_trust_contact_route_anchors_checked={contact_route_anchors_checked}")
     print(f"public_trust_noncommercial_pages_checked={noncommercial_pages_checked}")
     print(f"public_trust_issues={len(issues)}")

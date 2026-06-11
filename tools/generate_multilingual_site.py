@@ -4438,7 +4438,7 @@ def trust_hero_actions(lang: str, slug: str) -> str:
             ("secondary-btn", "about", lang_url(lang, "about"), t["about"]),
         ]
     links = "".join(
-        f'<a class="{button_class}" href="{href}" data-trust-hero-link="{escape(key)}">{escape(label)}</a>'
+        f'<a class="{button_class}" href="{href}" data-trust-hero-link="{escape(key)}" data-funnel-event="trust_hero_{escape(slug)}_{escape(key).replace("-", "_")}">{escape(label)}</a>'
         for button_class, key, href, label in actions
     )
     return f'<div class="hero-actions" data-trust-hero-actions="{escape(slug)}">{links}</div>'
@@ -7968,7 +7968,7 @@ def trust_action_routes(lang: str, slug: str) -> str:
   <span>{escape(step)}</span>
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
-  <a href="{href}">{escape(cta)}</a>
+  <a href="{href}" data-funnel-event="trust_action_{escape(slug)}_{escape(step)}">{escape(cta)}</a>
 </article>
 """)
     return f"""
@@ -8888,7 +8888,7 @@ def theory_domain_compass(lang: str) -> str:
         domain_title, domain_desc, _domain_cta = GUARDIAN_DOMAINS[slug][lang]
         domain = GUARDIAN_DOMAINS[slug]
         cards.append(f"""
-<a class="theory-domain-card" href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+<a class="theory-domain-card" href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" data-funnel-event="theory_domain_guardian" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {img_tag(guardian["prop"], f"{name} {domain_title}", "theory-domain-prop")}
   <div>
     <span>{escape(typ)}</span>
@@ -8900,7 +8900,7 @@ def theory_domain_compass(lang: str) -> str:
 """)
     return f"""
 <section class="section theory-domain-compass" data-theory-domain-compass>
-  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "characters")}" data-funnel-event="theory_domain_section_guardians">{escape(LANGS[lang]["guardians"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="theory-domain-grid">{"".join(cards)}</div>
 </section>
@@ -8945,7 +8945,7 @@ def simple_page(lang: str, slug: str) -> None:
         guardian_cards = "".join(character_card(lang, guardian_slug, guardian_data) for guardian_slug, guardian_data in GUARDIANS.items())
         faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions" data-trust-hero-actions="theory"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-trust-hero-link="quiz" data-funnel-event="trust_hero_theory_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-trust-hero-link="guardians" data-funnel-event="trust_hero_theory_guardians">{escape(t["guardians"])}</a></div></section>
 {theory_domain_compass(lang)}
 <section class="section article-body standalone">
   {theory_items}

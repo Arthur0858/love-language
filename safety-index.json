@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "contact": "contact@lovetypes.tw",
+  "description": "Machine-readable LoveTypes safety and commerce boundary index for reflection, purchase, email, and urgent-risk use cases.",
+  "totals": {
+    "boundaries": 5,
+    "routes": 13,
+    "languages": 2
+  },
+  "notFor": [
+    "emergency support",
+    "therapy",
+    "medical advice",
+    "legal advice",
+    "individual diagnosis",
+    "coercive purchase pressure"
+  ],
+  "saferFirstSteps": [
+    {
+      "id": "free_task",
+      "url": "https://lovetypes.tw/repair-plan/",
+      "label": "Use a free repair task before buying."
+    },
+    {
+      "id": "read_terms",
+      "url": "https://lovetypes.tw/terms/",
+      "label": "Read content and purchase boundaries."
+    },
+    {
+      "id": "privacy",
+      "url": "https://lovetypes.tw/privacy/",
+      "label": "Check data and local storage boundaries."
+    },
+    {
+      "id": "contact_repair",
+      "url": "https://lovetypes.tw/contact/#site-repair-report",
+      "label": "Report unclear pages, links, or supply requests."
+    }
+  ],
+  "boundaries": [
+    {
+      "id": "reflection_not_diagnosis",
+      "severity": "core",
+      "title": {
+        "zh": "自我理解，不是診斷",
+        "en": "Reflection, not diagnosis"
+      },
+      "body": {
+        "zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。",
+        "en": "LoveTypes quizzes, guardians, and the Heart Garden are for relationship reflection and communication practice, not therapy, medical advice, legal advice, or individual diagnosis."
+      },
+      "routes": [
+        "https://lovetypes.tw/about/",
+        "https://lovetypes.tw/theory/",
+        "https://lovetypes.tw/terms/"
+      ]
+    },
+    {
+      "id": "urgent_risk_first",
+      "severity": "high",
+      "title": {
+        "zh": "高風險情境先求助",
+        "en": "Urgent risk comes first"
+      },
+      "body": {
+        "zh": "若關係中有暴力、控制、創傷、騷擾、自傷風險或緊急危險，請先尋求當地緊急資源、可信任的人與專業支援。",
+        "en": "If there is violence, coercive control, trauma, harassment, self-harm risk, or urgent danger, seek local emergency resources, trusted people, and professional support first."
+      },
+      "routes": [
+        "https://lovetypes.tw/terms/",
+        "https://lovetypes.tw/contact/#site-repair-report"
+      ]
+    },
+    {
+      "id": "do_not_buy_to_fix",
+      "severity": "commercial",
+      "title": {
+        "zh": "不要用購買代替修復",
+        "en": "Do not buy to replace repair"
+      },
+      "body": {
+        "zh": "Luna、書卷、收藏物與補給只適合作為輔助練習；若你正在衝動消費、想用商品逼對方改變，或期待商品取代道歉與溝通，請先使用免費任務。",
+        "en": "Luna, books, keepsakes, and supplies are practice supports only. If you are impulse buying, trying to force change, or expecting a product to replace apology and communication, use a free task first."
+      },
+      "routes": [
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/repair-plan/",
+        "https://lovetypes.tw/commerce-catalog.json"
+      ]
+    },
+    {
+      "id": "email_minimum_context",
+      "severity": "privacy",
+      "title": {
+        "zh": "來信只需要最少脈絡",
+        "en": "Email only the minimum context"
+      },
+      "body": {
+        "zh": "補給願望清單與回報信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下守護者、使用情境與你希望修復或收到的素材。",
+        "en": "Supply waitlist and repair inbox emails do not need quiz scores, sensitive personal details, or emergency requests. Include only the guardian, use case, and the material or issue you want handled."
+      },
+      "routes": [
+        "https://lovetypes.tw/contact/",
+        "https://lovetypes.tw/privacy/"
+      ]
+    },
+    {
+      "id": "external_store_boundary",
+      "severity": "commerce",
+      "title": {
+        "zh": "外部商店由外部服務負責",
+        "en": "External stores are handled externally"
+      },
+      "body": {
+        "zh": "聯盟書卷與 Gumroad 音樂包會離開 LoveTypes；外部商店的結帳、交付、退款與帳號條款由該服務負責。",
+        "en": "Affiliate books and Gumroad audio packs leave LoveTypes. Checkout, delivery, refunds, and account terms are handled by those external services."
+      },
+      "routes": [
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/luna-yoga-music/",
+        "https://lovetypes.tw/terms/"
+      ]
+    }
+  ]
+}

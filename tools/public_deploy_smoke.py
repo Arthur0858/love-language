@@ -314,7 +314,7 @@ SUPPORT_FILES = {
         '"indexablePages": 150',
         '"guardians": 5',
         '"commerceItems": 20',
-        '"supportFiles": 15',
+        '"supportFiles": 16',
         '"localPredeploy"',
         '"publicDiscovery"',
         '"publicDeploy"',
@@ -330,6 +330,17 @@ SUPPORT_FILES = {
         '"commerceItems": 20',
         '"python3 tools/predeploy_check.py"',
         '"public_versioned_asset_stale_refs=0"',
+    ],
+    "/safety-index.json": [
+        '"schemaVersion": 1',
+        '"contact": "contact@lovetypes.tw"',
+        '"reflection_not_diagnosis"',
+        '"urgent_risk_first"',
+        '"do_not_buy_to_fix"',
+        '"email_minimum_context"',
+        '"external_store_boundary"',
+        '"emergency support"',
+        '"coercive purchase pressure"',
     ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"

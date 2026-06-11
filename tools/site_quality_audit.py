@@ -150,6 +150,7 @@ SITE_INDEX_PATH = ROOT / "site-index.json"
 GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
+SAFETY_INDEX_PATH = ROOT / "safety-index.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1872,7 +1873,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 15,
+        "supportFiles": 16,
     }
     for key, expected in expected_coverage.items():
         stats["site_health_coverage_fields_checked"] += 1
@@ -1904,7 +1905,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
             if snippet not in gate_text:
                 issues.append(f"{SITE_HEALTH_PATH}: requiredGates missing snippet {snippet!r}")
     indexes = data.get("primaryIndexes")
-    if not isinstance(indexes, dict) or len(indexes) < 6:
+    if not isinstance(indexes, dict) or len(indexes) < 8:
         issues.append(f"{SITE_HEALTH_PATH}: primaryIndexes should list core public indexes")
     else:
         stats["site_health_primary_indexes_checked"] = len(indexes)
@@ -1963,7 +1964,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         else:
             stats["release_content_fields_checked"] += 1
     indexes = data.get("publicIndexes")
-    expected_indexes = {"siteHealth", "siteIndex", "guardianProfiles", "commerceCatalog", "funnelEvents", "llms", "humans"}
+    expected_indexes = {"siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "llms", "humans"}
     if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
         issues.append(f"{RELEASE_PATH}: publicIndexes should contain {sorted(expected_indexes)}")
     else:
@@ -2002,6 +2003,88 @@ def parse_release_info() -> tuple[list[str], Counter]:
     else:
         stats["release_safety_boundaries_checked"] = len(boundaries)
     stats["release_files_checked"] = 1
+    return issues, stats
+
+
+def parse_safety_index(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SAFETY_INDEX_PATH.exists():
+        return [f"{SAFETY_INDEX_PATH}: missing safety-index.json"], stats
+    try:
+        data = json.loads(SAFETY_INDEX_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{SAFETY_INDEX_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{SAFETY_INDEX_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{SAFETY_INDEX_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{SAFETY_INDEX_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{SAFETY_INDEX_PATH}: production should be {DOMAIN}/")
+    if data.get("contact") != CONTACT_EMAIL:
+        issues.append(f"{SAFETY_INDEX_PATH}: contact should be {CONTACT_EMAIL}")
+    not_for = data.get("notFor")
+    required_not_for = {"emergency support", "therapy", "medical advice", "legal advice", "individual diagnosis", "coercive purchase pressure"}
+    if not isinstance(not_for, list) or not required_not_for.issubset(set(not_for)):
+        issues.append(f"{SAFETY_INDEX_PATH}: notFor should include {sorted(required_not_for)}")
+    else:
+        stats["safety_index_not_for_checked"] = len(not_for)
+    steps = data.get("saferFirstSteps")
+    if not isinstance(steps, list) or len(steps) != 4:
+        issues.append(f"{SAFETY_INDEX_PATH}: saferFirstSteps should include four entries")
+    else:
+        stats["safety_index_first_steps_checked"] = len(steps)
+    boundaries = data.get("boundaries")
+    if not isinstance(boundaries, list) or len(boundaries) != 5:
+        issues.append(f"{SAFETY_INDEX_PATH}: boundaries should include five entries")
+        return issues, stats
+    expected_ids = {"reflection_not_diagnosis", "urgent_risk_first", "do_not_buy_to_fix", "email_minimum_context", "external_store_boundary"}
+    seen_ids: set[str] = set()
+    route_count = 0
+    for boundary in boundaries:
+        if not isinstance(boundary, dict):
+            issues.append(f"{SAFETY_INDEX_PATH}: boundary should be an object")
+            continue
+        boundary_id = boundary.get("id")
+        if boundary_id not in expected_ids:
+            issues.append(f"{SAFETY_INDEX_PATH}: unexpected boundary id {boundary_id!r}")
+        else:
+            seen_ids.add(boundary_id)
+        if boundary.get("severity") not in {"core", "high", "commercial", "privacy", "commerce"}:
+            issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} has unexpected severity")
+        for key in ("title", "body"):
+            value = boundary.get(key)
+            if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
+                issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} should include zh/en {key}")
+        routes = boundary.get("routes")
+        if not isinstance(routes, list) or not routes:
+            issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} should include routes")
+            continue
+        route_count += len(routes)
+        for url in routes:
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route should point to {DOMAIN}: {url!r}")
+                continue
+            target, fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route target missing: {url}")
+                continue
+            parser = parsers.get(target)
+            if target.suffix == ".html" and parser and is_noindex(parser):
+                issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route should not point to noindex page: {url}")
+            if fragment and target.suffix == ".html" and parser and fragment not in parser.ids:
+                issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route missing anchor #{fragment}: {url}")
+    missing_ids = sorted(expected_ids.difference(seen_ids))
+    if missing_ids:
+        issues.append(f"{SAFETY_INDEX_PATH}: missing boundary ids: {', '.join(missing_ids)}")
+    stats["safety_index_boundaries_checked"] = len(boundaries)
+    stats["safety_index_routes_checked"] = route_count
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("boundaries") != len(boundaries) or totals.get("routes") != route_count:
+        issues.append(f"{SAFETY_INDEX_PATH}: totals should match boundary and route counts")
+    stats["safety_index_files_checked"] = 1
     return issues, stats
 
 
@@ -3187,6 +3270,9 @@ def main() -> int:
     release_issues, release_stats = parse_release_info()
     issues.extend(release_issues)
     stats.update(release_stats)
+    safety_index_issues, safety_index_stats = parse_safety_index(parsers)
+    issues.extend(safety_index_issues)
+    stats.update(safety_index_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3350,6 +3436,11 @@ def main() -> int:
     print(f"release_verification_commands_checked={stats['release_verification_commands_checked']}")
     print(f"release_required_outcomes_checked={stats['release_required_outcomes_checked']}")
     print(f"release_safety_boundaries_checked={stats['release_safety_boundaries_checked']}")
+    print(f"safety_index_files_checked={stats['safety_index_files_checked']}")
+    print(f"safety_index_boundaries_checked={stats['safety_index_boundaries_checked']}")
+    print(f"safety_index_routes_checked={stats['safety_index_routes_checked']}")
+    print(f"safety_index_not_for_checked={stats['safety_index_not_for_checked']}")
+    print(f"safety_index_first_steps_checked={stats['safety_index_first_steps_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

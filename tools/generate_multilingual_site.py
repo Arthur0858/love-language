@@ -9816,6 +9816,82 @@ def write_site_index() -> None:
     write(ROOT / "site-index.json", json.dumps(collect_site_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_safety_index() -> dict:
+    boundaries = [
+        {
+            "id": "reflection_not_diagnosis",
+            "severity": "core",
+            "title": {"zh": "自我理解，不是診斷", "en": "Reflection, not diagnosis"},
+            "body": {
+                "zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。",
+                "en": "LoveTypes quizzes, guardians, and the Heart Garden are for relationship reflection and communication practice, not therapy, medical advice, legal advice, or individual diagnosis.",
+            },
+            "routes": [f"{DOMAIN}/about/", f"{DOMAIN}/theory/", f"{DOMAIN}/terms/"],
+        },
+        {
+            "id": "urgent_risk_first",
+            "severity": "high",
+            "title": {"zh": "高風險情境先求助", "en": "Urgent risk comes first"},
+            "body": {
+                "zh": "若關係中有暴力、控制、創傷、騷擾、自傷風險或緊急危險，請先尋求當地緊急資源、可信任的人與專業支援。",
+                "en": "If there is violence, coercive control, trauma, harassment, self-harm risk, or urgent danger, seek local emergency resources, trusted people, and professional support first.",
+            },
+            "routes": [f"{DOMAIN}/terms/", f"{DOMAIN}/contact/#site-repair-report"],
+        },
+        {
+            "id": "do_not_buy_to_fix",
+            "severity": "commercial",
+            "title": {"zh": "不要用購買代替修復", "en": "Do not buy to replace repair"},
+            "body": {
+                "zh": "Luna、書卷、收藏物與補給只適合作為輔助練習；若你正在衝動消費、想用商品逼對方改變，或期待商品取代道歉與溝通，請先使用免費任務。",
+                "en": "Luna, books, keepsakes, and supplies are practice supports only. If you are impulse buying, trying to force change, or expecting a product to replace apology and communication, use a free task first.",
+            },
+            "routes": [f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/", f"{DOMAIN}/commerce-catalog.json"],
+        },
+        {
+            "id": "email_minimum_context",
+            "severity": "privacy",
+            "title": {"zh": "來信只需要最少脈絡", "en": "Email only the minimum context"},
+            "body": {
+                "zh": "補給願望清單與回報信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下守護者、使用情境與你希望修復或收到的素材。",
+                "en": "Supply waitlist and repair inbox emails do not need quiz scores, sensitive personal details, or emergency requests. Include only the guardian, use case, and the material or issue you want handled.",
+            },
+            "routes": [f"{DOMAIN}/contact/", f"{DOMAIN}/privacy/"],
+        },
+        {
+            "id": "external_store_boundary",
+            "severity": "commerce",
+            "title": {"zh": "外部商店由外部服務負責", "en": "External stores are handled externally"},
+            "body": {
+                "zh": "聯盟書卷與 Gumroad 音樂包會離開 LoveTypes；外部商店的結帳、交付、退款與帳號條款由該服務負責。",
+                "en": "Affiliate books and Gumroad audio packs leave LoveTypes. Checkout, delivery, refunds, and account terms are handled by those external services.",
+            },
+            "routes": [f"{DOMAIN}/resources/", f"{DOMAIN}/luna-yoga-music/", f"{DOMAIN}/terms/"],
+        },
+    ]
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "contact": CONTACT_EMAIL,
+        "description": "Machine-readable LoveTypes safety and commerce boundary index for reflection, purchase, email, and urgent-risk use cases.",
+        "totals": {"boundaries": len(boundaries), "routes": sum(len(item["routes"]) for item in boundaries), "languages": 2},
+        "notFor": ["emergency support", "therapy", "medical advice", "legal advice", "individual diagnosis", "coercive purchase pressure"],
+        "saferFirstSteps": [
+            {"id": "free_task", "url": f"{DOMAIN}/repair-plan/", "label": "Use a free repair task before buying."},
+            {"id": "read_terms", "url": f"{DOMAIN}/terms/", "label": "Read content and purchase boundaries."},
+            {"id": "privacy", "url": f"{DOMAIN}/privacy/", "label": "Check data and local storage boundaries."},
+            {"id": "contact_repair", "url": f"{DOMAIN}/contact/#site-repair-report", "label": "Report unclear pages, links, or supply requests."},
+        ],
+        "boundaries": boundaries,
+    }
+
+
+def write_safety_index() -> None:
+    write(ROOT / "safety-index.json", json.dumps(collect_safety_index(), ensure_ascii=False, indent=2) + "\n")
+
+
 def collect_release_info() -> dict:
     site_index = collect_site_index()
     commerce = collect_commerce_catalog()
@@ -9842,6 +9918,7 @@ def collect_release_info() -> dict:
             "siteHealth": f"{DOMAIN}/site-health.json",
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+            "safetyIndex": f"{DOMAIN}/safety-index.json",
             "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
             "funnelEvents": f"{DOMAIN}/funnel-events.json",
             "llms": f"{DOMAIN}/llms.txt",
@@ -9893,6 +9970,7 @@ def collect_site_health() -> dict:
         "commerce-catalog.json",
         "site-index.json",
         "guardian-profiles.json",
+        "safety-index.json",
         "release.json",
         "site-health.json",
     ]
@@ -9929,6 +10007,7 @@ def collect_site_health() -> dict:
         "primaryIndexes": {
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+            "safetyIndex": f"{DOMAIN}/safety-index.json",
             "release": f"{DOMAIN}/release.json",
             "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
             "funnelEvents": f"{DOMAIN}/funnel-events.json",
@@ -10048,6 +10127,7 @@ https://:version.lovetypes.pages.dev/*
     write_commerce_catalog()
     write_guardian_profiles()
     write_site_index()
+    write_safety_index()
     write_release_info()
     write_site_health()
 

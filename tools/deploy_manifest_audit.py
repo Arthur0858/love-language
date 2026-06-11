@@ -22,6 +22,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
+    "safety-index.json",
     "site-health.json",
     "release.json",
 }

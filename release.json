@@ -19,6 +19,7 @@
     "siteHealth": "https://lovetypes.tw/site-health.json",
     "siteIndex": "https://lovetypes.tw/site-index.json",
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
+    "safetyIndex": "https://lovetypes.tw/safety-index.json",
     "commerceCatalog": "https://lovetypes.tw/commerce-catalog.json",
     "funnelEvents": "https://lovetypes.tw/funnel-events.json",
     "llms": "https://lovetypes.tw/llms.txt",

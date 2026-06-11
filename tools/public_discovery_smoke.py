@@ -817,7 +817,7 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 15,
+        "supportFiles": 16,
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -830,13 +830,13 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         coverage_checked += 1
     support_files = data.get("supportFiles", [])
     gates = data.get("requiredGates", {})
-    if not isinstance(support_files, list) or len(support_files) != 15:
-        issues.append(f"{path}: expected 15 support files")
+    if not isinstance(support_files, list) or len(support_files) != 16:
+        issues.append(f"{path}: expected 16 support files")
     if not isinstance(gates, dict) or set(gates) != {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}:
         issues.append(f"{path}: requiredGates should list four gate names")
     indexes = data.get("primaryIndexes", {})
-    if not isinstance(indexes, dict) or len(indexes) < 6:
-        issues.append(f"{path}: primaryIndexes should list at least six entries")
+    if not isinstance(indexes, dict) or len(indexes) < 8:
+        issues.append(f"{path}: primaryIndexes should list at least eight entries")
     return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
 
 
@@ -874,13 +874,66 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
     indexes = data.get("publicIndexes", {})
     commands = data.get("verificationCommands", [])
     outcomes = data.get("requiredOutcomes", [])
-    if not isinstance(indexes, dict) or len(indexes) != 7:
-        issues.append(f"{path}: publicIndexes should contain seven entries")
+    if not isinstance(indexes, dict) or len(indexes) != 8:
+        issues.append(f"{path}: publicIndexes should contain eight entries")
     if not isinstance(commands, list) or len(commands) != 5:
         issues.append(f"{path}: verificationCommands should contain five commands")
     if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
         issues.append(f"{path}: requiredOutcomes should include public_versioned_asset_stale_refs=0")
     return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(outcomes) if isinstance(outcomes, list) else 0
+
+
+def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
+    path = "/safety-index.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
+    expected_ids = {"reflection_not_diagnosis", "urgent_risk_first", "do_not_buy_to_fix", "email_minimum_context", "external_store_boundary"}
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("contact") != "contact@lovetypes.tw":
+        issues.append(f"{path}: contact should be contact@lovetypes.tw")
+    not_for = set(data.get("notFor", [])) if isinstance(data.get("notFor"), list) else set()
+    for snippet in ("emergency support", "therapy", "medical advice", "legal advice", "coercive purchase pressure"):
+        if snippet not in not_for:
+            issues.append(f"{path}: notFor missing {snippet!r}")
+    steps = data.get("saferFirstSteps", [])
+    boundaries = data.get("boundaries", [])
+    if not isinstance(steps, list) or len(steps) != 4:
+        issues.append(f"{path}: expected four saferFirstSteps")
+    if not isinstance(boundaries, list) or len(boundaries) != 5:
+        issues.append(f"{path}: expected five boundaries")
+        return issues, len(boundaries) if isinstance(boundaries, list) else 0, 0, len(not_for), len(steps) if isinstance(steps, list) else 0
+    route_count = 0
+    seen_ids = set()
+    for boundary in boundaries:
+        if not isinstance(boundary, dict):
+            issues.append(f"{path}: boundary should be an object")
+            continue
+        boundary_id = boundary.get("id")
+        seen_ids.add(boundary_id)
+        routes = boundary.get("routes", [])
+        route_count += len(routes) if isinstance(routes, list) else 0
+        for key in ("title", "body"):
+            value = boundary.get(key)
+            if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
+                issues.append(f"{path}: {boundary_id} should include zh/en {key}")
+    missing = sorted(expected_ids.difference(seen_ids))
+    if missing:
+        issues.append(f"{path}: missing boundary ids {', '.join(missing)}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("boundaries") != len(boundaries) or totals.get("routes") != route_count:
+        issues.append(f"{path}: totals should match boundary and route counts")
+    return issues, len(boundaries), route_count, len(not_for), len(steps) if isinstance(steps, list) else 0
 
 
 def main() -> int:
@@ -917,6 +970,7 @@ def main() -> int:
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
     site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_indexes_checked = check_site_health(base_url)
     release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_outcomes_checked = check_release_info(base_url)
+    safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -928,6 +982,7 @@ def main() -> int:
     issues.extend(guardian_profile_issues)
     issues.extend(site_health_issues)
     issues.extend(release_issues)
+    issues.extend(safety_index_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -971,6 +1026,10 @@ def main() -> int:
     print(f"public_discovery_release_indexes_checked={release_indexes_checked}")
     print(f"public_discovery_release_commands_checked={release_commands_checked}")
     print(f"public_discovery_release_outcomes_checked={release_outcomes_checked}")
+    print(f"public_discovery_safety_index_boundaries_checked={safety_index_boundaries_checked}")
+    print(f"public_discovery_safety_index_routes_checked={safety_index_routes_checked}")
+    print(f"public_discovery_safety_index_not_for_checked={safety_index_not_for_checked}")
+    print(f"public_discovery_safety_index_steps_checked={safety_index_steps_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

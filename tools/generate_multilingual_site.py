@@ -5968,6 +5968,7 @@ def keepsakes_page(lang: str) -> None:
 {keepsake_practice_card_section(lang)}
 {keepsake_shelf_section(lang)}
 {keepsake_ritual_section(lang)}
+{safety_boundary_bridge(lang)}
 {keepsake_waitlist_section(lang)}
 {collector_section(lang)}
 <section class="section keepsake-use-section">
@@ -6396,6 +6397,87 @@ POLICY_CONTACT_CTA = {
         "cta": "Abrir ruta de reparación",
     },
 }
+
+
+SAFETY_BOUNDARY_BRIDGE = {
+    "zh": {
+        "eyebrow": "SAFETY RETURN",
+        "title": "領取補給前，先看清楚邊界",
+        "intro": "收藏、書卷與 Luna 都只是輔助練習。若你要下載、購買或寄出需求，先保留三條安全出口。",
+        "items": [
+            ("01", "資料與本機儲存", "查看測驗結果、修復表單與聯絡信件如何處理。", "查看隱私", "privacy", "safety_bridge_privacy"),
+            ("02", "內容與購買邊界", "確認 LoveTypes 不承諾療效、不取代諮商，也不替外部商店負責。", "查看條款", "terms", "safety_bridge_terms"),
+            ("03", "回報需要修復的地方", "按鈕、連結、文案或補給需求不清楚時，直接送到修復入口。", "回報問題", "contact#site-repair-report", "safety_bridge_contact"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SAFETY RETURN",
+        "title": "Before taking a supply, keep the boundary visible",
+        "intro": "Keepsakes, books, and Luna are practice supports. Before downloading, buying, or sending a request, keep three safe exits open.",
+        "items": [
+            ("01", "Data and local storage", "See how quiz results, repair worksheets, and contact emails are handled.", "Read privacy", "privacy", "safety_bridge_privacy"),
+            ("02", "Content and purchase boundary", "Confirm that LoveTypes does not promise outcomes, replace counseling, or control external stores.", "Read terms", "terms", "safety_bridge_terms"),
+            ("03", "Report something that needs repair", "If a button, link, sentence, or supply request is unclear, send it through the repair route.", "Report issue", "contact#site-repair-report", "safety_bridge_contact"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SAFETY RETURN",
+        "title": "補給を受け取る前に、境界を見える場所へ",
+        "intro": "コレクション、本、Luna は練習を支える道具です。保存、購入、希望送信の前に三つの安全な出口を残してください。",
+        "items": [
+            ("01", "データと端末内保存", "診断結果、修復シート、連絡メールの扱いを確認できます。", "プライバシーへ", "privacy", "safety_bridge_privacy"),
+            ("02", "内容と購入の境界", "LoveTypes が結果を約束せず、相談支援や外部ストアの責任を代替しないことを確認します。", "規約へ", "terms", "safety_bridge_terms"),
+            ("03", "修復が必要な場所を報告", "ボタン、リンク、文案、補給希望が不明確な時は修復入口へ送れます。", "問題を報告", "contact#site-repair-report", "safety_bridge_contact"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SAFETY RETURN",
+        "title": "보급을 받기 전, 경계를 먼저 확인하세요",
+        "intro": "소장물, 책, Luna는 연습을 돕는 도구입니다. 다운로드, 구매, 요청 전 세 가지 안전 출구를 열어 두세요.",
+        "items": [
+            ("01", "자료와 로컬 저장", "테스트 결과, 회복 시트, 연락 메일이 어떻게 처리되는지 확인합니다.", "개인정보 보기", "privacy", "safety_bridge_privacy"),
+            ("02", "콘텐츠와 구매 경계", "LoveTypes가 결과를 약속하거나 상담, 외부 상점의 책임을 대신하지 않음을 확인합니다.", "약관 보기", "terms", "safety_bridge_terms"),
+            ("03", "수리가 필요한 부분 제보", "버튼, 링크, 문장, 보급 요청이 불명확하면 수리 입구로 보내세요.", "문제 제보", "contact#site-repair-report", "safety_bridge_contact"),
+        ],
+    },
+    "es": {
+        "eyebrow": "SAFETY RETURN",
+        "title": "Antes de tomar un recurso, mantén visible el límite",
+        "intro": "Recuerdos, libros y Luna son apoyos de práctica. Antes de descargar, comprar o pedir algo, conserva tres salidas seguras.",
+        "items": [
+            ("01", "Datos y almacenamiento local", "Revisa cómo se manejan resultados, hojas de reparación y correos de contacto.", "Ver privacidad", "privacy", "safety_bridge_privacy"),
+            ("02", "Límite de contenido y compra", "Confirma que LoveTypes no promete resultados, no reemplaza terapia ni controla tiendas externas.", "Ver términos", "terms", "safety_bridge_terms"),
+            ("03", "Reportar algo que requiere reparación", "Si un botón, enlace, frase o pedido es confuso, envíalo por la ruta de reparación.", "Reportar problema", "contact#site-repair-report", "safety_bridge_contact"),
+        ],
+    },
+}
+
+
+def safety_boundary_bridge(lang: str) -> str:
+    copy = SAFETY_BOUNDARY_BRIDGE[lang]
+    cards = []
+    for number, title, desc, cta, target, event in copy["items"]:
+        if "#" in target:
+            route, anchor = target.split("#", 1)
+            href = lang_url(lang, route) + f"#{anchor}"
+        else:
+            href = lang_url(lang, target)
+        cards.append(f"""
+<article class="trust-action-card">
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}" data-funnel-event="{escape(event)}">{escape(cta)}</a>
+</article>
+""")
+    return f"""
+<section class="section trust-action-section safety-boundary-bridge" data-safety-boundary-bridge>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2><p>{escape(copy["intro"])}</p></div>
+  </div>
+  <div class="trust-action-grid">{"".join(cards)}</div>
+</section>
+"""
 
 
 NOT_FOUND_COPY = {
@@ -7790,6 +7872,7 @@ def resources_page(lang: str) -> None:
   <div><h2>{escape(supply_labels["choose"])}</h2><p>{escape(supply_labels["choose_text"])}</p></div>
   <div><h2>{escape(supply_labels["not_now"])}</h2><p>{escape(supply_labels["not_now_text"])}</p></div>
 </section>
+{safety_boundary_bridge(lang)}
 {supply_wishlist_section(lang)}
 {collector_section(lang)}
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>

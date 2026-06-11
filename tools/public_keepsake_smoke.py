@@ -132,6 +132,11 @@ def localized_route(lang: str, route: str, anchor: str) -> str:
     return f"{prefix}/{route}/#{anchor}" if prefix else f"/{route}/#{anchor}"
 
 
+def localized_page(lang: str, route: str) -> str:
+    prefix = "" if lang == "zh" else f"/{lang}"
+    return f"{prefix}/{route}/" if prefix else f"/{route}/"
+
+
 def decode_cloudflare_email_href(href: str) -> str:
     if not href.startswith("/cdn-cgi/l/email-protection#"):
         return href
@@ -192,6 +197,8 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "practice_print_buttons": 0,
         "free_asset_cards": 0,
         "free_asset_events": 0,
+        "safety_bridge_sections": 0,
+        "safety_bridge_links": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -318,6 +325,23 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             else:
                 stats["free_asset_events"] += len(expected_free_events)
 
+    safety_bridge = next((item for item in walk(root) if item.attrs.get("data-safety-boundary-bridge") == ""), None)
+    if safety_bridge is None:
+        issues.append(f"{source}: missing safety boundary bridge")
+    else:
+        stats["safety_bridge_sections"] += 1
+        bridge_hrefs = {link.attrs.get("href", "") for link in descendants(safety_bridge, "a")}
+        expected_bridge_hrefs = {
+            localized_page(lang, "privacy"),
+            localized_page(lang, "terms"),
+            localized_route(lang, "contact", "site-repair-report"),
+        }
+        for expected in expected_bridge_hrefs:
+            if expected not in bridge_hrefs:
+                issues.append(f"{source}: safety boundary bridge missing {expected}")
+            else:
+                stats["safety_bridge_links"] += 1
+
     waitlist = find_by_id(root, "keepsake-supply-waitlist")
     if waitlist is None:
         issues.append(f"{source}: missing keepsake supply waitlist section")
@@ -376,6 +400,8 @@ def main() -> int:
         "practice_print_buttons": 0,
         "free_asset_cards": 0,
         "free_asset_events": 0,
+        "safety_bridge_sections": 0,
+        "safety_bridge_links": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -403,6 +429,8 @@ def main() -> int:
     print(f"public_keepsake_practice_print_buttons_checked={totals['practice_print_buttons']}")
     print(f"public_keepsake_free_asset_cards_checked={totals['free_asset_cards']}")
     print(f"public_keepsake_free_asset_events_checked={totals['free_asset_events']}")
+    print(f"public_keepsake_safety_bridge_sections_checked={totals['safety_bridge_sections']}")
+    print(f"public_keepsake_safety_bridge_links_checked={totals['safety_bridge_links']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
     print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
     print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")

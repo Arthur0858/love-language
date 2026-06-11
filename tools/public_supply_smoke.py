@@ -174,6 +174,8 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
+        "safety_bridge_sections": 0,
+        "safety_bridge_links": 0,
         "decision_sections": 0,
         "decision_cards": 0,
         "decision_links": 0,
@@ -192,6 +194,22 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: missing supply trust safety section")
     else:
         stats["safety_sections"] += 1
+    safety_bridge = next((item for item in walk(root) if item.attrs.get("data-safety-boundary-bridge") == ""), None)
+    if safety_bridge is None:
+        issues.append(f"{path}: missing safety boundary bridge")
+    else:
+        stats["safety_bridge_sections"] += 1
+        bridge_hrefs = {link.attrs.get("href", "") for link in descendants(safety_bridge, "a")}
+        expected_bridge_hrefs = {
+            localized_path(lang, "privacy"),
+            localized_path(lang, "terms"),
+            localized_path(lang, "contact") + "#site-repair-report",
+        }
+        for expected in expected_bridge_hrefs:
+            if expected not in bridge_hrefs:
+                issues.append(f"{path}: safety boundary bridge missing {expected}")
+            else:
+                stats["safety_bridge_links"] += 1
     if "data-supply-owned-signal" not in response.text:
         issues.append(f"{path}: missing owned supply wishlist section")
     decision_section = next((item for item in walk(root) if item.attrs.get("data-supply-decision-matrix") == ""), None)
@@ -376,6 +394,8 @@ def main() -> int:
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
+        "safety_bridge_sections": 0,
+        "safety_bridge_links": 0,
         "decision_sections": 0,
         "decision_cards": 0,
         "decision_links": 0,
@@ -402,6 +422,8 @@ def main() -> int:
     print(f"public_supply_wishlist_mailtos_checked={totals['wishlist_mailtos']}")
     print(f"public_supply_wishlist_copy_buttons_checked={totals['wishlist_copy_buttons']}")
     print(f"public_supply_safety_sections_checked={totals['safety_sections']}")
+    print(f"public_supply_safety_bridge_sections_checked={totals['safety_bridge_sections']}")
+    print(f"public_supply_safety_bridge_links_checked={totals['safety_bridge_links']}")
     print(f"public_supply_decision_sections_checked={totals['decision_sections']}")
     print(f"public_supply_decision_cards_checked={totals['decision_cards']}")
     print(f"public_supply_decision_links_checked={totals['decision_links']}")

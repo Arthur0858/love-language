@@ -231,6 +231,9 @@ async function funnelStorageCheck(browser) {
   const clickTargets = [
     ['supply_route_copy', '[data-copy-supply-route]'],
     ['supply_wishlist_copy', '[data-supply-owned-card] [data-copy-contact-template]'],
+    ['safety_bridge_privacy', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_privacy"]'],
+    ['safety_bridge_terms', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_terms"]'],
+    ['safety_bridge_contact', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_contact"]'],
   ];
   for (const [_name, selector] of clickTargets) {
     await page.locator(selector).first().click();
@@ -279,7 +282,7 @@ async function funnelStorageCheck(browser) {
     issues.push('funnel: event store should be JSON');
   }
   const names = new Set(Array.isArray(events) ? events.map((event) => event.name) : []);
-  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact', 'collector_story_open', 'collector_story_download', 'free_keepsake_open', 'free_keepsake_download', 'free_keepsake_asset_request']) {
+  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'safety_bridge_privacy', 'safety_bridge_terms', 'safety_bridge_contact', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact', 'collector_story_open', 'collector_story_download', 'free_keepsake_open', 'free_keepsake_download', 'free_keepsake_asset_request']) {
     if (!names.has(expected)) issues.push(`funnel: missing local event ${expected}`);
   }
   if (!Array.isArray(events)) {

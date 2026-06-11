@@ -14,6 +14,7 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
+OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 EXPECTED_ORGANIZATION = {
     "@id": "https://lovetypes.tw/#organization",
     "name": "LoveTypes",
@@ -21,6 +22,7 @@ EXPECTED_ORGANIZATION = {
     "logo": "https://lovetypes.tw/apple-touch-icon.png",
     "email": "contact@lovetypes.tw",
 }
+EXPECTED_ORGANIZATION_SAME_AS = {OFFICIAL_YOUTUBE_CHANNEL}
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 CORE_PAGE_SCHEMA_TYPES = {
@@ -265,6 +267,12 @@ def validate_schema(path: str, parser: SchemaParser, entities: list[dict], sitem
         for key, expected in EXPECTED_ORGANIZATION.items():
             if organization.get(key) != expected:
                 issues.append(f"{path}: Organization {key} should be {expected!r}, got {organization.get(key)!r}")
+        same_as = organization.get("sameAs", [])
+        if not isinstance(same_as, list) or not EXPECTED_ORGANIZATION_SAME_AS.issubset(set(same_as)):
+            issues.append(f"{path}: Organization sameAs should include official LoveTypes channel")
+        knows_about = organization.get("knowsAbout", [])
+        if not isinstance(knows_about, list) or len(knows_about) < 3:
+            issues.append(f"{path}: Organization knowsAbout should include brand topic coverage")
         contact_point = organization.get("contactPoint", {})
         if not isinstance(contact_point, dict) or contact_point.get("email") != EXPECTED_ORGANIZATION["email"]:
             issues.append(f"{path}: Organization contactPoint email should be contact@lovetypes.tw")

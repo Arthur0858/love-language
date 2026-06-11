@@ -18,6 +18,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 CONTACT_EMAIL = "contact@lovetypes.tw"
+OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 ADS_TXT_PATH = ROOT / "ads.txt"
 FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS = {
     "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
@@ -266,6 +267,7 @@ EXPECTED_ORGANIZATION = {
     "logo": f"{DOMAIN}/apple-touch-icon.png",
     "email": CONTACT_EMAIL,
 }
+EXPECTED_ORGANIZATION_SAME_AS = {OFFICIAL_YOUTUBE_CHANNEL}
 POLICY_PAGE_SLUGS = {"contact", "privacy", "terms"}
 LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 CJK_RE = re.compile(r"[\u4e00-\u9fff]")
@@ -738,6 +740,12 @@ def validate_jsonld(
     elif any(organizations[0].get(key) != value for key, value in EXPECTED_ORGANIZATION.items()):
         issues.append(f"{page}: Organization JSON-LD does not match canonical LoveTypes identity")
     else:
+        same_as = organizations[0].get("sameAs", [])
+        if not isinstance(same_as, list) or not EXPECTED_ORGANIZATION_SAME_AS.issubset(set(same_as)):
+            issues.append(f"{page}: Organization JSON-LD missing official sameAs links")
+        knows_about = organizations[0].get("knowsAbout", [])
+        if not isinstance(knows_about, list) or len(knows_about) < 3:
+            issues.append(f"{page}: Organization JSON-LD should include brand topic coverage")
         contact_point = organizations[0].get("contactPoint", {})
         if not isinstance(contact_point, dict) or contact_point.get("email") != EXPECTED_ORGANIZATION["email"]:
             issues.append(f"{page}: Organization contactPoint email should be contact@lovetypes.tw")

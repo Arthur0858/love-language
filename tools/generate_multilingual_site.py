@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
+OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-06-12"
 ASSET_VERSION = "20260612-contact-path-handoff"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
@@ -4646,7 +4647,14 @@ def organization_schema(lang: str) -> str:
         "url": f"{DOMAIN}/",
         "logo": f"{DOMAIN}/apple-touch-icon.png",
         "email": CONTACT_EMAIL,
+        "sameAs": [OFFICIAL_YOUTUBE_CHANNEL],
         "description": t["trust_intro"],
+        "knowsAbout": [
+            "Five love languages",
+            "Relationship repair",
+            "Guardian personality quiz",
+            "Luna yoga music",
+        ],
         "contactPoint": {
             "@type": "ContactPoint",
             "email": CONTACT_EMAIL,

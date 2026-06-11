@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -1306,6 +1307,85 @@ LUNA_OFFER = {
         "listen": "Escuchar Luna gratis",
         "resources": "Volver a recursos",
         "contact": "Pedir recurso nocturno",
+    },
+}
+
+
+LUNA_GUMROAD_PRODUCTS = [
+    {
+        "slug": "healing-vibes-starter",
+        "title": "Healing Vibes Starter Pack",
+        "price": "US$2.99",
+        "url": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
+    },
+    {
+        "slug": "sleep-deep-rest",
+        "title": "Sleep & Deep Rest Bundle",
+        "price": "US$4.99",
+        "url": "https://lunayogamusic.gumroad.com/l/kgrau",
+    },
+    {
+        "slug": "morning-awakening",
+        "title": "Morning Awakening Bundle",
+        "price": "US$3.99",
+        "url": "https://lunayogamusic.gumroad.com/l/morning-awakening-bundle",
+    },
+    {
+        "slug": "stress-relief-yin",
+        "title": "Stress Relief & Yin Yoga",
+        "price": "US$4.99",
+        "url": "https://lunayogamusic.gumroad.com/l/stress-relief-yin-yoga",
+    },
+    {
+        "slug": "feminine-healing",
+        "title": "Feminine Healing",
+        "price": "US$4.99",
+        "url": "https://lunayogamusic.gumroad.com/l/feminine-healing-bundle",
+    },
+    {
+        "slug": "luna-flow-sessions",
+        "title": "Luna Flow Sessions",
+        "price": "US$4.99",
+        "url": "https://lunayogamusic.gumroad.com/l/luna-flow-sessions",
+    },
+]
+
+
+LUNA_PRODUCT_OFFER = {
+    "zh": {
+        "eyebrow": "LUNA DOWNLOAD PACKS",
+        "title": "需要離線使用時，直接選一個音樂包",
+        "intro": "公開聆聽先確認節奏是否適合你；若想把音檔放進睡前、瑜伽或書寫流程，這些 Gumroad 包已連到可購買頁面。",
+        "cta": "查看商品",
+        "note": "商品由 Gumroad 結帳與交付。內容是放鬆與創作陪伴，不承諾療效，也不取代諮商或醫療建議。",
+    },
+    "en": {
+        "eyebrow": "LUNA DOWNLOAD PACKS",
+        "title": "When you need offline use, pick one audio pack",
+        "intro": "Start with public listening to test the rhythm. If you want files for bedtime, yoga, or journaling, these Gumroad packs now point to live product pages.",
+        "cta": "View pack",
+        "note": "Checkout and delivery run through Gumroad. The audio is for calm creative practice, not therapy, medical care, or promised outcomes.",
+    },
+    "ja": {
+        "eyebrow": "LUNA DOWNLOAD PACKS",
+        "title": "オフラインで使う時は音楽パックを一つ選ぶ",
+        "intro": "まず公開音源でリズムが合うか確かめます。就寝前、ヨガ、日記に音源ファイルが必要な場合は、Gumroad の公開商品ページへ進めます。",
+        "cta": "商品を見る",
+        "note": "決済と配信は Gumroad が行います。音源は落ち着く練習の補助であり、治療効果を約束したり相談支援や医療を代替したりしません。",
+    },
+    "ko": {
+        "eyebrow": "LUNA DOWNLOAD PACKS",
+        "title": "오프라인 사용이 필요할 때 음악 팩 하나 고르기",
+        "intro": "먼저 공개 음악으로 리듬이 맞는지 확인하세요. 잠들기 전, 요가, 기록 루틴에 파일이 필요하다면 Gumroad 공개 상품 페이지로 이동할 수 있습니다.",
+        "cta": "상품 보기",
+        "note": "결제와 전달은 Gumroad에서 진행됩니다. 이 음원은 차분한 창작 연습을 돕는 자료이며 치료, 의료, 결과 보장을 대체하지 않습니다.",
+    },
+    "es": {
+        "eyebrow": "LUNA DOWNLOAD PACKS",
+        "title": "Cuando necesites uso sin conexión, elige un pack",
+        "intro": "Empieza con la escucha pública para comprobar el ritmo. Si quieres archivos para dormir, yoga o escritura, estos packs apuntan a páginas activas de Gumroad.",
+        "cta": "Ver pack",
+        "note": "El pago y la entrega ocurren en Gumroad. El audio acompaña prácticas de calma y creación; no promete resultados ni reemplaza terapia o atención médica.",
     },
 }
 
@@ -8698,6 +8778,33 @@ def luna_offer_section(lang: str) -> str:
 """
 
 
+def luna_product_url(product: dict) -> str:
+    return (
+        f"{product['url']}?utm_source=lovetypes"
+        f"&utm_medium=luna-page&utm_campaign=luna_gumroad_offer"
+        f"&utm_content={quote(product['slug'])}"
+    )
+
+
+def luna_product_offer_section(lang: str) -> str:
+    labels = LUNA_PRODUCT_OFFER[lang]
+    cards = "".join(f"""
+<article>
+  <p class="eyebrow">{escape(product["price"])}</p>
+  <h3>{escape(product["title"])}</h3>
+  <a class="secondary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_gumroad_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["cta"])}</a>
+</article>
+""" for product in LUNA_GUMROAD_PRODUCTS)
+    return f"""
+<section class="section luna-offer-section" id="luna-download-packs">
+  <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div></div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="luna-offer-grid">{cards}</div>
+  <p class="section-intro">{escape(labels["note"])}</p>
+</section>
+"""
+
+
 def luna_page(lang: str) -> None:
     t = LANGS[lang]
     luna = LUNA_CONTENT[lang]
@@ -8758,6 +8865,7 @@ def luna_page(lang: str) -> None:
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 {luna_offer_section(lang)}
+{luna_product_offer_section(lang)}
 <section class="section luna-guardian-flow">
   <div class="section-head"><div><p class="eyebrow">{escape(flow["eyebrow"])}</p><h2>{escape(flow["title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div>
   <p class="section-intro">{escape(flow["intro"])}</p>
@@ -9326,6 +9434,113 @@ def write_ads_txt() -> None:
     write(ROOT / "ads.txt", f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0\n")
 
 
+def funnel_event_category(name: str) -> str:
+    if name.startswith(("quiz_result_", "home_resume_", "home_saved_", "supply_pack_")):
+        return "quiz_result"
+    if name.startswith(("supply_", "guardian_supply_", "guardian_snapshot_supply", "guardian_hero_supply")):
+        return "supply"
+    if name.startswith(("luna_", "guardian_supply_panel_luna", "repair_guardian_luna")):
+        return "luna"
+    if name.startswith(("keepsake_", "collector_", "free_keepsake_", "practice_card_")):
+        return "keepsake"
+    if name.startswith(("contact_", "guardian_resume_contact", "guide_resume_contact")):
+        return "contact"
+    if name.startswith(("repair_", "guardian_snapshot_repair")):
+        return "repair"
+    if name.startswith(("guardian_", "theory_domain_guardian")):
+        return "guardian"
+    if name.startswith(("guide_", "trust_", "theory_")):
+        return "content"
+    return name.split("_", 1)[0]
+
+
+def funnel_event_role(name: str) -> str:
+    if any(token in name for token in ("affiliate", "book", "listen")):
+        return "revenue"
+    if any(token in name for token in ("mailto", "contact", "request", "send")):
+        return "lead"
+    if any(token in name for token in ("download", "story", "keepsake", "print", "copy")):
+        return "retention"
+    if any(token in name for token in ("route", "plan", "luna", "guardian", "guide", "resources", "quiz")):
+        return "navigation"
+    return "engagement"
+
+
+def collect_funnel_events() -> dict:
+    event_re = re.compile(r"data-funnel-event=(['\"])(.*?)\1")
+    valid_name_re = re.compile(r"^[a-z][a-z0-9_]*$")
+    events: dict[str, dict] = {}
+
+    def html_page(path: Path) -> str:
+        rel_page = "/" + path.relative_to(ROOT).as_posix()
+        if rel_page.endswith("/index.html"):
+            rel_page = rel_page[:-10] or "/"
+        return rel_page
+
+    def add_event(name: str, page: str, count: int = 1) -> None:
+        if not valid_name_re.match(name):
+            return
+        entry = events.setdefault(
+            name,
+            {
+                "name": name,
+                "category": funnel_event_category(name),
+                "role": funnel_event_role(name),
+                "count": 0,
+                "pages": set(),
+            },
+        )
+        entry["count"] += count
+        entry["pages"].add(page)
+
+    html_paths = sorted(
+        path
+        for path in ROOT.rglob("*.html")
+        if not any(part in {"output", "node_modules", ".git"} for part in path.parts)
+    )
+    html_sources = [(path, html_page(path), path.read_text(encoding="utf-8", errors="ignore")) for path in html_paths]
+    for _path, page, text in html_sources:
+        for _quote, name in event_re.findall(text):
+            add_event(name, page)
+
+    interaction_source = (ROOT / "tools" / "static" / "site-interactions.js").read_text(encoding="utf-8", errors="ignore")
+    for attr, name in re.findall(r"\['([^']+)', '([^']+)'\]", interaction_source):
+        attr_re = re.compile(rf"\s{re.escape(attr)}(?:[=\s>])")
+        for _path, page, text in html_sources:
+            count = len(attr_re.findall(text))
+            if count:
+                add_event(name, page, count)
+
+    event_items = []
+    for name in sorted(events):
+        entry = events[name]
+        event_items.append({
+            "name": entry["name"],
+            "category": entry["category"],
+            "role": entry["role"],
+            "count": entry["count"],
+            "pages": sorted(entry["pages"])[:20],
+            "pageCount": len(entry["pages"]),
+        })
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "localStorageKey": "lovetypes:funnel-events:v1",
+        "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
+        "totals": {
+            "events": len(event_items),
+            "trackedOccurrences": sum(item["count"] for item in event_items),
+            "pages": len({page for item in event_items for page in item["pages"]}),
+        },
+        "events": event_items,
+    }
+
+
+def write_funnel_event_catalog() -> None:
+    write(ROOT / "funnel-events.json", json.dumps(collect_funnel_events(), ensure_ascii=False, indent=2) + "\n")
+
+
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
@@ -9423,6 +9638,7 @@ https://:version.lovetypes.pages.dev/*
     write_security_txt()
     write_ads_txt()
     write_redirects()
+    write_funnel_event_catalog()
 
 
 def apply_section_label_localization() -> None:

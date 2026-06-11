@@ -143,6 +143,7 @@ ROBOTS_PATH = ROOT / "robots.txt"
 FEED_PATH = ROOT / "feed.xml"
 LLMS_PATH = ROOT / "llms.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
+FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1372,6 +1373,85 @@ def parse_ads_txt() -> tuple[list[str], Counter]:
     return issues, stats
 
 
+def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not FUNNEL_EVENTS_PATH.exists():
+        return [f"{FUNNEL_EVENTS_PATH}: missing funnel-events.json"], stats
+    try:
+        data = json.loads(FUNNEL_EVENTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{FUNNEL_EVENTS_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{FUNNEL_EVENTS_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{FUNNEL_EVENTS_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{FUNNEL_EVENTS_PATH}: updated should match generator date")
+    if data.get("localStorageKey") != "lovetypes:funnel-events:v1":
+        issues.append(f"{FUNNEL_EVENTS_PATH}: localStorageKey should match runtime storage key")
+    events = data.get("events")
+    if not isinstance(events, list) or not events:
+        issues.append(f"{FUNNEL_EVENTS_PATH}: events should be a non-empty list")
+        return issues, stats
+    stats["funnel_event_catalogs_checked"] = 1
+    stats["funnel_events_checked"] = len(events)
+    required_events = {
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "quiz_result_luna",
+        "quiz_result_contact",
+        "supply_route_affiliate_book",
+        "luna_hero_listen",
+        "contact_supply_mailto",
+        "free_keepsake_download",
+    }
+    seen: set[str] = set()
+    categories: set[str] = set()
+    roles: set[str] = set()
+    for event in events:
+        if not isinstance(event, dict):
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event entry should be an object")
+            continue
+        name = event.get("name")
+        if not isinstance(name, str) or not re.match(r"^[a-z][a-z0-9_]*$", name):
+            issues.append(f"{FUNNEL_EVENTS_PATH}: invalid event name {name!r}")
+            continue
+        if name in seen:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: duplicate event name {name}")
+        seen.add(name)
+        count = event.get("count")
+        if not isinstance(count, int) or count <= 0:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} should include positive count")
+        pages = event.get("pages")
+        page_count = event.get("pageCount")
+        if not isinstance(pages, list) or not pages:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} should include pages")
+        if not isinstance(page_count, int) or page_count < len(pages or []):
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} should include valid pageCount")
+        category = event.get("category")
+        role = event.get("role")
+        if not isinstance(category, str) or not category:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} missing category")
+        else:
+            categories.add(category)
+        if not isinstance(role, str) or not role:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} missing role")
+        else:
+            roles.add(role)
+    missing = sorted(required_events.difference(seen))
+    if missing:
+        issues.append(f"{FUNNEL_EVENTS_PATH}: missing core funnel events: {', '.join(missing)}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("events") != len(events):
+        issues.append(f"{FUNNEL_EVENTS_PATH}: totals.events should match event count")
+    stats["funnel_event_categories_checked"] = len(categories)
+    stats["funnel_event_roles_checked"] = len(roles)
+    if len(events) < 50:
+        issues.append(f"{FUNNEL_EVENTS_PATH}: expected at least 50 funnel events, got {len(events)}")
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2533,6 +2613,9 @@ def main() -> int:
     ads_issues, ads_stats = parse_ads_txt()
     issues.extend(ads_issues)
     stats.update(ads_stats)
+    funnel_issues, funnel_stats = parse_funnel_event_catalog()
+    issues.extend(funnel_issues)
+    stats.update(funnel_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -2660,6 +2743,10 @@ def main() -> int:
     print(f"security_txt_files={stats['security_txt_files']}")
     print(f"security_txt_fields={stats['security_txt_fields']}")
     print(f"ads_txt_records={stats['ads_txt_records']}")
+    print(f"funnel_event_catalogs_checked={stats['funnel_event_catalogs_checked']}")
+    print(f"funnel_events_checked={stats['funnel_events_checked']}")
+    print(f"funnel_event_categories_checked={stats['funnel_event_categories_checked']}")
+    print(f"funnel_event_roles_checked={stats['funnel_event_roles_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

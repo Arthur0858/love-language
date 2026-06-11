@@ -78,6 +78,16 @@ REQUIRED_ROBOTS_LINES = (
     "Sitemap: https://lovetypes.tw/sitemap.xml",
 )
 URL_RE = re.compile(r"https://lovetypes\.tw/[^\s),]+")
+REQUIRED_FUNNEL_EVENTS = {
+    "quiz_result_supply_route",
+    "quiz_result_repair_plan",
+    "quiz_result_luna",
+    "quiz_result_contact",
+    "supply_route_affiliate_book",
+    "luna_hero_listen",
+    "contact_supply_mailto",
+    "free_keepsake_download",
+}
 
 
 @dataclass(frozen=True)
@@ -536,6 +546,34 @@ def check_robots(base_url: str) -> tuple[list[str], int, int]:
     return issues, robots_lines_checked, sitemap_links_checked
 
 
+def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
+    path = "/funnel-events.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0
+    events = data.get("events", []) if isinstance(data, dict) else []
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("localStorageKey") != "lovetypes:funnel-events:v1":
+        issues.append(f"{path}: localStorageKey should match runtime storage key")
+    names = {event.get("name") for event in events if isinstance(event, dict)}
+    missing = sorted(REQUIRED_FUNNEL_EVENTS.difference(names))
+    if missing:
+        issues.append(f"{path}: missing core funnel events {', '.join(missing)}")
+    if len(events) < 50:
+        issues.append(f"{path}: expected at least 50 funnel events, got {len(events)}")
+    categories = {event.get("category") for event in events if isinstance(event, dict) and event.get("category")}
+    roles = {event.get("role") for event in events if isinstance(event, dict) and event.get("role")}
+    return issues, len(events), len(categories), len(roles)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -564,11 +602,13 @@ def main() -> int:
     ) = check_llms(base_url)
     text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
+    funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
     issues.extend(text_issues)
     issues.extend(robots_issues)
+    issues.extend(funnel_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -589,6 +629,9 @@ def main() -> int:
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
     print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
     print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")
+    print(f"public_discovery_funnel_events_checked={funnel_events_checked}")
+    print(f"public_discovery_funnel_event_categories_checked={funnel_categories_checked}")
+    print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

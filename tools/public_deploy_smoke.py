@@ -255,6 +255,14 @@ SUPPORT_FILES = {
         "https://lovetypes.tw/luna-yoga-music/",
         "Contact email: contact@lovetypes.tw",
     ],
+    "/funnel-events.json": [
+        '"schemaVersion": 1',
+        '"localStorageKey": "lovetypes:funnel-events:v1"',
+        '"quiz_result_supply_route"',
+        '"supply_route_affiliate_book"',
+        '"luna_hero_listen"',
+        '"contact_supply_mailto"',
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

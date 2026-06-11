@@ -23,6 +23,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "site-index.json",
     "guardian-profiles.json",
     "site-health.json",
+    "release.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}
 FORBIDDEN_PREFIXES = {

@@ -149,6 +149,7 @@ COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
 SITE_INDEX_PATH = ROOT / "site-index.json"
 GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
+RELEASE_PATH = ROOT / "release.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1871,7 +1872,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 14,
+        "supportFiles": 15,
     }
     for key, expected in expected_coverage.items():
         stats["site_health_coverage_fields_checked"] += 1
@@ -1916,6 +1917,91 @@ def parse_site_health() -> tuple[list[str], Counter]:
     else:
         stats["site_health_safety_boundaries_checked"] = len(boundaries)
     stats["site_health_snapshots_checked"] = 1
+    return issues, stats
+
+
+def parse_release_info() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not RELEASE_PATH.exists():
+        return [f"{RELEASE_PATH}: missing release.json"], stats
+    try:
+        data = json.loads(RELEASE_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{RELEASE_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{RELEASE_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{RELEASE_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{RELEASE_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{RELEASE_PATH}: production should be {DOMAIN}/")
+    if data.get("assetVersion") != GENERATOR_CONFIG.ASSET_VERSION:
+        issues.append(f"{RELEASE_PATH}: assetVersion should match generator ASSET_VERSION")
+    if data.get("deploymentTarget") != "Cloudflare Pages project lovetypes":
+        issues.append(f"{RELEASE_PATH}: deploymentTarget should name Cloudflare Pages project lovetypes")
+    if data.get("branch") != "main":
+        issues.append(f"{RELEASE_PATH}: branch should be main")
+    contents = data.get("releaseContents")
+    expected_contents = {
+        "indexablePages": 150,
+        "languages": 5,
+        "guardians": 5,
+        "commerceItems": 20,
+        "coreFlows": 4,
+    }
+    if not isinstance(contents, dict):
+        issues.append(f"{RELEASE_PATH}: releaseContents should be an object")
+    else:
+        for key, expected in expected_contents.items():
+            stats["release_content_fields_checked"] += 1
+            if contents.get(key) != expected:
+                issues.append(f"{RELEASE_PATH}: releaseContents.{key} should be {expected}, got {contents.get(key)!r}")
+        if not isinstance(contents.get("funnelEvents"), int) or contents["funnelEvents"] < 50:
+            issues.append(f"{RELEASE_PATH}: releaseContents.funnelEvents should be at least 50")
+        else:
+            stats["release_content_fields_checked"] += 1
+    indexes = data.get("publicIndexes")
+    expected_indexes = {"siteHealth", "siteIndex", "guardianProfiles", "commerceCatalog", "funnelEvents", "llms", "humans"}
+    if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
+        issues.append(f"{RELEASE_PATH}: publicIndexes should contain {sorted(expected_indexes)}")
+    else:
+        stats["release_public_indexes_checked"] = len(indexes)
+        for key, url in indexes.items():
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{RELEASE_PATH}: public index {key} should point to {DOMAIN}")
+    commands = data.get("verificationCommands")
+    expected_commands = [
+        "python3 tools/predeploy_check.py",
+        "python3 tools/deploy_cloudflare_pages.py",
+        "python3 tools/public_discovery_smoke.py",
+        "python3 tools/public_deploy_smoke.py",
+        "python3 tools/public_versioned_asset_smoke.py",
+    ]
+    if commands != expected_commands:
+        issues.append(f"{RELEASE_PATH}: verificationCommands should match the release workflow")
+    else:
+        stats["release_verification_commands_checked"] = len(commands)
+    outcomes = data.get("requiredOutcomes")
+    expected_outcomes = {
+        "predeploy_checks=ok",
+        "issues=0",
+        "public_discovery_issues=0",
+        "public_deploy_issues=0",
+        "public_versioned_asset_issues=0",
+        "public_versioned_asset_stale_refs=0",
+    }
+    if not isinstance(outcomes, list) or set(outcomes) != expected_outcomes:
+        issues.append(f"{RELEASE_PATH}: requiredOutcomes should contain {sorted(expected_outcomes)}")
+    else:
+        stats["release_required_outcomes_checked"] = len(outcomes)
+    boundaries = data.get("safetyBoundaries")
+    if not isinstance(boundaries, list) or len(boundaries) < 3:
+        issues.append(f"{RELEASE_PATH}: safetyBoundaries should include at least three entries")
+    else:
+        stats["release_safety_boundaries_checked"] = len(boundaries)
+    stats["release_files_checked"] = 1
     return issues, stats
 
 
@@ -3098,6 +3184,9 @@ def main() -> int:
     site_health_issues, site_health_stats = parse_site_health()
     issues.extend(site_health_issues)
     stats.update(site_health_stats)
+    release_issues, release_stats = parse_release_info()
+    issues.extend(release_issues)
+    stats.update(release_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3255,6 +3344,12 @@ def main() -> int:
     print(f"site_health_required_gates_checked={stats['site_health_required_gates_checked']}")
     print(f"site_health_primary_indexes_checked={stats['site_health_primary_indexes_checked']}")
     print(f"site_health_safety_boundaries_checked={stats['site_health_safety_boundaries_checked']}")
+    print(f"release_files_checked={stats['release_files_checked']}")
+    print(f"release_content_fields_checked={stats['release_content_fields_checked']}")
+    print(f"release_public_indexes_checked={stats['release_public_indexes_checked']}")
+    print(f"release_verification_commands_checked={stats['release_verification_commands_checked']}")
+    print(f"release_required_outcomes_checked={stats['release_required_outcomes_checked']}")
+    print(f"release_safety_boundaries_checked={stats['release_safety_boundaries_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

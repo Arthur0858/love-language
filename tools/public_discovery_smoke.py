@@ -817,7 +817,7 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 14,
+        "supportFiles": 15,
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -830,14 +830,57 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         coverage_checked += 1
     support_files = data.get("supportFiles", [])
     gates = data.get("requiredGates", {})
-    if not isinstance(support_files, list) or len(support_files) != 14:
-        issues.append(f"{path}: expected 14 support files")
+    if not isinstance(support_files, list) or len(support_files) != 15:
+        issues.append(f"{path}: expected 15 support files")
     if not isinstance(gates, dict) or set(gates) != {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}:
         issues.append(f"{path}: requiredGates should list four gate names")
     indexes = data.get("primaryIndexes", {})
     if not isinstance(indexes, dict) or len(indexes) < 6:
         issues.append(f"{path}: primaryIndexes should list at least six entries")
     return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
+
+
+def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
+    path = "/release.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("deploymentTarget") != "Cloudflare Pages project lovetypes":
+        issues.append(f"{path}: deploymentTarget should name Cloudflare Pages project lovetypes")
+    if data.get("branch") != "main":
+        issues.append(f"{path}: branch should be main")
+    contents = data.get("releaseContents", {})
+    expected_contents = {"indexablePages": 150, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 4}
+    content_checked = 0
+    for key, expected in expected_contents.items():
+        content_checked += 1
+        if contents.get(key) != expected:
+            issues.append(f"{path}: releaseContents.{key} should be {expected}, got {contents.get(key)!r}")
+    if not isinstance(contents.get("funnelEvents"), int) or contents["funnelEvents"] < 50:
+        issues.append(f"{path}: releaseContents.funnelEvents should be at least 50")
+    else:
+        content_checked += 1
+    indexes = data.get("publicIndexes", {})
+    commands = data.get("verificationCommands", [])
+    outcomes = data.get("requiredOutcomes", [])
+    if not isinstance(indexes, dict) or len(indexes) != 7:
+        issues.append(f"{path}: publicIndexes should contain seven entries")
+    if not isinstance(commands, list) or len(commands) != 5:
+        issues.append(f"{path}: verificationCommands should contain five commands")
+    if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
+        issues.append(f"{path}: requiredOutcomes should include public_versioned_asset_stale_refs=0")
+    return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(outcomes) if isinstance(outcomes, list) else 0
 
 
 def main() -> int:
@@ -873,6 +916,7 @@ def main() -> int:
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
     site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_indexes_checked = check_site_health(base_url)
+    release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_outcomes_checked = check_release_info(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -883,6 +927,7 @@ def main() -> int:
     issues.extend(site_index_issues)
     issues.extend(guardian_profile_issues)
     issues.extend(site_health_issues)
+    issues.extend(release_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -922,6 +967,10 @@ def main() -> int:
     print(f"public_discovery_site_health_support_files_checked={site_health_support_files_checked}")
     print(f"public_discovery_site_health_gates_checked={site_health_gates_checked}")
     print(f"public_discovery_site_health_indexes_checked={site_health_indexes_checked}")
+    print(f"public_discovery_release_content_checked={release_content_checked}")
+    print(f"public_discovery_release_indexes_checked={release_indexes_checked}")
+    print(f"public_discovery_release_commands_checked={release_commands_checked}")
+    print(f"public_discovery_release_outcomes_checked={release_outcomes_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

@@ -314,11 +314,22 @@ SUPPORT_FILES = {
         '"indexablePages": 150',
         '"guardians": 5',
         '"commerceItems": 20',
-        '"supportFiles": 14',
+        '"supportFiles": 15',
         '"localPredeploy"',
         '"publicDiscovery"',
         '"publicDeploy"',
         '"versionedAssets"',
+    ],
+    "/release.json": [
+        '"schemaVersion": 1',
+        '"assetVersion":',
+        '"deploymentTarget": "Cloudflare Pages project lovetypes"',
+        '"branch": "main"',
+        '"indexablePages": 150',
+        '"guardians": 5',
+        '"commerceItems": 20',
+        '"python3 tools/predeploy_check.py"',
+        '"public_versioned_asset_stale_refs=0"',
     ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"

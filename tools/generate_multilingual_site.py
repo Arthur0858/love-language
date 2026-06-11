@@ -9816,6 +9816,64 @@ def write_site_index() -> None:
     write(ROOT / "site-index.json", json.dumps(collect_site_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_release_info() -> dict:
+    site_index = collect_site_index()
+    commerce = collect_commerce_catalog()
+    guardians = collect_guardian_profiles()
+    funnel = collect_funnel_events()
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "assetVersion": ASSET_VERSION,
+        "deploymentTarget": "Cloudflare Pages project lovetypes",
+        "branch": "main",
+        "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
+        "releaseContents": {
+            "indexablePages": site_index["totals"]["pages"],
+            "languages": site_index["totals"]["languages"],
+            "guardians": guardians["totals"]["guardians"],
+            "commerceItems": commerce["totals"]["items"],
+            "funnelEvents": funnel["totals"]["events"],
+            "coreFlows": len(site_index["coreFlows"]),
+        },
+        "publicIndexes": {
+            "siteHealth": f"{DOMAIN}/site-health.json",
+            "siteIndex": f"{DOMAIN}/site-index.json",
+            "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+            "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
+            "funnelEvents": f"{DOMAIN}/funnel-events.json",
+            "llms": f"{DOMAIN}/llms.txt",
+            "humans": f"{DOMAIN}/humans.txt",
+        },
+        "verificationCommands": [
+            "python3 tools/predeploy_check.py",
+            "python3 tools/deploy_cloudflare_pages.py",
+            "python3 tools/public_discovery_smoke.py",
+            "python3 tools/public_deploy_smoke.py",
+            "python3 tools/public_versioned_asset_smoke.py",
+        ],
+        "requiredOutcomes": [
+            "predeploy_checks=ok",
+            "issues=0",
+            "public_discovery_issues=0",
+            "public_deploy_issues=0",
+            "public_versioned_asset_issues=0",
+            "public_versioned_asset_stale_refs=0",
+        ],
+        "safetyBoundaries": [
+            "Relationship reflection and communication support only.",
+            "Guardian universe content is metaphorical, not diagnostic.",
+            "Commercial resources are disclosed and do not promise outcomes.",
+        ],
+    }
+
+
+def write_release_info() -> None:
+    write(ROOT / "release.json", json.dumps(collect_release_info(), ensure_ascii=False, indent=2) + "\n")
+
+
 def collect_site_health() -> dict:
     site_index = collect_site_index()
     commerce = collect_commerce_catalog()
@@ -9835,6 +9893,7 @@ def collect_site_health() -> dict:
         "commerce-catalog.json",
         "site-index.json",
         "guardian-profiles.json",
+        "release.json",
         "site-health.json",
     ]
     return {
@@ -9870,6 +9929,7 @@ def collect_site_health() -> dict:
         "primaryIndexes": {
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+            "release": f"{DOMAIN}/release.json",
             "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
             "funnelEvents": f"{DOMAIN}/funnel-events.json",
             "llms": f"{DOMAIN}/llms.txt",
@@ -9988,6 +10048,7 @@ https://:version.lovetypes.pages.dev/*
     write_commerce_catalog()
     write_guardian_profiles()
     write_site_index()
+    write_release_info()
     write_site_health()
 
 

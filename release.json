@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "assetVersion": "20260612-contact-path-handoff",
+  "deploymentTarget": "Cloudflare Pages project lovetypes",
+  "branch": "main",
+  "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
+  "releaseContents": {
+    "indexablePages": 150,
+    "languages": 5,
+    "guardians": 5,
+    "commerceItems": 20,
+    "funnelEvents": 181,
+    "coreFlows": 4
+  },
+  "publicIndexes": {
+    "siteHealth": "https://lovetypes.tw/site-health.json",
+    "siteIndex": "https://lovetypes.tw/site-index.json",
+    "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
+    "commerceCatalog": "https://lovetypes.tw/commerce-catalog.json",
+    "funnelEvents": "https://lovetypes.tw/funnel-events.json",
+    "llms": "https://lovetypes.tw/llms.txt",
+    "humans": "https://lovetypes.tw/humans.txt"
+  },
+  "verificationCommands": [
+    "python3 tools/predeploy_check.py",
+    "python3 tools/deploy_cloudflare_pages.py",
+    "python3 tools/public_discovery_smoke.py",
+    "python3 tools/public_deploy_smoke.py",
+    "python3 tools/public_versioned_asset_smoke.py"
+  ],
+  "requiredOutcomes": [
+    "predeploy_checks=ok",
+    "issues=0",
+    "public_discovery_issues=0",
+    "public_deploy_issues=0",
+    "public_versioned_asset_issues=0",
+    "public_versioned_asset_stale_refs=0"
+  ],
+  "safetyBoundaries": [
+    "Relationship reflection and communication support only.",
+    "Guardian universe content is metaphorical, not diagnostic.",
+    "Commercial resources are disclosed and do not promise outcomes."
+  ]
+}

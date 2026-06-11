@@ -167,12 +167,13 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             issues.append(f"{path}: #repair-card-pack should be repair-asset-section")
         asset_cards = [card for card in descendants(asset_section, "article") if has_class(card, "repair-asset-card")]
         stats["asset_cards"] += len(asset_cards)
-        if len(asset_cards) != 3:
-            issues.append(f"{path}: expected three repair asset cards, got {len(asset_cards)}")
+        if len(asset_cards) != 4:
+            issues.append(f"{path}: expected four repair asset cards, got {len(asset_cards)}")
         asset_hrefs = [link.attrs.get("href", "") for link in descendants(asset_section, "a")]
         expected_asset_links = {
             localized_path(lang, "keepsakes"),
             "#repair-worksheet",
+            localized_path(lang, "luna-yoga-music"),
             localized_path(lang, "contact").rstrip("/") + "#luna-supply-request",
         }
         for expected in expected_asset_links:

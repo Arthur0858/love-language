@@ -174,6 +174,10 @@ EXPECTED_MANIFEST_SHORTCUT_URLS = {
     "/keepsakes/",
     "/luna-yoga-music/",
 }
+EXPECTED_MANIFEST_SCREENSHOTS = {
+    "/assets/lovetypes/pwa/home-desktop-screenshot.webp": (1440, 900),
+    "/assets/lovetypes/pwa/home-mobile-screenshot.webp": (390, 844),
+}
 REQUIRED_GLOBAL_HEADERS = {
     "Cache-Control": "public, max-age=600",
     "X-Content-Type-Options": "nosniff",
@@ -907,6 +911,47 @@ def parse_manifest() -> tuple[list[str], Counter]:
                     continue
                 if declared_size not in actual_sizes:
                     issues.append(f"{MANIFEST_PATH}: ico missing declared size {declared}: {src}")
+
+    screenshots = manifest.get("screenshots", [])
+    if not isinstance(screenshots, list) or len(screenshots) != len(EXPECTED_MANIFEST_SCREENSHOTS):
+        issues.append(
+            f"{MANIFEST_PATH}: expected {len(EXPECTED_MANIFEST_SCREENSHOTS)} screenshots, "
+            f"got {len(screenshots) if isinstance(screenshots, list) else 'invalid'}"
+        )
+        screenshots = []
+    screenshot_srcs = {
+        screenshot.get("src")
+        for screenshot in screenshots
+        if isinstance(screenshot, dict) and isinstance(screenshot.get("src"), str)
+    }
+    missing_screenshots = sorted(EXPECTED_MANIFEST_SCREENSHOTS.keys() - screenshot_srcs)
+    if missing_screenshots:
+        issues.append(f"{MANIFEST_PATH}: missing expected screenshots {', '.join(missing_screenshots)}")
+    for screenshot in screenshots:
+        stats["manifest_screenshots"] += 1
+        if not isinstance(screenshot, dict):
+            issues.append(f"{MANIFEST_PATH}: screenshot entry should be an object")
+            continue
+        src = screenshot.get("src", "")
+        sizes = screenshot.get("sizes", "")
+        image_type = screenshot.get("type", "")
+        if not src or not sizes or not image_type:
+            issues.append(f"{MANIFEST_PATH}: screenshot missing src, sizes, or type: {screenshot}")
+            continue
+        if image_type != "image/webp":
+            issues.append(f"{MANIFEST_PATH}: screenshot should be image/webp: {src}")
+        target = ROOT / unquote(src.lstrip("/"))
+        if not target.exists():
+            issues.append(f"{MANIFEST_PATH}: screenshot target missing: {src}")
+            continue
+        expected_size = EXPECTED_MANIFEST_SCREENSHOTS.get(src)
+        actual_size = image_size(target)
+        if expected_size and actual_size != expected_size:
+            issues.append(f"{MANIFEST_PATH}: screenshot {src} should be {expected_size[0]}x{expected_size[1]}, got {actual_size}")
+        if actual_size:
+            actual_size_label = f"{actual_size[0]}x{actual_size[1]}"
+            if sizes != actual_size_label:
+                issues.append(f"{MANIFEST_PATH}: screenshot sizes should be {actual_size_label}: {src}")
 
     shortcuts = manifest.get("shortcuts", [])
     if shortcuts and not isinstance(shortcuts, list):
@@ -2571,6 +2616,7 @@ def main() -> int:
     print(f"sitemap_urls={stats['sitemap_urls']}")
     print(f"sitemap_alternates={stats['sitemap_alternates']}")
     print(f"manifest_icons={stats['manifest_icons']}")
+    print(f"manifest_screenshots={stats['manifest_screenshots']}")
     print(f"manifest_shortcuts={stats['manifest_shortcuts']}")
     print(f"feed_items={stats['feed_items']}")
     print(f"llms_files_checked={stats['llms_files_checked']}")

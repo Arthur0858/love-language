@@ -35,6 +35,22 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+    {
+      "src": "/assets/lovetypes/pwa/home-desktop-screenshot.webp",
+      "sizes": "1440x900",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "LoveTypes 心語庭園首頁桌機預覽"
+    },
+    {
+      "src": "/assets/lovetypes/pwa/home-mobile-screenshot.webp",
+      "sizes": "390x844",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "LoveTypes 心語庭園首頁手機預覽"
+    }
+  ],
   "shortcuts": [
     {
       "name": "開始認領儀式",

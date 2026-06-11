@@ -9240,6 +9240,22 @@ def write_site_manifest() -> None:
             {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
             {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
         ],
+        "screenshots": [
+            {
+                "src": "/assets/lovetypes/pwa/home-desktop-screenshot.webp",
+                "sizes": "1440x900",
+                "type": "image/webp",
+                "form_factor": "wide",
+                "label": "LoveTypes 心語庭園首頁桌機預覽",
+            },
+            {
+                "src": "/assets/lovetypes/pwa/home-mobile-screenshot.webp",
+                "sizes": "390x844",
+                "type": "image/webp",
+                "form_factor": "narrow",
+                "label": "LoveTypes 心語庭園首頁手機預覽",
+            },
+        ],
         "shortcuts": [
             {"name": "開始認領儀式", "url": "/#quiz-section", "description": "完成 15 道心語題目，找到你的情感守護者。"},
             {"name": "心語庭園地圖", "url": "/garden-map/", "description": "查看測驗、守護者、指南、補給與修復計畫的完整入口。"},

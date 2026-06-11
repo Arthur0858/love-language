@@ -31,6 +31,10 @@ EXPECTED_MANIFEST_SHORTCUT_URLS = (
     "/keepsakes/",
     "/luna-yoga-music/",
 )
+EXPECTED_MANIFEST_SCREENSHOTS = {
+    "/assets/lovetypes/pwa/home-desktop-screenshot.webp": (1440, 900),
+    "/assets/lovetypes/pwa/home-mobile-screenshot.webp": (390, 844),
+}
 EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 REQUIRED_LLMS_SECTIONS = (
     "# LoveTypes - Heart Garden Emotion Guardians",
@@ -259,19 +263,19 @@ def image_declared_sizes(body: bytes) -> set[tuple[int, int]]:
         return {(int(image.size[0]), int(image.size[1]))}
 
 
-def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int]:
     path = "/site.webmanifest"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", "") and "manifest" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected manifest/json content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         manifest = json.loads(response.text)
     except json.JSONDecodeError as error:
-        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0, 0, 0, 0
     for field in ("name", "short_name", "description", "start_url", "scope", "display", "theme_color", "icons"):
         if not manifest.get(field):
             issues.append(f"{path}: missing required field {field}")
@@ -339,7 +343,66 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int]:
             issues.append(
                 f"{path}: icon {src} declared sizes {sorted(expected_sizes)} should exist in file sizes {sorted(actual_sizes)}"
             )
-    return issues, icons_checked, icon_dimensions_checked, len(shortcuts), shortcut_links_checked, manifest_expected_shortcuts_checked
+
+    screenshots = manifest.get("screenshots", [])
+    if not isinstance(screenshots, list) or len(screenshots) != len(EXPECTED_MANIFEST_SCREENSHOTS):
+        issues.append(
+            f"{path}: expected {len(EXPECTED_MANIFEST_SCREENSHOTS)} screenshots, "
+            f"got {len(screenshots) if isinstance(screenshots, list) else 'invalid'}"
+        )
+        screenshots = []
+    screenshot_urls = {
+        screenshot.get("src")
+        for screenshot in screenshots
+        if isinstance(screenshot, dict) and isinstance(screenshot.get("src"), str)
+    }
+    for expected_src in EXPECTED_MANIFEST_SCREENSHOTS:
+        if expected_src not in screenshot_urls:
+            issues.append(f"{path}: missing expected screenshot {expected_src}")
+    screenshots_checked = 0
+    screenshot_dimensions_checked = 0
+    for screenshot in screenshots:
+        src = screenshot.get("src") if isinstance(screenshot, dict) else ""
+        sizes = screenshot.get("sizes") if isinstance(screenshot, dict) else ""
+        image_type = screenshot.get("type") if isinstance(screenshot, dict) else ""
+        label = screenshot.get("label") if isinstance(screenshot, dict) else ""
+        if not src or not sizes or not image_type or not label:
+            issues.append(f"{path}: screenshot missing src, sizes, type, or label: {screenshot!r}")
+            continue
+        screenshot_response = request_url(urljoin(base_url + "/", src.lstrip("/")))
+        screenshots_checked += 1
+        if screenshot_response.status != 200:
+            issues.append(f"{path}: screenshot {src} expected status 200, got {screenshot_response.status}")
+            continue
+        content_type = screenshot_response.headers.get("content-type", "")
+        if image_type not in content_type:
+            issues.append(f"{path}: screenshot {src} expected content type containing {image_type!r}, got {content_type!r}")
+        host = urlparse(base_url).hostname or ""
+        cache_control = screenshot_response.headers.get("cache-control", "").lower()
+        if host not in {"127.0.0.1", "localhost"} and ("max-age=31536000" not in cache_control or "immutable" not in cache_control):
+            issues.append(f"{path}: screenshot {src} should be immutable cached, got {cache_control!r}")
+        expected_size = EXPECTED_MANIFEST_SCREENSHOTS.get(src)
+        expected_sizes = parse_icon_sizes(sizes)
+        try:
+            actual_sizes = image_declared_sizes(screenshot_response.body)
+        except OSError as error:
+            issues.append(f"{path}: screenshot {src} could not be decoded: {error}")
+            continue
+        screenshot_dimensions_checked += 1
+        if expected_size and expected_size not in actual_sizes:
+            issues.append(f"{path}: screenshot {src} should be {expected_size[0]}x{expected_size[1]}, got {sorted(actual_sizes)}")
+        if expected_sizes and not expected_sizes.issubset(actual_sizes):
+            issues.append(f"{path}: screenshot {src} declared sizes {sorted(expected_sizes)} should exist in file sizes {sorted(actual_sizes)}")
+    return (
+        issues,
+        icons_checked,
+        icon_dimensions_checked,
+        len(shortcuts),
+        shortcut_links_checked,
+        manifest_expected_shortcuts_checked,
+        screenshots_checked,
+        screenshot_dimensions_checked,
+    )
 
 
 def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
@@ -488,6 +551,8 @@ def main() -> int:
         manifest_shortcuts,
         manifest_shortcut_links_checked,
         manifest_expected_shortcuts_checked,
+        manifest_screenshots_checked,
+        manifest_screenshot_dimensions_checked,
     ) = check_manifest(base_url)
     (
         llms_issues,
@@ -513,6 +578,8 @@ def main() -> int:
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
     print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")
     print(f"public_discovery_manifest_expected_shortcuts_checked={manifest_expected_shortcuts_checked}")
+    print(f"public_discovery_manifest_screenshots_checked={manifest_screenshots_checked}")
+    print(f"public_discovery_manifest_screenshot_dimensions_checked={manifest_screenshot_dimensions_checked}")
     print(f"public_discovery_llms_sections_checked={llms_sections_checked}")
     print(f"public_discovery_llms_snippets_checked={llms_snippets_checked}")
     print(f"public_discovery_llms_high_value_urls_checked={llms_high_value_urls_checked}")

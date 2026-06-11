@@ -104,6 +104,8 @@ def main() -> int:
     contact_quiz_data_refs_checked = 0
     funnel_summary_sections_checked = 0
     funnel_summary_actions_checked = 0
+    funnel_summary_context_labels_checked = 0
+    funnel_summary_context_fields_checked = 0
 
     for item in expectations():
         response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
@@ -131,6 +133,18 @@ def main() -> int:
                 issues.append(f"{item.path}: local funnel summary missing {marker}")
             else:
                 funnel_summary_actions_checked += 1
+        funnel_labels = generator.CONTACT_FUNNEL_SUMMARY[item.lang]
+        for key in ("category", "guardian", "source", "language", "target_type"):
+            label = funnel_labels[key]
+            if label not in response.text:
+                issues.append(f"{item.path}: local funnel summary missing context label {key}")
+            else:
+                funnel_summary_context_labels_checked += 1
+        for field in ("event.category", "event.guardian", "event.source", "event.lang", "event.targetType"):
+            if field not in response.text:
+                issues.append(f"{item.path}: local funnel summary missing context field {field}")
+            else:
+                funnel_summary_context_fields_checked += 1
         for marker in CONTACT_SAVED_RESULT_MARKERS:
             if marker not in response.text:
                 issues.append(f"{item.path}: saved result handoff missing {marker}")
@@ -255,6 +269,8 @@ def main() -> int:
     print(f"public_contact_quiz_data_refs_checked={contact_quiz_data_refs_checked}")
     print(f"public_contact_funnel_summary_sections_checked={funnel_summary_sections_checked}")
     print(f"public_contact_funnel_summary_actions_checked={funnel_summary_actions_checked}")
+    print(f"public_contact_funnel_summary_context_labels_checked={funnel_summary_context_labels_checked}")
+    print(f"public_contact_funnel_summary_context_fields_checked={funnel_summary_context_fields_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:
         print(issue)

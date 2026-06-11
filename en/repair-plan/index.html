@@ -57,44 +57,44 @@
   <p class="eyebrow">7-DAY HEART-LANGUAGE PLAN</p>
   <h1>7-Day Heart-Language Repair Plan</h1>
   <p>After the quiz, use seven days to turn your guardian result into a revisitable route: notice the wound, ask for one small action, and choose one supply for practice.</p>
-  <div class="hero-actions"><a class="primary-btn" href="/en/#quiz-section">Start quiz</a><a class="secondary-btn" href="/en/resources/">Open supply station</a><a class="secondary-btn" href="#repair-card-pack">Save this route</a></div>
+  <div class="hero-actions" data-repair-hero-actions><a class="primary-btn" href="/en/#quiz-section" data-funnel-event="repair_hero_quiz">Start quiz</a><a class="secondary-btn" href="/en/resources/" data-funnel-event="repair_hero_resources">Open supply station</a><a class="secondary-btn" href="#repair-card-pack" data-funnel-event="repair_hero_asset_pack">Save this route</a></div>
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
-  <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>Free Repair Card Pack</h2></div><a href="/en/luna-yoga-music/">Open Luna</a></div>
+  <div class="section-head"><div><p class="eyebrow">PRINTABLE WORKSHEET</p><h2>Free Repair Card Pack</h2></div><a href="/en/luna-yoga-music/" data-funnel-event="repair_asset_section_luna">Open Luna</a></div>
   <p class="section-intro">Turn this week into four portable tools: save your guardian card, fill the worksheet, use Luna for a low-light reset, then request supply only when it truly helps. This is the lightest take-away from the guardian universe.</p>
   <div class="supply-panel-grid repair-asset-grid">
 <article class="repair-asset-card">
   <span>01</span>
   <h3>Guardian keepsake card</h3>
   <p>Save your guardian story image as the doorway back into this week&#x27;s route.</p>
-  <a class="secondary-btn" href="/en/keepsakes/">Open keepsakes</a>
+  <a class="secondary-btn" href="/en/keepsakes/" data-funnel-event="repair_asset_1">Open keepsakes</a>
 </article>
 
 <article class="repair-asset-card">
   <span>02</span>
   <h3>7-day printable worksheet</h3>
   <p>Put the misfrequency, request, and chosen supply onto one page for print or PDF.</p>
-  <a class="secondary-btn" href="#repair-worksheet">Fill worksheet</a>
+  <a class="secondary-btn" href="#repair-worksheet" data-funnel-event="repair_asset_2">Fill worksheet</a>
 </article>
 
 <article class="repair-asset-card">
   <span>03</span>
   <h3>Luna night reset</h3>
   <p>Before sleep or after conflict, lower the noise and return to this repair route.</p>
-  <a class="secondary-btn" href="/en/luna-yoga-music/">Open Luna</a>
+  <a class="secondary-btn" href="/en/luna-yoga-music/" data-funnel-event="repair_asset_3">Open Luna</a>
 </article>
 
 <article class="repair-asset-card">
   <span>04</span>
   <h3>Supply request</h3>
   <p>When you need a clearer next step, send your guardian route and the supply you want.</p>
-  <a class="secondary-btn" href="/en/contact#luna-supply-request">Request supply</a>
+  <a class="secondary-btn" href="/en/contact#luna-supply-request" data-funnel-event="repair_asset_4">Request supply</a>
 </article>
 </div>
 </section>
 <section class="section repair-plan-section">
-  <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>One-week practice route</h2></div><a href="/en/resources/">Open supply station</a></div>
+  <div class="section-head"><div><p class="eyebrow">WEEK ROUTE</p><h2>One-week practice route</h2></div><a href="/en/resources/" data-funnel-event="repair_week_resources">Open supply station</a></div>
   <div class="repair-day-grid">
 <article>
   <span>Day 1</span>
@@ -314,13 +314,13 @@
           <p>${resumeIntro}</p>
           <p><strong>${result.supplyTitle}</strong> · ${result.supplyMission}</p>
           <div class="repair-resume-actions">
-            <button class="primary-btn" type="button" data-fill-repair>${resumeFill}</button>
-            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route>${quiz.labels.saved_route}</a>
-            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan>${resumePlan}</a>
-            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna>${quiz.labels.saved_luna}</a>
-            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake>${result.collectorHall}</a>
-            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact>${quiz.labels.saved_contact}</a>
-            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored">${bookstoreLabel}</a>
+            <button class="primary-btn" type="button" data-fill-repair data-funnel-event="repair_resume_fill">${resumeFill}</button>
+            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route data-funnel-event="repair_resume_route">${quiz.labels.saved_route}</a>
+            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan data-funnel-event="repair_resume_plan">${resumePlan}</a>
+            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${quiz.labels.saved_luna}</a>
+            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${result.collectorHall}</a>
+            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${quiz.labels.saved_contact}</a>
+            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_resume_affiliate_book">${bookstoreLabel}</a>
           </div>
         </div>
       </article>`;
@@ -360,7 +360,7 @@
 </script>
 
 <section class="section repair-guardian-section">
-  <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>Adjust by guardian</h2></div><a href="/en/#quiz-section">Start quiz</a></div>
+  <div class="section-head"><div><p class="eyebrow">GUARDIAN ROUTES</p><h2>Adjust by guardian</h2></div><a href="/en/#quiz-section" data-funnel-event="repair_guardian_section_quiz">Start quiz</a></div>
   <div class="repair-guardian-grid">
 <article class="repair-guardian-card" id="plan-iris">
   <img src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="Iris Word Supply" width="285" height="235" loading="lazy" decoding="async" fetchpriority="low" />
@@ -370,10 +370,10 @@
     <p>You may read missing affirmation as not being valued, or turn a need into a test.</p>
     <p><strong>Your repair task:</strong> Write three specific affirmations today: seeing, gratitude, and recognition.</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/en/resources/#supply-iris">Open supply station</a>
-      <a class="secondary-btn" href="/en/characters/iris/">Guardians</a>
-      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-iris">Open Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">Open bookstore</a>
+      <a class="primary-btn" href="/en/resources/#supply-iris" data-funnel-event="repair_guardian_supply_route">Open supply station</a>
+      <a class="secondary-btn" href="/en/characters/iris/" data-funnel-event="repair_guardian_profile">Guardians</a>
+      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-iris" data-funnel-event="repair_guardian_luna">Open Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">Open bookstore</a>
     </div>
   </div>
 </article>
@@ -386,10 +386,10 @@
     <p>The tender wound is often presence without attention.</p>
     <p><strong>Your repair task:</strong> Protect fifteen phone-free minutes and ask one question: when did we feel most together this week?</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/en/resources/#supply-noah">Open supply station</a>
-      <a class="secondary-btn" href="/en/characters/noah/">Guardians</a>
-      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-noah">Open Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">Open bookstore</a>
+      <a class="primary-btn" href="/en/resources/#supply-noah" data-funnel-event="repair_guardian_supply_route">Open supply station</a>
+      <a class="secondary-btn" href="/en/characters/noah/" data-funnel-event="repair_guardian_profile">Guardians</a>
+      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-noah" data-funnel-event="repair_guardian_luna">Open Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">Open bookstore</a>
     </div>
   </div>
 </article>
@@ -402,10 +402,10 @@
     <p>You may feel unheld when important days pass with no sign.</p>
     <p><strong>Your repair task:</strong> Record one tiny preference and make it visible in a low-cost way.</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/en/resources/#supply-vivian">Open supply station</a>
-      <a class="secondary-btn" href="/en/characters/vivian/">Guardians</a>
-      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-vivian">Open Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">Open bookstore</a>
+      <a class="primary-btn" href="/en/resources/#supply-vivian" data-funnel-event="repair_guardian_supply_route">Open supply station</a>
+      <a class="secondary-btn" href="/en/characters/vivian/" data-funnel-event="repair_guardian_profile">Guardians</a>
+      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-vivian" data-funnel-event="repair_guardian_luna">Open Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">Open bookstore</a>
     </div>
   </div>
 </article>
@@ -418,10 +418,10 @@
     <p>When nobody shares the load, it can feel like you are not worth care.</p>
     <p><strong>Your repair task:</strong> Turn one desired help into a concrete request: time, action, and done condition.</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/en/resources/#supply-claire">Open supply station</a>
-      <a class="secondary-btn" href="/en/characters/claire/">Guardians</a>
-      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-claire">Open Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">Open bookstore</a>
+      <a class="primary-btn" href="/en/resources/#supply-claire" data-funnel-event="repair_guardian_supply_route">Open supply station</a>
+      <a class="secondary-btn" href="/en/characters/claire/" data-funnel-event="repair_guardian_profile">Guardians</a>
+      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-claire" data-funnel-event="repair_guardian_luna">Open Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">Open bookstore</a>
     </div>
   </div>
 </article>
@@ -434,10 +434,10 @@
     <p>When closeness is sudden or unchecked, the body may close first.</p>
     <p><strong>Your repair task:</strong> Create one safe closeness sentence: can I hold you now? If not, I can sit beside you.</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/en/resources/#supply-dora">Open supply station</a>
-      <a class="secondary-btn" href="/en/characters/dora/">Guardians</a>
-      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-dora">Open Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">Open bookstore</a>
+      <a class="primary-btn" href="/en/resources/#supply-dora" data-funnel-event="repair_guardian_supply_route">Open supply station</a>
+      <a class="secondary-btn" href="/en/characters/dora/" data-funnel-event="repair_guardian_profile">Guardians</a>
+      <a class="secondary-btn" href="/en/luna-yoga-music/#luna-dora" data-funnel-event="repair_guardian_luna">Open Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">Open bookstore</a>
     </div>
   </div>
 </article>

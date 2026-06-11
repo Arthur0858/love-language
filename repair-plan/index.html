@@ -57,44 +57,44 @@
   <p class="eyebrow">7 日心語修復計畫</p>
   <h1>7 日心語修復計畫</h1>
   <p>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</p>
-  <div class="hero-actions"><a class="primary-btn" href="/#quiz-section">開始測驗</a><a class="secondary-btn" href="/resources/">打開補給站</a><a class="secondary-btn" href="#repair-card-pack">保存這週路線</a></div>
+  <div class="hero-actions" data-repair-hero-actions><a class="primary-btn" href="/#quiz-section" data-funnel-event="repair_hero_quiz">開始測驗</a><a class="secondary-btn" href="/resources/" data-funnel-event="repair_hero_resources">打開補給站</a><a class="secondary-btn" href="#repair-card-pack" data-funnel-event="repair_hero_asset_pack">保存這週路線</a></div>
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
-  <div class="section-head"><div><p class="eyebrow">可列印練習表</p><h2>免費修復卡包</h2></div><a href="/luna-yoga-music/">開啟 Luna</a></div>
+  <div class="section-head"><div><p class="eyebrow">可列印練習表</p><h2>免費修復卡包</h2></div><a href="/luna-yoga-music/" data-funnel-event="repair_asset_section_luna">開啟 Luna</a></div>
   <p class="section-intro">把這週路線整理成四份可以帶走的工具：先收下守護者卡，再填工作表，用 Luna 做夜間整理，最後只在需要時申請補給。這是進入守護者宇宙後最輕量的實作包。</p>
   <div class="supply-panel-grid repair-asset-grid">
 <article class="repair-asset-card">
   <span>01</span>
   <h3>守護者收藏卡</h3>
   <p>保存你的守護者故事圖，作為本週修復路線的入口。</p>
-  <a class="secondary-btn" href="/keepsakes/">打開收藏室</a>
+  <a class="secondary-btn" href="/keepsakes/" data-funnel-event="repair_asset_1">打開收藏室</a>
 </article>
 
 <article class="repair-asset-card">
   <span>02</span>
   <h3>7 日可列印工作表</h3>
   <p>把錯頻、請求與補給寫成一頁，列印或存成 PDF。</p>
-  <a class="secondary-btn" href="#repair-worksheet">填寫工作表</a>
+  <a class="secondary-btn" href="#repair-worksheet" data-funnel-event="repair_asset_2">填寫工作表</a>
 </article>
 
 <article class="repair-asset-card">
   <span>03</span>
   <h3>Luna 夜間整理</h3>
   <p>睡前或衝突後先降低噪音，再回來看這張修復路線。</p>
-  <a class="secondary-btn" href="/luna-yoga-music/">開啟 Luna</a>
+  <a class="secondary-btn" href="/luna-yoga-music/" data-funnel-event="repair_asset_3">開啟 Luna</a>
 </article>
 
 <article class="repair-asset-card">
   <span>04</span>
   <h3>補給申請</h3>
   <p>需要更明確的下一步時，留下你的守護者路線與想要的補給。</p>
-  <a class="secondary-btn" href="/contact#luna-supply-request">申請補給</a>
+  <a class="secondary-btn" href="/contact#luna-supply-request" data-funnel-event="repair_asset_4">申請補給</a>
 </article>
 </div>
 </section>
 <section class="section repair-plan-section">
-  <div class="section-head"><div><p class="eyebrow">一週練習路線</p><h2>一週練習路線</h2></div><a href="/resources/">打開補給站</a></div>
+  <div class="section-head"><div><p class="eyebrow">一週練習路線</p><h2>一週練習路線</h2></div><a href="/resources/" data-funnel-event="repair_week_resources">打開補給站</a></div>
   <div class="repair-day-grid">
 <article>
   <span>第 1 天</span>
@@ -314,13 +314,13 @@
           <p>${resumeIntro}</p>
           <p><strong>${result.supplyTitle}</strong> · ${result.supplyMission}</p>
           <div class="repair-resume-actions">
-            <button class="primary-btn" type="button" data-fill-repair>${resumeFill}</button>
-            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route>${quiz.labels.saved_route}</a>
-            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan>${resumePlan}</a>
-            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna>${quiz.labels.saved_luna}</a>
-            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake>${result.collectorHall}</a>
-            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact>${quiz.labels.saved_contact}</a>
-            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored">${bookstoreLabel}</a>
+            <button class="primary-btn" type="button" data-fill-repair data-funnel-event="repair_resume_fill">${resumeFill}</button>
+            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route data-funnel-event="repair_resume_route">${quiz.labels.saved_route}</a>
+            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan data-funnel-event="repair_resume_plan">${resumePlan}</a>
+            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${quiz.labels.saved_luna}</a>
+            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${result.collectorHall}</a>
+            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${quiz.labels.saved_contact}</a>
+            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_resume_affiliate_book">${bookstoreLabel}</a>
           </div>
         </div>
       </article>`;
@@ -360,7 +360,7 @@
 </script>
 
 <section class="section repair-guardian-section">
-  <div class="section-head"><div><p class="eyebrow">守護者路線</p><h2>依守護者調整任務</h2></div><a href="/#quiz-section">開始測驗</a></div>
+  <div class="section-head"><div><p class="eyebrow">守護者路線</p><h2>依守護者調整任務</h2></div><a href="/#quiz-section" data-funnel-event="repair_guardian_section_quiz">開始測驗</a></div>
   <div class="repair-guardian-grid">
 <article class="repair-guardian-card" id="plan-iris">
   <img src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="艾莉絲語言補給" width="285" height="235" loading="lazy" decoding="async" fetchpriority="low" />
@@ -370,10 +370,10 @@
     <p>容易把沒被肯定解讀成不被珍惜，或把需要說成測驗。</p>
     <p><strong>你的修復任務:</strong> 今天寫下三句具體肯定：看見、感謝、承認，不使用空泛稱讚。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/resources/#supply-iris">打開補給站</a>
-      <a class="secondary-btn" href="/characters/iris/">守護者</a>
-      <a class="secondary-btn" href="/luna-yoga-music/#luna-iris">開啟 Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">前往博客來</a>
+      <a class="primary-btn" href="/resources/#supply-iris" data-funnel-event="repair_guardian_supply_route">打開補給站</a>
+      <a class="secondary-btn" href="/characters/iris/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/luna-yoga-music/#luna-iris" data-funnel-event="repair_guardian_luna">開啟 Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">前往博客來</a>
     </div>
   </div>
 </article>
@@ -386,10 +386,10 @@
     <p>最痛的錯頻通常是人在旁邊，心卻沒有到場。</p>
     <p><strong>你的修復任務:</strong> 安排十五分鐘無手機共處，只問一個問題：這週哪一刻最像我們在一起？</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/resources/#supply-noah">打開補給站</a>
-      <a class="secondary-btn" href="/characters/noah/">守護者</a>
-      <a class="secondary-btn" href="/luna-yoga-music/#luna-noah">開啟 Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">前往博客來</a>
+      <a class="primary-btn" href="/resources/#supply-noah" data-funnel-event="repair_guardian_supply_route">打開補給站</a>
+      <a class="secondary-btn" href="/characters/noah/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/luna-yoga-music/#luna-noah" data-funnel-event="repair_guardian_luna">開啟 Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">前往博客來</a>
     </div>
   </div>
 </article>
@@ -402,10 +402,10 @@
     <p>容易在重要日子沒有表示時，感覺自己沒有被放在心上。</p>
     <p><strong>你的修復任務:</strong> 記下一個對方隨口提過的小喜歡，並用低成本方式讓它被看見。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/resources/#supply-vivian">打開補給站</a>
-      <a class="secondary-btn" href="/characters/vivian/">守護者</a>
-      <a class="secondary-btn" href="/luna-yoga-music/#luna-vivian">開啟 Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">前往博客來</a>
+      <a class="primary-btn" href="/resources/#supply-vivian" data-funnel-event="repair_guardian_supply_route">打開補給站</a>
+      <a class="secondary-btn" href="/characters/vivian/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/luna-yoga-music/#luna-vivian" data-funnel-event="repair_guardian_luna">開啟 Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">前往博客來</a>
     </div>
   </div>
 </article>
@@ -418,10 +418,10 @@
     <p>容易把沒有人主動分擔，感覺成自己不值得被照顧。</p>
     <p><strong>你的修復任務:</strong> 把一件想被幫忙的事寫成具體請求：時間、動作、完成標準。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/resources/#supply-claire">打開補給站</a>
-      <a class="secondary-btn" href="/characters/claire/">守護者</a>
-      <a class="secondary-btn" href="/luna-yoga-music/#luna-claire">開啟 Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">前往博客來</a>
+      <a class="primary-btn" href="/resources/#supply-claire" data-funnel-event="repair_guardian_supply_route">打開補給站</a>
+      <a class="secondary-btn" href="/characters/claire/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/luna-yoga-music/#luna-claire" data-funnel-event="repair_guardian_luna">開啟 Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">前往博客來</a>
     </div>
   </div>
 </article>
@@ -434,10 +434,10 @@
     <p>容易在靠近太快、太突然或沒有確認時，身體先關門。</p>
     <p><strong>你的修復任務:</strong> 建立一個安全靠近句：我現在可以抱你嗎？如果不行，我可以坐在旁邊。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/resources/#supply-dora">打開補給站</a>
-      <a class="secondary-btn" href="/characters/dora/">守護者</a>
-      <a class="secondary-btn" href="/luna-yoga-music/#luna-dora">開啟 Luna</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">前往博客來</a>
+      <a class="primary-btn" href="/resources/#supply-dora" data-funnel-event="repair_guardian_supply_route">打開補給站</a>
+      <a class="secondary-btn" href="/characters/dora/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/luna-yoga-music/#luna-dora" data-funnel-event="repair_guardian_luna">開啟 Luna</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">前往博客來</a>
     </div>
   </div>
 </article>

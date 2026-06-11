@@ -57,44 +57,44 @@
   <p class="eyebrow">7日間の心語修復プラン</p>
   <h1>7日間の心語修復プラン</h1>
   <p>診断後、関係全体をすぐ修復する必要はありません。七日間で守護者の結果を見返せる練習ルートにします。傷を見つけ、小さなお願いにし、補給を一つ選びます。</p>
-  <div class="hero-actions"><a class="primary-btn" href="/ja/#quiz-section">診断を始める</a><a class="secondary-btn" href="/ja/resources/">補給ステーションを開く</a><a class="secondary-btn" href="#repair-card-pack">このルートを保存</a></div>
+  <div class="hero-actions" data-repair-hero-actions><a class="primary-btn" href="/ja/#quiz-section" data-funnel-event="repair_hero_quiz">診断を始める</a><a class="secondary-btn" href="/ja/resources/" data-funnel-event="repair_hero_resources">補給ステーションを開く</a><a class="secondary-btn" href="#repair-card-pack" data-funnel-event="repair_hero_asset_pack">このルートを保存</a></div>
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
-  <div class="section-head"><div><p class="eyebrow">印刷できるワークシート</p><h2>無料修復カードパック</h2></div><a href="/ja/luna-yoga-music/">Luna を開く</a></div>
+  <div class="section-head"><div><p class="eyebrow">印刷できるワークシート</p><h2>無料修復カードパック</h2></div><a href="/ja/luna-yoga-music/" data-funnel-event="repair_asset_section_luna">Luna を開く</a></div>
   <p class="section-intro">今週のルートを持ち帰れる四つの道具にします。守護者カードを保存し、ワークシートを埋め、Luna で夜の整理をして、必要な時だけ補給を申請します。</p>
   <div class="supply-panel-grid repair-asset-grid">
 <article class="repair-asset-card">
   <span>01</span>
   <h3>守護者コレクションカード</h3>
   <p>守護者のストーリー画像を保存し、今週のルートへ戻る入口にします。</p>
-  <a class="secondary-btn" href="/ja/keepsakes/">コレクション室を開く</a>
+  <a class="secondary-btn" href="/ja/keepsakes/" data-funnel-event="repair_asset_1">コレクション室を開く</a>
 </article>
 
 <article class="repair-asset-card">
   <span>02</span>
   <h3>7日間の印刷ワークシート</h3>
   <p>すれ違い、お願い、選ぶ補給を一枚にまとめ、印刷または PDF 保存します。</p>
-  <a class="secondary-btn" href="#repair-worksheet">ワークシートを書く</a>
+  <a class="secondary-btn" href="#repair-worksheet" data-funnel-event="repair_asset_2">ワークシートを書く</a>
 </article>
 
 <article class="repair-asset-card">
   <span>03</span>
   <h3>Luna 夜の整理</h3>
   <p>眠る前や衝突後に雑音を下げ、この修復ルートへ戻ります。</p>
-  <a class="secondary-btn" href="/ja/luna-yoga-music/">Luna を開く</a>
+  <a class="secondary-btn" href="/ja/luna-yoga-music/" data-funnel-event="repair_asset_3">Luna を開く</a>
 </article>
 
 <article class="repair-asset-card">
   <span>04</span>
   <h3>補給リクエスト</h3>
   <p>次の一歩をより明確にしたい時、守護者ルートと欲しい補給を送ります。</p>
-  <a class="secondary-btn" href="/ja/contact#luna-supply-request">補給を申請</a>
+  <a class="secondary-btn" href="/ja/contact#luna-supply-request" data-funnel-event="repair_asset_4">補給を申請</a>
 </article>
 </div>
 </section>
 <section class="section repair-plan-section">
-  <div class="section-head"><div><p class="eyebrow">一週間の練習ルート</p><h2>一週間の練習ルート</h2></div><a href="/ja/resources/">補給ステーションを開く</a></div>
+  <div class="section-head"><div><p class="eyebrow">一週間の練習ルート</p><h2>一週間の練習ルート</h2></div><a href="/ja/resources/" data-funnel-event="repair_week_resources">補給ステーションを開く</a></div>
   <div class="repair-day-grid">
 <article>
   <span>1日目</span>
@@ -314,13 +314,13 @@
           <p>${resumeIntro}</p>
           <p><strong>${result.supplyTitle}</strong> · ${result.supplyMission}</p>
           <div class="repair-resume-actions">
-            <button class="primary-btn" type="button" data-fill-repair>${resumeFill}</button>
-            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route>${quiz.labels.saved_route}</a>
-            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan>${resumePlan}</a>
-            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna>${quiz.labels.saved_luna}</a>
-            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake>${result.collectorHall}</a>
-            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact>${quiz.labels.saved_contact}</a>
-            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored">${bookstoreLabel}</a>
+            <button class="primary-btn" type="button" data-fill-repair data-funnel-event="repair_resume_fill">${resumeFill}</button>
+            <a class="secondary-btn" href="${result.resourceUrl}" data-repair-resume-route data-funnel-event="repair_resume_route">${quiz.labels.saved_route}</a>
+            <a class="secondary-btn" href="${result.planUrl}" data-repair-resume-plan data-funnel-event="repair_resume_plan">${resumePlan}</a>
+            <a class="secondary-btn" href="${result.lunaUrl}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${quiz.labels.saved_luna}</a>
+            <a class="secondary-btn" href="${result.collectorHallUrl}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${result.collectorHall}</a>
+            <a class="secondary-btn" href="${result.contactUrl}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${quiz.labels.saved_contact}</a>
+            <a class="secondary-btn" href="${result.supplyBookUrl}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_resume_affiliate_book">${bookstoreLabel}</a>
           </div>
         </div>
       </article>`;
@@ -360,7 +360,7 @@
 </script>
 
 <section class="section repair-guardian-section">
-  <div class="section-head"><div><p class="eyebrow">守護者ルート</p><h2>守護者別の調整</h2></div><a href="/ja/#quiz-section">診断を始める</a></div>
+  <div class="section-head"><div><p class="eyebrow">守護者ルート</p><h2>守護者別の調整</h2></div><a href="/ja/#quiz-section" data-funnel-event="repair_guardian_section_quiz">診断を始める</a></div>
   <div class="repair-guardian-grid">
 <article class="repair-guardian-card" id="plan-iris">
   <img src="/assets/lovetypes/props/affirmation-feather-pen.webp" alt="アイリス言葉の補給" width="285" height="235" loading="lazy" decoding="async" fetchpriority="low" />
@@ -370,10 +370,10 @@
     <p>肯定されないことを大切にされていないと読み、ニーズを試す形にしやすい。</p>
     <p><strong>あなたの修復課題:</strong> 今日、見る、感謝する、認めるの三つの具体的な肯定を書きます。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/ja/resources/#supply-iris">補給ステーションを開く</a>
-      <a class="secondary-btn" href="/ja/characters/iris/">守護者</a>
-      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-iris">Luna を開く</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">書店を見る</a>
+      <a class="primary-btn" href="/ja/resources/#supply-iris" data-funnel-event="repair_guardian_supply_route">補給ステーションを開く</a>
+      <a class="secondary-btn" href="/ja/characters/iris/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-iris" data-funnel-event="repair_guardian_luna">Luna を開く</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">書店を見る</a>
     </div>
   </div>
 </article>
@@ -386,10 +386,10 @@
     <p>痛みは、隣にいるのに心が不在なことから生まれやすい。</p>
     <p><strong>あなたの修復課題:</strong> スマホなしの十五分を作り、今週一番一緒に感じた瞬間を聞きます。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/ja/resources/#supply-noah">補給ステーションを開く</a>
-      <a class="secondary-btn" href="/ja/characters/noah/">守護者</a>
-      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-noah">Luna を開く</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">書店を見る</a>
+      <a class="primary-btn" href="/ja/resources/#supply-noah" data-funnel-event="repair_guardian_supply_route">補給ステーションを開く</a>
+      <a class="secondary-btn" href="/ja/characters/noah/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-noah" data-funnel-event="repair_guardian_luna">Luna を開く</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">書店を見る</a>
     </div>
   </div>
 </article>
@@ -402,10 +402,10 @@
     <p>大切な日に何もないと、心に置かれていないと感じやすい。</p>
     <p><strong>あなたの修復課題:</strong> 相手の小さな好みを一つ記録し、低コストで見える形にします。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/ja/resources/#supply-vivian">補給ステーションを開く</a>
-      <a class="secondary-btn" href="/ja/characters/vivian/">守護者</a>
-      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-vivian">Luna を開く</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">書店を見る</a>
+      <a class="primary-btn" href="/ja/resources/#supply-vivian" data-funnel-event="repair_guardian_supply_route">補給ステーションを開く</a>
+      <a class="secondary-btn" href="/ja/characters/vivian/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-vivian" data-funnel-event="repair_guardian_luna">Luna を開く</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">書店を見る</a>
     </div>
   </div>
 </article>
@@ -418,10 +418,10 @@
     <p>誰も分担しない時、自分はケアされる価値がないと感じやすい。</p>
     <p><strong>あなたの修復課題:</strong> 助けてほしいことを、時間、行動、完了条件つきの具体的なお願いにします。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/ja/resources/#supply-claire">補給ステーションを開く</a>
-      <a class="secondary-btn" href="/ja/characters/claire/">守護者</a>
-      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-claire">Luna を開く</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">書店を見る</a>
+      <a class="primary-btn" href="/ja/resources/#supply-claire" data-funnel-event="repair_guardian_supply_route">補給ステーションを開く</a>
+      <a class="secondary-btn" href="/ja/characters/claire/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-claire" data-funnel-event="repair_guardian_luna">Luna を開く</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">書店を見る</a>
     </div>
   </div>
 </article>
@@ -434,10 +434,10 @@
     <p>近づき方が急すぎる、確認がない時、身体が先に閉じやすい。</p>
     <p><strong>あなたの修復課題:</strong> 安全な近づきの一文を作ります。今抱きしめてもいい？無理なら隣に座るね。</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="/ja/resources/#supply-dora">補給ステーションを開く</a>
-      <a class="secondary-btn" href="/ja/characters/dora/">守護者</a>
-      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-dora">Luna を開く</a>
-      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored">書店を見る</a>
+      <a class="primary-btn" href="/ja/resources/#supply-dora" data-funnel-event="repair_guardian_supply_route">補給ステーションを開く</a>
+      <a class="secondary-btn" href="/ja/characters/dora/" data-funnel-event="repair_guardian_profile">守護者</a>
+      <a class="secondary-btn" href="/ja/luna-yoga-music/#luna-dora" data-funnel-event="repair_guardian_luna">Luna を開く</a>
+      <a class="secondary-btn" href="https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">書店を見る</a>
     </div>
   </div>
 </article>

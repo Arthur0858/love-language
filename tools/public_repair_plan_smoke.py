@@ -131,17 +131,21 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
     issues: list[str] = []
     stats = {
         "pages": 0,
+        "hero_events": 0,
         "day_cards": 0,
         "worksheet_fields": 0,
         "worksheet_actions": 0,
         "asset_sections": 0,
         "asset_cards": 0,
         "asset_links": 0,
+        "asset_events": 0,
         "guardian_cards": 0,
+        "guardian_action_events": 0,
         "guardian_supply_links": 0,
         "guardian_character_links": 0,
         "guardian_luna_links": 0,
         "guardian_affiliate_links": 0,
+        "resume_events": 0,
         "resume_templates": 0,
         "safety_sections": 0,
     }
@@ -157,6 +161,35 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: missing saved result repair resume template")
     else:
         stats["resume_templates"] += 1
+        expected_resume_events = {
+            "repair_resume_fill",
+            "repair_resume_route",
+            "repair_resume_plan",
+            "repair_resume_luna",
+            "repair_resume_keepsake",
+            "repair_resume_contact",
+            "repair_resume_affiliate_book",
+        }
+        missing_resume_events = [
+            event for event in sorted(expected_resume_events)
+            if f'data-funnel-event="{event}"' not in response.text
+        ]
+        if missing_resume_events:
+            issues.append(f"{path}: repair resume template missing events {', '.join(missing_resume_events)}")
+        else:
+            stats["resume_events"] += len(expected_resume_events)
+
+    hero_actions = next((item for item in walk(root) if item.attrs.get("data-repair-hero-actions") == ""), None)
+    if hero_actions is None:
+        issues.append(f"{path}: missing repair hero actions")
+    else:
+        expected_hero_events = {"repair_hero_quiz", "repair_hero_resources", "repair_hero_asset_pack"}
+        hero_events = {link.attrs.get("data-funnel-event", "") for link in descendants(hero_actions, "a")}
+        missing_hero_events = expected_hero_events.difference(hero_events)
+        if missing_hero_events:
+            issues.append(f"{path}: repair hero missing events {', '.join(sorted(missing_hero_events))}")
+        else:
+            stats["hero_events"] += len(expected_hero_events)
 
     asset_section = find_by_id(root, "repair-card-pack")
     if asset_section is None:
@@ -170,12 +203,19 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         if len(asset_cards) != 4:
             issues.append(f"{path}: expected four repair asset cards, got {len(asset_cards)}")
         asset_hrefs = [link.attrs.get("href", "") for link in descendants(asset_section, "a")]
+        asset_events = {link.attrs.get("data-funnel-event", "") for link in descendants(asset_section, "a")}
         expected_asset_links = {
             localized_path(lang, "keepsakes"),
             "#repair-worksheet",
             localized_path(lang, "luna-yoga-music"),
             localized_path(lang, "contact").rstrip("/") + "#luna-supply-request",
         }
+        expected_asset_events = {"repair_asset_1", "repair_asset_2", "repair_asset_3", "repair_asset_4", "repair_asset_section_luna"}
+        missing_asset_events = expected_asset_events.difference(asset_events)
+        if missing_asset_events:
+            issues.append(f"{path}: repair asset pack missing events {', '.join(sorted(missing_asset_events))}")
+        else:
+            stats["asset_events"] += len(expected_asset_events)
         for expected in expected_asset_links:
             if expected in asset_hrefs:
                 stats["asset_links"] += 1
@@ -239,7 +279,20 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         if not has_class(card, "repair-guardian-card"):
             issues.append(f"{path}: #plan-{slug} should be repair-guardian-card")
         stats["guardian_cards"] += 1
-        hrefs = [link.attrs.get("href", "") for link in descendants(card, "a")]
+        card_links = descendants(card, "a")
+        hrefs = [link.attrs.get("href", "") for link in card_links]
+        guardian_events = {link.attrs.get("data-funnel-event", "") for link in card_links}
+        expected_guardian_events = {
+            "repair_guardian_supply_route",
+            "repair_guardian_profile",
+            "repair_guardian_luna",
+            "repair_guardian_affiliate_book",
+        }
+        missing_guardian_events = expected_guardian_events.difference(guardian_events)
+        if missing_guardian_events:
+            issues.append(f"{path}: {slug} repair card missing events {', '.join(sorted(missing_guardian_events))}")
+        else:
+            stats["guardian_action_events"] += len(expected_guardian_events)
         supply = localized_path(lang, "resources") + f"#supply-{slug}"
         character = localized_path(lang, f"characters/{slug}")
         luna = localized_path(lang, "luna-yoga-music") + f"#luna-{slug}"
@@ -275,17 +328,21 @@ def main() -> int:
     issues: list[str] = []
     totals = {
         "pages": 0,
+        "hero_events": 0,
         "day_cards": 0,
         "worksheet_fields": 0,
         "worksheet_actions": 0,
         "asset_sections": 0,
         "asset_cards": 0,
         "asset_links": 0,
+        "asset_events": 0,
         "guardian_cards": 0,
+        "guardian_action_events": 0,
         "guardian_supply_links": 0,
         "guardian_character_links": 0,
         "guardian_luna_links": 0,
         "guardian_affiliate_links": 0,
+        "resume_events": 0,
         "resume_templates": 0,
         "safety_sections": 0,
     }
@@ -296,18 +353,22 @@ def main() -> int:
             totals[key] += value
 
     print(f"public_repair_plan_pages_checked={totals['pages']}")
+    print(f"public_repair_plan_hero_events_checked={totals['hero_events']}")
     print(f"public_repair_plan_day_cards_checked={totals['day_cards']}")
     print(f"public_repair_plan_worksheet_fields_checked={totals['worksheet_fields']}")
     print(f"public_repair_plan_worksheet_actions_checked={totals['worksheet_actions']}")
     print(f"public_repair_plan_asset_sections_checked={totals['asset_sections']}")
     print(f"public_repair_plan_asset_cards_checked={totals['asset_cards']}")
     print(f"public_repair_plan_asset_links_checked={totals['asset_links']}")
+    print(f"public_repair_plan_asset_events_checked={totals['asset_events']}")
     print(f"public_repair_plan_guardian_cards_checked={totals['guardian_cards']}")
+    print(f"public_repair_plan_guardian_action_events_checked={totals['guardian_action_events']}")
     print(f"public_repair_plan_guardian_supply_links_checked={totals['guardian_supply_links']}")
     print(f"public_repair_plan_guardian_character_links_checked={totals['guardian_character_links']}")
     print(f"public_repair_plan_guardian_luna_links_checked={totals['guardian_luna_links']}")
     print(f"public_repair_plan_guardian_affiliate_links_checked={totals['guardian_affiliate_links']}")
     print(f"public_repair_plan_resume_templates_checked={totals['resume_templates']}")
+    print(f"public_repair_plan_resume_events_checked={totals['resume_events']}")
     print(f"public_repair_plan_safety_sections_checked={totals['safety_sections']}")
     print(f"public_repair_plan_issues={len(issues)}")
     for issue in issues[:100]:

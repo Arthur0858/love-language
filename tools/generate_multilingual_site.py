@@ -8404,13 +8404,13 @@ def repair_worksheet_script(lang: str) -> str:
           <p>${{resumeIntro}}</p>
           <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
           <div class="repair-resume-actions">
-            <button class="primary-btn" type="button" data-fill-repair>${{resumeFill}}</button>
-            <a class="secondary-btn" href="${{result.resourceUrl}}" data-repair-resume-route>${{quiz.labels.saved_route}}</a>
-            <a class="secondary-btn" href="${{result.planUrl}}" data-repair-resume-plan>${{resumePlan}}</a>
-            <a class="secondary-btn" href="${{result.lunaUrl}}" data-repair-resume-luna>${{quiz.labels.saved_luna}}</a>
-            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-repair-resume-keepsake>${{result.collectorHall}}</a>
-            <a class="secondary-btn" href="${{result.contactUrl}}" data-repair-resume-contact>${{quiz.labels.saved_contact}}</a>
-            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{bookstoreLabel}}</a>
+            <button class="primary-btn" type="button" data-fill-repair data-funnel-event="repair_resume_fill">${{resumeFill}}</button>
+            <a class="secondary-btn" href="${{result.resourceUrl}}" data-repair-resume-route data-funnel-event="repair_resume_route">${{quiz.labels.saved_route}}</a>
+            <a class="secondary-btn" href="${{result.planUrl}}" data-repair-resume-plan data-funnel-event="repair_resume_plan">${{resumePlan}}</a>
+            <a class="secondary-btn" href="${{result.lunaUrl}}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${{quiz.labels.saved_luna}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${{result.collectorHall}}</a>
+            <a class="secondary-btn" href="${{result.contactUrl}}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${{quiz.labels.saved_contact}}</a>
+            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_resume_affiliate_book">${{bookstoreLabel}}</a>
           </div>
         </div>
       </article>`;
@@ -8468,7 +8468,7 @@ def repair_plan_page(lang: str) -> None:
   <span>{escape(label)}</span>
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
-  <a class="secondary-btn" href="{repair_asset_url(route)}">{escape(cta)}</a>
+  <a class="secondary-btn" href="{repair_asset_url(route)}" data-funnel-event="repair_asset_{idx}">{escape(cta)}</a>
 </article>
 """ for idx, (title, desc, route, cta) in enumerate(plan["asset_items"], 1) for label in (f"{idx:02d}",))
     days = "".join(f"""
@@ -8498,10 +8498,10 @@ def repair_plan_page(lang: str) -> None:
     <p>{escape(route["wound"])}</p>
     <p><strong>{escape(SUPPLY_LABELS[lang]["repair"])}:</strong> {escape(route["mission"])}</p>
     <div class="repair-plan-actions">
-      <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(REPAIR_PLAN[lang]["resources"])}</a>
-      <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}">{escape(t["guardians"])}</a>
-      <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
-      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+      <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="repair_guardian_supply_route">{escape(REPAIR_PLAN[lang]["resources"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="repair_guardian_profile">{escape(t["guardians"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}" data-funnel-event="repair_guardian_luna">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
+      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
     </div>
   </div>
 </article>
@@ -8511,16 +8511,16 @@ def repair_plan_page(lang: str) -> None:
   <p class="eyebrow">{escape(plan["eyebrow"])}</p>
   <h1>{escape(plan["title"])}</h1>
   <p>{escape(plan["desc"])}</p>
-  <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a><a class="secondary-btn" href="#repair-card-pack">{escape(plan["download"])}</a></div>
+  <div class="hero-actions" data-repair-hero-actions><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-funnel-event="repair_hero_quiz">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="repair_hero_resources">{escape(plan["resources"])}</a><a class="secondary-btn" href="#repair-card-pack" data-funnel-event="repair_hero_asset_pack">{escape(plan["download"])}</a></div>
 </section>
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["asset_title"])}</h2></div><a href="{lang_url(lang, "luna-yoga-music")}">{escape(plan["asset_items"][2][3])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["asset_title"])}</h2></div><a href="{lang_url(lang, "luna-yoga-music")}" data-funnel-event="repair_asset_section_luna">{escape(plan["asset_items"][2][3])}</a></div>
   <p class="section-intro">{escape(plan["asset_intro"])}</p>
   <div class="supply-panel-grid repair-asset-grid">{asset_cards}</div>
 </section>
 <section class="section repair-plan-section">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["week_route"])}</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(plan["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["week_route"])}</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}" data-funnel-event="repair_week_resources">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
 </section>
 <section class="section repair-worksheet-section" id="repair-worksheet">
@@ -8531,7 +8531,7 @@ def repair_plan_page(lang: str) -> None:
 </section>
 {repair_worksheet_script(lang)}
 <section class="section repair-guardian-section">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["guardian_routes"])}</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(plan["start"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["guardian_routes"])}</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section" data-funnel-event="repair_guardian_section_quiz">{escape(plan["start"])}</a></div>
   <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>
   <p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p>
 </section>

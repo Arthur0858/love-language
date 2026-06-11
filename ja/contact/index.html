@@ -193,7 +193,12 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "端末内経路の摘要", "title": "この端末の最近の経路をコピー", "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。", "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。", "copy": "最近の経路をコピー", "clear": "端末内の経路記録を消す", "copied": "コピーしました", "cleared": "消去しました", "event": "イベント", "category": "分類", "guardian": "守護者", "source": "元のセクション", "language": "言語", "path": "ページ", "target": "目標", "target_type": "目標タイプ", "time": "時間", "count": "最近 {count} 件"};
+  const labels = {"eyebrow": "端末内経路の摘要", "title": "この端末の最近の経路をコピー", "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。", "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。", "empty_quiz": "診断を始める", "empty_resources": "補給を開く", "empty_luna": "Luna を開く", "copy": "最近の経路をコピー", "clear": "端末内の経路記録を消す", "copied": "コピーしました", "cleared": "消去しました", "event": "イベント", "category": "分類", "guardian": "守護者", "source": "元のセクション", "language": "言語", "path": "ページ", "target": "目標", "target_type": "目標タイプ", "time": "時間", "count": "最近 {count} 件"};
+  const emptyActions = {
+    quiz: "/ja/#quiz-section",
+    resources: "/ja/resources/",
+    luna: "/ja/luna-yoga-music/"
+  };
   const box = document.querySelector('[data-contact-funnel-summary]');
   if (!box) return;
   const key = 'lovetypes:funnel-events:v1';
@@ -249,7 +254,12 @@
     if (!events.length) {
       box.innerHTML = `
         <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
-        <p class="section-intro">${labels.empty}</p>`;
+        <p class="section-intro">${labels.empty}</p>
+        <div class="contact-request-note" data-contact-funnel-empty-actions>
+          <a class="primary-btn" href="${emptyActions.quiz}" data-funnel-event="contact_empty_quiz">${labels.empty_quiz}</a>
+          <a class="secondary-btn" href="${emptyActions.resources}" data-funnel-event="contact_empty_resources">${labels.empty_resources}</a>
+          <a class="secondary-btn" href="${emptyActions.luna}" data-funnel-event="contact_empty_luna">${labels.empty_luna}</a>
+        </div>`;
       return;
     }
     const recent = events.slice(-8).reverse();

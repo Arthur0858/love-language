@@ -61,6 +61,12 @@ def localized_contact_anchor(lang: str, target: str) -> str:
     return localized_path(lang, "contact") + f"#{target}"
 
 
+def localized_home_anchor(lang: str, target: str) -> str:
+    prefix = LOCALE_PREFIXES[lang]
+    path = f"/{prefix}/" if prefix else "/"
+    return f"{path}#{target}"
+
+
 def expectations() -> list[LocaleExpectation]:
     generator = load_module("lovetypes_generator_contact_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     return [
@@ -106,6 +112,7 @@ def main() -> int:
     funnel_summary_actions_checked = 0
     funnel_summary_context_labels_checked = 0
     funnel_summary_context_fields_checked = 0
+    funnel_summary_empty_actions_checked = 0
 
     for item in expectations():
         response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
@@ -145,6 +152,22 @@ def main() -> int:
                 issues.append(f"{item.path}: local funnel summary missing context field {field}")
             else:
                 funnel_summary_context_fields_checked += 1
+        empty_action_expectations = (
+            ("contact_empty_quiz", generator.CONTACT_FUNNEL_SUMMARY[item.lang]["empty_quiz"], localized_home_anchor(item.lang, "quiz-section")),
+            ("contact_empty_resources", generator.CONTACT_FUNNEL_SUMMARY[item.lang]["empty_resources"], localized_path(item.lang, "resources")),
+            ("contact_empty_luna", generator.CONTACT_FUNNEL_SUMMARY[item.lang]["empty_luna"], localized_path(item.lang, "luna-yoga-music")),
+        )
+        if "data-contact-funnel-empty-actions" not in response.text:
+            issues.append(f"{item.path}: local funnel empty state missing recovery actions")
+        for event_name, label, href in empty_action_expectations:
+            if event_name not in response.text:
+                issues.append(f"{item.path}: local funnel empty state missing {event_name}")
+            elif label not in response.text:
+                issues.append(f"{item.path}: local funnel empty state missing label {label}")
+            elif href not in response.text:
+                issues.append(f"{item.path}: local funnel empty state missing href {href}")
+            else:
+                funnel_summary_empty_actions_checked += 1
         for marker in CONTACT_SAVED_RESULT_MARKERS:
             if marker not in response.text:
                 issues.append(f"{item.path}: saved result handoff missing {marker}")
@@ -271,6 +294,7 @@ def main() -> int:
     print(f"public_contact_funnel_summary_actions_checked={funnel_summary_actions_checked}")
     print(f"public_contact_funnel_summary_context_labels_checked={funnel_summary_context_labels_checked}")
     print(f"public_contact_funnel_summary_context_fields_checked={funnel_summary_context_fields_checked}")
+    print(f"public_contact_funnel_summary_empty_actions_checked={funnel_summary_empty_actions_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:
         print(issue)

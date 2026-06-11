@@ -193,7 +193,12 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "copy": "複製最近路徑摘要", "clear": "清除本機路徑紀錄", "copied": "已複製", "cleared": "已清除", "event": "事件", "category": "分類", "guardian": "守護者", "source": "來源區塊", "language": "語言", "path": "頁面", "target": "目標", "target_type": "目標類型", "time": "時間", "count": "最近 {count} 筆"};
+  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "empty_quiz": "開始測驗", "empty_resources": "打開旅人補給", "empty_luna": "開啟 Luna", "copy": "複製最近路徑摘要", "clear": "清除本機路徑紀錄", "copied": "已複製", "cleared": "已清除", "event": "事件", "category": "分類", "guardian": "守護者", "source": "來源區塊", "language": "語言", "path": "頁面", "target": "目標", "target_type": "目標類型", "time": "時間", "count": "最近 {count} 筆"};
+  const emptyActions = {
+    quiz: "/#quiz-section",
+    resources: "/resources/",
+    luna: "/luna-yoga-music/"
+  };
   const box = document.querySelector('[data-contact-funnel-summary]');
   if (!box) return;
   const key = 'lovetypes:funnel-events:v1';
@@ -249,7 +254,12 @@
     if (!events.length) {
       box.innerHTML = `
         <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
-        <p class="section-intro">${labels.empty}</p>`;
+        <p class="section-intro">${labels.empty}</p>
+        <div class="contact-request-note" data-contact-funnel-empty-actions>
+          <a class="primary-btn" href="${emptyActions.quiz}" data-funnel-event="contact_empty_quiz">${labels.empty_quiz}</a>
+          <a class="secondary-btn" href="${emptyActions.resources}" data-funnel-event="contact_empty_resources">${labels.empty_resources}</a>
+          <a class="secondary-btn" href="${emptyActions.luna}" data-funnel-event="contact_empty_luna">${labels.empty_luna}</a>
+        </div>`;
       return;
     }
     const recent = events.slice(-8).reverse();

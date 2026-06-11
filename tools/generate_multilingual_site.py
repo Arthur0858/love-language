@@ -1574,6 +1574,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "title": "複製這台裝置的最近路徑",
         "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。",
         "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。",
+        "empty_quiz": "開始測驗",
+        "empty_resources": "打開旅人補給",
+        "empty_luna": "開啟 Luna",
         "copy": "複製最近路徑摘要",
         "clear": "清除本機路徑紀錄",
         "copied": "已複製",
@@ -1594,6 +1597,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "title": "Copy this device's recent path",
         "intro": "When you report an issue or request supplies, you can include the recent LoveTypes path. This summary is read only from this browser and is shared only if you copy or send it.",
         "empty": "No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.",
+        "empty_quiz": "Start quiz",
+        "empty_resources": "Open resources",
+        "empty_luna": "Open Luna",
         "copy": "Copy recent path summary",
         "clear": "Clear local path log",
         "copied": "Copied",
@@ -1614,6 +1620,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "title": "この端末の最近の経路をコピー",
         "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。",
         "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。",
+        "empty_quiz": "診断を始める",
+        "empty_resources": "補給を開く",
+        "empty_luna": "Luna を開く",
         "copy": "最近の経路をコピー",
         "clear": "端末内の経路記録を消す",
         "copied": "コピーしました",
@@ -1634,6 +1643,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "title": "이 기기의 최근 경로 복사",
         "intro": "문제 제보나 보급 요청을 보낼 때 LoveTypes에서 최근 지나간 경로를 함께 보낼 수 있습니다. 이 요약은 이 브라우저에서만 읽고, 복사하거나 보낼 때만 공유됩니다.",
         "empty": "아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.",
+        "empty_quiz": "테스트 시작",
+        "empty_resources": "보급 열기",
+        "empty_luna": "Luna 열기",
         "copy": "최근 경로 요약 복사",
         "clear": "로컬 경로 기록 지우기",
         "copied": "복사됨",
@@ -1654,6 +1666,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "title": "Copiar la ruta reciente de este dispositivo",
         "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.",
         "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.",
+        "empty_quiz": "Iniciar test",
+        "empty_resources": "Abrir recursos",
+        "empty_luna": "Abrir Luna",
         "copy": "Copiar resumen reciente",
         "clear": "Borrar registro local",
         "copied": "Copiado",
@@ -5872,10 +5887,18 @@ def contact_template_copy_script(lang: str) -> str:
 
 def contact_funnel_summary_script(lang: str) -> str:
     labels = json.dumps(CONTACT_FUNNEL_SUMMARY[lang], ensure_ascii=False)
+    quiz_href = json.dumps(lang_url(lang, "") + "#quiz-section")
+    resources_href = json.dumps(lang_url(lang, "resources"))
+    luna_href = json.dumps(lang_url(lang, "luna-yoga-music"))
     return f"""
 <script>
 (() => {{
   const labels = {labels};
+  const emptyActions = {{
+    quiz: {quiz_href},
+    resources: {resources_href},
+    luna: {luna_href}
+  }};
   const box = document.querySelector('[data-contact-funnel-summary]');
   if (!box) return;
   const key = 'lovetypes:funnel-events:v1';
@@ -5931,7 +5954,12 @@ def contact_funnel_summary_script(lang: str) -> str:
     if (!events.length) {{
       box.innerHTML = `
         <div class="section-head"><div><p class="eyebrow">${{labels.eyebrow}}</p><h2>${{labels.title}}</h2></div></div>
-        <p class="section-intro">${{labels.empty}}</p>`;
+        <p class="section-intro">${{labels.empty}}</p>
+        <div class="contact-request-note" data-contact-funnel-empty-actions>
+          <a class="primary-btn" href="${{emptyActions.quiz}}" data-funnel-event="contact_empty_quiz">${{labels.empty_quiz}}</a>
+          <a class="secondary-btn" href="${{emptyActions.resources}}" data-funnel-event="contact_empty_resources">${{labels.empty_resources}}</a>
+          <a class="secondary-btn" href="${{emptyActions.luna}}" data-funnel-event="contact_empty_luna">${{labels.empty_luna}}</a>
+        </div>`;
       return;
     }}
     const recent = events.slice(-8).reverse();

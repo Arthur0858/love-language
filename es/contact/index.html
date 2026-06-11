@@ -193,7 +193,12 @@ Captura o notas extra:
 
 <script>
 (() => {
-  const labels = {"eyebrow": "RESUMEN LOCAL DE RUTA", "title": "Copiar la ruta reciente de este dispositivo", "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.", "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.", "copy": "Copiar resumen reciente", "clear": "Borrar registro local", "copied": "Copiado", "cleared": "Borrado", "event": "Evento", "category": "Categoría", "guardian": "Guardiana", "source": "Sección de origen", "language": "Idioma", "path": "Página", "target": "Destino", "target_type": "Tipo de destino", "time": "Hora", "count": "{count} elementos recientes"};
+  const labels = {"eyebrow": "RESUMEN LOCAL DE RUTA", "title": "Copiar la ruta reciente de este dispositivo", "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.", "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.", "empty_quiz": "Iniciar test", "empty_resources": "Abrir recursos", "empty_luna": "Abrir Luna", "copy": "Copiar resumen reciente", "clear": "Borrar registro local", "copied": "Copiado", "cleared": "Borrado", "event": "Evento", "category": "Categoría", "guardian": "Guardiana", "source": "Sección de origen", "language": "Idioma", "path": "Página", "target": "Destino", "target_type": "Tipo de destino", "time": "Hora", "count": "{count} elementos recientes"};
+  const emptyActions = {
+    quiz: "/es/#quiz-section",
+    resources: "/es/resources/",
+    luna: "/es/luna-yoga-music/"
+  };
   const box = document.querySelector('[data-contact-funnel-summary]');
   if (!box) return;
   const key = 'lovetypes:funnel-events:v1';
@@ -249,7 +254,12 @@ Captura o notas extra:
     if (!events.length) {
       box.innerHTML = `
         <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
-        <p class="section-intro">${labels.empty}</p>`;
+        <p class="section-intro">${labels.empty}</p>
+        <div class="contact-request-note" data-contact-funnel-empty-actions>
+          <a class="primary-btn" href="${emptyActions.quiz}" data-funnel-event="contact_empty_quiz">${labels.empty_quiz}</a>
+          <a class="secondary-btn" href="${emptyActions.resources}" data-funnel-event="contact_empty_resources">${labels.empty_resources}</a>
+          <a class="secondary-btn" href="${emptyActions.luna}" data-funnel-event="contact_empty_luna">${labels.empty_luna}</a>
+        </div>`;
       return;
     }
     const recent = events.slice(-8).reverse();

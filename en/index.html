@@ -35,7 +35,7 @@
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared-20260610-contact-pack.css" />
+  <link rel="stylesheet" href="/shared-20260611-path-pack.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -279,7 +279,7 @@
   </div>
 </section>
 
-<script src="/quiz-data-en-20260610-contact-pack.js"></script>
+<script src="/quiz-data-en-20260611-path-pack.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -413,8 +413,9 @@
             <a href="${result.resourceUrl}" data-home-resume-route>${quiz.labels.saved_route}</a>
             <a href="${result.planUrl}" data-home-saved-plan data-home-resume-plan>${quiz.labels.saved_plan}</a>
             <a href="${result.lunaUrl}" data-home-resume-luna>${quiz.labels.saved_luna}</a>
-            <a href="${result.guardianUrl}" data-home-resume-guardian>${quiz.labels.guardian_link}</a>
             <a href="${result.collectorHallUrl}" data-home-saved-keepsake data-home-resume-keepsake>${quiz.labels.saved_card}</a>
+            <a href="${result.contactUrl}" data-home-resume-contact>${quiz.labels.saved_contact}</a>
+            <a href="${result.guardianUrl}" data-home-resume-guardian>${quiz.labels.guardian_link}</a>
             <button type="button" data-result-action="story" data-story-name="${result.name}" data-story-title="${result.type}" data-story-quote="${result.supplyMission}" data-story-image="${result.resultImage}" data-story-slug="${result.slug}" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
             <button type="button" data-share-saved-result>${quiz.labels.share}</button>
             <button type="button" data-copy-saved-result>${quiz.labels.saved_copy}</button>
@@ -527,6 +528,8 @@
         <a class="primary-btn" href="${result.resourceUrl}" data-conversion-route>${quiz.labels.primary_route}</a>
         <a class="secondary-btn" href="${result.planUrl}" data-conversion-plan>${quiz.labels.secondary_plan}</a>
         <a class="secondary-btn" href="${result.lunaUrl}" data-conversion-luna>${quiz.labels.luna_action}</a>
+        <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-keepsake>${quiz.labels.saved_card}</a>
+        <a class="secondary-btn" href="${result.contactUrl}" data-conversion-contact>${quiz.labels.saved_contact}</a>
         <a class="secondary-btn" href="${result.guideUrl}" data-conversion-guide>${quiz.labels.guide_link}</a>
         <a class="secondary-btn" href="${result.guardianUrl}">${quiz.labels.guardian_link}</a>
       </nav>
@@ -631,7 +634,7 @@
             <a class="primary-btn" href="${result.storyImage}" target="_blank" rel="noopener noreferrer">${result.collectorOpen}</a>
             <a class="secondary-btn" href="${result.storyImage}" download>${result.collectorSave}</a>
             <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
-            <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-keepsake>${result.collectorHall}</a>
+            <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-collector-keepsake>${result.collectorHall}</a>
           </div>
         </div>
       </section>
@@ -677,7 +680,7 @@
   <p>© 2026 LoveTypes · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a> · <a href="/en/contact/">Contact</a></p>
 </footer>
 
-<script src="/site-interactions-20260610-contact-pack.js" defer></script>
+<script src="/site-interactions-20260611-path-pack.js" defer></script>
 
 </body>
 </html>

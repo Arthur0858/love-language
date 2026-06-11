@@ -19,6 +19,7 @@ REQUIRED_RESULT_URLS = (
     "guardianUrl",
     "guideUrl",
     "resourceUrl",
+    "contactUrl",
     "lunaUrl",
     "collectorHallUrl",
     "planUrl",
@@ -221,11 +222,11 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
             if not isinstance(pack.get(key), str) or not pack[key].strip():
                 issues.append(f"{source}: supplyProductPack missing {key}")
         items = pack.get("items")
-        if not isinstance(items, list) or len(items) != 3:
-            issues.append(f"{source}: supplyProductPack should contain three product paths")
+        if not isinstance(items, list) or len(items) != 4:
+            issues.append(f"{source}: supplyProductPack should contain four product paths")
         else:
             hrefs = [item.get("href", "") for item in items if isinstance(item, dict)]
-            expected_internal = ("/keepsakes/#keepsake-card-", "/luna-yoga-music/#luna-")
+            expected_internal = ("/keepsakes/#keepsake-card-", "/luna-yoga-music/#luna-", "/contact/#luna-supply-request")
             for fragment in expected_internal:
                 if not any(fragment in href for href in hrefs):
                     issues.append(f"{source}: supplyProductPack missing route containing {fragment}")

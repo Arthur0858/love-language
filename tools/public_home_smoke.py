@@ -265,7 +265,7 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: missing home saved-result template")
     else:
         stats["saved_templates"] = 1
-    for attr in ("data-home-resume-route", "data-home-resume-plan", "data-home-resume-luna", "data-home-resume-guardian", "data-home-saved-keepsake", "data-clear-home-result"):
+    for attr in ("data-home-resume-route", "data-home-resume-plan", "data-home-resume-luna", "data-home-resume-contact", "data-home-resume-guardian", "data-home-saved-keepsake", "data-clear-home-result"):
         if attr not in response.text:
             issues.append(f"{path}: missing saved-result action {attr}")
         else:

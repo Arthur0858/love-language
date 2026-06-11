@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260610-contact-pack"
+ASSET_VERSION = "20260611-path-pack"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -618,6 +618,7 @@ QUIZ_LABELS = {
         "saved_luna": "開啟 Luna",
         "saved_route": "查看補給路線",
         "saved_card": "開啟守護者卡",
+        "saved_contact": "提出補給需求",
         "saved_copy": "複製分享文字",
         "saved_clear": "清除上次結果",
         "routes_title": "延伸路線",
@@ -673,6 +674,7 @@ QUIZ_LABELS = {
         "saved_luna": "Open Luna",
         "saved_route": "View supply route",
         "saved_card": "Open guardian card",
+        "saved_contact": "Request supply",
         "saved_copy": "Copy share text",
         "saved_clear": "Clear last result",
         "routes_title": "Continue the path",
@@ -728,6 +730,7 @@ QUIZ_LABELS = {
         "saved_luna": "Luna を開く",
         "saved_route": "補給ルートを見る",
         "saved_card": "守護者カードを開く",
+        "saved_contact": "補給を希望する",
         "saved_copy": "共有文をコピー",
         "saved_clear": "前回の結果を消す",
         "routes_title": "続きを読む道筋",
@@ -783,6 +786,7 @@ QUIZ_LABELS = {
         "saved_luna": "Luna 열기",
         "saved_route": "보급 루트 보기",
         "saved_card": "수호자 카드 열기",
+        "saved_contact": "보급 요청하기",
         "saved_copy": "공유 문구 복사",
         "saved_clear": "지난 결과 지우기",
         "routes_title": "이어 갈 길",
@@ -838,6 +842,7 @@ QUIZ_LABELS = {
         "saved_luna": "Abrir Luna",
         "saved_route": "Ver ruta",
         "saved_card": "Abrir tarjeta",
+        "saved_contact": "Pedir recurso",
         "saved_copy": "Copiar texto",
         "saved_clear": "Borrar resultado",
         "routes_title": "Continuar el camino",
@@ -2751,6 +2756,10 @@ KEEPSAKES_PAGE = {
             ("分享入口", "可生成分享卡，把守護者結果變成一句可被理解的心語。"),
             ("未來收藏基底", "桌布、PDF 練習卡與短儀式會優先從這五張免費收藏物延伸。"),
         ],
+        "asset_title": "五位守護者免費收藏物",
+        "asset_intro": "每位守護者先提供一張可保存故事卡，並標記未來最適合延伸的桌布、PDF 練習卡與 Luna 補給格式。",
+        "asset_formats": ["故事卡", "手機桌布候補", "PDF 練習卡候補", "Luna 下載包候補"],
+        "asset_request": "索取這位守護者補給",
         "how_title": "怎麼使用收藏卡",
         "steps": [
             ("保存", "先保存最像你的守護者卡，讓測驗結果不只是一次性的答案。"),
@@ -2774,6 +2783,10 @@ KEEPSAKES_PAGE = {
             ("Share doorway", "Create a story card so the result becomes one heart-language sentence someone can understand."),
             ("Future collectible base", "Wallpapers, PDF practice cards, and short rituals will grow from these free keepsakes first."),
         ],
+        "asset_title": "Five free guardian keepsakes",
+        "asset_intro": "Each guardian starts with one savable story card and a clear signal for future wallpapers, PDF practice cards, and Luna supply formats.",
+        "asset_formats": ["Story card", "Phone wallpaper candidate", "PDF practice card candidate", "Luna download pack candidate"],
+        "asset_request": "Request this guardian supply",
         "how_title": "How to use the cards",
         "steps": [
             ("Save", "Keep the guardian card that feels most like you so the result is not a one-time answer."),
@@ -2797,6 +2810,10 @@ KEEPSAKES_PAGE = {
             ("共有入口", "共有カードを作り、結果を理解されやすい心語の一文にします。"),
             ("今後の土台", "壁紙、PDF 練習カード、短い儀式はこの無料カードから優先して広げます。"),
         ],
+        "asset_title": "五人の守護者の無料コレクション",
+        "asset_intro": "各守護者に保存できるストーリーカードを用意し、今後の壁紙、PDF 練習カード、Luna 補給形式へつなげます。",
+        "asset_formats": ["ストーリーカード", "スマホ壁紙候補", "PDF 練習カード候補", "Luna ダウンロード候補"],
+        "asset_request": "この守護者の補給を希望する",
         "how_title": "カードの使い方",
         "steps": [
             ("保存", "一番自分に近い守護者カードを保存し、結果を一回きりの答えで終わらせません。"),
@@ -2820,6 +2837,10 @@ KEEPSAKES_PAGE = {
             ("공유 입구", "공유 카드를 만들어 결과를 이해 가능한 마음 언어 한 문장으로 바꿉니다."),
             ("미래 소장 기반", "배경화면, PDF 연습 카드, 짧은 의식은 이 무료 소장물에서 먼저 확장됩니다."),
         ],
+        "asset_title": "다섯 수호자 무료 소장물",
+        "asset_intro": "각 수호자마다 저장 가능한 스토리 카드를 먼저 제공하고, 향후 배경화면, PDF 연습 카드, Luna 보급 형식으로 확장합니다.",
+        "asset_formats": ["스토리 카드", "휴대폰 배경화면 후보", "PDF 연습 카드 후보", "Luna 다운로드 후보"],
+        "asset_request": "이 수호자 보급 요청하기",
         "how_title": "카드 사용법",
         "steps": [
             ("저장", "가장 나다운 수호자 카드를 저장해 결과가 한 번의 답으로 끝나지 않게 합니다."),
@@ -2843,6 +2864,10 @@ KEEPSAKES_PAGE = {
             ("Puerta para compartir", "Crea una historia para convertir el resultado en una frase de lenguaje del corazón."),
             ("Base coleccionable futura", "Fondos, tarjetas PDF y rituales breves crecerán primero desde estos recuerdos gratis."),
         ],
+        "asset_title": "Cinco recuerdos gratis de guardianas",
+        "asset_intro": "Cada guardiana empieza con una tarjeta de historia guardable y una señal clara para futuros fondos, tarjetas PDF y packs Luna.",
+        "asset_formats": ["Tarjeta de historia", "Candidato a fondo móvil", "Candidato a tarjeta PDF", "Candidato a pack Luna"],
+        "asset_request": "Pedir recurso de esta guardiana",
         "how_title": "Cómo usar las tarjetas",
         "steps": [
             ("Guardar", "Conserva la tarjeta que más se parece a ti para que el resultado no sea una respuesta de una sola vez."),
@@ -5253,11 +5278,12 @@ def garden_map_resume_script(lang: str) -> str:
         <p>${{resumeIntro}}</p>
         <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
         <div class="garden-map-resume-actions">
-          <a class="primary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-          <a class="secondary-btn" href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
-          <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{quiz.labels.saved_card}}</a>
-          <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
-          <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+          <a class="primary-btn" href="${{result.resourceUrl}}" data-garden-map-route>${{quiz.labels.saved_route}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}" data-garden-map-plan>${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-garden-map-luna>${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-garden-map-keepsake>${{quiz.labels.saved_card}}</a>
+          <a class="secondary-btn" href="${{result.contactUrl}}" data-garden-map-contact>${{quiz.labels.saved_contact}}</a>
+          <a class="secondary-btn" href="${{result.guardianUrl}}" data-garden-map-guardian>${{quiz.labels.guardian_link}}</a>
           <button class="secondary-btn" type="button" data-clear-garden-map-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -5648,6 +5674,44 @@ def keepsake_waitlist_section(lang: str) -> str:
 """
 
 
+def keepsake_free_asset_section(lang: str) -> str:
+    labels = KEEPSAKES_PAGE[lang]
+    format_items = "".join(f"<li>{escape(item)}</li>" for item in labels["asset_formats"])
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        route = supply_route(lang, slug)
+        domain = GUARDIAN_DOMAINS[slug]
+        story_image = guardian_story_image(lang, slug)
+        story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
+        cards.append(f"""
+<article class="collector-card compact" id="free-keepsake-{slug}" data-free-keepsake-asset="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  <img src="{story_image}" alt="{escape(name)} {escape(labels["asset_formats"][0])}" width="{story_width}" height="{story_height}" loading="lazy" decoding="async" fetchpriority="low">
+  <div>
+    <p class="eyebrow">{escape(typ)}</p>
+    <h3>{escape(name)} · {escape(route["title"])}</h3>
+    <p>{escape(route["mission"])}</p>
+    <ul class="keepsake-asset-format-list">{format_items}</ul>
+    <div class="collector-actions">
+      <a href="{story_image}" target="_blank" rel="noopener noreferrer">{escape(COLLECTOR_LABELS[lang]["open"])}</a>
+      <a href="{story_image}" download>{escape(COLLECTOR_LABELS[lang]["download"])}</a>
+      <a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(labels["asset_request"])}</a>
+    </div>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section keepsake-free-assets" data-free-keepsake-assets>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(SECTION_LABELS[lang]["guardian_keepsakes"])}</p><h2>{escape(labels["asset_title"])}</h2></div>
+    <a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(labels["asset_request"])}</a>
+  </div>
+  <p class="section-intro">{escape(labels["asset_intro"])}</p>
+  <div class="collector-grid compact-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def keepsake_resume_script(lang: str) -> str:
     request_supply_label = json.dumps(SUPPLY_LABELS[lang]["request_supply"], ensure_ascii=False)
     contact_request_url = json.dumps(lang_url(lang, "contact") + "#luna-supply-request", ensure_ascii=False)
@@ -5703,10 +5767,12 @@ def keepsake_resume_script(lang: str) -> str:
           <a class="primary-btn" href="${{result.planUrl}}" data-keepsake-plan>${{quiz.labels.saved_plan}}</a>
           <a class="secondary-btn" href="${{result.contactUrl || contactRequestUrl}}" data-keepsake-contact>${{requestSupplyLabel}}</a>
           <a class="secondary-btn" href="${{result.lunaUrl}}" data-keepsake-luna>${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.resourceUrl}}" data-keepsake-route>${{quiz.labels.saved_route}}</a>
+          <a class="secondary-btn" href="${{result.guardianUrl}}" data-keepsake-guardian>${{quiz.labels.guardian_link}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
-          <a class="secondary-btn" href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-keepsake-keepsake>${{result.collectorHall}}</a>
           <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -5756,6 +5822,7 @@ def keepsakes_page(lang: str) -> None:
   <p class="section-intro">{escape(labels["free_intro"])}</p>
   <div class="supply-panel-grid">{free_cards}</div>
 </section>
+{keepsake_free_asset_section(lang)}
 {keepsake_shelf_section(lang)}
 {keepsake_ritual_section(lang)}
 {keepsake_waitlist_section(lang)}
@@ -6358,6 +6425,7 @@ def quiz_payload(lang: str) -> str:
             "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
             "guideTitle": guide[lang][0],
             "resourceUrl": resource_url,
+            "contactUrl": lang_url(lang, "contact") + "#luna-supply-request",
             "supplyTitle": route["title"],
             "supplyDesc": route["desc"],
             "supplyMission": route["mission"],
@@ -6539,8 +6607,9 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.resourceUrl}}" data-home-resume-route>${{quiz.labels.saved_route}}</a>
             <a href="${{result.planUrl}}" data-home-saved-plan data-home-resume-plan>${{quiz.labels.saved_plan}}</a>
             <a href="${{result.lunaUrl}}" data-home-resume-luna>${{quiz.labels.saved_luna}}</a>
-            <a href="${{result.guardianUrl}}" data-home-resume-guardian>${{quiz.labels.guardian_link}}</a>
             <a href="${{result.collectorHallUrl}}" data-home-saved-keepsake data-home-resume-keepsake>${{quiz.labels.saved_card}}</a>
+            <a href="${{result.contactUrl}}" data-home-resume-contact>${{quiz.labels.saved_contact}}</a>
+            <a href="${{result.guardianUrl}}" data-home-resume-guardian>${{quiz.labels.guardian_link}}</a>
             <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
@@ -6653,6 +6722,8 @@ def quiz_script(lang: str) -> str:
         <a class="primary-btn" href="${{result.resourceUrl}}" data-conversion-route>${{quiz.labels.primary_route}}</a>
         <a class="secondary-btn" href="${{result.planUrl}}" data-conversion-plan>${{quiz.labels.secondary_plan}}</a>
         <a class="secondary-btn" href="${{result.lunaUrl}}" data-conversion-luna>${{quiz.labels.luna_action}}</a>
+        <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-keepsake>${{quiz.labels.saved_card}}</a>
+        <a class="secondary-btn" href="${{result.contactUrl}}" data-conversion-contact>${{quiz.labels.saved_contact}}</a>
         <a class="secondary-btn" href="${{result.guideUrl}}" data-conversion-guide>${{quiz.labels.guide_link}}</a>
         <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
       </nav>
@@ -6757,7 +6828,7 @@ def quiz_script(lang: str) -> str:
             <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
             <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
-            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-keepsake>${{result.collectorHall}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-collector-keepsake>${{result.collectorHall}}</a>
           </div>
         </div>
       </section>
@@ -6910,10 +6981,12 @@ def supply_resume_script(lang: str) -> str:
           <p>${{notNowText}}</p>
         </div>
         <div class="quiz-saved-actions">
-          <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
-          <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
-          <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-          <a href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+          <a href="${{result.resourceUrl}}" data-supply-resume-route>${{quiz.labels.saved_route}}</a>
+          <a href="${{result.planUrl}}" data-supply-resume-plan>${{quiz.labels.saved_plan}}</a>
+          <a href="${{result.lunaUrl}}" data-supply-resume-luna>${{quiz.labels.saved_luna}}</a>
+          <a href="${{result.collectorHallUrl}}" data-supply-resume-keepsake>${{quiz.labels.saved_card}}</a>
+          <a href="${{result.contactUrl}}" data-supply-resume-contact>${{quiz.labels.saved_contact}}</a>
+          <a href="${{result.guardianUrl}}" data-supply-resume-guardian>${{quiz.labels.guardian_link}}</a>
           <button type="button" data-clear-supply-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -7043,10 +7116,12 @@ def guide_resume_script(lang: str) -> str:
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{quiz.labels.guide_resume_intro}}</p>
         <div class="quiz-saved-actions">
-          <a href="${{result.planUrl}}">${{quiz.labels.saved_plan}}</a>
-          <a href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
-          <a href="${{result.resourceUrl}}">${{quiz.labels.saved_route}}</a>
-          <a href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+          <a href="${{result.planUrl}}" data-guide-resume-plan>${{quiz.labels.saved_plan}}</a>
+          <a href="${{result.resourceUrl}}" data-guide-resume-route>${{quiz.labels.saved_route}}</a>
+          <a href="${{result.lunaUrl}}" data-guide-resume-luna>${{quiz.labels.saved_luna}}</a>
+          <a href="${{result.collectorHallUrl}}" data-guide-resume-keepsake>${{quiz.labels.saved_card}}</a>
+          <a href="${{result.contactUrl}}" data-guide-resume-contact>${{quiz.labels.saved_contact}}</a>
+          <a href="${{result.guardianUrl}}" data-guide-resume-guardian>${{quiz.labels.guardian_link}}</a>
           <button type="button" data-clear-guide-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -7129,6 +7204,7 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
           <a class="secondary-btn" href="${{result.planUrl}}" data-guardian-resume-plan>${{quiz.labels.saved_plan}}</a>
           <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-guardian-resume-keepsake>${{quiz.labels.saved_card}}</a>
           <a class="secondary-btn" href="${{result.lunaUrl}}" data-guardian-resume-luna>${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.contactUrl}}" data-guardian-resume-contact>${{quiz.labels.saved_contact}}</a>
           <button class="secondary-btn" type="button" data-clear-guardian-result>${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -7750,10 +7826,11 @@ def repair_worksheet_script(lang: str) -> str:
           <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
           <div class="repair-resume-actions">
             <button class="primary-btn" type="button" data-fill-repair>${{resumeFill}}</button>
-            <a class="secondary-btn" href="${{result.planUrl}}">${{resumePlan}}</a>
-            <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{quiz.labels.saved_card}}</a>
-            <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{result.collectorHall}}</a>
-            <a class="secondary-btn" href="${{result.lunaUrl}}">${{quiz.labels.saved_luna}}</a>
+            <a class="secondary-btn" href="${{result.resourceUrl}}" data-repair-resume-route>${{quiz.labels.saved_route}}</a>
+            <a class="secondary-btn" href="${{result.planUrl}}" data-repair-resume-plan>${{resumePlan}}</a>
+            <a class="secondary-btn" href="${{result.lunaUrl}}" data-repair-resume-luna>${{quiz.labels.saved_luna}}</a>
+            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-repair-resume-keepsake>${{result.collectorHall}}</a>
+            <a class="secondary-btn" href="${{result.contactUrl}}" data-repair-resume-contact>${{quiz.labels.saved_contact}}</a>
             <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{bookstoreLabel}}</a>
           </div>
         </div>
@@ -7948,8 +8025,11 @@ def luna_resume_script(lang: str) -> str:
         <p><strong>${{result.name}} · ${{result.type}}</strong></p>
         <p><strong>${{labels.practice}}:</strong> ${{practice}}</p>
         <div class="luna-resume-actions">
-          <a class="primary-btn" href="${{result.planUrl}}">${{labels.repair}}</a>
-          <a class="secondary-btn" href="${{result.resourceUrl}}">${{labels.route}}</a>
+          <a class="primary-btn" href="${{result.planUrl}}" data-luna-resume-plan>${{labels.repair}}</a>
+          <a class="secondary-btn" href="${{result.resourceUrl}}" data-luna-resume-route>${{labels.route}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-luna-resume-luna>${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-luna-resume-keepsake>${{quiz.labels.saved_card}}</a>
+          <a class="secondary-btn" href="${{result.contactUrl}}" data-luna-resume-contact>${{quiz.labels.saved_contact}}</a>
           <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{labels.book}}</a>
         </div>
       </div>

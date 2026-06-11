@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260612-trust-freshness.css" />
+  <link rel="stylesheet" href="/shared-20260612-funnel-context.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">跳到主要內容</a>
@@ -193,7 +193,7 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "copy": "複製最近路徑摘要", "clear": "清除本機路徑紀錄", "copied": "已複製", "cleared": "已清除", "event": "事件", "path": "頁面", "target": "目標", "time": "時間", "count": "最近 {count} 筆"};
+  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "copy": "複製最近路徑摘要", "clear": "清除本機路徑紀錄", "copied": "已複製", "cleared": "已清除", "event": "事件", "category": "分類", "guardian": "守護者", "source": "來源區塊", "language": "語言", "path": "頁面", "target": "目標", "target_type": "目標類型", "time": "時間", "count": "最近 {count} 筆"};
   const box = document.querySelector('[data-contact-funnel-summary]');
   if (!box) return;
   const key = 'lovetypes:funnel-events:v1';
@@ -210,8 +210,13 @@
   function summaryText(events) {
     return events.map((event, index) => [
       `${index + 1}. ${labels.event}: ${event.name || ''}`,
+      `${labels.category}: ${event.category || ''}`,
+      `${labels.guardian}: ${event.guardian || ''}`,
+      `${labels.source}: ${event.source || ''}`,
+      `${labels.language}: ${event.lang || ''}`,
       `${labels.path}: ${event.path || ''}`,
       `${labels.target}: ${event.target || ''}`,
+      `${labels.target_type}: ${event.targetType || ''}`,
       `${labels.time}: ${event.at || ''}`
     ].join('\n')).join('\n\n');
   }
@@ -257,8 +262,9 @@
           <article>
             <span>·</span>
             <h3>${event.name || ''}</h3>
-            <p>${event.path || ''}</p>
-            <p>${event.target || ''}</p>
+            <p>${labels.category}: ${event.category || ''} · ${labels.guardian}: ${event.guardian || ''}</p>
+            <p>${labels.source}: ${event.source || ''} · ${labels.language}: ${event.lang || ''}</p>
+            <p>${event.path || ''} → ${event.targetType || ''}</p>
           </article>`).join('')}
       </div>
       <div class="contact-request-note">
@@ -278,7 +284,7 @@
 </script>
 
 
-<script src="/quiz-data-zh-20260612-trust-freshness.js"></script>
+<script src="/quiz-data-zh-20260612-funnel-context.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -457,7 +463,7 @@
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260612-trust-freshness.js" defer></script>
+<script src="/site-interactions-20260612-funnel-context.js" defer></script>
 
 </body>
 </html>

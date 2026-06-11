@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-12"
-ASSET_VERSION = "20260612-trust-freshness"
+ASSET_VERSION = "20260612-funnel-context"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1579,8 +1579,13 @@ CONTACT_FUNNEL_SUMMARY = {
         "copied": "已複製",
         "cleared": "已清除",
         "event": "事件",
+        "category": "分類",
+        "guardian": "守護者",
+        "source": "來源區塊",
+        "language": "語言",
         "path": "頁面",
         "target": "目標",
+        "target_type": "目標類型",
         "time": "時間",
         "count": "最近 {count} 筆",
     },
@@ -1594,8 +1599,13 @@ CONTACT_FUNNEL_SUMMARY = {
         "copied": "Copied",
         "cleared": "Cleared",
         "event": "Event",
+        "category": "Category",
+        "guardian": "Guardian",
+        "source": "Source section",
+        "language": "Language",
         "path": "Page",
         "target": "Target",
+        "target_type": "Target type",
         "time": "Time",
         "count": "Recent {count} items",
     },
@@ -1609,8 +1619,13 @@ CONTACT_FUNNEL_SUMMARY = {
         "copied": "コピーしました",
         "cleared": "消去しました",
         "event": "イベント",
+        "category": "分類",
+        "guardian": "守護者",
+        "source": "元のセクション",
+        "language": "言語",
         "path": "ページ",
         "target": "目標",
+        "target_type": "目標タイプ",
         "time": "時間",
         "count": "最近 {count} 件",
     },
@@ -1624,8 +1639,13 @@ CONTACT_FUNNEL_SUMMARY = {
         "copied": "복사됨",
         "cleared": "지움",
         "event": "이벤트",
+        "category": "분류",
+        "guardian": "수호자",
+        "source": "출처 구역",
+        "language": "언어",
         "path": "페이지",
         "target": "목표",
+        "target_type": "목표 유형",
         "time": "시간",
         "count": "최근 {count}개",
     },
@@ -1639,8 +1659,13 @@ CONTACT_FUNNEL_SUMMARY = {
         "copied": "Copiado",
         "cleared": "Borrado",
         "event": "Evento",
+        "category": "Categoría",
+        "guardian": "Guardiana",
+        "source": "Sección de origen",
+        "language": "Idioma",
         "path": "Página",
         "target": "Destino",
+        "target_type": "Tipo de destino",
         "time": "Hora",
         "count": "{count} elementos recientes",
     },
@@ -5867,8 +5892,13 @@ def contact_funnel_summary_script(lang: str) -> str:
   function summaryText(events) {{
     return events.map((event, index) => [
       `${{index + 1}}. ${{labels.event}}: ${{event.name || ''}}`,
+      `${{labels.category}}: ${{event.category || ''}}`,
+      `${{labels.guardian}}: ${{event.guardian || ''}}`,
+      `${{labels.source}}: ${{event.source || ''}}`,
+      `${{labels.language}}: ${{event.lang || ''}}`,
       `${{labels.path}}: ${{event.path || ''}}`,
       `${{labels.target}}: ${{event.target || ''}}`,
+      `${{labels.target_type}}: ${{event.targetType || ''}}`,
       `${{labels.time}}: ${{event.at || ''}}`
     ].join('\\n')).join('\\n\\n');
   }}
@@ -5914,8 +5944,9 @@ def contact_funnel_summary_script(lang: str) -> str:
           <article>
             <span>·</span>
             <h3>${{event.name || ''}}</h3>
-            <p>${{event.path || ''}}</p>
-            <p>${{event.target || ''}}</p>
+            <p>${{labels.category}}: ${{event.category || ''}} · ${{labels.guardian}}: ${{event.guardian || ''}}</p>
+            <p>${{labels.source}}: ${{event.source || ''}} · ${{labels.language}}: ${{event.lang || ''}}</p>
+            <p>${{event.path || ''}} → ${{event.targetType || ''}}</p>
           </article>`).join('')}}
       </div>
       <div class="contact-request-note">

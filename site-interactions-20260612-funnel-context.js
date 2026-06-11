@@ -42,12 +42,63 @@
     return '';
   }
 
-  function recordFunnelPayload(name, target) {
+  function normalizeToken(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
+  function funnelCategory(name) {
+    return normalizeToken(name).split('_')[0] || 'unknown';
+  }
+
+  function guardianFromValue(value) {
+    var match = normalizeToken(value).match(/(?:^|[^a-z])(iris|noah|vivian|claire|dora)(?:[^a-z]|$)/);
+    return match ? match[1] : '';
+  }
+
+  function guardianFromElement(element, target) {
+    var guardianNode = closest(element, '[data-guardian-domain], [data-result-guardian], [data-story-slug]');
+    var explicit = guardianNode && (
+      guardianNode.getAttribute('data-guardian-domain') ||
+      guardianNode.getAttribute('data-result-guardian') ||
+      guardianNode.getAttribute('data-story-slug')
+    );
+    return guardianFromValue(explicit) || guardianFromValue(target) || guardianFromValue(window.location.pathname);
+  }
+
+  function funnelSource(element) {
+    var sourceNode = closest(element, '[data-funnel-source], section, article, nav');
+    if (!sourceNode) return '';
+    if (sourceNode.getAttribute('data-funnel-source')) return sourceNode.getAttribute('data-funnel-source');
+    if (sourceNode.id) return sourceNode.id;
+    var className = String(sourceNode.className || '').split(/\s+/).filter(Boolean)[0];
+    return className || sourceNode.tagName.toLowerCase();
+  }
+
+  function targetType(target) {
+    if (!target) return 'button';
+    if (target.indexOf('mailto:') === 0) return 'email';
+    if (target.indexOf('#') === 0) return 'anchor';
+    try {
+      var url = new URL(target, window.location.href);
+      if (url.origin !== window.location.origin) return 'external';
+      if (url.hash && url.pathname === window.location.pathname) return 'anchor';
+      return 'internal';
+    } catch (error) {
+      return 'unknown';
+    }
+  }
+
+  function recordFunnelPayload(name, target, element) {
     if (!name) return;
     var payload = {
       name: name,
       path: window.location.pathname,
       target: target || '',
+      targetType: targetType(target || ''),
+      lang: document.documentElement.getAttribute('lang') || '',
+      category: funnelCategory(name),
+      guardian: guardianFromElement(element, target || ''),
+      source: funnelSource(element),
       at: new Date().toISOString()
     };
     window.dispatchEvent(new CustomEvent('lovetypes:funnel', { detail: payload }));
@@ -63,11 +114,11 @@
   function recordFunnelEvent(element) {
     var name = funnelEventName(element);
     if (!name) return;
-    recordFunnelPayload(name, element.getAttribute('href') || element.getAttribute('data-result-action') || '');
+    recordFunnelPayload(name, element.getAttribute('href') || element.getAttribute('data-result-action') || '', element);
   }
 
-  window.lovetypesRecordFunnelEvent = function (name, target) {
-    recordFunnelPayload(name, target || '');
+  window.lovetypesRecordFunnelEvent = function (name, target, element) {
+    recordFunnelPayload(name, target || '', element || null);
   };
 
   function hashTarget(hash) {

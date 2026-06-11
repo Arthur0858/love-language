@@ -178,6 +178,16 @@ async function quizStorageCheck(browser) {
     if (!eventNames.has(expected)) issues.push(`quiz: missing home resume local funnel event ${expected}`);
   }
   if (!eventNames.has('contact_funnel_summary_copy')) issues.push('quiz: missing contact funnel summary copy event');
+  if (Array.isArray(funnelEvents)) {
+    for (const expected of ['quiz_completed', 'home_resume_supply_route', 'contact_funnel_summary_copy']) {
+      const event = funnelEvents.find((item) => item.name === expected);
+      if (!event) continue;
+      if (typeof event.lang !== 'string' || !event.lang) issues.push(`quiz: ${expected} missing language context`);
+      if (typeof event.category !== 'string' || !event.category) issues.push(`quiz: ${expected} missing category context`);
+      if (typeof event.targetType !== 'string' || !event.targetType) issues.push(`quiz: ${expected} missing target type context`);
+      if (expected === 'quiz_completed' && event.guardian !== 'iris') issues.push(`quiz: ${expected} should infer guardian iris, got ${event.guardian || 'empty'}`);
+    }
+  }
   const invalidValueKeys = Object.entries(saved.entries).flatMap(([key, value]) => {
     if (!key.startsWith('lovetypes:') || !key.includes('quiz-result')) return [];
     try {
@@ -328,7 +338,12 @@ async function funnelStorageCheck(browser) {
       if (!event || typeof event.name !== 'string' || typeof event.path !== 'string' || typeof event.at !== 'string') {
         issues.push(`funnel: event ${index} has invalid shape`);
       }
+      if (!event || typeof event.lang !== 'string' || !event.lang || typeof event.category !== 'string' || !event.category || typeof event.targetType !== 'string' || !event.targetType || typeof event.source !== 'string') {
+        issues.push(`funnel: event ${index} is missing context fields`);
+      }
     }
+    const contextualEvents = events.filter((event) => event.guardian || event.category || event.source);
+    if (contextualEvents.length < 8) issues.push(`funnel: expected at least 8 contextual events, got ${contextualEvents.length}`);
   }
   if (!response || response.status() >= 400) issues.push(`funnel: HTTP status ${response?.status() || 'missing'}`);
   issues.push(...networkIssues.map((issue) => `funnel network: ${issue}`));

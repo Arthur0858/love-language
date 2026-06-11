@@ -102,6 +102,8 @@ def main() -> int:
     saved_result_sections_checked = 0
     saved_result_actions_checked = 0
     contact_quiz_data_refs_checked = 0
+    funnel_summary_sections_checked = 0
+    funnel_summary_actions_checked = 0
 
     for item in expectations():
         response = deploy_smoke.request_url(urljoin(base_url + "/", item.path.lstrip("/")))
@@ -120,6 +122,15 @@ def main() -> int:
             issues.append(f"{item.path}: missing saved result contact handoff section")
         else:
             saved_result_sections_checked += 1
+        if "data-contact-funnel-summary" not in response.text:
+            issues.append(f"{item.path}: missing local funnel summary section")
+        else:
+            funnel_summary_sections_checked += 1
+        for marker in ("data-contact-funnel-copy", "data-contact-funnel-clear", "lovetypes:funnel-events:v1"):
+            if marker not in response.text:
+                issues.append(f"{item.path}: local funnel summary missing {marker}")
+            else:
+                funnel_summary_actions_checked += 1
         for marker in CONTACT_SAVED_RESULT_MARKERS:
             if marker not in response.text:
                 issues.append(f"{item.path}: saved result handoff missing {marker}")
@@ -242,6 +253,8 @@ def main() -> int:
     print(f"public_contact_saved_result_sections_checked={saved_result_sections_checked}")
     print(f"public_contact_saved_result_actions_checked={saved_result_actions_checked}")
     print(f"public_contact_quiz_data_refs_checked={contact_quiz_data_refs_checked}")
+    print(f"public_contact_funnel_summary_sections_checked={funnel_summary_sections_checked}")
+    print(f"public_contact_funnel_summary_actions_checked={funnel_summary_actions_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:
         print(issue)

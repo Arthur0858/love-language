@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260611-contact-options.css" />
+  <link rel="stylesheet" href="/shared-20260611-contact-funnel.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">본문으로 이동</a>
@@ -56,6 +56,10 @@
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>연락</h1><p>콘텐츠 수정, 개인정보 문의, 협업, 또는 마음의 정원에서 수리가 필요한 페이지를 LoveTypes에 알릴 수 있습니다.</p><div class="hero-actions" data-trust-hero-actions="contact"><a class="primary-btn" href="#luna-supply-request" data-trust-hero-link="luna-request">보급 대기 목록 요청 보내기</a><a class="secondary-btn" href="#site-repair-report" data-trust-hero-link="site-repair">사이트 수리 제보 보내기</a><a class="secondary-btn" href="/ko/garden-map/" data-trust-hero-link="map">지도</a></div><p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p></section>
 
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
+<section class="section contact-request-section" data-contact-funnel-summary aria-live="polite">
+  <div class="section-head"><div><p class="eyebrow">로컬 경로 요약</p><h2>이 기기의 최근 경로 복사</h2></div></div>
+  <p class="section-intro">아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.</p>
+</section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">요청 나침반</p><h2>수호자 보급 대기 목록에 요청 남기기</h2></div></div>
   <p class="section-intro">Luna, 소장실, 수호자 보급 루트에서 왔다면 한 가지 요청을 골라 보내 주세요. 인쇄용 연습 카드는 이미 무료입니다. 여기서는 오프라인 음원, 배경화면, 짧은 의식, 인쇄 소장팩 중 무엇을 먼저 준비할지 판단합니다.</p>
@@ -187,7 +191,94 @@
 </script>
 
 
-<script src="/quiz-data-ko-20260611-contact-options.js"></script>
+<script>
+(() => {
+  const labels = {"eyebrow": "로컬 경로 요약", "title": "이 기기의 최근 경로 복사", "intro": "문제 제보나 보급 요청을 보낼 때 LoveTypes에서 최근 지나간 경로를 함께 보낼 수 있습니다. 이 요약은 이 브라우저에서만 읽고, 복사하거나 보낼 때만 공유됩니다.", "empty": "아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.", "copy": "최근 경로 요약 복사", "clear": "로컬 경로 기록 지우기", "copied": "복사됨", "cleared": "지움", "event": "이벤트", "path": "페이지", "target": "목표", "time": "시간", "count": "최근 {count}개"};
+  const box = document.querySelector('[data-contact-funnel-summary]');
+  if (!box) return;
+  const key = 'lovetypes:funnel-events:v1';
+
+  function readEvents() {
+    try {
+      const events = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(events) ? events.filter((event) => event && event.name).slice(-12) : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function summaryText(events) {
+    return events.map((event, index) => [
+      `${index + 1}. ${labels.event}: ${event.name || ''}`,
+      `${labels.path}: ${event.path || ''}`,
+      `${labels.target}: ${event.target || ''}`,
+      `${labels.time}: ${event.at || ''}`
+    ].join('\n')).join('\n\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  function render() {
+    const events = readEvents();
+    if (!events.length) {
+      box.innerHTML = `
+        <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
+        <p class="section-intro">${labels.empty}</p>`;
+      return;
+    }
+    const recent = events.slice(-8).reverse();
+    const text = summaryText(events);
+    box.innerHTML = `
+      <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div><span>${labels.count.replace('{count}', events.length)}</span></div>
+      <p class="section-intro">${labels.intro}</p>
+      <div class="contact-request-grid">
+        ${recent.map((event) => `
+          <article>
+            <span>·</span>
+            <h3>${event.name || ''}</h3>
+            <p>${event.path || ''}</p>
+            <p>${event.target || ''}</p>
+          </article>`).join('')}
+      </div>
+      <div class="contact-request-note">
+        <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${labels.copy}</button>
+        <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${labels.clear}</button>
+      </div>`;
+    box.querySelector('[data-contact-funnel-copy]')?.addEventListener('click', (event) => copyText(text, event.currentTarget));
+    box.querySelector('[data-contact-funnel-clear]')?.addEventListener('click', (event) => {
+      localStorage.removeItem(key);
+      event.currentTarget.textContent = labels.cleared;
+      window.setTimeout(render, 800);
+    });
+  }
+
+  render();
+})();
+</script>
+
+
+<script src="/quiz-data-ko-20260611-contact-funnel.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -366,7 +457,7 @@
   <p>© 2026 LoveTypes · <a href="/ko/privacy/">개인정보</a> · <a href="/ko/terms/">이용약관</a> · <a href="/ko/contact/">연락</a></p>
 </footer>
 
-<script src="/site-interactions-20260611-contact-options.js" defer></script>
+<script src="/site-interactions-20260611-contact-funnel.js" defer></script>
 
 </body>
 </html>

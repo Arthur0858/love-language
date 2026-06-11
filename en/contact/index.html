@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260611-contact-options.css" />
+  <link rel="stylesheet" href="/shared-20260611-contact-funnel.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -56,6 +56,10 @@
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>Contact</h1><p>Contact LoveTypes for content corrections, privacy questions, partnership concerns, or pages in the Heart Garden that need repair.</p><div class="hero-actions" data-trust-hero-actions="contact"><a class="primary-btn" href="#luna-supply-request" data-trust-hero-link="luna-request">Send supply waitlist request</a><a class="secondary-btn" href="#site-repair-report" data-trust-hero-link="site-repair">Send site repair report</a><a class="secondary-btn" href="/en/garden-map/" data-trust-hero-link="map">Map</a></div><p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p></section>
 
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
+<section class="section contact-request-section" data-contact-funnel-summary aria-live="polite">
+  <div class="section-head"><div><p class="eyebrow">LOCAL PATH SUMMARY</p><h2>Copy this device&#x27;s recent path</h2></div></div>
+  <p class="section-intro">No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.</p>
+</section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">REQUEST COMPASS</p><h2>Join the guardian supply waitlist</h2></div></div>
   <p class="section-intro">If you arrived from Luna, keepsakes, or a guardian supply route, choose one request before writing. Printable practice cards are already free; this helps us decide whether offline audio, wallpapers, short rituals, or printed collectible packs should be prepared next.</p>
@@ -187,7 +191,94 @@ Extra screenshot or notes:
 </script>
 
 
-<script src="/quiz-data-en-20260611-contact-options.js"></script>
+<script>
+(() => {
+  const labels = {"eyebrow": "LOCAL PATH SUMMARY", "title": "Copy this device's recent path", "intro": "When you report an issue or request supplies, you can include the recent LoveTypes path. This summary is read only from this browser and is shared only if you copy or send it.", "empty": "No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.", "copy": "Copy recent path summary", "clear": "Clear local path log", "copied": "Copied", "cleared": "Cleared", "event": "Event", "path": "Page", "target": "Target", "time": "Time", "count": "Recent {count} items"};
+  const box = document.querySelector('[data-contact-funnel-summary]');
+  if (!box) return;
+  const key = 'lovetypes:funnel-events:v1';
+
+  function readEvents() {
+    try {
+      const events = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(events) ? events.filter((event) => event && event.name).slice(-12) : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function summaryText(events) {
+    return events.map((event, index) => [
+      `${index + 1}. ${labels.event}: ${event.name || ''}`,
+      `${labels.path}: ${event.path || ''}`,
+      `${labels.target}: ${event.target || ''}`,
+      `${labels.time}: ${event.at || ''}`
+    ].join('\n')).join('\n\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  function render() {
+    const events = readEvents();
+    if (!events.length) {
+      box.innerHTML = `
+        <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
+        <p class="section-intro">${labels.empty}</p>`;
+      return;
+    }
+    const recent = events.slice(-8).reverse();
+    const text = summaryText(events);
+    box.innerHTML = `
+      <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div><span>${labels.count.replace('{count}', events.length)}</span></div>
+      <p class="section-intro">${labels.intro}</p>
+      <div class="contact-request-grid">
+        ${recent.map((event) => `
+          <article>
+            <span>·</span>
+            <h3>${event.name || ''}</h3>
+            <p>${event.path || ''}</p>
+            <p>${event.target || ''}</p>
+          </article>`).join('')}
+      </div>
+      <div class="contact-request-note">
+        <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${labels.copy}</button>
+        <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${labels.clear}</button>
+      </div>`;
+    box.querySelector('[data-contact-funnel-copy]')?.addEventListener('click', (event) => copyText(text, event.currentTarget));
+    box.querySelector('[data-contact-funnel-clear]')?.addEventListener('click', (event) => {
+      localStorage.removeItem(key);
+      event.currentTarget.textContent = labels.cleared;
+      window.setTimeout(render, 800);
+    });
+  }
+
+  render();
+})();
+</script>
+
+
+<script src="/quiz-data-en-20260611-contact-funnel.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -366,7 +457,7 @@ Extra screenshot or notes:
   <p>© 2026 LoveTypes · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a> · <a href="/en/contact/">Contact</a></p>
 </footer>
 
-<script src="/site-interactions-20260611-contact-options.js" defer></script>
+<script src="/site-interactions-20260611-contact-funnel.js" defer></script>
 
 </body>
 </html>

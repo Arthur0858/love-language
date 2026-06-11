@@ -154,6 +154,9 @@ async function quizStorageCheck(browser) {
   ]) {
     await page.locator(selector).first().click();
   }
+  await page.goto(makeUrl('/contact/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.locator('[data-contact-funnel-copy]').waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('[data-contact-funnel-copy]').click();
   const saved = await storageSnapshot(page);
   validateQuietStorage(saved, issues, 'quiz');
   const quizKeys = saved.localKeys.filter((key) => key.startsWith('lovetypes:') && key.includes('quiz-result'));
@@ -174,6 +177,7 @@ async function quizStorageCheck(browser) {
   for (const expected of ['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact', 'home_resume_supply_route', 'home_resume_repair_plan', 'home_resume_luna', 'home_resume_keepsake', 'home_resume_contact', 'home_resume_guardian']) {
     if (!eventNames.has(expected)) issues.push(`quiz: missing home resume local funnel event ${expected}`);
   }
+  if (!eventNames.has('contact_funnel_summary_copy')) issues.push('quiz: missing contact funnel summary copy event');
   const invalidValueKeys = Object.entries(saved.entries).flatMap(([key, value]) => {
     if (!key.startsWith('lovetypes:') || !key.includes('quiz-result')) return [];
     try {

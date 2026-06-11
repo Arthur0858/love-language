@@ -224,6 +224,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_contact_saved_result_sections_checked",
         "public_contact_saved_result_actions_checked",
         "public_contact_quiz_data_refs_checked",
+        "public_contact_funnel_summary_sections_checked",
+        "public_contact_funnel_summary_actions_checked",
         "public_discovery_feed_items",
         "public_discovery_feed_links_checked",
         "public_discovery_feed_item_metadata_checked",

@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260611-contact-options.css" />
+  <link rel="stylesheet" href="/shared-20260611-contact-funnel.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">跳到主要內容</a>
@@ -56,6 +56,10 @@
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>聯絡</h1><p>聯絡 LoveTypes 團隊，回報內容修正、隱私疑問、合作需求，或指出心語庭園中需要修復的頁面。</p><div class="hero-actions" data-trust-hero-actions="contact"><a class="primary-btn" href="#luna-supply-request" data-trust-hero-link="luna-request">寄出補給等待清單需求</a><a class="secondary-btn" href="#site-repair-report" data-trust-hero-link="site-repair">回報網站修復線索</a><a class="secondary-btn" href="/garden-map/" data-trust-hero-link="map">地圖</a></div><p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p></section>
 
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
+<section class="section contact-request-section" data-contact-funnel-summary aria-live="polite">
+  <div class="section-head"><div><p class="eyebrow">本機路徑摘要</p><h2>複製這台裝置的最近路徑</h2></div></div>
+  <p class="section-intro">目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。</p>
+</section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">需求羅盤</p><h2>加入守護者補給等待清單</h2></div></div>
   <p class="section-intro">如果你是從 Luna、收藏室或守護者補給路線來到這裡，請先選一種需求寄信。練習卡已可免費列印；這裡會幫我們判斷下一批自有補給應優先整理離線音檔、手機桌布、短儀式，還是印刷收藏包。</p>
@@ -187,7 +191,94 @@
 </script>
 
 
-<script src="/quiz-data-zh-20260611-contact-options.js"></script>
+<script>
+(() => {
+  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "copy": "複製最近路徑摘要", "clear": "清除本機路徑紀錄", "copied": "已複製", "cleared": "已清除", "event": "事件", "path": "頁面", "target": "目標", "time": "時間", "count": "最近 {count} 筆"};
+  const box = document.querySelector('[data-contact-funnel-summary]');
+  if (!box) return;
+  const key = 'lovetypes:funnel-events:v1';
+
+  function readEvents() {
+    try {
+      const events = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(events) ? events.filter((event) => event && event.name).slice(-12) : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function summaryText(events) {
+    return events.map((event, index) => [
+      `${index + 1}. ${labels.event}: ${event.name || ''}`,
+      `${labels.path}: ${event.path || ''}`,
+      `${labels.target}: ${event.target || ''}`,
+      `${labels.time}: ${event.at || ''}`
+    ].join('\n')).join('\n\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  function render() {
+    const events = readEvents();
+    if (!events.length) {
+      box.innerHTML = `
+        <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
+        <p class="section-intro">${labels.empty}</p>`;
+      return;
+    }
+    const recent = events.slice(-8).reverse();
+    const text = summaryText(events);
+    box.innerHTML = `
+      <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div><span>${labels.count.replace('{count}', events.length)}</span></div>
+      <p class="section-intro">${labels.intro}</p>
+      <div class="contact-request-grid">
+        ${recent.map((event) => `
+          <article>
+            <span>·</span>
+            <h3>${event.name || ''}</h3>
+            <p>${event.path || ''}</p>
+            <p>${event.target || ''}</p>
+          </article>`).join('')}
+      </div>
+      <div class="contact-request-note">
+        <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${labels.copy}</button>
+        <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${labels.clear}</button>
+      </div>`;
+    box.querySelector('[data-contact-funnel-copy]')?.addEventListener('click', (event) => copyText(text, event.currentTarget));
+    box.querySelector('[data-contact-funnel-clear]')?.addEventListener('click', (event) => {
+      localStorage.removeItem(key);
+      event.currentTarget.textContent = labels.cleared;
+      window.setTimeout(render, 800);
+    });
+  }
+
+  render();
+})();
+</script>
+
+
+<script src="/quiz-data-zh-20260611-contact-funnel.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -366,7 +457,7 @@
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260611-contact-options.js" defer></script>
+<script src="/site-interactions-20260611-contact-funnel.js" defer></script>
 
 </body>
 </html>

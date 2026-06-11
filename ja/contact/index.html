@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260611-contact-options.css" />
+  <link rel="stylesheet" href="/shared-20260611-contact-funnel.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
@@ -56,6 +56,10 @@
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>連絡</h1><p>内容修正、プライバシー、提携、または心語の庭で修復が必要なページについて LoveTypes に連絡できます。</p><div class="hero-actions" data-trust-hero-actions="contact"><a class="primary-btn" href="#luna-supply-request" data-trust-hero-link="luna-request">補給待機リストへ送る</a><a class="secondary-btn" href="#site-repair-report" data-trust-hero-link="site-repair">サイト修復を報告する</a><a class="secondary-btn" href="/ja/garden-map/" data-trust-hero-link="map">マップ</a></div><p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p></section>
 
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
+<section class="section contact-request-section" data-contact-funnel-summary aria-live="polite">
+  <div class="section-head"><div><p class="eyebrow">端末内経路の摘要</p><h2>この端末の最近の経路をコピー</h2></div></div>
+  <p class="section-intro">まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。</p>
+</section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">リクエスト羅針盤</p><h2>守護者補給の待機リストへ希望を送る</h2></div></div>
   <p class="section-intro">Luna、コレクション室、守護者の補給ルートから来た場合は、一つの希望を選んで送ってください。印刷できる練習カードはすでに無料です。ここではオフライン音源、壁紙、短い儀式、印刷コレクションの優先順位を判断します。</p>
@@ -187,7 +191,94 @@
 </script>
 
 
-<script src="/quiz-data-ja-20260611-contact-options.js"></script>
+<script>
+(() => {
+  const labels = {"eyebrow": "端末内経路の摘要", "title": "この端末の最近の経路をコピー", "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。", "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。", "copy": "最近の経路をコピー", "clear": "端末内の経路記録を消す", "copied": "コピーしました", "cleared": "消去しました", "event": "イベント", "path": "ページ", "target": "目標", "time": "時間", "count": "最近 {count} 件"};
+  const box = document.querySelector('[data-contact-funnel-summary]');
+  if (!box) return;
+  const key = 'lovetypes:funnel-events:v1';
+
+  function readEvents() {
+    try {
+      const events = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(events) ? events.filter((event) => event && event.name).slice(-12) : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function summaryText(events) {
+    return events.map((event, index) => [
+      `${index + 1}. ${labels.event}: ${event.name || ''}`,
+      `${labels.path}: ${event.path || ''}`,
+      `${labels.target}: ${event.target || ''}`,
+      `${labels.time}: ${event.at || ''}`
+    ].join('\n')).join('\n\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  function render() {
+    const events = readEvents();
+    if (!events.length) {
+      box.innerHTML = `
+        <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div></div>
+        <p class="section-intro">${labels.empty}</p>`;
+      return;
+    }
+    const recent = events.slice(-8).reverse();
+    const text = summaryText(events);
+    box.innerHTML = `
+      <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div><span>${labels.count.replace('{count}', events.length)}</span></div>
+      <p class="section-intro">${labels.intro}</p>
+      <div class="contact-request-grid">
+        ${recent.map((event) => `
+          <article>
+            <span>·</span>
+            <h3>${event.name || ''}</h3>
+            <p>${event.path || ''}</p>
+            <p>${event.target || ''}</p>
+          </article>`).join('')}
+      </div>
+      <div class="contact-request-note">
+        <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${labels.copy}</button>
+        <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${labels.clear}</button>
+      </div>`;
+    box.querySelector('[data-contact-funnel-copy]')?.addEventListener('click', (event) => copyText(text, event.currentTarget));
+    box.querySelector('[data-contact-funnel-clear]')?.addEventListener('click', (event) => {
+      localStorage.removeItem(key);
+      event.currentTarget.textContent = labels.cleared;
+      window.setTimeout(render, 800);
+    });
+  }
+
+  render();
+})();
+</script>
+
+
+<script src="/quiz-data-ja-20260611-contact-funnel.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -366,7 +457,7 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260611-contact-options.js" defer></script>
+<script src="/site-interactions-20260611-contact-funnel.js" defer></script>
 
 </body>
 </html>

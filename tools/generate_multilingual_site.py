@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-contact-options"
+ASSET_VERSION = "20260611-contact-funnel"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1568,6 +1568,85 @@ CONTACT_RESULT_HANDOFF = {
 }
 
 
+CONTACT_FUNNEL_SUMMARY = {
+    "zh": {
+        "eyebrow": "LOCAL PATH SUMMARY",
+        "title": "複製這台裝置的最近路徑",
+        "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。",
+        "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。",
+        "copy": "複製最近路徑摘要",
+        "clear": "清除本機路徑紀錄",
+        "copied": "已複製",
+        "cleared": "已清除",
+        "event": "事件",
+        "path": "頁面",
+        "target": "目標",
+        "time": "時間",
+        "count": "最近 {count} 筆",
+    },
+    "en": {
+        "eyebrow": "LOCAL PATH SUMMARY",
+        "title": "Copy this device's recent path",
+        "intro": "When you report an issue or request supplies, you can include the recent LoveTypes path. This summary is read only from this browser and is shared only if you copy or send it.",
+        "empty": "No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.",
+        "copy": "Copy recent path summary",
+        "clear": "Clear local path log",
+        "copied": "Copied",
+        "cleared": "Cleared",
+        "event": "Event",
+        "path": "Page",
+        "target": "Target",
+        "time": "Time",
+        "count": "Recent {count} items",
+    },
+    "ja": {
+        "eyebrow": "LOCAL PATH SUMMARY",
+        "title": "この端末の最近の経路をコピー",
+        "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。",
+        "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。",
+        "copy": "最近の経路をコピー",
+        "clear": "端末内の経路記録を消す",
+        "copied": "コピーしました",
+        "cleared": "消去しました",
+        "event": "イベント",
+        "path": "ページ",
+        "target": "目標",
+        "time": "時間",
+        "count": "最近 {count} 件",
+    },
+    "ko": {
+        "eyebrow": "LOCAL PATH SUMMARY",
+        "title": "이 기기의 최근 경로 복사",
+        "intro": "문제 제보나 보급 요청을 보낼 때 LoveTypes에서 최근 지나간 경로를 함께 보낼 수 있습니다. 이 요약은 이 브라우저에서만 읽고, 복사하거나 보낼 때만 공유됩니다.",
+        "empty": "아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.",
+        "copy": "최근 경로 요약 복사",
+        "clear": "로컬 경로 기록 지우기",
+        "copied": "복사됨",
+        "cleared": "지움",
+        "event": "이벤트",
+        "path": "페이지",
+        "target": "목표",
+        "time": "시간",
+        "count": "최근 {count}개",
+    },
+    "es": {
+        "eyebrow": "LOCAL PATH SUMMARY",
+        "title": "Copiar la ruta reciente de este dispositivo",
+        "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.",
+        "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.",
+        "copy": "Copiar resumen reciente",
+        "clear": "Borrar registro local",
+        "copied": "Copiado",
+        "cleared": "Borrado",
+        "event": "Evento",
+        "path": "Página",
+        "target": "Destino",
+        "time": "Hora",
+        "count": "{count} elementos recientes",
+    },
+}
+
+
 CONTACT_REPAIR_REPORTS = {
     "zh": {
         "eyebrow": "GARDEN REPAIR DESK",
@@ -1735,6 +1814,7 @@ SECTION_LABELS = {
         "luna_supply_entry": "Luna 補給入口",
         "your_night_supply": "你的夜間補給",
         "request_compass": "需求羅盤",
+        "local_path_summary": "本機路徑摘要",
         "garden_repair_desk": "庭園修復台",
         "guardian_compass": "守護者羅盤",
         "choose_by_current_need": "依此刻需求選擇",
@@ -1794,6 +1874,7 @@ SECTION_LABELS = {
         "luna_supply_entry": "LUNA SUPPLY ENTRY",
         "your_night_supply": "YOUR NIGHT SUPPLY",
         "request_compass": "REQUEST COMPASS",
+        "local_path_summary": "LOCAL PATH SUMMARY",
         "garden_repair_desk": "GARDEN REPAIR DESK",
         "guardian_compass": "GUARDIAN COMPASS",
         "choose_by_current_need": "CHOOSE BY CURRENT NEED",
@@ -1853,6 +1934,7 @@ SECTION_LABELS = {
         "luna_supply_entry": "Luna 補給入口",
         "your_night_supply": "あなたの夜の補給",
         "request_compass": "リクエスト羅針盤",
+        "local_path_summary": "端末内経路の摘要",
         "garden_repair_desk": "庭の修復デスク",
         "guardian_compass": "守護者羅針盤",
         "choose_by_current_need": "今の必要から選ぶ",
@@ -1912,6 +1994,7 @@ SECTION_LABELS = {
         "luna_supply_entry": "Luna 보급 입구",
         "your_night_supply": "나의 밤 보급",
         "request_compass": "요청 나침반",
+        "local_path_summary": "로컬 경로 요약",
         "garden_repair_desk": "정원 수리 데스크",
         "guardian_compass": "수호자 나침반",
         "choose_by_current_need": "지금 필요한 것으로 선택",
@@ -1971,6 +2054,7 @@ SECTION_LABELS = {
         "luna_supply_entry": "ENTRADA LUNA",
         "your_night_supply": "TU SUMINISTRO NOCTURNO",
         "request_compass": "BRÚJULA DE PETICIONES",
+        "local_path_summary": "RESUMEN LOCAL DE RUTA",
         "garden_repair_desk": "MESA DE REPARACIÓN",
         "guardian_compass": "BRÚJULA GUARDIANA",
         "choose_by_current_need": "ELIGE POR NECESIDAD",
@@ -5761,6 +5845,97 @@ def contact_template_copy_script(lang: str) -> str:
 """
 
 
+def contact_funnel_summary_script(lang: str) -> str:
+    labels = json.dumps(CONTACT_FUNNEL_SUMMARY[lang], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const labels = {labels};
+  const box = document.querySelector('[data-contact-funnel-summary]');
+  if (!box) return;
+  const key = 'lovetypes:funnel-events:v1';
+
+  function readEvents() {{
+    try {{
+      const events = JSON.parse(localStorage.getItem(key) || '[]');
+      return Array.isArray(events) ? events.filter((event) => event && event.name).slice(-12) : [];
+    }} catch (_error) {{
+      return [];
+    }}
+  }}
+
+  function summaryText(events) {{
+    return events.map((event, index) => [
+      `${{index + 1}}. ${{labels.event}}: ${{event.name || ''}}`,
+      `${{labels.path}}: ${{event.path || ''}}`,
+      `${{labels.target}}: ${{event.target || ''}}`,
+      `${{labels.time}}: ${{event.at || ''}}`
+    ].join('\\n')).join('\\n\\n');
+  }}
+
+  async function copyText(text, button) {{
+    const original = button.textContent;
+    try {{
+      if (navigator.clipboard?.writeText && window.isSecureContext) {{
+        await navigator.clipboard.writeText(text);
+      }} else {{
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }}
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    }} catch (_error) {{
+      window.prompt(original, text);
+    }}
+  }}
+
+  function render() {{
+    const events = readEvents();
+    if (!events.length) {{
+      box.innerHTML = `
+        <div class="section-head"><div><p class="eyebrow">${{labels.eyebrow}}</p><h2>${{labels.title}}</h2></div></div>
+        <p class="section-intro">${{labels.empty}}</p>`;
+      return;
+    }}
+    const recent = events.slice(-8).reverse();
+    const text = summaryText(events);
+    box.innerHTML = `
+      <div class="section-head"><div><p class="eyebrow">${{labels.eyebrow}}</p><h2>${{labels.title}}</h2></div><span>${{labels.count.replace('{{count}}', events.length)}}</span></div>
+      <p class="section-intro">${{labels.intro}}</p>
+      <div class="contact-request-grid">
+        ${{recent.map((event) => `
+          <article>
+            <span>·</span>
+            <h3>${{event.name || ''}}</h3>
+            <p>${{event.path || ''}}</p>
+            <p>${{event.target || ''}}</p>
+          </article>`).join('')}}
+      </div>
+      <div class="contact-request-note">
+        <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${{labels.copy}}</button>
+        <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${{labels.clear}}</button>
+      </div>`;
+    box.querySelector('[data-contact-funnel-copy]')?.addEventListener('click', (event) => copyText(text, event.currentTarget));
+    box.querySelector('[data-contact-funnel-clear]')?.addEventListener('click', (event) => {{
+      localStorage.removeItem(key);
+      event.currentTarget.textContent = labels.cleared;
+      window.setTimeout(render, 800);
+    }});
+  }}
+
+  render();
+}})();
+</script>
+"""
+
+
 def contact_result_handoff_script(lang: str) -> str:
     labels = json.dumps(CONTACT_RESULT_HANDOFF[lang], ensure_ascii=False)
     return f"""
@@ -8564,6 +8739,7 @@ def contact_option_cards(items: list[tuple[str, str]], copy: dict, selected_labe
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
+    funnel = CONTACT_FUNNEL_SUMMARY[lang]
     subject_label = CONTACT_SUBJECT_LABELS[lang]
     template_labels = CONTACT_TEMPLATE_LABELS[lang]
     request_subject = request["subject"]
@@ -8591,6 +8767,10 @@ def contact_request_section(lang: str) -> str:
     )
     return f"""
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
+<section class="section contact-request-section" data-contact-funnel-summary aria-live="polite">
+  <div class="section-head"><div><p class="eyebrow">{escape(funnel["eyebrow"])}</p><h2>{escape(funnel["title"])}</h2></div></div>
+  <p class="section-intro">{escape(funnel["empty"])}</p>
+</section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
   <p class="section-intro">{escape(request["intro"])}</p>
@@ -8614,6 +8794,7 @@ def contact_request_section(lang: str) -> str:
   </div>
 </section>
 {contact_template_copy_script(lang)}
+{contact_funnel_summary_script(lang)}
 {contact_result_handoff_script(lang)}
 """
 
@@ -9148,6 +9329,7 @@ def apply_section_label_localization() -> None:
         (LUNA_OFFER, "luna_supply_entry"),
         (LUNA_RESUME, "your_night_supply"),
         (CONTACT_REQUESTS, "request_compass"),
+        (CONTACT_FUNNEL_SUMMARY, "local_path_summary"),
         (CONTACT_REPAIR_REPORTS, "garden_repair_desk"),
         (GUARDIAN_ENTRY, "guardian_compass"),
         (GUARDIAN_NEED_ROUTER, "choose_by_current_need"),

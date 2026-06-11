@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, and conversion routes.",
+  "rules": [
+    "Iris maps to words of affirmation.",
+    "Noah maps to quality time.",
+    "Vivian maps to receiving gifts.",
+    "Claire maps to acts of service.",
+    "Dora maps to physical touch.",
+    "Guardian profiles are metaphor tools for reflection, not diagnosis or therapy."
+  ],
+  "totals": {
+    "guardians": 5,
+    "languages": 2,
+    "routeTypes": 7
+  },
+  "guardians": [
+    {
+      "slug": "iris",
+      "name": {
+        "zh": "艾莉絲",
+        "en": "Iris"
+      },
+      "loveLanguage": {
+        "zh": "肯定的言詞",
+        "en": "Words of affirmation"
+      },
+      "description": {
+        "zh": "她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。",
+        "en": "In the dawn-glass garden, she guards the heart that longs to be seen clearly and gives names to words that waited too long."
+      },
+      "domain": {
+        "motif": "dawn-glass-garden",
+        "accent": "#943743",
+        "glow": "#f0c778",
+        "name": {
+          "zh": "晨曦玻璃花園",
+          "en": "Dawn-Glass Garden"
+        },
+        "signal": {
+          "zh": "羽筆與手寫光會把等很久的話照亮。",
+          "en": "Feather-pen light gives shape to words that waited too long."
+        }
+      },
+      "assets": {
+        "portrait": "/assets/lovetypes/guardians/iris.webp",
+        "card": "/assets/lovetypes/guardians/cards/iris-card.webp",
+        "prop": "/assets/lovetypes/props/affirmation-feather-pen.webp",
+        "story": "/assets/lovetypes/share/iris-story-zh.webp"
+      },
+      "routes": {
+        "profile": "https://lovetypes.tw/characters/iris/",
+        "supply": "https://lovetypes.tw/resources/#supply-iris",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-iris",
+        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-iris",
+        "repairPlan": "https://lovetypes.tw/repair-plan/",
+        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "supply": {
+        "title": {
+          "zh": "艾莉絲語言補給",
+          "en": "Iris Word Supply"
+        },
+        "mission": {
+          "zh": "今天寫下三句具體肯定：看見、感謝、承認，不使用空泛稱讚。",
+          "en": "Write three specific affirmations today: seeing, gratitude, and recognition."
+        },
+        "wound": {
+          "zh": "容易把沒被肯定解讀成不被珍惜，或把需要說成測驗。",
+          "en": "You may read missing affirmation as not being valued, or turn a need into a test."
+        },
+        "bookIndex": 1
+      },
+      "guides": [
+        "https://lovetypes.tw/guides/share-your-result/",
+        "https://lovetypes.tw/guides/words-of-affirmation-scripts/",
+        "https://lovetypes.tw/guides/misfrequency-examples/"
+      ]
+    },
+    {
+      "slug": "noah",
+      "name": {
+        "zh": "諾雅",
+        "en": "Noah"
+      },
+      "loveLanguage": {
+        "zh": "優質的時光",
+        "en": "Quality time"
+      },
+      "description": {
+        "zh": "她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。",
+        "en": "Between the star-sea library and a quiet shore, she guards the kind of time where two people truly stay."
+      },
+      "domain": {
+        "motif": "star-sea-library",
+        "accent": "#50417b",
+        "glow": "#b8c7e8",
+        "name": {
+          "zh": "星海圖書館",
+          "en": "Star-Sea Library"
+        },
+        "signal": {
+          "zh": "星圖與安靜海面保存真正留在彼此身邊的時間。",
+          "en": "Star maps and quiet water preserve time where two people truly stay."
+        }
+      },
+      "assets": {
+        "portrait": "/assets/lovetypes/guardians/noah.webp",
+        "card": "/assets/lovetypes/guardians/cards/noah-card.webp",
+        "prop": "/assets/lovetypes/props/quality-time-lantern.webp",
+        "story": "/assets/lovetypes/share/noah-story-zh.webp"
+      },
+      "routes": {
+        "profile": "https://lovetypes.tw/characters/noah/",
+        "supply": "https://lovetypes.tw/resources/#supply-noah",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-noah",
+        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-noah",
+        "repairPlan": "https://lovetypes.tw/repair-plan/",
+        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
+        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "supply": {
+        "title": {
+          "zh": "諾雅陪伴補給",
+          "en": "Noah Presence Supply"
+        },
+        "mission": {
+          "zh": "安排十五分鐘無手機共處，只問一個問題：這週哪一刻最像我們在一起？",
+          "en": "Protect fifteen phone-free minutes and ask one question: when did we feel most together this week?"
+        },
+        "wound": {
+          "zh": "最痛的錯頻通常是人在旁邊，心卻沒有到場。",
+          "en": "The tender wound is often presence without attention."
+        },
+        "bookIndex": 3
+      },
+      "guides": [
+        "https://lovetypes.tw/guides/repair-after-conflict/",
+        "https://lovetypes.tw/guides/quality-time-long-distance/",
+        "https://lovetypes.tw/guides/relationship-stages/"
+      ]
+    },
+    {
+      "slug": "vivian",
+      "name": {
+        "zh": "薇薇安",
+        "en": "Vivian"
+      },
+      "loveLanguage": {
+        "zh": "接受禮物",
+        "en": "Receiving gifts"
+      },
+      "description": {
+        "zh": "她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。",
+        "en": "In the moonlit memory workshop, she collects proof of being remembered and keeps meaning in details, not price."
+      },
+      "domain": {
+        "motif": "moonlit-memory-workshop",
+        "accent": "#76501c",
+        "glow": "#e9b2a0",
+        "name": {
+          "zh": "月光記憶工坊",
+          "en": "Moonlit Memory Workshop"
+        },
+        "signal": {
+          "zh": "緞帶、票根與禮物盒收藏被想起的證據。",
+          "en": "Ribbons, ticket stubs, and boxes keep proof of being remembered."
+        }
+      },
+      "assets": {
+        "portrait": "/assets/lovetypes/guardians/vivian.webp",
+        "card": "/assets/lovetypes/guardians/cards/vivian-card.webp",
+        "prop": "/assets/lovetypes/props/gifts-ribboned-gift-box.webp",
+        "story": "/assets/lovetypes/share/vivian-story-zh.webp"
+      },
+      "routes": {
+        "profile": "https://lovetypes.tw/characters/vivian/",
+        "supply": "https://lovetypes.tw/resources/#supply-vivian",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-vivian",
+        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-vivian",
+        "repairPlan": "https://lovetypes.tw/repair-plan/",
+        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "supply": {
+        "title": {
+          "zh": "薇薇安心意補給",
+          "en": "Vivian Memory Supply"
+        },
+        "mission": {
+          "zh": "記下一個對方隨口提過的小喜歡，並用低成本方式讓它被看見。",
+          "en": "Record one tiny preference and make it visible in a low-cost way."
+        },
+        "wound": {
+          "zh": "容易在重要日子沒有表示時，感覺自己沒有被放在心上。",
+          "en": "You may feel unheld when important days pass with no sign."
+        },
+        "bookIndex": 0
+      },
+      "guides": [
+        "https://lovetypes.tw/guides/gifts-are-not-materialism/",
+        "https://lovetypes.tw/guides/emotional-needs-checklist/"
+      ]
+    },
+    {
+      "slug": "claire",
+      "name": {
+        "zh": "克萊兒",
+        "en": "Claire"
+      },
+      "loveLanguage": {
+        "zh": "服務的行動",
+        "en": "Acts of service"
+      },
+      "description": {
+        "zh": "她守著不停修復的溫室，把承諾放回日常，讓疲憊不再只由一個人撐住。",
+        "en": "In a greenhouse of ongoing repair, she returns promises to daily life so one tired person does not hold everything alone."
+      },
+      "domain": {
+        "motif": "greenhouse-repair-room",
+        "accent": "#435a43",
+        "glow": "#d8c79a",
+        "name": {
+          "zh": "溫室修復間",
+          "en": "Greenhouse Repair Room"
+        },
+        "signal": {
+          "zh": "工具袋與暖白燈把承諾放回日常。",
+          "en": "Tool pouches and warm work lights return promises to daily life."
+        }
+      },
+      "assets": {
+        "portrait": "/assets/lovetypes/guardians/claire.webp",
+        "card": "/assets/lovetypes/guardians/cards/claire-card.webp",
+        "prop": "/assets/lovetypes/props/service-tool-pouch.webp",
+        "story": "/assets/lovetypes/share/claire-story-zh.webp"
+      },
+      "routes": {
+        "profile": "https://lovetypes.tw/characters/claire/",
+        "supply": "https://lovetypes.tw/resources/#supply-claire",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-claire",
+        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-claire",
+        "repairPlan": "https://lovetypes.tw/repair-plan/",
+        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "supply": {
+        "title": {
+          "zh": "克萊兒行動補給",
+          "en": "Claire Action Supply"
+        },
+        "mission": {
+          "zh": "把一件想被幫忙的事寫成具體請求：時間、動作、完成標準。",
+          "en": "Turn one desired help into a concrete request: time, action, and done condition."
+        },
+        "wound": {
+          "zh": "容易把沒有人主動分擔，感覺成自己不值得被照顧。",
+          "en": "When nobody shares the load, it can feel like you are not worth care."
+        },
+        "bookIndex": 3
+      },
+      "guides": [
+        "https://lovetypes.tw/guides/acts-of-service-boundaries/",
+        "https://lovetypes.tw/guides/weekly-relationship-review/"
+      ]
+    },
+    {
+      "slug": "dora",
+      "name": {
+        "zh": "朵拉",
+        "en": "Dora"
+      },
+      "loveLanguage": {
+        "zh": "身體的接觸",
+        "en": "Physical touch"
+      },
+      "description": {
+        "zh": "她在柔暖聖域守護經過同意的靠近，讓身體重新記得安全的溫度。",
+        "en": "In a warm sanctuary, she guards closeness after consent and helps the body remember the temperature of safety."
+      },
+      "domain": {
+        "motif": "rose-gold-safe-sanctuary",
+        "accent": "#923e4a",
+        "glow": "#f0b49c",
+        "name": {
+          "zh": "玫瑰金安全聖域",
+          "en": "Rose-Gold Safe Sanctuary"
+        },
+        "signal": {
+          "zh": "柔軟布料與暖光守護經過同意的靠近。",
+          "en": "Soft fabric and warm light guard closeness after consent."
+        }
+      },
+      "assets": {
+        "portrait": "/assets/lovetypes/guardians/dora.webp",
+        "card": "/assets/lovetypes/guardians/cards/dora-card.webp",
+        "prop": "/assets/lovetypes/props/touch-golden-hug-glow.webp",
+        "story": "/assets/lovetypes/share/dora-story-zh.webp"
+      },
+      "routes": {
+        "profile": "https://lovetypes.tw/characters/dora/",
+        "supply": "https://lovetypes.tw/resources/#supply-dora",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-dora",
+        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-dora",
+        "repairPlan": "https://lovetypes.tw/repair-plan/",
+        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "supply": {
+        "title": {
+          "zh": "朵拉安全補給",
+          "en": "Dora Safety Supply"
+        },
+        "mission": {
+          "zh": "建立一個安全靠近句：我現在可以抱你嗎？如果不行，我可以坐在旁邊。",
+          "en": "Create one safe closeness sentence: can I hold you now? If not, I can sit beside you."
+        },
+        "wound": {
+          "zh": "容易在靠近太快、太突然或沒有確認時，身體先關門。",
+          "en": "When closeness is sudden or unchecked, the body may close first."
+        },
+        "bookIndex": 2
+      },
+      "guides": [
+        "https://lovetypes.tw/guides/physical-touch-consent-safety/",
+        "https://lovetypes.tw/guides/healthy-boundaries/"
+      ]
+    }
+  ]
+}

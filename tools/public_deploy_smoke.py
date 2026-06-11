@@ -294,6 +294,20 @@ SUPPORT_FILES = {
         '"canonical": "https://lovetypes.tw/characters/iris/"',
         '"canonical": "https://lovetypes.tw/en/resources/"',
     ],
+    "/guardian-profiles.json": [
+        '"schemaVersion": 1',
+        '"slug": "iris"',
+        '"slug": "noah"',
+        '"slug": "vivian"',
+        '"slug": "claire"',
+        '"slug": "dora"',
+        '"Words of affirmation"',
+        '"Quality time"',
+        '"Receiving gifts"',
+        '"Acts of service"',
+        '"Physical touch"',
+        '"profile": "https://lovetypes.tw/characters/iris/"',
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

@@ -109,6 +109,13 @@ EXPECTED_COMMERCE_TYPE_COUNTS = {
 EXPECTED_COMMERCE_ROLE_COUNTS = {"lead": 5, "retention": 5, "revenue": 10}
 EXPECTED_SITE_INDEX_LANGS = {"zh", "en", "ja", "ko", "es"}
 EXPECTED_SITE_INDEX_FLOWS = {"quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
+EXPECTED_GUARDIAN_LANGUAGES = {
+    "iris": "Words of affirmation",
+    "noah": "Quality time",
+    "vivian": "Receiving gifts",
+    "claire": "Acts of service",
+    "dora": "Physical touch",
+}
 
 
 @dataclass(frozen=True)
@@ -721,6 +728,64 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, len(pages), len(seen_langs), len(groups), len(flow_ids)
 
 
+def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, int]:
+    path = "/guardian-profiles.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    guardians = data.get("guardians", [])
+    if not isinstance(guardians, list):
+        return [f"{path}: guardians should be a list"], 0, 0, 0, 0
+    if len(guardians) != 5:
+        issues.append(f"{path}: expected five guardians, got {len(guardians)}")
+    route_count = 0
+    asset_count = 0
+    guide_count = 0
+    seen: set[str] = set()
+    for guardian in guardians:
+        if not isinstance(guardian, dict):
+            issues.append(f"{path}: guardian should be an object")
+            continue
+        slug = guardian.get("slug")
+        if slug not in EXPECTED_GUARDIAN_LANGUAGES:
+            issues.append(f"{path}: unexpected guardian slug {slug!r}")
+            continue
+        seen.add(slug)
+        if guardian.get("loveLanguage", {}).get("en") != EXPECTED_GUARDIAN_LANGUAGES[slug]:
+            issues.append(f"{path}: {slug} love language mapping is incorrect")
+        routes = guardian.get("routes", {})
+        assets = guardian.get("assets", {})
+        guides = guardian.get("guides", [])
+        route_count += len(routes) if isinstance(routes, dict) else 0
+        asset_count += len(assets) if isinstance(assets, dict) else 0
+        guide_count += len(guides) if isinstance(guides, list) else 0
+        for key in ("profile", "supply", "keepsake", "freeKeepsake", "repairPlan", "luna", "contact"):
+            value = routes.get(key) if isinstance(routes, dict) else ""
+            if not isinstance(value, str) or not value.startswith("https://lovetypes.tw/"):
+                issues.append(f"{path}: {slug} route {key} should point to lovetypes.tw")
+        for key in ("portrait", "card", "prop", "story"):
+            value = assets.get(key) if isinstance(assets, dict) else ""
+            if not isinstance(value, str) or not value.startswith("/assets/lovetypes/"):
+                issues.append(f"{path}: {slug} asset {key} should point to /assets/lovetypes/")
+        if not isinstance(guides, list) or not guides:
+            issues.append(f"{path}: {slug} should include guide URLs")
+    missing = sorted(set(EXPECTED_GUARDIAN_LANGUAGES).difference(seen))
+    if missing:
+        issues.append(f"{path}: missing guardians {', '.join(missing)}")
+    return issues, len(guardians), route_count, asset_count, guide_count
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -752,6 +817,7 @@ def main() -> int:
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
+    guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -760,6 +826,7 @@ def main() -> int:
     issues.extend(funnel_issues)
     issues.extend(commerce_issues)
     issues.extend(site_index_issues)
+    issues.extend(guardian_profile_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -791,6 +858,10 @@ def main() -> int:
     print(f"public_discovery_site_index_languages_checked={site_index_languages_checked}")
     print(f"public_discovery_site_index_groups_checked={site_index_groups_checked}")
     print(f"public_discovery_site_index_flows_checked={site_index_flows_checked}")
+    print(f"public_discovery_guardian_profiles_checked={guardian_profiles_checked}")
+    print(f"public_discovery_guardian_profile_routes_checked={guardian_profile_routes_checked}")
+    print(f"public_discovery_guardian_profile_assets_checked={guardian_profile_assets_checked}")
+    print(f"public_discovery_guardian_profile_guides_checked={guardian_profile_guides_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

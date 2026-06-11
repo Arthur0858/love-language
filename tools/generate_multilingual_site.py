@@ -9690,6 +9690,72 @@ def write_commerce_catalog() -> None:
     write(ROOT / "commerce-catalog.json", json.dumps(collect_commerce_catalog(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_guardian_profiles() -> dict:
+    guardians = []
+    for slug, data in GUARDIANS.items():
+        domain = GUARDIAN_DOMAINS[slug]
+        supply = SUPPLY_ROUTES[slug]
+        guide_slugs = [guide["slug"] for guide in GUIDES if guide["guardian"] == slug]
+        zh_name, zh_language, zh_desc = data["zh"]
+        en_name, en_language, en_desc = data["en"]
+        guardians.append({
+            "slug": slug,
+            "name": {"zh": zh_name, "en": en_name},
+            "loveLanguage": {"zh": zh_language, "en": en_language},
+            "description": {"zh": zh_desc, "en": en_desc},
+            "domain": {
+                "motif": domain["motif"],
+                "accent": domain["accent"],
+                "glow": domain["glow"],
+                "name": {"zh": domain["zh"][0], "en": domain["en"][0]},
+                "signal": {"zh": domain["zh"][1], "en": domain["en"][1]},
+            },
+            "assets": {
+                "portrait": data["asset"],
+                "card": data["card_asset"],
+                "prop": data["prop"],
+                "story": f"/assets/lovetypes/share/{slug}-story-zh.webp",
+            },
+            "routes": {
+                "profile": f"{DOMAIN}/characters/{slug}/",
+                "supply": f"{DOMAIN}/resources/#supply-{slug}",
+                "keepsake": f"{DOMAIN}/keepsakes/#keepsake-card-{slug}",
+                "freeKeepsake": f"{DOMAIN}/keepsakes/#free-keepsake-{slug}",
+                "repairPlan": f"{DOMAIN}/repair-plan/",
+                "luna": f"{DOMAIN}/luna-yoga-music/#luna-{slug}",
+                "contact": f"{DOMAIN}/contact/#luna-supply-request",
+            },
+            "supply": {
+                "title": {"zh": supply["zh"][0], "en": supply["en"][0]},
+                "mission": {"zh": supply["zh"][3], "en": supply["en"][3]},
+                "wound": {"zh": supply["zh"][2], "en": supply["en"][2]},
+                "bookIndex": supply["book"],
+            },
+            "guides": [f"{DOMAIN}/guides/{guide_slug}/" for guide_slug in guide_slugs],
+        })
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, and conversion routes.",
+        "rules": [
+            "Iris maps to words of affirmation.",
+            "Noah maps to quality time.",
+            "Vivian maps to receiving gifts.",
+            "Claire maps to acts of service.",
+            "Dora maps to physical touch.",
+            "Guardian profiles are metaphor tools for reflection, not diagnosis or therapy.",
+        ],
+        "totals": {"guardians": len(guardians), "languages": 2, "routeTypes": 7},
+        "guardians": guardians,
+    }
+
+
+def write_guardian_profiles() -> None:
+    write(ROOT / "guardian-profiles.json", json.dumps(collect_guardian_profiles(), ensure_ascii=False, indent=2) + "\n")
+
+
 def site_index_paths() -> list[str]:
     paths = ["", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
@@ -9848,6 +9914,7 @@ https://:version.lovetypes.pages.dev/*
     write_redirects()
     write_funnel_event_catalog()
     write_commerce_catalog()
+    write_guardian_profiles()
     write_site_index()
 
 

@@ -147,6 +147,7 @@ MANIFEST_PATH = ROOT / "site.webmanifest"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
 SITE_INDEX_PATH = ROOT / "site-index.json"
+GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1737,6 +1738,103 @@ def parse_site_index(parsers: dict[Path, PageParser], sitemap_urls: set[str]) ->
     return issues, stats
 
 
+def parse_guardian_profiles(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not GUARDIAN_PROFILES_PATH.exists():
+        return [f"{GUARDIAN_PROFILES_PATH}: missing guardian-profiles.json"], stats
+    try:
+        data = json.loads(GUARDIAN_PROFILES_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{GUARDIAN_PROFILES_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{GUARDIAN_PROFILES_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: updated should match generator date")
+    guardians = data.get("guardians")
+    if not isinstance(guardians, list) or not guardians:
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: guardians should be a non-empty list")
+        return issues, stats
+    expected_languages = {
+        "iris": ("肯定的言詞", "Words of affirmation"),
+        "noah": ("優質的時光", "Quality time"),
+        "vivian": ("接受禮物", "Receiving gifts"),
+        "claire": ("服務的行動", "Acts of service"),
+        "dora": ("身體的接觸", "Physical touch"),
+    }
+    seen_slugs: set[str] = set()
+    stats["guardian_profiles_checked"] = len(guardians)
+    if len(guardians) != len(expected_languages):
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: expected {len(expected_languages)} guardians, got {len(guardians)}")
+    for guardian in guardians:
+        if not isinstance(guardian, dict):
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: guardian entry should be an object")
+            continue
+        slug = guardian.get("slug")
+        if slug not in expected_languages:
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: unexpected guardian slug {slug!r}")
+            continue
+        if slug in seen_slugs:
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: duplicate guardian slug {slug}")
+        seen_slugs.add(slug)
+        expected_zh, expected_en = expected_languages[slug]
+        love_language = guardian.get("loveLanguage", {})
+        if love_language.get("zh") != expected_zh or love_language.get("en") != expected_en:
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} love language mapping is incorrect")
+        domain = guardian.get("domain", {})
+        for key in ("motif", "accent", "glow", "name", "signal"):
+            if key not in domain:
+                issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} domain missing {key}")
+        assets = guardian.get("assets", {})
+        for key in ("portrait", "card", "prop", "story"):
+            value = assets.get(key)
+            stats["guardian_profile_assets_checked"] += 1
+            if not isinstance(value, str) or not value.startswith("/"):
+                issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} asset {key} should be an absolute path")
+                continue
+            target = ROOT / value.lstrip("/")
+            if not target.exists():
+                issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} asset {key} missing: {value}")
+        routes = guardian.get("routes", {})
+        expected_route_keys = {"profile", "supply", "keepsake", "freeKeepsake", "repairPlan", "luna", "contact"}
+        if set(routes) != expected_route_keys:
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} route keys should be {sorted(expected_route_keys)}, got {sorted(routes)}")
+        for key, value in routes.items():
+            stats["guardian_profile_routes_checked"] += 1
+            if not isinstance(value, str) or not value.startswith(DOMAIN):
+                issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} route {key} should be on {DOMAIN}")
+                continue
+            target, fragment = target_for(ROOT / "index.html", value)
+            if target is None or not target.exists():
+                issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} route {key} target missing: {value}")
+                continue
+            if target.suffix == ".html":
+                parser = parsers.get(target)
+                if parser and is_noindex(parser):
+                    issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} route {key} should not point to noindex page: {value}")
+                if fragment and parser and fragment not in parser.ids:
+                    issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} route {key} missing anchor #{fragment}: {value}")
+        guides = guardian.get("guides")
+        if not isinstance(guides, list) or not guides:
+            issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} should include at least one guide")
+        else:
+            stats["guardian_profile_guides_checked"] += len(guides)
+            for guide_url in guides:
+                target, fragment = target_for(ROOT / "index.html", guide_url)
+                if target is None or not target.exists() or fragment:
+                    issues.append(f"{GUARDIAN_PROFILES_PATH}: {slug} guide target invalid: {guide_url}")
+    missing = sorted(set(expected_languages).difference(seen_slugs))
+    if missing:
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: missing guardians: {', '.join(missing)}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("guardians") != len(guardians):
+        issues.append(f"{GUARDIAN_PROFILES_PATH}: totals.guardians should match guardian count")
+    stats["guardian_profile_love_languages_checked"] = len(seen_slugs)
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2910,6 +3008,9 @@ def main() -> int:
     site_index_issues, site_index_stats = parse_site_index(parsers, sitemap_urls)
     issues.extend(site_index_issues)
     stats.update(site_index_stats)
+    guardian_profile_issues, guardian_profile_stats = parse_guardian_profiles(parsers)
+    issues.extend(guardian_profile_issues)
+    stats.update(guardian_profile_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3056,6 +3157,11 @@ def main() -> int:
     print(f"site_index_languages_checked={stats['site_index_languages_checked']}")
     print(f"site_index_groups_checked={stats['site_index_groups_checked']}")
     print(f"site_index_core_flows_checked={stats['site_index_core_flows_checked']}")
+    print(f"guardian_profiles_checked={stats['guardian_profiles_checked']}")
+    print(f"guardian_profile_love_languages_checked={stats['guardian_profile_love_languages_checked']}")
+    print(f"guardian_profile_assets_checked={stats['guardian_profile_assets_checked']}")
+    print(f"guardian_profile_routes_checked={stats['guardian_profile_routes_checked']}")
+    print(f"guardian_profile_guides_checked={stats['guardian_profile_guides_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

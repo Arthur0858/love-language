@@ -21,6 +21,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "funnel-events.json",
     "commerce-catalog.json",
     "site-index.json",
+    "guardian-profiles.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}
 FORBIDDEN_PREFIXES = {

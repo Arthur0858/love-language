@@ -33,7 +33,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260612-funnel-context.css" />
+  <link rel="stylesheet" href="/shared-20260612-contact-path-handoff.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -193,7 +193,8 @@ Extra screenshot or notes:
 
 <script>
 (() => {
-  const labels = {"eyebrow": "LOCAL PATH SUMMARY", "title": "Copy this device's recent path", "intro": "When you report an issue or request supplies, you can include the recent LoveTypes path. This summary is read only from this browser and is shared only if you copy or send it.", "empty": "No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.", "empty_quiz": "Start quiz", "empty_resources": "Open resources", "empty_luna": "Open Luna", "copy": "Copy recent path summary", "clear": "Clear local path log", "copied": "Copied", "cleared": "Cleared", "event": "Event", "category": "Category", "guardian": "Guardian", "source": "Source section", "language": "Language", "path": "Page", "target": "Target", "target_type": "Target type", "time": "Time", "count": "Recent {count} items"};
+  const labels = {"eyebrow": "LOCAL PATH SUMMARY", "title": "Copy this device's recent path", "intro": "When you report an issue or request supplies, you can include the recent LoveTypes path. This summary is read only from this browser and is shared only if you copy or send it.", "empty": "No recent path is available yet. Finish the quiz, open supplies, or tap Luna to create a copyable summary.", "empty_quiz": "Start quiz", "empty_resources": "Open resources", "empty_luna": "Open Luna", "copy": "Copy recent path summary", "send": "Send recent path summary", "clear": "Clear local path log", "subject": "LoveTypes recent path summary", "copied": "Copied", "cleared": "Cleared", "event": "Event", "category": "Category", "guardian": "Guardian", "source": "Source section", "language": "Language", "path": "Page", "target": "Target", "target_type": "Target type", "time": "Time", "count": "Recent {count} items"};
+  const contactEmail = "contact@lovetypes.tw";
   const emptyActions = {
     quiz: "/en/#quiz-section",
     resources: "/en/resources/",
@@ -264,6 +265,7 @@ Extra screenshot or notes:
     }
     const recent = events.slice(-8).reverse();
     const text = summaryText(events);
+    const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
     box.innerHTML = `
       <div class="section-head"><div><p class="eyebrow">${labels.eyebrow}</p><h2>${labels.title}</h2></div><span>${labels.count.replace('{count}', events.length)}</span></div>
       <p class="section-intro">${labels.intro}</p>
@@ -278,6 +280,7 @@ Extra screenshot or notes:
           </article>`).join('')}
       </div>
       <div class="contact-request-note">
+        <a class="primary-btn" href="${mailto}" data-contact-funnel-mailto data-funnel-event="contact_funnel_summary_mailto">${labels.send}</a>
         <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${labels.copy}</button>
         <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${labels.clear}</button>
       </div>`;
@@ -294,7 +297,7 @@ Extra screenshot or notes:
 </script>
 
 
-<script src="/quiz-data-en-20260612-funnel-context.js"></script>
+<script src="/quiz-data-en-20260612-contact-path-handoff.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -473,7 +476,7 @@ Extra screenshot or notes:
   <p>© 2026 LoveTypes · <a href="/en/privacy/">Privacy</a> · <a href="/en/terms/">Terms</a> · <a href="/en/contact/">Contact</a></p>
 </footer>
 
-<script src="/site-interactions-20260612-funnel-context.js" defer></script>
+<script src="/site-interactions-20260612-contact-path-handoff.js" defer></script>
 
 </body>
 </html>

@@ -1355,6 +1355,14 @@ def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                     issues.append(f"{path}: contact page missing copyable email templates")
                 if parser.source.count(" data-copy-contact-template ") != 2:
                     issues.append(f"{path}: contact page should include two copy-template buttons")
+                if 'data-contact-funnel-mailto' not in parser.source:
+                    issues.append(f"{path}: contact page missing recent path summary mailto handoff")
+                if 'data-funnel-event="contact_funnel_summary_mailto"' not in parser.source:
+                    issues.append(f"{path}: contact page missing recent path summary mailto funnel event")
+                if GENERATOR_CONFIG.CONTACT_FUNNEL_SUMMARY[lang]["subject"] not in parser.source:
+                    issues.append(f"{path}: contact page missing localized recent path mailto subject")
+                else:
+                    stats["contact_funnel_mailto_pages"] += 1
                 mailto_subjects = {
                     value
                     for href in contact_mailtos
@@ -2516,6 +2524,7 @@ def main() -> int:
     print(f"keepsake_route_action_pages={stats['keepsake_route_action_pages']}")
     print(f"trust_action_route_pages={stats['trust_action_route_pages']}")
     print(f"trust_hero_action_pages={stats['trust_hero_action_pages']}")
+    print(f"contact_funnel_mailto_pages={stats['contact_funnel_mailto_pages']}")
     print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")

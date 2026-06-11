@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-12"
-ASSET_VERSION = "20260612-funnel-context"
+ASSET_VERSION = "20260612-contact-path-handoff"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1578,7 +1578,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "empty_resources": "打開旅人補給",
         "empty_luna": "開啟 Luna",
         "copy": "複製最近路徑摘要",
+        "send": "寄出最近路徑摘要",
         "clear": "清除本機路徑紀錄",
+        "subject": "LoveTypes 最近路徑摘要",
         "copied": "已複製",
         "cleared": "已清除",
         "event": "事件",
@@ -1601,7 +1603,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "empty_resources": "Open resources",
         "empty_luna": "Open Luna",
         "copy": "Copy recent path summary",
+        "send": "Send recent path summary",
         "clear": "Clear local path log",
+        "subject": "LoveTypes recent path summary",
         "copied": "Copied",
         "cleared": "Cleared",
         "event": "Event",
@@ -1624,7 +1628,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "empty_resources": "補給を開く",
         "empty_luna": "Luna を開く",
         "copy": "最近の経路をコピー",
+        "send": "最近の経路を送る",
         "clear": "端末内の経路記録を消す",
+        "subject": "LoveTypes 最近の経路摘要",
         "copied": "コピーしました",
         "cleared": "消去しました",
         "event": "イベント",
@@ -1647,7 +1653,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "empty_resources": "보급 열기",
         "empty_luna": "Luna 열기",
         "copy": "최근 경로 요약 복사",
+        "send": "최근 경로 요약 보내기",
         "clear": "로컬 경로 기록 지우기",
+        "subject": "LoveTypes 최근 경로 요약",
         "copied": "복사됨",
         "cleared": "지움",
         "event": "이벤트",
@@ -1670,7 +1678,9 @@ CONTACT_FUNNEL_SUMMARY = {
         "empty_resources": "Abrir recursos",
         "empty_luna": "Abrir Luna",
         "copy": "Copiar resumen reciente",
+        "send": "Enviar resumen reciente",
         "clear": "Borrar registro local",
+        "subject": "Resumen de ruta reciente de LoveTypes",
         "copied": "Copiado",
         "cleared": "Borrado",
         "event": "Evento",
@@ -5890,10 +5900,12 @@ def contact_funnel_summary_script(lang: str) -> str:
     quiz_href = json.dumps(lang_url(lang, "") + "#quiz-section")
     resources_href = json.dumps(lang_url(lang, "resources"))
     luna_href = json.dumps(lang_url(lang, "luna-yoga-music"))
+    contact_email = json.dumps(CONTACT_EMAIL)
     return f"""
 <script>
 (() => {{
   const labels = {labels};
+  const contactEmail = {contact_email};
   const emptyActions = {{
     quiz: {quiz_href},
     resources: {resources_href},
@@ -5964,6 +5976,7 @@ def contact_funnel_summary_script(lang: str) -> str:
     }}
     const recent = events.slice(-8).reverse();
     const text = summaryText(events);
+    const mailto = `mailto:${{contactEmail}}?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(text)}}`;
     box.innerHTML = `
       <div class="section-head"><div><p class="eyebrow">${{labels.eyebrow}}</p><h2>${{labels.title}}</h2></div><span>${{labels.count.replace('{{count}}', events.length)}}</span></div>
       <p class="section-intro">${{labels.intro}}</p>
@@ -5978,6 +5991,7 @@ def contact_funnel_summary_script(lang: str) -> str:
           </article>`).join('')}}
       </div>
       <div class="contact-request-note">
+        <a class="primary-btn" href="${{mailto}}" data-contact-funnel-mailto data-funnel-event="contact_funnel_summary_mailto">${{labels.send}}</a>
         <button class="secondary-btn" type="button" data-contact-funnel-copy data-funnel-event="contact_funnel_summary_copy">${{labels.copy}}</button>
         <button class="secondary-btn ghost" type="button" data-contact-funnel-clear data-funnel-event="contact_funnel_summary_clear">${{labels.clear}}</button>
       </div>`;

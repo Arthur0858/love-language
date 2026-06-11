@@ -93,6 +93,7 @@ def main() -> int:
     trust_action_routes_checked = 0
     trust_action_events_checked = 0
     contact_route_anchors_checked = 0
+    contact_funnel_mailtos_checked = 0
     about_trust_cards_checked = 0
     about_garden_pass_cards_checked = 0
     about_hero_actions_checked = 0
@@ -224,6 +225,14 @@ def main() -> int:
                     issues.append(f"{page.path}: missing contact anchor #{target}")
             if "contact@lovetypes.tw" not in response.text and "__cf_email__" not in response.text:
                 issues.append(f"{page.path}: missing contact email or Cloudflare protected email")
+            if 'data-contact-funnel-mailto' not in response.text:
+                issues.append(f"{page.path}: missing recent path summary mailto handoff")
+            if 'data-funnel-event="contact_funnel_summary_mailto"' not in response.text:
+                issues.append(f"{page.path}: missing recent path summary mailto event")
+            if generator.CONTACT_FUNNEL_SUMMARY[page.lang]["subject"] not in response.text:
+                issues.append(f"{page.path}: missing localized recent path summary subject")
+            else:
+                contact_funnel_mailtos_checked += 1
 
     print(f"public_trust_pages_checked={pages_checked}")
     print(f"public_trust_boundary_texts_checked={boundary_texts_checked}")
@@ -243,6 +252,7 @@ def main() -> int:
     print(f"public_trust_action_routes_checked={trust_action_routes_checked}")
     print(f"public_trust_action_events_checked={trust_action_events_checked}")
     print(f"public_trust_contact_route_anchors_checked={contact_route_anchors_checked}")
+    print(f"public_trust_contact_funnel_mailtos_checked={contact_funnel_mailtos_checked}")
     print(f"public_trust_noncommercial_pages_checked={noncommercial_pages_checked}")
     print(f"public_trust_issues={len(issues)}")
     for issue in issues[:100]:

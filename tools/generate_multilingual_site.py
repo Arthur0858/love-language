@@ -9375,6 +9375,34 @@ LoveTypes uses the five love languages as reflective communication tools, not as
     write(ROOT / "llms.txt", content)
 
 
+def write_humans_txt() -> None:
+    content = f"""/* TEAM */
+Site: LoveTypes
+Contact: {CONTACT_EMAIL}
+Production: {DOMAIN}/
+Updated: {UPDATED}
+
+/* SITE */
+Purpose: Heart Garden five love language reflection, guardian quiz, repair practices, Luna night support, keepsakes, and supply routes.
+Languages: zh-TW, en, ja, ko, es
+Canonical: {DOMAIN}/
+Generator: tools/generate_multilingual_site.py
+Hosting: Cloudflare Pages
+Commercial: Resources may contain affiliate links; Luna packs use Gumroad purchase links.
+Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
+
+/* HIGH-VALUE ROUTES */
+Quiz: {DOMAIN}/#quiz-section
+Garden map: {DOMAIN}/garden-map/
+Guardians: {DOMAIN}/characters/
+Resources: {DOMAIN}/resources/
+Keepsakes: {DOMAIN}/keepsakes/
+Luna: {DOMAIN}/luna-yoga-music/
+Contact: {DOMAIN}/contact/
+"""
+    write(ROOT / "humans.txt", content)
+
+
 def write_site_manifest() -> None:
     manifest = {
         "name": "LoveTypes 情感守護者宇宙",
@@ -9668,6 +9696,7 @@ https://:version.lovetypes.pages.dev/*
     write(ROOT / "_headers", headers)
     write_404_page()
     write_llms_txt()
+    write_humans_txt()
     write_site_manifest()
     write_feed_xml()
     write_security_txt()

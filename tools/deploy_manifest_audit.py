@@ -17,6 +17,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "robots.txt",
     "sitemap.xml",
     "llms.txt",
+    "humans.txt",
     "funnel-events.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}

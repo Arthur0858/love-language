@@ -1,0 +1,23 @@
+/* TEAM */
+Site: LoveTypes
+Contact: contact@lovetypes.tw
+Production: https://lovetypes.tw/
+Updated: 2026-06-12
+
+/* SITE */
+Purpose: Heart Garden five love language reflection, guardian quiz, repair practices, Luna night support, keepsakes, and supply routes.
+Languages: zh-TW, en, ja, ko, es
+Canonical: https://lovetypes.tw/
+Generator: tools/generate_multilingual_site.py
+Hosting: Cloudflare Pages
+Commercial: Resources may contain affiliate links; Luna packs use Gumroad purchase links.
+Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
+
+/* HIGH-VALUE ROUTES */
+Quiz: https://lovetypes.tw/#quiz-section
+Garden map: https://lovetypes.tw/garden-map/
+Guardians: https://lovetypes.tw/characters/
+Resources: https://lovetypes.tw/resources/
+Keepsakes: https://lovetypes.tw/keepsakes/
+Luna: https://lovetypes.tw/luna-yoga-music/
+Contact: https://lovetypes.tw/contact/

@@ -142,6 +142,7 @@ SITEMAP_PATH = ROOT / "sitemap.xml"
 ROBOTS_PATH = ROOT / "robots.txt"
 FEED_PATH = ROOT / "feed.xml"
 LLMS_PATH = ROOT / "llms.txt"
+HUMANS_PATH = ROOT / "humans.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 HEADERS_PATH = ROOT / "_headers"
@@ -1173,6 +1174,82 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
                 issues.append(f"{LLMS_PATH}: listed URL should match target canonical: {url}")
         if url not in sitemap_urls:
             issues.append(f"{LLMS_PATH}: listed URL missing from sitemap: {url}")
+
+    return issues, stats
+
+
+def parse_humans_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not HUMANS_PATH.exists():
+        return [f"{HUMANS_PATH}: missing humans.txt"], stats
+
+    text = HUMANS_PATH.read_text(encoding="utf-8", errors="ignore")
+    stats["humans_files_checked"] = 1
+    stats["humans_lines"] = len(text.splitlines())
+
+    required_sections = [
+        "/* TEAM */",
+        "/* SITE */",
+        "/* HIGH-VALUE ROUTES */",
+    ]
+    for section in required_sections:
+        stats["humans_sections_checked"] += 1
+        if section not in text:
+            issues.append(f"{HUMANS_PATH}: missing required section {section!r}")
+
+    required_snippets = {
+        "Site: LoveTypes": "site identity",
+        f"Contact: {CONTACT_EMAIL}": "contact email",
+        f"Production: {DOMAIN}/": "production URL",
+        f"Updated: {GENERATOR_CONFIG.UPDATED}": "generator updated date",
+        "Languages: zh-TW, en, ja, ko, es": "language coverage",
+        "Generator: tools/generate_multilingual_site.py": "source generator",
+        "Hosting: Cloudflare Pages": "hosting platform",
+        "Resources may contain affiliate links": "affiliate disclosure",
+        "Luna packs use Gumroad purchase links": "Luna product disclosure",
+        "not therapy, medical, legal, or diagnostic advice": "safety boundary",
+    }
+    for snippet, label in required_snippets.items():
+        stats["humans_snippets_checked"] += 1
+        if snippet not in text:
+            issues.append(f"{HUMANS_PATH}: missing {label}: {snippet!r}")
+
+    required_urls = {
+        f"{DOMAIN}/",
+        f"{DOMAIN}/garden-map/",
+        f"{DOMAIN}/characters/",
+        f"{DOMAIN}/resources/",
+        f"{DOMAIN}/keepsakes/",
+        f"{DOMAIN}/luna-yoga-music/",
+        f"{DOMAIN}/contact/",
+    }
+    for url in required_urls:
+        stats["humans_high_value_urls_checked"] += 1
+        if url not in text:
+            issues.append(f"{HUMANS_PATH}: missing high-value URL {url}")
+
+    for forbidden in FORBIDDEN_CONTACT_SNIPPETS | FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS:
+        if forbidden in text:
+            issues.append(f"{HUMANS_PATH}: forbidden snippet should not appear: {forbidden}")
+
+    humans_urls = sorted(set(extract_llms_urls(text)))
+    stats["humans_urls_checked"] = len(humans_urls)
+    for url in humans_urls:
+        target, fragment = target_for(ROOT / "index.html", url)
+        if target is None or not target.exists():
+            issues.append(f"{HUMANS_PATH}: listed URL target missing: {url}")
+            continue
+        if fragment and target.suffix == ".html":
+            target_parser = parsers.get(target)
+            if target_parser and fragment not in target_parser.ids:
+                issues.append(f"{HUMANS_PATH}: listed URL missing anchor #{fragment}: {url}")
+        if target.suffix == ".html":
+            target_parser = parsers.get(target)
+            if target_parser and is_noindex(target_parser):
+                issues.append(f"{HUMANS_PATH}: listed URL should not point to noindex page: {url}")
+        if not fragment and url not in sitemap_urls:
+            issues.append(f"{HUMANS_PATH}: listed URL missing from sitemap: {url}")
 
     return issues, stats
 
@@ -2604,6 +2681,9 @@ def main() -> int:
     llms_issues, llms_stats = parse_llms_txt(parsers, sitemap_urls)
     issues.extend(llms_issues)
     stats.update(llms_stats)
+    humans_issues, humans_stats = parse_humans_txt(parsers, sitemap_urls)
+    issues.extend(humans_issues)
+    stats.update(humans_stats)
     header_issues, header_stats = parse_headers()
     issues.extend(header_issues)
     stats.update(header_stats)
@@ -2740,6 +2820,12 @@ def main() -> int:
     print(f"llms_guardians_checked={stats['llms_guardians_checked']}")
     print(f"llms_guides_checked={stats['llms_guides_checked']}")
     print(f"llms_urls_checked={stats['llms_urls_checked']}")
+    print(f"humans_files_checked={stats['humans_files_checked']}")
+    print(f"humans_lines={stats['humans_lines']}")
+    print(f"humans_sections_checked={stats['humans_sections_checked']}")
+    print(f"humans_snippets_checked={stats['humans_snippets_checked']}")
+    print(f"humans_high_value_urls_checked={stats['humans_high_value_urls_checked']}")
+    print(f"humans_urls_checked={stats['humans_urls_checked']}")
     print(f"header_blocks={stats['header_blocks']}")
     print(f"header_rules={stats['header_rules']}")
     print(f"redirect_rules={stats['redirect_rules']}")

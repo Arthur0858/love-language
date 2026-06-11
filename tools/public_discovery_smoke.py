@@ -72,6 +72,17 @@ REQUIRED_SECURITY_FIELDS = (
     "Policy: https://lovetypes.tw/privacy/",
     "Canonical: https://lovetypes.tw/.well-known/security.txt",
 )
+REQUIRED_HUMANS_SNIPPETS = (
+    "/* TEAM */",
+    "Site: LoveTypes",
+    "Contact: contact@lovetypes.tw",
+    "Production: https://lovetypes.tw/",
+    "Generator: tools/generate_multilingual_site.py",
+    "Hosting: Cloudflare Pages",
+    "Resources may contain affiliate links",
+    "Luna packs use Gumroad purchase links",
+    "not therapy, medical, legal, or diagnostic advice",
+)
 REQUIRED_ROBOTS_LINES = (
     "User-agent: *",
     "Allow: /",
@@ -465,10 +476,11 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     return issues, sections_checked, snippets_checked, urls_checked, high_value_urls_checked, url_canonicals_checked
 
 
-def check_text_files(base_url: str) -> tuple[list[str], int, int]:
+def check_text_files(base_url: str) -> tuple[list[str], int, int, int]:
     issues: list[str] = []
     text_files_checked = 0
     security_fields_checked = 0
+    humans_snippets_checked = 0
     security = request_url(urljoin(base_url + "/", "security.txt"))
     well_known = request_url(urljoin(base_url + "/", ".well-known/security.txt"))
     for path, response in (("/security.txt", security), ("/.well-known/security.txt", well_known)):
@@ -497,7 +509,20 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int]:
         records = [line.strip() for line in ads.text.splitlines() if line.strip() and not line.strip().startswith("#")]
         if records != [EXPECTED_ADS_RECORD]:
             issues.append(f"/ads.txt: expected only {EXPECTED_ADS_RECORD!r}, got {records!r}")
-    return issues, text_files_checked, security_fields_checked
+
+    humans = request_url(urljoin(base_url + "/", "humans.txt"))
+    text_files_checked += 1
+    if humans.status != 200:
+        issues.append(f"/humans.txt: expected status 200, got {humans.status}")
+    else:
+        if not humans.headers.get("content-type", "").startswith("text/plain"):
+            issues.append(f"/humans.txt: expected text/plain content type, got {humans.headers.get('content-type')!r}")
+        issues.extend(cache_is_reasonable("/humans.txt", humans))
+        for snippet in REQUIRED_HUMANS_SNIPPETS:
+            humans_snippets_checked += 1
+            if snippet not in humans.text:
+                issues.append(f"/humans.txt: missing required snippet {snippet!r}")
+    return issues, text_files_checked, security_fields_checked, humans_snippets_checked
 
 
 def check_robots(base_url: str) -> tuple[list[str], int, int]:
@@ -605,7 +630,7 @@ def main() -> int:
         llms_high_value_urls_checked,
         llms_url_canonicals_checked,
     ) = check_llms(base_url)
-    text_issues, text_files_checked, security_fields_checked = check_text_files(base_url)
+    text_issues, text_files_checked, security_fields_checked, humans_snippets_checked = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     issues.extend(feed_issues)
@@ -632,6 +657,7 @@ def main() -> int:
     print(f"public_discovery_llms_url_canonicals_checked={llms_url_canonicals_checked}")
     print(f"public_discovery_text_files_checked={text_files_checked}")
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
+    print(f"public_discovery_humans_snippets_checked={humans_snippets_checked}")
     print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
     print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")
     print(f"public_discovery_funnel_events_checked={funnel_events_checked}")

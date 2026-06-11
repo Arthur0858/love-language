@@ -255,6 +255,17 @@ SUPPORT_FILES = {
         "https://lovetypes.tw/luna-yoga-music/",
         "Contact email: contact@lovetypes.tw",
     ],
+    "/humans.txt": [
+        "/* TEAM */",
+        "Site: LoveTypes",
+        "Contact: contact@lovetypes.tw",
+        "Production: https://lovetypes.tw/",
+        "Generator: tools/generate_multilingual_site.py",
+        "Hosting: Cloudflare Pages",
+        "Resources may contain affiliate links",
+        "Luna packs use Gumroad purchase links",
+        "not therapy, medical, legal, or diagnostic advice",
+    ],
     "/funnel-events.json": [
         '"schemaVersion": 1',
         '"localStorageKey": "lovetypes:funnel-events:v1"',

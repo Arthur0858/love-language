@@ -222,6 +222,7 @@ def validate_page(
         "safety_bridge_links": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
+        "waitlist_option_mailtos": 0,
         "waitlist_copy_buttons": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
@@ -376,15 +377,22 @@ def validate_page(
         if not any(link.attrs.get("href") == localized_route(lang, "contact", "luna-supply-request") for link in waitlist_links):
             issues.append(f"{source}: keepsake waitlist missing contact page bridge")
         mailto_hrefs = contact_request_hrefs(waitlist_links)
-        if len(mailto_hrefs) != 1:
-            issues.append(f"{source}: keepsake waitlist should include one contact mailto or protected email link, got {len(mailto_hrefs)}")
+        expected_mailtos = expected_waitlist_cards + 1
+        if len(mailto_hrefs) != expected_mailtos:
+            issues.append(f"{source}: keepsake waitlist should include {expected_mailtos} contact mailto or protected email links, got {len(mailto_hrefs)}")
         else:
-            href = mailto_hrefs[0]
-            query = parse_qs(urlparse(href).query)
-            if not query.get("subject") or not query.get("body"):
-                issues.append(f"{source}: keepsake waitlist mailto should include subject and body")
+            for href in mailto_hrefs:
+                query = parse_qs(urlparse(href).query)
+                if not query.get("subject") or not query.get("body"):
+                    issues.append(f"{source}: keepsake waitlist mailto should include subject and body")
+                    break
             else:
-                stats["waitlist_mailtos"] += 1
+                stats["waitlist_mailtos"] += expected_mailtos
+        option_links = [link for link in waitlist_links if "data-keepsake-waitlist-option" in link.attrs]
+        if len(option_links) != expected_waitlist_cards:
+            issues.append(f"{source}: keepsake waitlist should include {expected_waitlist_cards} direct option mailtos, got {len(option_links)}")
+        else:
+            stats["waitlist_option_mailtos"] += len(option_links)
         copy_buttons = [button for button in descendants(waitlist, "button") if "data-copy-contact-template" in button.attrs]
         if len(copy_buttons) != 1:
             issues.append(f"{source}: keepsake waitlist should include one copy template button, got {len(copy_buttons)}")
@@ -426,6 +434,7 @@ def main() -> int:
         "safety_bridge_links": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
+        "waitlist_option_mailtos": 0,
         "waitlist_copy_buttons": 0,
     }
     for lang, path in LANG_PATHS.items():
@@ -461,6 +470,7 @@ def main() -> int:
     print(f"public_keepsake_safety_bridge_links_checked={totals['safety_bridge_links']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
     print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
+    print(f"public_keepsake_waitlist_option_mailtos_checked={totals['waitlist_option_mailtos']}")
     print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")
     print(f"public_keepsake_issues={len(issues)}")
     for issue in issues[:100]:

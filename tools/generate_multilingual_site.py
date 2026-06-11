@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-resume-funnel"
+ASSET_VERSION = "20260611-contact-options"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1371,6 +1371,8 @@ CONTACT_REQUESTS = {
         ],
         "note": "來信時可附上你的守護者、想使用的情境、裝置與願意收藏的格式。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
         "cta": "寄出補給等待清單需求",
+        "item_cta": "我要這項補給",
+        "selected_label": "我選擇的補給",
         "subject": "LoveTypes 守護者補給等待清單",
         "body": "我的守護者：\n我想優先收到的補給：Luna 下載包 / 手機桌布 / PDF 練習卡 / 短儀式或印刷包\n使用情境：\n使用裝置：\n我會願意收藏的格式：\n",
     },
@@ -1386,6 +1388,8 @@ CONTACT_REQUESTS = {
         ],
         "note": "Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
         "cta": "Send supply waitlist request",
+        "item_cta": "Request this supply",
+        "selected_label": "Selected supply",
         "subject": "LoveTypes guardian supply waitlist",
         "body": "My guardian:\nSupply I want first: Luna download pack / phone wallpaper / PDF practice card / short ritual or printed pack\nUse case:\nDevice:\nFormat I would actually keep:\n",
     },
@@ -1401,6 +1405,8 @@ CONTACT_REQUESTS = {
         ],
         "note": "守護者、使いたい場面、端末、実際に保存したい形式を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
         "cta": "補給待機リストへ送る",
+        "item_cta": "この補給を希望する",
+        "selected_label": "選んだ補給",
         "subject": "LoveTypes 守護者補給の待機リスト",
         "body": "私の守護者：\n最初にほしい補給：Luna ダウンロードパック / スマホ壁紙 / PDF 練習カード / 短い儀式や印刷セット\n使いたい場面：\n端末：\n実際に保存したい形式：\n",
     },
@@ -1416,6 +1422,8 @@ CONTACT_REQUESTS = {
         ],
         "note": "가능하다면 수호자, 사용 장면, 기기, 실제로 보관할 형식을 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
         "cta": "보급 대기 목록 요청 보내기",
+        "item_cta": "이 보급 요청하기",
+        "selected_label": "선택한 보급",
         "subject": "LoveTypes 수호자 보급 대기 목록",
         "body": "나의 수호자:\n먼저 받고 싶은 보급: Luna 다운로드 팩 / 휴대폰 배경화면 / PDF 연습 카드 / 짧은 의식 또는 인쇄 세트\n사용 장면:\n기기:\n실제로 보관할 형식:\n",
     },
@@ -1431,6 +1439,8 @@ CONTACT_REQUESTS = {
         ],
         "note": "Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
         "cta": "Enviar petición de lista",
+        "item_cta": "Pedir este recurso",
+        "selected_label": "Recurso elegido",
         "subject": "Lista de espera de recursos LoveTypes",
         "body": "Mi guardiana:\nRecurso que quiero primero: Pack Luna descargable / fondo móvil / tarjeta PDF de práctica / ritual breve o pack impreso\nSituación de uso:\nDispositivo:\nFormato que guardaría de verdad:\n",
     },
@@ -1571,6 +1581,8 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "來信時請附上頁面網址、裝置與瀏覽器、你預期看到什麼、實際發生什麼。這個信箱處理網站修復與內容回報，不提供緊急支援或諮商替代。",
         "cta": "回報網站修復線索",
+        "item_cta": "回報這類問題",
+        "selected_label": "我選擇回報的問題",
         "subject": "LoveTypes 網站修復回報",
         "body": "頁面網址：\n裝置與瀏覽器：\n我預期看到：\n實際發生：\n補充截圖或說明：\n",
     },
@@ -1586,6 +1598,8 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "Please include the page URL, device and browser, what you expected, and what happened instead. This inbox handles site repair and content reports, not emergency support or counseling replacement.",
         "cta": "Send site repair report",
+        "item_cta": "Report this issue",
+        "selected_label": "Selected issue",
         "subject": "LoveTypes site repair report",
         "body": "Page URL:\nDevice and browser:\nWhat I expected:\nWhat happened instead:\nExtra screenshot or notes:\n",
     },
@@ -1601,6 +1615,8 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "ページ URL、端末とブラウザ、期待した表示、実際に起きたことを添えてください。この窓口はサイト修復と内容回報用で、緊急支援や相談支援の代替ではありません。",
         "cta": "サイト修復を報告する",
+        "item_cta": "この問題を報告する",
+        "selected_label": "選んだ問題",
         "subject": "LoveTypes サイト修復の報告",
         "body": "ページ URL：\n端末とブラウザ：\n期待した表示：\n実際に起きたこと：\n補足スクリーンショットやメモ：\n",
     },
@@ -1616,6 +1632,8 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "페이지 URL, 기기와 브라우저, 기대한 모습, 실제로 일어난 일을 함께 적어 주세요. 이 메일은 사이트 수리와 콘텐츠 제보용이며 긴급 지원이나 상담 대체를 제공하지 않습니다.",
         "cta": "사이트 수리 제보 보내기",
+        "item_cta": "이 문제 제보하기",
+        "selected_label": "선택한 문제",
         "subject": "LoveTypes 사이트 수리 제보",
         "body": "페이지 URL:\n기기와 브라우저:\n기대한 모습:\n실제로 일어난 일:\n추가 스크린샷 또는 메모:\n",
     },
@@ -1631,6 +1649,8 @@ CONTACT_REPAIR_REPORTS = {
         ],
         "note": "Incluye la URL, dispositivo y navegador, qué esperabas ver y qué ocurrió. Este buzón atiende reparación del sitio y reportes de contenido; no ofrece apoyo de emergencia ni sustituye terapia.",
         "cta": "Enviar reporte de reparación",
+        "item_cta": "Reportar este problema",
+        "selected_label": "Problema elegido",
         "subject": "Reporte de reparación del sitio LoveTypes",
         "body": "URL de la página:\nDispositivo y navegador:\nQué esperaba ver:\nQué ocurrió:\nCaptura o notas extra:\n",
     },
@@ -5849,9 +5869,12 @@ def keepsake_waitlist_section(lang: str) -> str:
     request_subject = request["subject"]
     request_subject_href = quote(request_subject)
     request_body_href = quote(request["body"])
-    request_cards = "".join(
-        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
-        for idx, (title, body) in enumerate(request["items"], 1)
+    request_cards = contact_option_cards(
+        request["items"],
+        request,
+        request["selected_label"],
+        "keepsake_waitlist_option_mailto",
+        "data-keepsake-waitlist-option",
     )
     return f"""
 <section class="section contact-request-section keepsake-waitlist-section" id="keepsake-supply-waitlist" data-keepsake-waitlist>
@@ -8518,6 +8541,26 @@ def luna_alias_page(lang: str) -> None:
     write(page_path(lang, "luna"), layout(lang, page_title, t["luna_desc"], "luna", body, t["resources"], "website", "/og-cover.jpg", schema, alternate_path="luna", canonical_path="luna-yoga-music", robots="noindex, follow"))
 
 
+def contact_option_href(subject: str, body: str, selected_label: str, selected_value: str) -> str:
+    option_body = f"{body.rstrip()}\n{selected_label}: {selected_value}\n"
+    return f"mailto:{CONTACT_EMAIL}?subject={quote(subject)}&body={quote(option_body)}"
+
+
+def contact_option_cards(items: list[tuple[str, str]], copy: dict, selected_label: str, event: str, attr: str) -> str:
+    cards = []
+    for idx, (title, body) in enumerate(items, 1):
+        href = contact_option_href(copy["subject"], copy["body"], selected_label, title)
+        cards.append(f"""
+<article>
+  <span>{idx}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(body)}</p>
+  <a class="contact-card-link" href="{href}" data-funnel-event="{event}" {attr}="{escape(title)}">{escape(copy["item_cta"])}</a>
+</article>
+""")
+    return "".join(cards)
+
+
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
@@ -8532,13 +8575,19 @@ def contact_request_section(lang: str) -> str:
     copy_label = escape(template_labels["copy"])
     template_label = escape(template_labels["label"])
 
-    request_cards = "".join(
-        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
-        for idx, (title, body) in enumerate(request["items"], 1)
+    request_cards = contact_option_cards(
+        request["items"],
+        request,
+        request["selected_label"],
+        "contact_supply_option_mailto",
+        "data-contact-request-option",
     )
-    repair_cards = "".join(
-        f"<article><span>{idx}</span><h3>{escape(title)}</h3><p>{escape(body)}</p></article>"
-        for idx, (title, body) in enumerate(repair["items"], 1)
+    repair_cards = contact_option_cards(
+        repair["items"],
+        repair,
+        repair["selected_label"],
+        "contact_repair_option_mailto",
+        "data-contact-repair-option",
     )
     return f"""
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>

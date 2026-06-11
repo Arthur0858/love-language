@@ -93,6 +93,8 @@ def main() -> int:
     template_buttons_checked = 0
     request_option_cards_checked = 0
     request_option_texts_checked = 0
+    request_option_mailtos_checked = 0
+    repair_option_mailtos_checked = 0
     contact_subjects_checked = 0
     anchor_targets_checked = 0
     protected_email_links_checked = 0
@@ -169,7 +171,8 @@ def main() -> int:
         template_blocks = response.text.count("contact-request-template")
         template_buttons = response.text.count(" data-copy-contact-template ")
         request_option_cards = response.text.count("<div class=\"contact-request-grid\">")
-        request_option_articles = response.text.count("<div class=\"contact-request-grid\"><article>")
+        request_option_mailtos = response.text.count("data-contact-request-option=")
+        repair_option_mailtos = response.text.count("data-contact-repair-option=")
         if template_blocks < 2:
             issues.append(f"{item.path}: expected two copyable contact templates, got {template_blocks}")
         else:
@@ -180,15 +183,26 @@ def main() -> int:
             template_buttons_checked += 2
         if request_option_cards < 2:
             issues.append(f"{item.path}: expected request and repair option grids, got {request_option_cards}")
-        if request_option_articles < 2:
-            issues.append(f"{item.path}: expected option article cards in both contact grids")
         else:
             request_option_cards_checked += 2
+        if request_option_mailtos != 4:
+            issues.append(f"{item.path}: expected four direct supply option mailtos, got {request_option_mailtos}")
+        else:
+            request_option_mailtos_checked += 4
+        if repair_option_mailtos != 4:
+            issues.append(f"{item.path}: expected four direct repair option mailtos, got {repair_option_mailtos}")
+        else:
+            repair_option_mailtos_checked += 4
         for title, body in generator.CONTACT_REQUESTS[item.lang]["items"]:
             if title not in visible_text or body not in visible_text:
                 issues.append(f"{item.path}: missing visible supply request option {title}")
             else:
                 request_option_texts_checked += 1
+            if f'data-contact-request-option="{title}"' not in response.text:
+                issues.append(f"{item.path}: missing direct supply option mailto for {title}")
+        for title, _body in generator.CONTACT_REPAIR_REPORTS[item.lang]["items"]:
+            if f'data-contact-repair-option="{title}"' not in response.text:
+                issues.append(f"{item.path}: missing direct repair option mailto for {title}")
         expected_bodies = {
             generator.CONTACT_REQUESTS[item.lang]["body"],
             generator.CONTACT_REPAIR_REPORTS[item.lang]["body"],
@@ -220,6 +234,8 @@ def main() -> int:
     print(f"public_contact_template_buttons_checked={template_buttons_checked}")
     print(f"public_contact_request_option_grids_checked={request_option_cards_checked}")
     print(f"public_contact_request_option_texts_checked={request_option_texts_checked}")
+    print(f"public_contact_request_option_mailtos_checked={request_option_mailtos_checked}")
+    print(f"public_contact_repair_option_mailtos_checked={repair_option_mailtos_checked}")
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")

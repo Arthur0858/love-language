@@ -190,7 +190,16 @@ def validate_garden_map(base_url: str, lang: str) -> tuple[list[str], dict[str, 
         issues.append(f"{path}: missing garden map resume template")
     else:
         stats["saved_templates"] += 1
-    for snippet in ("result.resourceUrl", "result.planUrl", "result.collectorHallUrl", "result.lunaUrl", "result.guardianUrl", "data-clear-garden-map-result"):
+    for snippet in (
+        "result.resourceUrl",
+        "result.planUrl",
+        "result.collectorHallUrl",
+        "result.lunaUrl",
+        "result.contactUrl",
+        "result.guardianUrl",
+        "data-garden-map-contact",
+        "data-clear-garden-map-result",
+    ):
         if snippet not in response.text:
             issues.append(f"{path}: resume template missing {snippet}")
         else:

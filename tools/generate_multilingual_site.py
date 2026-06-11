@@ -1366,12 +1366,13 @@ CONTACT_REQUESTS = {
         "items": [
             ("Luna 下載包", "希望能離線聆聽、收藏音檔，或把 Luna 放進固定睡前儀式。"),
             ("手機桌布", "希望把自己的守護者留在鎖定畫面，作為睡前、衝突後或關係日記的入口。"),
+            ("PDF 練習卡", "希望把一週修復任務、守護者句子或關係日記題目整理成可列印版本。"),
             ("短儀式或印刷包", "希望有 5 到 10 分鐘流程，或把五張守護者練習卡整理成可收藏的印刷包。"),
         ],
         "note": "來信時可附上你的守護者、想使用的情境、裝置與願意收藏的格式。LoveTypes 不提供緊急支援、醫療建議或諮商替代。",
         "cta": "寄出補給等待清單需求",
         "subject": "LoveTypes 守護者補給等待清單",
-        "body": "我的守護者：\n我想優先收到的補給：Luna 下載包 / 手機桌布 / 短儀式或印刷包\n使用情境：\n使用裝置：\n我會願意收藏的格式：\n",
+        "body": "我的守護者：\n我想優先收到的補給：Luna 下載包 / 手機桌布 / PDF 練習卡 / 短儀式或印刷包\n使用情境：\n使用裝置：\n我會願意收藏的格式：\n",
     },
     "en": {
         "eyebrow": "REQUEST COMPASS",
@@ -1380,12 +1381,13 @@ CONTACT_REQUESTS = {
         "items": [
             ("Luna download pack", "You want offline listening, a saved audio set, or a stable bedtime ritual with Luna."),
             ("Phone wallpaper", "You want your guardian on the lock screen as a doorway for bedtime, post-conflict cooling, or relationship journaling."),
+            ("PDF practice card", "You want a printable version of weekly repair tasks, guardian phrases, or relationship journal prompts."),
             ("Short ritual or printed pack", "You want a 5 to 10 minute sequence or a collectible printed set of the five guardian practice cards."),
         ],
         "note": "Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.",
         "cta": "Send supply waitlist request",
         "subject": "LoveTypes guardian supply waitlist",
-        "body": "My guardian:\nSupply I want first: Luna download pack / phone wallpaper / short ritual or printed pack\nUse case:\nDevice:\nFormat I would actually keep:\n",
+        "body": "My guardian:\nSupply I want first: Luna download pack / phone wallpaper / PDF practice card / short ritual or printed pack\nUse case:\nDevice:\nFormat I would actually keep:\n",
     },
     "ja": {
         "eyebrow": "REQUEST COMPASS",
@@ -1394,12 +1396,13 @@ CONTACT_REQUESTS = {
         "items": [
             ("Luna ダウンロードパック", "オフラインで聴きたい、音源を保存したい、Luna を就寝前の儀式に入れたい。"),
             ("スマホ壁紙", "守護者をロック画面に置き、就寝前、衝突後、関係日記の入口にしたい。"),
+            ("PDF 練習カード", "一週間の修復タスク、守護者の言葉、関係日記の問いを印刷できる形にしたい。"),
             ("短い儀式や印刷セット", "5 から 10 分の手順、または五枚の守護者練習カードを印刷コレクションとして残したい。"),
         ],
         "note": "守護者、使いたい場面、端末、実際に保存したい形式を書ける範囲で添えてください。LoveTypes は緊急支援、医療助言、相談支援の代替を提供しません。",
         "cta": "補給待機リストへ送る",
         "subject": "LoveTypes 守護者補給の待機リスト",
-        "body": "私の守護者：\n最初にほしい補給：Luna ダウンロードパック / スマホ壁紙 / 短い儀式や印刷セット\n使いたい場面：\n端末：\n実際に保存したい形式：\n",
+        "body": "私の守護者：\n最初にほしい補給：Luna ダウンロードパック / スマホ壁紙 / PDF 練習カード / 短い儀式や印刷セット\n使いたい場面：\n端末：\n実際に保存したい形式：\n",
     },
     "ko": {
         "eyebrow": "REQUEST COMPASS",
@@ -1408,12 +1411,13 @@ CONTACT_REQUESTS = {
         "items": [
             ("Luna 다운로드 팩", "오프라인으로 듣거나 음원을 보관하고, Luna를 고정된 잠들기 전 의식에 넣고 싶을 때."),
             ("휴대폰 배경화면", "수호자를 잠금 화면에 두고 잠들기 전, 다툼 뒤, 관계 일기의 입구로 쓰고 싶을 때."),
+            ("PDF 연습 카드", "일주일 회복 과제, 수호자 문장, 관계 일기 질문을 인쇄 가능한 형태로 받고 싶을 때."),
             ("짧은 의식 또는 인쇄 세트", "5-10분 순서나 다섯 수호자 연습 카드를 인쇄 소장팩으로 남기고 싶을 때."),
         ],
         "note": "가능하다면 수호자, 사용 장면, 기기, 실제로 보관할 형식을 함께 적어 주세요. LoveTypes는 긴급 지원, 의료 조언, 상담 대체를 제공하지 않습니다.",
         "cta": "보급 대기 목록 요청 보내기",
         "subject": "LoveTypes 수호자 보급 대기 목록",
-        "body": "나의 수호자:\n먼저 받고 싶은 보급: Luna 다운로드 팩 / 휴대폰 배경화면 / 짧은 의식 또는 인쇄 세트\n사용 장면:\n기기:\n실제로 보관할 형식:\n",
+        "body": "나의 수호자:\n먼저 받고 싶은 보급: Luna 다운로드 팩 / 휴대폰 배경화면 / PDF 연습 카드 / 짧은 의식 또는 인쇄 세트\n사용 장면:\n기기:\n실제로 보관할 형식:\n",
     },
     "es": {
         "eyebrow": "REQUEST COMPASS",
@@ -1422,12 +1426,13 @@ CONTACT_REQUESTS = {
         "items": [
             ("Pack Luna descargable", "Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir."),
             ("Fondo móvil", "Quieres llevar tu guardiana en la pantalla de bloqueo como entrada para dormir, calmarte o escribir un diario de relación."),
+            ("Tarjeta PDF de práctica", "Quieres una versión imprimible de tareas semanales, frases de guardiana o preguntas para diario de relación."),
             ("Ritual breve o pack impreso", "Quieres una secuencia de 5 a 10 minutos o un set impreso coleccionable de las cinco tarjetas de práctica."),
         ],
         "note": "Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.",
         "cta": "Enviar petición de lista",
         "subject": "Lista de espera de recursos LoveTypes",
-        "body": "Mi guardiana:\nRecurso que quiero primero: Pack Luna descargable / fondo móvil / ritual breve o pack impreso\nSituación de uso:\nDispositivo:\nFormato que guardaría de verdad:\n",
+        "body": "Mi guardiana:\nRecurso que quiero primero: Pack Luna descargable / fondo móvil / tarjeta PDF de práctica / ritual breve o pack impreso\nSituación de uso:\nDispositivo:\nFormato que guardaría de verdad:\n",
     },
 }
 

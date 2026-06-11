@@ -2,14 +2,18 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
+import sys
 import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
+from pathlib import Path
 
 
+ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 LANG_PATHS = {
     "zh": "/keepsakes/",
@@ -20,6 +24,17 @@ LANG_PATHS = {
 }
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 STORY_SIZE = ("1080", "1920")
+
+
+def load_generator_config():
+    generator_path = ROOT / "tools" / "generate_multilingual_site.py"
+    spec = importlib.util.spec_from_file_location("lovetypes_generator_keepsake_smoke", generator_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot import {generator_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 @dataclass(frozen=True)
@@ -177,7 +192,13 @@ def check_story_asset(base_url: str, source: str, path: str, image_cache: dict[s
     return issues
 
 
-def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Response]) -> tuple[list[str], dict[str, int]]:
+def validate_page(
+    base_url: str,
+    lang: str,
+    path: str,
+    image_cache: dict[str, Response],
+    expected_waitlist_cards: int,
+) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     stats = {
         "pages": 0,
@@ -347,8 +368,8 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         issues.append(f"{source}: missing keepsake supply waitlist section")
     else:
         waitlist_cards = [item for item in descendants(waitlist, "article") if has_class(item, "contact-request-grid") is False]
-        if len(waitlist_cards) != 3:
-            issues.append(f"{source}: expected three keepsake waitlist request cards, got {len(waitlist_cards)}")
+        if len(waitlist_cards) != expected_waitlist_cards:
+            issues.append(f"{source}: expected {expected_waitlist_cards} keepsake waitlist request cards, got {len(waitlist_cards)}")
         else:
             stats["waitlist_cards"] += len(waitlist_cards)
         waitlist_links = descendants(waitlist, "a")
@@ -380,6 +401,7 @@ def main() -> int:
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
     args = parser.parse_args()
     base_url = normalize_base_url(args.base_url)
+    generator = load_generator_config()
     image_cache: dict[str, Response] = {}
     issues: list[str] = []
     totals = {
@@ -407,7 +429,13 @@ def main() -> int:
         "waitlist_copy_buttons": 0,
     }
     for lang, path in LANG_PATHS.items():
-        page_issues, stats = validate_page(base_url, lang, path, image_cache)
+        page_issues, stats = validate_page(
+            base_url,
+            lang,
+            path,
+            image_cache,
+            len(generator.CONTACT_REQUESTS[lang]["items"]),
+        )
         issues.extend(page_issues)
         for key, value in stats.items():
             totals[key] += value

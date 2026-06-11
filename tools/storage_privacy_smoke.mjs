@@ -252,6 +252,22 @@ async function funnelStorageCheck(browser) {
     }, true);
   });
   await page.locator('[data-funnel-event="luna_offer_contact"]').first().click();
+  await page.goto(makeUrl('/keepsakes/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  for (const selector of [
+    '[data-funnel-event="collector_story_open"]',
+    '[data-funnel-event="collector_story_download"]',
+    '[data-funnel-event="free_keepsake_open"]',
+    '[data-funnel-event="free_keepsake_download"]',
+    '[data-funnel-event="free_keepsake_asset_request"]',
+  ]) {
+    await page.locator(selector).first().click();
+  }
 
   const saved = await storageSnapshot(page);
   validateQuietStorage(saved, issues, 'funnel');
@@ -263,7 +279,7 @@ async function funnelStorageCheck(browser) {
     issues.push('funnel: event store should be JSON');
   }
   const names = new Set(Array.isArray(events) ? events.map((event) => event.name) : []);
-  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact']) {
+  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact', 'collector_story_open', 'collector_story_download', 'free_keepsake_open', 'free_keepsake_download', 'free_keepsake_asset_request']) {
     if (!names.has(expected)) issues.push(`funnel: missing local event ${expected}`);
   }
   if (!Array.isArray(events)) {

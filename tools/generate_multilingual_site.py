@@ -5526,7 +5526,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     return f"""
 <span id="keepsake-{slug}" class="anchor-offset" aria-hidden="true"></span>
 <article class="{class_name}" id="keepsake-card-{slug}">
-  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer" aria-label="{escape(image_label)}">
+  <a class="collector-image-link" href="{image}" target="_blank" rel="noopener noreferrer" aria-label="{escape(image_label)}" data-funnel-event="collector_story_open">
     {img_tag(image, f"{name} {labels['card']}")}
   </a>
   <div>
@@ -5537,8 +5537,8 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
       <a class="primary-btn" href="{route_href}">{escape(labels["route"])}</a>
       <a class="secondary-btn" href="{plan_href}">{escape(labels["plan"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#practice-card-{slug}" data-funnel-event="collector_practice_card">{escape(KEEPSAKES_PAGE[lang]["practice_open"])}</a>
-      <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
-      <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
+      <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer" data-funnel-event="collector_story_open">{escape(labels["open"])}</a>
+      <a class="secondary-btn" href="{image}" download data-funnel-event="collector_story_download">{escape(labels["download"])}</a>
       <a class="secondary-btn" href="{supply_request_href(lang, slug)}" data-funnel-event="collector_supply_mailto">{escape(SUPPLY_LABELS[lang]["request_supply"])}</a>
       <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="keepsake_story_generate" {data_attrs}>{escape(labels["story"])}</button>
     </div>
@@ -5796,9 +5796,9 @@ def keepsake_free_asset_section(lang: str) -> str:
     <p>{escape(route["mission"])}</p>
     <ul class="keepsake-asset-format-list">{format_items}</ul>
     <div class="collector-actions">
-      <a href="{story_image}" target="_blank" rel="noopener noreferrer">{escape(COLLECTOR_LABELS[lang]["open"])}</a>
-      <a href="{story_image}" download>{escape(COLLECTOR_LABELS[lang]["download"])}</a>
-      <a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(labels["asset_request"])}</a>
+      <a href="{story_image}" target="_blank" rel="noopener noreferrer" data-funnel-event="free_keepsake_open">{escape(COLLECTOR_LABELS[lang]["open"])}</a>
+      <a href="{story_image}" download data-funnel-event="free_keepsake_download">{escape(COLLECTOR_LABELS[lang]["download"])}</a>
+      <a href="{lang_url(lang, "contact")}#luna-supply-request" data-funnel-event="free_keepsake_asset_request">{escape(labels["asset_request"])}</a>
     </div>
   </div>
 </article>
@@ -5891,7 +5891,7 @@ def keepsake_resume_script(lang: str) -> str:
   const result = quiz.results[saved.primaryKey];
   box.innerHTML = `
     <article class="keepsake-resume-card pass-resume-card" id="keepsake-resume-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
-      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" aria-label="${{result.collectorOpen}}：${{result.name}} ${{result.collectorTitle}}">
+      <a class="keepsake-resume-image" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" aria-label="${{result.collectorOpen}}：${{result.name}} ${{result.collectorTitle}}" data-funnel-event="keepsake_resume_story_open">
         <img src="${{result.storyImage}}" alt="${{result.collectorTitle}} ${{result.name}}" width="${{result.storyImageWidth}}" height="${{result.storyImageHeight}}" loading="eager" decoding="async" fetchpriority="high">
       </a>
       <div>
@@ -5911,8 +5911,8 @@ def keepsake_resume_script(lang: str) -> str:
           <a class="secondary-btn" href="${{result.resourceUrl}}" data-keepsake-route>${{quiz.labels.saved_route}}</a>
           <a class="secondary-btn" href="${{result.guardianUrl}}" data-keepsake-guardian>${{quiz.labels.guardian_link}}</a>
           <a class="secondary-btn" href="#practice-card-${{result.slug}}" data-keepsake-practice data-funnel-event="keepsake_resume_practice_card">${{quiz.labels.saved_plan}}</a>
-          <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
-          <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
+          <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer" data-funnel-event="keepsake_resume_story_open">${{result.collectorOpen}}</a>
+          <a class="secondary-btn" href="${{result.storyImage}}" download data-funnel-event="keepsake_resume_story_download">${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="keepsake_resume_story_generate" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
           <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-keepsake-keepsake>${{result.collectorHall}}</a>
           <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>

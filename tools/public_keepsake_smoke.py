@@ -179,6 +179,8 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "shelf_cards": 0,
         "collector_cards": 0,
         "download_links": 0,
+        "collector_open_events": 0,
+        "collector_download_events": 0,
         "story_buttons": 0,
         "route_links": 0,
         "plan_links": 0,
@@ -188,6 +190,8 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "practice_plan_links": 0,
         "practice_route_links": 0,
         "practice_print_buttons": 0,
+        "free_asset_cards": 0,
+        "free_asset_events": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -246,10 +250,19 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             stats["plan_links"] += 1
         else:
             issues.append(f"{source}: {slug} collector card missing repair plan link")
-        if not any(link.attrs.get("href") == story and link.attrs.get("target") == "_blank" for link in links):
+        open_links = [link for link in links if link.attrs.get("href") == story and link.attrs.get("target") == "_blank"]
+        if not open_links:
             issues.append(f"{source}: {slug} collector card missing open story image link")
+        elif not any(link.attrs.get("data-funnel-event") == "collector_story_open" for link in open_links):
+            issues.append(f"{source}: {slug} collector card open story link missing collector_story_open event")
+        else:
+            stats["collector_open_events"] += 1
         if any(link.attrs.get("href") == story and "download" in link.attrs for link in links):
             stats["download_links"] += 1
+            if any(link.attrs.get("href") == story and "download" in link.attrs and link.attrs.get("data-funnel-event") == "collector_story_download" for link in links):
+                stats["collector_download_events"] += 1
+            else:
+                issues.append(f"{source}: {slug} collector card download link missing collector_story_download event")
         else:
             issues.append(f"{source}: {slug} collector card missing story image download link")
         request_links = contact_request_hrefs(links)
@@ -291,6 +304,19 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
                 stats["practice_print_buttons"] += 1
             else:
                 issues.append(f"{source}: {slug} practice card missing print button")
+
+        free_asset = find_by_id(root, f"free-keepsake-{slug}")
+        if free_asset is None:
+            issues.append(f"{source}: missing #free-keepsake-{slug}")
+        else:
+            stats["free_asset_cards"] += 1
+            free_events = {link.attrs.get("data-funnel-event", "") for link in descendants(free_asset, "a")}
+            expected_free_events = {"free_keepsake_open", "free_keepsake_download", "free_keepsake_asset_request"}
+            missing_free_events = expected_free_events - free_events
+            if missing_free_events:
+                issues.append(f"{source}: {slug} free keepsake card missing events {', '.join(sorted(missing_free_events))}")
+            else:
+                stats["free_asset_events"] += len(expected_free_events)
 
     waitlist = find_by_id(root, "keepsake-supply-waitlist")
     if waitlist is None:
@@ -337,6 +363,8 @@ def main() -> int:
         "shelf_cards": 0,
         "collector_cards": 0,
         "download_links": 0,
+        "collector_open_events": 0,
+        "collector_download_events": 0,
         "story_buttons": 0,
         "route_links": 0,
         "plan_links": 0,
@@ -346,6 +374,8 @@ def main() -> int:
         "practice_plan_links": 0,
         "practice_route_links": 0,
         "practice_print_buttons": 0,
+        "free_asset_cards": 0,
+        "free_asset_events": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -361,6 +391,8 @@ def main() -> int:
     print(f"public_keepsake_collector_cards_checked={totals['collector_cards']}")
     print(f"public_keepsake_story_images_checked={totals['story_images']}")
     print(f"public_keepsake_download_links_checked={totals['download_links']}")
+    print(f"public_keepsake_collector_open_events_checked={totals['collector_open_events']}")
+    print(f"public_keepsake_collector_download_events_checked={totals['collector_download_events']}")
     print(f"public_keepsake_story_buttons_checked={totals['story_buttons']}")
     print(f"public_keepsake_route_links_checked={totals['route_links']}")
     print(f"public_keepsake_plan_links_checked={totals['plan_links']}")
@@ -369,6 +401,8 @@ def main() -> int:
     print(f"public_keepsake_practice_plan_links_checked={totals['practice_plan_links']}")
     print(f"public_keepsake_practice_route_links_checked={totals['practice_route_links']}")
     print(f"public_keepsake_practice_print_buttons_checked={totals['practice_print_buttons']}")
+    print(f"public_keepsake_free_asset_cards_checked={totals['free_asset_cards']}")
+    print(f"public_keepsake_free_asset_events_checked={totals['free_asset_events']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
     print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
     print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")

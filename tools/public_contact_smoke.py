@@ -19,6 +19,14 @@ CONTACT_SOURCE_ROUTES = {
     "privacy": "site-repair-report",
     "terms": "site-repair-report",
 }
+CONTACT_SAVED_RESULT_MARKERS = (
+    "data-contact-resume-send",
+    "data-contact-resume-copy",
+    "data-contact-resume-route",
+    "data-contact-resume-luna",
+    "data-contact-resume-keepsake",
+    "data-contact-resume-plan",
+)
 
 
 @dataclass(frozen=True)
@@ -90,6 +98,7 @@ def main() -> int:
     protected_email_links_checked = 0
     source_routes_checked = 0
     saved_result_sections_checked = 0
+    saved_result_actions_checked = 0
     contact_quiz_data_refs_checked = 0
 
     for item in expectations():
@@ -109,6 +118,11 @@ def main() -> int:
             issues.append(f"{item.path}: missing saved result contact handoff section")
         else:
             saved_result_sections_checked += 1
+        for marker in CONTACT_SAVED_RESULT_MARKERS:
+            if marker not in response.text:
+                issues.append(f"{item.path}: saved result handoff missing {marker}")
+            else:
+                saved_result_actions_checked += 1
         expected_quiz_data = generator.QUIZ_DATA_ASSETS[item.lang]
         if expected_quiz_data not in response.text:
             issues.append(f"{item.path}: missing localized quiz data for saved result handoff")
@@ -210,6 +224,7 @@ def main() -> int:
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")
     print(f"public_contact_saved_result_sections_checked={saved_result_sections_checked}")
+    print(f"public_contact_saved_result_actions_checked={saved_result_actions_checked}")
     print(f"public_contact_quiz_data_refs_checked={contact_quiz_data_refs_checked}")
     print(f"public_contact_issues={len(issues)}")
     for issue in issues:

@@ -5817,6 +5817,7 @@ def contact_result_handoff_script(lang: str) -> str:
           <a class="primary-btn" href="${{href}}" data-contact-resume-send>${{labels.send}}</a>
           <button class="secondary-btn" type="button" data-contact-copy-result data-contact-resume-copy>${{labels.copy}}</button>
           <a class="secondary-btn" href="${{result.resourceUrl}}" data-contact-resume-route>${{labels.route}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-contact-resume-luna>${{labels.luna}}</a>
           <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-contact-resume-keepsake>${{labels.card}}</a>
           <a class="secondary-btn" href="${{result.planUrl}}" data-contact-resume-plan>${{labels.plan}}</a>
           <button class="secondary-btn" type="button" data-clear-contact-result>${{labels.clear}}</button>

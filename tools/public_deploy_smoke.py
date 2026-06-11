@@ -294,6 +294,7 @@ CONTACT_FUNNEL_MARKERS = (
     "data-contact-resume-send",
     "data-contact-resume-copy",
     "data-contact-resume-route",
+    "data-contact-resume-luna",
     "data-contact-resume-keepsake",
     "data-contact-resume-plan",
 )

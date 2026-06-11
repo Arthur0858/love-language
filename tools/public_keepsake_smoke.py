@@ -218,6 +218,7 @@ def validate_page(
         "practice_print_buttons": 0,
         "free_asset_cards": 0,
         "free_asset_events": 0,
+        "free_asset_request_mailtos": 0,
         "safety_bridge_sections": 0,
         "safety_bridge_links": 0,
         "waitlist_cards": 0,
@@ -339,13 +340,29 @@ def validate_page(
             issues.append(f"{source}: missing #free-keepsake-{slug}")
         else:
             stats["free_asset_cards"] += 1
-            free_events = {link.attrs.get("data-funnel-event", "") for link in descendants(free_asset, "a")}
+            free_links = descendants(free_asset, "a")
+            free_events = {link.attrs.get("data-funnel-event", "") for link in free_links}
             expected_free_events = {"free_keepsake_open", "free_keepsake_download", "free_keepsake_asset_request"}
             missing_free_events = expected_free_events - free_events
             if missing_free_events:
                 issues.append(f"{source}: {slug} free keepsake card missing events {', '.join(sorted(missing_free_events))}")
             else:
                 stats["free_asset_events"] += len(expected_free_events)
+            request_links = [link for link in free_links if link.attrs.get("data-funnel-event") == "free_keepsake_asset_request"]
+            if len(request_links) != 1:
+                issues.append(f"{source}: {slug} free keepsake should include one direct asset request link, got {len(request_links)}")
+            elif request_links[0].attrs.get("data-free-keepsake-request") != slug:
+                issues.append(f"{source}: {slug} free keepsake request should carry guardian slug")
+            else:
+                request_href = decode_cloudflare_email_href(request_links[0].attrs.get("href", ""))
+                parsed = urlparse(request_href)
+                query = parse_qs(parsed.query)
+                if not (request_href.startswith("mailto:contact@lovetypes.tw") or request_href.startswith("contact@lovetypes.tw")):
+                    issues.append(f"{source}: {slug} free keepsake request should be a contact mailto")
+                elif not query.get("subject") or not query.get("body"):
+                    issues.append(f"{source}: {slug} free keepsake request should include subject and body")
+                else:
+                    stats["free_asset_request_mailtos"] += 1
 
     safety_bridge = next((item for item in walk(root) if item.attrs.get("data-safety-boundary-bridge") == ""), None)
     if safety_bridge is None:
@@ -430,6 +447,7 @@ def main() -> int:
         "practice_print_buttons": 0,
         "free_asset_cards": 0,
         "free_asset_events": 0,
+        "free_asset_request_mailtos": 0,
         "safety_bridge_sections": 0,
         "safety_bridge_links": 0,
         "waitlist_cards": 0,
@@ -466,6 +484,7 @@ def main() -> int:
     print(f"public_keepsake_practice_print_buttons_checked={totals['practice_print_buttons']}")
     print(f"public_keepsake_free_asset_cards_checked={totals['free_asset_cards']}")
     print(f"public_keepsake_free_asset_events_checked={totals['free_asset_events']}")
+    print(f"public_keepsake_free_asset_request_mailtos_checked={totals['free_asset_request_mailtos']}")
     print(f"public_keepsake_safety_bridge_sections_checked={totals['safety_bridge_sections']}")
     print(f"public_keepsake_safety_bridge_links_checked={totals['safety_bridge_links']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")

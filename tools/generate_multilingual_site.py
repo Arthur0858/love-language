@@ -6136,6 +6136,7 @@ def keepsake_free_asset_section(lang: str) -> str:
         domain = GUARDIAN_DOMAINS[slug]
         story_image = guardian_story_image(lang, slug)
         story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
+        request_href = supply_request_href(lang, slug)
         cards.append(f"""
 <article class="collector-card compact" id="free-keepsake-{slug}" data-free-keepsake-asset="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   <img src="{story_image}" alt="{escape(name)} {escape(labels["asset_formats"][0])}" width="{story_width}" height="{story_height}" loading="lazy" decoding="async" fetchpriority="low">
@@ -6147,7 +6148,7 @@ def keepsake_free_asset_section(lang: str) -> str:
     <div class="collector-actions">
       <a href="{story_image}" target="_blank" rel="noopener noreferrer" data-funnel-event="free_keepsake_open">{escape(COLLECTOR_LABELS[lang]["open"])}</a>
       <a href="{story_image}" download data-funnel-event="free_keepsake_download">{escape(COLLECTOR_LABELS[lang]["download"])}</a>
-      <a href="{lang_url(lang, "contact")}#luna-supply-request" data-funnel-event="free_keepsake_asset_request">{escape(labels["asset_request"])}</a>
+      <a href="{request_href}" data-funnel-event="free_keepsake_asset_request" data-free-keepsake-request="{slug}">{escape(labels["asset_request"])}</a>
     </div>
   </div>
 </article>

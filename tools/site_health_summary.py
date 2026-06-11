@@ -347,6 +347,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_keepsake_practice_print_buttons_checked",
         "public_keepsake_free_asset_cards_checked",
         "public_keepsake_free_asset_events_checked",
+        "public_keepsake_free_asset_request_mailtos_checked",
         "public_keepsake_safety_bridge_sections_checked",
         "public_keepsake_safety_bridge_links_checked",
         "public_keepsake_waitlist_cards_checked",

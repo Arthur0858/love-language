@@ -3,6 +3,58 @@
     return target && target.closest ? target.closest(selector) : null;
   }
 
+  var funnelAttributeMap = [
+    ['data-conversion-route', 'quiz_result_supply_route'],
+    ['data-conversion-plan', 'quiz_result_repair_plan'],
+    ['data-conversion-luna', 'quiz_result_luna'],
+    ['data-conversion-keepsake', 'quiz_result_keepsake'],
+    ['data-conversion-contact', 'quiz_result_contact'],
+    ['data-conversion-guide', 'quiz_result_guide'],
+    ['data-conversion-book', 'quiz_result_affiliate_book'],
+    ['data-home-resume-route', 'home_resume_supply_route'],
+    ['data-home-resume-plan', 'home_resume_repair_plan'],
+    ['data-home-resume-luna', 'home_resume_luna'],
+    ['data-home-resume-keepsake', 'home_resume_keepsake'],
+    ['data-home-resume-contact', 'home_resume_contact'],
+    ['data-supply-resume-contact', 'supply_resume_contact'],
+    ['data-keepsake-contact', 'keepsake_resume_contact'],
+    ['data-luna-resume-contact', 'luna_resume_contact'],
+    ['data-contact-resume-send', 'contact_resume_send'],
+    ['data-contact-resume-copy', 'contact_resume_copy'],
+    ['data-contact-resume-route', 'contact_resume_supply_route'],
+    ['data-contact-resume-keepsake', 'contact_resume_keepsake'],
+    ['data-contact-resume-plan', 'contact_resume_repair_plan']
+  ];
+
+  function funnelEventName(element) {
+    if (!element || !element.hasAttribute) return '';
+    var explicit = element.getAttribute('data-funnel-event');
+    if (explicit) return explicit;
+    for (var index = 0; index < funnelAttributeMap.length; index += 1) {
+      if (element.hasAttribute(funnelAttributeMap[index][0])) return funnelAttributeMap[index][1];
+    }
+    return '';
+  }
+
+  function recordFunnelEvent(element) {
+    var name = funnelEventName(element);
+    if (!name) return;
+    var payload = {
+      name: name,
+      path: window.location.pathname,
+      target: element.getAttribute('href') || element.getAttribute('data-result-action') || '',
+      at: new Date().toISOString()
+    };
+    window.dispatchEvent(new CustomEvent('lovetypes:funnel', { detail: payload }));
+    try {
+      var key = 'lovetypes:funnel-events:v1';
+      var events = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!Array.isArray(events)) events = [];
+      events.push(payload);
+      localStorage.setItem(key, JSON.stringify(events.slice(-40)));
+    } catch (error) {}
+  }
+
   function hashTarget(hash) {
     if (!hash || hash === '#') return null;
     var id = '';
@@ -55,6 +107,9 @@
   }
 
   document.addEventListener('click', function (event) {
+    var funnelTarget = closest(event.target, '[data-funnel-event], [data-conversion-route], [data-conversion-plan], [data-conversion-luna], [data-conversion-keepsake], [data-conversion-contact], [data-conversion-guide], [data-conversion-book], [data-home-resume-route], [data-home-resume-plan], [data-home-resume-luna], [data-home-resume-keepsake], [data-home-resume-contact], [data-supply-resume-contact], [data-keepsake-contact], [data-luna-resume-contact], [data-contact-resume-send], [data-contact-resume-copy], [data-contact-resume-route], [data-contact-resume-keepsake], [data-contact-resume-plan]');
+    if (funnelTarget) recordFunnelEvent(funnelTarget);
+
     var menuToggle = closest(event.target, '[data-menu-toggle]');
     if (menuToggle) {
       var menuId = menuToggle.getAttribute('aria-controls') || 'mobile-menu';

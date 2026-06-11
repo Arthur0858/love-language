@@ -5,6 +5,7 @@ import argparse
 import importlib.util
 import json
 import re
+import socket
 import ssl
 import sys
 import time
@@ -287,6 +288,14 @@ QUIZ_DATA_REQUIRED_MARKERS = (
     "data-guardian-saved",
     "data-guide-saved",
     "data-garden-map-saved",
+    "data-contact-saved",
+)
+CONTACT_FUNNEL_MARKERS = (
+    "data-contact-resume-send",
+    "data-contact-resume-copy",
+    "data-contact-resume-route",
+    "data-contact-resume-keepsake",
+    "data-contact-resume-plan",
 )
 RESOURCE_SUPPLY_SAFETY_MARKERS = (
     ("supply compass", 'class="section supply-compass"'),
@@ -424,7 +433,7 @@ def request_url_once(url: str, *, follow_redirects: bool = True) -> Response:
             return Response(raw.geturl(), raw.status, {key.lower(): value for key, value in raw.headers.items()}, raw.read())
     except HTTPError as error:
         return Response(error.geturl(), error.code, {key.lower(): value for key, value in error.headers.items()}, error.read())
-    except URLError as error:
+    except (TimeoutError, socket.timeout, URLError) as error:
         raise RuntimeError(f"failed to request {url}: {error}") from error
 
 
@@ -958,6 +967,11 @@ def main() -> int:
             issues.append(f"{path}: expected quiz data assets {expected_quiz_data}, found {versioned_quiz_data}")
         elif expected_quiz_data:
             public_current_asset_refs_checked += 1
+
+        if path.endswith("/contact/"):
+            for marker in CONTACT_FUNNEL_MARKERS:
+                if marker not in response.text:
+                    issues.append(f"{path}: contact saved-result funnel marker missing {marker}")
 
         page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate, *versioned_quiz_data])
 

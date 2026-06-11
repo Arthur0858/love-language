@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-path-pack"
+ASSET_VERSION = "20260611-funnel-pack"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -5630,11 +5630,11 @@ def contact_result_handoff_script(lang: str) -> str:
         <p>${{labels.intro}}</p>
         <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
         <div class="contact-result-actions garden-map-resume-actions">
-          <a class="primary-btn" href="${{href}}">${{labels.send}}</a>
-          <button class="secondary-btn" type="button" data-contact-copy-result>${{labels.copy}}</button>
-          <a class="secondary-btn" href="${{result.resourceUrl}}">${{labels.route}}</a>
-          <a class="secondary-btn" href="${{result.collectorHallUrl}}">${{labels.card}}</a>
-          <a class="secondary-btn" href="${{result.planUrl}}">${{labels.plan}}</a>
+          <a class="primary-btn" href="${{href}}" data-contact-resume-send>${{labels.send}}</a>
+          <button class="secondary-btn" type="button" data-contact-copy-result data-contact-resume-copy>${{labels.copy}}</button>
+          <a class="secondary-btn" href="${{result.resourceUrl}}" data-contact-resume-route>${{labels.route}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-contact-resume-keepsake>${{labels.card}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}" data-contact-resume-plan>${{labels.plan}}</a>
           <button class="secondary-btn" type="button" data-clear-contact-result>${{labels.clear}}</button>
         </div>
       </div>

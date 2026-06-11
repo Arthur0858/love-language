@@ -106,6 +106,19 @@ async function runCase(browser, item) {
   const bookRel = await page.locator('[data-conversion-book]').first().getAttribute('rel').catch(() => '');
   const disclosureVisible = await page.locator('.quiz-supply-card .affiliate-disclosure').first().isVisible().catch(() => false);
   const supplyPassVisible = await page.locator('[data-supply-pass]').first().isVisible().catch(() => false);
+  await page.evaluate(() => {
+    const link = document.querySelector('[data-conversion-route]');
+    link?.addEventListener('click', (event) => event.preventDefault(), { once: true });
+  });
+  await page.locator('[data-conversion-route]').first().click();
+  const funnelEvent = await page.evaluate(() => {
+    try {
+      const events = JSON.parse(localStorage.getItem('lovetypes:funnel-events:v1') || '[]');
+      return Array.isArray(events) ? events.at(-1) : null;
+    } catch {
+      return null;
+    }
+  });
   const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
 
   if (!resultName) issues.push('missing result name');
@@ -119,6 +132,8 @@ async function runCase(browser, item) {
   if (!bookRel.includes('sponsored')) issues.push(`affiliate book CTA missing sponsored rel: ${bookRel}`);
   if (!disclosureVisible) issues.push('affiliate disclosure is not visible in result');
   if (!supplyPassVisible) issues.push('guardian supply pass is not visible in result');
+  if (funnelEvent?.name !== 'quiz_result_supply_route') issues.push(`funnel event missing quiz_result_supply_route: ${JSON.stringify(funnelEvent)}`);
+  if (funnelEvent?.path !== new URL(makeUrl(item.path)).pathname) issues.push(`funnel event path mismatch: ${JSON.stringify(funnelEvent)}`);
   if (horizontalOverflow) issues.push('horizontal overflow');
   for (const message of consoleErrors) issues.push(`console error: ${message}`);
   for (const message of pageErrors) issues.push(`page error: ${message}`);
@@ -127,6 +142,7 @@ async function runCase(browser, item) {
     name: item.name,
     resultName,
     ctasChecked: 6,
+    funnelEventsChecked: funnelEvent ? 1 : 0,
     affiliateLinksChecked: bookHref ? 1 : 0,
     disclosuresChecked: disclosureVisible ? 1 : 0,
     issues,
@@ -149,6 +165,7 @@ const issues = results.flatMap((result) => result.issues.map((issue) => `${resul
 console.log(`public_quiz_flow_cases_checked=${results.length}`);
 console.log(`public_quiz_flow_results_checked=${results.filter((result) => result.resultName).length}`);
 console.log(`public_quiz_flow_ctas_checked=${results.reduce((sum, result) => sum + result.ctasChecked, 0)}`);
+console.log(`public_quiz_flow_funnel_events_checked=${results.reduce((sum, result) => sum + result.funnelEventsChecked, 0)}`);
 console.log(`public_quiz_flow_affiliate_links_checked=${results.reduce((sum, result) => sum + result.affiliateLinksChecked, 0)}`);
 console.log(`public_quiz_flow_disclosures_checked=${results.reduce((sum, result) => sum + result.disclosuresChecked, 0)}`);
 console.log(`public_quiz_flow_issues=${issues.length}`);

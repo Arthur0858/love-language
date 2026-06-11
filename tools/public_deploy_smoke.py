@@ -747,6 +747,12 @@ def unique_assets(values: Iterable[str]) -> list[str]:
     return result
 
 
+def localized_page_from_home(home_path: str, route: str) -> str:
+    prefix = home_path.strip("/")
+    route = route.strip("/")
+    return f"/{prefix}/{route}/" if prefix else f"/{route}/"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Smoke check a deployed LoveTypes public site.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
@@ -779,6 +785,8 @@ def main() -> int:
     public_affiliate_links_checked = 0
     public_home_universe_gate_sections_checked = 0
     public_home_universe_gate_cards_checked = 0
+    public_home_safety_sections_checked = 0
+    public_home_safety_links_checked = 0
     public_characters_universe_map_sections_checked = 0
     public_characters_universe_map_cards_checked = 0
     public_garden_map_sections_checked = 0
@@ -816,6 +824,17 @@ def main() -> int:
                 issues.append(
                     f"{path}: expected {HOME_EXPECTED_UNIVERSE_GATE_CARDS} universe gate cards, found {universe_gate_count}"
                 )
+            public_home_safety_sections_checked += 1
+            if "data-home-safety-compass" not in response.text:
+                issues.append(f"{path}: missing home safety compass")
+            for expected_href in (
+                localized_page_from_home(path, "privacy"),
+                localized_page_from_home(path, "terms"),
+                localized_page_from_home(path, "contact") + "#site-repair-report",
+            ):
+                public_home_safety_links_checked += 1
+                if f'href="{expected_href}"' not in response.text:
+                    issues.append(f"{path}: home safety compass missing {expected_href}")
         if path in {"/characters/", "/en/characters/", "/ja/characters/", "/ko/characters/", "/es/characters/"}:
             public_characters_universe_map_sections_checked += 1
             if "data-universe-map" not in response.text:
@@ -1059,6 +1078,8 @@ def main() -> int:
     print(f"public_affiliate_links_checked={public_affiliate_links_checked}")
     print(f"public_home_universe_gate_sections_checked={public_home_universe_gate_sections_checked}")
     print(f"public_home_universe_gate_cards_checked={public_home_universe_gate_cards_checked}")
+    print(f"public_home_safety_sections_checked={public_home_safety_sections_checked}")
+    print(f"public_home_safety_links_checked={public_home_safety_links_checked}")
     print(f"public_characters_universe_map_sections_checked={public_characters_universe_map_sections_checked}")
     print(f"public_characters_universe_map_cards_checked={public_characters_universe_map_cards_checked}")
     print(f"public_garden_map_sections_checked={public_garden_map_sections_checked}")

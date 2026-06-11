@@ -5177,6 +5177,87 @@ GARDEN_MAP = {
 }
 
 
+HOME_SAFETY_COMPASS = {
+    "zh": {
+        "eyebrow": "SAFE ENTRY",
+        "title": "進入心語庭園前，先保留三條安全路線",
+        "intro": "LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗、領取補給或寄出需求前，你可以先看清楚資料、購買與回報邊界。",
+        "items": [
+            ("01", "資料與本機儲存", "測驗結果與修復表單以本機保存為主，聯絡信件只在你主動寄出時傳送。", "查看隱私", "privacy"),
+            ("02", "內容與購買邊界", "指南、Luna、書卷與收藏物都是輔助練習，不承諾療效，也不取代諮商。", "查看條款", "terms"),
+            ("03", "網站修復入口", "若頁面、連結、翻譯或補給需求不清楚，可以直接回報需要修復的位置。", "回報問題", "contact#site-repair-report"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SAFE ENTRY",
+        "title": "Before entering the Heart Garden, keep three safe routes open",
+        "intro": "LoveTypes can help you recognize love languages and practice communication, but it does not make relationship decisions for you. Before taking the quiz, claiming supplies, or sending a request, you can review the data, purchase, and repair boundaries.",
+        "items": [
+            ("01", "Data and local storage", "Quiz results and repair worksheets stay mainly on this device; contact emails send only when you choose to send them.", "Read privacy", "privacy"),
+            ("02", "Content and purchase boundary", "Guides, Luna, books, and keepsakes are practice supports. They do not promise outcomes or replace counseling.", "Read terms", "terms"),
+            ("03", "Site repair route", "If a page, link, translation, or supply request is unclear, report the exact place that needs repair.", "Report issue", "contact#site-repair-report"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SAFE ENTRY",
+        "title": "心語庭園へ入る前に、三つの安全な道を残す",
+        "intro": "LoveTypes は愛の言語を見つけ、対話を練習するための場です。関係の決定を代わりに行うものではありません。診断、補給、希望送信の前に、データ、購入、修復の境界を確認できます。",
+        "items": [
+            ("01", "データと端末内保存", "診断結果と修復シートは主にこの端末に保存され、連絡メールは自分で送信した時だけ送られます。", "プライバシーへ", "privacy"),
+            ("02", "内容と購入の境界", "ガイド、Luna、本、コレクションは練習の支えです。結果を約束せず、相談支援の代替ではありません。", "規約へ", "terms"),
+            ("03", "サイト修復入口", "ページ、リンク、翻訳、補給希望が分かりにくい時は、修復が必要な場所を送れます。", "問題を報告", "contact#site-repair-report"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SAFE ENTRY",
+        "title": "마음 언어 정원에 들어가기 전, 세 가지 안전 경로를 남겨 두세요",
+        "intro": "LoveTypes는 사랑의 언어를 알아보고 대화를 연습하도록 돕지만 관계 결정을 대신하지 않습니다. 테스트, 보급, 요청 전 자료, 구매, 수리 경계를 확인할 수 있습니다.",
+        "items": [
+            ("01", "자료와 로컬 저장", "테스트 결과와 회복 시트는 주로 이 기기에 저장되며, 연락 메일은 직접 보낼 때만 전송됩니다.", "개인정보 보기", "privacy"),
+            ("02", "콘텐츠와 구매 경계", "가이드, Luna, 책, 소장물은 연습을 돕는 도구이며 결과를 약속하거나 상담을 대신하지 않습니다.", "약관 보기", "terms"),
+            ("03", "사이트 수리 입구", "페이지, 링크, 번역, 보급 요청이 불명확하면 수리가 필요한 위치를 바로 제보할 수 있습니다.", "문제 제보", "contact#site-repair-report"),
+        ],
+    },
+    "es": {
+        "eyebrow": "SAFE ENTRY",
+        "title": "Antes de entrar al Jardín del corazón, conserva tres rutas seguras",
+        "intro": "LoveTypes puede ayudarte a reconocer lenguajes del amor y practicar comunicación, pero no toma decisiones de relación por ti. Antes del test, los recursos o una solicitud, puedes revisar límites de datos, compra y reparación.",
+        "items": [
+            ("01", "Datos y almacenamiento local", "Resultados y hojas de reparación se guardan principalmente en este dispositivo; los correos se envían solo cuando decides enviarlos.", "Ver privacidad", "privacy"),
+            ("02", "Límite de contenido y compra", "Guías, Luna, libros y recuerdos son apoyos de práctica. No prometen resultados ni reemplazan terapia.", "Ver términos", "terms"),
+            ("03", "Ruta de reparación del sitio", "Si una página, enlace, traducción o pedido es confuso, reporta el lugar exacto que requiere reparación.", "Reportar problema", "contact#site-repair-report"),
+        ],
+    },
+}
+
+
+def home_safety_compass(lang: str) -> str:
+    copy = HOME_SAFETY_COMPASS[lang]
+    cards = []
+    for number, title, desc, cta, target in copy["items"]:
+        if "#" in target:
+            route, anchor = target.split("#", 1)
+            href = lang_url(lang, route) + f"#{anchor}"
+        else:
+            href = lang_url(lang, target)
+        cards.append(f"""
+<article class="trust-action-card">
+  <span>{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a href="{href}" data-home-safety-link>{escape(cta)}</a>
+</article>
+""")
+    return f"""
+<section class="section trust-action-section home-safety-compass" data-home-safety-compass>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2><p>{escape(copy["intro"])}</p></div>
+  </div>
+  <div class="trust-action-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def home_journey_section(lang: str) -> str:
     copy = HOME_JOURNEY[lang]
     cards = []
@@ -7467,6 +7548,7 @@ def home(lang: str) -> None:
 {universe_gate_section(lang)}
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
+{home_safety_compass(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(section_labels["home_field_notes"])}</h2><p>{escape(t["trust_intro"])}</p></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>

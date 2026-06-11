@@ -223,6 +223,8 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "universe_gate_cards": 0,
         "journey_sections": 0,
         "journey_cards": 0,
+        "safety_sections": 0,
+        "safety_links": 0,
         "hero_ctas": 0,
         "quiz_scripts": 0,
         "quiz_questions": 0,
@@ -308,6 +310,23 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         stats["journey_cards"] = len(cards)
         if len(cards) != 4:
             issues.append(f"{path}: expected four journey cards, got {len(cards)}")
+
+    safety = find_all(root, attr="data-home-safety-compass")
+    if len(safety) != 1:
+        issues.append(f"{path}: expected one home safety compass, got {len(safety)}")
+    else:
+        stats["safety_sections"] = 1
+        hrefs = set(hrefs_under(safety[0]))
+        expected_hrefs = {
+            localized_path(lang, "privacy"),
+            localized_path(lang, "terms"),
+            localized_path(lang, "contact") + "#site-repair-report",
+        }
+        for expected in expected_hrefs:
+            if expected not in hrefs:
+                issues.append(f"{path}: home safety compass missing {expected}")
+            else:
+                stats["safety_links"] += 1
     return issues, stats
 
 
@@ -331,6 +350,8 @@ def main() -> int:
         "universe_gate_cards": 0,
         "journey_sections": 0,
         "journey_cards": 0,
+        "safety_sections": 0,
+        "safety_links": 0,
         "hero_ctas": 0,
     }
     issues: list[str] = []
@@ -353,6 +374,8 @@ def main() -> int:
     print(f"public_home_universe_gate_cards_checked={totals['universe_gate_cards']}")
     print(f"public_home_journey_sections_checked={totals['journey_sections']}")
     print(f"public_home_journey_cards_checked={totals['journey_cards']}")
+    print(f"public_home_safety_sections_checked={totals['safety_sections']}")
+    print(f"public_home_safety_links_checked={totals['safety_links']}")
     print(f"public_home_hero_ctas_checked={totals['hero_ctas']}")
     print(f"public_home_issues={len(issues)}")
     for issue in issues[:100]:

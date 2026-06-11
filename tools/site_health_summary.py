@@ -306,6 +306,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_home_universe_gate_cards_checked",
         "public_home_journey_sections_checked",
         "public_home_journey_cards_checked",
+        "public_home_safety_sections_checked",
+        "public_home_safety_links_checked",
         "public_home_hero_ctas_checked",
         "public_indexability_sitemap_urls_listed",
         "public_indexability_sitemap_pages_checked",

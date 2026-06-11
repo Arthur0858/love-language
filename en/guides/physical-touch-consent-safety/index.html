@@ -104,28 +104,28 @@
   <span>01</span>
   <h3>Return to the guardian</h3>
   <p>Understand the need, misfrequency wound, and repair mission this guardian protects.</p>
-  <a href="/en/characters/dora/">Enter guardian page</a>
+  <a href="/en/characters/dora/" data-funnel-event="guide_action_01">Enter guardian page</a>
 </article>
 
 <article class="guide-action-card">
   <span>02</span>
   <h3>Get the supply route</h3>
   <p>Choose one free task, Luna use case, and deeper book scroll for this guardian. Dora Safety Supply</p>
-  <a href="/en/resources/#supply-dora">View supply route</a>
+  <a href="/en/resources/#supply-dora" data-funnel-event="guide_action_02">View supply route</a>
 </article>
 
 <article class="guide-action-card">
   <span>03</span>
   <h3>Fill the 7-day repair</h3>
   <p>Place the sentence you found today into a small agreement you can practice this week.</p>
-  <a href="/en/repair-plan/#plan-dora">Start repair plan</a>
+  <a href="/en/repair-plan/#plan-dora" data-funnel-event="guide_action_03">Start repair plan</a>
 </article>
 
 <article class="guide-action-card">
   <span>04</span>
   <h3>Lower the night noise</h3>
   <p>If feelings are loud after reading, use Luna to turn this insight into one line you can write down.</p>
-  <a href="/en/luna-yoga-music/#luna-dora">Open Luna</a>
+  <a href="/en/luna-yoga-music/#luna-dora" data-funnel-event="guide_action_04">Open Luna</a>
 </article>
 </div>
 </section>
@@ -173,13 +173,13 @@
         <h2>${result.name} · ${result.type}</h2>
         <p>${quiz.labels.guide_resume_intro}</p>
         <div class="quiz-saved-actions">
-          <a href="${result.planUrl}" data-guide-resume-plan>${quiz.labels.saved_plan}</a>
-          <a href="${result.resourceUrl}" data-guide-resume-route>${quiz.labels.saved_route}</a>
-          <a href="${result.lunaUrl}" data-guide-resume-luna>${quiz.labels.saved_luna}</a>
-          <a href="${result.collectorHallUrl}" data-guide-resume-keepsake>${quiz.labels.saved_card}</a>
-          <a href="${result.contactUrl}" data-guide-resume-contact>${quiz.labels.saved_contact}</a>
-          <a href="${result.guardianUrl}" data-guide-resume-guardian>${quiz.labels.guardian_link}</a>
-          <button type="button" data-clear-guide-result>${quiz.labels.saved_clear}</button>
+          <a href="${result.planUrl}" data-guide-resume-plan data-funnel-event="guide_resume_plan">${quiz.labels.saved_plan}</a>
+          <a href="${result.resourceUrl}" data-guide-resume-route data-funnel-event="guide_resume_route">${quiz.labels.saved_route}</a>
+          <a href="${result.lunaUrl}" data-guide-resume-luna data-funnel-event="guide_resume_luna">${quiz.labels.saved_luna}</a>
+          <a href="${result.collectorHallUrl}" data-guide-resume-keepsake data-funnel-event="guide_resume_keepsake">${quiz.labels.saved_card}</a>
+          <a href="${result.contactUrl}" data-guide-resume-contact data-funnel-event="guide_resume_contact">${quiz.labels.saved_contact}</a>
+          <a href="${result.guardianUrl}" data-guide-resume-guardian data-funnel-event="guide_resume_guardian">${quiz.labels.guardian_link}</a>
+          <button type="button" data-clear-guide-result data-funnel-event="guide_resume_clear">${quiz.labels.saved_clear}</button>
         </div>
       </div>
     </article>`;

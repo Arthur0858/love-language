@@ -6407,7 +6407,7 @@ def guide_index_compass(lang: str) -> str:
       <span>{escape(number)}</span>
       <h3>{escape(title)}</h3>
       <p>{escape(desc)}</p>
-      <a href="{href}">{escape(action)}</a>
+      <a href="{href}" data-funnel-event="guide_index_compass_{number}">{escape(action)}</a>
     </article>
 """)
     return f"""
@@ -6441,9 +6441,9 @@ def guide_domain_routes_section(lang: str) -> str:
     <div><dt>{escape(copy["practice"])}</dt><dd>{escape(route["mission"])}</dd></div>
   </dl>
   <div class="guide-domain-actions">
-    <a href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(copy["read"])}</a>
-    <a href="{lang_url(lang, "characters/" + slug)}">{escape(copy["guardian"])}</a>
-    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(copy["supply"])}</a>
+    <a href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guide_domain_read">{escape(copy["read"])}</a>
+    <a href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="guide_domain_guardian">{escape(copy["guardian"])}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guide_domain_supply">{escape(copy["supply"])}</a>
   </div>
 </article>
 """)
@@ -6451,7 +6451,7 @@ def guide_domain_routes_section(lang: str) -> str:
 <section class="section guide-domain-section" data-guide-domain-routes>
   <div class="section-head">
     <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
-    <a href="{lang_url(lang, "characters")}">{escape(LANGS[lang]["guardians"])}</a>
+    <a href="{lang_url(lang, "characters")}" data-funnel-event="guide_domain_section_guardians">{escape(LANGS[lang]["guardians"])}</a>
   </div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="guide-domain-grid">{"".join(cards)}</div>
@@ -7692,13 +7692,13 @@ def guide_resume_script(lang: str) -> str:
         <h2>${{result.name}} · ${{result.type}}</h2>
         <p>${{quiz.labels.guide_resume_intro}}</p>
         <div class="quiz-saved-actions">
-          <a href="${{result.planUrl}}" data-guide-resume-plan>${{quiz.labels.saved_plan}}</a>
-          <a href="${{result.resourceUrl}}" data-guide-resume-route>${{quiz.labels.saved_route}}</a>
-          <a href="${{result.lunaUrl}}" data-guide-resume-luna>${{quiz.labels.saved_luna}}</a>
-          <a href="${{result.collectorHallUrl}}" data-guide-resume-keepsake>${{quiz.labels.saved_card}}</a>
-          <a href="${{result.contactUrl}}" data-guide-resume-contact>${{quiz.labels.saved_contact}}</a>
-          <a href="${{result.guardianUrl}}" data-guide-resume-guardian>${{quiz.labels.guardian_link}}</a>
-          <button type="button" data-clear-guide-result>${{quiz.labels.saved_clear}}</button>
+          <a href="${{result.planUrl}}" data-guide-resume-plan data-funnel-event="guide_resume_plan">${{quiz.labels.saved_plan}}</a>
+          <a href="${{result.resourceUrl}}" data-guide-resume-route data-funnel-event="guide_resume_route">${{quiz.labels.saved_route}}</a>
+          <a href="${{result.lunaUrl}}" data-guide-resume-luna data-funnel-event="guide_resume_luna">${{quiz.labels.saved_luna}}</a>
+          <a href="${{result.collectorHallUrl}}" data-guide-resume-keepsake data-funnel-event="guide_resume_keepsake">${{quiz.labels.saved_card}}</a>
+          <a href="${{result.contactUrl}}" data-guide-resume-contact data-funnel-event="guide_resume_contact">${{quiz.labels.saved_contact}}</a>
+          <a href="${{result.guardianUrl}}" data-guide-resume-guardian data-funnel-event="guide_resume_guardian">${{quiz.labels.guardian_link}}</a>
+          <button type="button" data-clear-guide-result data-funnel-event="guide_resume_clear">${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
     </article>`;
@@ -7884,7 +7884,7 @@ def guides_index(lang: str) -> None:
     section_labels = SECTION_LABELS[lang]
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="resources" href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="resources" href="{lang_url(lang, "resources")}" data-funnel-event="guide_index_hero_resources">{escape(t["resources"])}</a></div></section>
 {guide_index_compass(lang)}
 {guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
@@ -7937,7 +7937,7 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
   <span>{step}</span>
   <h3>{escape(label)}</h3>
   <p>{escape(text)}</p>
-  <a href="{href}">{escape(cta)}</a>
+  <a href="{href}" data-funnel-event="guide_action_{step}">{escape(cta)}</a>
 </article>
 """
         for step, label, text, cta, href in actions

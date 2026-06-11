@@ -160,9 +160,12 @@ def validate_index(base_url: str, lang: str) -> tuple[list[str], dict[str, int]]
     stats = {
         "index_pages": 0,
         "index_actions": 0,
+        "index_action_events": 0,
         "index_compass_cards": 0,
+        "index_compass_events": 0,
         "index_domain_cards": 0,
         "index_domain_actions": 0,
+        "index_domain_events": 0,
         "index_guide_cards": 0,
         "index_boundary_sections": 0,
     }
@@ -183,6 +186,13 @@ def validate_index(base_url: str, lang: str) -> tuple[list[str], dict[str, int]]
                 issues.append(f"{path}: guide index actions missing {expected}")
             else:
                 stats["index_actions"] += 1
+        hero_events = {link.attrs.get("data-funnel-event", "") for link in descendants(actions[0], "a")}
+        expected_hero_events = {"guide_index_hero_quiz", "guide_index_hero_guardians", "guide_index_hero_resources"}
+        missing_hero_events = expected_hero_events.difference(hero_events)
+        if missing_hero_events:
+            issues.append(f"{path}: guide index hero missing events {', '.join(sorted(missing_hero_events))}")
+        else:
+            stats["index_action_events"] += len(expected_hero_events)
 
     compass = find_by_class(root, "guide-index-compass")
     if compass is None:
@@ -192,6 +202,13 @@ def validate_index(base_url: str, lang: str) -> tuple[list[str], dict[str, int]]
         stats["index_compass_cards"] += len(cards)
         if len(cards) != 3:
             issues.append(f"{path}: expected three guide compass cards, got {len(cards)}")
+        compass_events = {link.attrs.get("data-funnel-event", "") for link in descendants(compass, "a")}
+        expected_compass_events = {"guide_index_compass_1", "guide_index_compass_2", "guide_index_compass_3"}
+        missing_compass_events = expected_compass_events.difference(compass_events)
+        if missing_compass_events:
+            issues.append(f"{path}: guide compass missing events {', '.join(sorted(missing_compass_events))}")
+        else:
+            stats["index_compass_events"] += len(expected_compass_events)
 
     domain = find_all(root, attr="data-guide-domain-routes")
     if len(domain) != 1:
@@ -218,6 +235,13 @@ def validate_index(base_url: str, lang: str) -> tuple[list[str], dict[str, int]]
                 issues.append(f"{path}: {slug} domain card missing guide link")
             else:
                 stats["index_domain_actions"] += 1
+            domain_events = {link.attrs.get("data-funnel-event", "") for link in descendants(card, "a")}
+            expected_domain_events = {"guide_domain_read", "guide_domain_guardian", "guide_domain_supply"}
+            missing_domain_events = expected_domain_events.difference(domain_events)
+            if missing_domain_events:
+                issues.append(f"{path}: {slug} domain card missing events {', '.join(sorted(missing_domain_events))}")
+            else:
+                stats["index_domain_events"] += len(expected_domain_events)
 
     cards = [card for card in find_all(root, tag="a", class_name="content-card") if card.attrs.get("href", "").startswith(localized_path(lang, "guides/"))]
     stats["index_guide_cards"] += len(cards)
@@ -242,11 +266,13 @@ def validate_guide(base_url: str, lang: str, guide_slug: str, guardian_slug: str
         "guide_pages": 0,
         "guide_quiz_scripts": 0,
         "guide_resume_templates": 0,
+        "guide_resume_events": 0,
         "guide_article_sections": 0,
         "guide_safety_callouts": 0,
         "guide_related_cards": 0,
         "guide_action_bridges": 0,
         "guide_action_cards": 0,
+        "guide_action_events": 0,
         "guide_guardian_links": 0,
         "guide_supply_links": 0,
         "guide_repair_links": 0,
@@ -267,6 +293,23 @@ def validate_guide(base_url: str, lang: str, guide_slug: str, guardian_slug: str
         issues.append(f"{path}: missing guide saved-result resume template")
     else:
         stats["guide_resume_templates"] += 1
+        expected_resume_events = {
+            "guide_resume_plan",
+            "guide_resume_route",
+            "guide_resume_luna",
+            "guide_resume_keepsake",
+            "guide_resume_contact",
+            "guide_resume_guardian",
+            "guide_resume_clear",
+        }
+        missing_resume_events = [
+            event for event in sorted(expected_resume_events)
+            if f'data-funnel-event="{event}"' not in response.text
+        ]
+        if missing_resume_events:
+            issues.append(f"{path}: guide resume template missing events {', '.join(missing_resume_events)}")
+        else:
+            stats["guide_resume_events"] += len(expected_resume_events)
 
     article = find_by_class(root, "article-body")
     if article is None:
@@ -305,6 +348,13 @@ def validate_guide(base_url: str, lang: str, guide_slug: str, guardian_slug: str
         if len(cards) != 4:
             issues.append(f"{path}: expected four guide action cards, got {len(cards)}")
         hrefs = hrefs_under(bridges[0])
+        action_events = {link.attrs.get("data-funnel-event", "") for link in descendants(bridges[0], "a")}
+        expected_action_events = {"guide_action_01", "guide_action_02", "guide_action_03", "guide_action_04"}
+        missing_action_events = expected_action_events.difference(action_events)
+        if missing_action_events:
+            issues.append(f"{path}: action bridge missing events {', '.join(sorted(missing_action_events))}")
+        else:
+            stats["guide_action_events"] += len(expected_action_events)
         expected = {
             "guardian": localized_path(lang, f"characters/{guardian_slug}"),
             "supply": localized_path(lang, "resources") + f"#supply-{guardian_slug}",
@@ -339,19 +389,24 @@ def main() -> int:
     totals = {
         "index_pages": 0,
         "index_actions": 0,
+        "index_action_events": 0,
         "index_compass_cards": 0,
+        "index_compass_events": 0,
         "index_domain_cards": 0,
         "index_domain_actions": 0,
+        "index_domain_events": 0,
         "index_guide_cards": 0,
         "index_boundary_sections": 0,
         "guide_pages": 0,
         "guide_quiz_scripts": 0,
         "guide_resume_templates": 0,
+        "guide_resume_events": 0,
         "guide_article_sections": 0,
         "guide_safety_callouts": 0,
         "guide_related_cards": 0,
         "guide_action_bridges": 0,
         "guide_action_cards": 0,
+        "guide_action_events": 0,
         "guide_guardian_links": 0,
         "guide_supply_links": 0,
         "guide_repair_links": 0,
@@ -372,19 +427,24 @@ def main() -> int:
 
     print(f"public_guide_index_pages_checked={totals['index_pages']}")
     print(f"public_guide_index_actions_checked={totals['index_actions']}")
+    print(f"public_guide_index_action_events_checked={totals['index_action_events']}")
     print(f"public_guide_index_compass_cards_checked={totals['index_compass_cards']}")
+    print(f"public_guide_index_compass_events_checked={totals['index_compass_events']}")
     print(f"public_guide_index_domain_cards_checked={totals['index_domain_cards']}")
     print(f"public_guide_index_domain_actions_checked={totals['index_domain_actions']}")
+    print(f"public_guide_index_domain_events_checked={totals['index_domain_events']}")
     print(f"public_guide_index_cards_checked={totals['index_guide_cards']}")
     print(f"public_guide_index_boundary_sections_checked={totals['index_boundary_sections']}")
     print(f"public_guide_pages_checked={totals['guide_pages']}")
     print(f"public_guide_quiz_scripts_checked={totals['guide_quiz_scripts']}")
     print(f"public_guide_resume_templates_checked={totals['guide_resume_templates']}")
+    print(f"public_guide_resume_events_checked={totals['guide_resume_events']}")
     print(f"public_guide_article_sections_checked={totals['guide_article_sections']}")
     print(f"public_guide_safety_callouts_checked={totals['guide_safety_callouts']}")
     print(f"public_guide_related_cards_checked={totals['guide_related_cards']}")
     print(f"public_guide_action_bridges_checked={totals['guide_action_bridges']}")
     print(f"public_guide_action_cards_checked={totals['guide_action_cards']}")
+    print(f"public_guide_action_events_checked={totals['guide_action_events']}")
     print(f"public_guide_guardian_links_checked={totals['guide_guardian_links']}")
     print(f"public_guide_supply_links_checked={totals['guide_supply_links']}")
     print(f"public_guide_repair_links_checked={totals['guide_repair_links']}")

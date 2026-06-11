@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-funnel-pack"
+ASSET_VERSION = "20260611-funnel-observe"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -4768,9 +4768,9 @@ def supply_route_card(lang: str, slug: str) -> str:
     <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(labels["open_luna"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}">{escape(labels["free_keepsake"])}</a>
-    <a class="secondary-btn" href="{request_href}">{escape(labels["request_supply"])}</a>
-    <button class="secondary-btn" type="button" data-copy-supply-route data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="secondary-btn" href="{request_href}" data-funnel-event="supply_route_mailto">{escape(labels["request_supply"])}</a>
+    <button class="secondary-btn" type="button" data-copy-supply-route data-funnel-event="supply_route_copy" data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="supply_route_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </article>
 """
@@ -5369,8 +5369,8 @@ def supply_wishlist_section(lang: str) -> str:
       <ul class="supply-format-list">{format_items}</ul>
     </div>
     <div class="supply-route-actions">
-      <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={subject}&body={body}">{escape(labels["request"])}</a>
-      <button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(body_text)}">{escape(template_labels["copy"])}</button>
+      <a class="supply-signal-link" href="mailto:contact@lovetypes.tw?subject={subject}&body={body}" data-funnel-event="supply_wishlist_mailto">{escape(labels["request"])}</a>
+      <button class="secondary-btn" type="button" data-copy-contact-template data-funnel-event="supply_wishlist_copy" data-copy-text="{escape(body_text)}">{escape(template_labels["copy"])}</button>
     </div>
   </div>
 </article>
@@ -5474,11 +5474,11 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     <div class="collector-actions">
       <a class="primary-btn" href="{route_href}">{escape(labels["route"])}</a>
       <a class="secondary-btn" href="{plan_href}">{escape(labels["plan"])}</a>
-      <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#practice-card-{slug}">{escape(KEEPSAKES_PAGE[lang]["practice_open"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#practice-card-{slug}" data-funnel-event="collector_practice_card">{escape(KEEPSAKES_PAGE[lang]["practice_open"])}</a>
       <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
-      <a class="secondary-btn" href="{supply_request_href(lang, slug)}">{escape(SUPPLY_LABELS[lang]["request_supply"])}</a>
-      <button class="secondary-btn" type="button" data-result-action="story" {data_attrs}>{escape(labels["story"])}</button>
+      <a class="secondary-btn" href="{supply_request_href(lang, slug)}" data-funnel-event="collector_supply_mailto">{escape(SUPPLY_LABELS[lang]["request_supply"])}</a>
+      <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="keepsake_story_generate" {data_attrs}>{escape(labels["story"])}</button>
     </div>
   </div>
 </article>
@@ -5707,8 +5707,8 @@ def keepsake_waitlist_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
-    <div class="contact-request-subject contact-request-template"><strong>{escape(template_labels["label"])}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(request["body"])}">{escape(template_labels["copy"])}</button></div>
-    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}">{escape(request["cta"])}</a>
+    <div class="contact-request-subject contact-request-template"><strong>{escape(template_labels["label"])}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-funnel-event="keepsake_waitlist_copy" data-copy-text="{escape(request["body"])}">{escape(template_labels["copy"])}</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}" data-funnel-event="keepsake_waitlist_mailto">{escape(request["cta"])}</a>
   </div>
 </section>
 {contact_template_copy_script(lang)}
@@ -5772,9 +5772,9 @@ def keepsake_practice_card_section(lang: str) -> str:
     <p><strong>{escape(labels["practice_supply"])}</strong><br>{escape(route["supply"])}</p>
     <p><strong>{escape(labels["practice_blank"])}</strong><br>______________________________</p>
     <div class="collector-actions">
-      <a class="primary-btn" href="{lang_url(lang, "repair-plan")}#plan-{slug}">{escape(COLLECTOR_LABELS[lang]["plan"])}</a>
-      <a class="secondary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(COLLECTOR_LABELS[lang]["route"])}</a>
-      <button class="secondary-btn" type="button" onclick="window.print()">{escape(labels["practice_print"])}</button>
+      <a class="primary-btn" href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="practice_card_repair_plan">{escape(COLLECTOR_LABELS[lang]["plan"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="practice_card_supply_route">{escape(COLLECTOR_LABELS[lang]["route"])}</a>
+      <button class="secondary-btn" type="button" onclick="window.print()" data-funnel-event="practice_card_print">{escape(labels["practice_print"])}</button>
     </div>
   </div>
 </article>
@@ -5848,10 +5848,10 @@ def keepsake_resume_script(lang: str) -> str:
           <a class="secondary-btn" href="${{result.lunaUrl}}" data-keepsake-luna>${{quiz.labels.saved_luna}}</a>
           <a class="secondary-btn" href="${{result.resourceUrl}}" data-keepsake-route>${{quiz.labels.saved_route}}</a>
           <a class="secondary-btn" href="${{result.guardianUrl}}" data-keepsake-guardian>${{quiz.labels.guardian_link}}</a>
-          <a class="secondary-btn" href="#practice-card-${{result.slug}}" data-keepsake-practice>${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="#practice-card-${{result.slug}}" data-keepsake-practice data-funnel-event="keepsake_resume_practice_card">${{quiz.labels.saved_plan}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
-          <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+          <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="keepsake_resume_story_generate" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
           <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-keepsake-keepsake>${{result.collectorHall}}</a>
           <button class="secondary-btn" type="button" data-clear-keepsake-result>${{quiz.labels.saved_clear}}</button>
         </div>
@@ -6691,7 +6691,7 @@ def quiz_script(lang: str) -> str:
             <a href="${{result.collectorHallUrl}}" data-home-saved-keepsake data-home-resume-keepsake>${{quiz.labels.saved_card}}</a>
             <a href="${{result.contactUrl}}" data-home-resume-contact>${{quiz.labels.saved_contact}}</a>
             <a href="${{result.guardianUrl}}" data-home-resume-guardian>${{quiz.labels.guardian_link}}</a>
-            <button type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+            <button type="button" data-result-action="story" data-funnel-event="home_resume_story_generate" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <button type="button" data-share-saved-result>${{quiz.labels.share}}</button>
             <button type="button" data-copy-saved-result>${{quiz.labels.saved_copy}}</button>
             <button type="button" data-clear-saved-result ${{variant === 'home' ? 'data-clear-home-result' : ''}}>${{quiz.labels.saved_clear}}</button>
@@ -6908,7 +6908,7 @@ def quiz_script(lang: str) -> str:
           <div class="quiz-collector-actions">
             <a class="primary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
             <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
-            <button class="secondary-btn" type="button" data-result-action="story" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
+            <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="quiz_result_story_generate" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
             <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-collector-keepsake>${{result.collectorHall}}</a>
           </div>
         </div>
@@ -8165,9 +8165,9 @@ def luna_offer_section(lang: str) -> str:
   <p class="section-intro">{escape(offer["intro"])}</p>
   <div class="luna-offer-grid">{cards}</div>
   <div class="luna-offer-actions">
-    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(offer["resources"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request">{escape(offer["contact"])}</a>
+    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer" data-funnel-event="luna_offer_listen">{escape(offer["listen"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="luna_offer_resources">{escape(offer["resources"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request" data-funnel-event="luna_offer_contact">{escape(offer["contact"])}</a>
   </div>
 </section>
 """
@@ -8183,7 +8183,7 @@ def luna_page(lang: str) -> None:
     def use_case_href(target: str) -> str:
         return f"{lang_url(lang)}{target}" if target.startswith("#") else lang_url(lang, target)
     use_cases = "".join(
-        f'<article><h3>{escape(title)}</h3><p>{escape(desc)}</p><a class="supply-signal-link" href="{use_case_href(target)}">{escape(action)}</a></article>'
+        f'<article><h3>{escape(title)}</h3><p>{escape(desc)}</p><a class="supply-signal-link" href="{use_case_href(target)}" data-funnel-event="luna_use_case_action">{escape(action)}</a></article>'
         for (title, desc), (action, target) in zip(LUNA_USE_CASES[lang], use_case_actions)
     )
     guardian_flow_cards = []
@@ -8309,8 +8309,8 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
-    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(request["body"])}">{copy_label}</button></div>
-    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}">{escape(request["cta"])}</a>
+    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(request["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-funnel-event="contact_supply_template_copy" data-copy-text="{escape(request["body"])}">{copy_label}</button></div>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={request_subject_href}&body={request_body_href}" data-funnel-event="contact_supply_mailto">{escape(request["cta"])}</a>
   </div>
 </section>
 <section class="section contact-request-section" id="site-repair-report">
@@ -8320,8 +8320,8 @@ def contact_request_section(lang: str) -> str:
   <div class="contact-request-note">
     <p>{escape(repair["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(repair_subject)}</code></p>
-    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(repair["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="{escape(repair["body"])}">{copy_label}</button></div>
-    <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair_subject_href}&body={repair_body_href}">{escape(repair["cta"])}</a>
+    <div class="contact-request-subject contact-request-template"><strong>{template_label}</strong><code>{escape(repair["body"])}</code><button class="secondary-btn" type="button" data-copy-contact-template data-funnel-event="contact_repair_template_copy" data-copy-text="{escape(repair["body"])}">{copy_label}</button></div>
+    <a class="primary-btn ghost" href="mailto:contact@lovetypes.tw?subject={repair_subject_href}&body={repair_body_href}" data-funnel-event="contact_repair_mailto">{escape(repair["cta"])}</a>
   </div>
 </section>
 {contact_template_copy_script(lang)}

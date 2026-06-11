@@ -192,6 +192,73 @@ async function worksheetStorageCheck(browser) {
   return { name: 'repair-worksheet-local-storage', checked: 1, localKeysChecked: saved.localKeys.length + cleared.localKeys.length, issues };
 }
 
+async function funnelStorageCheck(browser) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const page = await context.newPage();
+  const networkIssues = watchNetwork(page);
+  const issues = [];
+  const response = await page.goto(makeUrl('/resources/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await resetBrowserStorage(context, page);
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  const clickTargets = [
+    ['supply_route_copy', '[data-copy-supply-route]'],
+    ['supply_wishlist_copy', '[data-supply-owned-card] [data-copy-contact-template]'],
+  ];
+  for (const [_name, selector] of clickTargets) {
+    await page.locator(selector).first().click();
+  }
+  await page.goto(makeUrl('/contact/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  await page.locator('[data-funnel-event="contact_supply_template_copy"]').first().click();
+  await page.locator('[data-funnel-event="contact_supply_mailto"]').first().click();
+  await page.goto(makeUrl('/luna-yoga-music/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  await page.locator('[data-funnel-event="luna_offer_contact"]').first().click();
+
+  const saved = await storageSnapshot(page);
+  validateQuietStorage(saved, issues, 'funnel');
+  const raw = saved.entries['lovetypes:funnel-events:v1'];
+  let events = [];
+  try {
+    events = JSON.parse(raw || '[]');
+  } catch {
+    issues.push('funnel: event store should be JSON');
+  }
+  const names = new Set(Array.isArray(events) ? events.map((event) => event.name) : []);
+  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact']) {
+    if (!names.has(expected)) issues.push(`funnel: missing local event ${expected}`);
+  }
+  if (!Array.isArray(events)) {
+    issues.push('funnel: event store should be an array');
+  } else {
+    if (events.length > 40) issues.push(`funnel: event store should keep at most 40 events, got ${events.length}`);
+    for (const [index, event] of events.entries()) {
+      if (!event || typeof event.name !== 'string' || typeof event.path !== 'string' || typeof event.at !== 'string') {
+        issues.push(`funnel: event ${index} has invalid shape`);
+      }
+    }
+  }
+  if (!response || response.status() >= 400) issues.push(`funnel: HTTP status ${response?.status() || 'missing'}`);
+  issues.push(...networkIssues.map((issue) => `funnel network: ${issue}`));
+  await context.close();
+  return { name: 'funnel-local-observability', checked: 1, localKeysChecked: saved.localKeys.length, issues };
+}
+
 async function main() {
   const playwright = await loadPlaywright();
   const browser = await playwright.chromium.launch(await browserLaunchOptions());
@@ -201,6 +268,8 @@ async function main() {
     results.push(await quizStorageCheck(browser));
     console.error('[storage-privacy] repair-worksheet-local-storage');
     results.push(await worksheetStorageCheck(browser));
+    console.error('[storage-privacy] funnel-local-observability');
+    results.push(await funnelStorageCheck(browser));
   } finally {
     await browser.close();
   }

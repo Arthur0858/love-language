@@ -8,7 +8,7 @@ import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urldefrag, urljoin, urlparse
+from urllib.parse import parse_qs, urldefrag, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -35,6 +35,15 @@ REQUIRED_RESULT_TEXT = (
 )
 AFFILIATE_HOST = "www.books.com.tw"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
+GUMROAD_HOST = "lunayogamusic.gumroad.com"
+EXPECTED_LUNA_PRODUCTS = {
+    "healing-vibes-starter",
+    "sleep-deep-rest",
+    "morning-awakening",
+    "stress-relief-yin",
+    "feminine-healing",
+    "luna-flow-sessions",
+}
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 
@@ -51,11 +60,14 @@ class ScriptAndIdParser(HTMLParser):
         super().__init__()
         self.scripts: list[str] = []
         self.ids: set[str] = set()
+        self.links: list[dict[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
         if tag == "script" and data.get("src"):
             self.scripts.append(data["src"])
+        if tag == "a" and data.get("href"):
+            self.links.append(data)
         if data.get("id"):
             self.ids.add(data["id"])
 
@@ -135,6 +147,25 @@ def is_supply_request(value: str) -> bool:
     if parsed.scheme != "mailto" or parsed.path != "contact@lovetypes.tw":
         return False
     return "subject=" in parsed.query and "body=" in parsed.query
+
+
+def is_gumroad_product_link(link: dict[str, str]) -> bool:
+    href = link.get("href", "")
+    parsed = urlparse(href)
+    product_slug = link.get("data-luna-product", "")
+    if parsed.scheme != "https" or parsed.netloc != GUMROAD_HOST:
+        return False
+    if product_slug not in EXPECTED_LUNA_PRODUCTS:
+        return False
+    query = parse_qs(parsed.query)
+    return (
+        query.get("utm_source", [""])[0] == "lovetypes"
+        and query.get("utm_medium", [""])[0] == "luna-page"
+        and query.get("utm_campaign", [""])[0] == "luna_gumroad_offer"
+        and query.get("utm_content", [""])[0] == product_slug
+        and link.get("data-funnel-event") == "luna_gumroad_pack_click"
+        and "sponsored" in link.get("rel", "").split()
+    )
 
 
 def validate_target(base_url: str, source: str, value: str, cache: dict[str, tuple[int, set[str]]]) -> list[str]:
@@ -244,6 +275,63 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
     return issues, stats
 
 
+def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
+    issues: list[str] = []
+    stats = {
+        "luna_pages": 0,
+        "luna_product_links": 0,
+        "luna_product_slugs": 0,
+        "funnel_revenue_events": 0,
+    }
+    seen_product_slugs: set[str] = set()
+    for lang in LANG_PATHS:
+        prefix = "" if lang == "zh" else f"/{lang}"
+        path = f"{prefix}/luna-yoga-music/" if prefix else "/luna-yoga-music/"
+        response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+        if response.status != 200:
+            issues.append(f"{path}: expected status 200, got {response.status}")
+            continue
+        stats["luna_pages"] += 1
+        parser = parse_html(response.text)
+        product_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_gumroad_pack_click"]
+        if len(product_links) != len(EXPECTED_LUNA_PRODUCTS):
+            issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} Luna product links, got {len(product_links)}")
+        page_slugs = {link.get("data-luna-product", "") for link in product_links}
+        missing_slugs = sorted(EXPECTED_LUNA_PRODUCTS.difference(page_slugs))
+        if missing_slugs:
+            issues.append(f"{path}: missing Luna product slugs {', '.join(missing_slugs)}")
+        for link in product_links:
+            product_slug = link.get("data-luna-product", "")
+            if not is_gumroad_product_link(link):
+                issues.append(f"{path}: invalid Gumroad product revenue link for {product_slug or '<missing>'}: {link.get('href', '')}")
+                continue
+            seen_product_slugs.add(product_slug)
+            stats["luna_product_links"] += 1
+    stats["luna_product_slugs"] = len(seen_product_slugs)
+
+    funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
+    if funnel_response.status != 200:
+        issues.append(f"/funnel-events.json: expected status 200, got {funnel_response.status}")
+    else:
+        try:
+            funnel_data = json.loads(funnel_response.text)
+        except json.JSONDecodeError as error:
+            issues.append(f"/funnel-events.json: invalid JSON: {error}")
+        else:
+            events = {event.get("name"): event for event in funnel_data.get("events", []) if isinstance(event, dict)}
+            gumroad_event = events.get("luna_gumroad_pack_click", {})
+            if gumroad_event.get("role") != "revenue":
+                issues.append("/funnel-events.json: luna_gumroad_pack_click should be revenue")
+            elif gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
+                issues.append(
+                    "/funnel-events.json: luna_gumroad_pack_click count should match product links "
+                    f"{len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS)}, got {gumroad_event.get('count')}"
+                )
+            else:
+                stats["funnel_revenue_events"] += 1
+    return issues, stats
+
+
 def run(base_url: str) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     stats = {
@@ -256,6 +344,10 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         "affiliate_links_checked": 0,
         "starter_kits_checked": 0,
         "supply_product_packs_checked": 0,
+        "luna_pages_checked": 0,
+        "luna_product_links_checked": 0,
+        "luna_product_slugs_checked": 0,
+        "funnel_revenue_events_checked": 0,
     }
     target_cache: dict[str, tuple[int, set[str]]] = {}
     for lang, path in LANG_PATHS.items():
@@ -285,6 +377,12 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
             stats["affiliate_links_checked"] += result_stats["affiliate_links"]
             stats["starter_kits_checked"] += result_stats["starter_kits"]
             stats["supply_product_packs_checked"] += result_stats["supply_product_packs"]
+    luna_issues, luna_stats = validate_luna_products(base_url)
+    issues.extend(luna_issues)
+    stats["luna_pages_checked"] += luna_stats["luna_pages"]
+    stats["luna_product_links_checked"] += luna_stats["luna_product_links"]
+    stats["luna_product_slugs_checked"] += luna_stats["luna_product_slugs"]
+    stats["funnel_revenue_events_checked"] += luna_stats["funnel_revenue_events"]
     return issues, stats
 
 

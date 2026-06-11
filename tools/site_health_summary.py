@@ -376,6 +376,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_luna_guardian_repair_links_checked",
         "public_luna_guardian_supply_links_checked",
         "public_luna_hero_ctas_checked",
+        "public_luna_use_case_ctas_checked",
         "public_luna_offer_ctas_checked",
         "public_luna_resume_templates_checked",
         "public_metadata_pages_checked",

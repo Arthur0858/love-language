@@ -8716,7 +8716,7 @@ def luna_page(lang: str) -> None:
     <h1>{escape(t["luna_title"])}</h1>
     <p class="lead">{escape(luna["headline"])}</p>
     <p>{escape(luna["intro"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer">{escape(offer["listen"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request">{escape(offer["contact"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer" data-funnel-event="luna_hero_listen">{escape(offer["listen"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="luna_hero_resources">{escape(luna["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "contact")}#luna-supply-request" data-funnel-event="luna_hero_contact">{escape(offer["contact"])}</a></div>
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>

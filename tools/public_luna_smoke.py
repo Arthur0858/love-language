@@ -250,11 +250,26 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             else:
                 stats["offer_ctas"] += 1
 
-    hero_hrefs = [link.attrs.get("href", "") for link in find_all(root, tag="a")]
-    for expected in (YOUTUBE_CHANNEL, localized_path(lang, "resources"), localized_path(lang, "guides/repair-after-conflict")):
-        if expected not in hero_hrefs:
-            issues.append(f"{path}: Luna hero missing CTA {expected}")
-        else:
+    hero_section = next((item for item in walk(root) if has_class(item, "luna-hero")), None)
+    if hero_section is None:
+        issues.append(f"{path}: missing Luna hero section")
+    else:
+        hero_links = descendants(hero_section, "a")
+        hero_events = {
+            link.attrs.get("href", ""): link.attrs.get("data-funnel-event", "")
+            for link in hero_links
+        }
+        for expected, event_name in (
+            (YOUTUBE_CHANNEL, "luna_hero_listen"),
+            (localized_path(lang, "resources"), "luna_hero_resources"),
+            (localized_path(lang, "contact") + "#luna-supply-request", "luna_hero_contact"),
+        ):
+            if expected not in hero_events:
+                issues.append(f"{path}: Luna hero missing CTA {expected}")
+                continue
+            if hero_events[expected] != event_name:
+                issues.append(f"{path}: Luna hero CTA {expected} should track {event_name}")
+                continue
             stats["hero_ctas"] += 1
 
     for slug in GUARDIAN_SLUGS:

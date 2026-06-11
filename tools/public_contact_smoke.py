@@ -83,6 +83,8 @@ def main() -> int:
     mailto_bodies_checked = 0
     template_blocks_checked = 0
     template_buttons_checked = 0
+    request_option_cards_checked = 0
+    request_option_texts_checked = 0
     contact_subjects_checked = 0
     anchor_targets_checked = 0
     protected_email_links_checked = 0
@@ -152,6 +154,8 @@ def main() -> int:
                 issues.append(f"{item.path}: missing visible suggested subject {subject}")
         template_blocks = response.text.count("contact-request-template")
         template_buttons = response.text.count(" data-copy-contact-template ")
+        request_option_cards = response.text.count("<div class=\"contact-request-grid\">")
+        request_option_articles = response.text.count("<div class=\"contact-request-grid\"><article>")
         if template_blocks < 2:
             issues.append(f"{item.path}: expected two copyable contact templates, got {template_blocks}")
         else:
@@ -160,6 +164,17 @@ def main() -> int:
             issues.append(f"{item.path}: expected two copy contact template buttons, got {template_buttons}")
         else:
             template_buttons_checked += 2
+        if request_option_cards < 2:
+            issues.append(f"{item.path}: expected request and repair option grids, got {request_option_cards}")
+        if request_option_articles < 2:
+            issues.append(f"{item.path}: expected option article cards in both contact grids")
+        else:
+            request_option_cards_checked += 2
+        for title, body in generator.CONTACT_REQUESTS[item.lang]["items"]:
+            if title not in visible_text or body not in visible_text:
+                issues.append(f"{item.path}: missing visible supply request option {title}")
+            else:
+                request_option_texts_checked += 1
         expected_bodies = {
             generator.CONTACT_REQUESTS[item.lang]["body"],
             generator.CONTACT_REPAIR_REPORTS[item.lang]["body"],
@@ -189,6 +204,8 @@ def main() -> int:
     print(f"public_contact_mailto_bodies_checked={mailto_bodies_checked}")
     print(f"public_contact_template_blocks_checked={template_blocks_checked}")
     print(f"public_contact_template_buttons_checked={template_buttons_checked}")
+    print(f"public_contact_request_option_grids_checked={request_option_cards_checked}")
+    print(f"public_contact_request_option_texts_checked={request_option_texts_checked}")
     print(f"public_contact_protected_email_links_checked={protected_email_links_checked}")
     print(f"public_contact_subjects_checked={contact_subjects_checked}")
     print(f"public_contact_source_routes_checked={source_routes_checked}")

@@ -58,23 +58,23 @@
 <section class="section contact-result-handoff" data-contact-saved hidden aria-live="polite"></section>
 <section class="section contact-request-section" id="luna-supply-request">
   <div class="section-head"><div><p class="eyebrow">BRÚJULA DE PETICIONES</p><h2>Únete a la lista de recursos de guardianas</h2></div></div>
-  <p class="section-intro">Si llegaste desde Luna, recuerdos o una ruta de guardiana, elige una petición antes de escribir. Así sabremos si preparar primero descargas de audio, tarjetas PDF, fondos o rutinas nocturnas.</p>
-  <div class="contact-request-grid"><article><span>1</span><h3>Pack Luna descargable</h3><p>Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir.</p></article><article><span>2</span><h3>Tarjetas PDF</h3><p>Quieres tarjetas imprimibles que unan tu resultado, tarea de guardiana y pregunta de reparación.</p></article><article><span>3</span><h3>Fondo o ritual breve</h3><p>Quieres fondos móviles o una secuencia de 5 a 10 minutos para calmarte, reflexionar o escribir un diario de relación.</p></article></div>
+  <p class="section-intro">Si llegaste desde Luna, recuerdos o una ruta de guardiana, elige una petición antes de escribir. Las tarjetas imprimibles ya son gratuitas; esto nos ayuda a decidir si preparar después audio sin conexión, fondos, rituales breves o packs impresos.</p>
+  <div class="contact-request-grid"><article><span>1</span><h3>Pack Luna descargable</h3><p>Quieres escuchar sin conexión, guardar los audios o usar Luna como ritual estable antes de dormir.</p></article><article><span>2</span><h3>Fondo móvil</h3><p>Quieres llevar tu guardiana en la pantalla de bloqueo como entrada para dormir, calmarte o escribir un diario de relación.</p></article><article><span>3</span><h3>Ritual breve o pack impreso</h3><p>Quieres una secuencia de 5 a 10 minutos o un set impreso coleccionable de las cinco tarjetas de práctica.</p></article></div>
   <div class="contact-request-note">
     <p>Incluye tu guardiana, situación de uso, dispositivo y el formato que guardarías de verdad. LoveTypes no ofrece apoyo de emergencia, consejo médico ni sustituto de terapia.</p>
     <p class="contact-request-subject"><strong>Asunto sugerido</strong><code>Lista de espera de recursos LoveTypes</code></p>
     <div class="contact-request-subject contact-request-template"><strong>Plantilla copiable</strong><code>Mi guardiana:
-Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Recurso que quiero primero: Pack Luna descargable / fondo móvil / ritual breve o pack impreso
 Situación de uso:
 Dispositivo:
 Formato que guardaría de verdad:
 </code><button class="secondary-btn" type="button" data-copy-contact-template data-copy-text="Mi guardiana:
-Recurso que quiero primero: Pack Luna descargable / tarjetas PDF / fondo o ritual breve
+Recurso que quiero primero: Pack Luna descargable / fondo móvil / ritual breve o pack impreso
 Situación de uso:
 Dispositivo:
 Formato que guardaría de verdad:
 ">Copiar plantilla</button></div>
-    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=Lista%20de%20espera%20de%20recursos%20LoveTypes&body=Mi%20guardiana%3A%0ARecurso%20que%20quiero%20primero%3A%20Pack%20Luna%20descargable%20/%20tarjetas%20PDF%20/%20fondo%20o%20ritual%20breve%0ASituaci%C3%B3n%20de%20uso%3A%0ADispositivo%3A%0AFormato%20que%20guardar%C3%ADa%20de%20verdad%3A%0A">Enviar petición de lista</a>
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=Lista%20de%20espera%20de%20recursos%20LoveTypes&body=Mi%20guardiana%3A%0ARecurso%20que%20quiero%20primero%3A%20Pack%20Luna%20descargable%20/%20fondo%20m%C3%B3vil%20/%20ritual%20breve%20o%20pack%20impreso%0ASituaci%C3%B3n%20de%20uso%3A%0ADispositivo%3A%0AFormato%20que%20guardar%C3%ADa%20de%20verdad%3A%0A">Enviar petición de lista</a>
   </div>
 </section>
 <section class="section contact-request-section" id="site-repair-report">
@@ -135,7 +135,7 @@ Captura o notas extra:
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
-  const labels = {"eyebrow": "RESULT HANDOFF", "title": "Enviar una solicitud desde tu último resultado", "intro": "Este dispositivo conserva tu resultado. Puedes llevar la guardiana, ruta y recurso coleccionable a un solo correo.", "subject": "Solicitud de recurso de guardiana LoveTypes", "send": "Enviar solicitud personalizada", "copy": "Copiar solicitud personalizada", "copied": "Solicitud copiada", "route": "Ver ruta", "card": "Abrir tarjeta", "plan": "Volver al plan", "clear": "Borrar resultado", "guardian": "Mi guardiana", "supply": "Ruta de recurso", "mission": "Tarea gratuita", "luna": "Uso de Luna", "keepsake": "Recurso coleccionable que quiero", "context": "Lo usaría en esta situación", "keepsake_hint": "Tarjeta PDF / fondo móvil / ritual de 7 minutos / pack Luna"};
+  const labels = {"eyebrow": "RESULT HANDOFF", "title": "Enviar una solicitud desde tu último resultado", "intro": "Este dispositivo conserva tu resultado. Puedes llevar la guardiana, ruta y recurso coleccionable a un solo correo.", "subject": "Solicitud de recurso de guardiana LoveTypes", "send": "Enviar solicitud personalizada", "copy": "Copiar solicitud personalizada", "copied": "Solicitud copiada", "route": "Ver ruta", "card": "Abrir tarjeta", "plan": "Volver al plan", "clear": "Borrar resultado", "guardian": "Mi guardiana", "supply": "Ruta de recurso", "mission": "Tarea gratuita", "luna": "Uso de Luna", "keepsake": "Recurso coleccionable que quiero", "context": "Lo usaría en esta situación", "keepsake_hint": "Fondo móvil / ritual de 7 minutos / pack Luna / pack impreso"};
   const box = document.querySelector('[data-contact-saved]');
   if (!quiz || !box) return;
   const homePath = new URL(quiz.shareUrl).pathname;

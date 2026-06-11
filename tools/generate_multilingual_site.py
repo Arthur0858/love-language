@@ -2235,6 +2235,13 @@ SUPPLY_DECISION = {
             ("2", "需要整理情緒時用 Luna", "睡前、吵架後或寫關係日記時，用 Luna 幫情緒降噪，不急著購買書卷。"),
             ("3", "需要長期理解再選書卷", "只有在你願意慢慢讀、慢慢練時，才把書當成延伸補給。"),
         ],
+        "matrix_title": "我現在該選哪一種補給？",
+        "matrix": [
+            ("先不要買", "只是想知道下一步，或情緒還很滿。", "做免費任務", "repair-plan"),
+            ("需要夜間降噪", "睡前、吵架後、寫日記時需要先冷卻。", "開啟 Luna", "luna-yoga-music"),
+            ("需要長期練習", "願意慢慢讀、慢慢做，才考慮一本延伸書卷。", "查看書卷", "#affiliate-books"),
+            ("想要自有素材", "想要桌布、Luna 下載包、短儀式或印刷收藏包。", "提出需求", "contact/#luna-supply-request"),
+        ],
     },
     "en": {
         "eyebrow": "SUPPLY COMPASS",
@@ -2244,6 +2251,13 @@ SUPPLY_DECISION = {
             ("1", "Do one free small task", "Choose one action from the quiz result, guardian page, or guide that can be done within 24 hours."),
             ("2", "Use Luna when feelings need sorting", "At night, after conflict, or while journaling, let Luna quiet the noise before buying books."),
             ("3", "Choose a book for longer learning", "Only use a book as extended supply when you are ready to read slowly and practice slowly."),
+        ],
+        "matrix_title": "Which supply should I choose now?",
+        "matrix": [
+            ("Do not buy yet", "You only need the next step, or your emotions are still too loud.", "Use free task", "repair-plan"),
+            ("Need night calm", "You need to cool down before sleep, after conflict, or while journaling.", "Open Luna", "luna-yoga-music"),
+            ("Need long practice", "You are ready to read slowly and practice slowly with one book.", "View books", "#affiliate-books"),
+            ("Want owned assets", "You want wallpapers, Luna downloads, short rituals, or printed packs.", "Send request", "contact/#luna-supply-request"),
         ],
     },
     "ja": {
@@ -2255,6 +2269,13 @@ SUPPLY_DECISION = {
             ("2", "感情整理には Luna を使う", "眠る前、衝突後、関係日記を書く時に Luna で心を静め、本を急いで買わないようにします。"),
             ("3", "長く学びたい時だけ本を選ぶ", "ゆっくり読み、ゆっくり練習する準備がある時だけ、本を延長補給にします。"),
         ],
+        "matrix_title": "今はどの補給を選ぶ？",
+        "matrix": [
+            ("まだ買わない", "次の一歩だけ必要、または感情が大きすぎる時。", "無料課題へ", "repair-plan"),
+            ("夜に静めたい", "就寝前、衝突後、日記を書く前に冷静になりたい時。", "Luna を開く", "luna-yoga-music"),
+            ("長く練習したい", "ゆっくり読み、ゆっくり練習する準備がある時だけ本へ。", "本を見る", "#affiliate-books"),
+            ("自有素材がほしい", "壁紙、Luna ダウンロード、短い儀式、印刷セットがほしい時。", "希望を送る", "contact/#luna-supply-request"),
+        ],
     },
     "ko": {
         "eyebrow": "SUPPLY COMPASS",
@@ -2265,6 +2286,13 @@ SUPPLY_DECISION = {
             ("2", "감정 정리가 필요할 때 Luna 사용", "잠들기 전, 다툼 뒤, 관계 일기를 쓸 때 Luna로 감정을 낮추고 책 구매를 서두르지 않습니다."),
             ("3", "장기 이해가 필요할 때 책 선택", "천천히 읽고 천천히 연습할 준비가 되었을 때만 책을 확장 보급으로 사용합니다."),
         ],
+        "matrix_title": "지금 어떤 보급을 고를까요?",
+        "matrix": [
+            ("아직 사지 않기", "다음 단계만 필요하거나 감정이 아직 큰 상태입니다.", "무료 과제 하기", "repair-plan"),
+            ("밤에 낮추기", "잠들기 전, 다툼 뒤, 일기 전에 먼저 진정이 필요합니다.", "Luna 열기", "luna-yoga-music"),
+            ("길게 연습하기", "천천히 읽고 천천히 연습할 준비가 되었을 때만 책을 봅니다.", "책 보기", "#affiliate-books"),
+            ("자체 자료 원함", "배경화면, Luna 다운로드, 짧은 의식, 인쇄팩을 원합니다.", "요청 보내기", "contact/#luna-supply-request"),
+        ],
     },
     "es": {
         "eyebrow": "SUPPLY COMPASS",
@@ -2274,6 +2302,13 @@ SUPPLY_DECISION = {
             ("1", "Haz una tarea pequeña gratuita", "Elige una acción del resultado, la página de guardiana o una guía que puedas hacer en 24 horas."),
             ("2", "Usa Luna para ordenar emociones", "De noche, después de un conflicto o al escribir diario, deja que Luna calme el ruido antes de comprar libros."),
             ("3", "Elige un libro para aprendizaje largo", "Usa un libro como recurso extendido solo si estás lista para leer y practicar despacio."),
+        ],
+        "matrix_title": "Qué recurso conviene ahora?",
+        "matrix": [
+            ("No comprar todavía", "Solo necesitas el siguiente paso o la emoción sigue muy alta.", "Usar tarea gratis", "repair-plan"),
+            ("Calma nocturna", "Necesitas enfriar antes de dormir, después de un conflicto o al escribir.", "Abrir Luna", "luna-yoga-music"),
+            ("Práctica larga", "Estás lista para leer y practicar despacio con un solo libro.", "Ver libros", "#affiliate-books"),
+            ("Quiero recursos propios", "Quieres fondos, descargas Luna, rituales breves o packs impresos.", "Enviar petición", "contact/#luna-supply-request"),
         ],
     },
 }
@@ -4801,6 +4836,33 @@ def supply_quick_route_nav(lang: str) -> str:
   </div>
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="supply-quick-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+def supply_decision_matrix(lang: str) -> str:
+    decision = SUPPLY_DECISION[lang]
+    cards = []
+    for index, (title, desc, action, target) in enumerate(decision["matrix"], start=1):
+        if target.startswith("#"):
+            href = lang_url(lang, "resources") + target
+        elif "#" in target:
+            route, anchor = target.split("#", 1)
+            href = lang_url(lang, route) + f"#{anchor}"
+        else:
+            href = lang_url(lang, target)
+        cards.append(f"""
+<article class="supply-decision-card" data-supply-decision-card>
+  <span>{index:02d}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <a class="secondary-btn" href="{href}" data-funnel-event="supply_decision_matrix">{escape(action)}</a>
+</article>
+""")
+    return f"""
+<section class="section supply-decision-matrix" data-supply-decision-matrix>
+  <div class="section-head"><div><p class="eyebrow">{escape(decision["eyebrow"])}</p><h2>{escape(decision["matrix_title"])}</h2></div></div>
+  <div class="supply-compass-grid supply-decision-grid">{"".join(cards)}</div>
 </section>
 """
 
@@ -7716,6 +7778,7 @@ def resources_page(lang: str) -> None:
   <p class="section-intro">{escape(decision["intro"])}</p>
   <div class="supply-compass-grid">{decision_steps}</div>
 </section>
+{supply_decision_matrix(lang)}
 {starter_kit_section(lang)}
 <section class="section supply-routes" id="supply-routes">
   <div class="section-head"><div><p class="eyebrow">{escape(supply_labels["eyebrow"])}</p><h2>{escape(supply_labels["title"])}</h2></div></div>
@@ -7729,7 +7792,7 @@ def resources_page(lang: str) -> None:
 {supply_wishlist_section(lang)}
 {collector_section(lang)}
 <section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
-<section class="section affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p><p class="affiliate-link-note">{escape(affiliate_labels["fallback"])}</p></section>
+<section class="section affiliate-books" id="affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p><p class="affiliate-link-note">{escape(affiliate_labels["fallback"])}</p></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 {supply_resume_script(lang)}
 {supply_route_receipt_script(lang)}

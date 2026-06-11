@@ -174,6 +174,9 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
+        "decision_sections": 0,
+        "decision_cards": 0,
+        "decision_links": 0,
     }
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     if response.status != 200:
@@ -191,6 +194,27 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         stats["safety_sections"] += 1
     if "data-supply-owned-signal" not in response.text:
         issues.append(f"{path}: missing owned supply wishlist section")
+    decision_section = next((item for item in walk(root) if item.attrs.get("data-supply-decision-matrix") == ""), None)
+    if decision_section is None:
+        issues.append(f"{path}: missing supply decision matrix")
+    else:
+        stats["decision_sections"] += 1
+        decision_cards = [item for item in descendants(decision_section) if item.attrs.get("data-supply-decision-card") == ""]
+        decision_links = descendants(decision_section, "a")
+        stats["decision_cards"] += len(decision_cards)
+        stats["decision_links"] += len(decision_links)
+        if len(decision_cards) != 4:
+            issues.append(f"{path}: expected four supply decision cards, got {len(decision_cards)}")
+        expected_decision_hrefs = {
+            localized_path(lang, "repair-plan"),
+            localized_path(lang, "luna-yoga-music"),
+            localized_path(lang, "resources") + "#affiliate-books",
+            localized_path(lang, "contact") + "#luna-supply-request",
+        }
+        actual_decision_hrefs = {link.attrs.get("href", "") for link in decision_links}
+        for expected in expected_decision_hrefs:
+            if expected not in actual_decision_hrefs:
+                issues.append(f"{path}: supply decision matrix missing CTA {expected}")
 
     quick_cards = find_all(root, tag="a", class_name="supply-quick-card")
     if len(quick_cards) != len(GUARDIAN_SLUGS):
@@ -352,6 +376,9 @@ def main() -> int:
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
+        "decision_sections": 0,
+        "decision_cards": 0,
+        "decision_links": 0,
     }
     for lang, path in LANG_PATHS.items():
         page_issues, stats = validate_page(base_url, lang, path)
@@ -375,6 +402,9 @@ def main() -> int:
     print(f"public_supply_wishlist_mailtos_checked={totals['wishlist_mailtos']}")
     print(f"public_supply_wishlist_copy_buttons_checked={totals['wishlist_copy_buttons']}")
     print(f"public_supply_safety_sections_checked={totals['safety_sections']}")
+    print(f"public_supply_decision_sections_checked={totals['decision_sections']}")
+    print(f"public_supply_decision_cards_checked={totals['decision_cards']}")
+    print(f"public_supply_decision_links_checked={totals['decision_links']}")
     print(f"public_supply_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

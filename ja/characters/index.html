@@ -72,21 +72,21 @@
       <span>1</span>
       <h3>まだ守護者が分からない</h3>
       <p>まず15問に答え、今ケアが必要な分域を結果で確認します。</p>
-      <a href="/ja/#quiz-section">診断を始める</a>
+      <a href="/ja/#quiz-section" data-funnel-event="guardian_entry_1">診断を始める</a>
     </article>
 
     <article>
       <span>2</span>
       <h3>先に五つの分域を見る</h3>
       <p>五領域の地図を見て、今の必要に近い守護者を選びます。</p>
-      <a href="#guardian-map">地図を見る</a>
+      <a href="#guardian-map" data-funnel-event="guardian_entry_2">地図を見る</a>
     </article>
 
     <article>
       <span>3</span>
       <h3>守護者が分かっている</h3>
       <p>リソースへ進み、ガイド、7日間の修復プラン、Luna の夜の補給へつなげます。</p>
-      <a href="/ja/resources/">リソースへ</a>
+      <a href="/ja/resources/" data-funnel-event="guardian_entry_3">リソースへ</a>
     </article>
 </div>
 </section>
@@ -95,7 +95,7 @@
 <section class="section guardian-need-section" data-guardian-need-router>
   <div class="section-head">
     <div><p class="eyebrow">今の必要から選ぶ</p><h2>今必要なのが……なら</h2></div>
-    <a href="/ja/#quiz-section">認領の儀式を始める</a>
+    <a href="/ja/#quiz-section" data-funnel-event="guardian_need_quiz">認領の儀式を始める</a>
   </div>
   <p class="section-intro">先に五つの愛の言語を覚える必要はありません。今いちばん目立つ欠けから入り、守護者の分域、修復課題、補給ルートへ進みます。</p>
   <div class="guardian-need-grid">
@@ -105,8 +105,8 @@
   <h3>一言でしっかり受け止められたい</h3>
   <p>沈黙で自分の大切さを疑う時は、アイリスの朝光ガラス庭園へ。</p>
   <div>
-    <a href="/ja/characters/iris/">分域へ入る：アイリス</a>
-    <a href="/ja/resources/#supply-iris">補給ルート</a>
+    <a href="/ja/characters/iris/" data-funnel-event="guardian_need_profile">分域へ入る：アイリス</a>
+    <a href="/ja/resources/#supply-iris" data-funnel-event="guardian_need_supply">補給ルート</a>
   </div>
 </article>
 
@@ -116,8 +116,8 @@
   <h3>集中した時間と同席がほしい</h3>
   <p>細切れの時間が孤独に感じる時、ノアの静かな星海図書館が入口になります。</p>
   <div>
-    <a href="/ja/characters/noah/">分域へ入る：ノア</a>
-    <a href="/ja/resources/#supply-noah">補給ルート</a>
+    <a href="/ja/characters/noah/" data-funnel-event="guardian_need_profile">分域へ入る：ノア</a>
+    <a href="/ja/resources/#supply-noah" data-funnel-event="guardian_need_supply">補給ルート</a>
   </div>
 </article>
 
@@ -127,8 +127,8 @@
   <h3>覚えていてくれた証がほしい</h3>
   <p>大切な細部が抜け落ちる時、ヴィヴィアンの月光記憶工房が心意を整理します。</p>
   <div>
-    <a href="/ja/characters/vivian/">分域へ入る：ヴィヴィアン</a>
-    <a href="/ja/resources/#supply-vivian">補給ルート</a>
+    <a href="/ja/characters/vivian/" data-funnel-event="guardian_need_profile">分域へ入る：ヴィヴィアン</a>
+    <a href="/ja/resources/#supply-vivian" data-funnel-event="guardian_need_supply">補給ルート</a>
   </div>
 </article>
 
@@ -138,8 +138,8 @@
   <h3>約束を行動にしてほしい</h3>
   <p>ケアが自分だけに偏る時、クレアの温室修復室が願いを一つの行動へ変えます。</p>
   <div>
-    <a href="/ja/characters/claire/">分域へ入る：クレア</a>
-    <a href="/ja/resources/#supply-claire">補給ルート</a>
+    <a href="/ja/characters/claire/" data-funnel-event="guardian_need_profile">分域へ入る：クレア</a>
+    <a href="/ja/resources/#supply-claire" data-funnel-event="guardian_need_supply">補給ルート</a>
   </div>
 </article>
 
@@ -149,8 +149,8 @@
   <h3>安全な境界の中で近づきたい</h3>
   <p>身体が先にこわばる時、ドラのローズゴールド聖域は同意とリズムから始めます。</p>
   <div>
-    <a href="/ja/characters/dora/">分域へ入る：ドーラ</a>
-    <a href="/ja/resources/#supply-dora">補給ルート</a>
+    <a href="/ja/characters/dora/" data-funnel-event="guardian_need_profile">分域へ入る：ドーラ</a>
+    <a href="/ja/resources/#supply-dora" data-funnel-event="guardian_need_supply">補給ルート</a>
   </div>
 </article>
 </div>
@@ -161,7 +161,7 @@
   <div class="section-head"><div><p class="eyebrow">心語の庭マップ</p><h2>五領域の星図</h2></div><a href="/ja/resources/">リソース</a></div>
   <p class="section-intro">守護者は分類ではなく、入って留まり、練習できる感情の領域です。</p>
   <div class="guardian-grid universe-map-grid">
-<a class="guardian-card" href="/ja/characters/iris/" data-guardian-domain="iris" style="--domain-accent:#943743;--domain-glow:#f0c778">
+<a class="guardian-card" href="/ja/characters/iris/" data-guardian-domain="iris" data-funnel-event="guardian_map_card" style="--domain-accent:#943743;--domain-glow:#f0c778">
   <img src="/assets/lovetypes/guardians/cards/iris-card.webp" alt="アイリス" width="528" height="560" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <span>肯定の言葉</span>
@@ -173,7 +173,7 @@
   </div>
 </a>
 
-<a class="guardian-card" href="/ja/characters/noah/" data-guardian-domain="noah" style="--domain-accent:#50417b;--domain-glow:#b8c7e8">
+<a class="guardian-card" href="/ja/characters/noah/" data-guardian-domain="noah" data-funnel-event="guardian_map_card" style="--domain-accent:#50417b;--domain-glow:#b8c7e8">
   <img src="/assets/lovetypes/guardians/cards/noah-card.webp" alt="ノア" width="560" height="538" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <span>上質な時間</span>
@@ -185,7 +185,7 @@
   </div>
 </a>
 
-<a class="guardian-card" href="/ja/characters/vivian/" data-guardian-domain="vivian" style="--domain-accent:#76501c;--domain-glow:#e9b2a0">
+<a class="guardian-card" href="/ja/characters/vivian/" data-guardian-domain="vivian" data-funnel-event="guardian_map_card" style="--domain-accent:#76501c;--domain-glow:#e9b2a0">
   <img src="/assets/lovetypes/guardians/cards/vivian-card.webp" alt="ヴィヴィアン" width="450" height="560" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <span>贈り物</span>
@@ -197,7 +197,7 @@
   </div>
 </a>
 
-<a class="guardian-card" href="/ja/characters/claire/" data-guardian-domain="claire" style="--domain-accent:#435a43;--domain-glow:#d8c79a">
+<a class="guardian-card" href="/ja/characters/claire/" data-guardian-domain="claire" data-funnel-event="guardian_map_card" style="--domain-accent:#435a43;--domain-glow:#d8c79a">
   <img src="/assets/lovetypes/guardians/cards/claire-card.webp" alt="クレア" width="400" height="560" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <span>奉仕の行動</span>
@@ -209,7 +209,7 @@
   </div>
 </a>
 
-<a class="guardian-card" href="/ja/characters/dora/" data-guardian-domain="dora" style="--domain-accent:#923e4a;--domain-glow:#f0b49c">
+<a class="guardian-card" href="/ja/characters/dora/" data-guardian-domain="dora" data-funnel-event="guardian_map_card" style="--domain-accent:#923e4a;--domain-glow:#f0b49c">
   <img src="/assets/lovetypes/guardians/cards/dora-card.webp" alt="ドーラ" width="409" height="560" loading="lazy" decoding="async" fetchpriority="low" />
   <div>
     <span>身体的なふれあい</span>
@@ -285,13 +285,13 @@
         <p>${intro}</p>
         <p class="resume-domain-line">${result.domainDesc}</p>
         <div class="guardian-resume-actions">
-          <a class="primary-btn" href="${primaryHref}" data-guardian-resume-primary>${primaryLabel}</a>
-          <a class="secondary-btn" href="${result.guardianUrl}" data-guardian-resume-guardian>${quiz.labels.guardian_link}</a>
-          <a class="secondary-btn" href="${result.planUrl}" data-guardian-resume-plan>${quiz.labels.saved_plan}</a>
-          <a class="secondary-btn" href="${result.collectorHallUrl}" data-guardian-resume-keepsake>${quiz.labels.saved_card}</a>
-          <a class="secondary-btn" href="${result.lunaUrl}" data-guardian-resume-luna>${quiz.labels.saved_luna}</a>
-          <a class="secondary-btn" href="${result.contactUrl}" data-guardian-resume-contact>${quiz.labels.saved_contact}</a>
-          <button class="secondary-btn" type="button" data-clear-guardian-result>${quiz.labels.saved_clear}</button>
+          <a class="primary-btn" href="${primaryHref}" data-guardian-resume-primary data-funnel-event="guardian_resume_primary">${primaryLabel}</a>
+          <a class="secondary-btn" href="${result.guardianUrl}" data-guardian-resume-guardian data-funnel-event="guardian_resume_profile">${quiz.labels.guardian_link}</a>
+          <a class="secondary-btn" href="${result.planUrl}" data-guardian-resume-plan data-funnel-event="guardian_resume_plan">${quiz.labels.saved_plan}</a>
+          <a class="secondary-btn" href="${result.collectorHallUrl}" data-guardian-resume-keepsake data-funnel-event="guardian_resume_keepsake">${quiz.labels.saved_card}</a>
+          <a class="secondary-btn" href="${result.lunaUrl}" data-guardian-resume-luna data-funnel-event="guardian_resume_luna">${quiz.labels.saved_luna}</a>
+          <a class="secondary-btn" href="${result.contactUrl}" data-guardian-resume-contact data-funnel-event="guardian_resume_contact">${quiz.labels.saved_contact}</a>
+          <button class="secondary-btn" type="button" data-clear-guardian-result data-funnel-event="guardian_resume_clear">${quiz.labels.saved_clear}</button>
         </div>
       </div>
     </article>`;

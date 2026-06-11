@@ -4810,7 +4810,7 @@ def character_card(lang: str, slug: str, data: dict, current_slug: str = "") -> 
     card_asset = data.get("card_asset", data["asset"])
     guardian_image = img_tag(card_asset, name)
     return f"""
-<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" data-funnel-event="guardian_map_card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {guardian_image}
   <div>
     <span>{escape(typ)}</span>
@@ -4833,7 +4833,7 @@ def character_link_card(lang: str, slug: str, data: dict, current_slug: str = ""
     card_asset = data.get("card_asset", data["asset"])
     guardian_image = img_tag(card_asset, name)
     return f"""
-<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+<a {attrs} href="{lang_url(lang, "characters/" + slug)}" data-guardian-domain="{slug}" data-funnel-event="guardian_nav_card" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {guardian_image}
   <div><span>{escape(typ)}</span><h3>{escape(name)}</h3><p class="domain-title">{escape(domain_title)}</p><small>{escape(domain_cta)}</small></div>
 </a>
@@ -6351,7 +6351,7 @@ def guardian_entry_section(lang: str) -> str:
       <span>{number}</span>
       <h3>{escape(title)}</h3>
       <p>{escape(desc)}</p>
-      <a href="{href}">{escape(action)}</a>
+      <a href="{href}" data-funnel-event="guardian_entry_{number}">{escape(action)}</a>
     </article>
 """)
     return f"""
@@ -6380,8 +6380,8 @@ def guardian_need_router_section(lang: str) -> str:
   <h3>{escape(need)}</h3>
   <p>{escape(body_text)}</p>
   <div>
-    <a href="{lang_url(lang, "characters/" + slug)}">{escape(copy["open"])}：{escape(name)}</a>
-    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(copy["supply"])}</a>
+    <a href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="guardian_need_profile">{escape(copy["open"])}：{escape(name)}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_need_supply">{escape(copy["supply"])}</a>
   </div>
 </article>
 """)
@@ -6389,7 +6389,7 @@ def guardian_need_router_section(lang: str) -> str:
 <section class="section guardian-need-section" data-guardian-need-router>
   <div class="section-head">
     <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div>
-    <a href="{lang_url(lang)}#quiz-section">{escape(LANGS[lang]["start"])}</a>
+    <a href="{lang_url(lang)}#quiz-section" data-funnel-event="guardian_need_quiz">{escape(LANGS[lang]["start"])}</a>
   </div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="guardian-need-grid">{"".join(cards)}</div>
@@ -6468,7 +6468,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
 <section class="section supply-panel-section">
   <div class="section-head">
     <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["deeper_route"])}</h2></div>
-    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(LANGS[lang]["resources"])}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_supply_panel_header">{escape(LANGS[lang]["resources"])}</a>
   </div>
   <p class="section-intro">{escape(route["desc"])}</p>
   <div class="supply-panel-grid">
@@ -6477,10 +6477,10 @@ def character_supply_panel(lang: str, slug: str) -> str:
     <article><span>{escape(labels["repair"])}</span><h3>{escape(labels["practice"])}</h3><p>{escape(route["mission"])}</p></article>
   </div>
   <div class="supply-panel-actions">
-    <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(labels["open_luna"])}</a>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_supply_panel_route">{escape(labels["route"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guardian_supply_panel_guide">{escape(labels["read_guide"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}" data-funnel-event="guardian_supply_panel_luna">{escape(labels["open_luna"])}</a>
+    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="guardian_supply_panel_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
   <p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p>
 </section>
@@ -6500,7 +6500,7 @@ def character_route_snapshot(lang: str, slug: str) -> str:
 <section class="section guardian-route-snapshot">
   <div class="section-head">
     <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["quick_route"])}</h2></div>
-    <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["fit_supply"])}</a>
+    <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_snapshot_header_supply">{escape(labels["fit_supply"])}</a>
   </div>
   <p class="section-intro">{escape(guardian_name)} · {escape(guardian_type)}{intro_joiner}{escape(route["desc"])}</p>
   <div class="guardian-route-grid">
@@ -6508,26 +6508,26 @@ def character_route_snapshot(lang: str, slug: str) -> str:
       <span>{escape(labels["guide"])}</span>
       <h3>{escape(guide_title)}</h3>
       <p>{escape(guide_desc)}</p>
-      <a href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
+      <a href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guardian_snapshot_guide">{escape(labels["read_guide"])}</a>
     </article>
     <article>
       <span>{escape(labels["repair"])}</span>
       <h3>{escape(REPAIR_PLAN[lang]["title"])}</h3>
       <p>{escape(route["mission"])}</p>
-      <a href="{lang_url(lang, "repair-plan")}#plan-{slug}">{escape(REPAIR_PLAN[lang]["title"])}</a>
+      <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_snapshot_repair_plan">{escape(REPAIR_PLAN[lang]["title"])}</a>
     </article>
     <article>
       <span>{escape(labels["supply"])}</span>
       <h3>{escape(book["title"][lang])}</h3>
       <p>{escape(route["supply"])}</p>
-      <a href="{lang_url(lang, "resources")}#supply-{slug}">{escape(labels["route"])}</a>
+      <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_snapshot_supply_route">{escape(labels["route"])}</a>
     </article>
     <article>
       <span>{escape(collector["eyebrow"])}</span>
       <h3>{escape(labels["free_keepsake"])}</h3>
       <p>{escape(collector["share_hint"])}</p>
-      <a href="{lang_url(lang, "keepsakes")}#keepsake-{slug}">{escape(collector["open"])}</a>
-      <a href="{supply_request_href(lang, slug)}">{escape(labels["request_supply"])}</a>
+      <a href="{lang_url(lang, "keepsakes")}#keepsake-{slug}" data-funnel-event="guardian_snapshot_keepsake">{escape(collector["open"])}</a>
+      <a href="{supply_request_href(lang, slug)}" data-funnel-event="guardian_snapshot_supply_request">{escape(labels["request_supply"])}</a>
     </article>
   </div>
 </section>
@@ -7775,13 +7775,13 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
         <p>${{intro}}</p>
         <p class="resume-domain-line">${{result.domainDesc}}</p>
         <div class="guardian-resume-actions">
-          <a class="primary-btn" href="${{primaryHref}}" data-guardian-resume-primary>${{primaryLabel}}</a>
-          <a class="secondary-btn" href="${{result.guardianUrl}}" data-guardian-resume-guardian>${{quiz.labels.guardian_link}}</a>
-          <a class="secondary-btn" href="${{result.planUrl}}" data-guardian-resume-plan>${{quiz.labels.saved_plan}}</a>
-          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-guardian-resume-keepsake>${{quiz.labels.saved_card}}</a>
-          <a class="secondary-btn" href="${{result.lunaUrl}}" data-guardian-resume-luna>${{quiz.labels.saved_luna}}</a>
-          <a class="secondary-btn" href="${{result.contactUrl}}" data-guardian-resume-contact>${{quiz.labels.saved_contact}}</a>
-          <button class="secondary-btn" type="button" data-clear-guardian-result>${{quiz.labels.saved_clear}}</button>
+          <a class="primary-btn" href="${{primaryHref}}" data-guardian-resume-primary data-funnel-event="guardian_resume_primary">${{primaryLabel}}</a>
+          <a class="secondary-btn" href="${{result.guardianUrl}}" data-guardian-resume-guardian data-funnel-event="guardian_resume_profile">${{quiz.labels.guardian_link}}</a>
+          <a class="secondary-btn" href="${{result.planUrl}}" data-guardian-resume-plan data-funnel-event="guardian_resume_plan">${{quiz.labels.saved_plan}}</a>
+          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-guardian-resume-keepsake data-funnel-event="guardian_resume_keepsake">${{quiz.labels.saved_card}}</a>
+          <a class="secondary-btn" href="${{result.lunaUrl}}" data-guardian-resume-luna data-funnel-event="guardian_resume_luna">${{quiz.labels.saved_luna}}</a>
+          <a class="secondary-btn" href="${{result.contactUrl}}" data-guardian-resume-contact data-funnel-event="guardian_resume_contact">${{quiz.labels.saved_contact}}</a>
+          <button class="secondary-btn" type="button" data-clear-guardian-result data-funnel-event="guardian_resume_clear">${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
     </article>`;
@@ -8112,7 +8112,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     body = f"""
 <section class="guardian-hero guardian-domain-hero" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
-  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p class="domain-title">{escape(domain_title)}</p><p>{escape(desc)}</p><p>{escape(domain_desc)}</p><div class="hero-actions"><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div></div>
+  <div><p class="eyebrow">{escape(typ)}</p><h1>{escape(name)}</h1><p class="domain-title">{escape(domain_title)}</p><p>{escape(desc)}</p><p>{escape(domain_desc)}</p><div class="hero-actions" data-guardian-hero-actions><a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_hero_supply_route">{escape(SUPPLY_LABELS[lang]["route"])}</a><a class="secondary-btn" href="{lang_url(lang)}#quiz-section" data-funnel-event="guardian_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="guardian_hero_overview">{escape(t["guardians"])}</a></div></div>
   {img_tag(data["asset"], name, lazy=False, priority=True)}
 </section>
 <section class="section guardian-result-resume" data-guardian-saved hidden aria-live="polite"></section>

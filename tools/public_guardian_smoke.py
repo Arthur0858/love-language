@@ -133,7 +133,15 @@ def hrefs_under(element: Element) -> list[str]:
 def validate_overview(base_url: str, lang: str) -> tuple[list[str], dict[str, int]]:
     path = localized_path(lang, "characters")
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
-    stats = {"overview_pages": 0, "overview_map_cards": 0, "overview_need_cards": 0, "overview_entry_actions": 0}
+    stats = {
+        "overview_pages": 0,
+        "overview_map_cards": 0,
+        "overview_map_events": 0,
+        "overview_need_cards": 0,
+        "overview_need_events": 0,
+        "overview_entry_actions": 0,
+        "overview_entry_events": 0,
+    }
     issues: list[str] = []
     if response.status != 200:
         return [f"{path}: expected status 200, got {response.status}"], stats
@@ -152,8 +160,13 @@ def validate_overview(base_url: str, lang: str) -> tuple[list[str], dict[str, in
             issues.append(f"{path}: expected five universe guardian cards, got {len(cards)}")
         for slug in GUARDIAN_SLUGS:
             expected = localized_path(lang, f"characters/{slug}")
-            if expected not in [card.attrs.get("href", "") for card in cards]:
+            card = next((item for item in cards if item.attrs.get("data-guardian-domain") == slug), None)
+            if card is None or expected not in [item.attrs.get("href", "") for item in cards]:
                 issues.append(f"{path}: universe map missing {slug} link")
+            elif card.attrs.get("data-funnel-event") != "guardian_map_card":
+                issues.append(f"{path}: {slug} universe map card should track guardian_map_card")
+            else:
+                stats["overview_map_events"] += 1
 
     need_cards = find_all(root, tag="article", class_name="guardian-need-card")
     stats["overview_need_cards"] += len(need_cards)
@@ -169,6 +182,13 @@ def validate_overview(base_url: str, lang: str) -> tuple[list[str], dict[str, in
             issues.append(f"{path}: {slug} need router missing character link")
         if localized_path(lang, "resources") + f"#supply-{slug}" not in hrefs:
             issues.append(f"{path}: {slug} need router missing supply link")
+        need_events = {link.attrs.get("data-funnel-event", "") for link in descendants(card, "a")}
+        expected_need_events = {"guardian_need_profile", "guardian_need_supply"}
+        missing_need_events = expected_need_events.difference(need_events)
+        if missing_need_events:
+            issues.append(f"{path}: {slug} need router missing events {', '.join(sorted(missing_need_events))}")
+        else:
+            stats["overview_need_events"] += len(expected_need_events)
 
     entry = find_by_class(root, "guardian-entry-section")
     if entry is None:
@@ -180,6 +200,13 @@ def validate_overview(base_url: str, lang: str) -> tuple[list[str], dict[str, in
                 issues.append(f"{path}: guardian entry missing action {expected}")
             else:
                 stats["overview_entry_actions"] += 1
+        entry_events = {link.attrs.get("data-funnel-event", "") for link in descendants(entry, "a")}
+        expected_entry_events = {"guardian_entry_1", "guardian_entry_2", "guardian_entry_3"}
+        missing_entry_events = expected_entry_events.difference(entry_events)
+        if missing_entry_events:
+            issues.append(f"{path}: guardian entry missing events {', '.join(sorted(missing_entry_events))}")
+        else:
+            stats["overview_entry_events"] += len(expected_entry_events)
     return issues, stats
 
 
@@ -190,7 +217,9 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         "guardian_pages": 0,
         "domain_markers": 0,
         "hero_supply_links": 0,
+        "hero_events": 0,
         "route_snapshots": 0,
+        "route_snapshot_events": 0,
         "guide_links": 0,
         "repair_links": 0,
         "supply_links": 0,
@@ -198,8 +227,11 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
+        "supply_panel_events": 0,
         "nav_cards": 0,
+        "nav_events": 0,
         "resume_templates": 0,
+        "resume_events": 0,
     }
     issues: list[str] = []
     if response.status != 200:
@@ -222,6 +254,13 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
             issues.append(f"{path}: hero missing quiz action")
         if localized_path(lang, "characters") not in hrefs:
             issues.append(f"{path}: hero missing guardians overview action")
+        hero_events = {link.attrs.get("data-funnel-event", "") for link in descendants(hero, "a")}
+        expected_hero_events = {"guardian_hero_supply_route", "guardian_hero_quiz", "guardian_hero_overview"}
+        missing_hero_events = expected_hero_events.difference(hero_events)
+        if missing_hero_events:
+            issues.append(f"{path}: hero missing events {', '.join(sorted(missing_hero_events))}")
+        else:
+            stats["hero_events"] += len(expected_hero_events)
 
     if "data-domain-marker" not in response.text:
         issues.append(f"{path}: missing guardian domain marker")
@@ -231,6 +270,23 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         issues.append(f"{path}: missing saved guardian resume template")
     else:
         stats["resume_templates"] += 1
+        expected_resume_events = {
+            "guardian_resume_primary",
+            "guardian_resume_profile",
+            "guardian_resume_plan",
+            "guardian_resume_keepsake",
+            "guardian_resume_luna",
+            "guardian_resume_contact",
+            "guardian_resume_clear",
+        }
+        missing_resume_events = [
+            event for event in sorted(expected_resume_events)
+            if f'data-funnel-event="{event}"' not in response.text
+        ]
+        if missing_resume_events:
+            issues.append(f"{path}: guardian resume template missing events {', '.join(missing_resume_events)}")
+        else:
+            stats["resume_events"] += len(expected_resume_events)
 
     snapshot = find_by_class(root, "guardian-route-snapshot")
     if snapshot is None:
@@ -238,6 +294,20 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
     else:
         stats["route_snapshots"] += 1
         hrefs = hrefs_under(snapshot)
+        snapshot_events = {link.attrs.get("data-funnel-event", "") for link in descendants(snapshot, "a")}
+        expected_snapshot_events = {
+            "guardian_snapshot_header_supply",
+            "guardian_snapshot_guide",
+            "guardian_snapshot_repair_plan",
+            "guardian_snapshot_supply_route",
+            "guardian_snapshot_keepsake",
+            "guardian_snapshot_supply_request",
+        }
+        missing_snapshot_events = expected_snapshot_events.difference(snapshot_events)
+        if missing_snapshot_events:
+            issues.append(f"{path}: route snapshot missing events {', '.join(sorted(missing_snapshot_events))}")
+        else:
+            stats["route_snapshot_events"] += len(expected_snapshot_events)
         expected_guide = localized_path(lang, TYPE_GUIDE_ROUTES[slug])
         expected_repair = localized_path(lang, "repair-plan") + f"#plan-{slug}"
         expected_supply = localized_path(lang, "resources") + f"#supply-{slug}"
@@ -258,10 +328,13 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
             stats["keepsake_links"] += 1
         else:
             issues.append(f"{path}: route snapshot missing keepsake link")
-        request_links = [href for href in hrefs if href.startswith("mailto:contact@lovetypes.tw")]
+        request_links = [
+            href for href in hrefs
+            if href.startswith("mailto:contact@lovetypes.tw") or href.startswith("/cdn-cgi/l/email-protection")
+        ]
         if len(request_links) != 1:
-            issues.append(f"{path}: route snapshot should include one supply request mailto, got {len(request_links)}")
-        elif "subject=" not in request_links[0] or "body=" not in request_links[0]:
+            issues.append(f"{path}: route snapshot should include one supply request mailto or protected email link, got {len(request_links)}")
+        elif request_links[0].startswith("mailto:") and ("subject=" not in request_links[0] or "body=" not in request_links[0]):
             issues.append(f"{path}: supply request mailto should include subject and body")
         else:
             stats["request_mailtos"] += 1
@@ -271,6 +344,19 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         issues.append(f"{path}: missing guardian supply panel")
     else:
         hrefs = hrefs_under(supply_panel)
+        supply_panel_events = {link.attrs.get("data-funnel-event", "") for link in descendants(supply_panel, "a")}
+        expected_supply_panel_events = {
+            "guardian_supply_panel_header",
+            "guardian_supply_panel_route",
+            "guardian_supply_panel_guide",
+            "guardian_supply_panel_luna",
+            "guardian_supply_panel_affiliate_book",
+        }
+        missing_supply_panel_events = expected_supply_panel_events.difference(supply_panel_events)
+        if missing_supply_panel_events:
+            issues.append(f"{path}: supply panel missing events {', '.join(sorted(missing_supply_panel_events))}")
+        else:
+            stats["supply_panel_events"] += len(expected_supply_panel_events)
         expected_guide = localized_path(lang, TYPE_GUIDE_ROUTES[slug])
         expected_luna = localized_path(lang, "luna-yoga-music") + f"#luna-{slug}"
         expected_supply = localized_path(lang, "resources") + f"#supply-{slug}"
@@ -304,6 +390,11 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         for target_slug in GUARDIAN_SLUGS:
             if localized_path(lang, f"characters/{target_slug}") not in nav_hrefs:
                 issues.append(f"{path}: guardian nav missing {target_slug}")
+        nav_events = [card.attrs.get("data-funnel-event", "") for card in nav_cards]
+        if nav_events.count("guardian_nav_card") != len(GUARDIAN_SLUGS):
+            issues.append(f"{path}: guardian nav cards should track guardian_nav_card")
+        else:
+            stats["nav_events"] += len(GUARDIAN_SLUGS)
     return issues, stats
 
 
@@ -316,12 +407,17 @@ def main() -> int:
     totals = {
         "overview_pages": 0,
         "overview_map_cards": 0,
+        "overview_map_events": 0,
         "overview_need_cards": 0,
+        "overview_need_events": 0,
         "overview_entry_actions": 0,
+        "overview_entry_events": 0,
         "guardian_pages": 0,
         "domain_markers": 0,
         "hero_supply_links": 0,
+        "hero_events": 0,
         "route_snapshots": 0,
+        "route_snapshot_events": 0,
         "guide_links": 0,
         "repair_links": 0,
         "supply_links": 0,
@@ -329,8 +425,11 @@ def main() -> int:
         "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
+        "supply_panel_events": 0,
         "nav_cards": 0,
+        "nav_events": 0,
         "resume_templates": 0,
+        "resume_events": 0,
     }
     for lang in LANG_PREFIXES:
         overview_issues, overview_stats = validate_overview(base_url, lang)
@@ -345,12 +444,17 @@ def main() -> int:
 
     print(f"public_guardian_overview_pages_checked={totals['overview_pages']}")
     print(f"public_guardian_overview_map_cards_checked={totals['overview_map_cards']}")
+    print(f"public_guardian_overview_map_events_checked={totals['overview_map_events']}")
     print(f"public_guardian_overview_need_cards_checked={totals['overview_need_cards']}")
+    print(f"public_guardian_overview_need_events_checked={totals['overview_need_events']}")
     print(f"public_guardian_overview_entry_actions_checked={totals['overview_entry_actions']}")
+    print(f"public_guardian_overview_entry_events_checked={totals['overview_entry_events']}")
     print(f"public_guardian_pages_checked={totals['guardian_pages']}")
     print(f"public_guardian_domain_markers_checked={totals['domain_markers']}")
     print(f"public_guardian_hero_supply_links_checked={totals['hero_supply_links']}")
+    print(f"public_guardian_hero_events_checked={totals['hero_events']}")
     print(f"public_guardian_route_snapshots_checked={totals['route_snapshots']}")
+    print(f"public_guardian_route_snapshot_events_checked={totals['route_snapshot_events']}")
     print(f"public_guardian_guide_links_checked={totals['guide_links']}")
     print(f"public_guardian_repair_links_checked={totals['repair_links']}")
     print(f"public_guardian_supply_links_checked={totals['supply_links']}")
@@ -358,8 +462,11 @@ def main() -> int:
     print(f"public_guardian_request_mailtos_checked={totals['request_mailtos']}")
     print(f"public_guardian_luna_links_checked={totals['luna_links']}")
     print(f"public_guardian_affiliate_links_checked={totals['affiliate_links']}")
+    print(f"public_guardian_supply_panel_events_checked={totals['supply_panel_events']}")
     print(f"public_guardian_nav_cards_checked={totals['nav_cards']}")
+    print(f"public_guardian_nav_events_checked={totals['nav_events']}")
     print(f"public_guardian_resume_templates_checked={totals['resume_templates']}")
+    print(f"public_guardian_resume_events_checked={totals['resume_events']}")
     print(f"public_guardian_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

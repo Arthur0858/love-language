@@ -32,6 +32,14 @@ DESCRIPTION_LENGTH_LIMITS = {
     "en": (50, 170),
     "es": (50, 170),
 }
+EXPECTED_APP_META = {
+    "theme-color": "#7a4d6d",
+    "application-name": "LoveTypes",
+    "apple-mobile-web-app-title": "LoveTypes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "mobile-web-app-capable": "yes",
+}
 IMAGE_SAMPLE_LIMIT = 24
 
 
@@ -209,12 +217,12 @@ def check_jsonld(path: str, parser: MetadataParser) -> tuple[list[str], int]:
     return issues, parsed_count
 
 
-def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[str], MetadataParser, int]:
+def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[str], MetadataParser, int, int]:
     issues: list[str] = []
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     parser = MetadataParser()
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], parser, 0
+        return [f"{path}: expected status 200, got {response.status}"], parser, 0, 0
     parser.feed(response.text)
 
     title = parser.title.strip()
@@ -240,6 +248,17 @@ def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[
     robots_tokens = {token.strip().lower() for token in parser.robots.split(",") if token.strip()}
     if {"index", "follow"}.difference(robots_tokens) or "noindex" in robots_tokens:
         issues.append(f"{path}: robots should include index/follow and not noindex, got {parser.robots!r}")
+
+    app_meta_checked = 0
+    app_meta_mismatches = []
+    for name, expected_value in EXPECTED_APP_META.items():
+        actual_value = parser.meta_name.get(name, "")
+        if actual_value != expected_value:
+            app_meta_mismatches.append(f"{name}={actual_value!r}")
+    if app_meta_mismatches:
+        issues.append(f"{path}: app/PWA meta mismatch {', '.join(app_meta_mismatches)}")
+    else:
+        app_meta_checked = 1
 
     if first(parser.meta_property.get("og:title")) != title:
         issues.append(f"{path}: og:title should match title")
@@ -280,7 +299,7 @@ def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[
 
     jsonld_issues, jsonld_count = check_jsonld(path, parser)
     issues.extend(jsonld_issues)
-    return issues, parser, jsonld_count
+    return issues, parser, jsonld_count, app_meta_checked
 
 
 def check_images(image_urls: list[str], canonical_base_url: str) -> tuple[list[str], int, int]:
@@ -325,15 +344,17 @@ def main() -> int:
     paths, issues = sitemap_paths(base_url)
     pages_checked = 0
     jsonld_blocks_checked = 0
+    app_meta_pages_checked = 0
     social_cards_checked = 0
     hreflang_links_checked = 0
     image_urls: list[str] = []
 
     for path in paths:
-        page_issues, page_parser, jsonld_count = check_page(base_url, canonical_base_url, path)
+        page_issues, page_parser, jsonld_count, app_meta_checked = check_page(base_url, canonical_base_url, path)
         issues.extend(page_issues)
         pages_checked += 1
         jsonld_blocks_checked += jsonld_count
+        app_meta_pages_checked += app_meta_checked
         social_cards_checked += 1 if page_parser.meta_property.get("og:image") else 0
         hreflang_links_checked += len(page_parser.hreflangs)
         og_image = first(page_parser.meta_property.get("og:image"))
@@ -347,6 +368,7 @@ def main() -> int:
     print(f"public_metadata_social_cards_checked={social_cards_checked}")
     print(f"public_metadata_hreflang_links_checked={hreflang_links_checked}")
     print(f"public_metadata_jsonld_blocks_checked={jsonld_blocks_checked}")
+    print(f"public_metadata_app_meta_pages_checked={app_meta_pages_checked}")
     print(f"public_metadata_images_checked={images_checked}")
     print(f"public_metadata_image_dimensions_checked={image_dimensions_checked}")
     print(f"public_metadata_issues={len(issues)}")

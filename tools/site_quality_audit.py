@@ -178,6 +178,14 @@ EXPECTED_MANIFEST_SCREENSHOTS = {
     "/assets/lovetypes/pwa/home-desktop-screenshot.webp": (1440, 900),
     "/assets/lovetypes/pwa/home-mobile-screenshot.webp": (390, 844),
 }
+EXPECTED_APP_META = {
+    "theme-color": "#7a4d6d",
+    "application-name": "LoveTypes",
+    "apple-mobile-web-app-title": "LoveTypes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "mobile-web-app-capable": "yes",
+}
 REQUIRED_GLOBAL_HEADERS = {
     "Cache-Control": "public, max-age=600",
     "X-Content-Type-Options": "nosniff",
@@ -2211,6 +2219,16 @@ def main() -> int:
         if rss_target is None or not rss_target.exists():
             issues.append(f"{page}: RSS target missing: /feed.xml")
 
+        app_meta_missing = []
+        for meta_name, expected_value in EXPECTED_APP_META.items():
+            actual_value = parser.meta_content(meta_name)
+            if actual_value != expected_value:
+                app_meta_missing.append(f"{meta_name}={actual_value!r}")
+        if app_meta_missing:
+            issues.append(f"{page}: app/PWA meta mismatch {', '.join(app_meta_missing)}")
+        else:
+            stats["app_meta_pages"] += 1
+
         canonicals = parser.links_with_rel("canonical")
         canonical_url = canonicals[0].get("href", "") if len(canonicals) == 1 else public_url_for_page(page)
         stats["canonical_links"] += len(canonicals)
@@ -2606,6 +2624,7 @@ def main() -> int:
     print(f"hreflang_links={stats['hreflang_links']}")
     print(f"head_asset_links={stats['head_asset_links']}")
     print(f"rss_head_links={stats['rss_head_links']}")
+    print(f"app_meta_pages={stats['app_meta_pages']}")
     print(f"current_css_asset_refs={stats['current_css_asset_refs']}")
     print(f"current_interaction_asset_refs={stats['current_interaction_asset_refs']}")
     print(f"current_affiliate_asset_refs={stats['current_affiliate_asset_refs']}")

@@ -120,10 +120,33 @@ async function quizStorageCheck(browser) {
   const response = await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await resetBrowserStorage(context, page);
   await completeQuiz(page);
+  await page.evaluate(() => {
+    document.addEventListener('click', (event) => {
+      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
+      if (link) event.preventDefault();
+    }, true);
+  });
+  const productPackLinks = page.locator('[data-quiz-product-pack-link]');
+  const productPackLinkCount = await productPackLinks.count();
+  for (let index = 0; index < productPackLinkCount; index += 1) {
+    await productPackLinks.nth(index).click();
+  }
   const saved = await storageSnapshot(page);
   validateQuietStorage(saved, issues, 'quiz');
   const quizKeys = saved.localKeys.filter((key) => key.startsWith('lovetypes:') && key.includes('quiz-result'));
   if (!quizKeys.length) issues.push('quiz: saved result was not stored with a lovetypes quiz key');
+  if (productPackLinkCount !== 4) issues.push(`quiz: expected 4 product pack links, got ${productPackLinkCount}`);
+  const rawFunnel = saved.entries['lovetypes:funnel-events:v1'];
+  let funnelEvents = [];
+  try {
+    funnelEvents = JSON.parse(rawFunnel || '[]');
+  } catch {
+    issues.push('quiz: funnel events should be JSON');
+  }
+  const eventNames = new Set(Array.isArray(funnelEvents) ? funnelEvents.map((event) => event.name) : []);
+  for (const expected of ['quiz_completed', 'supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact']) {
+    if (!eventNames.has(expected)) issues.push(`quiz: missing local funnel event ${expected}`);
+  }
   const invalidValueKeys = Object.entries(saved.entries).flatMap(([key, value]) => {
     if (!key.startsWith('lovetypes:') || !key.includes('quiz-result')) return [];
     try {

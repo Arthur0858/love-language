@@ -36,13 +36,12 @@
     return '';
   }
 
-  function recordFunnelEvent(element) {
-    var name = funnelEventName(element);
+  function recordFunnelPayload(name, target) {
     if (!name) return;
     var payload = {
       name: name,
       path: window.location.pathname,
-      target: element.getAttribute('href') || element.getAttribute('data-result-action') || '',
+      target: target || '',
       at: new Date().toISOString()
     };
     window.dispatchEvent(new CustomEvent('lovetypes:funnel', { detail: payload }));
@@ -54,6 +53,16 @@
       localStorage.setItem(key, JSON.stringify(events.slice(-40)));
     } catch (error) {}
   }
+
+  function recordFunnelEvent(element) {
+    var name = funnelEventName(element);
+    if (!name) return;
+    recordFunnelPayload(name, element.getAttribute('href') || element.getAttribute('data-result-action') || '');
+  }
+
+  window.lovetypesRecordFunnelEvent = function (name, target) {
+    recordFunnelPayload(name, target || '');
+  };
 
   function hashTarget(hash) {
     if (!hash || hash === '#') return null;

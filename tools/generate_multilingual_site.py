@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-funnel-observe"
+ASSET_VERSION = "20260611-funnel-complete"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -6850,6 +6850,7 @@ def quiz_script(lang: str) -> str:
     try {{
       localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
       localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
+      window.lovetypesRecordFunnelEvent?.('quiz_completed', result.slug);
     }} catch (error) {{}}
     resultBox.innerHTML = `
       <article class="quiz-result-card ritual-reveal-card" data-result-guardian="${{result.slug}}" style="--result-accent:${{result.color}}">
@@ -6925,7 +6926,7 @@ def quiz_script(lang: str) -> str:
               <span>${{item.number}}</span>
               <h4>${{item.title}}</h4>
               <p>${{item.desc}}</p>
-              <a href="${{item.href}}" data-quiz-product-pack-link>${{item.title}}</a>
+              <a href="${{item.href}}" data-quiz-product-pack-link data-funnel-event="${{['supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact'][Number(item.number) - 1] || 'supply_pack_link'}}">${{item.title}}</a>
             </article>
           `).join('')}}
         </div>

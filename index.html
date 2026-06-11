@@ -35,7 +35,7 @@
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
-  <link rel="stylesheet" href="/shared-20260611-funnel-observe.css" />
+  <link rel="stylesheet" href="/shared-20260611-funnel-complete.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">跳到主要內容</a>
@@ -279,7 +279,7 @@
   </div>
 </section>
 
-<script src="/quiz-data-zh-20260611-funnel-observe.js"></script>
+<script src="/quiz-data-zh-20260611-funnel-complete.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -513,6 +513,7 @@
     try {
       localStorage.setItem(storageKey, JSON.stringify({ primaryKey, savedAt: new Date().toISOString() }));
       localStorage.setItem(sharedStorageKey, JSON.stringify({ primaryKey, savedAt: new Date().toISOString() }));
+      window.lovetypesRecordFunnelEvent?.('quiz_completed', result.slug);
     } catch (error) {}
     resultBox.innerHTML = `
       <article class="quiz-result-card ritual-reveal-card" data-result-guardian="${result.slug}" style="--result-accent:${result.color}">
@@ -588,7 +589,7 @@
               <span>${item.number}</span>
               <h4>${item.title}</h4>
               <p>${item.desc}</p>
-              <a href="${item.href}" data-quiz-product-pack-link>${item.title}</a>
+              <a href="${item.href}" data-quiz-product-pack-link data-funnel-event="${['supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact'][Number(item.number) - 1] || 'supply_pack_link'}">${item.title}</a>
             </article>
           `).join('')}
         </div>
@@ -680,7 +681,7 @@
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260611-funnel-observe.js" defer></script>
+<script src="/site-interactions-20260611-funnel-complete.js" defer></script>
 
 </body>
 </html>

@@ -4,7 +4,9 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import re
+import socket
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -112,15 +114,20 @@ class NoRedirectHandler(HTTPRedirectHandler):
 NO_REDIRECT_OPENER = build_opener(NoRedirectHandler)
 
 
-def fetch_head(url: str) -> tuple[int, dict[str, str]]:
-    request = Request(url, method="HEAD", headers={"User-Agent": "LoveTypes public headers smoke"})
-    try:
-        with NO_REDIRECT_OPENER.open(request, timeout=30) as response:
-            return response.status, {key.lower(): value for key, value in response.headers.items()}
-    except HTTPError as error:
-        return error.code, {key.lower(): value for key, value in error.headers.items()}
-    except URLError as error:
-        raise RuntimeError(f"{url}: {error}") from error
+def fetch_head(url: str, attempts: int = 3) -> tuple[int, dict[str, str]]:
+    last_error: BaseException | None = None
+    for attempt in range(1, attempts + 1):
+        request = Request(url, method="HEAD", headers={"User-Agent": "LoveTypes public headers smoke"})
+        try:
+            with NO_REDIRECT_OPENER.open(request, timeout=30) as response:
+                return response.status, {key.lower(): value for key, value in response.headers.items()}
+        except HTTPError as error:
+            return error.code, {key.lower(): value for key, value in error.headers.items()}
+        except (TimeoutError, socket.timeout, URLError, OSError) as error:
+            last_error = error
+            if attempt < attempts:
+                time.sleep(0.75 * attempt)
+    raise RuntimeError(f"{url}: failed after {attempts} attempts: {last_error}") from last_error
 
 
 def check_global_headers(case: HeaderCase, headers: dict[str, str], require_csp: bool) -> tuple[list[str], int]:

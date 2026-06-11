@@ -83,6 +83,7 @@ def main() -> int:
     args = parser.parse_args()
     base_url = normalize_base_url(args.base_url)
     deploy_smoke = load_module("public_deploy_smoke_trust_import", ROOT / "tools" / "public_deploy_smoke.py")
+    generator = load_module("lovetypes_generator_trust_expectations", ROOT / "tools" / "generate_multilingual_site.py")
 
     issues: list[str] = []
     pages_checked = 0
@@ -136,7 +137,7 @@ def main() -> int:
                 issues.append(f"{page.path}: expected 3 policy compass cards, got {compass_count}")
             if detail_count != 3:
                 issues.append(f"{page.path}: expected 3 policy detail cards, got {detail_count}")
-            if page.slug in {"privacy", "terms"} and "2026-06-05" not in response.text:
+            if page.slug in {"privacy", "terms"} and generator.UPDATED not in response.text:
                 issues.append(f"{page.path}: missing updated date")
         elif page.slug == "about":
             if 'data-trust-hero-actions="about"' not in response.text:

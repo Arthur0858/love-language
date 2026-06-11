@@ -84,6 +84,7 @@ REQUIRED_FUNNEL_EVENTS = {
     "quiz_result_luna",
     "quiz_result_contact",
     "supply_route_affiliate_book",
+    "luna_gumroad_pack_click",
     "luna_hero_listen",
     "contact_supply_mailto",
     "free_keepsake_download",
@@ -564,9 +565,13 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
     if data.get("localStorageKey") != "lovetypes:funnel-events:v1":
         issues.append(f"{path}: localStorageKey should match runtime storage key")
     names = {event.get("name") for event in events if isinstance(event, dict)}
+    event_by_name = {event.get("name"): event for event in events if isinstance(event, dict)}
     missing = sorted(REQUIRED_FUNNEL_EVENTS.difference(names))
     if missing:
         issues.append(f"{path}: missing core funnel events {', '.join(missing)}")
+    gumroad_event = event_by_name.get("luna_gumroad_pack_click", {})
+    if gumroad_event.get("role") != "revenue":
+        issues.append(f"{path}: luna_gumroad_pack_click should be a revenue event")
     if len(events) < 50:
         issues.append(f"{path}: expected at least 50 funnel events, got {len(events)}")
     categories = {event.get("category") for event in events if isinstance(event, dict) and event.get("category")}

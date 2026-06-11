@@ -1402,6 +1402,7 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
         "quiz_result_luna",
         "quiz_result_contact",
         "supply_route_affiliate_book",
+        "luna_gumroad_pack_click",
         "luna_hero_listen",
         "contact_supply_mailto",
         "free_keepsake_download",
@@ -1439,6 +1440,8 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
             issues.append(f"{FUNNEL_EVENTS_PATH}: event {name} missing role")
         else:
             roles.add(role)
+        if name == "luna_gumroad_pack_click" and role != "revenue":
+            issues.append(f"{FUNNEL_EVENTS_PATH}: luna_gumroad_pack_click should be a revenue event")
     missing = sorted(required_events.difference(seen))
     if missing:
         issues.append(f"{FUNNEL_EVENTS_PATH}: missing core funnel events: {', '.join(missing)}")

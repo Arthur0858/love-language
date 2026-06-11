@@ -9488,7 +9488,9 @@ def funnel_event_category(name: str) -> str:
 
 
 def funnel_event_role(name: str) -> str:
-    if any(token in name for token in ("affiliate", "book", "listen")):
+    if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product")):
+        return "revenue"
+    if name.startswith(("supply_pack_", "home_saved_pack_")):
         return "revenue"
     if any(token in name for token in ("mailto", "contact", "request", "send")):
         return "lead"

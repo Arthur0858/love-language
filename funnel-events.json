@@ -1886,7 +1886,7 @@
     {
       "name": "luna_gumroad_pack_click",
       "category": "luna",
-      "role": "navigation",
+      "role": "revenue",
       "count": 30,
       "pages": [
         "/en/luna-yoga-music/",
@@ -2615,7 +2615,7 @@
     {
       "name": "supply_product_contact",
       "category": "supply",
-      "role": "lead",
+      "role": "revenue",
       "count": 25,
       "pages": [
         "/en/resources/",
@@ -2629,7 +2629,7 @@
     {
       "name": "supply_product_free_keepsake",
       "category": "supply",
-      "role": "retention",
+      "role": "revenue",
       "count": 25,
       "pages": [
         "/en/resources/",
@@ -2643,7 +2643,7 @@
     {
       "name": "supply_product_luna",
       "category": "supply",
-      "role": "navigation",
+      "role": "revenue",
       "count": 25,
       "pages": [
         "/en/resources/",
@@ -2657,7 +2657,7 @@
     {
       "name": "supply_product_owned_request",
       "category": "supply",
-      "role": "lead",
+      "role": "revenue",
       "count": 25,
       "pages": [
         "/en/resources/",

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -9604,6 +9605,91 @@ def write_funnel_event_catalog() -> None:
     write(ROOT / "funnel-events.json", json.dumps(collect_funnel_events(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_commerce_catalog() -> dict:
+    items: list[dict] = []
+    for slug, guardian in GUARDIANS.items():
+        zh_name, zh_language, _ = guardian["zh"]
+        en_name, en_language, _ = guardian["en"]
+        items.append({
+            "id": f"free-keepsake-{slug}",
+            "type": "free_keepsake",
+            "role": "retention",
+            "guardian": slug,
+            "title": {"zh": f"{zh_name}免費守護者收藏卡", "en": f"{en_name} free guardian keepsake card"},
+            "loveLanguage": {"zh": zh_language, "en": en_language},
+            "url": f"{DOMAIN}/keepsakes/#free-keepsake-{slug}",
+            "price": "free",
+            "conversion": "free_keepsake_download",
+            "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+        })
+        items.append({
+            "id": f"supply-wishlist-{slug}",
+            "type": "owned_supply_waitlist",
+            "role": "lead",
+            "guardian": slug,
+            "title": {"zh": f"{zh_name}補給願望清單", "en": f"{en_name} supply wishlist"},
+            "loveLanguage": {"zh": zh_language, "en": en_language},
+            "url": f"{DOMAIN}/resources/#supply-{slug}",
+            "contact": CONTACT_EMAIL,
+            "conversion": "supply_route_asset_request",
+            "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+        })
+
+    for index, book in enumerate(AFFILIATE_BOOKS, start=1):
+        items.append({
+            "id": f"affiliate-book-{index}",
+            "type": "affiliate_book",
+            "role": "revenue",
+            "guardian": "all",
+            "title": {"zh": book["title"]["zh"], "en": book["title"]["en"]},
+            "author": book["author"],
+            "url": book["url"],
+            "price": "external retailer",
+            "conversion": "supply_route_affiliate_book",
+            "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+        })
+
+    for product in LUNA_GUMROAD_PRODUCTS:
+        items.append({
+            "id": f"luna-{product['slug']}",
+            "type": "luna_gumroad_pack",
+            "role": "revenue",
+            "guardian": "all",
+            "title": {"zh": product["title"], "en": product["title"]},
+            "url": product["url"],
+            "price": product["price"],
+            "conversion": "luna_gumroad_pack_click",
+            "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+        })
+
+    roles = Counter(item["role"] for item in items)
+    types = Counter(item["type"] for item in items)
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "contact": CONTACT_EMAIL,
+        "production": f"{DOMAIN}/",
+        "description": "Machine-readable LoveTypes catalog for free guardian keepsakes, owned supply requests, affiliate books, and Luna Gumroad packs.",
+        "safetyBoundaries": [
+            "Relationship reflection and communication support only.",
+            "No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims.",
+            "Affiliate links and Gumroad purchase links are disclosed as commercial paths.",
+            "Email waitlist requests do not require quiz scores or sensitive personal details.",
+        ],
+        "totals": {
+            "items": len(items),
+            "types": dict(sorted(types.items())),
+            "roles": dict(sorted(roles.items())),
+        },
+        "items": items,
+    }
+
+
+def write_commerce_catalog() -> None:
+    write(ROOT / "commerce-catalog.json", json.dumps(collect_commerce_catalog(), ensure_ascii=False, indent=2) + "\n")
+
+
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
@@ -9703,6 +9789,7 @@ https://:version.lovetypes.pages.dev/*
     write_ads_txt()
     write_redirects()
     write_funnel_event_catalog()
+    write_commerce_catalog()
 
 
 def apply_section_label_localization() -> None:

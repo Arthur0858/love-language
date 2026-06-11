@@ -100,6 +100,13 @@ REQUIRED_FUNNEL_EVENTS = {
     "contact_supply_mailto",
     "free_keepsake_download",
 }
+EXPECTED_COMMERCE_TYPE_COUNTS = {
+    "free_keepsake": 5,
+    "owned_supply_waitlist": 5,
+    "affiliate_book": 4,
+    "luna_gumroad_pack": 6,
+}
+EXPECTED_COMMERCE_ROLE_COUNTS = {"lead": 5, "retention": 5, "revenue": 10}
 
 
 @dataclass(frozen=True)
@@ -604,6 +611,66 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, len(events), len(categories), len(roles)
 
 
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
+    path = "/commerce-catalog.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("contact") != "contact@lovetypes.tw":
+        issues.append(f"{path}: contact should be contact@lovetypes.tw")
+    boundaries = " ".join(str(item) for item in data.get("safetyBoundaries", []))
+    for snippet in ("No therapeutic", "Affiliate links", "Email waitlist", "sensitive personal details"):
+        if snippet not in boundaries:
+            issues.append(f"{path}: missing safety boundary snippet {snippet!r}")
+    items = data.get("items", [])
+    if not isinstance(items, list):
+        return [f"{path}: items should be a list"], 0, 0, 0
+    if len(items) != 20:
+        issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
+    type_counts: dict[str, int] = {}
+    role_counts: dict[str, int] = {}
+    ids: set[str] = set()
+    for item in items:
+        if not isinstance(item, dict):
+            issues.append(f"{path}: item should be an object")
+            continue
+        item_id = item.get("id")
+        if not isinstance(item_id, str) or not item_id:
+            issues.append(f"{path}: item missing id")
+        elif item_id in ids:
+            issues.append(f"{path}: duplicate item id {item_id}")
+        else:
+            ids.add(item_id)
+        item_type = item.get("type")
+        role = item.get("role")
+        if isinstance(item_type, str):
+            type_counts[item_type] = type_counts.get(item_type, 0) + 1
+        if isinstance(role, str):
+            role_counts[role] = role_counts.get(role, 0) + 1
+        if not isinstance(item.get("conversion"), str) or not item["conversion"]:
+            issues.append(f"{path}: {item_id or '<unknown>'} missing conversion")
+        if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
+            issues.append(f"{path}: {item_id or '<unknown>'} missing disclosure")
+    for item_type, expected in EXPECTED_COMMERCE_TYPE_COUNTS.items():
+        if type_counts.get(item_type) != expected:
+            issues.append(f"{path}: expected {expected} {item_type} items, got {type_counts.get(item_type, 0)}")
+    for role, expected in EXPECTED_COMMERCE_ROLE_COUNTS.items():
+        if role_counts.get(role) != expected:
+            issues.append(f"{path}: expected {expected} {role} items, got {role_counts.get(role, 0)}")
+    return issues, len(items), len(type_counts), len(role_counts)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -633,12 +700,14 @@ def main() -> int:
     text_issues, text_files_checked, security_fields_checked, humans_snippets_checked = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
+    commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
     issues.extend(text_issues)
     issues.extend(robots_issues)
     issues.extend(funnel_issues)
+    issues.extend(commerce_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -663,6 +732,9 @@ def main() -> int:
     print(f"public_discovery_funnel_events_checked={funnel_events_checked}")
     print(f"public_discovery_funnel_event_categories_checked={funnel_categories_checked}")
     print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")
+    print(f"public_discovery_commerce_items_checked={commerce_items_checked}")
+    print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
+    print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

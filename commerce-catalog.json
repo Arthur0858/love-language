@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "contact": "contact@lovetypes.tw",
+  "production": "https://lovetypes.tw/",
+  "description": "Machine-readable LoveTypes catalog for free guardian keepsakes, owned supply requests, affiliate books, and Luna Gumroad packs.",
+  "safetyBoundaries": [
+    "Relationship reflection and communication support only.",
+    "No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims.",
+    "Affiliate links and Gumroad purchase links are disclosed as commercial paths.",
+    "Email waitlist requests do not require quiz scores or sensitive personal details."
+  ],
+  "totals": {
+    "items": 20,
+    "types": {
+      "affiliate_book": 4,
+      "free_keepsake": 5,
+      "luna_gumroad_pack": 6,
+      "owned_supply_waitlist": 5
+    },
+    "roles": {
+      "lead": 5,
+      "retention": 5,
+      "revenue": 10
+    }
+  },
+  "items": [
+    {
+      "id": "free-keepsake-iris",
+      "type": "free_keepsake",
+      "role": "retention",
+      "guardian": "iris",
+      "title": {
+        "zh": "艾莉絲免費守護者收藏卡",
+        "en": "Iris free guardian keepsake card"
+      },
+      "loveLanguage": {
+        "zh": "肯定的言詞",
+        "en": "Words of affirmation"
+      },
+      "url": "https://lovetypes.tw/keepsakes/#free-keepsake-iris",
+      "price": "free",
+      "conversion": "free_keepsake_download",
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+    },
+    {
+      "id": "supply-wishlist-iris",
+      "type": "owned_supply_waitlist",
+      "role": "lead",
+      "guardian": "iris",
+      "title": {
+        "zh": "艾莉絲補給願望清單",
+        "en": "Iris supply wishlist"
+      },
+      "loveLanguage": {
+        "zh": "肯定的言詞",
+        "en": "Words of affirmation"
+      },
+      "url": "https://lovetypes.tw/resources/#supply-iris",
+      "contact": "contact@lovetypes.tw",
+      "conversion": "supply_route_asset_request",
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+    },
+    {
+      "id": "free-keepsake-noah",
+      "type": "free_keepsake",
+      "role": "retention",
+      "guardian": "noah",
+      "title": {
+        "zh": "諾雅免費守護者收藏卡",
+        "en": "Noah free guardian keepsake card"
+      },
+      "loveLanguage": {
+        "zh": "優質的時光",
+        "en": "Quality time"
+      },
+      "url": "https://lovetypes.tw/keepsakes/#free-keepsake-noah",
+      "price": "free",
+      "conversion": "free_keepsake_download",
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+    },
+    {
+      "id": "supply-wishlist-noah",
+      "type": "owned_supply_waitlist",
+      "role": "lead",
+      "guardian": "noah",
+      "title": {
+        "zh": "諾雅補給願望清單",
+        "en": "Noah supply wishlist"
+      },
+      "loveLanguage": {
+        "zh": "優質的時光",
+        "en": "Quality time"
+      },
+      "url": "https://lovetypes.tw/resources/#supply-noah",
+      "contact": "contact@lovetypes.tw",
+      "conversion": "supply_route_asset_request",
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+    },
+    {
+      "id": "free-keepsake-vivian",
+      "type": "free_keepsake",
+      "role": "retention",
+      "guardian": "vivian",
+      "title": {
+        "zh": "薇薇安免費守護者收藏卡",
+        "en": "Vivian free guardian keepsake card"
+      },
+      "loveLanguage": {
+        "zh": "接受禮物",
+        "en": "Receiving gifts"
+      },
+      "url": "https://lovetypes.tw/keepsakes/#free-keepsake-vivian",
+      "price": "free",
+      "conversion": "free_keepsake_download",
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+    },
+    {
+      "id": "supply-wishlist-vivian",
+      "type": "owned_supply_waitlist",
+      "role": "lead",
+      "guardian": "vivian",
+      "title": {
+        "zh": "薇薇安補給願望清單",
+        "en": "Vivian supply wishlist"
+      },
+      "loveLanguage": {
+        "zh": "接受禮物",
+        "en": "Receiving gifts"
+      },
+      "url": "https://lovetypes.tw/resources/#supply-vivian",
+      "contact": "contact@lovetypes.tw",
+      "conversion": "supply_route_asset_request",
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+    },
+    {
+      "id": "free-keepsake-claire",
+      "type": "free_keepsake",
+      "role": "retention",
+      "guardian": "claire",
+      "title": {
+        "zh": "克萊兒免費守護者收藏卡",
+        "en": "Claire free guardian keepsake card"
+      },
+      "loveLanguage": {
+        "zh": "服務的行動",
+        "en": "Acts of service"
+      },
+      "url": "https://lovetypes.tw/keepsakes/#free-keepsake-claire",
+      "price": "free",
+      "conversion": "free_keepsake_download",
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+    },
+    {
+      "id": "supply-wishlist-claire",
+      "type": "owned_supply_waitlist",
+      "role": "lead",
+      "guardian": "claire",
+      "title": {
+        "zh": "克萊兒補給願望清單",
+        "en": "Claire supply wishlist"
+      },
+      "loveLanguage": {
+        "zh": "服務的行動",
+        "en": "Acts of service"
+      },
+      "url": "https://lovetypes.tw/resources/#supply-claire",
+      "contact": "contact@lovetypes.tw",
+      "conversion": "supply_route_asset_request",
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+    },
+    {
+      "id": "free-keepsake-dora",
+      "type": "free_keepsake",
+      "role": "retention",
+      "guardian": "dora",
+      "title": {
+        "zh": "朵拉免費守護者收藏卡",
+        "en": "Dora free guardian keepsake card"
+      },
+      "loveLanguage": {
+        "zh": "身體的接觸",
+        "en": "Physical touch"
+      },
+      "url": "https://lovetypes.tw/keepsakes/#free-keepsake-dora",
+      "price": "free",
+      "conversion": "free_keepsake_download",
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+    },
+    {
+      "id": "supply-wishlist-dora",
+      "type": "owned_supply_waitlist",
+      "role": "lead",
+      "guardian": "dora",
+      "title": {
+        "zh": "朵拉補給願望清單",
+        "en": "Dora supply wishlist"
+      },
+      "loveLanguage": {
+        "zh": "身體的接觸",
+        "en": "Physical touch"
+      },
+      "url": "https://lovetypes.tw/resources/#supply-dora",
+      "contact": "contact@lovetypes.tw",
+      "conversion": "supply_route_asset_request",
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+    },
+    {
+      "id": "affiliate-book-1",
+      "type": "affiliate_book",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "愛的五種語言：增訂版",
+        "en": "The 5 Love Languages"
+      },
+      "author": "Gary Chapman",
+      "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+      "price": "external retailer",
+      "conversion": "supply_route_affiliate_book",
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+    },
+    {
+      "id": "affiliate-book-2",
+      "type": "affiliate_book",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "非暴力溝通",
+        "en": "Nonviolent Communication"
+      },
+      "author": "Marshall B. Rosenberg",
+      "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+      "price": "external retailer",
+      "conversion": "supply_route_affiliate_book",
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+    },
+    {
+      "id": "affiliate-book-3",
+      "type": "affiliate_book",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "依附：為什麼我們愛得這麼難",
+        "en": "Attached"
+      },
+      "author": "Amir Levine, Rachel Heller",
+      "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+      "price": "external retailer",
+      "conversion": "supply_route_affiliate_book",
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+    },
+    {
+      "id": "affiliate-book-4",
+      "type": "affiliate_book",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "讓愛長久：七個原則",
+        "en": "The Seven Principles for Making Marriage Work"
+      },
+      "author": "John Gottman",
+      "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+      "price": "external retailer",
+      "conversion": "supply_route_affiliate_book",
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+    },
+    {
+      "id": "luna-healing-vibes-starter",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Healing Vibes Starter Pack",
+        "en": "Healing Vibes Starter Pack"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
+      "price": "US$2.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    },
+    {
+      "id": "luna-sleep-deep-rest",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Sleep & Deep Rest Bundle",
+        "en": "Sleep & Deep Rest Bundle"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/kgrau",
+      "price": "US$4.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    },
+    {
+      "id": "luna-morning-awakening",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Morning Awakening Bundle",
+        "en": "Morning Awakening Bundle"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/morning-awakening-bundle",
+      "price": "US$3.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    },
+    {
+      "id": "luna-stress-relief-yin",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Stress Relief & Yin Yoga",
+        "en": "Stress Relief & Yin Yoga"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/stress-relief-yin-yoga",
+      "price": "US$4.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    },
+    {
+      "id": "luna-feminine-healing",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Feminine Healing",
+        "en": "Feminine Healing"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/feminine-healing-bundle",
+      "price": "US$4.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    },
+    {
+      "id": "luna-luna-flow-sessions",
+      "type": "luna_gumroad_pack",
+      "role": "revenue",
+      "guardian": "all",
+      "title": {
+        "zh": "Luna Flow Sessions",
+        "en": "Luna Flow Sessions"
+      },
+      "url": "https://lunayogamusic.gumroad.com/l/luna-flow-sessions",
+      "price": "US$4.99",
+      "conversion": "luna_gumroad_pack_click",
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+    }
+  ]
+}

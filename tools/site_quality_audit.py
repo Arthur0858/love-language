@@ -145,6 +145,7 @@ LLMS_PATH = ROOT / "llms.txt"
 HUMANS_PATH = ROOT / "humans.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
+COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1532,6 +1533,121 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
     return issues, stats
 
 
+def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not COMMERCE_CATALOG_PATH.exists():
+        return [f"{COMMERCE_CATALOG_PATH}: missing commerce-catalog.json"], stats
+    try:
+        data = json.loads(COMMERCE_CATALOG_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{COMMERCE_CATALOG_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{COMMERCE_CATALOG_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: updated should match generator date")
+    if data.get("contact") != CONTACT_EMAIL:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: contact should be {CONTACT_EMAIL}")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{COMMERCE_CATALOG_PATH}: production should be {DOMAIN}/")
+    boundaries = data.get("safetyBoundaries")
+    if not isinstance(boundaries, list) or len(boundaries) < 4:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: safetyBoundaries should include at least four entries")
+    else:
+        boundary_text = " ".join(str(item) for item in boundaries)
+        for snippet in ("No therapeutic", "Affiliate links", "Email waitlist", "sensitive personal details"):
+            stats["commerce_safety_boundaries_checked"] += 1
+            if snippet not in boundary_text:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: missing safety boundary snippet {snippet!r}")
+
+    items = data.get("items")
+    if not isinstance(items, list) or not items:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: items should be a non-empty list")
+        return issues, stats
+    stats["commerce_catalogs_checked"] = 1
+    stats["commerce_items_checked"] = len(items)
+    if len(items) != 20:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: expected 20 commerce items, got {len(items)}")
+
+    expected_type_counts = {
+        "free_keepsake": 5,
+        "owned_supply_waitlist": 5,
+        "affiliate_book": 4,
+        "luna_gumroad_pack": 6,
+    }
+    expected_role_counts = {"lead": 5, "retention": 5, "revenue": 10}
+    type_counts = Counter()
+    role_counts = Counter()
+    seen_ids: set[str] = set()
+    guardian_slugs = set(GENERATOR_CONFIG.GUARDIANS)
+    for item in items:
+        if not isinstance(item, dict):
+            issues.append(f"{COMMERCE_CATALOG_PATH}: item should be an object")
+            continue
+        item_id = item.get("id")
+        item_type = item.get("type")
+        role = item.get("role")
+        url = item.get("url")
+        if not isinstance(item_id, str) or not item_id:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: item missing id")
+            continue
+        if item_id in seen_ids:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: duplicate item id {item_id}")
+        seen_ids.add(item_id)
+        if item_type not in expected_type_counts:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} unexpected type {item_type!r}")
+        else:
+            type_counts[item_type] += 1
+        if role not in expected_role_counts:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} unexpected role {role!r}")
+        else:
+            role_counts[role] += 1
+        if not isinstance(item.get("title"), dict) or not item["title"].get("zh") or not item["title"].get("en"):
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include zh/en title")
+        if not isinstance(item.get("conversion"), str) or not item["conversion"]:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing conversion")
+        if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing disclosure")
+        if not isinstance(url, str) or not url:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing url")
+            continue
+        parsed = urlparse(url)
+        if item_type in {"free_keepsake", "owned_supply_waitlist"}:
+            if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw":
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should point to lovetypes.tw")
+            target, fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} target missing: {url}")
+            elif fragment and target.suffix == ".html":
+                target_parser = parsers.get(target)
+                if target_parser and fragment not in target_parser.ids:
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} target missing anchor #{fragment}")
+            guardian = item.get("guardian")
+            if guardian not in guardian_slugs:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a valid guardian slug")
+        elif item_type == "affiliate_book":
+            if parsed.netloc != "www.books.com.tw" or "arthur0858" not in url or "utm_campaign=ap-202604" not in url:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a tracked books.com.tw affiliate URL")
+        elif item_type == "luna_gumroad_pack":
+            if parsed.netloc != "lunayogamusic.gumroad.com":
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a Luna Gumroad URL")
+
+    stats["commerce_types_checked"] = len(type_counts)
+    stats["commerce_roles_checked"] = len(role_counts)
+    for item_type, expected in expected_type_counts.items():
+        if type_counts[item_type] != expected:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: expected {expected} {item_type} items, got {type_counts[item_type]}")
+    for role, expected in expected_role_counts.items():
+        if role_counts[role] != expected:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: expected {expected} {role} items, got {role_counts[role]}")
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("items") != len(items):
+        issues.append(f"{COMMERCE_CATALOG_PATH}: totals.items should match item count")
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2699,6 +2815,9 @@ def main() -> int:
     funnel_issues, funnel_stats = parse_funnel_event_catalog()
     issues.extend(funnel_issues)
     stats.update(funnel_stats)
+    commerce_issues, commerce_stats = parse_commerce_catalog(parsers)
+    issues.extend(commerce_issues)
+    stats.update(commerce_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -2836,6 +2955,11 @@ def main() -> int:
     print(f"funnel_events_checked={stats['funnel_events_checked']}")
     print(f"funnel_event_categories_checked={stats['funnel_event_categories_checked']}")
     print(f"funnel_event_roles_checked={stats['funnel_event_roles_checked']}")
+    print(f"commerce_catalogs_checked={stats['commerce_catalogs_checked']}")
+    print(f"commerce_items_checked={stats['commerce_items_checked']}")
+    print(f"commerce_types_checked={stats['commerce_types_checked']}")
+    print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
+    print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

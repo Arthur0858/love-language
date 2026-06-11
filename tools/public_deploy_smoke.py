@@ -274,6 +274,16 @@ SUPPORT_FILES = {
         '"luna_hero_listen"',
         '"contact_supply_mailto"',
     ],
+    "/commerce-catalog.json": [
+        '"schemaVersion": 1',
+        '"contact": "contact@lovetypes.tw"',
+        '"free_keepsake"',
+        '"owned_supply_waitlist"',
+        '"affiliate_book"',
+        '"luna_gumroad_pack"',
+        '"luna_gumroad_pack_click"',
+        '"No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims."',
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

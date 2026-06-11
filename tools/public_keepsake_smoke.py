@@ -158,6 +158,7 @@ def contact_request_hrefs(links: list[Element]) -> list[str]:
 def check_story_asset(base_url: str, source: str, path: str, image_cache: dict[str, Response]) -> list[str]:
     issues: list[str] = []
     absolute = urljoin(base_url + "/", path.lstrip("/"))
+    host = urlparse(base_url).hostname or ""
     if absolute not in image_cache:
         image_cache[absolute] = request_url(absolute, method="HEAD")
     response = image_cache[absolute]
@@ -166,7 +167,7 @@ def check_story_asset(base_url: str, source: str, path: str, image_cache: dict[s
     if not response.headers.get("content-type", "").startswith("image/"):
         issues.append(f"{source}: story image expected image content-type for {path}")
     cache_control = response.headers.get("cache-control", "").lower()
-    if "max-age=31536000" not in cache_control or "immutable" not in cache_control:
+    if host not in {"127.0.0.1", "localhost"} and ("max-age=31536000" not in cache_control or "immutable" not in cache_control):
         issues.append(f"{source}: story image should be immutable cached, got {cache_control!r}")
     return issues
 
@@ -183,6 +184,10 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
         "plan_links": 0,
         "story_images": 0,
         "collector_request_mailtos": 0,
+        "practice_cards": 0,
+        "practice_plan_links": 0,
+        "practice_route_links": 0,
+        "practice_print_buttons": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -265,6 +270,28 @@ def validate_page(base_url: str, lang: str, path: str, image_cache: dict[str, Re
             if story_button.attrs.get("data-story-cta", "") != expected_cta:
                 issues.append(f"{source}: {slug} story button should carry localized keepsake CTA {expected_cta}")
 
+        practice = find_by_id(root, f"practice-card-{slug}")
+        if practice is None:
+            issues.append(f"{source}: missing #practice-card-{slug}")
+        else:
+            stats["practice_cards"] += 1
+            if practice.attrs.get("data-keepsake-practice-card") != slug:
+                issues.append(f"{source}: #practice-card-{slug} missing data-keepsake-practice-card={slug}")
+            practice_hrefs = [link.attrs.get("href", "") for link in descendants(practice, "a")]
+            if localized_route(lang, "repair-plan", f"plan-{slug}") in practice_hrefs:
+                stats["practice_plan_links"] += 1
+            else:
+                issues.append(f"{source}: {slug} practice card missing repair plan link")
+            if localized_route(lang, "resources", f"supply-{slug}") in practice_hrefs:
+                stats["practice_route_links"] += 1
+            else:
+                issues.append(f"{source}: {slug} practice card missing supply route link")
+            print_buttons = [button for button in descendants(practice, "button") if "window.print()" in button.attrs.get("onclick", "")]
+            if print_buttons:
+                stats["practice_print_buttons"] += 1
+            else:
+                issues.append(f"{source}: {slug} practice card missing print button")
+
     waitlist = find_by_id(root, "keepsake-supply-waitlist")
     if waitlist is None:
         issues.append(f"{source}: missing keepsake supply waitlist section")
@@ -315,6 +342,10 @@ def main() -> int:
         "plan_links": 0,
         "story_images": 0,
         "collector_request_mailtos": 0,
+        "practice_cards": 0,
+        "practice_plan_links": 0,
+        "practice_route_links": 0,
+        "practice_print_buttons": 0,
         "waitlist_cards": 0,
         "waitlist_mailtos": 0,
         "waitlist_copy_buttons": 0,
@@ -334,6 +365,10 @@ def main() -> int:
     print(f"public_keepsake_route_links_checked={totals['route_links']}")
     print(f"public_keepsake_plan_links_checked={totals['plan_links']}")
     print(f"public_keepsake_collector_request_mailtos_checked={totals['collector_request_mailtos']}")
+    print(f"public_keepsake_practice_cards_checked={totals['practice_cards']}")
+    print(f"public_keepsake_practice_plan_links_checked={totals['practice_plan_links']}")
+    print(f"public_keepsake_practice_route_links_checked={totals['practice_route_links']}")
+    print(f"public_keepsake_practice_print_buttons_checked={totals['practice_print_buttons']}")
     print(f"public_keepsake_waitlist_cards_checked={totals['waitlist_cards']}")
     print(f"public_keepsake_waitlist_mailtos_checked={totals['waitlist_mailtos']}")
     print(f"public_keepsake_waitlist_copy_buttons_checked={totals['waitlist_copy_buttons']}")

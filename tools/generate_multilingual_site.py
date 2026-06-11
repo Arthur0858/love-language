@@ -2757,9 +2757,17 @@ KEEPSAKES_PAGE = {
             ("未來收藏基底", "桌布、PDF 練習卡與短儀式會優先從這五張免費收藏物延伸。"),
         ],
         "asset_title": "五位守護者免費收藏物",
-        "asset_intro": "每位守護者先提供一張可保存故事卡，並標記未來最適合延伸的桌布、PDF 練習卡與 Luna 補給格式。",
-        "asset_formats": ["故事卡", "手機桌布候補", "PDF 練習卡候補", "Luna 下載包候補"],
+        "asset_intro": "每位守護者先提供一張可保存故事卡與一張可列印練習卡，並標記未來最適合延伸的桌布與 Luna 補給格式。",
+        "asset_formats": ["故事卡", "可列印練習卡", "手機桌布候補", "Luna 下載包候補"],
         "asset_request": "索取這位守護者補給",
+        "practice_title": "五張守護者可列印練習卡",
+        "practice_intro": "把守護者結果整理成一張短卡：看見錯頻傷口、寫下一個修復任務、選一個補給。可列印或直接存成 PDF。",
+        "practice_open": "開啟練習卡",
+        "practice_print": "列印 / 存成 PDF",
+        "practice_wound": "錯頻傷口",
+        "practice_mission": "今日修復任務",
+        "practice_supply": "延伸補給",
+        "practice_blank": "我的一句心語",
         "how_title": "怎麼使用收藏卡",
         "steps": [
             ("保存", "先保存最像你的守護者卡，讓測驗結果不只是一次性的答案。"),
@@ -2784,9 +2792,17 @@ KEEPSAKES_PAGE = {
             ("Future collectible base", "Wallpapers, PDF practice cards, and short rituals will grow from these free keepsakes first."),
         ],
         "asset_title": "Five free guardian keepsakes",
-        "asset_intro": "Each guardian starts with one savable story card and a clear signal for future wallpapers, PDF practice cards, and Luna supply formats.",
-        "asset_formats": ["Story card", "Phone wallpaper candidate", "PDF practice card candidate", "Luna download pack candidate"],
+        "asset_intro": "Each guardian starts with one savable story card, one printable practice card, and a clear signal for future wallpapers and Luna supply formats.",
+        "asset_formats": ["Story card", "Printable practice card", "Phone wallpaper candidate", "Luna download pack candidate"],
         "asset_request": "Request this guardian supply",
+        "practice_title": "Five printable guardian practice cards",
+        "practice_intro": "Turn the guardian result into a short card: name the wound, write one repair task, and choose one supply. Print it or save it as PDF.",
+        "practice_open": "Open practice card",
+        "practice_print": "Print / save PDF",
+        "practice_wound": "Misfrequency wound",
+        "practice_mission": "Today repair task",
+        "practice_supply": "Extended supply",
+        "practice_blank": "My one heart-language line",
         "how_title": "How to use the cards",
         "steps": [
             ("Save", "Keep the guardian card that feels most like you so the result is not a one-time answer."),
@@ -2811,9 +2827,17 @@ KEEPSAKES_PAGE = {
             ("今後の土台", "壁紙、PDF 練習カード、短い儀式はこの無料カードから優先して広げます。"),
         ],
         "asset_title": "五人の守護者の無料コレクション",
-        "asset_intro": "各守護者に保存できるストーリーカードを用意し、今後の壁紙、PDF 練習カード、Luna 補給形式へつなげます。",
-        "asset_formats": ["ストーリーカード", "スマホ壁紙候補", "PDF 練習カード候補", "Luna ダウンロード候補"],
+        "asset_intro": "各守護者に保存できるストーリーカードと印刷できる練習カードを用意し、今後の壁紙と Luna 補給形式へつなげます。",
+        "asset_formats": ["ストーリーカード", "印刷できる練習カード", "スマホ壁紙候補", "Luna ダウンロード候補"],
         "asset_request": "この守護者の補給を希望する",
+        "practice_title": "五人の守護者の印刷できる練習カード",
+        "practice_intro": "守護者の結果を短いカードにします。すれ違いの傷、修復課題、補給を一つずつ書き、印刷または PDF 保存できます。",
+        "practice_open": "練習カードを開く",
+        "practice_print": "印刷 / PDF 保存",
+        "practice_wound": "すれ違いの傷",
+        "practice_mission": "今日の修復課題",
+        "practice_supply": "延長補給",
+        "practice_blank": "私の心語の一文",
         "how_title": "カードの使い方",
         "steps": [
             ("保存", "一番自分に近い守護者カードを保存し、結果を一回きりの答えで終わらせません。"),
@@ -2838,9 +2862,17 @@ KEEPSAKES_PAGE = {
             ("미래 소장 기반", "배경화면, PDF 연습 카드, 짧은 의식은 이 무료 소장물에서 먼저 확장됩니다."),
         ],
         "asset_title": "다섯 수호자 무료 소장물",
-        "asset_intro": "각 수호자마다 저장 가능한 스토리 카드를 먼저 제공하고, 향후 배경화면, PDF 연습 카드, Luna 보급 형식으로 확장합니다.",
-        "asset_formats": ["스토리 카드", "휴대폰 배경화면 후보", "PDF 연습 카드 후보", "Luna 다운로드 후보"],
+        "asset_intro": "각 수호자마다 저장 가능한 스토리 카드와 인쇄용 연습 카드를 제공하고, 향후 배경화면과 Luna 보급 형식으로 확장합니다.",
+        "asset_formats": ["스토리 카드", "인쇄용 연습 카드", "휴대폰 배경화면 후보", "Luna 다운로드 후보"],
         "asset_request": "이 수호자 보급 요청하기",
+        "practice_title": "다섯 수호자 인쇄용 연습 카드",
+        "practice_intro": "수호자 결과를 짧은 카드로 정리합니다. 어긋남 상처, 회복 과제, 보급 하나를 적고 인쇄하거나 PDF로 저장하세요.",
+        "practice_open": "연습 카드 열기",
+        "practice_print": "인쇄 / PDF 저장",
+        "practice_wound": "어긋남 상처",
+        "practice_mission": "오늘의 회복 과제",
+        "practice_supply": "확장 보급",
+        "practice_blank": "나의 마음 언어 한 줄",
         "how_title": "카드 사용법",
         "steps": [
             ("저장", "가장 나다운 수호자 카드를 저장해 결과가 한 번의 답으로 끝나지 않게 합니다."),
@@ -2865,9 +2897,17 @@ KEEPSAKES_PAGE = {
             ("Base coleccionable futura", "Fondos, tarjetas PDF y rituales breves crecerán primero desde estos recuerdos gratis."),
         ],
         "asset_title": "Cinco recuerdos gratis de guardianas",
-        "asset_intro": "Cada guardiana empieza con una tarjeta de historia guardable y una señal clara para futuros fondos, tarjetas PDF y packs Luna.",
-        "asset_formats": ["Tarjeta de historia", "Candidato a fondo móvil", "Candidato a tarjeta PDF", "Candidato a pack Luna"],
+        "asset_intro": "Cada guardiana empieza con una tarjeta de historia guardable, una tarjeta imprimible y una señal clara para futuros fondos y packs Luna.",
+        "asset_formats": ["Tarjeta de historia", "Tarjeta imprimible", "Candidato a fondo móvil", "Candidato a pack Luna"],
         "asset_request": "Pedir recurso de esta guardiana",
+        "practice_title": "Cinco tarjetas imprimibles de guardianas",
+        "practice_intro": "Convierte el resultado en una tarjeta breve: nombra la herida, escribe una tarea de reparación y elige un recurso. Imprímela o guárdala como PDF.",
+        "practice_open": "Abrir tarjeta práctica",
+        "practice_print": "Imprimir / guardar PDF",
+        "practice_wound": "Herida de desajuste",
+        "practice_mission": "Tarea de reparación de hoy",
+        "practice_supply": "Recurso extendido",
+        "practice_blank": "Mi frase de lenguaje del corazón",
         "how_title": "Cómo usar las tarjetas",
         "steps": [
             ("Guardar", "Conserva la tarjeta que más se parece a ti para que el resultado no sea una respuesta de una sola vez."),
@@ -5434,6 +5474,7 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
     <div class="collector-actions">
       <a class="primary-btn" href="{route_href}">{escape(labels["route"])}</a>
       <a class="secondary-btn" href="{plan_href}">{escape(labels["plan"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#practice-card-{slug}">{escape(KEEPSAKES_PAGE[lang]["practice_open"])}</a>
       <a class="secondary-btn" href="{image}" target="_blank" rel="noopener noreferrer">{escape(labels["open"])}</a>
       <a class="secondary-btn" href="{image}" download>{escape(labels["download"])}</a>
       <a class="secondary-btn" href="{supply_request_href(lang, slug)}">{escape(SUPPLY_LABELS[lang]["request_supply"])}</a>
@@ -5712,6 +5753,44 @@ def keepsake_free_asset_section(lang: str) -> str:
 """
 
 
+def keepsake_practice_card_section(lang: str) -> str:
+    labels = KEEPSAKES_PAGE[lang]
+    section_labels = SECTION_LABELS[lang]
+    cards = []
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        route = supply_route(lang, slug)
+        domain = GUARDIAN_DOMAINS[slug]
+        cards.append(f"""
+<article class="collector-card compact" id="practice-card-{slug}" data-keepsake-practice-card="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(guardian["prop"], f"{name} {route['title']}", "domain-prop")}
+  <div>
+    <p class="eyebrow">{escape(typ)}</p>
+    <h3>{escape(name)} · {escape(route["title"])}</h3>
+    <p><strong>{escape(labels["practice_wound"])}</strong><br>{escape(route["wound"])}</p>
+    <p><strong>{escape(labels["practice_mission"])}</strong><br>{escape(route["mission"])}</p>
+    <p><strong>{escape(labels["practice_supply"])}</strong><br>{escape(route["supply"])}</p>
+    <p><strong>{escape(labels["practice_blank"])}</strong><br>______________________________</p>
+    <div class="collector-actions">
+      <a class="primary-btn" href="{lang_url(lang, "repair-plan")}#plan-{slug}">{escape(COLLECTOR_LABELS[lang]["plan"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "resources")}#supply-{slug}">{escape(COLLECTOR_LABELS[lang]["route"])}</a>
+      <button class="secondary-btn" type="button" onclick="window.print()">{escape(labels["practice_print"])}</button>
+    </div>
+  </div>
+</article>
+""")
+    return f"""
+<section class="section keepsake-practice-cards" data-keepsake-practice-cards>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(labels["practice_title"])}</h2></div>
+    <button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(labels["practice_print"])}</button>
+  </div>
+  <p class="section-intro">{escape(labels["practice_intro"])}</p>
+  <div class="collector-grid compact-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
 def keepsake_resume_script(lang: str) -> str:
     request_supply_label = json.dumps(SUPPLY_LABELS[lang]["request_supply"], ensure_ascii=False)
     contact_request_url = json.dumps(lang_url(lang, "contact") + "#luna-supply-request", ensure_ascii=False)
@@ -5769,6 +5848,7 @@ def keepsake_resume_script(lang: str) -> str:
           <a class="secondary-btn" href="${{result.lunaUrl}}" data-keepsake-luna>${{quiz.labels.saved_luna}}</a>
           <a class="secondary-btn" href="${{result.resourceUrl}}" data-keepsake-route>${{quiz.labels.saved_route}}</a>
           <a class="secondary-btn" href="${{result.guardianUrl}}" data-keepsake-guardian>${{quiz.labels.guardian_link}}</a>
+          <a class="secondary-btn" href="#practice-card-${{result.slug}}" data-keepsake-practice>${{quiz.labels.saved_plan}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" target="_blank" rel="noopener noreferrer">${{result.collectorOpen}}</a>
           <a class="secondary-btn" href="${{result.storyImage}}" download>${{result.collectorSave}}</a>
           <button class="secondary-btn" type="button" data-result-action="story" data-story-name="${{result.name}}" data-story-title="${{result.type}}" data-story-quote="${{result.supplyMission}}" data-story-image="${{result.resultImage}}" data-story-slug="${{result.slug}}" data-story-kicker="${{result.collectorStoryKicker}}" data-story-cta="${{result.collectorStoryCta}}" data-story-error="${{result.collectorStoryError}}">${{result.collectorStory}}</button>
@@ -5823,6 +5903,7 @@ def keepsakes_page(lang: str) -> None:
   <div class="supply-panel-grid">{free_cards}</div>
 </section>
 {keepsake_free_asset_section(lang)}
+{keepsake_practice_card_section(lang)}
 {keepsake_shelf_section(lang)}
 {keepsake_ritual_section(lang)}
 {keepsake_waitlist_section(lang)}

@@ -178,13 +178,18 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
     issues: list[str] = []
     stats = {
         "pages": 0,
+        "hero_events": 0,
+        "entry_events": 0,
         "quick_cards": 0,
+        "quick_events": 0,
         "route_cards": 0,
+        "route_action_events": 0,
         "guide_links": 0,
         "luna_links": 0,
         "route_request_mailtos": 0,
         "route_product_stacks": 0,
         "route_product_links": 0,
+        "route_product_events": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -232,6 +237,32 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
                 stats["safety_bridge_links"] += 1
     if "data-supply-owned-signal" not in response.text:
         issues.append(f"{path}: missing owned supply wishlist section")
+    hero_actions = next((item for item in walk(root) if item.attrs.get("data-supply-hero-actions") == ""), None)
+    if hero_actions is None:
+        issues.append(f"{path}: missing supply hero actions")
+    else:
+        expected_hero_events = {"supply_hero_routes", "supply_hero_luna", "supply_hero_quiz"}
+        actual_hero_events = {link.attrs.get("data-funnel-event", "") for link in descendants(hero_actions, "a")}
+        missing_hero_events = expected_hero_events.difference(actual_hero_events)
+        if missing_hero_events:
+            issues.append(f"{path}: supply hero actions missing events {', '.join(sorted(missing_hero_events))}")
+        else:
+            stats["hero_events"] += len(expected_hero_events)
+
+    entry_cards = find_all(root, tag="article", attr="data-supply-entry-card")
+    if len(entry_cards) != 3:
+        issues.append(f"{path}: expected three supply entry cards, got {len(entry_cards)}")
+    for entry_card in entry_cards:
+        link = next((item for item in descendants(entry_card, "a") if "data-supply-entry-link" in item.attrs), None)
+        if link is None:
+            issues.append(f"{path}: supply entry card missing entry link")
+            continue
+        action_key = link.attrs.get("data-supply-entry-link", "").replace("-", "_")
+        expected_event = f"supply_entry_{action_key}"
+        if link.attrs.get("data-funnel-event") != expected_event:
+            issues.append(f"{path}: supply entry {action_key} should track {expected_event}")
+        else:
+            stats["entry_events"] += 1
     decision_section = next((item for item in walk(root) if item.attrs.get("data-supply-decision-matrix") == ""), None)
     if decision_section is None:
         issues.append(f"{path}: missing supply decision matrix")
@@ -265,6 +296,10 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
             stats["quick_cards"] += 1
             if quick.attrs.get("href") != f"#supply-{slug}":
                 issues.append(f"{path}: {slug} quick route should target #supply-{slug}")
+            if quick.attrs.get("data-funnel-event") != "supply_quick_route":
+                issues.append(f"{path}: {slug} quick route should track supply_quick_route")
+            else:
+                stats["quick_events"] += 1
 
         card = find_by_id(root, f"supply-{slug}")
         if card is None:
@@ -276,6 +311,19 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
         links = descendants(card, "a")
         buttons = descendants(card, "button")
         hrefs = [link.attrs.get("href", "") for link in links]
+        route_events = {link.attrs.get("data-funnel-event", "") for link in links}
+        expected_route_events = {
+            "supply_route_guide",
+            "supply_route_luna",
+            "supply_route_free_keepsake",
+            "supply_route_mailto",
+            "supply_route_affiliate_book",
+        }
+        missing_route_events = expected_route_events.difference(route_events)
+        if missing_route_events:
+            issues.append(f"{path}: {slug} route actions missing events {', '.join(sorted(missing_route_events))}")
+        else:
+            stats["route_action_events"] += len(expected_route_events)
 
         expected_guide = localized_path(lang, TYPE_GUIDE_ROUTES[slug])
         if expected_guide in hrefs:
@@ -308,10 +356,22 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
         else:
             stats["route_product_stacks"] += 1
             product_hrefs = [link.attrs.get("href", "") for link in descendants(product_stacks[0], "a")]
+            product_events = {link.attrs.get("data-funnel-event", "") for link in descendants(product_stacks[0], "a")}
             expected_product_targets = (
                 localized_path(lang, "keepsakes") + f"#keepsake-card-{slug}",
                 localized_path(lang, "luna-yoga-music") + f"#luna-{slug}",
             )
+            expected_product_events = {
+                "supply_product_free_keepsake",
+                "supply_product_owned_request",
+                "supply_product_luna",
+                "supply_product_contact",
+            }
+            missing_product_events = expected_product_events.difference(product_events)
+            if missing_product_events:
+                issues.append(f"{path}: {slug} product stack missing events {', '.join(sorted(missing_product_events))}")
+            else:
+                stats["route_product_events"] += len(expected_product_events)
             for expected in expected_product_targets:
                 if expected not in product_hrefs:
                     issues.append(f"{path}: {slug} product stack missing {expected}")
@@ -415,13 +475,18 @@ def main() -> int:
     issues: list[str] = []
     totals = {
         "pages": 0,
+        "hero_events": 0,
+        "entry_events": 0,
         "quick_cards": 0,
+        "quick_events": 0,
         "route_cards": 0,
+        "route_action_events": 0,
         "guide_links": 0,
         "luna_links": 0,
         "route_request_mailtos": 0,
         "route_product_stacks": 0,
         "route_product_links": 0,
+        "route_product_events": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
         "affiliate_book_cards": 0,
@@ -444,13 +509,18 @@ def main() -> int:
             totals[key] += value
 
     print(f"public_supply_pages_checked={totals['pages']}")
+    print(f"public_supply_hero_events_checked={totals['hero_events']}")
+    print(f"public_supply_entry_events_checked={totals['entry_events']}")
     print(f"public_supply_quick_cards_checked={totals['quick_cards']}")
+    print(f"public_supply_quick_events_checked={totals['quick_events']}")
     print(f"public_supply_route_cards_checked={totals['route_cards']}")
+    print(f"public_supply_route_action_events_checked={totals['route_action_events']}")
     print(f"public_supply_guide_links_checked={totals['guide_links']}")
     print(f"public_supply_luna_links_checked={totals['luna_links']}")
     print(f"public_supply_route_request_mailtos_checked={totals['route_request_mailtos']}")
     print(f"public_supply_route_product_stacks_checked={totals['route_product_stacks']}")
     print(f"public_supply_route_product_links_checked={totals['route_product_links']}")
+    print(f"public_supply_route_product_events_checked={totals['route_product_events']}")
     print(f"public_supply_copy_buttons_checked={totals['copy_buttons']}")
     print(f"public_supply_affiliate_links_checked={totals['affiliate_links']}")
     print(f"public_supply_affiliate_book_cards_checked={totals['affiliate_book_cards']}")

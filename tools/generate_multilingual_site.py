@@ -4926,14 +4926,14 @@ def supply_route_card(lang: str, slug: str) -> str:
     summary_json = escape(json.dumps(summary, ensure_ascii=False))
     request_href = supply_request_href(lang, slug)
     product_items = [
-        (product["free"], product["free_desc"], lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}"),
-        (product["owned"], product["owned_desc"], request_href),
-        (product["night"], product["night_desc"], lang_url(lang, "luna-yoga-music") + f"#luna-{slug}"),
-        (product["contact"], product["contact_desc"], lang_url(lang, "contact") + "#luna-supply-request"),
+        (product["free"], product["free_desc"], lang_url(lang, "keepsakes") + f"#keepsake-card-{slug}", "supply_product_free_keepsake"),
+        (product["owned"], product["owned_desc"], request_href, "supply_product_owned_request"),
+        (product["night"], product["night_desc"], lang_url(lang, "luna-yoga-music") + f"#luna-{slug}", "supply_product_luna"),
+        (product["contact"], product["contact_desc"], lang_url(lang, "contact") + "#luna-supply-request", "supply_product_contact"),
     ]
     product_cards = "".join(
-        f'<li><a href="{escape(href)}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a></li>'
-        for title, desc, href in product_items
+        f'<li><a href="{escape(href)}" data-funnel-event="{event_name}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a></li>'
+        for title, desc, href, event_name in product_items
     )
     return f"""
 <article class="supply-route-card" id="supply-{slug}">
@@ -4954,9 +4954,9 @@ def supply_route_card(lang: str, slug: str) -> str:
     </div>
   </div>
   <div class="supply-route-actions">
-    <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}">{escape(labels["read_guide"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}">{escape(labels["open_luna"])}</a>
-    <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}">{escape(labels["free_keepsake"])}</a>
+    <a class="primary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="supply_route_guide">{escape(labels["read_guide"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}" data-funnel-event="supply_route_luna">{escape(labels["open_luna"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}" data-funnel-event="supply_route_free_keepsake">{escape(labels["free_keepsake"])}</a>
     <a class="secondary-btn" href="{request_href}" data-funnel-event="supply_route_mailto">{escape(labels["request_supply"])}</a>
     <button class="secondary-btn" type="button" data-copy-supply-route data-funnel-event="supply_route_copy" data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
     <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="supply_route_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
@@ -4974,7 +4974,7 @@ def supply_quick_route_nav(lang: str) -> str:
         name, typ, _desc = data[lang]
         domain = GUARDIAN_DOMAINS[slug]
         cards.append(f"""
-<a class="supply-quick-card" href="#supply-{slug}" data-guardian-domain="{slug}" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+<a class="supply-quick-card" href="#supply-{slug}" data-guardian-domain="{slug}" data-funnel-event="supply_quick_route" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
   {img_tag(data["prop"], f"{name} {route['title']}", "supply-quick-prop")}
   <span class="eyebrow">{escape(name)} · {escape(typ)}</span>
   <h3>{escape(route["title"])}</h3>
@@ -5038,7 +5038,7 @@ def supply_entry_section(lang: str) -> str:
 <article data-supply-entry-card="{escape(action_key)}">
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
-  <a href="{href}" data-supply-entry-link="{escape(action_key)}" data-default-href="{href}">{escape(action)}</a>
+  <a href="{href}" data-supply-entry-link="{escape(action_key)}" data-default-href="{href}" data-funnel-event="supply_entry_{escape(action_key).replace('-', '_')}">{escape(action)}</a>
 </article>
 """)
     return f"""
@@ -5064,7 +5064,7 @@ def supply_hero_actions(lang: str) -> str:
             action_key = "quiz"
         button_class = "primary-btn" if index == 0 else "secondary-btn"
         actions.append(
-            f'<a class="{button_class}" href="{href}" data-supply-hero-link="{escape(action_key)}">{escape(action)}</a>'
+            f'<a class="{button_class}" href="{href}" data-supply-hero-link="{escape(action_key)}" data-funnel-event="supply_hero_{escape(action_key).replace("-", "_")}">{escape(action)}</a>'
         )
     return f'<div class="hero-actions" data-supply-hero-actions>{"".join(actions)}</div>'
 

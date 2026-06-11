@@ -2,15 +2,19 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
+import sys
 import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, unquote, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
+ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 LANG_PATHS = {
     "zh": "/resources/",
@@ -29,6 +33,17 @@ TYPE_GUIDE_ROUTES = {
 }
 BOOKS_HOST = "www.books.com.tw"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
+
+
+def load_generator_config():
+    generator_path = ROOT / "tools" / "generate_multilingual_site.py"
+    spec = importlib.util.spec_from_file_location("lovetypes_generator_supply_smoke", generator_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot import {generator_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 @dataclass(frozen=True)
@@ -102,6 +117,10 @@ def descendants(element: Element, tag: str | None = None) -> list[Element]:
     return [item for item in items if tag is None or item.tag == tag]
 
 
+def text_content(element: Element) -> str:
+    return " ".join(item.text.strip() for item in walk(element) if item.text.strip())
+
+
 def has_class(element: Element, class_name: str) -> bool:
     return class_name in element.attrs.get("class", "").split()
 
@@ -155,7 +174,7 @@ def validate_summary(source: str, slug: str, value: str) -> list[str]:
     return issues
 
 
-def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[str, int]]:
+def validate_page(base_url: str, lang: str, path: str, expected_formats: list[str]) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     stats = {
         "pages": 0,
@@ -171,6 +190,7 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "affiliate_book_cards": 0,
         "route_tags": 0,
         "wishlist_cards": 0,
+        "wishlist_formats": 0,
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
@@ -346,6 +366,12 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected five owned supply wishlist cards, got {len(wishlist_cards)}")
     for card in wishlist_cards:
         stats["wishlist_cards"] += 1
+        card_text = text_content(card)
+        for expected_format in expected_formats:
+            if expected_format not in card_text:
+                issues.append(f"{path}: wishlist card missing format {expected_format!r}")
+            else:
+                stats["wishlist_formats"] += 1
         contact_links = [
             link
             for link in descendants(card, "a")
@@ -360,12 +386,21 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         query = parse_qs(urlparse(href).query)
         if href.startswith("mailto:") and (not query.get("subject") or not query.get("body")):
             issues.append(f"{path}: wishlist mailto should include subject and body")
+        if href.startswith("mailto:"):
+            body_text = "\n".join(query.get("body", []))
+            for expected_format in expected_formats:
+                if expected_format not in body_text:
+                    issues.append(f"{path}: wishlist mailto body missing format {expected_format!r}")
         copy_buttons = [button for button in descendants(card, "button") if "data-copy-contact-template" in button.attrs]
         if len(copy_buttons) != 1:
             issues.append(f"{path}: wishlist card should include one copy template button")
         elif not copy_buttons[0].attrs.get("data-copy-text"):
             issues.append(f"{path}: wishlist copy template button missing data-copy-text")
         else:
+            copy_text = copy_buttons[0].attrs["data-copy-text"]
+            for expected_format in expected_formats:
+                if expected_format not in copy_text:
+                    issues.append(f"{path}: wishlist copy template missing format {expected_format!r}")
             stats["wishlist_copy_buttons"] += 1
 
     return issues, stats
@@ -376,6 +411,7 @@ def main() -> int:
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
     args = parser.parse_args()
     base_url = normalize_base_url(args.base_url)
+    generator = load_generator_config()
     issues: list[str] = []
     totals = {
         "pages": 0,
@@ -391,6 +427,7 @@ def main() -> int:
         "affiliate_book_cards": 0,
         "route_tags": 0,
         "wishlist_cards": 0,
+        "wishlist_formats": 0,
         "wishlist_mailtos": 0,
         "wishlist_copy_buttons": 0,
         "safety_sections": 0,
@@ -401,7 +438,7 @@ def main() -> int:
         "decision_links": 0,
     }
     for lang, path in LANG_PATHS.items():
-        page_issues, stats = validate_page(base_url, lang, path)
+        page_issues, stats = validate_page(base_url, lang, path, generator.SUPPLY_WISHLIST[lang]["formats"])
         issues.extend(page_issues)
         for key, value in stats.items():
             totals[key] += value
@@ -419,6 +456,7 @@ def main() -> int:
     print(f"public_supply_affiliate_book_cards_checked={totals['affiliate_book_cards']}")
     print(f"public_supply_affiliate_route_tags_checked={totals['route_tags']}")
     print(f"public_supply_wishlist_cards_checked={totals['wishlist_cards']}")
+    print(f"public_supply_wishlist_formats_checked={totals['wishlist_formats']}")
     print(f"public_supply_wishlist_mailtos_checked={totals['wishlist_mailtos']}")
     print(f"public_supply_wishlist_copy_buttons_checked={totals['wishlist_copy_buttons']}")
     print(f"public_supply_safety_sections_checked={totals['safety_sections']}")

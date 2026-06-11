@@ -14,7 +14,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 UPDATED = "2026-06-05"
-ASSET_VERSION = "20260611-funnel-complete"
+ASSET_VERSION = "20260611-supply-pdf"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -2382,9 +2382,9 @@ SUPPLY_WISHLIST = {
     "zh": {
         "eyebrow": "SUPPLY WISHLIST",
         "title": "下一批自有補給，先開哪一道門？",
-        "intro": "如果書卷還不是你現在需要的補給，可以直接選一位守護者，告訴我們你會留下哪種素材。練習卡已在收藏室免費開放；這裡會成為 LoveTypes 下一批桌布、Luna 下載包、短儀式與印刷收藏包的優先訊號。",
+        "intro": "如果書卷還不是你現在需要的補給，可以直接選一位守護者，告訴我們你會留下哪種素材。練習卡已在收藏室免費開放；這裡會成為 LoveTypes 下一批桌布、Luna 下載包、PDF 練習卡、短儀式與印刷收藏包的優先訊號。",
         "format_label": "可做成",
-        "formats": ["手機桌布", "Luna 下載包", "7 分鐘短儀式", "印刷收藏包"],
+        "formats": ["手機桌布", "Luna 下載包", "PDF 練習卡", "7 分鐘短儀式", "印刷收藏包"],
         "request": "投票給這條補給",
         "note": "來信不需要提供測驗分數；寫下守護者、使用情境與你希望帶走的素材即可。LoveTypes 不承諾療效，也不取代諮商。",
         "subject": "LoveTypes 守護者補給願望清單",
@@ -2394,9 +2394,9 @@ SUPPLY_WISHLIST = {
     "en": {
         "eyebrow": "SUPPLY WISHLIST",
         "title": "Which owned supply gate should open next?",
-        "intro": "If a book is not the supply you need right now, choose one guardian and tell us which material you would actually keep. Printable cards are already free in the keepsake hall; this signal helps prioritize future wallpapers, Luna downloads, short rituals, and printed collectible packs.",
+        "intro": "If a book is not the supply you need right now, choose one guardian and tell us which material you would actually keep. Printable cards are already free in the keepsake hall; this signal helps prioritize future wallpapers, Luna downloads, PDF practice cards, short rituals, and printed collectible packs.",
         "format_label": "Could become",
-        "formats": ["Phone wallpaper", "Luna download pack", "7-minute ritual", "Printed collectible pack"],
+        "formats": ["Phone wallpaper", "Luna download pack", "PDF practice card", "7-minute ritual", "Printed collectible pack"],
         "request": "Vote for this supply",
         "note": "You do not need to send quiz scores. Include the guardian, use case, and the material you would actually keep. LoveTypes does not promise outcomes or replace counseling.",
         "subject": "LoveTypes guardian supply wishlist",
@@ -2406,9 +2406,9 @@ SUPPLY_WISHLIST = {
     "ja": {
         "eyebrow": "SUPPLY WISHLIST",
         "title": "次に開く自有補給の扉は？",
-        "intro": "本が今の補給ではない場合、守護者を一人選び、実際に保存したい素材を教えてください。印刷できる練習カードはコレクション室で無料公開済みです。その声は LoveTypes の壁紙、Luna ダウンロード、短い儀式、印刷コレクションの優先順位になります。",
+        "intro": "本が今の補給ではない場合、守護者を一人選び、実際に保存したい素材を教えてください。印刷できる練習カードはコレクション室で無料公開済みです。その声は LoveTypes の壁紙、Luna ダウンロード、PDF 練習カード、短い儀式、印刷コレクションの優先順位になります。",
         "format_label": "制作候補",
-        "formats": ["スマホ壁紙", "Luna ダウンロード", "7分の短い儀式", "印刷コレクション"],
+        "formats": ["スマホ壁紙", "Luna ダウンロード", "PDF 練習カード", "7分の短い儀式", "印刷コレクション"],
         "request": "この補給に投票する",
         "note": "診断スコアは不要です。守護者、使いたい場面、実際に保存したい素材を書いてください。LoveTypes は効果を約束せず、相談支援の代わりにもなりません。",
         "subject": "LoveTypes 守護者補給の希望リスト",
@@ -2418,9 +2418,9 @@ SUPPLY_WISHLIST = {
     "ko": {
         "eyebrow": "SUPPLY WISHLIST",
         "title": "다음 자체 보급 문은 어디를 먼저 열까요?",
-        "intro": "지금 책이 필요한 보급이 아니라면, 수호자 한 명을 고르고 실제로 보관할 자료를 알려 주세요. 인쇄용 연습 카드는 이미 소장실에서 무료로 열려 있습니다. 그 신호가 LoveTypes 배경화면, Luna 다운로드, 짧은 의식, 인쇄 소장팩의 우선순위가 됩니다.",
+        "intro": "지금 책이 필요한 보급이 아니라면, 수호자 한 명을 고르고 실제로 보관할 자료를 알려 주세요. 인쇄용 연습 카드는 이미 소장실에서 무료로 열려 있습니다. 그 신호가 LoveTypes 배경화면, Luna 다운로드, PDF 연습 카드, 짧은 의식, 인쇄 소장팩의 우선순위가 됩니다.",
         "format_label": "제작 후보",
-        "formats": ["휴대폰 배경화면", "Luna 다운로드 팩", "7분 짧은 의식", "인쇄 소장팩"],
+        "formats": ["휴대폰 배경화면", "Luna 다운로드 팩", "PDF 연습 카드", "7분 짧은 의식", "인쇄 소장팩"],
         "request": "이 보급에 투표하기",
         "note": "테스트 점수는 보내지 않아도 됩니다. 수호자, 사용 장면, 실제로 보관하고 싶은 자료를 적어 주세요. LoveTypes는 결과를 약속하거나 상담을 대신하지 않습니다.",
         "subject": "LoveTypes 수호자 보급 희망 목록",
@@ -2430,9 +2430,9 @@ SUPPLY_WISHLIST = {
     "es": {
         "eyebrow": "SUPPLY WISHLIST",
         "title": "Qué puerta de recursos propios debería abrirse después?",
-        "intro": "Si un libro no es el recurso que necesitas ahora, elige una guardiana y dinos qué material guardarías de verdad. Las tarjetas imprimibles ya están gratis en la sala de recuerdos; esta señal ayuda a priorizar futuros fondos, descargas Luna, rituales breves y packs impresos.",
+        "intro": "Si un libro no es el recurso que necesitas ahora, elige una guardiana y dinos qué material guardarías de verdad. Las tarjetas imprimibles ya están gratis en la sala de recuerdos; esta señal ayuda a priorizar futuros fondos, descargas Luna, tarjetas PDF de práctica, rituales breves y packs impresos.",
         "format_label": "Podría ser",
-        "formats": ["Fondo móvil", "Pack Luna", "Ritual de 7 minutos", "Pack impreso"],
+        "formats": ["Fondo móvil", "Pack Luna", "Tarjeta PDF de práctica", "Ritual de 7 minutos", "Pack impreso"],
         "request": "Votar por este recurso",
         "note": "No necesitas enviar puntajes. Incluye la guardiana, el uso y el material que realmente guardarías. LoveTypes no promete resultados ni reemplaza terapia.",
         "subject": "Lista de deseos de recursos de guardiana LoveTypes",
@@ -2448,7 +2448,7 @@ SUPPLY_PRODUCT_STACK = {
         "free": "免費收藏物",
         "free_desc": "先保存守護者卡，讓結果變成可回訪的入口。",
         "owned": "自有素材需求",
-        "owned_desc": "投票給桌布、Luna 下載包、短儀式或印刷包，告訴我們下一批素材優先順序。",
+        "owned_desc": "投票給桌布、Luna 下載包、PDF 練習卡、短儀式或印刷包，告訴我們下一批素材優先順序。",
         "night": "Luna 夜間承接",
         "night_desc": "情緒太滿時先降噪，再回到一個小任務。",
         "contact": "帶著結果寄出需求",
@@ -2460,7 +2460,7 @@ SUPPLY_PRODUCT_STACK = {
         "free": "Free keepsake",
         "free_desc": "Save the guardian card first so the result becomes a route you can revisit.",
         "owned": "Owned asset request",
-        "owned_desc": "Vote for a wallpaper, Luna download, short ritual, or printed pack so we know what to build next.",
+        "owned_desc": "Vote for a wallpaper, Luna download, PDF practice card, short ritual, or printed pack so we know what to build next.",
         "night": "Luna night handoff",
         "night_desc": "Lower the emotional noise first, then return to one small task.",
         "contact": "Send request with result",
@@ -2470,13 +2470,13 @@ SUPPLY_PRODUCT_STACK = {
     "ja": {
         "label": "持ち帰れる補給セット",
         "free": "無料コレクション",
-        "free_desc": "守護者カードを保存し、結果へ戻る入口にします。",
-        "owned": "自有素材の希望",
-        "owned_desc": "壁紙、Luna、短い儀式、印刷セットに投票できます。",
+        "free_desc": "守護者カードを保存し、結果へ戻れます。",
+        "owned": "素材希望",
+        "owned_desc": "壁紙、Luna、PDF、儀式、印刷を希望できます。",
         "night": "Luna 夜の受け皿",
         "night_desc": "感情を下げ、小さな課題へ戻ります。",
         "contact": "結果と一緒に希望を送る",
-        "contact_desc": "守護者、補給ルート、希望素材を一通に入れます。",
+        "contact_desc": "守護者、ルート、希望素材を一通に入れます。",
         "template_note": "メールには守護者、今日の課題、希望素材が入ります。",
     },
     "ko": {
@@ -2484,7 +2484,7 @@ SUPPLY_PRODUCT_STACK = {
         "free": "무료 소장물",
         "free_desc": "먼저 수호자 카드를 저장해 결과를 다시 찾을 수 있는 입구로 만듭니다.",
         "owned": "자체 자료 요청",
-        "owned_desc": "배경화면, Luna 다운로드, 짧은 의식, 인쇄팩 중 무엇을 다음에 만들지 투표합니다.",
+        "owned_desc": "배경화면, Luna 다운로드, PDF 연습 카드, 짧은 의식, 인쇄팩 중 무엇을 다음에 만들지 투표합니다.",
         "night": "Luna 밤 연결",
         "night_desc": "감정의 소음을 낮춘 뒤 작은 과제 하나로 돌아갑니다.",
         "contact": "결과와 함께 요청 보내기",
@@ -2496,7 +2496,7 @@ SUPPLY_PRODUCT_STACK = {
         "free": "Recuerdo gratis",
         "free_desc": "Guarda primero la tarjeta para volver a tu resultado cuando lo necesites.",
         "owned": "Solicitud de recurso propio",
-        "owned_desc": "Vota por fondo, descarga Luna, ritual breve o pack impreso para decidir qué crear después.",
+        "owned_desc": "Vota por fondo, descarga Luna, tarjeta PDF de práctica, ritual breve o pack impreso para decidir qué crear después.",
         "night": "Paso nocturno Luna",
         "night_desc": "Baja el ruido emocional y vuelve a una tarea pequeña.",
         "contact": "Enviar solicitud con resultado",

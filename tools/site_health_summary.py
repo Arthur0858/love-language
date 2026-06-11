@@ -455,6 +455,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_supply_affiliate_book_cards_checked",
         "public_supply_affiliate_route_tags_checked",
         "public_supply_wishlist_cards_checked",
+        "public_supply_wishlist_formats_checked",
         "public_supply_wishlist_mailtos_checked",
         "public_supply_decision_sections_checked",
         "public_supply_decision_cards_checked",

@@ -22,6 +22,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
+    "site-health.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}
 FORBIDDEN_PREFIXES = {

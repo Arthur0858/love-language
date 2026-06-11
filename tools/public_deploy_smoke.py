@@ -308,6 +308,18 @@ SUPPORT_FILES = {
         '"Physical touch"',
         '"profile": "https://lovetypes.tw/characters/iris/"',
     ],
+    "/site-health.json": [
+        '"schemaVersion": 1',
+        '"status": "ready_for_predeploy"',
+        '"indexablePages": 150',
+        '"guardians": 5',
+        '"commerceItems": 20',
+        '"supportFiles": 14',
+        '"localPredeploy"',
+        '"publicDiscovery"',
+        '"publicDeploy"',
+        '"versionedAssets"',
+    ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [

@@ -9816,6 +9816,78 @@ def write_site_index() -> None:
     write(ROOT / "site-index.json", json.dumps(collect_site_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_site_health() -> dict:
+    site_index = collect_site_index()
+    commerce = collect_commerce_catalog()
+    guardians = collect_guardian_profiles()
+    funnel = collect_funnel_events()
+    support_files = [
+        "robots.txt",
+        "sitemap.xml",
+        "feed.xml",
+        "site.webmanifest",
+        "llms.txt",
+        "humans.txt",
+        "security.txt",
+        ".well-known/security.txt",
+        "ads.txt",
+        "funnel-events.json",
+        "commerce-catalog.json",
+        "site-index.json",
+        "guardian-profiles.json",
+        "site-health.json",
+    ]
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "status": "ready_for_predeploy",
+        "description": "Machine-readable LoveTypes generated-site health snapshot for structure, conversion catalogs, guardian universe coverage, and required verification gates.",
+        "coverage": {
+            "indexablePages": site_index["totals"]["pages"],
+            "localizedPaths": site_index["totals"]["paths"],
+            "languages": site_index["totals"]["languages"],
+            "routeGroups": len(site_index["totals"]["groups"]),
+            "coreFlows": len(site_index["coreFlows"]),
+            "guardians": guardians["totals"]["guardians"],
+            "guardianRoutes": sum(len(item["routes"]) for item in guardians["guardians"]),
+            "guardianAssets": sum(len(item["assets"]) for item in guardians["guardians"]),
+            "commerceItems": commerce["totals"]["items"],
+            "commerceTypes": len(commerce["totals"]["types"]),
+            "commerceRoles": len(commerce["totals"]["roles"]),
+            "funnelEvents": funnel["totals"]["events"],
+            "funnelTrackedOccurrences": funnel["totals"]["trackedOccurrences"],
+            "supportFiles": len(support_files),
+        },
+        "requiredGates": {
+            "localPredeploy": "tools/predeploy_check.py must report predeploy_checks=ok and issues=0 before deployment.",
+            "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
+            "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
+            "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment.",
+        },
+        "supportFiles": support_files,
+        "primaryIndexes": {
+            "siteIndex": f"{DOMAIN}/site-index.json",
+            "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+            "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
+            "funnelEvents": f"{DOMAIN}/funnel-events.json",
+            "llms": f"{DOMAIN}/llms.txt",
+            "humans": f"{DOMAIN}/humans.txt",
+        },
+        "safetyBoundaries": [
+            "LoveTypes is a relationship reflection and communication site.",
+            "Guardian profiles are metaphor tools, not diagnosis or therapy.",
+            "Commerce paths are disclosed and do not promise outcomes.",
+            "Email requests should not include sensitive personal details or emergency needs.",
+        ],
+    }
+
+
+def write_site_health() -> None:
+    write(ROOT / "site-health.json", json.dumps(collect_site_health(), ensure_ascii=False, indent=2) + "\n")
+
+
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
@@ -9916,6 +9988,7 @@ https://:version.lovetypes.pages.dev/*
     write_commerce_catalog()
     write_guardian_profiles()
     write_site_index()
+    write_site_health()
 
 
 def apply_section_label_localization() -> None:

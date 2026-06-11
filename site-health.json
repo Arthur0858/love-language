@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "status": "ready_for_predeploy",
+  "description": "Machine-readable LoveTypes generated-site health snapshot for structure, conversion catalogs, guardian universe coverage, and required verification gates.",
+  "coverage": {
+    "indexablePages": 150,
+    "localizedPaths": 30,
+    "languages": 5,
+    "routeGroups": 5,
+    "coreFlows": 4,
+    "guardians": 5,
+    "guardianRoutes": 35,
+    "guardianAssets": 20,
+    "commerceItems": 20,
+    "commerceTypes": 4,
+    "commerceRoles": 3,
+    "funnelEvents": 181,
+    "funnelTrackedOccurrences": 3568,
+    "supportFiles": 14
+  },
+  "requiredGates": {
+    "localPredeploy": "tools/predeploy_check.py must report predeploy_checks=ok and issues=0 before deployment.",
+    "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
+    "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
+    "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment."
+  },
+  "supportFiles": [
+    "robots.txt",
+    "sitemap.xml",
+    "feed.xml",
+    "site.webmanifest",
+    "llms.txt",
+    "humans.txt",
+    "security.txt",
+    ".well-known/security.txt",
+    "ads.txt",
+    "funnel-events.json",
+    "commerce-catalog.json",
+    "site-index.json",
+    "guardian-profiles.json",
+    "site-health.json"
+  ],
+  "primaryIndexes": {
+    "siteIndex": "https://lovetypes.tw/site-index.json",
+    "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
+    "commerceCatalog": "https://lovetypes.tw/commerce-catalog.json",
+    "funnelEvents": "https://lovetypes.tw/funnel-events.json",
+    "llms": "https://lovetypes.tw/llms.txt",
+    "humans": "https://lovetypes.tw/humans.txt"
+  },
+  "safetyBoundaries": [
+    "LoveTypes is a relationship reflection and communication site.",
+    "Guardian profiles are metaphor tools, not diagnosis or therapy.",
+    "Commerce paths are disclosed and do not promise outcomes.",
+    "Email requests should not include sensitive personal details or emergency needs."
+  ]
+}

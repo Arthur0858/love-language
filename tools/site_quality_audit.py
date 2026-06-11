@@ -148,6 +148,7 @@ FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
 SITE_INDEX_PATH = ROOT / "site-index.json"
 GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
+SITE_HEALTH_PATH = ROOT / "site-health.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1835,6 +1836,89 @@ def parse_guardian_profiles(parsers: dict[Path, PageParser]) -> tuple[list[str],
     return issues, stats
 
 
+def parse_site_health() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SITE_HEALTH_PATH.exists():
+        return [f"{SITE_HEALTH_PATH}: missing site-health.json"], stats
+    try:
+        data = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{SITE_HEALTH_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{SITE_HEALTH_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{SITE_HEALTH_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{SITE_HEALTH_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{SITE_HEALTH_PATH}: production should be {DOMAIN}/")
+    if data.get("status") != "ready_for_predeploy":
+        issues.append(f"{SITE_HEALTH_PATH}: status should be ready_for_predeploy")
+    coverage = data.get("coverage")
+    if not isinstance(coverage, dict):
+        issues.append(f"{SITE_HEALTH_PATH}: coverage should be an object")
+        return issues, stats
+    expected_coverage = {
+        "indexablePages": 150,
+        "localizedPaths": 30,
+        "languages": 5,
+        "routeGroups": 5,
+        "coreFlows": 4,
+        "guardians": 5,
+        "guardianRoutes": 35,
+        "guardianAssets": 20,
+        "commerceItems": 20,
+        "commerceTypes": 4,
+        "commerceRoles": 3,
+        "supportFiles": 14,
+    }
+    for key, expected in expected_coverage.items():
+        stats["site_health_coverage_fields_checked"] += 1
+        if coverage.get(key) != expected:
+            issues.append(f"{SITE_HEALTH_PATH}: coverage.{key} should be {expected}, got {coverage.get(key)!r}")
+    if not isinstance(coverage.get("funnelEvents"), int) or coverage["funnelEvents"] < 50:
+        issues.append(f"{SITE_HEALTH_PATH}: coverage.funnelEvents should be at least 50")
+    else:
+        stats["site_health_coverage_fields_checked"] += 1
+    support_files = data.get("supportFiles")
+    if not isinstance(support_files, list) or len(support_files) != coverage.get("supportFiles"):
+        issues.append(f"{SITE_HEALTH_PATH}: supportFiles should match coverage.supportFiles")
+    else:
+        stats["site_health_support_files_checked"] = len(support_files)
+        for rel_path in support_files:
+            if not isinstance(rel_path, str) or not rel_path:
+                issues.append(f"{SITE_HEALTH_PATH}: invalid support file entry {rel_path!r}")
+                continue
+            if not (ROOT / rel_path).exists():
+                issues.append(f"{SITE_HEALTH_PATH}: listed support file missing: {rel_path}")
+    gates = data.get("requiredGates")
+    expected_gates = {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}
+    if not isinstance(gates, dict) or set(gates) != expected_gates:
+        issues.append(f"{SITE_HEALTH_PATH}: requiredGates should contain {sorted(expected_gates)}")
+    else:
+        stats["site_health_required_gates_checked"] = len(gates)
+        gate_text = " ".join(str(value) for value in gates.values())
+        for snippet in ("issues=0", "predeploy_checks=ok", "public_discovery_issues=0", "public_deploy_issues=0", "public_versioned_asset_issues=0"):
+            if snippet not in gate_text:
+                issues.append(f"{SITE_HEALTH_PATH}: requiredGates missing snippet {snippet!r}")
+    indexes = data.get("primaryIndexes")
+    if not isinstance(indexes, dict) or len(indexes) < 6:
+        issues.append(f"{SITE_HEALTH_PATH}: primaryIndexes should list core public indexes")
+    else:
+        stats["site_health_primary_indexes_checked"] = len(indexes)
+        for key, url in indexes.items():
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{SITE_HEALTH_PATH}: primary index {key} should point to {DOMAIN}")
+    boundaries = data.get("safetyBoundaries")
+    if not isinstance(boundaries, list) or len(boundaries) < 4:
+        issues.append(f"{SITE_HEALTH_PATH}: safetyBoundaries should include at least four entries")
+    else:
+        stats["site_health_safety_boundaries_checked"] = len(boundaries)
+    stats["site_health_snapshots_checked"] = 1
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -3011,6 +3095,9 @@ def main() -> int:
     guardian_profile_issues, guardian_profile_stats = parse_guardian_profiles(parsers)
     issues.extend(guardian_profile_issues)
     stats.update(guardian_profile_stats)
+    site_health_issues, site_health_stats = parse_site_health()
+    issues.extend(site_health_issues)
+    stats.update(site_health_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3162,6 +3249,12 @@ def main() -> int:
     print(f"guardian_profile_assets_checked={stats['guardian_profile_assets_checked']}")
     print(f"guardian_profile_routes_checked={stats['guardian_profile_routes_checked']}")
     print(f"guardian_profile_guides_checked={stats['guardian_profile_guides_checked']}")
+    print(f"site_health_snapshots_checked={stats['site_health_snapshots_checked']}")
+    print(f"site_health_coverage_fields_checked={stats['site_health_coverage_fields_checked']}")
+    print(f"site_health_support_files_checked={stats['site_health_support_files_checked']}")
+    print(f"site_health_required_gates_checked={stats['site_health_required_gates_checked']}")
+    print(f"site_health_primary_indexes_checked={stats['site_health_primary_indexes_checked']}")
+    print(f"site_health_safety_boundaries_checked={stats['site_health_safety_boundaries_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

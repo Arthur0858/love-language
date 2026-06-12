@@ -149,7 +149,7 @@ def is_supply_request(value: str) -> bool:
     return "subject=" in parsed.query and "body=" in parsed.query
 
 
-def is_gumroad_product_link(link: dict[str, str]) -> bool:
+def is_gumroad_product_link(link: dict[str, str], expected_event: str = "luna_gumroad_pack_click") -> bool:
     href = link.get("href", "")
     parsed = urlparse(href)
     product_slug = link.get("data-luna-product", "")
@@ -163,7 +163,7 @@ def is_gumroad_product_link(link: dict[str, str]) -> bool:
         and query.get("utm_medium", [""])[0] == "luna-page"
         and query.get("utm_campaign", [""])[0] == "luna_gumroad_offer"
         and query.get("utm_content", [""])[0] == product_slug
-        and link.get("data-funnel-event") == "luna_gumroad_pack_click"
+        and link.get("data-funnel-event") == expected_event
         and "sponsored" in link.get("rel", "").split()
     )
 
@@ -312,7 +312,9 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
             seen_product_slugs.add(product_slug)
             stats["luna_product_links"] += 1
         for link in starter_links:
-            if link.get("data-luna-product") != "healing-vibes-starter" or not is_gumroad_product_link(link):
+            if link.get("data-luna-product") != "healing-vibes-starter" or not is_gumroad_product_link(
+                link, "luna_starter_pack_click"
+            ):
                 issues.append(f"{path}: invalid Gumroad starter revenue link: {link.get('href', '')}")
                 continue
             stats["luna_starter_links"] += 1

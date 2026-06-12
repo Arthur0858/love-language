@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+from collections import Counter, defaultdict
+from datetime import date
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
+TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+KIT_PATH = ROOT / "promotion-kit.json"
+DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "weekly-summary.md"
+
+NUMERIC_FIELDS = [
+    "views",
+    "likes",
+    "comments",
+    "shares",
+    "profile_clicks",
+    "site_clicks",
+    "quiz_starts",
+    "quiz_completions",
+    "guardian_result_clicks",
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks",
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+]
+REVENUE_FIELDS = [
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+]
+
+
+def parse_int(value: str | None) -> int:
+    text = (value or "").strip().replace(",", "")
+    if not text:
+        return 0
+    try:
+        return int(float(text))
+    except ValueError:
+        return 0
+
+
+def read_tracker(path: Path) -> tuple[list[str], list[dict[str, str]]]:
+    with path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        return list(reader.fieldnames or []), list(reader)
+
+
+def is_filled(row: dict[str, str]) -> bool:
+    return any((value or "").strip() for value in row.values())
+
+
+def load_tasks(path: Path) -> list[dict]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    tasks = data.get("publishingTasks", [])
+    return tasks if isinstance(tasks, list) else []
+
+
+def sum_fields(rows: list[dict[str, str]]) -> Counter:
+    totals: Counter = Counter()
+    for row in rows:
+        for field in NUMERIC_FIELDS:
+            totals[field] += parse_int(row.get(field))
+    return totals
+
+
+def rate(numerator: int, denominator: int) -> str:
+    if denominator <= 0:
+        return "n/a"
+    return f"{numerator / denominator:.1%}"
+
+
+def top_counter(counter: Counter) -> tuple[str, int] | None:
+    if not counter:
+        return None
+    key, value = counter.most_common(1)[0]
+    if value <= 0:
+        return None
+    return key, value
+
+
+def planned_task_summary(tasks: list[dict]) -> tuple[int, Counter, list[str]]:
+    planned = [task for task in tasks if task.get("status") == "planned"]
+    by_guardian = Counter(task.get("guardianId", "unknown") for task in planned)
+    next_tasks = [
+        f"{task.get('taskId')} ({task.get('guardianName')} / {task.get('contentAngle')})"
+        for task in planned[:3]
+    ]
+    return len(planned), by_guardian, next_tasks
+
+
+def build_summary(fields: list[str], rows: list[dict[str, str]], tasks: list[dict]) -> str:
+    filled_rows = [row for row in rows if is_filled(row)]
+    totals = sum_fields(filled_rows)
+    planned_count, planned_by_guardian, next_tasks = planned_task_summary(tasks)
+    guardian_quiz = Counter()
+    guardian_revenue = Counter()
+    angle_quiz = Counter()
+    missing_fields = [field for field in REVENUE_FIELDS if field not in fields]
+
+    for row in filled_rows:
+        guardian = (row.get("guardian_id") or "unknown").strip() or "unknown"
+        script_id = (row.get("script_id") or "").strip()
+        task = next((item for item in tasks if item.get("scriptId") == script_id), {})
+        angle = (task.get("contentAngle") or "unknown").strip()
+        quiz_completions = parse_int(row.get("quiz_completions"))
+        revenue_intent = sum(parse_int(row.get(field)) for field in REVENUE_FIELDS)
+        guardian_quiz[guardian] += quiz_completions
+        guardian_revenue[guardian] += revenue_intent
+        angle_quiz[angle] += quiz_completions
+
+    top_guardian = top_counter(guardian_quiz)
+    top_revenue_guardian = top_counter(guardian_revenue)
+    top_angle = top_counter(angle_quiz)
+    revenue_total = sum(totals[field] for field in REVENUE_FIELDS)
+    lines = [
+        "# LoveTypes 第一輪推廣週摘要",
+        "",
+        f"- 產生日期：{date.today().isoformat()}",
+        f"- 追蹤列數：{len(filled_rows)}",
+        f"- 已規劃待發布任務：{planned_count}",
+        f"- 追蹤欄位狀態：{'完整' if not missing_fields else '缺少 ' + ', '.join(missing_fields)}",
+        "",
+        "## 漏斗總覽",
+        "",
+        f"- 觀看：{totals['views']}",
+        f"- 個人檔案點擊：{totals['profile_clicks']}",
+        f"- 網站點擊：{totals['site_clicks']}（site click rate: {rate(totals['site_clicks'], totals['profile_clicks'])}）",
+        f"- 測驗開始：{totals['quiz_starts']}（quiz start rate: {rate(totals['quiz_starts'], totals['site_clicks'])}）",
+        f"- 測驗完成：{totals['quiz_completions']}（completion rate: {rate(totals['quiz_completions'], totals['quiz_starts'])}）",
+        f"- 路線興趣：{totals['resources_clicks'] + totals['repair_plan_clicks'] + totals['luna_clicks'] + totals['keepsake_clicks']}（route interest rate: {rate(totals['resources_clicks'] + totals['repair_plan_clicks'] + totals['luna_clicks'] + totals['keepsake_clicks'], totals['quiz_completions'])}）",
+        f"- 獲利意圖：{revenue_total}（revenue intent rate: {rate(totals['luna_pack_clicks'] + totals['affiliate_book_clicks'], totals['quiz_completions'])}）",
+        f"- 名單/需求意圖：{totals['supply_lead_requests'] + totals['contact_requests']}（lead capture rate: {rate(totals['supply_lead_requests'] + totals['contact_requests'], totals['quiz_completions'])}）",
+        "",
+        "## 守護者與內容角度",
+        "",
+    ]
+    if filled_rows:
+        lines.extend([
+            f"- 測驗完成最高守護者：{top_guardian[0]}（{top_guardian[1]}）" if top_guardian else "- 測驗完成最高守護者：尚無",
+            f"- 獲利意圖最高守護者：{top_revenue_guardian[0]}（{top_revenue_guardian[1]}）" if top_revenue_guardian else "- 獲利意圖最高守護者：尚無",
+            f"- 測驗完成最高內容角度：{top_angle[0]}（{top_angle[1]}）" if top_angle else "- 測驗完成最高內容角度：尚無",
+        ])
+    else:
+        lines.extend([
+            "- 尚未有已發布且已回填的追蹤列，不能判斷優勝守護者或內容角度。",
+            "- 目前應先完成發布與回填，不應根據空資料調整商品或文案。",
+        ])
+
+    lines.extend(["", "## 下一週建議", ""])
+    if not filled_rows:
+        lines.extend([
+            "- 先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
+            "- 發布後至少回填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。",
+            "- 若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
+        ])
+        if next_tasks:
+            lines.append("- 下一批建議任務：" + "；".join(next_tasks))
+    else:
+        if totals["site_clicks"] > 0 and totals["quiz_starts"] * 10 < totals["site_clicks"] * 3:
+            lines.append("- 修首頁或 `/start/` 首屏：網站點擊有進來，但測驗開始率低於 30%。")
+        if totals["quiz_starts"] > 0 and totals["quiz_completions"] * 10 < totals["quiz_starts"] * 4:
+            lines.append("- 修測驗流程：測驗完成率低於 40%，優先檢查手機版題目節奏與結果揭示。")
+        if totals["supply_lead_requests"] + totals["contact_requests"] > 0:
+            lines.append("- 補自有資產：已有補給或 Contact 需求，優先做對應守護者的 PDF、桌布或短儀式。")
+        if totals["luna_pack_clicks"] + totals["affiliate_book_clicks"] > 0:
+            lines.append("- 測試柔性商品承接：已有 Luna 或聯盟意圖，下支內容仍以測驗為 CTA，商品只放在結果後路線。")
+        if top_guardian:
+            lines.append(f"- 放大 {top_guardian[0]}：下一週多做一支同守護者、不同痛點的變體。")
+        if len(lines) and lines[-1] == "## 下一週建議":
+            lines.append("- 數據不足以調整策略，先補足本週回填。")
+
+    lines.extend(["", "## Planned 任務分布", ""])
+    for guardian, count in sorted(planned_by_guardian.items()):
+        lines.append(f"- {guardian}: {count}")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Generate a LoveTypes first-round promotion weekly summary.")
+    parser.add_argument("--tracker", default=str(TRACKER_PATH))
+    parser.add_argument("--kit", default=str(KIT_PATH))
+    parser.add_argument("--output", default=str(DEFAULT_OUTPUT_PATH))
+    parser.add_argument("--stdout", action="store_true", help="Print the summary instead of writing a file.")
+    args = parser.parse_args()
+
+    fields, rows = read_tracker(Path(args.tracker))
+    tasks = load_tasks(Path(args.kit))
+    summary = build_summary(fields, rows, tasks)
+    if args.stdout:
+        print(summary, end="")
+    else:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(summary, encoding="utf-8")
+        print(f"promotion_weekly_summary={output_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

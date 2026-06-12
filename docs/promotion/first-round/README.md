@@ -9,6 +9,7 @@
 - `shorts-scripts.zh-TW.json`: 15 支 Shorts 腳本，每位守護者 3 支，欄位符合 shorts-factory 腳本自動化契約。
 - `publishing-calendar.csv`: 5 週發布節奏，每週 3 支 Shorts，依 Iris、Noah、Vivian、Claire、Dora 排列。
 - `kpi-tracker.csv`: 發布後追蹤表，記錄觀看、互動、網站點擊、測驗開始與完成，並回填收藏物、補給名單、Luna、聯盟書卷與 Contact 需求。
+- `weekly-summary.md`: 使用 `python3 tools/promotion_weekly_summary.py` 產生的週檢查摘要，會指出應放大的守護者、內容角度與下一個獲利承接動作。
 
 ## 推廣語彙
 
@@ -55,3 +56,13 @@
 - `contact_requests`: 使用 Contact 或帶有路徑摘要的 mailto，代表高意圖需求。
 
 每週檢查時先看 `quiz_completions`，再看上述五個欄位。若某位守護者連續兩週有補給名單或 Luna 商品點擊，下一週優先補該守護者的收藏物、短儀式或 Luna 入口內容。
+
+## 產生週摘要
+
+在每週回填 `kpi-tracker.csv` 後執行：
+
+```bash
+python3 tools/promotion_weekly_summary.py
+```
+
+若追蹤表尚未有資料，摘要會保持保守，只提示先發布與回填，不會誤判優勝守護者或商品方向。

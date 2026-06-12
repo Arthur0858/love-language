@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "weekly-summary.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "weekly-summary.json"
@@ -68,6 +69,15 @@ def is_filled(row: dict[str, str]) -> bool:
     return any(parse_int(row.get(field)) > 0 for field in NUMERIC_FIELDS)
 
 
+def is_profile_filled(row: dict[str, str]) -> bool:
+    status = (row.get("status") or "").strip().lower()
+    if status in {"set", "live"}:
+        return True
+    if (row.get("profile_link_set_date") or "").strip():
+        return True
+    return any(parse_int(row.get(field)) > 0 for field in NUMERIC_FIELDS)
+
+
 def load_tasks(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     tasks = data.get("publishingTasks", [])
@@ -119,14 +129,32 @@ def planned_task_summary(tasks: list[dict]) -> tuple[int, Counter, list[str]]:
     return len(planned), by_guardian, next_tasks
 
 
-def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict]) -> dict:
+def add_counters(left: Counter, right: Counter) -> Counter:
+    total = Counter(left)
+    total.update(right)
+    return total
+
+
+def build_report(
+    fields: list[str],
+    rows: list[dict[str, str]],
+    tasks: list[dict],
+    profile_fields: list[str] | None = None,
+    profile_rows: list[dict[str, str]] | None = None,
+) -> dict:
     filled_rows = [row for row in rows if is_filled(row)]
-    totals = sum_fields(filled_rows)
+    profile_fields = profile_fields or []
+    profile_rows = profile_rows or []
+    filled_profile_rows = [row for row in profile_rows if is_profile_filled(row)]
+    video_totals = sum_fields(filled_rows)
+    profile_totals = sum_fields(filled_profile_rows)
+    totals = add_counters(video_totals, profile_totals)
     planned_count, planned_by_guardian, next_tasks = planned_task_summary(tasks)
     guardian_quiz = Counter()
     guardian_revenue = Counter()
     angle_quiz = Counter()
     missing_fields = [field for field in REVENUE_FIELDS if field not in fields]
+    profile_missing_fields = [field for field in REVENUE_FIELDS if profile_fields and field not in profile_fields]
 
     for row in filled_rows:
         guardian = (row.get("guardian_id") or "unknown").strip() or "unknown"
@@ -147,10 +175,11 @@ def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict
     lead_total = totals["supply_lead_requests"] + totals["contact_requests"]
     paid_revenue_intent = totals["luna_pack_clicks"] + totals["affiliate_book_clicks"]
     recommendations: list[str] = []
-    if not filled_rows:
+    if not filled_rows and not filled_profile_rows:
         recommendations.extend([
             "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
             "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+            "完成平台首頁設定後，同步回填 platform-profile-tracker.csv，分開判讀 Bio/Profile link 成效。",
             "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
         ])
         if next_tasks:
@@ -173,12 +202,27 @@ def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict
         "generatedAt": date.today().isoformat(),
         "trackerTotalRows": len(rows),
         "trackerRows": len(filled_rows),
+        "profileTrackerTotalRows": len(profile_rows),
+        "profileTrackerRows": len(filled_profile_rows),
         "plannedTasks": planned_count,
         "fieldStatus": {
-            "complete": not missing_fields,
+            "complete": not missing_fields and not profile_missing_fields,
             "missingFields": missing_fields,
+            "profileMissingFields": profile_missing_fields,
         },
         "totals": {field: int(totals[field]) for field in NUMERIC_FIELDS},
+        "sourceBreakdown": {
+            "videoTracker": {
+                "rows": len(filled_rows),
+                "totalRows": len(rows),
+                "totals": {field: int(video_totals[field]) for field in NUMERIC_FIELDS},
+            },
+            "platformProfileTracker": {
+                "rows": len(filled_profile_rows),
+                "totalRows": len(profile_rows),
+                "totals": {field: int(profile_totals[field]) for field in NUMERIC_FIELDS},
+            },
+        },
         "derived": {
             "siteClickRate": rate_value(totals["site_clicks"], totals["profile_clicks"]),
             "quizStartRate": rate_value(totals["quiz_starts"], totals["site_clicks"]),
@@ -202,8 +246,8 @@ def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict
         "plannedTaskDistribution": dict(sorted(planned_by_guardian.items())),
         "nextPlannedTasks": next_tasks,
         "safety": {
-            "emptyDataMode": not filled_rows,
-            "emptyDataNote": "Do not change product, offer, or guardian priorities from empty tracker data." if not filled_rows else "",
+            "emptyDataMode": not filled_rows and not filled_profile_rows,
+            "emptyDataNote": "Do not change product, offer, or guardian priorities from empty tracker data." if not filled_rows and not filled_profile_rows else "",
         },
     }
 
@@ -215,13 +259,16 @@ def build_summary(report: dict) -> str:
     leaders = report["leaders"]
     field_status = report["fieldStatus"]
     missing_fields = field_status["missingFields"]
+    profile_missing_fields = field_status.get("profileMissingFields", [])
+    source_breakdown = report["sourceBreakdown"]
     lines = [
         "# LoveTypes 第一輪推廣週摘要",
         "",
         f"- 產生日期：{report['generatedAt']}",
-        f"- 追蹤列數：{report['trackerRows']} / {report.get('trackerTotalRows', report['trackerRows'])}",
+        f"- 影片追蹤列數：{report['trackerRows']} / {report.get('trackerTotalRows', report['trackerRows'])}",
+        f"- 平台首頁追蹤列數：{report['profileTrackerRows']} / {report.get('profileTrackerTotalRows', report['profileTrackerRows'])}",
         f"- 已規劃待發布任務：{report['plannedTasks']}",
-        f"- 追蹤欄位狀態：{'完整' if field_status['complete'] else '缺少 ' + ', '.join(missing_fields)}",
+        f"- 追蹤欄位狀態：{'完整' if field_status['complete'] else '缺少 ' + ', '.join([*missing_fields, *profile_missing_fields])}",
         "",
         "## 漏斗總覽",
         "",
@@ -233,6 +280,11 @@ def build_summary(report: dict) -> str:
         f"- 路線興趣：{computed['routeInterest']}（route interest rate: {format_rate_value(derived['routeInterestRate'])}）",
         f"- 獲利意圖：{computed['revenueIntent']}（revenue intent rate: {format_rate_value(derived['revenueIntentRate'])}）",
         f"- 名單/需求意圖：{computed['leadIntent']}（lead capture rate: {format_rate_value(derived['leadCaptureRate'])}）",
+        "",
+        "## 來源拆分",
+        "",
+        f"- 單支影片網站點擊：{source_breakdown['videoTracker']['totals']['site_clicks']}；測驗完成：{source_breakdown['videoTracker']['totals']['quiz_completions']}",
+        f"- Bio/Profile 網站點擊：{source_breakdown['platformProfileTracker']['totals']['site_clicks']}；測驗完成：{source_breakdown['platformProfileTracker']['totals']['quiz_completions']}",
         "",
         "## 守護者與內容角度",
         "",
@@ -262,6 +314,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Generate a LoveTypes first-round promotion weekly summary.")
     parser.add_argument("--tracker", default=str(TRACKER_PATH))
     parser.add_argument("--kit", default=str(KIT_PATH))
+    parser.add_argument("--profile-tracker", default=str(PROFILE_TRACKER_PATH))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT_PATH))
     parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT_PATH))
     parser.add_argument("--check", action="store_true", help="Validate the summary inputs and report shape without writing files.")
@@ -269,17 +322,21 @@ def main() -> int:
     args = parser.parse_args()
 
     fields, rows = read_tracker(Path(args.tracker))
+    profile_fields, profile_rows = read_tracker(Path(args.profile_tracker))
     tasks = load_tasks(Path(args.kit))
-    report = build_report(fields, rows, tasks)
+    report = build_report(fields, rows, tasks, profile_fields, profile_rows)
     summary = build_summary(report)
     if args.check:
         required_report_keys = {
             "generatedAt",
             "trackerRows",
             "trackerTotalRows",
+            "profileTrackerRows",
+            "profileTrackerTotalRows",
             "plannedTasks",
             "fieldStatus",
             "totals",
+            "sourceBreakdown",
             "derived",
             "computedTotals",
             "leaders",
@@ -293,11 +350,14 @@ def main() -> int:
             issues.append("report missing required keys")
         if report["fieldStatus"]["missingFields"]:
             issues.append("tracker missing revenue fields")
+        if report["fieldStatus"].get("profileMissingFields"):
+            issues.append("profile tracker missing revenue fields")
         if len(report["recommendations"]) < 1:
             issues.append("report should include at least one recommendation")
         if not summary.startswith("# LoveTypes 第一輪推廣週摘要"):
             issues.append("markdown summary missing title")
         print(f"promotion_weekly_summary_tracker_rows={report['trackerRows']}")
+        print(f"promotion_weekly_summary_profile_tracker_rows={report['profileTrackerRows']}")
         print(f"promotion_weekly_summary_recommendations={len(report['recommendations'])}")
         print(f"promotion_weekly_summary_empty_data_mode={int(report['safety']['emptyDataMode'])}")
         print(f"promotion_weekly_summary_issues={len(issues)}")

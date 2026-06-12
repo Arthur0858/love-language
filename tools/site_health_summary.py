@@ -190,6 +190,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_platform_profile_tracker_rows",
         "promotion_platform_profile_tracker_numeric_fields",
         "promotion_platform_profile_tracker_issues",
+        "promotion_weekly_summary_profile_tracker_rows",
         "promotion_now_asset_briefs_count",
         "promotion_now_asset_briefs_platforms",
         "promotion_now_asset_briefs_scene_cards",

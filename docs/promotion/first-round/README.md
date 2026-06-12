@@ -34,7 +34,7 @@
 - `now-asset-production-queue.md/json`: 同一份製作佇列的人讀版與機器可讀版。
 - `now-asset-production-briefs.md`: 5 支 now 短片的剪輯與發布手卡，包含 9:16 場景卡、字幕分段、平台 caption、hashtag、CTA 與安全檢查。
 - `now-asset-production-briefs.json`: 同一份製作手卡的機器可讀版本，可交給剪輯、自動化或發布排程使用。
-- `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Next Actions 與 Data Dictionary。
+- `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Platform Profiles、Week 1 Execution、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
 - `weekly-summary.md`: 使用 `python3 tools/promotion_weekly_summary.py` 產生的週檢查摘要，會指出應放大的守護者、內容角度與下一個獲利承接動作。

@@ -8,8 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(__filename), "..");
 const PROMOTION_DIR = path.join(ROOT, "docs", "promotion", "first-round");
 const TRACKER_CSV = path.join(PROMOTION_DIR, "kpi-tracker.csv");
+const PROFILE_TRACKER_CSV = path.join(PROMOTION_DIR, "platform-profile-tracker.csv");
 const NEXT_ACTIONS_JSON = path.join(PROMOTION_DIR, "next-actions.json");
 const WEEKLY_SUMMARY_JSON = path.join(PROMOTION_DIR, "weekly-summary.json");
+const WEEK_EXECUTION_JSON = path.join(PROMOTION_DIR, "week-1-execution-sheet.json");
 const OUTPUT_XLSX = path.join(PROMOTION_DIR, "lovetypes-first-round-kpi-workbook.xlsx");
 
 function parseCsv(text) {
@@ -54,6 +56,46 @@ function valuesForObjects(objects, headers) {
   return [headers, ...objects.map((item) => headers.map((header) => item?.[header] ?? ""))];
 }
 
+function executionRows(sheet) {
+  const rows = [];
+  for (const script of sheet.scripts ?? []) {
+    for (const platform of script.platforms ?? []) {
+      rows.push({
+        week: sheet.week,
+        taskId: script.taskId,
+        scriptId: script.scriptId,
+        guardianId: script.guardianId,
+        guardianName: script.guardianName,
+        contentAngle: script.contentAngle,
+        title: script.title,
+        platform: platform.platform,
+        label: platform.label,
+        scheduledDate: platform.scheduledDate,
+        scheduledTime: platform.scheduledTime,
+        timezone: platform.timezone,
+        trackedUrl: platform.trackedUrl,
+        caption: platform.caption,
+        writeback: (platform.writeback ?? []).join(", "),
+      });
+    }
+  }
+  return rows;
+}
+
+function profileGateRows(sheet) {
+  return (sheet.profileGates ?? []).map((gate) => ({
+    platform: gate.platform,
+    label: gate.label,
+    ready: gate.ready ? "YES" : "NO",
+    status: gate.status,
+    profileLinkLabel: gate.profileLinkLabel,
+    profileLink: gate.profileLink,
+    bio: gate.bio,
+    pinnedComment: gate.pinnedComment,
+    writeback: (gate.writeback ?? []).join(", "),
+  }));
+}
+
 function writeMatrix(sheet, startCell, matrix) {
   if (!matrix.length || !matrix[0].length) return;
   const width = Math.max(...matrix.map((row) => row.length));
@@ -84,12 +126,16 @@ function numberToColumn(num) {
 
 async function main() {
   const trackerRows = parseCsv(await fs.readFile(TRACKER_CSV, "utf8"));
+  const profileTrackerRows = parseCsv(await fs.readFile(PROFILE_TRACKER_CSV, "utf8"));
   const nextActions = JSON.parse(await fs.readFile(NEXT_ACTIONS_JSON, "utf8"));
   const weeklySummary = JSON.parse(await fs.readFile(WEEKLY_SUMMARY_JSON, "utf8"));
+  const weekExecution = JSON.parse(await fs.readFile(WEEK_EXECUTION_JSON, "utf8"));
   const headers = trackerRows[0] ?? [];
   const workbook = Workbook.create();
   const dashboard = workbook.worksheets.add("Dashboard");
   const tracker = workbook.worksheets.add("KPI Tracker");
+  const profileTracker = workbook.worksheets.add("Platform Profiles");
+  const weekExecutionSheet = workbook.worksheets.add("Week 1 Execution");
   const actions = workbook.worksheets.add("Next Actions");
   const dictionary = workbook.worksheets.add("Data Dictionary");
 
@@ -98,6 +144,10 @@ async function main() {
     ["Generated", weeklySummary.generatedAt],
     ["Tracker rows with activity", weeklySummary.trackerRows],
     ["Tracker rows total", weeklySummary.trackerTotalRows],
+    ["Platform profile rows with activity", weeklySummary.profileTrackerRows],
+    ["Platform profile rows total", weeklySummary.profileTrackerTotalRows],
+    ["Week 1 profile gates pending", weekExecution.profilePendingCount],
+    ["Week 1 platform posts", weekExecution.platformPostCount],
     ["Empty data safety mode", nextActions.dataState.emptyDataMode ? "YES" : "NO"],
     [""],
     ["Metric", "Value"],
@@ -114,6 +164,33 @@ async function main() {
   ]);
 
   writeMatrix(tracker, "A1", trackerRows);
+  writeMatrix(profileTracker, "A1", profileTrackerRows);
+
+  const profileGateHeaders = ["platform", "label", "ready", "status", "profileLinkLabel", "profileLink", "bio", "pinnedComment", "writeback"];
+  const executionHeaders = [
+    "week",
+    "taskId",
+    "scriptId",
+    "guardianId",
+    "guardianName",
+    "contentAngle",
+    "title",
+    "platform",
+    "label",
+    "scheduledDate",
+    "scheduledTime",
+    "timezone",
+    "trackedUrl",
+    "caption",
+    "writeback",
+  ];
+  writeMatrix(weekExecutionSheet, "A1", [
+    ["Week 1 Profile Gates"],
+    ...valuesForObjects(profileGateRows(weekExecution), profileGateHeaders),
+    [""],
+    ["Week 1 Platform Posts"],
+    ...valuesForObjects(executionRows(weekExecution), executionHeaders),
+  ]);
 
   const actionHeaders = [
     "taskId",
@@ -137,6 +214,8 @@ async function main() {
     ["site_clicks", "Clicks from social profile/caption into LoveTypes."],
     ["quiz_starts", "Sessions where the 15-question guardian quiz begins."],
     ["quiz_completions", "Completed quiz sessions; primary first-round KPI."],
+    ["profile_clicks", "Clicks on social Bio/Profile links before visitors reach LoveTypes."],
+    ["profile_link_set_date", "Date the platform Bio/Profile tracked link was set live."],
     ["free_keepsake_downloads", "Guardian identity asset save or print intent."],
     ["supply_lead_requests", "Owned email/request demand for guardian supply assets."],
     ["luna_pack_clicks", "Luna Gumroad product exploration."],
@@ -155,13 +234,15 @@ async function main() {
     summary: "formula error scan",
   });
   let renderedSheets = 0;
-  for (const sheetName of ["Dashboard", "KPI Tracker", "Next Actions", "Data Dictionary"]) {
-    await workbook.render({ sheetName, range: "A1:H24", scale: 1 });
+  const sheetNames = ["Dashboard", "KPI Tracker", "Platform Profiles", "Week 1 Execution", "Next Actions", "Data Dictionary"];
+  for (const sheetName of sheetNames) {
+    const range = sheetName === "Week 1 Execution" ? "A1:O28" : "A1:H24";
+    await workbook.render({ sheetName, range, scale: 1 });
     renderedSheets += 1;
   }
   console.log(errors.ndjson);
   console.log(`promotion_spreadsheet=${OUTPUT_XLSX}`);
-  console.log(`promotion_spreadsheet_sheets=4`);
+  console.log(`promotion_spreadsheet_sheets=${sheetNames.length}`);
   console.log(`promotion_spreadsheet_rendered_sheets=${renderedSheets}`);
 }
 

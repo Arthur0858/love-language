@@ -399,6 +399,7 @@
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
     "commerceCatalog": "https://lovetypes.tw/commerce-catalog.json",
     "safetyIndex": "https://lovetypes.tw/safety-index.json",
+    "promotionKit": "https://lovetypes.tw/promotion-kit.json",
     "release": "https://lovetypes.tw/release.json",
     "siteHealth": "https://lovetypes.tw/site-health.json",
     "humans": "https://lovetypes.tw/humans.txt"
@@ -441,6 +442,6 @@
     "answerableQuestions": 11,
     "priorityUrls": 12,
     "languages": 5,
-    "discoveryFiles": 9
+    "discoveryFiles": 10
   }
 }

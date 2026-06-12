@@ -9566,6 +9566,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Guardian profile index: /guardian-profiles.json
 - Commerce catalog: /commerce-catalog.json
 - Safety boundary index: /safety-index.json
+- First-round promotion kit: /promotion-kit.json
 - Release manifest: /release.json
 - Site health snapshot: /site-health.json
 - Human ownership file: /humans.txt
@@ -10227,6 +10228,7 @@ def collect_ai_discovery_index() -> dict:
         "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
         "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
         "safetyIndex": f"{DOMAIN}/safety-index.json",
+        "promotionKit": f"{DOMAIN}/promotion-kit.json",
         "release": f"{DOMAIN}/release.json",
         "siteHealth": f"{DOMAIN}/site-health.json",
         "humans": f"{DOMAIN}/humans.txt",
@@ -10362,6 +10364,7 @@ def collect_release_info() -> dict:
             "safetyIndex": f"{DOMAIN}/safety-index.json",
             "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
             "funnelEvents": f"{DOMAIN}/funnel-events.json",
+            "promotionKit": f"{DOMAIN}/promotion-kit.json",
             "llms": f"{DOMAIN}/llms.txt",
             "humans": f"{DOMAIN}/humans.txt",
         },
@@ -10413,6 +10416,7 @@ def collect_site_health() -> dict:
         "guardian-profiles.json",
         "safety-index.json",
         "ai-discovery.json",
+        "promotion-kit.json",
         "release.json",
         "site-health.json",
     ]
@@ -10454,6 +10458,7 @@ def collect_site_health() -> dict:
             "release": f"{DOMAIN}/release.json",
             "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
             "funnelEvents": f"{DOMAIN}/funnel-events.json",
+            "promotionKit": f"{DOMAIN}/promotion-kit.json",
             "llms": f"{DOMAIN}/llms.txt",
             "humans": f"{DOMAIN}/humans.txt",
         },

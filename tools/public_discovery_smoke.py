@@ -821,7 +821,7 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 17,
+        "supportFiles": 18,
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -834,13 +834,13 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         coverage_checked += 1
     support_files = data.get("supportFiles", [])
     gates = data.get("requiredGates", {})
-    if not isinstance(support_files, list) or len(support_files) != 17:
-        issues.append(f"{path}: expected 17 support files")
+    if not isinstance(support_files, list) or len(support_files) != 18:
+        issues.append(f"{path}: expected 18 support files")
     if not isinstance(gates, dict) or set(gates) != {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}:
         issues.append(f"{path}: requiredGates should list four gate names")
     indexes = data.get("primaryIndexes", {})
-    if not isinstance(indexes, dict) or len(indexes) < 9:
-        issues.append(f"{path}: primaryIndexes should list at least nine entries")
+    if not isinstance(indexes, dict) or len(indexes) < 10:
+        issues.append(f"{path}: primaryIndexes should list at least ten entries")
     return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
 
 
@@ -878,8 +878,8 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
     indexes = data.get("publicIndexes", {})
     commands = data.get("verificationCommands", [])
     outcomes = data.get("requiredOutcomes", [])
-    if not isinstance(indexes, dict) or len(indexes) != 9:
-        issues.append(f"{path}: publicIndexes should contain nine entries")
+    if not isinstance(indexes, dict) or len(indexes) != 10:
+        issues.append(f"{path}: publicIndexes should contain ten entries")
     if not isinstance(commands, list) or len(commands) != 5:
         issues.append(f"{path}: verificationCommands should contain five commands")
     if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
@@ -967,7 +967,7 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         if not isinstance(guidance.get(key), str) or not guidance[key]:
             issues.append(f"{path}: answerGuidance.{key} should be non-empty")
     totals = data.get("totals", {})
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 9}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 10}
     for key, expected in expected_totals.items():
         if not isinstance(totals, dict) or totals.get(key) != expected:
             got = totals.get(key) if isinstance(totals, dict) else None
@@ -1004,7 +1004,7 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     if not isinstance(priority_urls, list) or len(priority_urls) != 12:
         issues.append(f"{path}: priorityUrls should include twelve entries")
     files = data.get("discoveryFiles", {})
-    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "release", "siteHealth", "humans"}
+    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:
         issues.append(f"{path}: discoveryFiles should contain {sorted(expected_files)}")
     return (

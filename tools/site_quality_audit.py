@@ -1879,7 +1879,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 17,
+        "supportFiles": 18,
     }
     for key, expected in expected_coverage.items():
         stats["site_health_coverage_fields_checked"] += 1
@@ -1970,7 +1970,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         else:
             stats["release_content_fields_checked"] += 1
     indexes = data.get("publicIndexes")
-    expected_indexes = {"aiDiscovery", "siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "llms", "humans"}
+    expected_indexes = {"aiDiscovery", "siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "promotionKit", "llms", "humans"}
     if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
         issues.append(f"{RELEASE_PATH}: publicIndexes should contain {sorted(expected_indexes)}")
     else:
@@ -2128,7 +2128,7 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
         stats["ai_discovery_guidance_fields_checked"] = len(guidance)
 
     totals = data.get("totals")
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 9}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 10}
     if not isinstance(totals, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
     else:
@@ -2220,7 +2220,7 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
                 issues.append(f"{AI_DISCOVERY_PATH}: priority URL should not include fragment: {url}")
 
     files = data.get("discoveryFiles")
-    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "release", "siteHealth", "humans"}
+    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:
         issues.append(f"{AI_DISCOVERY_PATH}: discoveryFiles should contain {sorted(expected_files)}")
     else:

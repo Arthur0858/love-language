@@ -45,6 +45,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Guardian profile index: /guardian-profiles.json
 - Commerce catalog: /commerce-catalog.json
 - Safety boundary index: /safety-index.json
+- First-round promotion kit: /promotion-kit.json
 - Release manifest: /release.json
 - Site health snapshot: /site-health.json
 - Human ownership file: /humans.txt

@@ -311,7 +311,9 @@
   });
 
   window.addEventListener('DOMContentLoaded', function () {
+    var landingAttribution = campaignAttributionFromUrl();
     captureCampaignAttribution();
+    if (landingAttribution) recordFunnelPayload('campaign_landing', window.location.href, document.documentElement);
     if (!window.location.hash) return;
     window.requestAnimationFrame(function () {
       scrollToHashTarget(window.location.hash, 'auto');

@@ -341,6 +341,7 @@ REQUIRED_INTERACTION_HASH_SNIPPETS = {
     "lovetypes:campaign-attribution:v1": "campaign attribution storage",
     "utm_campaign": "campaign UTM capture",
     "campaign: campaign": "funnel payload campaign attachment",
+    "campaign_landing": "campaign landing funnel event",
 }
 
 
@@ -1495,6 +1496,7 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
         "luna_hero_listen",
         "contact_supply_mailto",
         "free_keepsake_download",
+        "campaign_landing",
     }
     seen: set[str] = set()
     categories: set[str] = set()

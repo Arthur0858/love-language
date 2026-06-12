@@ -283,6 +283,7 @@ SUPPORT_FILES = {
         '"supply_route_affiliate_book"',
         '"luna_hero_listen"',
         '"contact_supply_mailto"',
+        '"campaign_landing"',
     ],
     "/commerce-catalog.json": [
         '"schemaVersion": 1',

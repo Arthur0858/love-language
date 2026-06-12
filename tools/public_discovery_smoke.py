@@ -102,6 +102,7 @@ REQUIRED_FUNNEL_EVENTS = {
     "luna_hero_listen",
     "contact_supply_mailto",
     "free_keepsake_download",
+    "campaign_landing",
 }
 EXPECTED_COMMERCE_TYPE_COUNTS = {
     "free_keepsake": 5,

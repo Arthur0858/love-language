@@ -5,11 +5,25 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 190,
-    "trackedOccurrences": 3723,
+    "events": 191,
+    "trackedOccurrences": 3728,
     "pages": 110
   },
   "events": [
+    {
+      "name": "campaign_landing",
+      "category": "campaign",
+      "role": "acquisition",
+      "count": 5,
+      "pages": [
+        "/en/start/",
+        "/es/start/",
+        "/ja/start/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 5
+    },
     {
       "name": "collector_practice_card",
       "category": "keepsake",

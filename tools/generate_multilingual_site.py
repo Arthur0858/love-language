@@ -18,7 +18,7 @@ ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-06-12"
-ASSET_VERSION = "20260612-luna-starter-results"
+ASSET_VERSION = "20260612-campaign-landing"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -9727,6 +9727,8 @@ def funnel_event_category(name: str) -> str:
 
 
 def funnel_event_role(name: str) -> str:
+    if name.startswith("campaign_"):
+        return "acquisition"
     if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product", "starter_pack")):
         return "revenue"
     if name.startswith(("supply_pack_", "home_saved_pack_")):
@@ -9784,6 +9786,9 @@ def collect_funnel_events() -> dict:
             count = len(attr_re.findall(text))
             if count:
                 add_event(name, page, count)
+
+    for page in ["/start/", "/en/start/", "/ja/start/", "/ko/start/", "/es/start/"]:
+        add_event("campaign_landing", page)
 
     event_items = []
     for name in sorted(events):

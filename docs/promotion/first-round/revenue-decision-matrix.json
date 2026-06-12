@@ -1,0 +1,379 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "tracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "promotionKit": "promotion-kit.json"
+  },
+  "dataState": {
+    "trackerRows": 15,
+    "filledRows": 0,
+    "missingRevenueFields": [],
+    "emptyDataMode": true
+  },
+  "fieldMeanings": {
+    "free_keepsake_downloads": "角色認同與保存意願",
+    "supply_lead_requests": "自有名單與補給需求",
+    "luna_pack_clicks": "Luna 付費音檔意圖",
+    "affiliate_book_clicks": "延伸閱讀購買意圖",
+    "contact_requests": "高意圖需求或合作/修復訊號"
+  },
+  "decisionRules": [
+    {
+      "stage": "collect_signal",
+      "rule": "尚無可判斷數據，照原排程發布與回填。"
+    },
+    {
+      "stage": "publish_guardian_variants",
+      "rule": "測驗完成累積但尚無路線/獲利意圖時，先放大同守護者內容變體。"
+    },
+    {
+      "stage": "deepen_identity_asset",
+      "rule": "已有收藏或路線興趣時，先強化免費收藏物與分享資產。"
+    },
+    {
+      "stage": "build_owned_asset",
+      "rule": "已有補給名單或 Contact 需求時，優先做自有 Email/下載資產。"
+    },
+    {
+      "stage": "test_soft_offer",
+      "rule": "已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。"
+    }
+  ],
+  "guardians": [
+    {
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "week": 1,
+      "taskCount": 3,
+      "contentAngles": [
+        "守護者人格認同",
+        "情感錯頻情境",
+        "測驗入口"
+      ],
+      "metrics": {
+        "quiz_completions": 0,
+        "resources_clicks": 0,
+        "repair_plan_clicks": 0,
+        "luna_clicks": 0,
+        "keepsake_clicks": 0,
+        "free_keepsake_downloads": 0,
+        "supply_lead_requests": 0,
+        "luna_pack_clicks": 0,
+        "affiliate_book_clicks": 0,
+        "contact_requests": 0
+      },
+      "stage": "collect_signal",
+      "recommendedAction": {
+        "priority": "low",
+        "action": "先收集訊號",
+        "build": "照既有週次發布並回填，不提前改商品或付費 CTA。",
+        "target": "https://lovetypes.tw/start/"
+      },
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/iris/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-iris",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-iris",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      }
+    },
+    {
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "week": 2,
+      "taskCount": 3,
+      "contentAngles": [
+        "守護者人格認同",
+        "情感錯頻情境",
+        "測驗入口"
+      ],
+      "metrics": {
+        "quiz_completions": 0,
+        "resources_clicks": 0,
+        "repair_plan_clicks": 0,
+        "luna_clicks": 0,
+        "keepsake_clicks": 0,
+        "free_keepsake_downloads": 0,
+        "supply_lead_requests": 0,
+        "luna_pack_clicks": 0,
+        "affiliate_book_clicks": 0,
+        "contact_requests": 0
+      },
+      "stage": "collect_signal",
+      "recommendedAction": {
+        "priority": "low",
+        "action": "先收集訊號",
+        "build": "照既有週次發布並回填，不提前改商品或付費 CTA。",
+        "target": "https://lovetypes.tw/start/"
+      },
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/noah/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-noah",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-noah",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-noah",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-noah",
+        "ownedLeadItemId": "supply-wishlist-noah",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      }
+    },
+    {
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "week": 3,
+      "taskCount": 3,
+      "contentAngles": [
+        "守護者人格認同",
+        "情感錯頻情境",
+        "測驗入口"
+      ],
+      "metrics": {
+        "quiz_completions": 0,
+        "resources_clicks": 0,
+        "repair_plan_clicks": 0,
+        "luna_clicks": 0,
+        "keepsake_clicks": 0,
+        "free_keepsake_downloads": 0,
+        "supply_lead_requests": 0,
+        "luna_pack_clicks": 0,
+        "affiliate_book_clicks": 0,
+        "contact_requests": 0
+      },
+      "stage": "collect_signal",
+      "recommendedAction": {
+        "priority": "low",
+        "action": "先收集訊號",
+        "build": "照既有週次發布並回填，不提前改商品或付費 CTA。",
+        "target": "https://lovetypes.tw/start/"
+      },
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/vivian/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-vivian",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-vivian",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      }
+    },
+    {
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "week": 4,
+      "taskCount": 3,
+      "contentAngles": [
+        "守護者人格認同",
+        "情感錯頻情境",
+        "測驗入口"
+      ],
+      "metrics": {
+        "quiz_completions": 0,
+        "resources_clicks": 0,
+        "repair_plan_clicks": 0,
+        "luna_clicks": 0,
+        "keepsake_clicks": 0,
+        "free_keepsake_downloads": 0,
+        "supply_lead_requests": 0,
+        "luna_pack_clicks": 0,
+        "affiliate_book_clicks": 0,
+        "contact_requests": 0
+      },
+      "stage": "collect_signal",
+      "recommendedAction": {
+        "priority": "low",
+        "action": "先收集訊號",
+        "build": "照既有週次發布並回填，不提前改商品或付費 CTA。",
+        "target": "https://lovetypes.tw/start/"
+      },
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/claire/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-claire",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-claire",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      }
+    },
+    {
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "week": 5,
+      "taskCount": 3,
+      "contentAngles": [
+        "守護者人格認同",
+        "情感錯頻情境",
+        "測驗入口"
+      ],
+      "metrics": {
+        "quiz_completions": 0,
+        "resources_clicks": 0,
+        "repair_plan_clicks": 0,
+        "luna_clicks": 0,
+        "keepsake_clicks": 0,
+        "free_keepsake_downloads": 0,
+        "supply_lead_requests": 0,
+        "luna_pack_clicks": 0,
+        "affiliate_book_clicks": 0,
+        "contact_requests": 0
+      },
+      "stage": "collect_signal",
+      "recommendedAction": {
+        "priority": "low",
+        "action": "先收集訊號",
+        "build": "照既有週次發布並回填，不提前改商品或付費 CTA。",
+        "target": "https://lovetypes.tw/start/"
+      },
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/dora/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-dora",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-dora",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      }
+    }
+  ],
+  "safety": {
+    "shortsCta": "完成 15 題測驗，找到你的情感守護者",
+    "doNotClaim": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ],
+    "emptyDataBoundary": "空資料時不調整商品、守護者優先序或付費 CTA。"
+  }
+}

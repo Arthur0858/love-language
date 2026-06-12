@@ -39,6 +39,11 @@ EXPECTED_BRIDGE_EVENTS = {
     "luna_gumroad_pack_click",
     "supply_route_affiliate_book",
 }
+EXPECTED_PLATFORM_PROFILE_SOURCES = {
+    "youtube_shorts": "youtube",
+    "tiktok": "tiktok",
+    "instagram_reels": "instagram",
+}
 
 
 def request_json(base_url: str) -> tuple[dict, str]:
@@ -71,6 +76,24 @@ def validate_tracked_url(source: str, value: str) -> list[str]:
             issues.append(f"{source}: trackedUrl missing {key}={expected_value}")
     if not query.get("utm_content", [""])[0]:
         issues.append(f"{source}: trackedUrl missing utm_content")
+    return issues
+
+
+def validate_profile_link(source: str, value: str, platform_id: str, utm_source: str) -> list[str]:
+    issues: list[str] = []
+    parsed = urlparse(value)
+    query = parse_qs(parsed.query)
+    expected = {
+        "utm_source": utm_source,
+        "utm_medium": "social_profile",
+        "utm_campaign": EXPECTED_CAMPAIGN,
+        "utm_content": f"{platform_id}_bio",
+    }
+    if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw" or parsed.path != "/start/":
+        issues.append(f"{source}: profileLink should point to https://lovetypes.tw/start/")
+    for key, expected_value in expected.items():
+        if query.get(key, [""])[0] != expected_value:
+            issues.append(f"{source}: profileLink missing {key}={expected_value}")
     return issues
 
 
@@ -160,6 +183,47 @@ def main() -> int:
     weekly = measurement.get("weeklyReviewChecklist")
     if not isinstance(weekly, list) or len(weekly) < 5:
         issues.append("/promotion-kit.json: measurementPlan.weeklyReviewChecklist should include at least five steps")
+
+    platform_profile_setup = kit.get("platformProfileSetup")
+    platform_profile_count = 0
+    platform_profile_kpi_fields_checked = 0
+    if not isinstance(platform_profile_setup, list) or len(platform_profile_setup) != len(EXPECTED_PLATFORM_PROFILE_SOURCES):
+        issues.append(f"/promotion-kit.json: platformProfileSetup should include {len(EXPECTED_PLATFORM_PROFILE_SOURCES)} platforms")
+        platform_profile_setup = []
+    seen_profile_platforms: set[str] = set()
+    for index, item in enumerate(platform_profile_setup, start=1):
+        source = f"/promotion-kit.json:platformProfileSetup[{index}]"
+        if not isinstance(item, dict):
+            issues.append(f"{source}: platform setup should be an object")
+            continue
+        platform_id = item.get("platformId")
+        expected_source = EXPECTED_PLATFORM_PROFILE_SOURCES.get(platform_id)
+        if not expected_source:
+            issues.append(f"{source}: unexpected platformId {platform_id!r}")
+            continue
+        seen_profile_platforms.add(platform_id)
+        platform_profile_count += 1
+        issues.extend(validate_profile_link(source, item.get("profileLink", ""), platform_id, expected_source))
+        for key in ("label", "profileLinkLabel", "bio", "pinnedComment", "linkLimitNote"):
+            if not isinstance(item.get(key), str) or not item[key]:
+                issues.append(f"{source}: missing {key}")
+        setup_text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
+        if "完成 15 題測驗" not in setup_text:
+            issues.append(f"{source}: setup copy should include the quiz CTA")
+        if any(word in setup_text for word in ("診斷", "療效", "保證修復", "必須購買")):
+            issues.append(f"{source}: setup copy should not include diagnosis, treatment, guarantee, or required purchase claims")
+        checklist = item.get("launchChecklist")
+        if not isinstance(checklist, list) or len(checklist) < 4:
+            issues.append(f"{source}: launchChecklist should include at least four items")
+        kpi_fields_to_fill = item.get("kpiFieldsToFill")
+        if not isinstance(kpi_fields_to_fill, list):
+            issues.append(f"{source}: kpiFieldsToFill should be a list")
+        else:
+            platform_profile_kpi_fields_checked += len(kpi_fields_to_fill)
+            if not {"profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"}.issubset(kpi_fields_to_fill):
+                issues.append(f"{source}: kpiFieldsToFill missing core profile funnel fields")
+    if seen_profile_platforms != set(EXPECTED_PLATFORM_PROFILE_SOURCES):
+        issues.append(f"/promotion-kit.json: platformProfileSetup missing platforms {sorted(set(EXPECTED_PLATFORM_PROFILE_SOURCES) - seen_profile_platforms)}")
 
     seen_scripts: set[str] = set()
     seen_guardians: set[str] = set()
@@ -288,6 +352,8 @@ def main() -> int:
     print(f"public_promotion_kit_measurement_rules_checked={len(measurement.get('decisionRules', [])) if isinstance(measurement, dict) else 0}")
     print(f"public_promotion_kit_revenue_bridge_kpis_checked={len(measurement.get('revenueBridgeKpis', [])) if isinstance(measurement, dict) else 0}")
     print(f"public_promotion_kit_monetization_bridges_checked={sum(1 for task in tasks if isinstance(task, dict) and isinstance(task.get('monetizationBridge'), dict))}")
+    print(f"public_promotion_kit_platform_profile_setups_checked={platform_profile_count}")
+    print(f"public_promotion_kit_platform_profile_kpi_fields_checked={platform_profile_kpi_fields_checked}")
     print(f"public_promotion_kit_issues={len(issues)}")
     for issue in issues:
         print(issue)

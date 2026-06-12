@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
 
@@ -29,6 +29,33 @@ STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
     "site-interactions.js": INTERACTIONS_ASSET,
     "deferred-external.js": AFFILIATE_ASSET,
+}
+
+PROMOTION_PLATFORM_PROFILE_SETUP = {
+    "youtube_shorts": {
+        "label": "YouTube Shorts",
+        "utm_source": "youtube",
+        "profileLinkLabel": "Channel description / video description",
+        "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+        "pinnedComment": "完成 15 題測驗，找到你的情感守護者：{url}\n留言 A/B/C，我們會用守護者路線回覆你。",
+        "linkLimitNote": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。",
+    },
+    "tiktok": {
+        "label": "TikTok",
+        "utm_source": "tiktok",
+        "profileLinkLabel": "Profile website link",
+        "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+        "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+        "linkLimitNote": "若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。",
+    },
+    "instagram_reels": {
+        "label": "Instagram Reels",
+        "utm_source": "instagram",
+        "profileLinkLabel": "Profile link in bio",
+        "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+        "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+        "linkLimitNote": "IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。",
+    },
 }
 
 
@@ -10493,6 +10520,38 @@ def collect_promotion_kit() -> dict:
             "Choose one scale action and one repair action for the next week.",
         ],
     }
+    platform_profile_setup = []
+    for platform_id, setup in PROMOTION_PLATFORM_PROFILE_SETUP.items():
+        profile_link = f"{DOMAIN}/start/?" + urlencode({
+            "utm_source": setup["utm_source"],
+            "utm_medium": "social_profile",
+            "utm_campaign": "first_round_quiz_completion",
+            "utm_content": f"{platform_id}_bio",
+        })
+        platform_profile_setup.append({
+            "platformId": platform_id,
+            "label": setup["label"],
+            "profileLinkLabel": setup["profileLinkLabel"],
+            "profileLink": profile_link,
+            "bio": setup["bio"],
+            "pinnedComment": setup["pinnedComment"].format(url=profile_link),
+            "linkLimitNote": setup["linkLimitNote"],
+            "launchChecklist": [
+                "發布第一支 Shorts/Reels 前，先確認 profile link 使用平台專屬追蹤連結。",
+                "Bio 不直接導購，只保留測驗與情感守護者入口。",
+                "置頂留言或首則留言維持單一 CTA：完成 15 題測驗。",
+                "發布後回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+            ],
+            "kpiFieldsToFill": [
+                "profile_clicks",
+                "site_clicks",
+                "quiz_starts",
+                "quiz_completions",
+                "guardian_result_clicks",
+                "resources_clicks",
+                "luna_clicks",
+            ],
+        })
     return {
         "generatedAt": UPDATED,
         "site": DOMAIN,
@@ -10510,6 +10569,7 @@ def collect_promotion_kit() -> dict:
         "contentRules": scripts["campaign"]["contentRules"],
         "kpiFields": tracker_fields,
         "measurementPlan": measurement_plan,
+        "platformProfileSetup": platform_profile_setup,
         "publishingTasks": tasks,
         "publishingCalendar": campaigns,
     }

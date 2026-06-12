@@ -1723,6 +1723,52 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
     kpi_fields = data.get("kpiFields")
     if not isinstance(kpi_fields, list) or not expected_kpi_fields.issubset(kpi_fields):
         issues.append(f"{PROMOTION_KIT_PATH}: kpiFields missing revenue bridge fields")
+    platform_profile_setup = data.get("platformProfileSetup")
+    expected_profile_sources = {
+        "youtube_shorts": "youtube",
+        "tiktok": "tiktok",
+        "instagram_reels": "instagram",
+    }
+    if not isinstance(platform_profile_setup, list) or len(platform_profile_setup) != len(expected_profile_sources):
+        issues.append(f"{PROMOTION_KIT_PATH}: platformProfileSetup should include three platform setups")
+        platform_profile_setup = []
+    seen_profile_platforms: set[str] = set()
+    for item in platform_profile_setup:
+        if not isinstance(item, dict):
+            issues.append(f"{PROMOTION_KIT_PATH}: platformProfileSetup item should be an object")
+            continue
+        platform_id = item.get("platformId")
+        expected_source = expected_profile_sources.get(platform_id)
+        if not expected_source:
+            issues.append(f"{PROMOTION_KIT_PATH}: unexpected platformProfileSetup platformId {platform_id!r}")
+            continue
+        seen_profile_platforms.add(platform_id)
+        stats["promotion_platform_profile_setups_checked"] += 1
+        parsed = urlparse(item.get("profileLink", ""))
+        query = parse_qs(parsed.query)
+        expected_query = {
+            "utm_source": expected_source,
+            "utm_medium": "social_profile",
+            "utm_campaign": "first_round_quiz_completion",
+            "utm_content": f"{platform_id}_bio",
+        }
+        if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw" or parsed.path != "/start/":
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} profileLink should point to /start/")
+        for key, expected_value in expected_query.items():
+            if query.get(key, [""])[0] != expected_value:
+                issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} profileLink missing {key}={expected_value}")
+        setup_text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
+        if "完成 15 題測驗" not in setup_text:
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should include quiz CTA")
+        if any(word in setup_text for word in ("診斷", "療效", "保證修復", "必須購買")):
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should not include unsafe commercial claims")
+        kpi_fields_to_fill = item.get("kpiFieldsToFill")
+        if not isinstance(kpi_fields_to_fill, list) or not {"profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"}.issubset(kpi_fields_to_fill):
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} kpiFieldsToFill missing profile funnel fields")
+        else:
+            stats["promotion_platform_profile_kpi_fields_checked"] += len(kpi_fields_to_fill)
+    if seen_profile_platforms != set(expected_profile_sources):
+        issues.append(f"{PROMOTION_KIT_PATH}: platformProfileSetup missing platforms {sorted(set(expected_profile_sources) - seen_profile_platforms)}")
     measurement = data.get("measurementPlan")
     if not isinstance(measurement, dict):
         issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan should be an object")
@@ -3728,6 +3774,8 @@ def main() -> int:
     print(f"promotion_tasks_checked={stats['promotion_tasks_checked']}")
     print(f"promotion_revenue_bridge_kpis_checked={stats['promotion_revenue_bridge_kpis_checked']}")
     print(f"promotion_monetization_bridges_checked={stats['promotion_monetization_bridges_checked']}")
+    print(f"promotion_platform_profile_setups_checked={stats['promotion_platform_profile_setups_checked']}")
+    print(f"promotion_platform_profile_kpi_fields_checked={stats['promotion_platform_profile_kpi_fields_checked']}")
     print(f"site_index_pages_checked={stats['site_index_pages_checked']}")
     print(f"site_index_languages_checked={stats['site_index_languages_checked']}")
     print(f"site_index_groups_checked={stats['site_index_groups_checked']}")

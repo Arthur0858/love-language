@@ -31,6 +31,7 @@ PYTHON_TOOLS = [
     "tools/promotion_launch_brief.py",
     "tools/promotion_revenue_decision_matrix.py",
     "tools/promotion_week_decision_gate.py",
+    "tools/promotion_lead_intake_playbook.py",
     "tools/promotion_asset_backlog.py",
     "tools/promotion_platform_profile_setup.py",
     "tools/promotion_platform_profile_tracker.py",
@@ -146,6 +147,7 @@ def main() -> int:
         run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])
         run_step("promotion week decision gate", [sys.executable, "tools/promotion_week_decision_gate.py", "--check"])
+        run_step("promotion lead intake playbook", [sys.executable, "tools/promotion_lead_intake_playbook.py", "--check"])
         run_step("promotion asset backlog", [sys.executable, "tools/promotion_asset_backlog.py", "--check"])
         run_step("promotion platform profile setup", [sys.executable, "tools/promotion_platform_profile_setup.py", "--check"])
         run_step("promotion platform profile tracker", [sys.executable, "tools/promotion_platform_profile_tracker.py", "--check"])

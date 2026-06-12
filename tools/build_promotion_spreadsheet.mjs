@@ -9,6 +9,7 @@ const ROOT = path.resolve(path.dirname(__filename), "..");
 const PROMOTION_DIR = path.join(ROOT, "docs", "promotion", "first-round");
 const TRACKER_CSV = path.join(PROMOTION_DIR, "kpi-tracker.csv");
 const PROFILE_TRACKER_CSV = path.join(PROMOTION_DIR, "platform-profile-tracker.csv");
+const LEAD_INTAKE_CSV = path.join(PROMOTION_DIR, "lead-intake-tracker.csv");
 const NEXT_ACTIONS_JSON = path.join(PROMOTION_DIR, "next-actions.json");
 const WEEKLY_SUMMARY_JSON = path.join(PROMOTION_DIR, "weekly-summary.json");
 const WEEK_EXECUTION_JSON = path.join(PROMOTION_DIR, "week-1-execution-sheet.json");
@@ -127,6 +128,7 @@ function numberToColumn(num) {
 async function main() {
   const trackerRows = parseCsv(await fs.readFile(TRACKER_CSV, "utf8"));
   const profileTrackerRows = parseCsv(await fs.readFile(PROFILE_TRACKER_CSV, "utf8"));
+  const leadIntakeRows = parseCsv(await fs.readFile(LEAD_INTAKE_CSV, "utf8"));
   const nextActions = JSON.parse(await fs.readFile(NEXT_ACTIONS_JSON, "utf8"));
   const weeklySummary = JSON.parse(await fs.readFile(WEEKLY_SUMMARY_JSON, "utf8"));
   const weekExecution = JSON.parse(await fs.readFile(WEEK_EXECUTION_JSON, "utf8"));
@@ -135,6 +137,7 @@ async function main() {
   const dashboard = workbook.worksheets.add("Dashboard");
   const tracker = workbook.worksheets.add("KPI Tracker");
   const profileTracker = workbook.worksheets.add("Platform Profiles");
+  const leadIntake = workbook.worksheets.add("Lead Intake");
   const weekExecutionSheet = workbook.worksheets.add("Week 1 Execution");
   const actions = workbook.worksheets.add("Next Actions");
   const dictionary = workbook.worksheets.add("Data Dictionary");
@@ -146,6 +149,7 @@ async function main() {
     ["Tracker rows total", weeklySummary.trackerTotalRows],
     ["Platform profile rows with activity", weeklySummary.profileTrackerRows],
     ["Platform profile rows total", weeklySummary.profileTrackerTotalRows],
+    ["Lead intake template rows", Math.max(leadIntakeRows.length - 1, 0)],
     ["Week 1 profile gates pending", weekExecution.profilePendingCount],
     ["Week 1 platform posts", weekExecution.platformPostCount],
     ["Empty data safety mode", nextActions.dataState.emptyDataMode ? "YES" : "NO"],
@@ -165,6 +169,7 @@ async function main() {
 
   writeMatrix(tracker, "A1", trackerRows);
   writeMatrix(profileTracker, "A1", profileTrackerRows);
+  writeMatrix(leadIntake, "A1", leadIntakeRows);
 
   const profileGateHeaders = ["platform", "label", "ready", "status", "profileLinkLabel", "profileLink", "bio", "pinnedComment", "writeback"];
   const executionHeaders = [
@@ -221,6 +226,7 @@ async function main() {
     ["luna_pack_clicks", "Luna Gumroad product exploration."],
     ["affiliate_book_clicks", "Affiliate book route exploration."],
     ["contact_requests", "High-intent contact or path-summary mailto request."],
+    ["lead-intake-tracker.csv", "Template rows for real Contact, waitlist, Luna, or repair supply requests. Template rows are not user data."],
   ]);
 
   await fs.mkdir(PROMOTION_DIR, { recursive: true });
@@ -234,9 +240,9 @@ async function main() {
     summary: "formula error scan",
   });
   let renderedSheets = 0;
-  const sheetNames = ["Dashboard", "KPI Tracker", "Platform Profiles", "Week 1 Execution", "Next Actions", "Data Dictionary"];
+  const sheetNames = ["Dashboard", "KPI Tracker", "Platform Profiles", "Lead Intake", "Week 1 Execution", "Next Actions", "Data Dictionary"];
   for (const sheetName of sheetNames) {
-    const range = sheetName === "Week 1 Execution" ? "A1:O28" : "A1:H24";
+    const range = sheetName === "Week 1 Execution" ? "A1:O28" : sheetName === "Lead Intake" ? "A1:Q18" : "A1:H24";
     await workbook.render({ sheetName, range, scale: 1 });
     renderedSheets += 1;
   }

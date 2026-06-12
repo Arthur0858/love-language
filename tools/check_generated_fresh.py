@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED_DIRS = {".git", ".github", ".wrangler", "__pycache__", "node_modules", "output"}
-EXCLUDED_SUFFIXES = {".pyc"}
+EXCLUDED_SUFFIXES = {".pyc", ".xlsx"}
 
 
 def site_files(root: Path) -> dict[str, Path]:

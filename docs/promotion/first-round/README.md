@@ -56,6 +56,8 @@
 - `offer-experiment-queue.json/csv`: 同一份商品實驗佇列的機器可讀與表格版本。
 - `launch-command-center.md`: 第一輪每日發布指揮板，把平台首頁設定、素材就緒檢查、Week 1 發布與 KPI 回填排成可執行順序。
 - `launch-command-center.json/csv`: 同一份發布指揮板的機器可讀與表格版本，可匯入 KPI 工作簿。
+- `launch-link-qa.md`: 發布前追蹤連結 QA 清單，集中檢查 3 條 Bio/Profile 連結與 15 條 Shorts 連結。
+- `launch-link-qa.json/csv`: 同一份連結 QA 的機器可讀與表格版本，可供公開 smoke 逐一打開驗證。
 - `next-actions.md`: 使用 `python3 tools/promotion_next_actions.py` 產生的下一批發布與獲利承接建議。
 - `next-actions.json`: 同一份下一步建議的機器可讀版本。
 
@@ -125,6 +127,7 @@ python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_week_asset_briefs.py --all
 python3 tools/promotion_launch_command_center.py
+python3 tools/promotion_launch_link_qa.py
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
 ```
@@ -154,6 +157,7 @@ python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_week_asset_briefs.py --all
 python3 tools/promotion_launch_command_center.py
+python3 tools/promotion_launch_link_qa.py
 python3 tools/promotion_weekly_summary.py
 python3 tools/promotion_week_decision_gate.py
 python3 tools/promotion_lead_intake_playbook.py
@@ -176,6 +180,8 @@ node tools/build_promotion_spreadsheet.mjs
 `offer-experiment-queue.md` 是達標後才執行的工作佇列。每個 READY 實驗會拆成 brief、asset、QA、measure；若週 Gate 還有阻擋條件，所有佇列列都保持 `blocked_by_gate`，不製作公開商品素材。
 
 `launch-command-center.md` 是每天開工時先看的指揮板。它把可以立即做的 profile setup 與 asset ready check 放在前面，真正發布與 KPI 回填列會保留前置條件；因此還沒有 post URL 與 KPI 前，系統仍會明確禁止調整商品排序或加重付費 CTA。
+
+`launch-link-qa.md` 是正式發布前的連結清單。它會把三平台 Bio/Profile link 和 15 支 Shorts 的唯一追蹤連結集中列出；公開部署後可用 `tools/public_launch_link_smoke.py` 逐一確認所有連結都落在 `/start/`，UTM 沒被改寫，且測驗入口與安全邊界仍存在。
 
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 

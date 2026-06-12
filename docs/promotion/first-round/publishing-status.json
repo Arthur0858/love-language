@@ -1,0 +1,74 @@
+{
+  "generatedAt": "2026-06-13",
+  "queueRows": 45,
+  "trackerRows": 15,
+  "platforms": [
+    "instagram_reels",
+    "tiktok",
+    "youtube_shorts"
+  ],
+  "queueByPlatform": {
+    "instagram_reels": 15,
+    "tiktok": 15,
+    "youtube_shorts": 15
+  },
+  "queueByStatus": {
+    "planned": 45
+  },
+  "queueByGuardian": {
+    "claire": 9,
+    "dora": 9,
+    "iris": 9,
+    "noah": 9,
+    "vivian": 9
+  },
+  "publishedByPlatform": {},
+  "platformStatus": {
+    "instagram_reels": {
+      "planned": 15
+    },
+    "tiktok": {
+      "planned": 15
+    },
+    "youtube_shorts": {
+      "planned": 15
+    }
+  },
+  "guardianStatus": {
+    "claire": {
+      "planned": 9
+    },
+    "dora": {
+      "planned": 9
+    },
+    "iris": {
+      "planned": 9
+    },
+    "noah": {
+      "planned": 9
+    },
+    "vivian": {
+      "planned": 9
+    }
+  },
+  "publishedScripts": [],
+  "trackerReadyPublishedScripts": [],
+  "trackerMissingPublishedScripts": [],
+  "trackerPartialPublishedScripts": [],
+  "revenueIntentTotals": {
+    "free_keepsake_downloads": 0,
+    "supply_lead_requests": 0,
+    "luna_pack_clicks": 0,
+    "affiliate_book_clicks": 0,
+    "contact_requests": 0
+  },
+  "warnings": [
+    "empty publish mode: no queue rows are marked published/live/posted yet"
+  ],
+  "issues": [],
+  "readyForWeeklyDecision": false,
+  "safety": {
+    "emptyPublishMode": true,
+    "note": "Do not pick winning guardians or monetization routes before published posts and KPI rows are backfilled."
+  }
+}

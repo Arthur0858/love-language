@@ -9,7 +9,9 @@
 - `shorts-scripts.zh-TW.json`: 15 支 Shorts 腳本，每位守護者 3 支，欄位符合 shorts-factory 腳本自動化契約。
 - `publishing-calendar.csv`: 5 週發布節奏，每週 3 支 Shorts，依 Iris、Noah、Vivian、Claire、Dora 排列。
 - `kpi-tracker.csv`: 發布後追蹤表，已預填 15 支 Shorts 的任務、守護者、UTM 與追蹤連結；發布後只需補平台、貼文 URL 與成效欄位。
-- `posting-queue.csv`: 三平台發布佇列，將 15 支 Shorts 展開為 YouTube Shorts、TikTok、Instagram Reels 共 45 個發布任務。
+- `posting-queue.csv`: 三平台發布佇列，將 15 支 Shorts 展開為 YouTube Shorts、TikTok、Instagram Reels 共 45 個發布任務，預設排在台北時間每週一/三/五晚間。
+- `publishing-status.md`: 發布狀態對帳報告，檢查 45 筆發文任務是否已回填貼文 URL、發布日期，並確認 KPI 表是否足以做週決策。
+- `publishing-status.json`: 同一份發布狀態的機器可讀版本，可交給表格、儀表板或自動化使用。
 - `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
@@ -71,11 +73,24 @@
 ```bash
 python3 tools/promotion_sync_kpi_tracker.py
 python3 tools/promotion_sync_posting_queue.py
+python3 tools/promotion_publishing_status.py
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
 ```
 
-發布後先在 `posting-queue.csv` 回填各平台 `post_url`、`published_date`、`status`，再回填 `kpi-tracker.csv` 的 `date`、`platform`、`post_url` 與成效欄位，最後執行：
+若要指定第一週週一日期，可使用：
+
+```bash
+python3 tools/promotion_sync_posting_queue.py --start-date 2026-06-15
+```
+
+發布後先在 `posting-queue.csv` 回填各平台 `post_url`、`published_date`、`status`，再回填 `kpi-tracker.csv` 的 `date`、`platform`、`post_url` 與成效欄位。每週做判讀前先執行：
+
+```bash
+python3 tools/promotion_publishing_status.py
+```
+
+若 `publishing-status.md` 顯示「是否可做週決策：尚不可」，先補貼文 URL、發布日期或 KPI 回填，不要急著判斷優勝守護者或商品方向。資料足夠後再執行：
 
 ```bash
 python3 tools/promotion_weekly_summary.py

@@ -20,6 +20,8 @@
 - `revenue-decision-matrix.json`: 同一份決策矩陣的機器可讀版本。
 - `asset-build-backlog.md`: 五守護者可製作資產 backlog，列出故事卡、PDF、桌布、Email、短儀式、Luna、聯盟書卷與短片變體。
 - `asset-build-backlog.json`: 同一份資產 backlog 的機器可讀版本。
+- `platform-profile-setup.md`: 三平台首頁設定檢查包，整理 YouTube Shorts、TikTok、Instagram Reels 的 Bio、個人頁連結、置頂留言、KPI 回填欄位與商業邊界。
+- `platform-profile-setup.json`: 同一份平台首頁設定的機器可讀版本，可交給發布排程、表格或手動檢查使用。
 - `now-asset-production-pack.md`: 目前 `priority=now` 的製作包，將五位守護者短影片痛點變體整理成可直接製作的腳本。
 - `now-asset-production-pack.json`: 同一份 now 製作包的機器可讀版本，欄位符合 LoveTypes guardian script library。
 - `now-asset-production-queue.csv`: 5 支 now 短片的製作追蹤表，拆成腳本審核、素材、剪輯、字幕、安全 QA、排程與 KPI 回填。
@@ -50,6 +52,7 @@
 - 每支 Shorts 只保留一個 CTA：完成 15 題測驗，找到你的情感守護者。
 - 不把測驗結果寫成診斷，不承諾療效，不用恐嚇式情緒操控。
 - 第一輪不主推聯盟書卷或 Luna 購買；測驗完成後再由網站承接旅人補給、修復計畫、Luna、收藏室。
+- 發布第一支影片前，先依 `platform-profile-setup.md` 完成三平台 Bio、個人頁連結與置頂留言設定。
 - Shorts 說明欄建議連結：優先使用 `publishing-calendar.csv` 的 `tracked_url`。
 - 若平台不允許長連結，退回 `https://lovetypes.tw/start/`，並在平台後台用 `utm_campaign=first_round_quiz_completion`、`utm_content` 對應 `publishing-calendar.csv`。
 
@@ -91,6 +94,7 @@ python3 tools/promotion_publishing_status.py
 python3 tools/promotion_launch_brief.py --all
 python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
+python3 tools/promotion_platform_profile_setup.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
@@ -115,6 +119,7 @@ python3 tools/promotion_publishing_status.py
 ```bash
 python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
+python3 tools/promotion_platform_profile_setup.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
@@ -125,6 +130,8 @@ node tools/build_promotion_spreadsheet.mjs
 `revenue-decision-matrix.md` 會把每位守護者分成五種階段：先收集訊號、放大內容變體、深化免費收藏物、建立自有名單資產、測試柔性商品承接。空資料時它會維持安全模式，不會建議調整商品或付費 CTA。
 
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
+
+`platform-profile-setup.md` 是發布前的承接檢查包。三平台各自有專屬 profile link UTM、Bio、置頂留言與 KPI 欄位，避免 Shorts caption 說「個人頁連結」但平台首頁沒有一致入口。
 
 `now-asset-production-pack.md` 只抽出當前 `priority=now` 的任務，整理成可直接製作的短影片腳本、字幕、畫面建議與留言引導。若 tracker 尚未回填，它會先提供每位守護者一支痛點變體，不提前製作付費商品。
 

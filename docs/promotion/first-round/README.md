@@ -22,6 +22,8 @@
 - `asset-build-backlog.json`: 同一份資產 backlog 的機器可讀版本。
 - `platform-profile-setup.md`: 三平台首頁設定檢查包，整理 YouTube Shorts、TikTok、Instagram Reels 的 Bio、個人頁連結、置頂留言、KPI 回填欄位與商業邊界。
 - `platform-profile-setup.json`: 同一份平台首頁設定的機器可讀版本，可交給發布排程、表格或手動檢查使用。
+- `platform-profile-tracker.csv`: 三平台 Bio/Profile link 的 KPI 追蹤表，專門回填個人頁連結帶來的點擊、測驗開始、測驗完成與收益意圖。
+- `platform-profile-tracker.md/json`: 同一份平台首頁 KPI 追蹤表的人讀版與機器可讀版本。
 - `now-asset-production-pack.md`: 目前 `priority=now` 的製作包，將五位守護者短影片痛點變體整理成可直接製作的腳本。
 - `now-asset-production-pack.json`: 同一份 now 製作包的機器可讀版本，欄位符合 LoveTypes guardian script library。
 - `now-asset-production-queue.csv`: 5 支 now 短片的製作追蹤表，拆成腳本審核、素材、剪輯、字幕、安全 QA、排程與 KPI 回填。
@@ -95,6 +97,7 @@ python3 tools/promotion_launch_brief.py --all
 python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_platform_profile_setup.py
+python3 tools/promotion_platform_profile_tracker.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
@@ -120,6 +123,7 @@ python3 tools/promotion_publishing_status.py
 python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_platform_profile_setup.py
+python3 tools/promotion_platform_profile_tracker.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
@@ -132,6 +136,8 @@ node tools/build_promotion_spreadsheet.mjs
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 
 `platform-profile-setup.md` 是發布前的承接檢查包。三平台各自有專屬 profile link UTM、Bio、置頂留言與 KPI 欄位，避免 Shorts caption 說「個人頁連結」但平台首頁沒有一致入口。
+
+`platform-profile-tracker.csv` 則是 Bio/Profile link 的回填表。單支影片成效仍放在 `kpi-tracker.csv`，平台首頁承接成效放在此表，避免把 caption 連結與個人頁連結混在一起判斷。
 
 `now-asset-production-pack.md` 只抽出當前 `priority=now` 的任務，整理成可直接製作的短影片腳本、字幕、畫面建議與留言引導。若 tracker 尚未回填，它會先提供每位守護者一支痛點變體，不提前製作付費商品。
 
@@ -153,6 +159,7 @@ python3 tools/promotion_weekly_summary.py --check
 
 - `posting-queue.csv`: `status`、`published_date`、`post_url`
 - `kpi-tracker.csv`: `platform`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
+- `platform-profile-tracker.csv`: 若流量來自 Bio/Profile link，回填 `profile_clicks`、`site_clicks`、`quiz_starts`、`quiz_completions`
 
 若要重新產生全部週次的平台簡報：
 

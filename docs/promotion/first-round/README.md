@@ -46,6 +46,8 @@
 - `lead-intake-tracker.csv`: 真實需求發生後使用的回填模板；預設列都是 `template`，不代表已有使用者名單。
 - `offer-hypothesis-board.md`: 五守護者商品假設板，把免費收藏物、自有名單、Luna 與聯盟書卷拆成 PASS/HOLD 的測試假設。
 - `offer-hypothesis-board.json/csv`: 同一份商品假設板的機器可讀與表格版本，可匯入 KPI 工作簿。
+- `offer-experiment-plan.md`: 商品實驗計畫，為免費收藏、自有名單、Luna 與聯盟書卷設定可進入 READY 的 KPI 門檻。
+- `offer-experiment-plan.json/csv`: 同一份商品實驗計畫的機器可讀與表格版本。
 - `next-actions.md`: 使用 `python3 tools/promotion_next_actions.py` 產生的下一批發布與獲利承接建議。
 - `next-actions.json`: 同一份下一步建議的機器可讀版本。
 
@@ -144,6 +146,7 @@ python3 tools/promotion_weekly_summary.py
 python3 tools/promotion_week_decision_gate.py
 python3 tools/promotion_lead_intake_playbook.py
 python3 tools/promotion_offer_hypothesis_board.py
+python3 tools/promotion_offer_experiment_plan.py
 node tools/build_promotion_spreadsheet.mjs
 ```
 
@@ -154,6 +157,8 @@ node tools/build_promotion_spreadsheet.mjs
 `lead-intake-playbook.md` 是有人寄信、索取收藏物、提出補給願望或詢問 Luna 後的承接規則。它不預設已有名單；只有真實需求發生時才把 `lead-intake-tracker.csv` 的模板列複製成真實列，並回填來源、守護者、需求類型、回覆狀態與履約資產。這讓「免費收藏物 → Email 需求 → 自有素材或柔性商品」的路徑可追蹤，而不需要一開始就上付款系統。
 
 `offer-hypothesis-board.md` 是商品化前的假設板。它把每位守護者目前可測的免費資產、自有名單資產、Luna 測試與聯盟書卷列成 PASS/HOLD；只要週 Gate 還有阻擋條件，商品假設就維持 HOLD，不改公開付費 CTA 或商品排序。
+
+`offer-experiment-plan.md` 是把假設推進成實驗的門檻表。每位守護者有四種實驗：免費保存、自有名單、Luna 柔性商品、聯盟書卷；只有測驗完成與對應意圖指標達標，實驗才會 READY。未達 READY 前，不製作或加重付費 CTA。
 
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 

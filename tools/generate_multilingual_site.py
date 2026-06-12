@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+import csv
 from collections import Counter
 from datetime import date
 from html import escape
@@ -10283,6 +10284,54 @@ def write_ai_discovery_index() -> None:
     write(ROOT / "ai-discovery.json", json.dumps(collect_ai_discovery_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_promotion_kit() -> dict:
+    base = ROOT / "docs" / "promotion" / "first-round"
+    calendar_path = base / "publishing-calendar.csv"
+    tracker_path = base / "kpi-tracker.csv"
+    scripts_path = base / "shorts-scripts.zh-TW.json"
+    campaigns = []
+    with calendar_path.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            campaigns.append({
+                "week": int(row["week"]),
+                "slot": int(row["slot"]),
+                "guardianId": row["guardian_id"],
+                "guardianName": row["guardian_name"],
+                "scriptId": row["script_id"],
+                "contentAngle": row["content_angle"],
+                "primaryUrl": row["primary_url"],
+                "trackedUrl": row["tracked_url"],
+                "utmCampaign": row["utm_campaign"],
+                "utmContent": row["utm_content"],
+                "platformStatus": row["platform_status"],
+                "notes": row["notes"],
+            })
+    with tracker_path.open(newline="", encoding="utf-8") as handle:
+        tracker_fields = next(csv.reader(handle))
+    scripts = json.loads(scripts_path.read_text(encoding="utf-8"))
+    return {
+        "generatedAt": UPDATED,
+        "site": DOMAIN,
+        "campaignId": scripts["campaign"]["id"],
+        "campaignName": scripts["campaign"]["name"],
+        "utmCampaign": "first_round_quiz_completion",
+        "objective": "Increase completed 15-question guardian quiz sessions before optimizing direct sales.",
+        "primaryUrl": scripts["campaign"]["primaryUrl"],
+        "trackingUrlTemplate": scripts["campaign"]["trackingUrlTemplate"],
+        "language": "zh-TW",
+        "guardianCount": 5,
+        "scriptCount": len(scripts["scripts"]),
+        "campaignCount": len(campaigns),
+        "contentRules": scripts["campaign"]["contentRules"],
+        "kpiFields": tracker_fields,
+        "publishingCalendar": campaigns,
+    }
+
+
+def write_promotion_kit() -> None:
+    write(ROOT / "promotion-kit.json", json.dumps(collect_promotion_kit(), ensure_ascii=False, indent=2) + "\n")
+
+
 def collect_release_info() -> dict:
     site_index = collect_site_index()
     commerce = collect_commerce_catalog()
@@ -10523,6 +10572,7 @@ https://:version.lovetypes.pages.dev/*
     write_site_index()
     write_safety_index()
     write_ai_discovery_index()
+    write_promotion_kit()
     write_release_info()
     write_site_health()
 

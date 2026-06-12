@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import date
 from pathlib import Path
 
-from promotion_weekly_summary import build_report, load_tasks, read_tracker
+from promotion_weekly_summary import build_report, is_filled, load_tasks, read_tracker
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,7 +37,7 @@ def parse_int(value: str | None) -> int:
 
 
 def filled_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
-    return [row for row in rows if any((value or "").strip() for value in row.values())]
+    return [row for row in rows if is_filled(row)]
 
 
 def tasks_by_script(tasks: list[dict]) -> dict[str, dict]:

@@ -36,6 +36,7 @@ NUMERIC_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+ACTIVITY_FIELDS = ["date", "platform", "post_url"]
 REVENUE_FIELDS = [
     "free_keepsake_downloads",
     "supply_lead_requests",
@@ -62,7 +63,9 @@ def read_tracker(path: Path) -> tuple[list[str], list[dict[str, str]]]:
 
 
 def is_filled(row: dict[str, str]) -> bool:
-    return any((value or "").strip() for value in row.values())
+    if any((row.get(field) or "").strip() for field in ACTIVITY_FIELDS):
+        return True
+    return any(parse_int(row.get(field)) > 0 for field in NUMERIC_FIELDS)
 
 
 def load_tasks(path: Path) -> list[dict]:
@@ -168,6 +171,7 @@ def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict
 
     return {
         "generatedAt": date.today().isoformat(),
+        "trackerTotalRows": len(rows),
         "trackerRows": len(filled_rows),
         "plannedTasks": planned_count,
         "fieldStatus": {
@@ -215,7 +219,7 @@ def build_summary(report: dict) -> str:
         "# LoveTypes 第一輪推廣週摘要",
         "",
         f"- 產生日期：{report['generatedAt']}",
-        f"- 追蹤列數：{report['trackerRows']}",
+        f"- 追蹤列數：{report['trackerRows']} / {report.get('trackerTotalRows', report['trackerRows'])}",
         f"- 已規劃待發布任務：{report['plannedTasks']}",
         f"- 追蹤欄位狀態：{'完整' if field_status['complete'] else '缺少 ' + ', '.join(missing_fields)}",
         "",
@@ -272,6 +276,7 @@ def main() -> int:
         required_report_keys = {
             "generatedAt",
             "trackerRows",
+            "trackerTotalRows",
             "plannedTasks",
             "fieldStatus",
             "totals",

@@ -14,11 +14,18 @@ DEFAULT_WEEK = 1
 DEFAULT_WEEKS = [1, 2, 3, 4, 5]
 HASHTAGS = ["#五種愛之語測驗", "#情感守護者", "#心語庭園", "#錯頻修復", "#LoveTypes"]
 KPI_FIELDS = [
+    "week",
+    "slot",
+    "task_id",
     "date",
     "platform",
     "post_url",
     "script_id",
     "guardian_id",
+    "guardian_name",
+    "content_angle",
+    "utm_content",
+    "tracked_url",
     "views",
     "likes",
     "comments",
@@ -66,8 +73,15 @@ def caption_for(task: dict) -> str:
 
 def kpi_row_template(task: dict) -> dict[str, str]:
     row = {field: "" for field in KPI_FIELDS}
+    row["week"] = str(task.get("week", ""))
+    row["slot"] = str(task.get("slot", ""))
+    row["task_id"] = str(task.get("taskId", ""))
     row["script_id"] = str(task.get("scriptId", ""))
     row["guardian_id"] = str(task.get("guardianId", ""))
+    row["guardian_name"] = str(task.get("guardianName", ""))
+    row["content_angle"] = str(task.get("contentAngle", ""))
+    row["utm_content"] = str(task.get("utmContent", ""))
+    row["tracked_url"] = str(task.get("trackedUrl", ""))
     row["notes"] = str(task.get("notes", ""))
     return row
 

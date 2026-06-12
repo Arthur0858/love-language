@@ -8,7 +8,7 @@
 
 - `shorts-scripts.zh-TW.json`: 15 支 Shorts 腳本，每位守護者 3 支，欄位符合 shorts-factory 腳本自動化契約。
 - `publishing-calendar.csv`: 5 週發布節奏，每週 3 支 Shorts，依 Iris、Noah、Vivian、Claire、Dora 排列。
-- `kpi-tracker.csv`: 發布後追蹤表，記錄觀看、互動、網站點擊、測驗開始與完成，並回填收藏物、補給名單、Luna、聯盟書卷與 Contact 需求。
+- `kpi-tracker.csv`: 發布後追蹤表，已預填 15 支 Shorts 的任務、守護者、UTM 與追蹤連結；發布後只需補平台、貼文 URL 與成效欄位。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
 - `weekly-summary.md`: 使用 `python3 tools/promotion_weekly_summary.py` 產生的週檢查摘要，會指出應放大的守護者、內容角度與下一個獲利承接動作。
@@ -67,10 +67,11 @@
 發布前先產生完整第一輪 5 週發布包：
 
 ```bash
+python3 tools/promotion_sync_kpi_tracker.py
 python3 tools/promotion_publish_pack.py --all
 ```
 
-發布後回填 `kpi-tracker.csv`，再執行：
+發布後回填 `kpi-tracker.csv` 的 `date`、`platform`、`post_url` 與成效欄位，再執行：
 
 ```bash
 python3 tools/promotion_weekly_summary.py

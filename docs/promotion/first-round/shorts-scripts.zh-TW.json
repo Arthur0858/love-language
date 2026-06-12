@@ -7,6 +7,7 @@
     "primaryGoal": "quiz_completion",
     "primaryCta": "完成 15 題測驗，找到你的情感守護者",
     "primaryUrl": "https://lovetypes.tw/start/",
+    "trackingUrlTemplate": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content={utm_content}",
     "contentRules": [
       "每支 Shorts 只推一個 CTA：完成 15 題測驗，找到你的情感守護者。",
       "不直接導購，不承諾療效，不把守護者結果寫成診斷。",

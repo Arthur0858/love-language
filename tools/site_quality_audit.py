@@ -338,6 +338,9 @@ REQUIRED_INTERACTION_HASH_SNIPPETS = {
     "scrollToHashTarget": "hash target scrolling",
     "prefers-reduced-motion: reduce": "reduced motion hash scrolling",
     "window.history.pushState": "same-page hash history update",
+    "lovetypes:campaign-attribution:v1": "campaign attribution storage",
+    "utm_campaign": "campaign UTM capture",
+    "campaign: campaign": "funnel payload campaign attachment",
 }
 
 

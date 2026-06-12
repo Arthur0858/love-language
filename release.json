@@ -3,7 +3,7 @@
   "generatedBy": "tools/generate_multilingual_site.py",
   "updated": "2026-06-12",
   "production": "https://lovetypes.tw/",
-  "assetVersion": "20260612-contact-path-handoff",
+  "assetVersion": "20260612-campaign-attribution",
   "deploymentTarget": "Cloudflare Pages project lovetypes",
   "branch": "main",
   "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",

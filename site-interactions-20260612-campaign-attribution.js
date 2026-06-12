@@ -88,8 +88,51 @@
     }
   }
 
+  function campaignAttributionFromUrl() {
+    var params;
+    try {
+      params = new URLSearchParams(window.location.search || '');
+    } catch (error) {
+      return null;
+    }
+    var fields = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var attribution = {};
+    fields.forEach(function (field) {
+      var value = String(params.get(field) || '').trim();
+      if (value) attribution[field] = value.slice(0, 120);
+    });
+    if (!Object.keys(attribution).length) return null;
+    attribution.landingPath = window.location.pathname;
+    attribution.firstSeenAt = new Date().toISOString();
+    return attribution;
+  }
+
+  function storedCampaignAttribution() {
+    try {
+      var attribution = JSON.parse(localStorage.getItem('lovetypes:campaign-attribution:v1') || '{}');
+      return attribution && typeof attribution === 'object' ? attribution : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function captureCampaignAttribution() {
+    var attribution = campaignAttributionFromUrl();
+    if (!attribution) return storedCampaignAttribution();
+    try {
+      var previous = storedCampaignAttribution();
+      attribution.firstSeenAt = previous.firstSeenAt || attribution.firstSeenAt;
+      attribution.lastSeenAt = new Date().toISOString();
+      localStorage.setItem('lovetypes:campaign-attribution:v1', JSON.stringify(attribution));
+      return attribution;
+    } catch (error) {
+      return attribution;
+    }
+  }
+
   function recordFunnelPayload(name, target, element) {
     if (!name) return;
+    var campaign = storedCampaignAttribution();
     var payload = {
       name: name,
       path: window.location.pathname,
@@ -99,6 +142,7 @@
       category: funnelCategory(name),
       guardian: guardianFromElement(element, target || ''),
       source: funnelSource(element),
+      campaign: campaign,
       at: new Date().toISOString()
     };
     window.dispatchEvent(new CustomEvent('lovetypes:funnel', { detail: payload }));
@@ -267,6 +311,7 @@
   });
 
   window.addEventListener('DOMContentLoaded', function () {
+    captureCampaignAttribution();
     if (!window.location.hash) return;
     window.requestAnimationFrame(function () {
       scrollToHashTarget(window.location.hash, 'auto');

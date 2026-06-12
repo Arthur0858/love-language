@@ -14,11 +14,13 @@ KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "lead-intake-playbook.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "lead-intake-playbook.json"
 DEFAULT_CSV_OUTPUT_PATH = PROMOTION_DIR / "lead-intake-tracker.csv"
+ATTRIBUTION_RECONCILIATION_PATH = PROMOTION_DIR / "attribution-reconciliation.csv"
 GUARDIAN_ORDER = ["iris", "noah", "vivian", "claire", "dora"]
 INTAKE_TYPES = [
     {
         "type": "owned_asset_request",
         "requestedAsset": "guardian PDF / wallpaper / short ritual",
+        "kpiField": "supply_lead_requests",
         "priority": "medium",
         "firstResponse": "確認想收到的守護者素材，回覆預計製作方向與安全邊界。",
         "nextAction": "累積同守護者重複需求後，排進 asset-build-backlog 的 build_owned_asset。",
@@ -26,6 +28,7 @@ INTAKE_TYPES = [
     {
         "type": "luna_scene_request",
         "requestedAsset": "Luna bedtime / conflict cooldown / quiz aftercare pack",
+        "kpiField": "luna_pack_clicks",
         "priority": "medium",
         "firstResponse": "確認使用情境，不承諾療效，只提供夜間整理或冷卻素材方向。",
         "nextAction": "若同守護者 Luna 需求重複，才測試結果後柔性商品承接。",
@@ -33,6 +36,7 @@ INTAKE_TYPES = [
     {
         "type": "repair_or_contact_request",
         "requestedAsset": "relationship repair prompt / supply route guidance",
+        "kpiField": "contact_requests",
         "priority": "high",
         "firstResponse": "回覆可提供的網站路線與自助素材，不收集敏感個資，不取代諮商。",
         "nextAction": "整理成 FAQ、修復計畫或 Contact 模板，不把個案內容公開。",
@@ -42,11 +46,15 @@ CSV_FIELDS = [
     "request_id",
     "date",
     "source",
+    "utm_content",
+    "contact_campaign_content",
     "guardian_id",
     "guardian_name",
     "intake_type",
     "requested_asset",
     "related_route",
+    "kpi_writeback_field",
+    "kpi_writeback_rule",
     "email_status",
     "consent_status",
     "priority",
@@ -63,6 +71,19 @@ def load_tasks(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     tasks = data.get("publishingTasks", [])
     return tasks if isinstance(tasks, list) else []
+
+
+def attribution_content_by_guardian(path: Path) -> dict[str, list[str]]:
+    by_guardian: dict[str, list[str]] = {guardian: [] for guardian in GUARDIAN_ORDER}
+    if not path.exists():
+        return by_guardian
+    with path.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            guardian = (row.get("guardian_id") or "").strip()
+            utm_content = (row.get("utm_content") or "").strip()
+            if guardian in by_guardian and utm_content:
+                by_guardian[guardian].append(utm_content)
+    return {guardian: sorted(set(values)) for guardian, values in by_guardian.items()}
 
 
 def group_guardians(tasks: list[dict]) -> dict[str, dict]:
@@ -96,7 +117,8 @@ def route_for_intake(path: dict, intake_type: str) -> str:
     return str(path.get("contactRequest") or path.get("repairPlan") or "")
 
 
-def build_playbook(tasks: list[dict]) -> dict:
+def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[str]] | None = None) -> dict:
+    attribution_by_guardian = attribution_by_guardian or {guardian: [] for guardian in GUARDIAN_ORDER}
     guardians_by_id = group_guardians(tasks)
     guardians = []
     rows = []
@@ -108,15 +130,20 @@ def build_playbook(tasks: list[dict]) -> dict:
         guardian_rows = []
         for intake in INTAKE_TYPES:
             request_id = f"template-{guardian_id}-{intake['type']}"
+            examples = attribution_by_guardian.get(guardian_id, [])
             row = {
                 "request_id": request_id,
                 "date": "",
                 "source": "contact_or_waitlist",
+                "utm_content": "",
+                "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: " + ", ".join(examples[:3]),
                 "guardian_id": guardian_id,
                 "guardian_name": guardian["guardianName"],
                 "intake_type": intake["type"],
                 "requested_asset": intake["requestedAsset"],
                 "related_route": route_for_intake(path, intake["type"]),
+                "kpi_writeback_field": intake["kpiField"],
+                "kpi_writeback_rule": "If utm_content matches attribution-reconciliation.csv, increment this field on the matching kpi-tracker.csv row; otherwise record as manual lead and do not choose a winning script.",
                 "email_status": "not_received",
                 "consent_status": "not_applicable_until_user_contacts",
                 "priority": intake["priority"],
@@ -132,6 +159,7 @@ def build_playbook(tasks: list[dict]) -> dict:
         guardians.append({
             **guardian,
             "intakeRows": guardian_rows,
+            "attributionContentExamples": attribution_by_guardian.get(guardian_id, []),
             "firstOwnedAsset": guardian["monetizationBridge"].get("ownedLeadItemId"),
             "recommendedPolicy": "只記錄守護者、需求類型、素材偏好與可回覆信箱；不要求測驗分數、敏感個資或關係細節。",
         })
@@ -140,12 +168,15 @@ def build_playbook(tasks: list[dict]) -> dict:
         "source": {
             "promotionKit": str(KIT_PATH.relative_to(ROOT)),
             "csvTracker": str(DEFAULT_CSV_OUTPUT_PATH.relative_to(ROOT)),
+            "attributionReconciliation": str(ATTRIBUTION_RECONCILIATION_PATH.relative_to(ROOT)),
         },
         "guardians": guardians,
         "trackerRows": rows,
         "intakeTypes": INTAKE_TYPES,
         "workflow": [
             "收到 Contact、收藏室等待清單或旅人補給願望後，先填 lead-intake-tracker.csv。",
+            "把 Contact 信中的 Campaign content / 推廣內容 複製到 utm_content，並用 attribution-reconciliation.csv 找到對應腳本。",
+            "依 intake_type 回填 kpi_writeback_field；找不到 utm_content 時，只記錄 manual lead，不判定優勝腳本。",
             "同一守護者同一需求類型重複出現兩次以上，才排進自有素材製作。",
             "Luna 或聯盟需求只在測驗結果後路線測試，不把 Shorts CTA 改成購買。",
             "回覆時保持安全邊界：不診斷、不承諾療效、不要求敏感個資。",
@@ -153,6 +184,7 @@ def build_playbook(tasks: list[dict]) -> dict:
         "safety": {
             "noFakeLeads": True,
             "doNotCollect": ["quiz score", "sensitive personal details", "emergency requests", "therapy replacement claims"],
+            "manualLeadRule": "Leads without matched utm_content can inform qualitative notes, but cannot decide winning Shorts scripts.",
             "firstResponseTone": "reflective, optional, non-therapeutic",
         },
     }
@@ -165,6 +197,7 @@ def render_markdown(playbook: dict) -> str:
         f"- 產生日期：{playbook['generatedAt']}",
         f"- 模板列數：{len(playbook['trackerRows'])}",
         "- 用途：把 Contact、補給願望、收藏物等待清單與 Luna 需求轉成可回填、可排序、可履約的素材線索。",
+        "- Attribution：用 Contact 信中的 `Campaign content / 推廣內容` 對回 `attribution-reconciliation.csv`。",
         "",
         "## 使用規則",
         "",
@@ -177,15 +210,18 @@ def render_markdown(playbook: dict) -> str:
             "",
             f"- 名單資產 ID：{guardian['firstOwnedAsset']}",
             f"- 安全策略：{guardian['recommendedPolicy']}",
+            f"- 可對照 utm_content：{', '.join(guardian['attributionContentExamples']) or '尚無'}",
         ])
         for row in guardian["intakeRows"]:
-            lines.append(f"- `{row['intake_type']}`：{row['requested_asset']} -> {row['related_route']}")
+            lines.append(f"- `{row['intake_type']}`：{row['requested_asset']} -> `{row['kpi_writeback_field']}` -> {row['related_route']}")
         lines.append("")
     lines.extend([
         "## 回填欄位",
         "",
         "- `request_id`: 真實需求發生後改成可追蹤 ID，例如 `2026-06-15-iris-owned-001`。",
         "- `source`: contact、keepsake_waitlist、resources_wishlist、luna_page 或 manual_reply。",
+        "- `utm_content`: 從 Contact 信中的 `Campaign content / 推廣內容` 複製；若沒有，保留空白並只當質性線索。",
+        "- `kpi_writeback_field`: 依需求類型回填到 `kpi-tracker.csv` 的對應欄位。",
         "- `email_status`: not_received、received、replied、fulfilled、closed。",
         "- `consent_status`: not_applicable_until_user_contacts、explicit_reply_ok、do_not_contact。",
         "- `status`: template、new、triaged、queued、fulfilled、closed。",
@@ -193,6 +229,7 @@ def render_markdown(playbook: dict) -> str:
         "## 安全邊界",
         "",
         "- 模板列不代表真實名單或需求，不可當成成效數據。",
+        "- 沒有對上的 `utm_content` 不可用來判定哪支 Shorts 獲勝。",
         "- 不要求測驗分數、敏感個資、緊急求助內容或諮商替代承諾。",
         "- 同守護者同需求至少重複兩次，才提高自有素材或 Luna 商品承接優先級。",
     ])
@@ -222,8 +259,17 @@ def validate_playbook(playbook: dict) -> list[str]:
     for row in rows:
         if not row.get("guardian_id") or not row.get("intake_type") or not row.get("related_route"):
             issues.append(f"{row.get('request_id', '<unknown>')}: missing guardian, intake type, or route")
+        if not row.get("kpi_writeback_field") or "kpi-tracker.csv" not in row.get("kpi_writeback_rule", ""):
+            issues.append(f"{row.get('request_id', '<unknown>')}: missing KPI writeback guidance")
+        if "Campaign content" not in row.get("contact_campaign_content", ""):
+            issues.append(f"{row.get('request_id', '<unknown>')}: missing Contact campaign content mapping")
+    for guardian in playbook.get("guardians", []):
+        if not guardian.get("attributionContentExamples"):
+            issues.append(f"{guardian.get('guardianId', '<unknown>')}: missing attribution content examples")
     if not playbook.get("safety", {}).get("noFakeLeads"):
         issues.append("playbook must mark noFakeLeads safety boundary")
+    if not playbook.get("safety", {}).get("manualLeadRule"):
+        issues.append("playbook must include manual lead attribution safety rule")
     return issues
 
 
@@ -236,7 +282,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    playbook = build_playbook(load_tasks(Path(args.kit)))
+    playbook = build_playbook(load_tasks(Path(args.kit)), attribution_content_by_guardian(ATTRIBUTION_RECONCILIATION_PATH))
     issues = validate_playbook(playbook)
     if not args.check:
         write_outputs(playbook, Path(args.output), Path(args.json_output), Path(args.csv_output))

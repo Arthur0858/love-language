@@ -146,6 +146,7 @@ HUMANS_PATH = ROOT / "humans.txt"
 MANIFEST_PATH = ROOT / "site.webmanifest"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
+PROMOTION_KIT_PATH = ROOT / "promotion-kit.json"
 SITE_INDEX_PATH = ROOT / "site-index.json"
 GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
@@ -1694,6 +1695,74 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
     totals = data.get("totals", {})
     if not isinstance(totals, dict) or totals.get("items") != len(items):
         issues.append(f"{COMMERCE_CATALOG_PATH}: totals.items should match item count")
+    return issues, stats
+
+
+def parse_promotion_kit() -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not PROMOTION_KIT_PATH.exists():
+        return [f"{PROMOTION_KIT_PATH}: missing promotion-kit.json"], stats
+    try:
+        data = json.loads(PROMOTION_KIT_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{PROMOTION_KIT_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{PROMOTION_KIT_PATH}: root should be an object"], stats
+    tasks = data.get("publishingTasks")
+    if not isinstance(tasks, list) or len(tasks) != 15:
+        issues.append(f"{PROMOTION_KIT_PATH}: expected 15 publishingTasks")
+        return issues, stats
+
+    expected_playbook_sequence = [
+        "identity_retention_first",
+        "owned_supply_lead",
+        "luna_pack_revenue",
+        "affiliate_book_revenue",
+    ]
+    expected_success_events = {
+        "quiz_complete",
+        "free_keepsake_download",
+        "supply_route_asset_request",
+        "luna_gumroad_pack_click",
+        "supply_route_affiliate_book",
+    }
+    guardian_slugs = set(GENERATOR_CONFIG.GUARDIANS)
+    stats["promotion_tasks_checked"] = len(tasks)
+    for task in tasks:
+        if not isinstance(task, dict):
+            issues.append(f"{PROMOTION_KIT_PATH}: publishing task should be an object")
+            continue
+        task_id = task.get("taskId") or "<unknown>"
+        guardian = task.get("guardianId")
+        if guardian not in guardian_slugs:
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} unexpected guardianId {guardian!r}")
+        conversion_path = task.get("conversionPath")
+        if not isinstance(conversion_path, dict) or not conversion_path:
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} missing conversionPath")
+        bridge = task.get("monetizationBridge")
+        if not isinstance(bridge, dict):
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} missing monetizationBridge")
+            continue
+        stats["promotion_monetization_bridges_checked"] += 1
+        if bridge.get("playbookSequence") != expected_playbook_sequence:
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} monetizationBridge.playbookSequence mismatch")
+        if bridge.get("primaryFreeItemId") != f"free-keepsake-{guardian}":
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} primaryFreeItemId should match guardian")
+        if bridge.get("ownedLeadItemId") != f"supply-wishlist-{guardian}":
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} ownedLeadItemId should match guardian")
+        luna_products = bridge.get("lunaProductIds")
+        if not isinstance(luna_products, list) or len(luna_products) != 6 or not all(isinstance(item, str) and item.startswith("luna-") for item in luna_products):
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} should include six Luna product ids")
+        affiliate_items = bridge.get("affiliateItemIds")
+        if not isinstance(affiliate_items, list) or len(affiliate_items) != 4 or not all(isinstance(item, str) and item.startswith("affiliate-book-") for item in affiliate_items):
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} should include four affiliate item ids")
+        success_events = bridge.get("successEvents")
+        if not isinstance(success_events, list) or not expected_success_events.issubset(set(success_events)):
+            issues.append(f"{PROMOTION_KIT_PATH}: {task_id} monetizationBridge.successEvents incomplete")
+        for key in ("recommendedFirstAction", "safetyNote"):
+            if not isinstance(bridge.get(key), str) or not bridge[key]:
+                issues.append(f"{PROMOTION_KIT_PATH}: {task_id} monetizationBridge missing {key}")
     return issues, stats
 
 
@@ -3445,6 +3514,9 @@ def main() -> int:
     commerce_issues, commerce_stats = parse_commerce_catalog(parsers)
     issues.extend(commerce_issues)
     stats.update(commerce_stats)
+    promotion_issues, promotion_stats = parse_promotion_kit()
+    issues.extend(promotion_issues)
+    stats.update(promotion_stats)
     site_index_issues, site_index_stats = parse_site_index(parsers, sitemap_urls)
     issues.extend(site_index_issues)
     stats.update(site_index_stats)
@@ -3605,6 +3677,10 @@ def main() -> int:
     print(f"commerce_types_checked={stats['commerce_types_checked']}")
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
+    print(f"commerce_revenue_playbook_checked={stats['commerce_revenue_playbook_checked']}")
+    print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")
+    print(f"promotion_tasks_checked={stats['promotion_tasks_checked']}")
+    print(f"promotion_monetization_bridges_checked={stats['promotion_monetization_bridges_checked']}")
     print(f"site_index_pages_checked={stats['site_index_pages_checked']}")
     print(f"site_index_languages_checked={stats['site_index_languages_checked']}")
     print(f"site_index_groups_checked={stats['site_index_groups_checked']}")

@@ -10381,6 +10381,8 @@ def collect_promotion_kit() -> dict:
     scripts = json.loads(scripts_path.read_text(encoding="utf-8"))
     scripts_by_id = {script["id"]: script for script in scripts["scripts"]}
     tasks = []
+    luna_product_ids = [f"luna-{product['slug']}" for product in LUNA_GUMROAD_PRODUCTS]
+    affiliate_item_ids = [f"affiliate-book-{index}" for index, _book in enumerate(AFFILIATE_BOOKS, start=1)]
     for campaign in campaigns:
         script = scripts_by_id.get(campaign["scriptId"], {})
         guardian_id = campaign["guardianId"]
@@ -10410,6 +10412,27 @@ def collect_promotion_kit() -> dict:
                 "lunaScene": f"{DOMAIN}/luna-yoga-music/#luna-{guardian_id}",
                 "keepsake": f"{DOMAIN}/keepsakes/#keepsake-{guardian_id}",
                 "contactRequest": f"{DOMAIN}/contact/#luna-supply-request",
+            },
+            "monetizationBridge": {
+                "playbookSequence": [
+                    "identity_retention_first",
+                    "owned_supply_lead",
+                    "luna_pack_revenue",
+                    "affiliate_book_revenue",
+                ],
+                "primaryFreeItemId": f"free-keepsake-{guardian_id}",
+                "ownedLeadItemId": f"supply-wishlist-{guardian_id}",
+                "lunaProductIds": luna_product_ids,
+                "affiliateItemIds": affiliate_item_ids,
+                "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+                "successEvents": [
+                    "quiz_complete",
+                    "free_keepsake_download",
+                    "supply_route_asset_request",
+                    "luna_gumroad_pack_click",
+                    "supply_route_affiliate_book",
+                ],
+                "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase.",
             },
             "publishChecklist": [
                 "Use the trackedUrl in the caption or profile link.",

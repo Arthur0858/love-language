@@ -150,6 +150,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -219,6 +252,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -290,6 +356,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -359,6 +458,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-noah",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-noah",
+        "ownedLeadItemId": "supply-wishlist-noah",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -431,6 +563,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-noah",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-noah",
+        "ownedLeadItemId": "supply-wishlist-noah",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -500,6 +665,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-noah",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-noah",
+        "ownedLeadItemId": "supply-wishlist-noah",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -571,6 +769,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -640,6 +871,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -711,6 +975,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -780,6 +1077,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -852,6 +1182,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -921,6 +1284,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
@@ -993,6 +1389,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -1063,6 +1492,39 @@
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
       },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",
         "Keep one CTA: complete the 15-question quiz.",
@@ -1132,6 +1594,39 @@
         "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
         "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
         "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "lunaProductIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ],
+        "affiliateItemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "successEvents": [
+          "quiz_complete",
+          "free_keepsake_download",
+          "supply_route_asset_request",
+          "luna_gumroad_pack_click",
+          "supply_route_affiliate_book"
+        ],
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
       },
       "publishChecklist": [
         "Use the trackedUrl in the caption or profile link.",

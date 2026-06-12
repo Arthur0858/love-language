@@ -21,6 +21,19 @@ EXPECTED_KPI_FIELDS = {
     "luna_clicks",
     "notes",
 }
+EXPECTED_PLAYBOOK_SEQUENCE = [
+    "identity_retention_first",
+    "owned_supply_lead",
+    "luna_pack_revenue",
+    "affiliate_book_revenue",
+]
+EXPECTED_BRIDGE_EVENTS = {
+    "quiz_complete",
+    "free_keepsake_download",
+    "supply_route_asset_request",
+    "luna_gumroad_pack_click",
+    "supply_route_affiliate_book",
+}
 
 
 def request_json(base_url: str) -> tuple[dict, str]:
@@ -202,6 +215,28 @@ def main() -> int:
         for key, expected_value in expected_paths.items():
             if conversion_path.get(key) != expected_value:
                 issues.append(f"{source}: conversionPath.{key} should be {expected_value}")
+        bridge = task.get("monetizationBridge")
+        if not isinstance(bridge, dict):
+            issues.append(f"{source}: monetizationBridge should be an object")
+            bridge = {}
+        if bridge.get("playbookSequence") != EXPECTED_PLAYBOOK_SEQUENCE:
+            issues.append(f"{source}: monetizationBridge.playbookSequence should match revenue playbook order")
+        if bridge.get("primaryFreeItemId") != f"free-keepsake-{guardian_id}":
+            issues.append(f"{source}: monetizationBridge.primaryFreeItemId should match guardian")
+        if bridge.get("ownedLeadItemId") != f"supply-wishlist-{guardian_id}":
+            issues.append(f"{source}: monetizationBridge.ownedLeadItemId should match guardian")
+        luna_products = bridge.get("lunaProductIds")
+        if not isinstance(luna_products, list) or len(luna_products) < 6 or not all(isinstance(item, str) and item.startswith("luna-") for item in luna_products):
+            issues.append(f"{source}: monetizationBridge.lunaProductIds should include Luna product item ids")
+        affiliate_items = bridge.get("affiliateItemIds")
+        if not isinstance(affiliate_items, list) or len(affiliate_items) < 4 or not all(isinstance(item, str) and item.startswith("affiliate-book-") for item in affiliate_items):
+            issues.append(f"{source}: monetizationBridge.affiliateItemIds should include affiliate item ids")
+        bridge_events = bridge.get("successEvents")
+        if not isinstance(bridge_events, list) or not EXPECTED_BRIDGE_EVENTS.issubset(set(bridge_events)):
+            issues.append(f"{source}: monetizationBridge.successEvents missing required events")
+        for key in ("recommendedFirstAction", "safetyNote"):
+            if not isinstance(bridge.get(key), str) or not bridge[key]:
+                issues.append(f"{source}: monetizationBridge missing {key}")
         checklist = task.get("publishChecklist")
         if not isinstance(checklist, list) or len(checklist) < 4:
             issues.append(f"{source}: publishChecklist should include four guardrails")
@@ -224,6 +259,7 @@ def main() -> int:
     print(f"public_promotion_kit_utm_contents_checked={len(seen_contents)}")
     print(f"public_promotion_kit_kpi_fields_checked={len(kpi_fields) if isinstance(kpi_fields, list) else 0}")
     print(f"public_promotion_kit_measurement_rules_checked={len(measurement.get('decisionRules', [])) if isinstance(measurement, dict) else 0}")
+    print(f"public_promotion_kit_monetization_bridges_checked={sum(1 for task in tasks if isinstance(task, dict) and isinstance(task.get('monetizationBridge'), dict))}")
     print(f"public_promotion_kit_issues={len(issues)}")
     for issue in issues:
         print(issue)

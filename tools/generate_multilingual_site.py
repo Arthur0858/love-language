@@ -1357,6 +1357,10 @@ LUNA_PRODUCT_OFFER = {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "需要離線使用時，直接選一個音樂包",
         "intro": "公開聆聽先確認節奏是否適合你；若想把音檔放進睡前、瑜伽或書寫流程，這些 Gumroad 包已連到可購買頁面。",
+        "starter_eyebrow": "RECOMMENDED STARTER",
+        "starter_title": "第一次購買，先選 Healing Vibes Starter Pack",
+        "starter_intro": "若你只是想把 Luna 放進睡前整理、吵架後冷卻或測驗後承接，先從最低門檻的起手包開始。確認自己真的會使用，再回來選其他主題包。",
+        "starter_cta": "開啟起手包",
         "cta": "查看商品",
         "note": "商品由 Gumroad 結帳與交付。內容是放鬆與創作陪伴，不承諾療效，也不取代諮商或醫療建議。",
     },
@@ -1364,6 +1368,10 @@ LUNA_PRODUCT_OFFER = {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "When you need offline use, pick one audio pack",
         "intro": "Start with public listening to test the rhythm. If you want files for bedtime, yoga, or journaling, these Gumroad packs now point to live product pages.",
+        "starter_eyebrow": "RECOMMENDED STARTER",
+        "starter_title": "First purchase: start with Healing Vibes Starter Pack",
+        "starter_intro": "If you only need Luna for bedtime sorting, cooling down after conflict, or post-quiz grounding, start with the lowest-friction pack. Confirm you will use it before choosing other themes.",
+        "starter_cta": "Open starter pack",
         "cta": "View pack",
         "note": "Checkout and delivery run through Gumroad. The audio is for calm creative practice, not therapy, medical care, or promised outcomes.",
     },
@@ -1371,6 +1379,10 @@ LUNA_PRODUCT_OFFER = {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "オフラインで使う時は音楽パックを一つ選ぶ",
         "intro": "まず公開音源でリズムが合うか確かめます。就寝前、ヨガ、日記に音源ファイルが必要な場合は、Gumroad の公開商品ページへ進めます。",
+        "starter_eyebrow": "RECOMMENDED STARTER",
+        "starter_title": "初回は Healing Vibes Starter Pack から",
+        "starter_intro": "就寝前の整理、衝突後の冷却、診断後の落ち着きに Luna を使いたいだけなら、まず低い入口の起手包から始めます。使い続けられると分かってから他のテーマを選んでください。",
+        "starter_cta": "起手包を開く",
         "cta": "商品を見る",
         "note": "決済と配信は Gumroad が行います。音源は落ち着く練習の補助であり、治療効果を約束したり相談支援や医療を代替したりしません。",
     },
@@ -1378,6 +1390,10 @@ LUNA_PRODUCT_OFFER = {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "오프라인 사용이 필요할 때 음악 팩 하나 고르기",
         "intro": "먼저 공개 음악으로 리듬이 맞는지 확인하세요. 잠들기 전, 요가, 기록 루틴에 파일이 필요하다면 Gumroad 공개 상품 페이지로 이동할 수 있습니다.",
+        "starter_eyebrow": "RECOMMENDED STARTER",
+        "starter_title": "첫 구매는 Healing Vibes Starter Pack부터",
+        "starter_intro": "잠들기 전 정리, 다툼 뒤 식히기, 테스트 후 마음 정리에 Luna를 쓰고 싶다면 가장 낮은 진입의 스타터 팩부터 시작하세요. 실제로 사용할 수 있는지 확인한 뒤 다른 테마를 고르세요.",
+        "starter_cta": "스타터 팩 열기",
         "cta": "상품 보기",
         "note": "결제와 전달은 Gumroad에서 진행됩니다. 이 음원은 차분한 창작 연습을 돕는 자료이며 치료, 의료, 결과 보장을 대체하지 않습니다.",
     },
@@ -1385,6 +1401,10 @@ LUNA_PRODUCT_OFFER = {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "Cuando necesites uso sin conexión, elige un pack",
         "intro": "Empieza con la escucha pública para comprobar el ritmo. Si quieres archivos para dormir, yoga o escritura, estos packs apuntan a páginas activas de Gumroad.",
+        "starter_eyebrow": "RECOMMENDED STARTER",
+        "starter_title": "Primera compra: empieza con Healing Vibes Starter Pack",
+        "starter_intro": "Si solo quieres Luna para ordenar la noche, enfriar después de un conflicto o sostenerte tras el test, empieza por el pack de menor fricción. Confirma que lo usarás antes de elegir otros temas.",
+        "starter_cta": "Abrir pack inicial",
         "cta": "Ver pack",
         "note": "El pago y la entrega ocurren en Gumroad. El audio acompaña prácticas de calma y creación; no promete resultados ni reemplaza terapia o atención médica.",
     },
@@ -8926,6 +8946,23 @@ def luna_product_url(product: dict) -> str:
     )
 
 
+def luna_starter_pack_section(lang: str) -> str:
+    labels = LUNA_PRODUCT_OFFER[lang]
+    product = LUNA_GUMROAD_PRODUCTS[0]
+    return f"""
+<section class="section luna-offer-section luna-starter-pack-section" id="luna-starter-pack">
+  <div class="section-head"><div><p class="eyebrow">{escape(labels["starter_eyebrow"])}</p><h2>{escape(labels["starter_title"])}</h2></div><span>{escape(product["price"])}</span></div>
+  <p class="section-intro">{escape(labels["starter_intro"])}</p>
+  <div class="luna-offer-actions">
+    <a class="primary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_starter_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["starter_cta"])}</a>
+    <a class="secondary-btn" href="#luna-download-packs" data-funnel-event="luna_starter_compare">{escape(labels["cta"])}</a>
+    <a class="secondary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer" data-funnel-event="luna_starter_listen">{escape(LUNA_OFFER[lang]["listen"])}</a>
+  </div>
+  <p class="section-intro">{escape(labels["note"])}</p>
+</section>
+"""
+
+
 def luna_product_offer_section(lang: str) -> str:
     labels = LUNA_PRODUCT_OFFER[lang]
     cards = "".join(f"""
@@ -9038,6 +9075,7 @@ def luna_page(lang: str) -> None:
   <div class="luna-use-grid">{use_cases}</div>
 </section>
 {luna_offer_section(lang)}
+{luna_starter_pack_section(lang)}
 {luna_product_offer_section(lang)}
 <section class="section luna-guardian-flow">
   <div class="section-head"><div><p class="eyebrow">{escape(flow["eyebrow"])}</p><h2>{escape(flow["title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div>
@@ -9668,7 +9706,7 @@ def funnel_event_category(name: str) -> str:
 
 
 def funnel_event_role(name: str) -> str:
-    if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product")):
+    if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product", "starter_pack")):
         return "revenue"
     if name.startswith(("supply_pack_", "home_saved_pack_")):
         return "revenue"

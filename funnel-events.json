@@ -5,8 +5,8 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 185,
-    "trackedOccurrences": 3688,
+    "events": 188,
+    "trackedOccurrences": 3703,
     "pages": 110
   },
   "events": [
@@ -2020,6 +2020,48 @@
       "name": "luna_resume_contact",
       "category": "luna",
       "role": "lead",
+      "count": 5,
+      "pages": [
+        "/en/luna-yoga-music/",
+        "/es/luna-yoga-music/",
+        "/ja/luna-yoga-music/",
+        "/ko/luna-yoga-music/",
+        "/luna-yoga-music/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "luna_starter_compare",
+      "category": "luna",
+      "role": "navigation",
+      "count": 5,
+      "pages": [
+        "/en/luna-yoga-music/",
+        "/es/luna-yoga-music/",
+        "/ja/luna-yoga-music/",
+        "/ko/luna-yoga-music/",
+        "/luna-yoga-music/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "luna_starter_listen",
+      "category": "luna",
+      "role": "revenue",
+      "count": 5,
+      "pages": [
+        "/en/luna-yoga-music/",
+        "/es/luna-yoga-music/",
+        "/ja/luna-yoga-music/",
+        "/ko/luna-yoga-music/",
+        "/luna-yoga-music/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "luna_starter_pack_click",
+      "category": "luna",
+      "role": "revenue",
       "count": 5,
       "pages": [
         "/en/luna-yoga-music/",

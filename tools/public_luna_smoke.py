@@ -187,6 +187,8 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "guardian_supply_links": 0,
         "hero_ctas": 0,
         "offer_ctas": 0,
+        "starter_sections": 0,
+        "starter_ctas": 0,
         "resume_templates": 0,
         "use_case_ctas": 0,
         "product_pack_cards": 0,
@@ -300,6 +302,40 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         if missing_products:
             issues.append(f"{path}: missing Luna product slugs {', '.join(missing_products)}")
 
+    starter_section = find_by_id(root, "luna-starter-pack")
+    if starter_section is None:
+        issues.append(f"{path}: missing Luna starter pack section")
+    else:
+        stats["starter_sections"] += 1
+        starter_links = descendants(starter_section, "a")
+        starter_ctas = [link for link in starter_links if link.attrs.get("data-funnel-event") == "luna_starter_pack_click"]
+        if len(starter_ctas) != 1:
+            issues.append(f"{path}: expected one Luna starter pack CTA, got {len(starter_ctas)}")
+        else:
+            link = starter_ctas[0]
+            href = link.attrs.get("href", "")
+            parsed = urlparse(href)
+            if parsed.scheme != "https" or parsed.netloc != "lunayogamusic.gumroad.com":
+                issues.append(f"{path}: Luna starter CTA should point to Gumroad, got {href}")
+            if link.attrs.get("data-luna-product") != "healing-vibes-starter":
+                issues.append(f"{path}: Luna starter CTA should use healing-vibes-starter")
+            if link.attrs.get("target") != "_blank":
+                issues.append(f"{path}: Luna starter CTA should open in a new tab")
+            rel_tokens = set(link.attrs.get("rel", "").split())
+            if {"noopener", "noreferrer", "sponsored"}.difference(rel_tokens):
+                issues.append(f"{path}: Luna starter CTA missing noopener noreferrer sponsored rel: {href}")
+            query = parse_qs(parsed.query)
+            expected_query = {
+                "utm_source": "lovetypes",
+                "utm_medium": "luna-page",
+                "utm_campaign": "luna_gumroad_offer",
+                "utm_content": "healing-vibes-starter",
+            }
+            for key, expected in expected_query.items():
+                if query.get(key, [""])[0] != expected:
+                    issues.append(f"{path}: Luna starter CTA {key} should be {expected!r}: {href}")
+            stats["starter_ctas"] += 1
+
     hero_section = next((item for item in walk(root) if has_class(item, "luna-hero")), None)
     if hero_section is None:
         issues.append(f"{path}: missing Luna hero section")
@@ -361,6 +397,8 @@ def main() -> int:
         "guardian_supply_links": 0,
         "hero_ctas": 0,
         "offer_ctas": 0,
+        "starter_sections": 0,
+        "starter_ctas": 0,
         "resume_templates": 0,
         "use_case_ctas": 0,
         "product_pack_cards": 0,
@@ -382,6 +420,8 @@ def main() -> int:
     print(f"public_luna_guardian_supply_links_checked={totals['guardian_supply_links']}")
     print(f"public_luna_hero_ctas_checked={totals['hero_ctas']}")
     print(f"public_luna_offer_ctas_checked={totals['offer_ctas']}")
+    print(f"public_luna_starter_sections_checked={totals['starter_sections']}")
+    print(f"public_luna_starter_ctas_checked={totals['starter_ctas']}")
     print(f"public_luna_use_case_ctas_checked={totals['use_case_ctas']}")
     print(f"public_luna_product_pack_cards_checked={totals['product_pack_cards']}")
     print(f"public_luna_product_pack_ctas_checked={totals['product_pack_ctas']}")

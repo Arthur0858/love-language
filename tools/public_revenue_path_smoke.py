@@ -280,6 +280,7 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
     stats = {
         "luna_pages": 0,
         "luna_product_links": 0,
+        "luna_starter_links": 0,
         "luna_product_slugs": 0,
         "funnel_revenue_events": 0,
     }
@@ -294,8 +295,11 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
         stats["luna_pages"] += 1
         parser = parse_html(response.text)
         product_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_gumroad_pack_click"]
+        starter_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_starter_pack_click"]
         if len(product_links) != len(EXPECTED_LUNA_PRODUCTS):
             issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} Luna product links, got {len(product_links)}")
+        if len(starter_links) != 1:
+            issues.append(f"{path}: expected one Luna starter link, got {len(starter_links)}")
         page_slugs = {link.get("data-luna-product", "") for link in product_links}
         missing_slugs = sorted(EXPECTED_LUNA_PRODUCTS.difference(page_slugs))
         if missing_slugs:
@@ -307,6 +311,11 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
                 continue
             seen_product_slugs.add(product_slug)
             stats["luna_product_links"] += 1
+        for link in starter_links:
+            if link.get("data-luna-product") != "healing-vibes-starter" or not is_gumroad_product_link(link):
+                issues.append(f"{path}: invalid Gumroad starter revenue link: {link.get('href', '')}")
+                continue
+            stats["luna_starter_links"] += 1
     stats["luna_product_slugs"] = len(seen_product_slugs)
 
     funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
@@ -320,12 +329,22 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
         else:
             events = {event.get("name"): event for event in funnel_data.get("events", []) if isinstance(event, dict)}
             gumroad_event = events.get("luna_gumroad_pack_click", {})
+            starter_event = events.get("luna_starter_pack_click", {})
             if gumroad_event.get("role") != "revenue":
                 issues.append("/funnel-events.json: luna_gumroad_pack_click should be revenue")
             elif gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
                 issues.append(
                     "/funnel-events.json: luna_gumroad_pack_click count should match product links "
                     f"{len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS)}, got {gumroad_event.get('count')}"
+                )
+            else:
+                stats["funnel_revenue_events"] += 1
+            if starter_event.get("role") != "revenue":
+                issues.append("/funnel-events.json: luna_starter_pack_click should be revenue")
+            elif starter_event.get("count") != len(LANG_PATHS):
+                issues.append(
+                    "/funnel-events.json: luna_starter_pack_click count should match starter links "
+                    f"{len(LANG_PATHS)}, got {starter_event.get('count')}"
                 )
             else:
                 stats["funnel_revenue_events"] += 1
@@ -346,6 +365,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         "supply_product_packs_checked": 0,
         "luna_pages_checked": 0,
         "luna_product_links_checked": 0,
+        "luna_starter_links_checked": 0,
         "luna_product_slugs_checked": 0,
         "funnel_revenue_events_checked": 0,
     }
@@ -381,6 +401,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
     issues.extend(luna_issues)
     stats["luna_pages_checked"] += luna_stats["luna_pages"]
     stats["luna_product_links_checked"] += luna_stats["luna_product_links"]
+    stats["luna_starter_links_checked"] += luna_stats["luna_starter_links"]
     stats["luna_product_slugs_checked"] += luna_stats["luna_product_slugs"]
     stats["funnel_revenue_events_checked"] += luna_stats["funnel_revenue_events"]
     return issues, stats

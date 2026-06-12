@@ -1669,11 +1669,14 @@ CONTACT_FUNNEL_SUMMARY = {
         "category": "分類",
         "guardian": "守護者",
         "source": "來源區塊",
+        "campaign": "推廣活動",
+        "campaign_content": "推廣內容",
         "language": "語言",
         "path": "頁面",
         "target": "目標",
         "target_type": "目標類型",
         "time": "時間",
+        "none": "無",
         "count": "最近 {count} 筆",
     },
     "en": {
@@ -1694,11 +1697,14 @@ CONTACT_FUNNEL_SUMMARY = {
         "category": "Category",
         "guardian": "Guardian",
         "source": "Source section",
+        "campaign": "Campaign",
+        "campaign_content": "Campaign content",
         "language": "Language",
         "path": "Page",
         "target": "Target",
         "target_type": "Target type",
         "time": "Time",
+        "none": "None",
         "count": "Recent {count} items",
     },
     "ja": {
@@ -1719,11 +1725,14 @@ CONTACT_FUNNEL_SUMMARY = {
         "category": "分類",
         "guardian": "守護者",
         "source": "元のセクション",
+        "campaign": "キャンペーン",
+        "campaign_content": "キャンペーン内容",
         "language": "言語",
         "path": "ページ",
         "target": "目標",
         "target_type": "目標タイプ",
         "time": "時間",
+        "none": "なし",
         "count": "最近 {count} 件",
     },
     "ko": {
@@ -1744,11 +1753,14 @@ CONTACT_FUNNEL_SUMMARY = {
         "category": "분류",
         "guardian": "수호자",
         "source": "출처 구역",
+        "campaign": "캠페인",
+        "campaign_content": "캠페인 콘텐츠",
         "language": "언어",
         "path": "페이지",
         "target": "목표",
         "target_type": "목표 유형",
         "time": "시간",
+        "none": "없음",
         "count": "최근 {count}개",
     },
     "es": {
@@ -1769,11 +1781,14 @@ CONTACT_FUNNEL_SUMMARY = {
         "category": "Categoría",
         "guardian": "Guardiana",
         "source": "Sección de origen",
+        "campaign": "Campaña",
+        "campaign_content": "Contenido de campaña",
         "language": "Idioma",
         "path": "Página",
         "target": "Destino",
         "target_type": "Tipo de destino",
         "time": "Hora",
+        "none": "Sin datos",
         "count": "{count} elementos recientes",
     },
 }
@@ -6024,6 +6039,8 @@ def contact_funnel_summary_script(lang: str) -> str:
       `${{labels.category}}: ${{event.category || ''}}`,
       `${{labels.guardian}}: ${{event.guardian || ''}}`,
       `${{labels.source}}: ${{event.source || ''}}`,
+      `${{labels.campaign}}: ${{event.campaign?.utm_campaign || ''}}`,
+      `${{labels.campaign_content}}: ${{event.campaign?.utm_content || ''}}`,
       `${{labels.language}}: ${{event.lang || ''}}`,
       `${{labels.path}}: ${{event.path || ''}}`,
       `${{labels.target}}: ${{event.target || ''}}`,
@@ -6081,6 +6098,7 @@ def contact_funnel_summary_script(lang: str) -> str:
             <h3>${{event.name || ''}}</h3>
             <p>${{labels.category}}: ${{event.category || ''}} · ${{labels.guardian}}: ${{event.guardian || ''}}</p>
             <p>${{labels.source}}: ${{event.source || ''}} · ${{labels.language}}: ${{event.lang || ''}}</p>
+            <p>${{labels.campaign}}: ${{event.campaign?.utm_campaign || labels.none}} · ${{labels.campaign_content}}: ${{event.campaign?.utm_content || labels.none}}</p>
             <p>${{event.path || ''}} → ${{event.targetType || ''}}</p>
           </article>`).join('')}}
       </div>

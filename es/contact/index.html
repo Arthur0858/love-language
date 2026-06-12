@@ -198,7 +198,7 @@ Captura o notas extra:
 
 <script>
 (() => {
-  const labels = {"eyebrow": "RESUMEN LOCAL DE RUTA", "title": "Copiar la ruta reciente de este dispositivo", "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.", "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.", "empty_quiz": "Iniciar test", "empty_resources": "Abrir recursos", "empty_luna": "Abrir Luna", "copy": "Copiar resumen reciente", "send": "Enviar resumen reciente", "clear": "Borrar registro local", "subject": "Resumen de ruta reciente de LoveTypes", "copied": "Copiado", "cleared": "Borrado", "event": "Evento", "category": "Categoría", "guardian": "Guardiana", "source": "Sección de origen", "language": "Idioma", "path": "Página", "target": "Destino", "target_type": "Tipo de destino", "time": "Hora", "count": "{count} elementos recientes"};
+  const labels = {"eyebrow": "RESUMEN LOCAL DE RUTA", "title": "Copiar la ruta reciente de este dispositivo", "intro": "Si reportas un problema o pides recursos, puedes incluir la ruta reciente dentro de LoveTypes. Este resumen se lee solo desde este navegador y se comparte solo si lo copias o lo envías.", "empty": "Aún no hay ruta reciente para resumir. Completa el test, abre recursos o toca Luna para crear un resumen copiable.", "empty_quiz": "Iniciar test", "empty_resources": "Abrir recursos", "empty_luna": "Abrir Luna", "copy": "Copiar resumen reciente", "send": "Enviar resumen reciente", "clear": "Borrar registro local", "subject": "Resumen de ruta reciente de LoveTypes", "copied": "Copiado", "cleared": "Borrado", "event": "Evento", "category": "Categoría", "guardian": "Guardiana", "source": "Sección de origen", "campaign": "Campaña", "campaign_content": "Contenido de campaña", "language": "Idioma", "path": "Página", "target": "Destino", "target_type": "Tipo de destino", "time": "Hora", "none": "Sin datos", "count": "{count} elementos recientes"};
   const contactEmail = "contact@lovetypes.tw";
   const emptyActions = {
     quiz: "/es/#quiz-section",
@@ -224,6 +224,8 @@ Captura o notas extra:
       `${labels.category}: ${event.category || ''}`,
       `${labels.guardian}: ${event.guardian || ''}`,
       `${labels.source}: ${event.source || ''}`,
+      `${labels.campaign}: ${event.campaign?.utm_campaign || ''}`,
+      `${labels.campaign_content}: ${event.campaign?.utm_content || ''}`,
       `${labels.language}: ${event.lang || ''}`,
       `${labels.path}: ${event.path || ''}`,
       `${labels.target}: ${event.target || ''}`,
@@ -281,6 +283,7 @@ Captura o notas extra:
             <h3>${event.name || ''}</h3>
             <p>${labels.category}: ${event.category || ''} · ${labels.guardian}: ${event.guardian || ''}</p>
             <p>${labels.source}: ${event.source || ''} · ${labels.language}: ${event.lang || ''}</p>
+            <p>${labels.campaign}: ${event.campaign?.utm_campaign || labels.none} · ${labels.campaign_content}: ${event.campaign?.utm_content || labels.none}</p>
             <p>${event.path || ''} → ${event.targetType || ''}</p>
           </article>`).join('')}
       </div>

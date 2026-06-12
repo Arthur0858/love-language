@@ -198,7 +198,7 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "empty_quiz": "開始測驗", "empty_resources": "打開旅人補給", "empty_luna": "開啟 Luna", "copy": "複製最近路徑摘要", "send": "寄出最近路徑摘要", "clear": "清除本機路徑紀錄", "subject": "LoveTypes 最近路徑摘要", "copied": "已複製", "cleared": "已清除", "event": "事件", "category": "分類", "guardian": "守護者", "source": "來源區塊", "language": "語言", "path": "頁面", "target": "目標", "target_type": "目標類型", "time": "時間", "count": "最近 {count} 筆"};
+  const labels = {"eyebrow": "本機路徑摘要", "title": "複製這台裝置的最近路徑", "intro": "如果你要回報問題或申請補給，可以附上最近在 LoveTypes 走過的路徑。這份摘要只從本機瀏覽器讀取，只有你按下複製或寄信時才會帶出。", "empty": "目前沒有可整理的最近路徑。完成測驗、開啟補給或點選 Luna 後，這裡會出現可複製摘要。", "empty_quiz": "開始測驗", "empty_resources": "打開旅人補給", "empty_luna": "開啟 Luna", "copy": "複製最近路徑摘要", "send": "寄出最近路徑摘要", "clear": "清除本機路徑紀錄", "subject": "LoveTypes 最近路徑摘要", "copied": "已複製", "cleared": "已清除", "event": "事件", "category": "分類", "guardian": "守護者", "source": "來源區塊", "campaign": "推廣活動", "campaign_content": "推廣內容", "language": "語言", "path": "頁面", "target": "目標", "target_type": "目標類型", "time": "時間", "none": "無", "count": "最近 {count} 筆"};
   const contactEmail = "contact@lovetypes.tw";
   const emptyActions = {
     quiz: "/#quiz-section",
@@ -224,6 +224,8 @@
       `${labels.category}: ${event.category || ''}`,
       `${labels.guardian}: ${event.guardian || ''}`,
       `${labels.source}: ${event.source || ''}`,
+      `${labels.campaign}: ${event.campaign?.utm_campaign || ''}`,
+      `${labels.campaign_content}: ${event.campaign?.utm_content || ''}`,
       `${labels.language}: ${event.lang || ''}`,
       `${labels.path}: ${event.path || ''}`,
       `${labels.target}: ${event.target || ''}`,
@@ -281,6 +283,7 @@
             <h3>${event.name || ''}</h3>
             <p>${labels.category}: ${event.category || ''} · ${labels.guardian}: ${event.guardian || ''}</p>
             <p>${labels.source}: ${event.source || ''} · ${labels.language}: ${event.lang || ''}</p>
+            <p>${labels.campaign}: ${event.campaign?.utm_campaign || labels.none} · ${labels.campaign_content}: ${event.campaign?.utm_content || labels.none}</p>
             <p>${event.path || ''} → ${event.targetType || ''}</p>
           </article>`).join('')}
       </div>

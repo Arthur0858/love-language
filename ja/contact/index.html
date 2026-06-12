@@ -198,7 +198,7 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "端末内経路の摘要", "title": "この端末の最近の経路をコピー", "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。", "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。", "empty_quiz": "診断を始める", "empty_resources": "補給を開く", "empty_luna": "Luna を開く", "copy": "最近の経路をコピー", "send": "最近の経路を送る", "clear": "端末内の経路記録を消す", "subject": "LoveTypes 最近の経路摘要", "copied": "コピーしました", "cleared": "消去しました", "event": "イベント", "category": "分類", "guardian": "守護者", "source": "元のセクション", "language": "言語", "path": "ページ", "target": "目標", "target_type": "目標タイプ", "time": "時間", "count": "最近 {count} 件"};
+  const labels = {"eyebrow": "端末内経路の摘要", "title": "この端末の最近の経路をコピー", "intro": "不具合報告や補給リクエストの際、LoveTypes 内で最近たどった経路を添えられます。この摘要はこのブラウザだけから読み取り、コピーまたは送信した時だけ共有されます。", "empty": "まだ整理できる最近の経路はありません。診断、補給、Luna を開くとコピー用の摘要が出ます。", "empty_quiz": "診断を始める", "empty_resources": "補給を開く", "empty_luna": "Luna を開く", "copy": "最近の経路をコピー", "send": "最近の経路を送る", "clear": "端末内の経路記録を消す", "subject": "LoveTypes 最近の経路摘要", "copied": "コピーしました", "cleared": "消去しました", "event": "イベント", "category": "分類", "guardian": "守護者", "source": "元のセクション", "campaign": "キャンペーン", "campaign_content": "キャンペーン内容", "language": "言語", "path": "ページ", "target": "目標", "target_type": "目標タイプ", "time": "時間", "none": "なし", "count": "最近 {count} 件"};
   const contactEmail = "contact@lovetypes.tw";
   const emptyActions = {
     quiz: "/ja/#quiz-section",
@@ -224,6 +224,8 @@
       `${labels.category}: ${event.category || ''}`,
       `${labels.guardian}: ${event.guardian || ''}`,
       `${labels.source}: ${event.source || ''}`,
+      `${labels.campaign}: ${event.campaign?.utm_campaign || ''}`,
+      `${labels.campaign_content}: ${event.campaign?.utm_content || ''}`,
       `${labels.language}: ${event.lang || ''}`,
       `${labels.path}: ${event.path || ''}`,
       `${labels.target}: ${event.target || ''}`,
@@ -281,6 +283,7 @@
             <h3>${event.name || ''}</h3>
             <p>${labels.category}: ${event.category || ''} · ${labels.guardian}: ${event.guardian || ''}</p>
             <p>${labels.source}: ${event.source || ''} · ${labels.language}: ${event.lang || ''}</p>
+            <p>${labels.campaign}: ${event.campaign?.utm_campaign || labels.none} · ${labels.campaign_content}: ${event.campaign?.utm_content || labels.none}</p>
             <p>${event.path || ''} → ${event.targetType || ''}</p>
           </article>`).join('')}
       </div>

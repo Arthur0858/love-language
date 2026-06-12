@@ -198,7 +198,7 @@
 
 <script>
 (() => {
-  const labels = {"eyebrow": "로컬 경로 요약", "title": "이 기기의 최근 경로 복사", "intro": "문제 제보나 보급 요청을 보낼 때 LoveTypes에서 최근 지나간 경로를 함께 보낼 수 있습니다. 이 요약은 이 브라우저에서만 읽고, 복사하거나 보낼 때만 공유됩니다.", "empty": "아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.", "empty_quiz": "테스트 시작", "empty_resources": "보급 열기", "empty_luna": "Luna 열기", "copy": "최근 경로 요약 복사", "send": "최근 경로 요약 보내기", "clear": "로컬 경로 기록 지우기", "subject": "LoveTypes 최근 경로 요약", "copied": "복사됨", "cleared": "지움", "event": "이벤트", "category": "분류", "guardian": "수호자", "source": "출처 구역", "language": "언어", "path": "페이지", "target": "목표", "target_type": "목표 유형", "time": "시간", "count": "최근 {count}개"};
+  const labels = {"eyebrow": "로컬 경로 요약", "title": "이 기기의 최근 경로 복사", "intro": "문제 제보나 보급 요청을 보낼 때 LoveTypes에서 최근 지나간 경로를 함께 보낼 수 있습니다. 이 요약은 이 브라우저에서만 읽고, 복사하거나 보낼 때만 공유됩니다.", "empty": "아직 정리할 최근 경로가 없습니다. 테스트를 마치거나 보급, Luna를 열면 복사 가능한 요약이 나타납니다.", "empty_quiz": "테스트 시작", "empty_resources": "보급 열기", "empty_luna": "Luna 열기", "copy": "최근 경로 요약 복사", "send": "최근 경로 요약 보내기", "clear": "로컬 경로 기록 지우기", "subject": "LoveTypes 최근 경로 요약", "copied": "복사됨", "cleared": "지움", "event": "이벤트", "category": "분류", "guardian": "수호자", "source": "출처 구역", "campaign": "캠페인", "campaign_content": "캠페인 콘텐츠", "language": "언어", "path": "페이지", "target": "목표", "target_type": "목표 유형", "time": "시간", "none": "없음", "count": "최근 {count}개"};
   const contactEmail = "contact@lovetypes.tw";
   const emptyActions = {
     quiz: "/ko/#quiz-section",
@@ -224,6 +224,8 @@
       `${labels.category}: ${event.category || ''}`,
       `${labels.guardian}: ${event.guardian || ''}`,
       `${labels.source}: ${event.source || ''}`,
+      `${labels.campaign}: ${event.campaign?.utm_campaign || ''}`,
+      `${labels.campaign_content}: ${event.campaign?.utm_content || ''}`,
       `${labels.language}: ${event.lang || ''}`,
       `${labels.path}: ${event.path || ''}`,
       `${labels.target}: ${event.target || ''}`,
@@ -281,6 +283,7 @@
             <h3>${event.name || ''}</h3>
             <p>${labels.category}: ${event.category || ''} · ${labels.guardian}: ${event.guardian || ''}</p>
             <p>${labels.source}: ${event.source || ''} · ${labels.language}: ${event.lang || ''}</p>
+            <p>${labels.campaign}: ${event.campaign?.utm_campaign || labels.none} · ${labels.campaign_content}: ${event.campaign?.utm_content || labels.none}</p>
             <p>${event.path || ''} → ${event.targetType || ''}</p>
           </article>`).join('')}
       </div>

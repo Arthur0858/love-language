@@ -141,13 +141,13 @@ def main() -> int:
             else:
                 funnel_summary_actions_checked += 1
         funnel_labels = generator.CONTACT_FUNNEL_SUMMARY[item.lang]
-        for key in ("category", "guardian", "source", "language", "target_type"):
+        for key in ("category", "guardian", "source", "campaign", "campaign_content", "language", "target_type"):
             label = funnel_labels[key]
             if label not in response.text:
                 issues.append(f"{item.path}: local funnel summary missing context label {key}")
             else:
                 funnel_summary_context_labels_checked += 1
-        for field in ("event.category", "event.guardian", "event.source", "event.lang", "event.targetType"):
+        for field in ("event.category", "event.guardian", "event.source", "event.campaign?.utm_campaign", "event.campaign?.utm_content", "event.lang", "event.targetType"):
             if field not in response.text:
                 issues.append(f"{item.path}: local funnel summary missing context field {field}")
             else:

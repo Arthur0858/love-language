@@ -24,6 +24,8 @@
 - `now-asset-production-pack.json`: 同一份 now 製作包的機器可讀版本，欄位符合 LoveTypes guardian script library。
 - `now-asset-production-queue.csv`: 5 支 now 短片的製作追蹤表，拆成腳本審核、素材、剪輯、字幕、安全 QA、排程與 KPI 回填。
 - `now-asset-production-queue.md/json`: 同一份製作佇列的人讀版與機器可讀版。
+- `now-asset-production-briefs.md`: 5 支 now 短片的剪輯與發布手卡，包含 9:16 場景卡、字幕分段、平台 caption、hashtag、CTA 與安全檢查。
+- `now-asset-production-briefs.json`: 同一份製作手卡的機器可讀版本，可交給剪輯、自動化或發布排程使用。
 - `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
@@ -91,6 +93,7 @@ python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
+python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
 ```
@@ -114,6 +117,7 @@ python3 tools/promotion_revenue_decision_matrix.py
 python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
+python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_weekly_summary.py
 node tools/build_promotion_spreadsheet.mjs
 ```
@@ -125,6 +129,8 @@ node tools/build_promotion_spreadsheet.mjs
 `now-asset-production-pack.md` 只抽出當前 `priority=now` 的任務，整理成可直接製作的短影片腳本、字幕、畫面建議與留言引導。若 tracker 尚未回填，它會先提供每位守護者一支痛點變體，不提前製作付費商品。
 
 `now-asset-production-queue.csv` 則把這 5 支短片拆成 40 個製作步驟，方便標記 `planned`、`in_progress`、`done` 或 `blocked`，並保留建議輸出檔名與 KPI 回填提醒。
+
+`now-asset-production-briefs.md` 把同一批 5 支短片整理成可交給剪輯者的製作手卡：每支都有 9:16 場景卡、字幕分段、畫面字、三平台 caption、hashtag、安全檢查與回填提醒。
 
 需要只檢查不寫檔時執行：
 

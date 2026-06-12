@@ -1,0 +1,377 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "pack": "docs/promotion/first-round/now-asset-production-pack.json"
+  },
+  "briefCount": 5,
+  "platformCount": 3,
+  "sceneCardCount": 15,
+  "briefs": [
+    {
+      "scriptId": "iris-now-content-variant-01",
+      "sourceTaskId": "publish-lt-s01-iris-silence",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "guardianTheme": "浪漫與文字",
+      "title": "你等的不是秒回，是一句清楚的在乎",
+      "hook": "如果他回很慢，你第一個害怕的是什麼？",
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者。",
+        "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+        "recommendedOutput": "exports/lovetypes/iris/iris-now-content-variant-01.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "晨曦玻璃花園，手機已讀訊息停在畫面中央。",
+          "subtitleLines": [
+            "他不是沒回。",
+            "但你心裡已經跑完一整場雨。",
+            "A：我是不是不重要了。"
+          ],
+          "overlayText": "他不是沒回。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "羽筆把模糊問號改寫成金色短句。",
+          "subtitleLines": [
+            "B：我是不是又太敏感了。",
+            "C：我只是想聽一句清楚的話。",
+            "艾莉絲不會叫你猜。"
+          ],
+          "overlayText": "B：我是不是又太敏感了。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "A/B/C 選項以玻璃光牌浮現。",
+          "subtitleLines": [
+            "她會把沉默翻成你真正想說的句子。",
+            "你最想被哪一句話接住？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她會把沉默翻成你真正想說的句子。"
+        }
+      ],
+      "captionByPlatform": {
+        "youtube_shorts": "如果他回很慢，你第一個害怕的是什麼？\n\n留言 A/B/C，或寫下你最想聽見的那句話。\n完成 15 題測驗，找到你的情感守護者。\n測驗入口：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n#艾莉絲 #肯定言詞 #文字型戀人 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "tiktok": "如果他回很慢，你第一個害怕的是什麼？\n\n留言 A/B/C，或寫下你最想聽見的那句話。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入測驗。\n#艾莉絲 #肯定言詞 #文字型戀人 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "instagram_reels": "如果他回很慢，你第一個害怕的是什麼？\n\n留言 A/B/C，或寫下你最想聽見的那句話。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入心語庭園。\n#艾莉絲 #肯定言詞 #文字型戀人 #LoveTypes #五種愛之語 #情感守護者 #心語庭園"
+      },
+      "hashtags": [
+        "#艾莉絲",
+        "#肯定言詞",
+        "#文字型戀人",
+        "#LoveTypes",
+        "#五種愛之語",
+        "#情感守護者",
+        "#心語庭園"
+      ],
+      "commentCTA": "留言 A/B/C，或寫下你最想聽見的那句話。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "字幕維持短句，手機上單行可讀。",
+        "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "scriptId": "noah-now-content-variant-01",
+      "sourceTaskId": "publish-lt-s04-noah-phone",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "guardianTheme": "神秘與宇宙",
+      "title": "他人在你旁邊，心卻像不在場",
+      "hook": "你最怕的不是孤單，是明明有人卻沒有被陪伴。",
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者。",
+        "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone",
+        "recommendedOutput": "exports/lovetypes/noah/noah-now-content-variant-01.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "星海圖書館，桌上攤開星圖與兩只杯子。",
+          "subtitleLines": [
+            "有些約會很安靜。",
+            "不是因為舒服。",
+            "而是你感覺他其實不在。"
+          ],
+          "overlayText": "有些約會很安靜。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "其中一盞燈忽明忽暗，最後穩定亮起。",
+          "subtitleLines": [
+            "A：一直看手機。",
+            "B：約定常常被延後。",
+            "C：聽你說話卻沒有記住。"
+          ],
+          "overlayText": "A：一直看手機。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "A/B/C 選項像星座節點連線。",
+          "subtitleLines": [
+            "諾雅會在星海裡替你留一盞燈。",
+            "提醒你要的不是黏人。",
+            "而是一段真正在場的時間。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "諾雅會在星海裡替你留一盞燈。"
+        }
+      ],
+      "captionByPlatform": {
+        "youtube_shorts": "你最怕的不是孤單，是明明有人卻沒有被陪伴。\n\n留言 A/B/C，你最不能接受哪一種不在場？\n完成 15 題測驗，找到你的情感守護者。\n測驗入口：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone\n#諾雅 #優質時光 #陪伴感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "tiktok": "你最怕的不是孤單，是明明有人卻沒有被陪伴。\n\n留言 A/B/C，你最不能接受哪一種不在場？\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入測驗。\n#諾雅 #優質時光 #陪伴感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "instagram_reels": "你最怕的不是孤單，是明明有人卻沒有被陪伴。\n\n留言 A/B/C，你最不能接受哪一種不在場？\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入心語庭園。\n#諾雅 #優質時光 #陪伴感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園"
+      },
+      "hashtags": [
+        "#諾雅",
+        "#優質時光",
+        "#陪伴感",
+        "#LoveTypes",
+        "#五種愛之語",
+        "#情感守護者",
+        "#心語庭園"
+      ],
+      "commentCTA": "留言 A/B/C，你最不能接受哪一種不在場？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "字幕維持短句，手機上單行可讀。",
+        "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "scriptId": "vivian-now-content-variant-01",
+      "sourceTaskId": "publish-lt-s07-vivian-remembered",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "guardianTheme": "被重視與儀式感",
+      "title": "你不是想要禮物，你想知道自己有沒有被記得",
+      "hook": "重要日子被忘記時，你真正痛的是哪裡？",
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者。",
+        "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered",
+        "recommendedOutput": "exports/lovetypes/vivian/vivian-now-content-variant-01.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "月光記憶工坊，緞帶、票根與小禮盒排列在桌面。",
+          "subtitleLines": [
+            "那一天不只是日期。",
+            "是你偷偷期待被記得的證據。",
+            "A：他忘了你說過的話。"
+          ],
+          "overlayText": "那一天不只是日期。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "忘記的日期被金色墨水重新圈起。",
+          "subtitleLines": [
+            "B：他覺得這不重要。",
+            "C：他補救時像在交差。",
+            "薇薇安守護的不是價格。"
+          ],
+          "overlayText": "B：他覺得這不重要。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "A/B/C 選項像抽屜標籤打開。",
+          "subtitleLines": [
+            "而是被放在心上的痕跡。",
+            "你最想被記得的是哪件小事？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "而是被放在心上的痕跡。"
+        }
+      ],
+      "captionByPlatform": {
+        "youtube_shorts": "重要日子被忘記時，你真正痛的是哪裡？\n\n留言一個你希望被記得的小日子，或選 A/B/C。\n完成 15 題測驗，找到你的情感守護者。\n測驗入口：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered\n#薇薇安 #接受禮物 #儀式感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "tiktok": "重要日子被忘記時，你真正痛的是哪裡？\n\n留言一個你希望被記得的小日子，或選 A/B/C。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入測驗。\n#薇薇安 #接受禮物 #儀式感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "instagram_reels": "重要日子被忘記時，你真正痛的是哪裡？\n\n留言一個你希望被記得的小日子，或選 A/B/C。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入心語庭園。\n#薇薇安 #接受禮物 #儀式感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園"
+      },
+      "hashtags": [
+        "#薇薇安",
+        "#接受禮物",
+        "#儀式感",
+        "#LoveTypes",
+        "#五種愛之語",
+        "#情感守護者",
+        "#心語庭園"
+      ],
+      "commentCTA": "留言一個你希望被記得的小日子，或選 A/B/C。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "字幕維持短句，手機上單行可讀。",
+        "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "scriptId": "claire-now-content-variant-01",
+      "sourceTaskId": "publish-lt-s10-claire-tired",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "guardianTheme": "療癒與陪伴",
+      "title": "你要的不是幫忙，是有人看見你快撐不住了",
+      "hook": "當你說沒事的時候，你其實希望他做什麼？",
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者。",
+        "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
+        "recommendedOutput": "exports/lovetypes/claire/claire-now-content-variant-01.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "溫室修復間，工具袋、澆水壺與被扶起的小植物。",
+          "subtitleLines": [
+            "你不是什麼都能自己來。",
+            "你只是太習慣先撐住。",
+            "A：希望他主動分擔。"
+          ],
+          "overlayText": "你不是什麼都能自己來。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "待辦清單上的重擔被一個暖白光點接住。",
+          "subtitleLines": [
+            "B：希望他記得你累在哪裡。",
+            "C：希望他不要等你崩潰才行動。",
+            "克萊兒不會把愛說得很大聲。"
+          ],
+          "overlayText": "B：希望他記得你累在哪裡。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "A/B/C 選項像工具吊牌浮現。",
+          "subtitleLines": [
+            "她會把愛放進一個具體動作。",
+            "你現在最想被分擔的是什麼？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她會把愛放進一個具體動作。"
+        }
+      ],
+      "captionByPlatform": {
+        "youtube_shorts": "當你說沒事的時候，你其實希望他做什麼？\n\n留言 A/B/C，或寫下你最希望有人幫你接住的一件事。\n完成 15 題測驗，找到你的情感守護者。\n測驗入口：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n#克萊兒 #服務行動 #被分擔 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "tiktok": "當你說沒事的時候，你其實希望他做什麼？\n\n留言 A/B/C，或寫下你最希望有人幫你接住的一件事。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入測驗。\n#克萊兒 #服務行動 #被分擔 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "instagram_reels": "當你說沒事的時候，你其實希望他做什麼？\n\n留言 A/B/C，或寫下你最希望有人幫你接住的一件事。\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入心語庭園。\n#克萊兒 #服務行動 #被分擔 #LoveTypes #五種愛之語 #情感守護者 #心語庭園"
+      },
+      "hashtags": [
+        "#克萊兒",
+        "#服務行動",
+        "#被分擔",
+        "#LoveTypes",
+        "#五種愛之語",
+        "#情感守護者",
+        "#心語庭園"
+      ],
+      "commentCTA": "留言 A/B/C，或寫下你最希望有人幫你接住的一件事。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "字幕維持短句，手機上單行可讀。",
+        "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "scriptId": "dora-now-content-variant-01",
+      "sourceTaskId": "publish-lt-s13-dora-distance",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "guardianTheme": "溫暖與擁抱",
+      "title": "你不是任性，你只是需要一種安全的靠近",
+      "hook": "你最想要的親密，是靠近，還是先被允許？",
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者。",
+        "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
+        "recommendedOutput": "exports/lovetypes/dora/dora-now-content-variant-01.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "玫瑰金安全聖域，柔軟布料與暖光圍出安全邊界。",
+          "subtitleLines": [
+            "有些擁抱很近。",
+            "卻不一定讓人安心。",
+            "A：我想先確認界線。"
+          ],
+          "overlayText": "有些擁抱很近。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "兩個人影停在合適距離，光圈慢慢靠近。",
+          "subtitleLines": [
+            "B：我想被溫柔安撫。",
+            "C：我想有人問我可不可以。",
+            "朵拉守護的不是強迫靠近。"
+          ],
+          "overlayText": "B：我想被溫柔安撫。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "A/B/C 選項像柔軟織帶標籤。",
+          "subtitleLines": [
+            "而是讓身體知道自己安全。",
+            "你最需要哪一種靠近？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "而是讓身體知道自己安全。"
+        }
+      ],
+      "captionByPlatform": {
+        "youtube_shorts": "你最想要的親密，是靠近，還是先被允許？\n\n留言 A/B/C，你最需要哪一種安全靠近？\n完成 15 題測驗，找到你的情感守護者。\n測驗入口：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance\n#朵拉 #身體接觸 #安全感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "tiktok": "你最想要的親密，是靠近，還是先被允許？\n\n留言 A/B/C，你最需要哪一種安全靠近？\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入測驗。\n#朵拉 #身體接觸 #安全感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園",
+        "instagram_reels": "你最想要的親密，是靠近，還是先被允許？\n\n留言 A/B/C，你最需要哪一種安全靠近？\n完成 15 題測驗，找到你的情感守護者。\n從個人頁連結進入心語庭園。\n#朵拉 #身體接觸 #安全感 #LoveTypes #五種愛之語 #情感守護者 #心語庭園"
+      },
+      "hashtags": [
+        "#朵拉",
+        "#身體接觸",
+        "#安全感",
+        "#LoveTypes",
+        "#五種愛之語",
+        "#情感守護者",
+        "#心語庭園"
+      ],
+      "commentCTA": "留言 A/B/C，你最需要哪一種安全靠近？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "字幕維持短句，手機上單行可讀。",
+        "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      ]
+    }
+  ]
+}

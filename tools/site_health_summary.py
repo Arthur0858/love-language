@@ -702,6 +702,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_launch_brief_issues",
         "promotion_revenue_decision_guardians",
         "promotion_revenue_decision_filled_rows",
+        "promotion_revenue_decision_profile_filled_rows",
+        "promotion_revenue_decision_profile_stage",
         "promotion_revenue_decision_empty_data_mode",
         "promotion_revenue_decision_issues",
         "promotion_asset_backlog_guardians",

@@ -1,8 +1,8 @@
 # LoveTypes 獲利決策矩陣
 
 - 產生日期：2026-06-13
-- 追蹤列數：15
-- 已回填列數：0
+- 影片追蹤列數：0 / 15
+- 平台首頁追蹤列數：0 / 3
 - 空資料安全模式：是
 
 ## 判斷規則
@@ -12,6 +12,21 @@
 - `deepen_identity_asset`: 已有收藏或路線興趣時，先強化免費收藏物與分享資產。
 - `build_owned_asset`: 已有補給名單或 Contact 需求時，優先做自有 Email/下載資產。
 - `test_soft_offer`: 已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。
+
+## 平台首頁意圖
+
+- 目前階段：`collect_signal`
+- 建議動作：[low] 先完成平台首頁回填
+- 建議補強：先設定三平台 Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。
+- 目標入口：https://lovetypes.tw/start/
+- Bio/Profile 點擊：0
+- 網站點擊：0
+- 測驗開始：0
+- 測驗完成：0
+- 路線興趣：0
+- 名單/Contact：0
+- Luna/聯盟：0
+- 判讀邊界：此區只代表 Bio/Profile link 承接，不分配到特定守護者。
 
 ## 守護者決策
 

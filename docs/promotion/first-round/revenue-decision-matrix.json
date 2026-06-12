@@ -2,12 +2,16 @@
   "generatedAt": "2026-06-13",
   "source": {
     "tracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
     "promotionKit": "promotion-kit.json"
   },
   "dataState": {
     "trackerRows": 15,
     "filledRows": 0,
+    "profileTrackerRows": 3,
+    "profileFilledRows": 0,
     "missingRevenueFields": [],
+    "profileMissingRevenueFields": [],
     "emptyDataMode": true
   },
   "fieldMeanings": {
@@ -39,6 +43,35 @@
       "rule": "已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。"
     }
   ],
+  "platformProfileIntent": {
+    "scope": "platform_profile_unassigned",
+    "boundary": "此區只代表 Bio/Profile link 承接，不分配到特定守護者。",
+    "trackerRows": 3,
+    "filledRows": 0,
+    "metrics": {
+      "profile_clicks": 0,
+      "site_clicks": 0,
+      "quiz_starts": 0,
+      "quiz_completions": 0,
+      "resources_clicks": 0,
+      "repair_plan_clicks": 0,
+      "luna_clicks": 0,
+      "keepsake_clicks": 0,
+      "free_keepsake_downloads": 0,
+      "supply_lead_requests": 0,
+      "luna_pack_clicks": 0,
+      "affiliate_book_clicks": 0,
+      "contact_requests": 0
+    },
+    "platforms": [],
+    "stage": "collect_signal",
+    "recommendedAction": {
+      "priority": "low",
+      "action": "先完成平台首頁回填",
+      "build": "先設定三平台 Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+      "target": "https://lovetypes.tw/start/"
+    }
+  },
   "guardians": [
     {
       "guardianId": "iris",

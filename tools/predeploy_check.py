@@ -134,7 +134,7 @@ def main() -> int:
         run_step("promotion kpi tracker", [sys.executable, "tools/promotion_sync_kpi_tracker.py", "--check"])
         run_step("promotion posting queue", [sys.executable, "tools/promotion_sync_posting_queue.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
-        run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--check"])
+        run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])

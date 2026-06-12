@@ -15,6 +15,8 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "week-1-platform-launch-brief.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "week-1-platform-launch-brief.json"
+DEFAULT_INDEX_PATH = PROMOTION_DIR / "platform-launch-brief-index.md"
+DEFAULT_INDEX_JSON_PATH = PROMOTION_DIR / "platform-launch-brief-index.json"
 PLATFORM_LABELS = {
     "youtube_shorts": "YouTube Shorts",
     "tiktok": "TikTok",
@@ -191,31 +193,123 @@ def write_outputs(report: dict, output_path: Path, json_path: Path) -> None:
     json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def available_weeks(rows: list[dict[str, str]]) -> list[int]:
+    return sorted({
+        int(row.get("week", "0") or 0)
+        for row in rows
+        if row.get("week") and int(row.get("week", "0") or 0) > 0
+    })
+
+
+def week_output_paths(week: int) -> tuple[Path, Path]:
+    return (
+        PROMOTION_DIR / f"week-{week}-platform-launch-brief.md",
+        PROMOTION_DIR / f"week-{week}-platform-launch-brief.json",
+    )
+
+
+def render_index(reports: list[dict]) -> str:
+    total_rows = sum(int(report["rowCount"]) for report in reports)
+    total_scripts = sum(int(report["scriptCount"]) for report in reports)
+    issue_count = sum(len(report["issues"]) for report in reports)
+    lines = [
+        "# LoveTypes 第一輪平台發布簡報索引",
+        "",
+        f"- 產生日期：{date.today().isoformat()}",
+        f"- 週次：{len(reports)}",
+        f"- 平台任務：{total_rows}",
+        f"- 腳本數：{total_scripts}",
+        f"- 問題數：{issue_count}",
+        "",
+        "## 週次",
+        "",
+    ]
+    for report in reports:
+        week = report["week"]
+        guardian_text = ", ".join(f"{key}: {value}" for key, value in report["guardianDistribution"].items())
+        lines.extend([
+            f"### Week {week}",
+            "",
+            f"- 簡報：`week-{week}-platform-launch-brief.md`",
+            f"- 平台任務：{report['rowCount']}",
+            f"- 腳本數：{report['scriptCount']}",
+            f"- 守護者分布：{guardian_text}",
+            f"- 問題數：{len(report['issues'])}",
+            "",
+        ])
+    lines.extend([
+        "## 使用規則",
+        "",
+        "- 每週只看該週的 `week-N-platform-launch-brief.md` 發布，不需要從 45 筆佇列人工篩選。",
+        "- 發布後先更新 `posting-queue.csv`，再更新 `kpi-tracker.csv`。",
+        "- 判斷放大或商品承接前，先跑 `python3 tools/promotion_publishing_status.py`。",
+    ])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_index(reports: list[dict], output_path: Path, json_path: Path) -> None:
+    output_path.write_text(render_index(reports), encoding="utf-8")
+    payload = {
+        "generatedAt": date.today().isoformat(),
+        "weekCount": len(reports),
+        "rowCount": sum(int(report["rowCount"]) for report in reports),
+        "scriptCount": sum(int(report["scriptCount"]) for report in reports),
+        "issueCount": sum(len(report["issues"]) for report in reports),
+        "reports": [
+            {
+                "week": report["week"],
+                "rowCount": report["rowCount"],
+                "scriptCount": report["scriptCount"],
+                "platformCount": report["platformCount"],
+                "guardianDistribution": report["guardianDistribution"],
+                "issues": report["issues"],
+            }
+            for report in reports
+        ],
+    }
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the next LoveTypes platform launch brief from posting queue rows.")
     parser.add_argument("--queue", default=str(QUEUE_PATH))
     parser.add_argument("--week", type=int, default=None, help="Promotion week to render. Defaults to first planned week.")
+    parser.add_argument("--all", action="store_true", help="Render launch briefs for every week in the posting queue.")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT_PATH))
     parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT_PATH))
+    parser.add_argument("--index-output", default=str(DEFAULT_INDEX_PATH))
+    parser.add_argument("--index-json-output", default=str(DEFAULT_INDEX_JSON_PATH))
     parser.add_argument("--check", action="store_true", help="Validate without writing launch brief files.")
     args = parser.parse_args()
 
     rows = read_queue(Path(args.queue))
-    week = selected_week(rows, args.week)
-    report = build_report(rows, week)
+    weeks = available_weeks(rows) if args.all else [selected_week(rows, args.week)]
+    reports = [build_report(rows, week) for week in weeks]
+    report = reports[0]
     if not args.check:
-        write_outputs(report, Path(args.output), Path(args.json_output))
-        print(f"promotion_launch_brief={args.output}")
-        print(f"promotion_launch_brief_json={args.json_output}")
+        if args.all:
+            for item in reports:
+                output_path, json_path = week_output_paths(int(item["week"]))
+                write_outputs(item, output_path, json_path)
+            write_index(reports, Path(args.index_output), Path(args.index_json_output))
+            print(f"promotion_launch_brief_index={args.index_output}")
+            print(f"promotion_launch_brief_index_json={args.index_json_output}")
+        else:
+            write_outputs(report, Path(args.output), Path(args.json_output))
+            print(f"promotion_launch_brief={args.output}")
+            print(f"promotion_launch_brief_json={args.json_output}")
+    all_issues = [issue for item in reports for issue in item["issues"]]
+    all_warnings = [warning for item in reports for warning in item["warnings"]]
+    print(f"promotion_launch_brief_weeks={len(reports)}")
     print(f"promotion_launch_brief_week={report['week']}")
-    print(f"promotion_launch_brief_rows={report['rowCount']}")
-    print(f"promotion_launch_brief_scripts={report['scriptCount']}")
-    print(f"promotion_launch_brief_platforms={report['platformCount']}")
-    print(f"promotion_launch_brief_warnings={len(report['warnings'])}")
-    print(f"promotion_launch_brief_issues={len(report['issues'])}")
-    for issue in report["issues"]:
+    print(f"promotion_launch_brief_rows={sum(int(item['rowCount']) for item in reports)}")
+    print(f"promotion_launch_brief_scripts={sum(int(item['scriptCount']) for item in reports)}")
+    print(f"promotion_launch_brief_platforms={max((int(item['platformCount']) for item in reports), default=0)}")
+    print(f"promotion_launch_brief_warnings={len(all_warnings)}")
+    print(f"promotion_launch_brief_issues={len(all_issues)}")
+    for issue in all_issues:
         print(issue)
-    return 1 if report["issues"] else 0
+    return 1 if all_issues else 0
 
 
 if __name__ == "__main__":

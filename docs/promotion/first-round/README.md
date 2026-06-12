@@ -12,8 +12,10 @@
 - `posting-queue.csv`: 三平台發布佇列，將 15 支 Shorts 展開為 YouTube Shorts、TikTok、Instagram Reels 共 45 個發布任務，預設排在台北時間每週一/三/五晚間。
 - `publishing-status.md`: 發布狀態對帳報告，檢查 45 筆發文任務是否已回填貼文 URL、發布日期，並確認 KPI 表是否足以做週決策。
 - `publishing-status.json`: 同一份發布狀態的機器可讀版本，可交給表格、儀表板或自動化使用。
-- `week-1-platform-launch-brief.md`: 第一週 9 筆平台發布任務的操作簡報，含排程時間、平台文案、追蹤連結與回填欄位。
-- `week-1-platform-launch-brief.json`: 同一份平台發布簡報的機器可讀版本。
+- `platform-launch-brief-index.md`: 5 週平台發布簡報索引，確認 45 筆平台任務、15 支腳本與每週守護者分布。
+- `platform-launch-brief-index.json`: 同一份平台發布索引的機器可讀版本。
+- `week-1-platform-launch-brief.md` 到 `week-5-platform-launch-brief.md`: 每週 9 筆平台發布任務的操作簡報，含排程時間、平台文案、追蹤連結與回填欄位。
+- `week-1-platform-launch-brief.json` 到 `week-5-platform-launch-brief.json`: 每週平台發布簡報的機器可讀版本。
 - `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
@@ -76,7 +78,7 @@
 python3 tools/promotion_sync_kpi_tracker.py
 python3 tools/promotion_sync_posting_queue.py
 python3 tools/promotion_publishing_status.py
-python3 tools/promotion_launch_brief.py
+python3 tools/promotion_launch_brief.py --all
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
 ```
@@ -108,14 +110,20 @@ python3 tools/promotion_weekly_summary.py --check
 
 若追蹤表尚未有資料，摘要會保持保守，只提示先發布與回填，不會誤判優勝守護者或商品方向。
 
-## 第一週發布
+## 平台發布
 
-第一週可直接打開 `week-1-platform-launch-brief.md`，依序發布 3 支 Iris 腳本到 YouTube Shorts、TikTok、Instagram Reels。每支發布後先回填：
+先打開 `platform-launch-brief-index.md`，再依週次打開 `week-N-platform-launch-brief.md`。每週有 3 支腳本、9 筆平台任務，直接依簡報發布到 YouTube Shorts、TikTok、Instagram Reels。每支發布後先回填：
 
 - `posting-queue.csv`: `status`、`published_date`、`post_url`
 - `kpi-tracker.csv`: `platform`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
 
-若要重新產生指定週次的平台簡報：
+若要重新產生全部週次的平台簡報：
+
+```bash
+python3 tools/promotion_launch_brief.py --all
+```
+
+若只要重建指定週次：
 
 ```bash
 python3 tools/promotion_launch_brief.py --week 1

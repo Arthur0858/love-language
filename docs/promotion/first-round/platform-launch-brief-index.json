@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-06-13",
+  "weekCount": 5,
+  "rowCount": 45,
+  "scriptCount": 15,
+  "issueCount": 0,
+  "reports": [
+    {
+      "week": 1,
+      "rowCount": 9,
+      "scriptCount": 3,
+      "platformCount": 3,
+      "guardianDistribution": {
+        "iris": 9
+      },
+      "issues": []
+    },
+    {
+      "week": 2,
+      "rowCount": 9,
+      "scriptCount": 3,
+      "platformCount": 3,
+      "guardianDistribution": {
+        "noah": 9
+      },
+      "issues": []
+    },
+    {
+      "week": 3,
+      "rowCount": 9,
+      "scriptCount": 3,
+      "platformCount": 3,
+      "guardianDistribution": {
+        "vivian": 9
+      },
+      "issues": []
+    },
+    {
+      "week": 4,
+      "rowCount": 9,
+      "scriptCount": 3,
+      "platformCount": 3,
+      "guardianDistribution": {
+        "claire": 9
+      },
+      "issues": []
+    },
+    {
+      "week": 5,
+      "rowCount": 9,
+      "scriptCount": 3,
+      "platformCount": 3,
+      "guardianDistribution": {
+        "dora": 9
+      },
+      "issues": []
+    }
+  ]
+}

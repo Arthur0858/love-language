@@ -678,6 +678,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_publishing_status_ready",
         "promotion_publishing_status_warnings",
         "promotion_publishing_status_issues",
+        "promotion_launch_brief_weeks",
         "promotion_launch_brief_week",
         "promotion_launch_brief_rows",
         "promotion_launch_brief_scripts",

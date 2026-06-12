@@ -34,6 +34,7 @@ PYTHON_TOOLS = [
     "tools/promotion_lead_intake_playbook.py",
     "tools/promotion_offer_hypothesis_board.py",
     "tools/promotion_offer_experiment_plan.py",
+    "tools/promotion_offer_experiment_queue.py",
     "tools/promotion_asset_backlog.py",
     "tools/promotion_platform_profile_setup.py",
     "tools/promotion_platform_profile_tracker.py",
@@ -152,6 +153,7 @@ def main() -> int:
         run_step("promotion lead intake playbook", [sys.executable, "tools/promotion_lead_intake_playbook.py", "--check"])
         run_step("promotion offer hypothesis board", [sys.executable, "tools/promotion_offer_hypothesis_board.py", "--check"])
         run_step("promotion offer experiment plan", [sys.executable, "tools/promotion_offer_experiment_plan.py", "--check"])
+        run_step("promotion offer experiment queue", [sys.executable, "tools/promotion_offer_experiment_queue.py", "--check"])
         run_step("promotion asset backlog", [sys.executable, "tools/promotion_asset_backlog.py", "--check"])
         run_step("promotion platform profile setup", [sys.executable, "tools/promotion_platform_profile_setup.py", "--check"])
         run_step("promotion platform profile tracker", [sys.executable, "tools/promotion_platform_profile_tracker.py", "--check"])

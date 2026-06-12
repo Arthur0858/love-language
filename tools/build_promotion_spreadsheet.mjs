@@ -12,6 +12,7 @@ const PROFILE_TRACKER_CSV = path.join(PROMOTION_DIR, "platform-profile-tracker.c
 const LEAD_INTAKE_CSV = path.join(PROMOTION_DIR, "lead-intake-tracker.csv");
 const OFFER_HYPOTHESIS_CSV = path.join(PROMOTION_DIR, "offer-hypothesis-board.csv");
 const OFFER_EXPERIMENT_CSV = path.join(PROMOTION_DIR, "offer-experiment-plan.csv");
+const OFFER_EXPERIMENT_QUEUE_CSV = path.join(PROMOTION_DIR, "offer-experiment-queue.csv");
 const NEXT_ACTIONS_JSON = path.join(PROMOTION_DIR, "next-actions.json");
 const WEEKLY_SUMMARY_JSON = path.join(PROMOTION_DIR, "weekly-summary.json");
 const WEEK_EXECUTION_JSON = path.join(PROMOTION_DIR, "week-1-execution-sheet.json");
@@ -133,6 +134,7 @@ async function main() {
   const leadIntakeRows = parseCsv(await fs.readFile(LEAD_INTAKE_CSV, "utf8"));
   const offerHypothesisRows = parseCsv(await fs.readFile(OFFER_HYPOTHESIS_CSV, "utf8"));
   const offerExperimentRows = parseCsv(await fs.readFile(OFFER_EXPERIMENT_CSV, "utf8"));
+  const offerExperimentQueueRows = parseCsv(await fs.readFile(OFFER_EXPERIMENT_QUEUE_CSV, "utf8"));
   const nextActions = JSON.parse(await fs.readFile(NEXT_ACTIONS_JSON, "utf8"));
   const weeklySummary = JSON.parse(await fs.readFile(WEEKLY_SUMMARY_JSON, "utf8"));
   const weekExecution = JSON.parse(await fs.readFile(WEEK_EXECUTION_JSON, "utf8"));
@@ -144,6 +146,7 @@ async function main() {
   const leadIntake = workbook.worksheets.add("Lead Intake");
   const offerHypothesis = workbook.worksheets.add("Offer Hypotheses");
   const offerExperiments = workbook.worksheets.add("Offer Experiments");
+  const offerQueue = workbook.worksheets.add("Offer Queue");
   const weekExecutionSheet = workbook.worksheets.add("Week 1 Execution");
   const actions = workbook.worksheets.add("Next Actions");
   const dictionary = workbook.worksheets.add("Data Dictionary");
@@ -158,6 +161,7 @@ async function main() {
     ["Lead intake template rows", Math.max(leadIntakeRows.length - 1, 0)],
     ["Offer hypothesis rows", Math.max(offerHypothesisRows.length - 1, 0)],
     ["Offer experiment rows", Math.max(offerExperimentRows.length - 1, 0)],
+    ["Offer queue rows", Math.max(offerExperimentQueueRows.length - 1, 0)],
     ["Week 1 profile gates pending", weekExecution.profilePendingCount],
     ["Week 1 platform posts", weekExecution.platformPostCount],
     ["Empty data safety mode", nextActions.dataState.emptyDataMode ? "YES" : "NO"],
@@ -180,6 +184,7 @@ async function main() {
   writeMatrix(leadIntake, "A1", leadIntakeRows);
   writeMatrix(offerHypothesis, "A1", offerHypothesisRows);
   writeMatrix(offerExperiments, "A1", offerExperimentRows);
+  writeMatrix(offerQueue, "A1", offerExperimentQueueRows);
 
   const profileGateHeaders = ["platform", "label", "ready", "status", "profileLinkLabel", "profileLink", "bio", "pinnedComment", "writeback"];
   const executionHeaders = [
@@ -239,6 +244,7 @@ async function main() {
     ["lead-intake-tracker.csv", "Template rows for real Contact, waitlist, Luna, or repair supply requests. Template rows are not user data."],
     ["offer-hypothesis-board.csv", "Guardian-level offer hypotheses and readiness gates. HOLD rows must not change public paid CTA priority."],
     ["offer-experiment-plan.csv", "Guarded product experiment thresholds for free assets, owned leads, Luna, and affiliate book tests."],
+    ["offer-experiment-queue.csv", "Execution queue for READY offer experiments. Blocked rows must not be produced as public assets."],
   ]);
 
   await fs.mkdir(PROMOTION_DIR, { recursive: true });
@@ -252,9 +258,9 @@ async function main() {
     summary: "formula error scan",
   });
   let renderedSheets = 0;
-  const sheetNames = ["Dashboard", "KPI Tracker", "Platform Profiles", "Lead Intake", "Offer Hypotheses", "Offer Experiments", "Week 1 Execution", "Next Actions", "Data Dictionary"];
+  const sheetNames = ["Dashboard", "KPI Tracker", "Platform Profiles", "Lead Intake", "Offer Hypotheses", "Offer Experiments", "Offer Queue", "Week 1 Execution", "Next Actions", "Data Dictionary"];
   for (const sheetName of sheetNames) {
-    const range = sheetName === "Week 1 Execution" ? "A1:O28" : sheetName === "Lead Intake" ? "A1:Q18" : sheetName === "Offer Hypotheses" ? "A1:L8" : sheetName === "Offer Experiments" ? "A1:Q22" : "A1:H24";
+    const range = sheetName === "Week 1 Execution" ? "A1:O28" : sheetName === "Lead Intake" ? "A1:Q18" : sheetName === "Offer Hypotheses" ? "A1:L8" : sheetName === "Offer Experiments" ? "A1:Q22" : sheetName === "Offer Queue" ? "A1:N26" : "A1:H24";
     await workbook.render({ sheetName, range, scale: 1 });
     renderedSheets += 1;
   }

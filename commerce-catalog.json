@@ -25,6 +25,88 @@
       "revenue": 10
     }
   },
+  "revenuePlaybook": [
+    {
+      "id": "identity_retention_first",
+      "role": "retention",
+      "itemTypes": [
+        "free_keepsake"
+      ],
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "useWhen": "A visitor has a guardian result but has not yet shown buying or email intent.",
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
+    },
+    {
+      "id": "owned_supply_lead",
+      "role": "lead",
+      "itemTypes": [
+        "owned_supply_waitlist"
+      ],
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "useWhen": "A visitor clicks a guardian supply route, asks for a downloadable asset, or reaches Contact with funnel context.",
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
+    },
+    {
+      "id": "affiliate_book_revenue",
+      "role": "revenue",
+      "itemTypes": [
+        "affiliate_book"
+      ],
+      "recommendedAfter": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "primaryEvents": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "useWhen": "A visitor wants longer-form reading after seeing their guardian supply route or repair plan.",
+      "nextStep": "Show one relevant book as optional extended reading with affiliate disclosure.",
+      "doNotUseWhen": "Do not imply the book will fix the relationship, replace apology, or replace counseling."
+    },
+    {
+      "id": "luna_pack_revenue",
+      "role": "revenue",
+      "itemTypes": [
+        "luna_gumroad_pack"
+      ],
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "useWhen": "A visitor wants night reflection, conflict cooldown, journaling, or post-quiz emotional sorting.",
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
+    }
+  ],
   "items": [
     {
       "id": "free-keepsake-iris",

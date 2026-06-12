@@ -646,6 +646,19 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
     for snippet in ("No therapeutic", "Affiliate links", "Email waitlist", "sensitive personal details"):
         if snippet not in boundaries:
             issues.append(f"{path}: missing safety boundary snippet {snippet!r}")
+    playbook = data.get("revenuePlaybook")
+    if not isinstance(playbook, list) or len(playbook) < 4:
+        issues.append(f"{path}: revenuePlaybook should include at least four plays")
+    else:
+        expected_play_ids = {"identity_retention_first", "owned_supply_lead", "affiliate_book_revenue", "luna_pack_revenue"}
+        play_ids = {play.get("id") for play in playbook if isinstance(play, dict)}
+        missing_play_ids = sorted(expected_play_ids.difference(play_ids))
+        if missing_play_ids:
+            issues.append(f"{path}: revenuePlaybook missing play ids {', '.join(missing_play_ids)}")
+        for play in playbook:
+            if not isinstance(play, dict) or not play.get("primaryEvents") or not play.get("doNotUseWhen"):
+                issues.append(f"{path}: revenuePlaybook entries should include primaryEvents and doNotUseWhen")
+                break
     items = data.get("items", [])
     if not isinstance(items, list):
         return [f"{path}: items should be a list"], 0, 0, 0

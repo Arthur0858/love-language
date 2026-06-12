@@ -1579,6 +1579,22 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
     if not isinstance(items, list) or not items:
         issues.append(f"{COMMERCE_CATALOG_PATH}: items should be a non-empty list")
         return issues, stats
+    playbook = data.get("revenuePlaybook")
+    if not isinstance(playbook, list) or len(playbook) < 4:
+        issues.append(f"{COMMERCE_CATALOG_PATH}: revenuePlaybook should include at least four plays")
+    else:
+        stats["commerce_revenue_playbook_checked"] = len(playbook)
+        expected_play_ids = {"identity_retention_first", "owned_supply_lead", "affiliate_book_revenue", "luna_pack_revenue"}
+        play_ids = {play.get("id") for play in playbook if isinstance(play, dict)}
+        if not expected_play_ids.issubset(play_ids):
+            issues.append(f"{COMMERCE_CATALOG_PATH}: revenuePlaybook missing play ids {sorted(expected_play_ids.difference(play_ids))}")
+        for play in playbook:
+            if not isinstance(play, dict):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: revenuePlaybook entries should be objects")
+                continue
+            for key in ("role", "itemTypes", "recommendedAfter", "primaryEvents", "useWhen", "nextStep", "doNotUseWhen"):
+                if not play.get(key):
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: revenue play {play.get('id') or '<unknown>'} missing {key}")
     stats["commerce_catalogs_checked"] = 1
     stats["commerce_items_checked"] = len(items)
     if len(items) != 20:

@@ -2,10 +2,15 @@
   "generatedAt": "2026-06-13",
   "source": {
     "tracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
+    "platformProfileSetup": "docs/promotion/first-round/platform-profile-setup.json",
     "promotionKit": "promotion-kit.json"
   },
   "dataState": {
     "trackerRows": 0,
+    "profileTrackerRows": 3,
+    "profileFilledRows": 0,
+    "profilePendingRows": 3,
     "emptyDataMode": true,
     "fieldComplete": true
   },
@@ -33,10 +38,75 @@
       "summary": "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。"
     },
     {
+      "id": "set_platform_profile_links",
+      "priority": "high",
+      "type": "distribution",
+      "summary": "發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。"
+    },
+    {
+      "id": "fill_platform_profile_kpis",
+      "priority": "high",
+      "type": "measurement",
+      "summary": "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。"
+    },
+    {
       "id": "hold_offer_changes",
       "priority": "medium",
       "type": "safety",
       "summary": "目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。"
+    }
+  ],
+  "platformProfileActions": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "profileLinkLabel": "Channel description / video description",
+      "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "firstKpis": [
+        "status",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "profileLinkLabel": "Profile website link",
+      "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "firstKpis": [
+        "status",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "profileLinkLabel": "Profile link in bio",
+      "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "firstKpis": [
+        "status",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
     }
   ],
   "selectedTasks": [
@@ -89,6 +159,7 @@
   "safety": {
     "doNotChangeOffersFromEmptyData": true,
     "doNotUseDiagnosisClaims": true,
-    "keepShortsCtaQuizOnly": true
+    "keepShortsCtaQuizOnly": true,
+    "profileLinksQuizOnly": true
   }
 }

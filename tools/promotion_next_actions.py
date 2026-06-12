@@ -8,12 +8,14 @@ from collections import Counter
 from datetime import date
 from pathlib import Path
 
-from promotion_weekly_summary import build_report, is_filled, load_tasks, read_tracker
+from promotion_weekly_summary import build_report, is_filled, is_profile_filled, load_tasks, read_tracker
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
+PROFILE_SETUP_PATH = PROMOTION_DIR / "platform-profile-setup.json"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "next-actions.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "next-actions.json"
@@ -49,6 +51,37 @@ def planned_tasks(tasks: list[dict]) -> list[dict]:
         [task for task in tasks if task.get("status") == "planned"],
         key=lambda task: (int(task.get("week", 0) or 0), int(task.get("slot", 0) or 0)),
     )
+
+
+def read_json(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def platform_setup_lookup(path: Path) -> dict[str, dict]:
+    data = read_json(path)
+    return {str(item.get("platformId", "")): item for item in data.get("platforms", []) if item.get("platformId")}
+
+
+def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict]) -> list[dict]:
+    actions = []
+    for row in rows:
+        if is_profile_filled(row):
+            continue
+        platform = (row.get("platform") or "").strip()
+        item = setup.get(platform, {})
+        actions.append({
+            "platform": platform,
+            "label": row.get("label") or item.get("label") or platform,
+            "status": row.get("status") or "planned",
+            "profileLink": row.get("profile_link") or item.get("profileLink"),
+            "profileLinkLabel": item.get("profileLinkLabel", "Profile link"),
+            "bio": item.get("bio", ""),
+            "pinnedComment": item.get("pinnedComment", ""),
+            "firstKpis": ["status", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
+        })
+    return actions
 
 
 def score_rows(rows: list[dict[str, str]], tasks: list[dict]) -> tuple[Counter, Counter, Counter]:
@@ -115,9 +148,21 @@ def task_summary(task: dict) -> dict:
     }
 
 
-def build_actions(fields: list[str], rows: list[dict[str, str]], tasks: list[dict]) -> dict:
-    report = build_report(fields, rows, tasks)
+def build_actions(
+    fields: list[str],
+    rows: list[dict[str, str]],
+    tasks: list[dict],
+    profile_fields: list[str] | None = None,
+    profile_rows: list[dict[str, str]] | None = None,
+    profile_setup: dict[str, dict] | None = None,
+) -> dict:
+    profile_fields = profile_fields or []
+    profile_rows = profile_rows or []
+    profile_setup = profile_setup or {}
+    report = build_report(fields, rows, tasks, profile_fields, profile_rows)
     active_rows = filled_rows(rows)
+    active_profile_rows = [row for row in profile_rows if is_profile_filled(row)]
+    pending_profile_actions = profile_rows_to_actions(profile_rows, profile_setup)
     guardian_scores, angle_scores, revenue_scores = score_rows(active_rows, tasks)
     top_guardian = top_key(guardian_scores)
     top_angle = top_key(angle_scores)
@@ -138,6 +183,18 @@ def build_actions(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
                 "priority": "high",
                 "type": "measurement",
                 "summary": "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+            },
+            {
+                "id": "set_platform_profile_links",
+                "priority": "high",
+                "type": "distribution",
+                "summary": "發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。",
+            },
+            {
+                "id": "fill_platform_profile_kpis",
+                "priority": "high",
+                "type": "measurement",
+                "summary": "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。",
             },
             {
                 "id": "hold_offer_changes",
@@ -187,10 +244,15 @@ def build_actions(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
         "generatedAt": date.today().isoformat(),
         "source": {
             "tracker": str(TRACKER_PATH.relative_to(ROOT)),
+            "platformProfileTracker": str(PROFILE_TRACKER_PATH.relative_to(ROOT)),
+            "platformProfileSetup": str(PROFILE_SETUP_PATH.relative_to(ROOT)),
             "promotionKit": str(KIT_PATH.relative_to(ROOT)),
         },
         "dataState": {
             "trackerRows": report["trackerRows"],
+            "profileTrackerRows": report["profileTrackerTotalRows"],
+            "profileFilledRows": report["profileTrackerRows"],
+            "profilePendingRows": len(pending_profile_actions),
             "emptyDataMode": report["safety"]["emptyDataMode"],
             "fieldComplete": report["fieldStatus"]["complete"],
         },
@@ -205,11 +267,13 @@ def build_actions(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
             "revenueGuardians": dict(sorted(revenue_scores.items())),
         },
         "actions": actions,
+        "platformProfileActions": pending_profile_actions,
         "selectedTasks": [task_summary(task) for task in selected],
         "safety": {
-            "doNotChangeOffersFromEmptyData": not active_rows,
+            "doNotChangeOffersFromEmptyData": not active_rows and not active_profile_rows,
             "doNotUseDiagnosisClaims": True,
             "keepShortsCtaQuizOnly": True,
+            "profileLinksQuizOnly": True,
         },
     }
 
@@ -219,7 +283,8 @@ def build_markdown(plan: dict) -> str:
         "# LoveTypes 下一批推廣動作建議",
         "",
         f"- 產生日期：{plan['generatedAt']}",
-        f"- 追蹤列數：{plan['dataState']['trackerRows']}",
+        f"- 影片追蹤列數：{plan['dataState']['trackerRows']}",
+        f"- 平台首頁待設定列數：{plan['dataState']['profilePendingRows']} / {plan['dataState']['profileTrackerRows']}",
         f"- 空資料安全模式：{'是' if plan['dataState']['emptyDataMode'] else '否'}",
         "",
         "## 優先動作",
@@ -227,7 +292,32 @@ def build_markdown(plan: dict) -> str:
     ]
     for action in plan["actions"]:
         lines.append(f"- [{action['priority']}] {action['summary']}")
-    lines.extend(["", "## 建議發布任務", ""])
+    lines.extend(["", "## 平台首頁設定", ""])
+    for item in plan["platformProfileActions"]:
+        lines.extend([
+            f"### {item['label']}（`{item['platform']}`）",
+            "",
+            f"- 連結位置：{item['profileLinkLabel']}",
+            f"- Profile link：{item['profileLink']}",
+            f"- 狀態：`{item['status']}`",
+            "- Bio：",
+            "",
+            "```text",
+            item["bio"],
+            "```",
+            "",
+            "- 置頂留言 / 首則留言：",
+            "",
+            "```text",
+            item["pinnedComment"],
+            "```",
+            "",
+            f"- 優先回填欄位：{', '.join(f'`{field}`' for field in item['firstKpis'])}",
+            "",
+        ])
+    if not plan["platformProfileActions"]:
+        lines.extend(["- 平台首頁追蹤列已設定，下一步看 profile_clicks、site_clicks、quiz_starts、quiz_completions。", ""])
+    lines.extend(["## 建議發布任務", ""])
     for task in plan["selectedTasks"]:
         lines.extend([
             f"### {task['taskId']}",
@@ -248,6 +338,7 @@ def build_markdown(plan: dict) -> str:
         "## 安全邊界",
         "",
         "- Shorts CTA 維持測驗，不直接導購。",
+        "- 平台首頁 Bio/Profile link 也維持測驗，不直接導購。",
         "- 不把守護者結果描述成診斷、療效或保證修復。",
         "- 空資料時不調整商品、守護者優先序或付費 CTA。",
     ])
@@ -257,6 +348,8 @@ def build_markdown(plan: dict) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate LoveTypes next promotion actions from KPI tracker data.")
     parser.add_argument("--tracker", default=str(TRACKER_PATH))
+    parser.add_argument("--profile-tracker", default=str(PROFILE_TRACKER_PATH))
+    parser.add_argument("--profile-setup", default=str(PROFILE_SETUP_PATH))
     parser.add_argument("--kit", default=str(KIT_PATH))
     parser.add_argument("--output", default=str(PROMOTION_DIR / "next-actions.md"))
     parser.add_argument("--json-output", default=str(PROMOTION_DIR / "next-actions.json"))
@@ -265,8 +358,10 @@ def main() -> int:
     args = parser.parse_args()
 
     fields, rows = read_tracker(Path(args.tracker))
+    profile_fields, profile_rows = read_tracker(Path(args.profile_tracker))
+    profile_setup = platform_setup_lookup(Path(args.profile_setup))
     tasks = load_tasks(Path(args.kit))
-    plan = build_actions(fields, rows, tasks)
+    plan = build_actions(fields, rows, tasks, profile_fields, profile_rows, profile_setup)
     markdown = build_markdown(plan)
     if args.check:
         issues = []
@@ -276,10 +371,16 @@ def main() -> int:
             issues.append("expected at least one selected task")
         if plan["dataState"]["emptyDataMode"] and not plan["safety"]["doNotChangeOffersFromEmptyData"]:
             issues.append("empty data mode should block offer changes")
+        if plan["dataState"]["profileTrackerRows"] and not plan["platformProfileActions"] and plan["dataState"]["profilePendingRows"]:
+            issues.append("expected platform profile actions for pending rows")
+        if plan["dataState"]["emptyDataMode"] and plan["dataState"]["profilePendingRows"] < 1:
+            issues.append("empty data mode should surface platform profile setup actions")
         if not markdown.startswith("# LoveTypes 下一批推廣動作建議"):
             issues.append("markdown missing title")
         print(f"promotion_next_actions_selected_tasks={len(plan['selectedTasks'])}")
         print(f"promotion_next_actions_actions={len(plan['actions'])}")
+        print(f"promotion_next_actions_profile_actions={len(plan['platformProfileActions'])}")
+        print(f"promotion_next_actions_profile_pending_rows={plan['dataState']['profilePendingRows']}")
         print(f"promotion_next_actions_empty_data_mode={int(plan['dataState']['emptyDataMode'])}")
         print(f"promotion_next_actions_issues={len(issues)}")
         for issue in issues:

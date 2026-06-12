@@ -722,6 +722,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_spreadsheet_rendered_sheets",
         "promotion_next_actions_selected_tasks",
         "promotion_next_actions_actions",
+        "promotion_next_actions_profile_actions",
+        "promotion_next_actions_profile_pending_rows",
         "promotion_next_actions_empty_data_mode",
         "promotion_next_actions_issues",
         "promotion_weekly_summary_tracker_rows",

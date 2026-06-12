@@ -1,14 +1,79 @@
 # LoveTypes 下一批推廣動作建議
 
 - 產生日期：2026-06-13
-- 追蹤列數：0
+- 影片追蹤列數：0
+- 平台首頁待設定列數：3 / 3
 - 空資料安全模式：是
 
 ## 優先動作
 
 - [high] 發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
 - [high] 發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。
+- [high] 發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。
+- [high] 平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。
 - [medium] 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
+
+## 平台首頁設定
+
+### YouTube Shorts（`youtube_shorts`）
+
+- 連結位置：Channel description / video description
+- Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+- 狀態：`planned`
+- Bio：
+
+```text
+LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
+```
+
+- 置頂留言 / 首則留言：
+
+```text
+完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+留言 A/B/C，我們會用守護者路線回覆你。
+```
+
+- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
+
+### TikTok（`tiktok`）
+
+- 連結位置：Profile website link
+- Profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+- 狀態：`planned`
+- Bio：
+
+```text
+五種愛之語測驗｜進入心語庭園，找到你的情感守護者。
+```
+
+- 置頂留言 / 首則留言：
+
+```text
+完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。
+留言 A/B/C，選出最像你的心語。
+```
+
+- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
+
+### Instagram Reels（`instagram_reels`）
+
+- 連結位置：Profile link in bio
+- Profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+- 狀態：`planned`
+- Bio：
+
+```text
+LoveTypes 心語庭園｜15 題找到你的情感守護者。
+```
+
+- 置頂留言 / 首則留言：
+
+```text
+完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。
+留言你的 A/B/C，讓守護者把心語接住。
+```
+
+- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
 
 ## 建議發布任務
 
@@ -54,5 +119,6 @@
 ## 安全邊界
 
 - Shorts CTA 維持測驗，不直接導購。
+- 平台首頁 Bio/Profile link 也維持測驗，不直接導購。
 - 不把守護者結果描述成診斷、療效或保證修復。
 - 空資料時不調整商品、守護者優先序或付費 CTA。

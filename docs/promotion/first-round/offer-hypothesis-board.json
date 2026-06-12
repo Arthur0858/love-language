@@ -1,0 +1,242 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
+    "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
+    "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
+    "assetBuildBacklog": "docs/promotion/first-round/asset-build-backlog.json"
+  },
+  "rows": [
+    {
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "stage": "collect_signal",
+      "offerHypothesis": "目前只驗證測驗完成與守護者認同，不提出商品假設。",
+      "freeAsset": {
+        "id": "iris-free_story_card_upgrade",
+        "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "freeItemId": "free-keepsake-iris"
+      },
+      "ownedAsset": {
+        "id": "iris-email_lead_template",
+        "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+        "leadItemId": "supply-wishlist-iris",
+        "intakeTemplates": 3
+      },
+      "lunaTest": {
+        "id": "iris-luna_scene_cta",
+        "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "productIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ]
+      },
+      "affiliateTest": {
+        "id": "iris-affiliate_book_bundle",
+        "targetUrl": "https://lovetypes.tw/resources/#supply-iris",
+        "itemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ]
+      },
+      "readiness": "HOLD",
+      "nextValidation": "先發布與回填 KPI；不新增付費 CTA，不改商品排序。",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
+    },
+    {
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "stage": "collect_signal",
+      "offerHypothesis": "目前只驗證測驗完成與守護者認同，不提出商品假設。",
+      "freeAsset": {
+        "id": "noah-free_story_card_upgrade",
+        "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
+        "freeItemId": "free-keepsake-noah"
+      },
+      "ownedAsset": {
+        "id": "noah-email_lead_template",
+        "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+        "leadItemId": "supply-wishlist-noah",
+        "intakeTemplates": 3
+      },
+      "lunaTest": {
+        "id": "noah-luna_scene_cta",
+        "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
+        "productIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ]
+      },
+      "affiliateTest": {
+        "id": "noah-affiliate_book_bundle",
+        "targetUrl": "https://lovetypes.tw/resources/#supply-noah",
+        "itemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ]
+      },
+      "readiness": "HOLD",
+      "nextValidation": "先發布與回填 KPI；不新增付費 CTA，不改商品排序。",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
+    },
+    {
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "stage": "collect_signal",
+      "offerHypothesis": "目前只驗證測驗完成與守護者認同，不提出商品假設。",
+      "freeAsset": {
+        "id": "vivian-free_story_card_upgrade",
+        "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "freeItemId": "free-keepsake-vivian"
+      },
+      "ownedAsset": {
+        "id": "vivian-email_lead_template",
+        "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+        "leadItemId": "supply-wishlist-vivian",
+        "intakeTemplates": 3
+      },
+      "lunaTest": {
+        "id": "vivian-luna_scene_cta",
+        "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "productIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ]
+      },
+      "affiliateTest": {
+        "id": "vivian-affiliate_book_bundle",
+        "targetUrl": "https://lovetypes.tw/resources/#supply-vivian",
+        "itemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ]
+      },
+      "readiness": "HOLD",
+      "nextValidation": "先發布與回填 KPI；不新增付費 CTA，不改商品排序。",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
+    },
+    {
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "stage": "collect_signal",
+      "offerHypothesis": "目前只驗證測驗完成與守護者認同，不提出商品假設。",
+      "freeAsset": {
+        "id": "claire-free_story_card_upgrade",
+        "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "freeItemId": "free-keepsake-claire"
+      },
+      "ownedAsset": {
+        "id": "claire-email_lead_template",
+        "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+        "leadItemId": "supply-wishlist-claire",
+        "intakeTemplates": 3
+      },
+      "lunaTest": {
+        "id": "claire-luna_scene_cta",
+        "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "productIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ]
+      },
+      "affiliateTest": {
+        "id": "claire-affiliate_book_bundle",
+        "targetUrl": "https://lovetypes.tw/resources/#supply-claire",
+        "itemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ]
+      },
+      "readiness": "HOLD",
+      "nextValidation": "先發布與回填 KPI；不新增付費 CTA，不改商品排序。",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
+    },
+    {
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "stage": "collect_signal",
+      "offerHypothesis": "目前只驗證測驗完成與守護者認同，不提出商品假設。",
+      "freeAsset": {
+        "id": "dora-free_story_card_upgrade",
+        "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "freeItemId": "free-keepsake-dora"
+      },
+      "ownedAsset": {
+        "id": "dora-email_lead_template",
+        "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+        "leadItemId": "supply-wishlist-dora",
+        "intakeTemplates": 3
+      },
+      "lunaTest": {
+        "id": "dora-luna_scene_cta",
+        "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "productIds": [
+          "luna-healing-vibes-starter",
+          "luna-sleep-deep-rest",
+          "luna-morning-awakening",
+          "luna-stress-relief-yin",
+          "luna-feminine-healing",
+          "luna-luna-flow-sessions"
+        ]
+      },
+      "affiliateTest": {
+        "id": "dora-affiliate_book_bundle",
+        "targetUrl": "https://lovetypes.tw/resources/#supply-dora",
+        "itemIds": [
+          "affiliate-book-1",
+          "affiliate-book-2",
+          "affiliate-book-3",
+          "affiliate-book-4"
+        ]
+      },
+      "readiness": "HOLD",
+      "nextValidation": "先發布與回填 KPI；不新增付費 CTA，不改商品排序。",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
+    }
+  ],
+  "readyRows": 0,
+  "holdRows": 5,
+  "blockers": [
+    "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
+    "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+  ],
+  "safety": {
+    "shortsCtaMustRemainQuiz": true,
+    "emptyDataFailClosed": true,
+    "doNotClaim": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ]
+  }
+}

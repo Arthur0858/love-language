@@ -44,6 +44,8 @@
 - `lead-intake-playbook.md`: 名單承接與履約 playbook，說明 Contact、收藏室等待清單、補給願望與 Luna 需求如何回填、排序與安全回覆。
 - `lead-intake-playbook.json`: 同一份名單承接 playbook 的機器可讀版本。
 - `lead-intake-tracker.csv`: 真實需求發生後使用的回填模板；預設列都是 `template`，不代表已有使用者名單。
+- `offer-hypothesis-board.md`: 五守護者商品假設板，把免費收藏物、自有名單、Luna 與聯盟書卷拆成 PASS/HOLD 的測試假設。
+- `offer-hypothesis-board.json/csv`: 同一份商品假設板的機器可讀與表格版本，可匯入 KPI 工作簿。
 - `next-actions.md`: 使用 `python3 tools/promotion_next_actions.py` 產生的下一批發布與獲利承接建議。
 - `next-actions.json`: 同一份下一步建議的機器可讀版本。
 
@@ -141,6 +143,7 @@ python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_weekly_summary.py
 python3 tools/promotion_week_decision_gate.py
 python3 tools/promotion_lead_intake_playbook.py
+python3 tools/promotion_offer_hypothesis_board.py
 node tools/build_promotion_spreadsheet.mjs
 ```
 
@@ -149,6 +152,8 @@ node tools/build_promotion_spreadsheet.mjs
 `week-decision-gate.md` 是週判讀前的最後一道閘門。它會把發布狀態、週摘要、獲利矩陣與 next actions 合併成 PASS/HOLD，只有發布與 KPI 回填足夠時才允許放大內容、補自有名單或測試 Luna/聯盟承接。
 
 `lead-intake-playbook.md` 是有人寄信、索取收藏物、提出補給願望或詢問 Luna 後的承接規則。它不預設已有名單；只有真實需求發生時才把 `lead-intake-tracker.csv` 的模板列複製成真實列，並回填來源、守護者、需求類型、回覆狀態與履約資產。這讓「免費收藏物 → Email 需求 → 自有素材或柔性商品」的路徑可追蹤，而不需要一開始就上付款系統。
+
+`offer-hypothesis-board.md` 是商品化前的假設板。它把每位守護者目前可測的免費資產、自有名單資產、Luna 測試與聯盟書卷列成 PASS/HOLD；只要週 Gate 還有阻擋條件，商品假設就維持 HOLD，不改公開付費 CTA 或商品排序。
 
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 

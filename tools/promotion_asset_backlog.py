@@ -123,6 +123,7 @@ def build_item(guardian: str, name: str, asset_type: str, task: dict, matrix_ite
         "priority": "now" if asset_type in STAGE_TO_ASSETS.get(matrix_item.get("stage", "collect_signal"), []) else "later",
         "sourceTaskId": task.get("taskId"),
         "sourceTitle": task.get("title"),
+        "sourceTrackedUrl": task.get("trackedUrl"),
         "freeItemId": bridge.get("primaryFreeItemId"),
         "leadItemId": bridge.get("ownedLeadItemId"),
         "keepsakeUrl": path.get("keepsake"),
@@ -218,6 +219,7 @@ def render_markdown(backlog: dict) -> str:
                 f"- 格式：{item['format']}",
                 f"- 觸發條件：{item['trigger']}",
                 f"- 來源腳本：{item['sourceTaskId']} · {item['sourceTitle']}",
+                f"- 追蹤連結：{item['sourceTrackedUrl']}",
                 f"- 免費資產 ID：{item['freeItemId']}",
                 f"- 名單資產 ID：{item['leadItemId']}",
                 f"- 入口：{item['targetUrl']}",
@@ -244,7 +246,7 @@ def validate_backlog(backlog: dict) -> list[str]:
     by_guardian = defaultdict(list)
     for item in backlog.get("items", []):
         by_guardian[item.get("guardianId")].append(item)
-        for field in ("id", "assetType", "title", "format", "trigger", "priority", "freeItemId", "leadItemId", "targetUrl"):
+        for field in ("id", "assetType", "title", "format", "trigger", "priority", "sourceTrackedUrl", "freeItemId", "leadItemId", "targetUrl"):
             if not item.get(field):
                 issues.append(f"{item.get('id', '<unknown>')}: missing {field}")
         if item.get("priority") not in {"now", "later"}:

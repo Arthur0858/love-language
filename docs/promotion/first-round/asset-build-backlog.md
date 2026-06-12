@@ -22,6 +22,7 @@
 - 格式：1080x1920 story card / share card
 - 觸發條件：free_keepsake_downloads 或 keepsake_clicks 開始出現
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-iris
@@ -35,6 +36,7 @@
 - 格式：1 頁可列印 PDF
 - 觸發條件：supply_lead_requests 或 contact_requests 開始出現
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-iris
@@ -48,6 +50,7 @@
 - 格式：1170x2532 / 1290x2796 wallpaper
 - 觸發條件：收藏物保存或分享明顯高於其他路線
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-iris
@@ -61,6 +64,7 @@
 - 格式：subject + body + thank-you copy
 - 觸發條件：supply_lead_requests 或 contact_requests 大於 0
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/contact/#luna-supply-request
@@ -74,6 +78,7 @@
 - 格式：短文案 + 步驟卡 + Luna 引導入口
 - 觸發條件：修復計畫或補給路線點擊開始累積
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/repair-plan/#plan-iris
@@ -87,6 +92,7 @@
 - 格式：睡前 / 衝突後 / 測驗後承接文案
 - 觸發條件：luna_clicks 或 luna_pack_clicks 大於 0
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/luna-yoga-music/#luna-iris
@@ -100,6 +106,7 @@
 - 格式：每位守護者 1-3 本延伸書卷包裝
 - 觸發條件：affiliate_book_clicks 大於 0
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/resources/#supply-iris
@@ -113,6 +120,7 @@
 - 格式：同守護者不同情境 hook / subtitle / CTA
 - 觸發條件：quiz_completions 有累積但尚無明確獲利意圖
 - 來源腳本：publish-lt-s01-iris-silence · 他沉默時，你最想聽見哪一句話？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 免費資產 ID：free-keepsake-iris
 - 名單資產 ID：supply-wishlist-iris
 - 入口：https://lovetypes.tw/start/
@@ -128,6 +136,7 @@
 - 格式：1080x1920 story card / share card
 - 觸發條件：free_keepsake_downloads 或 keepsake_clicks 開始出現
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-noah
@@ -141,6 +150,7 @@
 - 格式：1 頁可列印 PDF
 - 觸發條件：supply_lead_requests 或 contact_requests 開始出現
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-noah
@@ -154,6 +164,7 @@
 - 格式：1170x2532 / 1290x2796 wallpaper
 - 觸發條件：收藏物保存或分享明顯高於其他路線
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-noah
@@ -167,6 +178,7 @@
 - 格式：subject + body + thank-you copy
 - 觸發條件：supply_lead_requests 或 contact_requests 大於 0
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/contact/#luna-supply-request
@@ -180,6 +192,7 @@
 - 格式：短文案 + 步驟卡 + Luna 引導入口
 - 觸發條件：修復計畫或補給路線點擊開始累積
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/repair-plan/#plan-noah
@@ -193,6 +206,7 @@
 - 格式：睡前 / 衝突後 / 測驗後承接文案
 - 觸發條件：luna_clicks 或 luna_pack_clicks 大於 0
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/luna-yoga-music/#luna-noah
@@ -206,6 +220,7 @@
 - 格式：每位守護者 1-3 本延伸書卷包裝
 - 觸發條件：affiliate_book_clicks 大於 0
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/resources/#supply-noah
@@ -219,6 +234,7 @@
 - 格式：同守護者不同情境 hook / subtitle / CTA
 - 觸發條件：quiz_completions 有累積但尚無明確獲利意圖
 - 來源腳本：publish-lt-s04-noah-phone · 約會時他一直看手機，你真正難過的是什麼？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 - 免費資產 ID：free-keepsake-noah
 - 名單資產 ID：supply-wishlist-noah
 - 入口：https://lovetypes.tw/start/
@@ -234,6 +250,7 @@
 - 格式：1080x1920 story card / share card
 - 觸發條件：free_keepsake_downloads 或 keepsake_clicks 開始出現
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-vivian
@@ -247,6 +264,7 @@
 - 格式：1 頁可列印 PDF
 - 觸發條件：supply_lead_requests 或 contact_requests 開始出現
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-vivian
@@ -260,6 +278,7 @@
 - 格式：1170x2532 / 1290x2796 wallpaper
 - 觸發條件：收藏物保存或分享明顯高於其他路線
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-vivian
@@ -273,6 +292,7 @@
 - 格式：subject + body + thank-you copy
 - 觸發條件：supply_lead_requests 或 contact_requests 大於 0
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/contact/#luna-supply-request
@@ -286,6 +306,7 @@
 - 格式：短文案 + 步驟卡 + Luna 引導入口
 - 觸發條件：修復計畫或補給路線點擊開始累積
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/repair-plan/#plan-vivian
@@ -299,6 +320,7 @@
 - 格式：睡前 / 衝突後 / 測驗後承接文案
 - 觸發條件：luna_clicks 或 luna_pack_clicks 大於 0
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/luna-yoga-music/#luna-vivian
@@ -312,6 +334,7 @@
 - 格式：每位守護者 1-3 本延伸書卷包裝
 - 觸發條件：affiliate_book_clicks 大於 0
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/resources/#supply-vivian
@@ -325,6 +348,7 @@
 - 格式：同守護者不同情境 hook / subtitle / CTA
 - 觸發條件：quiz_completions 有累積但尚無明確獲利意圖
 - 來源腳本：publish-lt-s07-vivian-remembered · 你在乎的真的是禮物嗎？
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 - 免費資產 ID：free-keepsake-vivian
 - 名單資產 ID：supply-wishlist-vivian
 - 入口：https://lovetypes.tw/start/
@@ -340,6 +364,7 @@
 - 格式：1080x1920 story card / share card
 - 觸發條件：free_keepsake_downloads 或 keepsake_clicks 開始出現
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-claire
@@ -353,6 +378,7 @@
 - 格式：1 頁可列印 PDF
 - 觸發條件：supply_lead_requests 或 contact_requests 開始出現
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-claire
@@ -366,6 +392,7 @@
 - 格式：1170x2532 / 1290x2796 wallpaper
 - 觸發條件：收藏物保存或分享明顯高於其他路線
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-claire
@@ -379,6 +406,7 @@
 - 格式：subject + body + thank-you copy
 - 觸發條件：supply_lead_requests 或 contact_requests 大於 0
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/contact/#luna-supply-request
@@ -392,6 +420,7 @@
 - 格式：短文案 + 步驟卡 + Luna 引導入口
 - 觸發條件：修復計畫或補給路線點擊開始累積
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/repair-plan/#plan-claire
@@ -405,6 +434,7 @@
 - 格式：睡前 / 衝突後 / 測驗後承接文案
 - 觸發條件：luna_clicks 或 luna_pack_clicks 大於 0
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/luna-yoga-music/#luna-claire
@@ -418,6 +448,7 @@
 - 格式：每位守護者 1-3 本延伸書卷包裝
 - 觸發條件：affiliate_book_clicks 大於 0
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/resources/#supply-claire
@@ -431,6 +462,7 @@
 - 格式：同守護者不同情境 hook / subtitle / CTA
 - 觸發條件：quiz_completions 有累積但尚無明確獲利意圖
 - 來源腳本：publish-lt-s10-claire-tired · 你不是愛計較，你只是太久沒人主動幫你
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 - 免費資產 ID：free-keepsake-claire
 - 名單資產 ID：supply-wishlist-claire
 - 入口：https://lovetypes.tw/start/
@@ -446,6 +478,7 @@
 - 格式：1080x1920 story card / share card
 - 觸發條件：free_keepsake_downloads 或 keepsake_clicks 開始出現
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-dora
@@ -459,6 +492,7 @@
 - 格式：1 頁可列印 PDF
 - 觸發條件：supply_lead_requests 或 contact_requests 開始出現
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-dora
@@ -472,6 +506,7 @@
 - 格式：1170x2532 / 1290x2796 wallpaper
 - 觸發條件：收藏物保存或分享明顯高於其他路線
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/keepsakes/#keepsake-dora
@@ -485,6 +520,7 @@
 - 格式：subject + body + thank-you copy
 - 觸發條件：supply_lead_requests 或 contact_requests 大於 0
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/contact/#luna-supply-request
@@ -498,6 +534,7 @@
 - 格式：短文案 + 步驟卡 + Luna 引導入口
 - 觸發條件：修復計畫或補給路線點擊開始累積
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/repair-plan/#plan-dora
@@ -511,6 +548,7 @@
 - 格式：睡前 / 衝突後 / 測驗後承接文案
 - 觸發條件：luna_clicks 或 luna_pack_clicks 大於 0
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/luna-yoga-music/#luna-dora
@@ -524,6 +562,7 @@
 - 格式：每位守護者 1-3 本延伸書卷包裝
 - 觸發條件：affiliate_book_clicks 大於 0
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/resources/#supply-dora
@@ -537,6 +576,7 @@
 - 格式：同守護者不同情境 hook / subtitle / CTA
 - 觸發條件：quiz_completions 有累積但尚無明確獲利意圖
 - 來源腳本：publish-lt-s13-dora-distance · 你不是太黏，你只是用身體最先感覺到距離
+- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance
 - 免費資產 ID：free-keepsake-dora
 - 名單資產 ID：supply-wishlist-dora
 - 入口：https://lovetypes.tw/start/

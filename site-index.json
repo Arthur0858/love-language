@@ -37,18 +37,27 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 150,
-    "paths": 30,
+    "pages": 155,
+    "paths": 31,
     "languages": 5,
     "groups": {
       "content": 80,
-      "conversion": 20,
+      "conversion": 25,
       "guardians": 30,
       "home": 5,
       "trust": 15
     }
   },
   "coreFlows": [
+    {
+      "id": "shorts_to_quiz",
+      "entry": "https://lovetypes.tw/start/",
+      "next": [
+        "https://lovetypes.tw/#quiz-section",
+        "https://lovetypes.tw/characters/",
+        "https://lovetypes.tw/resources/"
+      ]
+    },
     {
       "id": "quiz_to_guardian",
       "entry": "https://lovetypes.tw/#quiz-section",
@@ -92,6 +101,14 @@
       "path": "/",
       "canonical": "https://lovetypes.tw/",
       "group": "home",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/start/",
+      "canonical": "https://lovetypes.tw/start/",
+      "group": "conversion",
       "primary": true
     },
     {
@@ -337,6 +354,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/start/",
+      "canonical": "https://lovetypes.tw/en/start/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/garden-map/",
       "canonical": "https://lovetypes.tw/en/garden-map/",
       "group": "content",
@@ -572,6 +597,14 @@
       "path": "/ja/",
       "canonical": "https://lovetypes.tw/ja/",
       "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/start/",
+      "canonical": "https://lovetypes.tw/ja/start/",
+      "group": "conversion",
       "primary": false
     },
     {
@@ -817,6 +850,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/start/",
+      "canonical": "https://lovetypes.tw/ko/start/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/garden-map/",
       "canonical": "https://lovetypes.tw/ko/garden-map/",
       "group": "content",
@@ -1052,6 +1093,14 @@
       "path": "/es/",
       "canonical": "https://lovetypes.tw/es/",
       "group": "home",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/start/",
+      "canonical": "https://lovetypes.tw/es/start/",
+      "group": "conversion",
       "primary": false
     },
     {

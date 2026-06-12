@@ -8,12 +8,12 @@
   "branch": "main",
   "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
   "releaseContents": {
-    "indexablePages": 150,
+    "indexablePages": 155,
     "languages": 5,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 181,
-    "coreFlows": 4
+    "funnelEvents": 185,
+    "coreFlows": 5
   },
   "publicIndexes": {
     "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",

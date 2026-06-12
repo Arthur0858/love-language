@@ -24,7 +24,7 @@ EXPECTED_FEED_ITEMS = 12
 EXPECTED_MANIFEST_LANG = "zh-TW"
 EXPECTED_MANIFEST_SHORTCUTS = 6
 EXPECTED_MANIFEST_SHORTCUT_URLS = (
-    "/#quiz-section",
+    "/start/",
     "/garden-map/",
     "/characters/",
     "/resources/",
@@ -55,6 +55,7 @@ REQUIRED_LLMS_SNIPPETS = (
     "Contact email: contact@lovetypes.tw",
 )
 REQUIRED_LLMS_HIGH_VALUE_URLS = (
+    "https://lovetypes.tw/start/",
     "https://lovetypes.tw/",
     "https://lovetypes.tw/garden-map/",
     "https://lovetypes.tw/characters/",
@@ -110,7 +111,7 @@ EXPECTED_COMMERCE_TYPE_COUNTS = {
 }
 EXPECTED_COMMERCE_ROLE_COUNTS = {"lead": 5, "retention": 5, "revenue": 10}
 EXPECTED_SITE_INDEX_LANGS = {"zh", "en", "ja", "ko", "es"}
-EXPECTED_SITE_INDEX_FLOWS = {"quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
+EXPECTED_SITE_INDEX_FLOWS = {"shorts_to_quiz", "quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
 EXPECTED_GUARDIAN_LANGUAGES = {
     "iris": "Words of affirmation",
     "noah": "Quality time",
@@ -705,8 +706,8 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     core_flows = data.get("coreFlows", [])
     if not isinstance(pages, list):
         return [f"{path}: pages should be a list"], 0, 0, 0, 0
-    if len(pages) != 150:
-        issues.append(f"{path}: expected 150 pages, got {len(pages)}")
+    if len(pages) != 155:
+        issues.append(f"{path}: expected 155 pages, got {len(pages)}")
     seen_langs = {item.get("id") for item in languages if isinstance(item, dict)}
     if seen_langs != EXPECTED_SITE_INDEX_LANGS:
         issues.append(f"{path}: language ids should be {sorted(EXPECTED_SITE_INDEX_LANGS)}, got {sorted(seen_langs)}")
@@ -717,6 +718,7 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     canonicals = {page.get("canonical") for page in pages if isinstance(page, dict) and page.get("canonical")}
     for required_url in (
         "https://lovetypes.tw/",
+        "https://lovetypes.tw/start/",
         "https://lovetypes.tw/characters/iris/",
         "https://lovetypes.tw/en/resources/",
         "https://lovetypes.tw/ja/luna-yoga-music/",
@@ -808,11 +810,11 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         issues.append(f"{path}: status should be ready_for_predeploy")
     coverage = data.get("coverage", {})
     expected = {
-        "indexablePages": 150,
-        "localizedPaths": 30,
+        "indexablePages": 155,
+        "localizedPaths": 31,
         "languages": 5,
         "routeGroups": 5,
-        "coreFlows": 4,
+        "coreFlows": 5,
         "guardians": 5,
         "guardianRoutes": 35,
         "guardianAssets": 20,
@@ -863,7 +865,7 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
     if data.get("branch") != "main":
         issues.append(f"{path}: branch should be main")
     contents = data.get("releaseContents", {})
-    expected_contents = {"indexablePages": 150, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 4}
+    expected_contents = {"indexablePages": 155, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 5}
     content_checked = 0
     for key, expected in expected_contents.items():
         content_checked += 1
@@ -965,7 +967,7 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         if not isinstance(guidance.get(key), str) or not guidance[key]:
             issues.append(f"{path}: answerGuidance.{key} should be non-empty")
     totals = data.get("totals", {})
-    expected_totals = {"guardians": 5, "answerableQuestions": 10, "priorityUrls": 11, "languages": 5, "discoveryFiles": 9}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 9}
     for key, expected in expected_totals.items():
         if not isinstance(totals, dict) or totals.get(key) != expected:
             got = totals.get(key) if isinstance(totals, dict) else None
@@ -992,15 +994,15 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     if missing:
         issues.append(f"{path}: missing guardians {', '.join(missing)}")
     questions = data.get("answerableQuestions", [])
-    if not isinstance(questions, list) or len(questions) != 10:
-        issues.append(f"{path}: answerableQuestions should include ten entries")
+    if not isinstance(questions, list) or len(questions) != 11:
+        issues.append(f"{path}: answerableQuestions should include eleven entries")
     else:
         for snippet in ("LoveTypes 是什麼？", "LoveTypes 能取代諮商、醫療或緊急求助嗎？", "LoveTypes 是否包含聯盟連結或購買入口？"):
             if not any(isinstance(item, dict) and item.get("question") == snippet for item in questions):
                 issues.append(f"{path}: answerableQuestions missing {snippet!r}")
     priority_urls = data.get("priorityUrls", [])
-    if not isinstance(priority_urls, list) or len(priority_urls) != 11:
-        issues.append(f"{path}: priorityUrls should include eleven entries")
+    if not isinstance(priority_urls, list) or len(priority_urls) != 12:
+        issues.append(f"{path}: priorityUrls should include twelve entries")
     files = data.get("discoveryFiles", {})
     expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:

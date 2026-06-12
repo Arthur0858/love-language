@@ -177,7 +177,7 @@ REQUIRED_MANIFEST_FIELDS = {
     "icons",
 }
 EXPECTED_MANIFEST_SHORTCUT_URLS = {
-    "/#quiz-section",
+    "/start/",
     "/garden-map/",
     "/characters/",
     "/resources/",
@@ -1683,11 +1683,11 @@ def parse_site_index(parsers: dict[Path, PageParser], sitemap_urls: set[str]) ->
         if seen_langs != expected_langs:
             issues.append(f"{SITE_INDEX_PATH}: language ids should be {sorted(expected_langs)}, got {sorted(seen_langs)}")
     core_flows = data.get("coreFlows")
-    if not isinstance(core_flows, list) or len(core_flows) != 4:
-        issues.append(f"{SITE_INDEX_PATH}: expected four core flows")
+    if not isinstance(core_flows, list) or len(core_flows) != 5:
+        issues.append(f"{SITE_INDEX_PATH}: expected five core flows")
     else:
         stats["site_index_core_flows_checked"] = len(core_flows)
-        expected_flows = {"quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
+        expected_flows = {"shorts_to_quiz", "quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
         seen_flows = {flow.get("id") for flow in core_flows if isinstance(flow, dict)}
         if seen_flows != expected_flows:
             issues.append(f"{SITE_INDEX_PATH}: core flow ids should be {sorted(expected_flows)}, got {sorted(seen_flows)}")
@@ -1865,11 +1865,11 @@ def parse_site_health() -> tuple[list[str], Counter]:
         issues.append(f"{SITE_HEALTH_PATH}: coverage should be an object")
         return issues, stats
     expected_coverage = {
-        "indexablePages": 150,
-        "localizedPaths": 30,
+        "indexablePages": 155,
+        "localizedPaths": 31,
         "languages": 5,
         "routeGroups": 5,
-        "coreFlows": 4,
+        "coreFlows": 5,
         "guardians": 5,
         "guardianRoutes": 35,
         "guardianAssets": 20,
@@ -1949,11 +1949,11 @@ def parse_release_info() -> tuple[list[str], Counter]:
         issues.append(f"{RELEASE_PATH}: branch should be main")
     contents = data.get("releaseContents")
     expected_contents = {
-        "indexablePages": 150,
+        "indexablePages": 155,
         "languages": 5,
         "guardians": 5,
         "commerceItems": 20,
-        "coreFlows": 4,
+        "coreFlows": 5,
     }
     if not isinstance(contents, dict):
         issues.append(f"{RELEASE_PATH}: releaseContents should be an object")
@@ -2125,7 +2125,7 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
         stats["ai_discovery_guidance_fields_checked"] = len(guidance)
 
     totals = data.get("totals")
-    expected_totals = {"guardians": 5, "answerableQuestions": 10, "priorityUrls": 11, "languages": 5, "discoveryFiles": 9}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 9}
     if not isinstance(totals, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
     else:
@@ -2166,8 +2166,8 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
             issues.append(f"{AI_DISCOVERY_PATH}: missing guardians {sorted(missing)}")
 
     questions = data.get("answerableQuestions")
-    if not isinstance(questions, list) or len(questions) != 10:
-        issues.append(f"{AI_DISCOVERY_PATH}: answerableQuestions should include ten entries")
+    if not isinstance(questions, list) or len(questions) != 11:
+        issues.append(f"{AI_DISCOVERY_PATH}: answerableQuestions should include eleven entries")
     else:
         seen_ids: set[str] = set()
         for question in questions:
@@ -2198,8 +2198,8 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
                         issues.append(f"{AI_DISCOVERY_PATH}: {question_id} fragment missing: {url}")
 
     priority_urls = data.get("priorityUrls")
-    if not isinstance(priority_urls, list) or len(priority_urls) != 11:
-        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include eleven entries")
+    if not isinstance(priority_urls, list) or len(priority_urls) != 12:
+        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include twelve entries")
     else:
         for item in priority_urls:
             if not isinstance(item, dict):

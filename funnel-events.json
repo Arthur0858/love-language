@@ -5,9 +5,9 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 181,
-    "trackedOccurrences": 3568,
-    "pages": 105
+    "events": 185,
+    "trackedOccurrences": 3688,
+    "pages": 110
   },
   "events": [
     {
@@ -596,7 +596,7 @@
       "name": "guardian_nav_card",
       "category": "guardian",
       "role": "navigation",
-      "count": 125,
+      "count": 150,
       "pages": [
         "/characters/claire/",
         "/characters/dora/",
@@ -608,18 +608,18 @@
         "/en/characters/iris/",
         "/en/characters/noah/",
         "/en/characters/vivian/",
+        "/en/start/",
         "/es/characters/claire/",
         "/es/characters/dora/",
         "/es/characters/iris/",
         "/es/characters/noah/",
         "/es/characters/vivian/",
+        "/es/start/",
         "/ja/characters/claire/",
         "/ja/characters/dora/",
-        "/ja/characters/iris/",
-        "/ja/characters/noah/",
-        "/ja/characters/vivian/"
+        "/ja/characters/iris/"
       ],
-      "pageCount": 25
+      "pageCount": 30
     },
     {
       "name": "guardian_need_profile",
@@ -1648,99 +1648,134 @@
       "name": "home_resume_contact",
       "category": "quiz_result",
       "role": "lead",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_guardian",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_keepsake",
       "category": "quiz_result",
       "role": "retention",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_luna",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_repair_plan",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_story_generate",
       "category": "quiz_result",
       "role": "retention",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "home_resume_supply_route",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "keepsake_resume_contact",
@@ -2055,113 +2090,153 @@
       "name": "quiz_result_affiliate_book",
       "category": "quiz_result",
       "role": "revenue",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_contact",
       "category": "quiz_result",
       "role": "lead",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_guide",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_keepsake",
       "category": "quiz_result",
       "role": "retention",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_luna",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_repair_plan",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_story_generate",
       "category": "quiz_result",
       "role": "retention",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "quiz_result_supply_route",
       "category": "quiz_result",
       "role": "navigation",
-      "count": 5,
+      "count": 10,
       "pages": [
         "/",
         "/en/",
+        "/en/start/",
         "/es/",
+        "/es/start/",
         "/ja/",
-        "/ko/"
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
       ],
-      "pageCount": 5
+      "pageCount": 10
     },
     {
       "name": "repair_asset_1",
@@ -2513,6 +2588,62 @@
         "/resources/"
       ],
       "pageCount": 10
+    },
+    {
+      "name": "start_guardian_map",
+      "category": "start",
+      "role": "navigation",
+      "count": 5,
+      "pages": [
+        "/en/start/",
+        "/es/start/",
+        "/ja/start/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "start_hero_guardians",
+      "category": "start",
+      "role": "navigation",
+      "count": 5,
+      "pages": [
+        "/en/start/",
+        "/es/start/",
+        "/ja/start/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "start_hero_quiz",
+      "category": "start",
+      "role": "navigation",
+      "count": 5,
+      "pages": [
+        "/en/start/",
+        "/es/start/",
+        "/ja/start/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "start_hero_resources",
+      "category": "start",
+      "role": "navigation",
+      "count": 5,
+      "pages": [
+        "/en/start/",
+        "/es/start/",
+        "/ja/start/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 5
     },
     {
       "name": "supply_decision_matrix",

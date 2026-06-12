@@ -174,7 +174,7 @@
           "zh": "守護者認領儀式",
           "en": "guardian recognition ritual"
         },
-        "canonical": "https://lovetypes.tw/"
+        "canonical": "https://lovetypes.tw/start/"
       },
       {
         "id": "five_love_languages",
@@ -225,12 +225,24 @@
     {
       "id": "find_guardian",
       "question": "如何找到我的情感守護者？",
-      "answerHint": "從首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
-      "canonical": "https://lovetypes.tw/",
+      "answerHint": "從測驗入口或首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
+      "canonical": "https://lovetypes.tw/start/",
       "supportingUrls": [
+        "https://lovetypes.tw/",
         "https://lovetypes.tw/characters/",
         "https://lovetypes.tw/resources/",
         "https://lovetypes.tw/repair-plan/"
+      ]
+    },
+    {
+      "id": "quiz_entrance",
+      "question": "LoveTypes 五種愛之語測驗在哪裡做？",
+      "answerHint": "正式測驗入口是 /start/，可直接完成 15 題心語儀式；首頁也保留同一套測驗作為回訪入口。",
+      "canonical": "https://lovetypes.tw/start/",
+      "supportingUrls": [
+        "https://lovetypes.tw/",
+        "https://lovetypes.tw/garden-map/",
+        "https://lovetypes.tw/characters/"
       ]
     },
     {
@@ -320,6 +332,11 @@
   ],
   "priorityUrls": [
     {
+      "url": "https://lovetypes.tw/start/",
+      "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery",
+      "priority": 1.0
+    },
+    {
       "url": "https://lovetypes.tw/",
       "intent": "quiz and guardian recognition entrance",
       "priority": 1.0
@@ -388,12 +405,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 150,
-      "paths": 30,
+      "pages": 155,
+      "paths": 31,
       "languages": 5,
       "groups": {
         "content": 80,
-        "conversion": 20,
+        "conversion": 25,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -421,8 +438,8 @@
   },
   "totals": {
     "guardians": 5,
-    "answerableQuestions": 10,
-    "priorityUrls": 11,
+    "answerableQuestions": 11,
+    "priorityUrls": 12,
     "languages": 5,
     "discoveryFiles": 9
   }

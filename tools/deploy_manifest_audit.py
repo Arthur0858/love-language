@@ -11,6 +11,7 @@ DEPLOY_SCRIPT = ROOT / "tools" / "deploy_cloudflare_pages.py"
 GENERATOR_SCRIPT = ROOT / "tools" / "generate_multilingual_site.py"
 BASE_REQUIRED_MANIFEST_FILES = {
     "index.html",
+    "start/index.html",
     "characters/iris/index.html",
     "resources/index.html",
     "repair-plan/index.html",

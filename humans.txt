@@ -14,7 +14,7 @@ Commercial: Resources may contain affiliate links; Luna packs use Gumroad purcha
 Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
 
 /* HIGH-VALUE ROUTES */
-Quiz: https://lovetypes.tw/#quiz-section
+Quiz: https://lovetypes.tw/start/
 Garden map: https://lovetypes.tw/garden-map/
 Guardians: https://lovetypes.tw/characters/
 Resources: https://lovetypes.tw/resources/

@@ -19,6 +19,7 @@ EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 CORE_UNIVERSE_ROUTES = (
     "",
+    "start",
     "garden-map",
     "guides",
     "characters",

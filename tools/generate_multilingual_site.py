@@ -7906,9 +7906,142 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
 """
 
 
+def quiz_section(lang: str) -> str:
+    quiz = QUIZ_LABELS[lang]
+    return f"""
+<section class="quiz-band" id="quiz-section" tabindex="-1">
+  <div class="quiz-shell" data-quiz-root>
+    <div class="quiz-intro" data-quiz-intro>
+      <p class="eyebrow">{escape(quiz["eyebrow"])}</p>
+      <h2>{escape(quiz["title"])}</h2>
+      <p>{escape(quiz["intro"])}</p>
+      <button type="button" class="primary-btn" data-quiz-start>{escape(quiz["start"])}</button>
+    </div>
+    <div class="quiz-saved" data-quiz-saved hidden aria-live="polite"></div>
+    <div class="quiz-stage" data-quiz-box hidden aria-live="polite"></div>
+    <div class="quiz-result" data-quiz-result hidden aria-live="polite"></div>
+  </div>
+</section>
+"""
+
+
+START_PAGE_COPY = {
+    "zh": {
+        "title": "五種愛之語測驗入口",
+        "desc": "完成 15 題心語儀式，找到你的情感守護者，再接到專屬補給、修復計畫、Luna 與收藏卡。",
+        "eyebrow": "QUIZ GATE",
+        "lead": "從這裡直接開始守護者認領儀式。不用註冊，約 2 到 3 分鐘完成，結果只保存在你的瀏覽器。",
+        "map": "進入五守護者地圖",
+        "resources": "先看旅人補給",
+        "preview_title": "完成後會開啟三條路",
+        "preview": [
+            ("守護者結果", "知道哪一種愛之語最容易讓你感到被愛，也最容易受傷。"),
+            ("免費修復任務", "先拿一個今天能做的小練習，而不是直接被推去消費。"),
+            ("個人補給路線", "再依守護者選 Luna、收藏卡、延伸書卷或 Email 需求。"),
+        ],
+    },
+    "en": {
+        "title": "Five Love Languages Quiz Entrance",
+        "desc": "Complete 15 heart-language prompts, find your emotion guardian, then continue into supplies, repair plan, Luna, and keepsakes.",
+        "eyebrow": "QUIZ GATE",
+        "lead": "Start the guardian recognition ritual here. No signup, about 2 to 3 minutes, with the result saved only in your browser.",
+        "map": "Enter guardian map",
+        "resources": "View supplies first",
+        "preview_title": "After the ritual, three paths open",
+        "preview": [
+            ("Guardian result", "See which love language helps you feel loved fastest, and where hurt appears fastest."),
+            ("Free repair task", "Take one small practice before any purchase or resource choice."),
+            ("Personal supply route", "Choose Luna, keepsake cards, book supply, or email request by guardian."),
+        ],
+    },
+    "ja": {
+        "title": "5つの愛の言語 診断入口",
+        "desc": "15 の心語リチュアルで感情の守護者を見つけ、補給、修復計画、Luna、コレクションへ進みます。",
+        "eyebrow": "QUIZ GATE",
+        "lead": "ここから守護者認領リチュアルを始めます。登録不要、約 2〜3 分、結果はこのブラウザだけに保存されます。",
+        "map": "守護者マップへ",
+        "resources": "補給を先に見る",
+        "preview_title": "完了後に開く三つの道",
+        "preview": [
+            ("守護者結果", "どの愛の言語で愛を受け取りやすく、傷つきやすいかを見ます。"),
+            ("無料の修復タスク", "購入の前に、今日できる小さな練習を一つ選びます。"),
+            ("個人補給ルート", "守護者に合わせて Luna、カード、書卷、メール相談へ進みます。"),
+        ],
+    },
+    "ko": {
+        "title": "다섯 가지 사랑의 언어 테스트 입구",
+        "desc": "15개의 마음 언어 의식으로 감정 수호자를 찾고 보급, 회복 계획, Luna, 소장 카드로 이어갑니다.",
+        "eyebrow": "QUIZ GATE",
+        "lead": "여기서 수호자 인식 의식을 바로 시작합니다. 가입 없이 약 2~3분, 결과는 이 브라우저에만 저장됩니다.",
+        "map": "수호자 지도 보기",
+        "resources": "보급 먼저 보기",
+        "preview_title": "완료 후 열리는 세 갈래 길",
+        "preview": [
+            ("수호자 결과", "어떤 사랑의 언어로 가장 빨리 사랑을 느끼고 상처받는지 확인합니다."),
+            ("무료 회복 과제", "구매나 자료 선택 전에 오늘 할 수 있는 작은 연습을 먼저 받습니다."),
+            ("개인 보급 루트", "수호자에 맞춰 Luna, 소장 카드, 책, 이메일 요청으로 이어갑니다."),
+        ],
+    },
+    "es": {
+        "title": "Entrada al test de los cinco lenguajes del amor",
+        "desc": "Completa 15 señales del corazón, encuentra tu guardiana emocional y sigue hacia recursos, reparación, Luna y recuerdos.",
+        "eyebrow": "QUIZ GATE",
+        "lead": "Empieza aquí el ritual de reconocimiento. Sin registro, unos 2 a 3 minutos, con el resultado guardado solo en este navegador.",
+        "map": "Entrar al mapa de guardianas",
+        "resources": "Ver recursos primero",
+        "preview_title": "Después del ritual se abren tres rutas",
+        "preview": [
+            ("Resultado de guardiana", "Reconoce qué lenguaje del amor te hace sentir amor y herida con más rapidez."),
+            ("Tarea gratuita", "Toma una práctica pequeña antes de cualquier compra o recurso."),
+            ("Ruta personal de recursos", "Elige Luna, tarjetas, libros o solicitud por email según tu guardiana."),
+        ],
+    },
+}
+
+
+def start_page(lang: str) -> None:
+    t = LANGS[lang]
+    copy = START_PAGE_COPY[lang]
+    section_labels = SECTION_LABELS[lang]
+    preview_cards = "".join(
+        f'<article class="mini-card"><p class="eyebrow">{escape(str(index).zfill(2))}</p><h3>{escape(title)}</h3><p>{escape(text)}</p></article>'
+        for index, (title, text) in enumerate(copy["preview"], start=1)
+    )
+    guardian_cards = "".join(character_link_card(lang, slug, data) for slug, data in GUARDIANS.items())
+    body = f"""
+<section class="page-hero compact guardian-index-hero">
+  <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h1>{escape(copy["title"])}</h1>
+  <p>{escape(copy["lead"])}</p>
+  <div class="hero-actions" data-start-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="start_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="start_hero_guardians">{escape(copy["map"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="start_hero_resources">{escape(copy["resources"])}</a></div>
+</section>
+<section class="section intro-grid">
+  <div><p class="eyebrow">{escape(section_labels["destiny_ritual"])}</p><h2>{escape(copy["preview_title"])}</h2></div>
+  <div class="card-grid compact">{preview_cards}</div>
+</section>
+{quiz_section(lang)}
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2></div><a href="{lang_url(lang, "characters")}" data-funnel-event="start_guardian_map">{escape(copy["map"])}</a></div>
+  <div class="guardian-grid">{guardian_cards}</div>
+</section>
+"""
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": f"{abs_url(lang, 'start')}#webpage",
+        "name": copy["title"],
+        "description": copy["desc"],
+        "url": abs_url(lang, "start"),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "isPartOf": {"@id": f"{abs_url(lang)}#website"},
+        "publisher": organization_ref(),
+    })
+    write(page_path(lang, "start"), layout(lang, copy["title"], copy["desc"], "start", body + quiz_script(lang), "start", "website", "/og-cover.jpg", schema))
+
+
 def home(lang: str) -> None:
     t = LANGS[lang]
-    quiz = QUIZ_LABELS[lang]
     section_labels = SECTION_LABELS[lang]
     guide_cards = "".join(guide_card(lang, g) for g in GUIDES[:6])
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
@@ -7932,19 +8065,7 @@ def home(lang: str) -> None:
 </section>
 <section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["guardian_field_guides"])}</p><h2>{escape(t["guides"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
 <section class="section" id="types-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
-<section class="quiz-band" id="quiz-section" tabindex="-1">
-  <div class="quiz-shell" data-quiz-root>
-    <div class="quiz-intro" data-quiz-intro>
-      <p class="eyebrow">{escape(quiz["eyebrow"])}</p>
-      <h2>{escape(quiz["title"])}</h2>
-      <p>{escape(quiz["intro"])}</p>
-      <button type="button" class="primary-btn" data-quiz-start>{escape(quiz["start"])}</button>
-    </div>
-    <div class="quiz-saved" data-quiz-saved hidden aria-live="polite"></div>
-    <div class="quiz-stage" data-quiz-box hidden aria-live="polite"></div>
-    <div class="quiz-result" data-quiz-result hidden aria-live="polite"></div>
-  </div>
-</section>
+{quiz_section(lang)}
 """
     schema = json_ld({
         "@context": "https://schema.org",
@@ -9347,6 +9468,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 
 ## High-Value Pages
 
+- Quiz campaign entrance: {DOMAIN}/start/
 - Quiz and home entrance: {DOMAIN}/
 - Human-readable Heart Garden map: {DOMAIN}/garden-map/
 - Guardian overview: {DOMAIN}/characters/
@@ -9404,7 +9526,7 @@ Commercial: Resources may contain affiliate links; Luna packs use Gumroad purcha
 Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
 
 /* HIGH-VALUE ROUTES */
-Quiz: {DOMAIN}/#quiz-section
+Quiz: {DOMAIN}/start/
 Garden map: {DOMAIN}/garden-map/
 Guardians: {DOMAIN}/characters/
 Resources: {DOMAIN}/resources/
@@ -9451,7 +9573,7 @@ def write_site_manifest() -> None:
             },
         ],
         "shortcuts": [
-            {"name": "開始認領儀式", "url": "/#quiz-section", "description": "完成 15 道心語題目，找到你的情感守護者。"},
+            {"name": "開始認領儀式", "url": "/start/", "description": "完成 15 道心語題目，找到你的情感守護者。"},
             {"name": "心語庭園地圖", "url": "/garden-map/", "description": "查看測驗、守護者、指南、補給與修復計畫的完整入口。"},
             {"name": "五位守護者", "url": "/characters/", "description": "查看艾莉絲、諾雅、薇薇安、克萊兒與朵拉。"},
             {"name": "旅人補給站", "url": "/resources/", "description": "依守護者路線選擇免費任務、Luna 場景與延伸書卷。"},
@@ -9768,7 +9890,7 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths() -> list[str]:
-    paths = ["", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths = ["", "start", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     return paths
@@ -9777,6 +9899,8 @@ def site_index_paths() -> list[str]:
 def site_index_group(path: str) -> str:
     if path == "":
         return "home"
+    if path == "start":
+        return "conversion"
     if path in {"garden-map", "guides", "theory", "about"} or path.startswith("guides/"):
         return "content"
     if path == "characters" or path.startswith("characters/"):
@@ -9814,6 +9938,7 @@ def collect_site_index() -> dict:
         "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
         "totals": {"pages": len(pages), "paths": len(paths), "languages": len(LANGS), "groups": dict(sorted(groups.items()))},
         "coreFlows": [
+            {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/resources/"]},
             {"id": "quiz_to_guardian", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"]},
             {"id": "guardian_supply", "entry": f"{DOMAIN}/characters/", "next": [f"{DOMAIN}/resources/", f"{DOMAIN}/keepsakes/", f"{DOMAIN}/luna-yoga-music/"]},
             {"id": "supply_to_contact", "entry": f"{DOMAIN}/resources/", "next": [f"{DOMAIN}/contact/#luna-supply-request", f"{DOMAIN}/commerce-catalog.json"]},
@@ -9936,9 +10061,16 @@ def collect_ai_discovery_index() -> dict:
         {
             "id": "find_guardian",
             "question": "如何找到我的情感守護者？",
-            "answerHint": "從首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
-            "canonical": f"{DOMAIN}/",
-            "supportingUrls": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"],
+            "answerHint": "從測驗入口或首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
+            "canonical": f"{DOMAIN}/start/",
+            "supportingUrls": [f"{DOMAIN}/", f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"],
+        },
+        {
+            "id": "quiz_entrance",
+            "question": "LoveTypes 五種愛之語測驗在哪裡做？",
+            "answerHint": "正式測驗入口是 /start/，可直接完成 15 題心語儀式；首頁也保留同一套測驗作為回訪入口。",
+            "canonical": f"{DOMAIN}/start/",
+            "supportingUrls": [f"{DOMAIN}/", f"{DOMAIN}/garden-map/", f"{DOMAIN}/characters/"],
         },
         {
             "id": "guardian_mapping",
@@ -9999,6 +10131,7 @@ def collect_ai_discovery_index() -> dict:
     ]
 
     priority_urls = [
+        {"url": f"{DOMAIN}/start/", "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery", "priority": 1.0},
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
@@ -10046,7 +10179,7 @@ def collect_ai_discovery_index() -> dict:
             "guardians": guardian_entities,
             "coreConcepts": [
                 {"id": "heart_garden", "label": {"zh": "心語庭園", "en": "Heart Garden"}, "canonical": f"{DOMAIN}/about/"},
-                {"id": "guardian_recognition_ritual", "label": {"zh": "守護者認領儀式", "en": "guardian recognition ritual"}, "canonical": f"{DOMAIN}/"},
+                {"id": "guardian_recognition_ritual", "label": {"zh": "守護者認領儀式", "en": "guardian recognition ritual"}, "canonical": f"{DOMAIN}/start/"},
                 {"id": "five_love_languages", "label": {"zh": "五種愛之語", "en": "five love languages"}, "canonical": f"{DOMAIN}/theory/"},
                 {"id": "misfrequency_repair", "label": {"zh": "錯頻修復", "en": "misfrequency repair"}, "canonical": f"{DOMAIN}/repair-plan/"},
                 {"id": "traveler_supplies", "label": {"zh": "旅人補給", "en": "traveler supplies"}, "canonical": f"{DOMAIN}/resources/"},
@@ -10368,6 +10501,7 @@ def main() -> None:
     write_quiz_data_assets()
     for lang in LANGS:
         home(lang)
+        start_page(lang)
         garden_map_page(lang)
         guides_index(lang)
         characters_index_page(lang)

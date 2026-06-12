@@ -26,7 +26,7 @@
 - 每支 Shorts 只保留一個 CTA：完成 15 題測驗，找到你的情感守護者。
 - 不把測驗結果寫成診斷，不承諾療效，不用恐嚇式情緒操控。
 - 第一輪不主推聯盟書卷或 Luna 購買；測驗完成後再由網站承接旅人補給、修復計畫、Luna、收藏室。
-- Shorts 說明欄建議連結：`https://lovetypes.tw/#quiz-section`。
+- Shorts 說明欄建議連結：`https://lovetypes.tw/start/`。
 - 若平台允許 UTM，使用 `utm_campaign=first_round_quiz_completion`，`utm_content` 對應 `publishing-calendar.csv`。
 
 ## 每週檢查

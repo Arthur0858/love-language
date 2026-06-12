@@ -1,0 +1,279 @@
+{
+  "generatedAt": "2026-06-13",
+  "week": 2,
+  "profileGateCount": 3,
+  "profilePendingCount": 3,
+  "platformPostCount": 9,
+  "scriptCount": 3,
+  "platformDistribution": {
+    "instagram_reels": 3,
+    "tiktok": 3,
+    "youtube_shorts": 3
+  },
+  "profileGates": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "ready": false,
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "profileLinkLabel": "Channel description / video description",
+      "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "writeback": [
+        "status=set/live",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "ready": false,
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "profileLinkLabel": "Profile website link",
+      "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "writeback": [
+        "status=set/live",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "ready": false,
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "profileLinkLabel": "Profile link in bio",
+      "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "writeback": [
+        "status=set/live",
+        "profile_link_set_date",
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ]
+    }
+  ],
+  "scripts": [
+    {
+      "taskId": "publish-lt-s04-noah-phone",
+      "scriptId": "lt-s04-noah-phone",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "contentAngle": "情感錯頻情境",
+      "title": "約會時他一直看手機，你真正難過的是什麼？",
+      "utmContent": "noah_phone",
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-22",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone",
+          "caption": "你不是要他每分每秒陪你，你只是希望他在的時候真的在。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone\n\n留言 A/B/C，你最不能接受哪一種不在場？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-22",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone",
+          "caption": "你不是要他每分每秒陪你，你只是希望他在的時候真的在。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone\n\n留言 A/B/C，你最不能接受哪一種不在場？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-22",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone",
+          "caption": "你不是要他每分每秒陪你，你只是希望他在的時候真的在。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone\n\n留言 A/B/C，你最不能接受哪一種不在場？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ]
+    },
+    {
+      "taskId": "publish-lt-s05-noah-cancel",
+      "scriptId": "lt-s05-noah-cancel",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "contentAngle": "守護者人格認同",
+      "title": "約定一再被取消，你會怎麼保護自己？",
+      "utmContent": "noah_cancel",
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-24",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel",
+          "caption": "每一次被延後，都像星海裡少了一盞燈。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel\n\n留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-24",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel",
+          "caption": "每一次被延後，都像星海裡少了一盞燈。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel\n\n留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-24",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel",
+          "caption": "每一次被延後，都像星海裡少了一盞燈。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel\n\n留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ]
+    },
+    {
+      "taskId": "publish-lt-s06-noah-quiet-time",
+      "scriptId": "lt-s06-noah-quiet-time",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "contentAngle": "測驗入口",
+      "title": "你最想被怎樣陪伴？",
+      "utmContent": "noah_quiet_time",
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-26",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time",
+          "caption": "有些人要的不是熱鬧，而是一段不被打斷的在場。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time\n\n留言你的選項，或寫下你最想被陪伴的 15 分鐘。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-26",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time",
+          "caption": "有些人要的不是熱鬧，而是一段不被打斷的在場。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time\n\n留言你的選項，或寫下你最想被陪伴的 15 分鐘。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-26",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time",
+          "caption": "有些人要的不是熱鬧，而是一段不被打斷的在場。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time\n\n留言你的選項，或寫下你最想被陪伴的 15 分鐘。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ]
+    }
+  ],
+  "runOrder": [
+    "完成三平台 Bio/Profile link 設定。",
+    "依本週三支腳本完成影片輸出或剪輯手卡交付。",
+    "依平台任務時間發布到 YouTube Shorts、TikTok、Instagram Reels。",
+    "先回填 posting-queue.csv，再回填 kpi-tracker.csv 與 platform-profile-tracker.csv。",
+    "跑 promotion_publishing_status.py；未達週決策門檻前不調整商品或付費 CTA。"
+  ],
+  "safety": {
+    "shortsCta": "完成 15 題測驗，找到你的情感守護者",
+    "profileLinksQuizOnly": true,
+    "doNotUse": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ],
+    "doNotChangeOffersBeforeData": true
+  },
+  "issues": []
+}

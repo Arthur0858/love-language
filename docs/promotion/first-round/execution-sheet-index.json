@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-06-13",
+  "weekCount": 5,
+  "platformPostCount": 45,
+  "issueCount": 0,
+  "sheets": [
+    {
+      "week": 1,
+      "profilePendingCount": 3,
+      "profileGateCount": 3,
+      "platformPostCount": 9,
+      "scriptCount": 3,
+      "issues": []
+    },
+    {
+      "week": 2,
+      "profilePendingCount": 3,
+      "profileGateCount": 3,
+      "platformPostCount": 9,
+      "scriptCount": 3,
+      "issues": []
+    },
+    {
+      "week": 3,
+      "profilePendingCount": 3,
+      "profileGateCount": 3,
+      "platformPostCount": 9,
+      "scriptCount": 3,
+      "issues": []
+    },
+    {
+      "week": 4,
+      "profilePendingCount": 3,
+      "profileGateCount": 3,
+      "platformPostCount": 9,
+      "scriptCount": 3,
+      "issues": []
+    },
+    {
+      "week": 5,
+      "profilePendingCount": 3,
+      "profileGateCount": 3,
+      "platformPostCount": 9,
+      "scriptCount": 3,
+      "issues": []
+    }
+  ]
+}

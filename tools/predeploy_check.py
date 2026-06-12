@@ -33,6 +33,7 @@ PYTHON_TOOLS = [
     "tools/promotion_asset_backlog.py",
     "tools/promotion_platform_profile_setup.py",
     "tools/promotion_platform_profile_tracker.py",
+    "tools/promotion_week_execution_sheet.py",
     "tools/promotion_now_asset_pack.py",
     "tools/promotion_now_asset_queue.py",
     "tools/promotion_now_asset_briefs.py",
@@ -146,6 +147,7 @@ def main() -> int:
         run_step("promotion asset backlog", [sys.executable, "tools/promotion_asset_backlog.py", "--check"])
         run_step("promotion platform profile setup", [sys.executable, "tools/promotion_platform_profile_setup.py", "--check"])
         run_step("promotion platform profile tracker", [sys.executable, "tools/promotion_platform_profile_tracker.py", "--check"])
+        run_step("promotion week execution sheet", [sys.executable, "tools/promotion_week_execution_sheet.py", "--all", "--check"])
         run_step("promotion now asset pack", [sys.executable, "tools/promotion_now_asset_pack.py", "--check"])
         run_step("promotion now asset queue", [sys.executable, "tools/promotion_now_asset_queue.py", "--check"])
         run_step("promotion now asset briefs", [sys.executable, "tools/promotion_now_asset_briefs.py", "--check"])

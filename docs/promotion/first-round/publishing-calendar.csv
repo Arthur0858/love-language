@@ -1,0 +1,16 @@
+week,slot,guardian_id,guardian_name,script_id,content_angle,primary_url,utm_campaign,utm_content,platform_status,notes
+1,1,iris,艾莉絲,lt-s01-iris-silence,情感錯頻情境,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,iris_silence,planned,第一支先測「沉默/已讀」痛點
+1,2,iris,艾莉絲,lt-s02-iris-affirmation,守護者人格認同,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,iris_affirmation,planned,留言引導收集想被聽見的句子
+1,3,iris,艾莉絲,lt-s03-iris-too-sensitive,測驗入口,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,iris_too_sensitive,planned,導向肯定言詞測驗動機
+2,1,noah,諾雅,lt-s04-noah-phone,情感錯頻情境,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,noah_phone,planned,測試約會分心共鳴
+2,2,noah,諾雅,lt-s05-noah-cancel,守護者人格認同,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,noah_cancel,planned,適合遠距/忙碌受眾
+2,3,noah,諾雅,lt-s06-noah-quiet-time,測驗入口,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,noah_quiet_time,planned,強化 15 分鐘陪伴概念
+3,1,vivian,薇薇安,lt-s07-vivian-remembered,情感錯頻情境,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,vivian_remembered,planned,釐清禮物不等於物質
+3,2,vivian,薇薇安,lt-s08-vivian-forgotten-date,守護者人格認同,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,vivian_forgotten_date,planned,節日/紀念日題材可配合日期
+3,3,vivian,薇薇安,lt-s09-vivian-ritual,測驗入口,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,vivian_ritual,planned,引導留言心意收藏
+4,1,claire,克萊兒,lt-s10-claire-tired,情感錯頻情境,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,claire_tired,planned,照顧者疲憊痛點
+4,2,claire,克萊兒,lt-s11-claire-promises,守護者人格認同,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,claire_promises,planned,承諾落空題材
+4,3,claire,克萊兒,lt-s12-claire-ask-help,測驗入口,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,claire_ask_help,planned,過度懂事/求助困難
+5,1,dora,朵拉,lt-s13-dora-distance,情感錯頻情境,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,dora_distance,planned,距離與擁抱需求
+5,2,dora,朵拉,lt-s14-dora-consent,守護者人格認同,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,dora_consent,planned,強化同意與界線
+5,3,dora,朵拉,lt-s15-dora-after-conflict,測驗入口,https://lovetypes.tw/#quiz-section,first_round_quiz_completion,dora_after_conflict,planned,衝突後冷卻與重新靠近

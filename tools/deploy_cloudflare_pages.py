@@ -43,6 +43,7 @@ EXCLUDED_DIR_NAMES = {
     ".github",
     ".wrangler",
     "__pycache__",
+    "docs",
     "node_modules",
     "output",
     "tools",

@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-06-13",
+  "trackerRows": 0,
+  "plannedTasks": 15,
+  "fieldStatus": {
+    "complete": true,
+    "missingFields": []
+  },
+  "totals": {
+    "views": 0,
+    "likes": 0,
+    "comments": 0,
+    "shares": 0,
+    "profile_clicks": 0,
+    "site_clicks": 0,
+    "quiz_starts": 0,
+    "quiz_completions": 0,
+    "guardian_result_clicks": 0,
+    "resources_clicks": 0,
+    "repair_plan_clicks": 0,
+    "luna_clicks": 0,
+    "keepsake_clicks": 0,
+    "free_keepsake_downloads": 0,
+    "supply_lead_requests": 0,
+    "luna_pack_clicks": 0,
+    "affiliate_book_clicks": 0,
+    "contact_requests": 0
+  },
+  "derived": {
+    "siteClickRate": null,
+    "quizStartRate": null,
+    "quizCompletionRate": null,
+    "routeInterestRate": null,
+    "revenueIntentRate": null,
+    "leadCaptureRate": null
+  },
+  "computedTotals": {
+    "routeInterest": 0,
+    "revenueIntent": 0,
+    "paidRevenueIntent": 0,
+    "leadIntent": 0
+  },
+  "leaders": {
+    "quizGuardian": null,
+    "revenueGuardian": null,
+    "contentAngle": null
+  },
+  "recommendations": [
+    "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
+    "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+    "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
+    "下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
+  ],
+  "plannedTaskDistribution": {
+    "claire": 3,
+    "dora": 3,
+    "iris": 3,
+    "noah": 3,
+    "vivian": 3
+  },
+  "nextPlannedTasks": [
+    "publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)",
+    "publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)",
+    "publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
+  ],
+  "safety": {
+    "emptyDataMode": true,
+    "emptyDataNote": "Do not change product, offer, or guardian priorities from empty tracker data."
+  }
+}

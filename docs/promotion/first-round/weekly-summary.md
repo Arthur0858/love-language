@@ -24,7 +24,7 @@
 ## 下一週建議
 
 - 先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。
-- 發布後至少回填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+- 發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。
 - 若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。
 - 下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)
 

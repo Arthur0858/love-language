@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-from collections import Counter, defaultdict
+from collections import Counter
 from datetime import date
 from pathlib import Path
 
@@ -14,6 +14,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "weekly-summary.md"
+DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "weekly-summary.json"
 
 NUMERIC_FIELDS = [
     "views",
@@ -84,6 +85,18 @@ def rate(numerator: int, denominator: int) -> str:
     return f"{numerator / denominator:.1%}"
 
 
+def rate_value(numerator: int, denominator: int) -> float | None:
+    if denominator <= 0:
+        return None
+    return round(numerator / denominator, 4)
+
+
+def format_rate_value(value: float | None) -> str:
+    if value is None:
+        return "n/a"
+    return f"{value:.1%}"
+
+
 def top_counter(counter: Counter) -> tuple[str, int] | None:
     if not counter:
         return None
@@ -103,7 +116,7 @@ def planned_task_summary(tasks: list[dict]) -> tuple[int, Counter, list[str]]:
     return len(planned), by_guardian, next_tasks
 
 
-def build_summary(fields: list[str], rows: list[dict[str, str]], tasks: list[dict]) -> str:
+def build_report(fields: list[str], rows: list[dict[str, str]], tasks: list[dict]) -> dict:
     filled_rows = [row for row in rows if is_filled(row)]
     totals = sum_fields(filled_rows)
     planned_count, planned_by_guardian, next_tasks = planned_task_summary(tasks)
@@ -126,14 +139,85 @@ def build_summary(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
     top_guardian = top_counter(guardian_quiz)
     top_revenue_guardian = top_counter(guardian_revenue)
     top_angle = top_counter(angle_quiz)
+    route_interest = totals["resources_clicks"] + totals["repair_plan_clicks"] + totals["luna_clicks"] + totals["keepsake_clicks"]
     revenue_total = sum(totals[field] for field in REVENUE_FIELDS)
+    lead_total = totals["supply_lead_requests"] + totals["contact_requests"]
+    paid_revenue_intent = totals["luna_pack_clicks"] + totals["affiliate_book_clicks"]
+    recommendations: list[str] = []
+    if not filled_rows:
+        recommendations.extend([
+            "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
+            "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+            "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
+        ])
+        if next_tasks:
+            recommendations.append("下一批建議任務：" + "；".join(next_tasks))
+    else:
+        if totals["site_clicks"] > 0 and totals["quiz_starts"] * 10 < totals["site_clicks"] * 3:
+            recommendations.append("修首頁或 /start/ 首屏：網站點擊有進來，但測驗開始率低於 30%。")
+        if totals["quiz_starts"] > 0 and totals["quiz_completions"] * 10 < totals["quiz_starts"] * 4:
+            recommendations.append("修測驗流程：測驗完成率低於 40%，優先檢查手機版題目節奏與結果揭示。")
+        if lead_total > 0:
+            recommendations.append("補自有資產：已有補給或 Contact 需求，優先做對應守護者的 PDF、桌布或短儀式。")
+        if paid_revenue_intent > 0:
+            recommendations.append("測試柔性商品承接：已有 Luna 或聯盟意圖，下支內容仍以測驗為 CTA，商品只放在結果後路線。")
+        if top_guardian:
+            recommendations.append(f"放大 {top_guardian[0]}：下一週多做一支同守護者、不同痛點的變體。")
+        if not recommendations:
+            recommendations.append("數據不足以調整策略，先補足本週回填。")
+
+    return {
+        "generatedAt": date.today().isoformat(),
+        "trackerRows": len(filled_rows),
+        "plannedTasks": planned_count,
+        "fieldStatus": {
+            "complete": not missing_fields,
+            "missingFields": missing_fields,
+        },
+        "totals": {field: int(totals[field]) for field in NUMERIC_FIELDS},
+        "derived": {
+            "siteClickRate": rate_value(totals["site_clicks"], totals["profile_clicks"]),
+            "quizStartRate": rate_value(totals["quiz_starts"], totals["site_clicks"]),
+            "quizCompletionRate": rate_value(totals["quiz_completions"], totals["quiz_starts"]),
+            "routeInterestRate": rate_value(route_interest, totals["quiz_completions"]),
+            "revenueIntentRate": rate_value(paid_revenue_intent, totals["quiz_completions"]),
+            "leadCaptureRate": rate_value(lead_total, totals["quiz_completions"]),
+        },
+        "computedTotals": {
+            "routeInterest": int(route_interest),
+            "revenueIntent": int(revenue_total),
+            "paidRevenueIntent": int(paid_revenue_intent),
+            "leadIntent": int(lead_total),
+        },
+        "leaders": {
+            "quizGuardian": {"id": top_guardian[0], "value": top_guardian[1]} if top_guardian else None,
+            "revenueGuardian": {"id": top_revenue_guardian[0], "value": top_revenue_guardian[1]} if top_revenue_guardian else None,
+            "contentAngle": {"id": top_angle[0], "value": top_angle[1]} if top_angle else None,
+        },
+        "recommendations": recommendations,
+        "plannedTaskDistribution": dict(sorted(planned_by_guardian.items())),
+        "nextPlannedTasks": next_tasks,
+        "safety": {
+            "emptyDataMode": not filled_rows,
+            "emptyDataNote": "Do not change product, offer, or guardian priorities from empty tracker data." if not filled_rows else "",
+        },
+    }
+
+
+def build_summary(report: dict) -> str:
+    totals = report["totals"]
+    derived = report["derived"]
+    computed = report["computedTotals"]
+    leaders = report["leaders"]
+    field_status = report["fieldStatus"]
+    missing_fields = field_status["missingFields"]
     lines = [
         "# LoveTypes 第一輪推廣週摘要",
         "",
-        f"- 產生日期：{date.today().isoformat()}",
-        f"- 追蹤列數：{len(filled_rows)}",
-        f"- 已規劃待發布任務：{planned_count}",
-        f"- 追蹤欄位狀態：{'完整' if not missing_fields else '缺少 ' + ', '.join(missing_fields)}",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- 追蹤列數：{report['trackerRows']}",
+        f"- 已規劃待發布任務：{report['plannedTasks']}",
+        f"- 追蹤欄位狀態：{'完整' if field_status['complete'] else '缺少 ' + ', '.join(missing_fields)}",
         "",
         "## 漏斗總覽",
         "",
@@ -142,18 +226,18 @@ def build_summary(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
         f"- 網站點擊：{totals['site_clicks']}（site click rate: {rate(totals['site_clicks'], totals['profile_clicks'])}）",
         f"- 測驗開始：{totals['quiz_starts']}（quiz start rate: {rate(totals['quiz_starts'], totals['site_clicks'])}）",
         f"- 測驗完成：{totals['quiz_completions']}（completion rate: {rate(totals['quiz_completions'], totals['quiz_starts'])}）",
-        f"- 路線興趣：{totals['resources_clicks'] + totals['repair_plan_clicks'] + totals['luna_clicks'] + totals['keepsake_clicks']}（route interest rate: {rate(totals['resources_clicks'] + totals['repair_plan_clicks'] + totals['luna_clicks'] + totals['keepsake_clicks'], totals['quiz_completions'])}）",
-        f"- 獲利意圖：{revenue_total}（revenue intent rate: {rate(totals['luna_pack_clicks'] + totals['affiliate_book_clicks'], totals['quiz_completions'])}）",
-        f"- 名單/需求意圖：{totals['supply_lead_requests'] + totals['contact_requests']}（lead capture rate: {rate(totals['supply_lead_requests'] + totals['contact_requests'], totals['quiz_completions'])}）",
+        f"- 路線興趣：{computed['routeInterest']}（route interest rate: {format_rate_value(derived['routeInterestRate'])}）",
+        f"- 獲利意圖：{computed['revenueIntent']}（revenue intent rate: {format_rate_value(derived['revenueIntentRate'])}）",
+        f"- 名單/需求意圖：{computed['leadIntent']}（lead capture rate: {format_rate_value(derived['leadCaptureRate'])}）",
         "",
         "## 守護者與內容角度",
         "",
     ]
-    if filled_rows:
+    if report["trackerRows"]:
         lines.extend([
-            f"- 測驗完成最高守護者：{top_guardian[0]}（{top_guardian[1]}）" if top_guardian else "- 測驗完成最高守護者：尚無",
-            f"- 獲利意圖最高守護者：{top_revenue_guardian[0]}（{top_revenue_guardian[1]}）" if top_revenue_guardian else "- 獲利意圖最高守護者：尚無",
-            f"- 測驗完成最高內容角度：{top_angle[0]}（{top_angle[1]}）" if top_angle else "- 測驗完成最高內容角度：尚無",
+            f"- 測驗完成最高守護者：{leaders['quizGuardian']['id']}（{leaders['quizGuardian']['value']}）" if leaders["quizGuardian"] else "- 測驗完成最高守護者：尚無",
+            f"- 獲利意圖最高守護者：{leaders['revenueGuardian']['id']}（{leaders['revenueGuardian']['value']}）" if leaders["revenueGuardian"] else "- 獲利意圖最高守護者：尚無",
+            f"- 測驗完成最高內容角度：{leaders['contentAngle']['id']}（{leaders['contentAngle']['value']}）" if leaders["contentAngle"] else "- 測驗完成最高內容角度：尚無",
         ])
     else:
         lines.extend([
@@ -162,30 +246,10 @@ def build_summary(fields: list[str], rows: list[dict[str, str]], tasks: list[dic
         ])
 
     lines.extend(["", "## 下一週建議", ""])
-    if not filled_rows:
-        lines.extend([
-            "- 先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
-            "- 發布後至少回填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。",
-            "- 若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
-        ])
-        if next_tasks:
-            lines.append("- 下一批建議任務：" + "；".join(next_tasks))
-    else:
-        if totals["site_clicks"] > 0 and totals["quiz_starts"] * 10 < totals["site_clicks"] * 3:
-            lines.append("- 修首頁或 `/start/` 首屏：網站點擊有進來，但測驗開始率低於 30%。")
-        if totals["quiz_starts"] > 0 and totals["quiz_completions"] * 10 < totals["quiz_starts"] * 4:
-            lines.append("- 修測驗流程：測驗完成率低於 40%，優先檢查手機版題目節奏與結果揭示。")
-        if totals["supply_lead_requests"] + totals["contact_requests"] > 0:
-            lines.append("- 補自有資產：已有補給或 Contact 需求，優先做對應守護者的 PDF、桌布或短儀式。")
-        if totals["luna_pack_clicks"] + totals["affiliate_book_clicks"] > 0:
-            lines.append("- 測試柔性商品承接：已有 Luna 或聯盟意圖，下支內容仍以測驗為 CTA，商品只放在結果後路線。")
-        if top_guardian:
-            lines.append(f"- 放大 {top_guardian[0]}：下一週多做一支同守護者、不同痛點的變體。")
-        if len(lines) and lines[-1] == "## 下一週建議":
-            lines.append("- 數據不足以調整策略，先補足本週回填。")
+    lines.extend(f"- {item}" for item in report["recommendations"])
 
     lines.extend(["", "## Planned 任務分布", ""])
-    for guardian, count in sorted(planned_by_guardian.items()):
+    for guardian, count in report["plannedTaskDistribution"].items():
         lines.append(f"- {guardian}: {count}")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -195,19 +259,57 @@ def main() -> int:
     parser.add_argument("--tracker", default=str(TRACKER_PATH))
     parser.add_argument("--kit", default=str(KIT_PATH))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT_PATH))
+    parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT_PATH))
+    parser.add_argument("--check", action="store_true", help="Validate the summary inputs and report shape without writing files.")
     parser.add_argument("--stdout", action="store_true", help="Print the summary instead of writing a file.")
     args = parser.parse_args()
 
     fields, rows = read_tracker(Path(args.tracker))
     tasks = load_tasks(Path(args.kit))
-    summary = build_summary(fields, rows, tasks)
-    if args.stdout:
+    report = build_report(fields, rows, tasks)
+    summary = build_summary(report)
+    if args.check:
+        required_report_keys = {
+            "generatedAt",
+            "trackerRows",
+            "plannedTasks",
+            "fieldStatus",
+            "totals",
+            "derived",
+            "computedTotals",
+            "leaders",
+            "recommendations",
+            "plannedTaskDistribution",
+            "nextPlannedTasks",
+            "safety",
+        }
+        issues = []
+        if not required_report_keys.issubset(report):
+            issues.append("report missing required keys")
+        if report["fieldStatus"]["missingFields"]:
+            issues.append("tracker missing revenue fields")
+        if len(report["recommendations"]) < 1:
+            issues.append("report should include at least one recommendation")
+        if not summary.startswith("# LoveTypes 第一輪推廣週摘要"):
+            issues.append("markdown summary missing title")
+        print(f"promotion_weekly_summary_tracker_rows={report['trackerRows']}")
+        print(f"promotion_weekly_summary_recommendations={len(report['recommendations'])}")
+        print(f"promotion_weekly_summary_empty_data_mode={int(report['safety']['emptyDataMode'])}")
+        print(f"promotion_weekly_summary_issues={len(issues)}")
+        for issue in issues:
+            print(issue)
+        return 1 if issues else 0
+    elif args.stdout:
         print(summary, end="")
     else:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(summary, encoding="utf-8")
+        json_output_path = Path(args.json_output)
+        json_output_path.parent.mkdir(parents=True, exist_ok=True)
+        json_output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"promotion_weekly_summary={output_path}")
+        print(f"promotion_weekly_summary_json={json_output_path}")
     return 0
 
 

@@ -1,0 +1,253 @@
+{
+  "generatedAt": "2026-06-13",
+  "campaign": "first_round_quiz_completion",
+  "week": 1,
+  "taskCount": 3,
+  "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+  "publishingRules": [
+    "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
+    "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
+    "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
+    "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。"
+  ],
+  "tasks": [
+    {
+      "taskId": "publish-lt-s01-iris-silence",
+      "week": 1,
+      "slot": 1,
+      "status": "planned",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "scriptId": "lt-s01-iris-silence",
+      "contentAngle": "情感錯頻情境",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "hook": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。",
+      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "utmContent": "iris_silence",
+      "subtitleLines": [
+        "如果他突然變安靜，",
+        "你心裡最先冒出的念頭是什麼？",
+        "A：我是不是不重要了。",
+        "B：我是不是哪裡做錯了。",
+        "C：他是不是根本沒看見我。",
+        "艾莉絲會收起那些沒被說出口的話。",
+        "她守護的不是甜言蜜語。",
+        "而是一句準確的看見。",
+        "你最想聽見哪一句？",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "晨曦玻璃花園背景，羽筆在信紙上寫下發光短句。",
+        "手機訊息停在已讀畫面，畫面逐漸被金色光點覆蓋。",
+        "字幕逐字浮現，節奏溫柔但有懸念。"
+      ],
+      "commentCta": "留言 A/B/C，或寫下一句你最想被說出口的話。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/iris/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-iris",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-iris",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s01-iris-silence",
+        "guardian_id": "iris",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "第一支先測「沉默/已讀」痛點"
+      }
+    },
+    {
+      "taskId": "publish-lt-s02-iris-affirmation",
+      "week": 1,
+      "slot": 2,
+      "status": "planned",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "scriptId": "lt-s02-iris-affirmation",
+      "contentAngle": "守護者人格認同",
+      "title": "哪一句肯定，會讓你瞬間安心？",
+      "hook": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。",
+      "caption": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation\n\n留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
+      "utmContent": "iris_affirmation",
+      "subtitleLines": [
+        "有些話很短，",
+        "卻能讓人撐過很久。",
+        "A：我知道你很努力。",
+        "B：我有看見你剛剛忍住了。",
+        "C：你不用完美，我也在。",
+        "如果這三句裡有一句擊中你，",
+        "你可能正在靠近艾莉絲的花園。",
+        "她守護被準確珍惜的心。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "玻璃花瓣反射三句短句，A/B/C 以光牌出現。",
+        "人物剪影低頭，聽見句子後抬頭。",
+        "使用暖金、象牙白、晨光粒子。"
+      ],
+      "commentCta": "留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/iris/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-iris",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-iris",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s02-iris-affirmation",
+        "guardian_id": "iris",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "留言引導收集想被聽見的句子"
+      }
+    },
+    {
+      "taskId": "publish-lt-s03-iris-too-sensitive",
+      "week": 1,
+      "slot": 3,
+      "status": "planned",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "scriptId": "lt-s03-iris-too-sensitive",
+      "contentAngle": "測驗入口",
+      "title": "你真的太敏感嗎？還是你只是等一句清楚的話？",
+      "hook": "有時候你不是太敏感，你只是一直在替沉默找理由。",
+      "caption": "有時候你不是太敏感，你只是一直在替沉默找理由。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive\n\n留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
+      "utmContent": "iris_too_sensitive",
+      "subtitleLines": [
+        "當你問：你還在乎我嗎？",
+        "你真正想問的可能是，",
+        "你有沒有看見我在努力？",
+        "你會不會願意回應我？",
+        "你能不能不要讓我一直猜？",
+        "艾莉絲不會叫你無限等待。",
+        "她會把需求翻成一句清楚的話。",
+        "如果你常被說太敏感，",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "霧面訊息框裡的問號逐漸變成清楚短句。",
+        "羽筆把模糊字跡改寫成發光句子。",
+        "畫面避免過度悲傷，保持溫柔與自我辨識感。"
+      ],
+      "commentCta": "留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/iris/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-iris",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-iris",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-iris",
+        "ownedLeadItemId": "supply-wishlist-iris",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s03-iris-too-sensitive",
+        "guardian_id": "iris",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "導向肯定言詞測驗動機"
+      }
+    }
+  ]
+}

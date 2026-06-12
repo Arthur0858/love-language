@@ -89,6 +89,37 @@ def main() -> int:
     kpi_fields = kit.get("kpiFields")
     if not isinstance(kpi_fields, list) or not EXPECTED_KPI_FIELDS.issubset(kpi_fields):
         issues.append("/promotion-kit.json: missing expected KPI fields")
+    measurement = kit.get("measurementPlan")
+    if not isinstance(measurement, dict):
+        issues.append("/promotion-kit.json: measurementPlan should be an object")
+        measurement = {}
+    if measurement.get("primaryKpi") != "quiz_completions":
+        issues.append("/promotion-kit.json: measurementPlan.primaryKpi should be quiz_completions")
+    secondary = measurement.get("secondaryKpis")
+    if not isinstance(secondary, list) or not {"site_clicks", "quiz_starts", "luna_clicks", "keepsake_clicks"}.issubset(secondary):
+        issues.append("/promotion-kit.json: measurementPlan.secondaryKpis missing required fields")
+    derived = measurement.get("derivedRates")
+    if not isinstance(derived, list) or len(derived) < 4:
+        issues.append("/promotion-kit.json: measurementPlan.derivedRates should include at least four rates")
+    else:
+        expected_rate_ids = {"site_click_rate", "quiz_start_rate", "quiz_completion_rate", "route_interest_rate"}
+        rate_ids = {item.get("id") for item in derived if isinstance(item, dict)}
+        if not expected_rate_ids.issubset(rate_ids):
+            issues.append("/promotion-kit.json: measurementPlan.derivedRates missing required rate ids")
+        for item in derived:
+            if not isinstance(item, dict) or not item.get("formula") or not item.get("use"):
+                issues.append("/promotion-kit.json: measurementPlan derived rates should include formula and use")
+                break
+    rules = measurement.get("decisionRules")
+    if not isinstance(rules, list) or len(rules) < 5:
+        issues.append("/promotion-kit.json: measurementPlan.decisionRules should include at least five rules")
+    else:
+        rule_ids = {item.get("id") for item in rules if isinstance(item, dict)}
+        if not {"scale_guardian", "fix_landing", "fix_quiz_flow", "monetize_route", "pause_angle"}.issubset(rule_ids):
+            issues.append("/promotion-kit.json: measurementPlan.decisionRules missing required rule ids")
+    weekly = measurement.get("weeklyReviewChecklist")
+    if not isinstance(weekly, list) or len(weekly) < 5:
+        issues.append("/promotion-kit.json: measurementPlan.weeklyReviewChecklist should include at least five steps")
 
     seen_scripts: set[str] = set()
     seen_guardians: set[str] = set()
@@ -192,6 +223,7 @@ def main() -> int:
     print(f"public_promotion_kit_scripts_checked={len(seen_scripts)}")
     print(f"public_promotion_kit_utm_contents_checked={len(seen_contents)}")
     print(f"public_promotion_kit_kpi_fields_checked={len(kpi_fields) if isinstance(kpi_fields, list) else 0}")
+    print(f"public_promotion_kit_measurement_rules_checked={len(measurement.get('decisionRules', [])) if isinstance(measurement, dict) else 0}")
     print(f"public_promotion_kit_issues={len(issues)}")
     for issue in issues:
         print(issue)

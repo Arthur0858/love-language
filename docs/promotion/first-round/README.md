@@ -13,6 +13,8 @@
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
 - `weekly-summary.md`: 使用 `python3 tools/promotion_weekly_summary.py` 產生的週檢查摘要，會指出應放大的守護者、內容角度與下一個獲利承接動作。
 - `weekly-summary.json`: 同一份週摘要的機器可讀版本，可交給自動化、表格或儀表板使用。
+- `next-actions.md`: 使用 `python3 tools/promotion_next_actions.py` 產生的下一批發布與獲利承接建議。
+- `next-actions.json`: 同一份下一步建議的機器可讀版本。
 
 ## 推廣語彙
 
@@ -81,3 +83,11 @@ python3 tools/promotion_weekly_summary.py --check
 ```
 
 若追蹤表尚未有資料，摘要會保持保守，只提示先發布與回填，不會誤判優勝守護者或商品方向。
+
+產生下一批內容與承接建議：
+
+```bash
+python3 tools/promotion_next_actions.py
+```
+
+若追蹤表尚未有資料，`next-actions` 會進入空資料安全模式，只建議先發布與回填，不調整商品或付費承接。

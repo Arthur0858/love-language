@@ -24,6 +24,7 @@ PYTHON_TOOLS = [
     "tools/image_asset_audit.py",
     "tools/performance_budget_audit.py",
     "tools/promotion_publish_pack.py",
+    "tools/promotion_next_actions.py",
     "tools/promotion_weekly_summary.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
@@ -125,6 +126,7 @@ def main() -> int:
         run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
         run_step("promotion publish pack", [sys.executable, "tools/promotion_publish_pack.py", "--all", "--check"])
+        run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
         run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])

@@ -8,7 +8,7 @@
 
 - `shorts-scripts.zh-TW.json`: 15 支 Shorts 腳本，每位守護者 3 支，欄位符合 shorts-factory 腳本自動化契約。
 - `publishing-calendar.csv`: 5 週發布節奏，每週 3 支 Shorts，依 Iris、Noah、Vivian、Claire、Dora 排列。
-- `kpi-tracker.csv`: 發布後追蹤表，記錄觀看、互動、網站點擊、測驗開始與完成。
+- `kpi-tracker.csv`: 發布後追蹤表，記錄觀看、互動、網站點擊、測驗開始與完成，並回填收藏物、補給名單、Luna、聯盟書卷與 Contact 需求。
 
 ## 推廣語彙
 
@@ -44,3 +44,14 @@
 - 哪種角度最能帶來測驗開始：錯頻情境、守護者認同、測驗入口。
 - 哪些 Shorts 帶來最多測驗完成。
 - 測驗結果後，使用者是否自然點向守護者頁、旅人補給、修復計畫、Luna 或收藏室。
+- 哪些守護者開始出現可變現意圖：免費收藏物下載、補給名單需求、Luna 商品點擊、聯盟書卷點擊或 Contact 需求。
+
+## 獲利意圖欄位
+
+- `free_keepsake_downloads`: 免費守護者收藏物下載或列印，代表角色認同與保存意願。
+- `supply_lead_requests`: 補給願望清單、補給資產或 Email 需求，代表可建立自有名單。
+- `luna_pack_clicks`: Luna Gumroad 商品包點擊，代表夜間補給付費意圖。
+- `affiliate_book_clicks`: 聯盟書卷點擊，代表延伸閱讀購買意圖。
+- `contact_requests`: 使用 Contact 或帶有路徑摘要的 mailto，代表高意圖需求。
+
+每週檢查時先看 `quiz_completions`，再看上述五個欄位。若某位守護者連續兩週有補給名單或 Luna 商品點擊，下一週優先補該守護者的收藏物、短儀式或 Luna 入口內容。

@@ -1709,6 +1709,52 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
         return [f"{PROMOTION_KIT_PATH}: invalid JSON: {exc}"], stats
     if not isinstance(data, dict):
         return [f"{PROMOTION_KIT_PATH}: root should be an object"], stats
+    expected_kpi_fields = {
+        "views",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
+    }
+    kpi_fields = data.get("kpiFields")
+    if not isinstance(kpi_fields, list) or not expected_kpi_fields.issubset(kpi_fields):
+        issues.append(f"{PROMOTION_KIT_PATH}: kpiFields missing revenue bridge fields")
+    measurement = data.get("measurementPlan")
+    if not isinstance(measurement, dict):
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan should be an object")
+        measurement = {}
+    bridge_kpis = measurement.get("revenueBridgeKpis")
+    if not isinstance(bridge_kpis, list) or len(bridge_kpis) < 5:
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.revenueBridgeKpis should include at least five entries")
+    else:
+        stats["promotion_revenue_bridge_kpis_checked"] = len(bridge_kpis)
+        bridge_fields = {item.get("field") for item in bridge_kpis if isinstance(item, dict)}
+        expected_bridge_fields = {"free_keepsake_downloads", "supply_lead_requests", "luna_pack_clicks", "affiliate_book_clicks", "contact_requests"}
+        if not expected_bridge_fields.issubset(bridge_fields):
+            issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.revenueBridgeKpis missing expected fields")
+        for item in bridge_kpis:
+            if not isinstance(item, dict) or not item.get("playbookId") or not item.get("meaning"):
+                issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.revenueBridgeKpis entries should include playbookId and meaning")
+                break
+    derived_rates = measurement.get("derivedRates")
+    if not isinstance(derived_rates, list):
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.derivedRates should be a list")
+    else:
+        expected_rates = {"lead_capture_rate", "revenue_intent_rate", "keepsake_save_rate"}
+        rate_ids = {item.get("id") for item in derived_rates if isinstance(item, dict)}
+        if not expected_rates.issubset(rate_ids):
+            issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.derivedRates missing revenue bridge rates")
+    decision_rules = measurement.get("decisionRules")
+    if not isinstance(decision_rules, list):
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.decisionRules should be a list")
+    else:
+        rule_ids = {item.get("id") for item in decision_rules if isinstance(item, dict)}
+        if not {"build_owned_asset", "test_soft_offer"}.issubset(rule_ids):
+            issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.decisionRules missing revenue bridge rules")
     tasks = data.get("publishingTasks")
     if not isinstance(tasks, list) or len(tasks) != 15:
         issues.append(f"{PROMOTION_KIT_PATH}: expected 15 publishingTasks")
@@ -3680,6 +3726,7 @@ def main() -> int:
     print(f"commerce_revenue_playbook_checked={stats['commerce_revenue_playbook_checked']}")
     print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")
     print(f"promotion_tasks_checked={stats['promotion_tasks_checked']}")
+    print(f"promotion_revenue_bridge_kpis_checked={stats['promotion_revenue_bridge_kpis_checked']}")
     print(f"promotion_monetization_bridges_checked={stats['promotion_monetization_bridges_checked']}")
     print(f"site_index_pages_checked={stats['site_index_pages_checked']}")
     print(f"site_index_languages_checked={stats['site_index_languages_checked']}")

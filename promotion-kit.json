@@ -37,6 +37,11 @@
     "repair_plan_clicks",
     "luna_clicks",
     "keepsake_clicks",
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
     "notes"
   ],
   "measurementPlan": {
@@ -48,7 +53,39 @@
       "resources_clicks",
       "repair_plan_clicks",
       "luna_clicks",
-      "keepsake_clicks"
+      "keepsake_clicks",
+      "free_keepsake_downloads",
+      "supply_lead_requests",
+      "luna_pack_clicks",
+      "affiliate_book_clicks",
+      "contact_requests"
+    ],
+    "revenueBridgeKpis": [
+      {
+        "field": "free_keepsake_downloads",
+        "playbookId": "identity_retention_first",
+        "meaning": "Guardian identity is strong enough for the visitor to save or print a free asset."
+      },
+      {
+        "field": "supply_lead_requests",
+        "playbookId": "owned_supply_lead",
+        "meaning": "The visitor is willing to request a guardian supply asset or wishlist follow-up by email."
+      },
+      {
+        "field": "luna_pack_clicks",
+        "playbookId": "luna_pack_revenue",
+        "meaning": "The visitor is exploring a paid Luna night supply product."
+      },
+      {
+        "field": "affiliate_book_clicks",
+        "playbookId": "affiliate_book_revenue",
+        "meaning": "The visitor is exploring optional extended reading through the affiliate route."
+      },
+      {
+        "field": "contact_requests",
+        "playbookId": "owned_supply_lead",
+        "meaning": "The visitor has high intent and wants a human-readable supply, Luna, or repair request path."
+      }
     ],
     "derivedRates": [
       {
@@ -70,6 +107,21 @@
         "id": "route_interest_rate",
         "formula": "(resources_clicks + repair_plan_clicks + luna_clicks + keepsake_clicks) / max(quiz_completions, 1)",
         "use": "Check whether results create enough guardian identity to continue into monetizable paths."
+      },
+      {
+        "id": "lead_capture_rate",
+        "formula": "(supply_lead_requests + contact_requests) / max(quiz_completions, 1)",
+        "use": "Check whether guardian identity is turning into owned email or request demand."
+      },
+      {
+        "id": "revenue_intent_rate",
+        "formula": "(luna_pack_clicks + affiliate_book_clicks) / max(quiz_completions, 1)",
+        "use": "Check whether completed quiz users are exploring paid or affiliate paths without forcing a sale."
+      },
+      {
+        "id": "keepsake_save_rate",
+        "formula": "free_keepsake_downloads / max(quiz_completions, 1)",
+        "use": "Check whether the free identity asset is strong enough to retain visitors after the result."
       }
     ],
     "decisionRules": [
@@ -94,6 +146,16 @@
         "action": "Add a follow-up post pointing to the same guardian supply route, Luna scene, keepsake, or contact request."
       },
       {
+        "id": "build_owned_asset",
+        "when": "supply_lead_requests or contact_requests repeat for the same guardian across two weekly reviews.",
+        "action": "Create the next free PDF, wallpaper, short ritual, or Luna request template for that guardian before adding more affiliate emphasis."
+      },
+      {
+        "id": "test_soft_offer",
+        "when": "luna_pack_clicks or affiliate_book_clicks appear without supply_lead_requests.",
+        "action": "Keep the next post educational and test one softer product mention after the quiz result, not in the Shorts CTA."
+      },
+      {
         "id": "pause_angle",
         "when": "A contentAngle gets views but no site_clicks across three posts.",
         "action": "Pause that angle for one week and rewrite the hook before creating more videos."
@@ -103,6 +165,7 @@
       "Fill kpi-tracker.csv for every published task.",
       "Group results by guardian_id and content_angle.",
       "Compare quiz_completions before revenue clicks.",
+      "Review free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, and contact_requests before changing offers.",
       "Use conversionPath to inspect the matching guardian, supply, Luna, keepsake, and contact routes.",
       "Choose one scale action and one repair action for the next week."
     ]
@@ -208,6 +271,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "第一支先測「沉默/已讀」痛點"
@@ -311,6 +379,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "留言引導收集想被聽見的句子"
@@ -414,6 +487,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "導向肯定言詞測驗動機"
@@ -517,6 +595,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "測試約會分心共鳴"
@@ -621,6 +704,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "適合遠距/忙碌受眾"
@@ -724,6 +812,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "強化 15 分鐘陪伴概念"
@@ -827,6 +920,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "釐清禮物不等於物質"
@@ -930,6 +1028,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "節日/紀念日題材可配合日期"
@@ -1033,6 +1136,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "引導留言心意收藏"
@@ -1136,6 +1244,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "照顧者疲憊痛點"
@@ -1240,6 +1353,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "承諾落空題材"
@@ -1343,6 +1461,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "過度懂事/求助困難"
@@ -1447,6 +1570,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "距離與擁抱需求"
@@ -1550,6 +1678,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "強化同意與界線"
@@ -1653,6 +1786,11 @@
         "repair_plan_clicks",
         "luna_clicks",
         "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
         "notes"
       ],
       "notes": "衝突後冷卻與重新靠近"

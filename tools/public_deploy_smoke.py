@@ -326,7 +326,7 @@ SUPPORT_FILES = {
         '"indexablePages": 155',
         '"guardians": 5',
         '"commerceItems": 20',
-        '"supportFiles": 17',
+        '"supportFiles": 18',
         '"localPredeploy"',
         '"publicDiscovery"',
         '"publicDeploy"',

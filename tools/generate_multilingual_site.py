@@ -17,8 +17,8 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
-UPDATED = "2026-06-12"
-ASSET_VERSION = "20260612-campaign-landing"
+UPDATED = "2026-06-13"
+ASSET_VERSION = "20260613-quiz-attribution"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -1612,6 +1612,9 @@ CONTACT_RESULT_HANDOFF = {
         "mission": "免費任務",
         "luna": "Luna 使用場景",
         "keepsake": "想要的收藏物",
+        "source": "測驗來源",
+        "campaign": "推廣活動",
+        "campaign_content": "推廣內容",
         "context": "我想使用在這個情境",
         "keepsake_hint": "手機桌布 / 7 分鐘短儀式 / Luna 下載包 / 印刷收藏包",
     },
@@ -1632,6 +1635,9 @@ CONTACT_RESULT_HANDOFF = {
         "mission": "Free task",
         "luna": "Luna use case",
         "keepsake": "Collectible I want",
+        "source": "Quiz source",
+        "campaign": "Campaign",
+        "campaign_content": "Campaign content",
         "context": "I would use it in this situation",
         "keepsake_hint": "Mobile wallpaper / 7-minute ritual / Luna download pack / printed collectible pack",
     },
@@ -1652,6 +1658,9 @@ CONTACT_RESULT_HANDOFF = {
         "mission": "無料の課題",
         "luna": "Luna の使用場面",
         "keepsake": "欲しいコレクション",
+        "source": "診断の流入元",
+        "campaign": "キャンペーン",
+        "campaign_content": "キャンペーン内容",
         "context": "この場面で使いたい",
         "keepsake_hint": "スマホ壁紙 / 7分の短い儀式 / Luna ダウンロード / 印刷コレクション",
     },
@@ -1672,6 +1681,9 @@ CONTACT_RESULT_HANDOFF = {
         "mission": "무료 과제",
         "luna": "Luna 사용 장면",
         "keepsake": "원하는 소장물",
+        "source": "테스트 유입",
+        "campaign": "캠페인",
+        "campaign_content": "캠페인 콘텐츠",
         "context": "이 상황에서 사용하고 싶어요",
         "keepsake_hint": "모바일 배경화면 / 7분 짧은 의식 / Luna 다운로드 팩 / 인쇄 소장팩",
     },
@@ -1692,6 +1704,9 @@ CONTACT_RESULT_HANDOFF = {
         "mission": "Tarea gratuita",
         "luna": "Uso de Luna",
         "keepsake": "Recurso coleccionable que quiero",
+        "source": "Fuente del test",
+        "campaign": "Campaña",
+        "campaign_content": "Contenido de campaña",
         "context": "Lo usaría en esta situación",
         "keepsake_hint": "Fondo móvil / ritual de 7 minutos / pack Luna / pack impreso",
     },
@@ -6243,12 +6258,21 @@ def contact_result_handoff_script(lang: str) -> str:
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  const campaign = saved.campaign && typeof saved.campaign === 'object' ? saved.campaign : {{}};
+  const campaignLines = campaign.utm_source || campaign.utm_campaign || campaign.utm_content
+    ? [
+        `${{labels.source}}: ${{campaign.utm_source || ''}}`,
+        `${{labels.campaign}}: ${{campaign.utm_campaign || ''}}`,
+        `${{labels.campaign_content}}: ${{campaign.utm_content || ''}}`
+      ]
+    : [];
   const body = [
     `${{labels.guardian}}: ${{result.name}} · ${{result.type}}`,
     `${{labels.supply}}: ${{result.supplyTitle}}`,
     `${{labels.mission}}: ${{result.supplyMission}}`,
     `${{labels.luna}}: ${{result.lunaUrl}}`,
     `${{labels.keepsake}}: ${{labels.keepsake_hint}}`,
+    ...campaignLines,
     `${{labels.context}}: `,
     '',
     `${{labels.route}}: ${{result.resourceUrl}}`,
@@ -7294,6 +7318,41 @@ def quiz_script(lang: str) -> str:
       return null;
     }}
   }}
+  function campaignAttributionFromUrl() {{
+    try {{
+      const params = new URLSearchParams(window.location.search || '');
+      const fields = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+      const attribution = {{}};
+      fields.forEach((field) => {{
+        const value = String(params.get(field) || '').trim();
+        if (value) attribution[field] = value.slice(0, 120);
+      }});
+      if (!Object.keys(attribution).length) return null;
+      attribution.landingPath = window.location.pathname;
+      attribution.savedAt = new Date().toISOString();
+      return attribution;
+    }} catch (error) {{
+      return null;
+    }}
+  }}
+  function savedCampaignAttribution() {{
+    const fromUrl = campaignAttributionFromUrl();
+    if (fromUrl) return fromUrl;
+    try {{
+      const stored = JSON.parse(localStorage.getItem('lovetypes:campaign-attribution:v1') || 'null');
+      if (!stored || typeof stored !== 'object') return null;
+      const hasCampaign = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].some((key) => stored[key]);
+      return hasCampaign ? stored : null;
+    }} catch (error) {{
+      return null;
+    }}
+  }}
+  function savedResultPayload(primaryKey) {{
+    const payload = {{ primaryKey, savedAt: new Date().toISOString() }};
+    const campaign = savedCampaignAttribution();
+    if (campaign) payload.campaign = campaign;
+    return payload;
+  }}
   async function copyShareText(text, button) {{
     const originalText = button.textContent;
     const mark = (label) => {{
@@ -7476,8 +7535,9 @@ def quiz_script(lang: str) -> str:
       slug: result.slug
     }};
     try {{
-      localStorage.setItem(storageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
-      localStorage.setItem(sharedStorageKey, JSON.stringify({{ primaryKey, savedAt: new Date().toISOString() }}));
+      const savedPayload = savedResultPayload(primaryKey);
+      localStorage.setItem(storageKey, JSON.stringify(savedPayload));
+      localStorage.setItem(sharedStorageKey, JSON.stringify(savedPayload));
       window.lovetypesRecordFunnelEvent?.('quiz_completed', result.slug);
     }} catch (error) {{}}
     resultBox.innerHTML = `

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-06-12",
+  "updated": "2026-06-13",
   "contact": "contact@lovetypes.tw",
   "production": "https://lovetypes.tw/",
   "description": "Machine-readable LoveTypes catalog for free guardian keepsakes, owned supply requests, affiliate books, and Luna Gumroad packs.",

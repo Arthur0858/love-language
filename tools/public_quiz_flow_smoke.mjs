@@ -39,8 +39,19 @@ async function browserLaunchOptions() {
 }
 
 const BASE_URL = process.env.BASE_URL || 'https://lovetypes.tw';
+const ATTRIBUTION_QUERY = '?utm_source=youtube&utm_medium=shorts&utm_campaign=first_round_quiz_completion&utm_content=iris_silence';
 const CASES = [
-  { name: 'quiz-flow-zh-desktop', path: '/', viewport: { width: 1280, height: 900 } },
+  {
+    name: 'quiz-flow-zh-desktop',
+    path: `/${ATTRIBUTION_QUERY}`,
+    viewport: { width: 1280, height: 900 },
+    expectedCampaign: {
+      utm_source: 'youtube',
+      utm_medium: 'shorts',
+      utm_campaign: 'first_round_quiz_completion',
+      utm_content: 'iris_silence',
+    },
+  },
   { name: 'quiz-flow-zh-mobile', path: '/', viewport: { width: 390, height: 844 } },
   { name: 'quiz-flow-en-mobile', path: '/en/', viewport: { width: 390, height: 844 } },
   { name: 'quiz-flow-ja-mobile', path: '/ja/', viewport: { width: 390, height: 844 } },
@@ -57,7 +68,6 @@ function hasBlockingConsoleMessage(message) {
 }
 
 async function completeQuiz(page) {
-  await page.evaluate(() => localStorage.clear());
   await page.locator('[data-quiz-start]').first().click();
   for (let index = 0; index < 15; index += 1) {
     await page.locator('.quiz-option').first().click();
@@ -104,6 +114,21 @@ async function runCase(browser, item) {
   const keepsakeHref = await page.locator('[data-conversion-keepsake]').first().getAttribute('href').catch(() => '');
   const bookHref = await page.locator('[data-conversion-book]').first().getAttribute('href').catch(() => '');
   const bookRel = await page.locator('[data-conversion-book]').first().getAttribute('rel').catch(() => '');
+  const savedResult = await page.evaluate(() => {
+    const candidates = [
+      'lovetypes:zh:quiz-result',
+      `lovetypes:${location.pathname}:quiz-result`,
+    ];
+    for (const key of candidates) {
+      try {
+        const value = JSON.parse(localStorage.getItem(key) || 'null');
+        if (value?.primaryKey) return value;
+      } catch {
+        // Continue checking the next key.
+      }
+    }
+    return null;
+  });
   const disclosureVisible = await page.locator('.quiz-supply-card .affiliate-disclosure').first().isVisible().catch(() => false);
   const supplyPassVisible = await page.locator('[data-supply-pass]').first().isVisible().catch(() => false);
   await page.evaluate(() => {
@@ -134,6 +159,16 @@ async function runCase(browser, item) {
   if (!supplyPassVisible) issues.push('guardian supply pass is not visible in result');
   if (funnelEvent?.name !== 'quiz_result_supply_route') issues.push(`funnel event missing quiz_result_supply_route: ${JSON.stringify(funnelEvent)}`);
   if (funnelEvent?.path !== new URL(makeUrl(item.path)).pathname) issues.push(`funnel event path mismatch: ${JSON.stringify(funnelEvent)}`);
+  if (item.expectedCampaign) {
+    for (const [key, value] of Object.entries(item.expectedCampaign)) {
+      if (savedResult?.campaign?.[key] !== value) {
+        issues.push(`saved quiz attribution missing ${key}=${value}: ${JSON.stringify(savedResult?.campaign || null)}`);
+      }
+      if (funnelEvent?.campaign?.[key] !== value) {
+        issues.push(`funnel attribution missing ${key}=${value}: ${JSON.stringify(funnelEvent?.campaign || null)}`);
+      }
+    }
+  }
   if (horizontalOverflow) issues.push('horizontal overflow');
   for (const message of consoleErrors) issues.push(`console error: ${message}`);
   for (const message of pageErrors) issues.push(`page error: ${message}`);
@@ -143,6 +178,7 @@ async function runCase(browser, item) {
     resultName,
     ctasChecked: 6,
     funnelEventsChecked: funnelEvent ? 1 : 0,
+    attributionsChecked: item.expectedCampaign ? Object.keys(item.expectedCampaign).length * 2 : 0,
     affiliateLinksChecked: bookHref ? 1 : 0,
     disclosuresChecked: disclosureVisible ? 1 : 0,
     issues,
@@ -166,6 +202,7 @@ console.log(`public_quiz_flow_cases_checked=${results.length}`);
 console.log(`public_quiz_flow_results_checked=${results.filter((result) => result.resultName).length}`);
 console.log(`public_quiz_flow_ctas_checked=${results.reduce((sum, result) => sum + result.ctasChecked, 0)}`);
 console.log(`public_quiz_flow_funnel_events_checked=${results.reduce((sum, result) => sum + result.funnelEventsChecked, 0)}`);
+console.log(`public_quiz_flow_attributions_checked=${results.reduce((sum, result) => sum + result.attributionsChecked, 0)}`);
 console.log(`public_quiz_flow_affiliate_links_checked=${results.reduce((sum, result) => sum + result.affiliateLinksChecked, 0)}`);
 console.log(`public_quiz_flow_disclosures_checked=${results.reduce((sum, result) => sum + result.disclosuresChecked, 0)}`);
 console.log(`public_quiz_flow_issues=${issues.length}`);

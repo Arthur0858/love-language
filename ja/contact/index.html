@@ -38,7 +38,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260612-campaign-landing.css" />
+  <link rel="stylesheet" href="/shared-20260613-quiz-attribution.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
@@ -53,7 +53,7 @@
 </header>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://lovetypes.tw/#organization","name":"LoveTypes","url":"https://lovetypes.tw/","logo":"https://lovetypes.tw/apple-touch-icon.png","email":"contact@lovetypes.tw","sameAs":["https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"],"description":"LoveTypes は五つの愛の言語を地図にした心語の庭です。五人の感情の守護者、状況型の内省、実用的なガイドを通じて、愛される入口、すれ違いの傷、次に言える言葉を見つけます。","knowsAbout":["Five love languages","Relationship repair","Guardian personality quiz","Luna yoga music"],"contactPoint":{"@type":"ContactPoint","email":"contact@lovetypes.tw","contactType":"content corrections and privacy inquiries","availableLanguage":["zh-TW","en","ja","ko","es"]},"publishingPrinciples":"https://lovetypes.tw/ja/about/","privacyPolicy":"https://lovetypes.tw/ja/privacy/"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"連絡","description":"内容修正、プライバシー、提携、または心語の庭で修復が必要なページについて LoveTypes に連絡できます。","url":"https://lovetypes.tw/ja/contact/","inLanguage":"ja","dateModified":"2026-06-12","isPartOf":{"@type":"WebSite","name":"LoveTypes","url":"https://lovetypes.tw/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"連絡","description":"内容修正、プライバシー、提携、または心語の庭で修復が必要なページについて LoveTypes に連絡できます。","url":"https://lovetypes.tw/ja/contact/","inLanguage":"ja","dateModified":"2026-06-13","isPartOf":{"@type":"WebSite","name":"LoveTypes","url":"https://lovetypes.tw/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LoveTypes 感情の守護者","item":"https://lovetypes.tw/ja/"},{"@type":"ListItem","position":2,"name":"連絡","item":"https://lovetypes.tw/ja/contact/"}]}</script>
 <nav class="breadcrumb" aria-label="パンくずリスト"><a href="/ja/">LoveTypes 感情の守護者</a><span>/</span><span aria-current="page">連絡</span></nav>
 <main id="main" tabindex="-1">
@@ -305,11 +305,11 @@
 </script>
 
 
-<script src="/quiz-data-ja-20260612-campaign-landing.js"></script>
+<script src="/quiz-data-ja-20260613-quiz-attribution.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
-  const labels = {"eyebrow": "RESULT HANDOFF", "title": "前回の結果から補給リクエストを送る", "intro": "この端末には守護者の結果が残っています。結果、補給ルート、欲しいコレクションを一つのメールに入れられます。", "subject": "LoveTypes 守護者の補給リクエスト", "send": "個別補給リクエストを送る", "copy": "個別リクエストをコピー", "copied": "コピーしました", "route": "補給ルートを見る", "card": "コレクションカードを開く", "plan": "修復プランへ戻る", "clear": "前回の結果を消す", "guardian": "私の守護者", "supply": "補給ルート", "mission": "無料の課題", "luna": "Luna の使用場面", "keepsake": "欲しいコレクション", "context": "この場面で使いたい", "keepsake_hint": "スマホ壁紙 / 7分の短い儀式 / Luna ダウンロード / 印刷コレクション"};
+  const labels = {"eyebrow": "RESULT HANDOFF", "title": "前回の結果から補給リクエストを送る", "intro": "この端末には守護者の結果が残っています。結果、補給ルート、欲しいコレクションを一つのメールに入れられます。", "subject": "LoveTypes 守護者の補給リクエスト", "send": "個別補給リクエストを送る", "copy": "個別リクエストをコピー", "copied": "コピーしました", "route": "補給ルートを見る", "card": "コレクションカードを開く", "plan": "修復プランへ戻る", "clear": "前回の結果を消す", "guardian": "私の守護者", "supply": "補給ルート", "mission": "無料の課題", "luna": "Luna の使用場面", "keepsake": "欲しいコレクション", "source": "診断の流入元", "campaign": "キャンペーン", "campaign_content": "キャンペーン内容", "context": "この場面で使いたい", "keepsake_hint": "スマホ壁紙 / 7分の短い儀式 / Luna ダウンロード / 印刷コレクション"};
   const box = document.querySelector('[data-contact-saved]');
   if (!quiz || !box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -358,12 +358,21 @@
   const saved = readSavedResult();
   if (!saved) return;
   const result = quiz.results[saved.primaryKey];
+  const campaign = saved.campaign && typeof saved.campaign === 'object' ? saved.campaign : {};
+  const campaignLines = campaign.utm_source || campaign.utm_campaign || campaign.utm_content
+    ? [
+        `${labels.source}: ${campaign.utm_source || ''}`,
+        `${labels.campaign}: ${campaign.utm_campaign || ''}`,
+        `${labels.campaign_content}: ${campaign.utm_content || ''}`
+      ]
+    : [];
   const body = [
     `${labels.guardian}: ${result.name} · ${result.type}`,
     `${labels.supply}: ${result.supplyTitle}`,
     `${labels.mission}: ${result.supplyMission}`,
     `${labels.luna}: ${result.lunaUrl}`,
     `${labels.keepsake}: ${labels.keepsake_hint}`,
+    ...campaignLines,
     `${labels.context}: `,
     '',
     `${labels.route}: ${result.resourceUrl}`,
@@ -484,7 +493,7 @@
   <p>© 2026 LoveTypes · <a href="/ja/privacy/">プライバシー</a> · <a href="/ja/terms/">利用規約</a> · <a href="/ja/contact/">連絡</a></p>
 </footer>
 
-<script src="/site-interactions-20260612-campaign-landing.js" defer></script>
+<script src="/site-interactions-20260613-quiz-attribution.js" defer></script>
 
 </body>
 </html>

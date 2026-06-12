@@ -107,6 +107,8 @@ def main() -> int:
     source_routes_checked = 0
     saved_result_sections_checked = 0
     saved_result_actions_checked = 0
+    saved_result_attribution_labels_checked = 0
+    saved_result_attribution_fields_checked = 0
     contact_quiz_data_refs_checked = 0
     funnel_summary_sections_checked = 0
     funnel_summary_actions_checked = 0
@@ -173,6 +175,18 @@ def main() -> int:
                 issues.append(f"{item.path}: saved result handoff missing {marker}")
             else:
                 saved_result_actions_checked += 1
+        handoff_labels = generator.CONTACT_RESULT_HANDOFF[item.lang]
+        for key in ("source", "campaign", "campaign_content"):
+            label = handoff_labels[key]
+            if label not in response.text:
+                issues.append(f"{item.path}: saved result handoff missing attribution label {key}")
+            else:
+                saved_result_attribution_labels_checked += 1
+        for field in ("campaign.utm_source", "campaign.utm_campaign", "campaign.utm_content"):
+            if field not in response.text:
+                issues.append(f"{item.path}: saved result handoff missing attribution field {field}")
+            else:
+                saved_result_attribution_fields_checked += 1
         expected_quiz_data = generator.QUIZ_DATA_ASSETS[item.lang]
         if expected_quiz_data not in response.text:
             issues.append(f"{item.path}: missing localized quiz data for saved result handoff")
@@ -289,6 +303,8 @@ def main() -> int:
     print(f"public_contact_source_routes_checked={source_routes_checked}")
     print(f"public_contact_saved_result_sections_checked={saved_result_sections_checked}")
     print(f"public_contact_saved_result_actions_checked={saved_result_actions_checked}")
+    print(f"public_contact_saved_result_attribution_labels_checked={saved_result_attribution_labels_checked}")
+    print(f"public_contact_saved_result_attribution_fields_checked={saved_result_attribution_fields_checked}")
     print(f"public_contact_quiz_data_refs_checked={contact_quiz_data_refs_checked}")
     print(f"public_contact_funnel_summary_sections_checked={funnel_summary_sections_checked}")
     print(f"public_contact_funnel_summary_actions_checked={funnel_summary_actions_checked}")

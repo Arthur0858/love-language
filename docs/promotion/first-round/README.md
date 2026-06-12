@@ -18,6 +18,8 @@
 - `week-1-platform-launch-brief.json` 到 `week-5-platform-launch-brief.json`: 每週平台發布簡報的機器可讀版本。
 - `revenue-decision-matrix.md`: 五守護者獲利決策矩陣，把回填數據轉成免費收藏物、自有名單、Luna、聯盟書卷或內容放大的下一步。
 - `revenue-decision-matrix.json`: 同一份決策矩陣的機器可讀版本。
+- `asset-build-backlog.md`: 五守護者可製作資產 backlog，列出故事卡、PDF、桌布、Email、短儀式、Luna、聯盟書卷與短片變體。
+- `asset-build-backlog.json`: 同一份資產 backlog 的機器可讀版本。
 - `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
@@ -82,6 +84,7 @@ python3 tools/promotion_sync_posting_queue.py
 python3 tools/promotion_publishing_status.py
 python3 tools/promotion_launch_brief.py --all
 python3 tools/promotion_revenue_decision_matrix.py
+python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
 ```
@@ -102,11 +105,14 @@ python3 tools/promotion_publishing_status.py
 
 ```bash
 python3 tools/promotion_revenue_decision_matrix.py
+python3 tools/promotion_asset_backlog.py
 python3 tools/promotion_weekly_summary.py
 node tools/build_promotion_spreadsheet.mjs
 ```
 
 `revenue-decision-matrix.md` 會把每位守護者分成五種階段：先收集訊號、放大內容變體、深化免費收藏物、建立自有名單資產、測試柔性商品承接。空資料時它會維持安全模式，不會建議調整商品或付費 CTA。
+
+`asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 
 需要只檢查不寫檔時執行：
 

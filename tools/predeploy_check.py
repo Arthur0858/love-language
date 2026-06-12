@@ -30,6 +30,7 @@ PYTHON_TOOLS = [
     "tools/promotion_publishing_status.py",
     "tools/promotion_launch_brief.py",
     "tools/promotion_revenue_decision_matrix.py",
+    "tools/promotion_asset_backlog.py",
     "tools/promotion_weekly_summary.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
@@ -137,6 +138,7 @@ def main() -> int:
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
         run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])
+        run_step("promotion asset backlog", [sys.executable, "tools/promotion_asset_backlog.py", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])

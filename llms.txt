@@ -37,6 +37,17 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Privacy policy: https://lovetypes.tw/privacy/
 - Terms: https://lovetypes.tw/terms/
 
+## AI Discovery Files
+
+- Generative answer index: /ai-discovery.json
+- Public route index: /site-index.json
+- Guardian profile index: /guardian-profiles.json
+- Commerce catalog: /commerce-catalog.json
+- Safety boundary index: /safety-index.json
+- Release manifest: /release.json
+- Site health snapshot: /site-health.json
+- Human ownership file: /humans.txt
+
 ## Guide Index
 
 - 測驗結果怎麼跟伴侶說: 把守護者結果從有趣分享，翻成對方聽得懂的真實需求。 Guardian: 艾莉絲. https://lovetypes.tw/guides/share-your-result/

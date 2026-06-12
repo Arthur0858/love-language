@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-06-12",
+  "production": "https://lovetypes.tw/",
+  "siteName": "LoveTypes",
+  "preferredLanguage": "zh-TW",
+  "availableLanguages": [
+    {
+      "id": "zh",
+      "hreflang": "zh-TW",
+      "prefix": "/",
+      "name": "繁體中文"
+    },
+    {
+      "id": "en",
+      "hreflang": "en",
+      "prefix": "en",
+      "name": "English"
+    },
+    {
+      "id": "ja",
+      "hreflang": "ja",
+      "prefix": "ja",
+      "name": "日本語"
+    },
+    {
+      "id": "ko",
+      "hreflang": "ko",
+      "prefix": "ko",
+      "name": "한국어"
+    },
+    {
+      "id": "es",
+      "hreflang": "es",
+      "prefix": "es",
+      "name": "Español"
+    }
+  ],
+  "siteType": "relationship reflection, five love languages, guardian quiz, repair practices, Luna night support, and guardian supply routes",
+  "canonicalSummary": "LoveTypes is a multilingual Heart Garden universe that helps visitors discover a five love languages guardian, then continue into personalized guides, repair tasks, keepsakes, Luna night support, and disclosed supply resources.",
+  "answerGuidance": {
+    "citeCanonicalPages": true,
+    "preferChineseNameWhenAnsweringZh": true,
+    "doNotUseAsDiagnosis": true,
+    "commercialDisclosure": "Resources may include Books.com.tw affiliate links and Luna Gumroad links. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
+    "safetyBoundary": "LoveTypes is relationship reflection and communication support only. It is not therapy, medical care, legal advice, diagnosis, or emergency support."
+  },
+  "canonicalEntities": {
+    "guardians": [
+      {
+        "slug": "iris",
+        "name": {
+          "zh": "艾莉絲",
+          "en": "Iris"
+        },
+        "loveLanguage": {
+          "zh": "肯定的言詞",
+          "en": "Words of affirmation"
+        },
+        "canonical": "https://lovetypes.tw/characters/iris/",
+        "domain": {
+          "zh": "晨曦玻璃花園",
+          "en": "Dawn-Glass Garden"
+        },
+        "bestForQuestions": [
+          "艾莉絲代表哪一種愛之語？",
+          "What LoveTypes guardian is Iris?",
+          "Which supply route should a Iris result follow?"
+        ],
+        "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy."
+      },
+      {
+        "slug": "noah",
+        "name": {
+          "zh": "諾雅",
+          "en": "Noah"
+        },
+        "loveLanguage": {
+          "zh": "優質的時光",
+          "en": "Quality time"
+        },
+        "canonical": "https://lovetypes.tw/characters/noah/",
+        "domain": {
+          "zh": "星海圖書館",
+          "en": "Star-Sea Library"
+        },
+        "bestForQuestions": [
+          "諾雅代表哪一種愛之語？",
+          "What LoveTypes guardian is Noah?",
+          "Which supply route should a Noah result follow?"
+        ],
+        "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy."
+      },
+      {
+        "slug": "vivian",
+        "name": {
+          "zh": "薇薇安",
+          "en": "Vivian"
+        },
+        "loveLanguage": {
+          "zh": "接受禮物",
+          "en": "Receiving gifts"
+        },
+        "canonical": "https://lovetypes.tw/characters/vivian/",
+        "domain": {
+          "zh": "月光記憶工坊",
+          "en": "Moonlit Memory Workshop"
+        },
+        "bestForQuestions": [
+          "薇薇安代表哪一種愛之語？",
+          "What LoveTypes guardian is Vivian?",
+          "Which supply route should a Vivian result follow?"
+        ],
+        "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy."
+      },
+      {
+        "slug": "claire",
+        "name": {
+          "zh": "克萊兒",
+          "en": "Claire"
+        },
+        "loveLanguage": {
+          "zh": "服務的行動",
+          "en": "Acts of service"
+        },
+        "canonical": "https://lovetypes.tw/characters/claire/",
+        "domain": {
+          "zh": "溫室修復間",
+          "en": "Greenhouse Repair Room"
+        },
+        "bestForQuestions": [
+          "克萊兒代表哪一種愛之語？",
+          "What LoveTypes guardian is Claire?",
+          "Which supply route should a Claire result follow?"
+        ],
+        "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy."
+      },
+      {
+        "slug": "dora",
+        "name": {
+          "zh": "朵拉",
+          "en": "Dora"
+        },
+        "loveLanguage": {
+          "zh": "身體的接觸",
+          "en": "Physical touch"
+        },
+        "canonical": "https://lovetypes.tw/characters/dora/",
+        "domain": {
+          "zh": "玫瑰金安全聖域",
+          "en": "Rose-Gold Safe Sanctuary"
+        },
+        "bestForQuestions": [
+          "朵拉代表哪一種愛之語？",
+          "What LoveTypes guardian is Dora?",
+          "Which supply route should a Dora result follow?"
+        ],
+        "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy."
+      }
+    ],
+    "coreConcepts": [
+      {
+        "id": "heart_garden",
+        "label": {
+          "zh": "心語庭園",
+          "en": "Heart Garden"
+        },
+        "canonical": "https://lovetypes.tw/about/"
+      },
+      {
+        "id": "guardian_recognition_ritual",
+        "label": {
+          "zh": "守護者認領儀式",
+          "en": "guardian recognition ritual"
+        },
+        "canonical": "https://lovetypes.tw/"
+      },
+      {
+        "id": "five_love_languages",
+        "label": {
+          "zh": "五種愛之語",
+          "en": "five love languages"
+        },
+        "canonical": "https://lovetypes.tw/theory/"
+      },
+      {
+        "id": "misfrequency_repair",
+        "label": {
+          "zh": "錯頻修復",
+          "en": "misfrequency repair"
+        },
+        "canonical": "https://lovetypes.tw/repair-plan/"
+      },
+      {
+        "id": "traveler_supplies",
+        "label": {
+          "zh": "旅人補給",
+          "en": "traveler supplies"
+        },
+        "canonical": "https://lovetypes.tw/resources/"
+      },
+      {
+        "id": "luna_night_support",
+        "label": {
+          "zh": "Luna 夜間補給",
+          "en": "Luna night support"
+        },
+        "canonical": "https://lovetypes.tw/luna-yoga-music/"
+      }
+    ]
+  },
+  "answerableQuestions": [
+    {
+      "id": "what_is_lovetypes",
+      "question": "LoveTypes 是什麼？",
+      "answerHint": "LoveTypes 是把五種愛之語轉譯成心語庭園與五位情感守護者的關係反思網站，核心入口是 15 題守護者認領儀式。",
+      "canonical": "https://lovetypes.tw/about/",
+      "supportingUrls": [
+        "https://lovetypes.tw/",
+        "https://lovetypes.tw/garden-map/",
+        "https://lovetypes.tw/theory/"
+      ]
+    },
+    {
+      "id": "find_guardian",
+      "question": "如何找到我的情感守護者？",
+      "answerHint": "從首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
+      "canonical": "https://lovetypes.tw/",
+      "supportingUrls": [
+        "https://lovetypes.tw/characters/",
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/repair-plan/"
+      ]
+    },
+    {
+      "id": "guardian_mapping",
+      "question": "五位守護者分別代表什麼愛之語？",
+      "answerHint": "Iris=肯定言詞、Noah=優質時光、Vivian=接受禮物、Claire=服務行動、Dora=身體接觸。",
+      "canonical": "https://lovetypes.tw/characters/",
+      "supportingUrls": [
+        "https://lovetypes.tw/characters/iris/",
+        "https://lovetypes.tw/characters/noah/",
+        "https://lovetypes.tw/characters/vivian/",
+        "https://lovetypes.tw/characters/claire/",
+        "https://lovetypes.tw/characters/dora/"
+      ]
+    },
+    {
+      "id": "supply_routes",
+      "question": "旅人補給站怎麼依守護者選擇資源？",
+      "answerHint": "旅人補給站以五條守護者路線整理免費任務、Luna 場景、聯盟書卷與不適合購買提醒。",
+      "canonical": "https://lovetypes.tw/resources/",
+      "supportingUrls": [
+        "https://lovetypes.tw/commerce-catalog.json",
+        "https://lovetypes.tw/safety-index.json"
+      ]
+    },
+    {
+      "id": "luna_positioning",
+      "question": "Luna Yoga Music 是什麼？",
+      "answerHint": "Luna 是夜間心語補給，適合睡前整理、衝突後冷卻與測驗後承接，不是醫療或治療服務。",
+      "canonical": "https://lovetypes.tw/luna-yoga-music/",
+      "supportingUrls": [
+        "https://lovetypes.tw/repair-plan/",
+        "https://lovetypes.tw/resources/"
+      ]
+    },
+    {
+      "id": "keepsakes",
+      "question": "LoveTypes 有哪些免費收藏物？",
+      "answerHint": "收藏室提供五位守護者的免費故事卡、練習卡與未來桌布/PDF/Luna 下載包等待清單入口。",
+      "canonical": "https://lovetypes.tw/keepsakes/",
+      "supportingUrls": [
+        "https://lovetypes.tw/characters/",
+        "https://lovetypes.tw/contact/#luna-supply-request"
+      ]
+    },
+    {
+      "id": "repair_plan",
+      "question": "錯頻修復計畫適合做什麼？",
+      "answerHint": "錯頻修復計畫提供免費練習與 7 日路線，協助把測驗結果轉成一個可做的溝通任務。",
+      "canonical": "https://lovetypes.tw/repair-plan/",
+      "supportingUrls": [
+        "https://lovetypes.tw/resources/",
+        "https://lovetypes.tw/luna-yoga-music/"
+      ]
+    },
+    {
+      "id": "commercial_disclosure",
+      "question": "LoveTypes 是否包含聯盟連結或購買入口？",
+      "answerHint": "聯盟書卷集中在旅人補給站並明確揭露，Luna 可能連到 Gumroad；購買是輔助練習，不保證關係結果。",
+      "canonical": "https://lovetypes.tw/resources/",
+      "supportingUrls": [
+        "https://lovetypes.tw/commerce-catalog.json",
+        "https://lovetypes.tw/terms/"
+      ]
+    },
+    {
+      "id": "safety_boundary",
+      "question": "LoveTypes 能取代諮商、醫療或緊急求助嗎？",
+      "answerHint": "不能。LoveTypes 只提供關係反思與溝通練習；暴力、控制、自傷或緊急危險應先尋求當地緊急與專業支援。",
+      "canonical": "https://lovetypes.tw/terms/",
+      "supportingUrls": [
+        "https://lovetypes.tw/safety-index.json",
+        "https://lovetypes.tw/privacy/",
+        "https://lovetypes.tw/contact/#site-repair-report"
+      ]
+    },
+    {
+      "id": "contact",
+      "question": "如何聯絡 LoveTypes 或申請守護者補給？",
+      "answerHint": "使用 contact@lovetypes.tw，或從聯絡頁選擇 Luna、補給願望清單、桌布/PDF/短儀式等申請情境。",
+      "canonical": "https://lovetypes.tw/contact/",
+      "supportingUrls": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/privacy/"
+      ]
+    }
+  ],
+  "priorityUrls": [
+    {
+      "url": "https://lovetypes.tw/",
+      "intent": "quiz and guardian recognition entrance",
+      "priority": 1.0
+    },
+    {
+      "url": "https://lovetypes.tw/garden-map/",
+      "intent": "human-readable Heart Garden route map",
+      "priority": 0.95
+    },
+    {
+      "url": "https://lovetypes.tw/characters/",
+      "intent": "five guardian universe overview",
+      "priority": 0.95
+    },
+    {
+      "url": "https://lovetypes.tw/resources/",
+      "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries",
+      "priority": 0.92
+    },
+    {
+      "url": "https://lovetypes.tw/repair-plan/",
+      "intent": "free misfrequency repair tasks after quiz result",
+      "priority": 0.9
+    },
+    {
+      "url": "https://lovetypes.tw/keepsakes/",
+      "intent": "free guardian keepsake lead magnet center",
+      "priority": 0.86
+    },
+    {
+      "url": "https://lovetypes.tw/luna-yoga-music/",
+      "intent": "Luna night support and Gumroad conversion page",
+      "priority": 0.86
+    },
+    {
+      "url": "https://lovetypes.tw/about/",
+      "intent": "Heart Garden and brand explanation",
+      "priority": 0.82
+    },
+    {
+      "url": "https://lovetypes.tw/theory/",
+      "intent": "five love languages theory boundary",
+      "priority": 0.8
+    },
+    {
+      "url": "https://lovetypes.tw/contact/",
+      "intent": "email support, supply request, and repair report",
+      "priority": 0.78
+    },
+    {
+      "url": "https://lovetypes.tw/terms/",
+      "intent": "safety, purchase, and non-therapy boundary",
+      "priority": 0.76
+    }
+  ],
+  "discoveryFiles": {
+    "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
+    "llms": "https://lovetypes.tw/llms.txt",
+    "siteIndex": "https://lovetypes.tw/site-index.json",
+    "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
+    "commerceCatalog": "https://lovetypes.tw/commerce-catalog.json",
+    "safetyIndex": "https://lovetypes.tw/safety-index.json",
+    "release": "https://lovetypes.tw/release.json",
+    "siteHealth": "https://lovetypes.tw/site-health.json",
+    "humans": "https://lovetypes.tw/humans.txt"
+  },
+  "sourceIndexes": {
+    "siteIndexTotals": {
+      "pages": 150,
+      "paths": 30,
+      "languages": 5,
+      "groups": {
+        "content": 80,
+        "conversion": 20,
+        "guardians": 30,
+        "home": 5,
+        "trust": 15
+      }
+    },
+    "commerceTotals": {
+      "items": 20,
+      "types": {
+        "affiliate_book": 4,
+        "free_keepsake": 5,
+        "luna_gumroad_pack": 6,
+        "owned_supply_waitlist": 5
+      },
+      "roles": {
+        "lead": 5,
+        "retention": 5,
+        "revenue": 10
+      }
+    },
+    "safetyTotals": {
+      "boundaries": 5,
+      "routes": 13,
+      "languages": 2
+    }
+  },
+  "totals": {
+    "guardians": 5,
+    "answerableQuestions": 10,
+    "priorityUrls": 11,
+    "languages": 5,
+    "discoveryFiles": 9
+  }
+}

@@ -42,6 +42,7 @@ REQUIRED_LLMS_SECTIONS = (
     "## Core Concept",
     "## Five Guardians",
     "## High-Value Pages",
+    "## AI Discovery Files",
     "## Guide Index",
     "## Commercial and Safety Boundaries",
 )
@@ -50,6 +51,7 @@ REQUIRED_LLMS_SNIPPETS = (
     "Primary language: Traditional Chinese",
     "Affiliate links are kept on the Resources page",
     "No full-site advertising script is enabled",
+    "Generative answer index: /ai-discovery.json",
     "Contact email: contact@lovetypes.tw",
 )
 REQUIRED_LLMS_HIGH_VALUE_URLS = (
@@ -817,7 +819,7 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 16,
+        "supportFiles": 17,
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -830,13 +832,13 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
         coverage_checked += 1
     support_files = data.get("supportFiles", [])
     gates = data.get("requiredGates", {})
-    if not isinstance(support_files, list) or len(support_files) != 16:
-        issues.append(f"{path}: expected 16 support files")
+    if not isinstance(support_files, list) or len(support_files) != 17:
+        issues.append(f"{path}: expected 17 support files")
     if not isinstance(gates, dict) or set(gates) != {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}:
         issues.append(f"{path}: requiredGates should list four gate names")
     indexes = data.get("primaryIndexes", {})
-    if not isinstance(indexes, dict) or len(indexes) < 8:
-        issues.append(f"{path}: primaryIndexes should list at least eight entries")
+    if not isinstance(indexes, dict) or len(indexes) < 9:
+        issues.append(f"{path}: primaryIndexes should list at least nine entries")
     return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
 
 
@@ -874,8 +876,8 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
     indexes = data.get("publicIndexes", {})
     commands = data.get("verificationCommands", [])
     outcomes = data.get("requiredOutcomes", [])
-    if not isinstance(indexes, dict) or len(indexes) != 8:
-        issues.append(f"{path}: publicIndexes should contain eight entries")
+    if not isinstance(indexes, dict) or len(indexes) != 9:
+        issues.append(f"{path}: publicIndexes should contain nine entries")
     if not isinstance(commands, list) or len(commands) != 5:
         issues.append(f"{path}: verificationCommands should contain five commands")
     if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
@@ -936,6 +938,83 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, len(boundaries), route_count, len(not_for), len(steps) if isinstance(steps, list) else 0
 
 
+def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+    path = "/ai-discovery.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("siteName") != "LoveTypes":
+        issues.append(f"{path}: siteName should be LoveTypes")
+    if data.get("preferredLanguage") != "zh-TW":
+        issues.append(f"{path}: preferredLanguage should be zh-TW")
+    guidance = data.get("answerGuidance", {})
+    if not isinstance(guidance, dict) or guidance.get("doNotUseAsDiagnosis") is not True:
+        issues.append(f"{path}: answerGuidance.doNotUseAsDiagnosis should be true")
+    for key in ("commercialDisclosure", "safetyBoundary"):
+        if not isinstance(guidance.get(key), str) or not guidance[key]:
+            issues.append(f"{path}: answerGuidance.{key} should be non-empty")
+    totals = data.get("totals", {})
+    expected_totals = {"guardians": 5, "answerableQuestions": 10, "priorityUrls": 11, "languages": 5, "discoveryFiles": 9}
+    for key, expected in expected_totals.items():
+        if not isinstance(totals, dict) or totals.get(key) != expected:
+            got = totals.get(key) if isinstance(totals, dict) else None
+            issues.append(f"{path}: totals.{key} should be {expected}, got {got!r}")
+    guardians = data.get("canonicalEntities", {}).get("guardians", []) if isinstance(data.get("canonicalEntities"), dict) else []
+    expected_guardians = {
+        "iris": "Words of affirmation",
+        "noah": "Quality time",
+        "vivian": "Receiving gifts",
+        "claire": "Acts of service",
+        "dora": "Physical touch",
+    }
+    seen = set()
+    for guardian in guardians if isinstance(guardians, list) else []:
+        if not isinstance(guardian, dict):
+            issues.append(f"{path}: guardian should be an object")
+            continue
+        slug = guardian.get("slug")
+        seen.add(slug)
+        love_language = guardian.get("loveLanguage", {}).get("en") if isinstance(guardian.get("loveLanguage"), dict) else None
+        if expected_guardians.get(slug) != love_language:
+            issues.append(f"{path}: {slug} should map to {expected_guardians.get(slug)!r}, got {love_language!r}")
+    missing = sorted(set(expected_guardians).difference(seen))
+    if missing:
+        issues.append(f"{path}: missing guardians {', '.join(missing)}")
+    questions = data.get("answerableQuestions", [])
+    if not isinstance(questions, list) or len(questions) != 10:
+        issues.append(f"{path}: answerableQuestions should include ten entries")
+    else:
+        for snippet in ("LoveTypes 是什麼？", "LoveTypes 能取代諮商、醫療或緊急求助嗎？", "LoveTypes 是否包含聯盟連結或購買入口？"):
+            if not any(isinstance(item, dict) and item.get("question") == snippet for item in questions):
+                issues.append(f"{path}: answerableQuestions missing {snippet!r}")
+    priority_urls = data.get("priorityUrls", [])
+    if not isinstance(priority_urls, list) or len(priority_urls) != 11:
+        issues.append(f"{path}: priorityUrls should include eleven entries")
+    files = data.get("discoveryFiles", {})
+    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "release", "siteHealth", "humans"}
+    if not isinstance(files, dict) or set(files) != expected_files:
+        issues.append(f"{path}: discoveryFiles should contain {sorted(expected_files)}")
+    return (
+        issues,
+        len(guardians) if isinstance(guardians, list) else 0,
+        len(questions) if isinstance(questions, list) else 0,
+        len(priority_urls) if isinstance(priority_urls, list) else 0,
+        len(files) if isinstance(files, dict) else 0,
+        len(guidance) if isinstance(guidance, dict) else 0,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -971,6 +1050,7 @@ def main() -> int:
     site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_indexes_checked = check_site_health(base_url)
     release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_outcomes_checked = check_release_info(base_url)
     safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
+    ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked = check_ai_discovery(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -983,6 +1063,7 @@ def main() -> int:
     issues.extend(site_health_issues)
     issues.extend(release_issues)
     issues.extend(safety_index_issues)
+    issues.extend(ai_discovery_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -1030,6 +1111,11 @@ def main() -> int:
     print(f"public_discovery_safety_index_routes_checked={safety_index_routes_checked}")
     print(f"public_discovery_safety_index_not_for_checked={safety_index_not_for_checked}")
     print(f"public_discovery_safety_index_steps_checked={safety_index_steps_checked}")
+    print(f"public_discovery_ai_guardians_checked={ai_discovery_guardians_checked}")
+    print(f"public_discovery_ai_questions_checked={ai_discovery_questions_checked}")
+    print(f"public_discovery_ai_priority_urls_checked={ai_discovery_priority_urls_checked}")
+    print(f"public_discovery_ai_discovery_files_checked={ai_discovery_discovery_files_checked}")
+    print(f"public_discovery_ai_guidance_fields_checked={ai_discovery_guidance_fields_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

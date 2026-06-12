@@ -9361,6 +9361,17 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Privacy policy: {DOMAIN}/privacy/
 - Terms: {DOMAIN}/terms/
 
+## AI Discovery Files
+
+- Generative answer index: /ai-discovery.json
+- Public route index: /site-index.json
+- Guardian profile index: /guardian-profiles.json
+- Commerce catalog: /commerce-catalog.json
+- Safety boundary index: /safety-index.json
+- Release manifest: /release.json
+- Site health snapshot: /site-health.json
+- Human ownership file: /humans.txt
+
 ## Guide Index
 
 {chr(10).join(guide_lines)}
@@ -9892,6 +9903,178 @@ def write_safety_index() -> None:
     write(ROOT / "safety-index.json", json.dumps(collect_safety_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_ai_discovery_index() -> dict:
+    site_index = collect_site_index()
+    commerce = collect_commerce_catalog()
+    guardians = collect_guardian_profiles()
+    safety = collect_safety_index()
+    guardian_entities = []
+    for guardian in guardians["guardians"]:
+        slug = guardian["slug"]
+        guardian_entities.append({
+            "slug": slug,
+            "name": guardian["name"],
+            "loveLanguage": guardian["loveLanguage"],
+            "canonical": guardian["routes"]["profile"],
+            "domain": guardian["domain"]["name"],
+            "bestForQuestions": [
+                f"{guardian['name']['zh']}代表哪一種愛之語？",
+                f"What LoveTypes guardian is {guardian['name']['en']}?",
+                f"Which supply route should a {guardian['name']['en']} result follow?",
+            ],
+            "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy.",
+        })
+
+    answerable_questions = [
+        {
+            "id": "what_is_lovetypes",
+            "question": "LoveTypes 是什麼？",
+            "answerHint": "LoveTypes 是把五種愛之語轉譯成心語庭園與五位情感守護者的關係反思網站，核心入口是 15 題守護者認領儀式。",
+            "canonical": f"{DOMAIN}/about/",
+            "supportingUrls": [f"{DOMAIN}/", f"{DOMAIN}/garden-map/", f"{DOMAIN}/theory/"],
+        },
+        {
+            "id": "find_guardian",
+            "question": "如何找到我的情感守護者？",
+            "answerHint": "從首頁完成 15 題測驗，結果會連到守護者頁、旅人補給、修復計畫、Luna 與收藏室。",
+            "canonical": f"{DOMAIN}/",
+            "supportingUrls": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"],
+        },
+        {
+            "id": "guardian_mapping",
+            "question": "五位守護者分別代表什麼愛之語？",
+            "answerHint": "Iris=肯定言詞、Noah=優質時光、Vivian=接受禮物、Claire=服務行動、Dora=身體接觸。",
+            "canonical": f"{DOMAIN}/characters/",
+            "supportingUrls": [item["canonical"] for item in guardian_entities],
+        },
+        {
+            "id": "supply_routes",
+            "question": "旅人補給站怎麼依守護者選擇資源？",
+            "answerHint": "旅人補給站以五條守護者路線整理免費任務、Luna 場景、聯盟書卷與不適合購買提醒。",
+            "canonical": f"{DOMAIN}/resources/",
+            "supportingUrls": [f"{DOMAIN}/commerce-catalog.json", f"{DOMAIN}/safety-index.json"],
+        },
+        {
+            "id": "luna_positioning",
+            "question": "Luna Yoga Music 是什麼？",
+            "answerHint": "Luna 是夜間心語補給，適合睡前整理、衝突後冷卻與測驗後承接，不是醫療或治療服務。",
+            "canonical": f"{DOMAIN}/luna-yoga-music/",
+            "supportingUrls": [f"{DOMAIN}/repair-plan/", f"{DOMAIN}/resources/"],
+        },
+        {
+            "id": "keepsakes",
+            "question": "LoveTypes 有哪些免費收藏物？",
+            "answerHint": "收藏室提供五位守護者的免費故事卡、練習卡與未來桌布/PDF/Luna 下載包等待清單入口。",
+            "canonical": f"{DOMAIN}/keepsakes/",
+            "supportingUrls": [f"{DOMAIN}/characters/", f"{DOMAIN}/contact/#luna-supply-request"],
+        },
+        {
+            "id": "repair_plan",
+            "question": "錯頻修復計畫適合做什麼？",
+            "answerHint": "錯頻修復計畫提供免費練習與 7 日路線，協助把測驗結果轉成一個可做的溝通任務。",
+            "canonical": f"{DOMAIN}/repair-plan/",
+            "supportingUrls": [f"{DOMAIN}/resources/", f"{DOMAIN}/luna-yoga-music/"],
+        },
+        {
+            "id": "commercial_disclosure",
+            "question": "LoveTypes 是否包含聯盟連結或購買入口？",
+            "answerHint": "聯盟書卷集中在旅人補給站並明確揭露，Luna 可能連到 Gumroad；購買是輔助練習，不保證關係結果。",
+            "canonical": f"{DOMAIN}/resources/",
+            "supportingUrls": [f"{DOMAIN}/commerce-catalog.json", f"{DOMAIN}/terms/"],
+        },
+        {
+            "id": "safety_boundary",
+            "question": "LoveTypes 能取代諮商、醫療或緊急求助嗎？",
+            "answerHint": "不能。LoveTypes 只提供關係反思與溝通練習；暴力、控制、自傷或緊急危險應先尋求當地緊急與專業支援。",
+            "canonical": f"{DOMAIN}/terms/",
+            "supportingUrls": [f"{DOMAIN}/safety-index.json", f"{DOMAIN}/privacy/", f"{DOMAIN}/contact/#site-repair-report"],
+        },
+        {
+            "id": "contact",
+            "question": "如何聯絡 LoveTypes 或申請守護者補給？",
+            "answerHint": f"使用 contact@lovetypes.tw，或從聯絡頁選擇 Luna、補給願望清單、桌布/PDF/短儀式等申請情境。",
+            "canonical": f"{DOMAIN}/contact/",
+            "supportingUrls": [f"{DOMAIN}/contact/#luna-supply-request", f"{DOMAIN}/privacy/"],
+        },
+    ]
+
+    priority_urls = [
+        {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
+        {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
+        {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
+        {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
+        {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},
+        {"url": f"{DOMAIN}/keepsakes/", "intent": "free guardian keepsake lead magnet center", "priority": 0.86},
+        {"url": f"{DOMAIN}/luna-yoga-music/", "intent": "Luna night support and Gumroad conversion page", "priority": 0.86},
+        {"url": f"{DOMAIN}/about/", "intent": "Heart Garden and brand explanation", "priority": 0.82},
+        {"url": f"{DOMAIN}/theory/", "intent": "five love languages theory boundary", "priority": 0.8},
+        {"url": f"{DOMAIN}/contact/", "intent": "email support, supply request, and repair report", "priority": 0.78},
+        {"url": f"{DOMAIN}/terms/", "intent": "safety, purchase, and non-therapy boundary", "priority": 0.76},
+    ]
+    discovery_files = {
+        "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
+        "llms": f"{DOMAIN}/llms.txt",
+        "siteIndex": f"{DOMAIN}/site-index.json",
+        "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
+        "commerceCatalog": f"{DOMAIN}/commerce-catalog.json",
+        "safetyIndex": f"{DOMAIN}/safety-index.json",
+        "release": f"{DOMAIN}/release.json",
+        "siteHealth": f"{DOMAIN}/site-health.json",
+        "humans": f"{DOMAIN}/humans.txt",
+    }
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "siteName": "LoveTypes",
+        "preferredLanguage": "zh-TW",
+        "availableLanguages": [
+            {"id": lang, "hreflang": cfg["code"], "prefix": cfg["prefix"] or "/", "name": cfg["name"]}
+            for lang, cfg in LANGS.items()
+        ],
+        "siteType": "relationship reflection, five love languages, guardian quiz, repair practices, Luna night support, and guardian supply routes",
+        "canonicalSummary": "LoveTypes is a multilingual Heart Garden universe that helps visitors discover a five love languages guardian, then continue into personalized guides, repair tasks, keepsakes, Luna night support, and disclosed supply resources.",
+        "answerGuidance": {
+            "citeCanonicalPages": True,
+            "preferChineseNameWhenAnsweringZh": True,
+            "doNotUseAsDiagnosis": True,
+            "commercialDisclosure": "Resources may include Books.com.tw affiliate links and Luna Gumroad links. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
+            "safetyBoundary": "LoveTypes is relationship reflection and communication support only. It is not therapy, medical care, legal advice, diagnosis, or emergency support.",
+        },
+        "canonicalEntities": {
+            "guardians": guardian_entities,
+            "coreConcepts": [
+                {"id": "heart_garden", "label": {"zh": "心語庭園", "en": "Heart Garden"}, "canonical": f"{DOMAIN}/about/"},
+                {"id": "guardian_recognition_ritual", "label": {"zh": "守護者認領儀式", "en": "guardian recognition ritual"}, "canonical": f"{DOMAIN}/"},
+                {"id": "five_love_languages", "label": {"zh": "五種愛之語", "en": "five love languages"}, "canonical": f"{DOMAIN}/theory/"},
+                {"id": "misfrequency_repair", "label": {"zh": "錯頻修復", "en": "misfrequency repair"}, "canonical": f"{DOMAIN}/repair-plan/"},
+                {"id": "traveler_supplies", "label": {"zh": "旅人補給", "en": "traveler supplies"}, "canonical": f"{DOMAIN}/resources/"},
+                {"id": "luna_night_support", "label": {"zh": "Luna 夜間補給", "en": "Luna night support"}, "canonical": f"{DOMAIN}/luna-yoga-music/"},
+            ],
+        },
+        "answerableQuestions": answerable_questions,
+        "priorityUrls": priority_urls,
+        "discoveryFiles": discovery_files,
+        "sourceIndexes": {
+            "siteIndexTotals": site_index["totals"],
+            "commerceTotals": commerce["totals"],
+            "safetyTotals": safety["totals"],
+        },
+        "totals": {
+            "guardians": len(guardian_entities),
+            "answerableQuestions": len(answerable_questions),
+            "priorityUrls": len(priority_urls),
+            "languages": len(LANGS),
+            "discoveryFiles": len(discovery_files),
+        },
+    }
+
+
+def write_ai_discovery_index() -> None:
+    write(ROOT / "ai-discovery.json", json.dumps(collect_ai_discovery_index(), ensure_ascii=False, indent=2) + "\n")
+
+
 def collect_release_info() -> dict:
     site_index = collect_site_index()
     commerce = collect_commerce_catalog()
@@ -9915,6 +10098,7 @@ def collect_release_info() -> dict:
             "coreFlows": len(site_index["coreFlows"]),
         },
         "publicIndexes": {
+            "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
             "siteHealth": f"{DOMAIN}/site-health.json",
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
@@ -9971,6 +10155,7 @@ def collect_site_health() -> dict:
         "site-index.json",
         "guardian-profiles.json",
         "safety-index.json",
+        "ai-discovery.json",
         "release.json",
         "site-health.json",
     ]
@@ -10005,6 +10190,7 @@ def collect_site_health() -> dict:
         },
         "supportFiles": support_files,
         "primaryIndexes": {
+            "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
             "safetyIndex": f"{DOMAIN}/safety-index.json",
@@ -10128,6 +10314,7 @@ https://:version.lovetypes.pages.dev/*
     write_guardian_profiles()
     write_site_index()
     write_safety_index()
+    write_ai_discovery_index()
     write_release_info()
     write_site_health()
 

@@ -151,6 +151,7 @@ GUARDIAN_PROFILES_PATH = ROOT / "guardian-profiles.json"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
 SAFETY_INDEX_PATH = ROOT / "safety-index.json"
+AI_DISCOVERY_PATH = ROOT / "ai-discovery.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -1094,6 +1095,7 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
         "## Core Concept",
         "## Five Guardians",
         "## High-Value Pages",
+        "## AI Discovery Files",
         "## Guide Index",
         "## Commercial and Safety Boundaries",
     ]
@@ -1109,6 +1111,7 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
         "relationship reflection and practical repair support": "safety positioning",
         "No full-site advertising script is enabled": "ad approval boundary",
         "Affiliate links are kept on the Resources page": "affiliate boundary",
+        "Generative answer index: /ai-discovery.json": "AI discovery index",
     }
     for snippet, label in required_snippets.items():
         stats["llms_snippets_checked"] += 1
@@ -1873,7 +1876,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 16,
+        "supportFiles": 17,
     }
     for key, expected in expected_coverage.items():
         stats["site_health_coverage_fields_checked"] += 1
@@ -1905,7 +1908,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
             if snippet not in gate_text:
                 issues.append(f"{SITE_HEALTH_PATH}: requiredGates missing snippet {snippet!r}")
     indexes = data.get("primaryIndexes")
-    if not isinstance(indexes, dict) or len(indexes) < 8:
+    if not isinstance(indexes, dict) or len(indexes) < 9:
         issues.append(f"{SITE_HEALTH_PATH}: primaryIndexes should list core public indexes")
     else:
         stats["site_health_primary_indexes_checked"] = len(indexes)
@@ -1964,7 +1967,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         else:
             stats["release_content_fields_checked"] += 1
     indexes = data.get("publicIndexes")
-    expected_indexes = {"siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "llms", "humans"}
+    expected_indexes = {"aiDiscovery", "siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "llms", "humans"}
     if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
         issues.append(f"{RELEASE_PATH}: publicIndexes should contain {sorted(expected_indexes)}")
     else:
@@ -2085,6 +2088,149 @@ def parse_safety_index(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
     if not isinstance(totals, dict) or totals.get("boundaries") != len(boundaries) or totals.get("routes") != route_count:
         issues.append(f"{SAFETY_INDEX_PATH}: totals should match boundary and route counts")
     stats["safety_index_files_checked"] = 1
+    return issues, stats
+
+
+def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not AI_DISCOVERY_PATH.exists():
+        return [f"{AI_DISCOVERY_PATH}: missing ai-discovery.json"], stats
+    try:
+        data = json.loads(AI_DISCOVERY_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{AI_DISCOVERY_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{AI_DISCOVERY_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{AI_DISCOVERY_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{AI_DISCOVERY_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{AI_DISCOVERY_PATH}: production should be {DOMAIN}/")
+    if data.get("siteName") != "LoveTypes":
+        issues.append(f"{AI_DISCOVERY_PATH}: siteName should be LoveTypes")
+    if data.get("preferredLanguage") != "zh-TW":
+        issues.append(f"{AI_DISCOVERY_PATH}: preferredLanguage should be zh-TW")
+
+    guidance = data.get("answerGuidance")
+    if not isinstance(guidance, dict):
+        issues.append(f"{AI_DISCOVERY_PATH}: answerGuidance should be an object")
+    else:
+        if guidance.get("doNotUseAsDiagnosis") is not True:
+            issues.append(f"{AI_DISCOVERY_PATH}: answerGuidance.doNotUseAsDiagnosis should be true")
+        for key in ("commercialDisclosure", "safetyBoundary"):
+            if not isinstance(guidance.get(key), str) or not guidance[key]:
+                issues.append(f"{AI_DISCOVERY_PATH}: answerGuidance.{key} should be non-empty")
+        stats["ai_discovery_guidance_fields_checked"] = len(guidance)
+
+    totals = data.get("totals")
+    expected_totals = {"guardians": 5, "answerableQuestions": 10, "priorityUrls": 11, "languages": 5, "discoveryFiles": 9}
+    if not isinstance(totals, dict):
+        issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
+    else:
+        for key, expected in expected_totals.items():
+            stats["ai_discovery_totals_checked"] += 1
+            if totals.get(key) != expected:
+                issues.append(f"{AI_DISCOVERY_PATH}: totals.{key} should be {expected}, got {totals.get(key)!r}")
+
+    entities = data.get("canonicalEntities")
+    guardians = entities.get("guardians") if isinstance(entities, dict) else None
+    if not isinstance(guardians, list) or len(guardians) != 5:
+        issues.append(f"{AI_DISCOVERY_PATH}: canonicalEntities.guardians should include five guardians")
+    else:
+        seen = set()
+        for guardian in guardians:
+            if not isinstance(guardian, dict):
+                issues.append(f"{AI_DISCOVERY_PATH}: guardian should be an object")
+                continue
+            slug = guardian.get("slug")
+            seen.add(slug)
+            stats["ai_discovery_guardians_checked"] += 1
+            expected = GENERATOR_CONFIG.GUARDIANS.get(slug) if isinstance(slug, str) else None
+            if expected is None:
+                issues.append(f"{AI_DISCOVERY_PATH}: unexpected guardian slug {slug!r}")
+                continue
+            for lang in ("zh", "en"):
+                name = guardian.get("name", {}).get(lang)
+                love_language = guardian.get("loveLanguage", {}).get(lang)
+                if name != expected[lang][0]:
+                    issues.append(f"{AI_DISCOVERY_PATH}: {slug} {lang} name mismatch")
+                if love_language != expected[lang][1]:
+                    issues.append(f"{AI_DISCOVERY_PATH}: {slug} {lang} loveLanguage mismatch")
+            canonical = guardian.get("canonical")
+            if canonical != f"{DOMAIN}/characters/{slug}/":
+                issues.append(f"{AI_DISCOVERY_PATH}: {slug} canonical should point to profile")
+        missing = set(GENERATOR_CONFIG.GUARDIANS).difference(seen)
+        if missing:
+            issues.append(f"{AI_DISCOVERY_PATH}: missing guardians {sorted(missing)}")
+
+    questions = data.get("answerableQuestions")
+    if not isinstance(questions, list) or len(questions) != 10:
+        issues.append(f"{AI_DISCOVERY_PATH}: answerableQuestions should include ten entries")
+    else:
+        seen_ids: set[str] = set()
+        for question in questions:
+            if not isinstance(question, dict):
+                issues.append(f"{AI_DISCOVERY_PATH}: answerable question should be an object")
+                continue
+            stats["ai_discovery_questions_checked"] += 1
+            question_id = question.get("id")
+            if not isinstance(question_id, str) or not question_id:
+                issues.append(f"{AI_DISCOVERY_PATH}: answerable question missing id")
+            elif question_id in seen_ids:
+                issues.append(f"{AI_DISCOVERY_PATH}: duplicate answerable question id {question_id!r}")
+            seen_ids.add(question_id)
+            for key in ("question", "answerHint", "canonical"):
+                if not isinstance(question.get(key), str) or not question[key]:
+                    issues.append(f"{AI_DISCOVERY_PATH}: {question_id} missing {key}")
+            for url in [question.get("canonical"), *(question.get("supportingUrls") or [])]:
+                if not isinstance(url, str) or not url.startswith(DOMAIN):
+                    issues.append(f"{AI_DISCOVERY_PATH}: {question_id} URL should point to {DOMAIN}: {url!r}")
+                    continue
+                target, fragment = target_for(ROOT / "index.html", url)
+                if target is None or not target.exists():
+                    issues.append(f"{AI_DISCOVERY_PATH}: {question_id} URL target missing: {url}")
+                    continue
+                if fragment and target.suffix == ".html":
+                    parser = parsers.get(target)
+                    if not parser or fragment not in parser.ids:
+                        issues.append(f"{AI_DISCOVERY_PATH}: {question_id} fragment missing: {url}")
+
+    priority_urls = data.get("priorityUrls")
+    if not isinstance(priority_urls, list) or len(priority_urls) != 11:
+        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include eleven entries")
+    else:
+        for item in priority_urls:
+            if not isinstance(item, dict):
+                issues.append(f"{AI_DISCOVERY_PATH}: priority URL should be an object")
+                continue
+            stats["ai_discovery_priority_urls_checked"] += 1
+            url = item.get("url")
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{AI_DISCOVERY_PATH}: priority URL should point to {DOMAIN}: {url!r}")
+                continue
+            target, fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{AI_DISCOVERY_PATH}: priority URL target missing: {url}")
+            if fragment:
+                issues.append(f"{AI_DISCOVERY_PATH}: priority URL should not include fragment: {url}")
+
+    files = data.get("discoveryFiles")
+    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "release", "siteHealth", "humans"}
+    if not isinstance(files, dict) or set(files) != expected_files:
+        issues.append(f"{AI_DISCOVERY_PATH}: discoveryFiles should contain {sorted(expected_files)}")
+    else:
+        stats["ai_discovery_discovery_files_checked"] = len(files)
+        for key, url in files.items():
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{AI_DISCOVERY_PATH}: discovery file {key} should point to {DOMAIN}")
+                continue
+            target, _fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{AI_DISCOVERY_PATH}: discovery file target missing: {url}")
+
+    stats["ai_discovery_files_checked"] = 1
     return issues, stats
 
 
@@ -3273,6 +3419,9 @@ def main() -> int:
     safety_index_issues, safety_index_stats = parse_safety_index(parsers)
     issues.extend(safety_index_issues)
     stats.update(safety_index_stats)
+    ai_discovery_issues, ai_discovery_stats = parse_ai_discovery_index(parsers)
+    issues.extend(ai_discovery_issues)
+    stats.update(ai_discovery_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3441,6 +3590,13 @@ def main() -> int:
     print(f"safety_index_routes_checked={stats['safety_index_routes_checked']}")
     print(f"safety_index_not_for_checked={stats['safety_index_not_for_checked']}")
     print(f"safety_index_first_steps_checked={stats['safety_index_first_steps_checked']}")
+    print(f"ai_discovery_files_checked={stats['ai_discovery_files_checked']}")
+    print(f"ai_discovery_guidance_fields_checked={stats['ai_discovery_guidance_fields_checked']}")
+    print(f"ai_discovery_totals_checked={stats['ai_discovery_totals_checked']}")
+    print(f"ai_discovery_guardians_checked={stats['ai_discovery_guardians_checked']}")
+    print(f"ai_discovery_questions_checked={stats['ai_discovery_questions_checked']}")
+    print(f"ai_discovery_priority_urls_checked={stats['ai_discovery_priority_urls_checked']}")
+    print(f"ai_discovery_discovery_files_checked={stats['ai_discovery_discovery_files_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

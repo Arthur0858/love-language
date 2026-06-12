@@ -16,6 +16,7 @@
     "coreFlows": 4
   },
   "publicIndexes": {
+    "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
     "siteHealth": "https://lovetypes.tw/site-health.json",
     "siteIndex": "https://lovetypes.tw/site-index.json",
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",

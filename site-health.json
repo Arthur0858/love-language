@@ -19,7 +19,7 @@
     "commerceRoles": 3,
     "funnelEvents": 181,
     "funnelTrackedOccurrences": 3568,
-    "supportFiles": 16
+    "supportFiles": 17
   },
   "requiredGates": {
     "localPredeploy": "tools/predeploy_check.py must report predeploy_checks=ok and issues=0 before deployment.",
@@ -42,10 +42,12 @@
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",
+    "ai-discovery.json",
     "release.json",
     "site-health.json"
   ],
   "primaryIndexes": {
+    "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
     "siteIndex": "https://lovetypes.tw/site-index.json",
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
     "safetyIndex": "https://lovetypes.tw/safety-index.json",

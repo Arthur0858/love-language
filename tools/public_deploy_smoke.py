@@ -314,7 +314,7 @@ SUPPORT_FILES = {
         '"indexablePages": 150',
         '"guardians": 5',
         '"commerceItems": 20',
-        '"supportFiles": 16',
+        '"supportFiles": 17',
         '"localPredeploy"',
         '"publicDiscovery"',
         '"publicDeploy"',
@@ -341,6 +341,18 @@ SUPPORT_FILES = {
         '"external_store_boundary"',
         '"emergency support"',
         '"coercive purchase pressure"',
+    ],
+    "/ai-discovery.json": [
+        '"schemaVersion": 1',
+        '"siteName": "LoveTypes"',
+        '"preferredLanguage": "zh-TW"',
+        '"doNotUseAsDiagnosis": true',
+        '"answerableQuestions"',
+        '"LoveTypes 是什麼？"',
+        '"guardian_mapping"',
+        '"commercialDisclosure"',
+        '"safetyBoundary"',
+        '"aiDiscovery"',
     ],
 }
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"

@@ -10320,12 +10320,13 @@ def collect_promotion_kit() -> dict:
     tasks = []
     for campaign in campaigns:
         script = scripts_by_id.get(campaign["scriptId"], {})
+        guardian_id = campaign["guardianId"]
         tasks.append({
             "taskId": f"publish-{campaign['scriptId']}",
             "status": campaign["platformStatus"],
             "week": campaign["week"],
             "slot": campaign["slot"],
-            "guardianId": campaign["guardianId"],
+            "guardianId": guardian_id,
             "guardianName": campaign["guardianName"],
             "scriptId": campaign["scriptId"],
             "contentAngle": campaign["contentAngle"],
@@ -10338,6 +10339,15 @@ def collect_promotion_kit() -> dict:
             "trackedUrl": campaign["trackedUrl"],
             "utmCampaign": campaign["utmCampaign"],
             "utmContent": campaign["utmContent"],
+            "conversionPath": {
+                "quizEntry": f"{DOMAIN}/start/",
+                "guardianProfile": f"{DOMAIN}/characters/{guardian_id}/",
+                "supplyRoute": f"{DOMAIN}/resources/#supply-{guardian_id}",
+                "repairPlan": f"{DOMAIN}/repair-plan/#plan-{guardian_id}",
+                "lunaScene": f"{DOMAIN}/luna-yoga-music/#luna-{guardian_id}",
+                "keepsake": f"{DOMAIN}/keepsakes/#keepsake-{guardian_id}",
+                "contactRequest": f"{DOMAIN}/contact/#luna-supply-request",
+            },
             "publishChecklist": [
                 "Use the trackedUrl in the caption or profile link.",
                 "Keep one CTA: complete the 15-question quiz.",

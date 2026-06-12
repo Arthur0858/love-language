@@ -154,6 +154,23 @@ def main() -> int:
             issues.append(f"{source}: subtitleLines should include at least five lines")
         if not isinstance(task.get("visualSuggestions"), list) or len(task["visualSuggestions"]) < 2:
             issues.append(f"{source}: visualSuggestions should include at least two items")
+        conversion_path = task.get("conversionPath")
+        if not isinstance(conversion_path, dict):
+            issues.append(f"{source}: conversionPath should be an object")
+            conversion_path = {}
+        guardian_id = task.get("guardianId")
+        expected_paths = {
+            "quizEntry": "https://lovetypes.tw/start/",
+            "guardianProfile": f"https://lovetypes.tw/characters/{guardian_id}/",
+            "supplyRoute": f"https://lovetypes.tw/resources/#supply-{guardian_id}",
+            "repairPlan": f"https://lovetypes.tw/repair-plan/#plan-{guardian_id}",
+            "lunaScene": f"https://lovetypes.tw/luna-yoga-music/#luna-{guardian_id}",
+            "keepsake": f"https://lovetypes.tw/keepsakes/#keepsake-{guardian_id}",
+            "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request",
+        }
+        for key, expected_value in expected_paths.items():
+            if conversion_path.get(key) != expected_value:
+                issues.append(f"{source}: conversionPath.{key} should be {expected_value}")
         checklist = task.get("publishChecklist")
         if not isinstance(checklist, list) or len(checklist) < 4:
             issues.append(f"{source}: publishChecklist should include four guardrails")

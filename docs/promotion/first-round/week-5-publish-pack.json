@@ -1,0 +1,253 @@
+{
+  "generatedAt": "2026-06-13",
+  "campaign": "first_round_quiz_completion",
+  "week": 5,
+  "taskCount": 3,
+  "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+  "publishingRules": [
+    "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
+    "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
+    "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
+    "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。"
+  ],
+  "tasks": [
+    {
+      "taskId": "publish-lt-s13-dora-distance",
+      "week": 5,
+      "slot": 1,
+      "status": "planned",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "scriptId": "lt-s13-dora-distance",
+      "contentAngle": "情感錯頻情境",
+      "title": "你不是太黏，你只是用身體最先感覺到距離",
+      "hook": "有些不安不是想太多，是身體先發現對方退後了。",
+      "caption": "有些不安不是想太多，是身體先發現對方退後了。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance\n\n留言 A/B/C，哪一種靠近最能讓你安心？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
+      "utmContent": "dora_distance",
+      "subtitleLines": [
+        "吵架後他離你很遠。",
+        "你嘴上說沒事，",
+        "身體卻先緊起來。",
+        "你最需要哪一種靠近？",
+        "A：牽手。",
+        "B：擁抱。",
+        "C：肩靠肩坐著。",
+        "朵拉守護的不是佔有。",
+        "是同意裡的安心。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "玫瑰金聖域裡兩個剪影保持距離，暖光慢慢靠近。",
+        "手部特寫，但避免壓迫感。",
+        "字幕柔和，音樂低噪。"
+      ],
+      "commentCta": "留言 A/B/C，哪一種靠近最能讓你安心？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/dora/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-dora",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-dora",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s13-dora-distance",
+        "guardian_id": "dora",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "距離與擁抱需求"
+      }
+    },
+    {
+      "taskId": "publish-lt-s14-dora-consent",
+      "week": 5,
+      "slot": 2,
+      "status": "planned",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "scriptId": "lt-s14-dora-consent",
+      "contentAngle": "守護者人格認同",
+      "title": "真正溫柔的靠近，會先問你願不願意",
+      "hook": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。",
+      "caption": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent\n\n留言 A/B/C，你最想聽見哪一句安全靠近？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent",
+      "utmContent": "dora_consent",
+      "subtitleLines": [
+        "哪一句話最讓你放鬆？",
+        "A：我現在可以抱你嗎？",
+        "B：如果不行，我可以坐旁邊。",
+        "C：你想靠近一點，還是先休息？",
+        "朵拉的聖域裡，",
+        "每一次靠近都需要被允許。",
+        "愛不是闖進來。",
+        "愛是讓你有選擇。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "三句安全靠近句浮現在柔軟布料與暖光上。",
+        "門微微打開，但不直接闖入。",
+        "畫面強調界線、同意、溫度。"
+      ],
+      "commentCta": "留言 A/B/C，你最想聽見哪一句安全靠近？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/dora/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-dora",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-dora",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s14-dora-consent",
+        "guardian_id": "dora",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "強化同意與界線"
+      }
+    },
+    {
+      "taskId": "publish-lt-s15-dora-after-conflict",
+      "week": 5,
+      "slot": 3,
+      "status": "planned",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "scriptId": "lt-s15-dora-after-conflict",
+      "contentAngle": "測驗入口",
+      "title": "吵架後，你需要多久才能重新靠近？",
+      "hook": "有些人不是不想和好，而是身體還沒感覺安全。",
+      "caption": "有些人不是不想和好，而是身體還沒感覺安全。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict\n\n留言 A/B/C，吵架後你是哪一種靠近節奏？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict",
+      "utmContent": "dora_after_conflict",
+      "subtitleLines": [
+        "吵完架之後，",
+        "你比較像哪一種？",
+        "A：想立刻抱一下確認還在。",
+        "B：需要冷靜，但不想被丟下。",
+        "C：可以靠近，但要慢慢來。",
+        "朵拉不會逼你立刻沒事。",
+        "她會先確認節奏。",
+        "讓身體重新相信安全。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "玫瑰金光線從遠到近，兩個人之間保留清楚界線。",
+        "A/B/C 選項像三段距離標記。",
+        "最後用柔光帶出測驗入口。"
+      ],
+      "commentCta": "留言 A/B/C，吵架後你是哪一種靠近節奏？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/dora/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-dora",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-dora",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-dora",
+        "ownedLeadItemId": "supply-wishlist-dora",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s15-dora-after-conflict",
+        "guardian_id": "dora",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "衝突後冷卻與重新靠近"
+      }
+    }
+  ]
+}

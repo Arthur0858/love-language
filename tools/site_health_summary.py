@@ -661,6 +661,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "funnel_event_categories_checked",
         "funnel_event_roles_checked",
         "promotion_publish_pack_week",
+        "promotion_publish_pack_weeks",
         "promotion_publish_pack_tasks",
         "promotion_publish_pack_issues",
         "promotion_weekly_summary_tracker_rows",

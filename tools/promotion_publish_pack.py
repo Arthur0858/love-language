@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_WEEK = 1
+DEFAULT_WEEKS = [1, 2, 3, 4, 5]
 HASHTAGS = ["#五種愛之語測驗", "#情感守護者", "#心語庭園", "#錯頻修復", "#LoveTypes"]
 KPI_FIELDS = [
     "date",
@@ -185,52 +186,132 @@ def build_markdown(pack: dict) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def build_index(packs: list[dict]) -> dict:
+    return {
+        "generatedAt": date.today().isoformat(),
+        "campaign": "first_round_quiz_completion",
+        "weekCount": len(packs),
+        "taskCount": sum(pack["taskCount"] for pack in packs),
+        "weeks": [
+            {
+                "week": pack["week"],
+                "taskCount": pack["taskCount"],
+                "markdown": f"week-{pack['week']}-publish-pack.md",
+                "json": f"week-{pack['week']}-publish-pack.json",
+                "guardians": [task.get("guardianId") for task in pack["tasks"]],
+                "taskIds": [task.get("taskId") for task in pack["tasks"]],
+            }
+            for pack in packs
+        ],
+    }
+
+
+def build_index_markdown(index: dict) -> str:
+    lines = [
+        "# LoveTypes 第一輪發布包索引",
+        "",
+        f"- 產生日期：{index['generatedAt']}",
+        f"- 週數：{index['weekCount']}",
+        f"- 任務數：{index['taskCount']}",
+        "",
+        "## Weeks",
+        "",
+    ]
+    for week in index["weeks"]:
+        lines.extend([
+            f"### Week {week['week']}",
+            "",
+            f"- 任務數：{week['taskCount']}",
+            f"- Markdown：`{week['markdown']}`",
+            f"- JSON：`{week['json']}`",
+            f"- 守護者：{', '.join(week['guardians'])}",
+            f"- 任務：{', '.join(week['taskIds'])}",
+            "",
+        ])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def validate_pack(pack: dict, week: int) -> list[str]:
+    issues = []
+    if pack["taskCount"] != 3:
+        issues.append(f"expected 3 tasks for week {week}, got {pack['taskCount']}")
+    for task in pack["tasks"]:
+        if not task.get("trackedUrl") or "utm_content=" not in task["trackedUrl"]:
+            issues.append(f"{task.get('taskId')}: missing trackedUrl UTM content")
+        if not task.get("caption") or task.get("trackedUrl") not in task.get("caption", ""):
+            issues.append(f"{task.get('taskId')}: caption should include trackedUrl")
+        bridge = task.get("monetizationBridge", {})
+        if not bridge.get("primaryFreeItemId") or not bridge.get("ownedLeadItemId"):
+            issues.append(f"{task.get('taskId')}: missing monetization bridge items")
+        if not task.get("kpiRowTemplate", {}).get("script_id"):
+            issues.append(f"{task.get('taskId')}: missing KPI row template")
+    markdown = build_markdown(pack)
+    if not markdown.startswith(f"# LoveTypes 第一輪 Week {week} 發布包"):
+        issues.append("markdown pack missing title")
+    return issues
+
+
+def write_pack(pack: dict, output: Path, json_output: Path) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    json_output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(build_markdown(pack), encoding="utf-8")
+    json_output.write_text(json.dumps(pack, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate a LoveTypes weekly Shorts publishing pack.")
     parser.add_argument("--kit", default=str(KIT_PATH))
     parser.add_argument("--week", type=int, default=DEFAULT_WEEK)
+    parser.add_argument("--all", action="store_true", help="Generate or validate all first-round weekly packs.")
     parser.add_argument("--output", default="")
     parser.add_argument("--json-output", default="")
     parser.add_argument("--check", action="store_true", help="Validate the selected week pack without writing files.")
     parser.add_argument("--stdout", action="store_true")
     args = parser.parse_args()
 
-    pack = build_pack(load_tasks(Path(args.kit)), args.week)
+    tasks = load_tasks(Path(args.kit))
+    weeks = DEFAULT_WEEKS if args.all else [args.week]
+    packs = [build_pack(tasks, week) for week in weeks]
+    pack = packs[0]
     markdown = build_markdown(pack)
     if args.check:
         issues = []
-        if pack["taskCount"] != 3:
-            issues.append(f"expected 3 tasks for week {args.week}, got {pack['taskCount']}")
-        for task in pack["tasks"]:
-            if not task.get("trackedUrl") or "utm_content=" not in task["trackedUrl"]:
-                issues.append(f"{task.get('taskId')}: missing trackedUrl UTM content")
-            if not task.get("caption") or task.get("trackedUrl") not in task.get("caption", ""):
-                issues.append(f"{task.get('taskId')}: caption should include trackedUrl")
-            bridge = task.get("monetizationBridge", {})
-            if not bridge.get("primaryFreeItemId") or not bridge.get("ownedLeadItemId"):
-                issues.append(f"{task.get('taskId')}: missing monetization bridge items")
-            if not task.get("kpiRowTemplate", {}).get("script_id"):
-                issues.append(f"{task.get('taskId')}: missing KPI row template")
-        if not markdown.startswith(f"# LoveTypes 第一輪 Week {args.week} 發布包"):
-            issues.append("markdown pack missing title")
-        print(f"promotion_publish_pack_week={args.week}")
-        print(f"promotion_publish_pack_tasks={pack['taskCount']}")
+        for candidate in packs:
+            issues.extend(validate_pack(candidate, int(candidate["week"])))
+        print(f"promotion_publish_pack_week={'all' if args.all else args.week}")
+        print(f"promotion_publish_pack_weeks={len(packs)}")
+        print(f"promotion_publish_pack_tasks={sum(candidate['taskCount'] for candidate in packs)}")
         print(f"promotion_publish_pack_issues={len(issues)}")
         for issue in issues:
             print(issue)
         return 1 if issues else 0
     elif args.stdout:
+        if args.all:
+            print(build_index_markdown(build_index(packs)), end="")
+            return 0
         print(markdown, end="")
     else:
-        output = Path(args.output) if args.output else PROMOTION_DIR / f"week-{args.week}-publish-pack.md"
-        json_output = Path(args.json_output) if args.json_output else PROMOTION_DIR / f"week-{args.week}-publish-pack.json"
-        output.parent.mkdir(parents=True, exist_ok=True)
-        json_output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(markdown, encoding="utf-8")
-        json_output.write_text(json.dumps(pack, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"promotion_publish_pack={output}")
-        print(f"promotion_publish_pack_json={json_output}")
-        print(f"promotion_publish_pack_tasks={pack['taskCount']}")
+        if args.all:
+            for candidate in packs:
+                output = PROMOTION_DIR / f"week-{candidate['week']}-publish-pack.md"
+                json_output = PROMOTION_DIR / f"week-{candidate['week']}-publish-pack.json"
+                write_pack(candidate, output, json_output)
+            index = build_index(packs)
+            index_output = PROMOTION_DIR / "publish-pack-index.md"
+            index_json_output = PROMOTION_DIR / "publish-pack-index.json"
+            index_output.write_text(build_index_markdown(index), encoding="utf-8")
+            index_json_output.write_text(json.dumps(index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print(f"promotion_publish_pack_index={index_output}")
+            print(f"promotion_publish_pack_index_json={index_json_output}")
+            print(f"promotion_publish_pack_weeks={len(packs)}")
+            print(f"promotion_publish_pack_tasks={index['taskCount']}")
+        else:
+            output = Path(args.output) if args.output else PROMOTION_DIR / f"week-{args.week}-publish-pack.md"
+            json_output = Path(args.json_output) if args.json_output else PROMOTION_DIR / f"week-{args.week}-publish-pack.json"
+            write_pack(pack, output, json_output)
+            print(f"promotion_publish_pack={output}")
+            print(f"promotion_publish_pack_json={json_output}")
+            print(f"promotion_publish_pack_tasks={pack['taskCount']}")
     return 0
 
 

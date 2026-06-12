@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-06-13",
+  "campaign": "first_round_quiz_completion",
+  "week": 3,
+  "taskCount": 3,
+  "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+  "publishingRules": [
+    "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
+    "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
+    "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
+    "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。"
+  ],
+  "tasks": [
+    {
+      "taskId": "publish-lt-s07-vivian-remembered",
+      "week": 3,
+      "slot": 1,
+      "status": "planned",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "scriptId": "lt-s07-vivian-remembered",
+      "contentAngle": "情感錯頻情境",
+      "title": "你在乎的真的是禮物嗎？",
+      "hook": "你不是物質，你只是想知道自己有沒有被放在心上。",
+      "caption": "你不是物質，你只是想知道自己有沒有被放在心上。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered\n\n留言 A/B/C，哪一種小心意最能打動你？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered",
+      "utmContent": "vivian_remembered",
+      "subtitleLines": [
+        "有些禮物不貴，",
+        "但會讓你記很久。",
+        "A：他記得你喜歡的甜度。",
+        "B：他留下你們的票根。",
+        "C：他在普通日子準備一張卡。",
+        "薇薇安收藏的不是價格。",
+        "是被想起的證據。",
+        "如果這讓你心動，",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "月光記憶工坊桌面擺著飲料、票根、手寫卡。",
+        "三件小物依序發光。",
+        "緞帶與金色粉塵作為轉場。"
+      ],
+      "commentCta": "留言 A/B/C，哪一種小心意最能打動你？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/vivian/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-vivian",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-vivian",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s07-vivian-remembered",
+        "guardian_id": "vivian",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "釐清禮物不等於物質"
+      }
+    },
+    {
+      "taskId": "publish-lt-s08-vivian-forgotten-date",
+      "week": 3,
+      "slot": 2,
+      "status": "planned",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "scriptId": "lt-s08-vivian-forgotten-date",
+      "contentAngle": "守護者人格認同",
+      "title": "重要日子被忘記，你最痛的是哪裡？",
+      "hook": "那一天不是日期而已，是你想確認自己有沒有被記得。",
+      "caption": "那一天不是日期而已，是你想確認自己有沒有被記得。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date\n\n留言 A/B/C，或寫下一個你希望被記得的日子。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date",
+      "utmContent": "vivian_forgotten_date",
+      "subtitleLines": [
+        "他忘了那個日子。",
+        "你表面說沒關係。",
+        "但心裡其實在想，",
+        "A：原來只有我記得。",
+        "B：是不是我太在意了。",
+        "C：他真的有把我放在心上嗎？",
+        "薇薇安不會笑你重視儀式感。",
+        "她知道那是心意的證據。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "月曆日期被月光圈起，旁邊有未拆的小盒子。",
+        "畫面從冷色轉為古董玫瑰金。",
+        "字幕保留停頓，讓觀眾代入。"
+      ],
+      "commentCta": "留言 A/B/C，或寫下一個你希望被記得的日子。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/vivian/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-vivian",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-vivian",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s08-vivian-forgotten-date",
+        "guardian_id": "vivian",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "節日/紀念日題材可配合日期"
+      }
+    },
+    {
+      "taskId": "publish-lt-s09-vivian-ritual",
+      "week": 3,
+      "slot": 3,
+      "status": "planned",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "scriptId": "lt-s09-vivian-ritual",
+      "contentAngle": "測驗入口",
+      "title": "你的戀愛儀式感是哪一種？",
+      "hook": "有些人把愛藏在細節裡，等你發現自己被記得。",
+      "caption": "有些人把愛藏在細節裡，等你發現自己被記得。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual\n\n留言 A/B/C，薇薇安會替你把那份心意歸檔。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual",
+      "utmContent": "vivian_ritual",
+      "subtitleLines": [
+        "如果愛可以被收藏，",
+        "你最想留下哪一種？",
+        "A：一起去過的地方。",
+        "B：對方偷偷記下的小喜好。",
+        "C：只有你們懂的紀念物。",
+        "薇薇安會把這些放進月光工坊。",
+        "不是為了比較。",
+        "是為了證明你曾被珍惜。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "工坊抽屜打開，旅行票根、便條、小盒子漂浮。",
+        "三個選項像收藏標籤一樣出現。",
+        "畫面可加入輕微拆禮物音效。"
+      ],
+      "commentCta": "留言 A/B/C，薇薇安會替你把那份心意歸檔。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/vivian/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-vivian",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-vivian",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-vivian",
+        "ownedLeadItemId": "supply-wishlist-vivian",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s09-vivian-ritual",
+        "guardian_id": "vivian",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "引導留言心意收藏"
+      }
+    }
+  ]
+}

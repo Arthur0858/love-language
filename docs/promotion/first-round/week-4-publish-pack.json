@@ -1,0 +1,253 @@
+{
+  "generatedAt": "2026-06-13",
+  "campaign": "first_round_quiz_completion",
+  "week": 4,
+  "taskCount": 3,
+  "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+  "publishingRules": [
+    "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
+    "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
+    "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
+    "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。"
+  ],
+  "tasks": [
+    {
+      "taskId": "publish-lt-s10-claire-tired",
+      "week": 4,
+      "slot": 1,
+      "status": "planned",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "scriptId": "lt-s10-claire-tired",
+      "contentAngle": "情感錯頻情境",
+      "title": "你不是愛計較，你只是太久沒人主動幫你",
+      "hook": "如果每一次都是你收拾，那不是成熟，是失衡。",
+      "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
+      "utmContent": "claire_tired",
+      "subtitleLines": [
+        "你是不是常說沒事？",
+        "但其實已經很累了。",
+        "你最希望有人做哪一件事？",
+        "A：主動分擔，不要等我開口。",
+        "B：說到做到，不要只答應。",
+        "C：看見我累了，先接住一部分。",
+        "克萊兒守護的愛，",
+        "會落在日常行動裡。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "溫室修復間裡一盞工作燈亮起，待辦清單逐項被完成。",
+        "破裂花盆被修好，象徵被分擔。",
+        "色調用苔綠、暖白、柔光。"
+      ],
+      "commentCta": "留言 A/B/C，你最希望有人替你分擔哪一件事？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/claire/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-claire",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-claire",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s10-claire-tired",
+        "guardian_id": "claire",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "照顧者疲憊痛點"
+      }
+    },
+    {
+      "taskId": "publish-lt-s11-claire-promises",
+      "week": 4,
+      "slot": 2,
+      "status": "planned",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "scriptId": "lt-s11-claire-promises",
+      "contentAngle": "守護者人格認同",
+      "title": "他說會改，卻一直沒有行動",
+      "hook": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。",
+      "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
+      "utmContent": "claire_promises",
+      "subtitleLines": [
+        "一句我會改，",
+        "如果沒有下一步，",
+        "你會慢慢不敢相信。",
+        "你最在意哪一種？",
+        "A：講完就忘。",
+        "B：永遠要我提醒。",
+        "C：道歉很多，行動很少。",
+        "克萊兒不需要華麗保證。",
+        "她需要可靠的一步。",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "承諾字卡落在溫室桌面，變成一張具體任務清單。",
+        "工具袋、便條、暖白燈作為視覺符號。",
+        "字幕節奏比其他角色更穩定、務實。"
+      ],
+      "commentCta": "留言 A/B/C，哪一種只說不做最讓你累？",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/claire/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-claire",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-claire",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s11-claire-promises",
+        "guardian_id": "claire",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "承諾落空題材"
+      }
+    },
+    {
+      "taskId": "publish-lt-s12-claire-ask-help",
+      "week": 4,
+      "slot": 3,
+      "status": "planned",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "scriptId": "lt-s12-claire-ask-help",
+      "contentAngle": "測驗入口",
+      "title": "你是不是很不習慣開口求助？",
+      "hook": "你不是不需要被照顧，你只是太習慣先照顧別人。",
+      "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
+      "utmContent": "claire_ask_help",
+      "subtitleLines": [
+        "如果你累了，",
+        "你最常怎麼做？",
+        "A：先忍一下。",
+        "B：自己做比較快。",
+        "C：怕開口會麻煩別人。",
+        "克萊兒會把這些疲憊放回溫室。",
+        "她想問你，",
+        "這一次，可不可以讓愛變成分擔？",
+        "完成 15 題測驗，找到你的情感守護者。"
+      ],
+      "visualSuggestions": [
+        "一個人整理混亂溫室，最後出現另一雙手接過工具。",
+        "A/B/C 選項像待辦卡片貼在木板上。",
+        "畫面有修復感，不要責備觀眾。"
+      ],
+      "commentCta": "留言 A/B/C，或寫下一件你其實很想被幫忙的事。",
+      "conversionPath": {
+        "quizEntry": "https://lovetypes.tw/start/",
+        "guardianProfile": "https://lovetypes.tw/characters/claire/",
+        "supplyRoute": "https://lovetypes.tw/resources/#supply-claire",
+        "repairPlan": "https://lovetypes.tw/repair-plan/#plan-claire",
+        "lunaScene": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
+        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "contactRequest": "https://lovetypes.tw/contact/#luna-supply-request"
+      },
+      "monetizationBridge": {
+        "primaryFreeItemId": "free-keepsake-claire",
+        "ownedLeadItemId": "supply-wishlist-claire",
+        "playbookSequence": [
+          "identity_retention_first",
+          "owned_supply_lead",
+          "luna_pack_revenue",
+          "affiliate_book_revenue"
+        ],
+        "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
+        "safetyNote": "Keep the CTA reflective and optional; do not imply diagnosis, therapy, guaranteed repair, or required purchase."
+      },
+      "kpiRowTemplate": {
+        "date": "",
+        "platform": "",
+        "post_url": "",
+        "script_id": "lt-s12-claire-ask-help",
+        "guardian_id": "claire",
+        "views": "",
+        "likes": "",
+        "comments": "",
+        "shares": "",
+        "profile_clicks": "",
+        "site_clicks": "",
+        "quiz_starts": "",
+        "quiz_completions": "",
+        "guardian_result_clicks": "",
+        "resources_clicks": "",
+        "repair_plan_clicks": "",
+        "luna_clicks": "",
+        "keepsake_clicks": "",
+        "free_keepsake_downloads": "",
+        "supply_lead_requests": "",
+        "luna_pack_clicks": "",
+        "affiliate_book_clicks": "",
+        "contact_requests": "",
+        "notes": "過度懂事/求助困難"
+      }
+    }
+  ]
+}

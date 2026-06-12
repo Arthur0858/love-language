@@ -82,6 +82,8 @@ def main() -> int:
         issues.append("/promotion-kit.json: primaryUrl should be the dedicated quiz start URL")
     if kit.get("scriptCount") != 15 or kit.get("campaignCount") != 15:
         issues.append("/promotion-kit.json: scriptCount and campaignCount should both be 15")
+    if kit.get("taskCount") != 15:
+        issues.append("/promotion-kit.json: taskCount should be 15")
     if kit.get("guardianCount") != 5:
         issues.append("/promotion-kit.json: guardianCount should be 5")
     kpi_fields = kit.get("kpiFields")
@@ -122,7 +124,53 @@ def main() -> int:
     if seen_guardians != EXPECTED_GUARDIANS:
         issues.append(f"/promotion-kit.json: missing guardians {sorted(EXPECTED_GUARDIANS - seen_guardians)}")
 
+    tasks = kit.get("publishingTasks")
+    if not isinstance(tasks, list) or len(tasks) != 15:
+        issues.append(f"/promotion-kit.json: expected 15 publishingTasks, got {len(tasks) if isinstance(tasks, list) else 'invalid'}")
+        tasks = []
+    task_script_ids: set[str] = set()
+    task_utm_contents: set[str] = set()
+    for index, task in enumerate(tasks, start=1):
+        source = f"/promotion-kit.json:publishingTasks[{index}]"
+        if not isinstance(task, dict):
+            issues.append(f"{source}: task should be an object")
+            continue
+        script_id = task.get("scriptId")
+        utm_content = task.get("utmContent")
+        task_script_ids.add(script_id)
+        task_utm_contents.add(utm_content)
+        if task.get("taskId") != f"publish-{script_id}":
+            issues.append(f"{source}: taskId should be publish-{script_id}")
+        if task.get("guardianId") not in EXPECTED_GUARDIANS:
+            issues.append(f"{source}: unexpected guardianId {task.get('guardianId')!r}")
+        if task.get("utmCampaign") != EXPECTED_CAMPAIGN:
+            issues.append(f"{source}: unexpected utmCampaign {task.get('utmCampaign')!r}")
+        if task.get("primaryCta") != "完成 15 題測驗，找到你的情感守護者":
+            issues.append(f"{source}: primaryCta should use the first-round CTA")
+        for key in ("title", "hook", "commentCta"):
+            if not isinstance(task.get(key), str) or not task[key]:
+                issues.append(f"{source}: missing {key}")
+        if not isinstance(task.get("subtitleLines"), list) or len(task["subtitleLines"]) < 5:
+            issues.append(f"{source}: subtitleLines should include at least five lines")
+        if not isinstance(task.get("visualSuggestions"), list) or len(task["visualSuggestions"]) < 2:
+            issues.append(f"{source}: visualSuggestions should include at least two items")
+        checklist = task.get("publishChecklist")
+        if not isinstance(checklist, list) or len(checklist) < 4:
+            issues.append(f"{source}: publishChecklist should include four guardrails")
+        kpi_task_fields = task.get("kpiFieldsToFill")
+        if not isinstance(kpi_task_fields, list) or not EXPECTED_KPI_FIELDS.issubset(kpi_task_fields):
+            issues.append(f"{source}: kpiFieldsToFill missing expected fields")
+        tracked = task.get("trackedUrl", "")
+        issues.extend(validate_tracked_url(source, tracked))
+        if utm_content and parse_qs(urlparse(tracked).query).get("utm_content", [""])[0] != utm_content:
+            issues.append(f"{source}: trackedUrl utm_content should match utmContent")
+    if task_script_ids != seen_scripts:
+        issues.append("/promotion-kit.json: publishingTasks scriptIds should match publishingCalendar")
+    if task_utm_contents != seen_contents:
+        issues.append("/promotion-kit.json: publishingTasks utmContents should match publishingCalendar")
+
     print(f"public_promotion_kit_campaigns_checked={len(calendar)}")
+    print(f"public_promotion_kit_tasks_checked={len(tasks)}")
     print(f"public_promotion_kit_guardians_checked={len(seen_guardians)}")
     print(f"public_promotion_kit_scripts_checked={len(seen_scripts)}")
     print(f"public_promotion_kit_utm_contents_checked={len(seen_contents)}")

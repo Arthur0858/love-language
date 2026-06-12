@@ -10316,6 +10316,37 @@ def collect_promotion_kit() -> dict:
     with tracker_path.open(newline="", encoding="utf-8") as handle:
         tracker_fields = next(csv.reader(handle))
     scripts = json.loads(scripts_path.read_text(encoding="utf-8"))
+    scripts_by_id = {script["id"]: script for script in scripts["scripts"]}
+    tasks = []
+    for campaign in campaigns:
+        script = scripts_by_id.get(campaign["scriptId"], {})
+        tasks.append({
+            "taskId": f"publish-{campaign['scriptId']}",
+            "status": campaign["platformStatus"],
+            "week": campaign["week"],
+            "slot": campaign["slot"],
+            "guardianId": campaign["guardianId"],
+            "guardianName": campaign["guardianName"],
+            "scriptId": campaign["scriptId"],
+            "contentAngle": campaign["contentAngle"],
+            "title": script.get("title", ""),
+            "hook": script.get("hook", ""),
+            "subtitleLines": script.get("full_subtitle_script", []),
+            "visualSuggestions": script.get("visual_suggestions", []),
+            "commentCta": script.get("comment_cta", ""),
+            "primaryCta": scripts["campaign"]["primaryCta"],
+            "trackedUrl": campaign["trackedUrl"],
+            "utmCampaign": campaign["utmCampaign"],
+            "utmContent": campaign["utmContent"],
+            "publishChecklist": [
+                "Use the trackedUrl in the caption or profile link.",
+                "Keep one CTA: complete the 15-question quiz.",
+                "Do not frame the result as diagnosis, therapy, or a guaranteed relationship outcome.",
+                "After publishing, fill kpi-tracker.csv with post_url and weekly metrics.",
+            ],
+            "kpiFieldsToFill": tracker_fields,
+            "notes": campaign["notes"],
+        })
     return {
         "generatedAt": UPDATED,
         "site": DOMAIN,
@@ -10329,8 +10360,10 @@ def collect_promotion_kit() -> dict:
         "guardianCount": 5,
         "scriptCount": len(scripts["scripts"]),
         "campaignCount": len(campaigns),
+        "taskCount": len(tasks),
         "contentRules": scripts["campaign"]["contentRules"],
         "kpiFields": tracker_fields,
+        "publishingTasks": tasks,
         "publishingCalendar": campaigns,
     }
 

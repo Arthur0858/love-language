@@ -670,6 +670,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_posting_queue_platforms",
         "promotion_posting_queue_rows",
         "promotion_posting_queue_issues",
+        "promotion_spreadsheet_sheets",
+        "promotion_spreadsheet_rendered_sheets",
         "promotion_next_actions_selected_tasks",
         "promotion_next_actions_actions",
         "promotion_next_actions_empty_data_mode",

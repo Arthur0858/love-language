@@ -154,9 +154,15 @@ async function main() {
     options: { useRegex: true, maxResults: 100 },
     summary: "formula error scan",
   });
+  let renderedSheets = 0;
+  for (const sheetName of ["Dashboard", "KPI Tracker", "Next Actions", "Data Dictionary"]) {
+    await workbook.render({ sheetName, range: "A1:H24", scale: 1 });
+    renderedSheets += 1;
+  }
   console.log(errors.ndjson);
   console.log(`promotion_spreadsheet=${OUTPUT_XLSX}`);
   console.log(`promotion_spreadsheet_sheets=4`);
+  console.log(`promotion_spreadsheet_rendered_sheets=${renderedSheets}`);
 }
 
 main().catch((error) => {

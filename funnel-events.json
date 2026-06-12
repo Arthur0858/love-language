@@ -5,8 +5,8 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 191,
-    "trackedOccurrences": 3728,
+    "events": 193,
+    "trackedOccurrences": 3748,
     "pages": 110
   },
   "events": [
@@ -2162,6 +2162,25 @@
       "pageCount": 5
     },
     {
+      "name": "quiz_completed",
+      "category": "quiz",
+      "role": "navigation",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
       "name": "quiz_luna_starter_pack_click",
       "category": "quiz",
       "role": "revenue",
@@ -2316,6 +2335,25 @@
     {
       "name": "quiz_result_supply_route",
       "category": "quiz_result",
+      "role": "navigation",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "quiz_started",
+      "category": "quiz",
       "role": "navigation",
       "count": 10,
       "pages": [

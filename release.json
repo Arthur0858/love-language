@@ -3,7 +3,7 @@
   "generatedBy": "tools/generate_multilingual_site.py",
   "updated": "2026-06-13",
   "production": "https://lovetypes.tw/",
-  "assetVersion": "20260613-quiz-attribution",
+  "assetVersion": "20260613-funnel-kpi-map",
   "deploymentTarget": "Cloudflare Pages project lovetypes",
   "branch": "main",
   "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
@@ -12,7 +12,7 @@
     "languages": 5,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 191,
+    "funnelEvents": 193,
     "coreFlows": 5
   },
   "publicIndexes": {

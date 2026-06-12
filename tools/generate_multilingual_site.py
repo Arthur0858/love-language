@@ -18,7 +18,7 @@ ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-06-13"
-ASSET_VERSION = "20260613-quiz-attribution"
+ASSET_VERSION = "20260613-funnel-kpi-map"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -7688,6 +7688,7 @@ def quiz_script(lang: str) -> str:
   function startQuiz() {{
     localStorage.removeItem(storageKey);
     localStorage.removeItem(sharedStorageKey);
+    window.lovetypesRecordFunnelEvent?.('quiz_started', 'quiz-section', document.getElementById('quiz-section'));
     renderSavedResult();
     preloadResultImages();
     current = 0;
@@ -9877,6 +9878,10 @@ def collect_funnel_events() -> dict:
     for page in ["/start/", "/en/start/", "/ja/start/", "/ko/start/", "/es/start/"]:
         add_event("campaign_landing", page)
 
+    for page in ["/", "/start/", "/en/", "/en/start/", "/ja/", "/ja/start/", "/ko/", "/ko/start/", "/es/", "/es/start/"]:
+        add_event("quiz_started", page)
+        add_event("quiz_completed", page)
+
     event_items = []
     for name in sorted(events):
         entry = events[name]
@@ -10441,6 +10446,115 @@ def write_ai_discovery_index() -> None:
     write(ROOT / "ai-discovery.json", json.dumps(collect_ai_discovery_index(), ensure_ascii=False, indent=2) + "\n")
 
 
+def promotion_event_kpi_map() -> list[dict]:
+    return [
+        {
+            "kpi": "site_clicks",
+            "label": "Campaign landing sessions",
+            "events": ["campaign_landing"],
+            "manualSources": ["platform link clicks", "Cloudflare Web Analytics visits for /start/ UTM URLs"],
+            "countRule": "Count a site_click when a promoted /start/ URL with first_round_quiz_completion attribution creates a landing session.",
+            "reviewUse": "If site_clicks exist but quiz_starts stay low, repair the /start/ first screen before changing offers.",
+        },
+        {
+            "kpi": "quiz_starts",
+            "label": "Quiz starts",
+            "events": ["quiz_started"],
+            "manualSources": ["lovetypes:funnel-events:v1", "Contact funnel summary", "browser event export"],
+            "countRule": "Count once when a visitor enters the 15-question ritual after a campaign landing or profile link.",
+            "reviewUse": "Measures whether the campaign promise is strong enough to move visitors into the quiz.",
+        },
+        {
+            "kpi": "quiz_completions",
+            "label": "Quiz completions",
+            "events": ["quiz_completed"],
+            "manualSources": ["lovetypes:funnel-events:v1", "Contact saved result", "Contact campaign content"],
+            "countRule": "Count once when a visitor receives a guardian result and the saved result includes campaign attribution.",
+            "reviewUse": "Primary KPI for the first promotion round; do not judge revenue before enough completions exist.",
+        },
+        {
+            "kpi": "guardian_result_clicks",
+            "label": "Guardian identity clicks",
+            "events": ["guardian_resume_primary", "guardian_resume_profile", "home_resume_guardian", "guide_resume_guardian", "guardian_map_card"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1"],
+            "countRule": "Count result-to-guardian or guardian-map navigation that shows identity interest after the quiz.",
+            "reviewUse": "Signals whether visitors recognize themselves in a guardian enough to continue exploring.",
+        },
+        {
+            "kpi": "resources_clicks",
+            "label": "Guardian supply route clicks",
+            "events": ["quiz_result_supply_route", "home_resume_supply_route", "guardian_hero_supply_route", "supply_quick_route", "supply_entry_routes"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1", "Contact funnel summary"],
+            "countRule": "Count clicks into /resources/ or a matching #supply-{guardian} route after the result.",
+            "reviewUse": "Shows demand for personalized supply routes before paid emphasis.",
+        },
+        {
+            "kpi": "repair_plan_clicks",
+            "label": "Repair plan clicks",
+            "events": ["quiz_result_repair_plan", "home_resume_repair_plan", "repair_resume_plan", "practice_card_repair_plan"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1"],
+            "countRule": "Count clicks into /repair-plan/ or a matching #plan-{guardian} route.",
+            "reviewUse": "Shows demand for structured repair tasks rather than commerce-first browsing.",
+        },
+        {
+            "kpi": "luna_clicks",
+            "label": "Luna route clicks",
+            "events": ["quiz_result_luna", "home_resume_luna", "guardian_resume_luna", "luna_offer_resources", "luna_use_case_action"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1"],
+            "countRule": "Count non-purchase Luna navigation or use-case interest separately from Gumroad product clicks.",
+            "reviewUse": "Shows night-support interest before deciding whether to test paid Luna offers.",
+        },
+        {
+            "kpi": "keepsake_clicks",
+            "label": "Keepsake route clicks",
+            "events": ["quiz_result_keepsake", "home_resume_keepsake", "keepsake_resume_story_open", "practice_card_supply_route"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1"],
+            "countRule": "Count visits or actions toward the free guardian keepsake path before download or print.",
+            "reviewUse": "Shows whether the guardian identity is strong enough to save or revisit.",
+        },
+        {
+            "kpi": "free_keepsake_downloads",
+            "label": "Free keepsake saves",
+            "events": ["free_keepsake_download", "collector_story_download", "keepsake_resume_story_download", "practice_card_print"],
+            "manualSources": ["funnel-events.json", "lovetypes:funnel-events:v1"],
+            "countRule": "Count explicit download, print, or save actions for free guardian assets.",
+            "reviewUse": "Best early signal for future low-priced assets or email lead magnets.",
+        },
+        {
+            "kpi": "supply_lead_requests",
+            "label": "Owned supply requests",
+            "events": ["supply_route_mailto", "supply_wishlist_mailto", "collector_supply_mailto", "free_keepsake_asset_request", "keepsake_waitlist_mailto"],
+            "manualSources": ["Contact inbox", "lead-intake-tracker.csv", "Contact campaign content"],
+            "countRule": "Count email or copy-template actions asking for guardian supplies, wallpapers, PDFs, or waitlist assets.",
+            "reviewUse": "Use this before building more owned email assets for a specific guardian.",
+        },
+        {
+            "kpi": "luna_pack_clicks",
+            "label": "Luna paid-intent clicks",
+            "events": ["luna_gumroad_pack_click", "luna_starter_pack_click", "quiz_luna_starter_pack_click", "home_saved_luna_starter_pack_click"],
+            "manualSources": ["Gumroad clicks", "lovetypes:funnel-events:v1", "Contact funnel summary"],
+            "countRule": "Count clicks to Luna Gumroad or starter-pack product URLs; do not treat them as purchases unless Gumroad confirms revenue.",
+            "reviewUse": "Soft paid-intent signal; keep Shorts CTA as quiz until repeated intent appears.",
+        },
+        {
+            "kpi": "affiliate_book_clicks",
+            "label": "Affiliate book clicks",
+            "events": ["supply_route_affiliate_book", "quiz_result_affiliate_book", "repair_guardian_affiliate_book", "repair_resume_affiliate_book"],
+            "manualSources": ["affiliate dashboard", "lovetypes:funnel-events:v1"],
+            "countRule": "Count disclosed sponsored book-link clicks separately from Luna and owned leads.",
+            "reviewUse": "Use only as optional extended-reading intent, not as the primary first-round KPI.",
+        },
+        {
+            "kpi": "contact_requests",
+            "label": "Contact or high-intent request",
+            "events": ["contact_funnel_summary_mailto", "contact_supply_mailto", "contact_repair_mailto", "contact_resume_send", "quiz_result_contact"],
+            "manualSources": ["Contact inbox", "lead-intake-tracker.csv"],
+            "countRule": "Count a contact request when a visitor sends or copies a structured request that includes guardian, route, Luna, repair, or campaign context.",
+            "reviewUse": "High-intent qualitative signal; reconcile with attribution-reconciliation.csv before changing offers.",
+        },
+    ]
+
+
 def collect_promotion_kit() -> dict:
     base = ROOT / "docs" / "promotion" / "first-round"
     calendar_path = base / "publishing-calendar.csv"
@@ -10577,8 +10691,21 @@ def collect_promotion_kit() -> dict:
             "Compare quiz_completions before revenue clicks.",
             "Review free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, and contact_requests before changing offers.",
             "Use conversionPath to inspect the matching guardian, supply, Luna, keepsake, and contact routes.",
+            "Use eventKpiMap to reconcile local funnel events, Contact summaries, platform analytics, Gumroad clicks, and affiliate clicks into the KPI tracker.",
             "Choose one scale action and one repair action for the next week.",
         ],
+        "eventKpiMap": promotion_event_kpi_map(),
+        "eventKpiSafety": {
+            "manualReviewRequired": True,
+            "doNotInferPurchasesFromClicks": True,
+            "doNotTreatGuardianAsDiagnosis": True,
+            "sourceOfTruthOrder": [
+                "platform analytics for profile and post clicks",
+                "site funnel events and Contact summaries for route intent",
+                "Gumroad or affiliate dashboards for external commerce confirmation",
+                "lead-intake-tracker.csv for email/request follow-up",
+            ],
+        },
     }
     platform_profile_setup = []
     for platform_id, setup in PROMOTION_PLATFORM_PROFILE_SETUP.items():

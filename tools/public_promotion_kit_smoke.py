@@ -44,6 +44,21 @@ EXPECTED_PLATFORM_PROFILE_SOURCES = {
     "tiktok": "tiktok",
     "instagram_reels": "instagram",
 }
+EXPECTED_EVENT_KPI_MAP = {
+    "site_clicks": {"campaign_landing"},
+    "quiz_starts": {"quiz_started"},
+    "quiz_completions": {"quiz_completed"},
+    "guardian_result_clicks": {"guardian_resume_primary", "guardian_map_card"},
+    "resources_clicks": {"quiz_result_supply_route", "supply_quick_route"},
+    "repair_plan_clicks": {"quiz_result_repair_plan", "repair_resume_plan"},
+    "luna_clicks": {"quiz_result_luna", "luna_offer_resources"},
+    "keepsake_clicks": {"quiz_result_keepsake", "keepsake_resume_story_open"},
+    "free_keepsake_downloads": {"free_keepsake_download", "collector_story_download"},
+    "supply_lead_requests": {"supply_wishlist_mailto", "free_keepsake_asset_request"},
+    "luna_pack_clicks": {"luna_gumroad_pack_click", "quiz_luna_starter_pack_click"},
+    "affiliate_book_clicks": {"supply_route_affiliate_book", "quiz_result_affiliate_book"},
+    "contact_requests": {"contact_funnel_summary_mailto", "contact_repair_mailto"},
+}
 
 
 def request_json(base_url: str) -> tuple[dict, str]:
@@ -183,6 +198,59 @@ def main() -> int:
     weekly = measurement.get("weeklyReviewChecklist")
     if not isinstance(weekly, list) or len(weekly) < 5:
         issues.append("/promotion-kit.json: measurementPlan.weeklyReviewChecklist should include at least five steps")
+    event_kpi_map = measurement.get("eventKpiMap")
+    event_kpi_rows_checked = 0
+    event_names_checked = 0
+    if not isinstance(event_kpi_map, list) or len(event_kpi_map) < len(EXPECTED_EVENT_KPI_MAP):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiMap should map every conversion KPI to funnel events")
+        event_kpi_map = []
+    mapped_by_kpi: dict[str, dict] = {}
+    for index, row in enumerate(event_kpi_map, start=1):
+        source = f"/promotion-kit.json:measurementPlan.eventKpiMap[{index}]"
+        if not isinstance(row, dict):
+            issues.append(f"{source}: event KPI row should be an object")
+            continue
+        kpi = row.get("kpi")
+        if not isinstance(kpi, str) or not kpi:
+            issues.append(f"{source}: missing kpi")
+            continue
+        if kpi in mapped_by_kpi:
+            issues.append(f"{source}: duplicate KPI mapping for {kpi}")
+        mapped_by_kpi[kpi] = row
+        event_kpi_rows_checked += 1
+        events = row.get("events")
+        if not isinstance(events, list) or not events or not all(isinstance(item, str) and item for item in events):
+            issues.append(f"{source}: events should be a non-empty list")
+        else:
+            event_names_checked += len(events)
+        for key in ("label", "countRule", "reviewUse"):
+            if not isinstance(row.get(key), str) or not row[key]:
+                issues.append(f"{source}: missing {key}")
+        manual_sources = row.get("manualSources")
+        if not isinstance(manual_sources, list) or not manual_sources:
+            issues.append(f"{source}: manualSources should list at least one source")
+    missing_kpis = sorted(set(EXPECTED_EVENT_KPI_MAP) - set(mapped_by_kpi))
+    if missing_kpis:
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiMap missing KPI mappings " + ", ".join(missing_kpis))
+    for kpi, required_events in EXPECTED_EVENT_KPI_MAP.items():
+        row = mapped_by_kpi.get(kpi, {})
+        events = set(row.get("events", [])) if isinstance(row.get("events"), list) else set()
+        missing_events = sorted(required_events - events)
+        if missing_events:
+            issues.append(f"/promotion-kit.json: measurementPlan.eventKpiMap[{kpi}] missing events " + ", ".join(missing_events))
+    event_safety = measurement.get("eventKpiSafety")
+    if not isinstance(event_safety, dict):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety should be an object")
+        event_safety = {}
+    if not event_safety.get("manualReviewRequired"):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety.manualReviewRequired should be true")
+    if not event_safety.get("doNotInferPurchasesFromClicks"):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety should not infer purchases from clicks")
+    if not event_safety.get("doNotTreatGuardianAsDiagnosis"):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety should keep guardian results non-diagnostic")
+    source_order = event_safety.get("sourceOfTruthOrder")
+    if not isinstance(source_order, list) or len(source_order) < 4:
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety.sourceOfTruthOrder should include source priority")
 
     platform_profile_setup = kit.get("platformProfileSetup")
     platform_profile_count = 0
@@ -351,6 +419,8 @@ def main() -> int:
     print(f"public_promotion_kit_kpi_fields_checked={len(kpi_fields) if isinstance(kpi_fields, list) else 0}")
     print(f"public_promotion_kit_measurement_rules_checked={len(measurement.get('decisionRules', [])) if isinstance(measurement, dict) else 0}")
     print(f"public_promotion_kit_revenue_bridge_kpis_checked={len(measurement.get('revenueBridgeKpis', [])) if isinstance(measurement, dict) else 0}")
+    print(f"public_promotion_kit_event_kpi_rows_checked={event_kpi_rows_checked}")
+    print(f"public_promotion_kit_event_names_checked={event_names_checked}")
     print(f"public_promotion_kit_monetization_bridges_checked={sum(1 for task in tasks if isinstance(task, dict) and isinstance(task.get('monetizationBridge'), dict))}")
     print(f"public_promotion_kit_platform_profile_setups_checked={platform_profile_count}")
     print(f"public_promotion_kit_platform_profile_kpi_fields_checked={platform_profile_kpi_fields_checked}")

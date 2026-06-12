@@ -168,6 +168,20 @@ def is_gumroad_product_link(link: dict[str, str], expected_event: str = "luna_gu
     )
 
 
+def is_gumroad_starter_href(value: str) -> bool:
+    parsed = urlparse(value)
+    query = parse_qs(parsed.query)
+    return (
+        parsed.scheme == "https"
+        and parsed.netloc == GUMROAD_HOST
+        and "/l/healing-vibes-starter" in parsed.path
+        and query.get("utm_source", [""])[0] == "lovetypes"
+        and query.get("utm_medium", [""])[0] == "luna-page"
+        and query.get("utm_campaign", [""])[0] == "luna_gumroad_offer"
+        and query.get("utm_content", [""])[0] == "healing-vibes-starter"
+    )
+
+
 def validate_target(base_url: str, source: str, value: str, cache: dict[str, tuple[int, set[str]]]) -> list[str]:
     issues: list[str] = []
     path, fragment = urldefrag(value)
@@ -365,6 +379,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         "affiliate_links_checked": 0,
         "starter_kits_checked": 0,
         "supply_product_packs_checked": 0,
+        "quiz_luna_starter_templates_checked": 0,
         "luna_pages_checked": 0,
         "luna_product_links_checked": 0,
         "luna_starter_links_checked": 0,
@@ -383,6 +398,22 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         if not data:
             continue
         stats["quiz_assets_checked"] += 1
+        home_response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+        home_text = home_response.text
+        starter_markers = (
+            "data-quiz-luna-starter-link",
+            "quiz_luna_starter_pack_click",
+            "data-home-saved-luna-starter-link",
+            "home_saved_luna_starter_pack_click",
+            "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
+            "utm_campaign=luna_gumroad_offer",
+            "utm_content=healing-vibes-starter",
+        )
+        missing_starter_markers = [marker for marker in starter_markers if marker not in home_text]
+        if missing_starter_markers:
+            issues.append(f"{path}: missing quiz Luna starter markers {', '.join(missing_starter_markers)}")
+        else:
+            stats["quiz_luna_starter_templates_checked"] += 1
         results = data.get("results", {})
         if set(results) != {"W", "T", "G", "S", "P"}:
             issues.append(f"{lang}: expected five result keys W/T/G/S/P, got {sorted(results)}")

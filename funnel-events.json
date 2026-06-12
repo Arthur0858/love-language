@@ -5,8 +5,8 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 188,
-    "trackedOccurrences": 3703,
+    "events": 190,
+    "trackedOccurrences": 3723,
     "pages": 110
   },
   "events": [
@@ -1778,6 +1778,25 @@
       "pageCount": 10
     },
     {
+      "name": "home_saved_luna_starter_pack_click",
+      "category": "quiz_result",
+      "role": "revenue",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
       "name": "keepsake_resume_contact",
       "category": "keepsake",
       "role": "lead",
@@ -2127,6 +2146,25 @@
         "/ko/keepsakes/"
       ],
       "pageCount": 5
+    },
+    {
+      "name": "quiz_luna_starter_pack_click",
+      "category": "quiz",
+      "role": "revenue",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
     },
     {
       "name": "quiz_result_affiliate_book",

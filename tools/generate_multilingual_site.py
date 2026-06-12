@@ -17,7 +17,7 @@ ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-06-12"
-ASSET_VERSION = "20260612-campaign-attribution"
+ASSET_VERSION = "20260612-luna-starter-results"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -5047,6 +5047,24 @@ def supply_product_pack(lang: str, slug: str) -> dict:
     }
 
 
+def luna_product_url(product: dict) -> str:
+    return (
+        f"{product['url']}?utm_source=lovetypes"
+        f"&utm_medium=luna-page&utm_campaign=luna_gumroad_offer"
+        f"&utm_content={quote(product['slug'])}"
+    )
+
+
+def luna_starter_pack_payload(lang: str) -> dict:
+    labels = LUNA_PRODUCT_OFFER[lang]
+    product = LUNA_GUMROAD_PRODUCTS[0]
+    return {
+        "cta": labels["starter_cta"],
+        "slug": product["slug"],
+        "href": luna_product_url(product),
+    }
+
+
 def supply_route_card(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     product = SUPPLY_PRODUCT_STACK[lang]
@@ -7209,6 +7227,7 @@ def quiz_script(lang: str) -> str:
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
   const sharedStorageKey = "lovetypes:{lang}:quiz-result";
+  const lunaStarterPack = {json.dumps(luna_starter_pack_payload(lang), ensure_ascii=False)};
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
@@ -7319,6 +7338,9 @@ def quiz_script(lang: str) -> str:
           <p class="eyebrow">${{result.supplyProductPack.label}}</p>
           <div class="${{actionsClass}}" data-home-saved-product-pack>
             ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link data-funnel-event="${{['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}}">${{item.title}}</a>`).join('')}}
+          </div>
+          <div class="${{actionsClass}}" data-home-saved-luna-starter>
+            <a href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${{quiz.supplySafety.notNowTitle}}</strong>
@@ -7507,6 +7529,11 @@ def quiz_script(lang: str) -> str:
               <a href="${{item.href}}" data-quiz-product-pack-link data-funnel-event="${{['supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact'][Number(item.number) - 1] || 'supply_pack_link'}}">${{item.title}}</a>
             </article>
           `).join('')}}
+        </div>
+        <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
+          <strong>${{quiz.labels.luna_step}}</strong>
+          <p>${{quiz.labels.next_pack_intro}}</p>
+          <a class="primary-btn" href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
         </div>
         <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
           <strong>${{quiz.supplySafety.chooseTitle}}</strong>
@@ -8936,14 +8963,6 @@ def luna_offer_section(lang: str) -> str:
   </div>
 </section>
 """
-
-
-def luna_product_url(product: dict) -> str:
-    return (
-        f"{product['url']}?utm_source=lovetypes"
-        f"&utm_medium=luna-page&utm_campaign=luna_gumroad_offer"
-        f"&utm_content={quote(product['slug'])}"
-    )
 
 
 def luna_starter_pack_section(lang: str) -> str:

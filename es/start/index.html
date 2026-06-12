@@ -38,7 +38,7 @@
   <meta property="og:locale:alternate" content="ko_KR" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://lovetypes.tw/og-cover.jpg" />
-  <link rel="stylesheet" href="/shared-20260612-campaign-attribution.css" />
+  <link rel="stylesheet" href="/shared-20260612-luna-starter-results.css" />
 </head>
 <body>
 <a class="skip-link" href="#main">Saltar al contenido</a>
@@ -113,7 +113,7 @@
 </div>
 </section>
 
-<script src="/quiz-data-es-20260612-campaign-attribution.js"></script>
+<script src="/quiz-data-es-20260612-luna-starter-results.js"></script>
 <script>
 (() => {
   const quiz = window.__LOVETYPES_QUIZ_DATA;
@@ -128,6 +128,7 @@
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${location.pathname}:quiz-result`;
   const sharedStorageKey = "lovetypes:es:quiz-result";
+  const lunaStarterPack = {"cta": "Abrir pack inicial", "slug": "healing-vibes-starter", "href": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter?utm_source=lovetypes&utm_medium=luna-page&utm_campaign=luna_gumroad_offer&utm_content=healing-vibes-starter"};
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
@@ -238,6 +239,9 @@
           <p class="eyebrow">${result.supplyProductPack.label}</p>
           <div class="${actionsClass}" data-home-saved-product-pack>
             ${result.supplyProductPack.items.map((item) => `<a href="${item.href}" data-home-saved-product-link data-funnel-event="${['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}">${item.title}</a>`).join('')}
+          </div>
+          <div class="${actionsClass}" data-home-saved-luna-starter>
+            <a href="${lunaStarterPack.href}" target="_blank" rel="noopener noreferrer sponsored" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${quiz.supplySafety.notNowTitle}</strong>
@@ -427,6 +431,11 @@
             </article>
           `).join('')}
         </div>
+        <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
+          <strong>${quiz.labels.luna_step}</strong>
+          <p>${quiz.labels.next_pack_intro}</p>
+          <a class="primary-btn" href="${lunaStarterPack.href}" target="_blank" rel="noopener noreferrer sponsored" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
+        </div>
         <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
           <strong>${quiz.supplySafety.chooseTitle}</strong>
           <p>${quiz.supplySafety.chooseText}</p>
@@ -515,7 +524,7 @@
   <p>© 2026 LoveTypes · <a href="/es/privacy/">Privacidad</a> · <a href="/es/terms/">Términos</a> · <a href="/es/contact/">Contacto</a></p>
 </footer>
 
-<script src="/site-interactions-20260612-campaign-attribution.js" defer></script>
+<script src="/site-interactions-20260612-luna-starter-results.js" defer></script>
 
 </body>
 </html>

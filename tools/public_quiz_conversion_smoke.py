@@ -8,7 +8,7 @@ import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urldefrag, urljoin, urlparse, unquote
+from urllib.parse import parse_qs, urldefrag, urljoin, urlparse, unquote
 from urllib.request import Request, urlopen
 
 
@@ -152,6 +152,8 @@ RESULT_IMAGE_FIELDS = ("image", "resultImage", "storyImage", "domainProp")
 RESULT_TEXT_FIELDS = ("domainTitle", "domainDesc", "domainCta", "domainAccent", "domainGlow", "domainMotif")
 RESULT_NUMBER_FIELDS = ("domainPropWidth", "domainPropHeight")
 ACCEPTED_EXTERNAL_STATUSES = set(range(200, 400)) | {403, 405, 429}
+GUMROAD_HOST = "lunayogamusic.gumroad.com"
+LUNA_STARTER_SLUG = "healing-vibes-starter"
 
 
 @dataclass
@@ -342,6 +344,37 @@ def check_affiliate_url(source: str, value: str, affiliate_cache: dict[str, Resp
     return issues
 
 
+def check_luna_starter_pack(source: str, pack: object) -> tuple[list[str], int]:
+    issues: list[str] = []
+    checked = 0
+    if not isinstance(pack, dict):
+        return [f"{source}: missing lunaStarterPack"], checked
+    for field in ("cta", "slug", "href"):
+        checked += 1
+        if not isinstance(pack.get(field), str) or not pack[field].strip():
+            issues.append(f"{source}: lunaStarterPack missing {field}")
+    href = pack.get("href", "")
+    parsed = urlparse(href)
+    query = parse_qs(parsed.query)
+    checked += 1
+    if parsed.scheme != "https" or parsed.netloc != GUMROAD_HOST:
+        issues.append(f"{source}: lunaStarterPack should use Gumroad host, got {href!r}")
+    checked += 1
+    if pack.get("slug") != LUNA_STARTER_SLUG or f"/l/{LUNA_STARTER_SLUG}" not in parsed.path:
+        issues.append(f"{source}: lunaStarterPack should use {LUNA_STARTER_SLUG}, got {href!r}")
+    expected_query = {
+        "utm_source": "lovetypes",
+        "utm_medium": "luna-page",
+        "utm_campaign": "luna_gumroad_offer",
+        "utm_content": LUNA_STARTER_SLUG,
+    }
+    for key, expected in expected_query.items():
+        checked += 1
+        if query.get(key, [""])[0] != expected:
+            issues.append(f"{source}: lunaStarterPack missing {key}={expected}")
+    return issues, checked
+
+
 def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple[list[str], int]:
     response = request_url(urljoin(base_url + "/", home_path.lstrip("/")))
     source = f"{home_path}:home-saved-template"
@@ -355,6 +388,11 @@ def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple
         "saved product pack label": "result.supplyProductPack.label",
         "saved product pack container": "data-home-saved-product-pack",
         "saved product pack links": "data-home-saved-product-link",
+        "saved Luna starter container": "data-home-saved-luna-starter",
+        "saved Luna starter link": "data-home-saved-luna-starter-link",
+        "saved Luna starter event": "home_saved_luna_starter_pack_click",
+        "saved Luna starter URL": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
+        "saved Luna starter UTM": "utm_campaign=luna_gumroad_offer",
         "saved supply safety": "data-home-saved-supply-safety",
         "saved supply not-buy title": "quiz.supplySafety.notNowTitle",
         "saved supply not-buy text": "quiz.supplySafety.notNowText",
@@ -450,6 +488,11 @@ def main() -> int:
             issues.append(f"{home_path}: quiz result template missing product pack hooks")
         else:
             result_pass_fields_checked += 2
+        for snippet in ("data-quiz-luna-starter", "data-quiz-luna-starter-link", "quiz_luna_starter_pack_click"):
+            if snippet not in home_response.text:
+                issues.append(f"{home_path}: quiz result template missing {snippet}")
+            else:
+                result_pass_fields_checked += 1
         if "data-quiz-supply-safety" not in home_response.text:
             issues.append(f"{home_path}: quiz result template missing supply safety note")
         else:

@@ -1,0 +1,369 @@
+{
+  "generatedAt": "2026-06-13",
+  "week": 5,
+  "source": {
+    "scripts": "docs/promotion/first-round/shorts-scripts.zh-TW.json",
+    "executionSheet": "docs/promotion/first-round/week-5-execution-sheet.json"
+  },
+  "briefCount": 3,
+  "sceneCardCount": 9,
+  "platformCaptionCount": 9,
+  "missingScripts": [],
+  "briefs": [
+    {
+      "week": 5,
+      "taskId": "publish-lt-s13-dora-distance",
+      "scriptId": "lt-s13-dora-distance",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "guardianTheme": "身體的接觸｜玫瑰金安全聖域",
+      "contentAngle": "情感錯頻情境",
+      "title": "你不是太黏，你只是用身體最先感覺到距離",
+      "hook": "有些不安不是想太多，是身體先發現對方退後了。",
+      "emotionTypes": [
+        "距離感",
+        "想被擁抱",
+        "身體先感覺不安"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-5/lt-s13-dora-distance.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "玫瑰金聖域裡兩個剪影保持距離，暖光慢慢靠近。",
+          "subtitleLines": [
+            "吵架後他離你很遠。",
+            "你嘴上說沒事，",
+            "身體卻先緊起來。"
+          ],
+          "overlayText": "吵架後他離你很遠。"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "手部特寫，但避免壓迫感。",
+          "subtitleLines": [
+            "你最需要哪一種靠近？",
+            "A：牽手。",
+            "B：擁抱。"
+          ],
+          "overlayText": "你最需要哪一種靠近？"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "字幕柔和，音樂低噪。",
+          "subtitleLines": [
+            "C：肩靠肩坐著。",
+            "朵拉守護的不是佔有。",
+            "是同意裡的安心。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "C：肩靠肩坐著。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-13",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
+          "caption": "有些不安不是想太多，是身體先發現對方退後了。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance\n\n留言 A/B/C，哪一種靠近最能讓你安心？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-13",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
+          "caption": "有些不安不是想太多，是身體先發現對方退後了。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance\n\n留言 A/B/C，哪一種靠近最能讓你安心？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-13",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
+          "caption": "有些不安不是想太多，是身體先發現對方退後了。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance\n\n留言 A/B/C，哪一種靠近最能讓你安心？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，哪一種靠近最能讓你安心？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 5,
+      "taskId": "publish-lt-s14-dora-consent",
+      "scriptId": "lt-s14-dora-consent",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "guardianTheme": "身體的接觸｜玫瑰金安全聖域",
+      "contentAngle": "守護者人格認同",
+      "title": "真正溫柔的靠近，會先問你願不願意",
+      "hook": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。",
+      "emotionTypes": [
+        "同意界線",
+        "安全親密",
+        "害怕被誤解"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-5/lt-s14-dora-consent.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "三句安全靠近句浮現在柔軟布料與暖光上。",
+          "subtitleLines": [
+            "哪一句話最讓你放鬆？",
+            "A：我現在可以抱你嗎？",
+            "B：如果不行，我可以坐旁邊。"
+          ],
+          "overlayText": "哪一句話最讓你放鬆？"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "門微微打開，但不直接闖入。",
+          "subtitleLines": [
+            "C：你想靠近一點，還是先休息？",
+            "朵拉的聖域裡，",
+            "每一次靠近都需要被允許。"
+          ],
+          "overlayText": "C：你想靠近一點，還是先休息？"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "畫面強調界線、同意、溫度。",
+          "subtitleLines": [
+            "愛不是闖進來。",
+            "愛是讓你有選擇。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "愛不是闖進來。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-15",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent",
+          "caption": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent\n\n留言 A/B/C，你最想聽見哪一句安全靠近？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-15",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent",
+          "caption": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent\n\n留言 A/B/C，你最想聽見哪一句安全靠近？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-15",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent",
+          "caption": "身體接觸的愛，不是要求對方配合，而是讓彼此都安心。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_consent\n\n留言 A/B/C，你最想聽見哪一句安全靠近？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，你最想聽見哪一句安全靠近？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 5,
+      "taskId": "publish-lt-s15-dora-after-conflict",
+      "scriptId": "lt-s15-dora-after-conflict",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "guardianTheme": "身體的接觸｜玫瑰金安全聖域",
+      "contentAngle": "測驗入口",
+      "title": "吵架後，你需要多久才能重新靠近？",
+      "hook": "有些人不是不想和好，而是身體還沒感覺安全。",
+      "emotionTypes": [
+        "衝突後冷卻",
+        "想重新靠近",
+        "安全感修復"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-5/lt-s15-dora-after-conflict.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "玫瑰金光線從遠到近，兩個人之間保留清楚界線。",
+          "subtitleLines": [
+            "吵完架之後，",
+            "你比較像哪一種？",
+            "A：想立刻抱一下確認還在。"
+          ],
+          "overlayText": "吵完架之後，"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "A/B/C 選項像三段距離標記。",
+          "subtitleLines": [
+            "B：需要冷靜，但不想被丟下。",
+            "C：可以靠近，但要慢慢來。",
+            "朵拉不會逼你立刻沒事。"
+          ],
+          "overlayText": "B：需要冷靜，但不想被丟下。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "最後用柔光帶出測驗入口。",
+          "subtitleLines": [
+            "她會先確認節奏。",
+            "讓身體重新相信安全。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她會先確認節奏。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-17",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict",
+          "caption": "有些人不是不想和好，而是身體還沒感覺安全。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict\n\n留言 A/B/C，吵架後你是哪一種靠近節奏？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-17",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict",
+          "caption": "有些人不是不想和好，而是身體還沒感覺安全。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict\n\n留言 A/B/C，吵架後你是哪一種靠近節奏？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-17",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict",
+          "caption": "有些人不是不想和好，而是身體還沒感覺安全。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_after_conflict\n\n留言 A/B/C，吵架後你是哪一種靠近節奏？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，吵架後你是哪一種靠近節奏？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    }
+  ]
+}

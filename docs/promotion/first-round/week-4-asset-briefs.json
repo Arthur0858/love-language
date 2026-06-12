@@ -1,0 +1,369 @@
+{
+  "generatedAt": "2026-06-13",
+  "week": 4,
+  "source": {
+    "scripts": "docs/promotion/first-round/shorts-scripts.zh-TW.json",
+    "executionSheet": "docs/promotion/first-round/week-4-execution-sheet.json"
+  },
+  "briefCount": 3,
+  "sceneCardCount": 9,
+  "platformCaptionCount": 9,
+  "missingScripts": [],
+  "briefs": [
+    {
+      "week": 4,
+      "taskId": "publish-lt-s10-claire-tired",
+      "scriptId": "lt-s10-claire-tired",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "guardianTheme": "服務的行動｜溫室修復間",
+      "contentAngle": "情感錯頻情境",
+      "title": "你不是愛計較，你只是太久沒人主動幫你",
+      "hook": "如果每一次都是你收拾，那不是成熟，是失衡。",
+      "emotionTypes": [
+        "照顧者疲憊",
+        "情緒勞動",
+        "想被分擔"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-4/lt-s10-claire-tired.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "溫室修復間裡一盞工作燈亮起，待辦清單逐項被完成。",
+          "subtitleLines": [
+            "你是不是常說沒事？",
+            "但其實已經很累了。",
+            "你最希望有人做哪一件事？"
+          ],
+          "overlayText": "你是不是常說沒事？"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "破裂花盆被修好，象徵被分擔。",
+          "subtitleLines": [
+            "A：主動分擔，不要等我開口。",
+            "B：說到做到，不要只答應。",
+            "C：看見我累了，先接住一部分。"
+          ],
+          "overlayText": "A：主動分擔，不要等我開口。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "色調用苔綠、暖白、柔光。",
+          "subtitleLines": [
+            "克萊兒守護的愛，",
+            "會落在日常行動裡。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "克萊兒守護的愛，"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-06",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
+          "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-06",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
+          "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-06",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
+          "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，你最希望有人替你分擔哪一件事？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 4,
+      "taskId": "publish-lt-s11-claire-promises",
+      "scriptId": "lt-s11-claire-promises",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "guardianTheme": "服務的行動｜溫室修復間",
+      "contentAngle": "守護者人格認同",
+      "title": "他說會改，卻一直沒有行動",
+      "hook": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。",
+      "emotionTypes": [
+        "只說不做",
+        "承諾落空",
+        "需要可靠"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-4/lt-s11-claire-promises.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "承諾字卡落在溫室桌面，變成一張具體任務清單。",
+          "subtitleLines": [
+            "一句我會改，",
+            "如果沒有下一步，",
+            "你會慢慢不敢相信。"
+          ],
+          "overlayText": "一句我會改，"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "工具袋、便條、暖白燈作為視覺符號。",
+          "subtitleLines": [
+            "你最在意哪一種？",
+            "A：講完就忘。",
+            "B：永遠要我提醒。"
+          ],
+          "overlayText": "你最在意哪一種？"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "字幕節奏比其他角色更穩定、務實。",
+          "subtitleLines": [
+            "C：道歉很多，行動很少。",
+            "克萊兒不需要華麗保證。",
+            "她需要可靠的一步。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "C：道歉很多，行動很少。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-08",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
+          "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-08",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
+          "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-08",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
+          "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，哪一種只說不做最讓你累？",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 4,
+      "taskId": "publish-lt-s12-claire-ask-help",
+      "scriptId": "lt-s12-claire-ask-help",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "guardianTheme": "服務的行動｜溫室修復間",
+      "contentAngle": "測驗入口",
+      "title": "你是不是很不習慣開口求助？",
+      "hook": "你不是不需要被照顧，你只是太習慣先照顧別人。",
+      "emotionTypes": [
+        "不敢求助",
+        "過度懂事",
+        "害怕成為負擔"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-4/lt-s12-claire-ask-help.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "一個人整理混亂溫室，最後出現另一雙手接過工具。",
+          "subtitleLines": [
+            "如果你累了，",
+            "你最常怎麼做？",
+            "A：先忍一下。"
+          ],
+          "overlayText": "如果你累了，"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "A/B/C 選項像待辦卡片貼在木板上。",
+          "subtitleLines": [
+            "B：自己做比較快。",
+            "C：怕開口會麻煩別人。",
+            "克萊兒會把這些疲憊放回溫室。"
+          ],
+          "overlayText": "B：自己做比較快。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "畫面有修復感，不要責備觀眾。",
+          "subtitleLines": [
+            "她想問你，",
+            "這一次，可不可以讓愛變成分擔？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她想問你，"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-07-10",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
+          "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-07-10",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
+          "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-07-10",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
+          "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，或寫下一件你其實很想被幫忙的事。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    }
+  ]
+}

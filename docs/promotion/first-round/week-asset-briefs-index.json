@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-06-13",
+  "weekCount": 5,
+  "briefCount": 15,
+  "sceneCardCount": 45,
+  "platformCaptionCount": 45,
+  "weeks": [
+    {
+      "week": 1,
+      "briefCount": 3,
+      "sceneCardCount": 9,
+      "platformCaptionCount": 9,
+      "markdown": "docs/promotion/first-round/week-1-asset-briefs.md",
+      "json": "docs/promotion/first-round/week-1-asset-briefs.json"
+    },
+    {
+      "week": 2,
+      "briefCount": 3,
+      "sceneCardCount": 9,
+      "platformCaptionCount": 9,
+      "markdown": "docs/promotion/first-round/week-2-asset-briefs.md",
+      "json": "docs/promotion/first-round/week-2-asset-briefs.json"
+    },
+    {
+      "week": 3,
+      "briefCount": 3,
+      "sceneCardCount": 9,
+      "platformCaptionCount": 9,
+      "markdown": "docs/promotion/first-round/week-3-asset-briefs.md",
+      "json": "docs/promotion/first-round/week-3-asset-briefs.json"
+    },
+    {
+      "week": 4,
+      "briefCount": 3,
+      "sceneCardCount": 9,
+      "platformCaptionCount": 9,
+      "markdown": "docs/promotion/first-round/week-4-asset-briefs.md",
+      "json": "docs/promotion/first-round/week-4-asset-briefs.json"
+    },
+    {
+      "week": 5,
+      "briefCount": 3,
+      "sceneCardCount": 9,
+      "platformCaptionCount": 9,
+      "markdown": "docs/promotion/first-round/week-5-asset-briefs.md",
+      "json": "docs/promotion/first-round/week-5-asset-briefs.json"
+    }
+  ],
+  "issues": []
+}

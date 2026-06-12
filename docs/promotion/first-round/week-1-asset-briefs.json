@@ -1,0 +1,369 @@
+{
+  "generatedAt": "2026-06-13",
+  "week": 1,
+  "source": {
+    "scripts": "docs/promotion/first-round/shorts-scripts.zh-TW.json",
+    "executionSheet": "docs/promotion/first-round/week-1-execution-sheet.json"
+  },
+  "briefCount": 3,
+  "sceneCardCount": 9,
+  "platformCaptionCount": 9,
+  "missingScripts": [],
+  "briefs": [
+    {
+      "week": 1,
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "guardianTheme": "肯定的言詞｜晨曦玻璃花園",
+      "contentAngle": "情感錯頻情境",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "hook": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。",
+      "emotionTypes": [
+        "已讀不回",
+        "缺乏肯定",
+        "害怕自己不重要"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-1/lt-s01-iris-silence.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "晨曦玻璃花園背景，羽筆在信紙上寫下發光短句。",
+          "subtitleLines": [
+            "如果他突然變安靜，",
+            "你心裡最先冒出的念頭是什麼？",
+            "A：我是不是不重要了。"
+          ],
+          "overlayText": "如果他突然變安靜，"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "手機訊息停在已讀畫面，畫面逐漸被金色光點覆蓋。",
+          "subtitleLines": [
+            "B：我是不是哪裡做錯了。",
+            "C：他是不是根本沒看見我。",
+            "艾莉絲會收起那些沒被說出口的話。"
+          ],
+          "overlayText": "B：我是不是哪裡做錯了。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "字幕逐字浮現，節奏溫柔但有懸念。",
+          "subtitleLines": [
+            "她守護的不是甜言蜜語。",
+            "而是一句準確的看見。",
+            "你最想聽見哪一句？",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她守護的不是甜言蜜語。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-15",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+          "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-15",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+          "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-15",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+          "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言 A/B/C，或寫下一句你最想被說出口的話。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 1,
+      "taskId": "publish-lt-s02-iris-affirmation",
+      "scriptId": "lt-s02-iris-affirmation",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "guardianTheme": "肯定的言詞｜晨曦玻璃花園",
+      "contentAngle": "守護者人格認同",
+      "title": "哪一句肯定，會讓你瞬間安心？",
+      "hook": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。",
+      "emotionTypes": [
+        "被敷衍",
+        "想被肯定",
+        "關係不安"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-1/lt-s02-iris-affirmation.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "玻璃花瓣反射三句短句，A/B/C 以光牌出現。",
+          "subtitleLines": [
+            "有些話很短，",
+            "卻能讓人撐過很久。",
+            "A：我知道你很努力。"
+          ],
+          "overlayText": "有些話很短，"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "人物剪影低頭，聽見句子後抬頭。",
+          "subtitleLines": [
+            "B：我有看見你剛剛忍住了。",
+            "C：你不用完美，我也在。",
+            "如果這三句裡有一句擊中你，"
+          ],
+          "overlayText": "B：我有看見你剛剛忍住了。"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "使用暖金、象牙白、晨光粒子。",
+          "subtitleLines": [
+            "你可能正在靠近艾莉絲的花園。",
+            "她守護被準確珍惜的心。",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "你可能正在靠近艾莉絲的花園。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-17",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
+          "caption": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation\n\n留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-17",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
+          "caption": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation\n\n留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-17",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
+          "caption": "真正的肯定，不是把你說得完美，而是讓你知道自己被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation\n\n留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    },
+    {
+      "week": 1,
+      "taskId": "publish-lt-s03-iris-too-sensitive",
+      "scriptId": "lt-s03-iris-too-sensitive",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "guardianTheme": "肯定的言詞｜晨曦玻璃花園",
+      "contentAngle": "測驗入口",
+      "title": "你真的太敏感嗎？還是你只是等一句清楚的話？",
+      "hook": "有時候你不是太敏感，你只是一直在替沉默找理由。",
+      "emotionTypes": [
+        "被說太敏感",
+        "需要回應",
+        "想說清需求"
+      ],
+      "format": {
+        "aspectRatio": "9:16",
+        "targetDuration": "20-30s",
+        "primaryCTA": "完成 15 題測驗，找到你的情感守護者",
+        "recommendedOutput": "exports/lovetypes/week-1/lt-s03-iris-too-sensitive.mp4"
+      },
+      "sceneCards": [
+        {
+          "scene": 1,
+          "timing": "00-07s",
+          "visualPrompt": "霧面訊息框裡的問號逐漸變成清楚短句。",
+          "subtitleLines": [
+            "當你問：你還在乎我嗎？",
+            "你真正想問的可能是，",
+            "你有沒有看見我在努力？"
+          ],
+          "overlayText": "當你問：你還在乎我嗎？"
+        },
+        {
+          "scene": 2,
+          "timing": "07-14s",
+          "visualPrompt": "羽筆把模糊字跡改寫成發光句子。",
+          "subtitleLines": [
+            "你會不會願意回應我？",
+            "你能不能不要讓我一直猜？",
+            "艾莉絲不會叫你無限等待。"
+          ],
+          "overlayText": "你會不會願意回應我？"
+        },
+        {
+          "scene": 3,
+          "timing": "14-21s",
+          "visualPrompt": "畫面避免過度悲傷，保持溫柔與自我辨識感。",
+          "subtitleLines": [
+            "她會把需求翻成一句清楚的話。",
+            "如果你常被說太敏感，",
+            "完成 15 題測驗，找到你的情感守護者。"
+          ],
+          "overlayText": "她會把需求翻成一句清楚的話。"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "youtube_shorts",
+          "label": "YouTube Shorts",
+          "scheduledDate": "2026-06-19",
+          "scheduledTime": "20:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
+          "caption": "有時候你不是太敏感，你只是一直在替沉默找理由。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive\n\n留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "tiktok",
+          "label": "TikTok",
+          "scheduledDate": "2026-06-19",
+          "scheduledTime": "21:00",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
+          "caption": "有時候你不是太敏感，你只是一直在替沉默找理由。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive\n\n留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        },
+        {
+          "platform": "instagram_reels",
+          "label": "Instagram Reels",
+          "scheduledDate": "2026-06-19",
+          "scheduledTime": "21:30",
+          "timezone": "Asia/Taipei",
+          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
+          "caption": "有時候你不是太敏感，你只是一直在替沉默找理由。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive\n\n留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+          "writeback": [
+            "status=published",
+            "published_date",
+            "post_url",
+            "site_clicks",
+            "quiz_starts",
+            "quiz_completions"
+          ]
+        }
+      ],
+      "commentCTA": "留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。",
+      "safetyChecklist": [
+        "不宣稱診斷、療效或保證修復。",
+        "不把短片 CTA 改成直接購買。",
+        "不交換守護者名稱、愛之語、色系或象徵物。",
+        "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+      ]
+    }
+  ]
+}

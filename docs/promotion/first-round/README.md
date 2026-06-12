@@ -34,6 +34,10 @@
 - `now-asset-production-queue.md/json`: 同一份製作佇列的人讀版與機器可讀版。
 - `now-asset-production-briefs.md`: 5 支 now 短片的剪輯與發布手卡，包含 9:16 場景卡、字幕分段、平台 caption、hashtag、CTA 與安全檢查。
 - `now-asset-production-briefs.json`: 同一份製作手卡的機器可讀版本，可交給剪輯、自動化或發布排程使用。
+- `week-asset-briefs-index.md`: 5 週素材製作手卡索引，確認 15 支 Shorts 都有場景卡、平台 caption 與回填提醒。
+- `week-asset-briefs-index.json`: 同一份週素材手卡索引的機器可讀版本。
+- `week-1-asset-briefs.md` 到 `week-5-asset-briefs.md`: 每週 3 支 Shorts 的完整剪輯手卡，對齊 `week-N-execution-sheet.md` 的平台發布任務。
+- `week-1-asset-briefs.json` 到 `week-5-asset-briefs.json`: 每週素材手卡的機器可讀版本。
 - `lovetypes-first-round-kpi-workbook.xlsx`: 可匯入 Google Sheets 的 KPI 工作簿，包含 Dashboard、KPI Tracker、Platform Profiles、Week 1 Execution、Next Actions 與 Data Dictionary。
 - `publish-pack-index.md`: 使用 `python3 tools/promotion_publish_pack.py --all` 產生的第一輪發布包索引。
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
@@ -119,6 +123,7 @@ python3 tools/promotion_week_execution_sheet.py --all
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
+python3 tools/promotion_week_asset_briefs.py --all
 python3 tools/promotion_launch_command_center.py
 python3 tools/promotion_publish_pack.py --all
 node tools/build_promotion_spreadsheet.mjs
@@ -147,6 +152,7 @@ python3 tools/promotion_week_execution_sheet.py --all
 python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
+python3 tools/promotion_week_asset_briefs.py --all
 python3 tools/promotion_launch_command_center.py
 python3 tools/promotion_weekly_summary.py
 python3 tools/promotion_week_decision_gate.py
@@ -184,6 +190,8 @@ node tools/build_promotion_spreadsheet.mjs
 `now-asset-production-queue.csv` 則把這 5 支短片拆成 40 個製作步驟，方便標記 `planned`、`in_progress`、`done` 或 `blocked`，並保留建議輸出檔名與 KPI 回填提醒。
 
 `now-asset-production-briefs.md` 把同一批 5 支短片整理成可交給剪輯者的製作手卡：每支都有 9:16 場景卡、字幕分段、畫面字、三平台 caption、hashtag、安全檢查與回填提醒。
+
+`week-N-asset-briefs.md` 則對齊每週真正要發布的 3 支 Shorts。它補齊每週三支影片的場景卡、平台 caption、追蹤連結與回填欄位，避免 `week-N-execution-sheet.md` 已經要求發布，但素材手卡只覆蓋部分影片。
 
 需要只檢查不寫檔時執行：
 

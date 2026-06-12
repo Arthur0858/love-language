@@ -42,6 +42,7 @@ PYTHON_TOOLS = [
     "tools/promotion_now_asset_pack.py",
     "tools/promotion_now_asset_queue.py",
     "tools/promotion_now_asset_briefs.py",
+    "tools/promotion_week_asset_briefs.py",
     "tools/promotion_launch_command_center.py",
     "tools/promotion_weekly_summary.py",
     "tools/build_guardian_card_assets.py",
@@ -162,6 +163,7 @@ def main() -> int:
         run_step("promotion now asset pack", [sys.executable, "tools/promotion_now_asset_pack.py", "--check"])
         run_step("promotion now asset queue", [sys.executable, "tools/promotion_now_asset_queue.py", "--check"])
         run_step("promotion now asset briefs", [sys.executable, "tools/promotion_now_asset_briefs.py", "--check"])
+        run_step("promotion week asset briefs", [sys.executable, "tools/promotion_week_asset_briefs.py", "--all", "--check"])
         run_step("promotion launch command center", [sys.executable, "tools/promotion_launch_command_center.py", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])

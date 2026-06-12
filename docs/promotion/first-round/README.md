@@ -39,6 +39,8 @@
 - `week-1-publish-pack.md` 到 `week-5-publish-pack.md`: 每週 3 支 Shorts 的發布包，包含說明欄文案、追蹤連結、字幕節奏、視覺提示與 KPI 回填起點。
 - `weekly-summary.md`: 使用 `python3 tools/promotion_weekly_summary.py` 產生的週檢查摘要，會指出應放大的守護者、內容角度與下一個獲利承接動作。
 - `weekly-summary.json`: 同一份週摘要的機器可讀版本，可交給自動化、表格或儀表板使用。
+- `week-decision-gate.md`: 每週 go/no-go 決策 gate，集中判斷是否可做週決策、內容放大、免費收藏深化、自有名單資產或 Luna/聯盟柔性測試。
+- `week-decision-gate.json`: 同一份週決策 gate 的機器可讀版本，空資料時會 fail-closed。
 - `next-actions.md`: 使用 `python3 tools/promotion_next_actions.py` 產生的下一批發布與獲利承接建議。
 - `next-actions.json`: 同一份下一步建議的機器可讀版本。
 
@@ -134,10 +136,13 @@ python3 tools/promotion_now_asset_pack.py
 python3 tools/promotion_now_asset_queue.py
 python3 tools/promotion_now_asset_briefs.py
 python3 tools/promotion_weekly_summary.py
+python3 tools/promotion_week_decision_gate.py
 node tools/build_promotion_spreadsheet.mjs
 ```
 
 `revenue-decision-matrix.md` 會把每位守護者分成五種階段：先收集訊號、放大內容變體、深化免費收藏物、建立自有名單資產、測試柔性商品承接。空資料時它會維持安全模式，不會建議調整商品或付費 CTA。
+
+`week-decision-gate.md` 是週判讀前的最後一道閘門。它會把發布狀態、週摘要、獲利矩陣與 next actions 合併成 PASS/HOLD，只有發布與 KPI 回填足夠時才允許放大內容、補自有名單或測試 Luna/聯盟承接。
 
 `asset-build-backlog.md` 則把上述階段拆成具體製作任務。每位守護者都有故事卡、PDF 練習卡、手機桌布、Email 名單模板、短儀式、Luna 場景、聯盟書卷與內容變體；只有符合目前階段的項目會標成 `now`。
 

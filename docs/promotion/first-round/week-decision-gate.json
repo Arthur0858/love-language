@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "publishingStatus": "docs/promotion/first-round/publishing-status.json",
+    "weeklySummary": "docs/promotion/first-round/weekly-summary.json",
+    "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
+    "nextActions": "docs/promotion/first-round/next-actions.json"
+  },
+  "metrics": {
+    "siteClicks": 0,
+    "quizStarts": 0,
+    "quizCompletions": 0,
+    "quizStartRate": null,
+    "quizCompletionRate": null,
+    "routeInterest": 0,
+    "leadIntent": 0,
+    "paidRevenueIntent": 0
+  },
+  "leaders": {
+    "quizGuardian": null,
+    "revenueGuardian": null,
+    "contentAngle": null
+  },
+  "gates": {
+    "weeklyDecision": false,
+    "scaleContent": false,
+    "deepenIdentityAsset": false,
+    "buildOwnedLeadAsset": false,
+    "testSoftOffer": false
+  },
+  "recommendedFocus": "collect_signal",
+  "blockers": [
+    "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
+    "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+  ],
+  "nextSteps": [
+    "發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。",
+    "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+    "發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。",
+    "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+    "目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。"
+  ],
+  "safety": {
+    "shortsCtaMustRemainQuiz": true,
+    "doNotUse": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ],
+    "emptyDataFailClosed": true,
+    "offerTestsOnlyAfterResultRoute": true
+  }
+}

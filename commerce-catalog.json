@@ -124,7 +124,20 @@
       "url": "https://lovetypes.tw/keepsakes/#free-keepsake-iris",
       "price": "free",
       "conversion": "free_keepsake_download",
-      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+      "playbookId": "identity_retention_first",
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
     },
     {
       "id": "supply-wishlist-iris",
@@ -142,7 +155,20 @@
       "url": "https://lovetypes.tw/resources/#supply-iris",
       "contact": "contact@lovetypes.tw",
       "conversion": "supply_route_asset_request",
-      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+      "playbookId": "owned_supply_lead",
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
     },
     {
       "id": "free-keepsake-noah",
@@ -160,7 +186,20 @@
       "url": "https://lovetypes.tw/keepsakes/#free-keepsake-noah",
       "price": "free",
       "conversion": "free_keepsake_download",
-      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+      "playbookId": "identity_retention_first",
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
     },
     {
       "id": "supply-wishlist-noah",
@@ -178,7 +217,20 @@
       "url": "https://lovetypes.tw/resources/#supply-noah",
       "contact": "contact@lovetypes.tw",
       "conversion": "supply_route_asset_request",
-      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+      "playbookId": "owned_supply_lead",
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
     },
     {
       "id": "free-keepsake-vivian",
@@ -196,7 +248,20 @@
       "url": "https://lovetypes.tw/keepsakes/#free-keepsake-vivian",
       "price": "free",
       "conversion": "free_keepsake_download",
-      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+      "playbookId": "identity_retention_first",
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
     },
     {
       "id": "supply-wishlist-vivian",
@@ -214,7 +279,20 @@
       "url": "https://lovetypes.tw/resources/#supply-vivian",
       "contact": "contact@lovetypes.tw",
       "conversion": "supply_route_asset_request",
-      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+      "playbookId": "owned_supply_lead",
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
     },
     {
       "id": "free-keepsake-claire",
@@ -232,7 +310,20 @@
       "url": "https://lovetypes.tw/keepsakes/#free-keepsake-claire",
       "price": "free",
       "conversion": "free_keepsake_download",
-      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+      "playbookId": "identity_retention_first",
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
     },
     {
       "id": "supply-wishlist-claire",
@@ -250,7 +341,20 @@
       "url": "https://lovetypes.tw/resources/#supply-claire",
       "contact": "contact@lovetypes.tw",
       "conversion": "supply_route_asset_request",
-      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+      "playbookId": "owned_supply_lead",
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
     },
     {
       "id": "free-keepsake-dora",
@@ -268,7 +372,20 @@
       "url": "https://lovetypes.tw/keepsakes/#free-keepsake-dora",
       "price": "free",
       "conversion": "free_keepsake_download",
-      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool."
+      "disclosure": "Free printable/downloadable identity asset; not a therapeutic tool.",
+      "playbookId": "identity_retention_first",
+      "recommendedAfter": [
+        "quiz_completed",
+        "quiz_result_keepsake",
+        "campaign_landing"
+      ],
+      "primaryEvents": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "practice_card_print"
+      ],
+      "nextStep": "Offer the free guardian card first, then route back to the matching supply route or repair plan.",
+      "doNotUseWhen": "Do not frame the keepsake as proof, diagnosis, or a relationship test result."
     },
     {
       "id": "supply-wishlist-dora",
@@ -286,7 +403,20 @@
       "url": "https://lovetypes.tw/resources/#supply-dora",
       "contact": "contact@lovetypes.tw",
       "conversion": "supply_route_asset_request",
-      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome."
+      "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
+      "playbookId": "owned_supply_lead",
+      "recommendedAfter": [
+        "quiz_result_supply_route",
+        "supply_route_mailto",
+        "supply_wishlist_mailto"
+      ],
+      "primaryEvents": [
+        "supply_route_asset_request",
+        "contact_supply_mailto",
+        "contact_funnel_summary_mailto"
+      ],
+      "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
+      "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence."
     },
     {
       "id": "affiliate-book-1",
@@ -301,7 +431,20 @@
       "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
       "price": "external retailer",
       "conversion": "supply_route_affiliate_book",
-      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+      "playbookId": "affiliate_book_revenue",
+      "recommendedAfter": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "primaryEvents": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "nextStep": "Show one relevant book as optional extended reading with affiliate disclosure.",
+      "doNotUseWhen": "Do not imply the book will fix the relationship, replace apology, or replace counseling."
     },
     {
       "id": "affiliate-book-2",
@@ -316,7 +459,20 @@
       "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
       "price": "external retailer",
       "conversion": "supply_route_affiliate_book",
-      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+      "playbookId": "affiliate_book_revenue",
+      "recommendedAfter": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "primaryEvents": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "nextStep": "Show one relevant book as optional extended reading with affiliate disclosure.",
+      "doNotUseWhen": "Do not imply the book will fix the relationship, replace apology, or replace counseling."
     },
     {
       "id": "affiliate-book-3",
@@ -331,7 +487,20 @@
       "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
       "price": "external retailer",
       "conversion": "supply_route_affiliate_book",
-      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+      "playbookId": "affiliate_book_revenue",
+      "recommendedAfter": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "primaryEvents": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "nextStep": "Show one relevant book as optional extended reading with affiliate disclosure.",
+      "doNotUseWhen": "Do not imply the book will fix the relationship, replace apology, or replace counseling."
     },
     {
       "id": "affiliate-book-4",
@@ -346,7 +515,20 @@
       "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
       "price": "external retailer",
       "conversion": "supply_route_affiliate_book",
-      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page."
+      "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+      "playbookId": "affiliate_book_revenue",
+      "recommendedAfter": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "primaryEvents": [
+        "supply_route_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "quiz_result_affiliate_book"
+      ],
+      "nextStep": "Show one relevant book as optional extended reading with affiliate disclosure.",
+      "doNotUseWhen": "Do not imply the book will fix the relationship, replace apology, or replace counseling."
     },
     {
       "id": "luna-healing-vibes-starter",
@@ -360,7 +542,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
       "price": "US$2.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     },
     {
       "id": "luna-sleep-deep-rest",
@@ -374,7 +569,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/kgrau",
       "price": "US$4.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     },
     {
       "id": "luna-morning-awakening",
@@ -388,7 +596,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/morning-awakening-bundle",
       "price": "US$3.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     },
     {
       "id": "luna-stress-relief-yin",
@@ -402,7 +623,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/stress-relief-yin-yoga",
       "price": "US$4.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     },
     {
       "id": "luna-feminine-healing",
@@ -416,7 +650,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/feminine-healing-bundle",
       "price": "US$4.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     },
     {
       "id": "luna-luna-flow-sessions",
@@ -430,7 +677,20 @@
       "url": "https://lunayogamusic.gumroad.com/l/luna-flow-sessions",
       "price": "US$4.99",
       "conversion": "luna_gumroad_pack_click",
-      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care."
+      "disclosure": "Gumroad checkout and delivery; calm audio support only, not therapy or medical care.",
+      "playbookId": "luna_pack_revenue",
+      "recommendedAfter": [
+        "quiz_result_luna",
+        "luna_starter_pack_click",
+        "supply_route_luna"
+      ],
+      "primaryEvents": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click"
+      ],
+      "nextStep": "Route to the Luna starter pack first, then compare other Gumroad packs only if they keep exploring Luna.",
+      "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair."
     }
   ]
 }

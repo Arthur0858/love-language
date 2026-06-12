@@ -667,6 +667,12 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
     type_counts: dict[str, int] = {}
     role_counts: dict[str, int] = {}
     ids: set[str] = set()
+    playbook_by_type = {
+        item_type: play
+        for play in (playbook if isinstance(playbook, list) else [])
+        if isinstance(play, dict)
+        for item_type in play.get("itemTypes", [])
+    }
     for item in items:
         if not isinstance(item, dict):
             issues.append(f"{path}: item should be an object")
@@ -688,6 +694,18 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
             issues.append(f"{path}: {item_id or '<unknown>'} missing conversion")
         if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
             issues.append(f"{path}: {item_id or '<unknown>'} missing disclosure")
+        play = playbook_by_type.get(item_type)
+        if not play:
+            issues.append(f"{path}: {item_id or '<unknown>'} missing matching revenue playbook")
+        else:
+            if item.get("playbookId") != play.get("id"):
+                issues.append(f"{path}: {item_id or '<unknown>'} playbookId should be {play.get('id')}")
+            for key in ("recommendedAfter", "primaryEvents"):
+                if not isinstance(item.get(key), list) or not item[key]:
+                    issues.append(f"{path}: {item_id or '<unknown>'} missing {key}")
+            for key in ("nextStep", "doNotUseWhen"):
+                if not isinstance(item.get(key), str) or not item[key]:
+                    issues.append(f"{path}: {item_id or '<unknown>'} missing {key}")
     for item_type, expected in EXPECTED_COMMERCE_TYPE_COUNTS.items():
         if type_counts.get(item_type) != expected:
             issues.append(f"{path}: expected {expected} {item_type} items, got {type_counts.get(item_type, 0)}")

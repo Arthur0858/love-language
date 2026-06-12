@@ -1611,6 +1611,12 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
     role_counts = Counter()
     seen_ids: set[str] = set()
     guardian_slugs = set(GENERATOR_CONFIG.GUARDIANS)
+    playbook_by_type = {
+        item_type: play
+        for play in (playbook if isinstance(playbook, list) else [])
+        if isinstance(play, dict)
+        for item_type in play.get("itemTypes", [])
+    }
     for item in items:
         if not isinstance(item, dict):
             issues.append(f"{COMMERCE_CATALOG_PATH}: item should be an object")
@@ -1639,6 +1645,20 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
             issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing conversion")
         if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
             issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing disclosure")
+        play = playbook_by_type.get(item_type)
+        if not play:
+            issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing matching revenue playbook for type {item_type!r}")
+        else:
+            stats["commerce_item_playbook_links_checked"] += 1
+            if item.get("playbookId") != play.get("id"):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} playbookId should be {play.get('id')}")
+            for key in ("recommendedAfter", "primaryEvents"):
+                value = item.get(key)
+                if not isinstance(value, list) or not value:
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing {key}")
+            for key in ("nextStep", "doNotUseWhen"):
+                if not isinstance(item.get(key), str) or not item[key]:
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing {key}")
         if not isinstance(url, str) or not url:
             issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} missing url")
             continue

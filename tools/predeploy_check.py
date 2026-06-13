@@ -56,6 +56,7 @@ PYTHON_TOOLS = [
     "tools/promotion_lead_form_importability_audit.py",
     "tools/promotion_lead_text_import.py",
     "tools/promotion_lead_writeback.py",
+    "tools/promotion_lead_ops_action_sheet.py",
     "tools/promotion_lead_evidence_checklist.py",
     "tools/promotion_lead_magnet_inventory.py",
     "tools/promotion_lead_demand_gate.py",
@@ -234,6 +235,7 @@ def main() -> int:
         run_step("promotion lead form importability audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"])
         run_step("promotion lead text import", [sys.executable, "tools/promotion_lead_text_import.py", "check"])
         run_step("promotion lead writeback", [sys.executable, "tools/promotion_lead_writeback.py", "check"])
+        run_step("promotion lead ops action sheet", [sys.executable, "tools/promotion_lead_ops_action_sheet.py", "--check"])
         run_step("promotion lead evidence checklist", [sys.executable, "tools/promotion_lead_evidence_checklist.py", "--check"])
         run_step("promotion lead magnet inventory", [sys.executable, "tools/promotion_lead_magnet_inventory.py", "--check"])
         run_step("promotion lead demand gate", [sys.executable, "tools/promotion_lead_demand_gate.py", "--check"])

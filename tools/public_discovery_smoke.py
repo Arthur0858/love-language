@@ -901,7 +901,7 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
     return issues, len(guardians), route_count, asset_count, guide_count
 
 
-def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
+def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     path = "/site-health.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
@@ -947,28 +947,42 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int]:
     gates = data.get("requiredGates", {})
     if not isinstance(support_files, list) or len(support_files) != 18:
         issues.append(f"{path}: expected 18 support files")
-    if not isinstance(gates, dict) or set(gates) != {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}:
-        issues.append(f"{path}: requiredGates should list four gate names")
+    expected_gates = {"localPredeploy", "localizedAffiliateLinks", "promotionWritebackFlow", "publicDiscovery", "publicDeploy", "versionedAssets"}
+    if not isinstance(gates, dict) or set(gates) != expected_gates:
+        issues.append(f"{path}: requiredGates should list six gate names")
+    else:
+        gate_text = " ".join(str(value) for value in gates.values())
+        for snippet in ("affiliate_locale_issues=0", "promotion_writeback_issues=0", "promotion_writeback_stale_phrase_hits=0"):
+            if snippet not in gate_text:
+                issues.append(f"{path}: requiredGates missing snippet {snippet!r}")
+    local_audits = data.get("localAuditCoverage", {})
+    if not isinstance(local_audits, dict) or set(local_audits) != {"structure", "conversion", "promotion", "experience"}:
+        issues.append(f"{path}: localAuditCoverage should list four audit groups")
+    else:
+        audit_text = json.dumps(local_audits, ensure_ascii=False)
+        for snippet in ("affiliate_locale", "promotion_writeback_flow", "platform_kpi_tracker", "performance_budget"):
+            if snippet not in audit_text:
+                issues.append(f"{path}: localAuditCoverage missing snippet {snippet!r}")
     indexes = data.get("primaryIndexes", {})
     if not isinstance(indexes, dict) or len(indexes) < 10:
         issues.append(f"{path}: primaryIndexes should list at least ten entries")
-    return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
+    return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
 
 
-def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
+def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     path = "/release.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("deploymentTarget") != "Cloudflare Pages project lovetypes":
@@ -989,13 +1003,21 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int]:
     indexes = data.get("publicIndexes", {})
     commands = data.get("verificationCommands", [])
     outcomes = data.get("requiredOutcomes", [])
+    local_audits = data.get("localAuditCoverage", {})
     if not isinstance(indexes, dict) or len(indexes) != 10:
         issues.append(f"{path}: publicIndexes should contain ten entries")
     if not isinstance(commands, list) or len(commands) != 5:
         issues.append(f"{path}: verificationCommands should contain five commands")
     if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
         issues.append(f"{path}: requiredOutcomes should include public_versioned_asset_stale_refs=0")
-    return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(outcomes) if isinstance(outcomes, list) else 0
+    if not isinstance(local_audits, dict) or set(local_audits) != {"contentStructure", "conversionAndCommerce", "promotionOperations", "experienceQuality"}:
+        issues.append(f"{path}: localAuditCoverage should list four audit groups")
+    else:
+        audit_text = json.dumps(local_audits, ensure_ascii=False)
+        for snippet in ("tools/affiliate_locale_audit.py", "tools/promotion_writeback_flow_audit.py", "tools/promotion_platform_kpi_tracker.py", "tools/performance_budget_audit.py"):
+            if snippet not in audit_text:
+                issues.append(f"{path}: localAuditCoverage missing snippet {snippet!r}")
+    return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(outcomes) if isinstance(outcomes, list) else 0
 
 
 def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1299,8 +1321,8 @@ def main() -> int:
     commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
-    site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_indexes_checked = check_site_health(base_url)
-    release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_outcomes_checked = check_release_info(base_url)
+    site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_local_audit_groups_checked, site_health_indexes_checked = check_site_health(base_url)
+    release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_local_audit_groups_checked, release_outcomes_checked = check_release_info(base_url)
     safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
     ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked = check_ai_discovery(base_url)
     discovery_cross_issues, discovery_cross_indexes_checked, discovery_cross_urls_checked, discovery_cross_targets_checked, discovery_cross_fragments_checked, discovery_cross_core_routes_checked = check_discovery_cross_index(base_url)
@@ -1359,10 +1381,12 @@ def main() -> int:
     print(f"public_discovery_site_health_coverage_checked={site_health_coverage_checked}")
     print(f"public_discovery_site_health_support_files_checked={site_health_support_files_checked}")
     print(f"public_discovery_site_health_gates_checked={site_health_gates_checked}")
+    print(f"public_discovery_site_health_local_audit_groups_checked={site_health_local_audit_groups_checked}")
     print(f"public_discovery_site_health_indexes_checked={site_health_indexes_checked}")
     print(f"public_discovery_release_content_checked={release_content_checked}")
     print(f"public_discovery_release_indexes_checked={release_indexes_checked}")
     print(f"public_discovery_release_commands_checked={release_commands_checked}")
+    print(f"public_discovery_release_local_audit_groups_checked={release_local_audit_groups_checked}")
     print(f"public_discovery_release_outcomes_checked={release_outcomes_checked}")
     print(f"public_discovery_safety_index_boundaries_checked={safety_index_boundaries_checked}")
     print(f"public_discovery_safety_index_routes_checked={safety_index_routes_checked}")

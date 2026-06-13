@@ -149,7 +149,7 @@ def main() -> int:
         run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
         run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
-        run_step("promotion spreadsheet workbook", [find_node(), "tools/build_promotion_spreadsheet.mjs"])
+        run_step("promotion spreadsheet workbook", [find_node(), "tools/build_promotion_spreadsheet.mjs", "--check"])
         run_step("promotion publish pack", [sys.executable, "tools/promotion_publish_pack.py", "--all", "--check"])
         run_step("promotion kpi tracker", [sys.executable, "tools/promotion_sync_kpi_tracker.py", "--check"])
         run_step("promotion posting queue", [sys.executable, "tools/promotion_sync_posting_queue.py", "--check"])

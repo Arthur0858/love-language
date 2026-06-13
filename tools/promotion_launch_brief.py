@@ -242,7 +242,7 @@ def render_index(reports: list[dict]) -> str:
         "## 使用規則",
         "",
         "- 每週只看該週的 `week-N-platform-launch-brief.md` 發布，不需要從 45 筆佇列人工篩選。",
-        "- 發布後先更新 `posting-queue.csv`，再更新 `kpi-tracker.csv`。",
+        "- 發布後先更新 `posting-queue.csv`，再更新 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
         "- 判斷放大或商品承接前，先跑 `python3 tools/promotion_publishing_status.py`。",
     ])
     return "\n".join(lines).rstrip() + "\n"

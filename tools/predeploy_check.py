@@ -30,6 +30,7 @@ PYTHON_TOOLS = [
     "tools/promotion_sync_posting_queue.py",
     "tools/promotion_platform_kpi_tracker.py",
     "tools/promotion_publishing_status.py",
+    "tools/promotion_writeback_flow_audit.py",
     "tools/promotion_launch_brief.py",
     "tools/promotion_revenue_decision_matrix.py",
     "tools/promotion_week_decision_gate.py",
@@ -157,6 +158,7 @@ def main() -> int:
         run_step("promotion posting queue", [sys.executable, "tools/promotion_sync_posting_queue.py", "--check"])
         run_step("promotion platform kpi tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
+        run_step("promotion writeback flow audit", [sys.executable, "tools/promotion_writeback_flow_audit.py"])
         run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])
         run_step("promotion week decision gate", [sys.executable, "tools/promotion_week_decision_gate.py", "--check"])

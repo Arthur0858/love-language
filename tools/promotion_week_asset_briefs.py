@@ -263,6 +263,13 @@ def render_index_markdown(index: dict) -> str:
         lines.extend([
             f"- Week {item['week']}: `{item['markdown']}` / `{item['json']}`",
         ])
+    lines.extend([
+        "",
+        "## 使用方式",
+        "",
+        "- 每支影片先依週手卡完成 9:16 初版，再使用對應平台 caption 發布。",
+        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
+    ])
     if index["issues"]:
         lines.extend(["", "## Issues", ""])
         lines.extend(f"- {issue}" for issue in index["issues"])

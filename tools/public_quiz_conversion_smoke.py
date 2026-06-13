@@ -336,13 +336,18 @@ def check_affiliate_url(source: str, lang: str, value: str, affiliate_cache: dic
             if token not in value:
                 issues.append(f"{source}: supplyBookUrl missing {token}")
     else:
-        if (
+        invalid_amazon_affiliate = (
             parsed.scheme != "https"
             or parsed.netloc != "www.amazon.com"
             or not parsed.path.startswith("/dp/")
             or parse_qs(parsed.query).get("tag", [""])[0] != AMAZON_ASSOCIATE_TAG
-        ):
+        )
+        if invalid_amazon_affiliate:
             issues.append(f"{source}: supplyBookUrl should use Amazon tag={AMAZON_ASSOCIATE_TAG}, got {value!r}")
+        # Amazon often returns 503/robot challenges to automated HEAD/GET checks
+        # even when the affiliate URL is valid, so treat canonical /dp/?tag=
+        # validation as the public smoke boundary for non-zh locales.
+        return issues
     if value not in affiliate_cache:
         try:
             affiliate_cache[value] = request_url(value, method="HEAD", attempts=2)

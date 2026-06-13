@@ -768,6 +768,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "hreflang_links",
         "jsonld_blocks",
         "primary_jsonld_entities",
+        "core_page_schema_types_checked",
+        "guardian_profile_schema_types_checked",
         "social_cards",
         "social_locale_tags",
         "mailto_links",

@@ -295,6 +295,21 @@ PAGE_SCHEMA_TYPES = {
     "WebPage",
     "WebSite",
 }
+CORE_PAGE_SCHEMA_TYPES = {
+    "": "WebSite",
+    "garden-map": "CollectionPage",
+    "guides": "CollectionPage",
+    "characters": "CollectionPage",
+    "theory": "WebPage",
+    "resources": "CollectionPage",
+    "repair-plan": "HowTo",
+    "keepsakes": "CollectionPage",
+    "luna-yoga-music": "WebPage",
+    "about": "AboutPage",
+    "contact": "ContactPage",
+    "privacy": "WebPage",
+    "terms": "WebPage",
+}
 EXPECTED_ORGANIZATION = {
     "@id": f"{DOMAIN}/#organization",
     "name": "LoveTypes",
@@ -718,6 +733,15 @@ def formal_guide_slug_for_page(page: Path) -> str:
     return ""
 
 
+def core_schema_route_for_page(page: Path) -> str:
+    parts = normalized_page_parts(page)
+    if parts == ["index.html"]:
+        return ""
+    if parts and parts[-1] == "index.html":
+        return "/".join(parts[:-1])
+    return ""
+
+
 def legacy_zh_guide_target_for_page(page: Path) -> str:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -873,6 +897,17 @@ def validate_jsonld(
             primary = primary_entities[0]
             primary_types = jsonld_type_set(primary)
             stats["primary_jsonld_entities"] += 1
+            expected_core_schema_type = CORE_PAGE_SCHEMA_TYPES.get(core_schema_route_for_page(page))
+            if expected_core_schema_type:
+                if expected_core_schema_type in primary_types:
+                    stats["core_page_schema_types_checked"] += 1
+                else:
+                    issues.append(f"{page}: primary JSON-LD type should include {expected_core_schema_type}")
+            if is_character_detail_page(page):
+                if "ProfilePage" in primary_types:
+                    stats["guardian_profile_schema_types_checked"] += 1
+                else:
+                    issues.append(f"{page}: guardian detail JSON-LD type should include ProfilePage")
             if primary.get("url") != canonical:
                 issues.append(f"{page}: primary JSON-LD url should match canonical: {canonical}")
             if parser.html_lang and primary.get("inLanguage") != parser.html_lang:
@@ -4404,6 +4439,8 @@ def main() -> int:
     print(f"spanish_polish_pages={stats['spanish_polish_pages']}")
     print(f"jsonld_blocks={stats['jsonld_blocks']}")
     print(f"primary_jsonld_entities={stats['primary_jsonld_entities']}")
+    print(f"core_page_schema_types_checked={stats['core_page_schema_types_checked']}")
+    print(f"guardian_profile_schema_types_checked={stats['guardian_profile_schema_types_checked']}")
     print(f"canonical_links={stats['canonical_links']}")
     print(f"hreflang_links={stats['hreflang_links']}")
     print(f"head_asset_links={stats['head_asset_links']}")

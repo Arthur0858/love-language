@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "runbook": "docs/promotion/first-round/profile-setup-runbook.json",
+    "identity": "docs/promotion/first-round/platform-account-identity-checklist.json",
+    "evidence": "docs/promotion/first-round/profile-evidence-checklist.json",
+    "profileCompletionGate": "docs/promotion/first-round/profile-completion-gate.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "readyToConfigure": 3,
+    "readyToWriteback": 0,
+    "configured": 0,
+    "identityChecks": 21,
+    "evidenceChecks": 18,
+    "profileGateReady": 0
+  },
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "planned",
+      "action_status": "ready_to_configure",
+      "profile_link_location": "Channel description / video description",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "pinned_comment": "完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "identity_checks": "7",
+      "evidence_checks": "6",
+      "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "proof_note": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "planned",
+      "action_status": "ready_to_configure",
+      "profile_link_location": "Profile website link",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "pinned_comment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "identity_checks": "7",
+      "evidence_checks": "6",
+      "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
+      "proof_note": "screenshot profile-tiktok-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "planned",
+      "action_status": "ready_to_configure",
+      "profile_link_location": "Profile link in bio",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "pinned_comment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "identity_checks": "7",
+      "evidence_checks": "6",
+      "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "proof_note": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    }
+  ],
+  "issues": []
+}

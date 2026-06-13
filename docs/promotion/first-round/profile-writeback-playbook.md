@@ -1,6 +1,6 @@
 # LoveTypes Profile Writeback Playbook
 
-- 產生日期：2026-06-13
+- 產生日期：2026-06-14
 - configured：0 / 3
 - issues：0
 - 原則：只有實際設定並確認平台 profile link 後，才能用 `set` 或 `live`。
@@ -12,27 +12,27 @@
 - 目前狀態：`planned`
 - Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 - 設定完成後：
-  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ### TikTok（`tiktok`）
 
 - 目前狀態：`planned`
 - Profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
 - 設定完成後：
-  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ### Instagram Reels（`instagram_reels`）
 
 - 目前狀態：`planned`
 - Profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
 - 設定完成後：
-  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ## 安全規則
 

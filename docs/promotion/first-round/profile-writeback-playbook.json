@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13",
+  "generatedAt": "2026-06-14",
   "source": "docs/promotion/first-round/platform-profile-tracker.csv",
   "platforms": [
     {
@@ -7,24 +7,24 @@
       "label": "YouTube Shorts",
       "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "currentStatus": "planned",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-13 --proof-note \"live profile link verified\""
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note \"live profile link verified\""
     },
     {
       "platform": "tiktok",
       "label": "TikTok",
       "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "currentStatus": "planned",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-13 --proof-note \"live profile link verified\""
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note \"live profile link verified\""
     },
     {
       "platform": "instagram_reels",
       "label": "Instagram Reels",
       "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "currentStatus": "planned",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-13 --proof-note \"live profile link verified\""
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note \"live profile link verified\""
     }
   ],
   "metrics": {

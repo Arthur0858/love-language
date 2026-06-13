@@ -26,7 +26,7 @@
 - priority：`high`
 - platform：youtube_shorts
 - url：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -42,7 +42,7 @@ Evidence:
 - priority：`high`
 - platform：tiktok
 - url：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -58,7 +58,7 @@ Evidence:
 - priority：`high`
 - platform：instagram_reels
 - url：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -78,7 +78,7 @@ Evidence:
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
 
 Caption:
 
@@ -102,7 +102,7 @@ Caption:
 - scheduled：2026-06-15 21:00 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
 
 Caption:
 
@@ -126,7 +126,7 @@ Caption:
 - scheduled：2026-06-15 21:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
 
 Caption:
 

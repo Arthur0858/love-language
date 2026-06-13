@@ -39,7 +39,7 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
       "blockedBy": ""
     },
     {
@@ -60,7 +60,7 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
       "blockedBy": ""
     },
     {
@@ -81,7 +81,7 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
       "blockedBy": ""
     },
     {
@@ -95,7 +95,7 @@
       "scheduled": "2026-06-15 20:30 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {
@@ -109,7 +109,7 @@
       "scheduled": "2026-06-15 21:00 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {
@@ -123,7 +123,7 @@
       "scheduled": "2026-06-15 21:30 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note \"manual post URL verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {

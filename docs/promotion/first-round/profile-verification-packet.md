@@ -1,6 +1,6 @@
 # LoveTypes Profile Verification Packet
 
-- 產生日期：2026-06-13
+- 產生日期：2026-06-14
 - platforms：3
 - configured：0
 - pending：3
@@ -43,8 +43,8 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ### After Writeback
 
@@ -82,8 +82,8 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ### After Writeback
 
@@ -121,8 +121,8 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note "manual profile link verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-13 --proof-note "live profile link verified"`
+- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "live profile link verified"`
 
 ### After Writeback
 

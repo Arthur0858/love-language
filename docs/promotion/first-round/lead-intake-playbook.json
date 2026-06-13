@@ -557,6 +557,8 @@
       "recommendedPolicy": "只記錄守護者、需求類型、素材偏好與可回覆信箱；不要求測驗分數、敏感個資或關係細節。"
     }
   ],
+  "expectedGuardianCount": 5,
+  "expectedTemplateRows": 15,
   "trackerRows": [
     {
       "request_id": "template-iris-owned_asset_request",

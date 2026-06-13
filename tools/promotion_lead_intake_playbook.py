@@ -120,6 +120,7 @@ def route_for_intake(path: dict, intake_type: str) -> str:
 def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[str]] | None = None) -> dict:
     attribution_by_guardian = attribution_by_guardian or {guardian: [] for guardian in GUARDIAN_ORDER}
     guardians_by_id = group_guardians(tasks)
+    expected_guardians = [guardian for guardian in GUARDIAN_ORDER if guardian in guardians_by_id]
     guardians = []
     rows = []
     for guardian_id in GUARDIAN_ORDER:
@@ -171,6 +172,8 @@ def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[st
             "attributionReconciliation": str(ATTRIBUTION_RECONCILIATION_PATH.relative_to(ROOT)),
         },
         "guardians": guardians,
+        "expectedGuardianCount": len(expected_guardians),
+        "expectedTemplateRows": len(expected_guardians) * len(INTAKE_TYPES),
         "trackerRows": rows,
         "intakeTypes": INTAKE_TYPES,
         "workflow": [
@@ -247,11 +250,13 @@ def write_outputs(playbook: dict, output: Path, json_output: Path, csv_output: P
 
 def validate_playbook(playbook: dict) -> list[str]:
     issues: list[str] = []
-    if len(playbook.get("guardians", [])) != 5:
-        issues.append("expected five guardian intake sections")
+    expected_guardians = int(playbook.get("expectedGuardianCount", 0) or 0)
+    if len(playbook.get("guardians", [])) != expected_guardians:
+        issues.append(f"expected {expected_guardians} guardian intake sections, got {len(playbook.get('guardians', []))}")
     rows = playbook.get("trackerRows", [])
-    if len(rows) != len(GUARDIAN_ORDER) * len(INTAKE_TYPES):
-        issues.append("expected one template row per guardian and intake type")
+    expected_template_rows = int(playbook.get("expectedTemplateRows", 0) or 0)
+    if len(rows) != expected_template_rows:
+        issues.append(f"expected {expected_template_rows} template rows, got {len(rows)}")
     if any(row.get("email_status") != "not_received" for row in rows):
         issues.append("template rows must not imply received user emails")
     if any(row.get("status") != "template" for row in rows):

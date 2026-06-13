@@ -757,20 +757,20 @@ def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
     )
 
 
-def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int]:
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
@@ -810,12 +810,14 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 break
     items = data.get("items", [])
     if not isinstance(items, list):
-        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0, 0, 0
+        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0, 0, 0, 0, 0
     if len(items) != 20:
         issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
     type_counts: dict[str, int] = {}
     role_counts: dict[str, int] = {}
     ids: set[str] = set()
+    amazon_associate_tags_checked = 0
+    affiliate_asins_checked = 0
     primary_affiliate_urls_checked = 0
     affiliate_localized_urls_checked = 0
     taiwan_affiliate_urls_checked = 0
@@ -850,6 +852,12 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 primary_affiliate_urls_checked += 1
             if item.get("amazonAssociateTag") != EXPECTED_AMAZON_ASSOCIATE_TAG:
                 issues.append(f"{path}: {item_id or '<unknown>'} should include amazonAssociateTag={EXPECTED_AMAZON_ASSOCIATE_TAG}")
+            else:
+                amazon_associate_tags_checked += 1
+            if not isinstance(item.get("asin"), str) or not item["asin"]:
+                issues.append(f"{path}: {item_id or '<unknown>'} should include asin")
+            else:
+                affiliate_asins_checked += 1
             localized_urls = item.get("localizedUrls")
             if not isinstance(localized_urls, dict):
                 issues.append(f"{path}: {item_id or '<unknown>'} should include localizedUrls")
@@ -890,7 +898,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
     for role, expected in EXPECTED_COMMERCE_ROLE_COUNTS.items():
         if role_counts.get(role) != expected:
             issues.append(f"{path}: expected {expected} {role} items, got {role_counts.get(role, 0)}")
-    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, primary_affiliate_urls_checked, affiliate_localized_urls_checked, taiwan_affiliate_urls_checked
+    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, amazon_associate_tags_checked, affiliate_asins_checked, primary_affiliate_urls_checked, affiliate_localized_urls_checked, taiwan_affiliate_urls_checked
 
 
 def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1474,6 +1482,8 @@ def main() -> int:
         commerce_types_checked,
         commerce_roles_checked,
         commerce_affiliate_locale_policies_checked,
+        commerce_amazon_associate_tags_checked,
+        commerce_affiliate_asins_checked,
         commerce_primary_affiliate_urls_checked,
         commerce_affiliate_localized_urls_checked,
         commerce_taiwan_affiliate_urls_checked,
@@ -1530,6 +1540,8 @@ def main() -> int:
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
     print(f"public_discovery_commerce_affiliate_locale_policies_checked={commerce_affiliate_locale_policies_checked}")
+    print(f"public_discovery_commerce_amazon_associate_tags_checked={commerce_amazon_associate_tags_checked}")
+    print(f"public_discovery_commerce_affiliate_asins_checked={commerce_affiliate_asins_checked}")
     print(f"public_discovery_commerce_primary_affiliate_urls_checked={commerce_primary_affiliate_urls_checked}")
     print(f"public_discovery_commerce_affiliate_localized_urls_checked={commerce_affiliate_localized_urls_checked}")
     print(f"public_discovery_commerce_taiwan_affiliate_urls_checked={commerce_taiwan_affiliate_urls_checked}")

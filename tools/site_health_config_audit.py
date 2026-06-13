@@ -20,6 +20,21 @@ RELEASE_PATH = ROOT / "release.json"
 PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
 NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
+SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
+    "site_quality": "tools/site_quality_audit.py",
+    "content_uniqueness": "tools/content_uniqueness_audit.py",
+    "multilingual_routes": "tools/multilingual_route_audit.py",
+    "guardian_conversion": "tools/guardian_conversion_audit.py",
+    "affiliate_locale": "tools/affiliate_locale_audit.py",
+    "promotion_writeback_flow": "tools/promotion_writeback_flow_audit.py",
+    "platform_kpi_tracker": "tools/promotion_platform_kpi_tracker.py",
+    "publishing_status": "tools/promotion_publishing_status.py",
+    "launch_readiness": "tools/promotion_launch_readiness_gate.py",
+    "launch_command_center": "tools/promotion_launch_command_center.py",
+    "accessibility": "tools/accessibility_audit.py",
+    "image_assets": "tools/image_asset_audit.py",
+    "performance_budget": "tools/performance_budget_audit.py",
+}
 
 
 class HealthCheck(NamedTuple):
@@ -126,6 +141,45 @@ def release_verification_script_paths() -> list[str]:
     return paths
 
 
+def release_local_audit_script_paths() -> list[str]:
+    try:
+        data = json.loads(RELEASE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    coverage = data.get("localAuditCoverage") if isinstance(data, dict) else None
+    if not isinstance(coverage, dict):
+        return []
+    paths: list[str] = []
+    for values in coverage.values():
+        if not isinstance(values, list):
+            continue
+        paths.extend(value for value in values if isinstance(value, str) and value.startswith("tools/"))
+    return paths
+
+
+def site_health_local_audit_tools() -> tuple[list[str], list[str]]:
+    try:
+        data = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return [], []
+    coverage = data.get("localAuditCoverage") if isinstance(data, dict) else None
+    if not isinstance(coverage, dict):
+        return [], []
+    names: list[str] = []
+    unknown: list[str] = []
+    for values in coverage.values():
+        if not isinstance(values, list):
+            continue
+        for value in values:
+            if not isinstance(value, str):
+                continue
+            names.append(value)
+            if value not in SITE_HEALTH_LOCAL_AUDIT_TOOLS:
+                unknown.append(value)
+    tools = [SITE_HEALTH_LOCAL_AUDIT_TOOLS[name] for name in names if name in SITE_HEALTH_LOCAL_AUDIT_TOOLS]
+    return tools, unknown
+
+
 def emitted_issue_keys(script_paths: list[str]) -> list[str]:
     keys: set[str] = set()
     for path in sorted(set(script_paths)):
@@ -217,6 +271,8 @@ def main() -> int:
     check_names, check_commands, check_script_paths, important_keys, retry_names, health_checks = parse_summary()
     predeploy_script_paths = parse_predeploy_script_paths()
     release_script_paths = release_verification_script_paths()
+    release_local_audit_scripts = release_local_audit_script_paths()
+    site_health_local_audit_scripts, unknown_site_health_local_audits = site_health_local_audit_tools()
     issue_keys = emitted_issue_keys(check_script_paths + predeploy_script_paths)
     duplicate_check_names = duplicates(check_names)
     duplicate_check_commands = duplicates(check_commands)
@@ -236,6 +292,11 @@ def main() -> int:
     missing_deploy_support_files = sorted(set(site_support_files).difference(deploy_support_files))
     extra_deploy_support_files = sorted(set(deploy_support_files).difference(site_support_files))
     missing_release_verification_scripts = sorted(set(release_script_paths).difference(check_script_paths))
+    missing_release_local_audit_scripts = sorted(set(release_local_audit_scripts).difference(predeploy_script_paths))
+    missing_site_health_local_audit_scripts = sorted(set(site_health_local_audit_scripts).difference(predeploy_script_paths))
+    site_health_release_local_audit_mismatches = sorted(
+        set(site_health_local_audit_scripts).symmetric_difference(release_local_audit_scripts)
+    )
     public_flag_mismatches: list[str] = []
     for check in health_checks:
         expected_public = (
@@ -284,6 +345,23 @@ def main() -> int:
         issues.append(
             "release verification scripts missing from site health CHECKS: "
             f"{', '.join(missing_release_verification_scripts)}"
+        )
+    if missing_release_local_audit_scripts:
+        issues.append(
+            "release local audit scripts missing from predeploy PYTHON_TOOLS: "
+            f"{', '.join(missing_release_local_audit_scripts)}"
+        )
+    if unknown_site_health_local_audits:
+        issues.append(f"unknown site-health local audit names: {', '.join(sorted(unknown_site_health_local_audits))}")
+    if missing_site_health_local_audit_scripts:
+        issues.append(
+            "site-health local audit scripts missing from predeploy PYTHON_TOOLS: "
+            f"{', '.join(missing_site_health_local_audit_scripts)}"
+        )
+    if site_health_release_local_audit_mismatches:
+        issues.append(
+            "site-health and release local audit coverage mismatch: "
+            f"{', '.join(site_health_release_local_audit_mismatches)}"
         )
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
@@ -351,6 +429,12 @@ def main() -> int:
     print(f"site_health_config_missing_predeploy_scripts={len(missing_predeploy_scripts)}")
     print(f"site_health_config_release_verification_scripts={len(release_script_paths)}")
     print(f"site_health_config_missing_release_verification_scripts={len(missing_release_verification_scripts)}")
+    print(f"site_health_config_release_local_audit_scripts={len(release_local_audit_scripts)}")
+    print(f"site_health_config_missing_release_local_audit_scripts={len(missing_release_local_audit_scripts)}")
+    print(f"site_health_config_site_health_local_audit_scripts={len(site_health_local_audit_scripts)}")
+    print(f"site_health_config_unknown_site_health_local_audits={len(unknown_site_health_local_audits)}")
+    print(f"site_health_config_missing_site_health_local_audit_scripts={len(missing_site_health_local_audit_scripts)}")
+    print(f"site_health_config_site_health_release_local_audit_mismatches={len(site_health_release_local_audit_mismatches)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")

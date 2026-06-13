@@ -12,31 +12,38 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
-TARGETS = [
-    "profile-writeback-playbook",
-    "post-writeback-playbook",
-    "publishing-status",
-    "revenue-decision-matrix",
-    "next-actions",
-    "weekly-summary",
-    "week-decision-gate",
-    "launch-readiness-gate",
-    "profile-verification-packet",
-    "first-batch-publication-packet",
-    "weekly-review-packet",
-    "operator-handoff-packet",
-]
 REFRESH_COMMANDS = [
+    [sys.executable, "tools/promotion_sync_posting_queue.py"],
+    [sys.executable, "tools/promotion_sync_kpi_tracker.py"],
+    [sys.executable, "tools/promotion_platform_profile_setup.py"],
+    [sys.executable, "tools/promotion_platform_profile_tracker.py"],
     [sys.executable, "tools/promotion_profile_writeback.py", "check", "--write-playbook"],
+    [sys.executable, "tools/promotion_launch_link_qa.py"],
+    [sys.executable, "tools/promotion_attribution_reconciliation.py"],
     [sys.executable, "tools/promotion_post_writeback.py", "check", "--write-playbook"],
+    [sys.executable, "tools/promotion_publish_pack.py", "--all"],
+    [sys.executable, "tools/promotion_launch_brief.py", "--all"],
+    [sys.executable, "tools/promotion_week_execution_sheet.py", "--all"],
     [sys.executable, "tools/promotion_publishing_status.py"],
     [sys.executable, "tools/promotion_revenue_decision_matrix.py"],
-    [sys.executable, "tools/promotion_next_actions.py"],
     [sys.executable, "tools/promotion_weekly_summary.py"],
     [sys.executable, "tools/promotion_week_decision_gate.py"],
+    [sys.executable, "tools/promotion_lead_intake_playbook.py"],
+    [sys.executable, "tools/promotion_lead_writeback.py", "check", "--write-playbook"],
+    [sys.executable, "tools/promotion_lead_magnet_inventory.py"],
+    [sys.executable, "tools/promotion_asset_backlog.py"],
+    [sys.executable, "tools/promotion_offer_hypothesis_board.py"],
+    [sys.executable, "tools/promotion_offer_experiment_plan.py"],
+    [sys.executable, "tools/promotion_offer_experiment_queue.py"],
+    [sys.executable, "tools/promotion_now_asset_pack.py"],
+    [sys.executable, "tools/promotion_now_asset_queue.py"],
+    [sys.executable, "tools/promotion_now_asset_briefs.py"],
+    [sys.executable, "tools/promotion_week_asset_briefs.py", "--all"],
+    [sys.executable, "tools/promotion_launch_command_center.py"],
     [sys.executable, "tools/promotion_launch_readiness_gate.py"],
     [sys.executable, "tools/promotion_profile_verification_packet.py"],
     [sys.executable, "tools/promotion_first_batch_publication_packet.py"],
+    [sys.executable, "tools/promotion_next_actions.py"],
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],
 ]
@@ -49,9 +56,12 @@ def today() -> str:
 
 def target_files() -> list[Path]:
     files: list[Path] = []
-    for stem in TARGETS:
-        files.append(PROMOTION_DIR / f"{stem}.md")
-        files.append(PROMOTION_DIR / f"{stem}.json")
+    for path in sorted(PROMOTION_DIR.glob("*")):
+        if path.suffix not in {".md", ".json"}:
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "產生日期" in text[:500] or '"generatedAt"' in text[:500]:
+            files.append(path)
     return files
 
 

@@ -1,6 +1,6 @@
 # LoveTypes Attribution Reconciliation
 
-- 產生日期：2026-06-13
+- 產生日期：2026-06-14
 - Attribution rows：18
 - Profile rows：3
 - Shorts rows：15

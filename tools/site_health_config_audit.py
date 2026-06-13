@@ -17,6 +17,7 @@ SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
+AI_DISCOVERY_PATH = ROOT / "ai-discovery.json"
 PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
 PUBLIC_PY_COUNTER_RE = re.compile(r'print\(f?"(public_[A-Za-z0-9_]+)=')
@@ -257,6 +258,28 @@ def emitted_public_smoke_counters(public_tools: list[str]) -> list[str]:
     return sorted(counters)
 
 
+def profile_verification_public_counter_refs() -> tuple[list[str], list[str]]:
+    refs: list[str] = []
+    missing_snapshots: list[str] = []
+    for source_path in (SITE_HEALTH_PATH, RELEASE_PATH, AI_DISCOVERY_PATH):
+        try:
+            data = json.loads(source_path.read_text(encoding="utf-8"))
+        except Exception:
+            missing_snapshots.append(source_path.name)
+            continue
+        verification = data.get("promotionProfileVerification") if isinstance(data, dict) else None
+        counters = verification.get("publicSmokeCounters") if isinstance(verification, dict) else None
+        if not isinstance(counters, list):
+            missing_snapshots.append(source_path.name)
+            continue
+        refs.extend(
+            f"{source_path.name}:{counter.split('=', 1)[0]}"
+            for counter in counters
+            if isinstance(counter, str) and counter
+        )
+    return refs, missing_snapshots
+
+
 def site_health_support_files() -> list[str]:
     try:
         data = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
@@ -303,6 +326,11 @@ def main() -> int:
     mixed_return_functions = mixed_return_tuple_functions(check_script_paths + predeploy_script_paths)
     public_tools = public_smoke_tools()
     public_smoke_counters = emitted_public_smoke_counters(public_tools)
+    profile_counter_refs, missing_profile_counter_snapshots = profile_verification_public_counter_refs()
+    profile_counter_ref_names = [ref.split(":", 1)[1] for ref in profile_counter_refs]
+    unknown_profile_counter_refs = sorted(
+        ref for ref in profile_counter_refs if ref.split(":", 1)[1] not in public_smoke_counters
+    )
     missing_public_counter_important_keys = sorted(set(public_smoke_counters).difference(important_keys))
     missing_public_tools = sorted(set(public_tools).difference(check_script_paths))
     site_support_files = site_health_support_files()
@@ -348,6 +376,16 @@ def main() -> int:
         issues.append(
             "public smoke counters missing from important_keys: "
             f"{', '.join(missing_public_counter_important_keys)}"
+        )
+    if missing_profile_counter_snapshots:
+        issues.append(
+            "promotion profile verification publicSmokeCounters missing from snapshots: "
+            f"{', '.join(missing_profile_counter_snapshots)}"
+        )
+    if unknown_profile_counter_refs:
+        issues.append(
+            "promotion profile verification publicSmokeCounters not emitted by public smoke tools: "
+            f"{', '.join(unknown_profile_counter_refs)}"
         )
     if malformed_checks:
         issues.append(f"malformed CHECKS tuples: {', '.join(malformed_checks)}")
@@ -460,6 +498,8 @@ def main() -> int:
     print(f"site_health_config_site_health_release_local_audit_mismatches={len(site_health_release_local_audit_mismatches)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_public_smoke_counters={len(public_smoke_counters)}")
+    print(f"site_health_config_profile_public_counter_refs={len(profile_counter_refs)}")
+    print(f"site_health_config_unique_profile_public_counter_refs={len(set(profile_counter_ref_names))}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")
     print(f"site_health_config_duplicate_script_paths={len(duplicate_script_paths)}")
@@ -468,6 +508,8 @@ def main() -> int:
     print(f"site_health_config_unknown_retry_names={len(unknown_retry_names)}")
     print(f"site_health_config_missing_issue_important_keys={len(missing_issue_important_keys)}")
     print(f"site_health_config_missing_public_counter_important_keys={len(missing_public_counter_important_keys)}")
+    print(f"site_health_config_missing_profile_public_counter_snapshots={len(missing_profile_counter_snapshots)}")
+    print(f"site_health_config_unknown_profile_public_counter_refs={len(unknown_profile_counter_refs)}")
     print(f"site_health_config_malformed_checks={len(malformed_checks)}")
     print(f"site_health_config_invalid_timeouts={len(invalid_timeouts)}")
     print(f"site_health_config_public_flag_mismatches={len(public_flag_mismatches)}")

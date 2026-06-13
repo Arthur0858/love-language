@@ -245,10 +245,10 @@ def build_index_markdown(index: dict) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def validate_pack(pack: dict, week: int) -> list[str]:
+def validate_pack(pack: dict, week: int, expected_task_count: int) -> list[str]:
     issues = []
-    if pack["taskCount"] != 3:
-        issues.append(f"expected 3 tasks for week {week}, got {pack['taskCount']}")
+    if pack["taskCount"] != expected_task_count:
+        issues.append(f"expected {expected_task_count} tasks for week {week}, got {pack['taskCount']}")
     for task in pack["tasks"]:
         if not task.get("trackedUrl") or "utm_content=" not in task["trackedUrl"]:
             issues.append(f"{task.get('taskId')}: missing trackedUrl UTM content")
@@ -291,7 +291,8 @@ def main() -> int:
     if args.check:
         issues = []
         for candidate in packs:
-            issues.extend(validate_pack(candidate, int(candidate["week"])))
+            expected_task_count = len(select_week_tasks(tasks, int(candidate["week"])))
+            issues.extend(validate_pack(candidate, int(candidate["week"]), expected_task_count))
         print(f"promotion_publish_pack_week={'all' if args.all else args.week}")
         print(f"promotion_publish_pack_weeks={len(packs)}")
         print(f"promotion_publish_pack_tasks={sum(candidate['taskCount'] for candidate in packs)}")

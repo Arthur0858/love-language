@@ -143,24 +143,42 @@ def build_sheet(queue_rows: list[dict[str, str]], profile_rows: list[dict[str, s
     gates = profile_gates(profile_rows, setup_by_platform(setup))
     scripts = scripts_from_rows(rows)
     platform_counts = Counter(row.get("platform", "") for row in rows)
+    expected_profile_gates = len(profile_rows)
+    expected_scripts = len({
+        (row.get("task_id") or "").strip()
+        for row in rows
+        if (row.get("task_id") or "").strip()
+    })
+    expected_platforms = {
+        (row.get("platform") or "").strip()
+        for row in profile_rows
+        if (row.get("platform") or "").strip()
+    }
+    expected_platform_posts = expected_scripts * len(expected_platforms)
     issues: list[str] = []
-    if len(gates) != 3:
-        issues.append(f"expected 3 platform profile gates, got {len(gates)}")
-    if len(rows) != 9:
-        issues.append(f"week {week} should include 9 platform posts, got {len(rows)}")
-    if len(scripts) != 3:
-        issues.append(f"week {week} should include 3 scripts, got {len(scripts)}")
+    if len(gates) != expected_profile_gates:
+        issues.append(f"expected {expected_profile_gates} platform profile gates, got {len(gates)}")
+    if len(rows) != expected_platform_posts:
+        issues.append(f"week {week} should include {expected_platform_posts} platform posts, got {len(rows)}")
+    if len(scripts) != expected_scripts:
+        issues.append(f"week {week} should include {expected_scripts} scripts, got {len(scripts)}")
     for platform in PLATFORM_ORDER:
-        if platform_counts[platform] != 3:
-            issues.append(f"week {week} should include 3 {platform} posts, got {platform_counts[platform]}")
+        expected_platform_count = expected_scripts if platform in expected_platforms else 0
+        if platform_counts[platform] != expected_platform_count:
+            issues.append(f"week {week} should include {expected_platform_count} {platform} posts, got {platform_counts[platform]}")
     for gate in gates:
         if not gate["profileLink"] or "utm_source=" not in gate["profileLink"]:
             issues.append(f"{gate['platform']}: missing tracked profile link")
         if not gate["bio"]:
             issues.append(f"{gate['platform']}: missing profile bio")
     for script in scripts:
-        if len(script["platforms"]) != 3:
-            issues.append(f"{script['taskId']}: expected 3 platform rows")
+        expected_script_platforms = len({
+            (row.get("platform") or "").strip()
+            for row in rows
+            if row.get("task_id") == script["taskId"] and (row.get("platform") or "").strip()
+        })
+        if len(script["platforms"]) != expected_script_platforms:
+            issues.append(f"{script['taskId']}: expected {expected_script_platforms} platform rows")
         for item in script["platforms"]:
             if not item["trackedUrl"] or "utm_content=" not in item["trackedUrl"]:
                 issues.append(f"{script['taskId']}/{item['platform']}: missing tracked URL")

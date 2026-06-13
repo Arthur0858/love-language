@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
+    "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "firstBatchCompletion": "docs/promotion/first-round/first-batch-completion-gate.json",
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "leadDemand": "docs/promotion/first-round/lead-demand-gate.json",
+    "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json",
+    "commandCenter": "docs/promotion/first-round/launch-command-center.json",
+    "nextActions": "docs/promotion/first-round/next-actions.json"
+  },
+  "stage": "profile_setup",
+  "stageIndex": 0,
+  "stageOrder": [
+    "profile_setup",
+    "first_batch_publish",
+    "first_batch_kpi",
+    "weekly_review",
+    "lead_collection",
+    "offer_experiment",
+    "scale"
+  ],
+  "nextAction": "Finish three platform profile links, then run profile writeback and refresh ops docs.",
+  "metrics": {
+    "profileConfigured": 0,
+    "expectedProfiles": 3,
+    "firstBatchPublished": 0,
+    "firstBatchMinimumKpiRows": 0,
+    "leadReadyRoutes": 0,
+    "readyOfferExperiments": 0,
+    "commandReadyRows": 6,
+    "commandBlockedRows": 18,
+    "issues": 0
+  },
+  "gateStates": [
+    {
+      "id": "launch_readiness",
+      "status": "open",
+      "blockers": [
+        "set_platform_profile_links",
+        "publish_first_batch",
+        "backfill_first_batch_kpis"
+      ]
+    },
+    {
+      "id": "profile_completion",
+      "status": "blocked",
+      "blockers": [
+        "profile_links_not_configured"
+      ]
+    },
+    {
+      "id": "first_batch_completion",
+      "status": "blocked",
+      "blockers": [
+        "first_batch_not_published",
+        "minimum_kpi_not_backfilled"
+      ]
+    },
+    {
+      "id": "weekly_review",
+      "status": "blocked",
+      "blockers": [
+        "首批三平台尚無公開 post URL。",
+        "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
+        "publishing-status 尚未達週決策條件。",
+        "目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。"
+      ]
+    },
+    {
+      "id": "lead_demand",
+      "status": "blocked",
+      "blockers": [
+        "no_real_leads",
+        "no_repeated_guardian_demand"
+      ]
+    },
+    {
+      "id": "offer_experiment",
+      "status": "blocked",
+      "blockers": [
+        "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
+        "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+      ]
+    }
+  ],
+  "allowedNow": [
+    "set_platform_profile_links",
+    "verify_profile_utm",
+    "writeback_profile_proof"
+  ],
+  "blockedDecisions": [
+    "build_owned_asset_from_lead",
+    "build_paid_product_from_empty_data",
+    "change_offer_order",
+    "increase_paid_cta",
+    "luna_pack_production",
+    "offer_experiment",
+    "pick_winning_guardian",
+    "prioritize_luna_or_affiliate",
+    "scale_content",
+    "weekly_decision"
+  ],
+  "safety": {
+    "emptyDataMode": true,
+    "keepShortsCtaQuiz": true,
+    "doNotClaim": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ]
+  },
+  "issues": []
+}

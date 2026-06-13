@@ -82,6 +82,7 @@ PYTHON_TOOLS = [
     "tools/promotion_operator_import_template_audit.py",
     "tools/promotion_empty_data_safety_audit.py",
     "tools/promotion_daily_ops_refresh.py",
+    "tools/promotion_master_gate.py",
     "tools/promotion_decision_scenario_audit.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
@@ -242,6 +243,7 @@ def main() -> int:
         run_step("promotion operator import template audit", [sys.executable, "tools/promotion_operator_import_template_audit.py"])
         run_step("promotion empty data safety audit", [sys.executable, "tools/promotion_empty_data_safety_audit.py"])
         run_step("promotion daily ops refresh", [sys.executable, "tools/promotion_daily_ops_refresh.py", "--check", "--strict-freshness"])
+        run_step("promotion master gate", [sys.executable, "tools/promotion_master_gate.py", "--check"])
         run_step("promotion decision scenario audit", [sys.executable, "tools/promotion_decision_scenario_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
         run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])

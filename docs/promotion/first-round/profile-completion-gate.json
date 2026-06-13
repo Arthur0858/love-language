@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "readiness": "docs/promotion/first-round/launch-readiness-gate.json",
+    "evidence": "docs/promotion/first-round/evidence-ledger.json",
+    "profilePacket": "docs/promotion/first-round/profile-verification-packet.json",
+    "firstBatchPacket": "docs/promotion/first-round/first-batch-publication-packet.json"
+  },
+  "metrics": {
+    "profileConfigured": 0,
+    "expectedProfiles": 3,
+    "evidenceRequired": 0,
+    "evidenceTraceable": 0,
+    "evidenceIssues": 0,
+    "blockers": 1,
+    "issues": 0
+  },
+  "state": {
+    "allProfilesConfigured": false,
+    "readinessReadyToPublish": false,
+    "profilePacketReadyToPublish": false,
+    "firstBatchPacketReadyToPublish": false,
+    "evidenceComplete": true,
+    "packetsInSync": true,
+    "readyForFirstBatchPublish": false
+  },
+  "nextAction": "Finish three platform profile links, refresh ops docs, then re-run this gate.",
+  "blockers": [
+    {
+      "id": "profile_links_not_configured",
+      "message": "profile configured 0/3; finish platform profile setup before publishing.",
+      "release": "All profile rows are set/live in platform-profile-tracker.csv."
+    }
+  ],
+  "issues": []
+}

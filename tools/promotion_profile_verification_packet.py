@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 SETUP_PATH = PROMOTION_DIR / "platform-profile-setup.json"
-READINESS_PATH = PROMOTION_DIR / "launch-readiness.json"
+READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "profile-verification-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "profile-verification-packet.json"
 PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
@@ -70,6 +70,8 @@ def build_packet() -> dict:
     tracker_rows = {row["platform"]: row for row in read_csv(TRACKER_PATH)}
     setup = setup_by_platform(load_json(SETUP_PATH))
     readiness = load_json(READINESS_PATH) if READINESS_PATH.exists() else {}
+    readiness_metrics = readiness.get("metrics", {}) if isinstance(readiness.get("metrics"), dict) else {}
+    readiness_state = readiness.get("readiness", {}) if isinstance(readiness.get("readiness"), dict) else {}
     platforms = []
     for platform in PLATFORM_ORDER:
         tracker = tracker_rows.get(platform, {})
@@ -117,11 +119,11 @@ def build_packet() -> dict:
         "platformCount": len(platforms),
         "configuredCount": configured_count,
         "pendingCount": len(platforms) - configured_count,
-        "readyToPublish": bool(readiness.get("readyToPublish")),
+        "readyToPublish": bool(readiness_state.get("readyToPublishPosts")),
         "readinessCounters": {
-            "profileConfigured": readiness.get("profileConfigured"),
-            "readyToPublish": readiness.get("readyToPublish"),
-            "blockers": readiness.get("blockers"),
+            "profileConfigured": readiness_metrics.get("profileConfigured"),
+            "readyToPublish": readiness_state.get("readyToPublishPosts"),
+            "blockers": readiness_metrics.get("blockers"),
         },
         "platforms": platforms,
         "policy": {

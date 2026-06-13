@@ -3,16 +3,16 @@
   "source": {
     "tracker": "docs/promotion/first-round/platform-profile-tracker.csv",
     "setup": "docs/promotion/first-round/platform-profile-setup.json",
-    "readiness": "docs/promotion/first-round/launch-readiness.json"
+    "readiness": "docs/promotion/first-round/launch-readiness-gate.json"
   },
   "platformCount": 3,
   "configuredCount": 0,
   "pendingCount": 3,
   "readyToPublish": false,
   "readinessCounters": {
-    "profileConfigured": null,
-    "readyToPublish": null,
-    "blockers": null
+    "profileConfigured": 0,
+    "readyToPublish": false,
+    "blockers": 3
   },
   "platforms": [
     {

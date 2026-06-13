@@ -4,7 +4,7 @@
     "postingQueue": "docs/promotion/first-round/posting-queue.csv",
     "platformKpiTracker": "docs/promotion/first-round/platform-kpi-tracker.csv",
     "publishingStatus": "docs/promotion/first-round/publishing-status.json",
-    "readiness": "docs/promotion/first-round/launch-readiness.json"
+    "readiness": "docs/promotion/first-round/launch-readiness-gate.json"
   },
   "week": 1,
   "slot": 1,

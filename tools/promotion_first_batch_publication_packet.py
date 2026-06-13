@@ -14,7 +14,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 PLATFORM_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 PUBLISHING_STATUS_PATH = PROMOTION_DIR / "publishing-status.json"
-READINESS_PATH = PROMOTION_DIR / "launch-readiness.json"
+READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.json"
 PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
@@ -89,6 +89,7 @@ def build_packet() -> dict:
     platform_lookup = platform_tracker_lookup(platform_rows)
     publishing_status = load_json(PUBLISHING_STATUS_PATH)
     readiness = load_json(READINESS_PATH)
+    readiness_state = readiness.get("readiness", {}) if isinstance(readiness.get("readiness"), dict) else {}
     rows = []
     for row in first_batch_rows(queue_rows):
         platform = row.get("platform", "")
@@ -155,7 +156,7 @@ def build_packet() -> dict:
         "publishedRows": sum(1 for row in rows if row["published"]),
         "pendingRows": sum(1 for row in rows if not row["published"]),
         "minimumKpiRows": sum(1 for row in rows if row["minimumKpiFilled"]),
-        "readyToPublish": bool(readiness.get("readyToPublish")),
+        "readyToPublish": bool(readiness_state.get("readyToPublishPosts")),
         "publishingReadyForWeeklyDecision": bool(publishing_status.get("readyForWeeklyDecision")),
         "minimumKpiFields": list(MINIMUM_KPI_FIELDS),
         "followupKpiFields": list(FOLLOWUP_KPI_FIELDS),

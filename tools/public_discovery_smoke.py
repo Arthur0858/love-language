@@ -757,20 +757,20 @@ def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
     )
 
 
-def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
@@ -810,13 +810,14 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 break
     items = data.get("items", [])
     if not isinstance(items, list):
-        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0
+        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0, 0
     if len(items) != 20:
         issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
     type_counts: dict[str, int] = {}
     role_counts: dict[str, int] = {}
     ids: set[str] = set()
     affiliate_localized_urls_checked = 0
+    taiwan_affiliate_urls_checked = 0
     playbook_by_type = {
         item_type: play
         for play in (playbook if isinstance(playbook, list) else [])
@@ -859,6 +860,8 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
             taiwan_url = item.get("taiwanAffiliateUrl")
             if not isinstance(taiwan_url, str) or not is_expected_commerce_affiliate_url("zh", taiwan_url):
                 issues.append(f"{path}: {item_id or '<unknown>'} should include taiwanAffiliateUrl using Books.com.tw")
+            else:
+                taiwan_affiliate_urls_checked += 1
         if not isinstance(item.get("conversion"), str) or not item["conversion"]:
             issues.append(f"{path}: {item_id or '<unknown>'} missing conversion")
         if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
@@ -881,7 +884,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
     for role, expected in EXPECTED_COMMERCE_ROLE_COUNTS.items():
         if role_counts.get(role) != expected:
             issues.append(f"{path}: expected {expected} {role} items, got {role_counts.get(role, 0)}")
-    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, affiliate_localized_urls_checked
+    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, affiliate_localized_urls_checked, taiwan_affiliate_urls_checked
 
 
 def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1466,6 +1469,7 @@ def main() -> int:
         commerce_roles_checked,
         commerce_affiliate_locale_policies_checked,
         commerce_affiliate_localized_urls_checked,
+        commerce_taiwan_affiliate_urls_checked,
     ) = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
@@ -1520,6 +1524,7 @@ def main() -> int:
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
     print(f"public_discovery_commerce_affiliate_locale_policies_checked={commerce_affiliate_locale_policies_checked}")
     print(f"public_discovery_commerce_affiliate_localized_urls_checked={commerce_affiliate_localized_urls_checked}")
+    print(f"public_discovery_commerce_taiwan_affiliate_urls_checked={commerce_taiwan_affiliate_urls_checked}")
     print(f"public_discovery_site_index_pages_checked={site_index_pages_checked}")
     print(f"public_discovery_site_index_languages_checked={site_index_languages_checked}")
     print(f"public_discovery_site_index_groups_checked={site_index_groups_checked}")

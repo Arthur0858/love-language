@@ -1982,6 +1982,8 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
             taiwan_url = item.get("taiwanAffiliateUrl")
             if not isinstance(taiwan_url, str) or not is_affiliate_url_for_lang(taiwan_url, "zh"):
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a tracked Books.com.tw taiwanAffiliateUrl")
+            else:
+                stats["commerce_taiwan_affiliate_urls_checked"] += 1
         elif item_type == "luna_gumroad_pack":
             if parsed.netloc != "lunayogamusic.gumroad.com":
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a Luna Gumroad URL")
@@ -4339,6 +4341,7 @@ def main() -> int:
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
     print(f"commerce_affiliate_locale_policies_checked={stats['commerce_affiliate_locale_policies_checked']}")
     print(f"commerce_affiliate_localized_urls_checked={stats['commerce_affiliate_localized_urls_checked']}")
+    print(f"commerce_taiwan_affiliate_urls_checked={stats['commerce_taiwan_affiliate_urls_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
     print(f"commerce_revenue_playbook_checked={stats['commerce_revenue_playbook_checked']}")
     print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")

@@ -2018,6 +2018,24 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
             issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should include quiz CTA")
         if any(word in setup_text for word in ("診斷", "療效", "保證修復", "必須購買")):
             issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should not include unsafe commercial claims")
+        writeback_values = item.get("writebackValues")
+        if not isinstance(writeback_values, dict):
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} writebackValues should be an object")
+        else:
+            if writeback_values.get("status") != "set":
+                issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} writebackValues.status should be set")
+            if writeback_values.get("profile_link") != item.get("profileLink"):
+                issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} writebackValues.profile_link should match profileLink")
+            if not writeback_values.get("profile_link_set_date"):
+                issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} writebackValues should include profile_link_set_date")
+        verification_steps = item.get("verificationSteps")
+        if not isinstance(verification_steps, list) or len(verification_steps) < 4:
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} verificationSteps should include at least four items")
+        elif not any("utm_source" in step for step in verification_steps):
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} verificationSteps should mention utm_source")
+        do_not_publish = item.get("doNotPublishUntil")
+        if not isinstance(do_not_publish, list) or len(do_not_publish) < 3:
+            issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} doNotPublishUntil should include at least three items")
         kpi_fields_to_fill = item.get("kpiFieldsToFill")
         if not isinstance(kpi_fields_to_fill, list) or not {"profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"}.issubset(kpi_fields_to_fill):
             issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} kpiFieldsToFill missing profile funnel fields")

@@ -10781,6 +10781,23 @@ def collect_promotion_kit() -> dict:
                 "置頂留言或首則留言維持單一 CTA：完成 15 題測驗。",
                 "發布後回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
             ],
+            "writebackValues": {
+                "status": "set",
+                "profile_link_set_date": "YYYY-MM-DD",
+                "profile_link": profile_link,
+                "notes": setup["linkLimitNote"],
+            },
+            "verificationSteps": [
+                "在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。",
+                f"確認 URL 保留 utm_source={setup['utm_source']}、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。",
+                "確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。",
+                "設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。",
+            ],
+            "doNotPublishUntil": [
+                "platform-profile-tracker.csv 的 status 已改為 set 或 live。",
+                "profile_link_set_date 已填入設定日期。",
+                "profile link 已手動開啟並確認 UTM 沒被平台截斷。",
+            ],
             "kpiFieldsToFill": [
                 "profile_clicks",
                 "site_clicks",

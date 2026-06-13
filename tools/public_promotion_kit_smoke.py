@@ -255,6 +255,9 @@ def main() -> int:
     platform_profile_setup = kit.get("platformProfileSetup")
     platform_profile_count = 0
     platform_profile_kpi_fields_checked = 0
+    platform_profile_writeback_checked = 0
+    platform_profile_verification_steps_checked = 0
+    platform_profile_publish_gates_checked = 0
     if not isinstance(platform_profile_setup, list) or len(platform_profile_setup) != len(EXPECTED_PLATFORM_PROFILE_SOURCES):
         issues.append(f"/promotion-kit.json: platformProfileSetup should include {len(EXPECTED_PLATFORM_PROFILE_SOURCES)} platforms")
         platform_profile_setup = []
@@ -283,6 +286,29 @@ def main() -> int:
         checklist = item.get("launchChecklist")
         if not isinstance(checklist, list) or len(checklist) < 4:
             issues.append(f"{source}: launchChecklist should include at least four items")
+        writeback_values = item.get("writebackValues")
+        if not isinstance(writeback_values, dict):
+            issues.append(f"{source}: writebackValues should be an object")
+        else:
+            platform_profile_writeback_checked += 1
+            if writeback_values.get("status") != "set":
+                issues.append(f"{source}: writebackValues.status should be set")
+            if writeback_values.get("profile_link") != item.get("profileLink"):
+                issues.append(f"{source}: writebackValues.profile_link should match profileLink")
+            if not writeback_values.get("profile_link_set_date"):
+                issues.append(f"{source}: writebackValues should include profile_link_set_date")
+        verification_steps = item.get("verificationSteps")
+        if not isinstance(verification_steps, list) or len(verification_steps) < 4:
+            issues.append(f"{source}: verificationSteps should include at least four items")
+        else:
+            platform_profile_verification_steps_checked += len(verification_steps)
+            if not any("utm_source" in step for step in verification_steps):
+                issues.append(f"{source}: verificationSteps should mention utm_source")
+        do_not_publish = item.get("doNotPublishUntil")
+        if not isinstance(do_not_publish, list) or len(do_not_publish) < 3:
+            issues.append(f"{source}: doNotPublishUntil should include at least three items")
+        else:
+            platform_profile_publish_gates_checked += len(do_not_publish)
         kpi_fields_to_fill = item.get("kpiFieldsToFill")
         if not isinstance(kpi_fields_to_fill, list):
             issues.append(f"{source}: kpiFieldsToFill should be a list")
@@ -424,6 +450,9 @@ def main() -> int:
     print(f"public_promotion_kit_monetization_bridges_checked={sum(1 for task in tasks if isinstance(task, dict) and isinstance(task.get('monetizationBridge'), dict))}")
     print(f"public_promotion_kit_platform_profile_setups_checked={platform_profile_count}")
     print(f"public_promotion_kit_platform_profile_kpi_fields_checked={platform_profile_kpi_fields_checked}")
+    print(f"public_promotion_kit_platform_profile_writeback_checked={platform_profile_writeback_checked}")
+    print(f"public_promotion_kit_platform_profile_verification_steps_checked={platform_profile_verification_steps_checked}")
+    print(f"public_promotion_kit_platform_profile_publish_gates_checked={platform_profile_publish_gates_checked}")
     print(f"public_promotion_kit_issues={len(issues)}")
     for issue in issues:
         print(issue)

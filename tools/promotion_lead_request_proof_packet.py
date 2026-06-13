@@ -158,7 +158,12 @@ def validate(rows: list[dict[str, str]], playbook: dict, writeback: dict, lead_r
         if "非緊急" not in text and row["intakeType"] == "repair_or_contact_request":
             issues.append(f"{label}: contact template must include non-emergency scope wording")
         code, output = run_check(row)
-        if code != 0 and "promotion_lead_text_import_issues=1" in output and "reply_email should look like an email address" in output:
+        safe_email_rejected = (
+            "reply_email should look like an email address" in output
+            or "reply_email must be a real requester address" in output
+            or "reply_email must not use a reserved test/example domain" in output
+        )
+        if code != 0 and "promotion_lead_text_import_issues=1" in output and safe_email_rejected:
             safe_rejected += 1
         else:
             issues.append(f"{label}: blank template should be safely rejected until a real reply email is inserted")

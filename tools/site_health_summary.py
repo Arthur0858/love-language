@@ -1448,6 +1448,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_lead_writeback_real_rows",
         "promotion_lead_writeback_issues",
         "promotion_lead_privacy_safe_imports",
+        "promotion_lead_privacy_placeholder_email_rejected",
+        "promotion_lead_privacy_sample_email_rejected",
         "promotion_lead_privacy_real_rows",
         "promotion_lead_privacy_raw_email_hits",
         "promotion_lead_privacy_do_not_contact_rejected",

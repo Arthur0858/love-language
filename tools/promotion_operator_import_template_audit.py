@@ -32,8 +32,10 @@ EXPECTED_IMPORTS = {
         "required_outputs": (
             "promotion_lead_text_import_has_reply_email=1",
             "promotion_lead_text_import_has_utm_content=1",
-            "promotion_lead_text_import_issues=0",
+            "promotion_lead_text_import_issues=1",
+            "reply_email must be a real requester address",
         ),
+        "expect_rejected": True,
     },
 }
 

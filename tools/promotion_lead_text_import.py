@@ -14,7 +14,7 @@ SAMPLE_TEXT = """LoveTypes 結構化需求
 我的守護者: 艾莉絲 · 肯定的言詞
 需求類型: owned_asset_request
 素材偏好: PDF 練習卡
-可回覆 email: sample@example.com
+可回覆 email: requester@customer-mail.com
 Campaign content / 推廣內容: iris_silence
 使用情境或備註: 睡前整理，想要可列印版本
 consent_status: explicit_reply_ok
@@ -104,6 +104,25 @@ KEY_ALIASES = {
     "consent_status": "consent_status",
     "page": "page",
 }
+PLACEHOLDER_EMAIL_TOKENS = (
+    "<",
+    ">",
+    "example.",
+    "sample@",
+    "placeholder",
+    "replace",
+    "real_reply_email",
+    "test@",
+    "dummy",
+)
+RESERVED_EMAIL_DOMAINS = {
+    "example.com",
+    "example.net",
+    "example.org",
+    "test",
+    "invalid",
+    "localhost",
+}
 
 
 def normalize_key(value: str) -> str:
@@ -147,10 +166,23 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
         issues.append(f"invalid intake_type {data.get('intake_type')!r}")
     if data.get("consent_status") != "explicit_reply_ok":
         issues.append("consent_status must be explicit_reply_ok")
-    email = data.get("reply_email", "")
-    if "@" not in email or "." not in email.rsplit("@", 1)[-1]:
-        issues.append("reply_email should look like an email address")
+    email_issue = reply_email_issue(data.get("reply_email", ""))
+    if email_issue:
+        issues.append(email_issue)
     return data, issues
+
+
+def reply_email_issue(value: str) -> str:
+    email = " ".join((value or "").strip().split())
+    lowered = email.lower()
+    if "@" not in email or "." not in email.rsplit("@", 1)[-1]:
+        return "reply_email should look like an email address"
+    if any(token in lowered for token in PLACEHOLDER_EMAIL_TOKENS):
+        return "reply_email must be a real requester address, not a placeholder or sample address"
+    domain = lowered.rsplit("@", 1)[-1]
+    if domain in RESERVED_EMAIL_DOMAINS or domain.endswith(".invalid") or domain.endswith(".test"):
+        return "reply_email must not use a reserved test/example domain"
+    return ""
 
 
 def resolve_source(value: str, page: str) -> str:

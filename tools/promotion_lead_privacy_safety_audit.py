@@ -12,7 +12,9 @@ import promotion_lead_writeback as writeback
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
-RAW_EMAIL = "sample@example.com"
+RAW_EMAIL = "requester@customer-mail.com"
+PLACEHOLDER_EMAIL = "<REAL_REPLY_EMAIL>"
+SAMPLE_EMAIL = "sample@example.com"
 SAFE_PROOF = "email thread Gmail request checked 2026-06-15"
 GENERIC_PROOF = "email request verified"
 
@@ -58,6 +60,10 @@ def sample_text(*, utm: str = "iris_silence", consent: str = "explicit_reply_ok"
     return lead_import.SAMPLE_TEXT.replace("iris_silence", utm).replace("explicit_reply_ok", consent)
 
 
+def sample_text_with_email(email: str) -> str:
+    return lead_import.SAMPLE_TEXT.replace(RAW_EMAIL, email)
+
+
 def add_from_text(text: str, proof_note: str) -> str:
     data, issues = lead_import.parse_text(text)
     if issues:
@@ -94,6 +100,8 @@ def run_audit() -> dict[str, int]:
         kpi_field = "supply_lead_requests"
         before_kpi = kpi_value(kpi_tracker, iris_script, kpi_field)
 
+        placeholder_email_rejected = expect_rejected(lambda: add_from_text(sample_text_with_email(PLACEHOLDER_EMAIL), SAFE_PROOF))
+        sample_email_rejected = expect_rejected(lambda: add_from_text(sample_text_with_email(SAMPLE_EMAIL), SAFE_PROOF))
         matched_status = add_from_text(sample_text(utm="iris_silence"), SAFE_PROOF)
         after_kpi = kpi_value(kpi_tracker, iris_script, kpi_field)
         raw_email_hits = file_contains(temp_docs, RAW_EMAIL)
@@ -107,6 +115,8 @@ def run_audit() -> dict[str, int]:
         profile_raw_email_hits = RAW_EMAIL in profile_tracker.read_text(encoding="utf-8")
 
         return {
+            "promotion_lead_privacy_placeholder_email_rejected": 1 if placeholder_email_rejected else 0,
+            "promotion_lead_privacy_sample_email_rejected": 1 if sample_email_rejected else 0,
             "promotion_lead_privacy_safe_imports": 1 if matched_status == "kpi_tracker_incremented" else 0,
             "promotion_lead_privacy_real_rows": real_rows_after_first,
             "promotion_lead_privacy_raw_email_hits": raw_email_hits,
@@ -123,6 +133,8 @@ def main() -> int:
     metrics = run_audit()
     issues: list[str] = []
     required_true = (
+        "promotion_lead_privacy_placeholder_email_rejected",
+        "promotion_lead_privacy_sample_email_rejected",
         "promotion_lead_privacy_safe_imports",
         "promotion_lead_privacy_do_not_contact_rejected",
         "promotion_lead_privacy_generic_proof_rejected",

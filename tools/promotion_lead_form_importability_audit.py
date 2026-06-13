@@ -63,7 +63,7 @@ def build_structured_text(labels: dict, source_label: str, sample: dict, lang: s
         f"{labels['guardian']}: {sample['guardian']}",
         f"{labels['request_type']}: owned_asset_request",
         f"{labels['asset']}: {sample['asset']}",
-        f"{labels['email']}: sample@example.com",
+        f"{labels['email']}: requester@customer-mail.com",
         f"{labels['campaign']}: iris_silence",
         f"{labels['context']}: {sample['context']}",
         "consent_status: explicit_reply_ok",

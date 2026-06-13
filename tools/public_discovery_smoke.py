@@ -36,6 +36,26 @@ EXPECTED_MANIFEST_SCREENSHOTS = {
     "/assets/lovetypes/pwa/home-mobile-screenshot.webp": (390, 844),
 }
 EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+EXPECTED_SUPPORT_FILES = {
+    "robots.txt",
+    "sitemap.xml",
+    "feed.xml",
+    "site.webmanifest",
+    "llms.txt",
+    "humans.txt",
+    "security.txt",
+    ".well-known/security.txt",
+    "ads.txt",
+    "funnel-events.json",
+    "commerce-catalog.json",
+    "site-index.json",
+    "guardian-profiles.json",
+    "safety-index.json",
+    "ai-discovery.json",
+    "promotion-kit.json",
+    "release.json",
+    "site-health.json",
+}
 REQUIRED_LLMS_SECTIONS = (
     "# LoveTypes - Heart Garden Emotion Guardians",
     "## Canonical Site",
@@ -854,15 +874,15 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     guardians = data.get("guardians", [])
@@ -991,6 +1011,10 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     gates = data.get("requiredGates", {})
     if not isinstance(support_files, list) or len(support_files) != 18:
         issues.append(f"{path}: expected 18 support files")
+    elif set(support_files) != EXPECTED_SUPPORT_FILES:
+        missing = sorted(EXPECTED_SUPPORT_FILES.difference(support_files))
+        extra = sorted(set(support_files).difference(EXPECTED_SUPPORT_FILES))
+        issues.append(f"{path}: supportFiles mismatch missing={missing} extra={extra}")
     expected_gates = {"localPredeploy", "localizedAffiliateLinks", "promotionWritebackFlow", "publicDiscovery", "publicDeploy", "versionedAssets"}
     if not isinstance(gates, dict) or set(gates) != expected_gates:
         issues.append(f"{path}: requiredGates should list six gate names")

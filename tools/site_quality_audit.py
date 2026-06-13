@@ -20,6 +20,26 @@ ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
+EXPECTED_SUPPORT_FILES = {
+    "robots.txt",
+    "sitemap.xml",
+    "feed.xml",
+    "site.webmanifest",
+    "llms.txt",
+    "humans.txt",
+    "security.txt",
+    ".well-known/security.txt",
+    "ads.txt",
+    "funnel-events.json",
+    "commerce-catalog.json",
+    "site-index.json",
+    "guardian-profiles.json",
+    "safety-index.json",
+    "ai-discovery.json",
+    "promotion-kit.json",
+    "release.json",
+    "site-health.json",
+}
 ADS_TXT_PATH = ROOT / "ads.txt"
 FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS = {
     "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
@@ -2481,6 +2501,10 @@ def parse_site_health() -> tuple[list[str], Counter]:
         issues.append(f"{SITE_HEALTH_PATH}: supportFiles should match coverage.supportFiles")
     else:
         stats["site_health_support_files_checked"] = len(support_files)
+        if set(support_files) != EXPECTED_SUPPORT_FILES:
+            missing = sorted(EXPECTED_SUPPORT_FILES.difference(support_files))
+            extra = sorted(set(support_files).difference(EXPECTED_SUPPORT_FILES))
+            issues.append(f"{SITE_HEALTH_PATH}: supportFiles mismatch missing={missing} extra={extra}")
         for rel_path in support_files:
             if not isinstance(rel_path, str) or not rel_path:
                 issues.append(f"{SITE_HEALTH_PATH}: invalid support file entry {rel_path!r}")

@@ -30,6 +30,7 @@ CHECKS = [
     ("public_discovery_smoke", [sys.executable, "tools/public_discovery_smoke.py"], 180, True),
     ("public_support_sync_smoke", [sys.executable, "tools/public_support_sync_smoke.py"], 180, True),
     ("public_promotion_kit_smoke", [sys.executable, "tools/public_promotion_kit_smoke.py"], 120, True),
+    ("public_profile_url_smoke", [sys.executable, "tools/public_profile_url_smoke.py"], 120, True),
     ("public_external_link_smoke", [sys.executable, "tools/public_external_link_smoke.py"], 120, True),
     ("public_garden_map_smoke", [sys.executable, "tools/public_garden_map_smoke.py"], 180, True),
     ("public_guide_smoke", [sys.executable, "tools/public_guide_smoke.py"], 300, True),

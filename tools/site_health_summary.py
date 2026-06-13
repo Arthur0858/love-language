@@ -206,6 +206,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_launch_readiness_asset_ready",
         "promotion_launch_readiness_published_rows",
         "promotion_launch_readiness_filled_kpi_rows",
+        "promotion_launch_readiness_platform_checklist_rows",
+        "promotion_launch_readiness_first_batch_schedule_rows",
         "promotion_launch_readiness_ready_to_start_setup",
         "promotion_launch_readiness_ready_to_publish",
         "promotion_launch_readiness_ready_for_kpi_decision",

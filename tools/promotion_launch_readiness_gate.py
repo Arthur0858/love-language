@@ -18,9 +18,15 @@ COMMAND_CENTER_PATH = PROMOTION_DIR / "launch-command-center.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 
-EXPECTED_PLATFORMS = {"youtube_shorts", "tiktok", "instagram_reels"}
+EXPECTED_PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
+EXPECTED_PLATFORMS = set(EXPECTED_PLATFORM_ORDER)
 CAMPAIGN = "first_round_quiz_completion"
 REQUIRED_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
+PLATFORM_LABELS = {
+    "youtube_shorts": "YouTube Shorts",
+    "tiktok": "TikTok",
+    "instagram_reels": "Instagram Reels",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -75,6 +81,53 @@ def count_asset_ready(command_center: dict) -> int:
     )
 
 
+def platform_checklist(profile_rows: list[dict[str, str]]) -> list[dict[str, str | bool]]:
+    rows = []
+    order = {platform: index for index, platform in enumerate(EXPECTED_PLATFORM_ORDER)}
+    for row in sorted(profile_rows, key=lambda item: order.get(item.get("platform") or "", len(order))):
+        platform = (row.get("platform") or "").strip()
+        profile_link = (row.get("profile_link") or "").strip()
+        status = (row.get("status") or "").strip() or "planned"
+        rows.append({
+            "platform": platform,
+            "label": row.get("label") or PLATFORM_LABELS.get(platform, platform),
+            "status": status,
+            "profileLink": profile_link,
+            "profileLinkValid": is_start_campaign_url(profile_link),
+            "configured": status in {"set", "live"},
+            "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions",
+        })
+    return rows
+
+
+def first_batch_schedule(posting_rows: list[dict[str, str]]) -> list[dict[str, str | bool]]:
+    rows = []
+    first_batch_rows = [
+        row
+        for row in posting_rows
+        if (row.get("week") or "").strip() == "1" and (row.get("slot") or "").strip() == "1"
+    ]
+    for row in sorted(first_batch_rows, key=lambda item: (item.get("scheduled_date") or "", item.get("scheduled_time") or "", item.get("platform") or "")):
+        tracked_url = (row.get("tracked_url") or "").strip()
+        rows.append({
+            "platform": (row.get("platform") or "").strip(),
+            "label": PLATFORM_LABELS.get((row.get("platform") or "").strip(), (row.get("platform") or "").strip()),
+            "taskId": (row.get("task_id") or "").strip(),
+            "scriptId": (row.get("script_id") or "").strip(),
+            "guardianId": (row.get("guardian_id") or "").strip(),
+            "guardianName": (row.get("guardian_name") or "").strip(),
+            "title": (row.get("title") or "").strip(),
+            "scheduledDate": (row.get("scheduled_date") or "").strip(),
+            "scheduledTime": (row.get("scheduled_time") or "").strip(),
+            "timezone": (row.get("timezone") or "Asia/Taipei").strip(),
+            "trackedUrl": tracked_url,
+            "trackedUrlValid": is_start_campaign_url(tracked_url),
+            "primaryCta": (row.get("primary_cta") or "").strip(),
+            "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions",
+        })
+    return rows
+
+
 def build_gate(
     profile_rows: list[dict[str, str]],
     posting_rows: list[dict[str, str]],
@@ -104,6 +157,8 @@ def build_gate(
     published_rows = sum(1 for row in posting_rows if (row.get("status") or "").strip() == "published")
     filled_kpi_rows = sum(1 for row in kpi_rows if is_kpi_filled(row))
     asset_ready = count_asset_ready(command_center)
+    platform_rows = platform_checklist(profile_rows)
+    first_batch = first_batch_schedule(posting_rows)
 
     structure_ready = (
         profile_platforms == EXPECTED_PLATFORMS
@@ -176,6 +231,8 @@ def build_gate(
             "assetReady": asset_ready,
             "publishedRows": published_rows,
             "filledKpiRows": filled_kpi_rows,
+            "platformChecklistRows": len(platform_rows),
+            "firstBatchScheduleRows": len(first_batch),
             "blockers": len(blockers),
             "issues": len(issues),
         },
@@ -191,6 +248,8 @@ def build_gate(
             if not ready_to_publish_posts
             else "可發布首批三平台貼文；發布後立即回填 post_url 與最小 KPI。"
         ),
+        "platformChecklist": platform_rows,
+        "firstBatchSchedule": first_batch,
         "blockers": blockers,
         "safety": {
             "quizOnlyCta": True,
@@ -224,13 +283,47 @@ def render_markdown(gate: dict) -> str:
         f"- 已發布平台列：{metrics['publishedRows']}",
         f"- 已回填 KPI 列：{metrics['filledKpiRows']}",
         "",
+        "## 平台入口清單",
+        "",
+    ]
+    for row in gate["platformChecklist"]:
+        status = "完成" if row["configured"] else "待設定"
+        valid = "有效" if row["profileLinkValid"] else "需修正"
+        lines.extend([
+            f"### {row['label']}",
+            "",
+            f"- 狀態：`{row['status']}` ({status})",
+            f"- Profile link：{row['profileLink']}",
+            f"- 連結檢查：{valid}",
+            f"- 回填：{row['writeback']}",
+            "",
+        ])
+    lines.extend([
+        "## 首批發文清單",
+        "",
+    ])
+    for row in gate["firstBatchSchedule"]:
+        valid = "有效" if row["trackedUrlValid"] else "需修正"
+        lines.extend([
+            f"### {row['label']} · {row['guardianName']} · {row['title']}",
+            "",
+            f"- 排程：{row['scheduledDate']} {row['scheduledTime']} {row['timezone']}",
+            f"- task：`{row['taskId']}`",
+            f"- script：`{row['scriptId']}`",
+            f"- CTA：{row['primaryCta']}",
+            f"- tracked URL：{row['trackedUrl']}",
+            f"- 連結檢查：{valid}",
+            f"- 回填：{row['writeback']}",
+            "",
+        ])
+    lines.extend([
         "## 下一個決策",
         "",
         f"- {gate['nextDecision']}",
         "",
         "## 阻擋項",
         "",
-    ]
+    ])
     if gate["blockers"]:
         for blocker in gate["blockers"]:
             lines.append(f"- `{blocker['id']}`：{blocker['message']}")
@@ -286,6 +379,8 @@ def main() -> int:
     print(f"promotion_launch_readiness_asset_ready={metrics['assetReady']}")
     print(f"promotion_launch_readiness_published_rows={metrics['publishedRows']}")
     print(f"promotion_launch_readiness_filled_kpi_rows={metrics['filledKpiRows']}")
+    print(f"promotion_launch_readiness_platform_checklist_rows={metrics['platformChecklistRows']}")
+    print(f"promotion_launch_readiness_first_batch_schedule_rows={metrics['firstBatchScheduleRows']}")
     print(f"promotion_launch_readiness_ready_to_start_setup={int(readiness['readyToStartSetup'])}")
     print(f"promotion_launch_readiness_ready_to_publish={int(readiness['readyToPublishPosts'])}")
     print(f"promotion_launch_readiness_ready_for_kpi_decision={int(readiness['readyForKpiDecision'])}")

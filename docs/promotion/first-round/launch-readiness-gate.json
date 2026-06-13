@@ -16,6 +16,8 @@
     "assetReady": 3,
     "publishedRows": 0,
     "filledKpiRows": 0,
+    "platformChecklistRows": 3,
+    "firstBatchScheduleRows": 3,
     "blockers": 3,
     "issues": 0
   },
@@ -27,6 +29,85 @@
     "emptyDataMode": true
   },
   "nextDecision": "先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。",
+  "platformChecklist": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "profileLinkValid": true,
+      "configured": false,
+      "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "profileLinkValid": true,
+      "configured": false,
+      "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "planned",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "profileLinkValid": true,
+      "configured": false,
+      "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
+    }
+  ],
+  "firstBatchSchedule": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduledDate": "2026-06-15",
+      "scheduledTime": "20:30",
+      "timezone": "Asia/Taipei",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "trackedUrlValid": true,
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduledDate": "2026-06-15",
+      "scheduledTime": "21:00",
+      "timezone": "Asia/Taipei",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "trackedUrlValid": true,
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduledDate": "2026-06-15",
+      "scheduledTime": "21:30",
+      "timezone": "Asia/Taipei",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "trackedUrlValid": true,
+      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+    }
+  ],
   "blockers": [
     {
       "id": "set_platform_profile_links",

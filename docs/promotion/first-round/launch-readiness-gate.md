@@ -17,6 +17,61 @@
 - 已發布平台列：0
 - 已回填 KPI 列：0
 
+## 平台入口清單
+
+### YouTube Shorts
+
+- 狀態：`planned` (待設定)
+- Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+- 連結檢查：有效
+- 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
+
+### TikTok
+
+- 狀態：`planned` (待設定)
+- Profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+- 連結檢查：有效
+- 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
+
+### Instagram Reels
+
+- 狀態：`planned` (待設定)
+- Profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+- 連結檢查：有效
+- 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
+
+## 首批發文清單
+
+### YouTube Shorts · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
+
+- 排程：2026-06-15 20:30 Asia/Taipei
+- task：`publish-lt-s01-iris-silence`
+- script：`lt-s01-iris-silence`
+- CTA：完成 15 題測驗，找到你的情感守護者
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+- 連結檢查：有效
+- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+
+### TikTok · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
+
+- 排程：2026-06-15 21:00 Asia/Taipei
+- task：`publish-lt-s01-iris-silence`
+- script：`lt-s01-iris-silence`
+- CTA：完成 15 題測驗，找到你的情感守護者
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+- 連結檢查：有效
+- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+
+### Instagram Reels · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
+
+- 排程：2026-06-15 21:30 Asia/Taipei
+- task：`publish-lt-s01-iris-silence`
+- script：`lt-s01-iris-silence`
+- CTA：完成 15 題測驗，找到你的情感守護者
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+- 連結檢查：有效
+- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+
 ## 下一個決策
 
 - 先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。

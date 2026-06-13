@@ -1,0 +1,771 @@
+{
+  "generatedAt": "2026-06-13",
+  "policy": {
+    "expectedLanguages": 5,
+    "expectedGuardians": 5,
+    "expectedStoryAssets": 25,
+    "minimumPerGuardian": "one savable story card plus one printable practice card route",
+    "privacy": "Lead magnets must hand off to email/request templates without storing raw email in CSV.",
+    "safety": "Free assets support reflection and repair practice; they do not diagnose, promise outcomes, or replace counseling."
+  },
+  "pages": [
+    {
+      "lang": "zh",
+      "path": "keepsakes/index.html",
+      "url": "https://lovetypes.tw/keepsakes/",
+      "exists": true,
+      "markers": {
+        "shelf": true,
+        "ritual": true,
+        "copy_template": true,
+        "supply_request": true,
+        "story_download": true,
+        "practice_card": true
+      },
+      "guardians": [
+        {
+          "guardian": "iris",
+          "guardianName": "艾莉絲",
+          "anchor": "https://lovetypes.tw/keepsakes/#keepsake-card-iris",
+          "practiceAnchor": "https://lovetypes.tw/keepsakes/#practice-card-iris",
+          "storyAsset": "assets/lovetypes/share/iris-story-zh.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-iris": true,
+            "keepsake-iris": true,
+            "practice-card-iris": true,
+            "iris-story-zh.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "noah",
+          "guardianName": "諾雅",
+          "anchor": "https://lovetypes.tw/keepsakes/#keepsake-card-noah",
+          "practiceAnchor": "https://lovetypes.tw/keepsakes/#practice-card-noah",
+          "storyAsset": "assets/lovetypes/share/noah-story-zh.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-noah": true,
+            "keepsake-noah": true,
+            "practice-card-noah": true,
+            "noah-story-zh.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "vivian",
+          "guardianName": "薇薇安",
+          "anchor": "https://lovetypes.tw/keepsakes/#keepsake-card-vivian",
+          "practiceAnchor": "https://lovetypes.tw/keepsakes/#practice-card-vivian",
+          "storyAsset": "assets/lovetypes/share/vivian-story-zh.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-vivian": true,
+            "keepsake-vivian": true,
+            "practice-card-vivian": true,
+            "vivian-story-zh.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "claire",
+          "guardianName": "克萊兒",
+          "anchor": "https://lovetypes.tw/keepsakes/#keepsake-card-claire",
+          "practiceAnchor": "https://lovetypes.tw/keepsakes/#practice-card-claire",
+          "storyAsset": "assets/lovetypes/share/claire-story-zh.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-claire": true,
+            "keepsake-claire": true,
+            "practice-card-claire": true,
+            "claire-story-zh.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "dora",
+          "guardianName": "朵拉",
+          "anchor": "https://lovetypes.tw/keepsakes/#keepsake-card-dora",
+          "practiceAnchor": "https://lovetypes.tw/keepsakes/#practice-card-dora",
+          "storyAsset": "assets/lovetypes/share/dora-story-zh.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-dora": true,
+            "keepsake-dora": true,
+            "practice-card-dora": true,
+            "dora-story-zh.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/contact/#luna-supply-request"
+        }
+      ]
+    },
+    {
+      "lang": "en",
+      "path": "en/keepsakes/index.html",
+      "url": "https://lovetypes.tw/en/keepsakes/",
+      "exists": true,
+      "markers": {
+        "shelf": true,
+        "ritual": true,
+        "copy_template": true,
+        "supply_request": true,
+        "story_download": true,
+        "practice_card": true
+      },
+      "guardians": [
+        {
+          "guardian": "iris",
+          "guardianName": "艾莉絲",
+          "anchor": "https://lovetypes.tw/en/keepsakes/#keepsake-card-iris",
+          "practiceAnchor": "https://lovetypes.tw/en/keepsakes/#practice-card-iris",
+          "storyAsset": "assets/lovetypes/share/iris-story-en.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-iris": true,
+            "keepsake-iris": true,
+            "practice-card-iris": true,
+            "iris-story-en.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/en/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "noah",
+          "guardianName": "諾雅",
+          "anchor": "https://lovetypes.tw/en/keepsakes/#keepsake-card-noah",
+          "practiceAnchor": "https://lovetypes.tw/en/keepsakes/#practice-card-noah",
+          "storyAsset": "assets/lovetypes/share/noah-story-en.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-noah": true,
+            "keepsake-noah": true,
+            "practice-card-noah": true,
+            "noah-story-en.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/en/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "vivian",
+          "guardianName": "薇薇安",
+          "anchor": "https://lovetypes.tw/en/keepsakes/#keepsake-card-vivian",
+          "practiceAnchor": "https://lovetypes.tw/en/keepsakes/#practice-card-vivian",
+          "storyAsset": "assets/lovetypes/share/vivian-story-en.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-vivian": true,
+            "keepsake-vivian": true,
+            "practice-card-vivian": true,
+            "vivian-story-en.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/en/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "claire",
+          "guardianName": "克萊兒",
+          "anchor": "https://lovetypes.tw/en/keepsakes/#keepsake-card-claire",
+          "practiceAnchor": "https://lovetypes.tw/en/keepsakes/#practice-card-claire",
+          "storyAsset": "assets/lovetypes/share/claire-story-en.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-claire": true,
+            "keepsake-claire": true,
+            "practice-card-claire": true,
+            "claire-story-en.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/en/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "dora",
+          "guardianName": "朵拉",
+          "anchor": "https://lovetypes.tw/en/keepsakes/#keepsake-card-dora",
+          "practiceAnchor": "https://lovetypes.tw/en/keepsakes/#practice-card-dora",
+          "storyAsset": "assets/lovetypes/share/dora-story-en.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-dora": true,
+            "keepsake-dora": true,
+            "practice-card-dora": true,
+            "dora-story-en.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/en/contact/#luna-supply-request"
+        }
+      ]
+    },
+    {
+      "lang": "ja",
+      "path": "ja/keepsakes/index.html",
+      "url": "https://lovetypes.tw/ja/keepsakes/",
+      "exists": true,
+      "markers": {
+        "shelf": true,
+        "ritual": true,
+        "copy_template": true,
+        "supply_request": true,
+        "story_download": true,
+        "practice_card": true
+      },
+      "guardians": [
+        {
+          "guardian": "iris",
+          "guardianName": "艾莉絲",
+          "anchor": "https://lovetypes.tw/ja/keepsakes/#keepsake-card-iris",
+          "practiceAnchor": "https://lovetypes.tw/ja/keepsakes/#practice-card-iris",
+          "storyAsset": "assets/lovetypes/share/iris-story-ja.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-iris": true,
+            "keepsake-iris": true,
+            "practice-card-iris": true,
+            "iris-story-ja.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ja/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "noah",
+          "guardianName": "諾雅",
+          "anchor": "https://lovetypes.tw/ja/keepsakes/#keepsake-card-noah",
+          "practiceAnchor": "https://lovetypes.tw/ja/keepsakes/#practice-card-noah",
+          "storyAsset": "assets/lovetypes/share/noah-story-ja.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-noah": true,
+            "keepsake-noah": true,
+            "practice-card-noah": true,
+            "noah-story-ja.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ja/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "vivian",
+          "guardianName": "薇薇安",
+          "anchor": "https://lovetypes.tw/ja/keepsakes/#keepsake-card-vivian",
+          "practiceAnchor": "https://lovetypes.tw/ja/keepsakes/#practice-card-vivian",
+          "storyAsset": "assets/lovetypes/share/vivian-story-ja.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-vivian": true,
+            "keepsake-vivian": true,
+            "practice-card-vivian": true,
+            "vivian-story-ja.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ja/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "claire",
+          "guardianName": "克萊兒",
+          "anchor": "https://lovetypes.tw/ja/keepsakes/#keepsake-card-claire",
+          "practiceAnchor": "https://lovetypes.tw/ja/keepsakes/#practice-card-claire",
+          "storyAsset": "assets/lovetypes/share/claire-story-ja.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-claire": true,
+            "keepsake-claire": true,
+            "practice-card-claire": true,
+            "claire-story-ja.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ja/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "dora",
+          "guardianName": "朵拉",
+          "anchor": "https://lovetypes.tw/ja/keepsakes/#keepsake-card-dora",
+          "practiceAnchor": "https://lovetypes.tw/ja/keepsakes/#practice-card-dora",
+          "storyAsset": "assets/lovetypes/share/dora-story-ja.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-dora": true,
+            "keepsake-dora": true,
+            "practice-card-dora": true,
+            "dora-story-ja.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ja/contact/#luna-supply-request"
+        }
+      ]
+    },
+    {
+      "lang": "ko",
+      "path": "ko/keepsakes/index.html",
+      "url": "https://lovetypes.tw/ko/keepsakes/",
+      "exists": true,
+      "markers": {
+        "shelf": true,
+        "ritual": true,
+        "copy_template": true,
+        "supply_request": true,
+        "story_download": true,
+        "practice_card": true
+      },
+      "guardians": [
+        {
+          "guardian": "iris",
+          "guardianName": "艾莉絲",
+          "anchor": "https://lovetypes.tw/ko/keepsakes/#keepsake-card-iris",
+          "practiceAnchor": "https://lovetypes.tw/ko/keepsakes/#practice-card-iris",
+          "storyAsset": "assets/lovetypes/share/iris-story-ko.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-iris": true,
+            "keepsake-iris": true,
+            "practice-card-iris": true,
+            "iris-story-ko.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ko/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "noah",
+          "guardianName": "諾雅",
+          "anchor": "https://lovetypes.tw/ko/keepsakes/#keepsake-card-noah",
+          "practiceAnchor": "https://lovetypes.tw/ko/keepsakes/#practice-card-noah",
+          "storyAsset": "assets/lovetypes/share/noah-story-ko.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-noah": true,
+            "keepsake-noah": true,
+            "practice-card-noah": true,
+            "noah-story-ko.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ko/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "vivian",
+          "guardianName": "薇薇安",
+          "anchor": "https://lovetypes.tw/ko/keepsakes/#keepsake-card-vivian",
+          "practiceAnchor": "https://lovetypes.tw/ko/keepsakes/#practice-card-vivian",
+          "storyAsset": "assets/lovetypes/share/vivian-story-ko.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-vivian": true,
+            "keepsake-vivian": true,
+            "practice-card-vivian": true,
+            "vivian-story-ko.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ko/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "claire",
+          "guardianName": "克萊兒",
+          "anchor": "https://lovetypes.tw/ko/keepsakes/#keepsake-card-claire",
+          "practiceAnchor": "https://lovetypes.tw/ko/keepsakes/#practice-card-claire",
+          "storyAsset": "assets/lovetypes/share/claire-story-ko.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-claire": true,
+            "keepsake-claire": true,
+            "practice-card-claire": true,
+            "claire-story-ko.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ko/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "dora",
+          "guardianName": "朵拉",
+          "anchor": "https://lovetypes.tw/ko/keepsakes/#keepsake-card-dora",
+          "practiceAnchor": "https://lovetypes.tw/ko/keepsakes/#practice-card-dora",
+          "storyAsset": "assets/lovetypes/share/dora-story-ko.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-dora": true,
+            "keepsake-dora": true,
+            "practice-card-dora": true,
+            "dora-story-ko.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/ko/contact/#luna-supply-request"
+        }
+      ]
+    },
+    {
+      "lang": "es",
+      "path": "es/keepsakes/index.html",
+      "url": "https://lovetypes.tw/es/keepsakes/",
+      "exists": true,
+      "markers": {
+        "shelf": true,
+        "ritual": true,
+        "copy_template": true,
+        "supply_request": true,
+        "story_download": true,
+        "practice_card": true
+      },
+      "guardians": [
+        {
+          "guardian": "iris",
+          "guardianName": "艾莉絲",
+          "anchor": "https://lovetypes.tw/es/keepsakes/#keepsake-card-iris",
+          "practiceAnchor": "https://lovetypes.tw/es/keepsakes/#practice-card-iris",
+          "storyAsset": "assets/lovetypes/share/iris-story-es.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-iris": true,
+            "keepsake-iris": true,
+            "practice-card-iris": true,
+            "iris-story-es.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/es/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "noah",
+          "guardianName": "諾雅",
+          "anchor": "https://lovetypes.tw/es/keepsakes/#keepsake-card-noah",
+          "practiceAnchor": "https://lovetypes.tw/es/keepsakes/#practice-card-noah",
+          "storyAsset": "assets/lovetypes/share/noah-story-es.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-noah": true,
+            "keepsake-noah": true,
+            "practice-card-noah": true,
+            "noah-story-es.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/es/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "vivian",
+          "guardianName": "薇薇安",
+          "anchor": "https://lovetypes.tw/es/keepsakes/#keepsake-card-vivian",
+          "practiceAnchor": "https://lovetypes.tw/es/keepsakes/#practice-card-vivian",
+          "storyAsset": "assets/lovetypes/share/vivian-story-es.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-vivian": true,
+            "keepsake-vivian": true,
+            "practice-card-vivian": true,
+            "vivian-story-es.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/es/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "claire",
+          "guardianName": "克萊兒",
+          "anchor": "https://lovetypes.tw/es/keepsakes/#keepsake-card-claire",
+          "practiceAnchor": "https://lovetypes.tw/es/keepsakes/#practice-card-claire",
+          "storyAsset": "assets/lovetypes/share/claire-story-es.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-claire": true,
+            "keepsake-claire": true,
+            "practice-card-claire": true,
+            "claire-story-es.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/es/contact/#luna-supply-request"
+        },
+        {
+          "guardian": "dora",
+          "guardianName": "朵拉",
+          "anchor": "https://lovetypes.tw/es/keepsakes/#keepsake-card-dora",
+          "practiceAnchor": "https://lovetypes.tw/es/keepsakes/#practice-card-dora",
+          "storyAsset": "assets/lovetypes/share/dora-story-es.webp",
+          "storyAssetExists": true,
+          "pageMarkers": {
+            "keepsake-card-dora": true,
+            "keepsake-dora": true,
+            "practice-card-dora": true,
+            "dora-story-es.webp": true
+          },
+          "leadMagnetTypes": [
+            "story_card_image",
+            "printable_practice_card",
+            "future_wallpaper_waitlist",
+            "luna_download_pack_waitlist"
+          ],
+          "contactHandoff": "https://lovetypes.tw/es/contact/#luna-supply-request"
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "lang": "zh",
+      "guardian": "iris",
+      "path": "assets/lovetypes/share/iris-story-zh.webp",
+      "exists": true
+    },
+    {
+      "lang": "zh",
+      "guardian": "noah",
+      "path": "assets/lovetypes/share/noah-story-zh.webp",
+      "exists": true
+    },
+    {
+      "lang": "zh",
+      "guardian": "vivian",
+      "path": "assets/lovetypes/share/vivian-story-zh.webp",
+      "exists": true
+    },
+    {
+      "lang": "zh",
+      "guardian": "claire",
+      "path": "assets/lovetypes/share/claire-story-zh.webp",
+      "exists": true
+    },
+    {
+      "lang": "zh",
+      "guardian": "dora",
+      "path": "assets/lovetypes/share/dora-story-zh.webp",
+      "exists": true
+    },
+    {
+      "lang": "en",
+      "guardian": "iris",
+      "path": "assets/lovetypes/share/iris-story-en.webp",
+      "exists": true
+    },
+    {
+      "lang": "en",
+      "guardian": "noah",
+      "path": "assets/lovetypes/share/noah-story-en.webp",
+      "exists": true
+    },
+    {
+      "lang": "en",
+      "guardian": "vivian",
+      "path": "assets/lovetypes/share/vivian-story-en.webp",
+      "exists": true
+    },
+    {
+      "lang": "en",
+      "guardian": "claire",
+      "path": "assets/lovetypes/share/claire-story-en.webp",
+      "exists": true
+    },
+    {
+      "lang": "en",
+      "guardian": "dora",
+      "path": "assets/lovetypes/share/dora-story-en.webp",
+      "exists": true
+    },
+    {
+      "lang": "ja",
+      "guardian": "iris",
+      "path": "assets/lovetypes/share/iris-story-ja.webp",
+      "exists": true
+    },
+    {
+      "lang": "ja",
+      "guardian": "noah",
+      "path": "assets/lovetypes/share/noah-story-ja.webp",
+      "exists": true
+    },
+    {
+      "lang": "ja",
+      "guardian": "vivian",
+      "path": "assets/lovetypes/share/vivian-story-ja.webp",
+      "exists": true
+    },
+    {
+      "lang": "ja",
+      "guardian": "claire",
+      "path": "assets/lovetypes/share/claire-story-ja.webp",
+      "exists": true
+    },
+    {
+      "lang": "ja",
+      "guardian": "dora",
+      "path": "assets/lovetypes/share/dora-story-ja.webp",
+      "exists": true
+    },
+    {
+      "lang": "ko",
+      "guardian": "iris",
+      "path": "assets/lovetypes/share/iris-story-ko.webp",
+      "exists": true
+    },
+    {
+      "lang": "ko",
+      "guardian": "noah",
+      "path": "assets/lovetypes/share/noah-story-ko.webp",
+      "exists": true
+    },
+    {
+      "lang": "ko",
+      "guardian": "vivian",
+      "path": "assets/lovetypes/share/vivian-story-ko.webp",
+      "exists": true
+    },
+    {
+      "lang": "ko",
+      "guardian": "claire",
+      "path": "assets/lovetypes/share/claire-story-ko.webp",
+      "exists": true
+    },
+    {
+      "lang": "ko",
+      "guardian": "dora",
+      "path": "assets/lovetypes/share/dora-story-ko.webp",
+      "exists": true
+    },
+    {
+      "lang": "es",
+      "guardian": "iris",
+      "path": "assets/lovetypes/share/iris-story-es.webp",
+      "exists": true
+    },
+    {
+      "lang": "es",
+      "guardian": "noah",
+      "path": "assets/lovetypes/share/noah-story-es.webp",
+      "exists": true
+    },
+    {
+      "lang": "es",
+      "guardian": "vivian",
+      "path": "assets/lovetypes/share/vivian-story-es.webp",
+      "exists": true
+    },
+    {
+      "lang": "es",
+      "guardian": "claire",
+      "path": "assets/lovetypes/share/claire-story-es.webp",
+      "exists": true
+    },
+    {
+      "lang": "es",
+      "guardian": "dora",
+      "path": "assets/lovetypes/share/dora-story-es.webp",
+      "exists": true
+    }
+  ],
+  "issues": []
+}

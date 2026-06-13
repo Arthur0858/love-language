@@ -57,6 +57,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_first_batch_kpi_checklist.py"],
     [sys.executable, "tools/promotion_profile_post_alignment_checklist.py"],
     [sys.executable, "tools/promotion_public_post_url_checklist.py"],
+    [sys.executable, "tools/promotion_zero_kpi_evidence_checklist.py"],
     [sys.executable, "tools/promotion_next_actions.py"],
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],

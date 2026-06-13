@@ -573,7 +573,7 @@ AFFILIATE_BOOKS = [
             "es": "Traduce los ejemplos a tu cultura, tono y situación relacional.",
         },
         "asin": "080241270X",
-        "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "url": amazon_affiliate_url("080241270X"),
         "urls": {
             "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
             "default": amazon_affiliate_url("080241270X"),
@@ -606,7 +606,7 @@ AFFILIATE_BOOKS = [
             "es": "Practica una frase primero; no intentes reescribir toda la relación de una vez.",
         },
         "asin": "189200528X",
-        "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "url": amazon_affiliate_url("189200528X"),
         "urls": {
             "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
             "default": amazon_affiliate_url("189200528X"),
@@ -639,7 +639,7 @@ AFFILIATE_BOOKS = [
             "es": "El apego no es una etiqueta fija; sirve para observar estrategias de protección.",
         },
         "asin": "1585429139",
-        "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "url": amazon_affiliate_url("1585429139"),
         "urls": {
             "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
             "default": amazon_affiliate_url("1585429139"),
@@ -672,7 +672,7 @@ AFFILIATE_BOOKS = [
             "es": "Empieza con un hábito; no intentes reparar todo de una vez.",
         },
         "asin": "0553447718",
-        "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "url": amazon_affiliate_url("0553447718"),
         "urls": {
             "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
             "default": amazon_affiliate_url("0553447718"),

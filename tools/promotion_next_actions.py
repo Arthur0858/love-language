@@ -79,6 +79,9 @@ def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict]) 
             "profileLinkLabel": item.get("profileLinkLabel", "Profile link"),
             "bio": item.get("bio", ""),
             "pinnedComment": item.get("pinnedComment", ""),
+            "writebackValues": item.get("writebackValues", {}),
+            "verificationSteps": item.get("verificationSteps", []),
+            "doNotPublishUntil": item.get("doNotPublishUntil", []),
             "firstKpis": ["status", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
         })
     return actions
@@ -312,6 +315,36 @@ def build_markdown(plan: dict) -> str:
             item["pinnedComment"],
             "```",
             "",
+            "- 設定後回填值：",
+            "",
+        ])
+        writeback_values = item.get("writebackValues", {})
+        if writeback_values:
+            lines.extend(f"  - `{field}`：{value}" for field, value in writeback_values.items())
+        else:
+            lines.append("  - `status`：set")
+        lines.extend([
+            "",
+            "- 設定後驗證：",
+            "",
+        ])
+        verification_steps = item.get("verificationSteps", [])
+        if verification_steps:
+            lines.extend(f"  - {step}" for step in verification_steps)
+        else:
+            lines.append("  - 開啟 profile link，確認會到 /start/ 並保留 UTM。")
+        lines.extend([
+            "",
+            "- 未完成前不要發布：",
+            "",
+        ])
+        do_not_publish = item.get("doNotPublishUntil", [])
+        if do_not_publish:
+            lines.extend(f"  - {step}" for step in do_not_publish)
+        else:
+            lines.append("  - status 尚未標記 set/live。")
+        lines.extend([
+            "",
             f"- 優先回填欄位：{', '.join(f'`{field}`' for field in item['firstKpis'])}",
             "",
         ])
@@ -375,6 +408,13 @@ def main() -> int:
             issues.append("expected platform profile actions for pending rows")
         if plan["dataState"]["emptyDataMode"] and plan["dataState"]["profilePendingRows"] < 1:
             issues.append("empty data mode should surface platform profile setup actions")
+        for item in plan["platformProfileActions"]:
+            if not item.get("writebackValues"):
+                issues.append(f"{item.get('platform')}: missing writebackValues")
+            if len(item.get("verificationSteps", [])) < 4:
+                issues.append(f"{item.get('platform')}: missing verificationSteps")
+            if len(item.get("doNotPublishUntil", [])) < 3:
+                issues.append(f"{item.get('platform')}: missing doNotPublishUntil")
         if not markdown.startswith("# LoveTypes 下一批推廣動作建議"):
             issues.append("markdown missing title")
         print(f"promotion_next_actions_selected_tasks={len(plan['selectedTasks'])}")

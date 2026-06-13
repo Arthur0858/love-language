@@ -33,6 +33,26 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 留言 A/B/C，我們會用守護者路線回覆你。
 ```
 
+- 設定後回填值：
+
+  - `status`：set
+  - `profile_link_set_date`：YYYY-MM-DD
+  - `profile_link`：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+  - `notes`：YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。
+
+- 設定後驗證：
+
+  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
+  - 確認 URL 保留 utm_source=youtube、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
+  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
+  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
+
+- 未完成前不要發布：
+
+  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
+  - profile_link_set_date 已填入設定日期。
+  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
+
 - 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
 
 ### TikTok（`tiktok`）
@@ -53,6 +73,26 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 留言 A/B/C，選出最像你的心語。
 ```
 
+- 設定後回填值：
+
+  - `status`：set
+  - `profile_link_set_date`：YYYY-MM-DD
+  - `profile_link`：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+  - `notes`：若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。
+
+- 設定後驗證：
+
+  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
+  - 確認 URL 保留 utm_source=tiktok、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
+  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
+  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
+
+- 未完成前不要發布：
+
+  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
+  - profile_link_set_date 已填入設定日期。
+  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
+
 - 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
 
 ### Instagram Reels（`instagram_reels`）
@@ -72,6 +112,26 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。
 留言你的 A/B/C，讓守護者把心語接住。
 ```
+
+- 設定後回填值：
+
+  - `status`：set
+  - `profile_link_set_date`：YYYY-MM-DD
+  - `profile_link`：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+  - `notes`：IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。
+
+- 設定後驗證：
+
+  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
+  - 確認 URL 保留 utm_source=instagram、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
+  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
+  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
+
+- 未完成前不要發布：
+
+  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
+  - profile_link_set_date 已填入設定日期。
+  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
 
 - 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
 

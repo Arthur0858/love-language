@@ -88,6 +88,23 @@ def build_setup() -> dict:
                 "置頂留言或首則留言維持單一 CTA：完成 15 題測驗。",
                 "發布後回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
             ],
+            "writebackValues": {
+                "status": "set",
+                "profile_link_set_date": "YYYY-MM-DD",
+                "profile_link": url,
+                "notes": config["link_limit_note"],
+            },
+            "verificationSteps": [
+                "在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。",
+                f"確認 URL 保留 utm_source={config['utm_source']}、utm_medium=social_profile、utm_campaign={CAMPAIGN}。",
+                "確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。",
+                "設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。",
+            ],
+            "doNotPublishUntil": [
+                "platform-profile-tracker.csv 的 status 已改為 set 或 live。",
+                "profile_link_set_date 已填入設定日期。",
+                "profile link 已手動開啟並確認 UTM 沒被平台截斷。",
+            ],
             "kpiFieldsToFill": [
                 "profile_clicks",
                 "site_clicks",
@@ -143,6 +160,24 @@ def validate_setup(setup: dict) -> list[str]:
         checklist = item.get("launchChecklist", [])
         if not isinstance(checklist, list) or len(checklist) < 4:
             issues.append(f"{label}: launchChecklist should include at least four items")
+        writeback = item.get("writebackValues", {})
+        if not isinstance(writeback, dict):
+            issues.append(f"{label}: writebackValues should be an object")
+        else:
+            if writeback.get("status") != "set":
+                issues.append(f"{label}: writebackValues.status should be set")
+            if writeback.get("profile_link") != item.get("profileLink"):
+                issues.append(f"{label}: writebackValues.profile_link should match profileLink")
+            if not writeback.get("profile_link_set_date"):
+                issues.append(f"{label}: writebackValues should include profile_link_set_date")
+        verification_steps = item.get("verificationSteps", [])
+        if not isinstance(verification_steps, list) or len(verification_steps) < 4:
+            issues.append(f"{label}: verificationSteps should include at least four items")
+        if not any("utm_source" in step for step in verification_steps):
+            issues.append(f"{label}: verificationSteps should mention UTM source")
+        do_not_publish = item.get("doNotPublishUntil", [])
+        if not isinstance(do_not_publish, list) or len(do_not_publish) < 3:
+            issues.append(f"{label}: doNotPublishUntil should include at least three items")
         kpis = set(item.get("kpiFieldsToFill", []))
         if not {"profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"}.issubset(kpis):
             issues.append(f"{label}: missing core KPI fields")
@@ -193,6 +228,13 @@ def render_markdown(setup: dict) -> str:
             "",
         ])
         lines.extend(f"- {check}" for check in item["launchChecklist"])
+        lines.extend(["", "### 設定後回填值", ""])
+        for field, value in item["writebackValues"].items():
+            lines.append(f"- `{field}`：{value}")
+        lines.extend(["", "### 設定後驗證", ""])
+        lines.extend(f"- {step}" for step in item["verificationSteps"])
+        lines.extend(["", "### 未完成前不要發布", ""])
+        lines.extend(f"- {step}" for step in item["doNotPublishUntil"])
         lines.extend(["", "### KPI 回填欄位", ""])
         lines.extend(f"- `{field}`" for field in item["kpiFieldsToFill"])
         lines.append("")

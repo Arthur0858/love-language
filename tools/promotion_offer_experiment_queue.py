@@ -60,6 +60,20 @@ STEPS = [
         "writeback": "Update kpi-tracker.csv, weekly-summary, decision gate, offer board, and experiment plan.",
     },
 ]
+QUEUE_STATUSES = ("ready", "waiting_for_signal", "blocked_by_gate")
+
+
+def queue_policy() -> dict[str, object]:
+    return {
+        "stepOrder": [step["step"] for step in STEPS],
+        "stepCount": len(STEPS),
+        "statuses": list(QUEUE_STATUSES),
+        "blockedStatus": "blocked_by_gate",
+        "readyStatus": "ready",
+        "waitingStatus": "waiting_for_signal",
+        "blockedGateReadyRowsMustBeZero": True,
+        "rule": "只有 offer experiment plan 無 blocker 且實驗列為 READY 時，queue row 才可進入 ready；其餘維持 waiting 或 blocked。",
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -68,10 +82,10 @@ def load_json(path: Path) -> dict:
 
 def row_status(experiment: dict, blockers: list[str]) -> str:
     if blockers:
-        return "blocked_by_gate"
+        return queue_policy()["blockedStatus"]
     if experiment.get("status") == "READY":
-        return "ready"
-    return "waiting_for_signal"
+        return queue_policy()["readyStatus"]
+    return queue_policy()["waitingStatus"]
 
 
 def build_queue(plan: dict) -> dict:
@@ -99,6 +113,7 @@ def build_queue(plan: dict) -> dict:
     return {
         "generatedAt": date.today().isoformat(),
         "source": {"offerExperimentPlan": str(PLAN_PATH.relative_to(ROOT))},
+        "queuePolicy": queue_policy(),
         "queueRows": rows,
         "experimentCount": len(plan.get("experiments", [])),
         "stepCount": len(STEPS),
@@ -116,6 +131,7 @@ def build_queue(plan: dict) -> dict:
 
 
 def render_markdown(queue: dict) -> str:
+    policy = queue["queuePolicy"]
     lines = [
         "# LoveTypes 商品實驗執行佇列",
         "",
@@ -123,6 +139,8 @@ def render_markdown(queue: dict) -> str:
         f"- ready rows：{queue['readyRows']}",
         f"- waiting rows：{queue['waitingRows']}",
         f"- blocked rows：{queue['blockedRows']}",
+        f"- 規則：{policy['rule']}",
+        f"- 步驟：{', '.join(policy['stepOrder'])}",
         "",
         "## 阻擋條件",
         "",
@@ -181,13 +199,18 @@ def write_outputs(queue: dict, output: Path, json_output: Path, csv_output: Path
 def validate_queue(queue: dict) -> list[str]:
     issues: list[str] = []
     rows = queue.get("queueRows", [])
+    policy = queue.get("queuePolicy", {})
     expected_rows = int(queue.get("expectedQueueRows", 0) or 0)
+    valid_statuses = set(policy.get("statuses", [])) if isinstance(policy, dict) else set()
+    expected_step_count = int(policy.get("stepCount", 0) or 0) if isinstance(policy, dict) else 0
+    if expected_step_count != len(STEPS) or valid_statuses != set(QUEUE_STATUSES):
+        issues.append("queue policy does not match configured steps or statuses")
     if len(rows) != expected_rows:
         issues.append(f"expected {expected_rows} experiment queue rows, got {len(rows)}")
-    if queue.get("blockers") and queue.get("readyRows", 0) != 0:
+    if policy.get("blockedGateReadyRowsMustBeZero") and queue.get("blockers") and queue.get("readyRows", 0) != 0:
         issues.append("blocked gate must not expose ready experiment queue rows")
     for row in rows:
-        if row.get("status") not in {"ready", "waiting_for_signal", "blocked_by_gate"}:
+        if row.get("status") not in valid_statuses:
             issues.append(f"{row.get('queueId', '<unknown>')}: invalid status")
         if not row.get("assetId") or not row.get("targetUrl") or not row.get("acceptanceCheck"):
             issues.append(f"{row.get('queueId', '<unknown>')}: missing asset, target, or acceptance check")

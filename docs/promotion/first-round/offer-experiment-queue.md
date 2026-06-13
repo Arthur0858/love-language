@@ -4,6 +4,8 @@
 - ready rows：0
 - waiting rows：0
 - blocked rows：80
+- 規則：只有 offer experiment plan 無 blocker 且實驗列為 READY 時，queue row 才可進入 ready；其餘維持 waiting 或 blocked。
+- 步驟：brief, asset, qa, measure
 
 ## 阻擋條件
 

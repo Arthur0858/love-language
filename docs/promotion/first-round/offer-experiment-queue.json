@@ -3,6 +3,25 @@
   "source": {
     "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json"
   },
+  "queuePolicy": {
+    "stepOrder": [
+      "brief",
+      "asset",
+      "qa",
+      "measure"
+    ],
+    "stepCount": 4,
+    "statuses": [
+      "ready",
+      "waiting_for_signal",
+      "blocked_by_gate"
+    ],
+    "blockedStatus": "blocked_by_gate",
+    "readyStatus": "ready",
+    "waitingStatus": "waiting_for_signal",
+    "blockedGateReadyRowsMustBeZero": true,
+    "rule": "只有 offer experiment plan 無 blocker 且實驗列為 READY 時，queue row 才可進入 ready；其餘維持 waiting 或 blocked。"
+  },
   "queueRows": [
     {
       "queueId": "iris-identity_save-brief",

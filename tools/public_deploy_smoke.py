@@ -254,6 +254,16 @@ REDIRECTS = {
     "/es/luna/": "/es/luna-yoga-music/",
 }
 DEDICATED_SUPPORT_FILES = {"/sitemap.xml", "/feed.xml"}
+
+
+def local_json_snippet(path: str, key: str) -> str:
+    data = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    value = data.get(key)
+    if not isinstance(value, str) or not value:
+        raise RuntimeError(f"{path} missing string field {key}")
+    return f'"{key}": "{value}"'
+
+
 SUPPORT_FILES = {
     "/robots.txt": ["User-agent: *", "Allow: /", "Sitemap: https://lovetypes.tw/sitemap.xml"],
     "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
@@ -309,7 +319,7 @@ SUPPORT_FILES = {
         '"No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims."',
     ],
     "/promotion-kit.json": [
-        '"generatedAt": "2026-06-13"',
+        local_json_snippet("promotion-kit.json", "generatedAt"),
         '"campaignId": "lovetypes-first-round-quiz-completion"',
         '"platformProfileSetup"',
         '"writebackValues"',

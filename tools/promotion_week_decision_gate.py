@@ -15,6 +15,15 @@ MATRIX_PATH = PROMOTION_DIR / "revenue-decision-matrix.json"
 NEXT_ACTIONS_PATH = PROMOTION_DIR / "next-actions.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "week-decision-gate.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "week-decision-gate.json"
+QUIZ_START_RATE_MIN = 0.3
+QUIZ_COMPLETION_RATE_MIN = 0.4
+
+
+def decision_thresholds() -> dict[str, float]:
+    return {
+        "quizStartRateMin": QUIZ_START_RATE_MIN,
+        "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -52,10 +61,10 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
         blockers.append("尚未達週決策門檻：發布狀態或 KPI 回填不足。")
     if empty_data:
         blockers.append("目前仍是空資料模式，不能放大守護者、商品或付費 CTA。")
-    if site_clicks > 0 and start_rate is not None and start_rate < 0.3:
-        blockers.append("網站點擊進來但測驗開始率低於 30%，先修 /start/ 首屏與 CTA。")
-    if quiz_starts > 0 and completion_rate is not None and completion_rate < 0.4:
-        blockers.append("測驗開始後完成率低於 40%，先修手機題目節奏與結果揭示。")
+    if site_clicks > 0 and start_rate is not None and start_rate < QUIZ_START_RATE_MIN:
+        blockers.append(f"網站點擊進來但測驗開始率低於 {QUIZ_START_RATE_MIN:.0%}，先修 /start/ 首屏與 CTA。")
+    if quiz_starts > 0 and completion_rate is not None and completion_rate < QUIZ_COMPLETION_RATE_MIN:
+        blockers.append(f"測驗開始後完成率低於 {QUIZ_COMPLETION_RATE_MIN:.0%}，先修手機題目節奏與結果揭示。")
 
     can_scale_content = ready_for_weekly and not empty_data and quiz_completions >= 10 and not any("測驗開始後完成率" in item for item in blockers)
     can_build_owned = ready_for_weekly and not empty_data and lead_intent > 0
@@ -114,6 +123,7 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
             "leadIntent": lead_intent,
             "paidRevenueIntent": paid_intent,
         },
+        "decisionThresholds": decision_thresholds(),
         "leaders": leaders,
         "gates": gates,
         "recommendedFocus": recommended_focus,

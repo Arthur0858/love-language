@@ -26,6 +26,15 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+QUIZ_START_RATE_MIN = 0.3
+QUIZ_COMPLETION_RATE_MIN = 0.4
+
+
+def decision_thresholds() -> dict[str, float]:
+    return {
+        "quizStartRateMin": QUIZ_START_RATE_MIN,
+        "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
+    }
 
 
 def parse_int(value: str | None) -> int:
@@ -218,14 +227,14 @@ def build_actions(
         ])
     else:
         derived = report["derived"]
-        if derived["quizStartRate"] is not None and derived["quizStartRate"] < 0.3:
+        if derived["quizStartRate"] is not None and derived["quizStartRate"] < QUIZ_START_RATE_MIN:
             actions.append({
                 "id": "repair_start_landing",
                 "priority": "high",
                 "type": "site",
                 "summary": "網站點擊有進來但測驗開始率低，優先檢查 /start/ 首屏與 CTA。",
             })
-        if derived["quizCompletionRate"] is not None and derived["quizCompletionRate"] < 0.4:
+        if derived["quizCompletionRate"] is not None and derived["quizCompletionRate"] < QUIZ_COMPLETION_RATE_MIN:
             actions.append({
                 "id": "repair_quiz_completion",
                 "priority": "high",
@@ -279,6 +288,7 @@ def build_actions(
             "contentAngles": dict(sorted(angle_scores.items())),
             "revenueGuardians": dict(sorted(revenue_scores.items())),
         },
+        "decisionThresholds": decision_thresholds(),
         "actions": actions,
         "platformProfileActions": pending_profile_actions,
         "selectedTasks": [task_summary(task) for task in selected],

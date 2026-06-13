@@ -16,6 +16,10 @@
     "leadIntent": 0,
     "paidRevenueIntent": 0
   },
+  "decisionThresholds": {
+    "quizStartRateMin": 0.3,
+    "quizCompletionRateMin": 0.4
+  },
   "leaders": {
     "quizGuardian": null,
     "revenueGuardian": null,

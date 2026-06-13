@@ -24,6 +24,10 @@
     "contentAngles": {},
     "revenueGuardians": {}
   },
+  "decisionThresholds": {
+    "quizStartRateMin": 0.3,
+    "quizCompletionRateMin": 0.4
+  },
   "actions": [
     {
       "id": "publish_first_batch",

@@ -222,8 +222,8 @@
 - task：`publish-lt-s01-iris-silence`
 - schedule：2026-06-15 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -236,8 +236,8 @@
 - task：`publish-lt-s01-iris-silence`
 - schedule：2026-06-15 21:00 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -250,8 +250,8 @@
 - task：`publish-lt-s01-iris-silence`
 - schedule：2026-06-15 21:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -264,8 +264,8 @@
 - task：`publish-lt-s02-iris-affirmation`
 - schedule：2026-06-17 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -278,8 +278,8 @@
 - task：`publish-lt-s02-iris-affirmation`
 - schedule：2026-06-17 21:00 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -292,8 +292,8 @@
 - task：`publish-lt-s02-iris-affirmation`
 - schedule：2026-06-17 21:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -306,8 +306,8 @@
 - task：`publish-lt-s03-iris-too-sensitive`
 - schedule：2026-06-19 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -320,8 +320,8 @@
 - task：`publish-lt-s03-iris-too-sensitive`
 - schedule：2026-06-19 21:00 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
@@ -334,8 +334,8 @@
 - task：`publish-lt-s03-iris-too-sensitive`
 - schedule：2026-06-19 21:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 

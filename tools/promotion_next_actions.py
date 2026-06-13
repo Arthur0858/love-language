@@ -26,6 +26,13 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+ROUTE_FIELDS = [
+    "guardian_result_clicks",
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks",
+]
 EMPTY_DATA_ACTION_IDS = (
     "publish_first_batch",
     "fill_required_kpis",
@@ -59,6 +66,7 @@ def action_policy() -> dict[str, object]:
         "profileSetupBeforePublish": True,
         "profileFirstKpis": list(PROFILE_FIRST_KPIS),
         "shortsKpiMinimumFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
+        "shortsKpiDownstreamFields": [*ROUTE_FIELDS, *REVENUE_FIELDS],
         "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
         "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + route_clicks + revenue_intent * 2.",
     }
@@ -231,7 +239,7 @@ def build_actions(
                 "id": "fill_required_kpis",
                 "priority": "high",
                 "type": "measurement",
-                "summary": "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+                "summary": "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。",
             },
             {
                 "id": "set_platform_profile_links",

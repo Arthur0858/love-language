@@ -9,7 +9,7 @@
 - 每支 Shorts 只放一個主 CTA：完成 15 題測驗。
 - 說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。
 - 不把守護者結果描述成診斷、療效、保證修復或購買要求。
-- 發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。
+- 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 1. 約會時他一直看手機，你真正難過的是什麼？
 
@@ -64,8 +64,9 @@
 
 - `script_id`: `lt-s04-noah-phone`
 - `guardian_id`: `noah`
-- 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
-- 有結果後互動時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`
+- `platform-kpi-tracker.csv` 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
+- `platform-kpi-tracker.csv` 路線互動時回填：`guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`
+- `platform-kpi-tracker.csv` 有收藏、名單、Luna、聯盟或 Contact 意圖時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`
 
 ## 2. 約定一再被取消，你會怎麼保護自己？
 
@@ -121,8 +122,9 @@
 
 - `script_id`: `lt-s05-noah-cancel`
 - `guardian_id`: `noah`
-- 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
-- 有結果後互動時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`
+- `platform-kpi-tracker.csv` 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
+- `platform-kpi-tracker.csv` 路線互動時回填：`guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`
+- `platform-kpi-tracker.csv` 有收藏、名單、Luna、聯盟或 Contact 意圖時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`
 
 ## 3. 你最想被怎樣陪伴？
 
@@ -177,5 +179,6 @@
 
 - `script_id`: `lt-s06-noah-quiet-time`
 - `guardian_id`: `noah`
-- 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
-- 有結果後互動時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`
+- `platform-kpi-tracker.csv` 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`
+- `platform-kpi-tracker.csv` 路線互動時回填：`guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`
+- `platform-kpi-tracker.csv` 有收藏、名單、Luna、聯盟或 Contact 意圖時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`

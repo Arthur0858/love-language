@@ -15,6 +15,18 @@ DEFAULT_INDEX_JSON_PATH = PROMOTION_DIR / "week-asset-briefs-index.json"
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 SCENE_SUBTITLE_GROUP_SIZE = 3
 MIN_SCENE_CARDS_PER_BRIEF = 3
+DOWNSTREAM_KPI_HINT = (
+    "guardian_result_clicks",
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks",
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+)
 
 
 def scene_card_policy() -> dict[str, int | str]:
@@ -114,7 +126,7 @@ def build_brief(week: int, script_row: dict, source_script: dict) -> dict:
             "不把短片 CTA 改成直接購買。",
             "不交換守護者名稱、愛之語、色系或象徵物。",
             "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-            "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。",
+            "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。",
         ],
     }
 
@@ -182,7 +194,7 @@ def validate_week_payload(payload: dict) -> list[str]:
             if "utm_campaign=first_round_quiz_completion" not in tracked_url:
                 issues.append(f"{label}/{platform_label}: tracked URL missing campaign marker")
         safety_text = " ".join(brief.get("safetyChecklist", []))
-        for required in ("不宣稱診斷", "不把短片 CTA 改成直接購買", "發布後先回填"):
+        for required in ("不宣稱診斷", "不把短片 CTA 改成直接購買", "發布後先回填", "結果後互動"):
             if required not in safety_text:
                 issues.append(f"{label}: safety checklist missing {required}")
     return issues
@@ -201,7 +213,7 @@ def render_week_markdown(payload: dict) -> str:
         "",
         "- 每支影片先依場景卡完成 9:16 初版，再使用對應平台 caption 發布。",
         "- 發布 CTA 固定導向 15 題測驗；商品、Luna、聯盟連結只由網站結果頁承接。",
-        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
+        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv` 的最小 KPI；有結果後互動時補齊 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。",
         "",
     ]
     for brief in payload["briefs"]:
@@ -240,6 +252,7 @@ def render_week_markdown(payload: dict) -> str:
                 "```",
                 "",
                 f"- 回填：{', '.join(f'`{item}`' for item in platform.get('writeback', []))}",
+                f"- 結果後互動欄位：{', '.join(f'`{item}`' for item in DOWNSTREAM_KPI_HINT)}",
                 "",
             ])
         lines.extend(["### 安全檢查", ""])
@@ -298,7 +311,8 @@ def render_index_markdown(index: dict) -> str:
         "## 使用方式",
         "",
         "- 每支影片先依週手卡完成 9:16 初版，再使用對應平台 caption 發布。",
-        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
+        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv` 的最小 KPI 與結果後互動欄位；週回顧才彙總 `kpi-tracker.csv`。",
+        f"- 結果後互動欄位：{', '.join(f'`{item}`' for item in DOWNSTREAM_KPI_HINT)}。",
     ])
     if index["issues"]:
         lines.extend(["", "## Issues", ""])

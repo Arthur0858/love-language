@@ -9,7 +9,7 @@
 
 - 每支影片先依場景卡完成 9:16 初版，再使用對應平台 caption 發布。
 - 發布 CTA 固定導向 15 題測驗；商品、Luna、聯盟連結只由網站結果頁承接。
-- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。
+- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv` 的最小 KPI；有結果後互動時補齊 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ## 艾莉絲 · 他沉默時，你最想聽見哪一句話？
 
@@ -52,7 +52,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### TikTok · 2026-06-15 21:00 Asia/Taipei
 
@@ -67,7 +68,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### Instagram Reels · 2026-06-15 21:30 Asia/Taipei
 
@@ -82,7 +84,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 ### 安全檢查
 
@@ -90,7 +93,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 艾莉絲 · 哪一句肯定，會讓你瞬間安心？
 
@@ -133,7 +136,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### TikTok · 2026-06-17 21:00 Asia/Taipei
 
@@ -148,7 +152,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### Instagram Reels · 2026-06-17 21:30 Asia/Taipei
 
@@ -163,7 +168,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 ### 安全檢查
 
@@ -171,7 +177,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 艾莉絲 · 你真的太敏感嗎？還是你只是等一句清楚的話？
 
@@ -214,7 +220,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### TikTok · 2026-06-19 21:00 Asia/Taipei
 
@@ -229,7 +236,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 #### Instagram Reels · 2026-06-19 21:30 Asia/Taipei
 
@@ -244,7 +252,8 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
+- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
 
 ### 安全檢查
 
@@ -252,4 +261,4 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。

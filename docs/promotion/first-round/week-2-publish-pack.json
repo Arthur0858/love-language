@@ -8,7 +8,7 @@
     "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
     "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
     "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
-    "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。"
+    "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。"
   ],
   "tasks": [
     {

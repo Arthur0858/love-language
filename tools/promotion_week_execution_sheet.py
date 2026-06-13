@@ -27,6 +27,28 @@ PLATFORM_LABELS = {
     "instagram_reels": "Instagram Reels",
 }
 POST_STATUS_READY = {"planned", "scheduled"}
+MINIMUM_POST_KPI_WRITEBACK = (
+    "platform-kpi-tracker.csv: post_url",
+    "platform-kpi-tracker.csv: site_clicks",
+    "platform-kpi-tracker.csv: quiz_starts",
+    "platform-kpi-tracker.csv: quiz_completions",
+)
+DOWNSTREAM_POST_KPI_WRITEBACK = (
+    "platform-kpi-tracker.csv: guardian_result_clicks",
+    "platform-kpi-tracker.csv: resources_clicks",
+    "platform-kpi-tracker.csv: repair_plan_clicks",
+    "platform-kpi-tracker.csv: luna_clicks",
+    "platform-kpi-tracker.csv: keepsake_clicks",
+    "platform-kpi-tracker.csv: free_keepsake_downloads",
+    "platform-kpi-tracker.csv: supply_lead_requests",
+    "platform-kpi-tracker.csv: luna_pack_clicks",
+    "platform-kpi-tracker.csv: affiliate_book_clicks",
+    "platform-kpi-tracker.csv: contact_requests",
+)
+
+
+def inline_code_list(items: tuple[str, ...]) -> str:
+    return "、".join(f"`{item}`" for item in items)
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -117,10 +139,8 @@ def scripts_from_rows(rows: list[dict[str, str]]) -> list[dict]:
                     "posting-queue.csv: status=published",
                     "posting-queue.csv: published_date",
                     "posting-queue.csv: post_url",
-                    "platform-kpi-tracker.csv: post_url",
-                    "platform-kpi-tracker.csv: site_clicks",
-                    "platform-kpi-tracker.csv: quiz_starts",
-                    "platform-kpi-tracker.csv: quiz_completions",
+                    *MINIMUM_POST_KPI_WRITEBACK,
+                    *DOWNSTREAM_POST_KPI_WRITEBACK,
                 ],
             })
         scripts.append({
@@ -196,7 +216,8 @@ def build_sheet(queue_rows: list[dict[str, str]], profile_rows: list[dict[str, s
             "完成三平台 Bio/Profile link 設定。",
             "依本週三支腳本完成影片輸出或剪輯手卡交付。",
             "依平台任務時間發布到 YouTube Shorts、TikTok、Instagram Reels。",
-            "先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧時才彙總 kpi-tracker.csv，平台首頁成效另回填 platform-profile-tracker.csv。",
+            "先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。",
+            "週回顧時才彙總 kpi-tracker.csv，平台首頁成效另回填 platform-profile-tracker.csv。",
             "跑 promotion_publishing_status.py；未達週決策門檻前不調整商品或付費 CTA。",
         ],
         "safety": {
@@ -271,6 +292,8 @@ def render_markdown(sheet: dict) -> str:
                 "```",
                 "",
                 f"- 回填：{', '.join(f'`{field}`' for field in item['writeback'])}",
+                f"- 最小 KPI：{inline_code_list(MINIMUM_POST_KPI_WRITEBACK)}",
+                f"- 結果後互動：{inline_code_list(DOWNSTREAM_POST_KPI_WRITEBACK)}",
                 "",
             ])
     lines.extend([
@@ -325,7 +348,8 @@ def render_index(sheets: list[dict]) -> str:
         "## 使用規則",
         "",
         "- 每週照該週執行單發布，不從多份文件人工拼接。",
-            "- 發布前先完成平台首頁 gate；發布後先回填 queue，再回填 platform-kpi-tracker.csv。",
+        "- 發布前先完成平台首頁 gate；發布後先回填 queue，再回填 platform-kpi-tracker.csv 的最小 KPI 與結果後互動欄位。",
+        f"- 結果後互動欄位：{inline_code_list(DOWNSTREAM_POST_KPI_WRITEBACK)}。",
         "- 若執行單有問題數，先修資料再發布。",
     ])
     return "\n".join(lines).rstrip() + "\n"

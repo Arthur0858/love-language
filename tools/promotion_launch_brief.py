@@ -41,6 +41,23 @@ REQUIRED_FIELDS = [
     "utm_content",
     "primary_cta",
 ]
+MINIMUM_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
+DOWNSTREAM_KPI_FIELDS = (
+    "guardian_result_clicks",
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks",
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+)
+
+
+def inline_code_list(fields: tuple[str, ...]) -> str:
+    return "、".join(f"`{field}`" for field in fields)
 
 
 def read_queue(path: Path) -> list[dict[str, str]]:
@@ -121,7 +138,8 @@ def build_report(rows: list[dict[str, str]], week: int) -> dict:
 
     next_actions = [
         "發布後先在 posting-queue.csv 回填 status、published_date、post_url。",
-        "同一天或隔天回填 platform-kpi-tracker.csv 的平台列 post_url、site_clicks、quiz_starts、quiz_completions。",
+        f"同一天或隔天先回填 platform-kpi-tracker.csv 的平台列最小 KPI：{', '.join(MINIMUM_KPI_FIELDS)}。",
+        f"一旦測驗結果頁、守護者路線、Luna、收藏物、補給或聯盟書卷有互動，接著回填下游欄位：{', '.join(DOWNSTREAM_KPI_FIELDS)}。",
         "週回顧時再把三平台合計彙總到 kpi-tracker.csv。",
         "只有在 publishing-status.md 顯示可做週決策後，才放大守護者或商品承接方向。",
     ]
@@ -166,7 +184,7 @@ def render_task(row: dict[str, str]) -> list[str]:
         row["caption"].strip(),
         "```",
         "",
-        "回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。",
+        f"回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 {inline_code_list(MINIMUM_KPI_FIELDS)}，有結果後互動時再填 {inline_code_list(DOWNSTREAM_KPI_FIELDS)}。",
         "",
     ]
 
@@ -255,7 +273,8 @@ def render_index(reports: list[dict]) -> str:
         "## 使用規則",
         "",
         "- 每週只看該週的 `week-N-platform-launch-brief.md` 發布，不需要從 45 筆佇列人工篩選。",
-        "- 發布後先更新 `posting-queue.csv`，再更新 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
+        "- 發布後先更新 `posting-queue.csv`，再更新 `platform-kpi-tracker.csv` 的最小 KPI 與結果後互動欄位；週回顧才彙總 `kpi-tracker.csv`。",
+        f"- 結果後互動欄位：{inline_code_list(DOWNSTREAM_KPI_FIELDS)}。",
         "- 判斷放大或商品承接前，先跑 `python3 tools/promotion_publishing_status.py`。",
     ])
     return "\n".join(lines).rstrip() + "\n"

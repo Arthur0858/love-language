@@ -32,7 +32,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-13 21:00 Asia/Taipei · TikTok
 
@@ -53,7 +53,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-13 21:30 Asia/Taipei · Instagram Reels
 
@@ -74,7 +74,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-15 20:30 Asia/Taipei · YouTube Shorts
 
@@ -95,7 +95,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-15 21:00 Asia/Taipei · TikTok
 
@@ -116,7 +116,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-15 21:30 Asia/Taipei · Instagram Reels
 
@@ -137,7 +137,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-17 20:30 Asia/Taipei · YouTube Shorts
 
@@ -158,7 +158,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-17 21:00 Asia/Taipei · TikTok
 
@@ -179,7 +179,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-07-17 21:30 Asia/Taipei · Instagram Reels
 
@@ -200,11 +200,12 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ## 發布後回填
 
 - 發布後先在 posting-queue.csv 回填 status、published_date、post_url。
-- 同一天或隔天回填 platform-kpi-tracker.csv 的平台列 post_url、site_clicks、quiz_starts、quiz_completions。
+- 同一天或隔天先回填 platform-kpi-tracker.csv 的平台列最小 KPI：post_url, site_clicks, quiz_starts, quiz_completions。
+- 一旦測驗結果頁、守護者路線、Luna、收藏物、補給或聯盟書卷有互動，接著回填下游欄位：guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests。
 - 週回顧時再把三平台合計彙總到 kpi-tracker.csv。
 - 只有在 publishing-status.md 顯示可做週決策後，才放大守護者或商品承接方向。

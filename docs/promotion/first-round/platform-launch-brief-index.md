@@ -51,5 +51,6 @@
 ## 使用規則
 
 - 每週只看該週的 `week-N-platform-launch-brief.md` 發布，不需要從 45 筆佇列人工篩選。
-- 發布後先更新 `posting-queue.csv`，再更新 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。
+- 發布後先更新 `posting-queue.csv`，再更新 `platform-kpi-tracker.csv` 的最小 KPI 與結果後互動欄位；週回顧才彙總 `kpi-tracker.csv`。
+- 結果後互動欄位：`guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 - 判斷放大或商品承接前，先跑 `python3 tools/promotion_publishing_status.py`。

@@ -91,7 +91,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -109,7 +119,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -127,7 +147,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         }
       ],
@@ -137,7 +167,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。"
       ]
     },
     {
@@ -213,7 +243,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -231,7 +271,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -249,7 +299,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         }
       ],
@@ -259,7 +319,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。"
       ]
     },
     {
@@ -334,7 +394,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -352,7 +422,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         },
         {
@@ -370,7 +450,17 @@
             "platform-kpi-tracker.csv: post_url",
             "platform-kpi-tracker.csv: site_clicks",
             "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions"
+            "platform-kpi-tracker.csv: quiz_completions",
+            "platform-kpi-tracker.csv: guardian_result_clicks",
+            "platform-kpi-tracker.csv: resources_clicks",
+            "platform-kpi-tracker.csv: repair_plan_clicks",
+            "platform-kpi-tracker.csv: luna_clicks",
+            "platform-kpi-tracker.csv: keepsake_clicks",
+            "platform-kpi-tracker.csv: free_keepsake_downloads",
+            "platform-kpi-tracker.csv: supply_lead_requests",
+            "platform-kpi-tracker.csv: luna_pack_clicks",
+            "platform-kpi-tracker.csv: affiliate_book_clicks",
+            "platform-kpi-tracker.csv: contact_requests"
           ]
         }
       ],
@@ -380,7 +470,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。"
       ]
     }
   ]

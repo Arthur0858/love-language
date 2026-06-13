@@ -42,6 +42,19 @@ BLOCKED_STATUS_BY_PHASE = {
     "publish_post": "blocked_until_ready",
     "kpi_backfill": "blocked_until_published",
 }
+MINIMUM_KPI_BACKFILL_FIELDS = ["post_url", "site_clicks", "quiz_starts", "quiz_completions"]
+DOWNSTREAM_KPI_BACKFILL_FIELDS = [
+    "guardian_result_clicks",
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks",
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+]
 
 
 def command_center_policy() -> dict[str, object]:
@@ -51,7 +64,8 @@ def command_center_policy() -> dict[str, object]:
         "blockedPhases": ["publish_post", "kpi_backfill"],
         "publishBlockedBy": ["profile_setup", "asset_ready_check"],
         "kpiBackfillBlockedBy": ["post_url"],
-        "minimumKpiBackfillFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
+        "minimumKpiBackfillFields": MINIMUM_KPI_BACKFILL_FIELDS,
+        "downstreamKpiBackfillFields": DOWNSTREAM_KPI_BACKFILL_FIELDS,
         "profileWritebackFields": ["status=set/live", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
         "rule": "Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
         "emptyDataSafety": "Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.",
@@ -155,8 +169,8 @@ def publish_and_backfill_rows(week_execution: dict) -> list[dict[str, str]]:
                 **base,
                 "phase": "kpi_backfill",
                 "status": "blocked_until_published",
-                "action": "發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。",
-                "writeback": "platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup",
+                "action": "發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。",
+                "writeback": "platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup",
                 "blocked_by": "post_url",
             })
     return rows
@@ -237,8 +251,10 @@ def validate_center(center: dict) -> list[str]:
         policy = {}
     if policy.get("phaseOrder") != list(PHASE_ORDER):
         issues.append("commandCenterPolicy.phaseOrder does not match generator policy")
-    if policy.get("minimumKpiBackfillFields") != ["post_url", "site_clicks", "quiz_starts", "quiz_completions"]:
+    if policy.get("minimumKpiBackfillFields") != MINIMUM_KPI_BACKFILL_FIELDS:
         issues.append("commandCenterPolicy.minimumKpiBackfillFields does not match generator policy")
+    if policy.get("downstreamKpiBackfillFields") != DOWNSTREAM_KPI_BACKFILL_FIELDS:
+        issues.append("commandCenterPolicy.downstreamKpiBackfillFields does not match generator policy")
     if not isinstance(expected_phase_counts, dict):
         expected_phase_counts = {}
     expected_row_count = sum(int(value) for value in expected_phase_counts.values() if isinstance(value, int))

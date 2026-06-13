@@ -50,5 +50,6 @@
 ## 使用規則
 
 - 每週照該週執行單發布，不從多份文件人工拼接。
-- 發布前先完成平台首頁 gate；發布後先回填 queue，再回填 platform-kpi-tracker.csv。
+- 發布前先完成平台首頁 gate；發布後先回填 queue，再回填 platform-kpi-tracker.csv 的最小 KPI 與結果後互動欄位。
+- 結果後互動欄位：`platform-kpi-tracker.csv: guardian_result_clicks`、`platform-kpi-tracker.csv: resources_clicks`、`platform-kpi-tracker.csv: repair_plan_clicks`、`platform-kpi-tracker.csv: luna_clicks`、`platform-kpi-tracker.csv: keepsake_clicks`、`platform-kpi-tracker.csv: free_keepsake_downloads`、`platform-kpi-tracker.csv: supply_lead_requests`、`platform-kpi-tracker.csv: luna_pack_clicks`、`platform-kpi-tracker.csv: affiliate_book_clicks`、`platform-kpi-tracker.csv: contact_requests`。
 - 若執行單有問題數，先修資料再發布。

@@ -46,6 +46,19 @@ KPI_FIELDS = [
     "contact_requests",
     "notes",
 ]
+MINIMUM_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
+ROUTE_KPI_FIELDS = ("guardian_result_clicks", "resources_clicks", "repair_plan_clicks", "luna_clicks", "keepsake_clicks")
+REVENUE_BRIDGE_KPI_FIELDS = (
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests",
+)
+
+
+def inline_code_list(fields: tuple[str, ...]) -> str:
+    return "、".join(f"`{field}`" for field in fields)
 
 
 def load_tasks(path: Path) -> list[dict]:
@@ -129,7 +142,7 @@ def build_pack(tasks: list[dict], week: int) -> dict:
             "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
             "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
             "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
-            "發布後回填 kpi-tracker.csv，先看 quiz_completions，再看獲利意圖欄位。",
+            "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。",
         ],
         "tasks": [task_payload(task) for task in selected],
     }
@@ -194,8 +207,9 @@ def build_markdown(pack: dict) -> str:
             "",
             f"- `script_id`: `{task['scriptId']}`",
             f"- `guardian_id`: `{task['guardianId']}`",
-            "- 發布後至少回填：`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`",
-            "- 有結果後互動時回填：`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`",
+            f"- `platform-kpi-tracker.csv` 發布後至少回填：{inline_code_list(MINIMUM_KPI_FIELDS)}",
+            f"- `platform-kpi-tracker.csv` 路線互動時回填：{inline_code_list(ROUTE_KPI_FIELDS)}",
+            f"- `platform-kpi-tracker.csv` 有收藏、名單、Luna、聯盟或 Contact 意圖時回填：{inline_code_list(REVENUE_BRIDGE_KPI_FIELDS)}",
         ])
     return "\n".join(lines).rstrip() + "\n"
 

@@ -156,6 +156,9 @@ def build_plan(matrix: dict, gate: dict, offer_board: dict) -> dict:
             "offerHypothesisBoard": str(OFFER_BOARD_PATH.relative_to(ROOT)),
         },
         "experiments": rows,
+        "guardianCount": len(matrix_rows),
+        "experimentTypeCount": len(EXPERIMENTS),
+        "expectedExperimentCount": len(matrix_rows) * len(EXPERIMENTS),
         "readyExperiments": sum(1 for row in rows if row["status"] == "READY"),
         "holdExperiments": sum(1 for row in rows if row["status"] == "HOLD"),
         "blockers": list(gate.get("blockers", [])),
@@ -239,8 +242,9 @@ def write_outputs(plan: dict, output: Path, json_output: Path, csv_output: Path)
 def validate_plan(plan: dict) -> list[str]:
     issues: list[str] = []
     experiments = plan.get("experiments", [])
-    if len(experiments) != 20:
-        issues.append("expected 20 guardian offer experiments")
+    expected_experiments = int(plan.get("expectedExperimentCount", 0) or 0)
+    if len(experiments) != expected_experiments:
+        issues.append(f"expected {expected_experiments} guardian offer experiments, got {len(experiments)}")
     if any(row.get("status") not in {"READY", "HOLD"} for row in experiments):
         issues.append("experiment status must be READY or HOLD")
     if plan.get("blockers") and any(row.get("status") == "READY" for row in experiments):

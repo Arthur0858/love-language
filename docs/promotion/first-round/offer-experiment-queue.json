@@ -1285,6 +1285,9 @@
       "safetyBoundary": "只在結果後、旅人補給、Luna 或 Contact 路線測試；不診斷、不承諾療效、不要求購買。"
     }
   ],
+  "experimentCount": 20,
+  "stepCount": 4,
+  "expectedQueueRows": 80,
   "readyRows": 0,
   "waitingRows": 0,
   "blockedRows": 80,

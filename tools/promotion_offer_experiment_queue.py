@@ -100,6 +100,9 @@ def build_queue(plan: dict) -> dict:
         "generatedAt": date.today().isoformat(),
         "source": {"offerExperimentPlan": str(PLAN_PATH.relative_to(ROOT))},
         "queueRows": rows,
+        "experimentCount": len(plan.get("experiments", [])),
+        "stepCount": len(STEPS),
+        "expectedQueueRows": len(plan.get("experiments", [])) * len(STEPS),
         "readyRows": sum(1 for row in rows if row["status"] == "ready"),
         "waitingRows": sum(1 for row in rows if row["status"] == "waiting_for_signal"),
         "blockedRows": sum(1 for row in rows if row["status"] == "blocked_by_gate"),
@@ -178,8 +181,9 @@ def write_outputs(queue: dict, output: Path, json_output: Path, csv_output: Path
 def validate_queue(queue: dict) -> list[str]:
     issues: list[str] = []
     rows = queue.get("queueRows", [])
-    if len(rows) != 80:
-        issues.append("expected 80 experiment queue rows")
+    expected_rows = int(queue.get("expectedQueueRows", 0) or 0)
+    if len(rows) != expected_rows:
+        issues.append(f"expected {expected_rows} experiment queue rows, got {len(rows)}")
     if queue.get("blockers") and queue.get("readyRows", 0) != 0:
         issues.append("blocked gate must not expose ready experiment queue rows")
     for row in rows:

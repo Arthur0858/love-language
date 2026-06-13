@@ -29,6 +29,12 @@
     "publish_post": 9,
     "kpi_backfill": 9
   },
+  "expectedPhaseCounts": {
+    "profile_setup": 3,
+    "asset_ready_check": 3,
+    "publish_post": 9,
+    "kpi_backfill": 9
+  },
   "nextDecision": "先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。",
   "rows": [
     {

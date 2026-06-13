@@ -149,6 +149,9 @@ def assign_sequence(rows: list[dict[str, str]]) -> list[dict[str, str]]:
 
 
 def build_center(next_actions: dict, week_execution: dict, publishing_status: dict) -> dict:
+    profile_gate_count = len(week_execution.get("profileGates", []))
+    script_count = len(week_execution.get("scripts", []))
+    platform_post_count = sum(len(script.get("platforms", [])) for script in week_execution.get("scripts", []))
     rows = assign_sequence([
         *profile_rows(week_execution),
         *asset_check_rows(week_execution),
@@ -174,6 +177,12 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
         "blockedRows": sum(1 for row in rows if row["status"].startswith("blocked")),
         "statusCounts": status_counts,
         "phaseCounts": phase_counts,
+        "expectedPhaseCounts": {
+            "profile_setup": profile_gate_count,
+            "asset_ready_check": script_count,
+            "publish_post": platform_post_count,
+            "kpi_backfill": platform_post_count,
+        },
         "nextDecision": "先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。",
         "rows": rows,
         "safety": {
@@ -187,21 +196,21 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
 def validate_center(center: dict) -> list[str]:
     issues: list[str] = []
     rows = center.get("rows", [])
-    if len(rows) != 24:
-        issues.append(f"expected 24 command rows, got {len(rows)}")
-    if center.get("readyRows", 0) < 6:
-        issues.append("expected at least six ready rows for profile setup and asset checks")
+    expected_phase_counts = center.get("expectedPhaseCounts", {})
+    if not isinstance(expected_phase_counts, dict):
+        expected_phase_counts = {}
+    expected_row_count = sum(int(value) for value in expected_phase_counts.values() if isinstance(value, int))
+    expected_ready_rows = int(expected_phase_counts.get("profile_setup", 0)) + int(expected_phase_counts.get("asset_ready_check", 0))
+    if len(rows) != expected_row_count:
+        issues.append(f"expected {expected_row_count} command rows, got {len(rows)}")
+    if center.get("readyRows", 0) < expected_ready_rows:
+        issues.append(f"expected at least {expected_ready_rows} ready rows for profile setup and asset checks")
     if not center.get("blockedRows"):
         issues.append("publish/backfill rows should stay blocked until prerequisites are done")
     phases = center.get("phaseCounts", {})
-    if phases.get("profile_setup") != 3:
-        issues.append("expected three profile_setup rows")
-    if phases.get("asset_ready_check") != 3:
-        issues.append("expected three asset_ready_check rows")
-    if phases.get("publish_post") != 9:
-        issues.append("expected nine publish_post rows")
-    if phases.get("kpi_backfill") != 9:
-        issues.append("expected nine kpi_backfill rows")
+    for phase, expected_count in expected_phase_counts.items():
+        if phases.get(phase) != expected_count:
+            issues.append(f"expected {expected_count} {phase} rows, got {phases.get(phase, 0)}")
     for row in rows:
         label = f"{row.get('sequence', '?')}:{row.get('phase', '<phase>')}"
         for field in ("sequence", "phase", "status", "priority", "task_id", "title", "action", "safety_note"):

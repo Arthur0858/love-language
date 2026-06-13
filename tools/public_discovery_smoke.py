@@ -832,13 +832,50 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
         return [f"{path}: invalid JSON: {exc}"], 0, 0, 0
-    events = data.get("events", []) if isinstance(data, dict) else []
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0
+    events = data.get("events", [])
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("localStorageKey") != "lovetypes:funnel-events:v1":
         issues.append(f"{path}: localStorageKey should match runtime storage key")
-    names = {event.get("name") for event in events if isinstance(event, dict)}
-    event_by_name = {event.get("name"): event for event in events if isinstance(event, dict)}
+    if not isinstance(events, list) or not events:
+        return [f"{path}: events should be a non-empty list"], 0, 0, 0
+    names: set[str] = set()
+    event_by_name: dict[str, dict] = {}
+    categories: set[str] = set()
+    roles: set[str] = set()
+    for event in events:
+        if not isinstance(event, dict):
+            issues.append(f"{path}: event entry should be an object")
+            continue
+        name = event.get("name")
+        if not isinstance(name, str) or not re.match(r"^[a-z][a-z0-9_]*$", name):
+            issues.append(f"{path}: invalid event name {name!r}")
+            continue
+        if name in names:
+            issues.append(f"{path}: duplicate event name {name}")
+        names.add(name)
+        event_by_name[name] = event
+        count = event.get("count")
+        if not isinstance(count, int) or count <= 0:
+            issues.append(f"{path}: event {name} should include positive count")
+        pages = event.get("pages")
+        page_count = event.get("pageCount")
+        if not isinstance(pages, list) or not pages:
+            issues.append(f"{path}: event {name} should include pages")
+        if not isinstance(page_count, int) or page_count < len(pages or []):
+            issues.append(f"{path}: event {name} should include valid pageCount")
+        category = event.get("category")
+        role = event.get("role")
+        if not isinstance(category, str) or not category:
+            issues.append(f"{path}: event {name} missing category")
+        else:
+            categories.add(category)
+        if not isinstance(role, str) or not role:
+            issues.append(f"{path}: event {name} missing role")
+        else:
+            roles.add(role)
     missing = sorted(REQUIRED_FUNNEL_EVENTS.difference(names))
     if missing:
         issues.append(f"{path}: missing core funnel events {', '.join(missing)}")
@@ -847,8 +884,9 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
         issues.append(f"{path}: luna_gumroad_pack_click should be a revenue event")
     if len(events) < 50:
         issues.append(f"{path}: expected at least 50 funnel events, got {len(events)}")
-    categories = {event.get("category") for event in events if isinstance(event, dict) and event.get("category")}
-    roles = {event.get("role") for event in events if isinstance(event, dict) and event.get("role")}
+    totals = data.get("totals", {})
+    if not isinstance(totals, dict) or totals.get("events") != len(events):
+        issues.append(f"{path}: totals.events should match event count")
     return issues, len(events), len(categories), len(roles)
 
 

@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profileHandoff": "docs/promotion/first-round/profile-publish-handoff.json",
+    "firstBatchPublishAction": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
+    "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json",
+    "firstBatchKpiAction": "docs/promotion/first-round/first-batch-kpi-action-sheet.json",
+    "firstBatchCompletionGate": "docs/promotion/first-round/first-batch-completion-gate.json",
+    "weeklyReviewPacket": "docs/promotion/first-round/weekly-review-packet.json",
+    "stageTransitionMatrix": "docs/promotion/first-round/stage-transition-matrix.json"
+  },
+  "metrics": {
+    "rows": 7,
+    "completeRows": 1,
+    "currentBlockers": 1,
+    "blockedUpstreamRows": 5,
+    "publishedRows": 0,
+    "minimumKpiRows": 0,
+    "readyForWeeklyReview": 0,
+    "issues": 0
+  },
+  "policy": {
+    "profileBeforePublish": true,
+    "publicPostUrlBeforeKpi": true,
+    "verifiedZeroBeforeDecision": true,
+    "weeklyReviewBeforeCommerce": true
+  },
+  "rows": [
+    {
+      "step_id": "profile_publish_handoff_open",
+      "phase": "profile_to_publish",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Only continue after the profile handoff says first-batch publishing is open.",
+      "evidence_required": "profile-publish-handoff readyToPublish is true after profile proof writeback and refresh.",
+      "command": "python3 tools/promotion_profile_publish_handoff.py --check",
+      "stop_condition": "Do not publish first-batch posts while profile_writeback_complete is still blocked.",
+      "status": "current_blocker"
+    },
+    {
+      "step_id": "first_batch_publish_sheet_ready",
+      "phase": "publish",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Confirm three first-batch rows are ready before opening platform publishing.",
+      "evidence_required": "first-batch publish action sheet has three ready rows and zero issues.",
+      "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
+      "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "post_url_writeback_complete",
+      "phase": "post_writeback",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "After each platform post is public, write back real HTTPS post_url with proof.",
+      "evidence_required": "posting-queue.csv and platform-kpi-tracker.csv have published status, date, post_url, and proof note.",
+      "command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "stop_condition": "Do not mark published with placeholder URLs, private URLs, or unverified scheduled drafts.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "post_evidence_traceable",
+      "phase": "post_writeback",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Confirm every first-batch post has traceable public URL evidence.",
+      "evidence_required": "first-batch completion gate traceablePostEvidence matches all three published rows.",
+      "command": "python3 tools/promotion_first_batch_completion_gate.py --check",
+      "stop_condition": "Stop if proof is generic, missing, or not tied to platform/date/post URL.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "minimum_kpi_source_check",
+      "phase": "kpi_writeback",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Keep KPI rows blocked until real post URLs are written back.",
+      "evidence_required": "first-batch KPI action sheet has three ready rows before source checks, then minimumKpiRows reaches three.",
+      "command": "python3 tools/promotion_first_batch_kpi_action_sheet.py --check",
+      "stop_condition": "Do not treat 0 as data unless the platform or site analytics source was checked.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "weekly_review_open",
+      "phase": "weekly_review",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Open weekly review only after post URLs, proof, and minimum KPI are complete.",
+      "evidence_required": "first-batch-completion-gate readyForWeeklyReview is true.",
+      "command": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
+      "stop_condition": "Do not rank guardians, offers, Luna, or affiliate routes while empty data mode is true.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "empty_data_safety_locked",
+      "phase": "decision_safety",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep commercial decisions locked until weekly review opens with real data.",
+      "evidence_required": "weekly-review remains empty-data mode and stage matrix exposes exactly one current blocker.",
+      "command": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_stage_transition_matrix.py --check",
+      "stop_condition": "Stop if commercial or paid CTA decisions become allowed before KPI proof.",
+      "status": "complete"
+    }
+  ],
+  "issues": []
+}

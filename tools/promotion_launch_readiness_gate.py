@@ -134,6 +134,7 @@ def build_gate(
     kpi_rows: list[dict[str, str]],
     command_center: dict,
 ) -> dict:
+    expected_platform_count = len(EXPECTED_PLATFORMS)
     profile_platforms = {(row.get("platform") or "").strip() for row in profile_rows}
     profile_links_valid = sum(1 for row in profile_rows if is_start_campaign_url(row.get("profile_link", "")))
     profile_configured = sum(1 for row in profile_rows if is_profile_configured(row))
@@ -144,6 +145,7 @@ def build_gate(
         if (row.get("week") or "").strip() == "1" and (row.get("slot") or "").strip() == "1"
     ]
     first_week_rows = [row for row in posting_rows if (row.get("week") or "").strip() == "1"]
+    expected_first_week_rows = len(first_week_rows)
     first_batch_scheduled = sum(
         1
         for row in first_batch_rows
@@ -162,54 +164,54 @@ def build_gate(
 
     structure_ready = (
         profile_platforms == EXPECTED_PLATFORMS
-        and len(profile_rows) == len(EXPECTED_PLATFORMS)
-        and profile_links_valid == len(EXPECTED_PLATFORMS)
-        and len(first_batch_rows) == len(EXPECTED_PLATFORMS)
-        and first_batch_scheduled == len(EXPECTED_PLATFORMS)
-        and asset_ready >= len(EXPECTED_PLATFORMS)
+        and len(profile_rows) == expected_platform_count
+        and profile_links_valid == expected_platform_count
+        and len(first_batch_rows) == expected_platform_count
+        and first_batch_scheduled == expected_platform_count
+        and asset_ready >= expected_platform_count
     )
     ready_to_start_setup = structure_ready
-    ready_to_publish_posts = structure_ready and profile_configured == len(EXPECTED_PLATFORMS)
-    ready_for_kpi_decision = filled_kpi_rows >= 3
+    ready_to_publish_posts = structure_ready and profile_configured == expected_platform_count
+    ready_for_kpi_decision = filled_kpi_rows >= expected_platform_count
 
     blockers: list[dict[str, str]] = []
-    if profile_configured < len(EXPECTED_PLATFORMS):
+    if profile_configured < expected_platform_count:
         blockers.append({
             "id": "set_platform_profile_links",
             "phase": "profile_setup",
             "severity": "launch_blocker",
-            "message": "三個平台個人頁仍未標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。",
+            "message": f"{expected_platform_count} 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。",
         })
-    if published_rows < len(EXPECTED_PLATFORMS):
+    if published_rows < expected_platform_count:
         blockers.append({
             "id": "publish_first_batch",
             "phase": "publish",
             "severity": "measurement_blocker",
-            "message": "首批三平台貼文尚未標記 published；沒有 post_url 前不能開始 KPI 判讀。",
+            "message": f"首批 {expected_platform_count} 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。",
         })
-    if filled_kpi_rows < 3:
+    if filled_kpi_rows < expected_platform_count:
         blockers.append({
             "id": "backfill_first_batch_kpis",
             "phase": "measurement",
             "severity": "decision_blocker",
-            "message": "KPI 尚未回填到前三筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。",
+            "message": f"KPI 尚未回填到前 {expected_platform_count} 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。",
         })
 
     issues: list[str] = []
-    if len(profile_rows) != len(EXPECTED_PLATFORMS):
-        issues.append(f"expected 3 platform profile rows, got {len(profile_rows)}")
+    if len(profile_rows) != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} platform profile rows, got {len(profile_rows)}")
     if profile_platforms != EXPECTED_PLATFORMS:
         issues.append(f"profile platforms should be {sorted(EXPECTED_PLATFORMS)}, got {sorted(profile_platforms)}")
-    if profile_links_valid != len(EXPECTED_PLATFORMS):
-        issues.append(f"expected 3 valid profile /start/ campaign links, got {profile_links_valid}")
-    if len(first_batch_rows) != len(EXPECTED_PLATFORMS):
-        issues.append(f"expected 3 first-batch platform rows, got {len(first_batch_rows)}")
-    if first_batch_scheduled != len(EXPECTED_PLATFORMS):
-        issues.append(f"expected 3 scheduled first-batch rows with campaign links, got {first_batch_scheduled}")
-    if first_week_scheduled != 9:
-        issues.append(f"expected 9 scheduled first-week platform rows, got {first_week_scheduled}")
-    if asset_ready < len(EXPECTED_PLATFORMS):
-        issues.append(f"expected at least 3 ready asset checks, got {asset_ready}")
+    if profile_links_valid != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} valid profile /start/ campaign links, got {profile_links_valid}")
+    if len(first_batch_rows) != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} first-batch platform rows, got {len(first_batch_rows)}")
+    if first_batch_scheduled != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} scheduled first-batch rows with campaign links, got {first_batch_scheduled}")
+    if first_week_scheduled != expected_first_week_rows:
+        issues.append(f"expected {expected_first_week_rows} scheduled first-week platform rows, got {first_week_scheduled}")
+    if asset_ready < expected_platform_count:
+        issues.append(f"expected at least {expected_platform_count} ready asset checks, got {asset_ready}")
     if filled_kpi_rows == 0 and not blockers:
         issues.append("empty data mode must produce explicit measurement blockers")
 
@@ -227,6 +229,7 @@ def build_gate(
             "profileConfigured": profile_configured,
             "firstBatchRows": len(first_batch_rows),
             "firstBatchScheduled": first_batch_scheduled,
+            "firstWeekRows": expected_first_week_rows,
             "firstWeekScheduled": first_week_scheduled,
             "assetReady": asset_ready,
             "publishedRows": published_rows,
@@ -276,9 +279,9 @@ def render_markdown(gate: dict) -> str:
         "## 目前數字",
         "",
         f"- 平台個人頁：{metrics['profileConfigured']} / {metrics['profileRows']} 已標記 set/live",
-        f"- 平台追蹤連結：{metrics['profileLinksValid']} / 3 有效",
+        f"- 平台追蹤連結：{metrics['profileLinksValid']} / {metrics['profileRows']} 有效",
         f"- 首批排程：{metrics['firstBatchScheduled']} / {metrics['firstBatchRows']} 有效",
-        f"- 首週排程：{metrics['firstWeekScheduled']} / 9 有效",
+        f"- 首週排程：{metrics['firstWeekScheduled']} / {metrics['firstWeekRows']} 有效",
         f"- 素材就緒檢查：{metrics['assetReady']}",
         f"- 已發布平台列：{metrics['publishedRows']}",
         f"- 已回填 KPI 列：{metrics['filledKpiRows']}",

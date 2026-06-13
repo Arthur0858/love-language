@@ -78,9 +78,9 @@
 
 ## 阻擋項
 
-- `set_platform_profile_links`：三個平台個人頁仍未標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。
-- `publish_first_batch`：首批三平台貼文尚未標記 published；沒有 post_url 前不能開始 KPI 判讀。
-- `backfill_first_batch_kpis`：KPI 尚未回填到前三筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。
+- `set_platform_profile_links`：3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。
+- `publish_first_batch`：首批 3 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。
+- `backfill_first_batch_kpis`：KPI 尚未回填到前 3 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。
 
 ## 安全界線
 

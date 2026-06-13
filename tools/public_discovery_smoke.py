@@ -139,12 +139,15 @@ class HeadParser(HTMLParser):
         super().__init__()
         self.canonical = ""
         self.description = ""
+        self.ids: set[str] = set()
         self.robots = ""
         self.title = ""
         self._in_title = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
+        if data.get("id"):
+            self.ids.add(data["id"])
         if tag == "title":
             self._in_title = True
         elif tag == "link" and data.get("rel") == "canonical":
@@ -188,6 +191,33 @@ def request_url(url: str, attempts: int = 3) -> Response:
 def is_lovetypes_url(value: str) -> bool:
     parsed = urlparse(value)
     return parsed.scheme == "https" and parsed.netloc == CANONICAL_HOST
+
+
+def route_url(value: str, base_url: str) -> str:
+    url = urljoin(base_url + "/", value.lstrip("/")) if value.startswith("/") else value
+    parsed = urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}{parsed.path or '/'}"
+
+
+def walk_index_urls(data: object, path: str = "$") -> list[tuple[str, str]]:
+    urls: list[tuple[str, str]] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            child_path = f"{path}.{key}"
+            if isinstance(value, str):
+                if value.startswith("https://lovetypes.tw") or value.startswith("/"):
+                    urls.append((child_path, value))
+            else:
+                urls.extend(walk_index_urls(value, child_path))
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            child_path = f"{path}[{index}]"
+            if isinstance(value, str):
+                if value.startswith("https://lovetypes.tw") or value.startswith("/"):
+                    urls.append((child_path, value))
+            else:
+                urls.extend(walk_index_urls(value, child_path))
+    return urls
 
 
 def cache_is_reasonable(path: str, response: Response) -> list[str]:
@@ -1097,6 +1127,144 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     )
 
 
+def public_sitemap_urls(base_url: str) -> tuple[list[str], set[str]]:
+    response = request_url(urljoin(base_url + "/", "sitemap.xml"))
+    if response.status != 200:
+        return [f"/sitemap.xml: expected status 200, got {response.status}"], set()
+    try:
+        root = ET.fromstring(response.body)
+    except ET.ParseError as exc:
+        return [f"/sitemap.xml: invalid XML for discovery cross-index: {exc}"], set()
+    urls = {
+        node.text.strip()
+        for node in root.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
+        if node.text and node.text.strip()
+    }
+    return [], urls
+
+
+def validate_public_index_url(
+    source_path: str,
+    field_path: str,
+    value: str,
+    base_url: str,
+    sitemap_urls: set[str],
+    response_cache: dict[str, Response],
+) -> tuple[list[str], int, int, int]:
+    issues: list[str] = []
+    urls_checked = 1
+    targets_checked = 0
+    fragments_checked = 0
+    url = urljoin(base_url + "/", value.lstrip("/")) if value.startswith("/") else value
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.netloc != CANONICAL_HOST:
+        return [f"{source_path}: {field_path} should point to https://lovetypes.tw or an absolute local path: {value}"], urls_checked, 0, 0
+    check_url = route_url(url, base_url)
+    path = urlparse(check_url).path
+    looks_like_html_route = path.endswith("/") or "." not in path.rsplit("/", 1)[-1]
+    if looks_like_html_route and not parsed.fragment:
+        if check_url not in sitemap_urls:
+            issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {check_url}")
+        else:
+            targets_checked += 1
+        return issues, urls_checked, targets_checked, fragments_checked
+
+    if not parsed.fragment:
+        targets_checked += 1
+        return issues, urls_checked, targets_checked, fragments_checked
+
+    if check_url not in response_cache:
+        response_cache[check_url] = request_url(check_url)
+    response = response_cache[check_url]
+    if response.status != 200:
+        return [f"{source_path}: {field_path} target {check_url} expected status 200, got {response.status}"], urls_checked, 0, 0
+    targets_checked += 1
+    content_type = response.headers.get("content-type", "")
+    if "html" not in content_type:
+        return issues, urls_checked, targets_checked, fragments_checked
+    head = HeadParser()
+    head.feed(response.text)
+    if "noindex" in head.robots.lower():
+        issues.append(f"{source_path}: {field_path} should not point to noindex HTML: {value}")
+    if parsed.fragment:
+        fragments_checked += 1
+        if parsed.fragment not in head.ids:
+            issues.append(f"{source_path}: {field_path} fragment missing #{parsed.fragment}: {value}")
+        if check_url not in sitemap_urls:
+            issues.append(f"{source_path}: {field_path} fragment base missing from sitemap: {check_url}")
+        return issues, urls_checked, targets_checked, fragments_checked
+    if check_url not in sitemap_urls:
+        issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {check_url}")
+    if head.canonical and head.canonical != check_url:
+        issues.append(f"{source_path}: {field_path} target canonical mismatch: {value} -> {head.canonical}")
+    return issues, urls_checked, targets_checked, fragments_checked
+
+
+def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+    issues, sitemap_urls = public_sitemap_urls(base_url)
+    response_cache: dict[str, Response] = {}
+    index_paths = (
+        "/ai-discovery.json",
+        "/site-index.json",
+        "/guardian-profiles.json",
+        "/commerce-catalog.json",
+        "/safety-index.json",
+        "/promotion-kit.json",
+        "/site-health.json",
+        "/release.json",
+    )
+    indexes_checked = 0
+    urls_checked = 0
+    targets_checked = 0
+    fragments_checked = 0
+    for index_path in index_paths:
+        response = request_url(urljoin(base_url + "/", index_path.lstrip("/")))
+        if response.status != 200:
+            issues.append(f"{index_path}: expected status 200, got {response.status}")
+            continue
+        try:
+            data = json.loads(response.text)
+        except json.JSONDecodeError as exc:
+            issues.append(f"{index_path}: invalid JSON for discovery cross-index: {exc}")
+            continue
+        indexes_checked += 1
+        seen_values: set[str] = set()
+        for field_path, value in walk_index_urls(data):
+            if value in seen_values:
+                continue
+            seen_values.add(value)
+            value_issues, checked, targets, fragments = validate_public_index_url(
+                index_path,
+                field_path,
+                value,
+                base_url,
+                sitemap_urls,
+                response_cache,
+            )
+            issues.extend(value_issues)
+            urls_checked += checked
+            targets_checked += targets
+            fragments_checked += fragments
+
+    core_routes = {
+        f"{DEFAULT_BASE_URL}/",
+        f"{DEFAULT_BASE_URL}/start/",
+        f"{DEFAULT_BASE_URL}/garden-map/",
+        f"{DEFAULT_BASE_URL}/characters/",
+        f"{DEFAULT_BASE_URL}/resources/",
+        f"{DEFAULT_BASE_URL}/repair-plan/",
+        f"{DEFAULT_BASE_URL}/keepsakes/",
+        f"{DEFAULT_BASE_URL}/luna-yoga-music/",
+        f"{DEFAULT_BASE_URL}/contact/",
+    }
+    core_routes_checked = 0
+    for route in sorted(core_routes):
+        core_routes_checked += 1
+        if route not in sitemap_urls:
+            issues.append(f"/sitemap.xml: missing core discovery route {route}")
+    return issues, indexes_checked, urls_checked, targets_checked, fragments_checked, core_routes_checked
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check public feed, manifest, llms, security, and ads discovery files.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -1134,6 +1302,7 @@ def main() -> int:
     release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_outcomes_checked = check_release_info(base_url)
     safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
     ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked = check_ai_discovery(base_url)
+    discovery_cross_issues, discovery_cross_indexes_checked, discovery_cross_urls_checked, discovery_cross_targets_checked, discovery_cross_fragments_checked, discovery_cross_core_routes_checked = check_discovery_cross_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
     issues.extend(llms_issues)
@@ -1148,6 +1317,7 @@ def main() -> int:
     issues.extend(release_issues)
     issues.extend(safety_index_issues)
     issues.extend(ai_discovery_issues)
+    issues.extend(discovery_cross_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
@@ -1202,6 +1372,11 @@ def main() -> int:
     print(f"public_discovery_ai_priority_urls_checked={ai_discovery_priority_urls_checked}")
     print(f"public_discovery_ai_discovery_files_checked={ai_discovery_discovery_files_checked}")
     print(f"public_discovery_ai_guidance_fields_checked={ai_discovery_guidance_fields_checked}")
+    print(f"public_discovery_cross_indexes_checked={discovery_cross_indexes_checked}")
+    print(f"public_discovery_cross_index_urls_checked={discovery_cross_urls_checked}")
+    print(f"public_discovery_cross_index_targets_checked={discovery_cross_targets_checked}")
+    print(f"public_discovery_cross_index_fragments_checked={discovery_cross_fragments_checked}")
+    print(f"public_discovery_cross_core_routes_checked={discovery_cross_core_routes_checked}")
     print(f"public_discovery_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

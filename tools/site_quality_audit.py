@@ -861,6 +861,80 @@ def local_path_for_public_url(value: str) -> Path | None:
     return ROOT / clean if clean else ROOT / "index.html"
 
 
+def canonical_url_without_fragment(value: str) -> str:
+    parsed = urlparse(value)
+    path = parsed.path or "/"
+    return f"{parsed.scheme}://{parsed.netloc}{path}"
+
+
+def walk_index_urls(data: object, path: str = "$") -> list[tuple[str, str]]:
+    urls: list[tuple[str, str]] = []
+    if isinstance(data, dict):
+        for key, value in data.items():
+            child_path = f"{path}.{key}"
+            if isinstance(value, str):
+                if value.startswith(DOMAIN) or value.startswith("/"):
+                    urls.append((child_path, value))
+            else:
+                urls.extend(walk_index_urls(value, child_path))
+    elif isinstance(data, list):
+        for index, value in enumerate(data):
+            child_path = f"{path}[{index}]"
+            if isinstance(value, str):
+                if value.startswith(DOMAIN) or value.startswith("/"):
+                    urls.append((child_path, value))
+            else:
+                urls.extend(walk_index_urls(value, child_path))
+    return urls
+
+
+def validate_index_url(
+    source: Path,
+    field_path: str,
+    value: str,
+    parsers: dict[Path, PageParser],
+    sitemap_urls: set[str],
+    stats: Counter,
+) -> list[str]:
+    issues: list[str] = []
+    stats["discovery_cross_index_urls_checked"] += 1
+    url = f"{DOMAIN}{value}" if value.startswith("/") else value
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw":
+        issues.append(f"{source}: {field_path} should use https://lovetypes.tw URL or absolute local path: {value}")
+        return issues
+
+    target, fragment = target_for(ROOT / "index.html", url)
+    if target is None or not target.exists():
+        issues.append(f"{source}: {field_path} target missing: {value}")
+        return issues
+    stats["discovery_cross_index_targets_checked"] += 1
+
+    if target.suffix != ".html":
+        return issues
+
+    parser = parsers.get(target)
+    if parser and is_noindex(parser):
+        issues.append(f"{source}: {field_path} should not point to noindex HTML: {value}")
+    if fragment:
+        stats["discovery_cross_index_fragments_checked"] += 1
+        if parser and fragment not in parser.ids:
+            issues.append(f"{source}: {field_path} fragment missing #{fragment}: {value}")
+        base_url = canonical_url_without_fragment(url)
+        if base_url not in sitemap_urls:
+            issues.append(f"{source}: {field_path} fragment base missing from sitemap: {base_url}")
+        return issues
+
+    canonical = public_url_for_page(target)
+    if canonical not in sitemap_urls:
+        issues.append(f"{source}: {field_path} HTML route missing from sitemap: {canonical}")
+    elif parser:
+        canonicals = parser.links_with_rel("canonical")
+        if len(canonicals) == 1 and canonicals[0].get("href") != canonical:
+            issues.append(f"{source}: {field_path} target canonical mismatch: {value}")
+    return issues
+
+
 def image_size(path: Path) -> tuple[int, int] | None:
     try:
         with Image.open(path) as image:
@@ -2510,6 +2584,67 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     return issues, stats
 
 
+def parse_discovery_cross_index(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    index_paths = [
+        AI_DISCOVERY_PATH,
+        SITE_INDEX_PATH,
+        GUARDIAN_PROFILES_PATH,
+        COMMERCE_CATALOG_PATH,
+        SAFETY_INDEX_PATH,
+        PROMOTION_KIT_PATH,
+        SITE_HEALTH_PATH,
+        RELEASE_PATH,
+    ]
+    for index_path in index_paths:
+        if not index_path.exists():
+            issues.append(f"{index_path}: missing discovery cross-index source")
+            continue
+        try:
+            data = json.loads(index_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            issues.append(f"{index_path}: invalid JSON for discovery cross-index: {exc}")
+            continue
+        stats["discovery_cross_indexes_checked"] += 1
+        seen_urls: set[str] = set()
+        for field_path, value in walk_index_urls(data):
+            if value in seen_urls:
+                continue
+            seen_urls.add(value)
+            issues.extend(validate_index_url(index_path, field_path, value, parsers, sitemap_urls, stats))
+
+    expected_core_routes = {
+        f"{DOMAIN}/",
+        f"{DOMAIN}/start/",
+        f"{DOMAIN}/garden-map/",
+        f"{DOMAIN}/characters/",
+        f"{DOMAIN}/resources/",
+        f"{DOMAIN}/repair-plan/",
+        f"{DOMAIN}/keepsakes/",
+        f"{DOMAIN}/luna-yoga-music/",
+        f"{DOMAIN}/contact/",
+    }
+    ai_urls = set()
+    if AI_DISCOVERY_PATH.exists():
+        try:
+            ai_data = json.loads(AI_DISCOVERY_PATH.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            ai_data = {}
+        for _field_path, value in walk_index_urls(ai_data):
+            url = f"{DOMAIN}{value}" if value.startswith("/") else value
+            if url.startswith(DOMAIN):
+                ai_urls.add(canonical_url_without_fragment(url))
+    for route in sorted(expected_core_routes):
+        stats["discovery_cross_core_routes_checked"] += 1
+        if route not in ai_urls:
+            issues.append(f"{AI_DISCOVERY_PATH}: AI discovery index missing core route {route}")
+        if route not in sitemap_urls:
+            issues.append(f"{SITEMAP_PATH}: sitemap missing core discovery route {route}")
+
+    return issues, stats
+
+
 def check_policy_pages(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -3701,6 +3836,9 @@ def main() -> int:
     ai_discovery_issues, ai_discovery_stats = parse_ai_discovery_index(parsers)
     issues.extend(ai_discovery_issues)
     stats.update(ai_discovery_stats)
+    discovery_cross_issues, discovery_cross_stats = parse_discovery_cross_index(parsers, sitemap_urls)
+    issues.extend(discovery_cross_issues)
+    stats.update(discovery_cross_stats)
     policy_issues, policy_stats = check_policy_pages(parsers)
     issues.extend(policy_issues)
     stats.update(policy_stats)
@@ -3885,6 +4023,11 @@ def main() -> int:
     print(f"ai_discovery_questions_checked={stats['ai_discovery_questions_checked']}")
     print(f"ai_discovery_priority_urls_checked={stats['ai_discovery_priority_urls_checked']}")
     print(f"ai_discovery_discovery_files_checked={stats['ai_discovery_discovery_files_checked']}")
+    print(f"discovery_cross_indexes_checked={stats['discovery_cross_indexes_checked']}")
+    print(f"discovery_cross_index_urls_checked={stats['discovery_cross_index_urls_checked']}")
+    print(f"discovery_cross_index_targets_checked={stats['discovery_cross_index_targets_checked']}")
+    print(f"discovery_cross_index_fragments_checked={stats['discovery_cross_index_fragments_checked']}")
+    print(f"discovery_cross_core_routes_checked={stats['discovery_cross_core_routes_checked']}")
     print(f"adsense_account_meta_tags={stats['adsense_account_meta_tags']}")
     print(f"policy_pages={stats['policy_pages']}")
     print(f"policy_updated_labels_checked={stats['policy_updated_labels_checked']}")

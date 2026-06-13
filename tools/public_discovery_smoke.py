@@ -1286,20 +1286,20 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, len(boundaries), route_count, len(not_for), len(steps) if isinstance(steps, list) else 0
 
 
-def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
+def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int]:
     path = "/ai-discovery.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("siteName") != "LoveTypes":
@@ -1318,6 +1318,36 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         if not isinstance(totals, dict) or totals.get(key) != expected:
             got = totals.get(key) if isinstance(totals, dict) else None
             issues.append(f"{path}: totals.{key} should be {expected}, got {got!r}")
+    expected_languages = {
+        "zh": {"hreflang": "zh-TW", "prefix": "/", "name": "繁體中文"},
+        "en": {"hreflang": "en", "prefix": "en", "name": "English"},
+        "ja": {"hreflang": "ja", "prefix": "ja", "name": "日本語"},
+        "ko": {"hreflang": "ko", "prefix": "ko", "name": "한국어"},
+        "es": {"hreflang": "es", "prefix": "es", "name": "Español"},
+    }
+    languages = data.get("availableLanguages")
+    languages_checked = 0
+    if not isinstance(languages, list) or len(languages) != len(expected_languages):
+        issues.append(f"{path}: availableLanguages should include five locales")
+    else:
+        seen_langs: set[str] = set()
+        for language in languages:
+            if not isinstance(language, dict):
+                issues.append(f"{path}: availableLanguages entries should be objects")
+                continue
+            lang_id = language.get("id")
+            seen_langs.add(lang_id)
+            expected = expected_languages.get(lang_id)
+            if expected is None:
+                issues.append(f"{path}: unexpected availableLanguages id {lang_id!r}")
+                continue
+            languages_checked += 1
+            for key, expected_value in expected.items():
+                if language.get(key) != expected_value:
+                    issues.append(f"{path}: availableLanguages.{lang_id}.{key} should be {expected_value!r}")
+        missing_langs = sorted(set(expected_languages).difference(seen_langs))
+        if missing_langs:
+            issues.append(f"{path}: availableLanguages missing {', '.join(missing_langs)}")
     guardians = data.get("canonicalEntities", {}).get("guardians", []) if isinstance(data.get("canonicalEntities"), dict) else []
     expected_guardians = {
         "iris": "Words of affirmation",
@@ -1339,6 +1369,40 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     missing = sorted(set(expected_guardians).difference(seen))
     if missing:
         issues.append(f"{path}: missing guardians {', '.join(missing)}")
+    canonical_base_url = base_url.rstrip("/")
+    expected_core_concepts = {
+        "heart_garden": f"{canonical_base_url}/about/",
+        "guardian_recognition_ritual": f"{canonical_base_url}/start/",
+        "five_love_languages": f"{canonical_base_url}/theory/",
+        "misfrequency_repair": f"{canonical_base_url}/repair-plan/",
+        "traveler_supplies": f"{canonical_base_url}/resources/",
+        "luna_night_support": f"{canonical_base_url}/luna-yoga-music/",
+    }
+    core_concepts = data.get("canonicalEntities", {}).get("coreConcepts", []) if isinstance(data.get("canonicalEntities"), dict) else []
+    core_concepts_checked = 0
+    if not isinstance(core_concepts, list) or len(core_concepts) != len(expected_core_concepts):
+        issues.append(f"{path}: canonicalEntities.coreConcepts should include six concepts")
+    else:
+        seen_concepts: set[str] = set()
+        for concept in core_concepts:
+            if not isinstance(concept, dict):
+                issues.append(f"{path}: core concept should be an object")
+                continue
+            concept_id = concept.get("id")
+            seen_concepts.add(concept_id)
+            expected_canonical = expected_core_concepts.get(concept_id)
+            if expected_canonical is None:
+                issues.append(f"{path}: unexpected core concept id {concept_id!r}")
+                continue
+            core_concepts_checked += 1
+            label = concept.get("label")
+            if not isinstance(label, dict) or not label.get("zh") or not label.get("en"):
+                issues.append(f"{path}: core concept {concept_id} should include zh/en label")
+            if concept.get("canonical") != expected_canonical:
+                issues.append(f"{path}: core concept {concept_id} canonical should be {expected_canonical}")
+        missing_concepts = sorted(set(expected_core_concepts).difference(seen_concepts))
+        if missing_concepts:
+            issues.append(f"{path}: missing core concepts {', '.join(missing_concepts)}")
     questions = data.get("answerableQuestions", [])
     if not isinstance(questions, list) or len(questions) != 11:
         issues.append(f"{path}: answerableQuestions should include eleven entries")
@@ -1358,6 +1422,8 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     return (
         issues,
         len(guardians) if isinstance(guardians, list) else 0,
+        languages_checked,
+        core_concepts_checked,
         len(questions) if isinstance(questions, list) else 0,
         len(priority_urls) if isinstance(priority_urls, list) else 0,
         len(files) if isinstance(files, dict) else 0,
@@ -1559,7 +1625,17 @@ def main() -> int:
     site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_local_audit_groups_checked, site_health_indexes_checked, site_health_profile_smoke_counters_checked = check_site_health(base_url)
     release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_local_audit_groups_checked, release_outcomes_checked, release_profile_smoke_counters_checked = check_release_info(base_url)
     safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
-    ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked, ai_discovery_profile_smoke_counters_checked = check_ai_discovery(base_url)
+    (
+        ai_discovery_issues,
+        ai_discovery_guardians_checked,
+        ai_discovery_languages_checked,
+        ai_discovery_core_concepts_checked,
+        ai_discovery_questions_checked,
+        ai_discovery_priority_urls_checked,
+        ai_discovery_discovery_files_checked,
+        ai_discovery_guidance_fields_checked,
+        ai_discovery_profile_smoke_counters_checked,
+    ) = check_ai_discovery(base_url)
     discovery_cross_issues, discovery_cross_indexes_checked, discovery_cross_urls_checked, discovery_cross_targets_checked, discovery_cross_fragments_checked, discovery_cross_core_routes_checked = check_discovery_cross_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
@@ -1642,6 +1718,8 @@ def main() -> int:
     print(f"public_discovery_safety_index_not_for_checked={safety_index_not_for_checked}")
     print(f"public_discovery_safety_index_steps_checked={safety_index_steps_checked}")
     print(f"public_discovery_ai_guardians_checked={ai_discovery_guardians_checked}")
+    print(f"public_discovery_ai_languages_checked={ai_discovery_languages_checked}")
+    print(f"public_discovery_ai_core_concepts_checked={ai_discovery_core_concepts_checked}")
     print(f"public_discovery_ai_questions_checked={ai_discovery_questions_checked}")
     print(f"public_discovery_ai_priority_urls_checked={ai_discovery_priority_urls_checked}")
     print(f"public_discovery_ai_discovery_files_checked={ai_discovery_discovery_files_checked}")

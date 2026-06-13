@@ -2812,6 +2812,36 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     if data.get("preferredLanguage") != "zh-TW":
         issues.append(f"{AI_DISCOVERY_PATH}: preferredLanguage should be zh-TW")
 
+    expected_languages = {
+        "zh": {"hreflang": "zh-TW", "prefix": "/", "name": "繁體中文"},
+        "en": {"hreflang": "en", "prefix": "en", "name": "English"},
+        "ja": {"hreflang": "ja", "prefix": "ja", "name": "日本語"},
+        "ko": {"hreflang": "ko", "prefix": "ko", "name": "한국어"},
+        "es": {"hreflang": "es", "prefix": "es", "name": "Español"},
+    }
+    languages = data.get("availableLanguages")
+    if not isinstance(languages, list) or len(languages) != len(expected_languages):
+        issues.append(f"{AI_DISCOVERY_PATH}: availableLanguages should include five locales")
+    else:
+        seen_langs: set[str] = set()
+        for language in languages:
+            if not isinstance(language, dict):
+                issues.append(f"{AI_DISCOVERY_PATH}: availableLanguages entries should be objects")
+                continue
+            lang_id = language.get("id")
+            seen_langs.add(lang_id)
+            expected = expected_languages.get(lang_id)
+            if expected is None:
+                issues.append(f"{AI_DISCOVERY_PATH}: unexpected availableLanguages id {lang_id!r}")
+                continue
+            stats["ai_discovery_languages_checked"] += 1
+            for key, expected_value in expected.items():
+                if language.get(key) != expected_value:
+                    issues.append(f"{AI_DISCOVERY_PATH}: availableLanguages.{lang_id}.{key} should be {expected_value!r}")
+        missing_langs = sorted(set(expected_languages).difference(seen_langs))
+        if missing_langs:
+            issues.append(f"{AI_DISCOVERY_PATH}: availableLanguages missing {', '.join(missing_langs)}")
+
     guidance = data.get("answerGuidance")
     if not isinstance(guidance, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: answerGuidance should be an object")
@@ -2865,6 +2895,39 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
         missing = set(GENERATOR_CONFIG.GUARDIANS).difference(seen)
         if missing:
             issues.append(f"{AI_DISCOVERY_PATH}: missing guardians {sorted(missing)}")
+
+    core_concepts = entities.get("coreConcepts") if isinstance(entities, dict) else None
+    expected_core_concepts = {
+        "heart_garden": f"{DOMAIN}/about/",
+        "guardian_recognition_ritual": f"{DOMAIN}/start/",
+        "five_love_languages": f"{DOMAIN}/theory/",
+        "misfrequency_repair": f"{DOMAIN}/repair-plan/",
+        "traveler_supplies": f"{DOMAIN}/resources/",
+        "luna_night_support": f"{DOMAIN}/luna-yoga-music/",
+    }
+    if not isinstance(core_concepts, list) or len(core_concepts) != len(expected_core_concepts):
+        issues.append(f"{AI_DISCOVERY_PATH}: canonicalEntities.coreConcepts should include six concepts")
+    else:
+        seen_concepts: set[str] = set()
+        for concept in core_concepts:
+            if not isinstance(concept, dict):
+                issues.append(f"{AI_DISCOVERY_PATH}: core concept should be an object")
+                continue
+            concept_id = concept.get("id")
+            seen_concepts.add(concept_id)
+            expected_canonical = expected_core_concepts.get(concept_id)
+            if expected_canonical is None:
+                issues.append(f"{AI_DISCOVERY_PATH}: unexpected core concept id {concept_id!r}")
+                continue
+            stats["ai_discovery_core_concepts_checked"] += 1
+            label = concept.get("label")
+            if not isinstance(label, dict) or not label.get("zh") or not label.get("en"):
+                issues.append(f"{AI_DISCOVERY_PATH}: core concept {concept_id} should include zh/en label")
+            if concept.get("canonical") != expected_canonical:
+                issues.append(f"{AI_DISCOVERY_PATH}: core concept {concept_id} canonical should be {expected_canonical}")
+        missing_concepts = sorted(set(expected_core_concepts).difference(seen_concepts))
+        if missing_concepts:
+            issues.append(f"{AI_DISCOVERY_PATH}: missing core concepts {', '.join(missing_concepts)}")
 
     questions = data.get("answerableQuestions")
     if not isinstance(questions, list) or len(questions) != 11:
@@ -4428,7 +4491,9 @@ def main() -> int:
     print(f"ai_discovery_promotion_profile_verification_snapshots_checked={stats['ai_discovery_promotion_profile_verification_snapshots_checked']}")
     print(f"ai_discovery_promotion_profile_verification_public_smoke_counters_checked={stats['ai_discovery_promotion_profile_verification_public_smoke_counters_checked']}")
     print(f"ai_discovery_totals_checked={stats['ai_discovery_totals_checked']}")
+    print(f"ai_discovery_languages_checked={stats['ai_discovery_languages_checked']}")
     print(f"ai_discovery_guardians_checked={stats['ai_discovery_guardians_checked']}")
+    print(f"ai_discovery_core_concepts_checked={stats['ai_discovery_core_concepts_checked']}")
     print(f"ai_discovery_questions_checked={stats['ai_discovery_questions_checked']}")
     print(f"ai_discovery_priority_urls_checked={stats['ai_discovery_priority_urls_checked']}")
     print(f"ai_discovery_discovery_files_checked={stats['ai_discovery_discovery_files_checked']}")

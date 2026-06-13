@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profileActionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
+    "profileCompletionGate": "docs/promotion/first-round/profile-completion-gate.json",
+    "launchReadinessGate": "docs/promotion/first-round/launch-readiness-gate.json",
+    "firstBatchActionSheet": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
+    "stageTransitionMatrix": "docs/promotion/first-round/stage-transition-matrix.json"
+  },
+  "metrics": {
+    "rows": 7,
+    "completeRows": 3,
+    "currentBlockers": 1,
+    "blockedUpstreamRows": 3,
+    "readyToPublish": 0,
+    "issues": 0
+  },
+  "policy": {
+    "noProfileProofNoPublish": true,
+    "refreshAfterWriteback": true,
+    "firstBatchOnlyAfterGate": true,
+    "emptyDataModeUntilKpi": true
+  },
+  "rows": [
+    {
+      "step_id": "profile_action_sheet_ready",
+      "phase": "profile_setup",
+      "current_value": 3,
+      "required_value": 3,
+      "owner_action": "Use the platform-specific Bio/Profile link copy from the action sheet.",
+      "evidence_required": "Action sheet has three platforms, valid /start/ UTM links, and no issues.",
+      "command": "python3 tools/promotion_profile_setup_action_sheet.py --check",
+      "stop_condition": "Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.",
+      "status": "complete"
+    },
+    {
+      "step_id": "profile_writeback_complete",
+      "phase": "profile_writeback",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "After setting each public profile link, write back status set/live with a proof note.",
+      "evidence_required": "platform-profile-tracker.csv has status set/live, set date, and traceable proof for all platforms.",
+      "command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "stop_condition": "Do not write set/live without screenshot, clicked public link, or platform timestamp evidence.",
+      "status": "current_blocker"
+    },
+    {
+      "step_id": "profile_evidence_complete",
+      "phase": "profile_writeback",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Confirm every completed profile row has proof in the evidence ledger.",
+      "evidence_required": "Evidence ledger traceable count equals required count and evidence issues are zero.",
+      "command": "python3 tools/promotion_evidence_ledger.py --check",
+      "stop_condition": "Stop if proof note is vague, missing, or not tied to a platform/date.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "ops_refresh_after_profile",
+      "phase": "handoff",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Refresh promotion docs after profile writeback before opening publication.",
+      "evidence_required": "Profile completion gate packetsInSync is true.",
+      "command": "python3 tools/promotion_daily_ops_refresh.py",
+      "stop_condition": "Do not publish from stale action sheets after tracker writeback.",
+      "status": "complete"
+    },
+    {
+      "step_id": "launch_readiness_open",
+      "phase": "handoff",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Confirm launch readiness opens first-batch publishing.",
+      "evidence_required": "launch-readiness-gate.json readiness.readyToPublishPosts is true.",
+      "command": "python3 tools/promotion_launch_readiness_gate.py --check",
+      "stop_condition": "Stop if profile links are incomplete, campaign UTM is invalid, or assets are not ready.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "first_batch_action_sheet_ready",
+      "phase": "publish",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Publish only the first batch rows that become ready after the profile gate opens.",
+      "evidence_required": "First-batch publish action sheet has three ready rows and zero issues.",
+      "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
+      "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "single_current_blocker_visible",
+      "phase": "stage_control",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep the stage matrix exposing exactly one current blocker before advancing.",
+      "evidence_required": "stage-transition-matrix has one current_blocker and no issues.",
+      "command": "python3 tools/promotion_stage_transition_matrix.py --check",
+      "stop_condition": "Stop if multiple current blockers appear or if later stages become next before profile handoff.",
+      "status": "complete"
+    }
+  ],
+  "issues": []
+}

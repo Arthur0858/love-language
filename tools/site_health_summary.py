@@ -1001,6 +1001,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_weekly_summary_empty_data_mode",
         "promotion_weekly_summary_issues",
         "promotion_decision_scenarios_checked",
+        "promotion_decision_profile_scenarios_checked",
         "promotion_decision_scenario_issues",
         "home_quiz_entry_pages",
         "guide_action_bridge_pages",

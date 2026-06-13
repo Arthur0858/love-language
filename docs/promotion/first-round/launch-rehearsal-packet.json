@@ -46,7 +46,7 @@
       "status": "ready",
       "platform": "youtube_shorts",
       "taskId": "profile-youtube_shorts",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: screenshot profile-platform-YYYY-MM-DD.png saved",
+      "requiredInput": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: screenshot profile-youtube_shorts-2026-06-14.png verified",
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
       "blockedBy": "",
       "successSignal": "profile proof text validates before writeback"
@@ -56,7 +56,7 @@
       "status": "ready",
       "platform": "tiktok",
       "taskId": "profile-tiktok",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: screenshot profile-platform-YYYY-MM-DD.png saved",
+      "requiredInput": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: screenshot profile-tiktok-2026-06-14.png verified",
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
       "blockedBy": "",
       "successSignal": "profile proof text validates before writeback"
@@ -66,7 +66,7 @@
       "status": "ready",
       "platform": "instagram_reels",
       "taskId": "profile-instagram_reels",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: screenshot profile-platform-YYYY-MM-DD.png saved",
+      "requiredInput": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: screenshot profile-instagram_reels-2026-06-14.png verified",
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
       "blockedBy": "",
       "successSignal": "profile proof text validates before writeback"

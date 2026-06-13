@@ -1,0 +1,6 @@
+LoveTypes profile setup writeback
+platform: instagram_reels
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+proof_note: screenshot profile-instagram_reels-2026-06-14.png verified

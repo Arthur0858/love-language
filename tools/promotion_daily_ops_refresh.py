@@ -54,6 +54,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],
     [sys.executable, "tools/promotion_operation_proof_packet.py"],
+    [sys.executable, "tools/promotion_operation_proof_templates.py"],
     [sys.executable, "tools/promotion_launch_rehearsal_packet.py"],
     [sys.executable, "tools/promotion_master_gate.py"],
 ]

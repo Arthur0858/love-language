@@ -50,13 +50,14 @@ def load_json(path: Path) -> dict:
 
 
 def profile_template(item: dict) -> str:
+    platform = item.get("platform", "")
     return "\n".join([
         "LoveTypes profile setup writeback",
-        f"platform: {item.get('platform', '')}",
+        f"platform: {platform}",
         "status: set",
         f"set_date: {date.today().isoformat()}",
         f"profile_link: {item.get('profileLink', '')}",
-        "proof_note: screenshot profile-platform-YYYY-MM-DD.png saved",
+        f"proof_note: screenshot profile-{platform}-{date.today().isoformat()}.png verified",
     ])
 
 

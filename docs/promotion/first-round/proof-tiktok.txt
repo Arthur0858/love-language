@@ -1,0 +1,6 @@
+LoveTypes profile setup writeback
+platform: tiktok
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+proof_note: screenshot profile-tiktok-2026-06-14.png verified

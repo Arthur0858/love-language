@@ -74,6 +74,7 @@ PYTHON_TOOLS = [
     "tools/promotion_launch_command_center.py",
     "tools/promotion_ops_closure_audit.py",
     "tools/promotion_operation_proof_packet.py",
+    "tools/promotion_operation_proof_templates.py",
     "tools/promotion_launch_rehearsal_packet.py",
     "tools/promotion_launch_readiness_gate.py",
     "tools/promotion_launch_link_qa.py",
@@ -236,6 +237,7 @@ def main() -> int:
         run_step("promotion launch command center", [sys.executable, "tools/promotion_launch_command_center.py", "--check"])
         run_step("promotion ops closure audit", [sys.executable, "tools/promotion_ops_closure_audit.py"])
         run_step("promotion operation proof packet", [sys.executable, "tools/promotion_operation_proof_packet.py", "--check"])
+        run_step("promotion operation proof templates", [sys.executable, "tools/promotion_operation_proof_templates.py", "--check"])
         run_step("promotion launch rehearsal packet", [sys.executable, "tools/promotion_launch_rehearsal_packet.py", "--check"])
         run_step("promotion launch readiness gate", [sys.executable, "tools/promotion_launch_readiness_gate.py", "--check"])
         run_step("promotion launch link qa", [sys.executable, "tools/promotion_launch_link_qa.py", "--check"])

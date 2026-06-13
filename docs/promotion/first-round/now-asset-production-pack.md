@@ -12,6 +12,12 @@
 - 不使用診斷、療效、保證修復或必須購買說法。
 - 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
+## 腳本完整性規則
+
+- 最少字幕行：8
+- 必須保留 CTA：完成 15 題測驗
+- 禁止詞：診斷, 療效, 保證修復, 必須購買
+
 ## 艾莉絲（iris）
 
 ### 影片標題

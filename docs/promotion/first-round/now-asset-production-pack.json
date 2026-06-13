@@ -3,6 +3,24 @@
   "source": {
     "backlog": "docs/promotion/first-round/asset-build-backlog.json"
   },
+  "scriptPolicy": {
+    "guardianOrder": [
+      "iris",
+      "noah",
+      "vivian",
+      "claire",
+      "dora"
+    ],
+    "minSubtitleLinesPerScript": 8,
+    "requiredQuizCta": "完成 15 題測驗",
+    "forbiddenClaims": [
+      "診斷",
+      "療效",
+      "保證修復",
+      "必須購買"
+    ],
+    "rule": "每支 now content variant 必須有足夠字幕行、保留測驗 CTA，且不得使用診斷、療效、保證修復或必須購買說法。"
+  },
   "scriptCount": 5,
   "guardianCount": 5,
   "expectedScriptCount": 5,

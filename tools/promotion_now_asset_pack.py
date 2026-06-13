@@ -12,6 +12,10 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 BACKLOG_PATH = PROMOTION_DIR / "asset-build-backlog.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "now-asset-production-pack.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "now-asset-production-pack.json"
+GUARDIAN_ORDER = ("iris", "noah", "vivian", "claire", "dora")
+MIN_SUBTITLE_LINES_PER_SCRIPT = 8
+REQUIRED_QUIZ_CTA = "完成 15 題測驗"
+FORBIDDEN_CLAIMS = ("診斷", "療效", "保證修復", "必須購買")
 GUARDIAN_VARIANTS = {
     "iris": {
         "theme": "浪漫與文字",
@@ -136,6 +140,16 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def script_policy() -> dict[str, object]:
+    return {
+        "guardianOrder": list(GUARDIAN_ORDER),
+        "minSubtitleLinesPerScript": MIN_SUBTITLE_LINES_PER_SCRIPT,
+        "requiredQuizCta": REQUIRED_QUIZ_CTA,
+        "forbiddenClaims": list(FORBIDDEN_CLAIMS),
+        "rule": "每支 now content variant 必須有足夠字幕行、保留測驗 CTA，且不得使用診斷、療效、保證修復或必須購買說法。",
+    }
+
+
 def build_script(item: dict) -> dict:
     guardian = item["guardianId"]
     variant = GUARDIAN_VARIANTS[guardian]
@@ -162,13 +176,14 @@ def build_pack(backlog: dict) -> dict:
         item for item in backlog.get("items", [])
         if item.get("priority") == "now" and item.get("assetType") == "content_variant"
     ]
-    now_items.sort(key=lambda item: ["iris", "noah", "vivian", "claire", "dora"].index(item["guardianId"]))
+    now_items.sort(key=lambda item: GUARDIAN_ORDER.index(item["guardianId"]))
     scripts = [build_script(item) for item in now_items]
     return {
         "generatedAt": date.today().isoformat(),
         "source": {
             "backlog": str(BACKLOG_PATH.relative_to(ROOT)),
         },
+        "scriptPolicy": script_policy(),
         "scriptCount": len(scripts),
         "guardianCount": len({script["guardian_id"] for script in scripts}),
         "expectedScriptCount": len(now_items),
@@ -196,6 +211,16 @@ def render_markdown(pack: dict) -> str:
         "",
     ]
     lines.extend(f"- {item}" for item in pack["productionChecklist"])
+    policy = pack.get("scriptPolicy", {})
+    if policy:
+        lines.extend([
+            "",
+            "## 腳本完整性規則",
+            "",
+            f"- 最少字幕行：{policy['minSubtitleLinesPerScript']}",
+            f"- 必須保留 CTA：{policy['requiredQuizCta']}",
+            f"- 禁止詞：{', '.join(policy['forbiddenClaims'])}",
+        ])
     for script in pack["scripts"]:
         lines.extend([
             "",
@@ -232,6 +257,12 @@ def validate_pack(pack: dict) -> list[str]:
     issues: list[str] = []
     expected_guardians = int(pack.get("expectedGuardianCount", 0) or 0)
     expected_scripts = int(pack.get("expectedScriptCount", 0) or 0)
+    policy = pack.get("scriptPolicy", {})
+    min_subtitle_lines = int(policy.get("minSubtitleLinesPerScript", 0) or 0) if isinstance(policy, dict) else 0
+    required_cta = str(policy.get("requiredQuizCta", "")) if isinstance(policy, dict) else ""
+    forbidden = tuple(policy.get("forbiddenClaims", [])) if isinstance(policy, dict) else ()
+    if min_subtitle_lines < 1 or not required_cta or not forbidden:
+        issues.append("missing script policy")
     if pack.get("guardianCount") != expected_guardians:
         issues.append(f"expected {expected_guardians} guardians in now asset production pack")
     if pack.get("scriptCount") != expected_scripts:
@@ -241,11 +272,10 @@ def validate_pack(pack: dict) -> list[str]:
         missing = [field for field in required if not script.get(field)]
         if missing:
             issues.append(f"{script.get('id', '<unknown>')}: missing {', '.join(missing)}")
-        if len(script.get("full_subtitle_script", [])) < 8:
-            issues.append(f"{script.get('id', '<unknown>')}: subtitle script should have at least 8 lines")
-        if "完成 15 題測驗" not in " ".join(script.get("full_subtitle_script", [])):
+        if len(script.get("full_subtitle_script", [])) < min_subtitle_lines:
+            issues.append(f"{script.get('id', '<unknown>')}: subtitle script should have at least {min_subtitle_lines} lines")
+        if required_cta not in " ".join(script.get("full_subtitle_script", [])):
             issues.append(f"{script.get('id', '<unknown>')}: subtitle script missing quiz CTA")
-        forbidden = "診斷 療效 保證修復 必須購買".split()
         text = " ".join(script.get("full_subtitle_script", [])) + " " + script.get("comment_cta", "")
         for word in forbidden:
             if word in text:

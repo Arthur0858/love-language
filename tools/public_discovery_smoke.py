@@ -1752,6 +1752,7 @@ def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int
     response_cache: dict[str, Response] = {}
     index_paths = (
         "/ai-discovery.json",
+        "/funnel-events.json",
         "/site-index.json",
         "/guardian-profiles.json",
         "/commerce-catalog.json",

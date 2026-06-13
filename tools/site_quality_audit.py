@@ -3114,6 +3114,7 @@ def parse_discovery_cross_index(parsers: dict[Path, PageParser], sitemap_urls: s
     stats = Counter()
     index_paths = [
         AI_DISCOVERY_PATH,
+        FUNNEL_EVENTS_PATH,
         SITE_INDEX_PATH,
         GUARDIAN_PROFILES_PATH,
         COMMERCE_CATALOG_PATH,

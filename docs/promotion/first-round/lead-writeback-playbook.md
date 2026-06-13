@@ -34,6 +34,13 @@
 - 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
 - Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
 
+## 結構化文字匯入
+
+- Contact 與收藏室的結構化表單會產生 `LoveTypes 結構化需求` 文字。
+- 收到來信後，先把該段文字存成暫存 `.txt`，再用匯入工具解析欄位；工具不會把 email 原文寫進 tracker。
+- 檢查：`python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt`
+- 寫入：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email request verified"`
+
 ## 安全規則
 
 - 不用本工具偽造名單、來信、同意或 KPI。

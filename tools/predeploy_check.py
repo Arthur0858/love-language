@@ -39,6 +39,7 @@ PYTHON_TOOLS = [
     "tools/promotion_week_decision_gate.py",
     "tools/promotion_lead_intake_playbook.py",
     "tools/promotion_lead_form_audit.py",
+    "tools/promotion_lead_text_import.py",
     "tools/promotion_lead_writeback.py",
     "tools/promotion_lead_magnet_inventory.py",
     "tools/promotion_offer_hypothesis_board.py",
@@ -179,6 +180,7 @@ def main() -> int:
         run_step("promotion week decision gate", [sys.executable, "tools/promotion_week_decision_gate.py", "--check"])
         run_step("promotion lead intake playbook", [sys.executable, "tools/promotion_lead_intake_playbook.py", "--check"])
         run_step("promotion lead form audit", [sys.executable, "tools/promotion_lead_form_audit.py"])
+        run_step("promotion lead text import", [sys.executable, "tools/promotion_lead_text_import.py", "check"])
         run_step("promotion lead writeback", [sys.executable, "tools/promotion_lead_writeback.py", "check"])
         run_step("promotion lead magnet inventory", [sys.executable, "tools/promotion_lead_magnet_inventory.py", "--check"])
         run_step("promotion offer hypothesis board", [sys.executable, "tools/promotion_offer_hypothesis_board.py", "--check"])

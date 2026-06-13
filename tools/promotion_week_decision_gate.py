@@ -17,12 +17,26 @@ DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "week-decision-gate.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "week-decision-gate.json"
 QUIZ_START_RATE_MIN = 0.3
 QUIZ_COMPLETION_RATE_MIN = 0.4
+SCALE_CONTENT_MIN_QUIZ_COMPLETIONS_FALLBACK = 10
 
 
-def decision_thresholds() -> dict[str, float]:
+def matrix_decision_thresholds(matrix: dict) -> dict:
+    thresholds = matrix.get("decisionThresholds", {})
+    return thresholds if isinstance(thresholds, dict) else {}
+
+
+def decision_thresholds(matrix: dict) -> dict[str, float | int]:
+    matrix_thresholds = matrix_decision_thresholds(matrix)
     return {
         "quizStartRateMin": QUIZ_START_RATE_MIN,
         "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
+        "scaleContentMinQuizCompletions": int(
+            matrix_thresholds.get(
+                "publishGuardianVariantsMinQuizCompletions",
+                SCALE_CONTENT_MIN_QUIZ_COMPLETIONS_FALLBACK,
+            )
+            or SCALE_CONTENT_MIN_QUIZ_COMPLETIONS_FALLBACK
+        ),
     }
 
 
@@ -56,6 +70,8 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
     lead_intent = int(computed.get("leadIntent", 0) or 0)
     completion_rate = derived.get("quizCompletionRate")
     start_rate = derived.get("quizStartRate")
+    thresholds = decision_thresholds(matrix)
+    scale_content_min_quiz = int(thresholds["scaleContentMinQuizCompletions"])
     blockers: list[str] = []
     if not ready_for_weekly:
         blockers.append("尚未達週決策門檻：發布狀態或 KPI 回填不足。")
@@ -66,7 +82,12 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
     if quiz_starts > 0 and completion_rate is not None and completion_rate < QUIZ_COMPLETION_RATE_MIN:
         blockers.append(f"測驗開始後完成率低於 {QUIZ_COMPLETION_RATE_MIN:.0%}，先修手機題目節奏與結果揭示。")
 
-    can_scale_content = ready_for_weekly and not empty_data and quiz_completions >= 10 and not any("測驗開始後完成率" in item for item in blockers)
+    can_scale_content = (
+        ready_for_weekly
+        and not empty_data
+        and quiz_completions >= scale_content_min_quiz
+        and not any("測驗開始後完成率" in item for item in blockers)
+    )
     can_build_owned = ready_for_weekly and not empty_data and lead_intent > 0
     can_test_soft_offer = ready_for_weekly and not empty_data and paid_intent > 0
     can_deepen_identity = ready_for_weekly and not empty_data and route_interest > 0
@@ -123,7 +144,7 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
             "leadIntent": lead_intent,
             "paidRevenueIntent": paid_intent,
         },
-        "decisionThresholds": decision_thresholds(),
+        "decisionThresholds": thresholds,
         "leaders": leaders,
         "gates": gates,
         "recommendedFocus": recommended_focus,
@@ -189,6 +210,8 @@ def validate_gate(gate: dict) -> list[str]:
         issues.append("empty data mode must fail closed for every decision gate")
     if gate.get("gates", {}).get("testSoftOffer") and gate.get("metrics", {}).get("paidRevenueIntent", 0) <= 0:
         issues.append("soft offer gate cannot pass without paid revenue intent")
+    if int(gate.get("decisionThresholds", {}).get("scaleContentMinQuizCompletions", 0) or 0) < 1:
+        issues.append("scale content gate missing quiz completion threshold")
     if not gate.get("nextSteps"):
         issues.append("gate should include at least one next step")
     if gate.get("recommendedFocus") not in {"collect_signal", "scale_content", "deepen_identity_asset", "build_owned_asset", "test_soft_offer"}:

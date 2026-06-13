@@ -18,7 +18,8 @@
   },
   "decisionThresholds": {
     "quizStartRateMin": 0.3,
-    "quizCompletionRateMin": 0.4
+    "quizCompletionRateMin": 0.4,
+    "scaleContentMinQuizCompletions": 10
   },
   "leaders": {
     "quizGuardian": null,

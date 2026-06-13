@@ -101,6 +101,7 @@ PYTHON_TOOLS = [
     "tools/promotion_launch_rehearsal_packet.py",
     "tools/promotion_launch_readiness_gate.py",
     "tools/promotion_launch_link_qa.py",
+    "tools/promotion_profile_url_smoke.py",
     "tools/promotion_attribution_reconciliation.py",
     "tools/promotion_weekly_summary.py",
     "tools/promotion_weekly_review_packet.py",
@@ -299,6 +300,7 @@ def main() -> int:
         run_step("promotion launch rehearsal packet", [sys.executable, "tools/promotion_launch_rehearsal_packet.py", "--check"])
         run_step("promotion launch readiness gate", [sys.executable, "tools/promotion_launch_readiness_gate.py", "--check"])
         run_step("promotion launch link qa", [sys.executable, "tools/promotion_launch_link_qa.py", "--check"])
+        run_step("promotion profile URL smoke", [sys.executable, "tools/promotion_profile_url_smoke.py", "--check"])
         run_step("promotion attribution reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])

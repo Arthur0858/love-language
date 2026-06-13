@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-06-14",
+  "rowCount": 3,
+  "structuralPass": 3,
+  "publicChecked": 0,
+  "publicPass": 0,
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "url": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "utm_source": "youtube",
+      "utm_medium": "social_profile",
+      "utm_campaign": "first_round_quiz_completion",
+      "utm_content": "youtube_shorts_bio",
+      "structural_status": "pass",
+      "public_status": "not_checked",
+      "final_url": "",
+      "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "url": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "utm_source": "tiktok",
+      "utm_medium": "social_profile",
+      "utm_campaign": "first_round_quiz_completion",
+      "utm_content": "tiktok_bio",
+      "structural_status": "pass",
+      "public_status": "not_checked",
+      "final_url": "",
+      "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "url": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "utm_source": "instagram",
+      "utm_medium": "social_profile",
+      "utm_campaign": "first_round_quiz_completion",
+      "utm_content": "instagram_reels_bio",
+      "structural_status": "pass",
+      "public_status": "not_checked",
+      "final_url": "",
+      "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
+    }
+  ],
+  "issues": []
+}

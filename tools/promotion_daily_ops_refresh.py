@@ -22,6 +22,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_profile_writeback.py", "check", "--write-playbook"],
     [sys.executable, "tools/promotion_profile_setup_runbook.py"],
     [sys.executable, "tools/promotion_launch_link_qa.py"],
+    [sys.executable, "tools/promotion_profile_url_smoke.py"],
     [sys.executable, "tools/promotion_attribution_reconciliation.py"],
     [sys.executable, "tools/promotion_post_writeback.py", "check", "--write-playbook"],
     [sys.executable, "tools/promotion_publish_pack.py", "--all"],

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import ssl
 import sys
 import time
@@ -284,6 +285,37 @@ def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[
     return issues, 1, checked_hreflangs
 
 
+def check_site_index_alignment(base_url: str, sitemap_canonicals: set[str]) -> tuple[list[str], int, int]:
+    path = "/site-index.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as error:
+        return [f"{path}: invalid JSON: {error}"], 0, 0
+    pages = data.get("pages") if isinstance(data, dict) else None
+    if not isinstance(pages, list):
+        return [f"{path}: pages should be a list"], 0, 0
+    site_index_canonicals = {
+        page.get("canonical")
+        for page in pages
+        if isinstance(page, dict) and isinstance(page.get("canonical"), str) and page.get("canonical")
+    }
+    missing_from_sitemap = sorted(site_index_canonicals.difference(sitemap_canonicals))
+    missing_from_index = sorted(sitemap_canonicals.difference(site_index_canonicals))
+    for url in missing_from_sitemap[:50]:
+        issues.append(f"{path}: canonical missing from sitemap: {url}")
+    if len(missing_from_sitemap) > 50:
+        issues.append(f"{path}: {len(missing_from_sitemap) - 50} more canonical URL(s) missing from sitemap")
+    for url in missing_from_index[:50]:
+        issues.append(f"{path}: sitemap URL missing from site index: {url}")
+    if len(missing_from_index) > 50:
+        issues.append(f"{path}: {len(missing_from_index) - 50} more sitemap URL(s) missing from site index")
+    return issues, len(pages), len(site_index_canonicals.intersection(sitemap_canonicals))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check every public URL listed in sitemap.xml.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Production or preview base URL.")
@@ -297,6 +329,12 @@ def main() -> int:
     canonical_base_url = normalize_base_url(args.canonical_base_url)
 
     paths, issues, sitemap_metadata_stats = sitemap_paths(base_url, canonical_base_url)
+    sitemap_canonicals = {expected_canonical(canonical_base_url, path) for path in paths}
+    site_index_issues, site_index_pages_checked, site_index_canonical_matches_checked = check_site_index_alignment(
+        base_url,
+        sitemap_canonicals,
+    )
+    issues.extend(site_index_issues)
     expected_core_paths = expected_core_universe_paths()
     core_paths_present = expected_core_paths.intersection(paths)
     missing_core_paths = sorted(expected_core_paths.difference(paths))
@@ -316,6 +354,8 @@ def main() -> int:
     print(f"public_sitemap_lastmod_checked={sitemap_metadata_stats['lastmod']}")
     print(f"public_sitemap_changefreq_checked={sitemap_metadata_stats['changefreq']}")
     print(f"public_sitemap_priority_checked={sitemap_metadata_stats['priority']}")
+    print(f"public_sitemap_site_index_pages_checked={site_index_pages_checked}")
+    print(f"public_sitemap_site_index_canonical_matches_checked={site_index_canonical_matches_checked}")
     print(f"public_sitemap_pages_checked={pages_checked}")
     print(f"public_sitemap_hreflang_links_checked={hreflang_links_checked}")
     print(f"public_sitemap_issues={len(issues)}")

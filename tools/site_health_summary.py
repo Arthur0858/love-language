@@ -701,6 +701,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_sitemap_lastmod_checked",
         "public_sitemap_changefreq_checked",
         "public_sitemap_priority_checked",
+        "public_sitemap_site_index_pages_checked",
+        "public_sitemap_site_index_canonical_matches_checked",
         "public_sitemap_hreflang_links_checked",
         "public_supply_pages_checked",
         "public_supply_hero_events_checked",

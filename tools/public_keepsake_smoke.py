@@ -394,7 +394,7 @@ def validate_page(
         if not any(link.attrs.get("href") == localized_route(lang, "contact", "luna-supply-request") for link in waitlist_links):
             issues.append(f"{source}: keepsake waitlist missing contact page bridge")
         mailto_hrefs = contact_request_hrefs(waitlist_links)
-        expected_mailtos = expected_waitlist_cards + 1
+        expected_mailtos = expected_waitlist_cards + 2
         if len(mailto_hrefs) != expected_mailtos:
             issues.append(f"{source}: keepsake waitlist should include {expected_mailtos} contact mailto or protected email links, got {len(mailto_hrefs)}")
         else:
@@ -405,6 +405,11 @@ def validate_page(
                     break
             else:
                 stats["waitlist_mailtos"] += expected_mailtos
+        structured_links = [link for link in waitlist_links if link.attrs.get("data-lead-intake-send") is not None]
+        if len(structured_links) != 1:
+            issues.append(f"{source}: keepsake waitlist should include one structured lead intake mailto, got {len(structured_links)}")
+        elif structured_links[0].attrs.get("data-funnel-event") != "keepsake_structured_request_mailto":
+            issues.append(f"{source}: structured lead intake link should use keepsake_structured_request_mailto")
         option_links = [link for link in waitlist_links if "data-keepsake-waitlist-option" in link.attrs]
         if len(option_links) != expected_waitlist_cards:
             issues.append(f"{source}: keepsake waitlist should include {expected_waitlist_cards} direct option mailtos, got {len(option_links)}")

@@ -21,6 +21,18 @@ GUARDIAN_TAGS = {
 }
 COMMON_TAGS = ["#LoveTypes", "#五種愛之語", "#情感守護者", "#心語庭園"]
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+SCENE_SUBTITLE_GROUP_SIZE = 3
+MIN_SCENE_CARDS_PER_BRIEF = 3
+
+
+def scene_card_policy() -> dict[str, int | str]:
+    return {
+        "subtitleLinesPerScene": SCENE_SUBTITLE_GROUP_SIZE,
+        "minSceneCardsPerBrief": MIN_SCENE_CARDS_PER_BRIEF,
+        "timingStepSeconds": 7,
+        "targetMaxSeconds": 24,
+        "rule": "每支短片至少三段場景卡，字幕以三行內一組，方便 9:16 手機剪輯。",
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -28,11 +40,11 @@ def load_json(path: Path) -> dict:
 
 
 def chunks(lines: list[str]) -> list[list[str]]:
-    if len(lines) <= 3:
+    if len(lines) <= SCENE_SUBTITLE_GROUP_SIZE:
         return [lines]
-    first = lines[:3]
-    second = lines[3:6]
-    third = lines[6:]
+    first = lines[:SCENE_SUBTITLE_GROUP_SIZE]
+    second = lines[SCENE_SUBTITLE_GROUP_SIZE : SCENE_SUBTITLE_GROUP_SIZE * 2]
+    third = lines[SCENE_SUBTITLE_GROUP_SIZE * 2 :]
     return [part for part in (first, second, third) if part]
 
 
@@ -109,6 +121,7 @@ def build_payload(pack: dict) -> dict:
         "source": {
             "pack": str(PACK_PATH.relative_to(ROOT)),
         },
+        "sceneCardPolicy": scene_card_policy(),
         "briefCount": len(briefs),
         "expectedBriefCount": int(pack.get("scriptCount", len(pack.get("scripts", []))) or 0),
         "platformCount": len(PLATFORMS),
@@ -124,10 +137,14 @@ def validate_payload(payload: dict) -> list[str]:
         issues.append(f"expected {expected_briefs} production briefs, got {payload.get('briefCount')}")
     if payload.get("platformCount") != len(PLATFORMS):
         issues.append(f"expected {len(PLATFORMS)} platforms, got {payload.get('platformCount')}")
+    policy = payload.get("sceneCardPolicy", {})
+    min_scene_cards = int(policy.get("minSceneCardsPerBrief", 0) or 0) if isinstance(policy, dict) else 0
+    if min_scene_cards < 1:
+        issues.append("missing scene card policy")
     for brief in payload.get("briefs", []):
         label = brief.get("scriptId", "<unknown>")
-        if len(brief.get("sceneCards", [])) < 3:
-            issues.append(f"{label}: expected at least 3 scene cards")
+        if len(brief.get("sceneCards", [])) < min_scene_cards:
+            issues.append(f"{label}: expected at least {min_scene_cards} scene cards")
         captions = brief.get("captionByPlatform", {})
         for platform in PLATFORMS:
             caption = captions.get(platform, "")

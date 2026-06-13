@@ -13,6 +13,18 @@ SCRIPTS_PATH = PROMOTION_DIR / "shorts-scripts.zh-TW.json"
 DEFAULT_INDEX_PATH = PROMOTION_DIR / "week-asset-briefs-index.md"
 DEFAULT_INDEX_JSON_PATH = PROMOTION_DIR / "week-asset-briefs-index.json"
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+SCENE_SUBTITLE_GROUP_SIZE = 3
+MIN_SCENE_CARDS_PER_BRIEF = 3
+
+
+def scene_card_policy() -> dict[str, int | str]:
+    return {
+        "subtitleLinesPerScene": SCENE_SUBTITLE_GROUP_SIZE,
+        "minSceneCardsPerBrief": MIN_SCENE_CARDS_PER_BRIEF,
+        "timingStepSeconds": 7,
+        "targetMaxSeconds": 24,
+        "rule": "每支短片至少三段場景卡，字幕以三行內一組，方便 9:16 手機剪輯。",
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -20,9 +32,17 @@ def load_json(path: Path) -> dict:
 
 
 def chunks(lines: list[str]) -> list[list[str]]:
-    if len(lines) <= 3:
+    if len(lines) <= SCENE_SUBTITLE_GROUP_SIZE:
         return [lines]
-    return [part for part in (lines[:3], lines[3:6], lines[6:]) if part]
+    return [
+        part
+        for part in (
+            lines[:SCENE_SUBTITLE_GROUP_SIZE],
+            lines[SCENE_SUBTITLE_GROUP_SIZE : SCENE_SUBTITLE_GROUP_SIZE * 2],
+            lines[SCENE_SUBTITLE_GROUP_SIZE * 2 :],
+        )
+        if part
+    ]
 
 
 def week_paths(week: int) -> tuple[Path, Path]:
@@ -117,6 +137,7 @@ def build_week_payload(week: int, script_library: dict, execution_sheet: dict) -
             "scripts": str(SCRIPTS_PATH.relative_to(ROOT)),
             "executionSheet": str(execution_sheet_path(week).relative_to(ROOT)),
         },
+        "sceneCardPolicy": scene_card_policy(),
         "briefCount": len(briefs),
         "expectedBriefCount": len(execution_sheet.get("scripts", [])),
         "sceneCardCount": sum(len(brief["sceneCards"]) for brief in briefs),
@@ -132,18 +153,22 @@ def validate_week_payload(payload: dict) -> list[str]:
     week = payload.get("week")
     expected_briefs = int(payload.get("expectedBriefCount", 0) or 0)
     expected_platform_captions = int(payload.get("expectedPlatformCaptionCount", 0) or 0)
+    policy = payload.get("sceneCardPolicy", {})
+    min_scene_cards = int(policy.get("minSceneCardsPerBrief", 0) or 0) if isinstance(policy, dict) else 0
+    if min_scene_cards < 1:
+        issues.append(f"week {week}: missing scene card policy")
     if payload.get("briefCount") != expected_briefs:
         issues.append(f"week {week}: expected {expected_briefs} briefs, got {payload.get('briefCount')}")
-    if payload.get("sceneCardCount", 0) < expected_briefs * 3:
-        issues.append(f"week {week}: expected at least {expected_briefs * 3} scene cards")
+    if payload.get("sceneCardCount", 0) < expected_briefs * min_scene_cards:
+        issues.append(f"week {week}: expected at least {expected_briefs * min_scene_cards} scene cards")
     if payload.get("platformCaptionCount") != expected_platform_captions:
         issues.append(f"week {week}: expected {expected_platform_captions} platform captions, got {payload.get('platformCaptionCount')}")
     if payload.get("missingScripts"):
         issues.append(f"week {week}: missing scripts {', '.join(payload['missingScripts'])}")
     for brief in payload.get("briefs", []):
         label = brief.get("scriptId", "<script>")
-        if len(brief.get("sceneCards", [])) < 3:
-            issues.append(f"{label}: expected at least 3 scene cards")
+        if len(brief.get("sceneCards", [])) < min_scene_cards:
+            issues.append(f"{label}: expected at least {min_scene_cards} scene cards")
         platforms = brief.get("platforms", [])
         platform_ids = {item.get("platform") for item in platforms}
         if platform_ids != set(PLATFORMS):
@@ -235,6 +260,7 @@ def build_index(week_payloads: list[dict], issues: list[str]) -> dict:
         "briefCount": sum(payload["briefCount"] for payload in week_payloads),
         "sceneCardCount": sum(payload["sceneCardCount"] for payload in week_payloads),
         "platformCaptionCount": sum(payload["platformCaptionCount"] for payload in week_payloads),
+        "sceneCardPolicy": scene_card_policy(),
         "weeks": [
             {
                 "week": payload["week"],

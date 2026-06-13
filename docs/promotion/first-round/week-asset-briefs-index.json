@@ -4,6 +4,13 @@
   "briefCount": 15,
   "sceneCardCount": 45,
   "platformCaptionCount": 45,
+  "sceneCardPolicy": {
+    "subtitleLinesPerScene": 3,
+    "minSceneCardsPerBrief": 3,
+    "timingStepSeconds": 7,
+    "targetMaxSeconds": 24,
+    "rule": "每支短片至少三段場景卡，字幕以三行內一組，方便 9:16 手機剪輯。"
+  },
   "weeks": [
     {
       "week": 1,

@@ -5,6 +5,13 @@
     "scripts": "docs/promotion/first-round/shorts-scripts.zh-TW.json",
     "executionSheet": "docs/promotion/first-round/week-5-execution-sheet.json"
   },
+  "sceneCardPolicy": {
+    "subtitleLinesPerScene": 3,
+    "minSceneCardsPerBrief": 3,
+    "timingStepSeconds": 7,
+    "targetMaxSeconds": 24,
+    "rule": "每支短片至少三段場景卡，字幕以三行內一組，方便 9:16 手機剪輯。"
+  },
   "briefCount": 3,
   "expectedBriefCount": 3,
   "sceneCardCount": 9,

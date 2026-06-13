@@ -31,6 +31,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_lead_intake_playbook.py"],
     [sys.executable, "tools/promotion_lead_writeback.py", "check", "--write-playbook"],
     [sys.executable, "tools/promotion_lead_magnet_inventory.py"],
+    [sys.executable, "tools/promotion_lead_demand_gate.py"],
     [sys.executable, "tools/promotion_asset_backlog.py"],
     [sys.executable, "tools/promotion_offer_hypothesis_board.py"],
     [sys.executable, "tools/promotion_offer_experiment_plan.py"],

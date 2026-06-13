@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
+    "evidenceLedger": "docs/promotion/first-round/evidence-ledger.json",
+    "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json"
+  },
+  "metrics": {
+    "realLeads": 0,
+    "traceableEvidence": 0,
+    "explicitConsent": 0,
+    "matchedUtmRows": 0,
+    "repeatedDemandRoutes": 0,
+    "readyRoutes": 0,
+    "blockers": 2,
+    "issues": 0
+  },
+  "policy": {
+    "repeatDemandThreshold": 2,
+    "requiresTraceableEvidence": true,
+    "requiresExplicitConsent": true,
+    "doNotStoreRawEmail": true,
+    "commercialBoundary": "Lead demand can prioritize free owned assets or Luna aftercare only after repeated same-guardian demand and matching offer readiness."
+  },
+  "routes": [
+    {
+      "guardianId": "iris",
+      "intakeType": "owned_asset_request",
+      "experimentType": "owned_lead",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "iris",
+      "intakeType": "luna_scene_request",
+      "experimentType": "luna_soft_offer",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "iris",
+      "intakeType": "repair_or_contact_request",
+      "experimentType": "identity_save",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "noah",
+      "intakeType": "owned_asset_request",
+      "experimentType": "owned_lead",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "noah",
+      "intakeType": "luna_scene_request",
+      "experimentType": "luna_soft_offer",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "noah",
+      "intakeType": "repair_or_contact_request",
+      "experimentType": "identity_save",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "vivian",
+      "intakeType": "owned_asset_request",
+      "experimentType": "owned_lead",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "vivian",
+      "intakeType": "luna_scene_request",
+      "experimentType": "luna_soft_offer",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "vivian",
+      "intakeType": "repair_or_contact_request",
+      "experimentType": "identity_save",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "claire",
+      "intakeType": "owned_asset_request",
+      "experimentType": "owned_lead",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "claire",
+      "intakeType": "luna_scene_request",
+      "experimentType": "luna_soft_offer",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "claire",
+      "intakeType": "repair_or_contact_request",
+      "experimentType": "identity_save",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "dora",
+      "intakeType": "owned_asset_request",
+      "experimentType": "owned_lead",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "dora",
+      "intakeType": "luna_scene_request",
+      "experimentType": "luna_soft_offer",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    },
+    {
+      "guardianId": "dora",
+      "intakeType": "repair_or_contact_request",
+      "experimentType": "identity_save",
+      "leadCount": 0,
+      "repeatDemandReady": false,
+      "offerExperimentReady": false,
+      "routeReady": false,
+      "relatedRequestIds": [],
+      "nextAction": "Keep collecting real requests; do not create paid or priority offer from this signal yet."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "no_real_leads",
+      "message": "No real Contact / keepsake / Luna requests have been written back yet.",
+      "release": "Add real lead rows only after a user request with explicit reply consent arrives."
+    },
+    {
+      "id": "no_repeated_guardian_demand",
+      "message": "No guardian/intake pair has reached 2 real requests.",
+      "release": "Wait for repeated same-guardian demand before prioritizing owned assets or Luna packs."
+    }
+  ],
+  "issues": []
+}

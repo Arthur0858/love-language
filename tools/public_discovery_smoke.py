@@ -301,25 +301,8 @@ def check_feed(base_url: str) -> tuple[list[str], int, int, int, int]:
     channel = root.find("channel")
     if channel is None:
         return [f"{path}: missing channel"], 0, 0, 0, 0
-    site_index_response = request_url(urljoin(base_url + "/", "site-index.json"))
-    site_index_canonicals: set[str] = set()
-    if site_index_response.status != 200:
-        issues.append(f"{path}: site-index.json expected status 200, got {site_index_response.status}")
-    else:
-        try:
-            site_index = json.loads(site_index_response.text)
-        except json.JSONDecodeError as error:
-            issues.append(f"{path}: site-index.json invalid JSON: {error}")
-        else:
-            pages = site_index.get("pages") if isinstance(site_index, dict) else None
-            if not isinstance(pages, list):
-                issues.append(f"{path}: site-index.json pages should be a list")
-            else:
-                site_index_canonicals = {
-                    page.get("canonical")
-                    for page in pages
-                    if isinstance(page, dict) and isinstance(page.get("canonical"), str) and page.get("canonical")
-                }
+    site_index_issues, site_index_canonicals = load_site_index_canonicals(base_url, path)
+    issues.extend(site_index_issues)
     for tag in ("title", "link", "description", "language", "lastBuildDate"):
         if not (channel.findtext(tag) or "").strip():
             issues.append(f"{path}: channel missing {tag}")
@@ -674,12 +657,32 @@ def check_security_date_fields(path: str, text: str) -> tuple[list[str], int]:
     return issues, checked
 
 
-def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int]:
+def load_site_index_canonicals(base_url: str, source_path: str) -> tuple[list[str], set[str]]:
+    response = request_url(urljoin(base_url + "/", "site-index.json"))
+    if response.status != 200:
+        return [f"{source_path}: site-index.json expected status 200, got {response.status}"], set()
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as error:
+        return [f"{source_path}: site-index.json invalid JSON: {error}"], set()
+    pages = data.get("pages") if isinstance(data, dict) else None
+    if not isinstance(pages, list):
+        return [f"{source_path}: site-index.json pages should be a list"], set()
+    return [], {
+        page.get("canonical")
+        for page in pages
+        if isinstance(page, dict) and isinstance(page.get("canonical"), str) and page.get("canonical")
+    }
+
+
+def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     issues: list[str] = []
     text_files_checked = 0
     security_fields_checked = 0
     security_date_fields_checked = 0
     humans_snippets_checked = 0
+    humans_urls_checked = 0
+    humans_site_index_urls_checked = 0
     security = request_url(urljoin(base_url + "/", "security.txt"))
     well_known = request_url(urljoin(base_url + "/", ".well-known/security.txt"))
     for path, response in (("/security.txt", security), ("/.well-known/security.txt", well_known)):
@@ -724,7 +727,35 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int]:
             humans_snippets_checked += 1
             if snippet not in humans.text:
                 issues.append(f"/humans.txt: missing required snippet {snippet!r}")
-    return issues, text_files_checked, security_fields_checked, security_date_fields_checked, humans_snippets_checked
+        site_index_issues, site_index_canonicals = load_site_index_canonicals(base_url, "/humans.txt")
+        issues.extend(site_index_issues)
+        humans_urls = sorted(set(match.group(0).rstrip(".,;") for match in URL_RE.finditer(humans.text)))
+        for url in humans_urls:
+            humans_urls_checked += 1
+            if url in site_index_canonicals:
+                humans_site_index_urls_checked += 1
+            else:
+                issues.append(f"/humans.txt: listed URL missing from site-index.json: {url}")
+            target = request_url(url)
+            if target.status != 200:
+                issues.append(f"/humans.txt: listed URL {url} expected status 200, got {target.status}")
+                continue
+            head = HeadParser()
+            head.feed(target.text)
+            robots_tokens = {token.strip().lower() for token in head.robots.split(",") if token.strip()}
+            if "noindex" in robots_tokens:
+                issues.append(f"/humans.txt: listed URL should not point to noindex page: {url}")
+            if head.canonical != url:
+                issues.append(f"/humans.txt: listed URL {url} canonical should match, got {head.canonical!r}")
+    return (
+        issues,
+        text_files_checked,
+        security_fields_checked,
+        security_date_fields_checked,
+        humans_snippets_checked,
+        humans_urls_checked,
+        humans_site_index_urls_checked,
+    )
 
 
 def check_robots(base_url: str) -> tuple[list[str], int, int, int]:
@@ -1776,6 +1807,8 @@ def main() -> int:
         security_fields_checked,
         security_date_fields_checked,
         humans_snippets_checked,
+        humans_urls_checked,
+        humans_site_index_urls_checked,
     ) = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked, robots_sitemap_core_urls_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
@@ -1861,6 +1894,8 @@ def main() -> int:
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
     print(f"public_discovery_security_date_fields_checked={security_date_fields_checked}")
     print(f"public_discovery_humans_snippets_checked={humans_snippets_checked}")
+    print(f"public_discovery_humans_urls_checked={humans_urls_checked}")
+    print(f"public_discovery_humans_site_index_urls_checked={humans_site_index_urls_checked}")
     print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
     print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")
     print(f"public_discovery_robots_sitemap_core_urls_checked={robots_sitemap_core_urls_checked}")

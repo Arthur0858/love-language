@@ -406,6 +406,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_discovery_security_fields_checked",
         "public_discovery_security_date_fields_checked",
         "public_discovery_humans_snippets_checked",
+        "public_discovery_humans_urls_checked",
+        "public_discovery_humans_site_index_urls_checked",
         "public_discovery_robots_lines_checked",
         "public_discovery_robots_sitemap_links_checked",
         "public_discovery_robots_sitemap_core_urls_checked",

@@ -77,6 +77,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],
     [sys.executable, "tools/promotion_launch_ops_dashboard.py"],
     [sys.executable, "tools/promotion_launch_day_run_sheet.py"],
+    [sys.executable, "tools/promotion_launch_exception_runbook.py"],
     [sys.executable, "tools/promotion_operation_proof_packet.py"],
     [sys.executable, "tools/promotion_operation_proof_templates.py"],
     [sys.executable, "tools/promotion_profile_evidence_checklist.py"],

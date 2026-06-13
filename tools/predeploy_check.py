@@ -107,6 +107,7 @@ PYTHON_TOOLS = [
     "tools/promotion_operator_handoff_packet.py",
     "tools/promotion_launch_ops_dashboard.py",
     "tools/promotion_launch_day_run_sheet.py",
+    "tools/promotion_launch_exception_runbook.py",
     "tools/promotion_operator_import_template_audit.py",
     "tools/promotion_empty_data_safety_audit.py",
     "tools/promotion_daily_ops_refresh.py",
@@ -296,6 +297,7 @@ def main() -> int:
         run_step("promotion operator handoff packet", [sys.executable, "tools/promotion_operator_handoff_packet.py", "--check"])
         run_step("promotion launch ops dashboard", [sys.executable, "tools/promotion_launch_ops_dashboard.py", "--check"])
         run_step("promotion launch day run sheet", [sys.executable, "tools/promotion_launch_day_run_sheet.py", "--check"])
+        run_step("promotion launch exception runbook", [sys.executable, "tools/promotion_launch_exception_runbook.py", "--check"])
         run_step("promotion operator import template audit", [sys.executable, "tools/promotion_operator_import_template_audit.py"])
         run_step("promotion empty data safety audit", [sys.executable, "tools/promotion_empty_data_safety_audit.py"])
         run_step("promotion daily ops refresh", [sys.executable, "tools/promotion_daily_ops_refresh.py", "--check", "--strict-freshness"])

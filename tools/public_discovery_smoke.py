@@ -1383,12 +1383,43 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     commands = data.get("verificationCommands", [])
     outcomes = data.get("requiredOutcomes", [])
     local_audits = data.get("localAuditCoverage", {})
-    if not isinstance(indexes, dict) or len(indexes) != 10:
-        issues.append(f"{path}: publicIndexes should contain ten entries")
-    if not isinstance(commands, list) or len(commands) != 5:
-        issues.append(f"{path}: verificationCommands should contain five commands")
-    if not isinstance(outcomes, list) or "public_versioned_asset_stale_refs=0" not in outcomes:
-        issues.append(f"{path}: requiredOutcomes should include public_versioned_asset_stale_refs=0")
+    expected_indexes = {
+        "aiDiscovery",
+        "siteHealth",
+        "siteIndex",
+        "guardianProfiles",
+        "safetyIndex",
+        "commerceCatalog",
+        "funnelEvents",
+        "promotionKit",
+        "llms",
+        "humans",
+    }
+    if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
+        issues.append(f"{path}: publicIndexes should contain {sorted(expected_indexes)}")
+    else:
+        for key, url in indexes.items():
+            if not isinstance(url, str) or not url.startswith(f"https://{CANONICAL_HOST}"):
+                issues.append(f"{path}: public index {key} should point to https://{CANONICAL_HOST}")
+    expected_commands = [
+        "python3 tools/predeploy_check.py",
+        "python3 tools/deploy_cloudflare_pages.py",
+        "python3 tools/public_discovery_smoke.py",
+        "python3 tools/public_deploy_smoke.py",
+        "python3 tools/public_versioned_asset_smoke.py",
+    ]
+    if commands != expected_commands:
+        issues.append(f"{path}: verificationCommands should match the release workflow")
+    expected_outcomes = {
+        "predeploy_checks=ok",
+        "issues=0",
+        "public_discovery_issues=0",
+        "public_deploy_issues=0",
+        "public_versioned_asset_issues=0",
+        "public_versioned_asset_stale_refs=0",
+    }
+    if not isinstance(outcomes, list) or set(outcomes) != expected_outcomes:
+        issues.append(f"{path}: requiredOutcomes should contain {sorted(expected_outcomes)}")
     if not isinstance(local_audits, dict) or set(local_audits) != {"contentStructure", "conversionAndCommerce", "promotionOperations", "experienceQuality"}:
         issues.append(f"{path}: localAuditCoverage should list four audit groups")
     else:

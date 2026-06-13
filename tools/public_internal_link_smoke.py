@@ -5,6 +5,7 @@ import argparse
 import ssl
 import time
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
@@ -16,6 +17,8 @@ DEFAULT_BASE_URL = "https://lovetypes.tw"
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 SKIPPED_SCHEMES = {"mailto", "tel", "javascript", "data", "blob"}
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+FETCH_WORKERS = 16
+FETCH_TIMEOUT_SECONDS = 10
 
 
 @dataclass
@@ -61,7 +64,7 @@ def normalize_base_url(value: str) -> str:
     return value.rstrip("/") or DEFAULT_BASE_URL
 
 
-def request_url(url: str, attempts: int = 3) -> Response:
+def request_url(url: str, attempts: int = 2) -> Response:
     last_error: Exception | None = None
     context = ssl.create_default_context()
     for attempt in range(1, attempts + 1):
@@ -73,7 +76,7 @@ def request_url(url: str, attempts: int = 3) -> Response:
                     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 },
             )
-            with urlopen(request, timeout=20, context=context) as raw:
+            with urlopen(request, timeout=FETCH_TIMEOUT_SECONDS, context=context) as raw:
                 headers = {key.lower(): value for key, value in raw.headers.items()}
                 return Response(url, raw.geturl(), raw.status, headers, raw.read())
         except HTTPError as error:
@@ -84,6 +87,23 @@ def request_url(url: str, attempts: int = 3) -> Response:
             if attempt < attempts:
                 time.sleep(0.5 * attempt)
     raise RuntimeError(f"Failed to fetch {url}: {last_error}")
+
+
+def fetch_many(urls: list[str], *, attempts: int = 2) -> tuple[dict[str, Response], dict[str, str]]:
+    responses: dict[str, Response] = {}
+    errors: dict[str, str] = {}
+    if not urls:
+        return responses, errors
+    workers = min(FETCH_WORKERS, max(1, len(urls)))
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        future_to_url = {executor.submit(request_url, url, attempts): url for url in urls}
+        for future in as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                responses[url] = future.result()
+            except RuntimeError as error:
+                errors[url] = str(error)
+    return responses, errors
 
 
 def public_path(url: str) -> str:
@@ -159,11 +179,13 @@ def collect_internal_links(base_url: str, page_urls: list[str]) -> tuple[list[In
     page_parsers: dict[str, AnchorParser] = {}
     links_seen = 0
 
+    page_responses, page_errors = fetch_many(page_urls)
+    for page_url, error in sorted(page_errors.items()):
+        issues.append(f"{public_path(page_url)}: request failed: {error}")
+
     for page_url in page_urls:
-        try:
-            response = request_url(page_url)
-        except RuntimeError as error:
-            issues.append(f"{public_path(page_url)}: request failed: {error}")
+        response = page_responses.get(page_url)
+        if response is None:
             continue
         if response.status != 200:
             issues.append(f"{public_path(page_url)}: expected status 200, got {response.status}")
@@ -207,22 +229,24 @@ def main() -> int:
     links, page_parsers, collect_issues, links_seen = collect_internal_links(base_url, page_urls)
     issues.extend(collect_issues)
 
-    response_cache: dict[str, Response] = {}
     parser_cache: dict[str, AnchorParser] = dict(page_parsers)
     redirects_followed = 0
     anchor_targets_checked = 0
     html_targets_checked = 0
     canonical_targets_checked = 0
 
+    target_urls = sorted({normalize_check_url(urldefrag(link.url)[0]) for link in links})
+    response_cache, target_errors = fetch_many(target_urls)
+
     for link in links:
         target_without_fragment, fragment = urldefrag(link.url)
         target_without_fragment = normalize_check_url(target_without_fragment)
-        try:
-            if target_without_fragment not in response_cache:
-                response_cache[target_without_fragment] = request_url(target_without_fragment)
-            response = response_cache[target_without_fragment]
-        except RuntimeError as error:
-            issues.append(f"{link.url}: request failed from {', '.join(link.source_paths)}: {error}")
+        if target_without_fragment in target_errors:
+            issues.append(f"{link.url}: request failed from {', '.join(link.source_paths)}: {target_errors[target_without_fragment]}")
+            continue
+        response = response_cache.get(target_without_fragment)
+        if response is None:
+            issues.append(f"{link.url}: missing fetched response from {', '.join(link.source_paths)}")
             continue
 
         if response.status >= 400:

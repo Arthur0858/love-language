@@ -1949,18 +1949,27 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
             continue
         parsed = urlparse(url)
         if item_type in {"free_keepsake", "owned_supply_waitlist"}:
+            owned_url_valid = True
             if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw":
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should point to lovetypes.tw")
+                owned_url_valid = False
             target, fragment = target_for(ROOT / "index.html", url)
             if target is None or not target.exists():
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} target missing: {url}")
+                owned_url_valid = False
             elif fragment and target.suffix == ".html":
                 target_parser = parsers.get(target)
                 if target_parser and fragment not in target_parser.ids:
                     issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} target missing anchor #{fragment}")
+                    owned_url_valid = False
             guardian = item.get("guardian")
             if guardian not in guardian_slugs:
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a valid guardian slug")
+            if owned_url_valid:
+                if item_type == "free_keepsake":
+                    stats["commerce_free_keepsake_urls_checked"] += 1
+                else:
+                    stats["commerce_owned_supply_urls_checked"] += 1
         elif item_type == "affiliate_book":
             if not is_amazon_affiliate(parsed):
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} primary url should be an Amazon Associates URL with tag={AMAZON_ASSOCIATE_TAG}")
@@ -4347,6 +4356,8 @@ def main() -> int:
     print(f"commerce_items_checked={stats['commerce_items_checked']}")
     print(f"commerce_types_checked={stats['commerce_types_checked']}")
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
+    print(f"commerce_free_keepsake_urls_checked={stats['commerce_free_keepsake_urls_checked']}")
+    print(f"commerce_owned_supply_urls_checked={stats['commerce_owned_supply_urls_checked']}")
     print(f"commerce_affiliate_locale_policies_checked={stats['commerce_affiliate_locale_policies_checked']}")
     print(f"commerce_amazon_associate_tags_checked={stats['commerce_amazon_associate_tags_checked']}")
     print(f"commerce_affiliate_asins_checked={stats['commerce_affiliate_asins_checked']}")

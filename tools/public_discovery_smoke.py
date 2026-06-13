@@ -12,7 +12,7 @@ from email.utils import parsedate_to_datetime
 from io import BytesIO
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qs, urljoin, urlparse
+from urllib.parse import parse_qs, urldefrag, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 from PIL import Image
@@ -757,20 +757,20 @@ def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
     )
 
 
-def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int, int]:
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int, int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
@@ -810,12 +810,14 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 break
     items = data.get("items", [])
     if not isinstance(items, list):
-        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0, 0, 0, 0, 0, 0
+        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0, 0, 0, 0, 0, 0, 0, 0
     if len(items) != 20:
         issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
     type_counts: dict[str, int] = {}
     role_counts: dict[str, int] = {}
     ids: set[str] = set()
+    free_keepsake_urls_checked = 0
+    owned_supply_urls_checked = 0
     amazon_associate_tags_checked = 0
     affiliate_asins_checked = 0
     primary_affiliate_urls_checked = 0
@@ -845,6 +847,24 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
             type_counts[item_type] = type_counts.get(item_type, 0) + 1
         if isinstance(role, str):
             role_counts[role] = role_counts.get(role, 0) + 1
+        if item_type in {"free_keepsake", "owned_supply_waitlist"}:
+            item_url = item.get("url")
+            parsed_item_url = urlparse(item_url) if isinstance(item_url, str) else urlparse("")
+            if parsed_item_url.scheme != "https" or parsed_item_url.netloc != CANONICAL_HOST:
+                issues.append(f"{path}: {item_id or '<unknown>'} should point to https://{CANONICAL_HOST}/")
+            else:
+                url_without_fragment, _fragment = urldefrag(item_url)
+                try:
+                    item_response = request_url(url_without_fragment)
+                except RuntimeError as exc:
+                    issues.append(f"{path}: {item_id or '<unknown>'} target request failed: {exc}")
+                else:
+                    if item_response.status != 200:
+                        issues.append(f"{path}: {item_id or '<unknown>'} target should return 200, got {item_response.status}")
+                    elif item_type == "free_keepsake":
+                        free_keepsake_urls_checked += 1
+                    else:
+                        owned_supply_urls_checked += 1
         if item_type == "affiliate_book":
             primary_url = item.get("url")
             if not isinstance(primary_url, str) or not is_expected_commerce_affiliate_url("en", primary_url):
@@ -906,7 +926,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
     for role, expected in EXPECTED_COMMERCE_ROLE_COUNTS.items():
         if role_counts.get(role) != expected:
             issues.append(f"{path}: expected {expected} {role} items, got {role_counts.get(role, 0)}")
-    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, amazon_associate_tags_checked, affiliate_asins_checked, primary_affiliate_urls_checked, affiliate_localized_urls_checked, taiwan_affiliate_urls_checked, luna_gumroad_urls_checked
+    return issues, len(items), len(type_counts), len(role_counts), free_keepsake_urls_checked, owned_supply_urls_checked, affiliate_policy_checked, amazon_associate_tags_checked, affiliate_asins_checked, primary_affiliate_urls_checked, affiliate_localized_urls_checked, taiwan_affiliate_urls_checked, luna_gumroad_urls_checked
 
 
 def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1489,6 +1509,8 @@ def main() -> int:
         commerce_items_checked,
         commerce_types_checked,
         commerce_roles_checked,
+        commerce_free_keepsake_urls_checked,
+        commerce_owned_supply_urls_checked,
         commerce_affiliate_locale_policies_checked,
         commerce_amazon_associate_tags_checked,
         commerce_affiliate_asins_checked,
@@ -1548,6 +1570,8 @@ def main() -> int:
     print(f"public_discovery_commerce_items_checked={commerce_items_checked}")
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
+    print(f"public_discovery_commerce_free_keepsake_urls_checked={commerce_free_keepsake_urls_checked}")
+    print(f"public_discovery_commerce_owned_supply_urls_checked={commerce_owned_supply_urls_checked}")
     print(f"public_discovery_commerce_affiliate_locale_policies_checked={commerce_affiliate_locale_policies_checked}")
     print(f"public_discovery_commerce_amazon_associate_tags_checked={commerce_amazon_associate_tags_checked}")
     print(f"public_discovery_commerce_affiliate_asins_checked={commerce_affiliate_asins_checked}")

@@ -8,6 +8,7 @@ import ssl
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from io import BytesIO
 from html.parser import HTMLParser
@@ -604,10 +605,47 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     return issues, sections_checked, snippets_checked, urls_checked, high_value_urls_checked, url_canonicals_checked
 
 
-def check_text_files(base_url: str) -> tuple[list[str], int, int, int]:
+def parse_security_fields(text: str) -> dict[str, list[str]]:
+    fields: dict[str, list[str]] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if ":" not in line:
+            continue
+        key, value = [part.strip() for part in line.split(":", 1)]
+        fields.setdefault(key.lower(), []).append(value)
+    return fields
+
+
+def check_security_date_fields(path: str, text: str) -> tuple[list[str], int]:
+    issues: list[str] = []
+    checked = 0
+    fields = parse_security_fields(text)
+    preferred_languages = fields.get("preferred-languages", [])
+    checked += 1
+    if not any("zh-TW" in value and "en" in value for value in preferred_languages):
+        issues.append(f"{path}: Preferred-Languages should include zh-TW and en")
+    expires_values = fields.get("expires", [])
+    checked += 1
+    if len(expires_values) != 1:
+        issues.append(f"{path}: expected one Expires field, found {len(expires_values)}")
+    else:
+        try:
+            expires = datetime.fromisoformat(expires_values[0].replace("Z", "+00:00"))
+        except ValueError:
+            issues.append(f"{path}: invalid Expires timestamp: {expires_values[0]}")
+        else:
+            if expires <= datetime.now(timezone.utc):
+                issues.append(f"{path}: Expires timestamp is in the past: {expires_values[0]}")
+    return issues, checked
+
+
+def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int]:
     issues: list[str] = []
     text_files_checked = 0
     security_fields_checked = 0
+    security_date_fields_checked = 0
     humans_snippets_checked = 0
     security = request_url(urljoin(base_url + "/", "security.txt"))
     well_known = request_url(urljoin(base_url + "/", ".well-known/security.txt"))
@@ -623,6 +661,9 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int, int]:
             security_fields_checked += 1
             if field not in response.text:
                 issues.append(f"{path}: missing required field {field!r}")
+        date_issues, date_fields_checked = check_security_date_fields(path, response.text)
+        issues.extend(date_issues)
+        security_date_fields_checked += date_fields_checked
     if security.status == 200 and well_known.status == 200 and security.text != well_known.text:
         issues.append("/.well-known/security.txt: body should match /security.txt")
 
@@ -650,7 +691,7 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int, int]:
             humans_snippets_checked += 1
             if snippet not in humans.text:
                 issues.append(f"/humans.txt: missing required snippet {snippet!r}")
-    return issues, text_files_checked, security_fields_checked, humans_snippets_checked
+    return issues, text_files_checked, security_fields_checked, security_date_fields_checked, humans_snippets_checked
 
 
 def check_robots(base_url: str) -> tuple[list[str], int, int]:
@@ -1681,7 +1722,13 @@ def main() -> int:
         llms_high_value_urls_checked,
         llms_url_canonicals_checked,
     ) = check_llms(base_url)
-    text_issues, text_files_checked, security_fields_checked, humans_snippets_checked = check_text_files(base_url)
+    (
+        text_issues,
+        text_files_checked,
+        security_fields_checked,
+        security_date_fields_checked,
+        humans_snippets_checked,
+    ) = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     promotion_event_issues, promotion_event_kpi_rows_checked, promotion_event_kpi_events_checked = check_promotion_event_kpi_alignment(base_url)
@@ -1763,6 +1810,7 @@ def main() -> int:
     print(f"public_discovery_llms_url_canonicals_checked={llms_url_canonicals_checked}")
     print(f"public_discovery_text_files_checked={text_files_checked}")
     print(f"public_discovery_security_fields_checked={security_fields_checked}")
+    print(f"public_discovery_security_date_fields_checked={security_date_fields_checked}")
     print(f"public_discovery_humans_snippets_checked={humans_snippets_checked}")
     print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
     print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")

@@ -125,6 +125,34 @@ def duplicates(values: list[str]) -> list[str]:
     return sorted(value for value, count in counts.items() if count > 1)
 
 
+def mixed_return_tuple_functions(script_paths: list[str]) -> list[str]:
+    mixed: list[str] = []
+    for path in sorted(set(script_paths)):
+        if not path.endswith(".py"):
+            continue
+        source_path = ROOT / path
+        if not source_path.exists():
+            continue
+        try:
+            tree = ast.parse(source_path.read_text(encoding="utf-8"))
+        except SyntaxError:
+            continue
+        for node in ast.walk(tree):
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            tuple_return_sizes = sorted(
+                {
+                    len(child.value.elts)
+                    for child in ast.walk(node)
+                    if isinstance(child, ast.Return) and isinstance(child.value, ast.Tuple)
+                }
+            )
+            if len(tuple_return_sizes) > 1:
+                sizes = ",".join(str(size) for size in tuple_return_sizes)
+                mixed.append(f"{path}:{node.name}[{sizes}]")
+    return mixed
+
+
 def main() -> int:
     issues: list[str] = []
     check_names, check_commands, check_script_paths, important_keys, retry_names, health_checks = parse_summary()
@@ -140,6 +168,7 @@ def main() -> int:
     invalid_timeouts = sorted(
         check.name for check in health_checks if check.timeout is None or check.timeout <= 0 or check.timeout > 1800
     )
+    mixed_return_functions = mixed_return_tuple_functions(check_script_paths + predeploy_script_paths)
     public_flag_mismatches: list[str] = []
     for check in health_checks:
         expected_public = (
@@ -175,6 +204,8 @@ def main() -> int:
         issues.append(f"invalid CHECKS timeouts: {', '.join(invalid_timeouts)}")
     if public_flag_mismatches:
         issues.append(f"CHECKS public flag mismatches: {', '.join(public_flag_mismatches)}")
+    if mixed_return_functions:
+        issues.append(f"mixed tuple return sizes in Python tools: {', '.join(mixed_return_functions)}")
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
@@ -250,6 +281,7 @@ def main() -> int:
     print(f"site_health_config_malformed_checks={len(malformed_checks)}")
     print(f"site_health_config_invalid_timeouts={len(invalid_timeouts)}")
     print(f"site_health_config_public_flag_mismatches={len(public_flag_mismatches)}")
+    print(f"site_health_config_mixed_return_tuple_functions={len(mixed_return_functions)}")
     print(f"site_health_config_issues={len(issues)}")
     for issue in issues:
         print(issue)

@@ -891,6 +891,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_malformed_checks",
         "site_health_config_invalid_timeouts",
         "site_health_config_public_flag_mismatches",
+        "site_health_config_mixed_return_tuple_functions",
         "timed_out",
         "error",
     ]

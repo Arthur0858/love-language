@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "masterGate": "docs/promotion/first-round/master-gate.json",
+    "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "firstBatchCompletion": "docs/promotion/first-round/first-batch-completion-gate.json",
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "leadDemand": "docs/promotion/first-round/lead-demand-gate.json",
+    "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json",
+    "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json",
+    "blockerResolution": "docs/promotion/first-round/blocker-resolution-checklist.json",
+    "decisionInput": "docs/promotion/first-round/decision-input-matrix.json"
+  },
+  "stage": "profile_setup",
+  "metrics": {
+    "rows": 6,
+    "completeRows": 0,
+    "currentBlockers": 1,
+    "nextRows": 0,
+    "blockedUpstreamRows": 5,
+    "commandReadyRows": 6,
+    "commandBlockedRows": 18,
+    "emptyDataMode": 1
+  },
+  "policy": {
+    "oneCurrentBlocker": true,
+    "noStageSkip": true,
+    "profileBeforePublish": true,
+    "minimumKpiBeforeWeeklyDecision": true,
+    "leadEvidenceBeforeOffer": true
+  },
+  "rows": [
+    {
+      "fromStage": "profile_setup",
+      "toStage": "first_batch_publish",
+      "gateId": "profile_completion",
+      "requiredMetric": "profileConfigured",
+      "requiredValue": 3,
+      "releaseCondition": "All three platform profile rows are set/live with profile_link_set_date and traceable proof.",
+      "nextCommand": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_launch_readiness_gate.py --check",
+      "fallbackAction": "Use profile proof import templates; do not publish first batch yet.",
+      "status": "current_blocker",
+      "activeStage": 1,
+      "currentValue": 0,
+      "blocker": "profile_link_youtube_shorts, profile_link_tiktok, profile_link_instagram_reels"
+    },
+    {
+      "fromStage": "first_batch_publish",
+      "toStage": "first_batch_kpi",
+      "gateId": "first_batch_publication",
+      "requiredMetric": "firstBatchPublished",
+      "requiredValue": 3,
+      "releaseCondition": "First batch has three verified HTTPS post URLs written back.",
+      "nextCommand": "python3 tools/promotion_first_batch_completion_gate.py --check",
+      "fallbackAction": "Publish only after profile gate opens; reject placeholder URLs.",
+      "status": "blocked_upstream",
+      "activeStage": 0,
+      "currentValue": 0,
+      "blocker": "first batch post URLs are not all verified"
+    },
+    {
+      "fromStage": "first_batch_kpi",
+      "toStage": "weekly_review",
+      "gateId": "minimum_kpi",
+      "requiredMetric": "firstBatchMinimumKpiRows",
+      "requiredValue": 3,
+      "releaseCondition": "Each first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
+      "nextCommand": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
+      "fallbackAction": "Keep KPI rows blank until the source was checked; 0 requires proof.",
+      "status": "blocked_upstream",
+      "activeStage": 0,
+      "currentValue": 0,
+      "blocker": "minimum KPI rows need checked source proof"
+    },
+    {
+      "fromStage": "weekly_review",
+      "toStage": "lead_collection",
+      "gateId": "weekly_review",
+      "requiredMetric": "weeklyReady",
+      "requiredValue": 1,
+      "releaseCondition": "Weekly review is ready and empty-data mode is false before changing route or commerce emphasis.",
+      "nextCommand": "python3 tools/promotion_decision_input_matrix.py --check && python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
+      "fallbackAction": "Keep collect_signal active; do not choose winner, paid CTA, Luna, or affiliate emphasis.",
+      "status": "blocked_upstream",
+      "activeStage": 0,
+      "currentValue": 0,
+      "blocker": "empty data mode is still active"
+    },
+    {
+      "fromStage": "lead_collection",
+      "toStage": "offer_experiment",
+      "gateId": "lead_demand",
+      "requiredMetric": "leadReadyRoutes",
+      "requiredValue": 1,
+      "releaseCondition": "At least one guardian/intake route has repeated real demand, explicit consent, and traceable evidence.",
+      "nextCommand": "python3 tools/promotion_lead_demand_gate.py --check && python3 tools/promotion_offer_experiment_plan.py --check",
+      "fallbackAction": "Keep collecting real requests; do not build paid or priority offers from weak demand.",
+      "status": "blocked_upstream",
+      "activeStage": 0,
+      "currentValue": 0,
+      "blocker": "no repeated consented real lead demand route"
+    },
+    {
+      "fromStage": "offer_experiment",
+      "toStage": "scale",
+      "gateId": "offer_experiment",
+      "requiredMetric": "readyOfferExperiments",
+      "requiredValue": 1,
+      "releaseCondition": "Offer experiment plan has at least one READY row with matching evidence and safety boundaries.",
+      "nextCommand": "python3 tools/promotion_offer_experiment_queue.py --check && python3 tools/promotion_asset_fulfillment_gate.py --check",
+      "fallbackAction": "Keep offer rows on HOLD; do not add paid CTA to first-touch Shorts.",
+      "status": "blocked_upstream",
+      "activeStage": 0,
+      "currentValue": 0,
+      "blocker": "no READY offer experiment"
+    }
+  ]
+}

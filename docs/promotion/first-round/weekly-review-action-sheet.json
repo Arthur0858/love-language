@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "weeklyDecisionEvidence": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
+    "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
+    "firstBatchAction": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
+    "kpiAction": "docs/promotion/first-round/first-batch-kpi-action-sheet.json",
+    "leadOpsAction": "docs/promotion/first-round/lead-ops-action-sheet.json"
+  },
+  "metrics": {
+    "rows": 7,
+    "readyRows": 0,
+    "blockedRows": 5,
+    "holdRows": 2,
+    "weeklyReady": 0,
+    "emptyData": 1,
+    "evidencePending": 7,
+    "evidenceComplete": 1
+  },
+  "rows": [
+    {
+      "step_id": "profile-before-review",
+      "phase": "precondition",
+      "status": "blocked",
+      "operator_action": "Confirm all platform profile links are set/live before using first-batch posts for weekly review.",
+      "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check",
+      "evidence_required": "profile_configured=3 and profile gate ready before publish/review.",
+      "decision_boundary": "Without profile links, do not treat missing clicks as content failure."
+    },
+    {
+      "step_id": "first-batch-public-url",
+      "phase": "publish",
+      "status": "blocked",
+      "operator_action": "Publish or verify the first three platform posts and record the real public post URLs.",
+      "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
+      "evidence_required": "Three real platform post_url values, not placeholders.",
+      "decision_boundary": "No public URL means no weekly decision."
+    },
+    {
+      "step_id": "minimum-kpi-backfill",
+      "phase": "kpi",
+      "status": "blocked",
+      "operator_action": "Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.",
+      "command": "python3 tools/promotion_first_batch_kpi_action_sheet.py --check",
+      "evidence_required": "Each 0 value has a checked platform or site source, not an assumption.",
+      "decision_boundary": "Zero without source is still unknown."
+    },
+    {
+      "step_id": "weekly-evidence-check",
+      "phase": "review",
+      "status": "blocked",
+      "operator_action": "Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.",
+      "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
+      "evidence_required": "complete=1, pending=7.",
+      "decision_boundary": "Pending evidence keeps all commerce and winner decisions on HOLD."
+    },
+    {
+      "step_id": "weekly-review-packet",
+      "phase": "review",
+      "status": "hold",
+      "operator_action": "Regenerate weekly summary, decision gate and review packet before changing the next content batch.",
+      "command": "python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py",
+      "evidence_required": "weekly_ready=0, empty_data=1.",
+      "decision_boundary": "Empty data mode allows only setup, publish, and KPI backfill actions."
+    },
+    {
+      "step_id": "lead-and-offer-safety",
+      "phase": "commerce",
+      "status": "blocked",
+      "operator_action": "Check lead demand before building owned assets, Luna packs or paid offer experiments.",
+      "command": "python3 tools/promotion_lead_ops_action_sheet.py --check && python3 tools/promotion_lead_demand_gate.py --check",
+      "evidence_required": "lead_ready_routes=0, repeated_routes=0.",
+      "decision_boundary": "No repeated lead demand means no paid or priority offer build."
+    },
+    {
+      "step_id": "allowed-decision-scope",
+      "phase": "decision",
+      "status": "hold",
+      "operator_action": "Use week-decision-gate as the only source of truth for allowed next decisions.",
+      "command": "python3 tools/promotion_week_decision_gate.py --check",
+      "evidence_required": "weeklyDecision=0, testSoftOffer=0.",
+      "decision_boundary": "Do not alter offer order, guardian priority, Luna emphasis, or affiliate weighting unless gate allows it."
+    }
+  ],
+  "rules": [
+    "Weekly review is not a commerce decision until public URLs, minimum KPIs and evidence rows are complete.",
+    "Empty data mode fails closed: keep setup, publishing and KPI backfill only.",
+    "Do not pick a winning guardian, change offer order or increase paid CTA from zero or missing data.",
+    "Lead and offer experiments require repeated guardian demand, not a single click or template row."
+  ],
+  "issues": []
+}

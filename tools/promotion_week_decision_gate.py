@@ -74,11 +74,14 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
     start_rate = derived.get("quizStartRate")
     thresholds = decision_thresholds(matrix)
     scale_content_min_quiz = int(thresholds["scaleContentMinQuizCompletions"])
+    positive_signal_total = site_clicks + quiz_starts + quiz_completions + identity_route_interest + lead_intent + paid_intent
     blockers: list[str] = []
     if not ready_for_weekly:
         blockers.append("尚未達週決策門檻：發布狀態或 KPI 回填不足。")
     if empty_data:
         blockers.append("目前仍是空資料模式，不能放大守護者、商品或付費 CTA。")
+    if ready_for_weekly and not empty_data and positive_signal_total == 0:
+        blockers.append("已回填 KPI，但目前所有關鍵訊號皆為 0；維持 collect_signal，不調整商品、守護者優先序或內容放大。")
     if site_clicks > 0 and start_rate is not None and start_rate < QUIZ_START_RATE_MIN:
         blockers.append(f"網站點擊進來但測驗開始率低於 {QUIZ_START_RATE_MIN:.0%}，先修 /start/ 首屏與 CTA。")
     if quiz_starts > 0 and completion_rate is not None and completion_rate < QUIZ_COMPLETION_RATE_MIN:
@@ -147,6 +150,7 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
             "identityRouteInterest": identity_route_interest,
             "leadIntent": lead_intent,
             "paidRevenueIntent": paid_intent,
+            "positiveSignalTotal": positive_signal_total,
         },
         "decisionThresholds": thresholds,
         "leaders": leaders,
@@ -158,6 +162,7 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
             "shortsCtaMustRemainQuiz": True,
             "doNotUse": ["診斷", "療效", "保證修復", "必須購買"],
             "emptyDataFailClosed": empty_data,
+            "noPositiveSignalFailClosed": ready_for_weekly and not empty_data and positive_signal_total == 0,
             "offerTestsOnlyAfterResultRoute": True,
         },
     }
@@ -186,6 +191,7 @@ def render_markdown(gate: dict) -> str:
         f"- 認同 + 路線興趣：{metrics['identityRouteInterest']}",
         f"- 名單/需求意圖：{metrics['leadIntent']}",
         f"- Luna/聯盟付費意圖：{metrics['paidRevenueIntent']}",
+        f"- 正向訊號總和：{metrics['positiveSignalTotal']}",
         "",
         "## 阻擋條件",
         "",
@@ -214,6 +220,8 @@ def validate_gate(gate: dict) -> list[str]:
         issues.append("gate payload should include all decision gates")
     if gate.get("safety", {}).get("emptyDataFailClosed") and any(gates.values()):
         issues.append("empty data mode must fail closed for every decision gate")
+    if gate.get("safety", {}).get("noPositiveSignalFailClosed") and any(gates.values()):
+        issues.append("no-positive-signal mode must fail closed for every decision gate")
     if gate.get("gates", {}).get("testSoftOffer") and gate.get("metrics", {}).get("paidRevenueIntent", 0) <= 0:
         issues.append("soft offer gate cannot pass without paid revenue intent")
     if gate.get("gates", {}).get("deepenIdentityAsset") and gate.get("metrics", {}).get("identityRouteInterest", 0) <= 0:
@@ -258,6 +266,8 @@ def main() -> int:
     print(f"promotion_week_decision_gate_scale={int(gate['gates']['scaleContent'])}")
     print(f"promotion_week_decision_gate_owned={int(gate['gates']['buildOwnedLeadAsset'])}")
     print(f"promotion_week_decision_gate_offer={int(gate['gates']['testSoftOffer'])}")
+    print(f"promotion_week_decision_gate_positive_signal_total={gate['metrics']['positiveSignalTotal']}")
+    print(f"promotion_week_decision_gate_no_positive_signal={int(gate['safety']['noPositiveSignalFailClosed'])}")
     print(f"promotion_week_decision_gate_blockers={len(gate['blockers'])}")
     print(f"promotion_week_decision_gate_issues={len(issues)}")
     for issue in issues:

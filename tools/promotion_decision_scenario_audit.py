@@ -23,6 +23,15 @@ from promotion_weekly_summary import build_report  # noqa: E402
 
 SCENARIOS = [
     {
+        "id": "verified_zero_signal",
+        "guardian": "iris",
+        "metrics": {"site_clicks": 0, "quiz_starts": 0, "quiz_completions": 0},
+        "expectedStage": "collect_signal",
+        "expectedFocus": "collect_signal",
+        "expectedGate": "",
+        "expectedBlocked": True,
+    },
+    {
         "id": "identity_only",
         "guardian": "iris",
         "metrics": {"site_clicks": 20, "quiz_starts": 12, "quiz_completions": 8, "guardian_result_clicks": 5},
@@ -176,6 +185,7 @@ def run_scenario(fields: list[str], profile_fieldnames: list[str], tasks: list[d
     expected_stage = scenario["expectedStage"]
     expected_focus = scenario["expectedFocus"]
     expected_gate = scenario["expectedGate"]
+    expected_blocked = bool(scenario.get("expectedBlocked"))
     label = scenario["id"]
 
     assert_condition(
@@ -188,16 +198,29 @@ def run_scenario(fields: list[str], profile_fieldnames: list[str], tasks: list[d
         gate.get("recommendedFocus") == expected_focus,
         f"{label}: expected gate focus {expected_focus}, got {gate.get('recommendedFocus')}",
     )
-    assert_condition(
-        issues,
-        bool(gate.get("gates", {}).get(expected_gate)),
-        f"{label}: expected gate {expected_gate} to pass",
-    )
-    assert_condition(
-        issues,
-        not gate.get("blockers"),
-        f"{label}: expected no gate blockers, got {gate.get('blockers')}",
-    )
+    if expected_gate:
+        assert_condition(
+            issues,
+            bool(gate.get("gates", {}).get(expected_gate)),
+            f"{label}: expected gate {expected_gate} to pass",
+        )
+    if expected_blocked:
+        assert_condition(
+            issues,
+            bool(gate.get("blockers")),
+            f"{label}: expected gate blockers",
+        )
+        assert_condition(
+            issues,
+            not any(gate.get("gates", {}).values()),
+            f"{label}: all gates should fail closed when there is no positive signal",
+        )
+    else:
+        assert_condition(
+            issues,
+            not gate.get("blockers"),
+            f"{label}: expected no gate blockers, got {gate.get('blockers')}",
+        )
 
     identity = int(weekly.get("computedTotals", {}).get("identityInterest", 0) or 0)
     route = int(weekly.get("computedTotals", {}).get("routeInterest", 0) or 0)

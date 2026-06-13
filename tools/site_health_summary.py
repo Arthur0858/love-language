@@ -1380,6 +1380,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_week_decision_gate_scale",
         "promotion_week_decision_gate_owned",
         "promotion_week_decision_gate_offer",
+        "promotion_week_decision_gate_positive_signal_total",
+        "promotion_week_decision_gate_no_positive_signal",
         "promotion_week_decision_gate_blockers",
         "promotion_week_decision_gate_issues",
         "promotion_lead_intake_guardians",

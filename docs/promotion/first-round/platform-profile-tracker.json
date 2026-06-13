@@ -4,6 +4,55 @@
     "promotionKit": "promotion-kit.json"
   },
   "rowCount": 3,
+  "profileTrackerPolicy": {
+    "statusValues": [
+      "planned",
+      "set",
+      "live",
+      "paused",
+      "blocked"
+    ],
+    "configuredStatuses": [
+      "set",
+      "live"
+    ],
+    "platformOrder": [
+      "youtube_shorts",
+      "tiktok",
+      "instagram_reels"
+    ],
+    "expectedPlatformSources": {
+      "youtube_shorts": "youtube",
+      "tiktok": "tiktok",
+      "instagram_reels": "instagram"
+    },
+    "minimumWeeklyFields": [
+      "profile_clicks",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions"
+    ],
+    "numericFields": [
+      "profile_clicks",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions",
+      "guardian_result_clicks",
+      "resources_clicks",
+      "repair_plan_clicks",
+      "luna_clicks",
+      "keepsake_clicks",
+      "free_keepsake_downloads",
+      "supply_lead_requests",
+      "luna_pack_clicks",
+      "affiliate_book_clicks",
+      "contact_requests"
+    ],
+    "rule": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video post performance stays in platform-kpi-tracker.csv and kpi-tracker.csv.",
+    "setLiveRequiresDate": true,
+    "startPath": "/start/",
+    "campaign": "first_round_quiz_completion"
+  },
   "numericFields": [
     "profile_clicks",
     "site_clicks",

@@ -42,11 +42,30 @@ FIELDNAMES = [
     "notes",
 ]
 NUMERIC_FIELDS = FIELDNAMES[9:23]
+STATUS_VALUES = ("planned", "set", "live", "paused", "blocked")
+CONFIGURED_STATUSES = ("set", "live")
+MINIMUM_WEEKLY_FIELDS = ("profile_clicks", "site_clicks", "quiz_starts", "quiz_completions")
 EXPECTED_PLATFORM_SOURCES = {
     "youtube_shorts": "youtube",
     "tiktok": "tiktok",
     "instagram_reels": "instagram",
 }
+PLATFORM_ORDER = tuple(EXPECTED_PLATFORM_SOURCES)
+
+
+def profile_tracker_policy() -> dict[str, object]:
+    return {
+        "statusValues": list(STATUS_VALUES),
+        "configuredStatuses": list(CONFIGURED_STATUSES),
+        "platformOrder": list(PLATFORM_ORDER),
+        "expectedPlatformSources": EXPECTED_PLATFORM_SOURCES,
+        "minimumWeeklyFields": list(MINIMUM_WEEKLY_FIELDS),
+        "numericFields": list(NUMERIC_FIELDS),
+        "rule": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video post performance stays in platform-kpi-tracker.csv and kpi-tracker.csv.",
+        "setLiveRequiresDate": True,
+        "startPath": "/start/",
+        "campaign": "first_round_quiz_completion",
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -89,12 +108,21 @@ def build_rows(kit: dict, existing: dict[str, dict[str, str]] | None = None) -> 
         for field in NUMERIC_FIELDS:
             row[field] = previous.get(field, "")
         rows.append({field: row.get(field, "") for field in FIELDNAMES})
-    rows.sort(key=lambda row: ["youtube_shorts", "tiktok", "instagram_reels"].index(row["platform"]) if row["platform"] in EXPECTED_PLATFORM_SOURCES else 99)
+    rows.sort(key=lambda row: PLATFORM_ORDER.index(row["platform"]) if row["platform"] in EXPECTED_PLATFORM_SOURCES else 99)
     return rows
 
 
 def validate_rows(rows: list[dict[str, str]]) -> list[str]:
     issues: list[str] = []
+    policy = profile_tracker_policy()
+    if tuple(policy["statusValues"]) != STATUS_VALUES:
+        issues.append("profileTrackerPolicy.statusValues does not match generator policy")
+    if tuple(policy["configuredStatuses"]) != CONFIGURED_STATUSES:
+        issues.append("profileTrackerPolicy.configuredStatuses does not match generator policy")
+    if tuple(policy["platformOrder"]) != PLATFORM_ORDER:
+        issues.append("profileTrackerPolicy.platformOrder does not match generator policy")
+    if tuple(policy["minimumWeeklyFields"]) != MINIMUM_WEEKLY_FIELDS:
+        issues.append("profileTrackerPolicy.minimumWeeklyFields does not match generator policy")
     if len(rows) != len(EXPECTED_PLATFORM_SOURCES):
         issues.append(f"expected {len(EXPECTED_PLATFORM_SOURCES)} platform tracker rows, got {len(rows)}")
     seen: set[str] = set()
@@ -119,8 +147,10 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
         for key, expected_value in expected.items():
             if row.get(key) != expected_value:
                 issues.append(f"{label}: {key} should be {expected_value}")
-        if row.get("status") not in {"planned", "set", "live", "paused", "blocked"}:
+        if row.get("status") not in STATUS_VALUES:
             issues.append(f"{label}: invalid status {row.get('status')}")
+        if row.get("status") in CONFIGURED_STATUSES and not (row.get("profile_link_set_date") or "").strip():
+            issues.append(f"{label}: status {row.get('status')} requires profile_link_set_date")
         for field in NUMERIC_FIELDS:
             value = (row.get(field) or "").strip()
             if value:
@@ -149,6 +179,8 @@ def render_markdown(rows: list[dict[str, str]]) -> str:
         f"- 產生日期：{date.today().isoformat()}",
         f"- 平台數：{len(rows)}",
         "- 用途：追蹤 Bio/Profile link 帶來的測驗與收益承接，不和單支 Shorts 成效混在一起。",
+        f"- 狀態規則：{', '.join(f'`{status}`' for status in STATUS_VALUES)}；`set/live` 必須填 `profile_link_set_date`。",
+        f"- 每週最小回填欄位：{', '.join(f'`{field}`' for field in MINIMUM_WEEKLY_FIELDS)}。",
         "",
         "## 使用方式",
         "",
@@ -182,6 +214,7 @@ def write_outputs(rows: list[dict[str, str]], csv_path: Path, json_path: Path, m
             "promotionKit": str(KIT_PATH.relative_to(ROOT)),
         },
         "rowCount": len(rows),
+        "profileTrackerPolicy": profile_tracker_policy(),
         "numericFields": NUMERIC_FIELDS,
         "rows": rows,
     }

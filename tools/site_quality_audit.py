@@ -1862,6 +1862,29 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
     if len(items) != 20:
         issues.append(f"{COMMERCE_CATALOG_PATH}: expected 20 commerce items, got {len(items)}")
 
+    affiliate_locale_policy = data.get("affiliateLocalePolicy")
+    expected_affiliate_locale_policy = {
+        "zh": {"provider": "books.com.tw", "host": BOOKS_AFFILIATE_HOST},
+        "en": {"provider": "amazon", "host": AMAZON_AFFILIATE_HOST, "tag": AMAZON_ASSOCIATE_TAG},
+        "ja": {"provider": "amazon", "host": AMAZON_AFFILIATE_HOST, "tag": AMAZON_ASSOCIATE_TAG},
+        "ko": {"provider": "amazon", "host": AMAZON_AFFILIATE_HOST, "tag": AMAZON_ASSOCIATE_TAG},
+        "es": {"provider": "amazon", "host": AMAZON_AFFILIATE_HOST, "tag": AMAZON_ASSOCIATE_TAG},
+    }
+    if not isinstance(affiliate_locale_policy, dict):
+        issues.append(f"{COMMERCE_CATALOG_PATH}: affiliateLocalePolicy should be an object")
+    else:
+        for lang, expected in expected_affiliate_locale_policy.items():
+            policy = affiliate_locale_policy.get(lang)
+            if not isinstance(policy, dict):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: affiliateLocalePolicy.{lang} should be an object")
+                continue
+            stats["commerce_affiliate_locale_policies_checked"] += 1
+            for key, expected_value in expected.items():
+                if policy.get(key) != expected_value:
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: affiliateLocalePolicy.{lang}.{key} should be {expected_value}")
+            if not isinstance(policy.get("rule"), str) or not policy["rule"]:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: affiliateLocalePolicy.{lang}.rule should explain the locale rule")
+
     expected_type_counts = {
         "free_keepsake": 5,
         "owned_supply_waitlist": 5,

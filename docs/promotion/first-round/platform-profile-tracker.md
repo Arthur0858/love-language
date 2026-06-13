@@ -3,6 +3,8 @@
 - 產生日期：2026-06-13
 - 平台數：3
 - 用途：追蹤 Bio/Profile link 帶來的測驗與收益承接，不和單支 Shorts 成效混在一起。
+- 狀態規則：`planned`, `set`, `live`, `paused`, `blocked`；`set/live` 必須填 `profile_link_set_date`。
+- 每週最小回填欄位：`profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`。
 
 ## 使用方式
 

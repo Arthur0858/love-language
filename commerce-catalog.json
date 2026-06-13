@@ -5,6 +5,37 @@
   "contact": "contact@lovetypes.tw",
   "production": "https://lovetypes.tw/",
   "description": "Machine-readable LoveTypes catalog for free guardian keepsakes, owned supply requests, affiliate books, and Luna Gumroad packs.",
+  "affiliateLocalePolicy": {
+    "zh": {
+      "provider": "books.com.tw",
+      "host": "www.books.com.tw",
+      "rule": "Traditional Chinese pages keep Books.com.tw affiliate URLs."
+    },
+    "en": {
+      "provider": "amazon",
+      "host": "www.amazon.com",
+      "tag": "parenttechche-20",
+      "rule": "English pages use Amazon Associates URLs."
+    },
+    "ja": {
+      "provider": "amazon",
+      "host": "www.amazon.com",
+      "tag": "parenttechche-20",
+      "rule": "Japanese pages use Amazon Associates URLs."
+    },
+    "ko": {
+      "provider": "amazon",
+      "host": "www.amazon.com",
+      "tag": "parenttechche-20",
+      "rule": "Korean pages use Amazon Associates URLs."
+    },
+    "es": {
+      "provider": "amazon",
+      "host": "www.amazon.com",
+      "tag": "parenttechche-20",
+      "rule": "Spanish pages use Amazon Associates URLs."
+    }
+  },
   "safetyBoundaries": [
     "Relationship reflection and communication support only.",
     "No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims.",

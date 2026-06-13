@@ -501,6 +501,37 @@ AFFILIATE_COPY = {
 
 
 AMAZON_ASSOCIATE_TAG = "parenttechche-20"
+AFFILIATE_LOCALE_POLICY = {
+    "zh": {
+        "provider": "books.com.tw",
+        "host": "www.books.com.tw",
+        "rule": "Traditional Chinese pages keep Books.com.tw affiliate URLs.",
+    },
+    "en": {
+        "provider": "amazon",
+        "host": "www.amazon.com",
+        "tag": AMAZON_ASSOCIATE_TAG,
+        "rule": "English pages use Amazon Associates URLs.",
+    },
+    "ja": {
+        "provider": "amazon",
+        "host": "www.amazon.com",
+        "tag": AMAZON_ASSOCIATE_TAG,
+        "rule": "Japanese pages use Amazon Associates URLs.",
+    },
+    "ko": {
+        "provider": "amazon",
+        "host": "www.amazon.com",
+        "tag": AMAZON_ASSOCIATE_TAG,
+        "rule": "Korean pages use Amazon Associates URLs.",
+    },
+    "es": {
+        "provider": "amazon",
+        "host": "www.amazon.com",
+        "tag": AMAZON_ASSOCIATE_TAG,
+        "rule": "Spanish pages use Amazon Associates URLs.",
+    },
+}
 
 
 def amazon_affiliate_url(asin: str) -> str:
@@ -10091,6 +10122,7 @@ def collect_commerce_catalog() -> dict:
         "contact": CONTACT_EMAIL,
         "production": f"{DOMAIN}/",
         "description": "Machine-readable LoveTypes catalog for free guardian keepsakes, owned supply requests, affiliate books, and Luna Gumroad packs.",
+        "affiliateLocalePolicy": AFFILIATE_LOCALE_POLICY,
         "safetyBoundaries": [
             "Relationship reflection and communication support only.",
             "No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims.",

@@ -82,6 +82,8 @@
         "profile_link_set_date 已填入設定日期。",
         "profile link 已手動開啟並確認 UTM 沒被平台截斷。"
       ],
+      "expectedVerificationSteps": 4,
+      "expectedDoNotPublishGates": 3,
       "firstKpis": [
         "status",
         "profile_link_set_date",
@@ -116,6 +118,8 @@
         "profile_link_set_date 已填入設定日期。",
         "profile link 已手動開啟並確認 UTM 沒被平台截斷。"
       ],
+      "expectedVerificationSteps": 4,
+      "expectedDoNotPublishGates": 3,
       "firstKpis": [
         "status",
         "profile_link_set_date",
@@ -150,6 +154,8 @@
         "profile_link_set_date 已填入設定日期。",
         "profile link 已手動開啟並確認 UTM 沒被平台截斷。"
       ],
+      "expectedVerificationSteps": 4,
+      "expectedDoNotPublishGates": 3,
       "firstKpis": [
         "status",
         "profile_link_set_date",

@@ -59,12 +59,18 @@ def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def platform_setup_lookup(path: Path) -> dict[str, dict]:
-    data = read_json(path)
+def platform_setup_lookup(data: dict) -> dict[str, dict]:
     return {str(item.get("platformId", "")): item for item in data.get("platforms", []) if item.get("platformId")}
 
 
-def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict]) -> list[dict]:
+def platform_setup_expectations(data: dict) -> dict[str, int]:
+    return {
+        "expectedVerificationSteps": int(data.get("expectedVerificationSteps", 0) or 0),
+        "expectedDoNotPublishGates": int(data.get("expectedDoNotPublishGates", 0) or 0),
+    }
+
+
+def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict], expectations: dict[str, int]) -> list[dict]:
     actions = []
     for row in rows:
         if is_profile_filled(row):
@@ -82,6 +88,8 @@ def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict]) 
             "writebackValues": item.get("writebackValues", {}),
             "verificationSteps": item.get("verificationSteps", []),
             "doNotPublishUntil": item.get("doNotPublishUntil", []),
+            "expectedVerificationSteps": expectations.get("expectedVerificationSteps", 0),
+            "expectedDoNotPublishGates": expectations.get("expectedDoNotPublishGates", 0),
             "firstKpis": ["status", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
         })
     return actions
@@ -158,14 +166,16 @@ def build_actions(
     profile_fields: list[str] | None = None,
     profile_rows: list[dict[str, str]] | None = None,
     profile_setup: dict[str, dict] | None = None,
+    profile_setup_expectations: dict[str, int] | None = None,
 ) -> dict:
     profile_fields = profile_fields or []
     profile_rows = profile_rows or []
     profile_setup = profile_setup or {}
+    profile_setup_expectations = profile_setup_expectations or {}
     report = build_report(fields, rows, tasks, profile_fields, profile_rows)
     active_rows = filled_rows(rows)
     active_profile_rows = [row for row in profile_rows if is_profile_filled(row)]
-    pending_profile_actions = profile_rows_to_actions(profile_rows, profile_setup)
+    pending_profile_actions = profile_rows_to_actions(profile_rows, profile_setup, profile_setup_expectations)
     guardian_scores, angle_scores, revenue_scores = score_rows(active_rows, tasks)
     top_guardian = top_key(guardian_scores)
     top_angle = top_key(angle_scores)
@@ -392,9 +402,11 @@ def main() -> int:
 
     fields, rows = read_tracker(Path(args.tracker))
     profile_fields, profile_rows = read_tracker(Path(args.profile_tracker))
-    profile_setup = platform_setup_lookup(Path(args.profile_setup))
+    profile_setup_data = read_json(Path(args.profile_setup))
+    profile_setup = platform_setup_lookup(profile_setup_data)
+    profile_expectations = platform_setup_expectations(profile_setup_data)
     tasks = load_tasks(Path(args.kit))
-    plan = build_actions(fields, rows, tasks, profile_fields, profile_rows, profile_setup)
+    plan = build_actions(fields, rows, tasks, profile_fields, profile_rows, profile_setup, profile_expectations)
     markdown = build_markdown(plan)
     if args.check:
         issues = []
@@ -411,9 +423,11 @@ def main() -> int:
         for item in plan["platformProfileActions"]:
             if not item.get("writebackValues"):
                 issues.append(f"{item.get('platform')}: missing writebackValues")
-            if len(item.get("verificationSteps", [])) < 4:
+            expected_verification_steps = int(item.get("expectedVerificationSteps", 0) or 0)
+            if len(item.get("verificationSteps", [])) < expected_verification_steps:
                 issues.append(f"{item.get('platform')}: missing verificationSteps")
-            if len(item.get("doNotPublishUntil", [])) < 3:
+            expected_do_not_publish = int(item.get("expectedDoNotPublishGates", 0) or 0)
+            if len(item.get("doNotPublishUntil", [])) < expected_do_not_publish:
                 issues.append(f"{item.get('platform')}: missing doNotPublishUntil")
         if not markdown.startswith("# LoveTypes 下一批推廣動作建議"):
             issues.append("markdown missing title")

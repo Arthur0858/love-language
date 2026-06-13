@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -49,6 +50,9 @@ KEY_ALIASES = {
 for metric in writeback.METRIC_FIELDS:
     KEY_ALIASES[metric] = metric
     KEY_ALIASES[metric.replace("_", " ")] = metric
+
+
+SCAFFOLD_PROOF_RE = re.compile(r"^screenshot\s+profile-(youtube_shorts|tiktok|instagram_reels)-20\d{2}-\d{2}-\d{2}\.png\s+verified$", re.IGNORECASE)
 
 
 def normalize_key(value: str) -> str:
@@ -120,11 +124,24 @@ def read_input(path: str) -> str:
     return Path(path).read_text(encoding="utf-8")
 
 
+def scaffold_proof_issue(proof: str) -> str:
+    if SCAFFOLD_PROOF_RE.match(" ".join((proof or "").strip().split())):
+        return (
+            "profile proof_note still looks like the scaffold screenshot filename; "
+            "replace it with real evidence such as an actual screenshot filename, "
+            "public profile URL click note, screen recording filename, or platform URL"
+        )
+    return ""
+
+
 def add_profile(data: dict[str, str], proof_note: str) -> None:
     fieldnames, rows = writeback.read_rows(writeback.TRACKER_PATH)
     proof = proof_note or data.get("proof_note", "")
     if data["status"] in writeback.CONFIGURED_STATUSES and not proof.strip():
         raise SystemExit("set/live import requires --proof-note or proof_note in input")
+    issue = scaffold_proof_issue(proof)
+    if issue:
+        raise SystemExit(issue)
     metrics = {field: data.get(field, "") for field in writeback.METRIC_FIELDS}
     writeback.update_row(rows, data["platform"], data["status"], data["set_date"], proof.strip(), metrics)
     issues = writeback.validate_tracker(fieldnames, rows)

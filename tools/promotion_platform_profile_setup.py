@@ -115,11 +115,18 @@ def build_setup() -> dict:
                 "luna_clicks",
             ],
         })
+    expected_launch_checklist_items = min(len(item["launchChecklist"]) for item in platforms) if platforms else 0
+    expected_verification_steps = min(len(item["verificationSteps"]) for item in platforms) if platforms else 0
+    expected_do_not_publish_gates = min(len(item["doNotPublishUntil"]) for item in platforms) if platforms else 0
     return {
         "generatedAt": date.today().isoformat(),
         "primaryUrl": PRIMARY_URL,
         "utmCampaign": CAMPAIGN,
         "platformCount": len(platforms),
+        "expectedPlatformCount": len(PLATFORMS),
+        "expectedLaunchChecklistItems": expected_launch_checklist_items,
+        "expectedVerificationSteps": expected_verification_steps,
+        "expectedDoNotPublishGates": expected_do_not_publish_gates,
         "platforms": platforms,
         "safety": {
             "primaryCta": "完成 15 題測驗，找到你的情感守護者。",
@@ -132,8 +139,12 @@ def build_setup() -> dict:
 def validate_setup(setup: dict) -> list[str]:
     issues: list[str] = []
     platforms = setup.get("platforms", [])
-    if setup.get("platformCount") != 3:
-        issues.append(f"expected 3 platform setups, got {setup.get('platformCount')}")
+    expected_platform_count = int(setup.get("expectedPlatformCount", 0) or 0)
+    expected_launch_checklist_items = int(setup.get("expectedLaunchChecklistItems", 0) or 0)
+    expected_verification_steps = int(setup.get("expectedVerificationSteps", 0) or 0)
+    expected_do_not_publish_gates = int(setup.get("expectedDoNotPublishGates", 0) or 0)
+    if setup.get("platformCount") != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} platform setups, got {setup.get('platformCount')}")
     if len(platforms) != setup.get("platformCount"):
         issues.append("platformCount should match platforms length")
     seen: set[str] = set()
@@ -158,8 +169,8 @@ def validate_setup(setup: dict) -> list[str]:
             if forbidden in item.get("bio", "") or forbidden in item.get("pinnedComment", ""):
                 issues.append(f"{label}: forbidden claim {forbidden}")
         checklist = item.get("launchChecklist", [])
-        if not isinstance(checklist, list) or len(checklist) < 4:
-            issues.append(f"{label}: launchChecklist should include at least four items")
+        if not isinstance(checklist, list) or len(checklist) < expected_launch_checklist_items:
+            issues.append(f"{label}: launchChecklist should include at least {expected_launch_checklist_items} items")
         writeback = item.get("writebackValues", {})
         if not isinstance(writeback, dict):
             issues.append(f"{label}: writebackValues should be an object")
@@ -171,13 +182,13 @@ def validate_setup(setup: dict) -> list[str]:
             if not writeback.get("profile_link_set_date"):
                 issues.append(f"{label}: writebackValues should include profile_link_set_date")
         verification_steps = item.get("verificationSteps", [])
-        if not isinstance(verification_steps, list) or len(verification_steps) < 4:
-            issues.append(f"{label}: verificationSteps should include at least four items")
+        if not isinstance(verification_steps, list) or len(verification_steps) < expected_verification_steps:
+            issues.append(f"{label}: verificationSteps should include at least {expected_verification_steps} items")
         if not any("utm_source" in step for step in verification_steps):
             issues.append(f"{label}: verificationSteps should mention UTM source")
         do_not_publish = item.get("doNotPublishUntil", [])
-        if not isinstance(do_not_publish, list) or len(do_not_publish) < 3:
-            issues.append(f"{label}: doNotPublishUntil should include at least three items")
+        if not isinstance(do_not_publish, list) or len(do_not_publish) < expected_do_not_publish_gates:
+            issues.append(f"{label}: doNotPublishUntil should include at least {expected_do_not_publish_gates} items")
         kpis = set(item.get("kpiFieldsToFill", []))
         if not {"profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"}.issubset(kpis):
             issues.append(f"{label}: missing core KPI fields")

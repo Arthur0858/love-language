@@ -3,6 +3,10 @@
   "primaryUrl": "https://lovetypes.tw/start/",
   "utmCampaign": "first_round_quiz_completion",
   "platformCount": 3,
+  "expectedPlatformCount": 3,
+  "expectedLaunchChecklistItems": 4,
+  "expectedVerificationSteps": 4,
+  "expectedDoNotPublishGates": 3,
   "platforms": [
     {
       "platformId": "youtube_shorts",

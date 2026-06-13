@@ -65,7 +65,9 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
     quiz_completions = int(totals.get("quiz_completions", 0) or 0)
     quiz_starts = int(totals.get("quiz_starts", 0) or 0)
     site_clicks = int(totals.get("site_clicks", 0) or 0)
+    identity_interest = int(computed.get("identityInterest", 0) or 0)
     route_interest = int(computed.get("routeInterest", 0) or 0)
+    identity_route_interest = int(computed.get("identityRouteInterest", identity_interest + route_interest) or 0)
     paid_intent = int(computed.get("paidRevenueIntent", 0) or 0)
     lead_intent = int(computed.get("leadIntent", 0) or 0)
     completion_rate = derived.get("quizCompletionRate")
@@ -90,7 +92,7 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
     )
     can_build_owned = ready_for_weekly and not empty_data and lead_intent > 0
     can_test_soft_offer = ready_for_weekly and not empty_data and paid_intent > 0
-    can_deepen_identity = ready_for_weekly and not empty_data and route_interest > 0
+    can_deepen_identity = ready_for_weekly and not empty_data and identity_route_interest > 0
 
     recommended_focus = "collect_signal"
     if can_test_soft_offer:
@@ -140,7 +142,9 @@ def build_gate(status: dict, summary: dict, matrix: dict, next_actions: dict) ->
             "quizCompletions": quiz_completions,
             "quizStartRate": start_rate,
             "quizCompletionRate": completion_rate,
+            "identityInterest": identity_interest,
             "routeInterest": route_interest,
+            "identityRouteInterest": identity_route_interest,
             "leadIntent": lead_intent,
             "paidRevenueIntent": paid_intent,
         },
@@ -177,7 +181,9 @@ def render_markdown(gate: dict) -> str:
         f"- 網站點擊：{metrics['siteClicks']}",
         f"- 測驗開始：{metrics['quizStarts']}（start rate: {pct(metrics['quizStartRate'])}）",
         f"- 測驗完成：{metrics['quizCompletions']}（completion rate: {pct(metrics['quizCompletionRate'])}）",
+        f"- 守護者認同：{metrics['identityInterest']}",
         f"- 路線興趣：{metrics['routeInterest']}",
+        f"- 認同 + 路線興趣：{metrics['identityRouteInterest']}",
         f"- 名單/需求意圖：{metrics['leadIntent']}",
         f"- Luna/聯盟付費意圖：{metrics['paidRevenueIntent']}",
         "",
@@ -210,6 +216,8 @@ def validate_gate(gate: dict) -> list[str]:
         issues.append("empty data mode must fail closed for every decision gate")
     if gate.get("gates", {}).get("testSoftOffer") and gate.get("metrics", {}).get("paidRevenueIntent", 0) <= 0:
         issues.append("soft offer gate cannot pass without paid revenue intent")
+    if gate.get("gates", {}).get("deepenIdentityAsset") and gate.get("metrics", {}).get("identityRouteInterest", 0) <= 0:
+        issues.append("identity asset gate cannot pass without identity or route interest")
     if int(gate.get("decisionThresholds", {}).get("scaleContentMinQuizCompletions", 0) or 0) < 1:
         issues.append("scale content gate missing quiz completion threshold")
     if not gate.get("nextSteps"):

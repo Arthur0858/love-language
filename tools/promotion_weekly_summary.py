@@ -38,6 +38,8 @@ NUMERIC_FIELDS = [
     "contact_requests",
 ]
 ACTIVITY_FIELDS = ["date", "platform", "post_url"]
+IDENTITY_FIELDS = ["guardian_result_clicks"]
+ROUTE_FIELDS = ["resources_clicks", "repair_plan_clicks", "luna_clicks", "keepsake_clicks"]
 REVENUE_FIELDS = [
     "free_keepsake_downloads",
     "supply_lead_requests",
@@ -45,6 +47,7 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+DOWNSTREAM_REQUIRED_FIELDS = [*IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS]
 QUIZ_START_RATE_MIN = 0.3
 QUIZ_COMPLETION_RATE_MIN = 0.4
 EMPTY_DATA_RECOMMENDATION_COUNT = 5
@@ -65,6 +68,8 @@ def weekly_summary_policy() -> dict[str, object]:
             "revenueGuardian": "Rank revenue intent only from filled video rows and revenue fields.",
             "contentAngle": "Rank content angles only from filled video rows joined to promotion-kit tasks.",
         },
+        "identityInterestFields": IDENTITY_FIELDS,
+        "routeInterestFields": ROUTE_FIELDS,
     }
 
 
@@ -174,8 +179,8 @@ def build_report(
     guardian_quiz = Counter()
     guardian_revenue = Counter()
     angle_quiz = Counter()
-    missing_fields = [field for field in REVENUE_FIELDS if field not in fields]
-    profile_missing_fields = [field for field in REVENUE_FIELDS if profile_fields and field not in profile_fields]
+    missing_fields = [field for field in DOWNSTREAM_REQUIRED_FIELDS if field not in fields]
+    profile_missing_fields = [field for field in DOWNSTREAM_REQUIRED_FIELDS if profile_fields and field not in profile_fields]
 
     for row in filled_rows:
         guardian = (row.get("guardian_id") or "unknown").strip() or "unknown"
@@ -191,7 +196,9 @@ def build_report(
     top_guardian = top_counter(guardian_quiz)
     top_revenue_guardian = top_counter(guardian_revenue)
     top_angle = top_counter(angle_quiz)
-    route_interest = totals["resources_clicks"] + totals["repair_plan_clicks"] + totals["luna_clicks"] + totals["keepsake_clicks"]
+    identity_interest = sum(totals[field] for field in IDENTITY_FIELDS)
+    route_interest = sum(totals[field] for field in ROUTE_FIELDS)
+    identity_route_interest = identity_interest + route_interest
     revenue_total = sum(totals[field] for field in REVENUE_FIELDS)
     lead_total = totals["supply_lead_requests"] + totals["contact_requests"]
     paid_revenue_intent = totals["luna_pack_clicks"] + totals["affiliate_book_clicks"]
@@ -248,12 +255,16 @@ def build_report(
             "siteClickRate": rate_value(totals["site_clicks"], totals["profile_clicks"]),
             "quizStartRate": rate_value(totals["quiz_starts"], totals["site_clicks"]),
             "quizCompletionRate": rate_value(totals["quiz_completions"], totals["quiz_starts"]),
+            "identityInterestRate": rate_value(identity_interest, totals["quiz_completions"]),
             "routeInterestRate": rate_value(route_interest, totals["quiz_completions"]),
+            "identityRouteInterestRate": rate_value(identity_route_interest, totals["quiz_completions"]),
             "revenueIntentRate": rate_value(paid_revenue_intent, totals["quiz_completions"]),
             "leadCaptureRate": rate_value(lead_total, totals["quiz_completions"]),
         },
         "computedTotals": {
+            "identityInterest": int(identity_interest),
             "routeInterest": int(route_interest),
+            "identityRouteInterest": int(identity_route_interest),
             "revenueIntent": int(revenue_total),
             "paidRevenueIntent": int(paid_revenue_intent),
             "leadIntent": int(lead_total),
@@ -301,7 +312,9 @@ def build_summary(report: dict) -> str:
         f"- 網站點擊：{totals['site_clicks']}（site click rate: {rate(totals['site_clicks'], totals['profile_clicks'])}）",
         f"- 測驗開始：{totals['quiz_starts']}（quiz start rate: {rate(totals['quiz_starts'], totals['site_clicks'])}）",
         f"- 測驗完成：{totals['quiz_completions']}（completion rate: {rate(totals['quiz_completions'], totals['quiz_starts'])}）",
+        f"- 守護者認同：{computed['identityInterest']}（identity interest rate: {format_rate_value(derived['identityInterestRate'])}）",
         f"- 路線興趣：{computed['routeInterest']}（route interest rate: {format_rate_value(derived['routeInterestRate'])}）",
+        f"- 認同 + 路線興趣：{computed['identityRouteInterest']}（identity route rate: {format_rate_value(derived['identityRouteInterestRate'])}）",
         f"- 獲利意圖：{computed['revenueIntent']}（revenue intent rate: {format_rate_value(derived['revenueIntentRate'])}）",
         f"- 名單/需求意圖：{computed['leadIntent']}（lead capture rate: {format_rate_value(derived['leadCaptureRate'])}）",
         "",
@@ -378,12 +391,16 @@ def main() -> int:
             issues.append("weeklySummaryPolicy.quizCompletionRateMin does not match generator policy")
         if policy.get("sourceBreakdownRequired") is not True:
             issues.append("weeklySummaryPolicy should require source breakdown")
+        if "guardian_result_clicks" not in policy.get("identityInterestFields", []):
+            issues.append("weeklySummaryPolicy should count guardian_result_clicks as identity interest")
+        if report["computedTotals"]["identityRouteInterest"] != report["computedTotals"]["identityInterest"] + report["computedTotals"]["routeInterest"]:
+            issues.append("identityRouteInterest should equal identityInterest plus routeInterest")
         if not required_report_keys.issubset(report):
             issues.append("report missing required keys")
         if report["fieldStatus"]["missingFields"]:
-            issues.append("tracker missing revenue fields")
+            issues.append("tracker missing downstream KPI fields")
         if report["fieldStatus"].get("profileMissingFields"):
-            issues.append("profile tracker missing revenue fields")
+            issues.append("profile tracker missing downstream KPI fields")
         if len(report["recommendations"]) < 1:
             issues.append("report should include at least one recommendation")
         if report["safety"]["emptyDataMode"]:

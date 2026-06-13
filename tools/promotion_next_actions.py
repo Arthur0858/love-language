@@ -27,12 +27,12 @@ REVENUE_FIELDS = [
     "contact_requests",
 ]
 ROUTE_FIELDS = [
-    "guardian_result_clicks",
     "resources_clicks",
     "repair_plan_clicks",
     "luna_clicks",
     "keepsake_clicks",
 ]
+IDENTITY_FIELDS = ["guardian_result_clicks"]
 EMPTY_DATA_ACTION_IDS = (
     "publish_first_batch",
     "fill_required_kpis",
@@ -66,9 +66,9 @@ def action_policy() -> dict[str, object]:
         "profileSetupBeforePublish": True,
         "profileFirstKpis": list(PROFILE_FIRST_KPIS),
         "shortsKpiMinimumFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
-        "shortsKpiDownstreamFields": [*ROUTE_FIELDS, *REVENUE_FIELDS],
+        "shortsKpiDownstreamFields": [*IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS],
         "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
-        "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + route_clicks + revenue_intent * 2.",
+        "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + identity_clicks + route_clicks + revenue_intent * 2.",
     }
 
 
@@ -155,8 +155,9 @@ def score_rows(rows: list[dict[str, str]], tasks: list[dict]) -> tuple[Counter, 
             + parse_int(row.get("luna_clicks"))
             + parse_int(row.get("keepsake_clicks"))
         )
+        identity = sum(parse_int(row.get(field)) for field in IDENTITY_FIELDS)
         revenue = sum(parse_int(row.get(field)) for field in REVENUE_FIELDS)
-        score = quiz * 3 + route + revenue * 2
+        score = quiz * 3 + identity + route + revenue * 2
         guardian_scores[guardian] += score
         angle_scores[angle] += score
         revenue_scores[guardian] += revenue

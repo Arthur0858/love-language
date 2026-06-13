@@ -25,7 +25,9 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+IDENTITY_FIELDS = ["guardian_result_clicks"]
 ROUTE_FIELDS = ["resources_clicks", "repair_plan_clicks", "luna_clicks", "keepsake_clicks"]
+DECISION_FIELDS = [*IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS]
 GUARDIAN_ORDER = ["iris", "noah", "vivian", "claire", "dora"]
 FIELD_MEANINGS = {
     "free_keepsake_downloads": "角色認同與保存意願",
@@ -81,7 +83,7 @@ def tracker_totals(rows: list[dict[str, str]]) -> dict[str, dict[str, int]]:
         if not is_filled(row):
             continue
         totals[guardian]["quiz_completions"] += parse_int(row.get("quiz_completions"))
-        for field in ROUTE_FIELDS + REVENUE_FIELDS:
+        for field in IDENTITY_FIELDS + ROUTE_FIELDS + REVENUE_FIELDS:
             totals[guardian][field] += parse_int(row.get(field))
     return {guardian: dict(counter) for guardian, counter in totals.items()}
 
@@ -89,7 +91,7 @@ def tracker_totals(rows: list[dict[str, str]]) -> dict[str, dict[str, int]]:
 def profile_tracker_totals(rows: list[dict[str, str]]) -> tuple[dict[str, int], list[dict[str, object]]]:
     totals: Counter = Counter()
     platforms: list[dict[str, object]] = []
-    metric_fields = ["profile_clicks", "site_clicks", "quiz_starts", "quiz_completions", *ROUTE_FIELDS, *REVENUE_FIELDS]
+    metric_fields = ["profile_clicks", "site_clicks", "quiz_starts", "quiz_completions", *IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS]
     for row in rows:
         platform_metrics = {field: parse_int(row.get(field)) for field in metric_fields}
         for field, value in platform_metrics.items():
@@ -109,12 +111,13 @@ def decision_stage(metrics: dict[str, int]) -> str:
     free = metrics.get("free_keepsake_downloads", 0)
     leads = metrics.get("supply_lead_requests", 0) + metrics.get("contact_requests", 0)
     paid = metrics.get("luna_pack_clicks", 0) + metrics.get("affiliate_book_clicks", 0)
+    identity = sum(metrics.get(field, 0) for field in IDENTITY_FIELDS)
     route = sum(metrics.get(field, 0) for field in ROUTE_FIELDS)
     if paid > 0:
         return "test_soft_offer"
     if leads > 0:
         return "build_owned_asset"
-    if free > 0 or route > 0:
+    if free > 0 or identity > 0 or route > 0:
         return "deepen_identity_asset"
     if quiz >= MIN_QUIZ_COMPLETIONS_FOR_VARIANTS:
         return "publish_guardian_variants"
@@ -215,11 +218,11 @@ def build_matrix(
     expected_guardians = [guardian for guardian in GUARDIAN_ORDER if guardian in grouped]
     expected_task_counts = {guardian: len(grouped.get(guardian, [])) for guardian in expected_guardians}
     metrics_by_guardian = tracker_totals(rows)
-    missing_fields = [field for field in REVENUE_FIELDS if field not in fields]
+    missing_fields = [field for field in DECISION_FIELDS if field not in fields]
     profile_fields = profile_fields or []
     profile_rows = profile_rows or []
     filled_profile_rows = [row for row in profile_rows if is_profile_filled(row)]
-    profile_missing_fields = [field for field in REVENUE_FIELDS if profile_fields and field not in profile_fields]
+    profile_missing_fields = [field for field in DECISION_FIELDS if profile_fields and field not in profile_fields]
     platform_metrics, platform_rows = profile_tracker_totals(filled_profile_rows)
     platform_stage = decision_stage(platform_metrics)
     guardians = []
@@ -237,7 +240,7 @@ def build_matrix(
             "week": first_task.get("week"),
             "taskCount": len(guardian_tasks),
             "contentAngles": sorted({str(task.get("contentAngle", "")) for task in guardian_tasks if task.get("contentAngle")}),
-            "metrics": {field: int(metrics.get(field, 0)) for field in ["quiz_completions", *ROUTE_FIELDS, *REVENUE_FIELDS]},
+            "metrics": {field: int(metrics.get(field, 0)) for field in ["quiz_completions", *IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS]},
             "stage": stage,
             "recommendedAction": action,
             "conversionPath": path,
@@ -268,6 +271,9 @@ def build_matrix(
             "emptyDataMode": not any(is_filled(row) for row in rows) and not filled_profile_rows,
         },
         "fieldMeanings": FIELD_MEANINGS,
+        "identityFields": IDENTITY_FIELDS,
+        "routeFields": ROUTE_FIELDS,
+        "revenueFields": REVENUE_FIELDS,
         "decisionThresholds": thresholds,
         "decisionRules": [
             {"stage": "collect_signal", "rule": "尚無可判斷數據，照原排程發布與回填。"},
@@ -275,7 +281,7 @@ def build_matrix(
                 "stage": "publish_guardian_variants",
                 "rule": f"測驗完成 >= {thresholds['publishGuardianVariantsMinQuizCompletions']} 且尚無路線/獲利意圖時，先放大同守護者內容變體。",
             },
-            {"stage": "deepen_identity_asset", "rule": "已有收藏或路線興趣時，先強化免費收藏物與分享資產。"},
+            {"stage": "deepen_identity_asset", "rule": "已有守護者結果點擊、收藏或路線興趣時，先強化免費收藏物與分享資產。"},
             {"stage": "build_owned_asset", "rule": "已有補給名單或 Contact 需求時，優先做自有 Email/下載資產。"},
             {"stage": "test_soft_offer", "rule": "已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。"},
         ],
@@ -328,6 +334,7 @@ def render_markdown(matrix: dict) -> str:
         f"- 網站點擊：{profile_metrics['site_clicks']}",
         f"- 測驗開始：{profile_metrics['quiz_starts']}",
         f"- 測驗完成：{profile_metrics['quiz_completions']}",
+        f"- 守護者認同：{sum(profile_metrics[field] for field in IDENTITY_FIELDS)}",
         f"- 路線興趣：{sum(profile_metrics[field] for field in ROUTE_FIELDS)}",
         f"- 名單/Contact：{profile_metrics['supply_lead_requests'] + profile_metrics['contact_requests']}",
         f"- Luna/聯盟：{profile_metrics['luna_pack_clicks'] + profile_metrics['affiliate_book_clicks']}",
@@ -350,6 +357,7 @@ def render_markdown(matrix: dict) -> str:
             f"- 建議補強：{action['build']}",
             f"- 目標入口：{action['target']}",
             f"- 測驗完成：{metrics['quiz_completions']}",
+            f"- 守護者認同：{sum(metrics[field] for field in IDENTITY_FIELDS)}",
             f"- 路線興趣：{sum(metrics[field] for field in ROUTE_FIELDS)}",
             f"- 免費收藏：{metrics['free_keepsake_downloads']}",
             f"- 名單/Contact：{metrics['supply_lead_requests'] + metrics['contact_requests']}",
@@ -402,9 +410,11 @@ def validate_matrix(matrix: dict) -> list[str]:
         if not action.get("action") or not action.get("target"):
             issues.append(f"{guardian}: missing recommended action or target")
     if matrix.get("dataState", {}).get("missingRevenueFields"):
-        issues.append("tracker missing revenue fields: " + ", ".join(matrix["dataState"]["missingRevenueFields"]))
+        issues.append("tracker missing decision fields: " + ", ".join(matrix["dataState"]["missingRevenueFields"]))
     if matrix.get("dataState", {}).get("profileMissingRevenueFields"):
-        issues.append("platform profile tracker missing revenue fields: " + ", ".join(matrix["dataState"]["profileMissingRevenueFields"]))
+        issues.append("platform profile tracker missing decision fields: " + ", ".join(matrix["dataState"]["profileMissingRevenueFields"]))
+    if "guardian_result_clicks" not in matrix.get("identityFields", []):
+        issues.append("guardian_result_clicks must be treated as identity interest")
     return issues
 
 

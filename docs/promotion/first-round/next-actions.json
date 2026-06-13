@@ -65,7 +65,7 @@
       "contact_requests"
     ],
     "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
-    "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + route_clicks + revenue_intent * 2."
+    "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + identity_clicks + route_clicks + revenue_intent * 2."
   },
   "actions": [
     {

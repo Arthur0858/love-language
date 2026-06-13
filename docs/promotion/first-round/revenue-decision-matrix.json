@@ -21,6 +21,22 @@
     "affiliate_book_clicks": "延伸閱讀購買意圖",
     "contact_requests": "高意圖需求或合作/修復訊號"
   },
+  "identityFields": [
+    "guardian_result_clicks"
+  ],
+  "routeFields": [
+    "resources_clicks",
+    "repair_plan_clicks",
+    "luna_clicks",
+    "keepsake_clicks"
+  ],
+  "revenueFields": [
+    "free_keepsake_downloads",
+    "supply_lead_requests",
+    "luna_pack_clicks",
+    "affiliate_book_clicks",
+    "contact_requests"
+  ],
   "decisionThresholds": {
     "publishGuardianVariantsMinQuizCompletions": 10
   },
@@ -35,7 +51,7 @@
     },
     {
       "stage": "deepen_identity_asset",
-      "rule": "已有收藏或路線興趣時，先強化免費收藏物與分享資產。"
+      "rule": "已有守護者結果點擊、收藏或路線興趣時，先強化免費收藏物與分享資產。"
     },
     {
       "stage": "build_owned_asset",
@@ -56,6 +72,7 @@
       "site_clicks": 0,
       "quiz_starts": 0,
       "quiz_completions": 0,
+      "guardian_result_clicks": 0,
       "resources_clicks": 0,
       "repair_plan_clicks": 0,
       "luna_clicks": 0,
@@ -96,6 +113,7 @@
       ],
       "metrics": {
         "quiz_completions": 0,
+        "guardian_result_clicks": 0,
         "resources_clicks": 0,
         "repair_plan_clicks": 0,
         "luna_clicks": 0,
@@ -161,6 +179,7 @@
       ],
       "metrics": {
         "quiz_completions": 0,
+        "guardian_result_clicks": 0,
         "resources_clicks": 0,
         "repair_plan_clicks": 0,
         "luna_clicks": 0,
@@ -226,6 +245,7 @@
       ],
       "metrics": {
         "quiz_completions": 0,
+        "guardian_result_clicks": 0,
         "resources_clicks": 0,
         "repair_plan_clicks": 0,
         "luna_clicks": 0,
@@ -291,6 +311,7 @@
       ],
       "metrics": {
         "quiz_completions": 0,
+        "guardian_result_clicks": 0,
         "resources_clicks": 0,
         "repair_plan_clicks": 0,
         "luna_clicks": 0,
@@ -356,6 +377,7 @@
       ],
       "metrics": {
         "quiz_completions": 0,
+        "guardian_result_clicks": 0,
         "resources_clicks": 0,
         "repair_plan_clicks": 0,
         "luna_clicks": 0,

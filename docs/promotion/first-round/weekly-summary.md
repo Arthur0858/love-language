@@ -15,7 +15,9 @@
 - 網站點擊：0（site click rate: n/a）
 - 測驗開始：0（quiz start rate: n/a）
 - 測驗完成：0（completion rate: n/a）
+- 守護者認同：0（identity interest rate: n/a）
 - 路線興趣：0（route interest rate: n/a）
+- 認同 + 路線興趣：0（identity route rate: n/a）
 - 獲利意圖：0（revenue intent rate: n/a）
 - 名單/需求意圖：0（lead capture rate: n/a）
 

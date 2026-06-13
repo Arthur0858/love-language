@@ -84,12 +84,16 @@
     "siteClickRate": null,
     "quizStartRate": null,
     "quizCompletionRate": null,
+    "identityInterestRate": null,
     "routeInterestRate": null,
+    "identityRouteInterestRate": null,
     "revenueIntentRate": null,
     "leadCaptureRate": null
   },
   "computedTotals": {
+    "identityInterest": 0,
     "routeInterest": 0,
+    "identityRouteInterest": 0,
     "revenueIntent": 0,
     "paidRevenueIntent": 0,
     "leadIntent": 0
@@ -112,7 +116,16 @@
       "quizGuardian": "Rank guardians only from filled video rows with quiz_completions.",
       "revenueGuardian": "Rank revenue intent only from filled video rows and revenue fields.",
       "contentAngle": "Rank content angles only from filled video rows joined to promotion-kit tasks."
-    }
+    },
+    "identityInterestFields": [
+      "guardian_result_clicks"
+    ],
+    "routeInterestFields": [
+      "resources_clicks",
+      "repair_plan_clicks",
+      "luna_clicks",
+      "keepsake_clicks"
+    ]
   },
   "recommendations": [
     "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",

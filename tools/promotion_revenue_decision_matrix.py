@@ -34,6 +34,13 @@ FIELD_MEANINGS = {
     "affiliate_book_clicks": "延伸閱讀購買意圖",
     "contact_requests": "高意圖需求或合作/修復訊號",
 }
+MIN_QUIZ_COMPLETIONS_FOR_VARIANTS = 10
+
+
+def decision_thresholds() -> dict[str, int]:
+    return {
+        "publishGuardianVariantsMinQuizCompletions": MIN_QUIZ_COMPLETIONS_FOR_VARIANTS,
+    }
 
 
 def parse_int(value: str | None) -> int:
@@ -109,7 +116,7 @@ def decision_stage(metrics: dict[str, int]) -> str:
         return "build_owned_asset"
     if free > 0 or route > 0:
         return "deepen_identity_asset"
-    if quiz >= 10:
+    if quiz >= MIN_QUIZ_COMPLETIONS_FOR_VARIANTS:
         return "publish_guardian_variants"
     return "collect_signal"
 
@@ -243,6 +250,7 @@ def build_matrix(
                 "safetyNote": bridge.get("safetyNote", ""),
             },
         })
+    thresholds = decision_thresholds()
     return {
         "generatedAt": date.today().isoformat(),
         "source": {
@@ -260,9 +268,13 @@ def build_matrix(
             "emptyDataMode": not any(is_filled(row) for row in rows) and not filled_profile_rows,
         },
         "fieldMeanings": FIELD_MEANINGS,
+        "decisionThresholds": thresholds,
         "decisionRules": [
             {"stage": "collect_signal", "rule": "尚無可判斷數據，照原排程發布與回填。"},
-            {"stage": "publish_guardian_variants", "rule": "測驗完成累積但尚無路線/獲利意圖時，先放大同守護者內容變體。"},
+            {
+                "stage": "publish_guardian_variants",
+                "rule": f"測驗完成 >= {thresholds['publishGuardianVariantsMinQuizCompletions']} 且尚無路線/獲利意圖時，先放大同守護者內容變體。",
+            },
             {"stage": "deepen_identity_asset", "rule": "已有收藏或路線興趣時，先強化免費收藏物與分享資產。"},
             {"stage": "build_owned_asset", "rule": "已有補給名單或 Contact 需求時，優先做自有 Email/下載資產。"},
             {"stage": "test_soft_offer", "rule": "已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。"},
@@ -371,6 +383,9 @@ def validate_matrix(matrix: dict) -> list[str]:
     expected_guardian_count = int(matrix.get("expectedGuardianCount", 0) or 0)
     if len(matrix.get("guardians", [])) != expected_guardian_count:
         issues.append(f"expected {expected_guardian_count} guardian decision rows, got {len(matrix.get('guardians', []))}")
+    thresholds = matrix.get("decisionThresholds", {})
+    if int(thresholds.get("publishGuardianVariantsMinQuizCompletions", 0) or 0) < 1:
+        issues.append("missing publish guardian variants quiz completion threshold")
     stages = {item.get("stage") for item in matrix.get("guardians", [])}
     if not stages:
         issues.append("expected at least one decision stage")

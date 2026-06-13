@@ -21,6 +21,9 @@
     "affiliate_book_clicks": "延伸閱讀購買意圖",
     "contact_requests": "高意圖需求或合作/修復訊號"
   },
+  "decisionThresholds": {
+    "publishGuardianVariantsMinQuizCompletions": 10
+  },
   "decisionRules": [
     {
       "stage": "collect_signal",
@@ -28,7 +31,7 @@
     },
     {
       "stage": "publish_guardian_variants",
-      "rule": "測驗完成累積但尚無路線/獲利意圖時，先放大同守護者內容變體。"
+      "rule": "測驗完成 >= 10 且尚無路線/獲利意圖時，先放大同守護者內容變體。"
     },
     {
       "stage": "deepen_identity_asset",

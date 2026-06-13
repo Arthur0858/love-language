@@ -8,7 +8,7 @@
 ## 判斷規則
 
 - `collect_signal`: 尚無可判斷數據，照原排程發布與回填。
-- `publish_guardian_variants`: 測驗完成累積但尚無路線/獲利意圖時，先放大同守護者內容變體。
+- `publish_guardian_variants`: 測驗完成 >= 10 且尚無路線/獲利意圖時，先放大同守護者內容變體。
 - `deepen_identity_asset`: 已有收藏或路線興趣時，先強化免費收藏物與分享資產。
 - `build_owned_asset`: 已有補給名單或 Contact 需求時，優先做自有 Email/下載資產。
 - `test_soft_offer`: 已有 Luna 或聯盟點擊時，測試柔性商品承接，但 Shorts CTA 仍維持測驗。

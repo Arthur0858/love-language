@@ -270,8 +270,9 @@ def rollup_script_tracker(script_rows: list[dict[str, str]], platform_rows: list
         row["post_url"] = first.get("post_url", "")
         for field in METRIC_FIELDS:
             if field in row:
+                present = any((item.get(field) or "").strip() != "" for item in published)
                 total = sum(parse_int(item.get(field)) for item in published)
-                row[field] = str(total) if total else row.get(field, "")
+                row[field] = str(total) if present else row.get(field, "")
         if "verified:" not in (row.get("notes") or ""):
             append_note(row, f"script rollup from {len(published)} platform post(s)", first.get("published_date", date.today().isoformat()))
         return

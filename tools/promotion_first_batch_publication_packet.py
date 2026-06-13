@@ -106,6 +106,7 @@ def build_packet() -> dict:
         status = row.get("status", "planned")
         published = status in PUBLISHED_STATUSES
         minimum_kpis = {field: parse_int(tracker.get(field) or row.get(field)) for field in MINIMUM_KPI_FIELDS}
+        minimum_kpi_present = all(((tracker.get(field) or row.get(field) or "").strip() != "") for field in MINIMUM_KPI_FIELDS)
         placeholder = post_url_placeholder(platform)
         rows.append({
             "platform": platform,
@@ -125,7 +126,7 @@ def build_packet() -> dict:
             "caption": row.get("caption", ""),
             "primaryCta": row.get("primary_cta", ""),
             "minimumKpis": minimum_kpis,
-            "minimumKpiFilled": any(value > 0 for value in minimum_kpis.values()),
+            "minimumKpiFilled": minimum_kpi_present,
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "

@@ -111,6 +111,9 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
         elif not writeback.post_url_matches_platform(data.get("platform", ""), data.get("post_url", "")):
             issues.append("published status requires post_url to match platform domain")
         proof = data.get("proof_note", "")
+        proof_issue = writeback.proof_note_issue(proof)
+        if proof_issue:
+            issues.append(proof_issue)
         zero_issue = writeback.zero_metric_source_issue(proof, data)
         if zero_issue:
             issues.append(zero_issue)

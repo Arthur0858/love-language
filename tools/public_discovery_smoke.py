@@ -890,29 +890,47 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, len(events), len(categories), len(roles)
 
 
-def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, int]:
+def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     issues: list[str] = []
     funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
     kit_response = request_url(urljoin(base_url + "/", "promotion-kit.json"))
     if funnel_response.status != 200:
-        return [f"/funnel-events.json: expected status 200, got {funnel_response.status}"], 0, 0
+        return [f"/funnel-events.json: expected status 200, got {funnel_response.status}"], 0, 0, 0, 0, 0, 0
     if kit_response.status != 200:
-        return [f"/promotion-kit.json: expected status 200, got {kit_response.status}"], 0, 0
+        return [f"/promotion-kit.json: expected status 200, got {kit_response.status}"], 0, 0, 0, 0, 0, 0
     try:
         funnel = json.loads(funnel_response.text)
         kit = json.loads(kit_response.text)
     except json.JSONDecodeError as exc:
-        return [f"promotion/funnel alignment: invalid JSON: {exc}"], 0, 0
+        return [f"promotion/funnel alignment: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     funnel_names = {
         event.get("name")
         for event in funnel.get("events", [])
         if isinstance(event, dict) and isinstance(event.get("name"), str)
     }
-    event_kpi_map = kit.get("measurementPlan", {}).get("eventKpiMap", []) if isinstance(kit, dict) else []
+    measurement = kit.get("measurementPlan", {}) if isinstance(kit, dict) else {}
+    if not isinstance(measurement, dict):
+        return ["/promotion-kit.json: measurementPlan should be an object"], 0, 0, 0, 0, 0, 0
+    event_kpi_map = measurement.get("eventKpiMap", [])
     if not isinstance(event_kpi_map, list) or not event_kpi_map:
-        return ["/promotion-kit.json: measurementPlan.eventKpiMap should be a non-empty list"], 0, 0
+        return ["/promotion-kit.json: measurementPlan.eventKpiMap should be a non-empty list"], 0, 0, 0, 0, 0, 0
     mapped_events: set[str] = set()
     seen_kpis: set[str] = set()
+    expected_event_kpis = {
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions",
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
+    }
     for row in event_kpi_map:
         if not isinstance(row, dict):
             issues.append("/promotion-kit.json: eventKpiMap entries should be objects")
@@ -935,7 +953,67 @@ def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, 
             mapped_events.add(event_name)
             if event_name not in funnel_names:
                 issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} references missing funnel event {event_name}")
-    return issues, len(event_kpi_map), len(mapped_events)
+        for key in ("label", "countRule", "reviewUse"):
+            if not isinstance(row.get(key), str) or not row[key]:
+                issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} missing {key}")
+        manual_sources = row.get("manualSources")
+        if not isinstance(manual_sources, list) or not manual_sources:
+            issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} should include manualSources")
+    missing_kpis = sorted(expected_event_kpis.difference(seen_kpis))
+    if missing_kpis:
+        issues.append(f"/promotion-kit.json: measurementPlan.eventKpiMap missing KPI mappings {', '.join(missing_kpis)}")
+
+    bridge_kpis = measurement.get("revenueBridgeKpis")
+    bridge_checked = 0
+    if not isinstance(bridge_kpis, list) or len(bridge_kpis) < 5:
+        issues.append("/promotion-kit.json: measurementPlan.revenueBridgeKpis should include at least five entries")
+    else:
+        bridge_checked = len(bridge_kpis)
+        bridge_fields = {item.get("field") for item in bridge_kpis if isinstance(item, dict)}
+        expected_bridge_fields = {"free_keepsake_downloads", "supply_lead_requests", "luna_pack_clicks", "affiliate_book_clicks", "contact_requests"}
+        if not expected_bridge_fields.issubset(bridge_fields):
+            issues.append("/promotion-kit.json: measurementPlan.revenueBridgeKpis missing expected fields")
+        for item in bridge_kpis:
+            if not isinstance(item, dict) or not item.get("playbookId") or not item.get("meaning"):
+                issues.append("/promotion-kit.json: measurementPlan.revenueBridgeKpis entries should include playbookId and meaning")
+                break
+
+    derived_rates = measurement.get("derivedRates")
+    derived_rates_checked = 0
+    if not isinstance(derived_rates, list):
+        issues.append("/promotion-kit.json: measurementPlan.derivedRates should be a list")
+    else:
+        derived_rates_checked = len(derived_rates)
+        expected_rates = {"lead_capture_rate", "revenue_intent_rate", "keepsake_save_rate"}
+        rate_ids = {item.get("id") for item in derived_rates if isinstance(item, dict)}
+        if not expected_rates.issubset(rate_ids):
+            issues.append("/promotion-kit.json: measurementPlan.derivedRates missing revenue bridge rates")
+
+    decision_rules = measurement.get("decisionRules")
+    decision_rules_checked = 0
+    if not isinstance(decision_rules, list):
+        issues.append("/promotion-kit.json: measurementPlan.decisionRules should be a list")
+    else:
+        decision_rules_checked = len(decision_rules)
+        rule_ids = {item.get("id") for item in decision_rules if isinstance(item, dict)}
+        if not {"build_owned_asset", "test_soft_offer"}.issubset(rule_ids):
+            issues.append("/promotion-kit.json: measurementPlan.decisionRules missing revenue bridge rules")
+
+    event_safety = measurement.get("eventKpiSafety")
+    safety_fields_checked = 0
+    if not isinstance(event_safety, dict):
+        issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety should be an object")
+    else:
+        for key in ("manualReviewRequired", "doNotInferPurchasesFromClicks", "doNotTreatGuardianAsDiagnosis"):
+            safety_fields_checked += 1
+            if event_safety.get(key) is not True:
+                issues.append(f"/promotion-kit.json: measurementPlan.eventKpiSafety.{key} should be true")
+        source_order = event_safety.get("sourceOfTruthOrder")
+        if not isinstance(source_order, list) or len(source_order) < 4:
+            issues.append("/promotion-kit.json: measurementPlan.eventKpiSafety.sourceOfTruthOrder should include source priority")
+        else:
+            safety_fields_checked += 1
+    return issues, len(event_kpi_map), len(mapped_events), bridge_checked, derived_rates_checked, decision_rules_checked, safety_fields_checked
 
 
 def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
@@ -1890,7 +1968,15 @@ def main() -> int:
     ) = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked, robots_sitemap_core_urls_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
-    promotion_event_issues, promotion_event_kpi_rows_checked, promotion_event_kpi_events_checked = check_promotion_event_kpi_alignment(base_url)
+    (
+        promotion_event_issues,
+        promotion_event_kpi_rows_checked,
+        promotion_event_kpi_events_checked,
+        promotion_revenue_bridge_kpis_checked,
+        promotion_derived_rates_checked,
+        promotion_decision_rules_checked,
+        promotion_event_safety_fields_checked,
+    ) = check_promotion_event_kpi_alignment(base_url)
     (
         commerce_issues,
         commerce_items_checked,
@@ -1984,6 +2070,10 @@ def main() -> int:
     print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")
     print(f"public_discovery_promotion_event_kpi_rows_checked={promotion_event_kpi_rows_checked}")
     print(f"public_discovery_promotion_event_kpi_events_checked={promotion_event_kpi_events_checked}")
+    print(f"public_discovery_promotion_revenue_bridge_kpis_checked={promotion_revenue_bridge_kpis_checked}")
+    print(f"public_discovery_promotion_derived_rates_checked={promotion_derived_rates_checked}")
+    print(f"public_discovery_promotion_decision_rules_checked={promotion_decision_rules_checked}")
+    print(f"public_discovery_promotion_event_safety_fields_checked={promotion_event_safety_fields_checked}")
     print(f"public_discovery_commerce_items_checked={commerce_items_checked}")
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")

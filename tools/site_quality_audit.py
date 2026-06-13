@@ -588,6 +588,21 @@ def public_url_for_page(page: Path) -> str:
     return f"{DOMAIN}/{rel}"
 
 
+def expected_hreflang_map_for_url(url: str) -> dict[str, str]:
+    path_parts = [part for part in urlparse(url).path.strip("/").split("/") if part]
+    if path_parts and path_parts[0] in {"en", "ja", "ko", "es"}:
+        suffix_parts = path_parts[1:]
+    else:
+        suffix_parts = path_parts
+    suffix = "/".join(suffix_parts)
+    result: dict[str, str] = {}
+    for hreflang, prefix in (("zh-TW", ""), ("en", "en"), ("ja", "ja"), ("ko", "ko"), ("es", "es")):
+        route = "/".join(part for part in (prefix, suffix) if part)
+        result[hreflang] = f"{DOMAIN}/{route}/" if route else f"{DOMAIN}/"
+    result["x-default"] = result["zh-TW"]
+    return result
+
+
 def public_url_for_href(page: Path, href: str) -> str:
     parsed = urlparse(href)
     if parsed.scheme in ("http", "https"):
@@ -3311,6 +3326,15 @@ def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str],
             issues.append(f"{SITEMAP_PATH}: unexpected sitemap hreflang alternates for {loc}: {', '.join(extra_hreflangs)}")
         if hreflang_map.get("x-default") and hreflang_map.get("zh-TW") and hreflang_map["x-default"] != hreflang_map["zh-TW"]:
             issues.append(f"{SITEMAP_PATH}: x-default sitemap alternate should match zh-TW for {loc}")
+        expected_hreflang_map = expected_hreflang_map_for_url(loc)
+        if loc not in set(expected_hreflang_map.values()):
+            issues.append(f"{SITEMAP_PATH}: loc does not match any expected localized hreflang URL: {loc}")
+        for hreflang, expected_href in expected_hreflang_map.items():
+            actual_href = hreflang_map.get(hreflang)
+            if actual_href is not None:
+                stats["sitemap_hreflang_matches_checked"] += 1
+                if actual_href != expected_href:
+                    issues.append(f"{SITEMAP_PATH}: {loc} hreflang {hreflang} should be {expected_href}, got {actual_href}")
 
     return urls, issues, stats
 
@@ -4394,6 +4418,7 @@ def main() -> int:
     print(f"social_images={stats['social_images']}")
     print(f"sitemap_urls={stats['sitemap_urls']}")
     print(f"sitemap_alternates={stats['sitemap_alternates']}")
+    print(f"sitemap_hreflang_matches_checked={stats['sitemap_hreflang_matches_checked']}")
     print(f"manifest_icons={stats['manifest_icons']}")
     print(f"manifest_screenshots={stats['manifest_screenshots']}")
     print(f"manifest_shortcuts={stats['manifest_shortcuts']}")

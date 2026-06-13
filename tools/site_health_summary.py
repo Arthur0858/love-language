@@ -311,6 +311,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "indexable_pages",
         "sitemap_urls",
         "sitemap_alternates",
+        "sitemap_hreflang_matches_checked",
         "affiliate_pages",
         "affiliate_links",
         "public_accessibility_pages_checked",

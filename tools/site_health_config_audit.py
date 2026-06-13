@@ -19,7 +19,8 @@ SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
 PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
-PUBLIC_COUNTER_RE = re.compile(r'print\(f?"(public_[A-Za-z0-9_]+)=')
+PUBLIC_PY_COUNTER_RE = re.compile(r'print\(f?"(public_[A-Za-z0-9_]+)=')
+PUBLIC_JS_COUNTER_RE = re.compile(r"console\.log\(\s*[`\"'](public_[A-Za-z0-9_]+)=")
 NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
 SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
     "site_quality": "tools/site_quality_audit.py",
@@ -245,13 +246,14 @@ def public_smoke_tools() -> list[str]:
 def emitted_public_smoke_counters(public_tools: list[str]) -> list[str]:
     counters: set[str] = set()
     for path in public_tools:
-        if not path.endswith(".py"):
-            continue
         source_path = ROOT / path
         if not source_path.exists():
             continue
         source = source_path.read_text(encoding="utf-8", errors="replace")
-        counters.update(match.group(1) for match in PUBLIC_COUNTER_RE.finditer(source))
+        if path.endswith(".py"):
+            counters.update(match.group(1) for match in PUBLIC_PY_COUNTER_RE.finditer(source))
+        if path.endswith((".js", ".mjs")):
+            counters.update(match.group(1) for match in PUBLIC_JS_COUNTER_RE.finditer(source))
     return sorted(counters)
 
 

@@ -22,11 +22,27 @@ EXPECTED_PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
 EXPECTED_PLATFORMS = set(EXPECTED_PLATFORM_ORDER)
 CAMPAIGN = "first_round_quiz_completion"
 REQUIRED_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
+CONFIGURED_PROFILE_STATUSES = ("set", "live")
 PLATFORM_LABELS = {
     "youtube_shorts": "YouTube Shorts",
     "tiktok": "TikTok",
     "instagram_reels": "Instagram Reels",
 }
+
+
+def readiness_policy() -> dict[str, object]:
+    return {
+        "expectedPlatformCount": len(EXPECTED_PLATFORMS),
+        "expectedPlatforms": list(EXPECTED_PLATFORM_ORDER),
+        "campaign": CAMPAIGN,
+        "startPath": "/start/",
+        "configuredProfileStatuses": list(CONFIGURED_PROFILE_STATUSES),
+        "requiredKpiFields": list(REQUIRED_KPI_FIELDS),
+        "firstBatchWeek": 1,
+        "firstBatchSlot": 1,
+        "minimumAssetReadyChecks": len(EXPECTED_PLATFORMS),
+        "rule": "三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。",
+    }
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -59,7 +75,7 @@ def is_start_campaign_url(value: str) -> bool:
 
 
 def is_profile_configured(row: dict[str, str]) -> bool:
-    return (row.get("status") or "").strip() in {"set", "live"}
+    return (row.get("status") or "").strip() in CONFIGURED_PROFILE_STATUSES
 
 
 def is_kpi_filled(row: dict[str, str]) -> bool:
@@ -134,7 +150,8 @@ def build_gate(
     kpi_rows: list[dict[str, str]],
     command_center: dict,
 ) -> dict:
-    expected_platform_count = len(EXPECTED_PLATFORMS)
+    policy = readiness_policy()
+    expected_platform_count = int(policy["expectedPlatformCount"])
     profile_platforms = {(row.get("platform") or "").strip() for row in profile_rows}
     profile_links_valid = sum(1 for row in profile_rows if is_start_campaign_url(row.get("profile_link", "")))
     profile_configured = sum(1 for row in profile_rows if is_profile_configured(row))
@@ -142,7 +159,8 @@ def build_gate(
     first_batch_rows = [
         row
         for row in posting_rows
-        if (row.get("week") or "").strip() == "1" and (row.get("slot") or "").strip() == "1"
+        if (row.get("week") or "").strip() == str(policy["firstBatchWeek"])
+        and (row.get("slot") or "").strip() == str(policy["firstBatchSlot"])
     ]
     first_week_rows = [row for row in posting_rows if (row.get("week") or "").strip() == "1"]
     expected_first_week_rows = len(first_week_rows)
@@ -214,6 +232,10 @@ def build_gate(
         issues.append(f"expected at least {expected_platform_count} ready asset checks, got {asset_ready}")
     if filled_kpi_rows == 0 and not blockers:
         issues.append("empty data mode must produce explicit measurement blockers")
+    if expected_platform_count != len(EXPECTED_PLATFORM_ORDER):
+        issues.append("readiness policy platform count does not match expected platform order")
+    if tuple(policy.get("requiredKpiFields", [])) != REQUIRED_KPI_FIELDS:
+        issues.append("readiness policy KPI fields do not match required KPI fields")
 
     return {
         "generatedAt": date.today().isoformat(),
@@ -223,6 +245,7 @@ def build_gate(
             "kpiTracker": str(KPI_TRACKER_PATH.relative_to(ROOT)),
             "launchCommandCenter": str(COMMAND_CENTER_PATH.relative_to(ROOT)),
         },
+        "readinessPolicy": policy,
         "metrics": {
             "profileRows": len(profile_rows),
             "profileLinksValid": profile_links_valid,
@@ -266,6 +289,7 @@ def build_gate(
 def render_markdown(gate: dict) -> str:
     metrics = gate["metrics"]
     readiness = gate["readiness"]
+    policy = gate["readinessPolicy"]
     lines = [
         "# LoveTypes Launch Readiness Gate",
         "",
@@ -275,6 +299,7 @@ def render_markdown(gate: dict) -> str:
         f"- 可發布首批貼文：`{int(readiness['readyToPublishPosts'])}`",
         f"- 可做 KPI/商品判斷：`{int(readiness['readyForKpiDecision'])}`",
         f"- 空資料模式：`{int(readiness['emptyDataMode'])}`",
+        f"- 規則：{policy['rule']}",
         "",
         "## 目前數字",
         "",
@@ -285,6 +310,7 @@ def render_markdown(gate: dict) -> str:
         f"- 素材就緒檢查：{metrics['assetReady']}",
         f"- 已發布平台列：{metrics['publishedRows']}",
         f"- 已回填 KPI 列：{metrics['filledKpiRows']}",
+        f"- 必填 KPI 欄位：{', '.join(f'`{field}`' for field in policy['requiredKpiFields'])}",
         "",
         "## 平台入口清單",
         "",

@@ -6,6 +6,30 @@
     "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json"
   },
+  "readinessPolicy": {
+    "expectedPlatformCount": 3,
+    "expectedPlatforms": [
+      "youtube_shorts",
+      "tiktok",
+      "instagram_reels"
+    ],
+    "campaign": "first_round_quiz_completion",
+    "startPath": "/start/",
+    "configuredProfileStatuses": [
+      "set",
+      "live"
+    ],
+    "requiredKpiFields": [
+      "post_url",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions"
+    ],
+    "firstBatchWeek": 1,
+    "firstBatchSlot": 1,
+    "minimumAssetReadyChecks": 3,
+    "rule": "三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。"
+  },
   "metrics": {
     "profileRows": 3,
     "profileLinksValid": 3,

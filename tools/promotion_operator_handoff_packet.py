@@ -122,6 +122,8 @@ def build_handoff() -> dict:
     steps = [*profile_steps, *publish_steps, *kpi_steps, *weekly_steps]
     ready_steps = [step for step in steps if step.get("status") == "ready"]
     blocked_steps = [step for step in steps if str(step.get("status", "")).startswith("blocked")]
+    first_profile = profile_steps[0] if profile_steps else {}
+    first_publish = publish_steps[0] if publish_steps else {}
     return {
         "generatedAt": date.today().isoformat(),
         "source": {
@@ -145,6 +147,7 @@ def build_handoff() -> dict:
         "readyCount": len(ready_steps),
         "blockedCount": len(blocked_steps),
         "steps": steps,
+        "structuredImports": build_structured_imports(first_profile, first_publish),
         "doNotDo": [
             "Do not mark profiles set/live without platform evidence.",
             "Do not mark posts published without a verified https post URL.",
@@ -161,6 +164,65 @@ def build_handoff() -> dict:
     }
 
 
+def build_structured_imports(first_profile: dict[str, object], first_publish: dict[str, object]) -> list[dict[str, str]]:
+    profile_platform = str(first_profile.get("platform") or "youtube_shorts")
+    profile_url = str(first_profile.get("url") or "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio")
+    publish_platform = str(first_publish.get("platform") or "youtube_shorts")
+    publish_task = str(first_publish.get("taskId") or "publish-lt-s01-iris-silence")
+    return [
+        {
+            "id": "profile_setup_import",
+            "title": "Profile setup proof import",
+            "checkCommand": "python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt",
+            "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"manual profile link verified\"",
+            "template": "\n".join([
+                "LoveTypes profile setup writeback",
+                f"platform: {profile_platform}",
+                "status: set",
+                f"set_date: {date.today().isoformat()}",
+                f"profile_link: {profile_url}",
+                "proof_note: manual profile link verified",
+            ]),
+        },
+        {
+            "id": "post_publish_import",
+            "title": "Published post URL and starter KPI import",
+            "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
+            "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"manual post URL verified\"",
+            "template": "\n".join([
+                "LoveTypes platform post writeback",
+                f"platform: {publish_platform}",
+                f"task_id: {publish_task}",
+                "status: published",
+                f"published_date: {date.today().isoformat()}",
+                "post_url: https://example.com/post",
+                "views: 0",
+                "site_clicks: 0",
+                "quiz_starts: 0",
+                "quiz_completions: 0",
+            ]),
+        },
+        {
+            "id": "lead_request_import",
+            "title": "Structured lead request import",
+            "checkCommand": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
+            "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email request verified\"",
+            "template": "\n".join([
+                "LoveTypes 結構化需求",
+                "來源: 收藏室免費素材需求",
+                "我的守護者: 艾莉絲 · 肯定的言詞",
+                "需求類型: owned_asset_request",
+                "素材偏好: PDF 練習卡",
+                "可回覆 email: name@example.com",
+                "Campaign content / 推廣內容: iris_silence",
+                "使用情境或備註: 睡前整理，想要可列印版本",
+                "consent_status: explicit_reply_ok",
+                "page: https://lovetypes.tw/keepsakes/",
+            ]),
+        },
+    ]
+
+
 def validate_handoff(handoff: dict) -> list[str]:
     issues: list[str] = []
     state = handoff.get("state", {})
@@ -175,6 +237,19 @@ def validate_handoff(handoff: dict) -> list[str]:
         issues.append("empty data mode should appear in do-not-do rules")
     if state.get("profilePending", 0) > 0 and state.get("readyToPublish"):
         issues.append("readyToPublish should not be true while profiles are pending")
+    structured_imports = handoff.get("structuredImports", [])
+    expected_import_ids = {"profile_setup_import", "post_publish_import", "lead_request_import"}
+    actual_import_ids = {item.get("id") for item in structured_imports}
+    if actual_import_ids != expected_import_ids:
+        issues.append("structured imports should cover profile, post, and lead writeback")
+    for item in structured_imports:
+        label = item.get("id", "<import>")
+        if " check --input " not in item.get("checkCommand", ""):
+            issues.append(f"{label}: missing check command")
+        if " add --input " not in item.get("writeCommand", "") or "--proof-note" not in item.get("writeCommand", ""):
+            issues.append(f"{label}: missing proof-gated write command")
+        if not item.get("template") or ":" not in item.get("template", ""):
+            issues.append(f"{label}: missing structured text template")
     for step in steps:
         label = f"{step.get('phase', '<phase>')}/{step.get('platform', step.get('taskId', ''))}"
         if not step.get("phase") or not step.get("status") or not step.get("priority"):
@@ -215,6 +290,19 @@ def render_markdown(handoff: dict, issues: list[str]) -> str:
         "",
     ]
     lines.extend(f"- {item}" for item in handoff["doNotDo"])
+    lines.extend(["", "## Structured Import Templates", ""])
+    for item in handoff["structuredImports"]:
+        lines.extend([
+            f"### {item['title']}",
+            "",
+            f"- check：`{item['checkCommand']}`",
+            f"- write：`{item['writeCommand']}`",
+            "",
+            "```text",
+            item["template"],
+            "```",
+            "",
+        ])
     lines.extend(["", "## Steps", ""])
     for index, step in enumerate(handoff["steps"], start=1):
         lines.extend([

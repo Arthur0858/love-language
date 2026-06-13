@@ -152,6 +152,29 @@
       "blockedBy": "首批三平台尚無公開 post URL。; 首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。; publishing-status 尚未達週決策條件。; 目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。"
     }
   ],
+  "structuredImports": [
+    {
+      "id": "profile_setup_import",
+      "title": "Profile setup proof import",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"manual profile link verified\"",
+      "template": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: manual profile link verified"
+    },
+    {
+      "id": "post_publish_import",
+      "title": "Published post URL and starter KPI import",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"manual post URL verified\"",
+      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://example.com/post\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0"
+    },
+    {
+      "id": "lead_request_import",
+      "title": "Structured lead request import",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email request verified\"",
+      "template": "LoveTypes 結構化需求\n來源: 收藏室免費素材需求\n我的守護者: 艾莉絲 · 肯定的言詞\n需求類型: owned_asset_request\n素材偏好: PDF 練習卡\n可回覆 email: name@example.com\nCampaign content / 推廣內容: iris_silence\n使用情境或備註: 睡前整理，想要可列印版本\nconsent_status: explicit_reply_ok\npage: https://lovetypes.tw/keepsakes/"
+    }
+  ],
   "doNotDo": [
     "Do not mark profiles set/live without platform evidence.",
     "Do not mark posts published without a verified https post URL.",

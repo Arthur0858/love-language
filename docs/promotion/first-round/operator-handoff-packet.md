@@ -17,6 +17,59 @@
 - Do not fill KPI with guesses; use 0 only when the platform/source was checked and truly has 0.
 - Do not change offer order, paid CTA, Luna emphasis, affiliate emphasis, or winning guardian in empty-data mode.
 
+## Structured Import Templates
+
+### Profile setup proof import
+
+- check：`python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt`
+- write：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note "manual profile link verified"`
+
+```text
+LoveTypes profile setup writeback
+platform: youtube_shorts
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+proof_note: manual profile link verified
+```
+
+### Published post URL and starter KPI import
+
+- check：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`
+- write：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "manual post URL verified"`
+
+```text
+LoveTypes platform post writeback
+platform: youtube_shorts
+task_id: publish-lt-s01-iris-silence
+status: published
+published_date: 2026-06-14
+post_url: https://example.com/post
+views: 0
+site_clicks: 0
+quiz_starts: 0
+quiz_completions: 0
+```
+
+### Structured lead request import
+
+- check：`python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt`
+- write：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email request verified"`
+
+```text
+LoveTypes 結構化需求
+來源: 收藏室免費素材需求
+我的守護者: 艾莉絲 · 肯定的言詞
+需求類型: owned_asset_request
+素材偏好: PDF 練習卡
+可回覆 email: name@example.com
+Campaign content / 推廣內容: iris_silence
+使用情境或備註: 睡前整理，想要可列印版本
+consent_status: explicit_reply_ok
+page: https://lovetypes.tw/keepsakes/
+```
+
+
 ## Steps
 
 ### 1. Set YouTube Shorts profile link

@@ -9704,7 +9704,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 
 ## Commercial and Safety Boundaries
 
-- Affiliate links are kept on the Resources page and are disclosed there.
+- Affiliate links are kept on the Resources page and are disclosed there. Traditional Chinese pages use Books.com.tw affiliate URLs; English, Japanese, Korean, and Spanish pages use Amazon Associates tag parenttechche-20.
 - No full-site advertising script is enabled before approval boundaries are clear.
 - Recommendations are framed as relationship reflection and practical repair support, not guaranteed outcomes.
 - Luna content is positioned as night reflection, cooling down after conflict, journaling, and post-quiz emotional sorting.

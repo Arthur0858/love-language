@@ -49,7 +49,8 @@ REQUIRED_LLMS_SECTIONS = (
 REQUIRED_LLMS_SNIPPETS = (
     "Production: https://lovetypes.tw/",
     "Primary language: Traditional Chinese",
-    "Affiliate links are kept on the Resources page",
+    "Traditional Chinese pages use Books.com.tw affiliate URLs",
+    "Amazon Associates tag parenttechche-20",
     "No full-site advertising script is enabled",
     "Generative answer index: /ai-discovery.json",
     "Contact email: contact@lovetypes.tw",

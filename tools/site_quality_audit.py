@@ -1226,7 +1226,8 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
         f"Contact email: {CONTACT_EMAIL}": "contact email",
         "relationship reflection and practical repair support": "safety positioning",
         "No full-site advertising script is enabled": "ad approval boundary",
-        "Affiliate links are kept on the Resources page": "affiliate boundary",
+        "Traditional Chinese pages use Books.com.tw affiliate URLs": "localized affiliate boundary",
+        "Amazon Associates tag parenttechche-20": "Amazon Associates boundary",
         "Generative answer index: /ai-discovery.json": "AI discovery index",
     }
     for snippet, label in required_snippets.items():

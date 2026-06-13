@@ -48,6 +48,9 @@ EXCLUDED_DIR_NAMES = {
     "output",
     "tools",
 }
+ALLOWED_HIDDEN_DIR_NAMES = {
+    ".well-known",
+}
 EXCLUDED_FILE_NAMES = {
     ".DS_Store",
     ".gitignore",
@@ -195,7 +198,12 @@ def collect_manifest_paths(site_dir: Path) -> list[Path]:
     paths: list[Path] = []
     for root, dirs, files in os.walk(site_dir, topdown=True):
         root_path = Path(root)
-        dirs[:] = [name for name in dirs if name not in EXCLUDED_DIR_NAMES and not name.startswith(".")]
+        dirs[:] = [
+            name
+            for name in dirs
+            if name not in EXCLUDED_DIR_NAMES
+            and (not name.startswith(".") or name in ALLOWED_HIDDEN_DIR_NAMES)
+        ]
         for filename in files:
             path = root_path / filename
             if path.is_symlink():

@@ -2,13 +2,17 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
+from urllib.parse import urlparse
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DEPLOY_SCRIPT = ROOT / "tools" / "deploy_cloudflare_pages.py"
 GENERATOR_SCRIPT = ROOT / "tools" / "generate_multilingual_site.py"
+RELEASE_PATH = ROOT / "release.json"
+SITE_HEALTH_PATH = ROOT / "site-health.json"
 BASE_REQUIRED_MANIFEST_FILES = {
     "index.html",
     "start/index.html",
@@ -71,21 +75,47 @@ def load_generator_module():
 
 def required_manifest_files() -> set[str]:
     generator = load_generator_module()
-    return BASE_REQUIRED_MANIFEST_FILES | {
+    return BASE_REQUIRED_MANIFEST_FILES | declared_index_and_support_files() | {
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
     } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()}
 
 
+def declared_index_and_support_files() -> set[str]:
+    required: set[str] = set()
+    release = json.loads(RELEASE_PATH.read_text(encoding="utf-8"))
+    site_health = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
+    indexes = release.get("publicIndexes") if isinstance(release, dict) else None
+    if isinstance(indexes, dict):
+        for value in indexes.values():
+            if not isinstance(value, str):
+                continue
+            parsed = urlparse(value)
+            if parsed.netloc == "lovetypes.tw" and parsed.path:
+                required.add(parsed.path.lstrip("/"))
+    support_files = site_health.get("supportFiles") if isinstance(site_health, dict) else None
+    if isinstance(support_files, list):
+        required.update(value for value in support_files if isinstance(value, str) and value)
+    return required
+
+
 def main() -> int:
     deploy = load_deploy_module()
     required_files = required_manifest_files()
+    declared_files = declared_index_and_support_files()
     manifest_paths = {
         path.relative_to(ROOT).as_posix()
         for path in deploy.collect_manifest_paths(ROOT)
     }
     issues: list[str] = []
+
+    missing_declared_required_files = sorted(declared_files.difference(required_files))
+    if missing_declared_required_files:
+        issues.append(
+            "required manifest files drift from release/site-health declarations: "
+            f"missing={missing_declared_required_files}"
+        )
 
     for rel_path in sorted(required_files):
         if rel_path not in manifest_paths:
@@ -107,6 +137,8 @@ def main() -> int:
 
     print(f"deploy_manifest_files={len(manifest_paths)}")
     print(f"deploy_manifest_required_files={len(required_files)}")
+    print(f"deploy_manifest_declared_files={len(declared_files)}")
+    print(f"deploy_manifest_missing_declared_required_files={len(missing_declared_required_files)}")
     print(f"deploy_manifest_special_files={len(REQUIRED_SPECIAL_FILES)}")
     print(f"deploy_manifest_issues={len(issues)}")
     for issue in issues[:100]:

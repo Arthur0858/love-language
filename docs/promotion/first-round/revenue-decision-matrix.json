@@ -72,6 +72,14 @@
       "target": "https://lovetypes.tw/start/"
     }
   },
+  "expectedGuardianCount": 5,
+  "expectedTaskCountsByGuardian": {
+    "iris": 3,
+    "noah": 3,
+    "vivian": 3,
+    "claire": 3,
+    "dora": 3
+  },
   "guardians": [
     {
       "guardianId": "iris",

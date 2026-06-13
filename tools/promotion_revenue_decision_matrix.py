@@ -205,6 +205,8 @@ def build_matrix(
     profile_rows: list[dict[str, str]] | None = None,
 ) -> dict:
     grouped = group_tasks(tasks)
+    expected_guardians = [guardian for guardian in GUARDIAN_ORDER if guardian in grouped]
+    expected_task_counts = {guardian: len(grouped.get(guardian, [])) for guardian in expected_guardians}
     metrics_by_guardian = tracker_totals(rows)
     missing_fields = [field for field in REVENUE_FIELDS if field not in fields]
     profile_fields = profile_fields or []
@@ -275,6 +277,8 @@ def build_matrix(
             "stage": platform_stage,
             "recommendedAction": platform_stage_action(platform_stage, platform_metrics),
         },
+        "expectedGuardianCount": len(expected_guardians),
+        "expectedTaskCountsByGuardian": expected_task_counts,
         "guardians": guardians,
         "safety": {
             "shortsCta": "完成 15 題測驗，找到你的情感守護者",
@@ -364,15 +368,18 @@ def validate_matrix(matrix: dict) -> list[str]:
         issues.append("missing platform profile intent block")
     elif profile_intent.get("scope") != "platform_profile_unassigned":
         issues.append("platform profile intent must remain unassigned")
-    if len(matrix.get("guardians", [])) != 5:
-        issues.append("expected five guardian decision rows")
+    expected_guardian_count = int(matrix.get("expectedGuardianCount", 0) or 0)
+    if len(matrix.get("guardians", [])) != expected_guardian_count:
+        issues.append(f"expected {expected_guardian_count} guardian decision rows, got {len(matrix.get('guardians', []))}")
     stages = {item.get("stage") for item in matrix.get("guardians", [])}
     if not stages:
         issues.append("expected at least one decision stage")
     for item in matrix.get("guardians", []):
         guardian = item.get("guardianId", "<unknown>")
-        if item.get("taskCount") != 3:
-            issues.append(f"{guardian}: expected three campaign scripts")
+        expected_task_counts = matrix.get("expectedTaskCountsByGuardian", {})
+        expected_task_count = int(expected_task_counts.get(guardian, 0) or 0) if isinstance(expected_task_counts, dict) else 0
+        if item.get("taskCount") != expected_task_count:
+            issues.append(f"{guardian}: expected {expected_task_count} campaign scripts")
         bridge = item.get("monetizationBridge", {})
         if not bridge.get("primaryFreeItemId") or not bridge.get("ownedLeadItemId"):
             issues.append(f"{guardian}: missing free or owned lead item id")

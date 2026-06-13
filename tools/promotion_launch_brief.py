@@ -77,11 +77,18 @@ def tracked_url_ok(row: dict[str, str]) -> bool:
 
 
 def build_report(rows: list[dict[str, str]], week: int) -> dict:
+    active_statuses = {"planned", "scheduled"}
+    expected_platforms = sorted({
+        (row.get("platform") or "").strip()
+        for row in rows
+        if (row.get("status") or "planned").strip().lower() in active_statuses
+        and (row.get("platform") or "").strip()
+    })
     launch_rows = [
         row
         for row in rows
         if int(row.get("week", "0") or 0) == week
-        and (row.get("status") or "planned").strip().lower() in {"planned", "scheduled"}
+        and (row.get("status") or "planned").strip().lower() in active_statuses
     ]
     launch_rows.sort(key=lambda row: (int(row.get("slot", "0") or 0), row.get("scheduled_time", ""), row.get("platform", "")))
     issues: list[str] = []
@@ -89,14 +96,17 @@ def build_report(rows: list[dict[str, str]], week: int) -> dict:
     by_platform = Counter(row.get("platform", "") for row in launch_rows)
     by_task = Counter(row.get("task_id", "") for row in launch_rows)
     by_guardian = Counter(row.get("guardian_id", "") for row in launch_rows)
+    expected_script_count = len(by_task)
+    expected_platform_distribution = {platform: expected_script_count for platform in expected_platforms}
+    expected_row_count = expected_script_count * len(expected_platforms)
 
-    if len(launch_rows) != 9:
-        issues.append(f"week {week} launch brief should include 9 platform rows, got {len(launch_rows)}")
-    if len(by_task) != 3:
-        issues.append(f"week {week} launch brief should include 3 scripts, got {len(by_task)}")
-    for platform in PLATFORM_LABELS:
-        if by_platform[platform] != 3:
-            issues.append(f"week {week} should include 3 {platform} rows, got {by_platform[platform]}")
+    if len(launch_rows) != expected_row_count:
+        issues.append(f"week {week} launch brief should include {expected_row_count} platform rows, got {len(launch_rows)}")
+    if len(by_task) != expected_script_count:
+        issues.append(f"week {week} launch brief should include {expected_script_count} scripts, got {len(by_task)}")
+    for platform, expected_count in expected_platform_distribution.items():
+        if by_platform[platform] != expected_count:
+            issues.append(f"week {week} should include {expected_count} {platform} rows, got {by_platform[platform]}")
     for row in launch_rows:
         label = f"{row.get('platform', '<platform>')}/{row.get('task_id', '<task>')}"
         for field in REQUIRED_FIELDS:
@@ -121,6 +131,9 @@ def build_report(rows: list[dict[str, str]], week: int) -> dict:
         "rowCount": len(launch_rows),
         "scriptCount": len(by_task),
         "platformCount": len(by_platform),
+        "expectedRowCount": expected_row_count,
+        "expectedScriptCount": expected_script_count,
+        "expectedPlatformDistribution": expected_platform_distribution,
         "guardianDistribution": dict(sorted(by_guardian.items())),
         "platformDistribution": dict(sorted(by_platform.items())),
         "tasks": launch_rows,

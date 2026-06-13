@@ -4,6 +4,13 @@
   "rowCount": 9,
   "scriptCount": 3,
   "platformCount": 3,
+  "expectedRowCount": 9,
+  "expectedScriptCount": 3,
+  "expectedPlatformDistribution": {
+    "instagram_reels": 3,
+    "tiktok": 3,
+    "youtube_shorts": 3
+  },
   "guardianDistribution": {
     "claire": 9
   },

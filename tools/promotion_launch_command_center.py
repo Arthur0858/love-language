@@ -36,6 +36,27 @@ FIELDNAMES = [
     "blocked_by",
     "safety_note",
 ]
+PHASE_ORDER = ("profile_setup", "asset_ready_check", "publish_post", "kpi_backfill")
+PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels", "all")
+BLOCKED_STATUS_BY_PHASE = {
+    "publish_post": "blocked_until_ready",
+    "kpi_backfill": "blocked_until_published",
+}
+
+
+def command_center_policy() -> dict[str, object]:
+    return {
+        "phaseOrder": list(PHASE_ORDER),
+        "readyPhases": ["profile_setup", "asset_ready_check"],
+        "blockedPhases": ["publish_post", "kpi_backfill"],
+        "publishBlockedBy": ["profile_setup", "asset_ready_check"],
+        "kpiBackfillBlockedBy": ["post_url"],
+        "minimumKpiBackfillFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
+        "profileWritebackFields": ["status=set/live", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
+        "rule": "Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
+        "emptyDataSafety": "Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.",
+        "ctaRule": "Every launch command keeps the CTA on the 15-question guardian quiz.",
+    }
 
 
 def load_json(path: Path) -> dict:
@@ -142,6 +163,18 @@ def publish_and_backfill_rows(week_execution: dict) -> list[dict[str, str]]:
 
 
 def assign_sequence(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    phase_index = {phase: index for index, phase in enumerate(PHASE_ORDER)}
+    platform_index = {platform: index for index, platform in enumerate(PLATFORM_ORDER)}
+    rows = sorted(
+        rows,
+        key=lambda row: (
+            phase_index.get(str(row.get("phase", "")), 99),
+            str(row.get("scheduled_date", "")),
+            str(row.get("scheduled_time", "")),
+            platform_index.get(str(row.get("platform", "")), 99),
+            str(row.get("task_id", "")),
+        ),
+    )
     ordered = []
     for index, row in enumerate(rows, start=1):
         ordered.append({**row, "sequence": str(index)})
@@ -183,6 +216,7 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
             "publish_post": platform_post_count,
             "kpi_backfill": platform_post_count,
         },
+        "commandCenterPolicy": command_center_policy(),
         "nextDecision": "先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。",
         "rows": rows,
         "safety": {
@@ -197,6 +231,14 @@ def validate_center(center: dict) -> list[str]:
     issues: list[str] = []
     rows = center.get("rows", [])
     expected_phase_counts = center.get("expectedPhaseCounts", {})
+    policy = center.get("commandCenterPolicy", {})
+    if not isinstance(policy, dict):
+        issues.append("center missing commandCenterPolicy")
+        policy = {}
+    if policy.get("phaseOrder") != list(PHASE_ORDER):
+        issues.append("commandCenterPolicy.phaseOrder does not match generator policy")
+    if policy.get("minimumKpiBackfillFields") != ["post_url", "site_clicks", "quiz_starts", "quiz_completions"]:
+        issues.append("commandCenterPolicy.minimumKpiBackfillFields does not match generator policy")
     if not isinstance(expected_phase_counts, dict):
         expected_phase_counts = {}
     expected_row_count = sum(int(value) for value in expected_phase_counts.values() if isinstance(value, int))
@@ -211,6 +253,10 @@ def validate_center(center: dict) -> list[str]:
     for phase, expected_count in expected_phase_counts.items():
         if phases.get(phase) != expected_count:
             issues.append(f"expected {expected_count} {phase} rows, got {phases.get(phase, 0)}")
+    row_phase_order = [row.get("phase") for row in rows]
+    phase_index = {phase: index for index, phase in enumerate(PHASE_ORDER)}
+    if row_phase_order != sorted(row_phase_order, key=lambda phase: phase_index.get(str(phase), 99)):
+        issues.append("rows should be sorted by command center phase order")
     for row in rows:
         label = f"{row.get('sequence', '?')}:{row.get('phase', '<phase>')}"
         for field in ("sequence", "phase", "status", "priority", "task_id", "title", "action", "safety_note"):
@@ -222,6 +268,13 @@ def validate_center(center: dict) -> list[str]:
             issues.append(f"{label}: tracked_url missing campaign marker")
         if row.get("phase") in {"publish_post", "kpi_backfill"} and not row.get("blocked_by"):
             issues.append(f"{label}: publish/backfill rows must declare blocked_by")
+        expected_status = BLOCKED_STATUS_BY_PHASE.get(str(row.get("phase", "")))
+        if expected_status and row.get("status") != expected_status:
+            issues.append(f"{label}: expected status {expected_status}")
+        if row.get("phase") == "publish_post" and row.get("blocked_by") != ", ".join(policy.get("publishBlockedBy", [])):
+            issues.append(f"{label}: publish row blocked_by should match policy")
+        if row.get("phase") == "kpi_backfill" and row.get("blocked_by") != ", ".join(policy.get("kpiBackfillBlockedBy", [])):
+            issues.append(f"{label}: kpi row blocked_by should match policy")
     return issues
 
 
@@ -236,6 +289,8 @@ def render_markdown(center: dict) -> str:
         f"- 可立即執行：{center['readyRows']}",
         f"- 等待前置條件：{center['blockedRows']}",
         f"- 週決策：{'可判讀' if center['publishingReadyForWeeklyDecision'] else '尚不可'}",
+        f"- 指揮板規則：{center['commandCenterPolicy']['rule']}",
+        f"- 空資料安全：{center['commandCenterPolicy']['emptyDataSafety']}",
         "",
         "## 今日決策",
         "",

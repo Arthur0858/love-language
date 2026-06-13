@@ -6,6 +6,8 @@
 - 可立即執行：6
 - 等待前置條件：18
 - 週決策：尚不可
+- 指揮板規則：Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.
+- 空資料安全：Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.
 
 ## 今日決策
 
@@ -101,6 +103,118 @@
 
 ### 8. 他沉默時，你最想聽見哪一句話？
 
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`tiktok`
+- task：`publish-lt-s01-iris-silence`
+- schedule：2026-06-15 21:00 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 9. 他沉默時，你最想聽見哪一句話？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`instagram_reels`
+- task：`publish-lt-s01-iris-silence`
+- schedule：2026-06-15 21:30 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 10. 哪一句肯定，會讓你瞬間安心？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`youtube_shorts`
+- task：`publish-lt-s02-iris-affirmation`
+- schedule：2026-06-17 20:30 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
+- action：依 YouTube Shorts caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 11. 哪一句肯定，會讓你瞬間安心？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`tiktok`
+- task：`publish-lt-s02-iris-affirmation`
+- schedule：2026-06-17 21:00 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
+- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 12. 哪一句肯定，會讓你瞬間安心？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`instagram_reels`
+- task：`publish-lt-s02-iris-affirmation`
+- schedule：2026-06-17 21:30 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
+- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 13. 你真的太敏感嗎？還是你只是等一句清楚的話？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`youtube_shorts`
+- task：`publish-lt-s03-iris-too-sensitive`
+- schedule：2026-06-19 20:30 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
+- action：依 YouTube Shorts caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 14. 你真的太敏感嗎？還是你只是等一句清楚的話？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`tiktok`
+- task：`publish-lt-s03-iris-too-sensitive`
+- schedule：2026-06-19 21:00 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
+- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 15. 你真的太敏感嗎？還是你只是等一句清楚的話？
+
+- phase：`publish_post`
+- status：`blocked_until_ready`
+- priority：`high`
+- platform：`instagram_reels`
+- task：`publish-lt-s03-iris-too-sensitive`
+- schedule：2026-06-19 21:30 Asia/Taipei
+- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
+- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
+- writeback：posting-queue.csv: status=published, published_date, post_url
+- blocked by：profile_setup, asset_ready_check
+- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
+
+### 16. 他沉默時，你最想聽見哪一句話？
+
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
 - priority：`high`
@@ -113,21 +227,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 9. 他沉默時，你最想聽見哪一句話？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`tiktok`
-- task：`publish-lt-s01-iris-silence`
-- schedule：2026-06-15 21:00 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 10. 他沉默時，你最想聽見哪一句話？
+### 17. 他沉默時，你最想聽見哪一句話？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -141,21 +241,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 11. 他沉默時，你最想聽見哪一句話？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`instagram_reels`
-- task：`publish-lt-s01-iris-silence`
-- schedule：2026-06-15 21:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 12. 他沉默時，你最想聽見哪一句話？
+### 18. 他沉默時，你最想聽見哪一句話？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -169,21 +255,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 13. 哪一句肯定，會讓你瞬間安心？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`youtube_shorts`
-- task：`publish-lt-s02-iris-affirmation`
-- schedule：2026-06-17 20:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：依 YouTube Shorts caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 14. 哪一句肯定，會讓你瞬間安心？
+### 19. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -197,21 +269,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 15. 哪一句肯定，會讓你瞬間安心？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`tiktok`
-- task：`publish-lt-s02-iris-affirmation`
-- schedule：2026-06-17 21:00 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 16. 哪一句肯定，會讓你瞬間安心？
+### 20. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -225,21 +283,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 17. 哪一句肯定，會讓你瞬間安心？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`instagram_reels`
-- task：`publish-lt-s02-iris-affirmation`
-- schedule：2026-06-17 21:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 18. 哪一句肯定，會讓你瞬間安心？
+### 21. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -251,48 +295,6 @@
 - action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
 - writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
 - blocked by：post_url
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 19. 你真的太敏感嗎？還是你只是等一句清楚的話？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`youtube_shorts`
-- task：`publish-lt-s03-iris-too-sensitive`
-- schedule：2026-06-19 20:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：依 YouTube Shorts caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 20. 你真的太敏感嗎？還是你只是等一句清楚的話？
-
-- phase：`kpi_backfill`
-- status：`blocked_until_published`
-- priority：`high`
-- platform：`youtube_shorts`
-- task：`publish-lt-s03-iris-too-sensitive`
-- schedule：2026-06-19 20:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
-- blocked by：post_url
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 21. 你真的太敏感嗎？還是你只是等一句清楚的話？
-
-- phase：`publish_post`
-- status：`blocked_until_ready`
-- priority：`high`
-- platform：`tiktok`
-- task：`publish-lt-s03-iris-too-sensitive`
-- schedule：2026-06-19 21:00 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：依 TikTok caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
 ### 22. 你真的太敏感嗎？還是你只是等一句清楚的話？
@@ -300,9 +302,9 @@
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
 - priority：`high`
-- platform：`tiktok`
+- platform：`youtube_shorts`
 - task：`publish-lt-s03-iris-too-sensitive`
-- schedule：2026-06-19 21:00 Asia/Taipei
+- schedule：2026-06-19 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
 - action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
 - writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
@@ -311,16 +313,16 @@
 
 ### 23. 你真的太敏感嗎？還是你只是等一句清楚的話？
 
-- phase：`publish_post`
-- status：`blocked_until_ready`
+- phase：`kpi_backfill`
+- status：`blocked_until_published`
 - priority：`high`
-- platform：`instagram_reels`
+- platform：`tiktok`
 - task：`publish-lt-s03-iris-too-sensitive`
-- schedule：2026-06-19 21:30 Asia/Taipei
+- schedule：2026-06-19 21:00 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：依 Instagram Reels caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- blocked by：profile_setup, asset_ready_check
+- action：發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。
+- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
+- blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
 ### 24. 你真的太敏感嗎？還是你只是等一句清楚的話？

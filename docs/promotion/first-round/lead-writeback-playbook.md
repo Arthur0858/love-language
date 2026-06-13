@@ -1,0 +1,41 @@
+# LoveTypes Lead Writeback Playbook
+
+- 產生日期：2026-06-13
+- real leads：0
+- template rows：15
+- issues：0
+- 原則：只有收到真實 Contact / 收藏室 / Luna / 補給願望來信後，才能新增 real lead。
+- 隱私：不把原始 email 寫入 CSV；只記 request_id、守護者、需求類型、來源與 proof note。
+
+## 回填命令範例
+
+### 艾莉絲（`iris`）
+
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+
+### 諾雅（`noah`）
+
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+
+### 薇薇安（`vivian`）
+
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+
+### 克萊兒（`claire`）
+
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+
+### 朵拉（`dora`）
+
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email request verified"`
+
+## 安全規則
+
+- 不用本工具偽造名單、來信、同意或 KPI。
+- `--utm-content` 能對上 attribution 時才會回填 KPI；對不上時只記 manual lead。
+- 同守護者同需求重複出現後，才提高自有素材或 Luna 商品化優先級。

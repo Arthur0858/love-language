@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-06-13",
+  "sources": {
+    "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
+    "attribution": "docs/promotion/first-round/attribution-reconciliation.csv",
+    "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "profileTracker": "docs/promotion/first-round/platform-profile-tracker.csv"
+  },
+  "metrics": {
+    "rows": 15,
+    "templateRows": 15,
+    "realRows": 0,
+    "issues": 0
+  },
+  "commands": [
+    {
+      "guardian": "iris",
+      "guardianName": "艾莉絲",
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+    },
+    {
+      "guardian": "noah",
+      "guardianName": "諾雅",
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+    },
+    {
+      "guardian": "vivian",
+      "guardianName": "薇薇安",
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+    },
+    {
+      "guardian": "claire",
+      "guardianName": "克萊兒",
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+    },
+    {
+      "guardian": "dora",
+      "guardianName": "朵拉",
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+    }
+  ],
+  "policy": {
+    "doNotFake": true,
+    "storeRawEmail": false,
+    "realLeadRequires": [
+      "proof note",
+      "explicit_reply_ok consent",
+      "guardian",
+      "intake type"
+    ],
+    "utmRule": "Matched shorts/profile utm_content increments KPI/profile tracker by one; missing or unmatched utm stays manual only."
+  },
+  "issues": []
+}

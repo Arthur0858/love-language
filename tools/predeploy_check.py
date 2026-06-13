@@ -91,6 +91,7 @@ PYTHON_TOOLS = [
     "tools/promotion_weekly_summary.py",
     "tools/promotion_weekly_review_packet.py",
     "tools/promotion_weekly_decision_evidence_checklist.py",
+    "tools/promotion_blocker_resolution_checklist.py",
     "tools/promotion_operator_handoff_packet.py",
     "tools/promotion_operator_import_template_audit.py",
     "tools/promotion_empty_data_safety_audit.py",
@@ -265,6 +266,7 @@ def main() -> int:
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
         run_step("promotion weekly review packet", [sys.executable, "tools/promotion_weekly_review_packet.py", "--check"])
         run_step("promotion weekly decision evidence checklist", [sys.executable, "tools/promotion_weekly_decision_evidence_checklist.py", "--check"])
+        run_step("promotion blocker resolution checklist", [sys.executable, "tools/promotion_blocker_resolution_checklist.py", "--check"])
         run_step("promotion operator handoff packet", [sys.executable, "tools/promotion_operator_handoff_packet.py", "--check"])
         run_step("promotion operator import template audit", [sys.executable, "tools/promotion_operator_import_template_audit.py"])
         run_step("promotion empty data safety audit", [sys.executable, "tools/promotion_empty_data_safety_audit.py"])

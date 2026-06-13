@@ -41,6 +41,7 @@ PYTHON_TOOLS = [
     "tools/promotion_first_batch_asset_qa.py",
     "tools/promotion_first_batch_publish_checklist.py",
     "tools/promotion_first_batch_kpi_checklist.py",
+    "tools/promotion_profile_post_alignment_checklist.py",
     "tools/promotion_publishing_status.py",
     "tools/promotion_kpi_writeback_consistency_audit.py",
     "tools/promotion_writeback_flow_audit.py",
@@ -209,6 +210,7 @@ def main() -> int:
         run_step("promotion first batch asset qa", [sys.executable, "tools/promotion_first_batch_asset_qa.py", "--check"])
         run_step("promotion first batch publish checklist", [sys.executable, "tools/promotion_first_batch_publish_checklist.py", "--check"])
         run_step("promotion first batch kpi checklist", [sys.executable, "tools/promotion_first_batch_kpi_checklist.py", "--check"])
+        run_step("promotion profile post alignment checklist", [sys.executable, "tools/promotion_profile_post_alignment_checklist.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
         run_step("promotion KPI writeback consistency audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"])
         run_step("promotion writeback flow audit", [sys.executable, "tools/promotion_writeback_flow_audit.py"])

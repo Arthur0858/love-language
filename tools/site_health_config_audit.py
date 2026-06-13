@@ -19,6 +19,7 @@ SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
 PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
+PUBLIC_COUNTER_RE = re.compile(r'print\(f?"(public_[A-Za-z0-9_]+)=')
 NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
 SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
     "site_quality": "tools/site_quality_audit.py",
@@ -241,6 +242,19 @@ def public_smoke_tools() -> list[str]:
     )
 
 
+def emitted_public_smoke_counters(public_tools: list[str]) -> list[str]:
+    counters: set[str] = set()
+    for path in public_tools:
+        if not path.endswith(".py"):
+            continue
+        source_path = ROOT / path
+        if not source_path.exists():
+            continue
+        source = source_path.read_text(encoding="utf-8", errors="replace")
+        counters.update(match.group(1) for match in PUBLIC_COUNTER_RE.finditer(source))
+    return sorted(counters)
+
+
 def site_health_support_files() -> list[str]:
     try:
         data = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
@@ -286,6 +300,8 @@ def main() -> int:
     )
     mixed_return_functions = mixed_return_tuple_functions(check_script_paths + predeploy_script_paths)
     public_tools = public_smoke_tools()
+    public_smoke_counters = emitted_public_smoke_counters(public_tools)
+    missing_public_counter_important_keys = sorted(set(public_smoke_counters).difference(important_keys))
     missing_public_tools = sorted(set(public_tools).difference(check_script_paths))
     site_support_files = site_health_support_files()
     deploy_support_files = public_deploy_support_files()
@@ -326,6 +342,11 @@ def main() -> int:
         issues.append(f"unknown RETRY_ON_FAILURE names: {', '.join(unknown_retry_names)}")
     if missing_issue_important_keys:
         issues.append(f"issue metrics missing from important_keys: {', '.join(missing_issue_important_keys)}")
+    if missing_public_counter_important_keys:
+        issues.append(
+            "public smoke counters missing from important_keys: "
+            f"{', '.join(missing_public_counter_important_keys)}"
+        )
     if malformed_checks:
         issues.append(f"malformed CHECKS tuples: {', '.join(malformed_checks)}")
     if invalid_timeouts:
@@ -436,6 +457,7 @@ def main() -> int:
     print(f"site_health_config_missing_site_health_local_audit_scripts={len(missing_site_health_local_audit_scripts)}")
     print(f"site_health_config_site_health_release_local_audit_mismatches={len(site_health_release_local_audit_mismatches)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
+    print(f"site_health_config_public_smoke_counters={len(public_smoke_counters)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")
     print(f"site_health_config_duplicate_script_paths={len(duplicate_script_paths)}")
@@ -443,6 +465,7 @@ def main() -> int:
     print(f"site_health_config_duplicate_important_keys={len(duplicate_important_keys)}")
     print(f"site_health_config_unknown_retry_names={len(unknown_retry_names)}")
     print(f"site_health_config_missing_issue_important_keys={len(missing_issue_important_keys)}")
+    print(f"site_health_config_missing_public_counter_important_keys={len(missing_public_counter_important_keys)}")
     print(f"site_health_config_malformed_checks={len(malformed_checks)}")
     print(f"site_health_config_invalid_timeouts={len(invalid_timeouts)}")
     print(f"site_health_config_public_flag_mismatches={len(public_flag_mismatches)}")

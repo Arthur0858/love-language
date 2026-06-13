@@ -1050,6 +1050,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_mixed_return_tuple_functions",
         "site_health_config_public_smoke_tools",
         "site_health_config_missing_public_smoke_tools",
+        "site_health_config_public_smoke_counters",
+        "site_health_config_missing_public_counter_important_keys",
         "site_health_config_site_support_files",
         "site_health_config_public_deploy_support_files",
         "site_health_config_public_deploy_missing_support_files",

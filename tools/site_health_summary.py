@@ -250,6 +250,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "commerce_items_checked",
         "commerce_types_checked",
         "commerce_roles_checked",
+        "commerce_affiliate_locale_policies_checked",
         "commerce_safety_boundaries_checked",
         "site_index_pages_checked",
         "site_index_languages_checked",

@@ -4335,6 +4335,7 @@ def main() -> int:
     print(f"commerce_items_checked={stats['commerce_items_checked']}")
     print(f"commerce_types_checked={stats['commerce_types_checked']}")
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
+    print(f"commerce_affiliate_locale_policies_checked={stats['commerce_affiliate_locale_policies_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
     print(f"commerce_revenue_playbook_checked={stats['commerce_revenue_playbook_checked']}")
     print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")

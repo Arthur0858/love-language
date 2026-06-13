@@ -6,8 +6,10 @@
     "executionSheet": "docs/promotion/first-round/week-4-execution-sheet.json"
   },
   "briefCount": 3,
+  "expectedBriefCount": 3,
   "sceneCardCount": 9,
   "platformCaptionCount": 9,
+  "expectedPlatformCaptionCount": 9,
   "missingScripts": [],
   "briefs": [
     {

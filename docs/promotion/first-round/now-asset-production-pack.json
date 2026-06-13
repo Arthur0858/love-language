@@ -5,6 +5,8 @@
   },
   "scriptCount": 5,
   "guardianCount": 5,
+  "expectedScriptCount": 5,
+  "expectedGuardianCount": 5,
   "scripts": [
     {
       "id": "iris-now-content-variant-01",

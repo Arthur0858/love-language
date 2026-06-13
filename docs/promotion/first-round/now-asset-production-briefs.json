@@ -4,6 +4,7 @@
     "pack": "docs/promotion/first-round/now-asset-production-pack.json"
   },
   "briefCount": 5,
+  "expectedBriefCount": 5,
   "platformCount": 3,
   "sceneCardCount": 15,
   "briefs": [

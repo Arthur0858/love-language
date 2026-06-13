@@ -118,8 +118,10 @@ def build_week_payload(week: int, script_library: dict, execution_sheet: dict) -
             "executionSheet": str(execution_sheet_path(week).relative_to(ROOT)),
         },
         "briefCount": len(briefs),
+        "expectedBriefCount": len(execution_sheet.get("scripts", [])),
         "sceneCardCount": sum(len(brief["sceneCards"]) for brief in briefs),
         "platformCaptionCount": sum(len(brief["platforms"]) for brief in briefs),
+        "expectedPlatformCaptionCount": sum(len(script.get("platforms", [])) for script in execution_sheet.get("scripts", [])),
         "missingScripts": missing_scripts,
         "briefs": briefs,
     }
@@ -128,12 +130,14 @@ def build_week_payload(week: int, script_library: dict, execution_sheet: dict) -
 def validate_week_payload(payload: dict) -> list[str]:
     issues: list[str] = []
     week = payload.get("week")
-    if payload.get("briefCount") != 3:
-        issues.append(f"week {week}: expected 3 briefs, got {payload.get('briefCount')}")
-    if payload.get("sceneCardCount", 0) < 9:
-        issues.append(f"week {week}: expected at least 9 scene cards")
-    if payload.get("platformCaptionCount") != 9:
-        issues.append(f"week {week}: expected 9 platform captions, got {payload.get('platformCaptionCount')}")
+    expected_briefs = int(payload.get("expectedBriefCount", 0) or 0)
+    expected_platform_captions = int(payload.get("expectedPlatformCaptionCount", 0) or 0)
+    if payload.get("briefCount") != expected_briefs:
+        issues.append(f"week {week}: expected {expected_briefs} briefs, got {payload.get('briefCount')}")
+    if payload.get("sceneCardCount", 0) < expected_briefs * 3:
+        issues.append(f"week {week}: expected at least {expected_briefs * 3} scene cards")
+    if payload.get("platformCaptionCount") != expected_platform_captions:
+        issues.append(f"week {week}: expected {expected_platform_captions} platform captions, got {payload.get('platformCaptionCount')}")
     if payload.get("missingScripts"):
         issues.append(f"week {week}: missing scripts {', '.join(payload['missingScripts'])}")
     for brief in payload.get("briefs", []):

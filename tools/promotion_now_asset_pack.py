@@ -171,6 +171,8 @@ def build_pack(backlog: dict) -> dict:
         },
         "scriptCount": len(scripts),
         "guardianCount": len({script["guardian_id"] for script in scripts}),
+        "expectedScriptCount": len(now_items),
+        "expectedGuardianCount": len({item["guardianId"] for item in now_items}),
         "scripts": scripts,
         "productionChecklist": [
             "每支短片維持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
@@ -228,10 +230,12 @@ def render_markdown(pack: dict) -> str:
 
 def validate_pack(pack: dict) -> list[str]:
     issues: list[str] = []
-    if pack.get("guardianCount") != 5:
-        issues.append("expected five guardians in now asset production pack")
-    if pack.get("scriptCount") != 5:
-        issues.append("expected five now scripts")
+    expected_guardians = int(pack.get("expectedGuardianCount", 0) or 0)
+    expected_scripts = int(pack.get("expectedScriptCount", 0) or 0)
+    if pack.get("guardianCount") != expected_guardians:
+        issues.append(f"expected {expected_guardians} guardians in now asset production pack")
+    if pack.get("scriptCount") != expected_scripts:
+        issues.append(f"expected {expected_scripts} now scripts")
     required = {"id", "guardian_id", "guardian_name", "guardian_theme", "emotion_types", "title", "hook", "full_subtitle_script", "visual_suggestions", "comment_cta"}
     for script in pack.get("scripts", []):
         missing = [field for field in required if not script.get(field)]

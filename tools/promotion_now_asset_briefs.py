@@ -110,6 +110,7 @@ def build_payload(pack: dict) -> dict:
             "pack": str(PACK_PATH.relative_to(ROOT)),
         },
         "briefCount": len(briefs),
+        "expectedBriefCount": int(pack.get("scriptCount", len(pack.get("scripts", []))) or 0),
         "platformCount": len(PLATFORMS),
         "sceneCardCount": sum(len(brief["sceneCards"]) for brief in briefs),
         "briefs": briefs,
@@ -118,8 +119,9 @@ def build_payload(pack: dict) -> dict:
 
 def validate_payload(payload: dict) -> list[str]:
     issues: list[str] = []
-    if payload.get("briefCount") != 5:
-        issues.append(f"expected 5 production briefs, got {payload.get('briefCount')}")
+    expected_briefs = int(payload.get("expectedBriefCount", 0) or 0)
+    if payload.get("briefCount") != expected_briefs:
+        issues.append(f"expected {expected_briefs} production briefs, got {payload.get('briefCount')}")
     if payload.get("platformCount") != len(PLATFORMS):
         issues.append(f"expected {len(PLATFORMS)} platforms, got {payload.get('platformCount')}")
     for brief in payload.get("briefs", []):

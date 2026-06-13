@@ -237,6 +237,8 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
         "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
+        "affiliate_zh_books_links": 0,
+        "affiliate_non_zh_amazon_links": 0,
         "supply_panel_events": 0,
         "nav_cards": 0,
         "nav_events": 0,
@@ -385,6 +387,10 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
             issues.append(f"{path}: supply panel should include one tracked affiliate book link, got {len(affiliate_links)}")
         else:
             stats["affiliate_links"] += 1
+            if lang == "zh":
+                stats["affiliate_zh_books_links"] += 1
+            else:
+                stats["affiliate_non_zh_amazon_links"] += 1
         if "affiliate-disclosure" not in response.text:
             issues.append(f"{path}: missing affiliate disclosure")
 
@@ -435,6 +441,8 @@ def main() -> int:
         "request_mailtos": 0,
         "luna_links": 0,
         "affiliate_links": 0,
+        "affiliate_zh_books_links": 0,
+        "affiliate_non_zh_amazon_links": 0,
         "supply_panel_events": 0,
         "nav_cards": 0,
         "nav_events": 0,
@@ -472,6 +480,8 @@ def main() -> int:
     print(f"public_guardian_request_mailtos_checked={totals['request_mailtos']}")
     print(f"public_guardian_luna_links_checked={totals['luna_links']}")
     print(f"public_guardian_affiliate_links_checked={totals['affiliate_links']}")
+    print(f"public_guardian_affiliate_zh_books_links_checked={totals['affiliate_zh_books_links']}")
+    print(f"public_guardian_affiliate_non_zh_amazon_links_checked={totals['affiliate_non_zh_amazon_links']}")
     print(f"public_guardian_supply_panel_events_checked={totals['supply_panel_events']}")
     print(f"public_guardian_nav_cards_checked={totals['nav_cards']}")
     print(f"public_guardian_nav_events_checked={totals['nav_events']}")

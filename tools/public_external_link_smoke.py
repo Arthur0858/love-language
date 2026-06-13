@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -18,6 +18,8 @@ DEFAULT_BASE_URL = "https://lovetypes.tw"
 ACCEPTED_STATUSES = set(range(200, 400)) | {403, 405, 429}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 AFFILIATE_HOSTS = {"www.books.com.tw", "www.amazon.com"}
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
+BOOKS_AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
 
 
 @dataclass(frozen=True)
@@ -31,6 +33,8 @@ class ExternalLinkStats:
     anchors_checked: int = 0
     blank_target_rel_checked: int = 0
     affiliate_anchors_checked: int = 0
+    affiliate_zh_books_links_checked: int = 0
+    affiliate_non_zh_amazon_links_checked: int = 0
     affiliate_disclosure_pages_checked: int = 0
 
 
@@ -101,6 +105,17 @@ def rel_tokens(anchor: dict[str, str]) -> set[str]:
     return {token.strip().lower() for token in anchor.get("rel", "").split() if token.strip()}
 
 
+def is_expected_affiliate_url(path: str, href: str) -> bool:
+    parsed = urlparse(href)
+    if resource_lang(path) == "zh":
+        return parsed.hostname == "www.books.com.tw" and all(token in href for token in BOOKS_AFFILIATE_TOKENS)
+    return (
+        parsed.hostname == "www.amazon.com"
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
+
+
 def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalLinkStats, list[str]]:
     smoke = load_public_deploy_smoke()
     generator = smoke.GENERATOR_CONFIG
@@ -138,6 +153,13 @@ def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalL
                     issues.append(f"{path}: affiliate link should include sponsored rel: {href}")
                 else:
                     stats.affiliate_anchors_checked += 1
+                if not is_expected_affiliate_url(path, href):
+                    expected = "Books.com.tw tracking" if resource_lang(path) == "zh" else f"Amazon tag={AMAZON_ASSOCIATE_TAG}"
+                    issues.append(f"{path}: affiliate link should use {expected}: {href}")
+                elif resource_lang(path) == "zh":
+                    stats.affiliate_zh_books_links_checked += 1
+                else:
+                    stats.affiliate_non_zh_amazon_links_checked += 1
             sources_by_url.setdefault(href, set()).add(path)
     return [
         ExternalLink(url=url, source_paths=tuple(sorted(source_paths)))
@@ -176,6 +198,8 @@ def main() -> int:
     print(f"public_external_hosts_checked={len(hosts)}")
     print(f"public_external_affiliate_links_checked={affiliate_links_checked}")
     print(f"public_external_affiliate_anchors_checked={stats.affiliate_anchors_checked}")
+    print(f"public_external_affiliate_zh_books_links_checked={stats.affiliate_zh_books_links_checked}")
+    print(f"public_external_affiliate_non_zh_amazon_links_checked={stats.affiliate_non_zh_amazon_links_checked}")
     print(f"public_external_affiliate_disclosure_pages_checked={stats.affiliate_disclosure_pages_checked}")
     print(f"public_external_link_issues={len(issues)}")
     for issue in issues:

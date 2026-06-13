@@ -154,6 +154,8 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "guardian_character_links": 0,
         "guardian_luna_links": 0,
         "guardian_affiliate_links": 0,
+        "guardian_affiliate_zh_books_links": 0,
+        "guardian_affiliate_non_zh_amazon_links": 0,
         "resume_events": 0,
         "resume_templates": 0,
         "safety_sections": 0,
@@ -322,6 +324,10 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             issues.append(f"{path}: {slug} repair card should include one tracked affiliate book link, got {len(affiliates)}")
         else:
             stats["guardian_affiliate_links"] += 1
+            if lang == "zh":
+                stats["guardian_affiliate_zh_books_links"] += 1
+            else:
+                stats["guardian_affiliate_non_zh_amazon_links"] += 1
             rel_tokens = set(affiliates[0].attrs.get("rel", "").split())
             if not {"noopener", "noreferrer", "sponsored"}.issubset(rel_tokens):
                 issues.append(f"{path}: {slug} affiliate link missing safe sponsored rel")
@@ -351,6 +357,8 @@ def main() -> int:
         "guardian_character_links": 0,
         "guardian_luna_links": 0,
         "guardian_affiliate_links": 0,
+        "guardian_affiliate_zh_books_links": 0,
+        "guardian_affiliate_non_zh_amazon_links": 0,
         "resume_events": 0,
         "resume_templates": 0,
         "safety_sections": 0,
@@ -376,6 +384,8 @@ def main() -> int:
     print(f"public_repair_plan_guardian_character_links_checked={totals['guardian_character_links']}")
     print(f"public_repair_plan_guardian_luna_links_checked={totals['guardian_luna_links']}")
     print(f"public_repair_plan_guardian_affiliate_links_checked={totals['guardian_affiliate_links']}")
+    print(f"public_repair_plan_guardian_affiliate_zh_books_links_checked={totals['guardian_affiliate_zh_books_links']}")
+    print(f"public_repair_plan_guardian_affiliate_non_zh_amazon_links_checked={totals['guardian_affiliate_non_zh_amazon_links']}")
     print(f"public_repair_plan_resume_templates_checked={totals['resume_templates']}")
     print(f"public_repair_plan_resume_events_checked={totals['resume_events']}")
     print(f"public_repair_plan_safety_sections_checked={totals['safety_sections']}")

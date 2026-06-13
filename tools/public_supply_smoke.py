@@ -201,6 +201,8 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
         "route_product_events": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
+        "affiliate_zh_books_links": 0,
+        "affiliate_non_zh_amazon_links": 0,
         "affiliate_book_cards": 0,
         "route_tags": 0,
         "wishlist_cards": 0,
@@ -401,6 +403,10 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
             issues.append(f"{path}: {slug} route should include one {expected} link, got {len(affiliate_links)}")
         else:
             stats["affiliate_links"] += 1
+            if lang == "zh":
+                stats["affiliate_zh_books_links"] += 1
+            else:
+                stats["affiliate_non_zh_amazon_links"] += 1
             rel_tokens = set(affiliate_links[0].attrs.get("rel", "").split())
             if not {"noopener", "noreferrer", "sponsored"}.issubset(rel_tokens):
                 issues.append(f"{path}: {slug} affiliate route link missing safe sponsored rel")
@@ -500,6 +506,8 @@ def main() -> int:
         "route_product_events": 0,
         "copy_buttons": 0,
         "affiliate_links": 0,
+        "affiliate_zh_books_links": 0,
+        "affiliate_non_zh_amazon_links": 0,
         "affiliate_book_cards": 0,
         "route_tags": 0,
         "wishlist_cards": 0,
@@ -534,6 +542,8 @@ def main() -> int:
     print(f"public_supply_route_product_events_checked={totals['route_product_events']}")
     print(f"public_supply_copy_buttons_checked={totals['copy_buttons']}")
     print(f"public_supply_affiliate_links_checked={totals['affiliate_links']}")
+    print(f"public_supply_affiliate_zh_books_links_checked={totals['affiliate_zh_books_links']}")
+    print(f"public_supply_affiliate_non_zh_amazon_links_checked={totals['affiliate_non_zh_amazon_links']}")
     print(f"public_supply_affiliate_book_cards_checked={totals['affiliate_book_cards']}")
     print(f"public_supply_affiliate_route_tags_checked={totals['route_tags']}")
     print(f"public_supply_wishlist_cards_checked={totals['wishlist_cards']}")

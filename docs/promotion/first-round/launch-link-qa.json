@@ -7,6 +7,9 @@
   "rowCount": 18,
   "profileLinks": 3,
   "shortsLinks": 15,
+  "expectedProfileLinks": 3,
+  "expectedShortsLinks": 15,
+  "expectedTotalLinks": 18,
   "rows": [
     {
       "link_id": "profile:instagram_reels:instagram_reels_bio",

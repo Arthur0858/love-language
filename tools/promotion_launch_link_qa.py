@@ -114,15 +114,30 @@ def build_rows(posting_rows: list[dict[str, str]], profile_setup: dict) -> list[
     return rows
 
 
-def validate_rows(rows: list[dict[str, str]]) -> list[str]:
+def expected_counts(posting_rows: list[dict[str, str]], profile_setup: dict) -> tuple[int, int]:
+    profile_urls = {
+        str(item.get("profileLink", ""))
+        for item in profile_setup.get("platforms", [])
+        if isinstance(item, dict) and str(item.get("profileLink", "")).strip()
+    }
+    shorts_urls = {
+        str(item.get("tracked_url", ""))
+        for item in posting_rows
+        if str(item.get("tracked_url", "")).strip() and str(item.get("tracked_url", "")) not in profile_urls
+    }
+    return len(profile_urls), len(shorts_urls)
+
+
+def validate_rows(rows: list[dict[str, str]], expected_profile_links: int, expected_shorts_links: int) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 18:
-        issues.append(f"expected 18 unique launch links, got {len(rows)}")
+    expected_total = expected_profile_links + expected_shorts_links
+    if len(rows) != expected_total:
+        issues.append(f"expected {expected_total} unique launch links, got {len(rows)}")
     counts = Counter(row["source_type"] for row in rows)
-    if counts.get("profile") != 3:
-        issues.append(f"expected 3 profile links, got {counts.get('profile', 0)}")
-    if counts.get("shorts") != 15:
-        issues.append(f"expected 15 shorts links, got {counts.get('shorts', 0)}")
+    if counts.get("profile") != expected_profile_links:
+        issues.append(f"expected {expected_profile_links} profile links, got {counts.get('profile', 0)}")
+    if counts.get("shorts") != expected_shorts_links:
+        issues.append(f"expected {expected_shorts_links} shorts links, got {counts.get('shorts', 0)}")
     seen_ids: set[str] = set()
     for row in rows:
         label = row.get("link_id", "<link>")
@@ -200,8 +215,11 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    rows = build_rows(read_csv(Path(args.posting_queue)), read_json(Path(args.profile_setup)))
-    issues = validate_rows(rows)
+    posting_rows = read_csv(Path(args.posting_queue))
+    profile_setup = read_json(Path(args.profile_setup))
+    rows = build_rows(posting_rows, profile_setup)
+    expected_profile_links, expected_shorts_links = expected_counts(posting_rows, profile_setup)
+    issues = validate_rows(rows, expected_profile_links, expected_shorts_links)
     payload = {
         "generatedAt": date.today().isoformat(),
         "source": {
@@ -211,6 +229,9 @@ def main() -> int:
         "rowCount": len(rows),
         "profileLinks": sum(1 for row in rows if row["source_type"] == "profile"),
         "shortsLinks": sum(1 for row in rows if row["source_type"] == "shorts"),
+        "expectedProfileLinks": expected_profile_links,
+        "expectedShortsLinks": expected_shorts_links,
+        "expectedTotalLinks": expected_profile_links + expected_shorts_links,
         "rows": rows,
         "issues": issues,
     }

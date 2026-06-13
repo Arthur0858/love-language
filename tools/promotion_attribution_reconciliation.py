@@ -152,16 +152,25 @@ def build_rows(kit: dict, launch_rows: list[dict], kpi_rows: list[dict[str, str]
     return rows
 
 
-def validate_payload(payload: dict, kpi_fields: list[str]) -> list[str]:
+def validate_payload(payload: dict, launch: dict, kpi_fields: list[str]) -> list[str]:
     issues: list[str] = []
     rows = payload.get("rows", [])
-    if len(rows) != 18:
-        issues.append(f"expected 18 attribution rows, got {len(rows)}")
+    expected_total = launch.get("rowCount")
+    expected_profile_rows = launch.get("profileLinks")
+    expected_shorts_rows = launch.get("shortsLinks")
+    if not isinstance(expected_total, int):
+        expected_total = len(launch.get("rows", [])) if isinstance(launch.get("rows"), list) else 0
+    if not isinstance(expected_profile_rows, int):
+        expected_profile_rows = sum(1 for row in launch.get("rows", []) if row.get("source_type") == "profile") if isinstance(launch.get("rows"), list) else 0
+    if not isinstance(expected_shorts_rows, int):
+        expected_shorts_rows = sum(1 for row in launch.get("rows", []) if row.get("source_type") == "shorts") if isinstance(launch.get("rows"), list) else 0
+    if len(rows) != expected_total:
+        issues.append(f"expected {expected_total} attribution rows, got {len(rows)}")
     counts = Counter(str(row.get("source_type", "")) for row in rows)
-    if counts.get("profile") != 3:
-        issues.append(f"expected 3 profile attribution rows, got {counts.get('profile', 0)}")
-    if counts.get("shorts") != 15:
-        issues.append(f"expected 15 shorts attribution rows, got {counts.get('shorts', 0)}")
+    if counts.get("profile") != expected_profile_rows:
+        issues.append(f"expected {expected_profile_rows} profile attribution rows, got {counts.get('profile', 0)}")
+    if counts.get("shorts") != expected_shorts_rows:
+        issues.append(f"expected {expected_shorts_rows} shorts attribution rows, got {counts.get('shorts', 0)}")
     missing_kpi = [field for field in REQUIRED_KPI_FIELDS if field not in kpi_fields]
     if missing_kpi:
         issues.append("KPI tracker missing fields: " + ", ".join(missing_kpi))
@@ -272,12 +281,15 @@ def main() -> int:
         "rowCount": len(rows),
         "profileRows": sum(1 for row in rows if row["source_type"] == "profile"),
         "shortsRows": sum(1 for row in rows if row["source_type"] == "shorts"),
+        "expectedRows": launch.get("rowCount", len(launch.get("rows", []))),
+        "expectedProfileRows": launch.get("profileLinks"),
+        "expectedShortsRows": launch.get("shortsLinks"),
         "kpiRows": len(kpi_rows),
         "filledKpiRows": sum(1 for row in kpi_rows if is_filled(row)),
         "decisionRule": "Do not intensify paid or affiliate CTAs until quiz completions create route, lead, Luna, or affiliate intent for the same utm_content.",
         "rows": rows,
     }
-    issues = validate_payload(payload, kpi_fields)
+    issues = validate_payload(payload, launch, kpi_fields)
     payload["issues"] = issues
     if not args.check:
         write_outputs(payload, Path(args.output), Path(args.json_output), Path(args.csv_output))

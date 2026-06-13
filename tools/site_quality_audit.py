@@ -2788,6 +2788,25 @@ def parse_safety_index(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
         issues.append(f"{SAFETY_INDEX_PATH}: saferFirstSteps should include four entries")
     else:
         stats["safety_index_first_steps_checked"] = len(steps)
+        for step in steps:
+            if not isinstance(step, dict):
+                issues.append(f"{SAFETY_INDEX_PATH}: saferFirstSteps entries should be objects")
+                continue
+            step_id = step.get("id") or "<unknown>"
+            url = step.get("url")
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{SAFETY_INDEX_PATH}: saferFirstStep {step_id} url should point to {DOMAIN}: {url!r}")
+                continue
+            target, fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{SAFETY_INDEX_PATH}: saferFirstStep {step_id} url target missing: {url}")
+                continue
+            parser = parsers.get(target)
+            if target.suffix == ".html" and parser and is_noindex(parser):
+                issues.append(f"{SAFETY_INDEX_PATH}: saferFirstStep {step_id} url should not point to noindex page: {url}")
+            if fragment and target.suffix == ".html" and parser and fragment not in parser.ids:
+                issues.append(f"{SAFETY_INDEX_PATH}: saferFirstStep {step_id} url missing anchor #{fragment}: {url}")
+            stats["safety_index_first_step_urls_checked"] += 1
     boundaries = data.get("boundaries")
     if not isinstance(boundaries, list) or len(boundaries) != 5:
         issues.append(f"{SAFETY_INDEX_PATH}: boundaries should include five entries")
@@ -2828,6 +2847,7 @@ def parse_safety_index(parsers: dict[Path, PageParser]) -> tuple[list[str], Coun
                 issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route should not point to noindex page: {url}")
             if fragment and target.suffix == ".html" and parser and fragment not in parser.ids:
                 issues.append(f"{SAFETY_INDEX_PATH}: {boundary_id} route missing anchor #{fragment}: {url}")
+            stats["safety_index_route_targets_checked"] += 1
     missing_ids = sorted(expected_ids.difference(seen_ids))
     if missing_ids:
         issues.append(f"{SAFETY_INDEX_PATH}: missing boundary ids: {', '.join(missing_ids)}")
@@ -4546,8 +4566,10 @@ def main() -> int:
     print(f"safety_index_files_checked={stats['safety_index_files_checked']}")
     print(f"safety_index_boundaries_checked={stats['safety_index_boundaries_checked']}")
     print(f"safety_index_routes_checked={stats['safety_index_routes_checked']}")
+    print(f"safety_index_route_targets_checked={stats['safety_index_route_targets_checked']}")
     print(f"safety_index_not_for_checked={stats['safety_index_not_for_checked']}")
     print(f"safety_index_first_steps_checked={stats['safety_index_first_steps_checked']}")
+    print(f"safety_index_first_step_urls_checked={stats['safety_index_first_step_urls_checked']}")
     print(f"ai_discovery_files_checked={stats['ai_discovery_files_checked']}")
     print(f"ai_discovery_guidance_fields_checked={stats['ai_discovery_guidance_fields_checked']}")
     print(f"ai_discovery_promotion_profile_verification_snapshots_checked={stats['ai_discovery_promotion_profile_verification_snapshots_checked']}")

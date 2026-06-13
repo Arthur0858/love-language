@@ -1233,20 +1233,20 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(outcomes) if isinstance(outcomes, list) else 0, profile_smoke_counters
 
 
-def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
+def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     path = "/safety-index.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     expected_ids = {"reflection_not_diagnosis", "urgent_risk_first", "do_not_buy_to_fix", "email_minimum_context", "external_store_boundary"}
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
@@ -1260,10 +1260,33 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     boundaries = data.get("boundaries", [])
     if not isinstance(steps, list) or len(steps) != 4:
         issues.append(f"{path}: expected four saferFirstSteps")
+    first_step_urls_checked = 0
+    response_cache: dict[str, Response] = {}
+    for step in steps if isinstance(steps, list) else []:
+        if not isinstance(step, dict):
+            issues.append(f"{path}: saferFirstSteps entries should be objects")
+            continue
+        step_id = step.get("id") or "<unknown>"
+        url = step.get("url")
+        if not isinstance(url, str) or not url.startswith(base_url.rstrip("/") + "/"):
+            issues.append(f"{path}: saferFirstStep {step_id} url should point to {base_url}: {url!r}")
+            continue
+        route_url_without_fragment, fragment = urldefrag(url)
+        if route_url_without_fragment not in response_cache:
+            response_cache[route_url_without_fragment] = request_url(route_url_without_fragment)
+        target_response = response_cache[route_url_without_fragment]
+        if target_response.status != 200:
+            issues.append(f"{path}: saferFirstStep {step_id} target should return 200, got {target_response.status}: {url}")
+            continue
+        if fragment and fragment not in target_response.text:
+            issues.append(f"{path}: saferFirstStep {step_id} target missing anchor #{fragment}: {url}")
+            continue
+        first_step_urls_checked += 1
     if not isinstance(boundaries, list) or len(boundaries) != 5:
         issues.append(f"{path}: expected five boundaries")
-        return issues, len(boundaries) if isinstance(boundaries, list) else 0, 0, len(not_for), len(steps) if isinstance(steps, list) else 0
+        return issues, len(boundaries) if isinstance(boundaries, list) else 0, 0, 0, len(not_for), len(steps) if isinstance(steps, list) else 0, first_step_urls_checked
     route_count = 0
+    route_targets_checked = 0
     seen_ids = set()
     for boundary in boundaries:
         if not isinstance(boundary, dict):
@@ -1273,6 +1296,24 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
         seen_ids.add(boundary_id)
         routes = boundary.get("routes", [])
         route_count += len(routes) if isinstance(routes, list) else 0
+        if not isinstance(routes, list) or not routes:
+            issues.append(f"{path}: {boundary_id} should include routes")
+            continue
+        for url in routes:
+            if not isinstance(url, str) or not url.startswith(base_url.rstrip("/") + "/"):
+                issues.append(f"{path}: {boundary_id} route should point to {base_url}: {url!r}")
+                continue
+            route_url_without_fragment, fragment = urldefrag(url)
+            if route_url_without_fragment not in response_cache:
+                response_cache[route_url_without_fragment] = request_url(route_url_without_fragment)
+            target_response = response_cache[route_url_without_fragment]
+            if target_response.status != 200:
+                issues.append(f"{path}: {boundary_id} route target should return 200, got {target_response.status}: {url}")
+                continue
+            if fragment and fragment not in target_response.text:
+                issues.append(f"{path}: {boundary_id} route target missing anchor #{fragment}: {url}")
+                continue
+            route_targets_checked += 1
         for key in ("title", "body"):
             value = boundary.get(key)
             if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
@@ -1283,7 +1324,7 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     totals = data.get("totals", {})
     if not isinstance(totals, dict) or totals.get("boundaries") != len(boundaries) or totals.get("routes") != route_count:
         issues.append(f"{path}: totals should match boundary and route counts")
-    return issues, len(boundaries), route_count, len(not_for), len(steps) if isinstance(steps, list) else 0
+    return issues, len(boundaries), route_count, route_targets_checked, len(not_for), len(steps) if isinstance(steps, list) else 0, first_step_urls_checked
 
 
 def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int]:
@@ -1624,7 +1665,15 @@ def main() -> int:
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
     site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_local_audit_groups_checked, site_health_indexes_checked, site_health_profile_smoke_counters_checked = check_site_health(base_url)
     release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_local_audit_groups_checked, release_outcomes_checked, release_profile_smoke_counters_checked = check_release_info(base_url)
-    safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
+    (
+        safety_index_issues,
+        safety_index_boundaries_checked,
+        safety_index_routes_checked,
+        safety_index_route_targets_checked,
+        safety_index_not_for_checked,
+        safety_index_steps_checked,
+        safety_index_first_step_urls_checked,
+    ) = check_safety_index(base_url)
     (
         ai_discovery_issues,
         ai_discovery_guardians_checked,
@@ -1715,8 +1764,10 @@ def main() -> int:
     print(f"public_discovery_release_profile_smoke_counters_checked={release_profile_smoke_counters_checked}")
     print(f"public_discovery_safety_index_boundaries_checked={safety_index_boundaries_checked}")
     print(f"public_discovery_safety_index_routes_checked={safety_index_routes_checked}")
+    print(f"public_discovery_safety_index_route_targets_checked={safety_index_route_targets_checked}")
     print(f"public_discovery_safety_index_not_for_checked={safety_index_not_for_checked}")
     print(f"public_discovery_safety_index_steps_checked={safety_index_steps_checked}")
+    print(f"public_discovery_safety_index_first_step_urls_checked={safety_index_first_step_urls_checked}")
     print(f"public_discovery_ai_guardians_checked={ai_discovery_guardians_checked}")
     print(f"public_discovery_ai_languages_checked={ai_discovery_languages_checked}")
     print(f"public_discovery_ai_core_concepts_checked={ai_discovery_core_concepts_checked}")

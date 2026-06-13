@@ -28,6 +28,13 @@
 - 目前狀態：`planned`
 - 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
 
+## 平台文字匯入
+
+- 發布後可把平台、task_id、post_url、發布日期與初始 KPI 貼成一段文字，再用匯入工具檢查。
+- 檢查：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`
+- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "manual post URL verified"`
+- 寫入時仍會同步 posting queue、platform KPI tracker、script KPI tracker 與後續摘要文件。
+
 ## 安全規則
 
 - 不用本工具偽造 post URL、發布日期或 KPI。

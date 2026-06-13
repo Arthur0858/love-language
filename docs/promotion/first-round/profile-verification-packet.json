@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "tracker": "docs/promotion/first-round/platform-profile-tracker.csv",
+    "setup": "docs/promotion/first-round/platform-profile-setup.json",
+    "readiness": "docs/promotion/first-round/launch-readiness.json"
+  },
+  "platformCount": 3,
+  "configuredCount": 0,
+  "pendingCount": 3,
+  "readyToPublish": false,
+  "readinessCounters": {
+    "profileConfigured": null,
+    "readyToPublish": null,
+    "blockers": null
+  },
+  "platforms": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "planned",
+      "configured": false,
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "profileLinkSetDate": "",
+      "profileLinkLabel": "Channel description / video description",
+      "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "notes": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。",
+      "urlIssues": [],
+      "evidenceRequirements": [
+        "profile link 已實際貼到平台個人頁或說明欄。",
+        "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。",
+        "UTM source / medium / campaign / content 沒有被平台移除或改寫。",
+        "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
+        "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
+      ],
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-13 --proof-note \"live profile link verified\"",
+      "postWritebackCheck": [
+        "重新跑 promotion_launch_readiness_gate.py。",
+        "確認 promotion_launch_readiness_profile_configured 變成 3。",
+        "只有 promotion_launch_readiness_ready_to_publish=1 時才發布第一批。"
+      ]
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "planned",
+      "configured": false,
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "profileLinkSetDate": "",
+      "profileLinkLabel": "Profile website link",
+      "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "notes": "若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。",
+      "urlIssues": [],
+      "evidenceRequirements": [
+        "profile link 已實際貼到平台個人頁或說明欄。",
+        "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。",
+        "UTM source / medium / campaign / content 沒有被平台移除或改寫。",
+        "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
+        "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
+      ],
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-13 --proof-note \"live profile link verified\"",
+      "postWritebackCheck": [
+        "重新跑 promotion_launch_readiness_gate.py。",
+        "確認 promotion_launch_readiness_profile_configured 變成 3。",
+        "只有 promotion_launch_readiness_ready_to_publish=1 時才發布第一批。"
+      ]
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "planned",
+      "configured": false,
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "profileLinkSetDate": "",
+      "profileLinkLabel": "Profile link in bio",
+      "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "notes": "IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。",
+      "urlIssues": [],
+      "evidenceRequirements": [
+        "profile link 已實際貼到平台個人頁或說明欄。",
+        "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。",
+        "UTM source / medium / campaign / content 沒有被平台移除或改寫。",
+        "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
+        "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
+      ],
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-13 --proof-note \"manual profile link verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-13 --proof-note \"live profile link verified\"",
+      "postWritebackCheck": [
+        "重新跑 promotion_launch_readiness_gate.py。",
+        "確認 promotion_launch_readiness_profile_configured 變成 3。",
+        "只有 promotion_launch_readiness_ready_to_publish=1 時才發布第一批。"
+      ]
+    }
+  ],
+  "policy": {
+    "doNotFake": true,
+    "configuredRequires": [
+      "status set/live",
+      "profile_link_set_date",
+      "verified proof note",
+      "valid UTM profile link"
+    ],
+    "publishBoundary": "Do not publish first batch until all three profile links are set/live and readiness ready_to_publish is true.",
+    "commercialBoundary": "Profile copy keeps the CTA on the 15-question guardian quiz and does not promote Luna, books, or paid products first."
+  },
+  "issues": []
+}

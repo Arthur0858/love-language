@@ -62,6 +62,7 @@ PYTHON_TOOLS = [
     "tools/promotion_platform_profile_tracker.py",
     "tools/promotion_profile_writeback.py",
     "tools/promotion_profile_text_import.py",
+    "tools/promotion_profile_setup_runbook.py",
     "tools/promotion_profile_verification_packet.py",
     "tools/promotion_profile_completion_gate.py",
     "tools/promotion_week_execution_sheet.py",
@@ -222,6 +223,7 @@ def main() -> int:
         run_step("promotion platform profile tracker", [sys.executable, "tools/promotion_platform_profile_tracker.py", "--check"])
         run_step("promotion profile writeback", [sys.executable, "tools/promotion_profile_writeback.py", "check"])
         run_step("promotion profile text import", [sys.executable, "tools/promotion_profile_text_import.py", "check"])
+        run_step("promotion profile setup runbook", [sys.executable, "tools/promotion_profile_setup_runbook.py", "--check"])
         run_step("promotion profile verification packet", [sys.executable, "tools/promotion_profile_verification_packet.py", "--check"])
         run_step("promotion profile completion gate", [sys.executable, "tools/promotion_profile_completion_gate.py", "--check"])
         run_step("promotion week execution sheet", [sys.executable, "tools/promotion_week_execution_sheet.py", "--all", "--check"])

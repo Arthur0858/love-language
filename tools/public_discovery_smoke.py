@@ -917,20 +917,20 @@ def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
     )
 
 
-def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int, int, int, int, int, int, int]:
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
@@ -956,9 +956,11 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
             if not isinstance(policy.get("rule"), str) or not policy["rule"]:
                 issues.append(f"{path}: affiliateLocalePolicy.{lang}.rule should explain the locale rule")
     playbook = data.get("revenuePlaybook")
+    revenue_playbook_checked = 0
     if not isinstance(playbook, list) or len(playbook) < 4:
         issues.append(f"{path}: revenuePlaybook should include at least four plays")
     else:
+        revenue_playbook_checked = len(playbook)
         expected_play_ids = {"identity_retention_first", "owned_supply_lead", "affiliate_book_revenue", "luna_pack_revenue"}
         play_ids = {play.get("id") for play in playbook if isinstance(play, dict)}
         missing_play_ids = sorted(expected_play_ids.difference(play_ids))
@@ -970,7 +972,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 break
     items = data.get("items", [])
     if not isinstance(items, list):
-        return [f"{path}: items should be a list"], 0, 0, 0, 0, 0, affiliate_policy_checked, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: items should be a list"], 0, 0, 0, 0, 0, 0, 0, 0, affiliate_policy_checked, 0, 0, 0, 0, 0, 0, revenue_playbook_checked, 0
     if len(items) != 20:
         issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
     type_counts: dict[str, int] = {}
@@ -987,6 +989,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
     affiliate_localized_urls_checked = 0
     taiwan_affiliate_urls_checked = 0
     luna_gumroad_urls_checked = 0
+    item_playbook_links_checked = 0
     playbook_by_type = {
         item_type: play
         for play in (playbook if isinstance(playbook, list) else [])
@@ -1087,6 +1090,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
         if not play:
             issues.append(f"{path}: {item_id or '<unknown>'} missing matching revenue playbook")
         else:
+            item_playbook_links_checked += 1
             if item.get("playbookId") != play.get("id"):
                 issues.append(f"{path}: {item_id or '<unknown>'} playbookId should be {play.get('id')}")
             for key in ("recommendedAfter", "primaryEvents"):
@@ -1118,6 +1122,8 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
         affiliate_localized_urls_checked,
         taiwan_affiliate_urls_checked,
         luna_gumroad_urls_checked,
+        revenue_playbook_checked,
+        item_playbook_links_checked,
     )
 
 
@@ -1830,6 +1836,8 @@ def main() -> int:
         commerce_affiliate_localized_urls_checked,
         commerce_taiwan_affiliate_urls_checked,
         commerce_luna_gumroad_urls_checked,
+        commerce_revenue_playbook_checked,
+        commerce_item_playbook_links_checked,
     ) = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
@@ -1919,6 +1927,8 @@ def main() -> int:
     print(f"public_discovery_commerce_affiliate_localized_urls_checked={commerce_affiliate_localized_urls_checked}")
     print(f"public_discovery_commerce_taiwan_affiliate_urls_checked={commerce_taiwan_affiliate_urls_checked}")
     print(f"public_discovery_commerce_luna_gumroad_urls_checked={commerce_luna_gumroad_urls_checked}")
+    print(f"public_discovery_commerce_revenue_playbook_checked={commerce_revenue_playbook_checked}")
+    print(f"public_discovery_commerce_item_playbook_links_checked={commerce_item_playbook_links_checked}")
     print(f"public_discovery_site_index_pages_checked={site_index_pages_checked}")
     print(f"public_discovery_site_index_languages_checked={site_index_languages_checked}")
     print(f"public_discovery_site_index_groups_checked={site_index_groups_checked}")

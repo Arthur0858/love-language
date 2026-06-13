@@ -825,15 +825,15 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("production") != "https://lovetypes.tw/":
@@ -874,15 +874,15 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     guardians = data.get("guardians", [])
@@ -970,15 +970,15 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("status") != "ready_for_predeploy":

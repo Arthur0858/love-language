@@ -10,6 +10,8 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
+from promotion_proof_note_policy import proof_note_issue
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -222,7 +224,7 @@ def first_batch_commands(queue_rows: list[dict[str, str]]) -> list[dict[str, str
             "publishCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
-                f"--proof-note \"manual post URL verified\""
+                f"--proof-note \"public URL post checked {date.today().isoformat()}\""
             ),
         })
     return commands
@@ -280,7 +282,7 @@ def render_markdown(data: dict) -> str:
         "",
         "- 發布後可把平台、task_id、post_url、發布日期與初始 KPI 貼成一段文字，再用匯入工具檢查。",
         "- 檢查：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`",
-        "- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"manual post URL verified\"`",
+        "- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL post checked YYYY-MM-DD\"`",
         "- 寫入時仍會同步 posting queue、platform KPI tracker、script KPI tracker 與後續摘要文件。",
         "",
         "## 安全規則",
@@ -345,6 +347,9 @@ def main() -> int:
                 raise SystemExit("published/live/posted updates require --post-url with https URL")
             if not args.proof_note.strip():
                 raise SystemExit("published/live/posted updates require --proof-note with verification evidence")
+            issue = proof_note_issue(args.proof_note)
+            if issue:
+                raise SystemExit(issue)
         metrics = {field: getattr(args, field) for field in METRIC_FIELDS}
         queue_row = update_platform_rows(queue_rows, args.platform, args.task_id, args.status, args.published_date, args.post_url, args.proof_note.strip(), metrics)
         update_platform_rows(platform_rows, args.platform, args.task_id, args.status, args.published_date, args.post_url, args.proof_note.strip(), metrics)

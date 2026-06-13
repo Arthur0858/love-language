@@ -20,7 +20,7 @@
 
 - Status: `needs_evidence`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
 - Required evidence:
   - `platform_account_visible`
   - `profile_link_visible_or_clickable`
@@ -36,14 +36,14 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: platform profile link manually verified; screenshot or URL evidence saved
+proof_note: screenshot profile-platform-YYYY-MM-DD.png saved
 ```
 
 ### profile_setup: tiktok
 
 - Status: `needs_evidence`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
 - Required evidence:
   - `platform_account_visible`
   - `profile_link_visible_or_clickable`
@@ -59,14 +59,14 @@ platform: tiktok
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-proof_note: platform profile link manually verified; screenshot or URL evidence saved
+proof_note: screenshot profile-platform-YYYY-MM-DD.png saved
 ```
 
 ### profile_setup: instagram_reels
 
 - Status: `needs_evidence`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
 - Required evidence:
   - `platform_account_visible`
   - `profile_link_visible_or_clickable`
@@ -82,14 +82,14 @@ platform: instagram_reels
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-proof_note: platform profile link manually verified; screenshot or URL evidence saved
+proof_note: screenshot profile-platform-YYYY-MM-DD.png saved
 ```
 
 ### post_publish: youtube_shorts publish-lt-s01-iris-silence
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -112,14 +112,14 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public post URL and starter metrics manually verified
+proof_note: public URL post checked YYYY-MM-DD
 ```
 
 ### post_publish: tiktok publish-lt-s01-iris-silence
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -142,14 +142,14 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public post URL and starter metrics manually verified
+proof_note: public URL post checked YYYY-MM-DD
 ```
 
 ### post_publish: instagram_reels publish-lt-s01-iris-silence
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -172,5 +172,5 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public post URL and starter metrics manually verified
+proof_note: public URL post checked YYYY-MM-DD
 ```

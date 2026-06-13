@@ -13,7 +13,7 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-15
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: manual profile link verified
+proof_note: screenshot profile-youtube_shorts-2026-06-15.png verified
 """
 
 PLATFORM_ALIASES = {

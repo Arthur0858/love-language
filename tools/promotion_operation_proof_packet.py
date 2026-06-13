@@ -51,7 +51,7 @@ def profile_template(item: dict) -> str:
         "status: set",
         f"set_date: {date.today().isoformat()}",
         f"profile_link: {item.get('profileLink', '')}",
-        "proof_note: platform profile link manually verified; screenshot or URL evidence saved",
+        "proof_note: screenshot profile-platform-YYYY-MM-DD.png saved",
     ])
 
 
@@ -67,7 +67,7 @@ def post_template(row: dict) -> str:
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        "proof_note: public post URL and starter metrics manually verified",
+        "proof_note: public URL post checked YYYY-MM-DD",
     ])
 
 
@@ -90,7 +90,7 @@ def build_profile_proofs(profile_packet: dict) -> list[dict[str, object]]:
             "requiredEvidence": list(PROFILE_REQUIRED_EVIDENCE),
             "minimumProofNote": "platform + set time + screenshot filename or manually clicked live link",
             "checkCommand": f"python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-{platform}.txt",
-            "writeCommand": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"profile link manually verified\"",
+            "writeCommand": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"screenshot profile-{platform}-{date.today().isoformat()}.png verified\"",
             "template": profile_template(item),
         })
     return proofs
@@ -118,7 +118,7 @@ def build_post_proofs(first_batch: dict, handoff: dict) -> list[dict[str, object
             "minimumKpiEvidence": list(KPI_REQUIRED_EVIDENCE),
             "blockedBy": blocked_by,
             "checkCommand": f"python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-{platform}-{task_id}.txt",
-            "writeCommand": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"post URL and starter metrics manually verified\"",
+            "writeCommand": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"public URL post checked {date.today().isoformat()}\"",
             "template": post_template(row),
         })
     return proofs

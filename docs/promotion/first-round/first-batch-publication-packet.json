@@ -55,8 +55,8 @@
         "quiz_completions": 0
       },
       "minimumKpiFilled": false,
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"manual post URL verified\"",
-      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"public URL post checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
       "prePublishChecks": [
         "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",
         "影片、字幕、首幀或封面使用正確守護者宇宙，不交換角色設定。",
@@ -94,8 +94,8 @@
         "quiz_completions": 0
       },
       "minimumKpiFilled": false,
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"manual post URL verified\"",
-      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"public URL post checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
       "prePublishChecks": [
         "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",
         "影片、字幕、首幀或封面使用正確守護者宇宙，不交換角色設定。",
@@ -133,8 +133,8 @@
         "quiz_completions": 0
       },
       "minimumKpiFilled": false,
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"manual post URL verified\"",
-      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note \"public URL post checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
       "prePublishChecks": [
         "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",
         "影片、字幕、首幀或封面使用正確守護者宇宙，不交換角色設定。",

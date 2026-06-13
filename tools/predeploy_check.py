@@ -33,6 +33,8 @@ PYTHON_TOOLS = [
     "tools/promotion_post_writeback.py",
     "tools/promotion_post_text_import.py",
     "tools/promotion_placeholder_url_safety_audit.py",
+    "tools/promotion_proof_note_policy.py",
+    "tools/promotion_proof_note_safety_audit.py",
     "tools/promotion_first_batch_publication_packet.py",
     "tools/promotion_first_batch_asset_qa.py",
     "tools/promotion_publishing_status.py",
@@ -187,6 +189,7 @@ def main() -> int:
         run_step("promotion post writeback", [sys.executable, "tools/promotion_post_writeback.py", "check"])
         run_step("promotion post text import", [sys.executable, "tools/promotion_post_text_import.py", "check"])
         run_step("promotion placeholder URL safety audit", [sys.executable, "tools/promotion_placeholder_url_safety_audit.py"])
+        run_step("promotion proof note safety audit", [sys.executable, "tools/promotion_proof_note_safety_audit.py"])
         run_step("promotion first batch publication packet", [sys.executable, "tools/promotion_first_batch_publication_packet.py", "--check"])
         run_step("promotion first batch asset qa", [sys.executable, "tools/promotion_first_batch_asset_qa.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])

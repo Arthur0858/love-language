@@ -208,7 +208,7 @@ def main() -> int:
     check_parser.add_argument("--input", default="", help="Optional text file to validate instead of the built-in sample.")
     add_parser = subparsers.add_parser("add")
     add_parser.add_argument("--input", required=True, help="Text file path, or - for stdin.")
-    add_parser.add_argument("--proof-note", required=True, help="Short proof note, e.g. email request verified.")
+    add_parser.add_argument("--proof-note", required=True, help="Traceable proof note, e.g. email thread Gmail request checked YYYY-MM-DD.")
     add_parser.add_argument("--request-date", default="")
     args = parser.parse_args()
     command = args.command or "check"

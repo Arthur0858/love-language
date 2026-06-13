@@ -45,21 +45,21 @@
 - script：`lt-s01-iris-silence`
 - status：`planned`
 - post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ### tiktok · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - status：`planned`
 - post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ### instagram_reels · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - status：`planned`
 - post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ## Allowed Decisions Now
 

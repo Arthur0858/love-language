@@ -22,7 +22,7 @@
 ### Profile setup proof import
 
 - check：`python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note "manual profile link verified"`
+- write：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note "screenshot profile-youtube_shorts-YYYY-MM-DD.png verified"`
 
 ```text
 LoveTypes profile setup writeback
@@ -30,13 +30,13 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: manual profile link verified
+proof_note: screenshot profile-youtube_shorts-YYYY-MM-DD.png verified
 ```
 
 ### Published post URL and starter KPI import
 
 - check：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "manual post URL verified"`
+- write：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "public URL post checked YYYY-MM-DD"`
 
 ```text
 LoveTypes platform post writeback
@@ -54,7 +54,7 @@ quiz_completions: 0
 ### Structured lead request import
 
 - check：`python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email request verified"`
+- write：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email thread Gmail request checked YYYY-MM-DD"`
 
 ```text
 LoveTypes 結構化需求
@@ -79,7 +79,7 @@ page: https://lovetypes.tw/keepsakes/
 - priority：`high`
 - platform：youtube_shorts
 - url：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -95,7 +95,7 @@ Evidence:
 - priority：`high`
 - platform：tiktok
 - url：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -111,7 +111,7 @@ Evidence:
 - priority：`high`
 - platform：instagram_reels
 - url：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "manual profile link verified"`
+- writeback：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -131,7 +131,7 @@ Evidence:
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 
@@ -155,7 +155,7 @@ Caption:
 - scheduled：2026-06-15 21:00 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 
@@ -179,7 +179,7 @@ Caption:
 - scheduled：2026-06-15 21:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 

@@ -94,11 +94,11 @@ def build_packet() -> dict:
             "evidenceRequirements": evidence_requirements(),
             "writebackCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status set --set-date {date.today().isoformat()} --proof-note \"manual profile link verified\""
+                f"--status set --set-date {date.today().isoformat()} --proof-note \"screenshot profile-{platform}-{date.today().isoformat()}.png verified\""
             ),
             "liveCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status live --set-date {date.today().isoformat()} --proof-note \"live profile link verified\""
+                f"--status live --set-date {date.today().isoformat()} --proof-note \"public URL profile link clicked {date.today().isoformat()}\""
             ),
             "postWritebackCheck": [
                 "重新跑 promotion_launch_readiness_gate.py。",

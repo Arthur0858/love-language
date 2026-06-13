@@ -174,21 +174,21 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
             "id": "profile_setup_import",
             "title": "Profile setup proof import",
             "checkCommand": "python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt",
-            "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"manual profile link verified\"",
+            "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"screenshot profile-youtube_shorts-YYYY-MM-DD.png verified\"",
             "template": "\n".join([
                 "LoveTypes profile setup writeback",
                 f"platform: {profile_platform}",
                 "status: set",
                 f"set_date: {date.today().isoformat()}",
                 f"profile_link: {profile_url}",
-                "proof_note: manual profile link verified",
+                "proof_note: screenshot profile-youtube_shorts-YYYY-MM-DD.png verified",
             ]),
         },
         {
             "id": "post_publish_import",
             "title": "Published post URL and starter KPI import",
             "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
-            "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"manual post URL verified\"",
+            "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL post checked YYYY-MM-DD\"",
             "template": "\n".join([
                 "LoveTypes platform post writeback",
                 f"platform: {publish_platform}",
@@ -206,7 +206,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
             "id": "lead_request_import",
             "title": "Structured lead request import",
             "checkCommand": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
-            "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email request verified\"",
+            "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked YYYY-MM-DD\"",
             "template": "\n".join([
                 "LoveTypes 結構化需求",
                 "來源: 收藏室免費素材需求",

@@ -119,13 +119,13 @@ def build_packet() -> dict:
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
-                f"--proof-note \"manual post URL verified\""
+                f"--proof-note \"public URL post checked {date.today().isoformat()}\""
             ),
             "kpiExampleCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
                 "--site-clicks 0 --quiz-starts 0 --quiz-completions 0 "
-                "--proof-note \"post URL and first metrics verified\""
+                f"--proof-note \"platform analytics checked {date.today().isoformat()}\""
             ),
             "prePublishChecks": [
                 "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",

@@ -45,21 +45,21 @@
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
 
 ### profile_writeback: tiktok profile-tiktok
 
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
 
 ### profile_writeback: instagram_reels profile-instagram_reels
 
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "profile link manually verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
 
 ### readiness_gate: all launch-readiness
 
@@ -74,7 +74,7 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 
 ### publish_post: tiktok publish-lt-s01-iris-silence
 
@@ -82,7 +82,7 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 
 ### publish_post: instagram_reels publish-lt-s01-iris-silence
 
@@ -90,28 +90,28 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "post URL and starter metrics manually verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
 
 ### minimum_kpi_backfill: youtube_shorts publish-lt-s01-iris-silence
 
 - Status: `blocked_until_post_url`
 - Blocked by: `publish_post`
 - Success signal: `platform row has post_url, site_clicks, quiz_starts, quiz_completions`
-- Writeback: `python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- Writeback: `python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ### minimum_kpi_backfill: tiktok publish-lt-s01-iris-silence
 
 - Status: `blocked_until_post_url`
 - Blocked by: `publish_post`
 - Success signal: `platform row has post_url, site_clicks, quiz_starts, quiz_completions`
-- Writeback: `python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- Writeback: `python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ### minimum_kpi_backfill: instagram_reels publish-lt-s01-iris-silence
 
 - Status: `blocked_until_post_url`
 - Blocked by: `publish_post`
 - Success signal: `platform row has post_url, site_clicks, quiz_starts, quiz_completions`
-- Writeback: `python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- Writeback: `python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
 
 ### weekly_review: all weekly-review
 

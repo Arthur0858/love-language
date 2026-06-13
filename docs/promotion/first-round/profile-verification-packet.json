@@ -34,8 +34,8 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note \"live profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
       "postWritebackCheck": [
         "重新跑 promotion_launch_readiness_gate.py。",
         "確認 promotion_launch_readiness_profile_configured 變成 3。",
@@ -61,8 +61,8 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note \"live profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
       "postWritebackCheck": [
         "重新跑 promotion_launch_readiness_gate.py。",
         "確認 promotion_launch_readiness_profile_configured 變成 3。",
@@ -88,8 +88,8 @@
         "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。",
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"manual profile link verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note \"live profile link verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
       "postWritebackCheck": [
         "重新跑 promotion_launch_readiness_gate.py。",
         "確認 promotion_launch_readiness_profile_configured 變成 3。",

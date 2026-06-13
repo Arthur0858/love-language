@@ -8,6 +8,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from promotion_proof_note_policy import proof_note_issue
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -180,6 +182,9 @@ def build_row(args: argparse.Namespace, existing_rows: list[dict[str, str]]) -> 
     proof = args.proof_note.strip()
     if not proof:
         raise SystemExit("real lead writeback requires --proof-note")
+    issue = proof_note_issue(proof)
+    if issue:
+        raise SystemExit(issue)
     if args.consent_status != "explicit_reply_ok":
         raise SystemExit("lead writeback requires explicit_reply_ok consent; use manual notes only for do_not_contact")
     return {
@@ -234,11 +239,11 @@ def playbook(fieldnames: list[str], rows: list[dict[str, str]], issues: list[str
             "guardianName": GUARDIANS[guardian],
             "ownedAssetCommand": (
                 f"python3 tools/promotion_lead_writeback.py add --source contact --guardian {guardian} "
-                "--intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+                f"--intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread {guardian}-owned request checked {today()}\""
             ),
             "lunaCommand": (
                 f"python3 tools/promotion_lead_writeback.py add --source luna_page --guardian {guardian} "
-                "--intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email request verified\""
+                f"--intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread {guardian}-luna request checked {today()}\""
             ),
         })
     return {
@@ -294,7 +299,7 @@ def render_markdown(data: dict) -> str:
         "- Contact 與收藏室的結構化表單會產生 `LoveTypes 結構化需求` 文字。",
         "- 收到來信後，先把該段文字存成暫存 `.txt`，再用匯入工具解析欄位；工具不會把 email 原文寫進 tracker。",
         "- 檢查：`python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt`",
-        "- 寫入：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email request verified\"`",
+        "- 寫入：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked YYYY-MM-DD\"`",
         "",
         "## 安全規則",
         "",

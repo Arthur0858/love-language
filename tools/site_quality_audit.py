@@ -1993,6 +1993,8 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
         elif item_type == "luna_gumroad_pack":
             if parsed.netloc != "lunayogamusic.gumroad.com":
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a Luna Gumroad URL")
+            else:
+                stats["commerce_luna_gumroad_urls_checked"] += 1
 
     stats["commerce_types_checked"] = len(type_counts)
     stats["commerce_roles_checked"] = len(role_counts)
@@ -4351,6 +4353,7 @@ def main() -> int:
     print(f"commerce_primary_affiliate_urls_checked={stats['commerce_primary_affiliate_urls_checked']}")
     print(f"commerce_affiliate_localized_urls_checked={stats['commerce_affiliate_localized_urls_checked']}")
     print(f"commerce_taiwan_affiliate_urls_checked={stats['commerce_taiwan_affiliate_urls_checked']}")
+    print(f"commerce_luna_gumroad_urls_checked={stats['commerce_luna_gumroad_urls_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")
     print(f"commerce_revenue_playbook_checked={stats['commerce_revenue_playbook_checked']}")
     print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")

@@ -373,19 +373,19 @@ def image_declared_sizes(body: bytes) -> set[tuple[int, int]]:
         return {(int(image.size[0]), int(image.size[1]))}
 
 
-def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int]:
+def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, int, int, int, int]:
     path = "/site.webmanifest"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", "") and "manifest" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected manifest/json content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         manifest = json.loads(response.text)
     except json.JSONDecodeError as error:
-        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {error}"], 0, 0, 0, 0, 0, 0, 0, 0, 0
     for field in ("name", "short_name", "description", "start_url", "scope", "display", "theme_color", "icons"):
         if not manifest.get(field):
             issues.append(f"{path}: missing required field {field}")
@@ -409,6 +409,8 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, i
         else:
             issues.append(f"{path}: missing expected shortcut URL {expected_url}")
     shortcut_links_checked = 0
+    shortcut_icons_checked = 0
+    shortcut_icon_dimensions_checked = 0
     for shortcut in shortcuts:
         url = shortcut.get("url") if isinstance(shortcut, dict) else ""
         name = shortcut.get("name") if isinstance(shortcut, dict) else ""
@@ -419,6 +421,42 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, i
         shortcut_links_checked += 1
         if target.status != 200:
             issues.append(f"{path}: shortcut {url} expected status 200, got {target.status}")
+        shortcut_icons = shortcut.get("icons", []) if isinstance(shortcut, dict) else []
+        if not isinstance(shortcut_icons, list) or not shortcut_icons:
+            issues.append(f"{path}: shortcut {url} should include icons")
+            continue
+        for shortcut_icon in shortcut_icons:
+            src = shortcut_icon.get("src") if isinstance(shortcut_icon, dict) else ""
+            sizes = shortcut_icon.get("sizes") if isinstance(shortcut_icon, dict) else ""
+            icon_type = shortcut_icon.get("type") if isinstance(shortcut_icon, dict) else ""
+            if not src or not sizes or not icon_type:
+                issues.append(f"{path}: shortcut {url} icon missing src, sizes, or type: {shortcut_icon!r}")
+                continue
+            if icon_type != "image/png":
+                issues.append(f"{path}: shortcut {url} icon should be image/png: {src}")
+            icon_response = request_url(urljoin(base_url + "/", src.lstrip("/")))
+            shortcut_icons_checked += 1
+            if icon_response.status != 200:
+                issues.append(f"{path}: shortcut {url} icon {src} expected status 200, got {icon_response.status}")
+                continue
+            content_type = icon_response.headers.get("content-type", "")
+            if icon_type not in content_type:
+                issues.append(f"{path}: shortcut {url} icon {src} expected content type containing {icon_type!r}, got {content_type!r}")
+            expected_sizes = parse_icon_sizes(sizes)
+            if not expected_sizes:
+                issues.append(f"{path}: shortcut {url} icon {src} should declare concrete sizes, got {sizes!r}")
+                continue
+            try:
+                actual_sizes = image_declared_sizes(icon_response.body)
+            except OSError as error:
+                issues.append(f"{path}: shortcut {url} icon {src} could not be decoded: {error}")
+                continue
+            shortcut_icon_dimensions_checked += 1
+            if not expected_sizes.issubset(actual_sizes):
+                issues.append(
+                    f"{path}: shortcut {url} icon {src} declared sizes {sorted(expected_sizes)} "
+                    f"should exist in file sizes {sorted(actual_sizes)}"
+                )
     icons = manifest.get("icons", [])
     if not isinstance(icons, list) or not icons:
         issues.append(f"{path}: icons should be a non-empty list")
@@ -510,6 +548,8 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, i
         len(shortcuts),
         shortcut_links_checked,
         manifest_expected_shortcuts_checked,
+        shortcut_icons_checked,
+        shortcut_icon_dimensions_checked,
         screenshots_checked,
         screenshot_dimensions_checked,
     )
@@ -1628,6 +1668,8 @@ def main() -> int:
         manifest_shortcuts,
         manifest_shortcut_links_checked,
         manifest_expected_shortcuts_checked,
+        manifest_shortcut_icons_checked,
+        manifest_shortcut_icon_dimensions_checked,
         manifest_screenshots_checked,
         manifest_screenshot_dimensions_checked,
     ) = check_manifest(base_url)
@@ -1710,6 +1752,8 @@ def main() -> int:
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")
     print(f"public_discovery_manifest_shortcut_links_checked={manifest_shortcut_links_checked}")
     print(f"public_discovery_manifest_expected_shortcuts_checked={manifest_expected_shortcuts_checked}")
+    print(f"public_discovery_manifest_shortcut_icons_checked={manifest_shortcut_icons_checked}")
+    print(f"public_discovery_manifest_shortcut_icon_dimensions_checked={manifest_shortcut_icon_dimensions_checked}")
     print(f"public_discovery_manifest_screenshots_checked={manifest_screenshots_checked}")
     print(f"public_discovery_manifest_screenshot_dimensions_checked={manifest_screenshot_dimensions_checked}")
     print(f"public_discovery_llms_sections_checked={llms_sections_checked}")

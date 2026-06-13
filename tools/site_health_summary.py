@@ -367,6 +367,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_discovery_manifest_shortcuts",
         "public_discovery_manifest_shortcut_links_checked",
         "public_discovery_manifest_expected_shortcuts_checked",
+        "public_discovery_manifest_shortcut_icons_checked",
+        "public_discovery_manifest_shortcut_icon_dimensions_checked",
         "public_discovery_llms_sections_checked",
         "public_discovery_llms_snippets_checked",
         "public_discovery_llms_high_value_urls_checked",

@@ -1218,6 +1218,45 @@ def parse_manifest() -> tuple[list[str], Counter]:
             parser.feed(target.read_text(encoding="utf-8", errors="ignore"))
             if fragment not in parser.ids:
                 issues.append(f"{MANIFEST_PATH}: shortcut anchor missing #{fragment}: {shortcut['url']}")
+        shortcut_icons = shortcut.get("icons", [])
+        if not isinstance(shortcut_icons, list) or not shortcut_icons:
+            issues.append(f"{MANIFEST_PATH}: shortcut missing icons: {shortcut.get('url', '<unknown>')}")
+            continue
+        for shortcut_icon in shortcut_icons:
+            stats["manifest_shortcut_icons"] += 1
+            if not isinstance(shortcut_icon, dict):
+                issues.append(f"{MANIFEST_PATH}: shortcut icon entry should be an object: {shortcut.get('url')}")
+                continue
+            src = shortcut_icon.get("src", "")
+            sizes = shortcut_icon.get("sizes", "")
+            icon_type = shortcut_icon.get("type", "")
+            if not src or not sizes or not icon_type:
+                issues.append(f"{MANIFEST_PATH}: shortcut icon missing src, sizes, or type: {shortcut_icon}")
+                continue
+            if icon_type != "image/png":
+                issues.append(f"{MANIFEST_PATH}: shortcut icon should be image/png: {src}")
+            icon_target = ROOT / unquote(src.lstrip("/"))
+            if not icon_target.exists():
+                issues.append(f"{MANIFEST_PATH}: shortcut icon target missing: {src}")
+                continue
+            actual_size = image_size(icon_target)
+            declared_sizes = [part for part in sizes.split() if "x" in part]
+            if not declared_sizes:
+                issues.append(f"{MANIFEST_PATH}: shortcut icon missing concrete sizes: {src}")
+                continue
+            for declared in declared_sizes:
+                try:
+                    declared_width, declared_height = [int(part) for part in declared.split("x", 1)]
+                except ValueError:
+                    issues.append(f"{MANIFEST_PATH}: invalid shortcut icon size {declared}: {src}")
+                    continue
+                if actual_size and actual_size == (declared_width, declared_height):
+                    stats["manifest_shortcut_icon_dimensions"] += 1
+                elif actual_size:
+                    issues.append(
+                        f"{MANIFEST_PATH}: shortcut icon size {declared} does not match file "
+                        f"{actual_size[0]}x{actual_size[1]}: {src}"
+                    )
 
     return issues, stats
 
@@ -4479,6 +4518,8 @@ def main() -> int:
     print(f"manifest_icons={stats['manifest_icons']}")
     print(f"manifest_screenshots={stats['manifest_screenshots']}")
     print(f"manifest_shortcuts={stats['manifest_shortcuts']}")
+    print(f"manifest_shortcut_icons={stats['manifest_shortcut_icons']}")
+    print(f"manifest_shortcut_icon_dimensions={stats['manifest_shortcut_icon_dimensions']}")
     print(f"feed_items={stats['feed_items']}")
     print(f"llms_files_checked={stats['llms_files_checked']}")
     print(f"llms_lines={stats['llms_lines']}")

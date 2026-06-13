@@ -12,7 +12,7 @@
 ## Rule
 
 - 空資料時只能準備內容變體與既有免費收藏物，不交付自有 PDF/桌布/Luna pack，也不加重付費 CTA。
-- 自有素材履約必須有真實需求或 lead-demand ready route。
+- 自有素材履約必須有真實需求，且只能解鎖使用者明確要求的素材類型。
 - Luna / 聯盟 / 商業資產必須等 offer experiment queue READY。
 - 所有履約都必須保留安全邊界：不診斷、不承諾療效、不替代諮商。
 
@@ -33,7 +33,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-iris
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 艾莉絲 · `phone_wallpaper`
@@ -42,7 +42,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-iris
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 艾莉絲 · `email_lead_template`
@@ -51,7 +51,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/contact/#luna-supply-request
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 艾莉絲 · `short_ritual`
@@ -60,7 +60,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/repair-plan/#plan-iris
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 艾莉絲 · `luna_scene_cta`
@@ -105,7 +105,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-noah
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 諾雅 · `phone_wallpaper`
@@ -114,7 +114,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-noah
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 諾雅 · `email_lead_template`
@@ -123,7 +123,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/contact/#luna-supply-request
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 諾雅 · `short_ritual`
@@ -132,7 +132,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/repair-plan/#plan-noah
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 諾雅 · `luna_scene_cta`
@@ -177,7 +177,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-vivian
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 薇薇安 · `phone_wallpaper`
@@ -186,7 +186,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-vivian
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 薇薇安 · `email_lead_template`
@@ -195,7 +195,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/contact/#luna-supply-request
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 薇薇安 · `short_ritual`
@@ -204,7 +204,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/repair-plan/#plan-vivian
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 薇薇安 · `luna_scene_cta`
@@ -249,7 +249,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-claire
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 克萊兒 · `phone_wallpaper`
@@ -258,7 +258,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-claire
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 克萊兒 · `email_lead_template`
@@ -267,7 +267,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/contact/#luna-supply-request
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 克萊兒 · `short_ritual`
@@ -276,7 +276,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/repair-plan/#plan-claire
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 克萊兒 · `luna_scene_cta`
@@ -321,7 +321,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-dora
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 朵拉 · `phone_wallpaper`
@@ -330,7 +330,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/keepsakes/#keepsake-dora
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 朵拉 · `email_lead_template`
@@ -339,7 +339,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/contact/#luna-supply-request
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 朵拉 · `short_ritual`
@@ -348,7 +348,7 @@
 - status：`blocked_until_real_request`
 - priority：`later`
 - target：https://lovetypes.tw/repair-plan/#plan-dora
-- evidence：Owned assets require at least one traceable request or a ready lead-demand route.
+- evidence：Owned assets require at least one traceable request for this specific asset type.
 - stop：Wait for lead-intake-tracker.csv evidence before building or sending.
 
 ### 朵拉 · `luna_scene_cta`

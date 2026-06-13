@@ -10,7 +10,7 @@
   "policy": {
     "doNotFulfillWithoutEvidence": true,
     "freePublicAssetsCanExistBeforeDemand": true,
-    "ownedAssetsRequireRealRequest": true,
+    "ownedAssetsRequireSpecificRealRequest": true,
     "commercialAssetsRequireReadyOfferGate": true,
     "emptyDataBoundary": "Only content variants and existing free public keepsakes may be prepared while real leads and KPI remain zero."
   },
@@ -24,6 +24,7 @@
     "blockedUntilOfferReady": 10,
     "blockedMissingInventory": 0,
     "realLeads": 0,
+    "requestedAssetTypes": 0,
     "readyOfferAssets": 0,
     "readyDemandPairs": 0
   },
@@ -48,7 +49,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -60,7 +61,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -72,7 +73,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -84,7 +85,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/repair-plan/#plan-iris",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -144,7 +145,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -156,7 +157,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -168,7 +169,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -180,7 +181,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/repair-plan/#plan-noah",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -240,7 +241,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -252,7 +253,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -264,7 +265,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -276,7 +277,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/repair-plan/#plan-vivian",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -336,7 +337,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-claire",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -348,7 +349,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-claire",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -360,7 +361,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -372,7 +373,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/repair-plan/#plan-claire",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -432,7 +433,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-dora",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -444,7 +445,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-dora",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -456,7 +457,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },
@@ -468,7 +469,7 @@
       "priority": "later",
       "targetUrl": "https://lovetypes.tw/repair-plan/#plan-dora",
       "fulfillmentStatus": "blocked_until_real_request",
-      "evidence": "Owned assets require at least one traceable request or a ready lead-demand route.",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
       "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
       "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
     },

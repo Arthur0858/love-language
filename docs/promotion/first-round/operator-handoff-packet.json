@@ -165,7 +165,7 @@
       "title": "Published post URL and starter KPI import",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
       "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"manual post URL verified\"",
-      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://example.com/post\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0"
+      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://www.youtube.com/shorts/lovetypes-proof-url-123\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0"
     },
     {
       "id": "lead_request_import",

@@ -13,7 +13,7 @@ platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-15
-post_url: https://www.youtube.com/shorts/example
+post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123
 views: 0
 site_clicks: 0
 quiz_starts: 0
@@ -106,7 +106,7 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
         if not writeback.validate_date(data.get("published_date", "")):
             issues.append("published status requires published_date YYYY-MM-DD")
         if not writeback.valid_post_url(data.get("post_url", "")):
-            issues.append("published status requires https post_url")
+            issues.append("published status requires non-placeholder https post_url")
     if data.get("task_id") and not task_exists(data.get("platform", ""), data["task_id"]):
         issues.append(f"unknown platform/task_id {data.get('platform')}/{data.get('task_id')}")
     for field in writeback.METRIC_FIELDS:

@@ -73,7 +73,11 @@ def validate_date(value: str) -> bool:
 
 def valid_post_url(value: str) -> bool:
     parsed = urlparse(value)
-    return parsed.scheme == "https" and bool(parsed.netloc)
+    if parsed.scheme != "https" or not parsed.netloc:
+        return False
+    lowered = value.strip().lower()
+    placeholder_tokens = ("example.com", "placeholder", "replace-with-real", "replace_with_real")
+    return not any(token in lowered for token in placeholder_tokens)
 
 
 def key(row: dict[str, str]) -> tuple[str, str]:
@@ -115,7 +119,7 @@ def validate_rows(
             if not validate_date(row.get("published_date", "")):
                 issues.append(f"{label}: published row requires published_date YYYY-MM-DD")
             if not valid_post_url(row.get("post_url", "")):
-                issues.append(f"{label}: published row requires https post_url")
+                issues.append(f"{label}: published row requires non-placeholder https post_url")
             if "verified:" not in (row.get("notes") or ""):
                 issues.append(f"{label}: published row requires verified proof note")
             platform_row = platform_lookup.get((platform, task_id), {})

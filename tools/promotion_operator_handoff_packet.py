@@ -195,7 +195,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
                 f"task_id: {publish_task}",
                 "status: published",
                 f"published_date: {date.today().isoformat()}",
-                "post_url: https://example.com/post",
+                "post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123",
                 "views: 0",
                 "site_clicks: 0",
                 "quiz_starts: 0",

@@ -44,7 +44,7 @@ platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-14
-post_url: https://example.com/post
+post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123
 views: 0
 site_clicks: 0
 quiz_starts: 0

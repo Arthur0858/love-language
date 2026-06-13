@@ -12,7 +12,7 @@ from email.utils import parsedate_to_datetime
 from io import BytesIO
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 from PIL import Image
@@ -140,6 +140,9 @@ EXPECTED_AFFILIATE_LOCALE_POLICY = {
     "ko": {"provider": "amazon", "host": "www.amazon.com", "tag": "parenttechche-20"},
     "es": {"provider": "amazon", "host": "www.amazon.com", "tag": "parenttechche-20"},
 }
+EXPECTED_AMAZON_ASSOCIATE_TAG = "parenttechche-20"
+EXPECTED_BOOKS_AFFILIATE_HOST = "www.books.com.tw"
+EXPECTED_AMAZON_AFFILIATE_HOST = "www.amazon.com"
 EXPECTED_SITE_INDEX_LANGS = {"zh", "en", "ja", "ko", "es"}
 EXPECTED_SITE_INDEX_FLOWS = {"shorts_to_quiz", "quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
 EXPECTED_GUARDIAN_LANGUAGES = {
@@ -737,20 +740,37 @@ def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, 
     return issues, len(event_kpi_map), len(mapped_events)
 
 
-def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int]:
+def is_expected_commerce_affiliate_url(lang: str, value: str) -> bool:
+    parsed = urlparse(value)
+    if lang == "zh":
+        return (
+            parsed.scheme == "https"
+            and parsed.hostname == EXPECTED_BOOKS_AFFILIATE_HOST
+            and parsed.path.startswith("/exep/assp.php/")
+            and "arthur0858" in parsed.path
+        )
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == EXPECTED_AMAZON_AFFILIATE_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == EXPECTED_AMAZON_ASSOCIATE_TAG
+    )
+
+
+def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
@@ -790,12 +810,13 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
                 break
     items = data.get("items", [])
     if not isinstance(items, list):
-        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked
+        return [f"{path}: items should be a list"], 0, 0, 0, affiliate_policy_checked, 0
     if len(items) != 20:
         issues.append(f"{path}: expected 20 commerce items, got {len(items)}")
     type_counts: dict[str, int] = {}
     role_counts: dict[str, int] = {}
     ids: set[str] = set()
+    affiliate_localized_urls_checked = 0
     playbook_by_type = {
         item_type: play
         for play in (playbook if isinstance(playbook, list) else [])
@@ -819,6 +840,25 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
             type_counts[item_type] = type_counts.get(item_type, 0) + 1
         if isinstance(role, str):
             role_counts[role] = role_counts.get(role, 0) + 1
+        if item_type == "affiliate_book":
+            if item.get("amazonAssociateTag") != EXPECTED_AMAZON_ASSOCIATE_TAG:
+                issues.append(f"{path}: {item_id or '<unknown>'} should include amazonAssociateTag={EXPECTED_AMAZON_ASSOCIATE_TAG}")
+            localized_urls = item.get("localizedUrls")
+            if not isinstance(localized_urls, dict):
+                issues.append(f"{path}: {item_id or '<unknown>'} should include localizedUrls")
+            else:
+                for lang in EXPECTED_AFFILIATE_LOCALE_POLICY:
+                    localized_url = localized_urls.get(lang)
+                    if not isinstance(localized_url, str) or not localized_url:
+                        issues.append(f"{path}: {item_id or '<unknown>'} localizedUrls.{lang} should be a URL")
+                        continue
+                    affiliate_localized_urls_checked += 1
+                    if not is_expected_commerce_affiliate_url(lang, localized_url):
+                        expected = "Books.com.tw affiliate URL" if lang == "zh" else f"Amazon Associates tag={EXPECTED_AMAZON_ASSOCIATE_TAG}"
+                        issues.append(f"{path}: {item_id or '<unknown>'} localizedUrls.{lang} should use {expected}")
+            taiwan_url = item.get("taiwanAffiliateUrl")
+            if not isinstance(taiwan_url, str) or not is_expected_commerce_affiliate_url("zh", taiwan_url):
+                issues.append(f"{path}: {item_id or '<unknown>'} should include taiwanAffiliateUrl using Books.com.tw")
         if not isinstance(item.get("conversion"), str) or not item["conversion"]:
             issues.append(f"{path}: {item_id or '<unknown>'} missing conversion")
         if not isinstance(item.get("disclosure"), str) or not item["disclosure"]:
@@ -841,7 +881,7 @@ def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int, int
     for role, expected in EXPECTED_COMMERCE_ROLE_COUNTS.items():
         if role_counts.get(role) != expected:
             issues.append(f"{path}: expected {expected} {role} items, got {role_counts.get(role, 0)}")
-    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked
+    return issues, len(items), len(type_counts), len(role_counts), affiliate_policy_checked, affiliate_localized_urls_checked
 
 
 def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1425,6 +1465,7 @@ def main() -> int:
         commerce_types_checked,
         commerce_roles_checked,
         commerce_affiliate_locale_policies_checked,
+        commerce_affiliate_localized_urls_checked,
     ) = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
@@ -1478,6 +1519,7 @@ def main() -> int:
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")
     print(f"public_discovery_commerce_affiliate_locale_policies_checked={commerce_affiliate_locale_policies_checked}")
+    print(f"public_discovery_commerce_affiliate_localized_urls_checked={commerce_affiliate_localized_urls_checked}")
     print(f"public_discovery_site_index_pages_checked={site_index_pages_checked}")
     print(f"public_discovery_site_index_languages_checked={site_index_languages_checked}")
     print(f"public_discovery_site_index_groups_checked={site_index_groups_checked}")

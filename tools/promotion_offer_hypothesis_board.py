@@ -81,6 +81,8 @@ def validation_step(stage: str, readiness: str) -> str:
 
 def build_board(matrix: dict, gate: dict, playbook: dict, backlog: dict) -> dict:
     matrix_guardians = by_guardian(matrix.get("guardians", []))
+    expected_guardians = [guardian for guardian in GUARDIAN_ORDER if guardian in matrix_guardians]
+    expected_intake_templates = len(playbook.get("intakeTypes", [])) if isinstance(playbook.get("intakeTypes"), list) else 0
     rows = []
     for guardian_id in GUARDIAN_ORDER:
         item = matrix_guardians.get(guardian_id, {})
@@ -143,6 +145,8 @@ def build_board(matrix: dict, gate: dict, playbook: dict, backlog: dict) -> dict
             "assetBuildBacklog": str(BACKLOG_PATH.relative_to(ROOT)),
         },
         "rows": rows,
+        "expectedRowCount": len(expected_guardians),
+        "expectedIntakeTemplatesPerGuardian": expected_intake_templates,
         "readyRows": sum(1 for row in rows if row["readiness"] == "PASS"),
         "holdRows": sum(1 for row in rows if row["readiness"] == "HOLD"),
         "blockers": blockers,
@@ -218,8 +222,9 @@ def write_outputs(board: dict, output: Path, json_output: Path, csv_output: Path
 def validate_board(board: dict) -> list[str]:
     issues: list[str] = []
     rows = board.get("rows", [])
-    if len(rows) != 5:
-        issues.append("expected five guardian offer hypothesis rows")
+    expected_rows = int(board.get("expectedRowCount", 0) or 0)
+    if len(rows) != expected_rows:
+        issues.append(f"expected {expected_rows} guardian offer hypothesis rows, got {len(rows)}")
     if any(row.get("readiness") not in {"PASS", "HOLD"} for row in rows):
         issues.append("readiness must be PASS or HOLD")
     if board.get("blockers") and any(row.get("readiness") == "PASS" for row in rows):
@@ -230,8 +235,9 @@ def validate_board(board: dict) -> list[str]:
             issues.append(f"{guardian}: missing hypothesis, validation, or target")
         if not row.get("ownedAsset", {}).get("leadItemId"):
             issues.append(f"{guardian}: missing owned lead item id")
-        if row.get("ownedAsset", {}).get("intakeTemplates") != 3:
-            issues.append(f"{guardian}: expected three intake templates")
+        expected_intake_templates = int(board.get("expectedIntakeTemplatesPerGuardian", 0) or 0)
+        if row.get("ownedAsset", {}).get("intakeTemplates") != expected_intake_templates:
+            issues.append(f"{guardian}: expected {expected_intake_templates} intake templates")
     return issues
 
 

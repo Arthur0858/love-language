@@ -155,6 +155,7 @@ def target_for_asset(asset_type: str, path: dict) -> str:
 def build_backlog(tasks: list[dict], matrix: dict) -> dict:
     grouped_tasks = tasks_by_guardian(tasks)
     grouped_matrix = matrix_by_guardian(matrix)
+    expected_guardians = [guardian for guardian in GUARDIAN_ORDER if guardian in grouped_tasks]
     items = []
     for guardian in GUARDIAN_ORDER:
         guardian_tasks = grouped_tasks.get(guardian, [])
@@ -176,6 +177,8 @@ def build_backlog(tasks: list[dict], matrix: dict) -> dict:
         },
         "itemCount": len(items),
         "guardianCount": len({item["guardianId"] for item in items}),
+        "expectedGuardianCount": len(expected_guardians),
+        "expectedItemCount": len(expected_guardians) * len(ASSET_TYPES),
         "assetTypes": ASSET_TYPES,
         "priorityCounts": dict(sorted(priority_counts.items())),
         "items": items,
@@ -238,9 +241,10 @@ def render_markdown(backlog: dict) -> str:
 
 def validate_backlog(backlog: dict) -> list[str]:
     issues: list[str] = []
-    if backlog.get("guardianCount") != 5:
-        issues.append("expected five guardians in asset backlog")
-    expected_items = 5 * len(ASSET_TYPES)
+    expected_guardians = int(backlog.get("expectedGuardianCount", 0) or 0)
+    if backlog.get("guardianCount") != expected_guardians:
+        issues.append(f"expected {expected_guardians} guardians in asset backlog")
+    expected_items = int(backlog.get("expectedItemCount", 0) or 0)
     if backlog.get("itemCount") != expected_items:
         issues.append(f"expected {expected_items} asset backlog items")
     by_guardian = defaultdict(list)

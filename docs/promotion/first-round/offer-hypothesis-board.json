@@ -223,6 +223,8 @@
       "safetyBoundary": "商品假設只能在測驗結果後或補給路線測試；不得承諾療效、診斷或必須購買。"
     }
   ],
+  "expectedRowCount": 5,
+  "expectedIntakeTemplatesPerGuardian": 3,
   "readyRows": 0,
   "holdRows": 5,
   "blockers": [

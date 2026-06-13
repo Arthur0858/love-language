@@ -6,6 +6,8 @@
   },
   "itemCount": 40,
   "guardianCount": 5,
+  "expectedGuardianCount": 5,
+  "expectedItemCount": 40,
   "assetTypes": [
     "free_story_card_upgrade",
     "pdf_practice_card",

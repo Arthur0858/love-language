@@ -9895,9 +9895,20 @@ def funnel_event_category(name: str) -> str:
 def funnel_event_role(name: str) -> str:
     if name.startswith("campaign_"):
         return "acquisition"
+    if name.startswith(("supply_pack_free_keepsake", "home_saved_pack_free_keepsake")):
+        return "retention"
+    if name.startswith(
+        (
+            "supply_pack_owned_request",
+            "home_saved_pack_owned_request",
+            "supply_pack_contact",
+            "home_saved_pack_contact",
+        )
+    ):
+        return "lead"
+    if name.startswith(("supply_pack_luna", "home_saved_pack_luna")):
+        return "navigation"
     if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product", "starter_pack")):
-        return "revenue"
-    if name.startswith(("supply_pack_", "home_saved_pack_")):
         return "revenue"
     if any(token in name for token in ("mailto", "contact", "request", "send")):
         return "lead"
@@ -9959,6 +9970,17 @@ def collect_funnel_events() -> dict:
     for page in ["/", "/start/", "/en/", "/en/start/", "/ja/", "/ja/start/", "/ko/", "/ko/start/", "/es/", "/es/start/"]:
         add_event("quiz_started", page)
         add_event("quiz_completed", page)
+        for name in (
+            "home_saved_pack_free_keepsake",
+            "home_saved_pack_owned_request",
+            "home_saved_pack_luna",
+            "home_saved_pack_contact",
+            "supply_pack_free_keepsake",
+            "supply_pack_owned_request",
+            "supply_pack_luna",
+            "supply_pack_contact",
+        ):
+            add_event(name, page)
 
     event_items = []
     for name in sorted(events):

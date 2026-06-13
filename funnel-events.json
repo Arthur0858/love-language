@@ -5,8 +5,8 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 193,
-    "trackedOccurrences": 3748,
+    "events": 201,
+    "trackedOccurrences": 3828,
     "pages": 110
   },
   "events": [
@@ -1811,6 +1811,82 @@
       "pageCount": 10
     },
     {
+      "name": "home_saved_pack_contact",
+      "category": "quiz_result",
+      "role": "lead",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "home_saved_pack_free_keepsake",
+      "category": "quiz_result",
+      "role": "retention",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "home_saved_pack_luna",
+      "category": "quiz_result",
+      "role": "navigation",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "home_saved_pack_owned_request",
+      "category": "quiz_result",
+      "role": "lead",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
       "name": "keepsake_resume_contact",
       "category": "keepsake",
       "role": "lead",
@@ -2874,6 +2950,82 @@
         "/resources/"
       ],
       "pageCount": 5
+    },
+    {
+      "name": "supply_pack_contact",
+      "category": "quiz_result",
+      "role": "lead",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "supply_pack_free_keepsake",
+      "category": "quiz_result",
+      "role": "retention",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "supply_pack_luna",
+      "category": "quiz_result",
+      "role": "navigation",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
+    },
+    {
+      "name": "supply_pack_owned_request",
+      "category": "quiz_result",
+      "role": "lead",
+      "count": 10,
+      "pages": [
+        "/",
+        "/en/",
+        "/en/start/",
+        "/es/",
+        "/es/start/",
+        "/ja/",
+        "/ja/start/",
+        "/ko/",
+        "/ko/start/",
+        "/start/"
+      ],
+      "pageCount": 10
     },
     {
       "name": "supply_product_contact",

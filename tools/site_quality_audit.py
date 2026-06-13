@@ -1745,6 +1745,24 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
         "contact_supply_mailto",
         "free_keepsake_download",
         "campaign_landing",
+        "home_saved_pack_free_keepsake",
+        "home_saved_pack_owned_request",
+        "home_saved_pack_luna",
+        "home_saved_pack_contact",
+        "supply_pack_free_keepsake",
+        "supply_pack_owned_request",
+        "supply_pack_luna",
+        "supply_pack_contact",
+    }
+    runtime_pack_roles = {
+        "home_saved_pack_free_keepsake": "retention",
+        "home_saved_pack_owned_request": "lead",
+        "home_saved_pack_luna": "navigation",
+        "home_saved_pack_contact": "lead",
+        "supply_pack_free_keepsake": "retention",
+        "supply_pack_owned_request": "lead",
+        "supply_pack_luna": "navigation",
+        "supply_pack_contact": "lead",
     }
     seen: set[str] = set()
     categories: set[str] = set()
@@ -1781,6 +1799,9 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
             roles.add(role)
         if name == "luna_gumroad_pack_click" and role != "revenue":
             issues.append(f"{FUNNEL_EVENTS_PATH}: luna_gumroad_pack_click should be a revenue event")
+        expected_runtime_role = runtime_pack_roles.get(name)
+        if expected_runtime_role and role != expected_runtime_role:
+            issues.append(f"{FUNNEL_EVENTS_PATH}: {name} should be a {expected_runtime_role} event")
     missing = sorted(required_events.difference(seen))
     if missing:
         issues.append(f"{FUNNEL_EVENTS_PATH}: missing core funnel events: {', '.join(missing)}")

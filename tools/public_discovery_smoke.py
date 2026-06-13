@@ -114,6 +114,15 @@ REQUIRED_ROBOTS_LINES = (
     "Allow: /",
     "Sitemap: https://lovetypes.tw/sitemap.xml",
 )
+REQUIRED_ROBOTS_SITEMAP_URLS = (
+    "https://lovetypes.tw/",
+    "https://lovetypes.tw/start/",
+    "https://lovetypes.tw/characters/",
+    "https://lovetypes.tw/resources/",
+    "https://lovetypes.tw/contact/",
+    "https://lovetypes.tw/privacy/",
+    "https://lovetypes.tw/terms/",
+)
 URL_RE = re.compile(r"https://lovetypes\.tw/[^\s),]+")
 REQUIRED_FUNNEL_EVENTS = {
     "quiz_result_supply_route",
@@ -694,14 +703,15 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, text_files_checked, security_fields_checked, security_date_fields_checked, humans_snippets_checked
 
 
-def check_robots(base_url: str) -> tuple[list[str], int, int]:
+def check_robots(base_url: str) -> tuple[list[str], int, int, int]:
     path = "/robots.txt"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     robots_lines_checked = 0
     sitemap_links_checked = 0
+    sitemap_core_urls_checked = 0
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], robots_lines_checked, sitemap_links_checked
+        return [f"{path}: expected status 200, got {response.status}"], robots_lines_checked, sitemap_links_checked, sitemap_core_urls_checked
     if not response.headers.get("content-type", "").startswith("text/plain"):
         issues.append(f"{path}: expected text/plain content type, got {response.headers.get('content-type')!r}")
 
@@ -734,11 +744,25 @@ def check_robots(base_url: str) -> tuple[list[str], int, int]:
         sitemap_response = request_url(sitemap_url)
         if sitemap_response.status != 200:
             issues.append(f"{path}: sitemap {sitemap_url} expected status 200, got {sitemap_response.status}")
+            continue
         if "xml" not in sitemap_response.headers.get("content-type", ""):
             issues.append(f"{path}: sitemap {sitemap_url} expected XML content type, got {sitemap_response.headers.get('content-type')!r}")
+        try:
+            root = ET.fromstring(sitemap_response.text)
+        except ET.ParseError as error:
+            issues.append(f"{path}: sitemap {sitemap_url} should be parseable XML: {error}")
+            continue
+        sitemap_locs = {element.text.strip() for element in root.findall(".//{http://www.sitemaps.org/schemas/sitemap/0.9}loc") if element.text}
+        if not sitemap_locs:
+            issues.append(f"{path}: sitemap {sitemap_url} should contain URL loc entries")
+        for required_url in REQUIRED_ROBOTS_SITEMAP_URLS:
+            if required_url in sitemap_locs:
+                sitemap_core_urls_checked += 1
+            else:
+                issues.append(f"{path}: sitemap {sitemap_url} missing core URL {required_url}")
     if not sitemap_urls:
         issues.append(f"{path}: missing Sitemap directive")
-    return issues, robots_lines_checked, sitemap_links_checked
+    return issues, robots_lines_checked, sitemap_links_checked, sitemap_core_urls_checked
 
 
 def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
@@ -1729,7 +1753,7 @@ def main() -> int:
         security_date_fields_checked,
         humans_snippets_checked,
     ) = check_text_files(base_url)
-    robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
+    robots_issues, robots_lines_checked, robots_sitemap_links_checked, robots_sitemap_core_urls_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
     promotion_event_issues, promotion_event_kpi_rows_checked, promotion_event_kpi_events_checked = check_promotion_event_kpi_alignment(base_url)
     (
@@ -1814,6 +1838,7 @@ def main() -> int:
     print(f"public_discovery_humans_snippets_checked={humans_snippets_checked}")
     print(f"public_discovery_robots_lines_checked={robots_lines_checked}")
     print(f"public_discovery_robots_sitemap_links_checked={robots_sitemap_links_checked}")
+    print(f"public_discovery_robots_sitemap_core_urls_checked={robots_sitemap_core_urls_checked}")
     print(f"public_discovery_funnel_events_checked={funnel_events_checked}")
     print(f"public_discovery_funnel_event_categories_checked={funnel_categories_checked}")
     print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")

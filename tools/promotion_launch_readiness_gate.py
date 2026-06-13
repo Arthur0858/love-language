@@ -23,6 +23,12 @@ EXPECTED_PLATFORMS = set(EXPECTED_PLATFORM_ORDER)
 CAMPAIGN = "first_round_quiz_completion"
 REQUIRED_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
 CONFIGURED_PROFILE_STATUSES = ("set", "live")
+BLOCKER_ORDER = ("set_platform_profile_links", "publish_first_batch", "backfill_first_batch_kpis")
+BLOCKER_SEVERITY_BY_ID = {
+    "set_platform_profile_links": "launch_blocker",
+    "publish_first_batch": "measurement_blocker",
+    "backfill_first_batch_kpis": "decision_blocker",
+}
 PLATFORM_LABELS = {
     "youtube_shorts": "YouTube Shorts",
     "tiktok": "TikTok",
@@ -41,6 +47,13 @@ def readiness_policy() -> dict[str, object]:
         "firstBatchWeek": 1,
         "firstBatchSlot": 1,
         "minimumAssetReadyChecks": len(EXPECTED_PLATFORMS),
+        "blockerOrder": list(BLOCKER_ORDER),
+        "blockerSeverityById": BLOCKER_SEVERITY_BY_ID,
+        "blockerReleaseConditions": {
+            "set_platform_profile_links": "All platform-profile-tracker.csv rows are marked set/live with valid /start/ campaign profile links.",
+            "publish_first_batch": "The first-batch posting-queue.csv platform rows are marked published and have post_url values.",
+            "backfill_first_batch_kpis": "At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.",
+        },
         "rule": "三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。",
     }
 
@@ -197,21 +210,21 @@ def build_gate(
         blockers.append({
             "id": "set_platform_profile_links",
             "phase": "profile_setup",
-            "severity": "launch_blocker",
+            "severity": BLOCKER_SEVERITY_BY_ID["set_platform_profile_links"],
             "message": f"{expected_platform_count} 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。",
         })
     if published_rows < expected_platform_count:
         blockers.append({
             "id": "publish_first_batch",
             "phase": "publish",
-            "severity": "measurement_blocker",
+            "severity": BLOCKER_SEVERITY_BY_ID["publish_first_batch"],
             "message": f"首批 {expected_platform_count} 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。",
         })
     if filled_kpi_rows < expected_platform_count:
         blockers.append({
             "id": "backfill_first_batch_kpis",
             "phase": "measurement",
-            "severity": "decision_blocker",
+            "severity": BLOCKER_SEVERITY_BY_ID["backfill_first_batch_kpis"],
             "message": f"KPI 尚未回填到前 {expected_platform_count} 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。",
         })
 
@@ -236,6 +249,15 @@ def build_gate(
         issues.append("readiness policy platform count does not match expected platform order")
     if tuple(policy.get("requiredKpiFields", [])) != REQUIRED_KPI_FIELDS:
         issues.append("readiness policy KPI fields do not match required KPI fields")
+    if tuple(policy.get("blockerOrder", [])) != BLOCKER_ORDER:
+        issues.append("readiness policy blocker order does not match blocker policy")
+    blocker_ids = tuple(blocker["id"] for blocker in blockers)
+    if blocker_ids != tuple(blocker_id for blocker_id in BLOCKER_ORDER if blocker_id in blocker_ids):
+        issues.append("blockers should follow readiness policy order")
+    for blocker in blockers:
+        expected_severity = BLOCKER_SEVERITY_BY_ID.get(blocker["id"])
+        if blocker.get("severity") != expected_severity:
+            issues.append(f"{blocker['id']}: blocker severity should be {expected_severity}")
 
     return {
         "generatedAt": date.today().isoformat(),
@@ -300,6 +322,7 @@ def render_markdown(gate: dict) -> str:
         f"- 可做 KPI/商品判斷：`{int(readiness['readyForKpiDecision'])}`",
         f"- 空資料模式：`{int(readiness['emptyDataMode'])}`",
         f"- 規則：{policy['rule']}",
+        f"- blocker 順序：{', '.join(f'`{item}`' for item in policy['blockerOrder'])}",
         "",
         "## 目前數字",
         "",
@@ -355,7 +378,8 @@ def render_markdown(gate: dict) -> str:
     ])
     if gate["blockers"]:
         for blocker in gate["blockers"]:
-            lines.append(f"- `{blocker['id']}`：{blocker['message']}")
+            release = policy["blockerReleaseConditions"].get(blocker["id"], "")
+            lines.append(f"- `{blocker['id']}` ({blocker['severity']})：{blocker['message']} 解除條件：{release}")
     else:
         lines.append("- 無阻擋項。")
     lines.extend([

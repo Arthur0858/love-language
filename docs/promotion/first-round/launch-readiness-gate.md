@@ -7,6 +7,7 @@
 - 可做 KPI/商品判斷：`0`
 - 空資料模式：`1`
 - 規則：三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。
+- blocker 順序：`set_platform_profile_links`, `publish_first_batch`, `backfill_first_batch_kpis`
 
 ## 目前數字
 
@@ -80,9 +81,9 @@
 
 ## 阻擋項
 
-- `set_platform_profile_links`：3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。
-- `publish_first_batch`：首批 3 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。
-- `backfill_first_batch_kpis`：KPI 尚未回填到前 3 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。
+- `set_platform_profile_links` (launch_blocker)：3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。 解除條件：All platform-profile-tracker.csv rows are marked set/live with valid /start/ campaign profile links.
+- `publish_first_batch` (measurement_blocker)：首批 3 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。 解除條件：The first-batch posting-queue.csv platform rows are marked published and have post_url values.
+- `backfill_first_batch_kpis` (decision_blocker)：KPI 尚未回填到前 3 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。 解除條件：At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.
 
 ## 安全界線
 

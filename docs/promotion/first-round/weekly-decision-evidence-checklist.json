@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
+    "publicPostUrl": "docs/promotion/first-round/public-post-url-checklist.json",
+    "zeroKpi": "docs/promotion/first-round/zero-kpi-evidence-checklist.json",
+    "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "firstBatchCompletion": "docs/promotion/first-round/first-batch-completion-gate.json"
+  },
+  "metrics": {
+    "rows": 8,
+    "completeRows": 1,
+    "pendingRows": 7,
+    "weeklyReady": 0,
+    "decisionReady": 0,
+    "emptyDataMode": 1
+  },
+  "policy": {
+    "doNotUseSingleMetricForCommerce": true,
+    "weeklyDecisionRequiresAllEvidence": true,
+    "emptyDataFailsClosed": true
+  },
+  "items": [
+    {
+      "phase": "profile_setup",
+      "check_id": "profiles_configured",
+      "expected_value": "3 platform profile links are set/live with traceable evidence.",
+      "operator_status": "pending",
+      "evidence_note": "三個平台 profile 尚未全部 set/live。"
+    },
+    {
+      "phase": "publish_first_batch",
+      "check_id": "first_batch_published",
+      "expected_value": "First-batch posts are published on all three platforms.",
+      "operator_status": "pending",
+      "evidence_note": "首批三平台尚未全部發布。"
+    },
+    {
+      "phase": "publish_first_batch",
+      "check_id": "public_post_urls_verified",
+      "expected_value": "Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.",
+      "operator_status": "pending",
+      "evidence_note": "公開貼文 URL 檢查仍有 pending 或缺證據。"
+    },
+    {
+      "phase": "kpi_backfill",
+      "check_id": "zero_kpis_have_source",
+      "expected_value": "Zero values for site_clicks, quiz_starts, and quiz_completions have checked-source proof.",
+      "operator_status": "pending",
+      "evidence_note": "核心 KPI 仍未發布、未回填，或 0 值缺來源證據。"
+    },
+    {
+      "phase": "weekly_review",
+      "check_id": "weekly_review_ready",
+      "expected_value": "Weekly review packet reports readyForWeeklyDecision=1.",
+      "operator_status": "pending",
+      "evidence_note": "weekly review 尚未達可決策狀態。"
+    },
+    {
+      "phase": "weekly_review",
+      "check_id": "not_empty_data_mode",
+      "expected_value": "Empty data mode is false before commerce or prioritization decisions.",
+      "operator_status": "pending",
+      "evidence_note": "目前仍是空資料安全模式。"
+    },
+    {
+      "phase": "weekly_decision",
+      "check_id": "decision_gate_ready",
+      "expected_value": "Week decision gate allows at least weeklyDecision before changing content or commerce paths.",
+      "operator_status": "pending",
+      "evidence_note": "week decision gate 仍是 HOLD。"
+    },
+    {
+      "phase": "commerce_safety",
+      "check_id": "commerce_changes_still_blocked",
+      "expected_value": "Paid CTA, Luna emphasis, affiliate emphasis, and offer order remain blocked until intent exists.",
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
+    }
+  ],
+  "issues": []
+}

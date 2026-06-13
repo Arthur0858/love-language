@@ -279,6 +279,15 @@ SUPPORT_FILES = {
         "Luna packs use Gumroad purchase links",
         "not therapy, medical, legal, or diagnostic advice",
     ],
+    "/site.webmanifest": [
+        '"name": "LoveTypes 情感守護者宇宙"',
+        '"start_url": "/"',
+        '"display": "standalone"',
+        '"shortcuts"',
+        '"/start/"',
+        '"/characters/"',
+        '"/resources/"',
+    ],
     "/funnel-events.json": [
         '"schemaVersion": 1',
         '"localStorageKey": "lovetypes:funnel-events:v1"',
@@ -297,6 +306,14 @@ SUPPORT_FILES = {
         '"luna_gumroad_pack"',
         '"luna_gumroad_pack_click"',
         '"No therapeutic, medical, legal, diagnostic, or guaranteed outcome claims."',
+    ],
+    "/promotion-kit.json": [
+        '"generatedAt": "2026-06-13"',
+        '"campaignId": "lovetypes-first-round-quiz-completion"',
+        '"platformProfileSetup"',
+        '"writebackValues"',
+        '"verificationSteps"',
+        '"doNotPublishUntil"',
     ],
     "/site-index.json": [
         '"schemaVersion": 1',

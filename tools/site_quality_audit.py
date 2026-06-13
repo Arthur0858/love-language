@@ -1773,6 +1773,17 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
     if not isinstance(measurement, dict):
         issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan should be an object")
         measurement = {}
+    funnel_events: set[str] = set()
+    if FUNNEL_EVENTS_PATH.exists():
+        try:
+            funnel_data = json.loads(FUNNEL_EVENTS_PATH.read_text(encoding="utf-8"))
+            funnel_events = {
+                event.get("name")
+                for event in funnel_data.get("events", [])
+                if isinstance(event, dict) and isinstance(event.get("name"), str)
+            }
+        except json.JSONDecodeError:
+            funnel_events = set()
     bridge_kpis = measurement.get("revenueBridgeKpis")
     if not isinstance(bridge_kpis, list) or len(bridge_kpis) < 5:
         issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.revenueBridgeKpis should include at least five entries")
@@ -1801,6 +1812,69 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
         rule_ids = {item.get("id") for item in decision_rules if isinstance(item, dict)}
         if not {"build_owned_asset", "test_soft_offer"}.issubset(rule_ids):
             issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.decisionRules missing revenue bridge rules")
+    event_kpi_map = measurement.get("eventKpiMap")
+    expected_event_kpis = {
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions",
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks",
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests",
+    }
+    if not isinstance(event_kpi_map, list):
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiMap should be a list")
+        event_kpi_map = []
+    else:
+        stats["promotion_event_kpi_rows_checked"] = len(event_kpi_map)
+        seen_kpis: set[str] = set()
+        mapped_events: set[str] = set()
+        for row in event_kpi_map:
+            if not isinstance(row, dict):
+                issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap entries should be objects")
+                continue
+            kpi = row.get("kpi")
+            if kpi in seen_kpis:
+                issues.append(f"{PROMOTION_KIT_PATH}: duplicate eventKpiMap KPI {kpi}")
+            if isinstance(kpi, str):
+                seen_kpis.add(kpi)
+            events = row.get("events")
+            if not isinstance(events, list) or not events:
+                issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap {kpi or '<unknown>'} should include events")
+            else:
+                for event_name in events:
+                    if not isinstance(event_name, str) or not event_name:
+                        issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap {kpi or '<unknown>'} has invalid event {event_name!r}")
+                        continue
+                    mapped_events.add(event_name)
+                    if funnel_events and event_name not in funnel_events:
+                        issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap {kpi or '<unknown>'} references missing funnel event {event_name}")
+            for key in ("label", "countRule", "reviewUse"):
+                if not isinstance(row.get(key), str) or not row[key]:
+                    issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap {kpi or '<unknown>'} missing {key}")
+            manual_sources = row.get("manualSources")
+            if not isinstance(manual_sources, list) or not manual_sources:
+                issues.append(f"{PROMOTION_KIT_PATH}: eventKpiMap {kpi or '<unknown>'} should include manualSources")
+        stats["promotion_event_kpi_events_checked"] = len(mapped_events)
+        missing_event_kpis = sorted(expected_event_kpis.difference(seen_kpis))
+        if missing_event_kpis:
+            issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiMap missing KPI mappings {', '.join(missing_event_kpis)}")
+    event_safety = measurement.get("eventKpiSafety")
+    if not isinstance(event_safety, dict):
+        issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiSafety should be an object")
+    else:
+        for key in ("manualReviewRequired", "doNotInferPurchasesFromClicks", "doNotTreatGuardianAsDiagnosis"):
+            if event_safety.get(key) is not True:
+                issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiSafety.{key} should be true")
+        source_order = event_safety.get("sourceOfTruthOrder")
+        if not isinstance(source_order, list) or len(source_order) < 4:
+            issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiSafety.sourceOfTruthOrder should include source priority")
     tasks = data.get("publishingTasks")
     if not isinstance(tasks, list) or len(tasks) != 15:
         issues.append(f"{PROMOTION_KIT_PATH}: expected 15 publishingTasks")
@@ -3773,6 +3847,8 @@ def main() -> int:
     print(f"commerce_item_playbook_links_checked={stats['commerce_item_playbook_links_checked']}")
     print(f"promotion_tasks_checked={stats['promotion_tasks_checked']}")
     print(f"promotion_revenue_bridge_kpis_checked={stats['promotion_revenue_bridge_kpis_checked']}")
+    print(f"promotion_event_kpi_rows_checked={stats['promotion_event_kpi_rows_checked']}")
+    print(f"promotion_event_kpi_events_checked={stats['promotion_event_kpi_events_checked']}")
     print(f"promotion_monetization_bridges_checked={stats['promotion_monetization_bridges_checked']}")
     print(f"promotion_platform_profile_setups_checked={stats['promotion_platform_profile_setups_checked']}")
     print(f"promotion_platform_profile_kpi_fields_checked={stats['promotion_platform_profile_kpi_fields_checked']}")

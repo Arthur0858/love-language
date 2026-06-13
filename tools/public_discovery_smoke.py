@@ -624,6 +624,54 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, len(events), len(categories), len(roles)
 
 
+def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, int]:
+    issues: list[str] = []
+    funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
+    kit_response = request_url(urljoin(base_url + "/", "promotion-kit.json"))
+    if funnel_response.status != 200:
+        return [f"/funnel-events.json: expected status 200, got {funnel_response.status}"], 0, 0
+    if kit_response.status != 200:
+        return [f"/promotion-kit.json: expected status 200, got {kit_response.status}"], 0, 0
+    try:
+        funnel = json.loads(funnel_response.text)
+        kit = json.loads(kit_response.text)
+    except json.JSONDecodeError as exc:
+        return [f"promotion/funnel alignment: invalid JSON: {exc}"], 0, 0
+    funnel_names = {
+        event.get("name")
+        for event in funnel.get("events", [])
+        if isinstance(event, dict) and isinstance(event.get("name"), str)
+    }
+    event_kpi_map = kit.get("measurementPlan", {}).get("eventKpiMap", []) if isinstance(kit, dict) else []
+    if not isinstance(event_kpi_map, list) or not event_kpi_map:
+        return ["/promotion-kit.json: measurementPlan.eventKpiMap should be a non-empty list"], 0, 0
+    mapped_events: set[str] = set()
+    seen_kpis: set[str] = set()
+    for row in event_kpi_map:
+        if not isinstance(row, dict):
+            issues.append("/promotion-kit.json: eventKpiMap entries should be objects")
+            continue
+        kpi = row.get("kpi")
+        if not isinstance(kpi, str) or not kpi:
+            issues.append("/promotion-kit.json: eventKpiMap entry missing kpi")
+        elif kpi in seen_kpis:
+            issues.append(f"/promotion-kit.json: duplicate eventKpiMap KPI {kpi}")
+        else:
+            seen_kpis.add(kpi)
+        events = row.get("events")
+        if not isinstance(events, list) or not events:
+            issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} should include events")
+            continue
+        for event_name in events:
+            if not isinstance(event_name, str) or not event_name:
+                issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} has invalid event {event_name!r}")
+                continue
+            mapped_events.add(event_name)
+            if event_name not in funnel_names:
+                issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} references missing funnel event {event_name}")
+    return issues, len(event_kpi_map), len(mapped_events)
+
+
 def check_commerce_catalog(base_url: str) -> tuple[list[str], int, int, int]:
     path = "/commerce-catalog.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
@@ -1078,6 +1126,7 @@ def main() -> int:
     text_issues, text_files_checked, security_fields_checked, humans_snippets_checked = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked = check_robots(base_url)
     funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
+    promotion_event_issues, promotion_event_kpi_rows_checked, promotion_event_kpi_events_checked = check_promotion_event_kpi_alignment(base_url)
     commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
@@ -1091,6 +1140,7 @@ def main() -> int:
     issues.extend(text_issues)
     issues.extend(robots_issues)
     issues.extend(funnel_issues)
+    issues.extend(promotion_event_issues)
     issues.extend(commerce_issues)
     issues.extend(site_index_issues)
     issues.extend(guardian_profile_issues)
@@ -1122,6 +1172,8 @@ def main() -> int:
     print(f"public_discovery_funnel_events_checked={funnel_events_checked}")
     print(f"public_discovery_funnel_event_categories_checked={funnel_categories_checked}")
     print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")
+    print(f"public_discovery_promotion_event_kpi_rows_checked={promotion_event_kpi_rows_checked}")
+    print(f"public_discovery_promotion_event_kpi_events_checked={promotion_event_kpi_events_checked}")
     print(f"public_discovery_commerce_items_checked={commerce_items_checked}")
     print(f"public_discovery_commerce_types_checked={commerce_types_checked}")
     print(f"public_discovery_commerce_roles_checked={commerce_roles_checked}")

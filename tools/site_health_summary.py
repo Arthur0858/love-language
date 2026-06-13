@@ -366,6 +366,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_discovery_commerce_items_checked",
         "public_discovery_commerce_types_checked",
         "public_discovery_commerce_roles_checked",
+        "public_discovery_commerce_affiliate_locale_policies_checked",
         "public_discovery_site_index_pages_checked",
         "public_discovery_site_index_languages_checked",
         "public_discovery_site_index_groups_checked",

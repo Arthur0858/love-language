@@ -8,6 +8,8 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
+import promotion_post_writeback as writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -16,11 +18,6 @@ OUTPUT_MD = PROMOTION_DIR / "public-post-url-checklist.md"
 OUTPUT_JSON = PROMOTION_DIR / "public-post-url-checklist.json"
 OUTPUT_CSV = PROMOTION_DIR / "public-post-url-checklist.csv"
 
-PLATFORM_DOMAINS = {
-    "youtube_shorts": ("youtube.com", "youtu.be"),
-    "tiktok": ("tiktok.com",),
-    "instagram_reels": ("instagram.com",),
-}
 CHECKS = [
     ("post_url_present", "公開貼文 URL 已取得", "post_url is a real https URL, not a placeholder."),
     ("platform_domain_matches", "平台網域正確", "post_url domain matches the intended publishing platform."),
@@ -47,11 +44,7 @@ def is_placeholder(value: str) -> bool:
 
 
 def domain_matches(platform: str, url: str) -> bool:
-    parsed = urlparse(url)
-    if parsed.scheme != "https" or not parsed.netloc:
-        return False
-    host = parsed.netloc.lower().removeprefix("www.")
-    return any(host == domain or host.endswith("." + domain) for domain in PLATFORM_DOMAINS.get(platform, ()))
+    return writeback.post_url_matches_platform(platform, url)
 
 
 def status_for(row: dict, check_id: str) -> tuple[str, str]:

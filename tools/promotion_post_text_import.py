@@ -107,6 +107,8 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
             issues.append("published status requires published_date YYYY-MM-DD")
         if not writeback.valid_post_url(data.get("post_url", "")):
             issues.append("published status requires non-placeholder https post_url")
+        elif not writeback.post_url_matches_platform(data.get("platform", ""), data.get("post_url", "")):
+            issues.append("published status requires post_url to match platform domain")
     if data.get("task_id") and not task_exists(data.get("platform", ""), data["task_id"]):
         issues.append(f"unknown platform/task_id {data.get('platform')}/{data.get('task_id')}")
     for field in writeback.METRIC_FIELDS:

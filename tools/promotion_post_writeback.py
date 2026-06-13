@@ -23,6 +23,11 @@ PLAYBOOK_JSON = PROMOTION_DIR / "post-writeback-playbook.json"
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 PUBLISH_STATUSES = ("published", "live", "posted")
 STATUS_VALUES = ("planned", "scheduled", *PUBLISH_STATUSES)
+PLATFORM_DOMAINS = {
+    "youtube_shorts": ("youtube.com", "youtu.be"),
+    "tiktok": ("tiktok.com",),
+    "instagram_reels": ("instagram.com",),
+}
 POST_URL_PLACEHOLDERS = {
     "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
     "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
@@ -87,6 +92,14 @@ def valid_post_url(value: str) -> bool:
     return not any(token in lowered for token in placeholder_tokens)
 
 
+def post_url_matches_platform(platform: str, value: str) -> bool:
+    parsed = urlparse(value)
+    if parsed.scheme != "https" or not parsed.netloc:
+        return False
+    host = parsed.netloc.lower().removeprefix("www.")
+    return any(host == domain or host.endswith("." + domain) for domain in PLATFORM_DOMAINS.get(platform, ()))
+
+
 def post_url_placeholder(platform: str) -> str:
     return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
 
@@ -131,6 +144,8 @@ def validate_rows(
                 issues.append(f"{label}: published row requires published_date YYYY-MM-DD")
             if not valid_post_url(row.get("post_url", "")):
                 issues.append(f"{label}: published row requires non-placeholder https post_url")
+            elif not post_url_matches_platform(platform, row.get("post_url", "")):
+                issues.append(f"{label}: published row post_url must match platform domain")
             if "verified:" not in (row.get("notes") or ""):
                 issues.append(f"{label}: published row requires verified proof note")
             platform_row = platform_lookup.get((platform, task_id), {})

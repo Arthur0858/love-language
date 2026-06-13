@@ -19,6 +19,11 @@ PLACEHOLDER_URLS = (
     "https://www.youtube.com/shorts/placeholder",
 )
 SAFE_SAMPLE_URL = "https://www.youtube.com/shorts/lovetypes-proof-url-123"
+WRONG_PLATFORM_URLS = {
+    "youtube_shorts": "https://www.tiktok.com/@lovetypes/video/1234567890",
+    "tiktok": "https://www.instagram.com/reel/lovetypes-proof-url-123/",
+    "instagram_reels": "https://www.youtube.com/shorts/lovetypes-proof-url-123",
+}
 FORBIDDEN_DOC_SNIPPETS = (
     "https://example.com/post",
     "https://example.com/replace-with-real-post-url",
@@ -29,11 +34,11 @@ FORBIDDEN_DOC_SNIPPETS = (
 DOC_SUFFIXES = (".md", ".json", ".csv")
 
 
-def sample_text(post_url: str) -> str:
+def sample_text(post_url: str, platform: str = "youtube_shorts", task_id: str = "publish-lt-s01-iris-silence") -> str:
     return "\n".join([
         "LoveTypes platform post writeback",
-        "platform: youtube_shorts",
-        "task_id: publish-lt-s01-iris-silence",
+        f"platform: {platform}",
+        f"task_id: {task_id}",
         "status: published",
         "published_date: 2026-06-15",
         f"post_url: {post_url}",
@@ -68,6 +73,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
     issues: list[str] = []
     rejected_by_validator = 0
     rejected_by_import = 0
+    rejected_wrong_domain_by_validator = 0
+    rejected_wrong_domain_by_import = 0
     for url in PLACEHOLDER_URLS:
         if writeback.valid_post_url(url):
             issues.append(f"placeholder URL should be rejected by validator: {url}")
@@ -86,6 +93,26 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("safe sample URL should pass validator")
     if not safe_import_passed:
         issues.append("safe sample URL should pass import check")
+    if not writeback.post_url_matches_platform("youtube_shorts", SAFE_SAMPLE_URL):
+        issues.append("safe sample URL should match youtube_shorts platform domain")
+
+    task_ids = {
+        "youtube_shorts": "publish-lt-s01-iris-silence",
+        "tiktok": "publish-lt-s01-iris-silence",
+        "instagram_reels": "publish-lt-s01-iris-silence",
+    }
+    for platform, url in WRONG_PLATFORM_URLS.items():
+        if writeback.valid_post_url(url) and not writeback.post_url_matches_platform(platform, url):
+            rejected_wrong_domain_by_validator += 1
+        else:
+            issues.append(f"wrong-platform URL should pass URL shape but fail platform domain: {platform} {url}")
+        code, output = run_import_check(sample_text(url, platform=platform, task_id=task_ids[platform]))
+        if code == 0 or "promotion_post_text_import_issues=0" in output:
+            issues.append(f"wrong-platform URL should be rejected by import check: {platform} {url}")
+        elif "post_url to match platform domain" in output:
+            rejected_wrong_domain_by_import += 1
+        else:
+            issues.append(f"wrong-platform URL rejected for unexpected reason: {platform} {output.strip()}")
     docs_checked = 0
     doc_hits = 0
     for path in sorted(PROMOTION_DIR.glob("*")):
@@ -104,6 +131,9 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "rejectedByImport": rejected_by_import,
         "safeValidatorPassed": safe_validator_passed,
         "safeImportPassed": safe_import_passed,
+        "wrongPlatformUrls": len(WRONG_PLATFORM_URLS),
+        "wrongPlatformRejectedByValidator": rejected_wrong_domain_by_validator,
+        "wrongPlatformRejectedByImport": rejected_wrong_domain_by_import,
         "docsChecked": docs_checked,
         "docHits": doc_hits,
     }, issues
@@ -116,6 +146,9 @@ def main() -> int:
     print(f"promotion_placeholder_url_rejected_by_import={metrics['rejectedByImport']}")
     print(f"promotion_placeholder_url_safe_validator_passed={metrics['safeValidatorPassed']}")
     print(f"promotion_placeholder_url_safe_import_passed={metrics['safeImportPassed']}")
+    print(f"promotion_placeholder_url_wrong_platform_checked={metrics['wrongPlatformUrls']}")
+    print(f"promotion_placeholder_url_wrong_platform_rejected_by_validator={metrics['wrongPlatformRejectedByValidator']}")
+    print(f"promotion_placeholder_url_wrong_platform_rejected_by_import={metrics['wrongPlatformRejectedByImport']}")
     print(f"promotion_placeholder_url_docs_checked={metrics['docsChecked']}")
     print(f"promotion_placeholder_url_doc_hits={metrics['docHits']}")
     print(f"promotion_placeholder_url_safety_issues={len(issues)}")

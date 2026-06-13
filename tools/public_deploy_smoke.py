@@ -389,6 +389,7 @@ SUPPORT_FILES = {
         '"aiDiscovery"',
     ],
 }
+DEDICATED_SUPPORT_FILES = {"/sitemap.xml", "/feed.xml"}
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [
     "404 HEART GARDEN",

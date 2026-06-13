@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import ast
+import json
 import py_compile
 import re
 import shutil
@@ -14,6 +15,8 @@ from typing import NamedTuple
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
+SITE_HEALTH_PATH = ROOT / "site-health.json"
+PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
 NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
 
@@ -30,6 +33,12 @@ def literal_strings(node: ast.AST) -> list[str]:
     if not isinstance(node, (ast.List, ast.Set)):
         return []
     return [item.value for item in node.elts if isinstance(item, ast.Constant) and isinstance(item.value, str)]
+
+
+def literal_dict_keys(node: ast.AST) -> list[str]:
+    if not isinstance(node, ast.Dict):
+        return []
+    return [key.value for key in node.keys if isinstance(key, ast.Constant) and isinstance(key.value, str)]
 
 
 def parse_summary() -> tuple[list[str], list[str], list[str], list[str], list[str], list[HealthCheck]]:
@@ -161,6 +170,31 @@ def public_smoke_tools() -> list[str]:
     )
 
 
+def site_health_support_files() -> list[str]:
+    try:
+        data = json.loads(SITE_HEALTH_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    support_files = data.get("supportFiles") if isinstance(data, dict) else None
+    if not isinstance(support_files, list):
+        return []
+    return sorted(f"/{path}" for path in support_files if isinstance(path, str) and path)
+
+
+def public_deploy_support_files() -> list[str]:
+    tree = ast.parse(PUBLIC_DEPLOY_PATH.read_text(encoding="utf-8"))
+    paths: set[str] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign):
+            continue
+        for target in node.targets:
+            if isinstance(target, ast.Name) and target.id == "SUPPORT_FILES":
+                paths.update(literal_dict_keys(node.value))
+            if isinstance(target, ast.Name) and target.id == "DEDICATED_SUPPORT_FILES":
+                paths.update(literal_strings(node.value))
+    return sorted(paths)
+
+
 def main() -> int:
     issues: list[str] = []
     check_names, check_commands, check_script_paths, important_keys, retry_names, health_checks = parse_summary()
@@ -179,6 +213,10 @@ def main() -> int:
     mixed_return_functions = mixed_return_tuple_functions(check_script_paths + predeploy_script_paths)
     public_tools = public_smoke_tools()
     missing_public_tools = sorted(set(public_tools).difference(check_script_paths))
+    site_support_files = site_health_support_files()
+    deploy_support_files = public_deploy_support_files()
+    missing_deploy_support_files = sorted(set(site_support_files).difference(deploy_support_files))
+    extra_deploy_support_files = sorted(set(deploy_support_files).difference(site_support_files))
     public_flag_mismatches: list[str] = []
     for check in health_checks:
         expected_public = (
@@ -218,6 +256,11 @@ def main() -> int:
         issues.append(f"mixed tuple return sizes in Python tools: {', '.join(mixed_return_functions)}")
     if missing_public_tools:
         issues.append(f"public smoke tools missing from site health CHECKS: {', '.join(missing_public_tools)}")
+    if missing_deploy_support_files or extra_deploy_support_files:
+        issues.append(
+            "public deploy support file coverage mismatch: "
+            f"missing={missing_deploy_support_files} extra={extra_deploy_support_files}"
+        )
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
         issues.append(f"missing CHECKS scripts: {', '.join(missing_scripts)}")
@@ -296,6 +339,10 @@ def main() -> int:
     print(f"site_health_config_mixed_return_tuple_functions={len(mixed_return_functions)}")
     print(f"site_health_config_public_smoke_tools={len(public_tools)}")
     print(f"site_health_config_missing_public_smoke_tools={len(missing_public_tools)}")
+    print(f"site_health_config_site_support_files={len(site_support_files)}")
+    print(f"site_health_config_public_deploy_support_files={len(deploy_support_files)}")
+    print(f"site_health_config_public_deploy_missing_support_files={len(missing_deploy_support_files)}")
+    print(f"site_health_config_public_deploy_extra_support_files={len(extra_deploy_support_files)}")
     print(f"site_health_config_issues={len(issues)}")
     for issue in issues:
         print(issue)

@@ -40,6 +40,7 @@ EXPECTED_SUPPORT_FILES = {
     "release.json",
     "site-health.json",
 }
+EXPECTED_SUPPORT_FILE_COUNT = len(EXPECTED_SUPPORT_FILES)
 ADS_TXT_PATH = ROOT / "ads.txt"
 FORBIDDEN_ADSENSE_SCRIPT_SNIPPETS = {
     "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
@@ -2486,7 +2487,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 18,
+        "supportFiles": EXPECTED_SUPPORT_FILE_COUNT,
     }
     for key, expected in expected_coverage.items():
         stats["site_health_coverage_fields_checked"] += 1

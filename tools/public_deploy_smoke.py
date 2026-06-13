@@ -253,6 +253,7 @@ REDIRECTS = {
     "/ko/luna/": "/ko/luna-yoga-music/",
     "/es/luna/": "/es/luna-yoga-music/",
 }
+DEDICATED_SUPPORT_FILES = {"/sitemap.xml", "/feed.xml"}
 SUPPORT_FILES = {
     "/robots.txt": ["User-agent: *", "Allow: /", "Sitemap: https://lovetypes.tw/sitemap.xml"],
     "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
@@ -347,7 +348,6 @@ SUPPORT_FILES = {
         '"indexablePages": 155',
         '"guardians": 5',
         '"commerceItems": 20',
-        '"supportFiles": 18',
         '"localPredeploy"',
         '"publicDiscovery"',
         '"publicDeploy"',
@@ -389,7 +389,8 @@ SUPPORT_FILES = {
         '"aiDiscovery"',
     ],
 }
-DEDICATED_SUPPORT_FILES = {"/sitemap.xml", "/feed.xml"}
+EXPECTED_SUPPORT_FILE_COUNT = len(SUPPORT_FILES) + len(DEDICATED_SUPPORT_FILES)
+SUPPORT_FILES["/site-health.json"].append(f'"supportFiles": {EXPECTED_SUPPORT_FILE_COUNT}')
 NOT_FOUND_PATH = "/__lovetypes_missing_smoke__/"
 NOT_FOUND_REQUIRED_TEXT = [
     "404 HEART GARDEN",

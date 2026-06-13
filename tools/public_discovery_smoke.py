@@ -56,6 +56,7 @@ EXPECTED_SUPPORT_FILES = {
     "release.json",
     "site-health.json",
 }
+EXPECTED_SUPPORT_FILE_COUNT = len(EXPECTED_SUPPORT_FILES)
 REQUIRED_LLMS_SECTIONS = (
     "# LoveTypes - Heart Garden Emotion Guardians",
     "## Canonical Site",
@@ -996,7 +997,7 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
         "commerceItems": 20,
         "commerceTypes": 4,
         "commerceRoles": 3,
-        "supportFiles": 18,
+        "supportFiles": EXPECTED_SUPPORT_FILE_COUNT,
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -1009,8 +1010,8 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
         coverage_checked += 1
     support_files = data.get("supportFiles", [])
     gates = data.get("requiredGates", {})
-    if not isinstance(support_files, list) or len(support_files) != 18:
-        issues.append(f"{path}: expected 18 support files")
+    if not isinstance(support_files, list) or len(support_files) != EXPECTED_SUPPORT_FILE_COUNT:
+        issues.append(f"{path}: expected {EXPECTED_SUPPORT_FILE_COUNT} support files")
     elif set(support_files) != EXPECTED_SUPPORT_FILES:
         missing = sorted(EXPECTED_SUPPORT_FILES.difference(support_files))
         extra = sorted(set(support_files).difference(EXPECTED_SUPPORT_FILES))

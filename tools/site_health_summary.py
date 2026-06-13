@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import signal
 import subprocess
 import sys
 import threading
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -81,7 +84,28 @@ def should_stream_progress(line: str) -> bool:
     return any(stripped.startswith(prefix) for prefix in PROGRESS_PREFIXES)
 
 
+def terminate_process_tree(process: subprocess.Popen[str]) -> None:
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        return
+    except OSError:
+        process.terminate()
+    try:
+        process.wait(timeout=5)
+        return
+    except subprocess.TimeoutExpired:
+        pass
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        return
+    except OSError:
+        process.kill()
+
+
 def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
+    started = time.monotonic()
     process = subprocess.Popen(
         command,
         cwd=ROOT,
@@ -89,6 +113,7 @@ def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         bufsize=1,
+        start_new_session=True,
     )
     output_lines: list[str] = []
 
@@ -104,10 +129,12 @@ def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
     try:
         code = process.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
-        process.kill()
+        terminate_process_tree(process)
         code = 124
         output_lines.append(f"\ntimed_out=1\nerror=command timed out after {timeout} seconds\n")
     reader.join(timeout=5)
+    elapsed = time.monotonic() - started
+    output_lines.append(f"\nelapsed_seconds={elapsed:.1f}\n")
     return code, "".join(output_lines)
 
 
@@ -959,6 +986,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_public_deploy_extra_support_files",
         "timed_out",
         "error",
+        "elapsed_seconds",
     ]
     emitted_keys: set[str] = set()
     for key in important_keys:

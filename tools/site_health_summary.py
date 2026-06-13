@@ -905,6 +905,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_kpi_schema_post_metrics",
         "promotion_kpi_schema_profile_metrics",
         "promotion_kpi_schema_event_kpis",
+        "promotion_kpi_schema_event_names",
+        "promotion_kpi_schema_catalog_events",
         "promotion_kpi_schema_revenue_bridge_kpis",
         "promotion_kpi_schema_attribution_rows",
         "promotion_kpi_schema_issues",

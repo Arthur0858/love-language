@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
+FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
 KPI_TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
 PLATFORM_KPI_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 PLATFORM_PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
@@ -86,11 +87,23 @@ def missing(required: list[str] | set[str], available: list[str] | set[str]) -> 
 def validate() -> tuple[dict[str, int], list[str]]:
     issues: list[str] = []
     kit = load_json(KIT_PATH)
+    funnel_catalog = load_json(FUNNEL_EVENTS_PATH)
+    catalog_events = {
+        str(item.get("name", "")): item
+        for item in funnel_catalog.get("events", [])
+        if isinstance(item, dict) and item.get("name")
+    }
     kpi_fields = list(kit.get("kpiFields") or [])
     measurement = kit.get("measurementPlan") if isinstance(kit.get("measurementPlan"), dict) else {}
     secondary_kpis = set(measurement.get("secondaryKpis") or [])
     event_kpi_map = measurement.get("eventKpiMap") if isinstance(measurement.get("eventKpiMap"), list) else []
     event_kpis = {str(item.get("kpi", "")) for item in event_kpi_map if isinstance(item, dict)}
+    event_names = [
+        str(event)
+        for item in event_kpi_map
+        if isinstance(item, dict)
+        for event in item.get("events", [])
+    ]
     revenue_bridge = measurement.get("revenueBridgeKpis") if isinstance(measurement.get("revenueBridgeKpis"), list) else []
     revenue_bridge_kpis = {str(item.get("field", "")) for item in revenue_bridge if isinstance(item, dict)}
     derived_rate_ids = {
@@ -143,6 +156,17 @@ def validate() -> tuple[dict[str, int], list[str]]:
         kpi = str(item.get("kpi", ""))
         if kpi in expected_event_kpis and not item.get("events"):
             issues.append(f"eventKpiMap {kpi} must list source events")
+        for event_name in item.get("events", []):
+            event = catalog_events.get(str(event_name))
+            if not event:
+                issues.append(f"eventKpiMap {kpi} references missing funnel event {event_name}")
+                continue
+            if int(event.get("count") or 0) <= 0:
+                issues.append(f"eventKpiMap {kpi} references zero-count funnel event {event_name}")
+            if not event.get("category") or not event.get("role"):
+                issues.append(f"funnel event {event_name} must include category and role")
+            if not event.get("pages"):
+                issues.append(f"funnel event {event_name} must list pages")
         if kpi in REVENUE_BRIDGE_FIELDS and not item.get("manualSources"):
             issues.append(f"eventKpiMap {kpi} must list manual sources")
         if kpi in REVENUE_BRIDGE_FIELDS and not item.get("reviewUse"):
@@ -161,6 +185,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "promotion_kpi_schema_post_metrics": len(POST_METRIC_FIELDS),
         "promotion_kpi_schema_profile_metrics": len(PROFILE_METRIC_FIELDS),
         "promotion_kpi_schema_event_kpis": len(event_kpis),
+        "promotion_kpi_schema_event_names": len(event_names),
+        "promotion_kpi_schema_catalog_events": len(catalog_events),
         "promotion_kpi_schema_revenue_bridge_kpis": len(revenue_bridge_kpis),
         "promotion_kpi_schema_attribution_rows": len(attribution_rows),
         "promotion_kpi_schema_issues": len(issues),

@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "firstBatchPacket": "docs/promotion/first-round/first-batch-publication-packet.json",
+    "evidenceLedger": "docs/promotion/first-round/evidence-ledger.json",
+    "publishingStatus": "docs/promotion/first-round/publishing-status.json",
+    "attributionReconciliation": "docs/promotion/first-round/attribution-reconciliation.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "publishedRows": 0,
+    "minimumKpiRows": 0,
+    "traceablePostEvidence": 0,
+    "genericPostEvidence": 0,
+    "missingPostEvidence": 0,
+    "attributionFilledRows": 0,
+    "blockers": 2,
+    "issues": 0
+  },
+  "state": {
+    "firstBatchPublished": false,
+    "evidenceComplete": true,
+    "minimumKpiComplete": false,
+    "publishingStatusReady": false,
+    "readyForWeeklyReview": false,
+    "emptyDataMode": true
+  },
+  "nextAction": "Publish first-batch posts, write back real post URLs, then fill or verified-zero minimum KPI.",
+  "minimumKpiFields": [
+    "site_clicks",
+    "quiz_starts",
+    "quiz_completions"
+  ],
+  "blockers": [
+    {
+      "id": "first_batch_not_published",
+      "message": "published rows 0/3; publish each platform post and write back post_url.",
+      "release": "All first-batch rows are marked published/live/posted with real post_url values."
+    },
+    {
+      "id": "minimum_kpi_not_backfilled",
+      "message": "minimum KPI rows 0/3; fill or verified-zero site_clicks, quiz_starts, quiz_completions.",
+      "release": "Every first-batch platform row has checked minimum KPI values."
+    }
+  ],
+  "issues": []
+}

@@ -37,6 +37,7 @@ PYTHON_TOOLS = [
     "tools/promotion_proof_note_safety_audit.py",
     "tools/promotion_evidence_ledger.py",
     "tools/promotion_first_batch_publication_packet.py",
+    "tools/promotion_first_batch_completion_gate.py",
     "tools/promotion_first_batch_asset_qa.py",
     "tools/promotion_publishing_status.py",
     "tools/promotion_kpi_writeback_consistency_audit.py",
@@ -194,6 +195,7 @@ def main() -> int:
         run_step("promotion proof note safety audit", [sys.executable, "tools/promotion_proof_note_safety_audit.py"])
         run_step("promotion evidence ledger", [sys.executable, "tools/promotion_evidence_ledger.py", "--check"])
         run_step("promotion first batch publication packet", [sys.executable, "tools/promotion_first_batch_publication_packet.py", "--check"])
+        run_step("promotion first batch completion gate", [sys.executable, "tools/promotion_first_batch_completion_gate.py", "--check"])
         run_step("promotion first batch asset qa", [sys.executable, "tools/promotion_first_batch_asset_qa.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
         run_step("promotion KPI writeback consistency audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"])

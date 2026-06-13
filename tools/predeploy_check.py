@@ -73,6 +73,7 @@ PYTHON_TOOLS = [
     "tools/promotion_offer_experiment_queue.py",
     "tools/promotion_asset_backlog.py",
     "tools/promotion_asset_fulfillment_gate.py",
+    "tools/promotion_asset_fulfillment_dry_run.py",
     "tools/promotion_asset_commerce_bridge_audit.py",
     "tools/promotion_trust_commerce_safety_audit.py",
     "tools/promotion_platform_profile_setup.py",
@@ -275,6 +276,7 @@ def main() -> int:
         run_step("promotion offer experiment queue", [sys.executable, "tools/promotion_offer_experiment_queue.py", "--check"])
         run_step("promotion asset backlog", [sys.executable, "tools/promotion_asset_backlog.py", "--check"])
         run_step("promotion asset fulfillment gate", [sys.executable, "tools/promotion_asset_fulfillment_gate.py", "--check"])
+        run_step("promotion asset fulfillment dry run", [sys.executable, "tools/promotion_asset_fulfillment_dry_run.py"])
         run_step("promotion asset commerce bridge audit", [sys.executable, "tools/promotion_asset_commerce_bridge_audit.py"])
         run_step("promotion trust commerce safety audit", [sys.executable, "tools/promotion_trust_commerce_safety_audit.py"])
         run_step("promotion platform profile setup", [sys.executable, "tools/promotion_platform_profile_setup.py", "--check"])

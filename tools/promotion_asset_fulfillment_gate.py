@@ -24,6 +24,12 @@ OWNED_REQUEST_TYPES = {"pdf_practice_card", "phone_wallpaper", "email_lead_templ
 PAID_OR_COMMERCIAL_TYPES = {"luna_scene_cta", "affiliate_book_bundle"}
 FREE_PUBLIC_TYPES = {"free_story_card_upgrade"}
 CONTENT_TYPES = {"content_variant"}
+REQUEST_ASSET_ALIASES = {
+    "pdf_practice_card": ("pdf", "練習卡", "practice card", "tarjeta pdf", "練習カード", "연습 카드"),
+    "phone_wallpaper": ("wallpaper", "桌布", "壁紙", "배경화면", "fondo"),
+    "short_ritual": ("short ritual", "短儀式", "7 分鐘", "7-minute", "ritual", "儀式"),
+    "email_lead_template": ("email", "contact", "聯絡", "來信", "需求", "template"),
+}
 
 
 def today() -> str:
@@ -48,6 +54,24 @@ def lead_counts(rows: list[dict[str, str]]) -> Counter[tuple[str, str]]:
     for row in real_leads(rows):
         counts[(row.get("guardian_id", ""), row.get("intake_type", ""))] += 1
     return counts
+
+
+def requested_asset_types(rows: list[dict[str, str]]) -> set[tuple[str, str]]:
+    requested: set[tuple[str, str]] = set()
+    for row in real_leads(rows):
+        guardian = (row.get("guardian_id") or "").strip()
+        intake = (row.get("intake_type") or "").strip()
+        text = f"{row.get('requested_asset', '')} {row.get('first_response', '')} {row.get('next_action', '')}".lower()
+        if intake == "repair_or_contact_request":
+            requested.add((guardian, "email_lead_template"))
+        if intake != "owned_asset_request":
+            continue
+        for asset_type, tokens in REQUEST_ASSET_ALIASES.items():
+            if asset_type == "email_lead_template":
+                continue
+            if any(token.lower() in text for token in tokens):
+                requested.add((guardian, asset_type))
+    return requested
 
 
 def inventory_guardians(inventory: dict) -> set[tuple[str, str]]:
@@ -82,7 +106,7 @@ def fulfillment_status(item: dict, context: dict) -> tuple[str, str, str]:
     asset_id = item.get("id", "")
     counts: Counter[tuple[str, str]] = context["leadCounts"]
     ready_assets: set[str] = context["readyOfferAssets"]
-    ready_pairs: set[tuple[str, str]] = context["readyDemandPairs"]
+    requested_assets: set[tuple[str, str]] = context["requestedAssetTypes"]
     inventory_pairs: set[tuple[str, str]] = context["inventoryPairs"]
 
     if asset_type in CONTENT_TYPES:
@@ -105,17 +129,15 @@ def fulfillment_status(item: dict, context: dict) -> tuple[str, str, str]:
             "Repair lead-magnet inventory before promoting this asset.",
         )
     if asset_type in OWNED_REQUEST_TYPES:
-        owned_count = counts[(guardian, "owned_asset_request")]
-        contact_count = counts[(guardian, "repair_or_contact_request")]
-        if owned_count + contact_count > 0 or (guardian, "owned_asset_request") in ready_pairs:
+        if (guardian, asset_type) in requested_assets:
             return (
                 "ready_after_real_request",
-                "A real owned/contact request or repeated demand route exists; create the smallest requested fulfillment asset.",
+                "A real request specifically asked for this asset type; create the smallest requested fulfillment asset.",
                 "Do not add a paid CTA; fulfill only the requested asset with safety copy.",
             )
         return (
             "blocked_until_real_request",
-            "Owned assets require at least one traceable request or a ready lead-demand route.",
+            "Owned assets require at least one traceable request for this specific asset type.",
             "Wait for lead-intake-tracker.csv evidence before building or sending.",
         )
     if asset_type in PAID_OR_COMMERCIAL_TYPES:
@@ -145,6 +167,7 @@ def build_gate() -> dict:
     queue = load_json(OFFER_QUEUE)
     context = {
         "leadCounts": lead_counts(leads),
+        "requestedAssetTypes": requested_asset_types(leads),
         "inventoryPairs": inventory_guardians(inventory),
         "readyDemandPairs": demand_ready_pairs(demand),
         "readyOfferAssets": ready_offer_assets(queue),
@@ -175,6 +198,7 @@ def build_gate() -> dict:
         "blockedUntilOfferReady": counts_by_status["blocked_until_offer_ready"],
         "blockedMissingInventory": counts_by_status["blocked_missing_inventory"],
         "realLeads": len(real_leads(leads)),
+        "requestedAssetTypes": len(context["requestedAssetTypes"]),
         "readyOfferAssets": len(context["readyOfferAssets"]),
         "readyDemandPairs": len(context["readyDemandPairs"]),
     }
@@ -191,7 +215,7 @@ def build_gate() -> dict:
         "policy": {
             "doNotFulfillWithoutEvidence": True,
             "freePublicAssetsCanExistBeforeDemand": True,
-            "ownedAssetsRequireRealRequest": True,
+            "ownedAssetsRequireSpecificRealRequest": True,
             "commercialAssetsRequireReadyOfferGate": True,
             "emptyDataBoundary": "Only content variants and existing free public keepsakes may be prepared while real leads and KPI remain zero.",
         },
@@ -242,7 +266,7 @@ def render_markdown(gate: dict) -> str:
         "## Rule",
         "",
         "- 空資料時只能準備內容變體與既有免費收藏物，不交付自有 PDF/桌布/Luna pack，也不加重付費 CTA。",
-        "- 自有素材履約必須有真實需求或 lead-demand ready route。",
+        "- 自有素材履約必須有真實需求，且只能解鎖使用者明確要求的素材類型。",
         "- Luna / 聯盟 / 商業資產必須等 offer experiment queue READY。",
         "- 所有履約都必須保留安全邊界：不診斷、不承諾療效、不替代諮商。",
         "",
@@ -308,6 +332,7 @@ def main() -> int:
     print(f"promotion_asset_fulfillment_blocked_until_real_request={metrics['blockedUntilRealRequest']}")
     print(f"promotion_asset_fulfillment_blocked_until_offer_ready={metrics['blockedUntilOfferReady']}")
     print(f"promotion_asset_fulfillment_real_leads={metrics['realLeads']}")
+    print(f"promotion_asset_fulfillment_requested_asset_types={metrics['requestedAssetTypes']}")
     print(f"promotion_asset_fulfillment_ready_offer_assets={metrics['readyOfferAssets']}")
     print(f"promotion_asset_fulfillment_issues={len(gate['issues'])}")
     for issue in gate["issues"]:

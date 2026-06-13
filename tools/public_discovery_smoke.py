@@ -283,24 +283,43 @@ def page_title_without_brand(title: str) -> str:
     return title.strip().split(" | ", 1)[0].split("｜", 1)[0].strip()
 
 
-def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
+def check_feed(base_url: str) -> tuple[list[str], int, int, int, int]:
     path = "/feed.xml"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if "xml" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected XML content type, got {response.headers.get('content-type')!r}")
     issues.extend(cache_is_reasonable(path, response))
     try:
         root = ET.fromstring(response.body)
     except ET.ParseError as error:
-        return [f"{path}: invalid XML: {error}"], 0, 0, 0
+        return [f"{path}: invalid XML: {error}"], 0, 0, 0, 0
     if root.tag != "rss" or root.attrib.get("version") != "2.0":
         issues.append(f"{path}: expected RSS 2.0 root")
     channel = root.find("channel")
     if channel is None:
-        return [f"{path}: missing channel"], 0, 0, 0
+        return [f"{path}: missing channel"], 0, 0, 0, 0
+    site_index_response = request_url(urljoin(base_url + "/", "site-index.json"))
+    site_index_canonicals: set[str] = set()
+    if site_index_response.status != 200:
+        issues.append(f"{path}: site-index.json expected status 200, got {site_index_response.status}")
+    else:
+        try:
+            site_index = json.loads(site_index_response.text)
+        except json.JSONDecodeError as error:
+            issues.append(f"{path}: site-index.json invalid JSON: {error}")
+        else:
+            pages = site_index.get("pages") if isinstance(site_index, dict) else None
+            if not isinstance(pages, list):
+                issues.append(f"{path}: site-index.json pages should be a list")
+            else:
+                site_index_canonicals = {
+                    page.get("canonical")
+                    for page in pages
+                    if isinstance(page, dict) and isinstance(page.get("canonical"), str) and page.get("canonical")
+                }
     for tag in ("title", "link", "description", "language", "lastBuildDate"):
         if not (channel.findtext(tag) or "").strip():
             issues.append(f"{path}: channel missing {tag}")
@@ -320,6 +339,7 @@ def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
     seen_links: set[str] = set()
     links_checked = 0
     item_metadata_checked = 0
+    site_index_links_checked = 0
     for item in items:
         title = (item.findtext("title") or "").strip()
         link = (item.findtext("link") or "").strip()
@@ -338,6 +358,10 @@ def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
         if not is_lovetypes_url(link):
             issues.append(f"{path}: feed item link should be absolute production URL: {link}")
             continue
+        if link in site_index_canonicals:
+            site_index_links_checked += 1
+        else:
+            issues.append(f"{path}: feed item link missing from site-index.json: {link}")
         try:
             parsedate_to_datetime(pub_date)
         except (TypeError, ValueError):
@@ -361,7 +385,7 @@ def check_feed(base_url: str) -> tuple[list[str], int, int, int]:
             issues.append(f"{path}: item title {title!r} should match page title {page_title!r} for {link}")
         if description and head.description and not description.startswith(head.description):
             issues.append(f"{path}: item description should start with page description for {link}")
-    return issues, len(items), links_checked, item_metadata_checked
+    return issues, len(items), links_checked, item_metadata_checked, site_index_links_checked
 
 
 def parse_icon_sizes(value: str) -> set[tuple[int, int]]:
@@ -1725,7 +1749,7 @@ def main() -> int:
     base_url = normalize_base_url(args.base_url)
 
     issues: list[str] = []
-    feed_issues, feed_items, feed_links_checked, feed_item_metadata_checked = check_feed(base_url)
+    feed_issues, feed_items, feed_links_checked, feed_item_metadata_checked, feed_site_index_links_checked = check_feed(base_url)
     (
         manifest_issues,
         manifest_icons_checked,
@@ -1818,6 +1842,7 @@ def main() -> int:
     print(f"public_discovery_feed_items={feed_items}")
     print(f"public_discovery_feed_links_checked={feed_links_checked}")
     print(f"public_discovery_feed_item_metadata_checked={feed_item_metadata_checked}")
+    print(f"public_discovery_feed_site_index_links_checked={feed_site_index_links_checked}")
     print(f"public_discovery_manifest_icons_checked={manifest_icons_checked}")
     print(f"public_discovery_manifest_icon_dimensions_checked={manifest_icon_dimensions_checked}")
     print(f"public_discovery_manifest_shortcuts={manifest_shortcuts}")

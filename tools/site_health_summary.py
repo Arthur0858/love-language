@@ -145,6 +145,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "content_uniqueness_issues",
         "multilingual_route_issues",
         "guardian_conversion_issues",
+        "affiliate_locale_issues",
         "accessibility_issues",
         "image_asset_issues",
         "performance_budget_issues",

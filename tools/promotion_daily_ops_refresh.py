@@ -46,6 +46,8 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_next_actions.py"],
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],
+    [sys.executable, "tools/promotion_operation_proof_packet.py"],
+    [sys.executable, "tools/promotion_launch_rehearsal_packet.py"],
 ]
 DATE_ARG_PATTERN = re.compile(r"--(?:set-date|published-date) (\d{4}-\d{2}-\d{2})")
 

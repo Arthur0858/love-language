@@ -65,6 +65,7 @@ PYTHON_TOOLS = [
     "tools/promotion_weekly_summary.py",
     "tools/promotion_weekly_review_packet.py",
     "tools/promotion_operator_handoff_packet.py",
+    "tools/promotion_empty_data_safety_audit.py",
     "tools/promotion_daily_ops_refresh.py",
     "tools/promotion_decision_scenario_audit.py",
     "tools/build_guardian_card_assets.py",
@@ -210,6 +211,7 @@ def main() -> int:
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
         run_step("promotion weekly review packet", [sys.executable, "tools/promotion_weekly_review_packet.py", "--check"])
         run_step("promotion operator handoff packet", [sys.executable, "tools/promotion_operator_handoff_packet.py", "--check"])
+        run_step("promotion empty data safety audit", [sys.executable, "tools/promotion_empty_data_safety_audit.py"])
         run_step("promotion daily ops refresh", [sys.executable, "tools/promotion_daily_ops_refresh.py", "--check", "--strict-freshness"])
         run_step("promotion decision scenario audit", [sys.executable, "tools/promotion_decision_scenario_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])

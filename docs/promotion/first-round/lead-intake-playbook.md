@@ -64,7 +64,7 @@
 ## 回填欄位
 
 - `request_id`: 真實需求發生後改成可追蹤 ID，例如 `2026-06-15-iris-owned-001`。
-- `source`: contact、keepsake_waitlist、resources_wishlist、luna_page 或 manual_reply。
+- `source`: 模板列維持 template；真實需求發生後改成 contact、keepsake_waitlist、resources_wishlist、luna_page 或 manual_reply。
 - `utm_content`: 從 Contact 信中的 `Campaign content / 推廣內容` 複製；若沒有，保留空白並只當質性線索。
 - `kpi_writeback_field`: 依需求類型回填到 `kpi-tracker.csv` 的對應欄位。
 - `email_status`: not_received、received、replied、fulfilled、closed。

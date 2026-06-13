@@ -16,6 +16,14 @@ DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "lead-intake-playbook.json"
 DEFAULT_CSV_OUTPUT_PATH = PROMOTION_DIR / "lead-intake-tracker.csv"
 ATTRIBUTION_RECONCILIATION_PATH = PROMOTION_DIR / "attribution-reconciliation.csv"
 GUARDIAN_ORDER = ["iris", "noah", "vivian", "claire", "dora"]
+SOURCE_OPTIONS = [
+    "template",
+    "contact",
+    "keepsake_waitlist",
+    "resources_wishlist",
+    "luna_page",
+    "manual_reply",
+]
 INTAKE_TYPES = [
     {
         "type": "owned_asset_request",
@@ -42,6 +50,12 @@ INTAKE_TYPES = [
         "nextAction": "整理成 FAQ、修復計畫或 Contact 模板，不把個案內容公開。",
     },
 ]
+INTAKE_KPI_MAP = {item["type"]: item["kpiField"] for item in INTAKE_TYPES}
+INTAKE_ROUTE_HINTS = {
+    "owned_asset_request": ("keepsake", "supplyRoute"),
+    "luna_scene_request": ("lunaScene", "contactRequest"),
+    "repair_or_contact_request": ("contactRequest", "repairPlan"),
+}
 CSV_FIELDS = [
     "request_id",
     "date",
@@ -110,11 +124,11 @@ def group_guardians(tasks: list[dict]) -> dict[str, dict]:
 
 
 def route_for_intake(path: dict, intake_type: str) -> str:
-    if intake_type == "owned_asset_request":
-        return str(path.get("keepsake") or path.get("supplyRoute") or "")
-    if intake_type == "luna_scene_request":
-        return str(path.get("lunaScene") or path.get("contactRequest") or "")
-    return str(path.get("contactRequest") or path.get("repairPlan") or "")
+    for route_key in INTAKE_ROUTE_HINTS.get(intake_type, ("contactRequest", "repairPlan")):
+        route = str(path.get(route_key) or "")
+        if route:
+            return route
+    return ""
 
 
 def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[str]] | None = None) -> dict:
@@ -135,7 +149,7 @@ def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[st
             row = {
                 "request_id": request_id,
                 "date": "",
-                "source": "contact_or_waitlist",
+                "source": "template",
                 "utm_content": "",
                 "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: " + ", ".join(examples[:3]),
                 "guardian_id": guardian_id,
@@ -176,6 +190,8 @@ def build_playbook(tasks: list[dict], attribution_by_guardian: dict[str, list[st
         "expectedTemplateRows": len(expected_guardians) * len(INTAKE_TYPES),
         "trackerRows": rows,
         "intakeTypes": INTAKE_TYPES,
+        "sourceOptions": SOURCE_OPTIONS,
+        "kpiMapping": INTAKE_KPI_MAP,
         "workflow": [
             "收到 Contact、收藏室等待清單或旅人補給願望後，先填 lead-intake-tracker.csv。",
             "把 Contact 信中的 Campaign content / 推廣內容 複製到 utm_content，並用 attribution-reconciliation.csv 找到對應腳本。",
@@ -222,7 +238,7 @@ def render_markdown(playbook: dict) -> str:
         "## 回填欄位",
         "",
         "- `request_id`: 真實需求發生後改成可追蹤 ID，例如 `2026-06-15-iris-owned-001`。",
-        "- `source`: contact、keepsake_waitlist、resources_wishlist、luna_page 或 manual_reply。",
+        "- `source`: 模板列維持 template；真實需求發生後改成 contact、keepsake_waitlist、resources_wishlist、luna_page 或 manual_reply。",
         "- `utm_content`: 從 Contact 信中的 `Campaign content / 推廣內容` 複製；若沒有，保留空白並只當質性線索。",
         "- `kpi_writeback_field`: 依需求類型回填到 `kpi-tracker.csv` 的對應欄位。",
         "- `email_status`: not_received、received、replied、fulfilled、closed。",
@@ -250,6 +266,9 @@ def write_outputs(playbook: dict, output: Path, json_output: Path, csv_output: P
 
 def validate_playbook(playbook: dict) -> list[str]:
     issues: list[str] = []
+    allowed_sources = set(playbook.get("sourceOptions") or SOURCE_OPTIONS)
+    expected_intake_types = set(INTAKE_KPI_MAP)
+    expected_kpi_fields = set(INTAKE_KPI_MAP.values())
     expected_guardians = int(playbook.get("expectedGuardianCount", 0) or 0)
     if len(playbook.get("guardians", [])) != expected_guardians:
         issues.append(f"expected {expected_guardians} guardian intake sections, got {len(playbook.get('guardians', []))}")
@@ -261,16 +280,36 @@ def validate_playbook(playbook: dict) -> list[str]:
         issues.append("template rows must not imply received user emails")
     if any(row.get("status") != "template" for row in rows):
         issues.append("template rows must keep template status")
+    if set(playbook.get("kpiMapping", {}).keys()) != expected_intake_types:
+        issues.append("playbook KPI mapping must cover every intake type")
     for row in rows:
+        intake_type = row.get("intake_type", "")
         if not row.get("guardian_id") or not row.get("intake_type") or not row.get("related_route"):
             issues.append(f"{row.get('request_id', '<unknown>')}: missing guardian, intake type, or route")
+        if row.get("source") not in allowed_sources:
+            issues.append(f"{row.get('request_id', '<unknown>')}: source must be one of {sorted(allowed_sources)}")
+        if row.get("status") == "template" and row.get("source") != "template":
+            issues.append(f"{row.get('request_id', '<unknown>')}: template row source must be template")
+        if intake_type not in expected_intake_types:
+            issues.append(f"{row.get('request_id', '<unknown>')}: unknown intake type {intake_type}")
+        elif row.get("kpi_writeback_field") != INTAKE_KPI_MAP[intake_type]:
+            issues.append(
+                f"{row.get('request_id', '<unknown>')}: {intake_type} must write back to {INTAKE_KPI_MAP[intake_type]}"
+            )
+        if row.get("kpi_writeback_field") not in expected_kpi_fields:
+            issues.append(f"{row.get('request_id', '<unknown>')}: unsupported KPI writeback field")
         if not row.get("kpi_writeback_field") or "kpi-tracker.csv" not in row.get("kpi_writeback_rule", ""):
             issues.append(f"{row.get('request_id', '<unknown>')}: missing KPI writeback guidance")
         if "Campaign content" not in row.get("contact_campaign_content", ""):
             issues.append(f"{row.get('request_id', '<unknown>')}: missing Contact campaign content mapping")
+        if "do not choose a winning script" not in row.get("kpi_writeback_rule", ""):
+            issues.append(f"{row.get('request_id', '<unknown>')}: missing manual lead safety wording")
     for guardian in playbook.get("guardians", []):
         if not guardian.get("attributionContentExamples"):
             issues.append(f"{guardian.get('guardianId', '<unknown>')}: missing attribution content examples")
+        guardian_intake_types = {row.get("intake_type") for row in guardian.get("intakeRows", [])}
+        if guardian_intake_types != expected_intake_types:
+            issues.append(f"{guardian.get('guardianId', '<unknown>')}: must include every intake type")
     if not playbook.get("safety", {}).get("noFakeLeads"):
         issues.append("playbook must mark noFakeLeads safety boundary")
     if not playbook.get("safety", {}).get("manualLeadRule"):
@@ -297,6 +336,8 @@ def main() -> int:
     print(f"promotion_lead_intake_guardians={len(playbook['guardians'])}")
     print(f"promotion_lead_intake_template_rows={len(playbook['trackerRows'])}")
     print(f"promotion_lead_intake_types={len(playbook['intakeTypes'])}")
+    print(f"promotion_lead_intake_source_options={len(playbook['sourceOptions'])}")
+    print(f"promotion_lead_intake_kpi_mappings={len(playbook['kpiMapping'])}")
     print(f"promotion_lead_intake_issues={len(issues)}")
     for issue in issues:
         print(issue)

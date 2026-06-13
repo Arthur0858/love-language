@@ -41,7 +41,7 @@
         {
           "request_id": "template-iris-owned_asset_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
           "guardian_id": "iris",
@@ -64,7 +64,7 @@
         {
           "request_id": "template-iris-luna_scene_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
           "guardian_id": "iris",
@@ -87,7 +87,7 @@
         {
           "request_id": "template-iris-repair_or_contact_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
           "guardian_id": "iris",
@@ -151,7 +151,7 @@
         {
           "request_id": "template-noah-owned_asset_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
           "guardian_id": "noah",
@@ -174,7 +174,7 @@
         {
           "request_id": "template-noah-luna_scene_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
           "guardian_id": "noah",
@@ -197,7 +197,7 @@
         {
           "request_id": "template-noah-repair_or_contact_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
           "guardian_id": "noah",
@@ -261,7 +261,7 @@
         {
           "request_id": "template-vivian-owned_asset_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
           "guardian_id": "vivian",
@@ -284,7 +284,7 @@
         {
           "request_id": "template-vivian-luna_scene_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
           "guardian_id": "vivian",
@@ -307,7 +307,7 @@
         {
           "request_id": "template-vivian-repair_or_contact_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
           "guardian_id": "vivian",
@@ -371,7 +371,7 @@
         {
           "request_id": "template-claire-owned_asset_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
           "guardian_id": "claire",
@@ -394,7 +394,7 @@
         {
           "request_id": "template-claire-luna_scene_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
           "guardian_id": "claire",
@@ -417,7 +417,7 @@
         {
           "request_id": "template-claire-repair_or_contact_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
           "guardian_id": "claire",
@@ -481,7 +481,7 @@
         {
           "request_id": "template-dora-owned_asset_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
           "guardian_id": "dora",
@@ -504,7 +504,7 @@
         {
           "request_id": "template-dora-luna_scene_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
           "guardian_id": "dora",
@@ -527,7 +527,7 @@
         {
           "request_id": "template-dora-repair_or_contact_request",
           "date": "",
-          "source": "contact_or_waitlist",
+          "source": "template",
           "utm_content": "",
           "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
           "guardian_id": "dora",
@@ -563,7 +563,7 @@
     {
       "request_id": "template-iris-owned_asset_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
       "guardian_id": "iris",
@@ -586,7 +586,7 @@
     {
       "request_id": "template-iris-luna_scene_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
       "guardian_id": "iris",
@@ -609,7 +609,7 @@
     {
       "request_id": "template-iris-repair_or_contact_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: iris_affirmation, iris_silence, iris_too_sensitive",
       "guardian_id": "iris",
@@ -632,7 +632,7 @@
     {
       "request_id": "template-noah-owned_asset_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
       "guardian_id": "noah",
@@ -655,7 +655,7 @@
     {
       "request_id": "template-noah-luna_scene_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
       "guardian_id": "noah",
@@ -678,7 +678,7 @@
     {
       "request_id": "template-noah-repair_or_contact_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: noah_cancel, noah_phone, noah_quiet_time",
       "guardian_id": "noah",
@@ -701,7 +701,7 @@
     {
       "request_id": "template-vivian-owned_asset_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
       "guardian_id": "vivian",
@@ -724,7 +724,7 @@
     {
       "request_id": "template-vivian-luna_scene_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
       "guardian_id": "vivian",
@@ -747,7 +747,7 @@
     {
       "request_id": "template-vivian-repair_or_contact_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: vivian_forgotten_date, vivian_remembered, vivian_ritual",
       "guardian_id": "vivian",
@@ -770,7 +770,7 @@
     {
       "request_id": "template-claire-owned_asset_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
       "guardian_id": "claire",
@@ -793,7 +793,7 @@
     {
       "request_id": "template-claire-luna_scene_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
       "guardian_id": "claire",
@@ -816,7 +816,7 @@
     {
       "request_id": "template-claire-repair_or_contact_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: claire_ask_help, claire_promises, claire_tired",
       "guardian_id": "claire",
@@ -839,7 +839,7 @@
     {
       "request_id": "template-dora-owned_asset_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
       "guardian_id": "dora",
@@ -862,7 +862,7 @@
     {
       "request_id": "template-dora-luna_scene_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
       "guardian_id": "dora",
@@ -885,7 +885,7 @@
     {
       "request_id": "template-dora-repair_or_contact_request",
       "date": "",
-      "source": "contact_or_waitlist",
+      "source": "template",
       "utm_content": "",
       "contact_campaign_content": "Copy from Contact email Campaign content / 推廣內容. Valid examples: dora_after_conflict, dora_consent, dora_distance",
       "guardian_id": "dora",
@@ -932,6 +932,19 @@
       "nextAction": "整理成 FAQ、修復計畫或 Contact 模板，不把個案內容公開。"
     }
   ],
+  "sourceOptions": [
+    "template",
+    "contact",
+    "keepsake_waitlist",
+    "resources_wishlist",
+    "luna_page",
+    "manual_reply"
+  ],
+  "kpiMapping": {
+    "owned_asset_request": "supply_lead_requests",
+    "luna_scene_request": "luna_pack_clicks",
+    "repair_or_contact_request": "contact_requests"
+  },
   "workflow": [
     "收到 Contact、收藏室等待清單或旅人補給願望後，先填 lead-intake-tracker.csv。",
     "把 Contact 信中的 Campaign content / 推廣內容 複製到 utm_content，並用 attribution-reconciliation.csv 找到對應腳本。",

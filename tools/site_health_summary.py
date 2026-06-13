@@ -933,6 +933,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_lead_intake_guardians",
         "promotion_lead_intake_template_rows",
         "promotion_lead_intake_types",
+        "promotion_lead_intake_source_options",
+        "promotion_lead_intake_kpi_mappings",
         "promotion_lead_intake_issues",
         "promotion_offer_hypothesis_rows",
         "promotion_offer_hypothesis_ready",

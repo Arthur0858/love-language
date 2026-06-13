@@ -34,6 +34,14 @@ REQUIRED_KPI_FIELDS = [
     *ROUTE_FIELDS,
     *REVENUE_FIELDS,
 ]
+KPI_ROW_STATUSES = ("filled", "ready_for_backfill", "profile_link_only")
+DECISION_STAGES = (
+    "collect_signal",
+    "scale_quiz_completion",
+    "deepen_identity_asset",
+    "build_owned_asset",
+    "test_soft_offer",
+)
 CSV_FIELDS = [
     "source_type",
     "platform",
@@ -49,6 +57,20 @@ CSV_FIELDS = [
     "next_writeback",
     "contact_email_match",
 ]
+
+
+def attribution_policy() -> dict[str, object]:
+    return {
+        "kpiRowStatuses": list(KPI_ROW_STATUSES),
+        "decisionStages": list(DECISION_STAGES),
+        "requiredKpiFields": list(REQUIRED_KPI_FIELDS),
+        "routeFields": list(ROUTE_FIELDS),
+        "revenueFields": list(REVENUE_FIELDS),
+        "contactMatchField": "Campaign content / 推廣內容",
+        "filledKpiRule": "A KPI row is filled only after post_url exists and at least one required metric is non-zero.",
+        "profileRowsStayInPlatformTracker": True,
+        "rule": "Profile rows 回填 platform-profile-tracker.csv；Shorts rows 回填 kpi-tracker.csv；空資料時維持 collect_signal，不加重付費或聯盟 CTA。",
+    }
 
 
 def read_json(path: Path) -> dict:
@@ -142,7 +164,7 @@ def build_rows(kit: dict, launch_rows: list[dict], kpi_rows: list[dict[str, str]
             "content_angle": str(task.get("contentAngle", "")),
             "utm_content": utm_content,
             "tracked_url": str(link.get("url", "")),
-            "kpi_row_status": "filled" if kpi and is_filled(kpi) else ("ready_for_backfill" if kpi else "profile_link_only"),
+            "kpi_row_status": KPI_ROW_STATUSES[0] if kpi and is_filled(kpi) else (KPI_ROW_STATUSES[1] if kpi else KPI_ROW_STATUSES[2]),
             "decision_stage": stage,
             "next_writeback": stage_writeback(stage),
             "contact_email_match": f"Campaign content / 推廣內容 = {utm_content}",
@@ -155,6 +177,24 @@ def build_rows(kit: dict, launch_rows: list[dict], kpi_rows: list[dict[str, str]
 def validate_payload(payload: dict, launch: dict, kpi_fields: list[str]) -> list[str]:
     issues: list[str] = []
     rows = payload.get("rows", [])
+    policy = payload.get("attributionPolicy", {})
+    if not isinstance(policy, dict):
+        issues.append("payload missing attributionPolicy")
+        policy = {}
+    policy_statuses = policy.get("kpiRowStatuses", [])
+    policy_stages = policy.get("decisionStages", [])
+    if policy_statuses != list(KPI_ROW_STATUSES):
+        issues.append("attributionPolicy.kpiRowStatuses does not match generator policy")
+    if policy_stages != list(DECISION_STAGES):
+        issues.append("attributionPolicy.decisionStages does not match generator policy")
+    if policy.get("requiredKpiFields") != list(REQUIRED_KPI_FIELDS):
+        issues.append("attributionPolicy.requiredKpiFields does not match generator policy")
+    if policy.get("routeFields") != list(ROUTE_FIELDS):
+        issues.append("attributionPolicy.routeFields does not match generator policy")
+    if policy.get("revenueFields") != list(REVENUE_FIELDS):
+        issues.append("attributionPolicy.revenueFields does not match generator policy")
+    if policy.get("profileRowsStayInPlatformTracker") is not True:
+        issues.append("attributionPolicy must keep profile rows in platform-profile-tracker.csv")
     expected_total = launch.get("rowCount")
     expected_profile_rows = launch.get("profileLinks")
     expected_shorts_rows = launch.get("shortsLinks")
@@ -190,7 +230,9 @@ def validate_payload(payload: dict, launch: dict, kpi_fields: list[str]) -> list
             issues.append(f"{label}: tracked_url should contain matching utm_content")
         if label and label not in str(row.get("contact_email_match", "")):
             issues.append(f"{label}: contact_email_match should name the same utm_content")
-        if row.get("decision_stage") not in {"collect_signal", "scale_quiz_completion", "deepen_identity_asset", "build_owned_asset", "test_soft_offer"}:
+        if row.get("kpi_row_status") not in policy_statuses:
+            issues.append(f"{label}: unknown kpi_row_status {row.get('kpi_row_status')}")
+        if row.get("decision_stage") not in policy_stages:
             issues.append(f"{label}: unknown decision_stage {row.get('decision_stage')}")
     return issues
 
@@ -205,6 +247,8 @@ def render_markdown(payload: dict) -> str:
         f"- Shorts rows：{payload['shortsRows']}",
         f"- 已有 KPI row：{payload['kpiRows']}",
         f"- 已完整回填 KPI row：{payload['filledKpiRows']}",
+        f"- 歸因規則：{payload['attributionPolicy']['rule']}",
+        f"- KPI 完整回填定義：{payload['attributionPolicy']['filledKpiRule']}",
         "",
         "## 使用方式",
         "",
@@ -212,6 +256,7 @@ def render_markdown(payload: dict) -> str:
         "- 若是 Shorts row，把 `post_url` 與平台數據回填到 `kpi-tracker.csv` 的同一個 `utm_content`。",
         "- 若是 Profile row，把平台首頁數據回填到 `platform-profile-tracker.csv`，不要混進單支影片 KPI。",
         "- 沒有 KPI 前只維持 `collect_signal`，不判定優勝守護者、不加重付費 CTA。",
+        f"- 必填 KPI 欄位：`{', '.join(payload['attributionPolicy']['requiredKpiFields'])}`。",
         "",
         "## Decision Stages",
         "",
@@ -287,6 +332,7 @@ def main() -> int:
         "kpiRows": len(kpi_rows),
         "filledKpiRows": sum(1 for row in kpi_rows if is_filled(row)),
         "decisionRule": "Do not intensify paid or affiliate CTAs until quiz completions create route, lead, Luna, or affiliate intent for the same utm_content.",
+        "attributionPolicy": attribution_policy(),
         "rows": rows,
     }
     issues = validate_payload(payload, launch, kpi_fields)

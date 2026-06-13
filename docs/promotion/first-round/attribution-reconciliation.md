@@ -6,6 +6,8 @@
 - Shorts rows：15
 - 已有 KPI row：15
 - 已完整回填 KPI row：0
+- 歸因規則：Profile rows 回填 platform-profile-tracker.csv；Shorts rows 回填 kpi-tracker.csv；空資料時維持 collect_signal，不加重付費或聯盟 CTA。
+- KPI 完整回填定義：A KPI row is filled only after post_url exists and at least one required metric is non-zero.
 
 ## 使用方式
 
@@ -13,6 +15,7 @@
 - 若是 Shorts row，把 `post_url` 與平台數據回填到 `kpi-tracker.csv` 的同一個 `utm_content`。
 - 若是 Profile row，把平台首頁數據回填到 `platform-profile-tracker.csv`，不要混進單支影片 KPI。
 - 沒有 KPI 前只維持 `collect_signal`，不判定優勝守護者、不加重付費 CTA。
+- 必填 KPI 欄位：`site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests`。
 
 ## Decision Stages
 

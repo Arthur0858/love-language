@@ -14,6 +14,52 @@
   "kpiRows": 15,
   "filledKpiRows": 0,
   "decisionRule": "Do not intensify paid or affiliate CTAs until quiz completions create route, lead, Luna, or affiliate intent for the same utm_content.",
+  "attributionPolicy": {
+    "kpiRowStatuses": [
+      "filled",
+      "ready_for_backfill",
+      "profile_link_only"
+    ],
+    "decisionStages": [
+      "collect_signal",
+      "scale_quiz_completion",
+      "deepen_identity_asset",
+      "build_owned_asset",
+      "test_soft_offer"
+    ],
+    "requiredKpiFields": [
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions",
+      "guardian_result_clicks",
+      "resources_clicks",
+      "repair_plan_clicks",
+      "luna_clicks",
+      "keepsake_clicks",
+      "free_keepsake_downloads",
+      "supply_lead_requests",
+      "luna_pack_clicks",
+      "affiliate_book_clicks",
+      "contact_requests"
+    ],
+    "routeFields": [
+      "resources_clicks",
+      "repair_plan_clicks",
+      "luna_clicks",
+      "keepsake_clicks"
+    ],
+    "revenueFields": [
+      "free_keepsake_downloads",
+      "supply_lead_requests",
+      "luna_pack_clicks",
+      "affiliate_book_clicks",
+      "contact_requests"
+    ],
+    "contactMatchField": "Campaign content / 推廣內容",
+    "filledKpiRule": "A KPI row is filled only after post_url exists and at least one required metric is non-zero.",
+    "profileRowsStayInPlatformTracker": true,
+    "rule": "Profile rows 回填 platform-profile-tracker.csv；Shorts rows 回填 kpi-tracker.csv；空資料時維持 collect_signal，不加重付費或聯盟 CTA。"
+  },
   "rows": [
     {
       "source_type": "profile",

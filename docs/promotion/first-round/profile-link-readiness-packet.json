@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "actionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
+    "launchLinkQa": "docs/promotion/first-round/launch-link-qa.json",
+    "profileCompletionGate": "docs/promotion/first-round/profile-completion-gate.json"
+  },
+  "smoke": {
+    "public_launch_link_checked": 3,
+    "public_launch_link_profile_checked": 3,
+    "public_launch_link_shorts_checked": 0,
+    "public_launch_link_quiz_entries": 3,
+    "public_launch_link_safety_navs": 3,
+    "public_launch_link_utm_checks": 12,
+    "public_launch_link_issues": 0
+  },
+  "metrics": {
+    "rows": 3,
+    "publicChecked": 3,
+    "publicProfileChecked": 3,
+    "publicReady": 3,
+    "readyToConfigure": 3,
+    "readyToWriteback": 0,
+    "configured": 0,
+    "profileGateReady": 0,
+    "issues": 0
+  },
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "status": "planned",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "public_ready": "1",
+      "action_status": "ready_to_configure",
+      "profile_configured": "0",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\""
+    },
+    {
+      "platform": "tiktok",
+      "status": "planned",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "public_ready": "1",
+      "action_status": "ready_to_configure",
+      "profile_configured": "0",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\""
+    },
+    {
+      "platform": "instagram_reels",
+      "status": "planned",
+      "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "public_ready": "1",
+      "action_status": "ready_to_configure",
+      "profile_configured": "0",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\""
+    }
+  ],
+  "issues": []
+}

@@ -27,6 +27,7 @@ PYTHON_TOOLS = [
     "tools/promotion_publish_pack.py",
     "tools/promotion_next_actions.py",
     "tools/promotion_sync_kpi_tracker.py",
+    "tools/promotion_metric_source_matrix.py",
     "tools/promotion_kpi_schema_audit.py",
     "tools/promotion_sync_posting_queue.py",
     "tools/promotion_platform_kpi_tracker.py",
@@ -217,6 +218,7 @@ def main() -> int:
         run_step("promotion spreadsheet workbook", [find_node(), "tools/build_promotion_spreadsheet.mjs", "--check"])
         run_step("promotion publish pack", [sys.executable, "tools/promotion_publish_pack.py", "--all", "--check"])
         run_step("promotion kpi tracker", [sys.executable, "tools/promotion_sync_kpi_tracker.py", "--check"])
+        run_step("promotion metric source matrix", [sys.executable, "tools/promotion_metric_source_matrix.py", "--check"])
         run_step("promotion kpi schema audit", [sys.executable, "tools/promotion_kpi_schema_audit.py"])
         run_step("promotion posting queue", [sys.executable, "tools/promotion_sync_posting_queue.py", "--check"])
         run_step("promotion platform kpi tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"])

@@ -15,6 +15,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_sync_posting_queue.py"],
     [sys.executable, "tools/promotion_sync_kpi_tracker.py"],
+    [sys.executable, "tools/promotion_metric_source_matrix.py"],
     [sys.executable, "tools/promotion_platform_profile_setup.py"],
     [sys.executable, "tools/promotion_platform_profile_tracker.py"],
     [sys.executable, "tools/promotion_profile_writeback.py", "check", "--write-playbook"],

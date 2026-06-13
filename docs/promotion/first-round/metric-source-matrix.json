@@ -1,0 +1,399 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "promotionKit": "promotion-kit.json",
+    "funnelEvents": "funnel-events.json",
+    "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "platformKpiTracker": "docs/promotion/first-round/platform-kpi-tracker.csv",
+    "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
+    "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
+    "attribution": "docs/promotion/first-round/attribution-reconciliation.csv"
+  },
+  "metrics": {
+    "rows": 18,
+    "platformFields": 5,
+    "siteConversionFields": 3,
+    "routeInterestFields": 7,
+    "leadIntentFields": 3
+  },
+  "rows": [
+    {
+      "metric": "views",
+      "category": "platform_engagement",
+      "primarySource": "Platform analytics screen for the published post or profile link.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv"
+      ],
+      "requiredProof": "public post/profile URL plus analytics screenshot or checked proof note.",
+      "zeroAllowed": "yes_after_public_source_check",
+      "zeroRule": "0 is valid only after the public URL exists and the platform analytics screen has been checked for the same date window.",
+      "decisionUse": "Useful for creative learning, but cannot choose a winning guardian or product path without site and quiz data.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": []
+    },
+    {
+      "metric": "likes",
+      "category": "platform_engagement",
+      "primarySource": "Platform analytics screen for the published post or profile link.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv"
+      ],
+      "requiredProof": "public post/profile URL plus analytics screenshot or checked proof note.",
+      "zeroAllowed": "yes_after_public_source_check",
+      "zeroRule": "0 is valid only after the public URL exists and the platform analytics screen has been checked for the same date window.",
+      "decisionUse": "Useful for creative learning, but cannot choose a winning guardian or product path without site and quiz data.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": []
+    },
+    {
+      "metric": "comments",
+      "category": "platform_engagement",
+      "primarySource": "Platform analytics screen for the published post or profile link.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv"
+      ],
+      "requiredProof": "public post/profile URL plus analytics screenshot or checked proof note.",
+      "zeroAllowed": "yes_after_public_source_check",
+      "zeroRule": "0 is valid only after the public URL exists and the platform analytics screen has been checked for the same date window.",
+      "decisionUse": "Useful for creative learning, but cannot choose a winning guardian or product path without site and quiz data.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": []
+    },
+    {
+      "metric": "shares",
+      "category": "platform_engagement",
+      "primarySource": "Platform analytics screen for the published post or profile link.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv"
+      ],
+      "requiredProof": "public post/profile URL plus analytics screenshot or checked proof note.",
+      "zeroAllowed": "yes_after_public_source_check",
+      "zeroRule": "0 is valid only after the public URL exists and the platform analytics screen has been checked for the same date window.",
+      "decisionUse": "Useful for creative learning, but cannot choose a winning guardian or product path without site and quiz data.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": []
+    },
+    {
+      "metric": "profile_clicks",
+      "category": "platform_engagement",
+      "primarySource": "Platform analytics screen for the published post or profile link.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "public post/profile URL plus analytics screenshot or checked proof note.",
+      "zeroAllowed": "yes_after_public_source_check",
+      "zeroRule": "0 is valid only after the public URL exists and the platform analytics screen has been checked for the same date window.",
+      "decisionUse": "Useful for creative learning, but cannot choose a winning guardian or product path without site and quiz data.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": []
+    },
+    {
+      "metric": "site_clicks",
+      "category": "site_conversion",
+      "primarySource": "Website analytics or event log filtered by tracked_url / utm_content.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "post/profile URL, tracked UTM, analytics date window, and proof note.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 is valid only after the site analytics source was checked; blank is not the same as 0.",
+      "decisionUse": "Minimum required for weekly review; quiz_completions is the main first-round success signal.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "campaign_landing"
+      ]
+    },
+    {
+      "metric": "quiz_starts",
+      "category": "site_conversion",
+      "primarySource": "Website analytics or event log filtered by tracked_url / utm_content.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "post/profile URL, tracked UTM, analytics date window, and proof note.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 is valid only after the site analytics source was checked; blank is not the same as 0.",
+      "decisionUse": "Minimum required for weekly review; quiz_completions is the main first-round success signal.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_started"
+      ]
+    },
+    {
+      "metric": "quiz_completions",
+      "category": "site_conversion",
+      "primarySource": "Website analytics or event log filtered by tracked_url / utm_content.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "post/profile URL, tracked UTM, analytics date window, and proof note.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 is valid only after the site analytics source was checked; blank is not the same as 0.",
+      "decisionUse": "Minimum required for weekly review; quiz_completions is the main first-round success signal.",
+      "manualWriteback": "promotion_post_writeback.py or promotion_profile_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_completed"
+      ]
+    },
+    {
+      "metric": "guardian_result_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: guardian_resume_primary, guardian_resume_profile, home_resume_guardian, guide_resume_guardian, guardian_map_card",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "guardian_resume_primary",
+        "guardian_resume_profile",
+        "home_resume_guardian",
+        "guide_resume_guardian",
+        "guardian_map_card"
+      ]
+    },
+    {
+      "metric": "resources_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: quiz_result_supply_route, home_resume_supply_route, guardian_hero_supply_route, supply_quick_route, supply_entry_routes, home_saved_pack_link, supply_pack_link",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_result_supply_route",
+        "home_resume_supply_route",
+        "guardian_hero_supply_route",
+        "supply_quick_route",
+        "supply_entry_routes",
+        "home_saved_pack_link",
+        "supply_pack_link"
+      ]
+    },
+    {
+      "metric": "repair_plan_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: quiz_result_repair_plan, home_resume_repair_plan, repair_resume_plan, practice_card_repair_plan",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_result_repair_plan",
+        "home_resume_repair_plan",
+        "repair_resume_plan",
+        "practice_card_repair_plan"
+      ]
+    },
+    {
+      "metric": "luna_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: quiz_result_luna, home_resume_luna, guardian_resume_luna, luna_offer_resources, luna_use_case_action, home_saved_pack_luna, supply_pack_luna",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_result_luna",
+        "home_resume_luna",
+        "guardian_resume_luna",
+        "luna_offer_resources",
+        "luna_use_case_action",
+        "home_saved_pack_luna",
+        "supply_pack_luna"
+      ]
+    },
+    {
+      "metric": "keepsake_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: quiz_result_keepsake, home_resume_keepsake, keepsake_resume_story_open, practice_card_supply_route",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "quiz_result_keepsake",
+        "home_resume_keepsake",
+        "keepsake_resume_story_open",
+        "practice_card_supply_route"
+      ]
+    },
+    {
+      "metric": "free_keepsake_downloads",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: free_keepsake_download, collector_story_download, keepsake_resume_story_download, practice_card_print, home_saved_pack_free_keepsake, supply_pack_free_keepsake",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "free_keepsake_download",
+        "collector_story_download",
+        "keepsake_resume_story_download",
+        "practice_card_print",
+        "home_saved_pack_free_keepsake",
+        "supply_pack_free_keepsake"
+      ]
+    },
+    {
+      "metric": "supply_lead_requests",
+      "category": "lead_or_revenue_intent",
+      "primarySource": "lead-intake-tracker.csv plus traceable consent/evidence; optional matching UTM attribution.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv",
+        "lead-intake-tracker.csv"
+      ],
+      "requiredProof": "real user request, explicit_reply_ok consent, traceable email/thread/proof note, and safe notes without raw sensitive content.",
+      "zeroAllowed": "no_without_review",
+      "zeroRule": "Do not write fake 0 demand from silence; keep blank until the lead window is reviewed, then document checked-zero separately.",
+      "decisionUse": "Can open owned asset or Luna experiments only after repeated same-guardian demand and matching gates.",
+      "manualWriteback": "promotion_lead_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "supply_route_mailto",
+        "supply_wishlist_mailto",
+        "collector_supply_mailto",
+        "free_keepsake_asset_request",
+        "keepsake_structured_request_mailto",
+        "keepsake_waitlist_mailto",
+        "home_saved_pack_owned_request",
+        "supply_pack_owned_request"
+      ]
+    },
+    {
+      "metric": "luna_pack_clicks",
+      "category": "lead_or_revenue_intent",
+      "primarySource": "lead-intake-tracker.csv plus traceable consent/evidence; optional matching UTM attribution.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv",
+        "lead-intake-tracker.csv"
+      ],
+      "requiredProof": "real user request, explicit_reply_ok consent, traceable email/thread/proof note, and safe notes without raw sensitive content.",
+      "zeroAllowed": "no_without_review",
+      "zeroRule": "Do not write fake 0 demand from silence; keep blank until the lead window is reviewed, then document checked-zero separately.",
+      "decisionUse": "Can open owned asset or Luna experiments only after repeated same-guardian demand and matching gates.",
+      "manualWriteback": "promotion_lead_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "luna_gumroad_pack_click",
+        "luna_starter_pack_click",
+        "quiz_luna_starter_pack_click",
+        "home_saved_luna_starter_pack_click"
+      ]
+    },
+    {
+      "metric": "affiliate_book_clicks",
+      "category": "route_interest",
+      "primarySource": "Website event catalog: supply_route_affiliate_book, quiz_result_affiliate_book, repair_guardian_affiliate_book, repair_resume_affiliate_book",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv"
+      ],
+      "requiredProof": "site event count or checked-zero proof note tied to the same UTM row.",
+      "zeroAllowed": "yes_after_site_source_check",
+      "zeroRule": "0 can inform route ordering only after minimum decision fields are also checked.",
+      "decisionUse": "Supports route sequencing after quiz completion exists; does not justify paid-product production by itself.",
+      "manualWriteback": "promotion_post_writeback.py, promotion_profile_writeback.py, or weekly review rollup",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "supply_route_affiliate_book",
+        "quiz_result_affiliate_book",
+        "repair_guardian_affiliate_book",
+        "repair_resume_affiliate_book"
+      ]
+    },
+    {
+      "metric": "contact_requests",
+      "category": "lead_or_revenue_intent",
+      "primarySource": "lead-intake-tracker.csv plus traceable consent/evidence; optional matching UTM attribution.",
+      "trackerFiles": [
+        "kpi-tracker.csv",
+        "platform-kpi-tracker.csv",
+        "platform-profile-tracker.csv",
+        "lead-intake-tracker.csv"
+      ],
+      "requiredProof": "real user request, explicit_reply_ok consent, traceable email/thread/proof note, and safe notes without raw sensitive content.",
+      "zeroAllowed": "no_without_review",
+      "zeroRule": "Do not write fake 0 demand from silence; keep blank until the lead window is reviewed, then document checked-zero separately.",
+      "decisionUse": "Can open owned asset or Luna experiments only after repeated same-guardian demand and matching gates.",
+      "manualWriteback": "promotion_lead_writeback.py",
+      "safetyBoundary": "Do not use this metric to claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.",
+      "eventNames": [
+        "contact_funnel_summary_mailto",
+        "contact_structured_request_mailto",
+        "contact_supply_mailto",
+        "contact_repair_mailto",
+        "contact_resume_send",
+        "quiz_result_contact",
+        "home_saved_pack_contact",
+        "supply_pack_contact"
+      ]
+    }
+  ]
+}

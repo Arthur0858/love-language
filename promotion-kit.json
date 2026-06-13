@@ -604,9 +604,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -719,9 +719,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -834,9 +834,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -949,9 +949,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1065,9 +1065,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1180,9 +1180,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1295,9 +1295,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1410,9 +1410,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1525,9 +1525,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1640,9 +1640,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1756,9 +1756,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1871,9 +1871,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -1987,9 +1987,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -2102,9 +2102,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],
@@ -2217,9 +2217,9 @@
         ],
         "recommendedFirstAction": "After a quiz completion, offer the matching free guardian keepsake before any paid or affiliate route.",
         "successEvents": [
-          "quiz_complete",
+          "quiz_completed",
           "free_keepsake_download",
-          "supply_route_asset_request",
+          "supply_wishlist_mailto",
           "luna_gumroad_pack_click",
           "supply_route_affiliate_book"
         ],

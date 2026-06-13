@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
 FUNNEL_EVENTS_PATH = ROOT / "funnel-events.json"
+COMMERCE_CATALOG_PATH = ROOT / "commerce-catalog.json"
 KPI_TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
 PLATFORM_KPI_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 PLATFORM_PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
@@ -87,6 +88,7 @@ def missing(required: list[str] | set[str], available: list[str] | set[str]) -> 
 def validate() -> tuple[dict[str, int], list[str]]:
     issues: list[str] = []
     kit = load_json(KIT_PATH)
+    commerce = load_json(COMMERCE_CATALOG_PATH)
     funnel_catalog = load_json(FUNNEL_EVENTS_PATH)
     catalog_events = {
         str(item.get("name", "")): item
@@ -122,6 +124,9 @@ def validate() -> tuple[dict[str, int], list[str]]:
     profile_header = csv_header(PLATFORM_PROFILE_TRACKER_PATH)
     attribution_header = csv_header(ATTRIBUTION_RECONCILIATION_PATH)
     attribution_rows = csv_rows(ATTRIBUTION_RECONCILIATION_PATH)
+    commerce_items = commerce.get("items") if isinstance(commerce.get("items"), list) else []
+    commerce_playbook = commerce.get("revenuePlaybook") if isinstance(commerce.get("revenuePlaybook"), list) else []
+    commerce_item_ids = {str(item.get("id", "")) for item in commerce_items if isinstance(item, dict)}
 
     if kpi_header != kpi_fields:
         issues.append("kpi-tracker.csv header must exactly match promotion-kit.json kpiFields")
@@ -172,6 +177,38 @@ def validate() -> tuple[dict[str, int], list[str]]:
         if kpi in REVENUE_BRIDGE_FIELDS and not item.get("reviewUse"):
             issues.append(f"eventKpiMap {kpi} must explain review use")
 
+    for play in commerce_playbook:
+        if not isinstance(play, dict):
+            continue
+        play_id = str(play.get("id", ""))
+        for event_name in play.get("primaryEvents", []):
+            if str(event_name) not in catalog_events:
+                issues.append(f"commerce revenue playbook {play_id} references missing funnel event {event_name}")
+
+    for item in commerce_items:
+        if not isinstance(item, dict):
+            continue
+        item_id = str(item.get("id", ""))
+        conversion = str(item.get("conversion", ""))
+        if conversion and conversion not in catalog_events:
+            issues.append(f"commerce item {item_id} references missing conversion event {conversion}")
+
+    for task in kit.get("publishingTasks", []):
+        if not isinstance(task, dict):
+            continue
+        task_id = str(task.get("taskId", "<unknown>"))
+        bridge = task.get("monetizationBridge") if isinstance(task.get("monetizationBridge"), dict) else {}
+        for event_name in bridge.get("successEvents", []):
+            if str(event_name) not in catalog_events:
+                issues.append(f"publishing task {task_id} monetizationBridge references missing funnel event {event_name}")
+        for field in ("primaryFreeItemId", "ownedLeadItemId"):
+            item_id = str(bridge.get(field, ""))
+            if item_id not in commerce_item_ids:
+                issues.append(f"publishing task {task_id} monetizationBridge.{field} missing from commerce catalog")
+        for item_id in bridge.get("lunaProductIds", []) + bridge.get("affiliateItemIds", []):
+            if str(item_id) not in commerce_item_ids:
+                issues.append(f"publishing task {task_id} monetizationBridge item {item_id} missing from commerce catalog")
+
     attribution_statuses = {row.get("kpi_row_status", "") for row in attribution_rows}
     if not attribution_statuses.issubset(ATTRIBUTION_STATUS_VALUES):
         issues.append(f"attribution-reconciliation.csv has unsupported kpi_row_status values: {sorted(attribution_statuses)}")
@@ -188,6 +225,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "promotion_kpi_schema_event_names": len(event_names),
         "promotion_kpi_schema_catalog_events": len(catalog_events),
         "promotion_kpi_schema_revenue_bridge_kpis": len(revenue_bridge_kpis),
+        "promotion_kpi_schema_commerce_items": len(commerce_item_ids),
+        "promotion_kpi_schema_commerce_playbooks": len(commerce_playbook),
         "promotion_kpi_schema_attribution_rows": len(attribution_rows),
         "promotion_kpi_schema_issues": len(issues),
     }

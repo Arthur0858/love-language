@@ -89,7 +89,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],
@@ -185,7 +186,7 @@
       },
       "url": "https://lovetypes.tw/resources/#supply-iris",
       "contact": "contact@lovetypes.tw",
-      "conversion": "supply_route_asset_request",
+      "conversion": "supply_wishlist_mailto",
       "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
       "playbookId": "owned_supply_lead",
       "recommendedAfter": [
@@ -194,7 +195,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],
@@ -247,7 +249,7 @@
       },
       "url": "https://lovetypes.tw/resources/#supply-noah",
       "contact": "contact@lovetypes.tw",
-      "conversion": "supply_route_asset_request",
+      "conversion": "supply_wishlist_mailto",
       "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
       "playbookId": "owned_supply_lead",
       "recommendedAfter": [
@@ -256,7 +258,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],
@@ -309,7 +312,7 @@
       },
       "url": "https://lovetypes.tw/resources/#supply-vivian",
       "contact": "contact@lovetypes.tw",
-      "conversion": "supply_route_asset_request",
+      "conversion": "supply_wishlist_mailto",
       "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
       "playbookId": "owned_supply_lead",
       "recommendedAfter": [
@@ -318,7 +321,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],
@@ -371,7 +375,7 @@
       },
       "url": "https://lovetypes.tw/resources/#supply-claire",
       "contact": "contact@lovetypes.tw",
-      "conversion": "supply_route_asset_request",
+      "conversion": "supply_wishlist_mailto",
       "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
       "playbookId": "owned_supply_lead",
       "recommendedAfter": [
@@ -380,7 +384,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],
@@ -433,7 +438,7 @@
       },
       "url": "https://lovetypes.tw/resources/#supply-dora",
       "contact": "contact@lovetypes.tw",
-      "conversion": "supply_route_asset_request",
+      "conversion": "supply_wishlist_mailto",
       "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
       "playbookId": "owned_supply_lead",
       "recommendedAfter": [
@@ -442,7 +447,8 @@
         "supply_wishlist_mailto"
       ],
       "primaryEvents": [
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
+        "free_keepsake_asset_request",
         "contact_supply_mailto",
         "contact_funnel_summary_mailto"
       ],

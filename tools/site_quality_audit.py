@@ -2385,9 +2385,9 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
         "affiliate_book_revenue",
     ]
     expected_success_events = {
-        "quiz_complete",
+        "quiz_completed",
         "free_keepsake_download",
-        "supply_route_asset_request",
+        "supply_wishlist_mailto",
         "luna_gumroad_pack_click",
         "supply_route_affiliate_book",
     }

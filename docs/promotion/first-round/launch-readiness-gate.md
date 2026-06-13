@@ -50,7 +50,7 @@
 - CTA：完成 15 題測驗，找到你的情感守護者
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 連結檢查：有效
-- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+- 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
 
 ### TikTok · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
 
@@ -60,7 +60,7 @@
 - CTA：完成 15 題測驗，找到你的情感守護者
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 連結檢查：有效
-- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+- 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
 
 ### Instagram Reels · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
 
@@ -70,7 +70,7 @@
 - CTA：完成 15 題測驗，找到你的情感守護者
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - 連結檢查：有效
-- 回填：posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions
+- 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
 
 ## 下一個決策
 

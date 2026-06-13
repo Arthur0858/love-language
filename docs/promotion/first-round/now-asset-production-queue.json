@@ -122,7 +122,7 @@
       "title": "你等的不是秒回，是一句清楚的在乎",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "output_file": "",
-      "notes": "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      "notes": "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
     },
     {
       "guardian_id": "noah",
@@ -242,7 +242,7 @@
       "title": "他人在你旁邊，心卻像不在場",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone",
       "output_file": "",
-      "notes": "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      "notes": "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
     },
     {
       "guardian_id": "vivian",
@@ -362,7 +362,7 @@
       "title": "你不是想要禮物，你想知道自己有沒有被記得",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered",
       "output_file": "",
-      "notes": "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      "notes": "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
     },
     {
       "guardian_id": "claire",
@@ -482,7 +482,7 @@
       "title": "你要的不是幫忙，是有人看見你快撐不住了",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
       "output_file": "",
-      "notes": "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      "notes": "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
     },
     {
       "guardian_id": "dora",
@@ -602,7 +602,7 @@
       "title": "你不是任性，你只是需要一種安全的靠近",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=dora_distance",
       "output_file": "",
-      "notes": "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"
+      "notes": "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
     }
   ]
 }

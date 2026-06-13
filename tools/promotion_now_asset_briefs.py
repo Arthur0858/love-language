@@ -97,7 +97,7 @@ def build_brief(script: dict) -> dict:
             "不把短片 CTA 改成直接購買。",
             "不交換守護者名稱、愛之語、色系或象徵物。",
             "字幕維持短句，手機上單行可讀。",
-            "發布後回填 posting-queue.csv 與 kpi-tracker.csv。",
+            "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。",
         ],
     }
 
@@ -155,7 +155,7 @@ def render_markdown(payload: dict) -> str:
         "",
         "- 每張手卡可直接交給剪輯或發布執行。",
         "- Shorts CTA 固定導向測驗，不直接導購。",
-        "- 發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。",
+        "- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。",
         "",
     ]
     for brief in payload["briefs"]:

@@ -76,12 +76,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
           "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -93,12 +94,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
           "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -110,12 +112,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired",
           "caption": "如果每一次都是你收拾，那不是成熟，是失衡。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired\n\n留言 A/B/C，你最希望有人替你分擔哪一件事？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         }
       ],
@@ -125,7 +128,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
       ]
     },
     {
@@ -195,12 +198,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
           "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -212,12 +216,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
           "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -229,12 +234,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises",
           "caption": "對克萊兒來說，真正的承諾會變成你不用一個人完成的事。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises\n\n留言 A/B/C，哪一種只說不做最讓你累？\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         }
       ],
@@ -244,7 +250,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
       ]
     },
     {
@@ -313,12 +319,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
           "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -330,12 +337,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
           "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         },
         {
@@ -347,12 +355,13 @@
           "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help",
           "caption": "你不是不需要被照顧，你只是太習慣先照顧別人。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help\n\n留言 A/B/C，或寫下一件你其實很想被幫忙的事。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
           "writeback": [
-            "status=published",
-            "published_date",
-            "post_url",
-            "site_clicks",
-            "quiz_starts",
-            "quiz_completions"
+            "posting-queue.csv: status=published",
+            "posting-queue.csv: published_date",
+            "posting-queue.csv: post_url",
+            "platform-kpi-tracker.csv: post_url",
+            "platform-kpi-tracker.csv: site_clicks",
+            "platform-kpi-tracker.csv: quiz_starts",
+            "platform-kpi-tracker.csv: quiz_completions"
           ]
         }
       ],
@@ -362,7 +371,7 @@
         "不把短片 CTA 改成直接購買。",
         "不交換守護者名稱、愛之語、色系或象徵物。",
         "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-        "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。"
+        "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"
       ]
     }
   ]

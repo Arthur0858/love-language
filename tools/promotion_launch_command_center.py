@@ -134,8 +134,8 @@ def publish_and_backfill_rows(week_execution: dict) -> list[dict[str, str]]:
                 **base,
                 "phase": "kpi_backfill",
                 "status": "blocked_until_published",
-                "action": "發布後回填貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions。",
-                "writeback": "kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions",
+                "action": "發布後回填平台貼文 URL 與最小 KPI：site_clicks、quiz_starts、quiz_completions；週回顧再彙總到腳本級 KPI。",
+                "writeback": "platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup",
                 "blocked_by": "post_url",
             })
     return rows

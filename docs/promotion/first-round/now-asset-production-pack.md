@@ -10,7 +10,7 @@
 - 字幕逐行短句，不一次揭示答案，保留留言互動。
 - 畫面使用對應守護者宇宙，不交換角色色系或象徵物。
 - 不使用診斷、療效、保證修復或必須購買說法。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 艾莉絲（iris）
 

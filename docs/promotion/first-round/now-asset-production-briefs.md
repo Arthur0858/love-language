@@ -9,7 +9,7 @@
 
 - 每張手卡可直接交給剪輯或發布執行。
 - Shorts CTA 固定導向測驗，不直接導購。
-- 發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 艾莉絲 · 你等的不是秒回，是一句清楚的在乎
 
@@ -77,7 +77,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - 字幕維持短句，手機上單行可讀。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 諾雅 · 他人在你旁邊，心卻像不在場
 
@@ -145,7 +145,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - 字幕維持短句，手機上單行可讀。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 薇薇安 · 你不是想要禮物，你想知道自己有沒有被記得
 
@@ -213,7 +213,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - 字幕維持短句，手機上單行可讀。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 克萊兒 · 你要的不是幫忙，是有人看見你快撐不住了
 
@@ -281,7 +281,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - 字幕維持短句，手機上單行可讀。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 朵拉 · 你不是任性，你只是需要一種安全的靠近
 
@@ -349,4 +349,4 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - 字幕維持短句，手機上單行可讀。
-- 發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- 發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。

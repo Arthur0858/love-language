@@ -94,7 +94,7 @@ def build_brief(week: int, script_row: dict, source_script: dict) -> dict:
             "不把短片 CTA 改成直接購買。",
             "不交換守護者名稱、愛之語、色系或象徵物。",
             "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
-            "發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。",
+            "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。",
         ],
     }
 
@@ -172,7 +172,7 @@ def render_week_markdown(payload: dict) -> str:
         "",
         "- 每支影片先依場景卡完成 9:16 初版，再使用對應平台 caption 發布。",
         "- 發布 CTA 固定導向 15 題測驗；商品、Luna、聯盟連結只由網站結果頁承接。",
-        "- 發布後先回填 `posting-queue.csv`，再回填 `kpi-tracker.csv`。",
+        "- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。",
         "",
     ]
     for brief in payload["briefs"]:

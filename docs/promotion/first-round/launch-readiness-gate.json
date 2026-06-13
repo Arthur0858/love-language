@@ -73,7 +73,7 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "trackedUrlValid": true,
       "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
     },
     {
       "platform": "tiktok",
@@ -89,7 +89,7 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "trackedUrlValid": true,
       "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
     },
     {
       "platform": "instagram_reels",
@@ -105,7 +105,7 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "trackedUrlValid": true,
       "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions"
+      "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
     }
   ],
   "blockers": [

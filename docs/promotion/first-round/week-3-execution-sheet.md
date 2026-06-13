@@ -11,7 +11,7 @@
 1. 完成三平台 Bio/Profile link 設定。
 2. 依本週三支腳本完成影片輸出或剪輯手卡交付。
 3. 依平台任務時間發布到 YouTube Shorts、TikTok、Instagram Reels。
-4. 先回填 posting-queue.csv，再回填 kpi-tracker.csv 與 platform-profile-tracker.csv。
+4. 先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧時才彙總 kpi-tracker.csv，平台首頁成效另回填 platform-profile-tracker.csv。
 5. 跑 promotion_publishing_status.py；未達週決策門檻前不調整商品或付費 CTA。
 
 ## 發布前平台首頁 Gate
@@ -100,7 +100,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-06-29 21:00 Asia/Taipei
 
@@ -116,7 +116,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-06-29 21:30 Asia/Taipei
 
@@ -132,7 +132,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ### 重要日子被忘記，你最痛的是哪裡？
 
@@ -156,7 +156,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-07-01 21:00 Asia/Taipei
 
@@ -172,7 +172,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-07-01 21:30 Asia/Taipei
 
@@ -188,7 +188,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ### 你的戀愛儀式感是哪一種？
 
@@ -212,7 +212,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-07-03 21:00 Asia/Taipei
 
@@ -228,7 +228,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-07-03 21:30 Asia/Taipei
 
@@ -244,7 +244,7 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ## 安全邊界
 

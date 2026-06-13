@@ -123,7 +123,7 @@ def first_batch_schedule(posting_rows: list[dict[str, str]]) -> list[dict[str, s
             "trackedUrl": tracked_url,
             "trackedUrlValid": is_start_campaign_url(tracked_url),
             "primaryCta": (row.get("primary_cta") or "").strip(),
-            "writeback": "posting-queue.csv: status=published, published_date, post_url; kpi-tracker.csv: platform, post_url, site_clicks, quiz_starts, quiz_completions",
+            "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup",
         })
     return rows
 

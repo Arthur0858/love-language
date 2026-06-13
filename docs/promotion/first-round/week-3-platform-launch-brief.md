@@ -32,7 +32,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-06-29 21:00 Asia/Taipei · TikTok
 
@@ -53,7 +53,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-06-29 21:30 Asia/Taipei · Instagram Reels
 
@@ -74,7 +74,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-01 20:30 Asia/Taipei · YouTube Shorts
 
@@ -95,7 +95,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-01 21:00 Asia/Taipei · TikTok
 
@@ -116,7 +116,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-01 21:30 Asia/Taipei · Instagram Reels
 
@@ -137,7 +137,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-03 20:30 Asia/Taipei · YouTube Shorts
 
@@ -158,7 +158,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-03 21:00 Asia/Taipei · TikTok
 
@@ -179,7 +179,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ### 2026-07-03 21:30 Asia/Taipei · Instagram Reels
 
@@ -200,10 +200,11 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-回填欄位：`status`、`published_date`、`post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
+回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 的 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`。
 
 ## 發布後回填
 
 - 發布後先在 posting-queue.csv 回填 status、published_date、post_url。
-- 同一天或隔天回填 kpi-tracker.csv 的 platform、post_url、site_clicks、quiz_starts、quiz_completions。
+- 同一天或隔天回填 platform-kpi-tracker.csv 的平台列 post_url、site_clicks、quiz_starts、quiz_completions。
+- 週回顧時再把三平台合計彙總到 kpi-tracker.csv。
 - 只有在 publishing-status.md 顯示可做週決策後，才放大守護者或商品承接方向。

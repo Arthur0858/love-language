@@ -9,7 +9,7 @@
 
 - 每支影片先依場景卡完成 9:16 初版，再使用對應平台 caption 發布。
 - 發布 CTA 固定導向 15 題測驗；商品、Luna、聯盟連結只由網站結果頁承接。
-- 發布後先回填 `posting-queue.csv`，再回填 `kpi-tracker.csv`。
+- 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv`；週回顧才彙總 `kpi-tracker.csv`。
 
 ## 薇薇安 · 你在乎的真的是禮物嗎？
 
@@ -52,7 +52,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-06-29 21:00 Asia/Taipei
 
@@ -67,7 +67,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-06-29 21:30 Asia/Taipei
 
@@ -82,7 +82,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ### 安全檢查
 
@@ -90,7 +90,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 薇薇安 · 重要日子被忘記，你最痛的是哪裡？
 
@@ -133,7 +133,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-07-01 21:00 Asia/Taipei
 
@@ -148,7 +148,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-07-01 21:30 Asia/Taipei
 
@@ -163,7 +163,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ### 安全檢查
 
@@ -171,7 +171,7 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 薇薇安 · 你的戀愛儀式感是哪一種？
 
@@ -214,7 +214,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### TikTok · 2026-07-03 21:00 Asia/Taipei
 
@@ -229,7 +229,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 #### Instagram Reels · 2026-07-03 21:30 Asia/Taipei
 
@@ -244,7 +244,7 @@
 #五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
 ```
 
-- 回填：`status=published`, `published_date`, `post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`
 
 ### 安全檢查
 
@@ -252,4 +252,4 @@
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
 - Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
-- 發布後先回填 posting-queue.csv，再回填 kpi-tracker.csv。
+- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。

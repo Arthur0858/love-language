@@ -23,7 +23,7 @@ STEPS = [
     ("subtitle_qa", "字幕 QA", "確認字幕短句、無錯字、手機可讀。"),
     ("safety_qa", "安全邊界 QA", "確認無診斷、療效、保證修復或必須購買說法。"),
     ("schedule_publish", "排程發布", "依平台發布簡報排程上片或排程。"),
-    ("kpi_backfill", "KPI 回填", "發布後回填 posting-queue.csv 與 kpi-tracker.csv。"),
+    ("kpi_backfill", "KPI 回填", "發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。"),
 ]
 FIELDNAMES = [
     "guardian_id",

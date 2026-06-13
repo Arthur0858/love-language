@@ -23,7 +23,7 @@
 - [planned] 字幕 QA：確認字幕短句、無錯字、手機可讀。
 - [planned] 安全邊界 QA：確認無診斷、療效、保證修復或必須購買說法。
 - [planned] 排程發布：依平台發布簡報排程上片或排程。
-- [planned] KPI 回填：發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- [planned] KPI 回填：發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 諾雅 · 他人在你旁邊，心卻像不在場
 
@@ -37,7 +37,7 @@
 - [planned] 字幕 QA：確認字幕短句、無錯字、手機可讀。
 - [planned] 安全邊界 QA：確認無診斷、療效、保證修復或必須購買說法。
 - [planned] 排程發布：依平台發布簡報排程上片或排程。
-- [planned] KPI 回填：發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- [planned] KPI 回填：發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 薇薇安 · 你不是想要禮物，你想知道自己有沒有被記得
 
@@ -51,7 +51,7 @@
 - [planned] 字幕 QA：確認字幕短句、無錯字、手機可讀。
 - [planned] 安全邊界 QA：確認無診斷、療效、保證修復或必須購買說法。
 - [planned] 排程發布：依平台發布簡報排程上片或排程。
-- [planned] KPI 回填：發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- [planned] KPI 回填：發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 克萊兒 · 你要的不是幫忙，是有人看見你快撐不住了
 
@@ -65,7 +65,7 @@
 - [planned] 字幕 QA：確認字幕短句、無錯字、手機可讀。
 - [planned] 安全邊界 QA：確認無診斷、療效、保證修復或必須購買說法。
 - [planned] 排程發布：依平台發布簡報排程上片或排程。
-- [planned] KPI 回填：發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- [planned] KPI 回填：發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。
 
 ## 朵拉 · 你不是任性，你只是需要一種安全的靠近
 
@@ -79,4 +79,4 @@
 - [planned] 字幕 QA：確認字幕短句、無錯字、手機可讀。
 - [planned] 安全邊界 QA：確認無診斷、療效、保證修復或必須購買說法。
 - [planned] 排程發布：依平台發布簡報排程上片或排程。
-- [planned] KPI 回填：發布後回填 posting-queue.csv 與 kpi-tracker.csv。
+- [planned] KPI 回填：發布後回填 posting-queue.csv 與 platform-kpi-tracker.csv；週回顧才彙總 kpi-tracker.csv。

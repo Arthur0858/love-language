@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import ast
 import importlib.util
 import json
 import sys
@@ -100,10 +101,25 @@ def declared_index_and_support_files() -> set[str]:
     return required
 
 
+def deployment_special_upload_files() -> set[str]:
+    tree = ast.parse(DEPLOY_SCRIPT.read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == "create_deployment":
+            return {
+                constant.value
+                for constant in ast.walk(node)
+                if isinstance(constant, ast.Constant)
+                and isinstance(constant.value, str)
+                and constant.value in REQUIRED_SPECIAL_FILES
+            }
+    return set()
+
+
 def main() -> int:
     deploy = load_deploy_module()
     required_files = required_manifest_files()
     declared_files = declared_index_and_support_files()
+    special_upload_files = deployment_special_upload_files()
     manifest_paths = {
         path.relative_to(ROOT).as_posix()
         for path in deploy.collect_manifest_paths(ROOT)
@@ -127,6 +143,13 @@ def main() -> int:
         if rel_path in manifest_paths:
             issues.append(f"special deployment file should not be in asset manifest: {rel_path}")
 
+    missing_special_upload_files = sorted(REQUIRED_SPECIAL_FILES.difference(special_upload_files))
+    if missing_special_upload_files:
+        issues.append(
+            "required special deployment files missing from deploy upload logic: "
+            f"{', '.join(missing_special_upload_files)}"
+        )
+
     for rel_path in sorted(manifest_paths):
         if rel_path in FORBIDDEN_FILES:
             issues.append(f"forbidden file in manifest: {rel_path}")
@@ -140,6 +163,7 @@ def main() -> int:
     print(f"deploy_manifest_declared_files={len(declared_files)}")
     print(f"deploy_manifest_missing_declared_required_files={len(missing_declared_required_files)}")
     print(f"deploy_manifest_special_files={len(REQUIRED_SPECIAL_FILES)}")
+    print(f"deploy_manifest_special_upload_files={len(special_upload_files)}")
     print(f"deploy_manifest_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

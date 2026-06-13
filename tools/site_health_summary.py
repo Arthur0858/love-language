@@ -945,6 +945,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "deploy_manifest_required_files",
         "deploy_manifest_declared_files",
         "deploy_manifest_missing_declared_required_files",
+        "deploy_manifest_special_files",
+        "deploy_manifest_special_upload_files",
         "site_health_config_checks",
         "site_health_config_check_tuples_parsed",
         "site_health_config_commands",

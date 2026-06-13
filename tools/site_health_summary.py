@@ -52,6 +52,7 @@ CHECKS = [
     ("csp_runtime_smoke", ["node", "tools/csp_runtime_smoke.mjs"], 120, True),
     ("public_trust_smoke", [sys.executable, "tools/public_trust_smoke.py"], 180, True),
     ("public_versioned_asset_smoke", [sys.executable, "tools/public_versioned_asset_smoke.py"], 240, True),
+    ("promotion_spreadsheet_workbook", ["node", "tools/build_promotion_spreadsheet.mjs", "--check"], 120, False),
     ("promotion_attribution_reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"], 120, False),
     ("promotion_platform_kpi_tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"], 120, False),
     ("promotion_launch_readiness_gate", [sys.executable, "tools/promotion_launch_readiness_gate.py", "--check"], 120, False),

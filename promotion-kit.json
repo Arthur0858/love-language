@@ -245,7 +245,9 @@
           "home_resume_supply_route",
           "guardian_hero_supply_route",
           "supply_quick_route",
-          "supply_entry_routes"
+          "supply_entry_routes",
+          "home_saved_pack_link",
+          "supply_pack_link"
         ],
         "manualSources": [
           "funnel-events.json",
@@ -279,7 +281,9 @@
           "home_resume_luna",
           "guardian_resume_luna",
           "luna_offer_resources",
-          "luna_use_case_action"
+          "luna_use_case_action",
+          "home_saved_pack_luna",
+          "supply_pack_luna"
         ],
         "manualSources": [
           "funnel-events.json",
@@ -311,7 +315,9 @@
           "free_keepsake_download",
           "collector_story_download",
           "keepsake_resume_story_download",
-          "practice_card_print"
+          "practice_card_print",
+          "home_saved_pack_free_keepsake",
+          "supply_pack_free_keepsake"
         ],
         "manualSources": [
           "funnel-events.json",
@@ -328,7 +334,9 @@
           "supply_wishlist_mailto",
           "collector_supply_mailto",
           "free_keepsake_asset_request",
-          "keepsake_waitlist_mailto"
+          "keepsake_waitlist_mailto",
+          "home_saved_pack_owned_request",
+          "supply_pack_owned_request"
         ],
         "manualSources": [
           "Contact inbox",
@@ -379,7 +387,9 @@
           "contact_supply_mailto",
           "contact_repair_mailto",
           "contact_resume_send",
-          "quiz_result_contact"
+          "quiz_result_contact",
+          "home_saved_pack_contact",
+          "supply_pack_contact"
         ],
         "manualSources": [
           "Contact inbox",

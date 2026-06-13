@@ -952,6 +952,7 @@ def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, 
         "affiliate_book_clicks",
         "contact_requests",
     }
+    required_runtime_pack_kpi_events = set(EXPECTED_RUNTIME_PACK_EVENT_ROLES)
     for row in event_kpi_map:
         if not isinstance(row, dict):
             issues.append("/promotion-kit.json: eventKpiMap entries should be objects")
@@ -983,6 +984,12 @@ def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, 
     missing_kpis = sorted(expected_event_kpis.difference(seen_kpis))
     if missing_kpis:
         issues.append(f"/promotion-kit.json: measurementPlan.eventKpiMap missing KPI mappings {', '.join(missing_kpis)}")
+    missing_runtime_pack_events = sorted(required_runtime_pack_kpi_events.difference(mapped_events))
+    if missing_runtime_pack_events:
+        issues.append(
+            "/promotion-kit.json: eventKpiMap missing runtime pack events "
+            f"{', '.join(missing_runtime_pack_events)}"
+        )
 
     bridge_kpis = measurement.get("revenueBridgeKpis")
     bridge_checked = 0

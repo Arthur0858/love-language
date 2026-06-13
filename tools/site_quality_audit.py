@@ -2294,6 +2294,18 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
         if not {"build_owned_asset", "test_soft_offer"}.issubset(rule_ids):
             issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.decisionRules missing revenue bridge rules")
     event_kpi_map = measurement.get("eventKpiMap")
+    required_runtime_pack_kpi_events = {
+        "home_saved_pack_free_keepsake",
+        "home_saved_pack_owned_request",
+        "home_saved_pack_luna",
+        "home_saved_pack_contact",
+        "home_saved_pack_link",
+        "supply_pack_free_keepsake",
+        "supply_pack_owned_request",
+        "supply_pack_luna",
+        "supply_pack_contact",
+        "supply_pack_link",
+    }
     expected_event_kpis = {
         "site_clicks",
         "quiz_starts",
@@ -2346,6 +2358,11 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
         missing_event_kpis = sorted(expected_event_kpis.difference(seen_kpis))
         if missing_event_kpis:
             issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiMap missing KPI mappings {', '.join(missing_event_kpis)}")
+        missing_runtime_pack_events = sorted(required_runtime_pack_kpi_events.difference(mapped_events))
+        if missing_runtime_pack_events:
+            issues.append(
+                f"{PROMOTION_KIT_PATH}: eventKpiMap missing runtime pack events {', '.join(missing_runtime_pack_events)}"
+            )
     event_safety = measurement.get("eventKpiSafety")
     if not isinstance(event_safety, dict):
         issues.append(f"{PROMOTION_KIT_PATH}: measurementPlan.eventKpiSafety should be an object")

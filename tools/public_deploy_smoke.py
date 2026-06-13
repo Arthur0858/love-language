@@ -244,7 +244,8 @@ REDIRECTS = {
     "/assets/lovetypes/share/dora-story.webp": "/assets/lovetypes/share/dora-story-zh.webp",
         "/luna-yoga-music/luna.css": "/shared-20260605-contrast.css",
     "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp": "/assets/lovetypes/share/guide-toolkit-og.jpg",
-    "/assets/lovetypes/backgrounds/quiz-desk.webp": "/assets/lovetypes/backgrounds/guardian-garden.webp",
+    "/assets/lovetypes/backgrounds/guardian-garden.webp": "/assets/lovetypes/backgrounds/guardian-garden-desktop.webp",
+    "/assets/lovetypes/backgrounds/quiz-desk.webp": "/assets/lovetypes/backgrounds/guardian-garden-desktop.webp",
     "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp": "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp",
     "/og-cover.webp": "/og-cover.jpg",
     "/en/luna/": "/en/luna-yoga-music/",
@@ -1137,13 +1138,17 @@ def main() -> int:
         page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate, *versioned_quiz_data])
 
     for source, target in REDIRECTS.items():
-        response = request_url(urljoin(base_url, source), follow_redirects=False)
+        cache_bust = "?cache-bust=public-deploy-smoke" if source.endswith((".webp", ".css")) else ""
+        response = request_url(urljoin(base_url, source + cache_bust), follow_redirects=False)
         redirects_checked += 1
         location = response.headers.get("location", "")
         expected_location = urljoin(base_url, target)
+        expected_locations = {target, expected_location}
+        if cache_bust:
+            expected_locations.update({target + cache_bust, expected_location + cache_bust})
         if response.status != 301:
             issues.append(f"{source}: expected 301 redirect, got {response.status}")
-        if location not in {target, expected_location}:
+        if location not in expected_locations:
             issues.append(f"{source}: expected redirect to {target}, got {location!r}")
 
     not_found_response = request_url(urljoin(base_url, NOT_FOUND_PATH))

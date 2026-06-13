@@ -65,7 +65,7 @@ FONT_CSS = ""
 
 IMAGE_DIMENSIONS = {
     "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp": (900, 506),
-    "/assets/lovetypes/backgrounds/guardian-garden.webp": (1920, 1080),
+    "/assets/lovetypes/backgrounds/guardian-garden-desktop.webp": (1440, 810),
     "/assets/lovetypes/share/claire-og.jpg": (1200, 630),
     "/assets/lovetypes/share/dora-og.jpg": (1200, 630),
     "/assets/lovetypes/share/guide-toolkit-og.jpg": (1200, 630),
@@ -4903,7 +4903,7 @@ def head(
     hero_preload = ""
     if path == "":
         hero_preload = """  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden.webp" media="(min-width: 721px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-desktop.webp" media="(min-width: 721px)" fetchpriority="high" />
 """
     return f"""<!DOCTYPE html>
 <html lang="{LANGS[lang]["code"]}">
@@ -8244,7 +8244,7 @@ def home(lang: str) -> None:
     <p class="lead">{escape(t["tagline"])}</p>
     <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(t["map"])}</a></div>
   </div>
-  <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
+  <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden-desktop.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
 {universe_gate_section(lang)}
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
@@ -10967,7 +10967,8 @@ def write_redirects() -> None:
         "/assets/lovetypes/share/dora-story.webp /assets/lovetypes/share/dora-story-zh.webp 301",
         f"/luna-yoga-music/luna.css {CSS_ASSET} 301",
         "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp /assets/lovetypes/share/guide-toolkit-og.jpg 301",
-        "/assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden.webp 301",
+        "/assets/lovetypes/backgrounds/guardian-garden.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
+        "/assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
         "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp /assets/lovetypes/backgrounds/guardian-garden-mobile.webp 301",
         "/og-cover.webp /og-cover.jpg 301",
     ]

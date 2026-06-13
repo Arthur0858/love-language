@@ -56,6 +56,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_platform_account_identity_checklist.py"],
     [sys.executable, "tools/promotion_profile_setup_action_sheet.py"],
     [sys.executable, "tools/promotion_profile_link_readiness_packet.py"],
+    [sys.executable, "tools/promotion_profile_proof_readiness_pack.py"],
     [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py"],
     [sys.executable, "tools/promotion_first_batch_kpi_action_sheet.py"],
     [sys.executable, "tools/promotion_first_batch_publish_checklist.py"],

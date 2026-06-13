@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "actionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
+    "readiness": "docs/promotion/first-round/profile-link-readiness-packet.json",
+    "completion": "docs/promotion/first-round/profile-completion-gate.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "proofFiles": 3,
+    "importableTemplates": 3,
+    "publicReady": 3,
+    "configured": 0,
+    "readyToConfigure": 3,
+    "readyToWriteback": 0,
+    "profileGateReady": 0
+  },
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "proof_file_exists": "1",
+      "proof_template_importable": "1",
+      "public_profile_link_ready": "1",
+      "profile_configured": "0",
+      "operator_status": "ready_to_configure",
+      "template_text": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: screenshot profile-youtube_shorts-2026-06-14.png verified\n",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "evidence_required": "A real platform screenshot/click proof must exist before running the write command.",
+      "import_output": "promotion_profile_text_import_fields_parsed=5 | promotion_profile_text_import_platform=youtube_shorts | promotion_profile_text_import_status=set | promotion_profile_text_import_has_profile_link=1 | promotion_profile_text_import_metric_fields_present=0 | promotion_profile_text_import_issues=0"
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
+      "proof_file_exists": "1",
+      "proof_template_importable": "1",
+      "public_profile_link_ready": "1",
+      "profile_configured": "0",
+      "operator_status": "ready_to_configure",
+      "template_text": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: screenshot profile-tiktok-2026-06-14.png verified\n",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "evidence_required": "A real platform screenshot/click proof must exist before running the write command.",
+      "import_output": "promotion_profile_text_import_fields_parsed=5 | promotion_profile_text_import_platform=tiktok | promotion_profile_text_import_status=set | promotion_profile_text_import_has_profile_link=1 | promotion_profile_text_import_metric_fields_present=0 | promotion_profile_text_import_issues=0"
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "proof_file_exists": "1",
+      "proof_template_importable": "1",
+      "public_profile_link_ready": "1",
+      "profile_configured": "0",
+      "operator_status": "ready_to_configure",
+      "template_text": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: screenshot profile-instagram_reels-2026-06-14.png verified\n",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "evidence_required": "A real platform screenshot/click proof must exist before running the write command.",
+      "import_output": "promotion_profile_text_import_fields_parsed=5 | promotion_profile_text_import_platform=instagram_reels | promotion_profile_text_import_status=set | promotion_profile_text_import_has_profile_link=1 | promotion_profile_text_import_metric_fields_present=0 | promotion_profile_text_import_issues=0"
+    }
+  ],
+  "rules": [
+    "Importable proof text is not proof of setup; it only means the writeback format is valid.",
+    "Run the write command only after the platform profile link is actually set and verified.",
+    "Keep status planned until there is a real screenshot, public click, or platform-time proof note.",
+    "After all three profile rows are set/live, rerun launch readiness before publishing first batch."
+  ],
+  "issues": []
+}

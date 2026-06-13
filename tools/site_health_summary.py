@@ -62,8 +62,11 @@ CHECKS = [
 ]
 RETRY_ON_FAILURE = {
     "csp_runtime_smoke",
+    "keyboard_navigation_smoke",
+    "public_launch_link_smoke",
     "public_locale_ui_smoke",
     "public_quiz_flow_smoke",
+    "public_schema_url_smoke",
     "runtime_performance_smoke",
     "tap_target_smoke",
 }

@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
+RELEASE_PATH = ROOT / "release.json"
 PUBLIC_DEPLOY_PATH = ROOT / "tools" / "public_deploy_smoke.py"
 ISSUE_KEY_RE = re.compile(r"([A-Za-z0-9_:-]*(?:_issues|issues))=")
 NODE_FALLBACK_PATH = Path("/Users/mac/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node")
@@ -109,6 +110,22 @@ def parse_predeploy_script_paths() -> list[str]:
     return []
 
 
+def release_verification_script_paths() -> list[str]:
+    try:
+        data = json.loads(RELEASE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    commands = data.get("verificationCommands") if isinstance(data, dict) else None
+    if not isinstance(commands, list):
+        return []
+    paths: list[str] = []
+    for command in commands:
+        if not isinstance(command, str):
+            continue
+        paths.extend(part for part in command.split() if part.startswith("tools/"))
+    return paths
+
+
 def emitted_issue_keys(script_paths: list[str]) -> list[str]:
     keys: set[str] = set()
     for path in sorted(set(script_paths)):
@@ -199,6 +216,7 @@ def main() -> int:
     issues: list[str] = []
     check_names, check_commands, check_script_paths, important_keys, retry_names, health_checks = parse_summary()
     predeploy_script_paths = parse_predeploy_script_paths()
+    release_script_paths = release_verification_script_paths()
     issue_keys = emitted_issue_keys(check_script_paths + predeploy_script_paths)
     duplicate_check_names = duplicates(check_names)
     duplicate_check_commands = duplicates(check_commands)
@@ -217,6 +235,7 @@ def main() -> int:
     deploy_support_files = public_deploy_support_files()
     missing_deploy_support_files = sorted(set(site_support_files).difference(deploy_support_files))
     extra_deploy_support_files = sorted(set(deploy_support_files).difference(site_support_files))
+    missing_release_verification_scripts = sorted(set(release_script_paths).difference(check_script_paths))
     public_flag_mismatches: list[str] = []
     for check in health_checks:
         expected_public = (
@@ -260,6 +279,11 @@ def main() -> int:
         issues.append(
             "public deploy support file coverage mismatch: "
             f"missing={missing_deploy_support_files} extra={extra_deploy_support_files}"
+        )
+    if missing_release_verification_scripts:
+        issues.append(
+            "release verification scripts missing from site health CHECKS: "
+            f"{', '.join(missing_release_verification_scripts)}"
         )
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
     if missing_scripts:
@@ -325,6 +349,8 @@ def main() -> int:
     print(f"site_health_config_predeploy_scripts={len(predeploy_script_paths)}")
     print(f"site_health_config_predeploy_python_scripts_compiled={compiled_predeploy_python_scripts}")
     print(f"site_health_config_missing_predeploy_scripts={len(missing_predeploy_scripts)}")
+    print(f"site_health_config_release_verification_scripts={len(release_script_paths)}")
+    print(f"site_health_config_missing_release_verification_scripts={len(missing_release_verification_scripts)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_duplicate_check_names={len(duplicate_check_names)}")
     print(f"site_health_config_duplicate_check_commands={len(duplicate_check_commands)}")

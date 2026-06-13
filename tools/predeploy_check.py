@@ -66,6 +66,7 @@ PYTHON_TOOLS = [
     "tools/promotion_profile_verification_packet.py",
     "tools/promotion_profile_completion_gate.py",
     "tools/promotion_week_execution_sheet.py",
+    "tools/promotion_week_publication_runbook.py",
     "tools/promotion_now_asset_pack.py",
     "tools/promotion_now_asset_queue.py",
     "tools/promotion_now_asset_briefs.py",
@@ -227,6 +228,7 @@ def main() -> int:
         run_step("promotion profile verification packet", [sys.executable, "tools/promotion_profile_verification_packet.py", "--check"])
         run_step("promotion profile completion gate", [sys.executable, "tools/promotion_profile_completion_gate.py", "--check"])
         run_step("promotion week execution sheet", [sys.executable, "tools/promotion_week_execution_sheet.py", "--all", "--check"])
+        run_step("promotion week publication runbook", [sys.executable, "tools/promotion_week_publication_runbook.py", "--week", "1", "--check"])
         run_step("promotion now asset pack", [sys.executable, "tools/promotion_now_asset_pack.py", "--check"])
         run_step("promotion now asset queue", [sys.executable, "tools/promotion_now_asset_queue.py", "--check"])
         run_step("promotion now asset briefs", [sys.executable, "tools/promotion_now_asset_briefs.py", "--check"])

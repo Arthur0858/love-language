@@ -25,6 +25,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_publish_pack.py", "--all"],
     [sys.executable, "tools/promotion_launch_brief.py", "--all"],
     [sys.executable, "tools/promotion_week_execution_sheet.py", "--all"],
+    [sys.executable, "tools/promotion_week_publication_runbook.py", "--week", "1"],
     [sys.executable, "tools/promotion_publishing_status.py"],
     [sys.executable, "tools/promotion_revenue_decision_matrix.py"],
     [sys.executable, "tools/promotion_weekly_summary.py"],

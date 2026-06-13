@@ -1965,6 +1965,15 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
             guardian = item.get("guardian")
             if guardian not in guardian_slugs:
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a valid guardian slug")
+            elif item_type == "free_keepsake":
+                stats["commerce_free_keepsake_guardians_checked"] += 1
+            else:
+                stats["commerce_owned_supply_guardians_checked"] += 1
+            if item_type == "owned_supply_waitlist":
+                if item.get("contact") != CONTACT_EMAIL:
+                    issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} contact should be {CONTACT_EMAIL}")
+                else:
+                    stats["commerce_owned_supply_contacts_checked"] += 1
             if owned_url_valid:
                 if item_type == "free_keepsake":
                     stats["commerce_free_keepsake_urls_checked"] += 1
@@ -4117,6 +4126,10 @@ def main() -> int:
                     if not is_affiliate_url_for_lang(href, expected_lang):
                         expected = "Books.com.tw tracking" if expected_lang == "zh" else f"Amazon Associates tag={AMAZON_ASSOCIATE_TAG}"
                         issues.append(f"{page}: affiliate link should use {expected}: {href}")
+                    elif expected_lang == "zh":
+                        stats["affiliate_zh_books_links_checked"] += 1
+                    else:
+                        stats["affiliate_non_zh_amazon_links_checked"] += 1
 
         if page_affiliate_links:
             stats["affiliate_pages"] += 1
@@ -4358,6 +4371,9 @@ def main() -> int:
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
     print(f"commerce_free_keepsake_urls_checked={stats['commerce_free_keepsake_urls_checked']}")
     print(f"commerce_owned_supply_urls_checked={stats['commerce_owned_supply_urls_checked']}")
+    print(f"commerce_free_keepsake_guardians_checked={stats['commerce_free_keepsake_guardians_checked']}")
+    print(f"commerce_owned_supply_guardians_checked={stats['commerce_owned_supply_guardians_checked']}")
+    print(f"commerce_owned_supply_contacts_checked={stats['commerce_owned_supply_contacts_checked']}")
     print(f"commerce_affiliate_locale_policies_checked={stats['commerce_affiliate_locale_policies_checked']}")
     print(f"commerce_amazon_associate_tags_checked={stats['commerce_amazon_associate_tags_checked']}")
     print(f"commerce_affiliate_asins_checked={stats['commerce_affiliate_asins_checked']}")
@@ -4435,6 +4451,8 @@ def main() -> int:
     print(f"external_links={stats['external_links']}")
     print(f"affiliate_pages={stats['affiliate_pages']}")
     print(f"affiliate_links={stats['affiliate_links']}")
+    print(f"affiliate_zh_books_links_checked={stats['affiliate_zh_books_links_checked']}")
+    print(f"affiliate_non_zh_amazon_links_checked={stats['affiliate_non_zh_amazon_links_checked']}")
     print(f"issues={len(issues)}")
     for issue in issues[:200]:
         print(issue)

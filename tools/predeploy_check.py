@@ -44,6 +44,7 @@ PYTHON_TOOLS = [
     "tools/promotion_profile_post_alignment_checklist.py",
     "tools/promotion_public_post_url_checklist.py",
     "tools/promotion_zero_kpi_evidence_checklist.py",
+    "tools/promotion_post_ops_readiness_pack.py",
     "tools/promotion_publishing_status.py",
     "tools/promotion_kpi_writeback_consistency_audit.py",
     "tools/promotion_writeback_flow_audit.py",
@@ -227,6 +228,7 @@ def main() -> int:
         run_step("promotion profile post alignment checklist", [sys.executable, "tools/promotion_profile_post_alignment_checklist.py", "--check"])
         run_step("promotion public post URL checklist", [sys.executable, "tools/promotion_public_post_url_checklist.py", "--check"])
         run_step("promotion zero KPI evidence checklist", [sys.executable, "tools/promotion_zero_kpi_evidence_checklist.py", "--check"])
+        run_step("promotion post ops readiness pack", [sys.executable, "tools/promotion_post_ops_readiness_pack.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
         run_step("promotion KPI writeback consistency audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"])
         run_step("promotion writeback flow audit", [sys.executable, "tools/promotion_writeback_flow_audit.py"])

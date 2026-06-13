@@ -2,6 +2,7 @@
   "generatedAt": "2026-06-13",
   "queueRows": 45,
   "trackerRows": 15,
+  "platformTrackerRows": 45,
   "platforms": [
     "instagram_reels",
     "tiktok",
@@ -55,7 +56,18 @@
   "trackerReadyPublishedScripts": [],
   "trackerMissingPublishedScripts": [],
   "trackerPartialPublishedScripts": [],
+  "platformTrackerReadyPublishedRows": [],
+  "platformTrackerMissingPublishedRows": [],
+  "platformTrackerPartialPublishedRows": [],
+  "platformTrackerMetricRows": 0,
   "revenueIntentTotals": {
+    "free_keepsake_downloads": 0,
+    "supply_lead_requests": 0,
+    "luna_pack_clicks": 0,
+    "affiliate_book_clicks": 0,
+    "contact_requests": 0
+  },
+  "platformRevenueIntentTotals": {
     "free_keepsake_downloads": 0,
     "supply_lead_requests": 0,
     "luna_pack_clicks": 0,

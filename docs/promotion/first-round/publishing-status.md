@@ -2,7 +2,8 @@
 
 - 產生日期：2026-06-13
 - 發文佇列列數：45
-- KPI 追蹤列數：15
+- 腳本級 KPI 追蹤列數：15
+- 平台級 KPI 追蹤列數：45
 - 是否可做週決策：尚不可
 
 ## 平台進度
@@ -25,8 +26,20 @@
 - KPI 已完整回填的已發布腳本：0
 - KPI 缺回填的已發布腳本：0
 - KPI 部分回填的已發布腳本：0
+- 平台級 KPI 已完整回填的已發布列：0
+- 平台級 KPI 缺回填的已發布列：0
+- 平台級 KPI 部分回填的已發布列：0
+- 平台級 KPI 已有獲利意圖數據列：0
 
 ## 獲利意圖欄位總計
+
+- free_keepsake_downloads: 0
+- supply_lead_requests: 0
+- luna_pack_clicks: 0
+- affiliate_book_clicks: 0
+- contact_requests: 0
+
+## 平台級獲利意圖欄位總計
 
 - free_keepsake_downloads: 0
 - supply_lead_requests: 0

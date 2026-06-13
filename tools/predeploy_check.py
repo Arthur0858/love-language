@@ -86,6 +86,7 @@ PYTHON_TOOLS = [
     "tools/promotion_profile_setup_action_sheet.py",
     "tools/promotion_profile_link_readiness_packet.py",
     "tools/promotion_profile_proof_readiness_pack.py",
+    "tools/promotion_profile_setup_dry_run.py",
     "tools/promotion_first_batch_publish_action_sheet.py",
     "tools/promotion_first_batch_publish_readiness_pack.py",
     "tools/promotion_first_batch_kpi_action_sheet.py",
@@ -286,6 +287,7 @@ def main() -> int:
         run_step("promotion profile setup action sheet", [sys.executable, "tools/promotion_profile_setup_action_sheet.py", "--check"])
         run_step("promotion profile link readiness packet", [sys.executable, "tools/promotion_profile_link_readiness_packet.py", "--check"])
         run_step("promotion profile proof readiness pack", [sys.executable, "tools/promotion_profile_proof_readiness_pack.py", "--check"])
+        run_step("promotion profile setup dry run", [sys.executable, "tools/promotion_profile_setup_dry_run.py"])
         run_step("promotion first batch publish action sheet", [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py", "--check"])
         run_step("promotion first batch publish readiness pack", [sys.executable, "tools/promotion_first_batch_publish_readiness_pack.py", "--check"])
         run_step("promotion first batch kpi action sheet", [sys.executable, "tools/promotion_first_batch_kpi_action_sheet.py", "--check"])

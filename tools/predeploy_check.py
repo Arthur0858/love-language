@@ -34,6 +34,7 @@ PYTHON_TOOLS = [
     "tools/promotion_platform_kpi_tracker.py",
     "tools/promotion_post_writeback.py",
     "tools/promotion_post_text_import.py",
+    "tools/promotion_post_scaffold_writeback_safety.py",
     "tools/promotion_first_batch_publish_dry_run.py",
     "tools/promotion_placeholder_url_safety_audit.py",
     "tools/promotion_proof_note_policy.py",
@@ -240,6 +241,7 @@ def main() -> int:
         run_step("promotion platform kpi tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"])
         run_step("promotion post writeback", [sys.executable, "tools/promotion_post_writeback.py", "check"])
         run_step("promotion post text import", [sys.executable, "tools/promotion_post_text_import.py", "check"])
+        run_step("promotion post scaffold writeback safety", [sys.executable, "tools/promotion_post_scaffold_writeback_safety.py"])
         run_step("promotion first batch publish dry run", [sys.executable, "tools/promotion_first_batch_publish_dry_run.py"])
         run_step("promotion placeholder URL safety audit", [sys.executable, "tools/promotion_placeholder_url_safety_audit.py"])
         run_step("promotion proof note safety audit", [sys.executable, "tools/promotion_proof_note_safety_audit.py"])

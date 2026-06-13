@@ -454,6 +454,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_discovery_funnel_events_checked",
         "public_discovery_funnel_event_categories_checked",
         "public_discovery_funnel_event_roles_checked",
+        "public_discovery_runtime_pack_events_checked",
         "public_discovery_promotion_event_kpi_rows_checked",
         "public_discovery_promotion_event_kpi_events_checked",
         "public_discovery_promotion_revenue_bridge_kpis_checked",

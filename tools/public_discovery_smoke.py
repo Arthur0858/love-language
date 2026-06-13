@@ -136,6 +136,18 @@ REQUIRED_FUNNEL_EVENTS = {
     "free_keepsake_download",
     "campaign_landing",
 }
+EXPECTED_RUNTIME_PACK_EVENT_ROLES = {
+    "home_saved_pack_free_keepsake": "retention",
+    "home_saved_pack_owned_request": "lead",
+    "home_saved_pack_luna": "navigation",
+    "home_saved_pack_contact": "lead",
+    "home_saved_pack_link": "navigation",
+    "supply_pack_free_keepsake": "retention",
+    "supply_pack_owned_request": "lead",
+    "supply_pack_luna": "navigation",
+    "supply_pack_contact": "lead",
+    "supply_pack_link": "navigation",
+}
 EXPECTED_COMMERCE_TYPE_COUNTS = {
     "free_keepsake": 5,
     "owned_supply_waitlist": 5,
@@ -820,27 +832,27 @@ def check_robots(base_url: str) -> tuple[list[str], int, int, int]:
     return issues, robots_lines_checked, sitemap_links_checked, sitemap_core_urls_checked
 
 
-def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
+def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int, int]:
     path = "/funnel-events.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
     events = data.get("events", [])
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("localStorageKey") != "lovetypes:funnel-events:v1":
         issues.append(f"{path}: localStorageKey should match runtime storage key")
     if not isinstance(events, list) or not events:
-        return [f"{path}: events should be a non-empty list"], 0, 0, 0
+        return [f"{path}: events should be a non-empty list"], 0, 0, 0, 0
     names: set[str] = set()
     event_by_name: dict[str, dict] = {}
     categories: set[str] = set()
@@ -882,12 +894,21 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int]:
     gumroad_event = event_by_name.get("luna_gumroad_pack_click", {})
     if gumroad_event.get("role") != "revenue":
         issues.append(f"{path}: luna_gumroad_pack_click should be a revenue event")
+    runtime_pack_events_checked = 0
+    for name, expected_role in EXPECTED_RUNTIME_PACK_EVENT_ROLES.items():
+        event = event_by_name.get(name)
+        if not event:
+            issues.append(f"{path}: missing runtime pack event {name}")
+            continue
+        runtime_pack_events_checked += 1
+        if event.get("role") != expected_role:
+            issues.append(f"{path}: {name} should be a {expected_role} event")
     if len(events) < 50:
         issues.append(f"{path}: expected at least 50 funnel events, got {len(events)}")
     totals = data.get("totals", {})
     if not isinstance(totals, dict) or totals.get("events") != len(events):
         issues.append(f"{path}: totals.events should match event count")
-    return issues, len(events), len(categories), len(roles)
+    return issues, len(events), len(categories), len(roles), runtime_pack_events_checked
 
 
 def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
@@ -1967,7 +1988,13 @@ def main() -> int:
         humans_site_index_urls_checked,
     ) = check_text_files(base_url)
     robots_issues, robots_lines_checked, robots_sitemap_links_checked, robots_sitemap_core_urls_checked = check_robots(base_url)
-    funnel_issues, funnel_events_checked, funnel_categories_checked, funnel_roles_checked = check_funnel_events(base_url)
+    (
+        funnel_issues,
+        funnel_events_checked,
+        funnel_categories_checked,
+        funnel_roles_checked,
+        runtime_pack_events_checked,
+    ) = check_funnel_events(base_url)
     (
         promotion_event_issues,
         promotion_event_kpi_rows_checked,
@@ -2068,6 +2095,7 @@ def main() -> int:
     print(f"public_discovery_funnel_events_checked={funnel_events_checked}")
     print(f"public_discovery_funnel_event_categories_checked={funnel_categories_checked}")
     print(f"public_discovery_funnel_event_roles_checked={funnel_roles_checked}")
+    print(f"public_discovery_runtime_pack_events_checked={runtime_pack_events_checked}")
     print(f"public_discovery_promotion_event_kpi_rows_checked={promotion_event_kpi_rows_checked}")
     print(f"public_discovery_promotion_event_kpi_events_checked={promotion_event_kpi_events_checked}")
     print(f"public_discovery_promotion_revenue_bridge_kpis_checked={promotion_revenue_bridge_kpis_checked}")

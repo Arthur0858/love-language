@@ -6,6 +6,7 @@ import hashlib
 import json
 import shutil
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_evidence_ledger as evidence_ledger
@@ -44,6 +45,7 @@ WATCHED_FILES = (
     SOURCE_DIR / "platform-kpi-tracker.csv",
     SOURCE_DIR / "kpi-tracker.csv",
 )
+TODAY = date.today().isoformat()
 
 
 def file_hashes(paths: tuple[Path, ...]) -> dict[Path, str]:
@@ -220,9 +222,9 @@ def sample_post_text(path: Path) -> str:
         if lower.startswith("post_url:"):
             lines.append(f"post_url: {SAMPLE_POST_URLS[platform]}")
         elif lower.startswith("published_date:"):
-            lines.append("published_date: 2026-06-15")
+            lines.append(f"published_date: {TODAY}")
         elif lower.startswith("proof_note:"):
-            lines.append("proof_note: public URL and analytics source checked 2026-06-15")
+            lines.append(f"proof_note: public URL and analytics source checked {TODAY}")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"

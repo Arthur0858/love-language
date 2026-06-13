@@ -3,22 +3,24 @@ from __future__ import annotations
 
 import argparse
 import sys
+from datetime import date
 from pathlib import Path
 
 import promotion_post_writeback as writeback
 
 
-SAMPLE_TEXT = """LoveTypes platform post writeback
+TODAY = date.today().isoformat()
+SAMPLE_TEXT = f"""LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-15
+published_date: {TODAY}
 post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123
 views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked 2026-06-15
+proof_note: public URL and analytics source checked {TODAY}
 """
 
 PLATFORM_ALIASES = {

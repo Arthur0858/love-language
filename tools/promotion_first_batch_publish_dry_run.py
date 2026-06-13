@@ -5,6 +5,7 @@ import csv
 import json
 import shutil
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_first_batch_publication_packet as first_batch_packet
@@ -26,6 +27,7 @@ SAMPLE_POST_URLS = {
     "tiktok": "https://www.tiktok.com/@lovetypes/video/1234567890123456789",
     "instagram_reels": "https://www.instagram.com/reel/lovetypesdryrun/",
 }
+TODAY = date.today().isoformat()
 
 
 def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -85,9 +87,9 @@ def sample_post_text(path: Path, *, generic_proof: bool = False, wrong_platform:
         if lower.startswith("post_url:"):
             lines.append(f"post_url: {replacement}")
         elif lower.startswith("published_date:"):
-            lines.append("published_date: 2026-06-15")
+            lines.append(f"published_date: {TODAY}")
         elif lower.startswith("proof_note:"):
-            note = "verified" if generic_proof else "public URL and analytics source checked 2026-06-15"
+            note = "verified" if generic_proof else f"public URL and analytics source checked {TODAY}"
             lines.append(f"proof_note: {note}")
         else:
             lines.append(line)
@@ -131,8 +133,8 @@ def configure_profile_gate(temp_docs: Path) -> None:
     fields, rows = read_rows(temp_docs / "platform-profile-tracker.csv")
     for row in rows:
         row["status"] = "set"
-        row["profile_link_set_date"] = "2026-06-15"
-        row["notes"] = "verified:2026-06-15 dry-run profile link proof checked"
+        row["profile_link_set_date"] = TODAY
+        row["notes"] = f"verified:{TODAY} dry-run profile link proof checked"
     issues = profile_writeback.validate_tracker(fields, rows)
     if issues:
         raise SystemExit("\n".join(issues))

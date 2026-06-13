@@ -80,10 +80,10 @@ def is_start_campaign_url(platform: str, value: str) -> bool:
 
 def validate_date(value: str) -> bool:
     try:
-        date.fromisoformat(value)
+        parsed = date.fromisoformat(value)
     except ValueError:
         return False
-    return True
+    return parsed <= date.today()
 
 
 def validate_tracker(fieldnames: list[str], rows: list[dict[str, str]]) -> list[str]:
@@ -111,7 +111,7 @@ def validate_tracker(fieldnames: list[str], rows: list[dict[str, str]]) -> list[
             if not set_date:
                 issues.append(f"{label}: {status} requires profile_link_set_date")
             elif not validate_date(set_date):
-                issues.append(f"{label}: profile_link_set_date must be YYYY-MM-DD")
+                issues.append(f"{label}: profile_link_set_date must be YYYY-MM-DD and not in the future")
             if "verified:" not in (row.get("notes") or ""):
                 issues.append(f"{label}: {status} requires verified proof note")
         for field in METRIC_FIELDS:
@@ -145,7 +145,7 @@ def update_row(
         raise SystemExit(f"invalid status: {status}")
     if status in CONFIGURED_STATUSES:
         if not set_date or not validate_date(set_date):
-            raise SystemExit("set/live updates require --set-date YYYY-MM-DD")
+            raise SystemExit("set/live updates require --set-date YYYY-MM-DD and not in the future")
         if not proof_note:
             raise SystemExit("set/live updates require --proof-note with real verification evidence")
         issue = proof_note_issue(proof_note)

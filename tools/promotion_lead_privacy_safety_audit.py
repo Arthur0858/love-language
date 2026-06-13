@@ -4,6 +4,7 @@ from __future__ import annotations
 import csv
 import shutil
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_lead_text_import as lead_import
@@ -15,7 +16,8 @@ SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
 RAW_EMAIL = "requester@customer-mail.com"
 PLACEHOLDER_EMAIL = "<REAL_REPLY_EMAIL>"
 SAMPLE_EMAIL = "sample@example.com"
-SAFE_PROOF = "email thread Gmail request checked 2026-06-15"
+TODAY = date.today().isoformat()
+SAFE_PROOF = f"email thread Gmail request checked {TODAY}"
 GENERIC_PROOF = "email request verified"
 
 
@@ -68,7 +70,7 @@ def add_from_text(text: str, proof_note: str) -> str:
     data, issues = lead_import.parse_text(text)
     if issues:
         raise SystemExit("\n".join(issues))
-    return lead_import.add_lead(data, proof_note=proof_note, request_date="2026-06-15")
+    return lead_import.add_lead(data, proof_note=proof_note, request_date=TODAY)
 
 
 def expect_rejected(action) -> bool:

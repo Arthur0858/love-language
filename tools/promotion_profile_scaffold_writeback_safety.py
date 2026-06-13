@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_launch_readiness_gate as readiness
@@ -19,10 +20,11 @@ PROFILE_PROOF_FILES = (
     SOURCE_DIR / "proof-instagram_reels.txt",
 )
 EXPECTED_REJECTION = "profile proof_note still looks like the scaffold screenshot filename"
+TODAY = date.today().isoformat()
 REAL_PROOF_BY_PLATFORM = {
-    "youtube_shorts": "screenshot actual-youtube-shorts-bio-2026-06-15.png profile URL clicked https://www.youtube.com/@lovetypes 2026-06-15",
-    "tiktok": "screenshot actual-tiktok-bio-2026-06-15.png profile URL clicked https://www.tiktok.com/@lovetypes 2026-06-15",
-    "instagram_reels": "screenshot actual-instagram-reels-bio-2026-06-15.png profile URL clicked https://www.instagram.com/lovetypes/ 2026-06-15",
+    "youtube_shorts": f"screenshot actual-youtube-shorts-bio-{TODAY}.png profile URL clicked https://www.youtube.com/@lovetypes {TODAY}",
+    "tiktok": f"screenshot actual-tiktok-bio-{TODAY}.png profile URL clicked https://www.tiktok.com/@lovetypes {TODAY}",
+    "instagram_reels": f"screenshot actual-instagram-reels-bio-{TODAY}.png profile URL clicked https://www.instagram.com/lovetypes/ {TODAY}",
 }
 
 
@@ -67,7 +69,7 @@ def real_profile_text(text: str) -> str:
         if lower.startswith("proof_note:"):
             lines.append(f"proof_note: {REAL_PROOF_BY_PLATFORM[platform]}")
         elif lower.startswith("set_date:"):
-            lines.append("set_date: 2026-06-15")
+            lines.append(f"set_date: {TODAY}")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"

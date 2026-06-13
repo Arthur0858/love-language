@@ -4,6 +4,7 @@ from __future__ import annotations
 import subprocess
 import sys
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_post_writeback as writeback
@@ -32,26 +33,28 @@ FORBIDDEN_DOC_SNIPPETS = (
     "https://www.youtube.com/shorts/lovetypes-proof-url-123",
 )
 DOC_SUFFIXES = (".md", ".json", ".csv")
+TODAY = date.today().isoformat()
 
 
 def sample_text(
     post_url: str,
     platform: str = "youtube_shorts",
     task_id: str = "publish-lt-s01-iris-silence",
-    proof_note: str = "public URL and analytics source checked 2026-06-15",
+    proof_note: str = "",
 ) -> str:
+    proof = proof_note or f"public URL and analytics source checked {TODAY}"
     return "\n".join([
         "LoveTypes platform post writeback",
         f"platform: {platform}",
         f"task_id: {task_id}",
         "status: published",
-        "published_date: 2026-06-15",
+        f"published_date: {TODAY}",
         f"post_url: {post_url}",
         "views: 0",
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        f"proof_note: {proof_note}",
+        f"proof_note: {proof}",
         "",
     ])
 
@@ -105,7 +108,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
 
     no_source_code, no_source_output = run_import_check(sample_text(
         SAFE_SAMPLE_URL,
-        proof_note="public URL post checked 2026-06-15",
+        proof_note=f"public URL post checked {TODAY}",
     ))
     if no_source_code == 0 or "promotion_post_text_import_issues=0" in no_source_output:
         issues.append("zero KPI sample without analytics/source proof should be rejected by import check")

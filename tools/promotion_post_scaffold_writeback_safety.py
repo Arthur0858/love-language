@@ -6,6 +6,7 @@ import hashlib
 import json
 import shutil
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_post_text_import as post_import
@@ -30,6 +31,7 @@ WATCHED_FILES = (
     SOURCE_DIR / "platform-kpi-tracker.csv",
     SOURCE_DIR / "kpi-tracker.csv",
 )
+TODAY = date.today().isoformat()
 
 
 def file_hashes(paths: tuple[Path, ...]) -> dict[Path, str]:
@@ -51,9 +53,9 @@ def real_post_text(text: str) -> str:
         if lower.startswith("post_url:"):
             lines.append(f"post_url: {SAMPLE_POST_URLS[platform]}")
         elif lower.startswith("published_date:"):
-            lines.append("published_date: 2026-06-15")
+            lines.append(f"published_date: {TODAY}")
         elif lower.startswith("proof_note:"):
-            lines.append("proof_note: public URL and analytics source checked 2026-06-15")
+            lines.append(f"proof_note: public URL and analytics source checked {TODAY}")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"
@@ -97,8 +99,8 @@ def configure_profile_gate(temp_docs: Path) -> None:
     fields, rows = read_csv(temp_docs / "platform-profile-tracker.csv")
     for row in rows:
         row["status"] = "set"
-        row["profile_link_set_date"] = "2026-06-15"
-        row["notes"] = "verified:2026-06-15 dry-run profile link proof checked"
+        row["profile_link_set_date"] = TODAY
+        row["notes"] = f"verified:{TODAY} dry-run profile link proof checked"
     issues = profile_writeback.validate_tracker(fields, rows)
     if issues:
         raise SystemExit("\n".join(issues))

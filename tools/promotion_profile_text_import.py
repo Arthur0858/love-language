@@ -4,17 +4,19 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 import promotion_profile_writeback as writeback
 
 
-SAMPLE_TEXT = """LoveTypes profile setup writeback
+TODAY = date.today().isoformat()
+SAMPLE_TEXT = f"""LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-06-15
+set_date: {TODAY}
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: screenshot profile-youtube_shorts-2026-06-15.png verified
+proof_note: screenshot profile-youtube_shorts-{TODAY}.png verified
 """
 
 PLATFORM_ALIASES = {

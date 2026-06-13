@@ -127,10 +127,10 @@ def zero_metric_source_issue(proof_note: str, values: dict[str, str], label: str
 
 def validate_date(value: str) -> bool:
     try:
-        date.fromisoformat(value)
+        parsed = date.fromisoformat(value)
     except ValueError:
         return False
-    return True
+    return parsed <= date.today()
 
 
 def valid_post_url(value: str) -> bool:
@@ -212,7 +212,7 @@ def validate_rows(
             issues.append(f"{label}: invalid status {status}")
         if status in PUBLISH_STATUSES:
             if not validate_date(row.get("published_date", "")):
-                issues.append(f"{label}: published row requires published_date YYYY-MM-DD")
+                issues.append(f"{label}: published row requires published_date YYYY-MM-DD and not in the future")
             if not valid_post_url(row.get("post_url", "")):
                 issues.append(f"{label}: published row requires non-placeholder https post_url")
             elif not post_url_matches_platform(platform, row.get("post_url", "")):
@@ -440,7 +440,7 @@ def main() -> int:
     if args.command == "update":
         if args.status in PUBLISH_STATUSES:
             if not args.published_date or not validate_date(args.published_date):
-                raise SystemExit("published/live/posted updates require --published-date YYYY-MM-DD")
+                raise SystemExit("published/live/posted updates require --published-date YYYY-MM-DD and not in the future")
             if not valid_post_url(args.post_url):
                 raise SystemExit("published/live/posted updates require --post-url with https URL")
             if not args.proof_note.strip():

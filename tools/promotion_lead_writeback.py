@@ -71,6 +71,14 @@ def today() -> str:
     return date.today().isoformat()
 
 
+def validate_date(value: str) -> bool:
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError:
+        return False
+    return parsed <= date.today()
+
+
 def next_request_id(rows: list[dict[str, str]], request_date: str, guardian: str, intake_type: str) -> str:
     prefix = f"{request_date}-{guardian}-{intake_type}"
     count = sum(1 for row in rows if (row.get("request_id") or "").startswith(prefix))
@@ -162,6 +170,8 @@ def validate_tracker(fieldnames: list[str], rows: list[dict[str, str]]) -> list[
             issues.append(f"{request_id}: kpi_writeback_field should be {INTAKE_TO_KPI[intake]}")
         if not row.get("date"):
             issues.append(f"{request_id}: real lead requires date")
+        elif not validate_date(row.get("date", "")):
+            issues.append(f"{request_id}: real lead date must be YYYY-MM-DD and not in the future")
         if row.get("consent_status") not in CONSENT_STATUSES:
             issues.append(f"{request_id}: real lead requires explicit consent or do_not_contact")
         if row.get("email_status") not in {"received", "replied", "fulfilled", "closed"}:
@@ -177,6 +187,8 @@ def validate_tracker(fieldnames: list[str], rows: list[dict[str, str]]) -> list[
 
 def build_row(args: argparse.Namespace, existing_rows: list[dict[str, str]]) -> dict[str, str]:
     request_date = args.request_date or today()
+    if not validate_date(request_date):
+        raise SystemExit("real lead writeback requires --request-date YYYY-MM-DD and not in the future")
     request_id = args.request_id or next_request_id(existing_rows, request_date, args.guardian, args.intake_type)
     kpi_field = INTAKE_TO_KPI[args.intake_type]
     proof = args.proof_note.strip()

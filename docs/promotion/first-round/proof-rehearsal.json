@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": [
+    "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+    "docs/promotion/first-round/proof-instagram_reels.txt",
+    "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+    "docs/promotion/first-round/proof-tiktok.txt",
+    "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+    "docs/promotion/first-round/proof-youtube_shorts.txt"
+  ],
+  "metrics": {
+    "proofFiles": 6,
+    "rows": 9,
+    "profilePass": 3,
+    "postPlaceholderRejected": 3,
+    "postRehearsalPass": 3,
+    "issues": 0
+  },
+  "policy": {
+    "noWriteback": true,
+    "checksOnly": true,
+    "postPlaceholdersMustFail": true,
+    "sampleRealUrlsMustPass": true
+  },
+  "rows": [
+    {
+      "path": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "instagram_reels",
+      "scenario": "post_placeholder_current",
+      "expected": "reject",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=instagram_reels\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "instagram_reels",
+      "scenario": "post_rehearsal_real_url",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=instagram_reels\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=0"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "kind": "profile",
+      "platform": "instagram_reels",
+      "scenario": "profile_template_current",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_profile_text_import_fields_parsed=5\npromotion_profile_text_import_platform=instagram_reels\npromotion_profile_text_import_status=set\npromotion_profile_text_import_has_profile_link=1\npromotion_profile_text_import_metric_fields_present=0\npromotion_profile_text_import_issues=0"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "tiktok",
+      "scenario": "post_placeholder_current",
+      "expected": "reject",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=tiktok\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "tiktok",
+      "scenario": "post_rehearsal_real_url",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=tiktok\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=0"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-tiktok.txt",
+      "kind": "profile",
+      "platform": "tiktok",
+      "scenario": "profile_template_current",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_profile_text_import_fields_parsed=5\npromotion_profile_text_import_platform=tiktok\npromotion_profile_text_import_status=set\npromotion_profile_text_import_has_profile_link=1\npromotion_profile_text_import_metric_fields_present=0\npromotion_profile_text_import_issues=0"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "youtube_shorts",
+      "scenario": "post_placeholder_current",
+      "expected": "reject",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=youtube_shorts\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "kind": "post",
+      "platform": "youtube_shorts",
+      "scenario": "post_rehearsal_real_url",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=youtube_shorts\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=0"
+    },
+    {
+      "path": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "kind": "profile",
+      "platform": "youtube_shorts",
+      "scenario": "profile_template_current",
+      "expected": "pass",
+      "passed": true,
+      "output": "promotion_profile_text_import_fields_parsed=5\npromotion_profile_text_import_platform=youtube_shorts\npromotion_profile_text_import_status=set\npromotion_profile_text_import_has_profile_link=1\npromotion_profile_text_import_metric_fields_present=0\npromotion_profile_text_import_issues=0"
+    }
+  ],
+  "issues": []
+}

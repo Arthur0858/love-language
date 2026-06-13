@@ -120,6 +120,7 @@ PYTHON_TOOLS = [
     "tools/promotion_publish_kpi_handoff.py",
     "tools/promotion_weekly_lead_offer_handoff.py",
     "tools/promotion_launch_clipboard.py",
+    "tools/promotion_proof_rehearsal.py",
     "tools/promotion_decision_scenario_audit.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
@@ -318,6 +319,7 @@ def main() -> int:
         run_step("promotion publish KPI handoff", [sys.executable, "tools/promotion_publish_kpi_handoff.py", "--check"])
         run_step("promotion weekly lead offer handoff", [sys.executable, "tools/promotion_weekly_lead_offer_handoff.py", "--check"])
         run_step("promotion launch clipboard", [sys.executable, "tools/promotion_launch_clipboard.py", "--check"])
+        run_step("promotion proof rehearsal", [sys.executable, "tools/promotion_proof_rehearsal.py", "--check"])
         run_step("promotion decision scenario audit", [sys.executable, "tools/promotion_decision_scenario_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
         run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])

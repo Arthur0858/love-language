@@ -4,6 +4,8 @@
 - 影片追蹤列數：0
 - 平台首頁待設定列數：3 / 3
 - 空資料安全模式：是
+- 行動選擇規則：Select the first three planned tasks by week and slot, then keep Shorts CTA focused on the 15-question quiz.
+- 商品調整 gate：Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.
 
 ## 優先動作
 

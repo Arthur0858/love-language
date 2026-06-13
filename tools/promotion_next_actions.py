@@ -26,6 +26,21 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+EMPTY_DATA_ACTION_IDS = (
+    "publish_first_batch",
+    "fill_required_kpis",
+    "set_platform_profile_links",
+    "fill_platform_profile_kpis",
+    "hold_offer_changes",
+)
+PROFILE_FIRST_KPIS = (
+    "status",
+    "profile_link_set_date",
+    "profile_clicks",
+    "site_clicks",
+    "quiz_starts",
+    "quiz_completions",
+)
 QUIZ_START_RATE_MIN = 0.3
 QUIZ_COMPLETION_RATE_MIN = 0.4
 
@@ -34,6 +49,18 @@ def decision_thresholds() -> dict[str, float]:
     return {
         "quizStartRateMin": QUIZ_START_RATE_MIN,
         "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
+    }
+
+
+def action_policy() -> dict[str, object]:
+    return {
+        "emptyDataActionOrder": list(EMPTY_DATA_ACTION_IDS),
+        "emptyDataSelectedTaskRule": "Select the first three planned tasks by week and slot, then keep Shorts CTA focused on the 15-question quiz.",
+        "profileSetupBeforePublish": True,
+        "profileFirstKpis": list(PROFILE_FIRST_KPIS),
+        "shortsKpiMinimumFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
+        "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
+        "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + route_clicks + revenue_intent * 2.",
     }
 
 
@@ -99,7 +126,7 @@ def profile_rows_to_actions(rows: list[dict[str, str]], setup: dict[str, dict], 
             "doNotPublishUntil": item.get("doNotPublishUntil", []),
             "expectedVerificationSteps": expectations.get("expectedVerificationSteps", 0),
             "expectedDoNotPublishGates": expectations.get("expectedDoNotPublishGates", 0),
-            "firstKpis": ["status", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
+            "firstKpis": list(PROFILE_FIRST_KPIS),
         })
     return actions
 
@@ -289,6 +316,7 @@ def build_actions(
             "revenueGuardians": dict(sorted(revenue_scores.items())),
         },
         "decisionThresholds": decision_thresholds(),
+        "actionPolicy": action_policy(),
         "actions": actions,
         "platformProfileActions": pending_profile_actions,
         "selectedTasks": [task_summary(task) for task in selected],
@@ -309,6 +337,8 @@ def build_markdown(plan: dict) -> str:
         f"- 影片追蹤列數：{plan['dataState']['trackerRows']}",
         f"- 平台首頁待設定列數：{plan['dataState']['profilePendingRows']} / {plan['dataState']['profileTrackerRows']}",
         f"- 空資料安全模式：{'是' if plan['dataState']['emptyDataMode'] else '否'}",
+        f"- 行動選擇規則：{plan['actionPolicy']['emptyDataSelectedTaskRule']}",
+        f"- 商品調整 gate：{plan['actionPolicy']['offerChangeGate']}",
         "",
         "## 優先動作",
         "",
@@ -420,6 +450,13 @@ def main() -> int:
     markdown = build_markdown(plan)
     if args.check:
         issues = []
+        policy = plan.get("actionPolicy", {})
+        if policy.get("emptyDataActionOrder") != list(EMPTY_DATA_ACTION_IDS):
+            issues.append("actionPolicy.emptyDataActionOrder does not match generator policy")
+        if policy.get("profileSetupBeforePublish") is not True:
+            issues.append("actionPolicy should require profile setup before publish")
+        if policy.get("profileFirstKpis") != list(PROFILE_FIRST_KPIS):
+            issues.append("actionPolicy.profileFirstKpis does not match generator policy")
         if len(plan["actions"]) < 1:
             issues.append("expected at least one action")
         if len(plan["selectedTasks"]) < 1:
@@ -430,9 +467,18 @@ def main() -> int:
             issues.append("expected platform profile actions for pending rows")
         if plan["dataState"]["emptyDataMode"] and plan["dataState"]["profilePendingRows"] < 1:
             issues.append("empty data mode should surface platform profile setup actions")
+        if plan["dataState"]["emptyDataMode"]:
+            action_ids = [action.get("id") for action in plan["actions"]]
+            if action_ids != list(EMPTY_DATA_ACTION_IDS):
+                issues.append("empty data mode action order should match policy")
+            slots = [int(task.get("slot", 0) or 0) for task in plan["selectedTasks"]]
+            if slots != [1, 2, 3]:
+                issues.append("empty data mode should select first three planned slots")
         for item in plan["platformProfileActions"]:
             if not item.get("writebackValues"):
                 issues.append(f"{item.get('platform')}: missing writebackValues")
+            if item.get("firstKpis") != list(PROFILE_FIRST_KPIS):
+                issues.append(f"{item.get('platform')}: firstKpis does not match policy")
             expected_verification_steps = int(item.get("expectedVerificationSteps", 0) or 0)
             if len(item.get("verificationSteps", [])) < expected_verification_steps:
                 issues.append(f"{item.get('platform')}: missing verificationSteps")

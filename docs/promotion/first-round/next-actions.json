@@ -28,6 +28,33 @@
     "quizStartRateMin": 0.3,
     "quizCompletionRateMin": 0.4
   },
+  "actionPolicy": {
+    "emptyDataActionOrder": [
+      "publish_first_batch",
+      "fill_required_kpis",
+      "set_platform_profile_links",
+      "fill_platform_profile_kpis",
+      "hold_offer_changes"
+    ],
+    "emptyDataSelectedTaskRule": "Select the first three planned tasks by week and slot, then keep Shorts CTA focused on the 15-question quiz.",
+    "profileSetupBeforePublish": true,
+    "profileFirstKpis": [
+      "status",
+      "profile_link_set_date",
+      "profile_clicks",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions"
+    ],
+    "shortsKpiMinimumFields": [
+      "post_url",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions"
+    ],
+    "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
+    "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + route_clicks + revenue_intent * 2."
+  },
   "actions": [
     {
       "id": "publish_first_batch",

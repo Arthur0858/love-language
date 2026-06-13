@@ -200,6 +200,12 @@ def route_url(value: str, base_url: str) -> str:
     return f"{parsed.scheme}://{parsed.netloc}{parsed.path or '/'}"
 
 
+def canonical_route_for_url(value: str, base_url: str) -> str:
+    url = urljoin(base_url + "/", value.lstrip("/")) if value.startswith("/") else value
+    parsed = urlparse(url)
+    return f"https://{CANONICAL_HOST}{parsed.path or '/'}"
+
+
 def walk_index_urls(data: object, path: str = "$") -> list[tuple[str, str]]:
     urls: list[tuple[str, str]] = []
     if isinstance(data, dict):
@@ -1178,16 +1184,18 @@ def validate_public_index_url(
     urls_checked = 1
     targets_checked = 0
     fragments_checked = 0
-    url = urljoin(base_url + "/", value.lstrip("/")) if value.startswith("/") else value
+    is_relative_route = value.startswith("/")
+    url = urljoin(base_url + "/", value.lstrip("/")) if is_relative_route else value
     parsed = urlparse(url)
-    if parsed.scheme != "https" or parsed.netloc != CANONICAL_HOST:
-        return [f"{source_path}: {field_path} should point to https://lovetypes.tw or an absolute local path: {value}"], urls_checked, 0, 0
+    if not is_relative_route and (parsed.scheme != "https" or parsed.netloc != CANONICAL_HOST):
+        return [f"{source_path}: {field_path} should point to https://lovetypes.tw or a site-relative path: {value}"], urls_checked, 0, 0
     check_url = route_url(url, base_url)
+    canonical_url = canonical_route_for_url(url, base_url)
     path = urlparse(check_url).path
     looks_like_html_route = path.endswith("/") or "." not in path.rsplit("/", 1)[-1]
     if looks_like_html_route and not parsed.fragment:
-        if check_url not in sitemap_urls:
-            issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {check_url}")
+        if canonical_url not in sitemap_urls:
+            issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
         else:
             targets_checked += 1
         return issues, urls_checked, targets_checked, fragments_checked
@@ -1213,12 +1221,12 @@ def validate_public_index_url(
         fragments_checked += 1
         if parsed.fragment not in head.ids:
             issues.append(f"{source_path}: {field_path} fragment missing #{parsed.fragment}: {value}")
-        if check_url not in sitemap_urls:
-            issues.append(f"{source_path}: {field_path} fragment base missing from sitemap: {check_url}")
+        if canonical_url not in sitemap_urls:
+            issues.append(f"{source_path}: {field_path} fragment base missing from sitemap: {canonical_url}")
         return issues, urls_checked, targets_checked, fragments_checked
-    if check_url not in sitemap_urls:
-        issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {check_url}")
-    if head.canonical and head.canonical != check_url:
+    if canonical_url not in sitemap_urls:
+        issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
+    if head.canonical and head.canonical != canonical_url:
         issues.append(f"{source_path}: {field_path} target canonical mismatch: {value} -> {head.canonical}")
     return issues, urls_checked, targets_checked, fragments_checked
 

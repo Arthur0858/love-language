@@ -10,6 +10,7 @@ from pathlib import Path
 import promotion_first_batch_publication_packet as first_batch_packet
 import promotion_post_text_import as post_import
 import promotion_post_writeback as post_writeback
+import promotion_profile_writeback as profile_writeback
 import promotion_publishing_status as publishing_status
 
 
@@ -46,8 +47,12 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     post_writeback.QUEUE_PATH = temp_docs / "posting-queue.csv"
     post_writeback.PLATFORM_TRACKER_PATH = temp_docs / "platform-kpi-tracker.csv"
     post_writeback.SCRIPT_TRACKER_PATH = temp_docs / "kpi-tracker.csv"
+    post_writeback.PROFILE_TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     post_writeback.PLAYBOOK_MD = temp_docs / "post-writeback-playbook.md"
     post_writeback.PLAYBOOK_JSON = temp_docs / "post-writeback-playbook.json"
+    profile_writeback.ROOT = temp_root
+    profile_writeback.PROMOTION_DIR = temp_docs
+    profile_writeback.TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     first_batch_packet.ROOT = temp_root
     first_batch_packet.PROMOTION_DIR = temp_docs
     first_batch_packet.QUEUE_PATH = temp_docs / "posting-queue.csv"
@@ -122,6 +127,18 @@ def update_from_text(
     post_writeback.rollup_script_tracker(script_rows, platform_rows, queue_row["script_id"])
 
 
+def configure_profile_gate(temp_docs: Path) -> None:
+    fields, rows = read_rows(temp_docs / "platform-profile-tracker.csv")
+    for row in rows:
+        row["status"] = "set"
+        row["profile_link_set_date"] = "2026-06-15"
+        row["notes"] = "verified:2026-06-15 dry-run profile link proof checked"
+    issues = profile_writeback.validate_tracker(fields, rows)
+    if issues:
+        raise SystemExit("\n".join(issues))
+    write_rows(temp_docs / "platform-profile-tracker.csv", fields, rows)
+
+
 def expect_rejected(action) -> bool:
     try:
         action()
@@ -171,6 +188,7 @@ def run_dry_run() -> dict[str, int]:
         temp_docs.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(SOURCE_DIR, temp_docs)
         patch_paths(temp_root, temp_docs)
+        configure_profile_gate(temp_docs)
 
         queue_fields, queue_rows = read_rows(temp_docs / "posting-queue.csv")
         platform_fields, platform_rows = read_rows(temp_docs / "platform-kpi-tracker.csv")

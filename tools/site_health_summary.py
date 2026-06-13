@@ -430,6 +430,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_post_text_import_issues",
         "promotion_post_scaffold_writeback_safety_scaffold_checked",
         "promotion_post_scaffold_writeback_safety_scaffold_rejected",
+        "promotion_post_scaffold_writeback_safety_profile_gate_rejected",
         "promotion_post_scaffold_writeback_safety_real_proof_accepted",
         "promotion_post_scaffold_writeback_safety_published_rows",
         "promotion_post_scaffold_writeback_safety_minimum_kpi_rows",

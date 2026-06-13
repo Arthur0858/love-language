@@ -10,6 +10,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
+import promotion_profile_writeback as profile_writeback
 from promotion_proof_note_policy import proof_note_issue
 
 
@@ -18,6 +19,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 PLATFORM_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 SCRIPT_TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 PLAYBOOK_MD = PROMOTION_DIR / "post-writeback-playbook.md"
 PLAYBOOK_JSON = PROMOTION_DIR / "post-writeback-playbook.json"
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
@@ -152,6 +154,22 @@ def post_url_placeholder(platform: str) -> str:
     return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
 
 
+def profile_gate_issue() -> str:
+    if not PROFILE_TRACKER_PATH.exists():
+        return "platform profile tracker is missing; cannot publish posts before profile links are verified"
+    fields, rows = profile_writeback.read_rows(PROFILE_TRACKER_PATH)
+    issues = profile_writeback.validate_tracker(fields, rows)
+    if issues:
+        return "platform profile tracker has validation issues before publishing: " + "; ".join(issues)
+    configured = sum(1 for row in rows if (row.get("status") or "").strip() in profile_writeback.CONFIGURED_STATUSES)
+    if configured != len(profile_writeback.PLATFORMS):
+        return (
+            "all platform profile links must be set/live before publishing first-batch posts "
+            f"({configured}/{len(profile_writeback.PLATFORMS)} configured)"
+        )
+    return ""
+
+
 def key(row: dict[str, str]) -> tuple[str, str]:
     return ((row.get("platform") or "").strip(), (row.get("task_id") or "").strip())
 
@@ -178,6 +196,11 @@ def validate_rows(
             issues.append(f"{label} missing fields: {', '.join(missing)}")
     platform_lookup = {key(row): row for row in platform_rows}
     script_lookup = {row.get("script_id", ""): row for row in script_rows if row.get("script_id")}
+    has_published_rows = any((row.get("status") or "planned").strip() in PUBLISH_STATUSES for row in queue_rows)
+    if has_published_rows:
+        issue = profile_gate_issue()
+        if issue:
+            issues.append(issue)
     for row in queue_rows:
         platform, task_id = key(row)
         label = f"{platform or '<platform>'}/{task_id or '<task>'}"

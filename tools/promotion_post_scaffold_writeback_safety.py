@@ -10,6 +10,7 @@ from pathlib import Path
 
 import promotion_post_text_import as post_import
 import promotion_publishing_status as publishing_status
+import promotion_profile_writeback as profile_writeback
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -65,9 +66,13 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     writeback.QUEUE_PATH = temp_docs / "posting-queue.csv"
     writeback.PLATFORM_TRACKER_PATH = temp_docs / "platform-kpi-tracker.csv"
     writeback.SCRIPT_TRACKER_PATH = temp_docs / "kpi-tracker.csv"
+    writeback.PROFILE_TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     writeback.PLAYBOOK_MD = temp_docs / "post-writeback-playbook.md"
     writeback.PLAYBOOK_JSON = temp_docs / "post-writeback-playbook.json"
     writeback.regenerate_dependent_docs = lambda: None
+    profile_writeback.ROOT = temp_root
+    profile_writeback.PROMOTION_DIR = temp_docs
+    profile_writeback.TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     publishing_status.ROOT = temp_root
     publishing_status.PROMOTION_DIR = temp_docs
     publishing_status.QUEUE_PATH = temp_docs / "posting-queue.csv"
@@ -79,6 +84,25 @@ def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         return list(reader.fieldnames or []), list(reader)
+
+
+def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> None:
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def configure_profile_gate(temp_docs: Path) -> None:
+    fields, rows = read_csv(temp_docs / "platform-profile-tracker.csv")
+    for row in rows:
+        row["status"] = "set"
+        row["profile_link_set_date"] = "2026-06-15"
+        row["notes"] = "verified:2026-06-15 dry-run profile link proof checked"
+    issues = profile_writeback.validate_tracker(fields, rows)
+    if issues:
+        raise SystemExit("\n".join(issues))
+    write_csv(temp_docs / "platform-profile-tracker.csv", fields, rows)
 
 
 def build_publishing_status(temp_docs: Path) -> dict:
@@ -101,7 +125,9 @@ def main() -> int:
 
         scaffold_checked = 0
         scaffold_rejected = 0
+        profile_gate_rejected = 0
         real_accepted = 0
+        real_texts: list[tuple[str, str]] = []
         for proof_file in POST_PROOF_FILES:
             text = proof_file.read_text(encoding="utf-8")
             _, scaffold_issues = post_import.parse_text(text)
@@ -112,6 +138,7 @@ def main() -> int:
                 issues.append(f"{proof_file.name}: scaffold post URL should be rejected before add")
 
             real_text = real_post_text(text)
+            real_texts.append((proof_file.name, real_text))
             data, parse_issues = post_import.parse_text(real_text)
             if parse_issues:
                 issues.append(f"{proof_file.name}: real post proof should parse\n" + "\n".join(parse_issues))
@@ -119,7 +146,23 @@ def main() -> int:
             try:
                 post_import.add_post(data, "")
             except SystemExit as exc:
-                issues.append(f"{proof_file.name}: real post add should be accepted\n{exc}")
+                if "all platform profile links must be set/live" in str(exc):
+                    profile_gate_rejected += 1
+                else:
+                    issues.append(f"{proof_file.name}: real post add should be blocked only by profile gate before profile setup\n{exc}")
+            else:
+                issues.append(f"{proof_file.name}: real post add should be rejected before profile gate is configured")
+
+        configure_profile_gate(temp_docs)
+
+        for proof_name, real_text in real_texts:
+            data, parse_issues = post_import.parse_text(real_text)
+            if parse_issues:
+                continue
+            try:
+                post_import.add_post(data, "")
+            except SystemExit as exc:
+                issues.append(f"{proof_name}: real post add should be accepted after profile gate\n{exc}")
                 continue
             real_accepted += 1
 
@@ -146,6 +189,8 @@ def main() -> int:
         issues.append(f"real post add should publish 3 first-batch rows, got {published_rows}")
     if platform_minimum_rows != 3:
         issues.append(f"real post add should fill 3 minimum KPI rows, got {platform_minimum_rows}")
+    if profile_gate_rejected != 3:
+        issues.append(f"real post add should reject 3 rows before profile gate, got {profile_gate_rejected}")
     if script_rollup_ready != 1:
         issues.append("real post add should roll up the Iris script tracker")
     if not publishing.get("readyForWeeklyDecision"):
@@ -155,6 +200,7 @@ def main() -> int:
 
     print(f"promotion_post_scaffold_writeback_safety_scaffold_checked={scaffold_checked}")
     print(f"promotion_post_scaffold_writeback_safety_scaffold_rejected={scaffold_rejected}")
+    print(f"promotion_post_scaffold_writeback_safety_profile_gate_rejected={profile_gate_rejected}")
     print(f"promotion_post_scaffold_writeback_safety_real_proof_accepted={real_accepted}")
     print(f"promotion_post_scaffold_writeback_safety_published_rows={published_rows}")
     print(f"promotion_post_scaffold_writeback_safety_minimum_kpi_rows={platform_minimum_rows}")

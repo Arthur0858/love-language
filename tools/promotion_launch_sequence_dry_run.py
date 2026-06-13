@@ -105,6 +105,7 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     post_writeback.QUEUE_PATH = temp_docs / "posting-queue.csv"
     post_writeback.PLATFORM_TRACKER_PATH = temp_docs / "platform-kpi-tracker.csv"
     post_writeback.SCRIPT_TRACKER_PATH = temp_docs / "kpi-tracker.csv"
+    post_writeback.PROFILE_TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     post_writeback.PLAYBOOK_MD = temp_docs / "post-writeback-playbook.md"
     post_writeback.PLAYBOOK_JSON = temp_docs / "post-writeback-playbook.json"
 

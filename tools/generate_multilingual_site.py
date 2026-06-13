@@ -9908,6 +9908,8 @@ def funnel_event_role(name: str) -> str:
         return "lead"
     if name.startswith(("supply_pack_luna", "home_saved_pack_luna")):
         return "navigation"
+    if name.startswith(("supply_pack_link", "home_saved_pack_link")):
+        return "navigation"
     if any(token in name for token in ("affiliate", "book", "listen", "gumroad", "product", "starter_pack")):
         return "revenue"
     if any(token in name for token in ("mailto", "contact", "request", "send")):
@@ -9975,10 +9977,12 @@ def collect_funnel_events() -> dict:
             "home_saved_pack_owned_request",
             "home_saved_pack_luna",
             "home_saved_pack_contact",
+            "home_saved_pack_link",
             "supply_pack_free_keepsake",
             "supply_pack_owned_request",
             "supply_pack_luna",
             "supply_pack_contact",
+            "supply_pack_link",
         ):
             add_event(name, page)
 

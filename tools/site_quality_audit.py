@@ -1759,10 +1759,12 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
         "home_saved_pack_owned_request": "lead",
         "home_saved_pack_luna": "navigation",
         "home_saved_pack_contact": "lead",
+        "home_saved_pack_link": "navigation",
         "supply_pack_free_keepsake": "retention",
         "supply_pack_owned_request": "lead",
         "supply_pack_luna": "navigation",
         "supply_pack_contact": "lead",
+        "supply_pack_link": "navigation",
     }
     seen: set[str] = set()
     categories: set[str] = set()
@@ -1828,6 +1830,17 @@ def funnel_event_names() -> set[str]:
         for event in events
         if isinstance(event, dict) and isinstance(event.get("name"), str)
     }
+
+
+def dynamic_funnel_template_names(source: str) -> set[str]:
+    names: set[str] = set()
+    for expression in re.findall(r'data-funnel-event="\$\{([^"]+)\}"', source):
+        names.update(
+            token
+            for token in re.findall(r"'([a-z][a-z0-9_]*)'", expression)
+            if "_" in token
+        )
+    return names
 
 
 def check_funnel_event_markup(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
@@ -1910,6 +1923,16 @@ def check_funnel_event_markup(parsers: dict[Path, PageParser]) -> tuple[list[str
                 if missing_story_attrs:
                     issues.append(f"{page}: story funnel event {event_name} missing {', '.join(missing_story_attrs)}")
                 stats["funnel_markup_story_actions_checked"] += 1
+
+        dynamic_template_names = dynamic_funnel_template_names(parser.source)
+        if dynamic_template_names:
+            stats["funnel_dynamic_templates_checked"] += 1
+            stats["funnel_dynamic_template_events_checked"] += len(dynamic_template_names)
+            for event_name in sorted(dynamic_template_names):
+                if event_name not in catalog_names:
+                    issues.append(f"{page}: dynamic data-funnel-event missing from funnel-events.json: {event_name}")
+                else:
+                    seen_event_names.add(event_name)
 
     stats["funnel_markup_event_names_checked"] = len(seen_event_names)
     missing_required = sorted(required_markup_events.difference(seen_event_names))
@@ -4571,6 +4594,8 @@ def main() -> int:
     print(f"funnel_event_roles_checked={stats['funnel_event_roles_checked']}")
     print(f"funnel_markup_actions_checked={stats['funnel_markup_actions_checked']}")
     print(f"funnel_markup_event_names_checked={stats['funnel_markup_event_names_checked']}")
+    print(f"funnel_dynamic_templates_checked={stats['funnel_dynamic_templates_checked']}")
+    print(f"funnel_dynamic_template_events_checked={stats['funnel_dynamic_template_events_checked']}")
     print(f"funnel_markup_mailtos_checked={stats['funnel_markup_mailtos_checked']}")
     print(f"funnel_markup_luna_products_checked={stats['funnel_markup_luna_products_checked']}")
     print(f"funnel_markup_copy_actions_checked={stats['funnel_markup_copy_actions_checked']}")

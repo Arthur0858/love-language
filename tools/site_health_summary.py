@@ -884,6 +884,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "funnel_event_roles_checked",
         "funnel_markup_actions_checked",
         "funnel_markup_event_names_checked",
+        "funnel_dynamic_templates_checked",
+        "funnel_dynamic_template_events_checked",
         "funnel_markup_mailtos_checked",
         "funnel_markup_luna_products_checked",
         "funnel_markup_copy_actions_checked",

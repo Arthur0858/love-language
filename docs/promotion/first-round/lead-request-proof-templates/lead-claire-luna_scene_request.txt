@@ -1,0 +1,10 @@
+LoveTypes 結構化需求
+來源: Luna page
+我的守護者: 克萊兒
+需求類型: luna_scene_request
+素材偏好: Luna bedtime / conflict cooldown / quiz aftercare pack
+可回覆 email: <REAL_REPLY_EMAIL>
+Campaign content / 推廣內容: claire_luna_scene_request
+使用情境或備註: 想知道這位守護者適合哪一種 Luna 夜間補給場景。
+consent_status: explicit_reply_ok
+page: https://lovetypes.tw/luna-yoga-music/

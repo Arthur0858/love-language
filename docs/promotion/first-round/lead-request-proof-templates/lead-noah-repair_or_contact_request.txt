@@ -1,0 +1,10 @@
+LoveTypes 結構化需求
+來源: Contact 結構化需求
+我的守護者: 諾雅
+需求類型: repair_or_contact_request
+素材偏好: relationship repair prompt / supply route guidance
+可回覆 email: <REAL_REPLY_EMAIL>
+Campaign content / 推廣內容: noah_repair_or_contact_request
+使用情境或備註: 想詢問守護者路線、修復計畫或補給方向；非緊急危機需求。
+consent_status: explicit_reply_ok
+page: https://lovetypes.tw/contact/

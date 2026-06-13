@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
+    "leadWritebackPlaybook": "docs/promotion/first-round/lead-writeback-playbook.json",
+    "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv"
+  },
+  "policy": {
+    "templatesAreNotRealLeads": true,
+    "doNotStoreRawEmail": true,
+    "safeRejectionRequired": "Templates must fail check until <REAL_REPLY_EMAIL> is replaced from a real request.",
+    "writeCommandRequires": [
+      "real reply email",
+      "explicit_reply_ok consent",
+      "traceable proof note",
+      "safe non-emergency scope"
+    ]
+  },
+  "metrics": {
+    "rows": 15,
+    "files": 15,
+    "guardians": 5,
+    "intakeTypes": 3,
+    "safeRejected": 15,
+    "realLeadRows": 0
+  },
+  "rows": [
+    {
+      "guardian": "iris",
+      "guardianName": "艾莉絲",
+      "intakeType": "owned_asset_request",
+      "source": "keepsake_waitlist",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt --proof-note \"email thread iris-owned_asset_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "iris",
+      "guardianName": "艾莉絲",
+      "intakeType": "luna_scene_request",
+      "source": "luna_page",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt --proof-note \"email thread iris-luna_scene_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "iris",
+      "guardianName": "艾莉絲",
+      "intakeType": "repair_or_contact_request",
+      "source": "contact",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt --proof-note \"email thread iris-repair_or_contact_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "noah",
+      "guardianName": "諾雅",
+      "intakeType": "owned_asset_request",
+      "source": "keepsake_waitlist",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt --proof-note \"email thread noah-owned_asset_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "noah",
+      "guardianName": "諾雅",
+      "intakeType": "luna_scene_request",
+      "source": "luna_page",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt --proof-note \"email thread noah-luna_scene_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "noah",
+      "guardianName": "諾雅",
+      "intakeType": "repair_or_contact_request",
+      "source": "contact",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt --proof-note \"email thread noah-repair_or_contact_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "vivian",
+      "guardianName": "薇薇安",
+      "intakeType": "owned_asset_request",
+      "source": "keepsake_waitlist",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt --proof-note \"email thread vivian-owned_asset_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "vivian",
+      "guardianName": "薇薇安",
+      "intakeType": "luna_scene_request",
+      "source": "luna_page",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt --proof-note \"email thread vivian-luna_scene_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "vivian",
+      "guardianName": "薇薇安",
+      "intakeType": "repair_or_contact_request",
+      "source": "contact",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt --proof-note \"email thread vivian-repair_or_contact_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "claire",
+      "guardianName": "克萊兒",
+      "intakeType": "owned_asset_request",
+      "source": "keepsake_waitlist",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt --proof-note \"email thread claire-owned_asset_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "claire",
+      "guardianName": "克萊兒",
+      "intakeType": "luna_scene_request",
+      "source": "luna_page",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt --proof-note \"email thread claire-luna_scene_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "claire",
+      "guardianName": "克萊兒",
+      "intakeType": "repair_or_contact_request",
+      "source": "contact",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt --proof-note \"email thread claire-repair_or_contact_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "dora",
+      "guardianName": "朵拉",
+      "intakeType": "owned_asset_request",
+      "source": "keepsake_waitlist",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt --proof-note \"email thread dora-owned_asset_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "dora",
+      "guardianName": "朵拉",
+      "intakeType": "luna_scene_request",
+      "source": "luna_page",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt --proof-note \"email thread dora-luna_scene_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    },
+    {
+      "guardian": "dora",
+      "guardianName": "朵拉",
+      "intakeType": "repair_or_contact_request",
+      "source": "contact",
+      "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt",
+      "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt --proof-note \"email thread dora-repair_or_contact_request request checked 2026-06-14\"",
+      "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
+    }
+  ],
+  "issues": []
+}

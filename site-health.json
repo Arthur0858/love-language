@@ -29,6 +29,29 @@
     "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
     "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment."
   },
+  "promotionProfileVerification": {
+    "source": "https://lovetypes.tw/promotion-kit.json#platformProfileSetup",
+    "platforms": 3,
+    "writebackFields": [
+      "status",
+      "profile_link_set_date",
+      "profile_link",
+      "notes"
+    ],
+    "verificationStepsPerPlatform": 4,
+    "doNotPublishGatesPerPlatform": 3,
+    "publicSmokeCounters": [
+      "public_promotion_kit_platform_profile_writeback_checked=3",
+      "public_promotion_kit_platform_profile_verification_steps_checked=12",
+      "public_promotion_kit_platform_profile_publish_gates_checked=9",
+      "public_promotion_kit_issues=0"
+    ],
+    "checkedBy": [
+      "tools/site_quality_audit.py",
+      "tools/public_promotion_kit_smoke.py",
+      "tools/public_discovery_smoke.py"
+    ]
+  },
   "localAuditCoverage": {
     "structure": [
       "site_quality",

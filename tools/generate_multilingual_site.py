@@ -10321,6 +10321,7 @@ def collect_ai_discovery_index() -> dict:
     commerce = collect_commerce_catalog()
     guardians = collect_guardian_profiles()
     safety = collect_safety_index()
+    profile_verification = collect_promotion_profile_verification()
     guardian_entities = []
     for guardian in guardians["guardians"]:
         slug = guardian["slug"]
@@ -10464,6 +10465,7 @@ def collect_ai_discovery_index() -> dict:
             "commercialDisclosure": "Resources may include localized affiliate links and Luna Gumroad links. Traditional Chinese pages use Books.com.tw; other language pages use Amazon Associates tag parenttechche-20. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
             "safetyBoundary": "LoveTypes is relationship reflection and communication support only. It is not therapy, medical care, legal advice, diagnosis, or emergency support.",
         },
+        "promotionProfileVerification": profile_verification,
         "canonicalEntities": {
             "guardians": guardian_entities,
             "coreConcepts": [
@@ -10835,11 +10837,33 @@ def write_promotion_kit() -> None:
     write(ROOT / "promotion-kit.json", json.dumps(collect_promotion_kit(), ensure_ascii=False, indent=2) + "\n")
 
 
+def collect_promotion_profile_verification() -> dict:
+    return {
+        "source": f"{DOMAIN}/promotion-kit.json#platformProfileSetup",
+        "platforms": len(PROMOTION_PLATFORM_PROFILE_SETUP),
+        "writebackFields": ["status", "profile_link_set_date", "profile_link", "notes"],
+        "verificationStepsPerPlatform": 4,
+        "doNotPublishGatesPerPlatform": 3,
+        "publicSmokeCounters": [
+            "public_promotion_kit_platform_profile_writeback_checked=3",
+            "public_promotion_kit_platform_profile_verification_steps_checked=12",
+            "public_promotion_kit_platform_profile_publish_gates_checked=9",
+            "public_promotion_kit_issues=0",
+        ],
+        "checkedBy": [
+            "tools/site_quality_audit.py",
+            "tools/public_promotion_kit_smoke.py",
+            "tools/public_discovery_smoke.py",
+        ],
+    }
+
+
 def collect_release_info() -> dict:
     site_index = collect_site_index()
     commerce = collect_commerce_catalog()
     guardians = collect_guardian_profiles()
     funnel = collect_funnel_events()
+    profile_verification = collect_promotion_profile_verification()
     return {
         "schemaVersion": 1,
         "generatedBy": "tools/generate_multilingual_site.py",
@@ -10907,6 +10931,7 @@ def collect_release_info() -> dict:
             "public_versioned_asset_issues=0",
             "public_versioned_asset_stale_refs=0",
         ],
+        "promotionProfileVerification": profile_verification,
         "safetyBoundaries": [
             "Relationship reflection and communication support only.",
             "Guardian universe content is metaphorical, not diagnostic.",
@@ -10924,6 +10949,7 @@ def collect_site_health() -> dict:
     commerce = collect_commerce_catalog()
     guardians = collect_guardian_profiles()
     funnel = collect_funnel_events()
+    profile_verification = collect_promotion_profile_verification()
     support_files = [
         "robots.txt",
         "sitemap.xml",
@@ -10975,6 +11001,7 @@ def collect_site_health() -> dict:
             "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
             "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment.",
         },
+        "promotionProfileVerification": profile_verification,
         "localAuditCoverage": {
             "structure": ["site_quality", "content_uniqueness", "multilingual_routes"],
             "conversion": ["guardian_conversion", "affiliate_locale", "promotion_writeback_flow"],

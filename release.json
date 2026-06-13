@@ -65,6 +65,29 @@
     "public_versioned_asset_issues=0",
     "public_versioned_asset_stale_refs=0"
   ],
+  "promotionProfileVerification": {
+    "source": "https://lovetypes.tw/promotion-kit.json#platformProfileSetup",
+    "platforms": 3,
+    "writebackFields": [
+      "status",
+      "profile_link_set_date",
+      "profile_link",
+      "notes"
+    ],
+    "verificationStepsPerPlatform": 4,
+    "doNotPublishGatesPerPlatform": 3,
+    "publicSmokeCounters": [
+      "public_promotion_kit_platform_profile_writeback_checked=3",
+      "public_promotion_kit_platform_profile_verification_steps_checked=12",
+      "public_promotion_kit_platform_profile_publish_gates_checked=9",
+      "public_promotion_kit_issues=0"
+    ],
+    "checkedBy": [
+      "tools/site_quality_audit.py",
+      "tools/public_promotion_kit_smoke.py",
+      "tools/public_discovery_smoke.py"
+    ]
+  },
   "safetyBoundaries": [
     "Relationship reflection and communication support only.",
     "Guardian universe content is metaphorical, not diagnostic.",

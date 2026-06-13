@@ -46,6 +46,29 @@
     "commercialDisclosure": "Resources may include localized affiliate links and Luna Gumroad links. Traditional Chinese pages use Books.com.tw; other language pages use Amazon Associates tag parenttechche-20. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
     "safetyBoundary": "LoveTypes is relationship reflection and communication support only. It is not therapy, medical care, legal advice, diagnosis, or emergency support."
   },
+  "promotionProfileVerification": {
+    "source": "https://lovetypes.tw/promotion-kit.json#platformProfileSetup",
+    "platforms": 3,
+    "writebackFields": [
+      "status",
+      "profile_link_set_date",
+      "profile_link",
+      "notes"
+    ],
+    "verificationStepsPerPlatform": 4,
+    "doNotPublishGatesPerPlatform": 3,
+    "publicSmokeCounters": [
+      "public_promotion_kit_platform_profile_writeback_checked=3",
+      "public_promotion_kit_platform_profile_verification_steps_checked=12",
+      "public_promotion_kit_platform_profile_publish_gates_checked=9",
+      "public_promotion_kit_issues=0"
+    ],
+    "checkedBy": [
+      "tools/site_quality_audit.py",
+      "tools/public_promotion_kit_smoke.py",
+      "tools/public_discovery_smoke.py"
+    ]
+  },
   "canonicalEntities": {
     "guardians": [
       {

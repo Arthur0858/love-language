@@ -805,15 +805,15 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("production") != "https://lovetypes.tw/":
@@ -907,7 +907,45 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
     return issues, len(guardians), route_count, asset_count, guide_count
 
 
-def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+def check_promotion_profile_verification(source_path: str, data: dict) -> tuple[list[str], int, int, int]:
+    issues: list[str] = []
+    verification = data.get("promotionProfileVerification")
+    if not isinstance(verification, dict):
+        return [f"{source_path}: promotionProfileVerification should be an object"], 0, 0, 0
+    expected_counters = {
+        "public_promotion_kit_platform_profile_writeback_checked=3",
+        "public_promotion_kit_platform_profile_verification_steps_checked=12",
+        "public_promotion_kit_platform_profile_publish_gates_checked=9",
+        "public_promotion_kit_issues=0",
+    }
+    if verification.get("source") != "https://lovetypes.tw/promotion-kit.json#platformProfileSetup":
+        issues.append(f"{source_path}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")
+    if verification.get("platforms") != 3:
+        issues.append(f"{source_path}: promotionProfileVerification.platforms should be 3")
+    writeback_fields = verification.get("writebackFields")
+    expected_fields = {"status", "profile_link_set_date", "profile_link", "notes"}
+    if not isinstance(writeback_fields, list) or set(writeback_fields) != expected_fields:
+        issues.append(f"{source_path}: promotionProfileVerification.writebackFields should contain {sorted(expected_fields)}")
+    if verification.get("verificationStepsPerPlatform") != 4:
+        issues.append(f"{source_path}: promotionProfileVerification.verificationStepsPerPlatform should be 4")
+    if verification.get("doNotPublishGatesPerPlatform") != 3:
+        issues.append(f"{source_path}: promotionProfileVerification.doNotPublishGatesPerPlatform should be 3")
+    counters = verification.get("publicSmokeCounters")
+    if not isinstance(counters, list) or not expected_counters.issubset(set(counters)):
+        issues.append(f"{source_path}: promotionProfileVerification.publicSmokeCounters missing required counters")
+    checked_by = verification.get("checkedBy")
+    expected_tools = {"tools/site_quality_audit.py", "tools/public_promotion_kit_smoke.py", "tools/public_discovery_smoke.py"}
+    if not isinstance(checked_by, list) or not expected_tools.issubset(set(checked_by)):
+        issues.append(f"{source_path}: promotionProfileVerification.checkedBy missing required tools")
+    return (
+        issues,
+        len(writeback_fields) if isinstance(writeback_fields, list) else 0,
+        len(counters) if isinstance(counters, list) else 0,
+        len(checked_by) if isinstance(checked_by, list) else 0,
+    )
+
+
+def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     path = "/site-health.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
@@ -972,23 +1010,25 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     indexes = data.get("primaryIndexes", {})
     if not isinstance(indexes, dict) or len(indexes) < 10:
         issues.append(f"{path}: primaryIndexes should list at least ten entries")
-    return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0
+    profile_issues, _writeback_fields, profile_smoke_counters, _checked_by = check_promotion_profile_verification(path, data)
+    issues.extend(profile_issues)
+    return issues, coverage_checked, len(support_files) if isinstance(support_files, list) else 0, len(gates) if isinstance(gates, dict) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(indexes) if isinstance(indexes, dict) else 0, profile_smoke_counters
 
 
-def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     path = "/release.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("deploymentTarget") != "Cloudflare Pages project lovetypes":
@@ -1023,7 +1063,9 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
         for snippet in ("tools/affiliate_locale_audit.py", "tools/promotion_writeback_flow_audit.py", "tools/promotion_platform_kpi_tracker.py", "tools/performance_budget_audit.py"):
             if snippet not in audit_text:
                 issues.append(f"{path}: localAuditCoverage missing snippet {snippet!r}")
-    return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(outcomes) if isinstance(outcomes, list) else 0
+    profile_issues, _writeback_fields, profile_smoke_counters, _checked_by = check_promotion_profile_verification(path, data)
+    issues.extend(profile_issues)
+    return issues, content_checked, len(indexes) if isinstance(indexes, dict) else 0, len(commands) if isinstance(commands, list) else 0, len(local_audits) if isinstance(local_audits, dict) else 0, len(outcomes) if isinstance(outcomes, list) else 0, profile_smoke_counters
 
 
 def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
@@ -1079,20 +1121,20 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     return issues, len(boundaries), route_count, len(not_for), len(steps) if isinstance(steps, list) else 0
 
 
-def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int]:
+def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     path = "/ai-discovery.json"
     response = request_url(urljoin(base_url + "/", path.lstrip("/")))
     issues: list[str] = []
     if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0, 0, 0
     if "json" not in response.headers.get("content-type", ""):
         issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
         data = json.loads(response.text)
     except json.JSONDecodeError as exc:
-        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
-        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0
+        return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("siteName") != "LoveTypes":
@@ -1146,6 +1188,8 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:
         issues.append(f"{path}: discoveryFiles should contain {sorted(expected_files)}")
+    profile_issues, _writeback_fields, profile_smoke_counters, _checked_by = check_promotion_profile_verification(path, data)
+    issues.extend(profile_issues)
     return (
         issues,
         len(guardians) if isinstance(guardians, list) else 0,
@@ -1153,6 +1197,7 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         len(priority_urls) if isinstance(priority_urls, list) else 0,
         len(files) if isinstance(files, dict) else 0,
         len(guidance) if isinstance(guidance, dict) else 0,
+        profile_smoke_counters,
     )
 
 
@@ -1329,10 +1374,10 @@ def main() -> int:
     commerce_issues, commerce_items_checked, commerce_types_checked, commerce_roles_checked = check_commerce_catalog(base_url)
     site_index_issues, site_index_pages_checked, site_index_languages_checked, site_index_groups_checked, site_index_flows_checked = check_site_index(base_url)
     guardian_profile_issues, guardian_profiles_checked, guardian_profile_routes_checked, guardian_profile_assets_checked, guardian_profile_guides_checked = check_guardian_profiles(base_url)
-    site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_local_audit_groups_checked, site_health_indexes_checked = check_site_health(base_url)
-    release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_local_audit_groups_checked, release_outcomes_checked = check_release_info(base_url)
+    site_health_issues, site_health_coverage_checked, site_health_support_files_checked, site_health_gates_checked, site_health_local_audit_groups_checked, site_health_indexes_checked, site_health_profile_smoke_counters_checked = check_site_health(base_url)
+    release_issues, release_content_checked, release_indexes_checked, release_commands_checked, release_local_audit_groups_checked, release_outcomes_checked, release_profile_smoke_counters_checked = check_release_info(base_url)
     safety_index_issues, safety_index_boundaries_checked, safety_index_routes_checked, safety_index_not_for_checked, safety_index_steps_checked = check_safety_index(base_url)
-    ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked = check_ai_discovery(base_url)
+    ai_discovery_issues, ai_discovery_guardians_checked, ai_discovery_questions_checked, ai_discovery_priority_urls_checked, ai_discovery_discovery_files_checked, ai_discovery_guidance_fields_checked, ai_discovery_profile_smoke_counters_checked = check_ai_discovery(base_url)
     discovery_cross_issues, discovery_cross_indexes_checked, discovery_cross_urls_checked, discovery_cross_targets_checked, discovery_cross_fragments_checked, discovery_cross_core_routes_checked = check_discovery_cross_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
@@ -1389,6 +1434,7 @@ def main() -> int:
     print(f"public_discovery_site_health_coverage_checked={site_health_coverage_checked}")
     print(f"public_discovery_site_health_support_files_checked={site_health_support_files_checked}")
     print(f"public_discovery_site_health_gates_checked={site_health_gates_checked}")
+    print(f"public_discovery_site_health_profile_smoke_counters_checked={site_health_profile_smoke_counters_checked}")
     print(f"public_discovery_site_health_local_audit_groups_checked={site_health_local_audit_groups_checked}")
     print(f"public_discovery_site_health_indexes_checked={site_health_indexes_checked}")
     print(f"public_discovery_release_content_checked={release_content_checked}")
@@ -1396,6 +1442,7 @@ def main() -> int:
     print(f"public_discovery_release_commands_checked={release_commands_checked}")
     print(f"public_discovery_release_local_audit_groups_checked={release_local_audit_groups_checked}")
     print(f"public_discovery_release_outcomes_checked={release_outcomes_checked}")
+    print(f"public_discovery_release_profile_smoke_counters_checked={release_profile_smoke_counters_checked}")
     print(f"public_discovery_safety_index_boundaries_checked={safety_index_boundaries_checked}")
     print(f"public_discovery_safety_index_routes_checked={safety_index_routes_checked}")
     print(f"public_discovery_safety_index_not_for_checked={safety_index_not_for_checked}")
@@ -1405,6 +1452,7 @@ def main() -> int:
     print(f"public_discovery_ai_priority_urls_checked={ai_discovery_priority_urls_checked}")
     print(f"public_discovery_ai_discovery_files_checked={ai_discovery_discovery_files_checked}")
     print(f"public_discovery_ai_guidance_fields_checked={ai_discovery_guidance_fields_checked}")
+    print(f"public_discovery_ai_profile_smoke_counters_checked={ai_discovery_profile_smoke_counters_checked}")
     print(f"public_discovery_cross_indexes_checked={discovery_cross_indexes_checked}")
     print(f"public_discovery_cross_index_urls_checked={discovery_cross_urls_checked}")
     print(f"public_discovery_cross_index_targets_checked={discovery_cross_targets_checked}")

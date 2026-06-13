@@ -2391,6 +2391,46 @@ def parse_guardian_profiles(parsers: dict[Path, PageParser]) -> tuple[list[str],
     return issues, stats
 
 
+def validate_promotion_profile_verification(source: str, data: dict, stats: Counter, stat_prefix: str) -> list[str]:
+    issues: list[str] = []
+    verification = data.get("promotionProfileVerification")
+    if not isinstance(verification, dict):
+        return [f"{source}: promotionProfileVerification should be an object"]
+    expected_counters = {
+        "public_promotion_kit_platform_profile_writeback_checked=3",
+        "public_promotion_kit_platform_profile_verification_steps_checked=12",
+        "public_promotion_kit_platform_profile_publish_gates_checked=9",
+        "public_promotion_kit_issues=0",
+    }
+    if verification.get("source") != f"{DOMAIN}/promotion-kit.json#platformProfileSetup":
+        issues.append(f"{source}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")
+    if verification.get("platforms") != 3:
+        issues.append(f"{source}: promotionProfileVerification.platforms should be 3")
+    writeback_fields = verification.get("writebackFields")
+    expected_fields = {"status", "profile_link_set_date", "profile_link", "notes"}
+    if not isinstance(writeback_fields, list) or set(writeback_fields) != expected_fields:
+        issues.append(f"{source}: promotionProfileVerification.writebackFields should contain {sorted(expected_fields)}")
+    else:
+        stats[f"{stat_prefix}_writeback_fields_checked"] = len(writeback_fields)
+    if verification.get("verificationStepsPerPlatform") != 4:
+        issues.append(f"{source}: promotionProfileVerification.verificationStepsPerPlatform should be 4")
+    if verification.get("doNotPublishGatesPerPlatform") != 3:
+        issues.append(f"{source}: promotionProfileVerification.doNotPublishGatesPerPlatform should be 3")
+    counters = verification.get("publicSmokeCounters")
+    if not isinstance(counters, list) or not expected_counters.issubset(set(counters)):
+        issues.append(f"{source}: promotionProfileVerification.publicSmokeCounters missing required counters")
+    else:
+        stats[f"{stat_prefix}_public_smoke_counters_checked"] = len(counters)
+    checked_by = verification.get("checkedBy")
+    expected_tools = {"tools/site_quality_audit.py", "tools/public_promotion_kit_smoke.py", "tools/public_discovery_smoke.py"}
+    if not isinstance(checked_by, list) or not expected_tools.issubset(set(checked_by)):
+        issues.append(f"{source}: promotionProfileVerification.checkedBy missing required tools")
+    else:
+        stats[f"{stat_prefix}_checked_by_tools_checked"] = len(checked_by)
+    stats[f"{stat_prefix}_snapshots_checked"] = 1
+    return issues
+
+
 def parse_site_health() -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -2466,6 +2506,7 @@ def parse_site_health() -> tuple[list[str], Counter]:
         ):
             if snippet not in gate_text:
                 issues.append(f"{SITE_HEALTH_PATH}: requiredGates missing snippet {snippet!r}")
+    issues.extend(validate_promotion_profile_verification(str(SITE_HEALTH_PATH), data, stats, "site_health_promotion_profile_verification"))
     local_audits = data.get("localAuditCoverage")
     expected_audit_groups = {"structure", "conversion", "promotion", "experience"}
     if not isinstance(local_audits, dict) or set(local_audits) != expected_audit_groups:
@@ -2579,6 +2620,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         issues.append(f"{RELEASE_PATH}: requiredOutcomes should contain {sorted(expected_outcomes)}")
     else:
         stats["release_required_outcomes_checked"] = len(outcomes)
+    issues.extend(validate_promotion_profile_verification(str(RELEASE_PATH), data, stats, "release_promotion_profile_verification"))
     boundaries = data.get("safetyBoundaries")
     if not isinstance(boundaries, list) or len(boundaries) < 3:
         issues.append(f"{RELEASE_PATH}: safetyBoundaries should include at least three entries")
@@ -2702,6 +2744,8 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
             if not isinstance(guidance.get(key), str) or not guidance[key]:
                 issues.append(f"{AI_DISCOVERY_PATH}: answerGuidance.{key} should be non-empty")
         stats["ai_discovery_guidance_fields_checked"] = len(guidance)
+
+    issues.extend(validate_promotion_profile_verification(str(AI_DISCOVERY_PATH), data, stats, "ai_discovery_promotion_profile_verification"))
 
     totals = data.get("totals")
     expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 10}
@@ -4266,6 +4310,8 @@ def main() -> int:
     print(f"site_health_coverage_fields_checked={stats['site_health_coverage_fields_checked']}")
     print(f"site_health_support_files_checked={stats['site_health_support_files_checked']}")
     print(f"site_health_required_gates_checked={stats['site_health_required_gates_checked']}")
+    print(f"site_health_promotion_profile_verification_snapshots_checked={stats['site_health_promotion_profile_verification_snapshots_checked']}")
+    print(f"site_health_promotion_profile_verification_public_smoke_counters_checked={stats['site_health_promotion_profile_verification_public_smoke_counters_checked']}")
     print(f"site_health_local_audit_groups_checked={stats['site_health_local_audit_groups_checked']}")
     print(f"site_health_primary_indexes_checked={stats['site_health_primary_indexes_checked']}")
     print(f"site_health_safety_boundaries_checked={stats['site_health_safety_boundaries_checked']}")
@@ -4275,6 +4321,8 @@ def main() -> int:
     print(f"release_verification_commands_checked={stats['release_verification_commands_checked']}")
     print(f"release_local_audit_groups_checked={stats['release_local_audit_groups_checked']}")
     print(f"release_required_outcomes_checked={stats['release_required_outcomes_checked']}")
+    print(f"release_promotion_profile_verification_snapshots_checked={stats['release_promotion_profile_verification_snapshots_checked']}")
+    print(f"release_promotion_profile_verification_public_smoke_counters_checked={stats['release_promotion_profile_verification_public_smoke_counters_checked']}")
     print(f"release_safety_boundaries_checked={stats['release_safety_boundaries_checked']}")
     print(f"safety_index_files_checked={stats['safety_index_files_checked']}")
     print(f"safety_index_boundaries_checked={stats['safety_index_boundaries_checked']}")
@@ -4283,6 +4331,8 @@ def main() -> int:
     print(f"safety_index_first_steps_checked={stats['safety_index_first_steps_checked']}")
     print(f"ai_discovery_files_checked={stats['ai_discovery_files_checked']}")
     print(f"ai_discovery_guidance_fields_checked={stats['ai_discovery_guidance_fields_checked']}")
+    print(f"ai_discovery_promotion_profile_verification_snapshots_checked={stats['ai_discovery_promotion_profile_verification_snapshots_checked']}")
+    print(f"ai_discovery_promotion_profile_verification_public_smoke_counters_checked={stats['ai_discovery_promotion_profile_verification_public_smoke_counters_checked']}")
     print(f"ai_discovery_totals_checked={stats['ai_discovery_totals_checked']}")
     print(f"ai_discovery_guardians_checked={stats['ai_discovery_guardians_checked']}")
     print(f"ai_discovery_questions_checked={stats['ai_discovery_questions_checked']}")

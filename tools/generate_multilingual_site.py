@@ -1642,6 +1642,139 @@ CONTACT_REQUESTS = {
     },
 }
 
+LEAD_INTAKE_FORM = {
+    "zh": {
+        "title": "結構化需求表單",
+        "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。",
+        "guardian": "我的守護者",
+        "unknown_guardian": "還不確定，請以測驗結果為準",
+        "request_type": "需求類型",
+        "asset": "素材偏好",
+        "email": "可回覆 email",
+        "campaign": "Campaign content / 推廣內容",
+        "context": "使用情境或備註",
+        "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。",
+        "email_placeholder": "name@example.com",
+        "campaign_placeholder": "例如 iris_silence；沒有可留白",
+        "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF",
+        "submit": "整理並寄出需求",
+        "copy": "複製需求內容",
+        "copied": "已複製",
+        "required": "請先填寫可回覆 email 並勾選同意。",
+        "subject": "LoveTypes 結構化守護者需求",
+        "source_label": "來源",
+        "source_contact": "Contact 結構化需求",
+        "source_keepsake": "收藏室免費素材需求",
+        "body_header": "LoveTypes 結構化需求",
+        "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"],
+        "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+    },
+    "en": {
+        "title": "Structured request form",
+        "intro": "Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.",
+        "guardian": "My guardian",
+        "unknown_guardian": "Not sure yet; use my quiz result",
+        "request_type": "Request type",
+        "asset": "Asset preference",
+        "email": "Reply email",
+        "campaign": "Campaign content",
+        "context": "Use case or note",
+        "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.",
+        "email_placeholder": "name@example.com",
+        "campaign_placeholder": "Example: iris_silence; leave blank if none",
+        "context_placeholder": "Example: bedtime reflection, post-conflict cooling, wallpaper or PDF",
+        "submit": "Prepare and send request",
+        "copy": "Copy request text",
+        "copied": "Copied",
+        "required": "Enter a reply email and check consent first.",
+        "subject": "LoveTypes structured guardian request",
+        "source_label": "Source",
+        "source_contact": "Contact structured request",
+        "source_keepsake": "Keepsake free asset request",
+        "body_header": "LoveTypes structured request",
+        "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"],
+        "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+    },
+    "ja": {
+        "title": "構造化リクエストフォーム",
+        "intro": "希望を欄に整理してから、自分のメールで送信します。LoveTypes は次の無料カード、Luna 補給、修復素材の優先順位を決めるためだけに使い、テンプレート行を実際の名簿として扱いません。",
+        "guardian": "私の守護者",
+        "unknown_guardian": "まだ不明。診断結果を優先",
+        "request_type": "希望タイプ",
+        "asset": "素材の希望",
+        "email": "返信用 email",
+        "campaign": "Campaign content",
+        "context": "使用場面やメモ",
+        "consent": "LoveTypes がこの希望に返信してよいこと、緊急支援、診断、相談支援ではないことに同意します。",
+        "email_placeholder": "name@example.com",
+        "campaign_placeholder": "例 iris_silence。なければ空欄",
+        "context_placeholder": "例 就寝前の整理、衝突後の冷却、壁紙や PDF",
+        "submit": "整理して送信",
+        "copy": "本文をコピー",
+        "copied": "コピー済み",
+        "required": "返信用 email を入力し、同意にチェックしてください。",
+        "subject": "LoveTypes 守護者の構造化リクエスト",
+        "source_label": "來源",
+        "source_contact": "Contact 構造化リクエスト",
+        "source_keepsake": "コレクション室の無料素材希望",
+        "body_header": "LoveTypes 構造化リクエスト",
+        "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"],
+        "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+    },
+    "ko": {
+        "title": "구조화 요청 양식",
+        "intro": "요청을 먼저 정리한 뒤 자신의 이메일로 보냅니다. LoveTypes는 다음 무료 소장물, Luna 보급, 회복 소재의 우선순위를 정하는 데만 사용하며 템플릿 행을 실제 명단으로 세지 않습니다.",
+        "guardian": "나의 수호자",
+        "unknown_guardian": "아직 모름. 테스트 결과 우선",
+        "request_type": "요청 유형",
+        "asset": "소재 선호",
+        "email": "답장 받을 email",
+        "campaign": "Campaign content",
+        "context": "사용 장면 또는 메모",
+        "consent": "LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.",
+        "email_placeholder": "name@example.com",
+        "campaign_placeholder": "예: iris_silence. 없으면 비워 두세요",
+        "context_placeholder": "예: 잠들기 전 정리, 다툼 뒤 냉각, 배경화면 또는 PDF",
+        "submit": "정리해서 보내기",
+        "copy": "요청 내용 복사",
+        "copied": "복사됨",
+        "required": "답장 받을 email을 입력하고 동의에 체크해 주세요.",
+        "subject": "LoveTypes 구조화 수호자 요청",
+        "source_label": "출처",
+        "source_contact": "Contact 구조화 요청",
+        "source_keepsake": "소장실 무료 소재 요청",
+        "body_header": "LoveTypes 구조화 요청",
+        "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"],
+        "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+    },
+    "es": {
+        "title": "Formulario de petición estructurada",
+        "intro": "Ordena la petición y envíala desde tu correo. LoveTypes usa estos datos solo para priorizar futuros recuerdos gratuitos, recursos Luna o prompts de reparación; las filas de plantilla no cuentan como leads reales.",
+        "guardian": "Mi guardiana",
+        "unknown_guardian": "Aún no sé; usar mi resultado",
+        "request_type": "Tipo de petición",
+        "asset": "Preferencia de recurso",
+        "email": "Email de respuesta",
+        "campaign": "Campaign content",
+        "context": "Situación o nota",
+        "consent": "Acepto que LoveTypes responda a esta petición y entiendo que no es apoyo de emergencia, diagnóstico ni terapia.",
+        "email_placeholder": "name@example.com",
+        "campaign_placeholder": "Ejemplo: iris_silence; deja vacío si no hay",
+        "context_placeholder": "Ejemplo: reflexión antes de dormir, calma tras conflicto, fondo o PDF",
+        "submit": "Preparar y enviar",
+        "copy": "Copiar petición",
+        "copied": "Copiado",
+        "required": "Escribe un email de respuesta y marca el consentimiento.",
+        "subject": "Petición estructurada LoveTypes",
+        "source_label": "Fuente",
+        "source_contact": "Petición estructurada de Contacto",
+        "source_keepsake": "Petición de recurso gratuito",
+        "body_header": "Petición estructurada LoveTypes",
+        "asset_options": ["Tarjeta / práctica imprimible", "Fondo móvil", "Tarjeta PDF", "Pack Luna descargable", "Ritual breve o pack impreso"],
+        "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+    },
+}
+
 
 CONTACT_SUBJECT_LABELS = {
     "zh": "建議郵件主旨",
@@ -6398,6 +6531,7 @@ def keepsake_waitlist_section(lang: str) -> str:
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div><a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(LANGS[lang]["contact"])}</a></div>
   <p class="section-intro">{escape(request["intro"])}</p>
   <div class="contact-request-grid">{request_cards}</div>
+  {lead_intake_form(lang, "keepsake_waitlist", "keepsake_structured_request_mailto")}
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
@@ -6406,6 +6540,7 @@ def keepsake_waitlist_section(lang: str) -> str:
   </div>
 </section>
 {contact_template_copy_script(lang)}
+{lead_intake_form_script(lang)}
 """
 
 
@@ -9327,6 +9462,137 @@ def contact_option_cards(items: list[tuple[str, str]], copy: dict, selected_labe
     return "".join(cards)
 
 
+def lead_intake_form(lang: str, source: str, event: str) -> str:
+    copy = LEAD_INTAKE_FORM[lang]
+    source_label = copy["source_keepsake"] if source == "keepsake_waitlist" else copy["source_contact"]
+    guardian_options = [f'<option value="">{escape(copy["unknown_guardian"])}</option>']
+    for slug, guardian in GUARDIANS.items():
+        name, typ, _desc = guardian[lang]
+        guardian_options.append(f'<option value="{slug}">{escape(name)} · {escape(typ)}</option>')
+    type_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["type_options"])
+    asset_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["asset_options"])
+    fallback_body = quote(f"{copy['body_header']}\n{copy['source_label']}: {source_label}\n")
+    copy_event = event.replace("_mailto", "_copy")
+    return f"""
+<form class="lead-intake-form" data-lead-intake-form data-lead-intake-source="{escape(source)}" data-lead-intake-source-label="{escape(source_label)}" novalidate>
+  <div class="lead-intake-head">
+    <h3>{escape(copy["title"])}</h3>
+    <p>{escape(copy["intro"])}</p>
+  </div>
+  <div class="lead-intake-fields">
+    <label>{escape(copy["guardian"])}<select name="guardian" aria-label="{escape(copy["guardian"])}">{''.join(guardian_options)}</select></label>
+    <label>{escape(copy["request_type"])}<select name="request_type" aria-label="{escape(copy["request_type"])}" required>{type_options}</select></label>
+    <label>{escape(copy["asset"])}<select name="asset" aria-label="{escape(copy["asset"])}" required>{asset_options}</select></label>
+    <label>{escape(copy["email"])}<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="{escape(copy["email"])}" placeholder="{escape(copy["email_placeholder"])}" required></label>
+    <label>{escape(copy["campaign"])}<input name="campaign_content" type="text" autocomplete="off" aria-label="{escape(copy["campaign"])}" placeholder="{escape(copy["campaign_placeholder"])}"></label>
+    <label class="lead-intake-full">{escape(copy["context"])}<textarea name="context" rows="4" autocomplete="off" aria-label="{escape(copy["context"])}" placeholder="{escape(copy["context_placeholder"])}"></textarea></label>
+  </div>
+  <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="{escape(copy["consent"])}" required> <span>{escape(copy["consent"])}</span></label>
+  <p class="lead-intake-error" data-lead-intake-error hidden>{escape(copy["required"])}</p>
+  <div class="lead-intake-actions">
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject={quote(copy["subject"])}&body={fallback_body}" data-lead-intake-send data-funnel-event="{event}">{escape(copy["submit"])}</a>
+    <button class="secondary-btn" type="button" data-lead-intake-copy data-funnel-event="{copy_event}" data-copy-text="{escape(copy["body_header"])}">{escape(copy["copy"])}</button>
+  </div>
+  <textarea class="lead-intake-preview" data-lead-intake-preview aria-label="{escape(copy["body_header"])}" autocomplete="off" readonly hidden></textarea>
+</form>
+"""
+
+
+def lead_intake_form_script(lang: str) -> str:
+    labels = json.dumps(LEAD_INTAKE_FORM[lang], ensure_ascii=False)
+    return f"""
+<script>
+(() => {{
+  const labels = {labels};
+  const forms = document.querySelectorAll('[data-lead-intake-form]');
+  if (!forms.length) return;
+
+  function value(form, name) {{
+    return (form.elements[name]?.value || '').trim();
+  }}
+
+  function guardianLabel(form) {{
+    const select = form.elements.guardian;
+    return select?.selectedOptions?.[0]?.textContent?.trim() || labels.unknown_guardian;
+  }}
+
+  function buildText(form) {{
+    const source = form.dataset.leadIntakeSourceLabel || form.dataset.leadIntakeSource || '';
+    return [
+      labels.body_header,
+      `${{labels.source_label}}: ${{source}}`,
+      `${{labels.guardian}}: ${{guardianLabel(form)}}`,
+      `${{labels.request_type}}: ${{value(form, 'request_type')}}`,
+      `${{labels.asset}}: ${{value(form, 'asset')}}`,
+      `${{labels.email}}: ${{value(form, 'reply_email')}}`,
+      `${{labels.campaign}}: ${{value(form, 'campaign_content')}}`,
+      `${{labels.context}}: ${{value(form, 'context')}}`,
+      `consent_status: explicit_reply_ok`,
+      `page: ${{location.href}}`
+    ].join('\\n');
+  }}
+
+  async function copyText(text, button) {{
+    const original = button.textContent;
+    try {{
+      if (navigator.clipboard?.writeText && window.isSecureContext) {{
+        await navigator.clipboard.writeText(text);
+      }} else {{
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }}
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    }} catch (_error) {{
+      window.prompt(original, text);
+    }}
+  }}
+
+  forms.forEach((form) => {{
+    const preview = form.querySelector('[data-lead-intake-preview]');
+    const error = form.querySelector('[data-lead-intake-error]');
+    const copyButton = form.querySelector('[data-lead-intake-copy]');
+    const sendLink = form.querySelector('[data-lead-intake-send]');
+    function update() {{
+      const text = buildText(form);
+      if (preview) preview.value = buildText(form);
+      if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(text)}}`;
+      if (copyButton) copyButton.dataset.copyText = text;
+      if (error) error.hidden = true;
+    }}
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    copyButton?.addEventListener('click', () => {{
+      if (!form.checkValidity()) {{
+        if (error) error.hidden = false;
+        return;
+      }}
+      copyText(buildText(form), copyButton);
+    }});
+    sendLink?.addEventListener('click', (event) => {{
+      event.preventDefault();
+      if (!form.checkValidity()) {{
+        if (error) error.hidden = false;
+        return;
+      }}
+      const text = buildText(form);
+      if (preview) preview.value = text;
+      location.href = `mailto:contact@lovetypes.tw?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(text)}}`;
+    }});
+    update();
+  }});
+}})();
+</script>
+"""
+
+
 def contact_request_section(lang: str) -> str:
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
@@ -9366,6 +9632,7 @@ def contact_request_section(lang: str) -> str:
   <div class="section-head"><div><p class="eyebrow">{escape(request["eyebrow"])}</p><h2>{escape(request["title"])}</h2></div></div>
   <p class="section-intro">{escape(request["intro"])}</p>
   <div class="contact-request-grid">{request_cards}</div>
+  {lead_intake_form(lang, "contact", "contact_structured_request_mailto")}
   <div class="contact-request-note">
     <p>{escape(request["note"])}</p>
     <p class="contact-request-subject"><strong>{escape(subject_label)}</strong><code>{escape(request_subject)}</code></p>
@@ -9385,6 +9652,7 @@ def contact_request_section(lang: str) -> str:
   </div>
 </section>
 {contact_template_copy_script(lang)}
+{lead_intake_form_script(lang)}
 {contact_funnel_summary_script(lang)}
 {contact_result_handoff_script(lang)}
 """
@@ -10034,7 +10302,7 @@ def collect_commerce_catalog() -> dict:
             "role": "lead",
             "itemTypes": ["owned_supply_waitlist"],
             "recommendedAfter": ["quiz_result_supply_route", "supply_route_mailto", "supply_wishlist_mailto"],
-            "primaryEvents": ["supply_wishlist_mailto", "free_keepsake_asset_request", "contact_supply_mailto", "contact_funnel_summary_mailto"],
+            "primaryEvents": ["supply_wishlist_mailto", "free_keepsake_asset_request", "keepsake_structured_request_mailto", "contact_structured_request_mailto", "contact_supply_mailto", "contact_funnel_summary_mailto"],
             "useWhen": "A visitor clicks a guardian supply route, asks for a downloadable asset, or reaches Contact with funnel context.",
             "nextStep": "Ask for minimum context: guardian, use case, and desired format. Keep requests email-based until demand is proven.",
             "doNotUseWhen": "Do not request sensitive details, quiz scores, emergency support details, or private relationship evidence.",
@@ -10663,6 +10931,7 @@ def promotion_event_kpi_map() -> list[dict]:
                 "supply_wishlist_mailto",
                 "collector_supply_mailto",
                 "free_keepsake_asset_request",
+                "keepsake_structured_request_mailto",
                 "keepsake_waitlist_mailto",
                 "home_saved_pack_owned_request",
                 "supply_pack_owned_request",
@@ -10692,6 +10961,7 @@ def promotion_event_kpi_map() -> list[dict]:
             "label": "Contact or high-intent request",
             "events": [
                 "contact_funnel_summary_mailto",
+                "contact_structured_request_mailto",
                 "contact_supply_mailto",
                 "contact_repair_mailto",
                 "contact_resume_send",

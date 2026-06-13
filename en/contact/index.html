@@ -97,6 +97,29 @@
   <a class="contact-card-link" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20guardian%20supply%20waitlist&body=My%20guardian%3A%0ASupply%20I%20want%20first%3A%20Luna%20download%20pack%20/%20phone%20wallpaper%20/%20PDF%20practice%20card%20/%20short%20ritual%20or%20printed%20pack%0AUse%20case%3A%0ADevice%3A%0AFormat%20I%20would%20actually%20keep%3A%0ASelected%20supply%3A%20Short%20ritual%20or%20printed%20pack%0A" data-funnel-event="contact_supply_option_mailto" data-contact-request-option="Short ritual or printed pack">Request this supply</a>
 </article>
 </div>
+  
+<form class="lead-intake-form" data-lead-intake-form data-lead-intake-source="contact" data-lead-intake-source-label="Contact structured request" novalidate>
+  <div class="lead-intake-head">
+    <h3>Structured request form</h3>
+    <p>Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.</p>
+  </div>
+  <div class="lead-intake-fields">
+    <label>My guardian<select name="guardian" aria-label="My guardian"><option value="">Not sure yet; use my quiz result</option><option value="iris">Iris · Words of affirmation</option><option value="noah">Noah · Quality time</option><option value="vivian">Vivian · Receiving gifts</option><option value="claire">Claire · Acts of service</option><option value="dora">Dora · Physical touch</option></select></label>
+    <label>Request type<select name="request_type" aria-label="Request type" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
+    <label>Asset preference<select name="asset" aria-label="Asset preference" required><option value="Story card / printable practice card">Story card / printable practice card</option><option value="Phone wallpaper">Phone wallpaper</option><option value="PDF practice card">PDF practice card</option><option value="Luna download pack">Luna download pack</option><option value="Short ritual or printed pack">Short ritual or printed pack</option></select></label>
+    <label>Reply email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="Reply email" placeholder="name@example.com" required></label>
+    <label>Campaign content<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content" placeholder="Example: iris_silence; leave blank if none"></label>
+    <label class="lead-intake-full">Use case or note<textarea name="context" rows="4" autocomplete="off" aria-label="Use case or note" placeholder="Example: bedtime reflection, post-conflict cooling, wallpaper or PDF"></textarea></label>
+  </div>
+  <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling." required> <span>I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.</span></label>
+  <p class="lead-intake-error" data-lead-intake-error hidden>Enter a reply email and check consent first.</p>
+  <div class="lead-intake-actions">
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20structured%20guardian%20request&body=LoveTypes%20structured%20request%0ASource%3A%20Contact%20structured%20request%0A" data-lead-intake-send data-funnel-event="contact_structured_request_mailto">Prepare and send request</a>
+    <button class="secondary-btn" type="button" data-lead-intake-copy data-funnel-event="contact_structured_request_copy" data-copy-text="LoveTypes structured request">Copy request text</button>
+  </div>
+  <textarea class="lead-intake-preview" data-lead-intake-preview aria-label="LoveTypes structured request" autocomplete="off" readonly hidden></textarea>
+</form>
+
   <div class="contact-request-note">
     <p>Include your guardian, use case, device, and the format you would actually keep. LoveTypes does not provide emergency support, medical advice, or a replacement for counseling.</p>
     <p class="contact-request-subject"><strong>Suggested email subject</strong><code>LoveTypes guardian supply waitlist</code></p>
@@ -191,6 +214,97 @@ Extra screenshot or notes:
         window.prompt(original, text);
       }
     });
+  });
+})();
+</script>
+
+
+<script>
+(() => {
+  const labels = {"title": "Structured request form", "intro": "Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.", "guardian": "My guardian", "unknown_guardian": "Not sure yet; use my quiz result", "request_type": "Request type", "asset": "Asset preference", "email": "Reply email", "campaign": "Campaign content", "context": "Use case or note", "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.", "email_placeholder": "name@example.com", "campaign_placeholder": "Example: iris_silence; leave blank if none", "context_placeholder": "Example: bedtime reflection, post-conflict cooling, wallpaper or PDF", "submit": "Prepare and send request", "copy": "Copy request text", "copied": "Copied", "required": "Enter a reply email and check consent first.", "subject": "LoveTypes structured guardian request", "source_label": "Source", "source_contact": "Contact structured request", "source_keepsake": "Keepsake free asset request", "body_header": "LoveTypes structured request", "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
+  const forms = document.querySelectorAll('[data-lead-intake-form]');
+  if (!forms.length) return;
+
+  function value(form, name) {
+    return (form.elements[name]?.value || '').trim();
+  }
+
+  function guardianLabel(form) {
+    const select = form.elements.guardian;
+    return select?.selectedOptions?.[0]?.textContent?.trim() || labels.unknown_guardian;
+  }
+
+  function buildText(form) {
+    const source = form.dataset.leadIntakeSourceLabel || form.dataset.leadIntakeSource || '';
+    return [
+      labels.body_header,
+      `${labels.source_label}: ${source}`,
+      `${labels.guardian}: ${guardianLabel(form)}`,
+      `${labels.request_type}: ${value(form, 'request_type')}`,
+      `${labels.asset}: ${value(form, 'asset')}`,
+      `${labels.email}: ${value(form, 'reply_email')}`,
+      `${labels.campaign}: ${value(form, 'campaign_content')}`,
+      `${labels.context}: ${value(form, 'context')}`,
+      `consent_status: explicit_reply_ok`,
+      `page: ${location.href}`
+    ].join('\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  forms.forEach((form) => {
+    const preview = form.querySelector('[data-lead-intake-preview]');
+    const error = form.querySelector('[data-lead-intake-error]');
+    const copyButton = form.querySelector('[data-lead-intake-copy]');
+    const sendLink = form.querySelector('[data-lead-intake-send]');
+    function update() {
+      const text = buildText(form);
+      if (preview) preview.value = buildText(form);
+      if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
+      if (copyButton) copyButton.dataset.copyText = text;
+      if (error) error.hidden = true;
+    }
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    copyButton?.addEventListener('click', () => {
+      if (!form.checkValidity()) {
+        if (error) error.hidden = false;
+        return;
+      }
+      copyText(buildText(form), copyButton);
+    });
+    sendLink?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        if (error) error.hidden = false;
+        return;
+      }
+      const text = buildText(form);
+      if (preview) preview.value = text;
+      location.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
+    });
+    update();
   });
 })();
 </script>

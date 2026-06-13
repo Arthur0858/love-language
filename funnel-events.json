@@ -5,8 +5,8 @@
   "localStorageKey": "lovetypes:funnel-events:v1",
   "description": "Machine-readable catalog of LoveTypes conversion and engagement events used by data-funnel-event attributes and interaction fallback mappings.",
   "totals": {
-    "events": 203,
-    "trackedOccurrences": 3848,
+    "events": 207,
+    "trackedOccurrences": 3868,
     "pages": 110
   },
   "events": [
@@ -338,6 +338,34 @@
     },
     {
       "name": "contact_resume_supply_route",
+      "category": "contact",
+      "role": "lead",
+      "count": 5,
+      "pages": [
+        "/contact/",
+        "/en/contact/",
+        "/es/contact/",
+        "/ja/contact/",
+        "/ko/contact/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "contact_structured_request_copy",
+      "category": "contact",
+      "role": "lead",
+      "count": 5,
+      "pages": [
+        "/contact/",
+        "/en/contact/",
+        "/es/contact/",
+        "/ja/contact/",
+        "/ko/contact/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "contact_structured_request_mailto",
       "category": "contact",
       "role": "lead",
       "count": 5,
@@ -2003,6 +2031,34 @@
         "/ja/characters/claire/"
       ],
       "pageCount": 35
+    },
+    {
+      "name": "keepsake_structured_request_copy",
+      "category": "keepsake",
+      "role": "lead",
+      "count": 5,
+      "pages": [
+        "/en/keepsakes/",
+        "/es/keepsakes/",
+        "/ja/keepsakes/",
+        "/keepsakes/",
+        "/ko/keepsakes/"
+      ],
+      "pageCount": 5
+    },
+    {
+      "name": "keepsake_structured_request_mailto",
+      "category": "keepsake",
+      "role": "lead",
+      "count": 5,
+      "pages": [
+        "/en/keepsakes/",
+        "/es/keepsakes/",
+        "/ja/keepsakes/",
+        "/keepsakes/",
+        "/ko/keepsakes/"
+      ],
+      "pageCount": 5
     },
     {
       "name": "keepsake_waitlist_copy",

@@ -480,8 +480,6 @@ button:focus-visible {
   color: var(--sage);
   font-size: .78rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .hero h1,
@@ -493,7 +491,6 @@ button:focus-visible {
   line-height: 1.04;
   margin: 0 0 18px;
   color: var(--ink);
-  letter-spacing: 0;
 }
 
 .lead,
@@ -1124,8 +1121,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .78rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .affiliate-route-match > div {
@@ -1374,8 +1369,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .78rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .supply-route-card dd {
@@ -1478,8 +1471,6 @@ button.secondary-btn {
   color: var(--ink);
   font-size: .74rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .supply-format-list {
@@ -1643,8 +1634,6 @@ button.secondary-btn {
 .contact-request-subject strong {
   color: var(--ink);
   font-size: .78rem;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .contact-request-subject code {
@@ -1664,6 +1653,8 @@ button.secondary-btn {
   flex: 0 1 250px;
   min-width: 0;
 }
+
+.lead-intake-form{display:grid;gap:14px;margin:18px 0}.lead-intake-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lead-intake-full{grid-column:1/-1}.lead-intake-actions{display:flex;flex-wrap:wrap;gap:10px}.lead-intake-actions .primary-btn,.lead-intake-actions .secondary-btn{flex:1 1 180px;min-width:0}
 
 .starter-kit-section {
   background:
@@ -2338,8 +2329,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .78rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .repair-day-grid h3,
@@ -2402,8 +2391,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .82rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .worksheet-meta .primary-btn,
@@ -2438,8 +2425,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .82rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .repair-worksheet textarea {
@@ -4206,8 +4191,6 @@ button.secondary-btn {
   color: var(--rose);
   font-size: .78rem;
   font-weight: 900;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .guardian-route-grid h3 {
@@ -4520,6 +4503,7 @@ button.secondary-btn {
   .supply-entry-grid,
   .supply-compass-grid,
   .contact-request-grid,
+  .lead-intake-fields,
   .starter-kit-grid,
   .luna-guardian-grid,
   .quiz-band,
@@ -4707,6 +4691,7 @@ button.secondary-btn {
   .garden-map-tool-grid,
   .garden-map-trust-grid,
   .contact-request-grid,
+  .lead-intake-fields,
   .luna-protocol-grid,
   .luna-use-grid,
   .luna-offer-grid,

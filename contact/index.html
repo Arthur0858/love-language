@@ -97,6 +97,29 @@
   <a class="contact-card-link" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20%E5%AE%88%E8%AD%B7%E8%80%85%E8%A3%9C%E7%B5%A6%E7%AD%89%E5%BE%85%E6%B8%85%E5%96%AE&body=%E6%88%91%E7%9A%84%E5%AE%88%E8%AD%B7%E8%80%85%EF%BC%9A%0A%E6%88%91%E6%83%B3%E5%84%AA%E5%85%88%E6%94%B6%E5%88%B0%E7%9A%84%E8%A3%9C%E7%B5%A6%EF%BC%9ALuna%20%E4%B8%8B%E8%BC%89%E5%8C%85%20/%20%E6%89%8B%E6%A9%9F%E6%A1%8C%E5%B8%83%20/%20PDF%20%E7%B7%B4%E7%BF%92%E5%8D%A1%20/%20%E7%9F%AD%E5%84%80%E5%BC%8F%E6%88%96%E5%8D%B0%E5%88%B7%E5%8C%85%0A%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%EF%BC%9A%0A%E4%BD%BF%E7%94%A8%E8%A3%9D%E7%BD%AE%EF%BC%9A%0A%E6%88%91%E6%9C%83%E9%A1%98%E6%84%8F%E6%94%B6%E8%97%8F%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%9A%0A%E6%88%91%E9%81%B8%E6%93%87%E7%9A%84%E8%A3%9C%E7%B5%A6%3A%20%E7%9F%AD%E5%84%80%E5%BC%8F%E6%88%96%E5%8D%B0%E5%88%B7%E5%8C%85%0A" data-funnel-event="contact_supply_option_mailto" data-contact-request-option="短儀式或印刷包">我要這項補給</a>
 </article>
 </div>
+  
+<form class="lead-intake-form" data-lead-intake-form data-lead-intake-source="contact" data-lead-intake-source-label="Contact 結構化需求" novalidate>
+  <div class="lead-intake-head">
+    <h3>結構化需求表單</h3>
+    <p>先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。</p>
+  </div>
+  <div class="lead-intake-fields">
+    <label>我的守護者<select name="guardian" aria-label="我的守護者"><option value="">還不確定，請以測驗結果為準</option><option value="iris">艾莉絲 · 肯定的言詞</option><option value="noah">諾雅 · 優質的時光</option><option value="vivian">薇薇安 · 接受禮物</option><option value="claire">克萊兒 · 服務的行動</option><option value="dora">朵拉 · 身體的接觸</option></select></label>
+    <label>需求類型<select name="request_type" aria-label="需求類型" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
+    <label>素材偏好<select name="asset" aria-label="素材偏好" required><option value="故事卡 / 可列印練習卡">故事卡 / 可列印練習卡</option><option value="手機桌布">手機桌布</option><option value="PDF 練習卡">PDF 練習卡</option><option value="Luna 下載包">Luna 下載包</option><option value="短儀式或印刷包">短儀式或印刷包</option></select></label>
+    <label>可回覆 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="可回覆 email" placeholder="name@example.com" required></label>
+    <label>Campaign content / 推廣內容<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content / 推廣內容" placeholder="例如 iris_silence；沒有可留白"></label>
+    <label class="lead-intake-full">使用情境或備註<textarea name="context" rows="4" autocomplete="off" aria-label="使用情境或備註" placeholder="例如睡前整理、衝突後冷卻、想要桌布或 PDF"></textarea></label>
+  </div>
+  <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。" required> <span>我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。</span></label>
+  <p class="lead-intake-error" data-lead-intake-error hidden>請先填寫可回覆 email 並勾選同意。</p>
+  <div class="lead-intake-actions">
+    <a class="primary-btn" href="mailto:contact@lovetypes.tw?subject=LoveTypes%20%E7%B5%90%E6%A7%8B%E5%8C%96%E5%AE%88%E8%AD%B7%E8%80%85%E9%9C%80%E6%B1%82&body=LoveTypes%20%E7%B5%90%E6%A7%8B%E5%8C%96%E9%9C%80%E6%B1%82%0A%E4%BE%86%E6%BA%90%3A%20Contact%20%E7%B5%90%E6%A7%8B%E5%8C%96%E9%9C%80%E6%B1%82%0A" data-lead-intake-send data-funnel-event="contact_structured_request_mailto">整理並寄出需求</a>
+    <button class="secondary-btn" type="button" data-lead-intake-copy data-funnel-event="contact_structured_request_copy" data-copy-text="LoveTypes 結構化需求">複製需求內容</button>
+  </div>
+  <textarea class="lead-intake-preview" data-lead-intake-preview aria-label="LoveTypes 結構化需求" autocomplete="off" readonly hidden></textarea>
+</form>
+
   <div class="contact-request-note">
     <p>來信時可附上你的守護者、想使用的情境、裝置與願意收藏的格式。LoveTypes 不提供緊急支援、醫療建議或諮商替代。</p>
     <p class="contact-request-subject"><strong>建議郵件主旨</strong><code>LoveTypes 守護者補給等待清單</code></p>
@@ -191,6 +214,97 @@
         window.prompt(original, text);
       }
     });
+  });
+})();
+</script>
+
+
+<script>
+(() => {
+  const labels = {"title": "結構化需求表單", "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。", "guardian": "我的守護者", "unknown_guardian": "還不確定，請以測驗結果為準", "request_type": "需求類型", "asset": "素材偏好", "email": "可回覆 email", "campaign": "Campaign content / 推廣內容", "context": "使用情境或備註", "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。", "email_placeholder": "name@example.com", "campaign_placeholder": "例如 iris_silence；沒有可留白", "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF", "submit": "整理並寄出需求", "copy": "複製需求內容", "copied": "已複製", "required": "請先填寫可回覆 email 並勾選同意。", "subject": "LoveTypes 結構化守護者需求", "source_label": "來源", "source_contact": "Contact 結構化需求", "source_keepsake": "收藏室免費素材需求", "body_header": "LoveTypes 結構化需求", "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
+  const forms = document.querySelectorAll('[data-lead-intake-form]');
+  if (!forms.length) return;
+
+  function value(form, name) {
+    return (form.elements[name]?.value || '').trim();
+  }
+
+  function guardianLabel(form) {
+    const select = form.elements.guardian;
+    return select?.selectedOptions?.[0]?.textContent?.trim() || labels.unknown_guardian;
+  }
+
+  function buildText(form) {
+    const source = form.dataset.leadIntakeSourceLabel || form.dataset.leadIntakeSource || '';
+    return [
+      labels.body_header,
+      `${labels.source_label}: ${source}`,
+      `${labels.guardian}: ${guardianLabel(form)}`,
+      `${labels.request_type}: ${value(form, 'request_type')}`,
+      `${labels.asset}: ${value(form, 'asset')}`,
+      `${labels.email}: ${value(form, 'reply_email')}`,
+      `${labels.campaign}: ${value(form, 'campaign_content')}`,
+      `${labels.context}: ${value(form, 'context')}`,
+      `consent_status: explicit_reply_ok`,
+      `page: ${location.href}`
+    ].join('\n');
+  }
+
+  async function copyText(text, button) {
+    const original = button.textContent;
+    try {
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.left = '-9999px';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      button.textContent = labels.copied;
+      window.setTimeout(() => button.textContent = original, 1600);
+    } catch (_error) {
+      window.prompt(original, text);
+    }
+  }
+
+  forms.forEach((form) => {
+    const preview = form.querySelector('[data-lead-intake-preview]');
+    const error = form.querySelector('[data-lead-intake-error]');
+    const copyButton = form.querySelector('[data-lead-intake-copy]');
+    const sendLink = form.querySelector('[data-lead-intake-send]');
+    function update() {
+      const text = buildText(form);
+      if (preview) preview.value = buildText(form);
+      if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
+      if (copyButton) copyButton.dataset.copyText = text;
+      if (error) error.hidden = true;
+    }
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    copyButton?.addEventListener('click', () => {
+      if (!form.checkValidity()) {
+        if (error) error.hidden = false;
+        return;
+      }
+      copyText(buildText(form), copyButton);
+    });
+    sendLink?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        if (error) error.hidden = false;
+        return;
+      }
+      const text = buildText(form);
+      if (preview) preview.value = text;
+      location.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
+    });
+    update();
   });
 })();
 </script>

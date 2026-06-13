@@ -334,6 +334,7 @@
           "supply_wishlist_mailto",
           "collector_supply_mailto",
           "free_keepsake_asset_request",
+          "keepsake_structured_request_mailto",
           "keepsake_waitlist_mailto",
           "home_saved_pack_owned_request",
           "supply_pack_owned_request"
@@ -384,6 +385,7 @@
         "label": "Contact or high-intent request",
         "events": [
           "contact_funnel_summary_mailto",
+          "contact_structured_request_mailto",
           "contact_supply_mailto",
           "contact_repair_mailto",
           "contact_resume_send",

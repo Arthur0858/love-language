@@ -21,6 +21,7 @@ PLAYBOOK_JSON = PROMOTION_DIR / "post-writeback-playbook.json"
 PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 PUBLISH_STATUSES = ("published", "live", "posted")
 STATUS_VALUES = ("planned", "scheduled", *PUBLISH_STATUSES)
+POST_URL_PLACEHOLDER = "https://www.youtube.com/shorts/replace-with-real-post-url"
 METRIC_FIELDS = (
     "views",
     "likes",
@@ -220,7 +221,7 @@ def first_batch_commands(queue_rows: list[dict[str, str]]) -> list[dict[str, str
             "currentStatus": row.get("status", "planned"),
             "publishCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
-                f"--status published --published-date {date.today().isoformat()} --post-url https://example.com/post "
+                f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
                 f"--proof-note \"manual post URL verified\""
             ),
         })

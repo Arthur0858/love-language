@@ -11,6 +11,7 @@ import promotion_post_writeback as writeback
 
 ROOT = Path(__file__).resolve().parents[1]
 POST_IMPORT_TOOL = ROOT / "tools" / "promotion_post_text_import.py"
+PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 PLACEHOLDER_URLS = (
     "https://example.com/post",
     "https://example.com/replace-with-real-post-url",
@@ -18,6 +19,8 @@ PLACEHOLDER_URLS = (
     "https://www.youtube.com/shorts/placeholder",
 )
 SAFE_SAMPLE_URL = "https://www.youtube.com/shorts/lovetypes-proof-url-123"
+FORBIDDEN_DOC_SNIPPETS = ("https://example.com/post",)
+DOC_SUFFIXES = (".md", ".json", ".csv")
 
 
 def sample_text(post_url: str) -> str:
@@ -77,6 +80,17 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("safe sample URL should pass validator")
     if not safe_import_passed:
         issues.append("safe sample URL should pass import check")
+    docs_checked = 0
+    doc_hits = 0
+    for path in sorted(PROMOTION_DIR.glob("*")):
+        if path.suffix not in DOC_SUFFIXES:
+            continue
+        docs_checked += 1
+        text = path.read_text(encoding="utf-8")
+        for snippet in FORBIDDEN_DOC_SNIPPETS:
+            if snippet in text:
+                doc_hits += 1
+                issues.append(f"{path.relative_to(ROOT)} should not contain stale placeholder {snippet}")
 
     return {
         "placeholderUrls": len(PLACEHOLDER_URLS),
@@ -84,6 +98,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "rejectedByImport": rejected_by_import,
         "safeValidatorPassed": safe_validator_passed,
         "safeImportPassed": safe_import_passed,
+        "docsChecked": docs_checked,
+        "docHits": doc_hits,
     }, issues
 
 
@@ -94,6 +110,8 @@ def main() -> int:
     print(f"promotion_placeholder_url_rejected_by_import={metrics['rejectedByImport']}")
     print(f"promotion_placeholder_url_safe_validator_passed={metrics['safeValidatorPassed']}")
     print(f"promotion_placeholder_url_safe_import_passed={metrics['safeImportPassed']}")
+    print(f"promotion_placeholder_url_docs_checked={metrics['docsChecked']}")
+    print(f"promotion_placeholder_url_doc_hits={metrics['docHits']}")
     print(f"promotion_placeholder_url_safety_issues={len(issues)}")
     for issue in issues:
         print(issue)

@@ -12,21 +12,21 @@
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
 
 ### tiktok · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
 
 ### instagram_reels · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
 
 ## 平台文字匯入
 

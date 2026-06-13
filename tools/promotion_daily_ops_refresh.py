@@ -43,6 +43,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_launch_readiness_gate.py"],
     [sys.executable, "tools/promotion_profile_verification_packet.py"],
     [sys.executable, "tools/promotion_first_batch_publication_packet.py"],
+    [sys.executable, "tools/promotion_first_batch_asset_qa.py"],
     [sys.executable, "tools/promotion_next_actions.py"],
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],

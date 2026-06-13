@@ -19,6 +19,7 @@ DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.json"
 PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
 PUBLISHED_STATUSES = {"published", "live", "posted"}
+POST_URL_PLACEHOLDER = "https://www.youtube.com/shorts/replace-with-real-post-url"
 MINIMUM_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
 FOLLOWUP_KPI_FIELDS = (
     "guardian_result_clicks",
@@ -117,12 +118,12 @@ def build_packet() -> dict:
             "minimumKpiFilled": any(value > 0 for value in minimum_kpis.values()),
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
-                f"--status published --published-date {date.today().isoformat()} --post-url https://example.com/post "
+                f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
                 f"--proof-note \"manual post URL verified\""
             ),
             "kpiExampleCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
-                f"--status published --published-date {date.today().isoformat()} --post-url https://example.com/post "
+                f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
                 "--site-clicks 0 --quiz-starts 0 --quiz-completions 0 "
                 "--proof-note \"post URL and first metrics verified\""
             ),

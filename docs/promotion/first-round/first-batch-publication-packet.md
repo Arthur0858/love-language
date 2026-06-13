@@ -73,8 +73,8 @@
 
 ### Writeback
 
-- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
-- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
 
 ## tiktok · `publish-lt-s01-iris-silence`
 
@@ -114,8 +114,8 @@
 
 ### Writeback
 
-- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
-- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
 
 ## instagram_reels · `publish-lt-s01-iris-silence`
 
@@ -155,5 +155,5 @@
 
 ### Writeback
 
-- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --proof-note "manual post URL verified"`
-- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`
+- 發布 URL 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "manual post URL verified"`
+- 初始 KPI 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "post URL and first metrics verified"`

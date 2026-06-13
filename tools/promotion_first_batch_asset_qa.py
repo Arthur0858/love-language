@@ -25,6 +25,7 @@ REQUIRED_QA_ITEMS = (
     "writeback_ready",
 )
 FORBIDDEN_FIRST_CTA = ("Luna", "Gumroad", "Amazon", "博客來", "購買", "buy")
+POST_URL_PLACEHOLDER = "https://www.youtube.com/shorts/replace-with-real-post-url"
 
 
 def load_json(path: Path) -> dict:
@@ -129,7 +130,7 @@ def build_packet() -> dict:
                 f"task_id: {task_id}",
                 "status: published",
                 f"published_date: {date.today().isoformat()}",
-                "post_url: https://example.com/post",
+                f"post_url: {POST_URL_PLACEHOLDER}",
                 "views: 0",
                 "site_clicks: 0",
                 "quiz_starts: 0",

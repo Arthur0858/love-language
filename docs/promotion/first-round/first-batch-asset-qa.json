@@ -29,7 +29,7 @@
       "assetReadyStatus": "ready",
       "assetReadyAction": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
       "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://example.com/post\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
+      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://www.youtube.com/shorts/replace-with-real-post-url\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [
         {
           "id": "vertical_video",
@@ -94,7 +94,7 @@
       "assetReadyStatus": "ready",
       "assetReadyAction": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
       "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://example.com/post\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
+      "postImportTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://www.youtube.com/shorts/replace-with-real-post-url\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [
         {
           "id": "vertical_video",
@@ -159,7 +159,7 @@
       "assetReadyStatus": "ready",
       "assetReadyAction": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
       "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://example.com/post\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
+      "postImportTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: https://www.youtube.com/shorts/replace-with-real-post-url\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [
         {
           "id": "vertical_video",

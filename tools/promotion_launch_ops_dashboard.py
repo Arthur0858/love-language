@@ -19,6 +19,9 @@ PUBLISH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
 KPI_ACTION = PROMOTION_DIR / "first-batch-kpi-action-sheet.json"
 LEAD_OPS = PROMOTION_DIR / "lead-ops-action-sheet.json"
 WEEKLY_ACTION = PROMOTION_DIR / "weekly-review-action-sheet.json"
+PROFILE_HANDOFF = PROMOTION_DIR / "profile-publish-handoff.json"
+PUBLISH_KPI_HANDOFF = PROMOTION_DIR / "publish-kpi-handoff.json"
+WEEKLY_LEAD_OFFER_HANDOFF = PROMOTION_DIR / "weekly-lead-offer-handoff.json"
 OUTPUT_MD = PROMOTION_DIR / "launch-ops-dashboard.md"
 OUTPUT_JSON = PROMOTION_DIR / "launch-ops-dashboard.json"
 OUTPUT_CSV = PROMOTION_DIR / "launch-ops-dashboard.csv"
@@ -65,6 +68,9 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
     kpi = bundle["kpi"]
     lead = bundle["lead"]
     weekly = bundle["weekly"]
+    profile_handoff = bundle["profile_handoff"]
+    publish_kpi_handoff = bundle["publish_kpi_handoff"]
+    weekly_lead_offer_handoff = bundle["weekly_lead_offer_handoff"]
     master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
     handoff_state = handoff.get("state", {}) if isinstance(handoff.get("state"), dict) else {}
     rows = [
@@ -132,6 +138,33 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
             "safety": "Keep external operations evidence-backed.",
         },
         {
+            "area": "profile_publish_handoff",
+            "status": "blocked" if metric(profile_handoff, "readyToPublish") == 0 else "ready",
+            "ready": str(metric(profile_handoff, "completeRows")),
+            "blocked": str(metric(profile_handoff, "currentBlockers") + metric(profile_handoff, "blockedUpstreamRows")),
+            "next_action": "Use this gate to hand off completed profile proof into first-batch publishing.",
+            "evidence": f"ready_to_publish={metric(profile_handoff, 'readyToPublish')}, current_blockers={metric(profile_handoff, 'currentBlockers')}, blocked_upstream={metric(profile_handoff, 'blockedUpstreamRows')}",
+            "safety": "No first-batch publishing until profile proof and refreshed packets are complete.",
+        },
+        {
+            "area": "publish_kpi_handoff",
+            "status": "blocked" if metric(publish_kpi_handoff, "readyForWeeklyReview") == 0 else "ready",
+            "ready": str(metric(publish_kpi_handoff, "completeRows")),
+            "blocked": str(metric(publish_kpi_handoff, "currentBlockers") + metric(publish_kpi_handoff, "blockedUpstreamRows")),
+            "next_action": "Use this gate to hand off public post URLs and minimum KPI into weekly review.",
+            "evidence": f"published={metric(publish_kpi_handoff, 'publishedRows')}/3, minimum_kpi={metric(publish_kpi_handoff, 'minimumKpiRows')}/3, weekly={metric(publish_kpi_handoff, 'readyForWeeklyReview')}",
+            "safety": "No weekly review or commerce decision until post URL, proof, and KPI checks are complete.",
+        },
+        {
+            "area": "weekly_lead_offer_handoff",
+            "status": "blocked" if metric(weekly_lead_offer_handoff, "readyLeadRoutes") == 0 and metric(weekly_lead_offer_handoff, "readyOfferExperiments") == 0 else "ready",
+            "ready": str(metric(weekly_lead_offer_handoff, "completeRows")),
+            "blocked": str(metric(weekly_lead_offer_handoff, "currentBlockers") + metric(weekly_lead_offer_handoff, "blockedUpstreamRows")),
+            "next_action": "Use this gate to move weekly signals into lead, asset, Luna, or offer work only when evidence exists.",
+            "evidence": f"real_leads={metric(weekly_lead_offer_handoff, 'realLeads')}, ready_routes={metric(weekly_lead_offer_handoff, 'readyLeadRoutes')}, ready_offers={metric(weekly_lead_offer_handoff, 'readyOfferExperiments')}",
+            "safety": "Public free assets are safe lead magnets, not proof of product demand.",
+        },
+        {
             "area": "next_actions",
             "status": "ready" if int(next_actions.get("actions", [{}]) and len(next_actions.get("actions", [])) or 0) else "waiting",
             "ready": str(command.get("readyRows", 0)),
@@ -155,6 +188,9 @@ def build_dashboard() -> dict:
         "kpi": load_json(KPI_ACTION),
         "lead": load_json(LEAD_OPS),
         "weekly": load_json(WEEKLY_ACTION),
+        "profile_handoff": load_json(PROFILE_HANDOFF),
+        "publish_kpi_handoff": load_json(PUBLISH_KPI_HANDOFF),
+        "weekly_lead_offer_handoff": load_json(WEEKLY_LEAD_OFFER_HANDOFF),
     }
     rows = build_rows(bundle)
     blocked = sum(1 for row in rows if row["status"] == "blocked")
@@ -173,8 +209,8 @@ def build_dashboard() -> dict:
         "leadReadyRoutes": int(master_metrics.get("leadReadyRoutes", 0) or 0),
     }
     issues: list[str] = []
-    if metrics["rows"] != 8:
-        issues.append(f"expected 8 launch ops dashboard rows, got {metrics['rows']}")
+    if metrics["rows"] != 11:
+        issues.append(f"expected 11 launch ops dashboard rows, got {metrics['rows']}")
     if not bundle["master"] or not bundle["command"] or not bundle["handoff"]:
         issues.append("launch ops dashboard missing core source packet")
     if metrics["profileConfigured"] == 0 and rows[0]["status"] != "profile_setup":
@@ -193,6 +229,9 @@ def build_dashboard() -> dict:
             "kpiAction": str(KPI_ACTION.relative_to(ROOT)),
             "leadOps": str(LEAD_OPS.relative_to(ROOT)),
             "weeklyAction": str(WEEKLY_ACTION.relative_to(ROOT)),
+            "profilePublishHandoff": str(PROFILE_HANDOFF.relative_to(ROOT)),
+            "publishKpiHandoff": str(PUBLISH_KPI_HANDOFF.relative_to(ROOT)),
+            "weeklyLeadOfferHandoff": str(WEEKLY_LEAD_OFFER_HANDOFF.relative_to(ROOT)),
         },
         "metrics": metrics,
         "rows": rows,

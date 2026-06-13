@@ -1,9 +1,9 @@
 # LoveTypes Launch Ops Dashboard
 
 - 產生日期：2026-06-14
-- rows：8
+- rows：11
 - ready areas：1
-- blocked areas：6
+- blocked areas：9
 - hold areas：0
 - profile configured：0 / 3
 - first batch published：0 / 3
@@ -75,6 +75,30 @@
 - next：Follow the handoff packet for structured proof imports and do-not-do rules.
 - evidence：profile_pending=3, first_batch_pending=3, weekly_ready=0
 - safety：Keep external operations evidence-backed.
+
+### profile_publish_handoff
+
+- status：`blocked`
+- ready / blocked：3 / 4
+- next：Use this gate to hand off completed profile proof into first-batch publishing.
+- evidence：ready_to_publish=0, current_blockers=1, blocked_upstream=3
+- safety：No first-batch publishing until profile proof and refreshed packets are complete.
+
+### publish_kpi_handoff
+
+- status：`blocked`
+- ready / blocked：1 / 6
+- next：Use this gate to hand off public post URLs and minimum KPI into weekly review.
+- evidence：published=0/3, minimum_kpi=0/3, weekly=0
+- safety：No weekly review or commerce decision until post URL, proof, and KPI checks are complete.
+
+### weekly_lead_offer_handoff
+
+- status：`blocked`
+- ready / blocked：2 / 6
+- next：Use this gate to move weekly signals into lead, asset, Luna, or offer work only when evidence exists.
+- evidence：real_leads=0, ready_routes=0, ready_offers=0
+- safety：Public free assets are safe lead magnets, not proof of product demand.
 
 ### next_actions
 

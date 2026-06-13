@@ -10859,6 +10859,29 @@ def collect_release_info() -> dict:
             "python3 tools/public_deploy_smoke.py",
             "python3 tools/public_versioned_asset_smoke.py",
         ],
+        "localAuditCoverage": {
+            "contentStructure": [
+                "tools/site_quality_audit.py",
+                "tools/content_uniqueness_audit.py",
+                "tools/multilingual_route_audit.py",
+            ],
+            "conversionAndCommerce": [
+                "tools/guardian_conversion_audit.py",
+                "tools/affiliate_locale_audit.py",
+                "tools/promotion_writeback_flow_audit.py",
+            ],
+            "promotionOperations": [
+                "tools/promotion_platform_kpi_tracker.py",
+                "tools/promotion_publishing_status.py",
+                "tools/promotion_launch_readiness_gate.py",
+                "tools/promotion_launch_command_center.py",
+            ],
+            "experienceQuality": [
+                "tools/accessibility_audit.py",
+                "tools/image_asset_audit.py",
+                "tools/performance_budget_audit.py",
+            ],
+        },
         "requiredOutcomes": [
             "predeploy_checks=ok",
             "issues=0",
@@ -10929,9 +10952,17 @@ def collect_site_health() -> dict:
         },
         "requiredGates": {
             "localPredeploy": "tools/predeploy_check.py must report predeploy_checks=ok and issues=0 before deployment.",
+            "localizedAffiliateLinks": "tools/affiliate_locale_audit.py must report affiliate_locale_issues=0 so Traditional Chinese keeps Books.com.tw while other locales use Amazon Associates.",
+            "promotionWritebackFlow": "tools/promotion_writeback_flow_audit.py must report promotion_writeback_issues=0 and promotion_writeback_stale_phrase_hits=0 so platform posts use platform-kpi-tracker.csv before weekly kpi-tracker.csv rollups.",
             "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
             "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
             "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment.",
+        },
+        "localAuditCoverage": {
+            "structure": ["site_quality", "content_uniqueness", "multilingual_routes"],
+            "conversion": ["guardian_conversion", "affiliate_locale", "promotion_writeback_flow"],
+            "promotion": ["platform_kpi_tracker", "publishing_status", "launch_readiness", "launch_command_center"],
+            "experience": ["accessibility", "image_assets", "performance_budget"],
         },
         "supportFiles": support_files,
         "primaryIndexes": {

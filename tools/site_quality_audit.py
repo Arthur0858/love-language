@@ -2430,15 +2430,34 @@ def parse_site_health() -> tuple[list[str], Counter]:
             if not (ROOT / rel_path).exists():
                 issues.append(f"{SITE_HEALTH_PATH}: listed support file missing: {rel_path}")
     gates = data.get("requiredGates")
-    expected_gates = {"localPredeploy", "publicDiscovery", "publicDeploy", "versionedAssets"}
+    expected_gates = {"localPredeploy", "localizedAffiliateLinks", "promotionWritebackFlow", "publicDiscovery", "publicDeploy", "versionedAssets"}
     if not isinstance(gates, dict) or set(gates) != expected_gates:
         issues.append(f"{SITE_HEALTH_PATH}: requiredGates should contain {sorted(expected_gates)}")
     else:
         stats["site_health_required_gates_checked"] = len(gates)
         gate_text = " ".join(str(value) for value in gates.values())
-        for snippet in ("issues=0", "predeploy_checks=ok", "public_discovery_issues=0", "public_deploy_issues=0", "public_versioned_asset_issues=0"):
+        for snippet in (
+            "issues=0",
+            "predeploy_checks=ok",
+            "affiliate_locale_issues=0",
+            "promotion_writeback_issues=0",
+            "promotion_writeback_stale_phrase_hits=0",
+            "public_discovery_issues=0",
+            "public_deploy_issues=0",
+            "public_versioned_asset_issues=0",
+        ):
             if snippet not in gate_text:
                 issues.append(f"{SITE_HEALTH_PATH}: requiredGates missing snippet {snippet!r}")
+    local_audits = data.get("localAuditCoverage")
+    expected_audit_groups = {"structure", "conversion", "promotion", "experience"}
+    if not isinstance(local_audits, dict) or set(local_audits) != expected_audit_groups:
+        issues.append(f"{SITE_HEALTH_PATH}: localAuditCoverage should contain {sorted(expected_audit_groups)}")
+    else:
+        stats["site_health_local_audit_groups_checked"] = len(local_audits)
+        audit_text = " ".join(" ".join(str(item) for item in values) for values in local_audits.values() if isinstance(values, list))
+        for snippet in ("affiliate_locale", "promotion_writeback_flow", "platform_kpi_tracker", "performance_budget"):
+            if snippet not in audit_text:
+                issues.append(f"{SITE_HEALTH_PATH}: localAuditCoverage missing snippet {snippet!r}")
     indexes = data.get("primaryIndexes")
     if not isinstance(indexes, dict) or len(indexes) < 9:
         issues.append(f"{SITE_HEALTH_PATH}: primaryIndexes should list core public indexes")
@@ -2519,6 +2538,16 @@ def parse_release_info() -> tuple[list[str], Counter]:
         issues.append(f"{RELEASE_PATH}: verificationCommands should match the release workflow")
     else:
         stats["release_verification_commands_checked"] = len(commands)
+    local_audits = data.get("localAuditCoverage")
+    expected_audit_groups = {"contentStructure", "conversionAndCommerce", "promotionOperations", "experienceQuality"}
+    if not isinstance(local_audits, dict) or set(local_audits) != expected_audit_groups:
+        issues.append(f"{RELEASE_PATH}: localAuditCoverage should contain {sorted(expected_audit_groups)}")
+    else:
+        stats["release_local_audit_groups_checked"] = len(local_audits)
+        audit_text = " ".join(" ".join(str(item) for item in values) for values in local_audits.values() if isinstance(values, list))
+        for snippet in ("tools/affiliate_locale_audit.py", "tools/promotion_writeback_flow_audit.py", "tools/promotion_platform_kpi_tracker.py", "tools/performance_budget_audit.py"):
+            if snippet not in audit_text:
+                issues.append(f"{RELEASE_PATH}: localAuditCoverage missing snippet {snippet!r}")
     outcomes = data.get("requiredOutcomes")
     expected_outcomes = {
         "predeploy_checks=ok",
@@ -4219,12 +4248,14 @@ def main() -> int:
     print(f"site_health_coverage_fields_checked={stats['site_health_coverage_fields_checked']}")
     print(f"site_health_support_files_checked={stats['site_health_support_files_checked']}")
     print(f"site_health_required_gates_checked={stats['site_health_required_gates_checked']}")
+    print(f"site_health_local_audit_groups_checked={stats['site_health_local_audit_groups_checked']}")
     print(f"site_health_primary_indexes_checked={stats['site_health_primary_indexes_checked']}")
     print(f"site_health_safety_boundaries_checked={stats['site_health_safety_boundaries_checked']}")
     print(f"release_files_checked={stats['release_files_checked']}")
     print(f"release_content_fields_checked={stats['release_content_fields_checked']}")
     print(f"release_public_indexes_checked={stats['release_public_indexes_checked']}")
     print(f"release_verification_commands_checked={stats['release_verification_commands_checked']}")
+    print(f"release_local_audit_groups_checked={stats['release_local_audit_groups_checked']}")
     print(f"release_required_outcomes_checked={stats['release_required_outcomes_checked']}")
     print(f"release_safety_boundaries_checked={stats['release_safety_boundaries_checked']}")
     print(f"safety_index_files_checked={stats['safety_index_files_checked']}")

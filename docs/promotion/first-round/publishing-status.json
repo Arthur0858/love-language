@@ -8,6 +8,15 @@
     "tiktok",
     "youtube_shorts"
   ],
+  "requiredScriptPublishFields": [
+    "date",
+    "platform",
+    "post_url"
+  ],
+  "requiredPlatformPublishFields": [
+    "published_date",
+    "post_url"
+  ],
   "queueByPlatform": {
     "instagram_reels": 15,
     "tiktok": 15,

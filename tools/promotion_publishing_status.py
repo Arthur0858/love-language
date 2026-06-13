@@ -27,6 +27,8 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+SCRIPT_PUBLISH_FIELDS = ("date", "platform", "post_url")
+PLATFORM_PUBLISH_FIELDS = ("published_date", "post_url")
 
 
 def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -197,8 +199,8 @@ def build_report(
     revenue_intent = Counter()
     for script_id in sorted(published_scripts):
         tracker = tracker_lookup.get(script_id, {})
-        filled = [field for field in ("date", "platform", "post_url") if (tracker.get(field) or "").strip()]
-        if len(filled) == 3:
+        filled = [field for field in SCRIPT_PUBLISH_FIELDS if (tracker.get(field) or "").strip()]
+        if len(filled) == len(SCRIPT_PUBLISH_FIELDS):
             tracker_ready_scripts.append(script_id)
         elif filled:
             tracker_partial_scripts.append(script_id)
@@ -209,8 +211,8 @@ def build_report(
         task_id = (queue_row.get("task_id") or "").strip()
         label = f"{platform}/{task_id}"
         platform_tracker = platform_tracker_lookup.get((platform, task_id), {})
-        filled = [field for field in ("published_date", "post_url") if (platform_tracker.get(field) or "").strip()]
-        if len(filled) == 2:
+        filled = [field for field in PLATFORM_PUBLISH_FIELDS if (platform_tracker.get(field) or "").strip()]
+        if len(filled) == len(PLATFORM_PUBLISH_FIELDS):
             platform_tracker_ready_rows.append(label)
         elif filled:
             platform_tracker_partial_rows.append(label)
@@ -259,6 +261,8 @@ def build_report(
         "trackerRows": len(tracker_rows),
         "platformTrackerRows": len(platform_tracker_rows),
         "platforms": sorted(queue_by_platform),
+        "requiredScriptPublishFields": list(SCRIPT_PUBLISH_FIELDS),
+        "requiredPlatformPublishFields": list(PLATFORM_PUBLISH_FIELDS),
         "queueByPlatform": dict(sorted(queue_by_platform.items())),
         "queueByStatus": dict(sorted(queue_by_status.items())),
         "queueByGuardian": dict(sorted(queue_by_guardian.items())),

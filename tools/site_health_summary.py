@@ -212,6 +212,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_deploy_issues",
         "public_launch_link_issues",
         "public_launch_link_checked",
+        "public_launch_link_profile_checked",
+        "public_launch_link_shorts_checked",
         "public_launch_link_quiz_entries",
         "public_launch_link_safety_navs",
         "public_launch_link_utm_checks",

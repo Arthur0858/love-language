@@ -34,15 +34,30 @@ def fetch(url: str) -> tuple[int, str, str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Smoke test public LoveTypes promotion launch links.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL)
+    parser.add_argument(
+        "--source-type",
+        choices=("all", "profile", "shorts"),
+        default="all",
+        help="Limit checks to profile Bio links or Shorts campaign links.",
+    )
     args = parser.parse_args()
     base_url = args.base_url.rstrip("/") or DEFAULT_BASE_URL
     issues: list[str] = []
     checked = 0
+    profile_checked = 0
+    shorts_checked = 0
     quiz_entries = 0
     safety_navs = 0
     utm_checks = 0
     for link in load_links():
+        source_type = str(link.get("source_type", ""))
+        if args.source_type != "all" and source_type != args.source_type:
+            continue
         checked += 1
+        if source_type == "profile":
+            profile_checked += 1
+        elif source_type == "shorts":
+            shorts_checked += 1
         source = link.get("link_id", f"link-{checked}")
         url = public_url(base_url, link)
         try:
@@ -72,6 +87,8 @@ def main() -> int:
             issues.append(f"{source}: landing page missing trust/safety footer links")
 
     print(f"public_launch_link_checked={checked}")
+    print(f"public_launch_link_profile_checked={profile_checked}")
+    print(f"public_launch_link_shorts_checked={shorts_checked}")
     print(f"public_launch_link_quiz_entries={quiz_entries}")
     print(f"public_launch_link_safety_navs={safety_navs}")
     print(f"public_launch_link_utm_checks={utm_checks}")

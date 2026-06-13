@@ -74,7 +74,7 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 
 ### publish_post: tiktok publish-lt-s01-iris-silence
 
@@ -82,7 +82,7 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 
 ### publish_post: instagram_reels publish-lt-s01-iris-silence
 
@@ -90,7 +90,7 @@
 - Blocked by: `readiness_gate`
 - Success signal: `post_url and starter metrics validate before writeback`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 
 ### minimum_kpi_backfill: youtube_shorts publish-lt-s01-iris-silence
 

@@ -198,7 +198,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
             "id": "post_publish_import",
             "title": "Published post URL and starter KPI import",
             "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
-            "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL post checked YYYY-MM-DD\"",
+            "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
             "template": "\n".join([
                 "LoveTypes platform post writeback",
                 f"platform: {publish_platform}",
@@ -210,6 +210,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
                 "site_clicks: 0",
                 "quiz_starts: 0",
                 "quiz_completions: 0",
+                "proof_note: public URL and analytics source checked YYYY-MM-DD",
             ]),
         },
         {

@@ -39,19 +39,19 @@
   - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
   - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
   - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
-  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - [ ] `publish_tiktok_publish-lt-s01-iris-silence`（publish_first_batch / blocked_until_profile_links）
   - scope：`tiktok:publish-lt-s01-iris-silence`
   - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
   - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
   - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
-  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - [ ] `publish_instagram_reels_publish-lt-s01-iris-silence`（publish_first_batch / blocked_until_profile_links）
   - scope：`instagram_reels:publish-lt-s01-iris-silence`
   - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
   - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
   - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
-  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - [ ] `public_post_urls_verified`（publish_first_batch / blocked_until_evidence）
   - scope：`first_round`
   - action：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.

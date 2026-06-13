@@ -55,7 +55,7 @@ KPI_ROWS = [
     {
         "metric_id": "proof_note",
         "required": "1",
-        "expected": "Traceable note such as public URL post checked YYYY-MM-DD, screenshot filename, or platform timestamp.",
+        "expected": "Traceable note such as public URL and analytics source checked YYYY-MM-DD, screenshot filename, or platform timestamp.",
         "allowed_empty": "0",
         "zero_requires_source_check": "0",
         "source": "Public URL check, screenshot, or platform dashboard.",

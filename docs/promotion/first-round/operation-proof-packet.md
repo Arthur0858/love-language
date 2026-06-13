@@ -89,7 +89,7 @@ proof_note: screenshot profile-instagram_reels-2026-06-14.png verified
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -112,14 +112,14 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL post checked YYYY-MM-DD
+proof_note: public URL and analytics source checked YYYY-MM-DD
 ```
 
 ### post_publish: tiktok publish-lt-s01-iris-silence
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -142,14 +142,14 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL post checked YYYY-MM-DD
+proof_note: public URL and analytics source checked YYYY-MM-DD
 ```
 
 ### post_publish: instagram_reels publish-lt-s01-iris-silence
 
 - Status: `blocked_until_profile_gate`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL post checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
 - Blocked by: `profile links are not all set/live`
 - Required evidence:
   - `profile_gate_passed`
@@ -172,5 +172,5 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL post checked YYYY-MM-DD
+proof_note: public URL and analytics source checked YYYY-MM-DD
 ```

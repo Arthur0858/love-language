@@ -34,7 +34,12 @@ FORBIDDEN_DOC_SNIPPETS = (
 DOC_SUFFIXES = (".md", ".json", ".csv")
 
 
-def sample_text(post_url: str, platform: str = "youtube_shorts", task_id: str = "publish-lt-s01-iris-silence") -> str:
+def sample_text(
+    post_url: str,
+    platform: str = "youtube_shorts",
+    task_id: str = "publish-lt-s01-iris-silence",
+    proof_note: str = "public URL and analytics source checked 2026-06-15",
+) -> str:
     return "\n".join([
         "LoveTypes platform post writeback",
         f"platform: {platform}",
@@ -46,7 +51,7 @@ def sample_text(post_url: str, platform: str = "youtube_shorts", task_id: str = 
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        "proof_note: post URL and first metrics verified",
+        f"proof_note: {proof_note}",
         "",
     ])
 
@@ -75,6 +80,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
     rejected_by_import = 0
     rejected_wrong_domain_by_validator = 0
     rejected_wrong_domain_by_import = 0
+    zero_source_rejected_by_import = 0
+    zero_source_safe_import_passed = 0
     for url in PLACEHOLDER_URLS:
         if writeback.valid_post_url(url):
             issues.append(f"placeholder URL should be rejected by validator: {url}")
@@ -95,6 +102,22 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("safe sample URL should pass import check")
     if not writeback.post_url_matches_platform("youtube_shorts", SAFE_SAMPLE_URL):
         issues.append("safe sample URL should match youtube_shorts platform domain")
+
+    no_source_code, no_source_output = run_import_check(sample_text(
+        SAFE_SAMPLE_URL,
+        proof_note="public URL post checked 2026-06-15",
+    ))
+    if no_source_code == 0 or "promotion_post_text_import_issues=0" in no_source_output:
+        issues.append("zero KPI sample without analytics/source proof should be rejected by import check")
+    elif "checked analytics/source note" in no_source_output:
+        zero_source_rejected_by_import += 1
+    else:
+        issues.append(f"zero KPI sample rejected for unexpected reason: {no_source_output.strip()}")
+    source_code, source_output = run_import_check(sample_text(SAFE_SAMPLE_URL))
+    if source_code == 0 and "promotion_post_text_import_issues=0" in source_output:
+        zero_source_safe_import_passed = 1
+    else:
+        issues.append("zero KPI sample with analytics/source proof should pass import check")
 
     task_ids = {
         "youtube_shorts": "publish-lt-s01-iris-silence",
@@ -134,6 +157,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "wrongPlatformUrls": len(WRONG_PLATFORM_URLS),
         "wrongPlatformRejectedByValidator": rejected_wrong_domain_by_validator,
         "wrongPlatformRejectedByImport": rejected_wrong_domain_by_import,
+        "zeroSourceRejectedByImport": zero_source_rejected_by_import,
+        "zeroSourceSafeImportPassed": zero_source_safe_import_passed,
         "docsChecked": docs_checked,
         "docHits": doc_hits,
     }, issues
@@ -149,6 +174,8 @@ def main() -> int:
     print(f"promotion_placeholder_url_wrong_platform_checked={metrics['wrongPlatformUrls']}")
     print(f"promotion_placeholder_url_wrong_platform_rejected_by_validator={metrics['wrongPlatformRejectedByValidator']}")
     print(f"promotion_placeholder_url_wrong_platform_rejected_by_import={metrics['wrongPlatformRejectedByImport']}")
+    print(f"promotion_placeholder_url_zero_source_rejected_by_import={metrics['zeroSourceRejectedByImport']}")
+    print(f"promotion_placeholder_url_zero_source_safe_import_passed={metrics['zeroSourceSafeImportPassed']}")
     print(f"promotion_placeholder_url_docs_checked={metrics['docsChecked']}")
     print(f"promotion_placeholder_url_doc_hits={metrics['docHits']}")
     print(f"promotion_placeholder_url_safety_issues={len(issues)}")

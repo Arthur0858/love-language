@@ -54,7 +54,7 @@ def replace_post_url(text: str, platform: str) -> str:
         if line.lower().startswith("post_url:"):
             lines.append(f"post_url: {replacement}")
         elif line.lower().startswith("proof_note:"):
-            lines.append(f"proof_note: rehearsal public URL checked {date.today().isoformat()}")
+            lines.append(f"proof_note: rehearsal public URL and analytics source checked {date.today().isoformat()}")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"

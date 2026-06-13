@@ -18,6 +18,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
+proof_note: public URL and analytics source checked 2026-06-15
 """
 
 PLATFORM_ALIASES = {
@@ -109,6 +110,10 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
             issues.append("published status requires non-placeholder https post_url")
         elif not writeback.post_url_matches_platform(data.get("platform", ""), data.get("post_url", "")):
             issues.append("published status requires post_url to match platform domain")
+        proof = data.get("proof_note", "")
+        zero_issue = writeback.zero_metric_source_issue(proof, data)
+        if zero_issue:
+            issues.append(zero_issue)
     if data.get("task_id") and not task_exists(data.get("platform", ""), data["task_id"]):
         issues.append(f"unknown platform/task_id {data.get('platform')}/{data.get('task_id')}")
     for field in writeback.METRIC_FIELDS:

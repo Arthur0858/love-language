@@ -113,7 +113,7 @@
       "platform": "youtube_shorts",
       "taskId": "publish-lt-s01-iris-silence",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL post checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
       "blockedBy": "readiness_gate",
       "successSignal": "post_url and starter metrics validate before writeback"
     },
@@ -123,7 +123,7 @@
       "platform": "tiktok",
       "taskId": "publish-lt-s01-iris-silence",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL post checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
       "blockedBy": "readiness_gate",
       "successSignal": "post_url and starter metrics validate before writeback"
     },
@@ -133,7 +133,7 @@
       "platform": "instagram_reels",
       "taskId": "publish-lt-s01-iris-silence",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL post checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
       "blockedBy": "readiness_gate",
       "successSignal": "post_url and starter metrics validate before writeback"
     },

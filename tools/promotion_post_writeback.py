@@ -53,6 +53,19 @@ METRIC_FIELDS = (
     "affiliate_book_clicks",
     "contact_requests",
 )
+MINIMUM_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
+ZERO_SOURCE_TOKENS = (
+    "analytics source checked",
+    "platform analytics checked",
+    "site analytics checked",
+    "source checked",
+    "analytics checked",
+    "utm report checked",
+    "cloudflare checked",
+    "platform report checked",
+    "數據來源已檢查",
+    "分析來源已檢查",
+)
 
 
 def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -73,6 +86,41 @@ def parse_int(value: str | None) -> int:
     if not text:
         return 0
     return int(float(text))
+
+
+def has_explicit_zero_metric(values: dict[str, str]) -> bool:
+    for field in MINIMUM_KPI_FIELDS:
+        value = (values.get(field) or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = parse_int(value)
+        except ValueError:
+            continue
+        if parsed == 0:
+            return True
+    return False
+
+
+def zero_metric_source_issue(proof_note: str, values: dict[str, str], label: str = "proof_note") -> str:
+    if not has_explicit_zero_metric(values):
+        return ""
+    normalized = " ".join(proof_note.strip().lower().split())
+    if any(token in normalized for token in ZERO_SOURCE_TOKENS):
+        return ""
+    fields = []
+    for field in MINIMUM_KPI_FIELDS:
+        value = (values.get(field) or "").strip()
+        if not value:
+            continue
+        try:
+            parsed = parse_int(value)
+        except ValueError:
+            continue
+        if parsed == 0:
+            fields.append(field)
+    field_list = ", ".join(fields)
+    return f"{label} must include an explicit checked analytics/source note before accepting zero KPI values: {field_list}"
 
 
 def validate_date(value: str) -> bool:
@@ -148,6 +196,9 @@ def validate_rows(
                 issues.append(f"{label}: published row post_url must match platform domain")
             if "verified:" not in (row.get("notes") or ""):
                 issues.append(f"{label}: published row requires verified proof note")
+            zero_issue = zero_metric_source_issue(row.get("notes", ""), row, "notes")
+            if zero_issue:
+                issues.append(f"{label}: {zero_issue}")
             platform_row = platform_lookup.get((platform, task_id), {})
             if platform_row.get("published_date") != row.get("published_date") or platform_row.get("post_url") != row.get("post_url"):
                 issues.append(f"{label}: platform KPI tracker publish fields must match posting queue")
@@ -247,7 +298,7 @@ def first_batch_commands(queue_rows: list[dict[str, str]]) -> list[dict[str, str
             "publishCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {post_url_placeholder(platform)} "
-                f"--proof-note \"public URL post checked {date.today().isoformat()}\""
+                f"--proof-note \"public URL and analytics source checked {date.today().isoformat()}\""
             ),
         })
     return commands
@@ -305,14 +356,14 @@ def render_markdown(data: dict) -> str:
         "",
         "- 發布後可把平台、task_id、post_url、發布日期與初始 KPI 貼成一段文字，再用匯入工具檢查。",
         "- 檢查：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`",
-        "- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL post checked YYYY-MM-DD\"`",
+        "- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"`",
         "- 寫入時仍會同步 posting queue、platform KPI tracker、script KPI tracker 與後續摘要文件。",
         "",
         "## 安全規則",
         "",
         "- 不用本工具偽造 post URL、發布日期或 KPI。",
         "- `published/live/posted` 必須有 `--published-date`、`--post-url`、`--proof-note`。",
-        "- 發布後先回填 `site_clicks`、`quiz_starts`、`quiz_completions`；沒有數據時保留空白，不做商品判斷。",
+        "- 發布後先回填 `site_clicks`、`quiz_starts`、`quiz_completions`；填 0 前必須在 proof note 寫明 analytics/source 已檢查。",
     ])
     if data["issues"]:
         lines.extend(["", "## Issues", ""])
@@ -374,6 +425,10 @@ def main() -> int:
             if issue:
                 raise SystemExit(issue)
         metrics = {field: getattr(args, field) for field in METRIC_FIELDS}
+        if args.command == "update" and args.status in PUBLISH_STATUSES:
+            issue = zero_metric_source_issue(args.proof_note, metrics)
+            if issue:
+                raise SystemExit(issue)
         queue_row = update_platform_rows(queue_rows, args.platform, args.task_id, args.status, args.published_date, args.post_url, args.proof_note.strip(), metrics)
         update_platform_rows(platform_rows, args.platform, args.task_id, args.status, args.published_date, args.post_url, args.proof_note.strip(), metrics)
         rollup_script_tracker(script_rows, platform_rows, queue_row["script_id"])

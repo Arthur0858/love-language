@@ -129,7 +129,7 @@ def build_packet() -> dict:
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "
-                f"--proof-note \"public URL post checked {date.today().isoformat()}\""
+                f"--proof-note \"public URL and analytics source checked {date.today().isoformat()}\""
             ),
             "kpiExampleCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "

@@ -88,7 +88,7 @@ def build_publish_command(row: dict[str, str], placeholder: str) -> str:
         f"python3 tools/promotion_post_writeback.py update --platform {row.get('platform', '')} "
         f"--task-id {row.get('task_id', '')} --status published "
         f"--published-date {date.today().isoformat()} --post-url {placeholder} "
-        f"--proof-note \"public URL post checked {date.today().isoformat()}\""
+        f"--proof-note \"public URL and analytics source checked {date.today().isoformat()}\""
     )
 
 
@@ -114,7 +114,7 @@ def build_import_template(row: dict[str, str], placeholder: str) -> str:
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        "proof_note: public URL post checked YYYY-MM-DD",
+        "proof_note: public URL and analytics source checked YYYY-MM-DD",
     ])
 
 

@@ -77,7 +77,7 @@ def post_template(row: dict) -> str:
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        "proof_note: public URL post checked YYYY-MM-DD",
+        "proof_note: public URL and analytics source checked YYYY-MM-DD",
     ])
 
 
@@ -128,7 +128,7 @@ def build_post_proofs(first_batch: dict, handoff: dict) -> list[dict[str, object
             "minimumKpiEvidence": list(KPI_REQUIRED_EVIDENCE),
             "blockedBy": blocked_by,
             "checkCommand": f"python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-{platform}-{task_id}.txt",
-            "writeCommand": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"public URL post checked {date.today().isoformat()}\"",
+            "writeCommand": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"public URL and analytics source checked {date.today().isoformat()}\"",
             "template": post_template(row),
         })
     return proofs

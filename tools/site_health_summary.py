@@ -402,6 +402,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_placeholder_url_wrong_platform_checked",
         "promotion_placeholder_url_wrong_platform_rejected_by_validator",
         "promotion_placeholder_url_wrong_platform_rejected_by_import",
+        "promotion_placeholder_url_zero_source_rejected_by_import",
+        "promotion_placeholder_url_zero_source_safe_import_passed",
         "promotion_placeholder_url_docs_checked",
         "promotion_placeholder_url_doc_hits",
         "promotion_placeholder_url_safety_issues",

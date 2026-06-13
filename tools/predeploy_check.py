@@ -44,6 +44,7 @@ PYTHON_TOOLS = [
     "tools/promotion_now_asset_briefs.py",
     "tools/promotion_week_asset_briefs.py",
     "tools/promotion_launch_command_center.py",
+    "tools/promotion_launch_readiness_gate.py",
     "tools/promotion_launch_link_qa.py",
     "tools/promotion_attribution_reconciliation.py",
     "tools/promotion_weekly_summary.py",
@@ -168,6 +169,7 @@ def main() -> int:
         run_step("promotion now asset briefs", [sys.executable, "tools/promotion_now_asset_briefs.py", "--check"])
         run_step("promotion week asset briefs", [sys.executable, "tools/promotion_week_asset_briefs.py", "--all", "--check"])
         run_step("promotion launch command center", [sys.executable, "tools/promotion_launch_command_center.py", "--check"])
+        run_step("promotion launch readiness gate", [sys.executable, "tools/promotion_launch_readiness_gate.py", "--check"])
         run_step("promotion launch link qa", [sys.executable, "tools/promotion_launch_link_qa.py", "--check"])
         run_step("promotion attribution reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])

@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-06-13",
+  "source": {
+    "profileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
+    "postingQueue": "docs/promotion/first-round/posting-queue.csv",
+    "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json"
+  },
+  "metrics": {
+    "profileRows": 3,
+    "profileLinksValid": 3,
+    "profileConfigured": 0,
+    "firstBatchRows": 3,
+    "firstBatchScheduled": 3,
+    "firstWeekScheduled": 9,
+    "assetReady": 3,
+    "publishedRows": 0,
+    "filledKpiRows": 0,
+    "blockers": 3,
+    "issues": 0
+  },
+  "readiness": {
+    "structureReady": true,
+    "readyToStartSetup": true,
+    "readyToPublishPosts": false,
+    "readyForKpiDecision": false,
+    "emptyDataMode": true
+  },
+  "nextDecision": "先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。",
+  "blockers": [
+    {
+      "id": "set_platform_profile_links",
+      "phase": "profile_setup",
+      "severity": "launch_blocker",
+      "message": "三個平台個人頁仍未標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。"
+    },
+    {
+      "id": "publish_first_batch",
+      "phase": "publish",
+      "severity": "measurement_blocker",
+      "message": "首批三平台貼文尚未標記 published；沒有 post_url 前不能開始 KPI 判讀。"
+    },
+    {
+      "id": "backfill_first_batch_kpis",
+      "phase": "measurement",
+      "severity": "decision_blocker",
+      "message": "KPI 尚未回填到前三筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。"
+    }
+  ],
+  "safety": {
+    "quizOnlyCta": true,
+    "doNotChangeOffersFromEmptyData": true,
+    "doNotChangeGuardianPriorityBeforeKpi": true
+  },
+  "issues": []
+}

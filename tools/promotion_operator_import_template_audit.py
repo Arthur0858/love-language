@@ -22,8 +22,10 @@ EXPECTED_IMPORTS = {
         "tool": "tools/promotion_post_text_import.py",
         "required_outputs": (
             "promotion_post_text_import_has_post_url=1",
-            "promotion_post_text_import_issues=0",
+            "promotion_post_text_import_issues=1",
+            "published status requires non-placeholder https post_url",
         ),
+        "expect_rejected": True,
     },
     "lead_request_import": {
         "tool": "tools/promotion_lead_text_import.py",
@@ -60,8 +62,11 @@ def run_template_check(import_id: str, template: str) -> tuple[bool, str]:
     finally:
         temp_path.unlink(missing_ok=True)
     output = result.stdout.strip()
-    if result.returncode != 0:
+    expect_rejected = bool(config.get("expect_rejected"))
+    if result.returncode != 0 and not expect_rejected:
         return False, f"{import_id}: check command failed\n{output}"
+    if result.returncode == 0 and expect_rejected:
+        return False, f"{import_id}: placeholder template should be rejected until a real post URL is supplied\n{output}"
     missing_outputs = [item for item in config["required_outputs"] if item not in output]
     if missing_outputs:
         return False, f"{import_id}: missing expected check output {', '.join(missing_outputs)}\n{output}"
@@ -82,6 +87,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
 
     checked = 0
     valid = 0
+    safely_rejected = 0
     for import_id in EXPECTED_IMPORTS:
         item = by_id.get(import_id)
         if not item:
@@ -97,7 +103,10 @@ def validate() -> tuple[dict[str, int], list[str]]:
         checked += 1
         ok, detail = run_template_check(import_id, template)
         if ok:
-            valid += 1
+            if EXPECTED_IMPORTS[import_id].get("expect_rejected"):
+                safely_rejected += 1
+            else:
+                valid += 1
         else:
             issues.append(detail)
 
@@ -106,6 +115,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "expectedTemplates": len(EXPECTED_IMPORTS),
         "checkedTemplates": checked,
         "validTemplates": valid,
+        "safelyRejectedTemplates": safely_rejected,
     }, issues
 
 
@@ -115,6 +125,7 @@ def main() -> int:
     print(f"promotion_operator_import_expected_templates={metrics['expectedTemplates']}")
     print(f"promotion_operator_import_checked_templates={metrics['checkedTemplates']}")
     print(f"promotion_operator_import_valid_templates={metrics['validTemplates']}")
+    print(f"promotion_operator_import_safely_rejected_templates={metrics['safelyRejectedTemplates']}")
     print(f"promotion_operator_import_template_issues={len(issues)}")
     for issue in issues:
         print(issue)

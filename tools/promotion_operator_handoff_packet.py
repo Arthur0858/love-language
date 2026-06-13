@@ -16,10 +16,19 @@ WEEKLY_REVIEW_PATH = PROMOTION_DIR / "weekly-review-packet.json"
 READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "operator-handoff-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "operator-handoff-packet.json"
+POST_URL_PLACEHOLDERS = {
+    "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
+    "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
+    "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
+}
 
 
 def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def post_url_placeholder(platform: str) -> str:
+    return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
 
 
 def build_profile_steps(profile_packet: dict) -> list[dict[str, object]]:
@@ -169,6 +178,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
     profile_url = str(first_profile.get("url") or "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio")
     publish_platform = str(first_publish.get("platform") or "youtube_shorts")
     publish_task = str(first_publish.get("taskId") or "publish-lt-s01-iris-silence")
+    publish_placeholder = post_url_placeholder(publish_platform)
     return [
         {
             "id": "profile_setup_import",
@@ -195,7 +205,7 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
                 f"task_id: {publish_task}",
                 "status: published",
                 f"published_date: {date.today().isoformat()}",
-                "post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123",
+                f"post_url: {publish_placeholder}",
                 "views: 0",
                 "site_clicks: 0",
                 "quiz_starts: 0",
@@ -250,6 +260,12 @@ def validate_handoff(handoff: dict) -> list[str]:
             issues.append(f"{label}: missing proof-gated write command")
         if not item.get("template") or ":" not in item.get("template", ""):
             issues.append(f"{label}: missing structured text template")
+        template = str(item.get("template", ""))
+        if item.get("id") == "post_publish_import":
+            if "replace-with-real" in template or "example.com" in template or "lovetypes-proof-url-123" in template:
+                issues.append(f"{label}: post import template should not contain URL-like placeholders")
+            if "<REAL_" not in template:
+                issues.append(f"{label}: post import template should use explicit platform placeholder")
     for step in steps:
         label = f"{step.get('phase', '<phase>')}/{step.get('platform', step.get('taskId', ''))}"
         if not step.get("phase") or not step.get("status") or not step.get("priority"):

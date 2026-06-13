@@ -19,7 +19,11 @@ DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.json"
 PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
 PUBLISHED_STATUSES = {"published", "live", "posted"}
-POST_URL_PLACEHOLDER = "https://www.youtube.com/shorts/replace-with-real-post-url"
+POST_URL_PLACEHOLDERS = {
+    "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
+    "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
+    "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
+}
 MINIMUM_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
 FOLLOWUP_KPI_FIELDS = (
     "guardian_result_clicks",
@@ -83,6 +87,10 @@ def platform_tracker_lookup(rows: list[dict[str, str]]) -> dict[tuple[str, str],
     return {queue_key(row): row for row in rows}
 
 
+def post_url_placeholder(platform: str) -> str:
+    return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
+
+
 def build_packet() -> dict:
     queue_rows = read_csv(QUEUE_PATH)
     platform_rows = read_csv(PLATFORM_TRACKER_PATH)
@@ -98,6 +106,7 @@ def build_packet() -> dict:
         status = row.get("status", "planned")
         published = status in PUBLISHED_STATUSES
         minimum_kpis = {field: parse_int(tracker.get(field) or row.get(field)) for field in MINIMUM_KPI_FIELDS}
+        placeholder = post_url_placeholder(platform)
         rows.append({
             "platform": platform,
             "taskId": task_id,
@@ -119,15 +128,16 @@ def build_packet() -> dict:
             "minimumKpiFilled": any(value > 0 for value in minimum_kpis.values()),
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
-                f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
+                f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "
                 f"--proof-note \"public URL post checked {date.today().isoformat()}\""
             ),
             "kpiExampleCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
-                f"--status published --published-date {date.today().isoformat()} --post-url {POST_URL_PLACEHOLDER} "
+                f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "
                 "--site-clicks 0 --quiz-starts 0 --quiz-completions 0 "
                 f"--proof-note \"platform analytics checked {date.today().isoformat()}\""
             ),
+            "postUrlPlaceholder": placeholder,
             "prePublishChecks": [
                 "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",
                 "影片、字幕、首幀或封面使用正確守護者宇宙，不交換角色設定。",
@@ -196,6 +206,11 @@ def validate_packet(packet: dict) -> list[str]:
             issues.append(f"{label}: missing post-publish checks")
         if "--proof-note" not in row.get("writebackCommand", ""):
             issues.append(f"{label}: writeback command must require proof note")
+        placeholder = row.get("postUrlPlaceholder", "")
+        if row.get("platform") in POST_URL_PLACEHOLDERS and placeholder != POST_URL_PLACEHOLDERS[row.get("platform", "")]:
+            issues.append(f"{label}: post URL placeholder should be platform-specific")
+        if "replace-with-real" in row.get("writebackCommand", "") or "example.com" in row.get("writebackCommand", ""):
+            issues.append(f"{label}: writeback command should not contain URL-like placeholders")
         if row.get("published"):
             if not row.get("publishedDate"):
                 issues.append(f"{label}: published row missing publishedDate")
@@ -247,6 +262,7 @@ def render_markdown(packet: dict, issues: list[str]) -> str:
             f"- schedule：{row['scheduledDate']} {row['scheduledTime']} Asia/Taipei",
             f"- tracked URL：{row['trackedUrl']}",
             f"- post URL：{row['postUrl'] or '(pending)'}",
+            f"- post URL placeholder：`{row['postUrlPlaceholder']}`",
             "",
             "### Caption",
             "",

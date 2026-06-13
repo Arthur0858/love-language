@@ -19,7 +19,13 @@ PLACEHOLDER_URLS = (
     "https://www.youtube.com/shorts/placeholder",
 )
 SAFE_SAMPLE_URL = "https://www.youtube.com/shorts/lovetypes-proof-url-123"
-FORBIDDEN_DOC_SNIPPETS = ("https://example.com/post",)
+FORBIDDEN_DOC_SNIPPETS = (
+    "https://example.com/post",
+    "https://example.com/replace-with-real-post-url",
+    "https://www.youtube.com/shorts/replace-with-real-post-url",
+    "https://www.youtube.com/shorts/replace-with-real-post-id",
+    "https://www.youtube.com/shorts/lovetypes-proof-url-123",
+)
 DOC_SUFFIXES = (".md", ".json", ".csv")
 
 

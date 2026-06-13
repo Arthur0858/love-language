@@ -107,7 +107,7 @@ platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-14
-post_url: https://example.com/replace-with-real-post-url
+post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0
 quiz_starts: 0
@@ -137,7 +137,7 @@ platform: tiktok
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-14
-post_url: https://example.com/replace-with-real-post-url
+post_url: <REAL_TIKTOK_VIDEO_URL>
 views: 0
 site_clicks: 0
 quiz_starts: 0
@@ -167,7 +167,7 @@ platform: instagram_reels
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-14
-post_url: https://example.com/replace-with-real-post-url
+post_url: <REAL_INSTAGRAM_REEL_URL>
 views: 0
 site_clicks: 0
 quiz_starts: 0

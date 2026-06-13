@@ -44,7 +44,7 @@ platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
 published_date: 2026-06-14
-post_url: https://www.youtube.com/shorts/lovetypes-proof-url-123
+post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0
 quiz_starts: 0
@@ -131,7 +131,7 @@ Evidence:
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 
@@ -155,7 +155,7 @@ Caption:
 - scheduled：2026-06-15 21:00 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 
@@ -179,7 +179,7 @@ Caption:
 - scheduled：2026-06-15 21:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - blocked by：profile links are not all set/live
-- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url https://www.youtube.com/shorts/replace-with-real-post-url --proof-note "public URL post checked 2026-06-14"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "public URL post checked 2026-06-14"`
 
 Caption:
 

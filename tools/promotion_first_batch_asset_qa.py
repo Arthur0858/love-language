@@ -25,7 +25,11 @@ REQUIRED_QA_ITEMS = (
     "writeback_ready",
 )
 FORBIDDEN_FIRST_CTA = ("Luna", "Gumroad", "Amazon", "博客來", "購買", "buy")
-POST_URL_PLACEHOLDER = "https://www.youtube.com/shorts/replace-with-real-post-url"
+POST_URL_PLACEHOLDERS = {
+    "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
+    "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
+    "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -44,6 +48,10 @@ def valid_start_url(value: str, utm_content: str) -> bool:
         and query.get("utm_campaign") == ["first_round_quiz_completion"]
         and query.get("utm_content") == [utm_content]
     )
+
+
+def post_url_placeholder(platform: str) -> str:
+    return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
 
 
 def qa_items(row: dict) -> list[dict[str, str]]:
@@ -130,7 +138,7 @@ def build_packet() -> dict:
                 f"task_id: {task_id}",
                 "status: published",
                 f"published_date: {date.today().isoformat()}",
-                f"post_url: {POST_URL_PLACEHOLDER}",
+                f"post_url: {post_url_placeholder(row.get('platform', ''))}",
                 "views: 0",
                 "site_clicks: 0",
                 "quiz_starts: 0",
@@ -173,6 +181,11 @@ def validate_packet(packet: dict) -> list[str]:
             issues.append(f"{label}: QA items should cover every required item")
         if "promotion_post_text_import.py" not in row.get("postImportTemplate", "") and "LoveTypes platform post writeback" not in row.get("postImportTemplate", ""):
             issues.append(f"{label}: missing post import template")
+        if "replace-with-real" in row.get("postImportTemplate", "") or "example.com" in row.get("postImportTemplate", ""):
+            issues.append(f"{label}: post import template should not contain URL-like placeholders")
+        expected_placeholder = post_url_placeholder(row.get("platform", ""))
+        if f"post_url: {expected_placeholder}" not in row.get("postImportTemplate", ""):
+            issues.append(f"{label}: post import template should use platform-specific placeholder")
     return issues
 
 

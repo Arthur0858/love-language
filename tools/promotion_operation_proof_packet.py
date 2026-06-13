@@ -38,6 +38,11 @@ KPI_REQUIRED_EVIDENCE = (
     "zero_values_are_verified_zero",
     "quiz_start_and_completion_fields_present",
 )
+POST_URL_PLACEHOLDERS = {
+    "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
+    "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
+    "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
+}
 
 
 def load_json(path: Path) -> dict:
@@ -55,6 +60,10 @@ def profile_template(item: dict) -> str:
     ])
 
 
+def post_url_placeholder(platform: str) -> str:
+    return POST_URL_PLACEHOLDERS.get(platform, "<REAL_POST_URL>")
+
+
 def post_template(row: dict) -> str:
     return "\n".join([
         "LoveTypes platform post writeback",
@@ -62,7 +71,7 @@ def post_template(row: dict) -> str:
         f"task_id: {row.get('taskId', '')}",
         "status: published",
         f"published_date: {date.today().isoformat()}",
-        "post_url: https://example.com/replace-with-real-post-url",
+        f"post_url: {post_url_placeholder(row.get('platform', ''))}",
         "views: 0",
         "site_clicks: 0",
         "quiz_starts: 0",
@@ -197,8 +206,11 @@ def validate_packet(packet: dict[str, object]) -> list[str]:
                 issues.append(f"{label}: post evidence checklist is incomplete")
             if set(KPI_REQUIRED_EVIDENCE) != set(item.get("minimumKpiEvidence", [])):
                 issues.append(f"{label}: minimum KPI evidence checklist is incomplete")
-            if "https://example.com/replace-with-real-post-url" not in template:
-                issues.append(f"{label}: template should make placeholder replacement explicit")
+            expected_placeholder = post_url_placeholder(str(item.get("platform", "")))
+            if f"post_url: {expected_placeholder}" not in template:
+                issues.append(f"{label}: template should use platform-specific post URL placeholder")
+            if "replace-with-real" in template or "example.com" in template:
+                issues.append(f"{label}: template should not contain URL-like placeholders")
             if not state.get("readyToPublish") and item.get("status") != "blocked_until_profile_gate":
                 issues.append(f"{label}: pending post should stay blocked while profile gate is false")
     return issues

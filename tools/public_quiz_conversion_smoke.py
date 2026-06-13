@@ -14,6 +14,7 @@ from urllib.request import Request, urlopen
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 LANG_PATHS = {"zh": "/", "en": "/en/", "ja": "/ja/", "ko": "/ko/", "es": "/es/"}
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 LOCALE_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 RESUME_TEMPLATE_CASES = (
     (
@@ -325,14 +326,23 @@ def check_image_url(base_url: str, source: str, field: str, value: str, image_ca
     return issues
 
 
-def check_affiliate_url(source: str, value: str, affiliate_cache: dict[str, Response]) -> list[str]:
+def check_affiliate_url(source: str, lang: str, value: str, affiliate_cache: dict[str, Response]) -> list[str]:
     parsed = urlparse(value)
     issues: list[str] = []
-    if parsed.scheme != "https" or parsed.netloc != "www.books.com.tw":
-        issues.append(f"{source}: supplyBookUrl should use https://www.books.com.tw, got {value!r}")
-    for token in ("arthur0858", "utm_campaign=ap-202604"):
-        if token not in value:
-            issues.append(f"{source}: supplyBookUrl missing {token}")
+    if lang == "zh":
+        if parsed.scheme != "https" or parsed.netloc != "www.books.com.tw":
+            issues.append(f"{source}: supplyBookUrl should use https://www.books.com.tw, got {value!r}")
+        for token in ("arthur0858", "utm_campaign=ap-202604"):
+            if token not in value:
+                issues.append(f"{source}: supplyBookUrl missing {token}")
+    else:
+        if (
+            parsed.scheme != "https"
+            or parsed.netloc != "www.amazon.com"
+            or not parsed.path.startswith("/dp/")
+            or parse_qs(parsed.query).get("tag", [""])[0] != AMAZON_ASSOCIATE_TAG
+        ):
+            issues.append(f"{source}: supplyBookUrl should use Amazon tag={AMAZON_ASSOCIATE_TAG}, got {value!r}")
     if value not in affiliate_cache:
         try:
             affiliate_cache[value] = request_url(value, method="HEAD", attempts=2)
@@ -531,7 +541,7 @@ def main() -> int:
                 result_images_checked += 1
                 issues.extend(check_image_url(base_url, source, field, result.get(field, ""), image_cache))
             result_affiliate_links_checked += 1
-            issues.extend(check_affiliate_url(source, result.get("supplyBookUrl", ""), affiliate_cache))
+            issues.extend(check_affiliate_url(source, lang, result.get("supplyBookUrl", ""), affiliate_cache))
             pack = result.get("supplyProductPack")
             if not isinstance(pack, dict):
                 issues.append(f"{source}: missing supplyProductPack")

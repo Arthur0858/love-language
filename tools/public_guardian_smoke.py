@@ -6,7 +6,7 @@ import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -21,6 +21,8 @@ TYPE_GUIDE_ROUTES = {
     "dora": "guides/physical-touch-consent-safety",
 }
 BOOKS_HOST = "www.books.com.tw"
+AMAZON_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
 
 
@@ -122,8 +124,16 @@ def find_by_class(root: Element, class_name: str) -> Element | None:
     return next((element for element in walk(root) if has_class(element, class_name)), None)
 
 
-def is_affiliate_url(value: str) -> bool:
-    return value.startswith(f"https://{BOOKS_HOST}/") and all(token in value for token in AFFILIATE_TOKENS)
+def is_affiliate_url(value: str, lang: str = "zh") -> bool:
+    parsed = urlparse(value)
+    if lang == "zh":
+        return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == AMAZON_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
 
 
 def hrefs_under(element: Element) -> list[str]:
@@ -370,7 +380,7 @@ def validate_guardian_page(base_url: str, lang: str, slug: str) -> tuple[list[st
             stats["supply_links"] += 1
         else:
             issues.append(f"{path}: supply panel missing supply link")
-        affiliate_links = [href for href in hrefs if is_affiliate_url(href)]
+        affiliate_links = [href for href in hrefs if is_affiliate_url(href, lang)]
         if len(affiliate_links) != 1:
             issues.append(f"{path}: supply panel should include one tracked affiliate book link, got {len(affiliate_links)}")
         else:

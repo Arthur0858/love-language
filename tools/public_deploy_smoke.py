@@ -15,7 +15,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -26,7 +26,9 @@ LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 AFFILIATE_DISCLOSURE_SNIPPET = "本頁部分連結為聯盟行銷連結"
-AFFILIATE_LINK_HOST = "www.books.com.tw"
+BOOKS_AFFILIATE_HOST = "www.books.com.tw"
+AMAZON_AFFILIATE_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 PUBLIC_PATHS = [
     "/",
     "/start/",
@@ -272,7 +274,7 @@ SUPPORT_FILES = {
         "Production: https://lovetypes.tw/",
         "Generator: tools/generate_multilingual_site.py",
         "Hosting: Cloudflare Pages",
-        "Resources may contain affiliate links",
+        "Resources may contain localized affiliate links",
         "Luna packs use Gumroad purchase links",
         "not therapy, medical, legal, or diagnostic advice",
     ],
@@ -681,6 +683,33 @@ def is_resources_path(path: str) -> bool:
     return bool(re.fullmatch(r"/(?:(?:en|ja|ko|es)/)?resources/", path))
 
 
+def lang_for_path(path: str) -> str:
+    match = re.match(r"^/(en|ja|ko|es)(?:/|$)", path)
+    return match.group(1) if match else "zh"
+
+
+def is_expected_affiliate_link(path: str, href: str) -> bool:
+    parsed = urlparse(href)
+    lang = lang_for_path(path)
+    if lang == "zh":
+        return (
+            parsed.scheme == "https"
+            and parsed.hostname == BOOKS_AFFILIATE_HOST
+            and "/exep/assp.php/arthur0858/" in parsed.path
+            and "utm_campaign=ap-202604" in parsed.query
+        )
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == AMAZON_AFFILIATE_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
+
+
+def is_affiliate_host(hostname: str | None) -> bool:
+    return hostname in {BOOKS_AFFILIATE_HOST, AMAZON_AFFILIATE_HOST}
+
+
 def check_external_links(path: str, assets: HeadAssetParser, html: str) -> tuple[list[str], int, int]:
     issues: list[str] = []
     external_links_checked = 0
@@ -695,14 +724,13 @@ def check_external_links(path: str, assets: HeadAssetParser, html: str) -> tuple
         rel_tokens = set(anchor.get("rel", "").split())
         if anchor.get("target") == "_blank" and not {"noopener", "noreferrer"}.issubset(rel_tokens):
             issues.append(f"{path}: external _blank link missing noopener/noreferrer: {href}")
-        if parsed.hostname == AFFILIATE_LINK_HOST:
+        if is_affiliate_host(parsed.hostname):
             affiliate_links_checked += 1
             if "sponsored" not in rel_tokens:
                 issues.append(f"{path}: affiliate link missing sponsored rel: {href}")
-            if "/exep/assp.php/arthur0858/" not in parsed.path:
-                issues.append(f"{path}: affiliate link should use arthur0858 tracking path: {href}")
-            if "utm_campaign=ap-202604" not in parsed.query:
-                issues.append(f"{path}: affiliate link missing expected campaign tag: {href}")
+            if not is_expected_affiliate_link(path, href):
+                expected = "Books.com.tw tracking" if lang_for_path(path) == "zh" else f"Amazon tag={AMAZON_ASSOCIATE_TAG}"
+                issues.append(f"{path}: affiliate link should use {expected}: {href}")
     if affiliate_links_checked:
         if AFFILIATE_DISCLOSURE_SNIPPET not in html and 'class="affiliate-disclosure"' not in html:
             issues.append(f"{path}: missing affiliate disclosure")

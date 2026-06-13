@@ -152,7 +152,7 @@ def audit_guardian(config, lang: str, result_key: str, meta: dict, issues: list[
         require_text(route.get(field_name), f"{label} supply route {field_name}", issues)
 
     book = route.get("book", {})
-    book_url = book.get("url", "")
+    book_url = config.affiliate_book_url(book, lang)
     checks += 1
     if not isinstance(book_url, str) or not book_url.startswith("https://"):
         issues.append(f"{label} affiliate book url should be https: {book_url!r}")

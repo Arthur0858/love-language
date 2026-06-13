@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 ACCEPTED_STATUSES = set(range(200, 400)) | {403, 405, 429}
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
+AFFILIATE_HOSTS = {"www.books.com.tw", "www.amazon.com"}
 
 
 @dataclass(frozen=True)
@@ -132,7 +133,7 @@ def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalL
                 stats.blank_target_rel_checked += 1
             else:
                 issues.append(f"{path}: external new-tab link should include noopener noreferrer: {href}")
-            if parsed.hostname == "www.books.com.tw":
+            if parsed.hostname in AFFILIATE_HOSTS:
                 if "sponsored" not in rel:
                     issues.append(f"{path}: affiliate link should include sponsored rel: {href}")
                 else:
@@ -159,7 +160,7 @@ def main() -> int:
     for link in links:
         host = urlparse(link.url).hostname or ""
         hosts.add(host)
-        if host == "www.books.com.tw":
+        if host in AFFILIATE_HOSTS:
             affiliate_links_checked += 1
         try:
             status, final_url = resilient_status(link.url)

@@ -82,7 +82,7 @@ REQUIRED_HUMANS_SNIPPETS = (
     "Production: https://lovetypes.tw/",
     "Generator: tools/generate_multilingual_site.py",
     "Hosting: Cloudflare Pages",
-    "Resources may contain affiliate links",
+    "Resources may contain localized affiliate links",
     "Luna packs use Gumroad purchase links",
     "not therapy, medical, legal, or diagnostic advice",
 )

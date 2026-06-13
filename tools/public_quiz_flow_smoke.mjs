@@ -63,6 +63,24 @@ function makeUrl(path) {
   return new URL(path, BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`).toString();
 }
 
+function langForPath(path) {
+  const match = path.match(/^\/(en|ja|ko|es)(?:\/|$)/);
+  return match ? match[1] : 'zh';
+}
+
+function isExpectedAffiliateHref(path, href) {
+  let url;
+  try {
+    url = new URL(href);
+  } catch {
+    return false;
+  }
+  if (langForPath(path) === 'zh') {
+    return url.hostname === 'www.books.com.tw' && href.includes('arthur0858') && href.includes('utm_campaign=ap-202604');
+  }
+  return url.hostname === 'www.amazon.com' && url.pathname.startsWith('/dp/') && url.searchParams.get('tag') === 'parenttechche-20';
+}
+
 function hasBlockingConsoleMessage(message) {
   return message.type() === 'error';
 }
@@ -153,7 +171,7 @@ async function runCase(browser, item) {
   if (!lunaHref.includes('/luna-yoga-music/#luna-')) issues.push(`missing Luna CTA: ${lunaHref}`);
   if (!guideHref.includes('/guides/') || !guideHref.includes('#guide-')) issues.push(`missing guide CTA: ${guideHref}`);
   if (!keepsakeHref.includes('/keepsakes/#keepsake-')) issues.push(`missing keepsake CTA: ${keepsakeHref}`);
-  if (!bookHref.startsWith('https://www.books.com.tw/') || !bookHref.includes('arthur0858')) issues.push(`missing tracked affiliate book CTA: ${bookHref}`);
+  if (!isExpectedAffiliateHref(item.path, bookHref)) issues.push(`missing expected localized affiliate book CTA: ${bookHref}`);
   if (!bookRel.includes('sponsored')) issues.push(`affiliate book CTA missing sponsored rel: ${bookRel}`);
   if (!disclosureVisible) issues.push('affiliate disclosure is not visible in result');
   if (!supplyPassVisible) issues.push('guardian supply pass is not visible in result');

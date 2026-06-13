@@ -6,7 +6,7 @@ import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -20,6 +20,8 @@ LANG_PATHS = {
 }
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 BOOKS_HOST = "www.books.com.tw"
+AMAZON_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
 
 
@@ -122,9 +124,16 @@ def localized_path(lang: str, route: str = "") -> str:
     return f"{prefix}/{route}/" if prefix else f"/{route}/"
 
 
-def is_affiliate_url(value: str) -> bool:
+def is_affiliate_url(value: str, lang: str = "zh") -> bool:
     parsed = urlparse(value)
-    return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    if lang == "zh":
+        return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == AMAZON_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
 
 
 def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[str, int]]:
@@ -308,7 +317,7 @@ def validate_page(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
             stats["guardian_luna_links"] += 1
         else:
             issues.append(f"{path}: {slug} repair card missing Luna link")
-        affiliates = [link for link in descendants(card, "a") if is_affiliate_url(link.attrs.get("href", ""))]
+        affiliates = [link for link in descendants(card, "a") if is_affiliate_url(link.attrs.get("href", ""), lang)]
         if len(affiliates) != 1:
             issues.append(f"{path}: {slug} repair card should include one tracked affiliate book link, got {len(affiliates)}")
         else:

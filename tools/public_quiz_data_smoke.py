@@ -8,7 +8,7 @@ import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
+from urllib.parse import parse_qs, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
@@ -39,6 +39,7 @@ TYPE_GUIDE_ROUTES = {
 STORY_IMAGE_DIMENSIONS = (1080, 1920)
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 
 
 @dataclass(frozen=True)
@@ -194,11 +195,21 @@ def validate_result(path: str, lang: str, result_type: str, result: object) -> l
     if not isinstance(result.get("tips"), list) or len(result.get("tips", [])) < 2:
         issues.append(f"{path}: {result_type} should include at least two tips")
     supply_book_url = result.get("supplyBookUrl", "")
-    if not supply_book_url.startswith("https://www.books.com.tw/"):
-        issues.append(f"{path}: {result_type} supplyBookUrl should point to books.com.tw")
-    for token in ("arthur0858", "utm_campaign=ap-202604"):
-        if token not in supply_book_url:
-            issues.append(f"{path}: {result_type} supplyBookUrl missing {token}")
+    parsed_book_url = urlparse(supply_book_url)
+    if lang == "zh":
+        if parsed_book_url.scheme != "https" or parsed_book_url.hostname != "www.books.com.tw":
+            issues.append(f"{path}: {result_type} supplyBookUrl should point to Books.com.tw")
+        for token in ("arthur0858", "utm_campaign=ap-202604"):
+            if token not in supply_book_url:
+                issues.append(f"{path}: {result_type} supplyBookUrl missing {token}")
+    else:
+        if (
+            parsed_book_url.scheme != "https"
+            or parsed_book_url.hostname != "www.amazon.com"
+            or not parsed_book_url.path.startswith("/dp/")
+            or parse_qs(parsed_book_url.query).get("tag", [""])[0] != AMAZON_ASSOCIATE_TAG
+        ):
+            issues.append(f"{path}: {result_type} supplyBookUrl should point to Amazon tag={AMAZON_ASSOCIATE_TAG}")
     for image_key in ("image", "resultImage", "storyImage"):
         image = result.get(image_key, "")
         if not isinstance(image, str) or not image.startswith("/assets/lovetypes/"):

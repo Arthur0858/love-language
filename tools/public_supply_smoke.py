@@ -32,6 +32,8 @@ TYPE_GUIDE_ROUTES = {
     "dora": "guides/physical-touch-consent-safety",
 }
 BOOKS_HOST = "www.books.com.tw"
+AMAZON_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
 
 
@@ -148,9 +150,16 @@ def localized_path(lang: str, route: str = "") -> str:
     return f"{prefix}/{route}/" if prefix else f"/{route}/"
 
 
-def is_affiliate_url(value: str) -> bool:
+def is_affiliate_url(value: str, lang: str = "zh") -> bool:
     parsed = urlparse(value)
-    return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    if lang == "zh":
+        return parsed.scheme == "https" and parsed.hostname == BOOKS_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == AMAZON_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
 
 
 def mailto_query(value: str) -> dict[str, list[str]]:
@@ -386,9 +395,10 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
                 issues.append(f"{path}: {slug} product stack should include one request mailto or protected email link")
             else:
                 stats["route_product_links"] += 1
-        affiliate_links = [link for link in links if is_affiliate_url(link.attrs.get("href", ""))]
+        affiliate_links = [link for link in links if is_affiliate_url(link.attrs.get("href", ""), lang)]
         if len(affiliate_links) != 1:
-            issues.append(f"{path}: {slug} route should include one tracked books.com.tw link, got {len(affiliate_links)}")
+            expected = "tracked Books.com.tw" if lang == "zh" else f"Amazon tag={AMAZON_ASSOCIATE_TAG}"
+            issues.append(f"{path}: {slug} route should include one {expected} link, got {len(affiliate_links)}")
         else:
             stats["affiliate_links"] += 1
             rel_tokens = set(affiliate_links[0].attrs.get("rel", "").split())
@@ -410,8 +420,9 @@ def validate_page(base_url: str, lang: str, path: str, expected_formats: list[st
         route_tags = [link for link in links if has_class(link, "affiliate-route-tag")]
         if len(book_links) != 1:
             issues.append(f"{path}: affiliate book card should include one book CTA")
-        elif not is_affiliate_url(book_links[0].attrs.get("href", "")):
-            issues.append(f"{path}: affiliate book CTA should use tracked books.com.tw URL")
+        elif not is_affiliate_url(book_links[0].attrs.get("href", ""), lang):
+            expected = "tracked Books.com.tw URL" if lang == "zh" else f"Amazon URL with tag={AMAZON_ASSOCIATE_TAG}"
+            issues.append(f"{path}: affiliate book CTA should use {expected}")
         else:
             stats["affiliate_book_cards"] += 1
         if not route_tags:

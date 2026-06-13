@@ -10,7 +10,7 @@ Languages: zh-TW, en, ja, ko, es
 Canonical: https://lovetypes.tw/
 Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
-Commercial: Resources may contain affiliate links; Luna packs use Gumroad purchase links.
+Commercial: Resources may contain localized affiliate links; Traditional Chinese pages use Books.com.tw, other language pages use Amazon Associates tag parenttechche-20. Luna packs use Gumroad purchase links.
 Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
 
 /* HIGH-VALUE ROUTES */

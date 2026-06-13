@@ -34,6 +34,8 @@ REQUIRED_RESULT_TEXT = (
     "collectorTitle",
 )
 AFFILIATE_HOST = "www.books.com.tw"
+AMAZON_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 AFFILIATE_TOKENS = ("arthur0858", "utm_campaign=ap-202604")
 GUMROAD_HOST = "lunayogamusic.gumroad.com"
 EXPECTED_LUNA_PRODUCTS = {
@@ -137,9 +139,16 @@ def is_internal_url(value: str) -> bool:
     return not parsed.scheme and value.startswith("/")
 
 
-def is_affiliate_url(value: str) -> bool:
+def is_affiliate_url(value: str, lang: str = "zh") -> bool:
     parsed = urlparse(value)
-    return parsed.scheme == "https" and parsed.hostname == AFFILIATE_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    if lang == "zh":
+        return parsed.scheme == "https" and parsed.hostname == AFFILIATE_HOST and all(token in value for token in AFFILIATE_TOKENS)
+    return (
+        parsed.scheme == "https"
+        and parsed.hostname == AMAZON_HOST
+        and parsed.path.startswith("/dp/")
+        and parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+    )
 
 
 def is_supply_request(value: str) -> bool:
@@ -228,8 +237,9 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
         stats["internal_targets"] += 1
         issues.extend(validate_target(base_url, f"{source}:{key}", value, cache))
     book_url = result.get("supplyBookUrl", "")
-    if not isinstance(book_url, str) or not is_affiliate_url(book_url):
-        issues.append(f"{source}: supplyBookUrl should be a tracked books.com.tw affiliate URL")
+    if not isinstance(book_url, str) or not is_affiliate_url(book_url, lang):
+        expected = "tracked Books.com.tw affiliate URL" if lang == "zh" else f"Amazon affiliate URL with tag={AMAZON_ASSOCIATE_TAG}"
+        issues.append(f"{source}: supplyBookUrl should be a {expected}")
     else:
         stats["affiliate_links"] += 1
     starter = result.get("starterKit")

@@ -19,11 +19,12 @@ CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-06-13"
 ASSET_VERSION = "20260613-funnel-kpi-map"
+QUIZ_DATA_VERSION = "20260613-localized-affiliate"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{ASSET_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
-QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{ASSET_VERSION}.js" for lang in QUIZ_DATA_LANGS}
+QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
@@ -454,49 +455,63 @@ AFFILIATE_COPY = {
         "fit": "適合",
         "limit": "使用提醒",
         "routes": "對應守護者路線",
-        "fallback": "外部書店偶爾會阻擋自動檢查或跨區連線；如果按鈕打不開，請用書名與作者到博客來或你常用的書店搜尋。",
+        "fallback": "博客來偶爾會阻擋自動檢查或跨區連線；如果按鈕打不開，請用書名與作者到博客來或你常用的書店搜尋。",
     },
     "en": {
         "eyebrow": "BOOK RELICS",
         "title": "Reading for the guardian journey",
         "intro": "If a guardian page helped you feel seen, these books can help turn that insight into everyday language and repair.",
-        "button": "Open bookstore",
+        "button": "Open Amazon",
         "fit": "Best for",
         "limit": "Use with",
         "routes": "Guardian routes",
-        "fallback": "External bookstores may block automated checks or some regions. If the button does not open, search the title and author in your preferred bookstore.",
+        "fallback": "Amazon or external bookstores may block automated checks or some regions. If the button does not open, search the title and author in your preferred bookstore.",
     },
     "ja": {
         "eyebrow": "BOOK RELICS",
         "title": "守護者の旅を深める本",
         "intro": "守護者ページで理解された感覚があったなら、これらの本はその理解を日常の言葉と修復へつなげます。",
-        "button": "書店を見る",
+        "button": "Amazon を開く",
         "fit": "向いている人",
         "limit": "使い方",
         "routes": "対応する守護者ルート",
-        "fallback": "外部書店は自動チェックや一部地域からの接続を止める場合があります。開けない時は、書名と著者名で普段使う書店を検索してください。",
+        "fallback": "Amazon や外部書店は自動チェックや一部地域からの接続を止める場合があります。開けない時は、書名と著者名で普段使う書店を検索してください。",
     },
     "ko": {
         "eyebrow": "BOOK RELICS",
         "title": "수호자 여정을 이어 가는 책",
         "intro": "수호자 페이지에서 이해받는 느낌이 있었다면, 이 책들은 그 이해를 일상의 말과 회복으로 옮기는 데 도움을 줍니다.",
-        "button": "서점 열기",
+        "button": "Amazon 열기",
         "fit": "추천 대상",
         "limit": "사용 팁",
         "routes": "연결 수호자 루트",
-        "fallback": "외부 서점은 자동 검사나 일부 지역 접속을 막을 수 있습니다. 버튼이 열리지 않으면 제목과 저자를 사용해 자주 쓰는 서점에서 검색하세요.",
+        "fallback": "Amazon 또는 외부 서점은 자동 검사나 일부 지역 접속을 막을 수 있습니다. 버튼이 열리지 않으면 제목과 저자를 사용해 자주 쓰는 서점에서 검색하세요.",
     },
     "es": {
         "eyebrow": "BOOK RELICS",
         "title": "Libros para continuar el viaje de las guardianas",
         "intro": "Si una página de guardiana te hizo sentir vista, estos libros ayudan a llevar esa comprensión a palabras y reparación cotidiana.",
-        "button": "Abrir librería",
+        "button": "Abrir Amazon",
         "fit": "Ideal para",
         "limit": "Úsalo con",
         "routes": "Rutas de guardianas",
-        "fallback": "Las librerías externas pueden bloquear revisiones automáticas o algunas regiones. Si el botón no abre, busca el título y el autor en tu librería habitual.",
+        "fallback": "Amazon o las librerías externas pueden bloquear revisiones automáticas o algunas regiones. Si el botón no abre, busca el título y el autor en tu librería habitual.",
     },
 }
+
+
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
+
+
+def amazon_affiliate_url(asin: str) -> str:
+    return f"https://www.amazon.com/dp/{asin}?tag={AMAZON_ASSOCIATE_TAG}"
+
+
+def affiliate_book_url(book: dict, lang: str) -> str:
+    urls = book.get("urls", {})
+    if isinstance(urls, dict):
+        return urls.get(lang) or urls.get("default") or book.get("url", "")
+    return book.get("url", "")
 
 
 AFFILIATE_BOOKS = [
@@ -526,7 +541,12 @@ AFFILIATE_BOOKS = [
             "ko": "예시를 자신의 문화, 말투, 관계 상황에 맞게 번역하세요.",
             "es": "Traduce los ejemplos a tu cultura, tono y situación relacional.",
         },
+        "asin": "080241270X",
         "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "urls": {
+            "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010842854?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+            "default": amazon_affiliate_url("080241270X"),
+        },
     },
     {
         "emoji": "💬",
@@ -554,7 +574,12 @@ AFFILIATE_BOOKS = [
             "ko": "한 문장부터 연습하고 관계 전체를 한 번에 고치려 하지 마세요.",
             "es": "Practica una frase primero; no intentes reescribir toda la relación de una vez.",
         },
+        "asin": "189200528X",
         "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "urls": {
+            "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010882950?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+            "default": amazon_affiliate_url("189200528X"),
+        },
     },
     {
         "emoji": "🧠",
@@ -582,7 +607,12 @@ AFFILIATE_BOOKS = [
             "ko": "애착은 정체성 라벨이 아니라 불안할 때의 보호 전략을 보는 도구입니다.",
             "es": "El apego no es una etiqueta fija; sirve para observar estrategias de protección.",
         },
+        "asin": "1585429139",
         "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "urls": {
+            "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010836544?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+            "default": amazon_affiliate_url("1585429139"),
+        },
     },
     {
         "emoji": "💑",
@@ -610,7 +640,12 @@ AFFILIATE_BOOKS = [
             "ko": "하나의 습관부터 시작하고 모든 문제를 한 번에 고치려 하지 마세요.",
             "es": "Empieza con un hábito; no intentes reparar todo de una vez.",
         },
+        "asin": "0553447718",
         "url": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+        "urls": {
+            "zh": "https://www.books.com.tw/exep/assp.php/arthur0858/products/0010826394?utm_source=arthur0858&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-202604",
+            "default": amazon_affiliate_url("0553447718"),
+        },
     },
 ]
 
@@ -5114,6 +5149,7 @@ def supply_route_card(lang: str, slug: str) -> str:
     route = supply_route(lang, slug)
     guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
     book = route["book"]
+    book_url = affiliate_book_url(book, lang)
     guide = route["guide"]
     summary = {
         "title": route["title"],
@@ -5159,7 +5195,7 @@ def supply_route_card(lang: str, slug: str) -> str:
     <a class="secondary-btn" href="{lang_url(lang, "keepsakes")}#keepsake-card-{slug}" data-funnel-event="supply_route_free_keepsake">{escape(labels["free_keepsake"])}</a>
     <a class="secondary-btn" href="{request_href}" data-funnel-event="supply_route_mailto">{escape(labels["request_supply"])}</a>
     <button class="secondary-btn" type="button" data-copy-supply-route data-funnel-event="supply_route_copy" data-route-summary="{summary_json}">{escape(labels["copy_route"])}</button>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="supply_route_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="secondary-btn" href="{book_url}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="supply_route_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
 </article>
 """
@@ -6680,6 +6716,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
     route = supply_route(lang, slug)
     guide = route["guide"]
     book = route["book"]
+    book_url = affiliate_book_url(book, lang)
     return f"""
 <section class="section supply-panel-section">
   <div class="section-head">
@@ -6696,7 +6733,7 @@ def character_supply_panel(lang: str, slug: str) -> str:
     <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guardian_supply_panel_route">{escape(labels["route"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guardian_supply_panel_guide">{escape(labels["read_guide"])}</a>
     <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}" data-funnel-event="guardian_supply_panel_luna">{escape(labels["open_luna"])}</a>
-    <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="guardian_supply_panel_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+    <a class="secondary-btn" href="{book_url}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="guardian_supply_panel_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
   </div>
   <p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p>
 </section>
@@ -7222,7 +7259,7 @@ def quiz_payload(lang: str) -> str:
             "supplyMission": route["mission"],
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
-            "supplyBookUrl": route["book"]["url"],
+            "supplyBookUrl": affiliate_book_url(route["book"], lang),
             "lunaUrl": lang_url(lang, "luna-yoga-music") + f"#luna-{meta['slug']}",
             "storyImage": story_image,
             "storyImageWidth": story_width,
@@ -8563,6 +8600,7 @@ def resources_page(lang: str) -> None:
 """)
     book_cards = []
     for book_index, book in enumerate(AFFILIATE_BOOKS):
+        book_url = affiliate_book_url(book, lang)
         matching_routes = []
         for slug in GUARDIANS:
             if SUPPLY_ROUTES[slug]["book"] != book_index:
@@ -8581,7 +8619,7 @@ def resources_page(lang: str) -> None:
   <p><strong>{escape(affiliate_labels["fit"])}:</strong> {escape(book["fit"][lang])}</p>
   <p><strong>{escape(affiliate_labels["limit"])}:</strong> {escape(book["limit"][lang])}</p>
   <div class="affiliate-route-match"><span>{escape(affiliate_labels["routes"])}</span><div>{route_tags}</div></div>
-  <a class="primary-btn affiliate-book-link" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored">{escape(affiliate_labels["button"])}</a>
+  <a class="primary-btn affiliate-book-link" href="{book_url}" target="_blank" rel="noopener noreferrer sponsored">{escape(affiliate_labels["button"])}</a>
 </article>
 """)
     body = f"""
@@ -8872,6 +8910,7 @@ def repair_plan_page(lang: str) -> None:
         route = supply_route(lang, slug)
         name, typ, _guardian_desc = route["guardian"][lang]
         book = route["book"]
+        book_url = affiliate_book_url(book, lang)
         guardian_rows.append(f"""
 <article class="repair-guardian-card" id="plan-{slug}">
   {img_tag(route["guardian"]["prop"], route["title"])}
@@ -8884,7 +8923,7 @@ def repair_plan_page(lang: str) -> None:
       <a class="primary-btn" href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="repair_guardian_supply_route">{escape(REPAIR_PLAN[lang]["resources"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="repair_guardian_profile">{escape(t["guardians"])}</a>
       <a class="secondary-btn" href="{lang_url(lang, "luna-yoga-music")}#luna-{slug}" data-funnel-event="repair_guardian_luna">{escape(SUPPLY_LABELS[lang]["open_luna"])}</a>
-      <a class="secondary-btn" href="{book["url"]}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
+      <a class="secondary-btn" href="{book_url}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_guardian_affiliate_book">{escape(AFFILIATE_COPY[lang]["button"])}</a>
     </div>
   </div>
 </article>
@@ -9687,7 +9726,7 @@ Languages: zh-TW, en, ja, ko, es
 Canonical: {DOMAIN}/
 Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
-Commercial: Resources may contain affiliate links; Luna packs use Gumroad purchase links.
+Commercial: Resources may contain localized affiliate links; Traditional Chinese pages use Books.com.tw, other language pages use Amazon Associates tag parenttechche-20. Luna packs use Gumroad purchase links.
 Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
 
 /* HIGH-VALUE ROUTES */
@@ -10003,6 +10042,7 @@ def collect_commerce_catalog() -> dict:
         })
 
     for index, book in enumerate(AFFILIATE_BOOKS, start=1):
+        localized_urls = {lang: affiliate_book_url(book, lang) for lang in LANGS}
         items.append({
             "id": f"affiliate-book-{index}",
             "type": "affiliate_book",
@@ -10010,10 +10050,14 @@ def collect_commerce_catalog() -> dict:
             "guardian": "all",
             "title": {"zh": book["title"]["zh"], "en": book["title"]["en"]},
             "author": book["author"],
-            "url": book["url"],
+            "url": affiliate_book_url(book, "en"),
+            "localizedUrls": localized_urls,
+            "asin": book["asin"],
+            "amazonAssociateTag": AMAZON_ASSOCIATE_TAG,
+            "taiwanAffiliateUrl": affiliate_book_url(book, "zh"),
             "price": "external retailer",
             "conversion": "supply_route_affiliate_book",
-            "disclosure": "Books.com.tw affiliate resource disclosed on the Resources page.",
+            "disclosure": "Localized affiliate resource disclosed on the Resources page: Traditional Chinese uses Books.com.tw; other language pages use Amazon Associates.",
             **commerce_play_fields("affiliate_book"),
         })
 
@@ -10410,7 +10454,7 @@ def collect_ai_discovery_index() -> dict:
             "citeCanonicalPages": True,
             "preferChineseNameWhenAnsweringZh": True,
             "doNotUseAsDiagnosis": True,
-            "commercialDisclosure": "Resources may include Books.com.tw affiliate links and Luna Gumroad links. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
+            "commercialDisclosure": "Resources may include localized affiliate links and Luna Gumroad links. Traditional Chinese pages use Books.com.tw; other language pages use Amazon Associates tag parenttechche-20. Commercial paths are disclosed and should be described as optional supports, not guaranteed outcomes.",
             "safetyBoundary": "LoveTypes is relationship reflection and communication support only. It is not therapy, medical care, legal advice, diagnosis, or emergency support.",
         },
         "canonicalEntities": {

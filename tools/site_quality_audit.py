@@ -115,14 +115,16 @@ POLICY_UPDATED_LABELS = {
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 MAX_H2_TEXT_LENGTH = 72
-AFFILIATE_HOST = "www.books.com.tw"
-AFFILIATE_PATH_PREFIX = "/exep/assp.php/arthur0858/products/"
-AFFILIATE_REQUIRED_QUERY = {
+BOOKS_AFFILIATE_HOST = "www.books.com.tw"
+BOOKS_AFFILIATE_PATH_PREFIX = "/exep/assp.php/arthur0858/products/"
+BOOKS_AFFILIATE_REQUIRED_QUERY = {
     "utm_source": "arthur0858",
     "utm_medium": "ap-books",
     "utm_content": "recommend",
     "utm_campaign": "ap-202604",
 }
+AMAZON_AFFILIATE_HOST = "www.amazon.com"
+AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 AFFILIATE_DISCLOSURE_SNIPPETS = {
     "聯盟行銷",
     "affiliate links",
@@ -363,6 +365,7 @@ class PageParser(HTMLParser):
         self.live_regions: list[dict[str, str]] = []
         self.dynamic_regions: list[dict[str, str]] = []
         self.progressbars: list[dict[str, str]] = []
+        self.funnel_actions: list[tuple[str, dict[str, str]]] = []
         self.ids: list[str] = []
         self.metas: list[dict[str, str]] = []
         self.tag_counts = Counter()
@@ -425,6 +428,8 @@ class PageParser(HTMLParser):
             self.links.append(data)
         if tag == "meta":
             self.metas.append(data)
+        if "data-funnel-event" in data:
+            self.funnel_actions.append((tag, data))
         for attr in ("href", "src", "poster"):
             if attr in data:
                 self.refs.append((tag, attr, data[attr]))
@@ -686,6 +691,38 @@ def lang_key_for_page(page: Path) -> str:
 
 def class_tokens(attrs: dict[str, str]) -> set[str]:
     return set(attrs.get("class", "").split())
+
+
+def is_books_affiliate(parsed) -> bool:
+    if parsed.scheme != "https" or parsed.hostname != BOOKS_AFFILIATE_HOST:
+        return False
+    if not parsed.path.startswith(BOOKS_AFFILIATE_PATH_PREFIX):
+        return False
+    query = parse_qs(parsed.query)
+    return all(query.get(key, [""])[0] == value for key, value in BOOKS_AFFILIATE_REQUIRED_QUERY.items())
+
+
+def is_amazon_affiliate(parsed) -> bool:
+    if parsed.scheme != "https" or parsed.hostname != AMAZON_AFFILIATE_HOST:
+        return False
+    if not parsed.path.startswith("/dp/"):
+        return False
+    return parse_qs(parsed.query).get("tag", [""])[0] == AMAZON_ASSOCIATE_TAG
+
+
+def is_affiliate_url_for_lang(value: str, lang: str) -> bool:
+    parsed = urlparse(value)
+    if lang == "zh":
+        return is_books_affiliate(parsed)
+    return is_amazon_affiliate(parsed)
+
+
+def affiliate_provider(parsed) -> str:
+    if parsed.hostname == BOOKS_AFFILIATE_HOST:
+        return "books"
+    if parsed.hostname == AMAZON_AFFILIATE_HOST:
+        return "amazon"
+    return ""
 
 
 def jsonld_type_set(item: dict) -> set[str]:
@@ -1294,7 +1331,7 @@ def parse_humans_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) ->
         "Languages: zh-TW, en, ja, ko, es": "language coverage",
         "Generator: tools/generate_multilingual_site.py": "source generator",
         "Hosting: Cloudflare Pages": "hosting platform",
-        "Resources may contain affiliate links": "affiliate disclosure",
+        "Resources may contain localized affiliate links": "affiliate disclosure",
         "Luna packs use Gumroad purchase links": "Luna product disclosure",
         "not therapy, medical, legal, or diagnostic advice": "safety boundary",
     }
@@ -1621,6 +1658,109 @@ def parse_funnel_event_catalog() -> tuple[list[str], Counter]:
     return issues, stats
 
 
+def funnel_event_names() -> set[str]:
+    if not FUNNEL_EVENTS_PATH.exists():
+        return set()
+    try:
+        data = json.loads(FUNNEL_EVENTS_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return set()
+    events = data.get("events", []) if isinstance(data, dict) else []
+    return {
+        event.get("name")
+        for event in events
+        if isinstance(event, dict) and isinstance(event.get("name"), str)
+    }
+
+
+def check_funnel_event_markup(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    catalog_names = funnel_event_names()
+    seen_event_names: set[str] = set()
+    required_markup_events = {
+        "supply_route_affiliate_book",
+        "luna_gumroad_pack_click",
+        "contact_supply_mailto",
+        "free_keepsake_download",
+    }
+    for page, parser in parsers.items():
+        for tag, attrs in parser.funnel_actions:
+            stats["funnel_markup_actions_checked"] += 1
+            event_name = attrs.get("data-funnel-event", "")
+            if not re.match(r"^[a-z][a-z0-9_]*$", event_name):
+                issues.append(f"{page}: invalid data-funnel-event name {event_name!r}")
+            if event_name not in catalog_names:
+                issues.append(f"{page}: data-funnel-event missing from funnel-events.json: {event_name}")
+            else:
+                seen_event_names.add(event_name)
+            if tag not in {"a", "button"}:
+                issues.append(f"{page}: data-funnel-event should be on a or button, got <{tag}> for {event_name}")
+
+            href = attrs.get("href", "")
+            is_copy_action = "copy" in event_name or "data-copy-text" in attrs or "data-route-summary" in attrs
+            is_story_action = event_name.endswith("story_generate") or event_name.endswith("story_download")
+            is_print_action = "print" in event_name
+            if tag == "a":
+                if not href:
+                    issues.append(f"{page}: link funnel event {event_name} missing href")
+                elif href.startswith("#"):
+                    target_id = href[1:]
+                    if target_id not in parser.ids:
+                        issues.append(f"{page}: link funnel event {event_name} points to missing anchor {href}")
+                elif href.startswith("mailto:"):
+                    pass
+                elif href.startswith(("http://", "https://", "/")):
+                    target, fragment = target_for(page, href)
+                    if target is not None:
+                        if not target.exists():
+                            issues.append(f"{page}: link funnel event {event_name} target missing: {href}")
+                        elif fragment and target.suffix == ".html":
+                            target_parser = parsers.get(target)
+                            if target_parser and fragment not in target_parser.ids:
+                                issues.append(f"{page}: link funnel event {event_name} target missing anchor #{fragment}: {href}")
+                else:
+                    issues.append(f"{page}: link funnel event {event_name} has unsupported href {href!r}")
+            elif tag == "button" and not (is_copy_action or is_story_action or is_print_action):
+                issues.append(f"{page}: button funnel event {event_name} should be a copy/story action")
+
+            if "mailto" in event_name:
+                if not href.startswith(f"mailto:{CONTACT_EMAIL}"):
+                    issues.append(f"{page}: mailto funnel event {event_name} should send to {CONTACT_EMAIL}")
+                parsed_mail = urlparse(href)
+                query = parse_qs(parsed_mail.query)
+                if not query.get("subject") or not query.get("body"):
+                    issues.append(f"{page}: mailto funnel event {event_name} should include subject and body")
+                stats["funnel_markup_mailtos_checked"] += 1
+            if "luna" in event_name and "pack_click" in event_name:
+                if not attrs.get("data-luna-product"):
+                    issues.append(f"{page}: Luna pack funnel event {event_name} missing data-luna-product")
+                stats["funnel_markup_luna_products_checked"] += 1
+            if is_copy_action:
+                if not (attrs.get("data-copy-text") or attrs.get("data-route-summary")):
+                    issues.append(f"{page}: copy funnel event {event_name} missing copy payload")
+                stats["funnel_markup_copy_actions_checked"] += 1
+            if event_name.endswith("story_generate"):
+                required_story_attrs = {
+                    "data-story-name",
+                    "data-story-title",
+                    "data-story-quote",
+                    "data-story-image",
+                    "data-story-slug",
+                    "data-story-cta",
+                }
+                missing_story_attrs = sorted(attr for attr in required_story_attrs if not attrs.get(attr))
+                if missing_story_attrs:
+                    issues.append(f"{page}: story funnel event {event_name} missing {', '.join(missing_story_attrs)}")
+                stats["funnel_markup_story_actions_checked"] += 1
+
+    stats["funnel_markup_event_names_checked"] = len(seen_event_names)
+    missing_required = sorted(required_markup_events.difference(seen_event_names))
+    if missing_required:
+        issues.append(f"HTML funnel markup missing required events: {', '.join(missing_required)}")
+    return issues, stats
+
+
 def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -1752,8 +1892,24 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
             if guardian not in guardian_slugs:
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a valid guardian slug")
         elif item_type == "affiliate_book":
-            if parsed.netloc != "www.books.com.tw" or "arthur0858" not in url or "utm_campaign=ap-202604" not in url:
-                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a tracked books.com.tw affiliate URL")
+            if not is_amazon_affiliate(parsed):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} primary url should be an Amazon Associates URL with tag={AMAZON_ASSOCIATE_TAG}")
+            if item.get("amazonAssociateTag") != AMAZON_ASSOCIATE_TAG:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include amazonAssociateTag={AMAZON_ASSOCIATE_TAG}")
+            if not isinstance(item.get("asin"), str) or not item["asin"]:
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include asin")
+            localized_urls = item.get("localizedUrls")
+            if not isinstance(localized_urls, dict):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include localizedUrls")
+            else:
+                for lang in ("zh", "en", "ja", "ko", "es"):
+                    localized_url = localized_urls.get(lang)
+                    if not isinstance(localized_url, str) or not is_affiliate_url_for_lang(localized_url, lang):
+                        expected = "tracked Books.com.tw" if lang == "zh" else f"Amazon Associates tag={AMAZON_ASSOCIATE_TAG}"
+                        issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} localizedUrls.{lang} should use {expected}")
+            taiwan_url = item.get("taiwanAffiliateUrl")
+            if not isinstance(taiwan_url, str) or not is_affiliate_url_for_lang(taiwan_url, "zh"):
+                issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include a tracked Books.com.tw taiwanAffiliateUrl")
         elif item_type == "luna_gumroad_pack":
             if parsed.netloc != "lunayogamusic.gumroad.com":
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should be a Luna Gumroad URL")
@@ -3743,17 +3899,16 @@ def main() -> int:
                 rel = set(anchor.get("rel", "").split())
                 if anchor.get("target") == "_blank" and not {"noopener", "noreferrer"}.issubset(rel):
                     issues.append(f"{page}: external _blank link missing noopener/noreferrer: {href}")
-                if parsed.netloc == AFFILIATE_HOST:
+                provider = affiliate_provider(parsed)
+                if provider:
                     page_affiliate_links += 1
                     stats["affiliate_links"] += 1
                     if "sponsored" not in rel:
                         issues.append(f"{page}: affiliate link missing sponsored rel: {href}")
-                    if not parsed.path.startswith(AFFILIATE_PATH_PREFIX):
-                        issues.append(f"{page}: affiliate link should use tracking path {AFFILIATE_PATH_PREFIX}: {href}")
-                    query = parse_qs(parsed.query)
-                    for key, expected_value in AFFILIATE_REQUIRED_QUERY.items():
-                        if query.get(key, [""])[0] != expected_value:
-                            issues.append(f"{page}: affiliate link missing {key}={expected_value}: {href}")
+                    expected_lang = lang_key_for_page(page)
+                    if not is_affiliate_url_for_lang(href, expected_lang):
+                        expected = "Books.com.tw tracking" if expected_lang == "zh" else f"Amazon Associates tag={AMAZON_ASSOCIATE_TAG}"
+                        issues.append(f"{page}: affiliate link should use {expected}: {href}")
 
         if page_affiliate_links:
             stats["affiliate_pages"] += 1
@@ -3812,6 +3967,9 @@ def main() -> int:
     funnel_issues, funnel_stats = parse_funnel_event_catalog()
     issues.extend(funnel_issues)
     stats.update(funnel_stats)
+    funnel_markup_issues, funnel_markup_stats = check_funnel_event_markup(parsers)
+    issues.extend(funnel_markup_issues)
+    stats.update(funnel_markup_stats)
     commerce_issues, commerce_stats = parse_commerce_catalog(parsers)
     issues.extend(commerce_issues)
     stats.update(commerce_stats)
@@ -3976,6 +4134,12 @@ def main() -> int:
     print(f"funnel_events_checked={stats['funnel_events_checked']}")
     print(f"funnel_event_categories_checked={stats['funnel_event_categories_checked']}")
     print(f"funnel_event_roles_checked={stats['funnel_event_roles_checked']}")
+    print(f"funnel_markup_actions_checked={stats['funnel_markup_actions_checked']}")
+    print(f"funnel_markup_event_names_checked={stats['funnel_markup_event_names_checked']}")
+    print(f"funnel_markup_mailtos_checked={stats['funnel_markup_mailtos_checked']}")
+    print(f"funnel_markup_luna_products_checked={stats['funnel_markup_luna_products_checked']}")
+    print(f"funnel_markup_copy_actions_checked={stats['funnel_markup_copy_actions_checked']}")
+    print(f"funnel_markup_story_actions_checked={stats['funnel_markup_story_actions_checked']}")
     print(f"commerce_catalogs_checked={stats['commerce_catalogs_checked']}")
     print(f"commerce_items_checked={stats['commerce_items_checked']}")
     print(f"commerce_types_checked={stats['commerce_types_checked']}")

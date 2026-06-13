@@ -1244,6 +1244,8 @@ def check_promotion_profile_verification(source_path: str, data: dict) -> tuple[
         "public_promotion_kit_platform_profile_verification_steps_checked=12",
         "public_promotion_kit_platform_profile_publish_gates_checked=9",
         "public_promotion_kit_issues=0",
+        "public_discovery_commerce_revenue_playbook_checked=4",
+        "public_discovery_commerce_item_playbook_links_checked=20",
     }
     if verification.get("source") != "https://lovetypes.tw/promotion-kit.json#platformProfileSetup":
         issues.append(f"{source_path}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")

@@ -2564,6 +2564,8 @@ def validate_promotion_profile_verification(source: str, data: dict, stats: Coun
         "public_promotion_kit_platform_profile_verification_steps_checked=12",
         "public_promotion_kit_platform_profile_publish_gates_checked=9",
         "public_promotion_kit_issues=0",
+        "public_discovery_commerce_revenue_playbook_checked=4",
+        "public_discovery_commerce_item_playbook_links_checked=20",
     }
     if verification.get("source") != f"{DOMAIN}/promotion-kit.json#platformProfileSetup":
         issues.append(f"{source}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")

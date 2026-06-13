@@ -5,6 +5,8 @@
 - 平台首頁追蹤列數：0 / 3
 - 已規劃待發布任務：15
 - 追蹤欄位狀態：完整
+- 週回顧規則：When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.
+- 商品調整 gate：Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.
 
 ## 漏斗總覽
 

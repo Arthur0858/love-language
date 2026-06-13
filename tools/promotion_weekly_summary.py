@@ -45,6 +45,27 @@ REVENUE_FIELDS = [
     "affiliate_book_clicks",
     "contact_requests",
 ]
+QUIZ_START_RATE_MIN = 0.3
+QUIZ_COMPLETION_RATE_MIN = 0.4
+EMPTY_DATA_RECOMMENDATION_COUNT = 5
+
+
+def weekly_summary_policy() -> dict[str, object]:
+    return {
+        "quizStartRateMin": QUIZ_START_RATE_MIN,
+        "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
+        "emptyDataRecommendationCount": EMPTY_DATA_RECOMMENDATION_COUNT,
+        "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.",
+        "profileTrackerSeparation": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video performance stays in kpi-tracker.csv.",
+        "offerChangeGate": "Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.",
+        "minimumFilledRowRule": "A row is treated as filled when it has activity fields or any numeric metric greater than zero.",
+        "sourceBreakdownRequired": True,
+        "leaderRules": {
+            "quizGuardian": "Rank guardians only from filled video rows with quiz_completions.",
+            "revenueGuardian": "Rank revenue intent only from filled video rows and revenue fields.",
+            "contentAngle": "Rank content angles only from filled video rows joined to promotion-kit tasks.",
+        },
+    }
 
 
 def parse_int(value: str | None) -> int:
@@ -185,9 +206,9 @@ def build_report(
         if next_tasks:
             recommendations.append("下一批建議任務：" + "；".join(next_tasks))
     else:
-        if totals["site_clicks"] > 0 and totals["quiz_starts"] * 10 < totals["site_clicks"] * 3:
+        if totals["site_clicks"] > 0 and totals["quiz_starts"] < totals["site_clicks"] * QUIZ_START_RATE_MIN:
             recommendations.append("修首頁或 /start/ 首屏：網站點擊有進來，但測驗開始率低於 30%。")
-        if totals["quiz_starts"] > 0 and totals["quiz_completions"] * 10 < totals["quiz_starts"] * 4:
+        if totals["quiz_starts"] > 0 and totals["quiz_completions"] < totals["quiz_starts"] * QUIZ_COMPLETION_RATE_MIN:
             recommendations.append("修測驗流程：測驗完成率低於 40%，優先檢查手機版題目節奏與結果揭示。")
         if lead_total > 0:
             recommendations.append("補自有資產：已有補給或 Contact 需求，優先做對應守護者的 PDF、桌布或短儀式。")
@@ -242,6 +263,7 @@ def build_report(
             "revenueGuardian": {"id": top_revenue_guardian[0], "value": top_revenue_guardian[1]} if top_revenue_guardian else None,
             "contentAngle": {"id": top_angle[0], "value": top_angle[1]} if top_angle else None,
         },
+        "weeklySummaryPolicy": weekly_summary_policy(),
         "recommendations": recommendations,
         "plannedTaskDistribution": dict(sorted(planned_by_guardian.items())),
         "nextPlannedTasks": next_tasks,
@@ -269,6 +291,8 @@ def build_summary(report: dict) -> str:
         f"- 平台首頁追蹤列數：{report['profileTrackerRows']} / {report.get('profileTrackerTotalRows', report['profileTrackerRows'])}",
         f"- 已規劃待發布任務：{report['plannedTasks']}",
         f"- 追蹤欄位狀態：{'完整' if field_status['complete'] else '缺少 ' + ', '.join([*missing_fields, *profile_missing_fields])}",
+        f"- 週回顧規則：{report['weeklySummaryPolicy']['emptyDataRule']}",
+        f"- 商品調整 gate：{report['weeklySummaryPolicy']['offerChangeGate']}",
         "",
         "## 漏斗總覽",
         "",
@@ -340,12 +364,20 @@ def main() -> int:
             "derived",
             "computedTotals",
             "leaders",
+            "weeklySummaryPolicy",
             "recommendations",
             "plannedTaskDistribution",
             "nextPlannedTasks",
             "safety",
         }
         issues = []
+        policy = report.get("weeklySummaryPolicy", {})
+        if policy.get("quizStartRateMin") != QUIZ_START_RATE_MIN:
+            issues.append("weeklySummaryPolicy.quizStartRateMin does not match generator policy")
+        if policy.get("quizCompletionRateMin") != QUIZ_COMPLETION_RATE_MIN:
+            issues.append("weeklySummaryPolicy.quizCompletionRateMin does not match generator policy")
+        if policy.get("sourceBreakdownRequired") is not True:
+            issues.append("weeklySummaryPolicy should require source breakdown")
         if not required_report_keys.issubset(report):
             issues.append("report missing required keys")
         if report["fieldStatus"]["missingFields"]:
@@ -354,6 +386,13 @@ def main() -> int:
             issues.append("profile tracker missing revenue fields")
         if len(report["recommendations"]) < 1:
             issues.append("report should include at least one recommendation")
+        if report["safety"]["emptyDataMode"]:
+            if len(report["recommendations"]) != EMPTY_DATA_RECOMMENDATION_COUNT:
+                issues.append("empty data mode should emit the fixed recommendation count")
+            if report["leaders"] != {"quizGuardian": None, "revenueGuardian": None, "contentAngle": None}:
+                issues.append("empty data mode should not select leaders")
+            if "不應根據空資料調整商品或文案" not in summary:
+                issues.append("empty data markdown should block product or copy changes")
         if not summary.startswith("# LoveTypes 第一輪推廣週摘要"):
             issues.append("markdown summary missing title")
         print(f"promotion_weekly_summary_tracker_rows={report['trackerRows']}")

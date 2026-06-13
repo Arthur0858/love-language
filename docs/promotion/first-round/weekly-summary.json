@@ -99,6 +99,21 @@
     "revenueGuardian": null,
     "contentAngle": null
   },
+  "weeklySummaryPolicy": {
+    "quizStartRateMin": 0.3,
+    "quizCompletionRateMin": 0.4,
+    "emptyDataRecommendationCount": 5,
+    "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.",
+    "profileTrackerSeparation": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video performance stays in kpi-tracker.csv.",
+    "offerChangeGate": "Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.",
+    "minimumFilledRowRule": "A row is treated as filled when it has activity fields or any numeric metric greater than zero.",
+    "sourceBreakdownRequired": true,
+    "leaderRules": {
+      "quizGuardian": "Rank guardians only from filled video rows with quiz_completions.",
+      "revenueGuardian": "Rank revenue intent only from filled video rows and revenue fields.",
+      "contentAngle": "Rank content angles only from filled video rows joined to promotion-kit tasks."
+    }
+  },
   "recommendations": [
     "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
     "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",

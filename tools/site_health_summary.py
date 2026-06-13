@@ -25,6 +25,7 @@ CHECKS = [
     ("public_launch_link_smoke", [sys.executable, "tools/public_launch_link_smoke.py"], 240, True),
     ("public_contact_smoke", [sys.executable, "tools/public_contact_smoke.py"], 120, True),
     ("public_discovery_smoke", [sys.executable, "tools/public_discovery_smoke.py"], 180, True),
+    ("public_promotion_kit_smoke", [sys.executable, "tools/public_promotion_kit_smoke.py"], 120, True),
     ("public_external_link_smoke", [sys.executable, "tools/public_external_link_smoke.py"], 120, True),
     ("public_garden_map_smoke", [sys.executable, "tools/public_garden_map_smoke.py"], 180, True),
     ("public_guide_smoke", [sys.executable, "tools/public_guide_smoke.py"], 300, True),
@@ -892,6 +893,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "site_health_config_invalid_timeouts",
         "site_health_config_public_flag_mismatches",
         "site_health_config_mixed_return_tuple_functions",
+        "site_health_config_public_smoke_tools",
+        "site_health_config_missing_public_smoke_tools",
         "timed_out",
         "error",
     ]

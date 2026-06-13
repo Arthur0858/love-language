@@ -55,6 +55,7 @@ PYTHON_TOOLS = [
     "tools/promotion_revenue_decision_matrix.py",
     "tools/promotion_week_decision_gate.py",
     "tools/promotion_decision_readiness_checklist.py",
+    "tools/promotion_decision_input_matrix.py",
     "tools/promotion_lead_intake_playbook.py",
     "tools/promotion_lead_form_audit.py",
     "tools/promotion_lead_form_importability_audit.py",
@@ -246,6 +247,7 @@ def main() -> int:
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])
         run_step("promotion week decision gate", [sys.executable, "tools/promotion_week_decision_gate.py", "--check"])
         run_step("promotion decision readiness checklist", [sys.executable, "tools/promotion_decision_readiness_checklist.py", "--check"])
+        run_step("promotion decision input matrix", [sys.executable, "tools/promotion_decision_input_matrix.py", "--check"])
         run_step("promotion lead intake playbook", [sys.executable, "tools/promotion_lead_intake_playbook.py", "--check"])
         run_step("promotion lead form audit", [sys.executable, "tools/promotion_lead_form_audit.py"])
         run_step("promotion lead form importability audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"])

@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "dataCollection": "docs/promotion/first-round/data-collection-sheet.json",
+    "weekDecision": "docs/promotion/first-round/week-decision-gate.json",
+    "decisionReadiness": "docs/promotion/first-round/decision-readiness-checklist.json",
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "leadDemand": "docs/promotion/first-round/lead-demand-gate.json"
+  },
+  "metrics": {
+    "rows": 5,
+    "readyRows": 0,
+    "activeRows": 1,
+    "blockedRows": 4,
+    "inputRows": 324,
+    "filledInputRows": 0,
+    "blockedInputRows": 324,
+    "leadReadyRoutes": 0,
+    "emptyDataMode": 1
+  },
+  "policy": {
+    "decisionRequiresGateAndInputs": true,
+    "emptyDataBlocksCommerce": true,
+    "platformEngagementCannotOpenCommerce": true,
+    "leadDecisionsRequireExplicitConsent": true
+  },
+  "rows": [
+    {
+      "decisionId": "collect_signal",
+      "gateKey": "weeklyDecision",
+      "gateOpen": false,
+      "readinessStatus": "active",
+      "decisionStatus": "active",
+      "requiredMetrics": [
+        "profile_clicks",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "inputRows": 72,
+      "filledRows": 0,
+      "readyRows": 0,
+      "blockedRows": 72,
+      "minimumFilled": 0,
+      "primaryBlocker": "",
+      "allowedAction": "Set profiles, publish first batch, and backfill public URLs plus minimum KPI evidence.",
+      "blockedAction": "Change offer order, pick a winning guardian, or increase paid CTA."
+    },
+    {
+      "decisionId": "scale_content",
+      "gateKey": "scaleContent",
+      "gateOpen": false,
+      "readinessStatus": "blocked",
+      "decisionStatus": "blocked_waiting_for_source",
+      "requiredMetrics": [
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "inputRows": 54,
+      "filledRows": 0,
+      "readyRows": 0,
+      "blockedRows": 54,
+      "minimumFilled": 3,
+      "primaryBlocker": "required source rows are still blocked by profile/post/KPI setup",
+      "allowedAction": "Publish more variants for the strongest guardian or pain point while keeping quiz CTA.",
+      "blockedAction": "Treat views, likes, or comments as proof of purchase intent."
+    },
+    {
+      "decisionId": "deepen_identity_asset",
+      "gateKey": "deepenIdentityAsset",
+      "gateOpen": false,
+      "readinessStatus": "blocked",
+      "decisionStatus": "blocked_waiting_for_source",
+      "requiredMetrics": [
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks",
+        "free_keepsake_downloads"
+      ],
+      "inputRows": 108,
+      "filledRows": 0,
+      "readyRows": 0,
+      "blockedRows": 108,
+      "minimumFilled": 1,
+      "primaryBlocker": "required source rows are still blocked by profile/post/KPI setup",
+      "allowedAction": "Improve free keepsakes, story cards, share images, and result-route assets.",
+      "blockedAction": "Move the primary CTA directly to paid products."
+    },
+    {
+      "decisionId": "build_owned_lead_asset",
+      "gateKey": "buildOwnedLeadAsset",
+      "gateOpen": false,
+      "readinessStatus": "blocked",
+      "decisionStatus": "blocked_waiting_for_source",
+      "requiredMetrics": [
+        "supply_lead_requests",
+        "contact_requests"
+      ],
+      "inputRows": 36,
+      "filledRows": 0,
+      "readyRows": 0,
+      "blockedRows": 36,
+      "minimumFilled": 1,
+      "primaryBlocker": "required source rows are still blocked by profile/post/KPI setup",
+      "allowedAction": "Build one low-risk email/download asset for the signaled guardian or route.",
+      "blockedAction": "Build a paid product before repeated lead evidence and explicit consent exist."
+    },
+    {
+      "decisionId": "test_soft_offer",
+      "gateKey": "testSoftOffer",
+      "gateOpen": false,
+      "readinessStatus": "blocked",
+      "decisionStatus": "blocked_waiting_for_source",
+      "requiredMetrics": [
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "quiz_completions"
+      ],
+      "inputRows": 54,
+      "filledRows": 0,
+      "readyRows": 0,
+      "blockedRows": 54,
+      "minimumFilled": 2,
+      "primaryBlocker": "required source rows are still blocked by profile/post/KPI setup",
+      "allowedAction": "Test a soft result-route Luna or affiliate offer after the quiz/result context.",
+      "blockedAction": "Use direct sales language in first-touch Shorts or profile bio."
+    }
+  ]
+}

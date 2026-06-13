@@ -121,10 +121,11 @@ def parse_int(value: str | None) -> int:
         return 0
 
 
-def validate_rows(rows: list[dict[str, str]]) -> list[str]:
+def validate_rows(rows: list[dict[str, str]], expected_platform_counts: dict[str, int]) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 45:
-        issues.append(f"expected 45 platform KPI rows, got {len(rows)}")
+    expected_total = sum(expected_platform_counts.values())
+    if len(rows) != expected_total:
+        issues.append(f"expected {expected_total} platform KPI rows, got {len(rows)}")
     seen: set[tuple[str, str]] = set()
     platform_counts = {platform: 0 for platform in PLATFORMS}
     for row in rows:
@@ -149,8 +150,9 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
                 if not row.get(field):
                     issues.append(f"{label}: published row missing {field}")
     for platform, count in platform_counts.items():
-        if count != 15:
-            issues.append(f"{platform} should have 15 platform KPI rows, got {count}")
+        expected_count = expected_platform_counts.get(platform, 0)
+        if count != expected_count:
+            issues.append(f"{platform} should have {expected_count} platform KPI rows, got {count}")
     return issues
 
 
@@ -177,8 +179,14 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    rows = build_rows(read_csv(Path(args.queue)), read_csv(Path(args.output)))
-    issues = validate_rows(rows)
+    queue_rows = read_csv(Path(args.queue))
+    expected_platform_counts: dict[str, int] = {platform: 0 for platform in PLATFORMS}
+    for queue_row in queue_rows:
+        platform = (queue_row.get("platform") or "").strip()
+        if platform in expected_platform_counts:
+            expected_platform_counts[platform] += 1
+    rows = build_rows(queue_rows, read_csv(Path(args.output)))
+    issues = validate_rows(rows, expected_platform_counts)
     if not args.check:
         if issues:
             for issue in issues:

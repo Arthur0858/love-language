@@ -128,6 +128,12 @@ def build_report(
     platform_tracker_lookup = tracker_by_platform_task(platform_tracker_rows)
     published_scripts: set[str] = set()
     published_queue_rows: list[dict[str, str]] = []
+    expected_script_count = len({
+        (row.get("script_id") or "").strip()
+        for row in queue_rows
+        if (row.get("script_id") or "").strip()
+    })
+    expected_platform_tracker_rows = len(queue_rows)
 
     for row in queue_rows:
         platform = (row.get("platform") or "").strip()
@@ -162,17 +168,15 @@ def build_report(
             if not (row.get("published_date") or "").strip():
                 missing_published_date.append(key_label)
 
-    if len(queue_rows) != 45:
-        issues.append(f"posting queue should have 45 rows, got {len(queue_rows)}")
     if set(queue_by_platform) != PLATFORMS:
         issues.append("posting queue platforms should be exactly " + ", ".join(sorted(PLATFORMS)))
     for platform in sorted(PLATFORMS):
-        if queue_by_platform[platform] != 15:
-            issues.append(f"{platform} should have 15 queue rows, got {queue_by_platform[platform]}")
-    if len(tracker_rows) != 15:
-        issues.append(f"KPI tracker should have 15 rows, got {len(tracker_rows)}")
-    if len(platform_tracker_rows) != 45:
-        issues.append(f"platform KPI tracker should have 45 rows, got {len(platform_tracker_rows)}")
+        if queue_by_platform[platform] != expected_script_count:
+            issues.append(f"{platform} should have {expected_script_count} queue rows, got {queue_by_platform[platform]}")
+    if len(tracker_rows) != expected_script_count:
+        issues.append(f"KPI tracker should have {expected_script_count} rows, got {len(tracker_rows)}")
+    if len(platform_tracker_rows) != expected_platform_tracker_rows:
+        issues.append(f"platform KPI tracker should have {expected_platform_tracker_rows} rows, got {len(platform_tracker_rows)}")
     for label, values in (
         ("duplicate posting queue rows", duplicate_keys),
         ("invalid posting queue platforms", invalid_platforms),

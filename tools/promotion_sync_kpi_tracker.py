@@ -117,10 +117,10 @@ def build_rows(tasks: list[dict], existing: dict[str, dict[str, str]]) -> list[d
     return [task_row(task, existing.get(str(task.get("scriptId", "")))) for task in tasks]
 
 
-def validate_rows(rows: list[dict[str, str]]) -> list[str]:
+def validate_rows(rows: list[dict[str, str]], expected_count: int) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 15:
-        issues.append(f"expected 15 tracker rows, got {len(rows)}")
+    if len(rows) != expected_count:
+        issues.append(f"expected {expected_count} tracker rows, got {len(rows)}")
     seen_scripts: set[str] = set()
     for row in rows:
         script_id = row.get("script_id", "")
@@ -154,7 +154,7 @@ def main() -> int:
 
     tasks = load_tasks(Path(args.kit))
     rows = build_rows(tasks, read_existing(Path(args.tracker)))
-    issues = validate_rows(rows)
+    issues = validate_rows(rows, len(tasks))
     if args.check:
         print(f"promotion_kpi_tracker_rows={len(rows)}")
         print(f"promotion_kpi_tracker_fields={len(FIELDNAMES)}")

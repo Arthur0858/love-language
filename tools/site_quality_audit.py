@@ -1964,6 +1964,8 @@ def parse_commerce_catalog(parsers: dict[Path, PageParser]) -> tuple[list[str], 
         elif item_type == "affiliate_book":
             if not is_amazon_affiliate(parsed):
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} primary url should be an Amazon Associates URL with tag={AMAZON_ASSOCIATE_TAG}")
+            else:
+                stats["commerce_primary_affiliate_urls_checked"] += 1
             if item.get("amazonAssociateTag") != AMAZON_ASSOCIATE_TAG:
                 issues.append(f"{COMMERCE_CATALOG_PATH}: {item_id} should include amazonAssociateTag={AMAZON_ASSOCIATE_TAG}")
             if not isinstance(item.get("asin"), str) or not item["asin"]:
@@ -4340,6 +4342,7 @@ def main() -> int:
     print(f"commerce_types_checked={stats['commerce_types_checked']}")
     print(f"commerce_roles_checked={stats['commerce_roles_checked']}")
     print(f"commerce_affiliate_locale_policies_checked={stats['commerce_affiliate_locale_policies_checked']}")
+    print(f"commerce_primary_affiliate_urls_checked={stats['commerce_primary_affiliate_urls_checked']}")
     print(f"commerce_affiliate_localized_urls_checked={stats['commerce_affiliate_localized_urls_checked']}")
     print(f"commerce_taiwan_affiliate_urls_checked={stats['commerce_taiwan_affiliate_urls_checked']}")
     print(f"commerce_safety_boundaries_checked={stats['commerce_safety_boundaries_checked']}")

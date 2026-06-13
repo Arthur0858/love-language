@@ -58,6 +58,7 @@ PYTHON_TOOLS = [
     "tools/promotion_launch_link_qa.py",
     "tools/promotion_attribution_reconciliation.py",
     "tools/promotion_weekly_summary.py",
+    "tools/promotion_weekly_review_packet.py",
     "tools/promotion_decision_scenario_audit.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
@@ -195,6 +196,7 @@ def main() -> int:
         run_step("promotion attribution reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"])
         run_step("promotion next actions", [sys.executable, "tools/promotion_next_actions.py", "--check"])
         run_step("promotion weekly summary", [sys.executable, "tools/promotion_weekly_summary.py", "--check"])
+        run_step("promotion weekly review packet", [sys.executable, "tools/promotion_weekly_review_packet.py", "--check"])
         run_step("promotion decision scenario audit", [sys.executable, "tools/promotion_decision_scenario_audit.py"])
         run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
         run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])

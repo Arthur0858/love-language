@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-06-14",
+  "source": {
+    "publishingStatus": "docs/promotion/first-round/publishing-status.json",
+    "weeklySummary": "docs/promotion/first-round/weekly-summary.json",
+    "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
+    "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
+    "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json"
+  },
+  "state": {
+    "readyForWeeklyDecision": false,
+    "publishingStatusReady": false,
+    "weekDecisionGateReady": false,
+    "emptyDataMode": true,
+    "firstBatchRows": 3,
+    "firstBatchPublishedRows": 0,
+    "firstBatchMinimumKpiRows": 0,
+    "trackerRows": 0,
+    "profileTrackerRows": 0
+  },
+  "reviewFields": {
+    "minimum": [
+      "post_url",
+      "site_clicks",
+      "quiz_starts",
+      "quiz_completions"
+    ],
+    "route": [
+      "guardian_result_clicks",
+      "resources_clicks",
+      "repair_plan_clicks",
+      "luna_clicks",
+      "keepsake_clicks"
+    ],
+    "revenue": [
+      "free_keepsake_downloads",
+      "supply_lead_requests",
+      "luna_pack_clicks",
+      "affiliate_book_clicks",
+      "contact_requests"
+    ]
+  },
+  "rowsToUpdate": [
+    {
+      "platform": "youtube_shorts",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "status": "planned",
+      "postUrl": "",
+      "minimumFields": [
+        "post_url",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "routeFields": [
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks"
+      ],
+      "revenueFields": [
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests"
+      ],
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\""
+    },
+    {
+      "platform": "tiktok",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "status": "planned",
+      "postUrl": "",
+      "minimumFields": [
+        "post_url",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "routeFields": [
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks"
+      ],
+      "revenueFields": [
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests"
+      ],
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\""
+    },
+    {
+      "platform": "instagram_reels",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "status": "planned",
+      "postUrl": "",
+      "minimumFields": [
+        "post_url",
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "routeFields": [
+        "guardian_result_clicks",
+        "resources_clicks",
+        "repair_plan_clicks",
+        "luna_clicks",
+        "keepsake_clicks"
+      ],
+      "revenueFields": [
+        "free_keepsake_downloads",
+        "supply_lead_requests",
+        "luna_pack_clicks",
+        "affiliate_book_clicks",
+        "contact_requests"
+      ],
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-13 --post-url https://example.com/post --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"post URL and first metrics verified\""
+    }
+  ],
+  "holdReasons": [
+    "首批三平台尚無公開 post URL。",
+    "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
+    "publishing-status 尚未達週決策條件。",
+    "目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。"
+  ],
+  "allowedDecisions": [
+    "publish_or_verify_first_batch",
+    "set_profile_links",
+    "backfill_minimum_kpis"
+  ],
+  "blockedDecisions": [
+    "change_offer_order",
+    "pick_winning_guardian",
+    "increase_paid_cta",
+    "prioritize_luna_or_affiliate",
+    "build_paid_product_from_empty_data"
+  ],
+  "decisionOutputs": {
+    "recommendedFocus": "collect_signal",
+    "matrixEmptyDataMode": true,
+    "weeklyRecommendations": [
+      "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
+      "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
+      "完成平台首頁設定後，同步回填 platform-profile-tracker.csv，分開判讀 Bio/Profile link 成效。",
+      "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
+      "下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
+    ]
+  },
+  "policy": {
+    "doNotUseEmptyDataForCommerce": true,
+    "minimumEvidenceForWeeklyDecision": [
+      "至少一個已發布 post_url",
+      "對應平台列已回填 published_date 與 proof note",
+      "至少填入 site_clicks、quiz_starts、quiz_completions 或確認為 0",
+      "weekly summary 與 week decision gate 重新產生"
+    ],
+    "safety": "週回顧只判斷內容與漏斗，不把測驗寫成診斷，不承諾修復結果。"
+  },
+  "issues": []
+}

@@ -35,6 +35,7 @@ PYTHON_TOOLS = [
     "tools/promotion_first_batch_publication_packet.py",
     "tools/promotion_first_batch_asset_qa.py",
     "tools/promotion_publishing_status.py",
+    "tools/promotion_kpi_writeback_consistency_audit.py",
     "tools/promotion_writeback_flow_audit.py",
     "tools/promotion_launch_brief.py",
     "tools/promotion_revenue_decision_matrix.py",
@@ -181,6 +182,7 @@ def main() -> int:
         run_step("promotion first batch publication packet", [sys.executable, "tools/promotion_first_batch_publication_packet.py", "--check"])
         run_step("promotion first batch asset qa", [sys.executable, "tools/promotion_first_batch_asset_qa.py", "--check"])
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
+        run_step("promotion KPI writeback consistency audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"])
         run_step("promotion writeback flow audit", [sys.executable, "tools/promotion_writeback_flow_audit.py"])
         run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])

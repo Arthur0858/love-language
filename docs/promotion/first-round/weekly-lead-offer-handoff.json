@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "publishKpiHandoff": "docs/promotion/first-round/publish-kpi-handoff.json",
+    "weeklyReviewPacket": "docs/promotion/first-round/weekly-review-packet.json",
+    "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
+    "weeklyDecisionEvidence": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
+    "leadOpsActionSheet": "docs/promotion/first-round/lead-ops-action-sheet.json",
+    "leadDemandGate": "docs/promotion/first-round/lead-demand-gate.json",
+    "assetFulfillmentGate": "docs/promotion/first-round/asset-fulfillment-gate.json",
+    "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json",
+    "offerExperimentQueue": "docs/promotion/first-round/offer-experiment-queue.json"
+  },
+  "metrics": {
+    "rows": 8,
+    "completeRows": 2,
+    "currentBlockers": 1,
+    "blockedUpstreamRows": 5,
+    "realLeads": 0,
+    "readyLeadRoutes": 0,
+    "publicFreeReady": 5,
+    "readyOfferExperiments": 0,
+    "issues": 0
+  },
+  "policy": {
+    "weeklyReviewBeforeLeadDecision": true,
+    "explicitConsentBeforeLeadDemand": true,
+    "repeatedDemandBeforeAssetBuild": true,
+    "offerReadyBeforePaidCta": true,
+    "shortsCtaRemainsQuiz": true
+  },
+  "rows": [
+    {
+      "step_id": "weekly_review_open",
+      "phase": "weekly_review",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Start lead and offer evaluation only after publish/KPI handoff opens weekly review.",
+      "evidence_required": "publish-kpi-handoff readyForWeeklyReview is true.",
+      "command": "python3 tools/promotion_publish_kpi_handoff.py --check",
+      "stop_condition": "Do not evaluate lead or offer routes while post URLs or minimum KPI proof are incomplete.",
+      "status": "current_blocker"
+    },
+    {
+      "step_id": "weekly_decision_ready",
+      "phase": "weekly_review",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Confirm weekly review, week decision gate, and non-empty data mode before route decisions.",
+      "evidence_required": "weekly review ready=1, weeklyDecision gate=1, emptyDataMode=0.",
+      "command": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
+      "stop_condition": "Do not pick winners or change commerce order while empty data mode is true.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "weekly_evidence_complete",
+      "phase": "weekly_review",
+      "current_value": 1,
+      "required_value": 8,
+      "owner_action": "Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.",
+      "evidence_required": "weekly-decision-evidence-checklist completeRows equals rows.",
+      "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
+      "stop_condition": "Stop if any weekly decision evidence row remains pending.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "lead_capture_ready",
+      "phase": "lead_collection",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep Contact, keepsake, and Luna requests importable before using them as lead signals.",
+      "evidence_required": "lead ops action sheet has ready capture checks and lead magnet inventory issues=0.",
+      "command": "python3 tools/promotion_lead_ops_action_sheet.py --check",
+      "stop_condition": "Do not collect raw sensitive content or use requests without explicit reply consent.",
+      "status": "complete"
+    },
+    {
+      "step_id": "lead_demand_ready",
+      "phase": "lead_collection",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Advance to owned assets or Luna only after repeated same-guardian demand creates a ready route.",
+      "evidence_required": "lead-demand-gate readyRoutes >= 1 with traceable evidence and explicit consent.",
+      "command": "python3 tools/promotion_lead_demand_gate.py --check",
+      "stop_condition": "Do not create paid or priority assets from a single request, weak signal, or no consent.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "asset_fulfillment_ready",
+      "phase": "asset_fulfillment",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Prepare only the smallest matching free asset or Luna aftercare item for proven demand.",
+      "evidence_required": "asset-fulfillment-gate has at least one ready demand pair or ready offer asset.",
+      "command": "python3 tools/promotion_asset_fulfillment_gate.py --check",
+      "stop_condition": "Keep public free assets available, but do not build custom products before demand proof.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "offer_experiment_ready",
+      "phase": "offer_experiment",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Only run low-risk offer experiments when both plan and queue have READY rows.",
+      "evidence_required": "offer-experiment-plan and offer-experiment-queue both have at least one READY row.",
+      "command": "python3 tools/promotion_offer_experiment_plan.py --check && python3 tools/promotion_offer_experiment_queue.py --check",
+      "stop_condition": "Do not add paid CTA to Shorts or claim diagnosis, therapy, guarantee, or required purchase.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "public_free_assets_remain_safe",
+      "phase": "safety",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep five public free assets as safe lead magnets while real demand is absent.",
+      "evidence_required": "asset-fulfillment-gate publicFreeReady >= 5 and lead-demand-gate has no repeated route.",
+      "command": "python3 tools/promotion_asset_fulfillment_gate.py --check && python3 tools/promotion_lead_demand_gate.py --check",
+      "stop_condition": "Stop if public free assets are treated as proof of product demand without tracked requests.",
+      "status": "complete"
+    }
+  ],
+  "issues": []
+}

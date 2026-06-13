@@ -8,6 +8,7 @@ import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
 from datetime import datetime, timezone
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
@@ -310,6 +311,20 @@ ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
 EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0"
 FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
 LEGACY_ZH_GUIDE_TARGETS = {slug: target for slug, _title, _desc, target in GENERATOR_CONFIG.LEGACY_ZH_GUIDES}
+GUIDE_FOCUS_MARKERS = {
+    "zh": "這一頁只聚焦",
+    "en": "This page narrows the repair",
+    "ja": "このページでは",
+    "ko": "이 페이지는",
+    "es": "Esta página reduce",
+}
+LEGACY_GUIDE_FOCUS_MARKER = "這一頁只聚焦一個舊入口"
+GUARDIAN_DESCRIPTION_SNIPPETS = {
+    data[lang][2]
+    for data in GENERATOR_CONFIG.GUARDIANS.values()
+    for lang in LOCALE_PREFIXES
+    if lang in data
+}
 CURRENT_STATIC_ASSETS = {
     "css": GENERATOR_CONFIG.CSS_ASSET,
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
@@ -673,6 +688,15 @@ def legacy_zh_guide_target_for_page(page: Path) -> str:
     if len(parts) == 3 and parts[0] == "guides" and parts[2] == "index.html" and parts[1] in LEGACY_ZH_GUIDE_TARGETS:
         return LEGACY_ZH_GUIDE_TARGETS[parts[1]]
     return ""
+
+
+def article_body_text(parser: PageParser) -> str:
+    match = re.search(r'<article class="article-body">(.*?)</article>', parser.source, re.DOTALL)
+    if not match:
+        return ""
+    body = unescape(match.group(1))
+    body = re.sub(r"<[^>]+>", " ", body)
+    return " ".join(body.split())
 
 
 def lang_url_for_page(page: Path, target: str = "") -> str:
@@ -3463,6 +3487,18 @@ def main() -> int:
         if guide_slug:
             stats["guide_action_bridge_pages"] += 1
             guardian_slug = FORMAL_GUIDE_GUARDIANS[guide_slug]
+            guide_body = article_body_text(parser)
+            lang = lang_key_for_page(page)
+            guide_focus_marker = GUIDE_FOCUS_MARKERS[lang]
+            if guide_focus_marker not in guide_body:
+                issues.append(f"{page}: guide article body missing localized focus marker {guide_focus_marker!r}")
+            else:
+                stats["guide_focus_article_pages"] += 1
+            repeated_guardian_descriptions = sorted(snippet for snippet in GUARDIAN_DESCRIPTION_SNIPPETS if snippet in guide_body)
+            if repeated_guardian_descriptions:
+                issues.append(f"{page}: guide article body repeats guardian boilerplate description")
+            else:
+                stats["guide_boilerplate_free_pages"] += 1
             bridge_count = parser.ids.count("guide-action-bridge")
             if bridge_count != 1:
                 issues.append(f"{page}: expected one #guide-action-bridge target, found {bridge_count}")
@@ -3479,6 +3515,16 @@ def main() -> int:
         legacy_target = legacy_zh_guide_target_for_page(page)
         if legacy_target:
             stats["legacy_guide_action_bridge_pages"] += 1
+            legacy_body = article_body_text(parser)
+            if LEGACY_GUIDE_FOCUS_MARKER not in legacy_body:
+                issues.append(f"{page}: legacy guide article body missing focus marker {LEGACY_GUIDE_FOCUS_MARKER!r}")
+            else:
+                stats["legacy_guide_focus_article_pages"] += 1
+            repeated_guardian_descriptions = sorted(snippet for snippet in GUARDIAN_DESCRIPTION_SNIPPETS if snippet in legacy_body)
+            if repeated_guardian_descriptions:
+                issues.append(f"{page}: legacy guide article body repeats guardian boilerplate description")
+            else:
+                stats["legacy_guide_boilerplate_free_pages"] += 1
             if not is_noindex(parser):
                 issues.append(f"{page}: legacy guide page should remain noindex")
             if "archive-forward" not in parser.source:
@@ -4082,7 +4128,11 @@ def main() -> int:
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
+    print(f"guide_focus_article_pages={stats['guide_focus_article_pages']}")
+    print(f"guide_boilerplate_free_pages={stats['guide_boilerplate_free_pages']}")
     print(f"legacy_guide_action_bridge_pages={stats['legacy_guide_action_bridge_pages']}")
+    print(f"legacy_guide_focus_article_pages={stats['legacy_guide_focus_article_pages']}")
+    print(f"legacy_guide_boilerplate_free_pages={stats['legacy_guide_boilerplate_free_pages']}")
     print(f"scroll_scripts={stats['scroll_scripts']}")
     print(f"reduced_motion_scroll_scripts={stats['reduced_motion_scroll_scripts']}")
     print(f"interaction_hash_focus_snippets_checked={stats['interaction_hash_focus_snippets_checked']}")

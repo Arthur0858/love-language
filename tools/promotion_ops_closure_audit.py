@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 COMMAND_CENTER = PROMOTION_DIR / "launch-command-center.json"
 OPERATOR_HANDOFF = PROMOTION_DIR / "operator-handoff-packet.json"
+PROFILE_PUBLISH_HANDOFF = PROMOTION_DIR / "profile-publish-handoff.json"
 NEXT_ACTIONS = PROMOTION_DIR / "next-actions.json"
 PROFILE_PACKET = PROMOTION_DIR / "profile-verification-packet.json"
 FIRST_BATCH = PROMOTION_DIR / "first-batch-publication-packet.json"
@@ -24,6 +25,18 @@ EXPECTED_HANDOFF_IMPORTS = {
     "profile_setup_import",
     "post_publish_import",
     "lead_request_import",
+}
+EXPECTED_PROFILE_PUBLISH_STEPS = {
+    "profile_action_sheet_ready",
+    "profile_setup_handoff_ready",
+    "profile_writeback_complete",
+    "profile_evidence_complete",
+    "ops_refresh_after_profile",
+    "launch_readiness_open",
+    "first_batch_action_sheet_ready",
+    "publish_readiness_guarded",
+    "post_proof_handoff_guarded",
+    "single_current_blocker_visible",
 }
 
 
@@ -42,6 +55,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
     issues: list[str] = []
     command = load_json(COMMAND_CENTER)
     handoff = load_json(OPERATOR_HANDOFF)
+    profile_publish = load_json(PROFILE_PUBLISH_HANDOFF)
     next_actions = load_json(NEXT_ACTIONS)
     profile = load_json(PROFILE_PACKET)
     first_batch = load_json(FIRST_BATCH)
@@ -49,6 +63,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
 
     command_rows = command.get("rows", [])
     handoff_steps = handoff.get("steps", [])
+    profile_publish_rows = profile_publish.get("rows", [])
     next_action_rows = next_actions.get("actions", [])
     profile_platforms = profile.get("platforms", [])
     first_batch_rows = first_batch.get("rows", [])
@@ -62,10 +77,20 @@ def validate() -> tuple[dict[str, int], list[str]]:
     if not isinstance(handoff_steps, list):
         issues.append("operator handoff steps should be a list")
         handoff_steps = []
+    if not isinstance(profile_publish_rows, list):
+        issues.append("profile publish handoff rows should be a list")
+        profile_publish_rows = []
     if command.get("rowCount") != len(command_rows):
         issues.append("command center rowCount should match rows length")
     if handoff.get("stepCount") != len(handoff_steps):
         issues.append("operator handoff stepCount should match steps length")
+    profile_publish_metrics = profile_publish.get("metrics", {})
+    if not isinstance(profile_publish_metrics, dict):
+        profile_publish_metrics = {}
+    if int(profile_publish_metrics.get("rows", 0) or 0) != len(profile_publish_rows):
+        issues.append("profile publish handoff metrics.rows should match rows length")
+    if len(profile_publish_rows) != len(EXPECTED_PROFILE_PUBLISH_STEPS):
+        issues.append(f"profile publish handoff should have {len(EXPECTED_PROFILE_PUBLISH_STEPS)} rows")
 
     expected_phase_counts = command.get("expectedPhaseCounts", {})
     for phase, expected in expected_phase_counts.items():
@@ -108,6 +133,15 @@ def validate() -> tuple[dict[str, int], list[str]]:
     }
     if import_ids != EXPECTED_HANDOFF_IMPORTS:
         issues.append("operator handoff structured imports should cover profile, post, and lead imports")
+    profile_publish_step_ids = {
+        str(row.get("step_id", ""))
+        for row in profile_publish_rows
+        if isinstance(row, dict)
+    }
+    if profile_publish_step_ids != EXPECTED_PROFILE_PUBLISH_STEPS:
+        missing = sorted(EXPECTED_PROFILE_PUBLISH_STEPS - profile_publish_step_ids)
+        extra = sorted(profile_publish_step_ids - EXPECTED_PROFILE_PUBLISH_STEPS)
+        issues.append(f"profile publish handoff step mismatch; missing={missing}, extra={extra}")
 
     command_ready = sum(1 for row in command_rows if row.get("status") == "ready")
     command_blocked = sum(1 for row in command_rows if str(row.get("status", "")).startswith("blocked"))
@@ -121,6 +155,27 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("operator handoff readyCount should match step statuses")
     if handoff.get("blockedCount") != handoff_blocked:
         issues.append("operator handoff blockedCount should match step statuses")
+    profile_publish_complete = sum(1 for row in profile_publish_rows if row.get("status") == "complete")
+    profile_publish_current = sum(1 for row in profile_publish_rows if row.get("status") == "current_blocker")
+    profile_publish_blocked = sum(1 for row in profile_publish_rows if row.get("status") == "blocked_upstream")
+    if int(profile_publish_metrics.get("completeRows", 0) or 0) != profile_publish_complete:
+        issues.append("profile publish handoff completeRows should match row statuses")
+    if int(profile_publish_metrics.get("currentBlockers", 0) or 0) != profile_publish_current:
+        issues.append("profile publish handoff currentBlockers should match row statuses")
+    if int(profile_publish_metrics.get("blockedUpstreamRows", 0) or 0) != profile_publish_blocked:
+        issues.append("profile publish handoff blockedUpstreamRows should match row statuses")
+    if profile_publish_current != 1:
+        issues.append("profile publish handoff should expose exactly one current blocker")
+    if bool(profile_publish_metrics.get("readyToPublish")) != bool(readiness.get("readiness", {}).get("readyToPublishPosts")):
+        issues.append("profile publish handoff readyToPublish should match launch readiness readyToPublishPosts")
+    guarded_steps = {"profile_setup_handoff_ready", "publish_readiness_guarded", "post_proof_handoff_guarded"}
+    incomplete_guarded = [
+        str(row.get("step_id", ""))
+        for row in profile_publish_rows
+        if row.get("step_id") in guarded_steps and row.get("status") != "complete"
+    ]
+    if incomplete_guarded:
+        issues.append("profile publish guarded handoff steps should be complete before profile writeback: " + ", ".join(incomplete_guarded))
 
     for row in command_rows:
         phase = row.get("phase", "")
@@ -134,6 +189,10 @@ def validate() -> tuple[dict[str, int], list[str]]:
     return {
         "commandRows": len(command_rows),
         "handoffSteps": len(handoff_steps),
+        "profilePublishRows": len(profile_publish_rows),
+        "profilePublishComplete": profile_publish_complete,
+        "profilePublishCurrentBlockers": profile_publish_current,
+        "profilePublishBlockedUpstream": profile_publish_blocked,
         "nextActions": len(next_action_rows) if isinstance(next_action_rows, list) else 0,
         "profilePlatforms": len(profile_platforms) if isinstance(profile_platforms, list) else 0,
         "firstBatchRows": len(first_batch_rows) if isinstance(first_batch_rows, list) else 0,
@@ -147,6 +206,10 @@ def main() -> int:
     metrics, issues = validate()
     print(f"promotion_ops_closure_command_rows={metrics['commandRows']}")
     print(f"promotion_ops_closure_handoff_steps={metrics['handoffSteps']}")
+    print(f"promotion_ops_closure_profile_publish_rows={metrics['profilePublishRows']}")
+    print(f"promotion_ops_closure_profile_publish_complete={metrics['profilePublishComplete']}")
+    print(f"promotion_ops_closure_profile_publish_current_blockers={metrics['profilePublishCurrentBlockers']}")
+    print(f"promotion_ops_closure_profile_publish_blocked_upstream={metrics['profilePublishBlockedUpstream']}")
     print(f"promotion_ops_closure_next_actions={metrics['nextActions']}")
     print(f"promotion_ops_closure_profile_platforms={metrics['profilePlatforms']}")
     print(f"promotion_ops_closure_first_batch_rows={metrics['firstBatchRows']}")

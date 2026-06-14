@@ -3,6 +3,8 @@ generated_at: 2026-06-14
 rows: 3
 ready_to_import: 0
 templates_safely_rejected: 3
+placeholder_proof_rows: 3
+real_proof_ready_rows: 0
 
 [youtube_shorts] publish-lt-s01-iris-silence
 proof: docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt

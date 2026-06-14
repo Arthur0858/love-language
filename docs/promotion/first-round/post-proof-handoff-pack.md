@@ -5,6 +5,8 @@
 - proof files：3
 - ready to import：0
 - templates safely rejected：3
+- placeholder proof rows：3
+- real proof ready rows：0
 - blocked until post URL：3
 - writeback commands：3
 - issues：0
@@ -21,6 +23,7 @@
 ### youtube_shorts · `publish-lt-s01-iris-silence`
 
 - status：`template_safely_rejected`
+- proof：placeholder=1 / real_ready=0
 - post ops：`blocked_until_post_url`
 - proof：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - title：他沉默時，你最想聽見哪一句話？
@@ -33,6 +36,7 @@
 ### tiktok · `publish-lt-s01-iris-silence`
 
 - status：`template_safely_rejected`
+- proof：placeholder=1 / real_ready=0
 - post ops：`blocked_until_post_url`
 - proof：`docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
 - title：他沉默時，你最想聽見哪一句話？
@@ -45,6 +49,7 @@
 ### instagram_reels · `publish-lt-s01-iris-silence`
 
 - status：`template_safely_rejected`
+- proof：placeholder=1 / real_ready=0
 - post ops：`blocked_until_post_url`
 - proof：`docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
 - title：他沉默時，你最想聽見哪一句話？

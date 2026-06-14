@@ -8,6 +8,8 @@
 - blocked：3
 - published：0
 - proof templates safely rejected：3
+- proof placeholder rows：3
+- proof real ready rows：0
 - issues：0
 
 ## Rule
@@ -32,6 +34,7 @@
 - post URL ready：0
 - post proof file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - proof template safely rejected：1
+- proof：placeholder=1 / real_ready=0
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.
 
@@ -48,6 +51,7 @@
 - post URL ready：0
 - post proof file：`docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
 - proof template safely rejected：1
+- proof：placeholder=1 / real_ready=0
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.
 
@@ -64,5 +68,6 @@
 - post URL ready：0
 - post proof file：`docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
 - proof template safely rejected：1
+- proof：placeholder=1 / real_ready=0
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.

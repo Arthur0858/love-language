@@ -31,7 +31,7 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
-def run_post_import_check(path: str) -> tuple[bool, str]:
+def run_post_import_check(path: str) -> tuple[bool, bool, str]:
     result = subprocess.run(
         [sys.executable, "tools/promotion_post_text_import.py", "check", "--input", path],
         cwd=ROOT,
@@ -41,11 +41,12 @@ def run_post_import_check(path: str) -> tuple[bool, str]:
         check=False,
     )
     output = result.stdout.strip()
+    import_ready = result.returncode == 0
     safely_rejected = (
         result.returncode != 0
         and "published status requires non-placeholder https post_url" in output
     )
-    return safely_rejected, output
+    return import_ready, safely_rejected, output
 
 
 def post_proof_path(platform: str, task_id: str) -> str:
@@ -76,7 +77,7 @@ def build_pack() -> dict:
         asset = asset_lookup.get(key, {})
         action = action_lookup.get(key, {})
         proof_path = post_proof_path(platform, task_id)
-        safely_rejected, import_output = run_post_import_check(proof_path)
+        import_ready, safely_rejected, import_output = run_post_import_check(proof_path)
         profile_ready = bool(profile_gate.get("state", {}).get("readyForFirstBatchPublish"))
         asset_ready = str(asset.get("assetReadyStatus", "")) in ACCEPTED_ASSET_QA_STATUSES
         public_url_ready = bool(pub.get("postUrl"))
@@ -97,6 +98,8 @@ def build_pack() -> dict:
             "post_url_ready": "1" if public_url_ready else "0",
             "post_proof_file": proof_path,
             "post_proof_template_safely_rejected": "1" if safely_rejected else "0",
+            "post_proof_placeholder": "1" if safely_rejected else "0",
+            "post_proof_real_ready": "1" if import_ready else "0",
             "operator_status": row_status,
             "caption_ready": "1" if "完成 15 題測驗" in str(pub.get("caption", "")) else "0",
             "tracked_url": str(pub.get("trackedUrl", "")),
@@ -113,6 +116,8 @@ def build_pack() -> dict:
         "published": sum(1 for row in rows if row["operator_status"] == "published"),
         "proofFiles": sum(1 for row in rows if (ROOT / row["post_proof_file"]).exists()),
         "proofTemplatesSafelyRejected": sum(1 for row in rows if row["post_proof_template_safely_rejected"] == "1"),
+        "proofPlaceholderRows": sum(1 for row in rows if row["post_proof_placeholder"] == "1"),
+        "proofRealReadyRows": sum(1 for row in rows if row["post_proof_real_ready"] == "1"),
         "operationProofPostSafelyRejected": int(proof_metrics.get("postSafelyRejected", 0) or 0),
     }
     issues: list[str] = []
@@ -124,6 +129,8 @@ def build_pack() -> dict:
         issues.append("all post proof template files should exist")
     if metrics["proofTemplatesSafelyRejected"] != metrics["rows"]:
         issues.append("all post proof templates should be safely rejected until real post URLs exist")
+    if metrics["proofPlaceholderRows"] + metrics["proofRealReadyRows"] != metrics["rows"]:
+        issues.append("each post proof should be explicitly placeholder or real ready")
     if metrics["profileGateReady"] == 0 and metrics["readyToPublish"] != 0:
         issues.append("no row can be ready_to_publish before profile gate is ready")
     if metrics["operationProofPostSafelyRejected"] and metrics["operationProofPostSafelyRejected"] != metrics["rows"]:
@@ -162,6 +169,8 @@ def render_markdown(pack: dict) -> str:
         f"- blocked：{metrics['blocked']}",
         f"- published：{metrics['published']}",
         f"- proof templates safely rejected：{metrics['proofTemplatesSafelyRejected']}",
+        f"- proof placeholder rows：{metrics['proofPlaceholderRows']}",
+        f"- proof real ready rows：{metrics['proofRealReadyRows']}",
         f"- issues：{len(pack['issues'])}",
         "",
         "## Rule",
@@ -184,6 +193,7 @@ def render_markdown(pack: dict) -> str:
             f"- post URL ready：{row['post_url_ready']}",
             f"- post proof file：`{row['post_proof_file']}`",
             f"- proof template safely rejected：{row['post_proof_template_safely_rejected']}",
+            f"- proof：placeholder={row['post_proof_placeholder']} / real_ready={row['post_proof_real_ready']}",
             f"- tracked URL：{row['tracked_url']}",
             f"- stop：{row['stop_condition']}",
             "",
@@ -211,6 +221,8 @@ def write_outputs(pack: dict) -> None:
         "post_url_ready",
         "post_proof_file",
         "post_proof_template_safely_rejected",
+        "post_proof_placeholder",
+        "post_proof_real_ready",
         "operator_status",
         "caption_ready",
         "tracked_url",
@@ -241,6 +253,8 @@ def main() -> int:
     print(f"promotion_first_batch_publish_readiness_published={metrics['published']}")
     print(f"promotion_first_batch_publish_readiness_proof_files={metrics['proofFiles']}")
     print(f"promotion_first_batch_publish_readiness_templates_safely_rejected={metrics['proofTemplatesSafelyRejected']}")
+    print(f"promotion_first_batch_publish_readiness_proof_placeholder_rows={metrics['proofPlaceholderRows']}")
+    print(f"promotion_first_batch_publish_readiness_proof_real_ready_rows={metrics['proofRealReadyRows']}")
     print(f"promotion_first_batch_publish_readiness_issues={len(pack['issues'])}")
     for issue in pack["issues"]:
         print(issue)

@@ -70,6 +70,8 @@ def build_pack() -> dict:
         ops = ops_lookup.get((platform, task_id), {})
         ready_to_import = import_status == "ready_to_import"
         safe_template = import_status == "template_safely_rejected"
+        placeholder_proof = safe_template
+        real_proof_ready = ready_to_import
         rows.append({
             "platform": platform,
             "task_id": task_id,
@@ -80,6 +82,8 @@ def build_pack() -> dict:
             "import_status": import_status,
             "ready_to_import": "1" if ready_to_import else "0",
             "template_safely_rejected": "1" if safe_template else "0",
+            "placeholder_proof": "1" if placeholder_proof else "0",
+            "real_proof_ready": "1" if real_proof_ready else "0",
             "post_ops_status": str(ops.get("status", "")),
             "post_url": str(ops.get("post_url", "")),
             "check_command": f"python3 tools/promotion_post_text_import.py check --input {proof_file}",
@@ -103,6 +107,8 @@ def build_pack() -> dict:
         "proofFiles": sum(1 for row in rows if row["proof_exists"] == "1"),
         "readyToImport": sum(1 for row in rows if row["ready_to_import"] == "1"),
         "templatesSafelyRejected": sum(1 for row in rows if row["template_safely_rejected"] == "1"),
+        "placeholderProofRows": sum(1 for row in rows if row["placeholder_proof"] == "1"),
+        "realProofReadyRows": sum(1 for row in rows if row["real_proof_ready"] == "1"),
         "blockedUntilPostUrl": sum(1 for row in rows if row["post_ops_status"] == "blocked_until_post_url"),
         "writebackCommands": sum(1 for row in rows if row["write_command"]),
         "launchDayPostOpsRows": int(launch.get("metrics", {}).get("postOpsRows", 0) or 0),
@@ -116,6 +122,10 @@ def build_pack() -> dict:
         issues.append("all first-batch proof files should exist")
     if metrics["readyToImport"] + metrics["templatesSafelyRejected"] != metrics["rows"]:
         issues.append("each proof file should either be import-ready or safely rejected as a placeholder template")
+    if metrics["placeholderProofRows"] + metrics["realProofReadyRows"] != metrics["rows"]:
+        issues.append("each proof file should be explicitly placeholder or real proof ready")
+    if metrics["realProofReadyRows"] != metrics["readyToImport"]:
+        issues.append("real proof ready rows should match import-ready rows")
     if metrics["postOpsRows"] != metrics["rows"]:
         issues.append("post ops rows should match first-batch proof rows")
     if metrics["postWritebackFirstBatch"] != metrics["rows"]:
@@ -153,6 +163,8 @@ def render_markdown(pack: dict) -> str:
         f"- proof files：{metrics['proofFiles']}",
         f"- ready to import：{metrics['readyToImport']}",
         f"- templates safely rejected：{metrics['templatesSafelyRejected']}",
+        f"- placeholder proof rows：{metrics['placeholderProofRows']}",
+        f"- real proof ready rows：{metrics['realProofReadyRows']}",
         f"- blocked until post URL：{metrics['blockedUntilPostUrl']}",
         f"- writeback commands：{metrics['writebackCommands']}",
         f"- issues：{len(pack['issues'])}",
@@ -167,6 +179,7 @@ def render_markdown(pack: dict) -> str:
             f"### {row['platform']} · `{row['task_id']}`",
             "",
             f"- status：`{row['import_status']}`",
+            f"- proof：placeholder={row['placeholder_proof']} / real_ready={row['real_proof_ready']}",
             f"- post ops：`{row['post_ops_status']}`",
             f"- proof：`{row['proof_file']}`",
             f"- title：{row['title']}",
@@ -191,6 +204,8 @@ def render_text(pack: dict) -> str:
         f"rows: {pack['metrics']['rows']}",
         f"ready_to_import: {pack['metrics']['readyToImport']}",
         f"templates_safely_rejected: {pack['metrics']['templatesSafelyRejected']}",
+        f"placeholder_proof_rows: {pack['metrics']['placeholderProofRows']}",
+        f"real_proof_ready_rows: {pack['metrics']['realProofReadyRows']}",
         "",
     ]
     for row in pack["rows"]:
@@ -226,6 +241,8 @@ def main() -> int:
     print(f"promotion_post_proof_handoff_proof_files={metrics['proofFiles']}")
     print(f"promotion_post_proof_handoff_ready_to_import={metrics['readyToImport']}")
     print(f"promotion_post_proof_handoff_templates_safely_rejected={metrics['templatesSafelyRejected']}")
+    print(f"promotion_post_proof_handoff_placeholder_proof_rows={metrics['placeholderProofRows']}")
+    print(f"promotion_post_proof_handoff_real_proof_ready_rows={metrics['realProofReadyRows']}")
     print(f"promotion_post_proof_handoff_blocked_until_post_url={metrics['blockedUntilPostUrl']}")
     print(f"promotion_post_proof_handoff_writeback_commands={metrics['writebackCommands']}")
     print(f"promotion_post_proof_handoff_post_ops_rows={metrics['postOpsRows']}")

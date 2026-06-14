@@ -79,6 +79,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_profile_writeback_closure_quickstart.py"],
     [sys.executable, "tools/promotion_post_batch_import.py"],
     [sys.executable, "tools/promotion_launch_proof_control_sheet.py"],
+    [sys.executable, "tools/promotion_profile_unlock_rehearsal.py"],
     [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py"],
     [sys.executable, "tools/promotion_first_batch_publish_readiness_pack.py"],
     [sys.executable, "tools/promotion_first_batch_launch_handoff.py"],

@@ -235,7 +235,7 @@ def render_markdown(data: dict, issues: list[str]) -> str:
 
 
 def write_outputs(data: dict, issues: list[str]) -> None:
-    OUTPUT_JSON.write_text(json.dumps({**data, "issues": issues}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_JSON.write_text(json.dumps({**data, "issues": issues}, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     OUTPUT_MD.write_text(render_markdown(data, issues), encoding="utf-8")
     fieldnames = [
         "request_id",

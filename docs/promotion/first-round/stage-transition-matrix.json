@@ -3,6 +3,7 @@
   "sources": {
     "masterGate": "docs/promotion/first-round/master-gate.json",
     "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "profileProofReadiness": "docs/promotion/first-round/profile-proof-readiness-pack.json",
     "firstBatchCompletion": "docs/promotion/first-round/first-batch-completion-gate.json",
     "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
     "leadDemand": "docs/promotion/first-round/lead-demand-gate.json",
@@ -20,7 +21,11 @@
     "blockedUpstreamRows": 5,
     "commandReadyRows": 3,
     "commandBlockedRows": 18,
-    "emptyDataMode": 1
+    "emptyDataMode": 1,
+    "profileProofRows": 3,
+    "profileProofRealReadyRows": 0,
+    "externalProfileProofBlockers": 3,
+    "currentTrueBlockers": 1
   },
   "policy": {
     "oneCurrentBlocker": true,

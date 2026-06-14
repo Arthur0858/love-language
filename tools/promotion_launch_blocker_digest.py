@@ -14,6 +14,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 COMMAND_CENTER = PROMOTION_DIR / "launch-command-center.json"
 PROFILE_COMPLETION = PROMOTION_DIR / "profile-completion-gate.json"
+PROFILE_PROOF_READINESS = PROMOTION_DIR / "profile-proof-readiness-pack.json"
 WEEKLY_REVIEW = PROMOTION_DIR / "weekly-review-packet.json"
 BLOCKER_CHECKLIST = PROMOTION_DIR / "blocker-resolution-checklist.json"
 KPI_HEALTH = PROMOTION_DIR / "kpi-attribution-health-report.json"
@@ -95,6 +96,7 @@ def build_digest() -> dict:
     launch = read_json(LAUNCH_READINESS)
     command = read_json(COMMAND_CENTER)
     profile = read_json(PROFILE_COMPLETION)
+    profile_proof = read_json(PROFILE_PROOF_READINESS)
     weekly = read_json(WEEKLY_REVIEW)
     checklist = read_json(BLOCKER_CHECKLIST)
     kpi = read_json(KPI_HEALTH)
@@ -104,6 +106,7 @@ def build_digest() -> dict:
     command_counts = command.get("phaseCounts", {}) if isinstance(command.get("phaseCounts"), dict) else {}
     weekly_state = weekly.get("state", {}) if isinstance(weekly.get("state"), dict) else {}
     checklist_metrics = checklist.get("metrics", {}) if isinstance(checklist.get("metrics"), dict) else {}
+    proof_metrics = profile_proof.get("metrics", {}) if isinstance(profile_proof.get("metrics"), dict) else {}
     kpi_writeback = kpi.get("writebackMetrics", {}) if isinstance(kpi.get("writebackMetrics"), dict) else {}
     kpi_attr = kpi.get("attributionMetrics", {}) if isinstance(kpi.get("attributionMetrics"), dict) else {}
 
@@ -112,10 +115,20 @@ def build_digest() -> dict:
     blockers = launch.get("blockers", []) if isinstance(launch.get("blockers"), list) else []
     first_blocker = blockers[0] if blockers else {}
     profile_blockers = profile.get("blockers", []) if isinstance(profile.get("blockers"), list) else []
+    real_proof_ready = as_int(proof_metrics.get("realProofReadyRows"))
+    proof_rows = as_int(proof_metrics.get("rows"))
+    profile_configured = as_int(launch_metrics.get("profileConfigured"))
+    current_true_blockers = 1 if stage == "profile_setup" and profile_configured < as_int(launch_metrics.get("profileRows")) else 0
+    external_profile_proof_blockers = max(0, proof_rows - real_proof_ready) if stage == "profile_setup" else 0
 
     metrics = {
-        "profileConfigured": as_int(launch_metrics.get("profileConfigured")),
+        "profileConfigured": profile_configured,
         "profileRows": as_int(launch_metrics.get("profileRows")),
+        "profileProofRows": proof_rows,
+        "profileProofRealReadyRows": real_proof_ready,
+        "profileProofPlaceholderRows": as_int(proof_metrics.get("placeholderProofRows")),
+        "externalProfileProofBlockers": external_profile_proof_blockers,
+        "currentTrueBlockers": current_true_blockers,
         "publishedRows": as_int(launch_metrics.get("publishedRows")),
         "firstBatchRows": as_int(launch_metrics.get("firstBatchRows")),
         "filledKpiRows": as_int(launch_metrics.get("filledKpiRows")),
@@ -158,6 +171,7 @@ def build_digest() -> dict:
             "launchReadiness": str(LAUNCH_READINESS.relative_to(ROOT)),
             "commandCenter": str(COMMAND_CENTER.relative_to(ROOT)),
             "profileCompletion": str(PROFILE_COMPLETION.relative_to(ROOT)),
+            "profileProofReadiness": str(PROFILE_PROOF_READINESS.relative_to(ROOT)),
             "weeklyReview": str(WEEKLY_REVIEW.relative_to(ROOT)),
             "blockerChecklist": str(BLOCKER_CHECKLIST.relative_to(ROOT)),
             "kpiHealth": str(KPI_HEALTH.relative_to(ROOT)),
@@ -172,7 +186,7 @@ def build_digest() -> dict:
         "nextAction": next_action,
         "allowedNow": [
             "Set or verify external platform profile links.",
-            "Capture real proof notes and import only source-checked profile proof.",
+            "Replace placeholder profile proof with real screenshot/click evidence, then import only source-checked profile proof.",
             "Refresh daily ops packets after any writeback.",
         ] if stage == "profile_setup" else [
             next_action["action"],
@@ -200,6 +214,9 @@ def render_markdown(digest: dict) -> str:
         f"- current stage：`{digest['stage']}`",
         f"- first blocker：`{blocker['id'] or 'none'}`",
         f"- profile configured：{metrics['profileConfigured']} / {metrics['profileRows']}",
+        f"- real profile proof ready：{metrics['profileProofRealReadyRows']} / {metrics['profileProofRows']}",
+        f"- external profile proof blockers：{metrics['externalProfileProofBlockers']}",
+        f"- current true blockers：{metrics['currentTrueBlockers']}",
         f"- first batch published：{metrics['publishedRows']} / {metrics['firstBatchRows']}",
         f"- filled KPI rows：{metrics['filledKpiRows']}",
         f"- active blockers：{metrics['checklistActiveBlockers']}",
@@ -231,6 +248,7 @@ def render_markdown(digest: dict) -> str:
         "",
         f"- command ready / prepared / blocked：{metrics['commandReady']} / {metrics['commandPrepared']} / {metrics['commandBlocked']}",
         f"- profile completion blockers：{metrics['profileCompletionBlockers']}",
+        f"- profile placeholder proof rows：{metrics['profileProofPlaceholderRows']}",
         f"- weekly ready：{metrics['weeklyReady']}",
         f"- KPI posting / platform / script rows：{metrics['kpiPostingRows']} / {metrics['kpiPlatformRows']} / {metrics['kpiScriptRows']}",
         f"- attribution rows：{metrics['attributionRows']}",
@@ -260,6 +278,9 @@ def main() -> int:
     metrics = digest["metrics"]
     print(f"promotion_launch_blocker_digest_stage={digest['stage']}")
     print(f"promotion_launch_blocker_digest_profile_configured={metrics['profileConfigured']}")
+    print(f"promotion_launch_blocker_digest_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
+    print(f"promotion_launch_blocker_digest_external_profile_proof_blockers={metrics['externalProfileProofBlockers']}")
+    print(f"promotion_launch_blocker_digest_current_true_blockers={metrics['currentTrueBlockers']}")
     print(f"promotion_launch_blocker_digest_first_batch_published={metrics['publishedRows']}")
     print(f"promotion_launch_blocker_digest_filled_kpi_rows={metrics['filledKpiRows']}")
     print(f"promotion_launch_blocker_digest_active_blockers={metrics['checklistActiveBlockers']}")

@@ -4,6 +4,9 @@
 - current stage：`profile_setup`
 - first blocker：`set_platform_profile_links`
 - profile configured：0 / 3
+- real profile proof ready：0 / 3
+- external profile proof blockers：3
+- current true blockers：1
 - first batch published：0 / 3
 - filled KPI rows：0
 - active blockers：14
@@ -26,7 +29,7 @@
 ## Allowed Now
 
 - Set or verify external platform profile links.
-- Capture real proof notes and import only source-checked profile proof.
+- Replace placeholder profile proof with real screenshot/click evidence, then import only source-checked profile proof.
 - Refresh daily ops packets after any writeback.
 
 ## Do Not Do
@@ -40,6 +43,7 @@
 
 - command ready / prepared / blocked：3 / 3 / 18
 - profile completion blockers：1
+- profile placeholder proof rows：3
 - weekly ready：0
 - KPI posting / platform / script rows：45 / 45 / 15
 - attribution rows：18

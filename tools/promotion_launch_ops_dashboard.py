@@ -15,6 +15,7 @@ COMMAND_CENTER = PROMOTION_DIR / "launch-command-center.json"
 NEXT_ACTIONS = PROMOTION_DIR / "next-actions.json"
 OPERATOR_HANDOFF = PROMOTION_DIR / "operator-handoff-packet.json"
 PROFILE_READINESS = PROMOTION_DIR / "profile-link-readiness-packet.json"
+PROFILE_PROOF_READINESS = PROMOTION_DIR / "profile-proof-readiness-pack.json"
 PUBLISH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
 KPI_ACTION = PROMOTION_DIR / "first-batch-kpi-action-sheet.json"
 LEAD_OPS = PROMOTION_DIR / "lead-ops-action-sheet.json"
@@ -76,6 +77,7 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
     next_actions = bundle["next"]
     handoff = bundle["handoff"]
     profile = bundle["profile"]
+    profile_proof = bundle["profile_proof"]
     publish = bundle["publish"]
     kpi = bundle["kpi"]
     lead = bundle["lead"]
@@ -88,6 +90,9 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
     profile_ready_to_configure = metric(profile, "readyToConfigure")
     profile_configured = metric(profile, "configured")
     profile_public_ready = metric(profile, "publicReady")
+    profile_proof_rows = metric(profile_proof, "rows")
+    profile_proof_real_ready = metric(profile_proof, "realProofReadyRows")
+    profile_proof_blockers = max(0, profile_proof_rows - profile_proof_real_ready)
     profile_status = (
         "ready"
         if metric(profile, "profileGateReady") > 0
@@ -111,8 +116,8 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
             "ready": str(profile_ready_to_configure),
             "blocked": str(3 - profile_configured),
             "next_action": "Set three platform profile links and write back proof.",
-            "evidence": f"public_ready={profile_public_ready}, configured={profile_configured}, ready_to_writeback={metric(profile, 'readyToWriteback')}",
-            "safety": "Do not mark set/live without platform evidence.",
+            "evidence": f"public_ready={profile_public_ready}, configured={profile_configured}, real_proof={profile_proof_real_ready}/{profile_proof_rows}, ready_to_writeback={metric(profile, 'readyToWriteback')}",
+            "safety": "Do not mark set/live without real screenshot or click proof from the platform.",
         },
         {
             "area": "first_batch_publish",
@@ -206,6 +211,7 @@ def build_dashboard() -> dict:
         "next": load_json(NEXT_ACTIONS),
         "handoff": load_json(OPERATOR_HANDOFF),
         "profile": load_json(PROFILE_READINESS),
+        "profile_proof": load_json(PROFILE_PROOF_READINESS),
         "publish": load_json(PUBLISH_ACTION),
         "kpi": load_json(KPI_ACTION),
         "lead": load_json(LEAD_OPS),
@@ -220,6 +226,10 @@ def build_dashboard() -> dict:
     actionable = sum(1 for row in rows if str(row["status"]).startswith("actionable"))
     ready = sum(1 for row in rows if row["status"] == "ready")
     master_metrics = bundle["master"].get("metrics", {}) if isinstance(bundle["master"].get("metrics"), dict) else {}
+    profile_proof_metrics = bundle["profile_proof"].get("metrics", {}) if isinstance(bundle["profile_proof"].get("metrics"), dict) else {}
+    profile_proof_rows = int(profile_proof_metrics.get("rows", 0) or 0)
+    profile_proof_real_ready = int(profile_proof_metrics.get("realProofReadyRows", 0) or 0)
+    external_profile_proof_blockers = max(0, profile_proof_rows - profile_proof_real_ready)
     metrics = {
         "rows": len(rows),
         "readyAreas": ready,
@@ -228,6 +238,10 @@ def build_dashboard() -> dict:
         "holdAreas": hold,
         "masterStageIndex": int(bundle["master"].get("stageIndex", 0) or 0),
         "profileConfigured": int(master_metrics.get("profileConfigured", 0) or 0),
+        "profileProofRows": profile_proof_rows,
+        "profileProofRealReadyRows": profile_proof_real_ready,
+        "externalProfileProofBlockers": external_profile_proof_blockers,
+        "currentTrueBlockers": 1 if str(bundle["master"].get("stage", "")) == "profile_setup" and external_profile_proof_blockers else 0,
         "firstBatchPublished": int(master_metrics.get("firstBatchPublished", 0) or 0),
         "minimumKpiRows": int(master_metrics.get("firstBatchMinimumKpiRows", 0) or 0),
         "leadReadyRoutes": int(master_metrics.get("leadReadyRoutes", 0) or 0),
@@ -244,6 +258,8 @@ def build_dashboard() -> dict:
         issues.append("profile setup should be actionable while public profile links are ready but not configured")
     if metrics["profileConfigured"] < 3 and metrics["actionableAreas"] < 2:
         issues.append("dashboard should expose actionable profile setup and next actions before external profile proof")
+    if metrics["profileConfigured"] < 3 and metrics["externalProfileProofBlockers"] == 0:
+        issues.append("dashboard should show external profile proof blockers before profile setup completes")
     if metrics["minimumKpiRows"] == 0 and any(row["area"] == "weekly_review" and row["status"] == "ready" for row in rows):
         issues.append("weekly review cannot be ready without minimum KPI rows")
     if metrics["profileConfigured"] < 3 and any(row["area"] == "next_actions" and row["status"] == "ready" for row in rows):
@@ -256,6 +272,7 @@ def build_dashboard() -> dict:
             "nextActions": str(NEXT_ACTIONS.relative_to(ROOT)),
             "operatorHandoff": str(OPERATOR_HANDOFF.relative_to(ROOT)),
             "profileReadiness": str(PROFILE_READINESS.relative_to(ROOT)),
+            "profileProofReadiness": str(PROFILE_PROOF_READINESS.relative_to(ROOT)),
             "publishAction": str(PUBLISH_ACTION.relative_to(ROOT)),
             "kpiAction": str(KPI_ACTION.relative_to(ROOT)),
             "leadOps": str(LEAD_OPS.relative_to(ROOT)),
@@ -288,6 +305,9 @@ def render_markdown(dashboard: dict) -> str:
         f"- blocked areas：{metrics['blockedAreas']}",
         f"- hold areas：{metrics['holdAreas']}",
         f"- profile configured：{metrics['profileConfigured']} / 3",
+        f"- real profile proof ready：{metrics['profileProofRealReadyRows']} / {metrics['profileProofRows']}",
+        f"- external profile proof blockers：{metrics['externalProfileProofBlockers']}",
+        f"- current true blockers：{metrics['currentTrueBlockers']}",
         f"- first batch published：{metrics['firstBatchPublished']} / 3",
         f"- minimum KPI rows：{metrics['minimumKpiRows']}",
         f"- lead ready routes：{metrics['leadReadyRoutes']}",
@@ -343,6 +363,9 @@ def main() -> int:
     print(f"promotion_launch_ops_dashboard_blocked_areas={metrics['blockedAreas']}")
     print(f"promotion_launch_ops_dashboard_hold_areas={metrics['holdAreas']}")
     print(f"promotion_launch_ops_dashboard_profile_configured={metrics['profileConfigured']}")
+    print(f"promotion_launch_ops_dashboard_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
+    print(f"promotion_launch_ops_dashboard_external_profile_proof_blockers={metrics['externalProfileProofBlockers']}")
+    print(f"promotion_launch_ops_dashboard_current_true_blockers={metrics['currentTrueBlockers']}")
     print(f"promotion_launch_ops_dashboard_first_batch_published={metrics['firstBatchPublished']}")
     print(f"promotion_launch_ops_dashboard_minimum_kpi_rows={metrics['minimumKpiRows']}")
     print(f"promotion_launch_ops_dashboard_lead_ready_routes={metrics['leadReadyRoutes']}")

@@ -7,6 +7,9 @@
 - blocked areas：8
 - hold areas：0
 - profile configured：0 / 3
+- real profile proof ready：0 / 3
+- external profile proof blockers：3
+- current true blockers：1
 - first batch published：0 / 3
 - minimum KPI rows：0
 - lead ready routes：0
@@ -34,8 +37,8 @@
 - status：`actionable`
 - ready / blocked：3 / 3
 - next：Set three platform profile links and write back proof.
-- evidence：public_ready=3, configured=0, ready_to_writeback=0
-- safety：Do not mark set/live without platform evidence.
+- evidence：public_ready=3, configured=0, real_proof=0/3, ready_to_writeback=0
+- safety：Do not mark set/live without real screenshot or click proof from the platform.
 
 ### first_batch_publish
 

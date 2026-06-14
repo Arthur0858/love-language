@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 MASTER_GATE = PROMOTION_DIR / "master-gate.json"
 PROFILE_COMPLETION = PROMOTION_DIR / "profile-completion-gate.json"
+PROFILE_PROOF_READINESS = PROMOTION_DIR / "profile-proof-readiness-pack.json"
 FIRST_BATCH_COMPLETION = PROMOTION_DIR / "first-batch-completion-gate.json"
 WEEKLY_REVIEW = PROMOTION_DIR / "weekly-review-packet.json"
 LEAD_DEMAND = PROMOTION_DIR / "lead-demand-gate.json"
@@ -135,7 +136,7 @@ def blocker_for(stage: str, blockers: dict, decision_input: dict) -> str:
     rows = blockers.get("rows", []) if isinstance(blockers.get("rows"), list) else []
     if stage == "profile_setup":
         ready = [row.get("blocker_id", "") for row in rows if row.get("phase") == "profile_setup" and row.get("status") == "ready_to_act"]
-        return ", ".join(ready[:3]) or "profile proof evidence is not complete"
+        return ", ".join(ready[:3]) or "real profile proof evidence is not complete"
     if stage == "first_batch_publish":
         return "first batch post URLs are not all verified"
     if stage == "first_batch_kpi":
@@ -155,6 +156,7 @@ def blocker_for(stage: str, blockers: dict, decision_input: dict) -> str:
 def build_matrix() -> dict:
     master = load_json(MASTER_GATE)
     profile = load_json(PROFILE_COMPLETION)
+    profile_proof = load_json(PROFILE_PROOF_READINESS)
     first_batch = load_json(FIRST_BATCH_COMPLETION)
     weekly = load_json(WEEKLY_REVIEW)
     lead = load_json(LEAD_DEMAND)
@@ -165,6 +167,10 @@ def build_matrix() -> dict:
 
     active_stage = str(master.get("stage", ""))
     values = current_values(master, profile, first_batch, weekly, lead, offer)
+    proof_metrics = profile_proof.get("metrics", {}) if isinstance(profile_proof.get("metrics"), dict) else {}
+    profile_proof_rows = int(proof_metrics.get("rows", 0) or 0)
+    profile_proof_real_ready = int(proof_metrics.get("realProofReadyRows", 0) or 0)
+    external_profile_proof_blockers = max(0, profile_proof_rows - profile_proof_real_ready)
     rows = []
     passed_so_far = True
     for item in TRANSITIONS:
@@ -193,6 +199,7 @@ def build_matrix() -> dict:
         "sources": {
             "masterGate": str(MASTER_GATE.relative_to(ROOT)),
             "profileCompletion": str(PROFILE_COMPLETION.relative_to(ROOT)),
+            "profileProofReadiness": str(PROFILE_PROOF_READINESS.relative_to(ROOT)),
             "firstBatchCompletion": str(FIRST_BATCH_COMPLETION.relative_to(ROOT)),
             "weeklyReview": str(WEEKLY_REVIEW.relative_to(ROOT)),
             "leadDemand": str(LEAD_DEMAND.relative_to(ROOT)),
@@ -211,6 +218,10 @@ def build_matrix() -> dict:
             "commandReadyRows": int(command.get("readyRows", 0) or 0),
             "commandBlockedRows": int(command.get("blockedRows", 0) or 0),
             "emptyDataMode": 1 if decision_input.get("metrics", {}).get("emptyDataMode") else 0,
+            "profileProofRows": profile_proof_rows,
+            "profileProofRealReadyRows": profile_proof_real_ready,
+            "externalProfileProofBlockers": external_profile_proof_blockers,
+            "currentTrueBlockers": 1 if active_stage == "profile_setup" and external_profile_proof_blockers else 0,
         },
         "policy": {
             "oneCurrentBlocker": True,
@@ -245,6 +256,9 @@ def validate_matrix(matrix: dict) -> list[str]:
             issues.append(f"{label}: non-complete transition needs blocker text")
     if matrix.get("stage") == "profile_setup" and rows[0].get("status") != "current_blocker":
         issues.append("profile_setup stage should put the first transition as current_blocker")
+    metrics = matrix.get("metrics", {})
+    if matrix.get("stage") == "profile_setup" and int(metrics.get("externalProfileProofBlockers", 0) or 0) < 1:
+        issues.append("profile_setup stage should expose external profile proof blockers")
     return issues
 
 
@@ -260,6 +274,9 @@ def render_markdown(matrix: dict, issues: list[str]) -> str:
         f"- current blockers：{metrics['currentBlockers']}",
         f"- blocked upstream rows：{metrics['blockedUpstreamRows']}",
         f"- command rows ready / blocked：{metrics['commandReadyRows']} / {metrics['commandBlockedRows']}",
+        f"- real profile proof ready：{metrics['profileProofRealReadyRows']} / {metrics['profileProofRows']}",
+        f"- external profile proof blockers：{metrics['externalProfileProofBlockers']}",
+        f"- current true blockers：{metrics['currentTrueBlockers']}",
         f"- empty data mode：{metrics['emptyDataMode']}",
         f"- issues：{len(issues)}",
         "",
@@ -329,6 +346,9 @@ def main() -> int:
     print(f"promotion_stage_transition_next_rows={metrics['nextRows']}")
     print(f"promotion_stage_transition_blocked_upstream={metrics['blockedUpstreamRows']}")
     print(f"promotion_stage_transition_command_ready={metrics['commandReadyRows']}")
+    print(f"promotion_stage_transition_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
+    print(f"promotion_stage_transition_external_profile_proof_blockers={metrics['externalProfileProofBlockers']}")
+    print(f"promotion_stage_transition_current_true_blockers={metrics['currentTrueBlockers']}")
     print(f"promotion_stage_transition_empty_data={metrics['emptyDataMode']}")
     print(f"promotion_stage_transition_issues={len(issues)}")
     for issue in issues:

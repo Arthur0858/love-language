@@ -7,6 +7,9 @@
 - current blockers：1
 - blocked upstream rows：5
 - command rows ready / blocked：3 / 18
+- real profile proof ready：0 / 3
+- external profile proof blockers：3
+- current true blockers：1
 - empty data mode：1
 - issues：0
 

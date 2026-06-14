@@ -4,6 +4,7 @@
     "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "commandCenter": "docs/promotion/first-round/launch-command-center.json",
     "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "profileProofReadiness": "docs/promotion/first-round/profile-proof-readiness-pack.json",
     "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
     "blockerChecklist": "docs/promotion/first-round/blocker-resolution-checklist.json",
     "kpiHealth": "docs/promotion/first-round/kpi-attribution-health-report.json"
@@ -22,7 +23,7 @@
   },
   "allowedNow": [
     "Set or verify external platform profile links.",
-    "Capture real proof notes and import only source-checked profile proof.",
+    "Replace placeholder profile proof with real screenshot/click evidence, then import only source-checked profile proof.",
     "Refresh daily ops packets after any writeback."
   ],
   "doNotDo": [
@@ -34,6 +35,11 @@
   "metrics": {
     "profileConfigured": 0,
     "profileRows": 3,
+    "profileProofRows": 3,
+    "profileProofRealReadyRows": 0,
+    "profileProofPlaceholderRows": 3,
+    "externalProfileProofBlockers": 3,
+    "currentTrueBlockers": 1,
     "publishedRows": 0,
     "firstBatchRows": 3,
     "filledKpiRows": 0,

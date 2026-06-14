@@ -251,7 +251,7 @@ def write_outputs(runbook: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(runbook, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     fieldnames = ["id", "phase", "severity", "status", "trigger", "stop", "recovery", "source", "operatorAction"]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in runbook["rows"])
 

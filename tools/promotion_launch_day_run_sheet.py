@@ -214,7 +214,7 @@ def write_outputs(sheet: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(sheet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     fieldnames = ["order", "phase", "platform", "task", "status", "action", "check_command", "write_command", "success_signal", "stop_condition"]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in sheet["rows"])
 

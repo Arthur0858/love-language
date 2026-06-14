@@ -2,7 +2,7 @@
 
 - 產生日期：2026-06-14
 - rows：11
-- ready areas：1
+- ready areas：0
 - blocked areas：9
 - hold areas：0
 - profile configured：0 / 3
@@ -102,8 +102,8 @@
 
 ### next_actions
 
-- status：`ready`
+- status：`profile_setup`
 - ready / blocked：6 / 18
-- next：Do the current ready actions in order: profile setup, asset readiness, then publish.
+- next：Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.
 - evidence：selected_tasks=3, command_rows=24
-- safety：Ready actions do not authorize downstream commerce decisions.
+- safety：A next-actions packet can include blocked downstream work; follow status and master gate before acting.

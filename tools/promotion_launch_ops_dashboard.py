@@ -58,6 +58,18 @@ def status_from_counts(ready: int, blocked: int, hold: int = 0) -> str:
     return "waiting"
 
 
+def next_actions_status(master: dict, next_actions: dict) -> str:
+    if not next_actions.get("actions"):
+        return "waiting"
+    master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
+    profile_configured = int(master_metrics.get("profileConfigured", 0) or 0)
+    if str(master.get("stage", "")) == "profile_setup" and profile_configured < 3:
+        return "profile_setup"
+    if any(str(action.get("priority", "")) == "blocked" for action in next_actions.get("actions", [])):
+        return "blocked"
+    return "ready"
+
+
 def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
     master = bundle["master"]
     command = bundle["command"]
@@ -166,12 +178,12 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
         },
         {
             "area": "next_actions",
-            "status": "ready" if int(next_actions.get("actions", [{}]) and len(next_actions.get("actions", [])) or 0) else "waiting",
+            "status": next_actions_status(master, next_actions),
             "ready": str(command.get("readyRows", 0)),
             "blocked": str(command.get("blockedRows", 0)),
-            "next_action": "Do the current ready actions in order: profile setup, asset readiness, then publish.",
+            "next_action": "Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.",
             "evidence": f"selected_tasks={len(next_actions.get('selectedTasks', []))}, command_rows={command.get('rowCount', 0)}",
-            "safety": "Ready actions do not authorize downstream commerce decisions.",
+            "safety": "A next-actions packet can include blocked downstream work; follow status and master gate before acting.",
         },
     ]
     return rows
@@ -217,6 +229,8 @@ def build_dashboard() -> dict:
         issues.append("dashboard should show master stage profile_setup while no profiles are configured")
     if metrics["minimumKpiRows"] == 0 and any(row["area"] == "weekly_review" and row["status"] == "ready" for row in rows):
         issues.append("weekly review cannot be ready without minimum KPI rows")
+    if metrics["profileConfigured"] < 3 and any(row["area"] == "next_actions" and row["status"] == "ready" for row in rows):
+        issues.append("next actions cannot be fully ready before profile setup completes")
     return {
         "generatedAt": today(),
         "sources": {
@@ -289,7 +303,7 @@ def write_outputs(dashboard: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(dashboard, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
         fieldnames = ["area", "status", "ready", "blocked", "next_action", "evidence", "safety"]
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(dashboard["rows"])
 

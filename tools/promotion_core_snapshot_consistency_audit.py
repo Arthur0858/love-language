@@ -75,7 +75,7 @@ def build_operator_handoff_snapshot() -> dict:
 
 def rows_csv(fieldnames: list[str], rows: list[dict[str, object]]) -> str:
     buffer = StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=fieldnames)
+    writer = csv.DictWriter(buffer, fieldnames=fieldnames, lineterminator="\n")
     writer.writeheader()
     for row in rows:
         writer.writerow({field: row.get(field, "") for field in fieldnames})

@@ -132,6 +132,7 @@ PYTHON_TOOLS = [
     "tools/promotion_weekly_review_action_sheet.py",
     "tools/promotion_weekly_review_quickstart.py",
     "tools/promotion_blocker_resolution_checklist.py",
+    "tools/promotion_launch_blocker_digest.py",
     "tools/promotion_operator_handoff_packet.py",
     "tools/promotion_launch_ops_dashboard.py",
     "tools/promotion_launch_day_run_sheet.py",
@@ -364,6 +365,7 @@ def main() -> int:
         run_step("promotion weekly review action sheet", [sys.executable, "tools/promotion_weekly_review_action_sheet.py", "--check"])
         run_step("promotion weekly review quickstart", [sys.executable, "tools/promotion_weekly_review_quickstart.py", "--check"])
         run_step("promotion blocker resolution checklist", [sys.executable, "tools/promotion_blocker_resolution_checklist.py", "--check"])
+        run_step("promotion launch blocker digest", [sys.executable, "tools/promotion_launch_blocker_digest.py", "--check"])
         run_step("promotion operator handoff packet", [sys.executable, "tools/promotion_operator_handoff_packet.py", "--check"])
         run_step("promotion launch ops dashboard", [sys.executable, "tools/promotion_launch_ops_dashboard.py", "--check"])
         run_step("promotion launch day run sheet", [sys.executable, "tools/promotion_launch_day_run_sheet.py", "--check"])

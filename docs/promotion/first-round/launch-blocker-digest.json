@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
+    "commandCenter": "docs/promotion/first-round/launch-command-center.json",
+    "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "blockerChecklist": "docs/promotion/first-round/blocker-resolution-checklist.json",
+    "kpiHealth": "docs/promotion/first-round/kpi-attribution-health-report.json"
+  },
+  "stage": "profile_setup",
+  "firstBlocker": {
+    "id": "set_platform_profile_links",
+    "phase": "profile_setup",
+    "severity": "launch_blocker",
+    "message": "3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。"
+  },
+  "nextAction": {
+    "action": "Set the three external platform profile links, capture real proof, then import profile proof text.",
+    "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+    "release": "promotion_launch_readiness_profile_configured=3 and ready_to_publish=1"
+  },
+  "allowedNow": [
+    "Set or verify external platform profile links.",
+    "Capture real proof notes and import only source-checked profile proof.",
+    "Refresh daily ops packets after any writeback."
+  ],
+  "doNotDo": [
+    "Do not publish first-batch posts before all profile rows are set/live.",
+    "Do not mark posts published without real public post URLs.",
+    "Do not fill KPI values from guesses or placeholders.",
+    "Do not change Luna, affiliate, paid offer, or guardian winner decisions while empty_data_mode=1."
+  ],
+  "metrics": {
+    "profileConfigured": 0,
+    "profileRows": 3,
+    "publishedRows": 0,
+    "firstBatchRows": 3,
+    "filledKpiRows": 0,
+    "blockers": 3,
+    "checklistActiveBlockers": 14,
+    "checklistReadyNow": 3,
+    "commandReady": 3,
+    "commandPrepared": 3,
+    "commandBlocked": 18,
+    "profileCompletionBlockers": 2,
+    "weeklyReady": 0,
+    "emptyDataMode": 1,
+    "kpiPostingRows": 45,
+    "kpiPlatformRows": 45,
+    "kpiScriptRows": 15,
+    "attributionRows": 18
+  },
+  "commandPhaseCounts": {
+    "profile_setup": 3,
+    "asset_ready_check": 3,
+    "publish_post": 9,
+    "kpi_backfill": 9
+  },
+  "issues": []
+}

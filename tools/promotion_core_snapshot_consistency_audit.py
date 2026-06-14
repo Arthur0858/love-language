@@ -26,22 +26,31 @@ from promotion_operator_handoff_packet import build_handoff as build_operator_ha
 from promotion_operator_handoff_packet import validate_handoff as validate_operator_handoff  # noqa: E402
 from promotion_launch_clipboard import build_clipboard as build_launch_clipboard  # noqa: E402
 from promotion_launch_ops_dashboard import build_dashboard as build_launch_ops_dashboard  # noqa: E402
+from promotion_launch_ops_dashboard import render_markdown as render_launch_ops_dashboard_markdown  # noqa: E402
 from promotion_launch_day_run_sheet import build_run_sheet as build_launch_day_run_sheet  # noqa: E402
+from promotion_launch_day_run_sheet import render_markdown as render_launch_day_run_sheet_markdown  # noqa: E402
 from promotion_launch_exception_runbook import build_runbook as build_launch_exception_runbook  # noqa: E402
+from promotion_launch_exception_runbook import render_markdown as render_launch_exception_runbook_markdown  # noqa: E402
 from promotion_operation_proof_packet import build_packet as build_operation_proof_packet  # noqa: E402
 from promotion_proof_rehearsal import build_rehearsal as build_proof_rehearsal  # noqa: E402
 from promotion_profile_publish_handoff import build_handoff as build_profile_publish_handoff  # noqa: E402
 from promotion_profile_publish_handoff import CSV_FIELDS as PROFILE_PUBLISH_CSV_FIELDS  # noqa: E402
+from promotion_profile_publish_handoff import render_markdown as render_profile_publish_handoff_markdown  # noqa: E402
 from promotion_publish_kpi_handoff import build_handoff as build_publish_kpi_handoff  # noqa: E402
 from promotion_publish_kpi_handoff import CSV_FIELDS as PUBLISH_KPI_CSV_FIELDS  # noqa: E402
+from promotion_publish_kpi_handoff import render_markdown as render_publish_kpi_handoff_markdown  # noqa: E402
 from promotion_stage_transition_matrix import build_matrix  # noqa: E402
 from promotion_stage_transition_matrix import CSV_FIELDS as STAGE_TRANSITION_CSV_FIELDS  # noqa: E402
+from promotion_stage_transition_matrix import render_markdown as render_stage_transition_markdown  # noqa: E402
+from promotion_stage_transition_matrix import validate_matrix as validate_stage_transition_matrix  # noqa: E402
 from promotion_weekly_lead_offer_handoff import build_handoff as build_weekly_lead_offer_handoff  # noqa: E402
 from promotion_weekly_lead_offer_handoff import CSV_FIELDS as WEEKLY_LEAD_OFFER_CSV_FIELDS  # noqa: E402
+from promotion_weekly_lead_offer_handoff import render_markdown as render_weekly_lead_offer_handoff_markdown  # noqa: E402
 
 
 SnapshotBuilder = Callable[[], dict]
 CsvBuilder = Callable[[], tuple[list[str], list[dict[str, object]]]]
+MdBuilder = Callable[[], str]
 
 
 def build_weekly_review_snapshot() -> dict:
@@ -124,6 +133,35 @@ def launch_exception_runbook_csv_rows() -> tuple[list[str], list[dict[str, objec
     return fields, build_launch_exception_runbook()["rows"]
 
 
+def stage_transition_md() -> str:
+    matrix = build_matrix()
+    return render_stage_transition_markdown(matrix, validate_stage_transition_matrix(matrix))
+
+
+def profile_publish_md() -> str:
+    return render_profile_publish_handoff_markdown(build_profile_publish_handoff())
+
+
+def publish_kpi_md() -> str:
+    return render_publish_kpi_handoff_markdown(build_publish_kpi_handoff())
+
+
+def weekly_lead_offer_md() -> str:
+    return render_weekly_lead_offer_handoff_markdown(build_weekly_lead_offer_handoff())
+
+
+def launch_ops_dashboard_md() -> str:
+    return render_launch_ops_dashboard_markdown(build_launch_ops_dashboard())
+
+
+def launch_day_run_sheet_md() -> str:
+    return render_launch_day_run_sheet_markdown(build_launch_day_run_sheet())
+
+
+def launch_exception_runbook_md() -> str:
+    return render_launch_exception_runbook_markdown(build_launch_exception_runbook())
+
+
 SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
     ("profile_completion_gate", PROMOTION_DIR / "profile-completion-gate.json", build_profile_completion_gate),
     ("first_batch_completion_gate", PROMOTION_DIR / "first-batch-completion-gate.json", build_first_batch_completion_gate),
@@ -152,6 +190,16 @@ CSV_SNAPSHOTS: tuple[tuple[str, Path, CsvBuilder], ...] = (
     ("launch_ops_dashboard_csv", PROMOTION_DIR / "launch-ops-dashboard.csv", launch_ops_dashboard_csv_rows),
     ("launch_day_run_sheet_csv", PROMOTION_DIR / "launch-day-run-sheet.csv", launch_day_run_sheet_csv_rows),
     ("launch_exception_runbook_csv", PROMOTION_DIR / "launch-exception-runbook.csv", launch_exception_runbook_csv_rows),
+)
+
+MD_SNAPSHOTS: tuple[tuple[str, Path, MdBuilder], ...] = (
+    ("stage_transition_matrix_md", PROMOTION_DIR / "stage-transition-matrix.md", stage_transition_md),
+    ("profile_publish_handoff_md", PROMOTION_DIR / "profile-publish-handoff.md", profile_publish_md),
+    ("publish_kpi_handoff_md", PROMOTION_DIR / "publish-kpi-handoff.md", publish_kpi_md),
+    ("weekly_lead_offer_handoff_md", PROMOTION_DIR / "weekly-lead-offer-handoff.md", weekly_lead_offer_md),
+    ("launch_ops_dashboard_md", PROMOTION_DIR / "launch-ops-dashboard.md", launch_ops_dashboard_md),
+    ("launch_day_run_sheet_md", PROMOTION_DIR / "launch-day-run-sheet.md", launch_day_run_sheet_md),
+    ("launch_exception_runbook_md", PROMOTION_DIR / "launch-exception-runbook.md", launch_exception_runbook_md),
 )
 
 
@@ -201,6 +249,19 @@ def main() -> int:
             fresh += 1
         else:
             issues.append(f"{label}: generated CSV snapshot is stale relative to current source data")
+
+    for label, path, builder in MD_SNAPSHOTS:
+        checked += 1
+        if not path.exists():
+            missing += 1
+            issues.append(f"{label}: missing snapshot {path.relative_to(ROOT)}")
+            continue
+        rebuilt = builder()
+        current = path.read_text(encoding="utf-8")
+        if current == rebuilt:
+            fresh += 1
+        else:
+            issues.append(f"{label}: generated Markdown snapshot is stale relative to current source data")
 
     print(f"promotion_core_snapshot_checked={checked}")
     print(f"promotion_core_snapshot_fresh={fresh}")

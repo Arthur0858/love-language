@@ -1469,11 +1469,18 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
         extra = sorted(set(support_files).difference(EXPECTED_SUPPORT_FILES))
         issues.append(f"{path}: supportFiles mismatch missing={missing} extra={extra}")
     expected_gates = {"localPredeploy", "localizedAffiliateLinks", "promotionWritebackFlow", "publicDiscovery", "publicDeploy", "versionedAssets"}
+    expected_gates.add("publicLeadMailtoImportability")
     if not isinstance(gates, dict) or set(gates) != expected_gates:
-        issues.append(f"{path}: requiredGates should list six gate names")
+        issues.append(f"{path}: requiredGates should list seven gate names")
     else:
         gate_text = " ".join(str(value) for value in gates.values())
-        for snippet in ("affiliate_locale_issues=0", "promotion_writeback_issues=0", "promotion_writeback_stale_phrase_hits=0"):
+        for snippet in (
+            "affiliate_locale_issues=0",
+            "promotion_writeback_issues=0",
+            "promotion_writeback_stale_phrase_hits=0",
+            "public_lead_mailto_importability_issues=0",
+            "public_lead_mailto_importability_importable_rows=175",
+        ):
             if snippet not in gate_text:
                 issues.append(f"{path}: requiredGates missing snippet {snippet!r}")
     local_audits = data.get("localAuditCoverage", {})
@@ -1550,6 +1557,7 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
         "python3 tools/deploy_cloudflare_pages.py",
         "python3 tools/public_discovery_smoke.py",
         "python3 tools/public_deploy_smoke.py",
+        "python3 tools/public_lead_mailto_importability_smoke.py",
         "python3 tools/public_versioned_asset_smoke.py",
     ]
     if commands != expected_commands:
@@ -1559,6 +1567,8 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
         "issues=0",
         "public_discovery_issues=0",
         "public_deploy_issues=0",
+        "public_lead_mailto_importability_issues=0",
+        "public_lead_mailto_importability_importable_rows=175",
         "public_versioned_asset_issues=0",
         "public_versioned_asset_stale_refs=0",
     }

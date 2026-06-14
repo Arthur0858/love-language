@@ -2718,7 +2718,15 @@ def parse_site_health() -> tuple[list[str], Counter]:
             if not (ROOT / rel_path).exists():
                 issues.append(f"{SITE_HEALTH_PATH}: listed support file missing: {rel_path}")
     gates = data.get("requiredGates")
-    expected_gates = {"localPredeploy", "localizedAffiliateLinks", "promotionWritebackFlow", "publicDiscovery", "publicDeploy", "versionedAssets"}
+    expected_gates = {
+        "localPredeploy",
+        "localizedAffiliateLinks",
+        "promotionWritebackFlow",
+        "publicDiscovery",
+        "publicDeploy",
+        "publicLeadMailtoImportability",
+        "versionedAssets",
+    }
     if not isinstance(gates, dict) or set(gates) != expected_gates:
         issues.append(f"{SITE_HEALTH_PATH}: requiredGates should contain {sorted(expected_gates)}")
     else:
@@ -2732,6 +2740,8 @@ def parse_site_health() -> tuple[list[str], Counter]:
             "promotion_writeback_stale_phrase_hits=0",
             "public_discovery_issues=0",
             "public_deploy_issues=0",
+            "public_lead_mailto_importability_issues=0",
+            "public_lead_mailto_importability_importable_rows=175",
             "public_versioned_asset_issues=0",
         ):
             if snippet not in gate_text:
@@ -2821,6 +2831,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         "python3 tools/deploy_cloudflare_pages.py",
         "python3 tools/public_discovery_smoke.py",
         "python3 tools/public_deploy_smoke.py",
+        "python3 tools/public_lead_mailto_importability_smoke.py",
         "python3 tools/public_versioned_asset_smoke.py",
     ]
     if commands != expected_commands:
@@ -2843,6 +2854,8 @@ def parse_release_info() -> tuple[list[str], Counter]:
         "issues=0",
         "public_discovery_issues=0",
         "public_deploy_issues=0",
+        "public_lead_mailto_importability_issues=0",
+        "public_lead_mailto_importability_importable_rows=175",
         "public_versioned_asset_issues=0",
         "public_versioned_asset_stale_refs=0",
     }

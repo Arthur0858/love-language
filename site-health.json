@@ -27,6 +27,7 @@
     "promotionWritebackFlow": "tools/promotion_writeback_flow_audit.py must report promotion_writeback_issues=0 and promotion_writeback_stale_phrase_hits=0 so platform posts use platform-kpi-tracker.csv before weekly kpi-tracker.csv rollups.",
     "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
     "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
+    "publicLeadMailtoImportability": "tools/public_lead_mailto_importability_smoke.py must report public_lead_mailto_importability_issues=0 and public_lead_mailto_importability_importable_rows=175 so Cloudflare-protected lead mailto links remain importable.",
     "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment."
   },
   "promotionProfileVerification": {

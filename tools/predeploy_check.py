@@ -129,6 +129,7 @@ PYTHON_TOOLS = [
     "tools/promotion_daily_ops_refresh.py",
     "tools/promotion_master_gate.py",
     "tools/promotion_stage_transition_matrix.py",
+    "tools/promotion_core_snapshot_consistency_audit.py",
     "tools/promotion_profile_publish_handoff.py",
     "tools/promotion_publish_kpi_handoff.py",
     "tools/promotion_weekly_lead_offer_handoff.py",
@@ -341,6 +342,7 @@ def main() -> int:
         run_step("promotion daily ops refresh", [sys.executable, "tools/promotion_daily_ops_refresh.py", "--check", "--strict-freshness"])
         run_step("promotion master gate", [sys.executable, "tools/promotion_master_gate.py", "--check"])
         run_step("promotion stage transition matrix", [sys.executable, "tools/promotion_stage_transition_matrix.py", "--check"])
+        run_step("promotion core snapshot consistency audit", [sys.executable, "tools/promotion_core_snapshot_consistency_audit.py"])
         run_step("promotion profile publish handoff", [sys.executable, "tools/promotion_profile_publish_handoff.py", "--check"])
         run_step("promotion publish KPI handoff", [sys.executable, "tools/promotion_publish_kpi_handoff.py", "--check"])
         run_step("promotion weekly lead offer handoff", [sys.executable, "tools/promotion_weekly_lead_offer_handoff.py", "--check"])

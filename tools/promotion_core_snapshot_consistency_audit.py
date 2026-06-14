@@ -27,6 +27,7 @@ from promotion_launch_ops_dashboard import build_dashboard as build_launch_ops_d
 from promotion_launch_day_run_sheet import build_run_sheet as build_launch_day_run_sheet  # noqa: E402
 from promotion_launch_exception_runbook import build_runbook as build_launch_exception_runbook  # noqa: E402
 from promotion_operation_proof_packet import build_packet as build_operation_proof_packet  # noqa: E402
+from promotion_proof_rehearsal import build_rehearsal as build_proof_rehearsal  # noqa: E402
 from promotion_profile_publish_handoff import build_handoff as build_profile_publish_handoff  # noqa: E402
 from promotion_publish_kpi_handoff import build_handoff as build_publish_kpi_handoff  # noqa: E402
 from promotion_stage_transition_matrix import build_matrix  # noqa: E402
@@ -73,6 +74,7 @@ SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
     ("launch_day_run_sheet", PROMOTION_DIR / "launch-day-run-sheet.json", build_launch_day_run_sheet),
     ("launch_exception_runbook", PROMOTION_DIR / "launch-exception-runbook.json", build_launch_exception_runbook),
     ("operation_proof_packet", PROMOTION_DIR / "operation-proof-packet.json", build_operation_proof_packet),
+    ("proof_rehearsal", PROMOTION_DIR / "proof-rehearsal.json", build_proof_rehearsal),
 )
 
 

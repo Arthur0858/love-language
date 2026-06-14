@@ -6,6 +6,8 @@ docs/
 output/
 node_modules
 node_modules/
+.playwright-cli/
+artifacts/
 
 # 上層目錄意外進入的資料夾
 love/

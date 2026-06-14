@@ -34,6 +34,9 @@ FIELDNAMES = [
     "structural_status",
     "public_status",
     "final_url",
+    "landing_quiz_entry",
+    "landing_hero_actions",
+    "landing_safety_nav",
     "notes",
 ]
 
@@ -61,6 +64,29 @@ def fetch_public(url: str, timeout: int) -> tuple[str, str, str]:
     with urlopen(request, timeout=timeout) as response:
         html = response.read().decode("utf-8", errors="replace")
         return str(response.status), response.geturl(), html
+
+
+def landing_checks(html: str) -> tuple[dict[str, bool], list[str]]:
+    checks = {
+        "quiz_entry": all(marker in html for marker in ('id="quiz-section"', "data-quiz-root", "data-quiz-start")),
+        "hero_actions": all(
+            marker in html
+            for marker in (
+                'data-funnel-event="start_hero_quiz"',
+                'data-funnel-event="start_hero_guardians"',
+                'data-funnel-event="start_hero_resources"',
+            )
+        ),
+        "safety_nav": all(marker in html for marker in ('href="/privacy/"', 'href="/terms/"', 'href="/contact/"')),
+    }
+    issues = []
+    if not checks["quiz_entry"] or not ("15 題" in html and ("心語儀式" in html or "情感守護者" in html)):
+        issues.append("public page missing quiz start signals")
+    if not checks["hero_actions"]:
+        issues.append("public page missing start hero action tracking")
+    if not checks["safety_nav"]:
+        issues.append("public page missing trust/safety footer links")
+    return checks, issues
 
 
 def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[dict[str, str]], list[str]]:
@@ -93,6 +119,9 @@ def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[di
 
         public_status = "not_checked"
         final_url = ""
+        landing_quiz_entry = ""
+        landing_hero_actions = ""
+        landing_safety_nav = ""
         if public and not structural_issues:
             try:
                 status, final_url, html = fetch_public(url, timeout)
@@ -104,8 +133,11 @@ def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[di
                 for key in ("utm_source", "utm_medium", "utm_campaign", "utm_content"):
                     if final_parts[key] != parts[key]:
                         public_issues.append(f"final URL changed {key}")
-                if 'id="quiz-section"' not in html or "情感守護者" not in html:
-                    public_issues.append("public page missing quiz/guardian landing signals")
+                checks, landing_issues = landing_checks(html)
+                landing_quiz_entry = "1" if checks["quiz_entry"] else "0"
+                landing_hero_actions = "1" if checks["hero_actions"] else "0"
+                landing_safety_nav = "1" if checks["safety_nav"] else "0"
+                public_issues.extend(landing_issues)
                 public_status = "pass" if not public_issues else "fail"
             except Exception as exc:  # noqa: BLE001
                 public_issues.append(f"public request failed: {exc}")
@@ -127,6 +159,9 @@ def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[di
             "structural_status": structural_status,
             "public_status": public_status,
             "final_url": final_url,
+            "landing_quiz_entry": landing_quiz_entry,
+            "landing_hero_actions": landing_hero_actions,
+            "landing_safety_nav": landing_safety_nav,
             "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform.",
         })
     return rows, issues
@@ -194,12 +229,18 @@ def main() -> int:
     structural_pass = sum(1 for row in rows if row["structural_status"] == "pass")
     public_checked = sum(1 for row in rows if row["public_status"] != "not_checked")
     public_pass = sum(1 for row in rows if row["public_status"] == "pass")
+    landing_quiz_entries = sum(1 for row in rows if row["landing_quiz_entry"] == "1")
+    landing_hero_actions = sum(1 for row in rows if row["landing_hero_actions"] == "1")
+    landing_safety_navs = sum(1 for row in rows if row["landing_safety_nav"] == "1")
     payload = {
         "generatedAt": date.today().isoformat(),
         "rowCount": len(rows),
         "structuralPass": structural_pass,
         "publicChecked": public_checked,
         "publicPass": public_pass,
+        "landingQuizEntries": landing_quiz_entries,
+        "landingHeroActions": landing_hero_actions,
+        "landingSafetyNavs": landing_safety_navs,
         "rows": rows,
         "issues": issues,
     }
@@ -210,6 +251,9 @@ def main() -> int:
     print(f"promotion_profile_url_structural_pass={structural_pass}")
     print(f"promotion_profile_url_public_checked={public_checked}")
     print(f"promotion_profile_url_public_pass={public_pass}")
+    print(f"promotion_profile_url_landing_quiz_entries={landing_quiz_entries}")
+    print(f"promotion_profile_url_landing_hero_actions={landing_hero_actions}")
+    print(f"promotion_profile_url_landing_safety_navs={landing_safety_navs}")
     print(f"promotion_profile_url_issues={len(issues)}")
     for issue in issues:
         print(issue)

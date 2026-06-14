@@ -4,6 +4,9 @@
   "structuralPass": 3,
   "publicChecked": 0,
   "publicPass": 0,
+  "landingQuizEntries": 0,
+  "landingHeroActions": 0,
+  "landingSafetyNavs": 0,
   "rows": [
     {
       "platform": "youtube_shorts",
@@ -16,6 +19,9 @@
       "structural_status": "pass",
       "public_status": "not_checked",
       "final_url": "",
+      "landing_quiz_entry": "",
+      "landing_hero_actions": "",
+      "landing_safety_nav": "",
       "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
     },
     {
@@ -29,6 +35,9 @@
       "structural_status": "pass",
       "public_status": "not_checked",
       "final_url": "",
+      "landing_quiz_entry": "",
+      "landing_hero_actions": "",
+      "landing_safety_nav": "",
       "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
     },
     {
@@ -42,6 +51,9 @@
       "structural_status": "pass",
       "public_status": "not_checked",
       "final_url": "",
+      "landing_quiz_entry": "",
+      "landing_hero_actions": "",
+      "landing_safety_nav": "",
       "notes": "Destination URL smoke only. This does not prove the profile link is configured on the platform."
     }
   ],

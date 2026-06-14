@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profilePublishHandoff": "docs/promotion/first-round/profile-publish-handoff.json",
+    "firstBatchPublishQuickstart": "docs/promotion/first-round/first-batch-publish-quickstart.json",
+    "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json",
+    "publicPostUrlChecklist": "docs/promotion/first-round/public-post-url-checklist.json",
+    "postOpsReadinessPack": "docs/promotion/first-round/post-ops-readiness-pack.json",
+    "firstBatchCompletionGate": "docs/promotion/first-round/first-batch-completion-gate.json",
+    "masterGate": "docs/promotion/first-round/master-gate.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "profileHandoffReady": 0,
+    "readyRows": 0,
+    "blockedRows": 3,
+    "publishedRows": 0,
+    "pendingRows": 3,
+    "publicPendingRows": 24,
+    "postOpsBlocked": 3,
+    "minimumKpiRows": 0,
+    "completionReady": 0,
+    "masterStageIndex": 0,
+    "masterProfileConfigured": 0,
+    "masterFirstBatchPublished": 0,
+    "issues": 0
+  },
+  "rules": [
+    "First-batch publishing stays blocked until profile handoff is open.",
+    "Publish only the first Iris script across YouTube Shorts, TikTok, and Instagram Reels.",
+    "Do not write post_url with placeholders, private drafts, scheduled previews, or login-only links.",
+    "After each post URL writeback, refresh daily ops before trusting KPI or weekly review packets.",
+    "KPI interpretation remains blocked until public URL checks and checked-source KPI proof are complete."
+  ],
+  "closureSteps": [
+    {
+      "stepId": "profile_publish_handoff_open",
+      "status": "current_blocker",
+      "command": "python3 tools/promotion_profile_publish_handoff.py --check",
+      "stopCondition": "Do not publish while profile_writeback_complete remains blocked."
+    },
+    {
+      "stepId": "publish_first_batch_posts",
+      "status": "blocked_until_profile_gate",
+      "command": "python3 tools/promotion_first_batch_publish_quickstart.py --check",
+      "stopCondition": "Publish only rows with readyToPublish=1 and unchanged quiz CTA."
+    },
+    {
+      "stepId": "writeback_public_post_urls",
+      "status": "blocked_until_public_url",
+      "command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+      "stopCondition": "Replace <REAL_...> with a real public HTTPS post URL before writeback."
+    },
+    {
+      "stepId": "verify_public_post_urls",
+      "status": "blocked_until_post_url",
+      "command": "python3 tools/promotion_public_post_url_checklist.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check",
+      "stopCondition": "Stop if platform domain, public view, caption CTA, UTM, or proof note is not traceable."
+    },
+    {
+      "stepId": "open_kpi_backfill",
+      "status": "blocked_until_public_url",
+      "command": "python3 tools/promotion_first_batch_kpi_quickstart.py --check",
+      "stopCondition": "Do not interpret zero KPI values until the analytics source was actually checked."
+    }
+  ],
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduled": "2026-06-15 20:30 Asia/Taipei",
+      "readyToPublish": 0,
+      "actionStatus": "blocked_until_profile_links",
+      "blockedBy": "profile links are not all set/live",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "postUrl": "",
+      "postUrlPlaceholder": "<REAL_YOUTUBE_SHORTS_URL>",
+      "published": 0,
+      "proofFile": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "publicPending": 8,
+      "publicComplete": 0,
+      "publicVerify": 0,
+      "postOpsStatus": "blocked_until_post_url",
+      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "stopCondition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims."
+    },
+    {
+      "platform": "tiktok",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduled": "2026-06-15 21:00 Asia/Taipei",
+      "readyToPublish": 0,
+      "actionStatus": "blocked_until_profile_links",
+      "blockedBy": "profile links are not all set/live",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "postUrl": "",
+      "postUrlPlaceholder": "<REAL_TIKTOK_VIDEO_URL>",
+      "published": 0,
+      "proofFile": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "publicPending": 8,
+      "publicComplete": 0,
+      "publicVerify": 0,
+      "postOpsStatus": "blocked_until_post_url",
+      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "stopCondition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims."
+    },
+    {
+      "platform": "instagram_reels",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "scheduled": "2026-06-15 21:30 Asia/Taipei",
+      "readyToPublish": 0,
+      "actionStatus": "blocked_until_profile_links",
+      "blockedBy": "profile links are not all set/live",
+      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
+      "postUrl": "",
+      "postUrlPlaceholder": "<REAL_INSTAGRAM_REEL_URL>",
+      "published": 0,
+      "proofFile": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "publicPending": 8,
+      "publicComplete": 0,
+      "publicVerify": 0,
+      "postOpsStatus": "blocked_until_post_url",
+      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "stopCondition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims."
+    }
+  ],
+  "issues": []
+}

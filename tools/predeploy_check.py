@@ -103,6 +103,7 @@ PYTHON_TOOLS = [
     "tools/promotion_first_batch_publish_action_sheet.py",
     "tools/promotion_first_batch_publish_readiness_pack.py",
     "tools/promotion_first_batch_publish_quickstart.py",
+    "tools/promotion_first_batch_publish_closure_quickstart.py",
     "tools/promotion_first_batch_kpi_action_sheet.py",
     "tools/promotion_first_batch_kpi_quickstart.py",
     "tools/promotion_week_publication_runbook.py",
@@ -324,6 +325,7 @@ def main() -> int:
         run_step("promotion first batch publish action sheet", [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py", "--check"])
         run_step("promotion first batch publish readiness pack", [sys.executable, "tools/promotion_first_batch_publish_readiness_pack.py", "--check"])
         run_step("promotion first batch publish quickstart", [sys.executable, "tools/promotion_first_batch_publish_quickstart.py", "--check"])
+        run_step("promotion first batch publish closure quickstart", [sys.executable, "tools/promotion_first_batch_publish_closure_quickstart.py", "--check"])
         run_step("promotion first batch kpi action sheet", [sys.executable, "tools/promotion_first_batch_kpi_action_sheet.py", "--check"])
         run_step("promotion first batch KPI quickstart", [sys.executable, "tools/promotion_first_batch_kpi_quickstart.py", "--check"])
         run_step("promotion week publication runbook", [sys.executable, "tools/promotion_week_publication_runbook.py", "--week", "1", "--check"])

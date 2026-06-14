@@ -167,6 +167,7 @@ PYTHON_TOOLS = [
     "tools/promotion_decision_scenario_audit.py",
     "tools/build_guardian_card_assets.py",
     "tools/public_deploy_smoke.py",
+    "tools/public_lead_mailto_importability_smoke.py",
     "tools/public_launch_link_smoke.py",
     "tools/public_headers_smoke.py",
     "tools/public_sitemap_smoke.py",

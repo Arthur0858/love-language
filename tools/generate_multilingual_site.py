@@ -5244,19 +5244,58 @@ def supply_route(lang: str, slug: str) -> dict:
     }
 
 
+def structured_lead_mailto_body(
+    *,
+    lang: str,
+    source: str,
+    slug: str,
+    intake_type: str,
+    requested_asset: str,
+    context: str,
+    page: str,
+    campaign_content: str,
+    reply_email: str = "",
+) -> str:
+    copy = LEAD_INTAKE_FORM[lang]
+    source_label = copy["source_keepsake"] if source == "keepsake_waitlist" else copy["source_contact"]
+    guardian_name, guardian_type, _guardian_desc = GUARDIANS[slug][lang]
+    email_value = reply_email or f'{copy["email"]}:'
+    lines = [
+        copy["body_header"],
+        f'{copy["source_label"]}: {source_label}',
+        f'{copy["guardian"]}: {guardian_name} · {guardian_type}',
+        f'{copy["request_type"]}: {intake_type}',
+        f'{copy["asset"]}: {requested_asset}',
+        email_value,
+        f'{copy["campaign"]}: {campaign_content}',
+        "consent_status: explicit_reply_ok",
+    ]
+    if context:
+        lines.append(f'{copy["context"]}: {context}')
+    if page:
+        lines.append(f"page: {page}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def supply_request_href(lang: str, slug: str) -> str:
     labels = SUPPLY_LABELS[lang]
     wishlist = SUPPLY_WISHLIST[lang]
+    lead_copy = LEAD_INTAKE_FORM[lang]
     route = supply_route(lang, slug)
     guardian_name, _guardian_type, _guardian_desc = route["guardian"][lang]
     request_subject = quote(wishlist["subject"])
-    request_body = quote(
-        f'{wishlist["body"]} {guardian_name} · {route["title"]}\n'
-        f'{labels["practice"]}: {route["mission"]}\n'
-        f'{labels["supply"]}: {route["supply"]}\n'
-        f'{wishlist["format_label"]}: {", ".join(wishlist["formats"])}\n'
-        f'{wishlist["body_context"]} \n\n'
-    )
+    request_body = quote(structured_lead_mailto_body(
+        lang=lang,
+        source="keepsake_waitlist",
+        slug=slug,
+        intake_type="owned_asset_request",
+        requested_asset=f"{slug}_guardian_asset_pack",
+        context=f"{guardian_name} · {route['title']}",
+        page=f"/keepsakes/#keepsake-{slug}",
+        campaign_content=f"{slug}_owned_asset_request",
+        reply_email=f'{lead_copy["email"]}:',
+    ))
     return f"mailto:contact@lovetypes.tw?subject={request_subject}&body={request_body}"
 
 
@@ -6053,10 +6092,15 @@ def supply_wishlist_section(lang: str) -> str:
         accent = next(meta["color"] for meta in QUIZ_TYPES.values() if meta["slug"] == slug)
         format_items = "".join(f"<li>{escape(item)}</li>" for item in labels["formats"])
         subject = quote(labels["subject"])
-        body_text = (
-            f'{labels["body"]} {guardian_name} · {route["title"]}\n'
-            f'{labels["format_label"]}: {", ".join(labels["formats"])}\n'
-            f'{labels["body_context"]} \n\n'
+        body_text = structured_lead_mailto_body(
+            lang=lang,
+            source="keepsake_waitlist",
+            slug=slug,
+            intake_type="owned_asset_request",
+            requested_asset=f"{slug}_guardian_asset_pack",
+            context=f"{guardian_name} · {route['title']}",
+            page=f"/resources/#supply-{slug}",
+            campaign_content=f"{slug}_owned_asset_request",
         )
         body = quote(body_text)
         cards.append(f"""

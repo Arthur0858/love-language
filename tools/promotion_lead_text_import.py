@@ -60,6 +60,7 @@ GUARDIAN_ALIASES = {
     "클레어": "claire",
     "dora": "dora",
     "朵拉": "dora",
+    "ドーラ": "dora",
     "ドラ": "dora",
     "도라": "dora",
 }

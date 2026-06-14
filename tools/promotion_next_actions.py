@@ -16,6 +16,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
 PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 PROFILE_SETUP_PATH = PROMOTION_DIR / "platform-profile-setup.json"
+PROOF_CONTROL_PATH = PROMOTION_DIR / "launch-proof-control-sheet.json"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "next-actions.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "next-actions.json"
@@ -69,6 +70,7 @@ def action_policy() -> dict[str, object]:
         "shortsKpiDownstreamFields": [*IDENTITY_FIELDS, *ROUTE_FIELDS, *REVENUE_FIELDS],
         "offerChangeGate": "Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.",
         "leaderSelectionRule": "When KPI rows are filled, score guardian and content-angle leaders by quiz_completions * 3 + identity_clicks + route_clicks + revenue_intent * 2.",
+        "proofControlFirst": "Use launch-proof-control-sheet as the operator source of truth before manual CSV or tracker edits.",
     }
 
 
@@ -212,11 +214,13 @@ def build_actions(
     profile_rows: list[dict[str, str]] | None = None,
     profile_setup: dict[str, dict] | None = None,
     profile_setup_expectations: dict[str, int] | None = None,
+    proof_control: dict | None = None,
 ) -> dict:
     profile_fields = profile_fields or []
     profile_rows = profile_rows or []
     profile_setup = profile_setup or {}
     profile_setup_expectations = profile_setup_expectations or {}
+    proof_control = proof_control or {}
     report = build_report(fields, rows, tasks, profile_fields, profile_rows)
     active_rows = filled_rows(rows)
     active_profile_rows = [row for row in profile_rows if is_profile_filled(row)]
@@ -246,13 +250,13 @@ def build_actions(
                 "id": "set_platform_profile_links",
                 "priority": "high",
                 "type": "distribution",
-                "summary": "先同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM；未完成前不發布 Shorts。",
+                "summary": "先依 launch-proof-control-sheet 完成 YouTube、TikTok、Instagram 的 Profile proof；三筆 ready 後才執行 profile batch add。",
             },
             {
                 "id": "fill_platform_profile_kpis",
                 "priority": "high",
                 "type": "measurement",
-                "summary": "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+                "summary": "平台首頁設定後先更新三個 proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。",
             },
             {
                 "id": "publish_first_batch",
@@ -316,6 +320,7 @@ def build_actions(
             "tracker": str(TRACKER_PATH.relative_to(ROOT)),
             "platformProfileTracker": str(PROFILE_TRACKER_PATH.relative_to(ROOT)),
             "platformProfileSetup": str(PROFILE_SETUP_PATH.relative_to(ROOT)),
+            "proofControl": str(PROOF_CONTROL_PATH.relative_to(ROOT)),
             "promotionKit": str(KIT_PATH.relative_to(ROOT)),
         },
         "dataState": {
@@ -325,6 +330,11 @@ def build_actions(
             "profilePendingRows": len(pending_profile_actions),
             "emptyDataMode": report["safety"]["emptyDataMode"],
             "fieldComplete": report["fieldStatus"]["complete"],
+            "proofControlRows": int((proof_control.get("metrics") or {}).get("rows", 0) or 0),
+            "profileProofReady": int((proof_control.get("metrics") or {}).get("profileReady", 0) or 0),
+            "profileProofBlocked": int((proof_control.get("metrics") or {}).get("profileBlocked", 0) or 0),
+            "postProofReady": int((proof_control.get("metrics") or {}).get("postReady", 0) or 0),
+            "postProofBlocked": int((proof_control.get("metrics") or {}).get("postBlocked", 0) or 0),
         },
         "leaders": {
             "guardian": top_guardian,
@@ -338,6 +348,11 @@ def build_actions(
         },
         "decisionThresholds": decision_thresholds(),
         "actionPolicy": action_policy(),
+        "proofControl": {
+            "steps": proof_control.get("steps", []),
+            "rows": proof_control.get("rows", []),
+            "issues": proof_control.get("issues", []),
+        },
         "actions": actions,
         "platformProfileActions": pending_profile_actions,
         "selectedTasks": [task_summary(task) for task in selected],
@@ -357,6 +372,8 @@ def build_markdown(plan: dict) -> str:
         f"- 產生日期：{plan['generatedAt']}",
         f"- 影片追蹤列數：{plan['dataState']['trackerRows']}",
         f"- 平台首頁待設定列數：{plan['dataState']['profilePendingRows']} / {plan['dataState']['profileTrackerRows']}",
+        f"- Profile proof ready / blocked：{plan['dataState']['profileProofReady']} / {plan['dataState']['profileProofBlocked']}",
+        f"- Post proof ready / blocked：{plan['dataState']['postProofReady']} / {plan['dataState']['postProofBlocked']}",
         f"- 空資料安全模式：{'是' if plan['dataState']['emptyDataMode'] else '否'}",
         f"- 行動選擇規則：{plan['actionPolicy']['emptyDataSelectedTaskRule']}",
         f"- 商品調整 gate：{plan['actionPolicy']['offerChangeGate']}",
@@ -366,6 +383,30 @@ def build_markdown(plan: dict) -> str:
     ]
     for action in plan["actions"]:
         lines.append(f"- [{action['priority']}] {action['summary']}")
+    lines.extend(["", "## Proof Control", ""])
+    proof_control = plan.get("proofControl", {})
+    steps = proof_control.get("steps", [])
+    if steps:
+        for step in steps:
+            lines.extend([
+                f"### `{step.get('id', '')}`",
+                "",
+                f"- status：`{step.get('status', '')}`",
+                f"- command：`{step.get('command', '')}`",
+                f"- release：{step.get('release', '')}",
+                "",
+            ])
+    else:
+        lines.append("- 尚未產生 launch-proof-control-sheet，先跑 `python3 tools/promotion_launch_proof_control_sheet.py`。")
+        lines.append("")
+    proof_rows = proof_control.get("rows", [])
+    if proof_rows:
+        lines.extend(["Proof rows:", ""])
+        for row in proof_rows:
+            lines.append(
+                f"- `{row.get('proofType', '')}` / `{row.get('platform', '')}`：`{row.get('status', '')}` ready={row.get('ready', '')} file=`{row.get('proofFile', '')}`"
+            )
+        lines.append("")
     lines.extend(["", "## 平台首頁設定", ""])
     for item in plan["platformProfileActions"]:
         lines.extend([
@@ -466,8 +507,9 @@ def main() -> int:
     profile_setup_data = read_json(Path(args.profile_setup))
     profile_setup = platform_setup_lookup(profile_setup_data)
     profile_expectations = platform_setup_expectations(profile_setup_data)
+    proof_control = read_json(PROOF_CONTROL_PATH)
     tasks = load_tasks(Path(args.kit))
-    plan = build_actions(fields, rows, tasks, profile_fields, profile_rows, profile_setup, profile_expectations)
+    plan = build_actions(fields, rows, tasks, profile_fields, profile_rows, profile_setup, profile_expectations, proof_control)
     markdown = build_markdown(plan)
     if args.check:
         issues = []
@@ -482,6 +524,13 @@ def main() -> int:
             issues.append("expected at least one action")
         if len(plan["selectedTasks"]) < 1:
             issues.append("expected at least one selected task")
+        if plan["dataState"]["proofControlRows"] != 6:
+            issues.append("proof control should expose six profile/post proof rows")
+        if plan["dataState"]["emptyDataMode"] and plan["dataState"]["profileProofBlocked"] < 1:
+            issues.append("empty data mode should expose blocked profile proof rows")
+        proof_steps = [step.get("id") for step in plan.get("proofControl", {}).get("steps", [])]
+        if proof_steps[:2] != ["prepare_profile_proofs", "write_profile_batch"]:
+            issues.append("proof control should start with profile proof preparation and profile batch write")
         if plan["dataState"]["emptyDataMode"] and not plan["safety"]["doNotChangeOffersFromEmptyData"]:
             issues.append("empty data mode should block offer changes")
         if plan["dataState"]["profileTrackerRows"] and not plan["platformProfileActions"] and plan["dataState"]["profilePendingRows"]:
@@ -512,6 +561,8 @@ def main() -> int:
         print(f"promotion_next_actions_actions={len(plan['actions'])}")
         print(f"promotion_next_actions_profile_actions={len(plan['platformProfileActions'])}")
         print(f"promotion_next_actions_profile_pending_rows={plan['dataState']['profilePendingRows']}")
+        print(f"promotion_next_actions_profile_proof_blocked={plan['dataState']['profileProofBlocked']}")
+        print(f"promotion_next_actions_post_proof_blocked={plan['dataState']['postProofBlocked']}")
         print(f"promotion_next_actions_empty_data_mode={int(plan['dataState']['emptyDataMode'])}")
         print(f"promotion_next_actions_issues={len(issues)}")
         for issue in issues:

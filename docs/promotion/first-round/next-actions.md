@@ -3,17 +3,61 @@
 - 產生日期：2026-06-14
 - 影片追蹤列數：0
 - 平台首頁待設定列數：3 / 3
+- Profile proof ready / blocked：0 / 3
+- Post proof ready / blocked：0 / 3
 - 空資料安全模式：是
 - 行動選擇規則：When profile links are pending, finish platform profile setup first; then select the first three planned tasks by week and slot and keep Shorts CTA focused on the 15-question quiz.
 - 商品調整 gate：Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.
 
 ## 優先動作
 
-- [high] 先同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM；未完成前不發布 Shorts。
-- [high] 平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。
+- [high] 先依 launch-proof-control-sheet 完成 YouTube、TikTok、Instagram 的 Profile proof；三筆 ready 後才執行 profile batch add。
+- [high] 平台首頁設定後先更新三個 proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。
 - [blocked] Profile link 完成並回填後，才發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
 - [blocked] 發布被 profile setup gate 鎖住；發布後才回填 post_url、site_clicks、quiz_starts、quiz_completions。
 - [medium] 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
+
+## Proof Control
+
+### `prepare_profile_proofs`
+
+- status：`current_action`
+- command：`python3 tools/promotion_profile_batch_import.py --check`
+- release：profile batch readyRows is 3.
+
+### `write_profile_batch`
+
+- status：`blocked_until_profile_ready`
+- command：`python3 tools/promotion_profile_batch_import.py --add`
+- release：master gate moves from profile_setup to first_batch_publish.
+
+### `prepare_post_proofs`
+
+- status：`blocked_until_profile_gate`
+- command：`python3 tools/promotion_post_batch_import.py --check`
+- release：post batch readyRows is 3.
+
+### `write_post_batch`
+
+- status：`blocked_until_post_ready`
+- command：`python3 tools/promotion_post_batch_import.py --add`
+- release：first batch has 3 published rows and minimum KPI rows.
+
+### `refresh_and_review`
+
+- status：`blocked_until_post_writeback`
+- command：`python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_launch_sequence_dry_run.py`
+- release：dry run stays green and weekly evidence gate can open.
+
+Proof rows:
+
+- `profile` / `youtube_shorts`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
+- `profile` / `tiktok`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-tiktok.txt`
+- `profile` / `instagram_reels`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-instagram_reels.txt`
+- `post` / `youtube_shorts`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
+- `post` / `tiktok`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
+- `post` / `instagram_reels`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
+
 
 ## 平台首頁設定
 

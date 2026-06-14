@@ -42,8 +42,8 @@
     "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
   ],
   "nextSteps": [
-    "先同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM；未完成前不發布 Shorts。",
-    "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+    "先依 launch-proof-control-sheet 完成 YouTube、TikTok、Instagram 的 Profile proof；三筆 ready 後才執行 profile batch add。",
+    "平台首頁設定後先更新三個 proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。",
     "Profile link 完成並回填後，才發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。",
     "發布被 profile setup gate 鎖住；發布後才回填 post_url、site_clicks、quiz_starts、quiz_completions。",
     "目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。"

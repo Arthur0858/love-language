@@ -12,7 +12,12 @@
     "profileFilledRows": 0,
     "profilePendingRows": 3,
     "emptyDataMode": true,
-    "fieldComplete": true
+    "fieldComplete": true,
+    "proofControlRows": 6,
+    "profileProofReady": 0,
+    "profileProofBlocked": 3,
+    "postProofReady": 0,
+    "postProofBlocked": 3
   },
   "publishingReadyForWeeklyDecision": false,
   "rowCount": 24,

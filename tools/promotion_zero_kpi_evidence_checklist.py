@@ -155,7 +155,7 @@ def render_markdown(payload: dict, issues: list[str]) -> str:
 
 
 def write_outputs(payload: dict, issues: list[str]) -> None:
-    OUTPUT_JSON.write_text(json.dumps({**payload, "issues": issues}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_JSON.write_text(json.dumps({**payload, "issues": issues}, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     OUTPUT_MD.write_text(render_markdown(payload, issues), encoding="utf-8")
     fieldnames = [
         "platform",

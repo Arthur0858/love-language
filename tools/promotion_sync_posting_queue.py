@@ -160,7 +160,7 @@ def write_outputs(rows: list[dict[str, str]], csv_path: Path, json_path: Path) -
         "rowCount": len(rows),
         "rows": rows,
     }
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
 
 
 def main() -> int:

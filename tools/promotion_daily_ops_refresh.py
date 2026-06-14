@@ -43,6 +43,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_lead_evidence_checklist.py"],
     [sys.executable, "tools/promotion_lead_magnet_inventory.py"],
     [sys.executable, "tools/promotion_lead_demand_gate.py"],
+    [sys.executable, "tools/promotion_lead_tracker_summary.py"],
     [sys.executable, "tools/promotion_asset_backlog.py"],
     [sys.executable, "tools/promotion_asset_fulfillment_gate.py"],
     [sys.executable, "tools/promotion_offer_hypothesis_board.py"],

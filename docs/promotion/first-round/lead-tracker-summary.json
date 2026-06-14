@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-06-14",
+  "source": "docs/promotion/first-round/lead-intake-tracker.csv",
+  "policy": {
+    "summaryOnly": true,
+    "doesNotIncludeRequestRows": true,
+    "doesNotStoreRawEmail": true,
+    "realConsentRequired": "explicit_reply_ok",
+    "repeatDemandThreshold": 2
+  },
+  "metrics": {
+    "totalRows": 15,
+    "templateRows": 15,
+    "realRows": 0,
+    "explicitConsentRows": 0,
+    "matchedUtmRows": 0,
+    "traceableRows": 0,
+    "guardianCount": 5,
+    "intakeTypeCount": 3
+  },
+  "counts": {
+    "byGuardian": {
+      "iris": 0,
+      "noah": 0,
+      "vivian": 0,
+      "claire": 0,
+      "dora": 0
+    },
+    "byIntakeType": {
+      "owned_asset_request": 0,
+      "luna_scene_request": 0,
+      "repair_or_contact_request": 0
+    },
+    "bySource": {},
+    "byStatus": {
+      "template": 15
+    },
+    "byGuardianIntake": [
+      {
+        "guardianId": "iris",
+        "intakeType": "owned_asset_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "iris",
+        "intakeType": "luna_scene_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "iris",
+        "intakeType": "repair_or_contact_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "noah",
+        "intakeType": "owned_asset_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "noah",
+        "intakeType": "luna_scene_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "noah",
+        "intakeType": "repair_or_contact_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "vivian",
+        "intakeType": "owned_asset_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "vivian",
+        "intakeType": "luna_scene_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "vivian",
+        "intakeType": "repair_or_contact_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "claire",
+        "intakeType": "owned_asset_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "claire",
+        "intakeType": "luna_scene_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "claire",
+        "intakeType": "repair_or_contact_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "dora",
+        "intakeType": "owned_asset_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "dora",
+        "intakeType": "luna_scene_request",
+        "realLeads": 0
+      },
+      {
+        "guardianId": "dora",
+        "intakeType": "repair_or_contact_request",
+        "realLeads": 0
+      }
+    ]
+  },
+  "issues": []
+}

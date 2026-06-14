@@ -71,6 +71,7 @@ PYTHON_TOOLS = [
     "tools/promotion_lead_evidence_checklist.py",
     "tools/promotion_lead_magnet_inventory.py",
     "tools/promotion_lead_demand_gate.py",
+    "tools/promotion_lead_tracker_summary.py",
     "tools/promotion_lead_demand_scenario_audit.py",
     "tools/promotion_offer_hypothesis_board.py",
     "tools/promotion_offer_experiment_plan.py",
@@ -283,6 +284,7 @@ def main() -> int:
         run_step("promotion lead evidence checklist", [sys.executable, "tools/promotion_lead_evidence_checklist.py", "--check"])
         run_step("promotion lead magnet inventory", [sys.executable, "tools/promotion_lead_magnet_inventory.py", "--check"])
         run_step("promotion lead demand gate", [sys.executable, "tools/promotion_lead_demand_gate.py", "--check"])
+        run_step("promotion lead tracker summary", [sys.executable, "tools/promotion_lead_tracker_summary.py", "--check"])
         run_step("promotion lead demand scenario audit", [sys.executable, "tools/promotion_lead_demand_scenario_audit.py"])
         run_step("promotion offer hypothesis board", [sys.executable, "tools/promotion_offer_hypothesis_board.py", "--check"])
         run_step("promotion offer experiment plan", [sys.executable, "tools/promotion_offer_experiment_plan.py", "--check"])

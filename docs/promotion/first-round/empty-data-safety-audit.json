@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": [
+    "docs/promotion/first-round/weekly-summary.json",
+    "docs/promotion/first-round/weekly-review-packet.json",
+    "docs/promotion/first-round/week-decision-gate.json",
+    "docs/promotion/first-round/revenue-decision-matrix.json",
+    "docs/promotion/first-round/offer-hypothesis-board.json",
+    "docs/promotion/first-round/offer-experiment-plan.json",
+    "docs/promotion/first-round/offer-experiment-queue.json",
+    "docs/promotion/first-round/next-actions.json",
+    "docs/promotion/first-round/launch-readiness-gate.json",
+    "docs/promotion/first-round/first-batch-publication-packet.json"
+  ],
+  "metrics": {
+    "emptyDataMode": 1,
+    "failClosedChecks": 14,
+    "blockedOfferRows": 5,
+    "blockedExperimentRows": 20,
+    "blockedQueueRows": 80
+  },
+  "issues": []
+}

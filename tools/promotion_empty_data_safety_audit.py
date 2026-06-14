@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
+from datetime import date
 from pathlib import Path
 
 
@@ -17,6 +19,8 @@ OFFER_QUEUE = PROMOTION_DIR / "offer-experiment-queue.json"
 NEXT_ACTIONS = PROMOTION_DIR / "next-actions.json"
 LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 FIRST_BATCH = PROMOTION_DIR / "first-batch-publication-packet.json"
+OUTPUT_MD = PROMOTION_DIR / "empty-data-safety-audit.md"
+OUTPUT_JSON = PROMOTION_DIR / "empty-data-safety-audit.json"
 REQUIRED_FILES = [
     WEEKLY_SUMMARY,
     WEEKLY_REVIEW,
@@ -36,6 +40,10 @@ BLOCKED_DECISIONS = {
     "prioritize_luna_or_affiliate",
     "build_paid_product_from_empty_data",
 }
+
+
+def today() -> str:
+    return date.today().isoformat()
 
 
 def load_json(path: Path) -> dict:
@@ -126,8 +134,54 @@ def validate() -> tuple[dict[str, int], list[str]]:
     }, issues
 
 
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    lines = [
+        "# LoveTypes Empty Data Safety Audit",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- empty data mode：`{metrics['emptyDataMode']}`",
+        f"- fail-closed checks：{metrics['failClosedChecks']}",
+        f"- blocked offer rows：{metrics['blockedOfferRows']}",
+        f"- blocked experiment rows：{metrics['blockedExperimentRows']}",
+        f"- blocked queue rows：{metrics.get('blockedQueueRows', 0)}",
+        f"- issues：{len(report['issues'])}",
+        "",
+        "## Rule",
+        "",
+        "- No KPI and no lead evidence means collect_signal remains the only decision focus.",
+        "- Offer, Luna, affiliate, owned product, and winning-guardian decisions must fail closed.",
+        "- HOLD or blocked_by_gate rows are expected in empty data mode.",
+        "- A non-empty data signal must arrive before changing commerce emphasis.",
+        "",
+    ]
+    if report["issues"]:
+        lines.extend(["## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_report(metrics: dict[str, int], issues: list[str]) -> None:
+    report = {
+        "generatedAt": today(),
+        "sources": [str(path.relative_to(ROOT)) for path in REQUIRED_FILES],
+        "metrics": metrics,
+        "issues": issues,
+    }
+    OUTPUT_MD.write_text(render_markdown(report), encoding="utf-8")
+    OUTPUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Audit LoveTypes empty-data fail-closed promotion safety.")
+    parser.add_argument("--write-report", action="store_true", help="Write a dated md/json safety audit report.")
+    args = parser.parse_args()
     metrics, issues = validate()
+    if args.write_report:
+        write_report(metrics, issues)
+        print(f"promotion_empty_data_safety_report={OUTPUT_MD.relative_to(ROOT)}")
+        print(f"promotion_empty_data_safety_report_json={OUTPUT_JSON.relative_to(ROOT)}")
     print(f"promotion_empty_data_safety_empty_mode={metrics['emptyDataMode']}")
     print(f"promotion_empty_data_safety_fail_closed_checks={metrics['failClosedChecks']}")
     print(f"promotion_empty_data_safety_blocked_offer_rows={metrics['blockedOfferRows']}")

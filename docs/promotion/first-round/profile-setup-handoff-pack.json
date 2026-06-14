@@ -1,0 +1,89 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profileSetupActionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
+    "profileQuickstart": "docs/promotion/first-round/profile-quickstart.json",
+    "profileLinkReadiness": "docs/promotion/first-round/profile-link-readiness-packet.json",
+    "profileProofReadiness": "docs/promotion/first-round/profile-proof-readiness-pack.json"
+  },
+  "metrics": {
+    "platforms": 3,
+    "readyToConfigure": 3,
+    "readyToWriteback": 0,
+    "configured": 0,
+    "publicReady": 3,
+    "pendingEvidenceChecks": 18,
+    "proofReadyRows": 3,
+    "issues": 0
+  },
+  "rules": [
+    "Use this handoff pack as the single operator view for platform profile setup.",
+    "Public-ready means the LoveTypes /start/ URL works; it does not prove the external platform profile is set.",
+    "Run checkCommand before writeCommand, and only after replacing proof placeholders with real screenshot/click proof.",
+    "Do not publish first-batch Shorts/Reels until all three tracker statuses are set or live.",
+    "Keep all profile copy quiz-only; do not add Luna, affiliate, paid, diagnosis, or treatment claims."
+  ],
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "trackerStatus": "planned",
+      "actionStatus": "ready_to_configure",
+      "linkPublicReady": "1",
+      "proofStatus": "ready_to_configure",
+      "profileLinkLocation": "Channel description / video description",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "proofFile": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "proofTemplate": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
+      "identityChecks": 7,
+      "evidenceChecks": 6,
+      "pendingEvidenceChecks": 6
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "trackerStatus": "planned",
+      "actionStatus": "ready_to_configure",
+      "linkPublicReady": "1",
+      "proofStatus": "ready_to_configure",
+      "profileLinkLocation": "Profile website link",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "proofFile": "docs/promotion/first-round/proof-tiktok.txt",
+      "proofTemplate": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
+      "identityChecks": 7,
+      "evidenceChecks": 6,
+      "pendingEvidenceChecks": 6
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "trackerStatus": "planned",
+      "actionStatus": "ready_to_configure",
+      "linkPublicReady": "1",
+      "proofStatus": "ready_to_configure",
+      "profileLinkLocation": "Profile link in bio",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "proofFile": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "proofTemplate": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
+      "identityChecks": 7,
+      "evidenceChecks": 6,
+      "pendingEvidenceChecks": 6
+    }
+  ],
+  "issues": []
+}

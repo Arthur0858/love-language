@@ -1,0 +1,81 @@
+LoveTypes profile quickstart
+generated: 2026-06-14
+
+Rules:
+- Only complete profile setup when the external platform profile visibly contains the tracked /start/ link.
+- Use the profile proof text after replacing the proof placeholder with real evidence.
+- Run the check command before the write command.
+- Do not publish first-batch posts until all three profile links are set or live.
+- Keep profile copy focused on the 15-question quiz; do not add paid, affiliate, diagnosis, or treatment claims.
+
+=== YouTube Shorts / youtube_shorts ===
+status: planned / ready_to_configure
+location: Channel description / video description
+profile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+
+BIO:
+LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
+
+PINNED / FIRST COMMENT:
+完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+留言 A/B/C，我們會用守護者路線回覆你。
+
+Save this proof text to docs/promotion/first-round/proof-youtube_shorts.txt after replacing the proof placeholder:
+LoveTypes profile setup writeback
+platform: youtube_shorts
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
+
+CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
+
+=== TikTok / tiktok ===
+status: planned / ready_to_configure
+location: Profile website link
+profile link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+
+BIO:
+五種愛之語測驗｜進入心語庭園，找到你的情感守護者。
+
+PINNED / FIRST COMMENT:
+完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。
+留言 A/B/C，選出最像你的心語。
+
+Save this proof text to docs/promotion/first-round/proof-tiktok.txt after replacing the proof placeholder:
+LoveTypes profile setup writeback
+platform: tiktok
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
+
+CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
+
+=== Instagram Reels / instagram_reels ===
+status: planned / ready_to_configure
+location: Profile link in bio
+profile link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+
+BIO:
+LoveTypes 心語庭園｜15 題找到你的情感守護者。
+
+PINNED / FIRST COMMENT:
+完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。
+留言你的 A/B/C，讓守護者把心語接住。
+
+Save this proof text to docs/promotion/first-round/proof-instagram_reels.txt after replacing the proof placeholder:
+LoveTypes profile setup writeback
+platform: instagram_reels
+status: set
+set_date: 2026-06-14
+profile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
+
+CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.

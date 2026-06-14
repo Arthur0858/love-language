@@ -93,6 +93,7 @@ PYTHON_TOOLS = [
     "tools/promotion_week_execution_sheet.py",
     "tools/promotion_platform_account_identity_checklist.py",
     "tools/promotion_profile_setup_action_sheet.py",
+    "tools/promotion_profile_quickstart.py",
     "tools/promotion_profile_link_readiness_packet.py",
     "tools/promotion_profile_proof_readiness_pack.py",
     "tools/promotion_profile_setup_dry_run.py",
@@ -306,6 +307,7 @@ def main() -> int:
         run_step("promotion week execution sheet", [sys.executable, "tools/promotion_week_execution_sheet.py", "--all", "--check"])
         run_step("promotion platform account identity checklist", [sys.executable, "tools/promotion_platform_account_identity_checklist.py", "--check"])
         run_step("promotion profile setup action sheet", [sys.executable, "tools/promotion_profile_setup_action_sheet.py", "--check"])
+        run_step("promotion profile quickstart", [sys.executable, "tools/promotion_profile_quickstart.py", "--check"])
         run_step("promotion profile link readiness packet", [sys.executable, "tools/promotion_profile_link_readiness_packet.py", "--check"])
         run_step("promotion profile proof readiness pack", [sys.executable, "tools/promotion_profile_proof_readiness_pack.py", "--check"])
         run_step("promotion profile setup dry run", [sys.executable, "tools/promotion_profile_setup_dry_run.py"])

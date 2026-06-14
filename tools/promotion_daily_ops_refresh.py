@@ -108,6 +108,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_launch_execution_closure_quickstart.py"],
     [sys.executable, "tools/promotion_proof_rehearsal.py"],
     [sys.executable, "tools/promotion_proof_import_closure_quickstart.py"],
+    [sys.executable, "tools/promotion_operator_next_action_closure_quickstart.py"],
 ]
 DATE_ARG_PATTERN = re.compile(r"--(?:set-date|published-date) (\d{4}-\d{2}-\d{2})")
 

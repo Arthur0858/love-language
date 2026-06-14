@@ -241,7 +241,7 @@ def main() -> int:
         return 1
     if not args.check:
         write_csv(rows, Path(args.csv_output))
-        Path(args.json_output).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        Path(args.json_output).write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         Path(args.output).write_text(render_markdown(payload), encoding="utf-8")
         print(f"promotion_first_batch_publish_checklist_csv={Path(args.csv_output).relative_to(ROOT)}")
         print(f"promotion_first_batch_publish_checklist_json={Path(args.json_output).relative_to(ROOT)}")

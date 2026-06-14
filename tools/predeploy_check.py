@@ -111,6 +111,7 @@ PYTHON_TOOLS = [
     "tools/promotion_launch_sequence_dry_run.py",
     "tools/promotion_first_batch_publish_action_sheet.py",
     "tools/promotion_first_batch_publish_readiness_pack.py",
+    "tools/promotion_first_batch_launch_handoff.py",
     "tools/promotion_first_batch_publish_quickstart.py",
     "tools/promotion_first_batch_publish_closure_quickstart.py",
     "tools/promotion_first_batch_kpi_action_sheet.py",
@@ -348,6 +349,7 @@ def main() -> int:
         run_step("promotion launch sequence dry run", [sys.executable, "tools/promotion_launch_sequence_dry_run.py"])
         run_step("promotion first batch publish action sheet", [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py", "--check"])
         run_step("promotion first batch publish readiness pack", [sys.executable, "tools/promotion_first_batch_publish_readiness_pack.py", "--check"])
+        run_step("promotion first batch launch handoff", [sys.executable, "tools/promotion_first_batch_launch_handoff.py", "--check"])
         run_step("promotion first batch publish quickstart", [sys.executable, "tools/promotion_first_batch_publish_quickstart.py", "--check"])
         run_step("promotion first batch publish closure quickstart", [sys.executable, "tools/promotion_first_batch_publish_closure_quickstart.py", "--check"])
         run_step("promotion first batch kpi action sheet", [sys.executable, "tools/promotion_first_batch_kpi_action_sheet.py", "--check"])

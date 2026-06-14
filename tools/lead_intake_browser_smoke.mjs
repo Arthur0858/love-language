@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const METRIC_PREFIX = process.env.METRIC_PREFIX || 'lead_intake_browser';
 const CASES = [
   '/contact/',
   '/keepsakes/',
@@ -110,6 +111,20 @@ function pageUrl(baseUrl, urlPath) {
   return new URL(urlPath, baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`).toString();
 }
 
+function emitMetrics(resultsLength, invalidRejected, validAccepted, issuesLength) {
+  if (METRIC_PREFIX === 'public_lead_intake_browser') {
+    console.log(`public_lead_intake_browser_pages_checked=${resultsLength}`);
+    console.log(`public_lead_intake_browser_invalid_email_rejected=${invalidRejected}`);
+    console.log(`public_lead_intake_browser_valid_email_accepted=${validAccepted}`);
+    console.log(`public_lead_intake_browser_issues=${issuesLength}`);
+    return;
+  }
+  console.log(`lead_intake_browser_pages_checked=${resultsLength}`);
+  console.log(`lead_intake_browser_invalid_email_rejected=${invalidRejected}`);
+  console.log(`lead_intake_browser_valid_email_accepted=${validAccepted}`);
+  console.log(`lead_intake_browser_issues=${issuesLength}`);
+}
+
 async function checkCase(browser, baseUrl, urlPath) {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -172,10 +187,7 @@ try {
   const invalidRejected = results.filter((result) => result.invalidRejected).length;
   const validAccepted = results.filter((result) => result.validAccepted).length;
   const issues = results.flatMap((result) => result.issues.map((issue) => `${result.urlPath}: ${issue}`));
-  console.log(`lead_intake_browser_pages_checked=${results.length}`);
-  console.log(`lead_intake_browser_invalid_email_rejected=${invalidRejected}`);
-  console.log(`lead_intake_browser_valid_email_accepted=${validAccepted}`);
-  console.log(`lead_intake_browser_issues=${issues.length}`);
+  emitMetrics(results.length, invalidRejected, validAccepted, issues.length);
   for (const issue of issues) console.log(issue);
   if (issues.length) process.exitCode = 1;
 } finally {

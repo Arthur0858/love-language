@@ -4,9 +4,12 @@
 - rows：3
 - proof files：3
 - importable templates：3
+- placeholder proof rows：3
+- real proof ready rows：0
 - public ready：3
 - configured：0
 - ready to configure：3
+- safe writeback rows：0
 - profile gate ready：0
 - issues：0
 
@@ -25,6 +28,8 @@
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
 - proof file exists：1
 - template importable：1
+- placeholder proof：1
+- real proof ready：0
 - public profile link ready：1
 - profile configured：0
 - evidence required：A real platform screenshot/click proof must exist before running the write command.
@@ -48,6 +53,8 @@ proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 - proof file：`docs/promotion/first-round/proof-tiktok.txt`
 - proof file exists：1
 - template importable：1
+- placeholder proof：1
+- real proof ready：0
 - public profile link ready：1
 - profile configured：0
 - evidence required：A real platform screenshot/click proof must exist before running the write command.
@@ -71,6 +78,8 @@ proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 - proof file：`docs/promotion/first-round/proof-instagram_reels.txt`
 - proof file exists：1
 - template importable：1
+- placeholder proof：1
+- real proof ready：0
 - public profile link ready：1
 - profile configured：0
 - evidence required：A real platform screenshot/click proof must exist before running the write command.

@@ -10,6 +10,7 @@ Rules:
 
 === YouTube Shorts / youtube_shorts ===
 status: tracker=planned action=ready_to_configure proof=ready_to_configure public=1
+proof: placeholder=1 real_ready=0
 location: Channel description / video description
 profile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 
@@ -34,6 +35,7 @@ STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missi
 
 === TikTok / tiktok ===
 status: tracker=planned action=ready_to_configure proof=ready_to_configure public=1
+proof: placeholder=1 real_ready=0
 location: Profile website link
 profile link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
 
@@ -58,6 +60,7 @@ STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missi
 
 === Instagram Reels / instagram_reels ===
 status: tracker=planned action=ready_to_configure proof=ready_to_configure public=1
+proof: placeholder=1 real_ready=0
 location: Profile link in bio
 profile link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
 

@@ -56,6 +56,11 @@ def run_import_check(proof_file: str) -> tuple[bool, str]:
     return ok, output
 
 
+def is_placeholder_proof(text: str) -> bool:
+    normalized = " ".join(text.split()).lower()
+    return "<real_screenshot_or_profile_click_note>" in normalized
+
+
 def proof_template_text(row: dict[str, str]) -> str:
     return "\n".join([
         "LoveTypes profile setup writeback",
@@ -82,19 +87,32 @@ def build_pack() -> dict:
         platform = str(action_row.get("platform", ""))
         proof_file = str(action_row.get("proof_file", ""))
         proof_path = ROOT / proof_file
+        proof_text = proof_path.read_text(encoding="utf-8") if proof_path.exists() else ""
+        placeholder_proof = is_placeholder_proof(proof_text)
         import_ok, import_output = run_import_check(proof_file) if proof_file else (False, "missing proof file")
         readiness_row = readiness_by_platform.get(platform, {})
         configured = truthy(readiness_row.get("profile_configured"))
         public_ready = truthy(readiness_row.get("public_ready"))
+        real_proof_ready = import_ok and not placeholder_proof
         row = {
             "platform": platform,
             "label": str(action_row.get("label", platform)),
             "proof_file": proof_file,
             "proof_file_exists": "1" if proof_path.exists() else "0",
             "proof_template_importable": "1" if import_ok else "0",
+            "placeholder_proof": "1" if placeholder_proof else "0",
+            "real_proof_ready": "1" if real_proof_ready else "0",
             "public_profile_link_ready": "1" if public_ready else "0",
             "profile_configured": "1" if configured else "0",
-            "operator_status": "ready_to_configure" if public_ready and not configured else ("complete" if configured else "blocked"),
+            "operator_status": (
+                "complete"
+                if configured
+                else "ready_to_writeback"
+                if public_ready and real_proof_ready
+                else "ready_to_configure"
+                if public_ready
+                else "blocked"
+            ),
             "template_text": proof_template_text(action_row),
             "check_command": str(action_row.get("check_command", "")),
             "write_command": str(action_row.get("write_command", "")),
@@ -106,10 +124,13 @@ def build_pack() -> dict:
         "rows": len(rows),
         "proofFiles": sum(1 for row in rows if row["proof_file_exists"] == "1"),
         "importableTemplates": sum(1 for row in rows if row["proof_template_importable"] == "1"),
+        "placeholderProofRows": sum(1 for row in rows if row["placeholder_proof"] == "1"),
+        "realProofReadyRows": sum(1 for row in rows if row["real_proof_ready"] == "1"),
         "publicReady": sum(1 for row in rows if row["public_profile_link_ready"] == "1"),
         "configured": sum(1 for row in rows if row["profile_configured"] == "1"),
         "readyToConfigure": sum(1 for row in rows if row["operator_status"] == "ready_to_configure"),
         "readyToWriteback": sum(1 for row in rows if row["operator_status"] == "ready_to_writeback"),
+        "safeWritebackRows": sum(1 for row in rows if row["operator_status"] in {"ready_to_writeback", "complete"}),
         "profileGateReady": int(bool(completion.get("state", {}).get("readyForFirstBatchPublish"))),
     }
     issues: list[str] = []
@@ -151,9 +172,12 @@ def render_markdown(pack: dict) -> str:
         f"- rows：{metrics['rows']}",
         f"- proof files：{metrics['proofFiles']}",
         f"- importable templates：{metrics['importableTemplates']}",
+        f"- placeholder proof rows：{metrics['placeholderProofRows']}",
+        f"- real proof ready rows：{metrics['realProofReadyRows']}",
         f"- public ready：{metrics['publicReady']}",
         f"- configured：{metrics['configured']}",
         f"- ready to configure：{metrics['readyToConfigure']}",
+        f"- safe writeback rows：{metrics['safeWritebackRows']}",
         f"- profile gate ready：{metrics['profileGateReady']}",
         f"- issues：{len(pack['issues'])}",
         "",
@@ -170,6 +194,8 @@ def render_markdown(pack: dict) -> str:
             f"- proof file：`{row['proof_file']}`",
             f"- proof file exists：{row['proof_file_exists']}",
             f"- template importable：{row['proof_template_importable']}",
+            f"- placeholder proof：{row['placeholder_proof']}",
+            f"- real proof ready：{row['real_proof_ready']}",
             f"- public profile link ready：{row['public_profile_link_ready']}",
             f"- profile configured：{row['profile_configured']}",
             f"- evidence required：{row['evidence_required']}",
@@ -200,6 +226,8 @@ def write_outputs(pack: dict) -> None:
             "proof_file",
             "proof_file_exists",
             "proof_template_importable",
+            "placeholder_proof",
+            "real_proof_ready",
             "public_profile_link_ready",
             "profile_configured",
             "operator_status",
@@ -226,10 +254,13 @@ def main() -> int:
     print(f"promotion_profile_proof_readiness_rows={metrics['rows']}")
     print(f"promotion_profile_proof_readiness_proof_files={metrics['proofFiles']}")
     print(f"promotion_profile_proof_readiness_importable_templates={metrics['importableTemplates']}")
+    print(f"promotion_profile_proof_readiness_placeholder_proof_rows={metrics['placeholderProofRows']}")
+    print(f"promotion_profile_proof_readiness_real_proof_ready_rows={metrics['realProofReadyRows']}")
     print(f"promotion_profile_proof_readiness_public_ready={metrics['publicReady']}")
     print(f"promotion_profile_proof_readiness_configured={metrics['configured']}")
     print(f"promotion_profile_proof_readiness_ready_configure={metrics['readyToConfigure']}")
     print(f"promotion_profile_proof_readiness_ready_writeback={metrics['readyToWriteback']}")
+    print(f"promotion_profile_proof_readiness_safe_writeback_rows={metrics['safeWritebackRows']}")
     print(f"promotion_profile_proof_readiness_gate_ready={metrics['profileGateReady']}")
     print(f"promotion_profile_proof_readiness_issues={len(pack['issues'])}")
     for issue in pack["issues"]:

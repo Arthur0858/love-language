@@ -7,6 +7,9 @@
 - configured：0
 - public ready：3
 - pending evidence checks：18
+- proof template ready rows：3
+- proof placeholder rows：3
+- proof real ready rows：0
 - issues：0
 
 ## Rules
@@ -22,6 +25,8 @@
 - tracker status：`planned`
 - action status：`ready_to_configure`
 - proof status：`ready_to_configure`
+- proof placeholder：`1`
+- proof real ready：`0`
 - public ready：`1`
 - link location：Channel description / video description
 - profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
@@ -63,6 +68,8 @@ proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 - tracker status：`planned`
 - action status：`ready_to_configure`
 - proof status：`ready_to_configure`
+- proof placeholder：`1`
+- proof real ready：`0`
 - public ready：`1`
 - link location：Profile website link
 - profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
@@ -104,6 +111,8 @@ proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 - tracker status：`planned`
 - action status：`ready_to_configure`
 - proof status：`ready_to_configure`
+- proof placeholder：`1`
+- proof real ready：`0`
 - public ready：`1`
 - link location：Profile link in bio
 - profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio

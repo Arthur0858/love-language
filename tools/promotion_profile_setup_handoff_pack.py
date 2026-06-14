@@ -57,6 +57,8 @@ def build_pack() -> dict:
             "actionStatus": str(action_row.get("action_status", "")),
             "linkPublicReady": str(link_row.get("public_ready", "0")),
             "proofStatus": str(proof_row.get("operator_status", "")),
+            "proofPlaceholder": str(proof_row.get("placeholder_proof", "0")),
+            "proofRealReady": str(proof_row.get("real_proof_ready", "0")),
             "profileLinkLocation": str(action_row.get("profile_link_location") or quick_row.get("profileLinkLocation") or ""),
             "profileLink": profile_link,
             "bio": str(action_row.get("bio") or quick_row.get("bio") or ""),
@@ -86,7 +88,9 @@ def build_pack() -> dict:
             "configured": sum(1 for row in rows if row["trackerStatus"] in {"set", "live"}),
             "publicReady": sum(1 for row in rows if row["linkPublicReady"] == "1"),
             "pendingEvidenceChecks": sum(int(row["pendingEvidenceChecks"]) for row in rows),
-            "proofReadyRows": sum(1 for row in rows if row["proofStatus"] in {"ready_to_configure", "ready_to_writeback", "complete"}),
+            "proofTemplateReadyRows": sum(1 for row in rows if row["proofStatus"] in {"ready_to_configure", "ready_to_writeback", "complete"}),
+            "proofPlaceholderRows": sum(1 for row in rows if row["proofPlaceholder"] == "1"),
+            "proofRealReadyRows": sum(1 for row in rows if row["proofRealReady"] == "1"),
             "issues": len(issues),
         },
         "rules": [
@@ -155,9 +159,12 @@ def render_markdown(pack: dict) -> str:
         f"- ready to configure：{metrics['readyToConfigure']}",
         f"- ready to writeback：{metrics['readyToWriteback']}",
         f"- configured：{metrics['configured']}",
-        f"- public ready：{metrics['publicReady']}",
-        f"- pending evidence checks：{metrics['pendingEvidenceChecks']}",
-        f"- issues：{metrics['issues']}",
+            f"- public ready：{metrics['publicReady']}",
+            f"- pending evidence checks：{metrics['pendingEvidenceChecks']}",
+            f"- proof template ready rows：{metrics['proofTemplateReadyRows']}",
+            f"- proof placeholder rows：{metrics['proofPlaceholderRows']}",
+            f"- proof real ready rows：{metrics['proofRealReadyRows']}",
+            f"- issues：{metrics['issues']}",
         "",
         "## Rules",
         "",
@@ -171,6 +178,8 @@ def render_markdown(pack: dict) -> str:
             f"- tracker status：`{row['trackerStatus']}`",
             f"- action status：`{row['actionStatus']}`",
             f"- proof status：`{row['proofStatus']}`",
+            f"- proof placeholder：`{row['proofPlaceholder']}`",
+            f"- proof real ready：`{row['proofRealReady']}`",
             f"- public ready：`{row['linkPublicReady']}`",
             f"- link location：{row['profileLinkLocation']}",
             f"- profile link：{row['profileLink']}",
@@ -220,6 +229,7 @@ def render_text(pack: dict) -> str:
             "",
             f"=== {row['label']} / {row['platform']} ===",
             f"status: tracker={row['trackerStatus']} action={row['actionStatus']} proof={row['proofStatus']} public={row['linkPublicReady']}",
+            f"proof: placeholder={row['proofPlaceholder']} real_ready={row['proofRealReady']}",
             f"location: {row['profileLinkLocation']}",
             f"profile link: {row['profileLink']}",
             "",
@@ -264,7 +274,10 @@ def main() -> int:
     print(f"promotion_profile_setup_handoff_configured={metrics['configured']}")
     print(f"promotion_profile_setup_handoff_public_ready={metrics['publicReady']}")
     print(f"promotion_profile_setup_handoff_pending_evidence={metrics['pendingEvidenceChecks']}")
-    print(f"promotion_profile_setup_handoff_proof_ready={metrics['proofReadyRows']}")
+    print(f"promotion_profile_setup_handoff_proof_ready={metrics['proofTemplateReadyRows']}")
+    print(f"promotion_profile_setup_handoff_proof_template_ready={metrics['proofTemplateReadyRows']}")
+    print(f"promotion_profile_setup_handoff_proof_placeholder_rows={metrics['proofPlaceholderRows']}")
+    print(f"promotion_profile_setup_handoff_proof_real_ready={metrics['proofRealReadyRows']}")
     print(f"promotion_profile_setup_handoff_issues={metrics['issues']}")
     for issue in pack["issues"]:
         print(issue)

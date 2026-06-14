@@ -13,6 +13,7 @@ from pathlib import Path
 import promotion_evidence_ledger as evidence_ledger
 import promotion_first_batch_completion_gate as first_batch_completion
 import promotion_first_batch_publication_packet as first_batch_packet
+import promotion_launch_blocker_digest as blocker_digest
 import promotion_launch_readiness_gate as readiness
 import promotion_post_text_import as post_import
 import promotion_post_writeback as post_writeback
@@ -48,6 +49,7 @@ WATCHED_FILES = (
     SOURCE_DIR / "platform-kpi-tracker.csv",
     SOURCE_DIR / "kpi-tracker.csv",
 )
+WEEKLY_REVIEW_PATH = SOURCE_DIR / "weekly-review-packet.json"
 TODAY = date.today().isoformat()
 
 
@@ -84,6 +86,7 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     readiness.PROFILE_TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     readiness.POSTING_QUEUE_PATH = temp_docs / "posting-queue.csv"
     readiness.KPI_TRACKER_PATH = temp_docs / "kpi-tracker.csv"
+    readiness.PLATFORM_KPI_TRACKER_PATH = temp_docs / "platform-kpi-tracker.csv"
     readiness.COMMAND_CENTER_PATH = temp_docs / "launch-command-center.json"
     readiness.DEFAULT_OUTPUT_PATH = temp_docs / "launch-readiness-gate.md"
     readiness.DEFAULT_JSON_OUTPUT_PATH = temp_docs / "launch-readiness-gate.json"
@@ -156,9 +159,14 @@ def build_readiness(temp_docs: Path) -> dict:
         readiness.read_csv(temp_docs / "posting-queue.csv"),
         readiness.read_csv(temp_docs / "kpi-tracker.csv"),
         readiness.read_json(temp_docs / "launch-command-center.json"),
+        readiness.read_csv(temp_docs / "platform-kpi-tracker.csv"),
     )
     write_json(temp_docs / "launch-readiness-gate.json", gate)
     return gate
+
+
+def transition_stage(gate: dict, temp_docs: Path) -> str:
+    return blocker_digest.current_stage(gate, blocker_digest.read_json(temp_docs / "weekly-review-packet.json"))
 
 
 def build_profile_packet(temp_docs: Path) -> dict:
@@ -277,6 +285,7 @@ def run_sequence() -> dict[str, int]:
 
         profile_fields, profile_rows = read_csv(temp_docs / "platform-profile-tracker.csv")
         initial_readiness = build_readiness(temp_docs)
+        initial_stage = transition_stage(initial_readiness, temp_docs)
         profile_imports = 0
         for proof_file in PROFILE_PROOF_FILES:
             update_profile_from_text(proof_file.read_text(encoding="utf-8"), profile_rows)
@@ -287,6 +296,7 @@ def run_sequence() -> dict[str, int]:
         write_csv(temp_docs / "platform-profile-tracker.csv", profile_fields, profile_rows)
 
         profile_readiness = build_readiness(temp_docs)
+        profile_stage = transition_stage(profile_readiness, temp_docs)
         build_profile_packet(temp_docs)
         build_publishing(temp_docs)
         build_first_batch_packet(temp_docs)
@@ -308,6 +318,8 @@ def run_sequence() -> dict[str, int]:
         write_csv(temp_docs / "platform-kpi-tracker.csv", platform_fields, platform_rows)
         write_csv(temp_docs / "kpi-tracker.csv", script_fields, script_rows)
 
+        post_readiness = build_readiness(temp_docs)
+        post_stage = transition_stage(post_readiness, temp_docs)
         publishing = build_publishing(temp_docs)
         first_packet = build_first_batch_packet(temp_docs)
         evidence = build_evidence(temp_docs)
@@ -316,13 +328,16 @@ def run_sequence() -> dict[str, int]:
 
     return {
         "promotion_launch_sequence_dry_run_initial_ready_to_publish": int(bool(initial_readiness["readiness"]["readyToPublishPosts"])),
+        "promotion_launch_sequence_dry_run_initial_stage": initial_stage,
         "promotion_launch_sequence_dry_run_profile_imports": profile_imports,
         "promotion_launch_sequence_dry_run_profile_configured": int(profile_readiness["metrics"]["profileConfigured"]),
         "promotion_launch_sequence_dry_run_profile_ready_to_publish": int(bool(profile_readiness["readiness"]["readyToPublishPosts"])),
+        "promotion_launch_sequence_dry_run_profile_stage": profile_stage,
         "promotion_launch_sequence_dry_run_profile_gate_ready": int(bool(profile_gate["state"]["readyForFirstBatchPublish"])),
         "promotion_launch_sequence_dry_run_post_imports": post_imports,
         "promotion_launch_sequence_dry_run_first_batch_published": int(first_packet["publishedRows"]),
         "promotion_launch_sequence_dry_run_minimum_kpi_rows": int(first_packet["minimumKpiRows"]),
+        "promotion_launch_sequence_dry_run_post_stage": post_stage,
         "promotion_launch_sequence_dry_run_traceable_evidence": int(evidence["metrics"]["traceable"]),
         "promotion_launch_sequence_dry_run_required_evidence": int(evidence["metrics"]["required"]),
         "promotion_launch_sequence_dry_run_publishing_ready": int(bool(publishing["readyForWeeklyDecision"])),
@@ -348,6 +363,14 @@ def validate_metrics(metrics: dict[str, int]) -> list[str]:
     issues = [f"{key} expected {value}, got {metrics.get(key)}" for key, value in expected.items() if metrics.get(key) != value]
     if metrics["promotion_launch_sequence_dry_run_traceable_evidence"] != metrics["promotion_launch_sequence_dry_run_required_evidence"]:
         issues.append("all required profile/post evidence should be traceable in the dry run")
+    expected_stages = {
+        "promotion_launch_sequence_dry_run_initial_stage": "profile_setup",
+        "promotion_launch_sequence_dry_run_profile_stage": "first_batch_publish",
+        "promotion_launch_sequence_dry_run_post_stage": "weekly_evidence",
+    }
+    for key, value in expected_stages.items():
+        if metrics.get(key) != value:
+            issues.append(f"{key} expected {value}, got {metrics.get(key)}")
     return issues
 
 
@@ -358,13 +381,16 @@ def render_markdown(report: dict) -> str:
         "",
         f"- 產生日期：{report['generatedAt']}",
         f"- initial ready to publish：`{metrics['promotion_launch_sequence_dry_run_initial_ready_to_publish']}`",
+        f"- initial stage：`{metrics['promotion_launch_sequence_dry_run_initial_stage']}`",
         f"- profile imports：{metrics['promotion_launch_sequence_dry_run_profile_imports']}",
         f"- profile configured：{metrics['promotion_launch_sequence_dry_run_profile_configured']}",
         f"- profile ready to publish：`{metrics['promotion_launch_sequence_dry_run_profile_ready_to_publish']}`",
+        f"- profile stage：`{metrics['promotion_launch_sequence_dry_run_profile_stage']}`",
         f"- profile gate ready：`{metrics['promotion_launch_sequence_dry_run_profile_gate_ready']}`",
         f"- post imports：{metrics['promotion_launch_sequence_dry_run_post_imports']}",
         f"- first batch published：{metrics['promotion_launch_sequence_dry_run_first_batch_published']}",
         f"- minimum KPI rows：{metrics['promotion_launch_sequence_dry_run_minimum_kpi_rows']}",
+        f"- post stage：`{metrics['promotion_launch_sequence_dry_run_post_stage']}`",
         f"- traceable / required evidence：{metrics['promotion_launch_sequence_dry_run_traceable_evidence']} / {metrics['promotion_launch_sequence_dry_run_required_evidence']}",
         f"- publishing ready：`{metrics['promotion_launch_sequence_dry_run_publishing_ready']}`",
         f"- weekly ready：`{metrics['promotion_launch_sequence_dry_run_weekly_ready']}`",
@@ -376,6 +402,7 @@ def render_markdown(report: dict) -> str:
         "- This is a temporary-directory dry run; current promotion CSV files must not mutate.",
         "- Profile proof imports must open the profile gate before first-batch post imports.",
         "- Post proof imports must produce three published rows, three minimum KPI rows, and traceable evidence.",
+        "- Blocker stage must move from profile_setup to first_batch_publish, then hold at weekly_evidence until real weekly review data exists.",
         "- Weekly decision can open only after the simulated post URL and KPI evidence path is complete.",
         "",
     ]

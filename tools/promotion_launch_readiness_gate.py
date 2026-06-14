@@ -14,6 +14,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 PROFILE_TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 POSTING_QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 KPI_TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+PLATFORM_KPI_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 COMMAND_CENTER_PATH = PROMOTION_DIR / "launch-command-center.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
@@ -69,6 +70,13 @@ def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def rel(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def parse_int(value: str | None) -> int:
     text = (value or "").strip().replace(",", "")
     if not text:
@@ -95,6 +103,16 @@ def is_kpi_filled(row: dict[str, str]) -> bool:
     if (row.get("post_url") or "").strip():
         return True
     return any(parse_int(row.get(field)) > 0 for field in REQUIRED_KPI_FIELDS if field != "post_url")
+
+
+def count_first_batch_kpi_rows(rows: list[dict[str, str]], policy: dict[str, object]) -> int:
+    return sum(
+        1
+        for row in rows
+        if (row.get("week") or "").strip() == str(policy["firstBatchWeek"])
+        and (row.get("slot") or "").strip() == str(policy["firstBatchSlot"])
+        and is_kpi_filled(row)
+    )
 
 
 def count_asset_prepared(command_center: dict) -> int:
@@ -162,6 +180,7 @@ def build_gate(
     posting_rows: list[dict[str, str]],
     kpi_rows: list[dict[str, str]],
     command_center: dict,
+    platform_kpi_rows: list[dict[str, str]] | None = None,
 ) -> dict:
     policy = readiness_policy()
     expected_platform_count = int(policy["expectedPlatformCount"])
@@ -188,7 +207,11 @@ def build_gate(
         if row.get("scheduled_date") and row.get("scheduled_time") and is_start_campaign_url(row.get("tracked_url", ""))
     )
     published_rows = sum(1 for row in posting_rows if (row.get("status") or "").strip() == "published")
-    filled_kpi_rows = sum(1 for row in kpi_rows if is_kpi_filled(row))
+    filled_kpi_rows = (
+        count_first_batch_kpi_rows(platform_kpi_rows, policy)
+        if platform_kpi_rows is not None
+        else sum(1 for row in kpi_rows if is_kpi_filled(row))
+    )
     asset_prepared = count_asset_prepared(command_center)
     platform_rows = platform_checklist(profile_rows)
     first_batch = first_batch_schedule(posting_rows)
@@ -262,10 +285,11 @@ def build_gate(
     return {
         "generatedAt": date.today().isoformat(),
         "source": {
-            "profileTracker": str(PROFILE_TRACKER_PATH.relative_to(ROOT)),
-            "postingQueue": str(POSTING_QUEUE_PATH.relative_to(ROOT)),
-            "kpiTracker": str(KPI_TRACKER_PATH.relative_to(ROOT)),
-            "launchCommandCenter": str(COMMAND_CENTER_PATH.relative_to(ROOT)),
+            "profileTracker": rel(PROFILE_TRACKER_PATH),
+            "postingQueue": rel(POSTING_QUEUE_PATH),
+            "kpiTracker": rel(KPI_TRACKER_PATH),
+            "platformKpiTracker": rel(PLATFORM_KPI_TRACKER_PATH),
+            "launchCommandCenter": rel(COMMAND_CENTER_PATH),
         },
         "readinessPolicy": policy,
         "metrics": {
@@ -405,6 +429,7 @@ def main() -> int:
     parser.add_argument("--profile-tracker", default=str(PROFILE_TRACKER_PATH))
     parser.add_argument("--posting-queue", default=str(POSTING_QUEUE_PATH))
     parser.add_argument("--kpi-tracker", default=str(KPI_TRACKER_PATH))
+    parser.add_argument("--platform-kpi-tracker", default=str(PLATFORM_KPI_TRACKER_PATH))
     parser.add_argument("--command-center", default=str(COMMAND_CENTER_PATH))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT_PATH))
     parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT_PATH))
@@ -416,6 +441,7 @@ def main() -> int:
         read_csv(Path(args.posting_queue)),
         read_csv(Path(args.kpi_tracker)),
         read_json(Path(args.command_center)),
+        read_csv(Path(args.platform_kpi_tracker)),
     )
     if not args.check:
         write_outputs(gate, Path(args.output), Path(args.json_output))

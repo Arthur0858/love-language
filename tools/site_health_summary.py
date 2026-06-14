@@ -1465,6 +1465,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_kpi_writeback_platform_rows",
         "promotion_kpi_writeback_platform_json_rows",
         "promotion_kpi_writeback_script_rows",
+        "promotion_kpi_writeback_script_json_rows",
         "promotion_kpi_writeback_published_rows",
         "promotion_kpi_writeback_filled_script_rows",
         "promotion_kpi_writeback_attribution_filled_rows",

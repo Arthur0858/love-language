@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
 TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
+TRACKER_JSON_PATH = PROMOTION_DIR / "kpi-tracker.json"
 
 FIELDNAMES = [
     "week",
@@ -145,10 +146,21 @@ def write_tracker(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def write_json(path: Path, rows: list[dict[str, str]]) -> None:
+    payload = {
+        "rowCount": len(rows),
+        "fieldnames": FIELDNAMES,
+        "preserveFields": sorted(PRESERVE_FIELDS),
+        "rows": rows,
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Sync LoveTypes KPI tracker rows from promotion-kit publishing tasks.")
     parser.add_argument("--kit", default=str(KIT_PATH))
     parser.add_argument("--tracker", default=str(TRACKER_PATH))
+    parser.add_argument("--json-output", default=str(TRACKER_JSON_PATH))
     parser.add_argument("--check", action="store_true", help="Validate expected tracker rows without writing.")
     args = parser.parse_args()
 
@@ -167,7 +179,9 @@ def main() -> int:
             print(issue)
         return 1
     write_tracker(Path(args.tracker), rows)
+    write_json(Path(args.json_output), rows)
     print(f"promotion_kpi_tracker={args.tracker}")
+    print(f"promotion_kpi_tracker_json={args.json_output}")
     print(f"promotion_kpi_tracker_rows={len(rows)}")
     print(f"promotion_kpi_tracker_fields={len(FIELDNAMES)}")
     return 0

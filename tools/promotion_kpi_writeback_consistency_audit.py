@@ -13,6 +13,7 @@ POSTING_QUEUE = PROMOTION_DIR / "posting-queue.csv"
 PLATFORM_KPI = PROMOTION_DIR / "platform-kpi-tracker.csv"
 PLATFORM_KPI_JSON = PROMOTION_DIR / "platform-kpi-tracker.json"
 SCRIPT_KPI = PROMOTION_DIR / "kpi-tracker.csv"
+SCRIPT_KPI_JSON = PROMOTION_DIR / "kpi-tracker.json"
 WEEKLY_SUMMARY = PROMOTION_DIR / "weekly-summary.json"
 ATTRIBUTION = PROMOTION_DIR / "attribution-reconciliation.json"
 LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
@@ -129,6 +130,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
     platform_fields, platform_rows = read_csv(PLATFORM_KPI)
     platform_json = read_json(PLATFORM_KPI_JSON)
     script_fields, script_rows = read_csv(SCRIPT_KPI)
+    script_json = read_json(SCRIPT_KPI_JSON)
     weekly_summary = read_json(WEEKLY_SUMMARY)
     attribution = read_json(ATTRIBUTION)
     launch_readiness = read_json(LAUNCH_READINESS)
@@ -157,6 +159,12 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("platform KPI JSON metricFields should match canonical metric fields")
     if platform_json.get("rows") != platform_rows:
         issues.append("platform KPI JSON rows should match platform KPI CSV rows")
+    if script_json.get("rowCount") != len(script_rows):
+        issues.append("script KPI JSON rowCount should match script KPI CSV rows")
+    if script_json.get("fieldnames") != script_fields:
+        issues.append("script KPI JSON fieldnames should match script KPI CSV fields")
+    if script_json.get("rows") != script_rows:
+        issues.append("script KPI JSON rows should match script KPI CSV rows")
 
     for queue_row in queue_rows:
         key = row_key(queue_row)
@@ -217,6 +225,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "platformRows": len(platform_rows),
         "platformJsonRows": int(platform_json.get("rowCount", 0) or 0),
         "scriptRows": len(script_rows),
+        "scriptJsonRows": int(script_json.get("rowCount", 0) or 0),
         "publishedRows": len(queue_published),
         "filledScriptRows": len(script_filled),
         "attributionFilledRows": len(attribution_filled),
@@ -230,6 +239,7 @@ def main() -> int:
     print(f"promotion_kpi_writeback_platform_rows={metrics['platformRows']}")
     print(f"promotion_kpi_writeback_platform_json_rows={metrics['platformJsonRows']}")
     print(f"promotion_kpi_writeback_script_rows={metrics['scriptRows']}")
+    print(f"promotion_kpi_writeback_script_json_rows={metrics['scriptJsonRows']}")
     print(f"promotion_kpi_writeback_published_rows={metrics['publishedRows']}")
     print(f"promotion_kpi_writeback_filled_script_rows={metrics['filledScriptRows']}")
     print(f"promotion_kpi_writeback_attribution_filled_rows={metrics['attributionFilledRows']}")

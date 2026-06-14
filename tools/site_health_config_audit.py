@@ -38,15 +38,13 @@ SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
     "image_assets": "tools/image_asset_audit.py",
     "performance_budget": "tools/performance_budget_audit.py",
 }
-PROMOTION_SITE_HEALTH_EXCLUDED_SCRIPTS = {
-    "tools/promotion_daily_ops_refresh.py": "date-sensitive write workflow; run manually when refreshing operator docs",
+PROMOTION_MANUAL_RUNTIME_SCRIPTS = {
     "tools/promotion_lead_text_import.py": "operator import parser; covered by import template audit and manual writeback flow",
     "tools/promotion_lead_writeback.py": "writes lead tracker rows from verified operator input",
     "tools/promotion_post_text_import.py": "operator import parser; covered by import template audit and manual writeback flow",
     "tools/promotion_post_writeback.py": "writes post publication rows from verified operator input",
     "tools/promotion_profile_text_import.py": "operator import parser; covered by import template audit and manual writeback flow",
     "tools/promotion_profile_writeback.py": "writes profile setup rows from verified operator input",
-    "tools/promotion_proof_note_policy.py": "policy helper imported by proof note safety audit",
 }
 
 
@@ -315,15 +313,24 @@ def public_deploy_support_files() -> list[str]:
     return sorted(paths)
 
 
-def promotion_tool_coverage(check_script_paths: list[str]) -> tuple[list[str], list[str], list[str]]:
+def promotion_tool_coverage(
+    check_script_paths: list[str],
+    predeploy_script_paths: list[str],
+) -> tuple[list[str], list[str], list[str], list[str]]:
     promotion_scripts = sorted(str(path.relative_to(ROOT)) for path in (ROOT / "tools").glob("promotion_*.py"))
     check_scripts = set(check_script_paths)
-    excluded_scripts = set(PROMOTION_SITE_HEALTH_EXCLUDED_SCRIPTS)
+    predeploy_scripts = set(predeploy_script_paths)
+    manual_runtime_scripts = set(PROMOTION_MANUAL_RUNTIME_SCRIPTS)
     covered_scripts = sorted(path for path in promotion_scripts if path in check_scripts)
-    documented_excluded_scripts = sorted(path for path in promotion_scripts if path in excluded_scripts)
-    unknown_scripts = sorted(path for path in promotion_scripts if path not in check_scripts and path not in excluded_scripts)
-    stale_exclusions = sorted(path for path in excluded_scripts if path not in promotion_scripts)
-    return covered_scripts, documented_excluded_scripts, unknown_scripts + stale_exclusions
+    predeploy_only_scripts = sorted(
+        path for path in promotion_scripts if path not in check_scripts and path in predeploy_scripts
+    )
+    documented_manual_runtime_scripts = sorted(path for path in promotion_scripts if path in manual_runtime_scripts)
+    unknown_scripts = sorted(
+        path for path in promotion_scripts if path not in check_scripts and path not in predeploy_scripts
+    )
+    stale_manual_runtime_scripts = sorted(path for path in manual_runtime_scripts if path not in promotion_scripts)
+    return covered_scripts, predeploy_only_scripts, documented_manual_runtime_scripts, unknown_scripts + stale_manual_runtime_scripts
 
 
 def main() -> int:
@@ -363,9 +370,10 @@ def main() -> int:
     missing_site_health_local_audit_scripts = sorted(set(site_health_local_audit_scripts).difference(predeploy_script_paths))
     (
         covered_promotion_scripts,
-        documented_excluded_promotion_scripts,
+        predeploy_only_promotion_scripts,
+        documented_manual_runtime_promotion_scripts,
         promotion_tool_coverage_issues,
-    ) = promotion_tool_coverage(check_script_paths)
+    ) = promotion_tool_coverage(check_script_paths, predeploy_script_paths)
     site_health_release_local_audit_mismatches = sorted(
         set(site_health_local_audit_scripts).symmetric_difference(release_local_audit_scripts)
     )
@@ -452,7 +460,7 @@ def main() -> int:
         )
     if promotion_tool_coverage_issues:
         issues.append(
-            "promotion tools missing from site health CHECKS or documented exclusions: "
+            "promotion tools missing from site health CHECKS, predeploy PYTHON_TOOLS, or documented manual runtime list: "
             f"{', '.join(promotion_tool_coverage_issues)}"
         )
     missing_scripts = sorted(path for path in check_script_paths if not (ROOT / path).exists())
@@ -528,7 +536,8 @@ def main() -> int:
     print(f"site_health_config_missing_site_health_local_audit_scripts={len(missing_site_health_local_audit_scripts)}")
     print(f"site_health_config_site_health_release_local_audit_mismatches={len(site_health_release_local_audit_mismatches)}")
     print(f"site_health_config_promotion_tools_covered={len(covered_promotion_scripts)}")
-    print(f"site_health_config_promotion_tools_documented_excluded={len(documented_excluded_promotion_scripts)}")
+    print(f"site_health_config_promotion_tools_predeploy_only={len(predeploy_only_promotion_scripts)}")
+    print(f"site_health_config_promotion_tools_manual_runtime={len(documented_manual_runtime_promotion_scripts)}")
     print(f"site_health_config_promotion_tool_coverage_issues={len(promotion_tool_coverage_issues)}")
     print(f"site_health_config_issue_metric_keys={len(issue_keys)}")
     print(f"site_health_config_public_smoke_counters={len(public_smoke_counters)}")

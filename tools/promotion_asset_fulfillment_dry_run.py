@@ -88,7 +88,10 @@ def render_markdown(report: dict) -> str:
         "# LoveTypes Asset Fulfillment Dry Run",
         "",
         f"- 產生日期：{report['generatedAt']}",
-        f"- real leads：{metrics['realLeads']}",
+        f"- dry-run mode：`{report['dryRunMode']}`",
+        f"- synthetic real leads：{report['syntheticRealLeads']}",
+        f"- current real leads：{report['currentRealLeads']}",
+        f"- simulated real leads：{metrics['realLeads']}",
         f"- requested asset types：{metrics['requestedAssetTypes']}",
         f"- ready after real request：{metrics['readyAfterRealRequest']}",
         f"- PDF ready：`{int(checks['pdf_ready'])}`",
@@ -102,6 +105,7 @@ def render_markdown(report: dict) -> str:
         "## Rule",
         "",
         "- This dry run appends one synthetic PDF request inside a temporary directory only.",
+        "- `syntheticRealLeads` is not production demand and must not unlock the official launch or offer gates.",
         "- One real owned-asset request may open the matching free PDF practice card.",
         "- Wallpaper, short ritual, email template, paid assets, Luna packs, and commercial offers must remain blocked without stronger evidence.",
         "- Current lead, asset, demand, and offer files must not mutate.",
@@ -124,9 +128,16 @@ def write_report(payload: dict) -> None:
     REPORT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def current_real_leads() -> int:
+    with (SOURCE_DIR / "lead-intake-tracker.csv").open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    return sum(1 for row in rows if row.get("status") != "template")
+
+
 def run_dry_run() -> tuple[dict, dict, dict[str, str], int, bool, list[str]]:
     before = file_hashes(TRACKED_FILES)
     issues: list[str] = []
+    current_leads = current_real_leads()
     with tempfile.TemporaryDirectory(prefix="lovetypes-asset-fulfillment-") as temp_name:
         temp_root = Path(temp_name)
         temp_docs = temp_root / "docs" / "promotion" / "first-round"
@@ -151,7 +162,9 @@ def run_dry_run() -> tuple[dict, dict, dict[str, str], int, bool, list[str]]:
         and row["fulfillmentStatus"] == "ready_after_offer_gate"
     )
     checks = {
-        "real_leads": metrics["realLeads"] == 1,
+        "dry_run_mode": True,
+        "synthetic_real_leads": metrics["realLeads"] - current_leads == 1,
+        "real_leads": metrics["realLeads"] == current_leads + 1,
         "requested_asset_types": metrics["requestedAssetTypes"] == 1,
         "ready_after_real_request": metrics["readyAfterRealRequest"] == 1,
         "pdf_ready": statuses["pdf"] == "ready_after_real_request",
@@ -180,6 +193,9 @@ def main() -> int:
                 "trackedFiles": [str(path.relative_to(ROOT)) for path in TRACKED_FILES],
                 "syntheticRequest": "iris owned_asset_request PDF practice card in a temporary directory",
             },
+            "dryRunMode": 1,
+            "syntheticRealLeads": metrics["realLeads"] - current_real_leads(),
+            "currentRealLeads": current_real_leads(),
             "metrics": metrics,
             "checks": checks,
             "statuses": statuses,
@@ -190,6 +206,9 @@ def main() -> int:
         print(f"promotion_asset_fulfillment_dry_run_report={REPORT_MD.relative_to(ROOT)}")
         print(f"promotion_asset_fulfillment_dry_run_report_json={REPORT_JSON.relative_to(ROOT)}")
 
+    print("promotion_asset_fulfillment_dry_run_mode=1")
+    print(f"promotion_asset_fulfillment_dry_run_synthetic_real_leads={metrics['realLeads'] - current_real_leads()}")
+    print(f"promotion_asset_fulfillment_dry_run_current_real_leads={current_real_leads()}")
     print(f"promotion_asset_fulfillment_dry_run_real_leads={metrics['realLeads']}")
     print(f"promotion_asset_fulfillment_dry_run_requested_asset_types={metrics['requestedAssetTypes']}")
     print(f"promotion_asset_fulfillment_dry_run_ready_after_real_request={metrics['readyAfterRealRequest']}")

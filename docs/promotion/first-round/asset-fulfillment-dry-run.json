@@ -10,6 +10,9 @@
     ],
     "syntheticRequest": "iris owned_asset_request PDF practice card in a temporary directory"
   },
+  "dryRunMode": 1,
+  "syntheticRealLeads": 1,
+  "currentRealLeads": 0,
   "metrics": {
     "rows": 40,
     "readyToPrepare": 5,
@@ -25,6 +28,8 @@
     "readyDemandPairs": 0
   },
   "checks": {
+    "dry_run_mode": true,
+    "synthetic_real_leads": true,
     "real_leads": true,
     "requested_asset_types": true,
     "ready_after_real_request": true,

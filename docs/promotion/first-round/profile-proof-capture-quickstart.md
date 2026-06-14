@@ -1,0 +1,83 @@
+# LoveTypes Profile Proof Capture Quickstart
+
+- 產生日期：2026-06-14
+- platforms：3
+- capture rows：18
+- pending evidence rows：18
+- proof files / importable templates：3 / 3
+- public ready / configured：3 / 0
+- profile gate ready：0
+- issues：0
+
+## Rules
+
+- Capture proof before writeback; importable text is only a format check.
+- Each platform needs six evidence checks before status can become set/live.
+- Use screenshot, clicked public link, screen recording, or platform timestamp as proof.
+- Keep the proof note tied to platform and date; do not use generic notes like done or checked.
+- After all three writebacks, rerun daily ops refresh, profile completion gate, and launch quickstart.
+
+## Capture Steps
+
+### YouTube Shorts (`youtube_shorts`)
+
+- status：`ready_to_configure`
+- profile link location：Channel description / video description
+- profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+- proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
+- suggested capture：`profile-youtube_shorts-2026-06-14.png`
+- proof note：`screenshot profile-youtube_shorts-2026-06-14.png verified`
+- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
+- write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
+
+Evidence checklist:
+
+- [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing. Notes: profile link 已實際貼到平台個人頁或說明欄。
+- [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link. Notes: Link location: Channel description / video description; URL: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+- [ ] `start_url_resolves`：Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404. Notes: 從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。
+- [ ] `utm_parameters_preserved`：utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling. Notes: UTM source / medium / campaign / content 沒有被平台移除或改寫。
+- [ ] `quiz_only_copy`：Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise. Notes: Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。
+- [ ] `proof_note_present`：A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename. Notes: 留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。
+
+### TikTok (`tiktok`)
+
+- status：`ready_to_configure`
+- profile link location：Profile website link
+- profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+- proof file：`docs/promotion/first-round/proof-tiktok.txt`
+- suggested capture：`profile-tiktok-2026-06-14.png`
+- proof note：`screenshot profile-tiktok-2026-06-14.png verified`
+- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
+- write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
+
+Evidence checklist:
+
+- [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing. Notes: profile link 已實際貼到平台個人頁或說明欄。
+- [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link. Notes: Link location: Profile website link; URL: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
+- [ ] `start_url_resolves`：Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404. Notes: 從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。
+- [ ] `utm_parameters_preserved`：utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling. Notes: UTM source / medium / campaign / content 沒有被平台移除或改寫。
+- [ ] `quiz_only_copy`：Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise. Notes: Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。
+- [ ] `proof_note_present`：A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename. Notes: 留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。
+
+### Instagram Reels (`instagram_reels`)
+
+- status：`ready_to_configure`
+- profile link location：Profile link in bio
+- profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+- proof file：`docs/promotion/first-round/proof-instagram_reels.txt`
+- suggested capture：`profile-instagram_reels-2026-06-14.png`
+- proof note：`screenshot profile-instagram_reels-2026-06-14.png verified`
+- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
+- write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
+
+Evidence checklist:
+
+- [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing. Notes: profile link 已實際貼到平台個人頁或說明欄。
+- [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link. Notes: Link location: Profile link in bio; URL: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
+- [ ] `start_url_resolves`：Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404. Notes: 從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。
+- [ ] `utm_parameters_preserved`：utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling. Notes: UTM source / medium / campaign / content 沒有被平台移除或改寫。
+- [ ] `quiz_only_copy`：Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise. Notes: Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。
+- [ ] `proof_note_present`：A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename. Notes: 留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。

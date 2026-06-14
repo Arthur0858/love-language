@@ -1,0 +1,204 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "firstBatchKpiQuickstart": "docs/promotion/first-round/first-batch-kpi-quickstart.json",
+    "zeroKpiEvidenceChecklist": "docs/promotion/first-round/zero-kpi-evidence-checklist.json",
+    "firstBatchKpiActionSheet": "docs/promotion/first-round/first-batch-kpi-action-sheet.json",
+    "postOpsReadinessPack": "docs/promotion/first-round/post-ops-readiness-pack.json",
+    "firstBatchCompletionGate": "docs/promotion/first-round/first-batch-completion-gate.json",
+    "publishKpiHandoff": "docs/promotion/first-round/publish-kpi-handoff.json",
+    "weeklyReviewPacket": "docs/promotion/first-round/weekly-review-packet.json",
+    "masterGate": "docs/promotion/first-round/master-gate.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "readyForKpi": 0,
+    "blockedRows": 3,
+    "publishedRows": 0,
+    "zeroPendingRows": 9,
+    "minimumKpiRows": 0,
+    "weeklyReady": 0,
+    "completionReady": 0,
+    "emptyData": 1,
+    "masterStage": "profile_setup",
+    "masterProfileConfigured": 0,
+    "handoffReadyForWeekly": 0,
+    "issues": 0
+  },
+  "rules": [
+    "Public post URL writeback is the first gate; KPI source checks are not valid before it.",
+    "Zero values are acceptable only as checked zeroes with source proof.",
+    "The minimum KPI set is site_clicks, quiz_starts, and quiz_completions.",
+    "Weekly review remains closed while emptyData is true.",
+    "Keep commerce and product decisions locked until first-batch KPI rows exist."
+  ],
+  "steps": [
+    {
+      "id": "post_url_writeback_complete",
+      "status": "current_blocker",
+      "command": "python3 tools/promotion_first_batch_publish_closure_quickstart.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check",
+      "release": "All three first-batch posts have real public HTTPS post_url values.",
+      "stop": "Do not continue with KPI proof while post_url fields are blank, scheduled-only, private, or placeholders."
+    },
+    {
+      "id": "verify_zero_kpi_sources",
+      "status": "blocked_until_public_url",
+      "command": "python3 tools/promotion_zero_kpi_evidence_checklist.py --check",
+      "release": "Each platform row has checked-source proof for site_clicks, quiz_starts, and quiz_completions.",
+      "stop": "Do not treat zero as data until a named analytics source has actually been checked."
+    },
+    {
+      "id": "writeback_minimum_kpis",
+      "status": "blocked_until_source_proof",
+      "command": "python3 tools/promotion_post_writeback.py update ... --site-clicks <REAL_OR_CHECKED_ZERO> --quiz-starts <REAL_OR_CHECKED_ZERO> --quiz-completions <REAL_OR_CHECKED_ZERO>",
+      "release": "All first-batch rows include checked minimum KPI values.",
+      "stop": "Do not write estimates, drafts, or unverified copied counts."
+    },
+    {
+      "id": "refresh_ops_docs",
+      "status": "blocked_until_kpi_writeback",
+      "command": "python3 tools/promotion_daily_ops_refresh.py",
+      "release": "Generated launch, KPI, weekly, and handoff docs reflect the written KPI rows.",
+      "stop": "Do not run a decision from stale generated docs."
+    },
+    {
+      "id": "open_weekly_review",
+      "status": "blocked_until_minimum_kpi",
+      "command": "python3 tools/promotion_first_batch_completion_gate.py --check && python3 tools/promotion_weekly_review_packet.py --check",
+      "release": "Weekly review is open only after publication, URL proof, and minimum KPI proof all pass.",
+      "stop": "Do not make product or channel decisions while emptyDataMode is still true."
+    }
+  ],
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "postOpsStatus": "blocked_until_post_url",
+      "actionStatus": "blocked_until_public_post_url",
+      "published": 0,
+      "readyForKpi": 0,
+      "postUrl": "",
+      "blockedBy": "first-batch post is not published",
+      "zeroChecks": [
+        {
+          "metric": "site_clicks",
+          "status": "pending_publish",
+          "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence/site_clicks"
+        },
+        {
+          "metric": "quiz_starts",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence/quiz_starts"
+        },
+        {
+          "metric": "quiz_completions",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence/quiz_completions"
+        }
+      ],
+      "minimumKpis": [
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence",
+      "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
+    },
+    {
+      "platform": "tiktok",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "postOpsStatus": "blocked_until_post_url",
+      "actionStatus": "blocked_until_public_post_url",
+      "published": 0,
+      "readyForKpi": 0,
+      "postUrl": "",
+      "blockedBy": "first-batch post is not published",
+      "zeroChecks": [
+        {
+          "metric": "site_clicks",
+          "status": "pending_publish",
+          "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence/site_clicks"
+        },
+        {
+          "metric": "quiz_starts",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence/quiz_starts"
+        },
+        {
+          "metric": "quiz_completions",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence/quiz_completions"
+        }
+      ],
+      "minimumKpis": [
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence",
+      "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
+    },
+    {
+      "platform": "instagram_reels",
+      "taskId": "publish-lt-s01-iris-silence",
+      "scriptId": "lt-s01-iris-silence",
+      "guardianId": "iris",
+      "postOpsStatus": "blocked_until_post_url",
+      "actionStatus": "blocked_until_public_post_url",
+      "published": 0,
+      "readyForKpi": 0,
+      "postUrl": "",
+      "blockedBy": "first-batch post is not published",
+      "zeroChecks": [
+        {
+          "metric": "site_clicks",
+          "status": "pending_publish",
+          "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence/site_clicks"
+        },
+        {
+          "metric": "quiz_starts",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence/quiz_starts"
+        },
+        {
+          "metric": "quiz_completions",
+          "status": "pending_publish",
+          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
+          "value": "0",
+          "proofNoteTemplate": "analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence/quiz_completions"
+        }
+      ],
+      "minimumKpis": [
+        "site_clicks",
+        "quiz_starts",
+        "quiz_completions"
+      ],
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence",
+      "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
+    }
+  ],
+  "issues": []
+}

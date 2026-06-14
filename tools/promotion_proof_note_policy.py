@@ -45,6 +45,13 @@ GENERIC_ONLY_PHRASES = {
     "verified",
 }
 DATE_RE = re.compile(r"\b20\d{2}-\d{2}-\d{2}\b")
+PLACEHOLDER_TOKENS = (
+    "<real_",
+    "<replace",
+    "replace-with-real",
+    "yyyy-mm-dd",
+    "example.com",
+)
 
 
 def normalize_note(value: str) -> str:
@@ -61,6 +68,9 @@ def has_traceable_evidence(value: str) -> bool:
 
 
 def proof_note_issue(value: str, label: str = "proof_note") -> str:
+    normalized = normalize_note(value)
+    if any(token in normalized for token in PLACEHOLDER_TOKENS):
+        return f"{label} must replace placeholder proof text with real evidence"
     if has_traceable_evidence(value):
         return ""
     return (

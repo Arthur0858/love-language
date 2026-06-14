@@ -55,7 +55,7 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 ### Structured lead request import
 
 - check：`python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email thread Gmail request checked YYYY-MM-DD"`
+- write：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "<REAL_EMAIL_THREAD_OR_MESSAGE_ID> checked YYYY-MM-DD"`
 
 ```text
 LoveTypes 結構化需求
@@ -63,7 +63,7 @@ LoveTypes 結構化需求
 我的守護者: 艾莉絲 · 肯定的言詞
 需求類型: owned_asset_request
 素材偏好: PDF 練習卡
-可回覆 email: name@example.com
+可回覆 email: <REAL_REPLY_EMAIL>
 Campaign content / 推廣內容: iris_silence
 使用情境或備註: 睡前整理，想要可列印版本
 consent_status: explicit_reply_ok

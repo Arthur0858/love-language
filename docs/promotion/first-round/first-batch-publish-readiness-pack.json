@@ -37,7 +37,7 @@
       "caption_ready": "1",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "stop_condition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.",
-      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=2 | published status requires non-placeholder https post_url | proof_note must replace placeholder proof text with real evidence"
     },
     {
       "platform": "tiktok",
@@ -57,7 +57,7 @@
       "caption_ready": "1",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "stop_condition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.",
-      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=tiktok | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=tiktok | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=2 | published status requires non-placeholder https post_url | proof_note must replace placeholder proof text with real evidence"
     },
     {
       "platform": "instagram_reels",
@@ -77,7 +77,7 @@
       "caption_ready": "1",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "stop_condition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.",
-      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=instagram_reels | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=instagram_reels | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=2 | published status requires non-placeholder https post_url | proof_note must replace placeholder proof text with real evidence"
     }
   ],
   "rules": [

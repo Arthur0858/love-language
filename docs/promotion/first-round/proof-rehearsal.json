@@ -30,7 +30,7 @@
       "scenario": "post_placeholder_current",
       "expected": "reject",
       "passed": true,
-      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=instagram_reels\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=instagram_reels\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=2\npublished status requires non-placeholder https post_url\nproof_note must replace placeholder proof text with real evidence"
     },
     {
       "path": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
@@ -57,7 +57,7 @@
       "scenario": "post_placeholder_current",
       "expected": "reject",
       "passed": true,
-      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=tiktok\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=tiktok\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=2\npublished status requires non-placeholder https post_url\nproof_note must replace placeholder proof text with real evidence"
     },
     {
       "path": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
@@ -84,7 +84,7 @@
       "scenario": "post_placeholder_current",
       "expected": "reject",
       "passed": true,
-      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=youtube_shorts\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=1\npublished status requires non-placeholder https post_url"
+      "output": "promotion_post_text_import_fields_parsed=10\npromotion_post_text_import_platform=youtube_shorts\npromotion_post_text_import_task_id=publish-lt-s01-iris-silence\npromotion_post_text_import_status=published\npromotion_post_text_import_has_post_url=1\npromotion_post_text_import_metric_fields_present=4\npromotion_post_text_import_issues=2\npublished status requires non-placeholder https post_url\nproof_note must replace placeholder proof text with real evidence"
     },
     {
       "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",

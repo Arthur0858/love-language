@@ -171,8 +171,8 @@
       "id": "lead_request_import",
       "title": "Structured lead request import",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked YYYY-MM-DD\"",
-      "template": "LoveTypes 結構化需求\n來源: 收藏室免費素材需求\n我的守護者: 艾莉絲 · 肯定的言詞\n需求類型: owned_asset_request\n素材偏好: PDF 練習卡\n可回覆 email: name@example.com\nCampaign content / 推廣內容: iris_silence\n使用情境或備註: 睡前整理，想要可列印版本\nconsent_status: explicit_reply_ok\npage: https://lovetypes.tw/keepsakes/"
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"<REAL_EMAIL_THREAD_OR_MESSAGE_ID> checked YYYY-MM-DD\"",
+      "template": "LoveTypes 結構化需求\n來源: 收藏室免費素材需求\n我的守護者: 艾莉絲 · 肯定的言詞\n需求類型: owned_asset_request\n素材偏好: PDF 練習卡\n可回覆 email: <REAL_REPLY_EMAIL>\nCampaign content / 推廣內容: iris_silence\n使用情境或備註: 睡前整理，想要可列印版本\nconsent_status: explicit_reply_ok\npage: https://lovetypes.tw/keepsakes/"
     }
   ],
   "doNotDo": [

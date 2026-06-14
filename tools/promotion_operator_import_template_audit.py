@@ -22,8 +22,9 @@ EXPECTED_IMPORTS = {
         "tool": "tools/promotion_post_text_import.py",
         "required_outputs": (
             "promotion_post_text_import_has_post_url=1",
-            "promotion_post_text_import_issues=1",
+            "promotion_post_text_import_issues=2",
             "published status requires non-placeholder https post_url",
+            "proof_note must replace placeholder proof text with real evidence",
         ),
         "expect_rejected": True,
     },
@@ -33,7 +34,7 @@ EXPECTED_IMPORTS = {
             "promotion_lead_text_import_has_reply_email=1",
             "promotion_lead_text_import_has_utm_content=1",
             "promotion_lead_text_import_issues=1",
-            "reply_email must be a real requester address",
+            "reply_email should look like an email address",
         ),
         "expect_rejected": True,
     },
@@ -105,6 +106,12 @@ def validate() -> tuple[dict[str, int], list[str]]:
                 issues.append(f"{import_id}: writeCommand should force real proof replacement")
             if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in template:
                 issues.append(f"{import_id}: template should force real proof replacement")
+        if import_id == "lead_request_import":
+            write_command = str(item.get("writeCommand", ""))
+            if "<REAL_REPLY_EMAIL>" not in template:
+                issues.append(f"{import_id}: template should force real reply email replacement")
+            if "<REAL_EMAIL_THREAD_OR_MESSAGE_ID>" not in write_command:
+                issues.append(f"{import_id}: writeCommand should force real email proof replacement")
         if not template:
             issues.append(f"{import_id}: template is empty")
             continue

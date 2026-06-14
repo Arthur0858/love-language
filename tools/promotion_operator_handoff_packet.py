@@ -217,14 +217,14 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
             "id": "lead_request_import",
             "title": "Structured lead request import",
             "checkCommand": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
-            "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked YYYY-MM-DD\"",
+            "writeCommand": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"<REAL_EMAIL_THREAD_OR_MESSAGE_ID> checked YYYY-MM-DD\"",
             "template": "\n".join([
                 "LoveTypes 結構化需求",
                 "來源: 收藏室免費素材需求",
                 "我的守護者: 艾莉絲 · 肯定的言詞",
                 "需求類型: owned_asset_request",
                 "素材偏好: PDF 練習卡",
-                "可回覆 email: name@example.com",
+                "可回覆 email: <REAL_REPLY_EMAIL>",
                 "Campaign content / 推廣內容: iris_silence",
                 "使用情境或備註: 睡前整理，想要可列印版本",
                 "consent_status: explicit_reply_ok",
@@ -272,6 +272,12 @@ def validate_handoff(handoff: dict) -> list[str]:
                 issues.append(f"{label}: profile import template should force real proof replacement")
             if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(item.get("writeCommand", "")):
                 issues.append(f"{label}: profile import write command should force real proof replacement")
+        if item.get("id") == "lead_request_import":
+            write_command = str(item.get("writeCommand", ""))
+            if "<REAL_REPLY_EMAIL>" not in template:
+                issues.append(f"{label}: lead import template should force real reply email replacement")
+            if "<REAL_EMAIL_THREAD_OR_MESSAGE_ID>" not in write_command:
+                issues.append(f"{label}: lead import write command should force real email evidence replacement")
     for step in steps:
         label = f"{step.get('phase', '<phase>')}/{step.get('platform', step.get('taskId', ''))}"
         if not step.get("phase") or not step.get("status") or not step.get("priority"):

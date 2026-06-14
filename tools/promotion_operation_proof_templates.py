@@ -120,10 +120,15 @@ def validate(packet: dict, rows: list[dict[str, object]]) -> tuple[list[str], di
                 issues.append(f"{label}: profile proof template should pass check")
         elif row.get("kind") == "post_publish":
             code, output = run_check([sys.executable, "tools/promotion_post_text_import.py", "check", "--input", rel_path])
-            if code != 0 and "promotion_post_text_import_issues=1" in output and "non-placeholder https post_url" in output:
+            if (
+                code != 0
+                and "promotion_post_text_import_issues=2" in output
+                and "non-placeholder https post_url" in output
+                and "proof_note must replace placeholder proof text with real evidence" in output
+            ):
                 post_safely_rejected += 1
             else:
-                issues.append(f"{label}: post proof template should be rejected until a real post URL is inserted")
+                issues.append(f"{label}: post proof template should be rejected until a real post URL and proof note are inserted")
 
     metrics = {
         "proofRows": proof_count,

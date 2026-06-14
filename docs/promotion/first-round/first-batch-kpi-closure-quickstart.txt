@@ -1,9 +1,9 @@
 LoveTypes first batch KPI closure quickstart
-generated: 2026-06-14
-rows: 3
+generated: 2026-06-15
+rows: 1
 ready for KPI: 0
 published rows: 0
-zero pending rows: 9
+zero pending rows: 3
 zero source proof needs rows: 0
 zero source proof complete rows: 0
 zero source proof missing rows: 0
@@ -15,7 +15,7 @@ Closure steps:
 
 post_url_writeback_complete: current_blocker
 command: python3 tools/promotion_first_batch_publish_closure_quickstart.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check
-release: All three first-batch posts have real public HTTPS post_url values.
+release: All active first-batch posts have real public HTTPS post_url values.
 stop: Do not continue with KPI proof while post_url fields are blank, scheduled-only, private, or placeholders.
 
 verify_zero_kpi_sources: blocked_until_public_url
@@ -49,30 +49,4 @@ zero checks:
 - quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
 - quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
 writeback command after source proof:
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
-
-=== tiktok / publish-lt-s01-iris-silence ===
-status: blocked_until_post_url
-published: 0
-ready for KPI: 0
-post URL: (not published)
-blocked by: first-batch post is not published
-zero checks:
-- site_clicks: pending_publish | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-- quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-writeback command after source proof:
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
-
-=== instagram_reels / publish-lt-s01-iris-silence ===
-status: blocked_until_post_url
-published: 0
-ready for KPI: 0
-post URL: (not published)
-blocked by: first-batch post is not published
-zero checks:
-- site_clicks: pending_publish | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-- quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-writeback command after source proof:
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"

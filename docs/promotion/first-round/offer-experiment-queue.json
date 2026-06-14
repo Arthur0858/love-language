@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json"
   },
@@ -1321,13 +1321,12 @@
     "readyRows": 0,
     "waitingRows": 0,
     "blockedRows": 80,
-    "blockers": 2,
+    "blockers": 1,
     "blockedByEmptyData": 1,
     "blockedByWeeklyGate": 1
   },
   "blockers": [
-    "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
-    "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+    "尚未達週決策門檻：發布狀態或 KPI 回填不足。"
   ],
   "safety": {
     "noPaidCtaBeforeReady": true,

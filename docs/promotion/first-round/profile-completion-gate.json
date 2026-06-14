@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "readiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "evidence": "docs/promotion/first-round/evidence-ledger.json",
@@ -7,34 +7,28 @@
     "firstBatchPacket": "docs/promotion/first-round/first-batch-publication-packet.json"
   },
   "metrics": {
-    "profileConfigured": 0,
-    "expectedProfiles": 3,
-    "evidenceRequired": 0,
-    "evidenceTraceable": 0,
-    "evidencePending": 63,
-    "evidenceNotRequiredYet": 63,
+    "profileConfigured": 1,
+    "expectedProfiles": 1,
+    "evidenceRequired": 1,
+    "evidenceTraceable": 1,
+    "evidencePending": 30,
+    "evidenceNotRequiredYet": 30,
     "evidenceIssues": 0,
-    "blockers": 1,
+    "blockers": 0,
     "issues": 0
   },
   "state": {
-    "allProfilesConfigured": false,
-    "readinessReadyToPublish": false,
-    "profilePacketReadyToPublish": false,
-    "firstBatchPacketReadyToPublish": false,
+    "allProfilesConfigured": true,
+    "readinessReadyToPublish": true,
+    "profilePacketReadyToPublish": true,
+    "firstBatchPacketReadyToPublish": true,
     "evidenceStructurallyClean": true,
-    "evidenceRequiredNow": false,
-    "evidenceComplete": false,
+    "evidenceRequiredNow": true,
+    "evidenceComplete": true,
     "packetsInSync": true,
-    "readyForFirstBatchPublish": false
+    "readyForFirstBatchPublish": true
   },
-  "nextAction": "Finish three platform profile links, refresh ops docs, then re-run this gate.",
-  "blockers": [
-    {
-      "id": "profile_links_not_configured",
-      "message": "profile configured 0/3; finish platform profile setup before publishing.",
-      "release": "All profile rows are set/live in platform-profile-tracker.csv."
-    }
-  ],
+  "nextAction": "Publish first-batch Shorts and write back post URLs.",
+  "blockers": [],
   "issues": []
 }

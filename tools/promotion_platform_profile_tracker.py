@@ -45,20 +45,26 @@ NUMERIC_FIELDS = FIELDNAMES[9:23]
 STATUS_VALUES = ("planned", "set", "live", "paused", "blocked")
 CONFIGURED_STATUSES = ("set", "live")
 MINIMUM_WEEKLY_FIELDS = ("profile_clicks", "site_clicks", "quiz_starts", "quiz_completions")
-EXPECTED_PLATFORM_SOURCES = {
-    "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
-}
-PLATFORM_ORDER = tuple(EXPECTED_PLATFORM_SOURCES)
+DEFAULT_PLATFORM_ORDER = ("youtube_shorts",)
 
 
-def profile_tracker_policy() -> dict[str, object]:
+def expected_platform_sources(kit: dict) -> dict[str, str]:
+    sources: dict[str, str] = {}
+    for item in kit.get("platformProfileSetup", []):
+        platform = str(item.get("platformId", ""))
+        if platform:
+            sources[platform] = parse_utm(str(item.get("profileLink", ""))).get("utm_source", "")
+    return sources
+
+
+def profile_tracker_policy(platform_sources: dict[str, str]) -> dict[str, object]:
+    platform_order = tuple(platform for platform in DEFAULT_PLATFORM_ORDER if platform in platform_sources)
+    platform_order = platform_order + tuple(platform for platform in platform_sources if platform not in platform_order)
     return {
         "statusValues": list(STATUS_VALUES),
         "configuredStatuses": list(CONFIGURED_STATUSES),
-        "platformOrder": list(PLATFORM_ORDER),
-        "expectedPlatformSources": EXPECTED_PLATFORM_SOURCES,
+        "platformOrder": list(platform_order),
+        "expectedPlatformSources": platform_sources,
         "minimumWeeklyFields": list(MINIMUM_WEEKLY_FIELDS),
         "numericFields": list(NUMERIC_FIELDS),
         "rule": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video post performance stays in platform-kpi-tracker.csv and kpi-tracker.csv.",
@@ -108,28 +114,34 @@ def build_rows(kit: dict, existing: dict[str, dict[str, str]] | None = None) -> 
         for field in NUMERIC_FIELDS:
             row[field] = previous.get(field, "")
         rows.append({field: row.get(field, "") for field in FIELDNAMES})
-    rows.sort(key=lambda row: PLATFORM_ORDER.index(row["platform"]) if row["platform"] in EXPECTED_PLATFORM_SOURCES else 99)
+    platform_sources = expected_platform_sources(kit)
+    platform_order = tuple(platform for platform in DEFAULT_PLATFORM_ORDER if platform in platform_sources)
+    platform_order = platform_order + tuple(platform for platform in platform_sources if platform not in platform_order)
+    rows.sort(key=lambda row: platform_order.index(row["platform"]) if row["platform"] in platform_order else 99)
     return rows
 
 
-def validate_rows(rows: list[dict[str, str]]) -> list[str]:
+def validate_rows(rows: list[dict[str, str]], kit: dict) -> list[str]:
     issues: list[str] = []
-    policy = profile_tracker_policy()
+    platform_sources = expected_platform_sources(kit)
+    platform_order = tuple(platform for platform in DEFAULT_PLATFORM_ORDER if platform in platform_sources)
+    platform_order = platform_order + tuple(platform for platform in platform_sources if platform not in platform_order)
+    policy = profile_tracker_policy(platform_sources)
     if tuple(policy["statusValues"]) != STATUS_VALUES:
         issues.append("profileTrackerPolicy.statusValues does not match generator policy")
     if tuple(policy["configuredStatuses"]) != CONFIGURED_STATUSES:
         issues.append("profileTrackerPolicy.configuredStatuses does not match generator policy")
-    if tuple(policy["platformOrder"]) != PLATFORM_ORDER:
+    if tuple(policy["platformOrder"]) != platform_order:
         issues.append("profileTrackerPolicy.platformOrder does not match generator policy")
     if tuple(policy["minimumWeeklyFields"]) != MINIMUM_WEEKLY_FIELDS:
         issues.append("profileTrackerPolicy.minimumWeeklyFields does not match generator policy")
-    if len(rows) != len(EXPECTED_PLATFORM_SOURCES):
-        issues.append(f"expected {len(EXPECTED_PLATFORM_SOURCES)} platform tracker rows, got {len(rows)}")
+    if len(rows) != len(platform_sources):
+        issues.append(f"expected {len(platform_sources)} platform tracker rows, got {len(rows)}")
     seen: set[str] = set()
     for row in rows:
         platform = row.get("platform", "")
         label = platform or "<platform>"
-        if platform not in EXPECTED_PLATFORM_SOURCES:
+        if platform not in platform_sources:
             issues.append(f"{label}: unexpected platform")
             continue
         if platform in seen:
@@ -139,7 +151,7 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
         if parsed.scheme != "https" or parsed.netloc != "lovetypes.tw" or parsed.path != "/start/":
             issues.append(f"{label}: profile_link should point to https://lovetypes.tw/start/")
         expected = {
-            "utm_source": EXPECTED_PLATFORM_SOURCES[platform],
+            "utm_source": platform_sources[platform],
             "utm_medium": "social_profile",
             "utm_campaign": "first_round_quiz_completion",
             "utm_content": f"{platform}_bio",
@@ -159,7 +171,7 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
                         issues.append(f"{label}: {field} should not be negative")
                 except ValueError:
                     issues.append(f"{label}: {field} should be numeric if filled")
-    missing = set(EXPECTED_PLATFORM_SOURCES) - seen
+    missing = set(platform_sources) - seen
     if missing:
         issues.append(f"missing platform tracker rows: {', '.join(sorted(missing))}")
     return issues
@@ -206,7 +218,7 @@ def render_markdown(rows: list[dict[str, str]]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def write_outputs(rows: list[dict[str, str]], csv_path: Path, json_path: Path, md_path: Path) -> None:
+def write_outputs(rows: list[dict[str, str]], kit: dict, csv_path: Path, json_path: Path, md_path: Path) -> None:
     write_csv(rows, csv_path)
     payload = {
         "generatedAt": date.today().isoformat(),
@@ -214,7 +226,7 @@ def write_outputs(rows: list[dict[str, str]], csv_path: Path, json_path: Path, m
             "promotionKit": str(KIT_PATH.relative_to(ROOT)),
         },
         "rowCount": len(rows),
-        "profileTrackerPolicy": profile_tracker_policy(),
+        "profileTrackerPolicy": profile_tracker_policy(expected_platform_sources(kit)),
         "numericFields": NUMERIC_FIELDS,
         "rows": rows,
     }
@@ -231,10 +243,11 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    rows = build_rows(load_json(Path(args.kit)), read_existing(Path(args.csv_output)))
-    issues = validate_rows(rows)
+    kit = load_json(Path(args.kit))
+    rows = build_rows(kit, read_existing(Path(args.csv_output)))
+    issues = validate_rows(rows, kit)
     if not args.check:
-        write_outputs(rows, Path(args.csv_output), Path(args.json_output), Path(args.md_output))
+        write_outputs(rows, kit, Path(args.csv_output), Path(args.json_output), Path(args.md_output))
         print(f"promotion_platform_profile_tracker={args.csv_output}")
         print(f"promotion_platform_profile_tracker_json={args.json_output}")
         print(f"promotion_platform_profile_tracker_md={args.md_output}")

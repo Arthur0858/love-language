@@ -58,7 +58,7 @@ def weekly_summary_policy() -> dict[str, object]:
         "quizStartRateMin": QUIZ_START_RATE_MIN,
         "quizCompletionRateMin": QUIZ_COMPLETION_RATE_MIN,
         "emptyDataRecommendationCount": EMPTY_DATA_RECOMMENDATION_COUNT,
-        "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.",
+        "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first planned YouTube Shorts tasks, setting active profile links, and backfilling KPI fields.",
         "profileTrackerSeparation": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video performance stays in kpi-tracker.csv.",
         "offerChangeGate": "Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.",
         "minimumFilledRowRule": "A row is treated as filled when it has activity fields or any numeric metric greater than zero.",

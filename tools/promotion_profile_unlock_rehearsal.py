@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMO = ROOT / "docs" / "promotion" / "first-round"
 OUTPUT_MD = PROMO / "profile-unlock-rehearsal.md"
 OUTPUT_JSON = PROMO / "profile-unlock-rehearsal.json"
+PROFILE_QUICKSTART = PROMO / "profile-quickstart.json"
 
 
 def read_tracker() -> tuple[list[str], list[dict[str, str]]]:
@@ -43,6 +44,14 @@ def proof_with_real_note(path: Path, platform: str) -> str:
     return "\n".join(lines) + "\n"
 
 
+def active_platforms() -> set[str]:
+    if not PROFILE_QUICKSTART.exists():
+        return set(batch_import.PROOF_FILES)
+    data = json.loads(PROFILE_QUICKSTART.read_text(encoding="utf-8"))
+    platforms = {str(row.get("platform", "")) for row in data.get("platforms", []) if row.get("platform")}
+    return platforms or set(batch_import.PROOF_FILES)
+
+
 def run_command(command: list[str]) -> tuple[int, str]:
     result = subprocess.run(command, cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
     return result.returncode, result.stdout.strip()
@@ -50,12 +59,15 @@ def run_command(command: list[str]) -> tuple[int, str]:
 
 def build_payload() -> dict:
     current_packet = batch_import.build_packet()
+    active = active_platforms()
     fieldnames, tracker_rows = read_tracker()
     candidate = [dict(row) for row in tracker_rows]
     rows: list[dict[str, object]] = []
     issues: list[str] = []
 
     for platform, path in batch_import.PROOF_FILES.items():
+        if platform not in active:
+            continue
         text = proof_with_real_note(path, platform)
         data, parse_issues = text_import.parse_text(text)
         proof_note = data.get("proof_note", "")
@@ -97,29 +109,27 @@ def build_payload() -> dict:
         dry_run_issues.append("launch sequence dry run must not mutate current files")
     issues.extend(dry_run_issues)
 
-    current_metrics = current_packet.get("metrics", {})
+    current_rows = [row for row in current_packet.get("rows", []) if str(row.get("platform", "")) in active]
     metrics = {
         "proofFiles": len(rows),
-        "currentReadyRows": int(current_metrics.get("readyRows", 0) or 0),
-        "currentBlockedRows": int(current_metrics.get("blockedRows", 0) or 0),
-        "currentPlaceholderProofRows": int(current_metrics.get("placeholderProofRows", 0) or 0),
-        "currentRealProofReadyRows": int(current_metrics.get("realProofReadyRows", 0) or 0),
+        "currentReadyRows": sum(1 for row in current_rows if int(row.get("ready", 0) or 0)),
+        "currentBlockedRows": sum(1 for row in current_rows if not int(row.get("ready", 0) or 0)),
+        "currentPlaceholderProofRows": sum(1 for row in current_rows if int(row.get("placeholderProof", 0) or 0)),
+        "currentRealProofReadyRows": sum(1 for row in current_rows if int(row.get("realProofReady", 0) or 0)),
         "syntheticReadyRows": sum(int(row["syntheticReady"]) for row in rows),
         "candidateTrackerValid": 0 if tracker_issues else 1,
         "launchDryRunGreen": 0 if dry_run_issues else 1,
     }
-    if metrics["proofFiles"] != 3:
-        issues.append(f"expected 3 profile proof files, got {metrics['proofFiles']}")
-    if metrics["currentBlockedRows"] != 3 and metrics["currentReadyRows"] != 3:
-        issues.append("current profile proof state should be either all blocked or all ready")
-    if metrics["syntheticReadyRows"] != 3:
-        issues.append("synthetic real-proof rehearsal should make all three rows ready")
+    if metrics["proofFiles"] != len(active):
+        issues.append(f"expected {len(active)} active profile proof files, got {metrics['proofFiles']}")
+    if metrics["currentBlockedRows"] not in {0, len(active)} and metrics["currentReadyRows"] != len(active):
+        issues.append("current profile proof state should be either all blocked or all ready for active platforms")
+    if metrics["syntheticReadyRows"] != len(active):
+        issues.append("synthetic real-proof rehearsal should make all active rows ready")
     return {
         "generatedAt": date.today().isoformat(),
         "sources": [
             "docs/promotion/first-round/proof-youtube_shorts.txt",
-            "docs/promotion/first-round/proof-tiktok.txt",
-            "docs/promotion/first-round/proof-instagram_reels.txt",
             str(writeback.TRACKER_PATH.relative_to(ROOT)),
         ],
         "metrics": metrics,

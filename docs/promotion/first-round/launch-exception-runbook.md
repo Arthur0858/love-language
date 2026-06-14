@@ -1,17 +1,17 @@
 # LoveTypes Launch Exception Runbook
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - exception rows：10
 - hard stops：6
 - holds：3
 - escalations：1
-- profile configured：0
-- real profile proof ready：0 / 3
-- placeholder proof rows：3
-- external profile proof blockers：3
-- ready to publish：0
+- profile configured：1
+- real profile proof ready：0 / 1
+- placeholder proof rows：1
+- external profile proof blockers：1
+- ready to publish：1
 - first batch published：0
-- empty data mode：1
+- empty data mode：0
 - issues：0
 
 ## Rule
@@ -47,7 +47,7 @@
 - severity：`stop`
 - trigger：A first-batch post is about to publish while ready_to_publish is false.
 - stop：Cancel or leave draft/scheduled; do not publish manually around the gate.
-- recovery：Complete all three profile rows, refresh launch readiness, then use the first-batch publish action sheet.
+- recovery：Complete all active profile rows, refresh launch readiness, then use the first-batch publish action sheet.
 - source：`first-batch-publication-packet.json`
 
 ### `post_not_public`
@@ -63,7 +63,7 @@
 
 - phase：`post_url_writeback`
 - severity：`stop`
-- trigger：Post URL domain does not match YouTube/TikTok/Instagram platform row, or URL points to the wrong post.
+- trigger：Post URL domain does not match the active platform row, or URL points to the wrong post.
 - stop：Do not write back; do not reuse the URL in weekly review.
 - recovery：Find the correct public post URL for the platform row and rerun post text import check.
 - source：`first-batch-evidence-matrix.json`

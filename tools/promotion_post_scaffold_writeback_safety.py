@@ -16,7 +16,7 @@ import promotion_profile_writeback as profile_writeback
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
-POST_PROOF_FILES = (
+POST_PROOF_FILE_CANDIDATES = (
     SOURCE_DIR / "proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
     SOURCE_DIR / "proof-tiktok-publish-lt-s01-iris-silence.txt",
     SOURCE_DIR / "proof-instagram_reels-publish-lt-s01-iris-silence.txt",
@@ -95,6 +95,40 @@ def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> 
         writer.writerows(rows)
 
 
+def current_platform_tasks() -> set[tuple[str, str]]:
+    _, rows = read_csv(SOURCE_DIR / "posting-queue.csv")
+    return {
+        ((row.get("platform") or "").strip(), (row.get("task_id") or "").strip())
+        for row in rows
+        if (row.get("platform") or "").strip() and (row.get("task_id") or "").strip()
+    }
+
+
+def task_id_from_text(text: str) -> str:
+    for line in text.splitlines():
+        if line.lower().startswith("task_id:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def current_post_proof_files() -> tuple[Path, ...]:
+    active_tasks = current_platform_tasks()
+    files: list[Path] = []
+    for proof_file in POST_PROOF_FILE_CANDIDATES:
+        text = proof_file.read_text(encoding="utf-8")
+        if (platform_from_text(text), task_id_from_text(text)) in active_tasks:
+            files.append(proof_file)
+    return tuple(files)
+
+
+def reset_profile_gate(temp_docs: Path) -> None:
+    fields, rows = read_csv(temp_docs / "platform-profile-tracker.csv")
+    for row in rows:
+        row["status"] = "planned"
+        row["profile_link_set_date"] = ""
+    write_csv(temp_docs / "platform-profile-tracker.csv", fields, rows)
+
+
 def configure_profile_gate(temp_docs: Path) -> None:
     fields, rows = read_csv(temp_docs / "platform-profile-tracker.csv")
     for row in rows:
@@ -124,13 +158,16 @@ def main() -> int:
         temp_docs.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(SOURCE_DIR, temp_docs)
         patch_paths(temp_root, temp_docs)
+        reset_profile_gate(temp_docs)
+        post_proof_files = current_post_proof_files()
+        expected_platform_rows = len(post_proof_files)
 
         scaffold_checked = 0
         scaffold_rejected = 0
         profile_gate_rejected = 0
         real_accepted = 0
         real_texts: list[tuple[str, str]] = []
-        for proof_file in POST_PROOF_FILES:
+        for proof_file in post_proof_files:
             text = proof_file.read_text(encoding="utf-8")
             _, scaffold_issues = post_import.parse_text(text)
             scaffold_checked += 1
@@ -187,12 +224,12 @@ def main() -> int:
         publishing = build_publishing_status(temp_docs)
         current_files_mutated = before != file_hashes(WATCHED_FILES)
 
-    if published_rows != 3:
-        issues.append(f"real post add should publish 3 first-batch rows, got {published_rows}")
-    if platform_minimum_rows != 3:
-        issues.append(f"real post add should fill 3 minimum KPI rows, got {platform_minimum_rows}")
-    if profile_gate_rejected != 3:
-        issues.append(f"real post add should reject 3 rows before profile gate, got {profile_gate_rejected}")
+    if published_rows != expected_platform_rows:
+        issues.append(f"real post add should publish {expected_platform_rows} first-batch row(s), got {published_rows}")
+    if platform_minimum_rows != expected_platform_rows:
+        issues.append(f"real post add should fill {expected_platform_rows} minimum KPI row(s), got {platform_minimum_rows}")
+    if profile_gate_rejected != expected_platform_rows:
+        issues.append(f"real post add should reject {expected_platform_rows} row(s) before profile gate, got {profile_gate_rejected}")
     if script_rollup_ready != 1:
         issues.append("real post add should roll up the Iris script tracker")
     if not publishing.get("readyForWeeklyDecision"):

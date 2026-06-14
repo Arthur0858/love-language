@@ -16,7 +16,6 @@ WEEKLY_REVIEW = PROMOTION_DIR / "weekly-review-packet.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "first-batch-kpi-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "first-batch-kpi-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "first-batch-kpi-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 MINIMUM_KPIS = ("site_clicks", "quiz_starts", "quiz_completions")
 POST_URL_PLACEHOLDERS = {
     "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
@@ -39,8 +38,13 @@ def rows_by_platform(payload: dict) -> dict[str, dict]:
     return {str(row.get("platform", "")): row for row in payload.get("rows", []) if row.get("platform")}
 
 
-def zero_rows_by_platform(payload: dict) -> dict[str, list[dict]]:
-    grouped = {platform: [] for platform in REQUIRED_PLATFORMS}
+def active_platforms(action: dict) -> tuple[str, ...]:
+    platforms = tuple(str(row.get("platform", "")) for row in action.get("rows", []) if row.get("platform"))
+    return platforms or ("youtube_shorts",)
+
+
+def zero_rows_by_platform(payload: dict, platforms: tuple[str, ...]) -> dict[str, list[dict]]:
+    grouped = {platform: [] for platform in platforms}
     for row in payload.get("items", []):
         platform = str(row.get("platform", ""))
         if platform in grouped:
@@ -81,10 +85,11 @@ def build_quickstart() -> dict:
     handoff = read_json(PUBLISH_KPI_HANDOFF)
     weekly = read_json(WEEKLY_REVIEW)
     action_rows = rows_by_platform(action)
-    zero_rows = zero_rows_by_platform(zero_evidence)
+    platforms = active_platforms(action)
+    zero_rows = zero_rows_by_platform(zero_evidence, platforms)
     rows: list[dict] = []
 
-    for platform in REQUIRED_PLATFORMS:
+    for platform in platforms:
         row = action_rows.get(platform, {})
         checks = [
             {
@@ -119,7 +124,7 @@ def build_quickstart() -> dict:
             ),
         })
 
-    issues = validate(rows)
+    issues = validate(rows, platforms)
     return {
         "generatedAt": today(),
         "sources": {
@@ -151,11 +156,11 @@ def build_quickstart() -> dict:
     }
 
 
-def validate(rows: list[dict]) -> list[str]:
+def validate(rows: list[dict], platforms: tuple[str, ...]) -> list[str]:
     issues: list[str] = []
     seen = {row.get("platform") for row in rows}
-    if seen != set(REQUIRED_PLATFORMS):
-        issues.append("first-batch KPI quickstart must include YouTube Shorts, TikTok, and Instagram Reels")
+    if seen != set(platforms):
+        issues.append("first-batch KPI quickstart must include all active platforms")
     for row in rows:
         label = f"{row.get('platform', '<platform>')}/{row.get('taskId', '<task>')}"
         checks = row.get("zeroChecks", [])

@@ -15,7 +15,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
 QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 QUEUE_JSON_PATH = PROMOTION_DIR / "posting-queue.json"
-PLATFORMS = ["youtube_shorts", "tiktok", "instagram_reels"]
+PLATFORMS = ["youtube_shorts"]
 PLATFORM_TIMES = {
     "youtube_shorts": "20:30",
     "tiktok": "21:00",
@@ -80,10 +80,6 @@ def platform_caption(task: dict, platform: str) -> str:
     caption = caption_for(task)
     if platform == "youtube_shorts":
         return caption
-    if platform == "tiktok":
-        return caption.replace("完成 15 題測驗，找到你的情感守護者：", "首頁連結完成 15 題測驗：")
-    if platform == "instagram_reels":
-        return caption.replace("完成 15 題測驗，找到你的情感守護者：", "個人檔案連結完成 15 題測驗：")
     return caption
 
 

@@ -100,8 +100,9 @@ def build_payload() -> dict:
         "rejectsZeroWithoutSource": sum(int(row["rejectsZeroWithoutSource"]) for row in rows),
         "acceptsZeroWithSource": sum(int(row["acceptsZeroWithSource"]) for row in rows),
     }
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 first-batch KPI rows, got {metrics['rows']}")
+    expected_rows = len(action.get("rows", []))
+    if metrics["rows"] != expected_rows:
+        issues.append(f"expected {expected_rows} first-batch KPI rows, got {metrics['rows']}")
     return {
         "generatedAt": date.today().isoformat(),
         "source": str(ACTION_SHEET.relative_to(ROOT)),

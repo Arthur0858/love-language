@@ -1,57 +1,57 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "weekCount": 5,
-  "rowCount": 45,
+  "rowCount": 15,
   "scriptCount": 15,
   "issueCount": 0,
   "reports": [
     {
       "week": 1,
-      "rowCount": 9,
+      "rowCount": 3,
       "scriptCount": 3,
-      "platformCount": 3,
+      "platformCount": 1,
       "guardianDistribution": {
-        "iris": 9
+        "iris": 3
       },
       "issues": []
     },
     {
       "week": 2,
-      "rowCount": 9,
+      "rowCount": 3,
       "scriptCount": 3,
-      "platformCount": 3,
+      "platformCount": 1,
       "guardianDistribution": {
-        "noah": 9
+        "noah": 3
       },
       "issues": []
     },
     {
       "week": 3,
-      "rowCount": 9,
+      "rowCount": 3,
       "scriptCount": 3,
-      "platformCount": 3,
+      "platformCount": 1,
       "guardianDistribution": {
-        "vivian": 9
+        "vivian": 3
       },
       "issues": []
     },
     {
       "week": 4,
-      "rowCount": 9,
+      "rowCount": 3,
       "scriptCount": 3,
-      "platformCount": 3,
+      "platformCount": 1,
       "guardianDistribution": {
-        "claire": 9
+        "claire": 3
       },
       "issues": []
     },
     {
       "week": 5,
-      "rowCount": 9,
+      "rowCount": 3,
       "scriptCount": 3,
-      "platformCount": 3,
+      "platformCount": 1,
       "guardianDistribution": {
-        "dora": 9
+        "dora": 3
       },
       "issues": []
     }

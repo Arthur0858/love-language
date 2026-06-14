@@ -1,21 +1,22 @@
 # LoveTypes Proof Import Closure Quickstart
 
-- 產生日期：2026-06-14
-- profile templates：3
-- post templates：3
-- profile template valid：3
-- profile placeholder proof rows：3
+- 產生日期：2026-06-15
+- profile templates：0
+- post templates：1
+- active platforms：1
+- profile template valid：0
+- profile placeholder proof rows：1
 - profile real proof ready rows：0
-- post safely rejected：3
-- rehearsal rows：9
-- rehearsal profile pass：3
-- rehearsal post placeholder rejected：3
-- rehearsal post real URL pass：3
-- profile evidence rows：18
-- profile evidence pending：18
+- post safely rejected：1
+- rehearsal rows：3
+- rehearsal profile pass：1
+- rehearsal post placeholder rejected：1
+- rehearsal post real URL pass：1
+- profile evidence rows：6
+- profile evidence pending：6
 - structured imports：3 / 3
-- launch ready to publish：0
-- empty data mode：1
+- launch ready to publish：1
+- empty data mode：0
 - issues：0
 
 ## Rules
@@ -32,14 +33,14 @@
 
 - status：`ready_to_use`
 - command：`python3 tools/promotion_operation_proof_templates.py --check && python3 tools/promotion_profile_evidence_checklist.py --check`
-- release：Three profile proof templates validate and each platform has six evidence checks.
+- release：Active profile proof templates validate and each active platform has six evidence checks.
 - stop：Do not write profile status unless all six evidence checks are backed by real platform proof.
 
 ### `reject_post_placeholders`
 
 - status：`guard_active`
 - command：`python3 tools/promotion_operation_proof_templates.py --check`
-- release：Three post proof templates are safely rejected while their post URLs are placeholders.
+- release：Active post proof templates are safely rejected while their post URLs are placeholders.
 - stop：Do not weaken this guard; placeholder post URLs must never write to trackers.
 
 ### `rehearse_import_paths`
@@ -65,30 +66,6 @@
 
 ## Proof Rows
 
-### profile_setup · youtube_shorts
-
-- file：`docs/promotion/first-round/proof-youtube_shorts.txt`
-- status：`written`
-- evidence count：6
-- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-
-### profile_setup · tiktok
-
-- file：`docs/promotion/first-round/proof-tiktok.txt`
-- status：`written`
-- evidence count：6
-- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-
-### profile_setup · instagram_reels
-
-- file：`docs/promotion/first-round/proof-instagram_reels.txt`
-- status：`written`
-- evidence count：6
-- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-
 ### post_publish · youtube_shorts publish-lt-s01-iris-silence
 
 - file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
@@ -96,22 +73,6 @@
 - evidence count：7
 - check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-
-### post_publish · tiktok publish-lt-s01-iris-silence
-
-- file：`docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- status：`written`
-- evidence count：7
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-
-### post_publish · instagram_reels publish-lt-s01-iris-silence
-
-- file：`docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- status：`written`
-- evidence count：7
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ## Structured Imports
 

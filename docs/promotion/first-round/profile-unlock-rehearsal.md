@@ -1,10 +1,10 @@
 # LoveTypes Profile Unlock Rehearsal
 
-- 產生日期：2026-06-14
-- proof files：3
-- current ready / blocked：0 / 3
-- current placeholder / real proof ready：3 / 0
-- synthetic ready：3
+- 產生日期：2026-06-15
+- proof files：1
+- current ready / blocked：0 / 1
+- current placeholder / real proof ready：1 / 0
+- synthetic ready：1
 - candidate tracker valid：1
 - launch dry run green：1
 - issues：0
@@ -24,5 +24,3 @@
 ## Rows
 
 - `youtube_shorts`：ready=1 file=`docs/promotion/first-round/proof-youtube_shorts.txt` issues=0
-- `tiktok`：ready=1 file=`docs/promotion/first-round/proof-tiktok.txt` issues=0
-- `instagram_reels`：ready=1 file=`docs/promotion/first-round/proof-instagram_reels.txt` issues=0

@@ -60,6 +60,7 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     writeback.PROFILE_TRACKER = temp_docs / "platform-profile-tracker.csv"
     writeback.PLAYBOOK_MD = temp_docs / "lead-writeback-playbook.md"
     writeback.PLAYBOOK_JSON = temp_docs / "lead-writeback-playbook.json"
+    writeback.regenerate_dependent_docs = lambda: None
 
 
 def sample_text(*, utm: str = "iris_silence", consent: str = "explicit_reply_ok") -> str:

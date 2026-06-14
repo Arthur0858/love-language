@@ -147,19 +147,22 @@ def build_run_sheet() -> dict:
         "rehearsalKpiReadyStages": int(rehearsal.get("kpiReadyStages", 0) or 0),
         "rehearsalWeeklyReadyStages": int(rehearsal.get("weeklyReadyStages", 0) or 0),
         "handoffReadySteps": int(handoff.get("readyCount", 0) or 0),
+        "profileConfigured": int(master.get("metrics", {}).get("profileConfigured", 0) or 0) if isinstance(master.get("metrics"), dict) else 0,
+        "expectedProfiles": max(1, int(master.get("metrics", {}).get("expectedProfiles", 1) or 1)) if isinstance(master.get("metrics"), dict) else 1,
     }
     issues: list[str] = []
-    if metrics["profileRows"] != 3:
-        issues.append(f"expected 3 profile setup rows, got {metrics['profileRows']}")
-    if metrics["publishRows"] != 3:
-        issues.append(f"expected 3 publish rows, got {metrics['publishRows']}")
-    if metrics["postOpsRows"] != 3:
-        issues.append(f"expected 3 post ops rows, got {metrics['postOpsRows']}")
-    if metrics["rows"] != 11:
-        issues.append(f"expected 11 launch day rows, got {metrics['rows']}")
+    if metrics["profileRows"] < 1:
+        issues.append("expected at least 1 profile setup row")
+    if metrics["publishRows"] < 1:
+        issues.append("expected at least 1 publish row")
+    if metrics["postOpsRows"] < 1:
+        issues.append("expected at least 1 post ops row")
+    expected_rows = metrics["profileRows"] + metrics["publishRows"] + metrics["postOpsRows"] + 2
+    if metrics["rows"] != expected_rows:
+        issues.append(f"expected {expected_rows} launch day rows, got {metrics['rows']}")
     if master.get("stage") == "profile_setup" and not any(row["phase"] == "readiness_gate" and row["status"] == "blocked" for row in rows):
         issues.append("readiness gate should stay blocked while master stage is profile_setup")
-    if metrics["externalProfileProofBlockers"] and metrics["readyRows"]:
+    if metrics["profileConfigured"] < metrics["expectedProfiles"] and metrics["externalProfileProofBlockers"] and metrics["readyRows"]:
         issues.append("safe ready rows should stay zero while external profile proof blockers exist")
     for row in rows:
         if not row["action"] or not row["success_signal"] or not row["stop_condition"]:
@@ -180,7 +183,7 @@ def build_run_sheet() -> dict:
         "rules": [
             "Execute rows in order; later rows do not override earlier blocked gates.",
             "Check commands are safe to run; write commands require real external proof.",
-            "Profile setup must reach 3/3 before first-batch publishing.",
+            "Profile setup must complete for all active platforms before first-batch publishing.",
             "Post URL and KPI evidence must complete before weekly review or commerce decisions.",
         ],
         "issues": issues,

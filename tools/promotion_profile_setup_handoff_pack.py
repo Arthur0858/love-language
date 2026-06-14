@@ -16,7 +16,6 @@ PROOF_READINESS = PROMOTION_DIR / "profile-proof-readiness-pack.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-setup-handoff-pack.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-setup-handoff-pack.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "profile-setup-handoff-pack.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 FORBIDDEN_TERMS = ("診斷", "療效", "保證修復", "必須購買")
 
 
@@ -44,7 +43,8 @@ def build_pack() -> dict:
     link_rows = by_platform(link.get("rows", []))
     proof_rows = by_platform(proof.get("rows", []))
     rows: list[dict[str, object]] = []
-    for platform in REQUIRED_PLATFORMS:
+    active_platforms = [str(row.get("platform", "")) for row in quickstart.get("platforms", []) if row.get("platform")]
+    for platform in active_platforms:
         action_row = action_rows.get(platform, {})
         quick_row = quick_rows.get(platform, {})
         link_row = link_rows.get(platform, {})
@@ -97,7 +97,7 @@ def build_pack() -> dict:
             "Use this handoff pack as the single operator view for platform profile setup.",
             "Public-ready means the LoveTypes /start/ URL works; it does not prove the external platform profile is set.",
             "Run checkCommand before writeCommand, and only after replacing proof placeholders with real screenshot/click proof.",
-            "Do not publish first-batch Shorts/Reels until all three tracker statuses are set or live.",
+            "Do not publish first-batch Shorts until all active tracker statuses are set or live.",
             "Keep all profile copy quiz-only; do not add Luna, affiliate, paid, diagnosis, or treatment claims.",
         ],
         "rows": rows,
@@ -108,16 +108,17 @@ def build_pack() -> dict:
 def validate_rows(rows: list[dict[str, object]], action: dict, quickstart: dict, link: dict, proof: dict) -> list[str]:
     issues: list[str] = []
     platforms = {str(row.get("platform", "")) for row in rows}
-    if platforms != set(REQUIRED_PLATFORMS):
-        issues.append("handoff pack must cover YouTube Shorts, TikTok, and Instagram Reels")
-    if int(action.get("metrics", {}).get("rows", 0) or 0) != len(REQUIRED_PLATFORMS):
-        issues.append("profile setup action sheet should contain three rows")
-    if int(quickstart.get("metrics", {}).get("platforms", 0) or 0) != len(REQUIRED_PLATFORMS):
-        issues.append("profile quickstart should contain three platforms")
-    if int(link.get("metrics", {}).get("publicReady", 0) or 0) != len(REQUIRED_PLATFORMS):
+    expected_platforms = {str(row.get("platform", "")) for row in quickstart.get("platforms", []) if row.get("platform")}
+    if platforms != expected_platforms:
+        issues.append("handoff pack must cover all active profile platforms")
+    if int(action.get("metrics", {}).get("rows", 0) or 0) != len(expected_platforms):
+        issues.append("profile setup action sheet should match active profile rows")
+    if int(quickstart.get("metrics", {}).get("platforms", 0) or 0) != len(expected_platforms):
+        issues.append("profile quickstart should match active platforms")
+    if int(link.get("metrics", {}).get("publicReady", 0) or 0) != len(expected_platforms):
         issues.append("profile links should all be public-ready before operator handoff")
-    if int(proof.get("metrics", {}).get("proofFiles", 0) or 0) != len(REQUIRED_PLATFORMS):
-        issues.append("profile proof readiness should expose three proof files")
+    if int(proof.get("metrics", {}).get("proofFiles", 0) or 0) != len(expected_platforms):
+        issues.append("profile proof readiness should expose active proof files")
     for row in rows:
         platform = str(row.get("platform", "<platform>"))
         profile_link = str(row.get("profileLink", ""))
@@ -130,7 +131,7 @@ def validate_rows(rows: list[dict[str, object]], action: dict, quickstart: dict,
             issues.append(f"{platform}: invalid action status {row.get('actionStatus')}")
         if row.get("proofStatus") not in {"ready_to_configure", "ready_to_writeback", "complete"}:
             issues.append(f"{platform}: invalid proof status {row.get('proofStatus')}")
-        if "15 題" not in profile_copy:
+        if "15 題" not in profile_copy and "15-question quiz" not in profile_copy:
             issues.append(f"{platform}: profile copy should keep the 15-question quiz CTA")
         if any(term in profile_copy for term in FORBIDDEN_TERMS):
             issues.append(f"{platform}: profile copy contains forbidden claim language")

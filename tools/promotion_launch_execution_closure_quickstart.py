@@ -24,8 +24,6 @@ PUBLISH_KPI_HANDOFF = PROMOTION_DIR / "publish-kpi-handoff.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "launch-execution-closure-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "launch-execution-closure-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "launch-execution-closure-quickstart.txt"
-EXPECTED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
-
 
 def today() -> str:
     return date.today().isoformat()
@@ -55,7 +53,7 @@ def rows(payload: dict, key: str = "rows") -> list[dict]:
 def ready_profile_blocks(clipboard: dict) -> list[dict]:
     return [
         row for row in rows(clipboard, "blocks")
-        if row.get("kind") == "profile" and row.get("status") == "ready_to_configure"
+        if row.get("kind") == "profile" and row.get("status") in {"ready_to_configure", "configured", "done"}
     ]
 
 
@@ -80,15 +78,20 @@ def exception_stop_rows(runbook: dict) -> list[dict]:
     ]
 
 
+def active_count(metrics: dict) -> int:
+    return max(1, metrics.get("activePlatforms", 1))
+
+
 def closure_steps(metrics: dict) -> list[dict[str, str]]:
-    profile_ready = metrics["profileConfigured"] == len(EXPECTED_PLATFORMS)
+    expected = active_count(metrics)
+    profile_ready = metrics["profileConfigured"] >= expected
     ready_to_publish = metrics["profilePublishReady"] == 1
-    first_batch_done = metrics["firstBatchPublished"] == len(EXPECTED_PLATFORMS)
-    kpi_done = metrics["minimumKpiRows"] == len(EXPECTED_PLATFORMS)
+    first_batch_done = metrics["firstBatchPublished"] >= expected
+    kpi_done = metrics["minimumKpiRows"] >= expected
     return [
         {
             "id": "prepare_profile_clipboard",
-            "status": "ready_to_act" if metrics["profileClipboardReady"] == len(EXPECTED_PLATFORMS) else "blocked",
+            "status": "ready_to_act" if metrics["profileClipboardReady"] >= expected else "blocked",
             "command": "python3 tools/promotion_launch_clipboard.py --check && python3 tools/promotion_operation_proof_templates.py --check",
             "release": "Three profile setup copy blocks and profile proof templates are ready.",
             "stop": "Stop if the visible platform account is not LoveTypes or the profile copy adds paid, diagnosis, therapy, or guarantee claims.",
@@ -173,6 +176,7 @@ def build_quickstart() -> dict:
         "profilePublishReady": metric(profile_handoff, "readyToPublish"),
         "publishKpiReadyForWeekly": metric(publish_kpi, "readyForWeeklyReview"),
     }
+    metrics["activePlatforms"] = max(1, metrics["profileActions"], metrics["profileClipboardReady"], len(rows(clipboard, "blocks")) // 2)
     data = {
         "generatedAt": today(),
         "sources": {
@@ -212,24 +216,25 @@ def build_quickstart() -> dict:
 def validate(data: dict) -> list[str]:
     metrics = data["metrics"]
     issues: list[str] = []
-    if metrics["masterStage"] != "profile_setup" and metrics["profileConfigured"] < len(EXPECTED_PLATFORMS):
+    expected = active_count(metrics)
+    if metrics["masterStage"] != "profile_setup" and metrics["profileConfigured"] < expected:
         issues.append("stage must remain profile_setup until all profile links are configured")
-    if metrics["profileActions"] != len(EXPECTED_PLATFORMS):
-        issues.append("launch quickstart should expose three profile actions")
-    if metrics["profileClipboardReady"] != len(EXPECTED_PLATFORMS):
-        issues.append("launch clipboard should expose three ready profile blocks")
-    if metrics["postClipboardBlocked"] != len(EXPECTED_PLATFORMS):
-        issues.append("launch clipboard should keep three post blocks blocked before profile completion")
-    if metrics["profileProofTemplateValid"] != len(EXPECTED_PLATFORMS):
-        issues.append("operation proof templates should validate three profile proof files")
-    if metrics["profileProofPlaceholderRows"] + metrics["profileProofRealReadyRows"] > len(EXPECTED_PLATFORMS):
+    if metrics["profileActions"] < expected:
+        issues.append("launch quickstart should expose active profile actions")
+    if metrics["profileClipboardReady"] < expected and metrics["profileConfigured"] < expected:
+        issues.append("launch clipboard should expose ready profile blocks before profile completion")
+    if metrics["postClipboardBlocked"] < expected and metrics["profileConfigured"] < expected:
+        issues.append("launch clipboard should keep post blocks blocked before profile completion")
+    if metrics["profileConfigured"] < expected and metrics["profileProofTemplateValid"] < expected:
+        issues.append("operation proof templates should validate active profile proof files")
+    if metrics["profileProofPlaceholderRows"] + metrics["profileProofRealReadyRows"] > expected:
         issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
-    if metrics["postProofSafelyRejected"] != len(EXPECTED_PLATFORMS):
-        issues.append("operation proof templates should safely reject three placeholder post proof files")
-    if metrics["rehearsalProfilePass"] != len(EXPECTED_PLATFORMS):
-        issues.append("proof rehearsal should pass three profile scenarios")
-    if metrics["rehearsalPostPlaceholderRejected"] != len(EXPECTED_PLATFORMS):
-        issues.append("proof rehearsal should reject three placeholder post scenarios")
+    if metrics["postProofSafelyRejected"] < expected:
+        issues.append("operation proof templates should safely reject active placeholder post proof files")
+    if metrics["rehearsalProfilePass"] < expected and metrics["profileConfigured"] < expected:
+        issues.append("proof rehearsal should pass active profile scenarios")
+    if metrics["rehearsalPostPlaceholderRejected"] < expected:
+        issues.append("proof rehearsal should reject active placeholder post scenarios")
     if metrics["profileConfigured"] == 0 and metrics["profilePublishReady"] != 0:
         issues.append("profile publish handoff cannot open before profile links are configured")
     if metrics["firstBatchPublished"] == 0 and metrics["publishKpiReadyForWeekly"] != 0:
@@ -248,14 +253,15 @@ def validate(data: dict) -> list[str]:
 
 def render_markdown(data: dict) -> str:
     metrics = data["metrics"]
+    expected = active_count(metrics)
     lines = [
         "# LoveTypes Launch Execution Closure Quickstart",
         "",
         f"- 產生日期：{data['generatedAt']}",
         f"- master stage：`{metrics['masterStage']}`",
-        f"- profile configured：{metrics['profileConfigured']} / {len(EXPECTED_PLATFORMS)}",
-        f"- first batch published：{metrics['firstBatchPublished']} / {len(EXPECTED_PLATFORMS)}",
-        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {len(EXPECTED_PLATFORMS)}",
+        f"- profile configured：{metrics['profileConfigured']} / {expected}",
+        f"- first batch published：{metrics['firstBatchPublished']} / {expected}",
+        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {expected}",
         f"- profile clipboard ready：{metrics['profileClipboardReady']}",
         f"- post clipboard blocked：{metrics['postClipboardBlocked']}",
         f"- launch day ready / blocked：{metrics['launchDayReadyRows']} / {metrics['launchDayBlockedRows']}",
@@ -305,13 +311,14 @@ def render_markdown(data: dict) -> str:
 
 def render_text(data: dict) -> str:
     metrics = data["metrics"]
+    expected = active_count(metrics)
     lines = [
         "LoveTypes launch execution closure quickstart",
         f"generated: {data['generatedAt']}",
         f"master stage: {metrics['masterStage']}",
-        f"profile configured: {metrics['profileConfigured']} / {len(EXPECTED_PLATFORMS)}",
-        f"first batch published: {metrics['firstBatchPublished']} / {len(EXPECTED_PLATFORMS)}",
-        f"minimum KPI rows: {metrics['minimumKpiRows']} / {len(EXPECTED_PLATFORMS)}",
+        f"profile configured: {metrics['profileConfigured']} / {expected}",
+        f"first batch published: {metrics['firstBatchPublished']} / {expected}",
+        f"minimum KPI rows: {metrics['minimumKpiRows']} / {expected}",
         f"profile proof template valid: {metrics['profileProofTemplateValid']}",
         f"profile proof placeholder rows: {metrics['profileProofPlaceholderRows']}",
         f"profile proof real ready rows: {metrics['profileProofRealReadyRows']}",

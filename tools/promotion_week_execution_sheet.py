@@ -20,7 +20,7 @@ DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "week-1-execution-sheet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "week-1-execution-sheet.json"
 DEFAULT_INDEX_PATH = PROMOTION_DIR / "execution-sheet-index.md"
 DEFAULT_INDEX_JSON_PATH = PROMOTION_DIR / "execution-sheet-index.json"
-PLATFORM_ORDER = ["youtube_shorts", "tiktok", "instagram_reels"]
+PLATFORM_ORDER = ["youtube_shorts"]
 PLATFORM_LABELS = {
     "youtube_shorts": "YouTube Shorts",
     "tiktok": "TikTok",
@@ -213,9 +213,9 @@ def build_sheet(queue_rows: list[dict[str, str]], profile_rows: list[dict[str, s
         "profileGates": gates,
         "scripts": scripts,
         "runOrder": [
-            "完成三平台 Bio/Profile link 設定。",
+            "完成 YouTube channel profile link 設定。",
             "依本週三支腳本完成影片輸出或剪輯手卡交付。",
-            "依平台任務時間發布到 YouTube Shorts、TikTok、Instagram Reels。",
+            "依任務時間發布到 YouTube Shorts。",
             "先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。",
             "週回顧時才彙總 kpi-tracker.csv，平台首頁成效另回填 platform-profile-tracker.csv。",
             "跑 promotion_publishing_status.py；未達週決策門檻前不調整商品或付費 CTA。",

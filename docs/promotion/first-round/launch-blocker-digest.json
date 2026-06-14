@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "commandCenter": "docs/promotion/first-round/launch-command-center.json",
@@ -9,21 +9,20 @@
     "blockerChecklist": "docs/promotion/first-round/blocker-resolution-checklist.json",
     "kpiHealth": "docs/promotion/first-round/kpi-attribution-health-report.json"
   },
-  "stage": "profile_setup",
+  "stage": "first_batch_publish",
   "firstBlocker": {
-    "id": "set_platform_profile_links",
-    "phase": "profile_setup",
-    "severity": "launch_blocker",
-    "message": "3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。"
+    "id": "publish_first_batch",
+    "phase": "publish",
+    "severity": "measurement_blocker",
+    "message": "首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。"
   },
   "nextAction": {
-    "action": "Set the three external platform profile links, capture real proof, then import profile proof text.",
-    "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-    "release": "promotion_launch_readiness_profile_configured=3 and ready_to_publish=1"
+    "action": "Publish the active first-batch platform post and write back the real public post URL.",
+    "command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+    "release": "first-batch post_url values exist for all active platforms"
   },
   "allowedNow": [
-    "Set or verify external platform profile links.",
-    "Replace placeholder profile proof with real screenshot/click evidence, then import only source-checked profile proof.",
+    "Publish the active first-batch platform post and write back the real public post URL.",
     "Refresh daily ops packets after any writeback."
   ],
   "doNotDo": [
@@ -33,35 +32,35 @@
     "Do not change Luna, affiliate, paid offer, or guardian winner decisions while empty_data_mode=1."
   ],
   "metrics": {
-    "profileConfigured": 0,
-    "profileRows": 3,
-    "profileProofRows": 3,
+    "profileConfigured": 1,
+    "profileRows": 1,
+    "profileProofRows": 1,
     "profileProofRealReadyRows": 0,
-    "profileProofPlaceholderRows": 3,
-    "externalProfileProofBlockers": 3,
-    "currentTrueBlockers": 1,
+    "profileProofPlaceholderRows": 1,
+    "externalProfileProofBlockers": 0,
+    "currentTrueBlockers": 0,
     "publishedRows": 0,
-    "firstBatchRows": 3,
+    "firstBatchRows": 1,
     "filledKpiRows": 0,
-    "blockers": 3,
-    "checklistActiveBlockers": 14,
-    "checklistReadyNow": 3,
+    "blockers": 2,
+    "checklistActiveBlockers": 8,
+    "checklistReadyNow": 1,
     "commandReady": 3,
     "commandPrepared": 3,
-    "commandBlocked": 18,
-    "profileCompletionBlockers": 1,
+    "commandBlocked": 3,
+    "profileCompletionBlockers": 0,
     "weeklyReady": 0,
     "emptyDataMode": 1,
-    "kpiPostingRows": 45,
-    "kpiPlatformRows": 45,
+    "kpiPostingRows": 15,
+    "kpiPlatformRows": 15,
     "kpiScriptRows": 15,
-    "attributionRows": 18
+    "attributionRows": 16
   },
   "commandPhaseCounts": {
-    "profile_setup": 3,
+    "profile_setup": 1,
     "asset_ready_check": 3,
-    "publish_post": 9,
-    "kpi_backfill": 9
+    "publish_post": 3,
+    "kpi_backfill": 3
   },
   "issues": []
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json",
     "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json"
   },
-  "rowCount": 3,
+  "rowCount": 1,
   "requiredQaItems": [
     "vertical_video",
     "subtitle_readability",
@@ -23,18 +23,18 @@
       "guardianId": "iris",
       "guardianName": "艾莉絲",
       "title": "他沉默時，你最想聽見哪一句話？",
-      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utmContent": "iris_silence",
       "assetReadyStatus": "prepared",
       "assetReadyAction": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
       "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
+      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-15\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [
         {
           "id": "vertical_video",
           "label": "直式影片檔",
-          "check": "確認 9:16 直式影片可播放，長度符合 Shorts/Reels/TikTok 節奏。",
+          "check": "確認 9:16 直式影片可播放，長度符合 YouTube Shorts 節奏。",
           "evidence": "實際影片檔路徑、平台預覽截圖或剪輯輸出紀錄。"
         },
         {
@@ -58,137 +58,7 @@
         {
           "id": "caption_quiz_cta",
           "label": "Caption 單一 CTA",
-          "check": "Caption 主 CTA 維持完成 15 題測驗，不加入商品、Luna 或聯盟導購作為第一動作。",
-          "evidence": "平台 caption 草稿。"
-        },
-        {
-          "id": "tracked_url_utm",
-          "label": "追蹤連結",
-          "check": "連結保留 utm_content=iris_silence，且指向 /start/。",
-          "evidence": "平台草稿中的連結或點擊後網址。"
-        },
-        {
-          "id": "safety_boundary",
-          "label": "安全邊界",
-          "check": "無診斷、療效、保證修復、必須購買或危機支援承諾。",
-          "evidence": "最終字幕與 caption 檢查紀錄。"
-        },
-        {
-          "id": "writeback_ready",
-          "label": "回填準備",
-          "check": "發布後可取得 https post URL、發布日期、proof note，並使用 post text import 回填。",
-          "evidence": "post text import 模板已準備。"
-        }
-      ]
-    },
-    {
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "platform": "tiktok",
-      "guardianId": "iris",
-      "guardianName": "艾莉絲",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "utmContent": "iris_silence",
-      "assetReadyStatus": "prepared",
-      "assetReadyAction": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
-      "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
-      "qaItems": [
-        {
-          "id": "vertical_video",
-          "label": "直式影片檔",
-          "check": "確認 9:16 直式影片可播放，長度符合 Shorts/Reels/TikTok 節奏。",
-          "evidence": "實際影片檔路徑、平台預覽截圖或剪輯輸出紀錄。"
-        },
-        {
-          "id": "subtitle_readability",
-          "label": "字幕可讀性",
-          "check": "字幕短句、無錯字、手機尺寸不遮擋主體，保留 A/B/C 互動。",
-          "evidence": "手機預覽截圖或字幕 QA 記錄。"
-        },
-        {
-          "id": "cover_or_first_frame",
-          "label": "封面或首幀",
-          "check": "首幀能在 1 秒內看懂情緒鉤子與守護者氛圍。",
-          "evidence": "封面圖、首幀截圖或平台草稿預覽。"
-        },
-        {
-          "id": "guardian_universe_match",
-          "label": "守護者宇宙一致",
-          "check": "使用 艾莉絲 / iris 的色彩、象徵物與情緒設定，不混用其他守護者。",
-          "evidence": "畫面截圖或素材清單。"
-        },
-        {
-          "id": "caption_quiz_cta",
-          "label": "Caption 單一 CTA",
-          "check": "Caption 主 CTA 維持完成 15 題測驗，不加入商品、Luna 或聯盟導購作為第一動作。",
-          "evidence": "平台 caption 草稿。"
-        },
-        {
-          "id": "tracked_url_utm",
-          "label": "追蹤連結",
-          "check": "連結保留 utm_content=iris_silence，且指向 /start/。",
-          "evidence": "平台草稿中的連結或點擊後網址。"
-        },
-        {
-          "id": "safety_boundary",
-          "label": "安全邊界",
-          "check": "無診斷、療效、保證修復、必須購買或危機支援承諾。",
-          "evidence": "最終字幕與 caption 檢查紀錄。"
-        },
-        {
-          "id": "writeback_ready",
-          "label": "回填準備",
-          "check": "發布後可取得 https post URL、發布日期、proof note，並使用 post text import 回填。",
-          "evidence": "post text import 模板已準備。"
-        }
-      ]
-    },
-    {
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "platform": "instagram_reels",
-      "guardianId": "iris",
-      "guardianName": "艾莉絲",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "utmContent": "iris_silence",
-      "assetReadyStatus": "prepared",
-      "assetReadyAction": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
-      "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
-      "qaItems": [
-        {
-          "id": "vertical_video",
-          "label": "直式影片檔",
-          "check": "確認 9:16 直式影片可播放，長度符合 Shorts/Reels/TikTok 節奏。",
-          "evidence": "實際影片檔路徑、平台預覽截圖或剪輯輸出紀錄。"
-        },
-        {
-          "id": "subtitle_readability",
-          "label": "字幕可讀性",
-          "check": "字幕短句、無錯字、手機尺寸不遮擋主體，保留 A/B/C 互動。",
-          "evidence": "手機預覽截圖或字幕 QA 記錄。"
-        },
-        {
-          "id": "cover_or_first_frame",
-          "label": "封面或首幀",
-          "check": "首幀能在 1 秒內看懂情緒鉤子與守護者氛圍。",
-          "evidence": "封面圖、首幀截圖或平台草稿預覽。"
-        },
-        {
-          "id": "guardian_universe_match",
-          "label": "守護者宇宙一致",
-          "check": "使用 艾莉絲 / iris 的色彩、象徵物與情緒設定，不混用其他守護者。",
-          "evidence": "畫面截圖或素材清單。"
-        },
-        {
-          "id": "caption_quiz_cta",
-          "label": "Caption 單一 CTA",
-          "check": "Caption 主 CTA 維持完成 15 題測驗，不加入商品、Luna 或聯盟導購作為第一動作。",
+          "check": "Caption 主 CTA 維持 15-question quiz，不加入商品、Luna 或聯盟導購作為第一動作。",
           "evidence": "平台 caption 草稿。"
         },
         {

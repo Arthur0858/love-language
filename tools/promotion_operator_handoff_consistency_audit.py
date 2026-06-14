@@ -18,8 +18,8 @@ LINK_READY = PROMOTION_DIR / "profile-link-readiness-packet.json"
 PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
 PROFILE_ACTION = PROMOTION_DIR / "profile-setup-action-sheet.json"
 PUBLISH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
+READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 PROFILE_SOURCES = {
     "youtube_shorts": "youtube",
     "tiktok": "tiktok",
@@ -34,6 +34,25 @@ POST_PLACEHOLDERS = {
 
 def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def active_platforms() -> tuple[str, ...]:
+    readiness = load_json(READINESS)
+    platforms = readiness.get("readinessPolicy", {}).get("expectedPlatforms", [])
+    if isinstance(platforms, list) and platforms:
+        return tuple(str(platform) for platform in platforms)
+    return ("youtube_shorts",)
+
+
+def ready_to_publish() -> bool:
+    return bool(load_json(READINESS).get("readiness", {}).get("readyToPublishPosts"))
+
+
+def platform_configured(platform: str) -> bool:
+    for row in load_json(READINESS).get("platformChecklist", []):
+        if row.get("platform") == platform:
+            return bool(row.get("configured"))
+    return False
 
 
 def proof_path_for(platform: str, kind: str = "profile") -> str:
@@ -90,9 +109,10 @@ def validate_profile_sources(metrics: dict[str, int], issues: list[str]) -> None
     clipboard_rows = by_platform([row for row in clipboard.get("blocks", []) if row.get("kind") == "profile"])
     template_rows = by_platform([row for row in proof_templates.get("rows", []) if row.get("kind") == "profile_setup"])
 
-    for platform in PLATFORMS:
+    for platform in active_platforms():
         expected_url = expected_profile_url(platform)
         expected_path = proof_path_for(platform)
+        configured = platform_configured(platform)
         rows = {
             "runbook": runbook_rows.get(platform, {}),
             "link_ready": link_rows.get(platform, {}),
@@ -107,9 +127,10 @@ def validate_profile_sources(metrics: dict[str, int], issues: list[str]) -> None
             ("runbook", rows["runbook"].get("profileLink", "")),
             ("link_ready", rows["link_ready"].get("profile_link", "")),
             ("profile_action", rows["profile_action"].get("profile_link", "")),
-            ("handoff", rows["handoff"].get("url", "")),
             ("clipboard", expected_url if expected_url in clipboard_copy else clipboard_copy),
         ]
+        if rows["handoff"]:
+            url_values.append(("handoff", rows["handoff"].get("url", "")))
         for source_name, value in url_values:
             if value != expected_url or not valid_profile_url(platform, str(value)):
                 issues.append(f"{platform}: {source_name} profile URL is not the expected /start/ UTM URL")
@@ -137,9 +158,13 @@ def validate_profile_sources(metrics: dict[str, int], issues: list[str]) -> None
         for command in commands:
             if command and not command_mentions(str(command), expected_path):
                 issues.append(f"{platform}: command does not reference expected profile proof path {expected_path}")
-        if rows["handoff"].get("status") != "ready":
+        if rows["handoff"] and rows["handoff"].get("status") != "ready":
             issues.append(f"{platform}: handoff profile step should be ready before profile setup")
-        if not str(rows["clipboard"].get("status", "")).startswith("ready"):
+        clipboard_status = str(rows["clipboard"].get("status", ""))
+        if configured:
+            if clipboard_status not in {"complete", "ready", "ready_to_configure", "ready_to_writeback"}:
+                issues.append(f"{platform}: clipboard profile block should be complete or ready after profile setup")
+        elif not clipboard_status.startswith("ready"):
             issues.append(f"{platform}: clipboard profile block should be ready before profile setup")
 
 
@@ -153,7 +178,8 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
     handoff_rows = by_platform([row for row in handoff.get("steps", []) if row.get("phase") == "publish_first_batch"])
     clipboard_rows = by_platform([row for row in clipboard.get("blocks", []) if row.get("kind") == "post"])
     template_rows = by_platform([row for row in proof_templates.get("rows", []) if row.get("kind") == "post_publish"])
-    for platform in PLATFORMS:
+    gate_open = ready_to_publish()
+    for platform in active_platforms():
         expected_path = proof_path_for(platform, "post")
         placeholder = POST_PLACEHOLDERS[platform]
         rows = {
@@ -188,9 +214,12 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
                 issues.append(f"{platform}: command does not reference expected post proof path {expected_path}")
         for source_name, row in rows.items():
             status = str(row.get("action_status") or row.get("status") or "")
-            if source_name in {"publish_action", "clipboard"} and "blocked" not in status:
+            if source_name in {"publish_action", "clipboard"} and not gate_open and "blocked" not in status:
                 issues.append(f"{platform}: {source_name} post should remain blocked before profile gate")
-        if rows["handoff"].get("status") != "blocked_until_profile_links":
+            if source_name in {"publish_action", "clipboard"} and gate_open and status not in {"ready", "ready_to_publish"}:
+                issues.append(f"{platform}: {source_name} post should be ready after profile gate")
+        expected_handoff_status = "ready" if gate_open else "blocked_until_profile_links"
+        if rows["handoff"].get("status") != expected_handoff_status:
             issues.append(f"{platform}: handoff post step should remain blocked_until_profile_links")
         proof_text = str(rows["clipboard"].get("proof", ""))
         if placeholder not in proof_text:
@@ -199,7 +228,7 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
 
 def main() -> int:
     metrics = {
-        "promotion_operator_handoff_platforms": len(PLATFORMS),
+        "promotion_operator_handoff_platforms": len(active_platforms()),
         "promotion_operator_handoff_profile_sources_checked": 0,
         "promotion_operator_handoff_profile_proofs_checked": 0,
         "promotion_operator_handoff_post_sources_checked": 0,

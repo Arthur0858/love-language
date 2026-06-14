@@ -1,35 +1,34 @@
 # LoveTypes Launch Blocker Digest
 
-- 產生日期：2026-06-14
-- current stage：`profile_setup`
-- first blocker：`set_platform_profile_links`
-- profile configured：0 / 3
-- real profile proof ready：0 / 3
-- external profile proof blockers：3
-- current true blockers：1
-- first batch published：0 / 3
+- 產生日期：2026-06-15
+- current stage：`first_batch_publish`
+- first blocker：`publish_first_batch`
+- profile configured：1 / 1
+- real profile proof ready：0 / 1
+- external profile proof blockers：0
+- current true blockers：0
+- first batch published：0 / 1
 - filled KPI rows：0
-- active blockers：14
-- ready now：3
+- active blockers：8
+- ready now：1
 - empty data mode：1
 - issues：0
 
 ## Next Action
 
-- action：Set the three external platform profile links, capture real proof, then import profile proof text.
-- command：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- release：promotion_launch_readiness_profile_configured=3 and ready_to_publish=1
+- action：Publish the active first-batch platform post and write back the real public post URL.
+- command：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- release：first-batch post_url values exist for all active platforms
 
 ## First Blocker
 
-- phase：`profile_setup`
-- severity：`launch_blocker`
-- message：3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。
+- phase：`publish`
+- severity：`measurement_blocker`
+- message：首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。
 
 ## Allowed Now
 
-- Set or verify external platform profile links.
-- Replace placeholder profile proof with real screenshot/click evidence, then import only source-checked profile proof.
+- Publish the active first-batch platform post and write back the real public post URL.
 - Refresh daily ops packets after any writeback.
 
 ## Do Not Do
@@ -41,9 +40,9 @@
 
 ## Evidence Snapshot
 
-- command ready / prepared / blocked：3 / 3 / 18
-- profile completion blockers：1
-- profile placeholder proof rows：3
+- command ready / prepared / blocked：3 / 3 / 3
+- profile completion blockers：0
+- profile placeholder proof rows：1
 - weekly ready：0
-- KPI posting / platform / script rows：45 / 45 / 15
-- attribution rows：18
+- KPI posting / platform / script rows：15 / 15 / 15
+- attribution rows：16

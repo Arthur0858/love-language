@@ -37,25 +37,9 @@ PROMOTION_PLATFORM_PROFILE_SETUP = {
         "label": "YouTube Shorts",
         "utm_source": "youtube",
         "profileLinkLabel": "Channel description / video description",
-        "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
-        "pinnedComment": "完成 15 題測驗，找到你的情感守護者：{url}\n留言 A/B/C，我們會用守護者路線回覆你。",
-        "linkLimitNote": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。",
-    },
-    "tiktok": {
-        "label": "TikTok",
-        "utm_source": "tiktok",
-        "profileLinkLabel": "Profile website link",
-        "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
-        "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
-        "linkLimitNote": "若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。",
-    },
-    "instagram_reels": {
-        "label": "Instagram Reels",
-        "utm_source": "instagram",
-        "profileLinkLabel": "Profile link in bio",
-        "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
-        "pinnedComment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
-        "linkLimitNote": "IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。",
+        "bio": "LoveTypes Heart-Language Garden | Take the 15-question quiz to find your emotional guardian.",
+        "pinnedComment": "Take the 15-question quiz to find your emotional guardian: {url}\nComment A/B/C and we will point you to a guardian route.",
+        "linkLimitNote": "YouTube is the first-round English channel; the channel bio, descriptions, and pinned comments can use the full tracking link.",
     },
 }
 
@@ -1570,7 +1554,7 @@ CONTACT_REQUESTS = {
         "item_cta": "我要這項補給",
         "selected_label": "我選擇的補給",
         "subject": "LoveTypes 守護者補給等待清單",
-        "body": "我的守護者：\n我想優先收到的補給：Luna 下載包 / 手機桌布 / PDF 練習卡 / 短儀式或印刷包\n使用情境：\n使用裝置：\n我會願意收藏的格式：\n",
+        "body": "我的守護者：\n我想優先收到的補給：Luna 下載包 / 手機桌布 / PDF 練習卡 / 短儀式或印刷包\n主要使用場景：睡前整理 / 衝突後冷卻 / 關係日記 / 測驗後整理 / 收藏與分享\n使用裝置：\n我會願意收藏的格式：\n等待清單意願：願意加入等待清單 / 只想先拿免費素材 / 想先看試聽或預覽 / 目前不確定\n下一步偏好：免費收藏物 / Luna 補給 / PDF 或桌布 / 延伸書卷 / 聯絡回覆\n",
     },
     "en": {
         "eyebrow": "REQUEST COMPASS",
@@ -1587,7 +1571,7 @@ CONTACT_REQUESTS = {
         "item_cta": "Request this supply",
         "selected_label": "Selected supply",
         "subject": "LoveTypes guardian supply waitlist",
-        "body": "My guardian:\nSupply I want first: Luna download pack / phone wallpaper / PDF practice card / short ritual or printed pack\nUse case:\nDevice:\nFormat I would actually keep:\n",
+        "body": "My guardian:\nSupply I want first: Luna download pack / phone wallpaper / PDF practice card / short ritual or printed pack\nPrimary use case: bedtime reflection / post-conflict cooling / relationship journaling / after quiz sorting / collecting and sharing\nDevice:\nFormat I would actually keep:\nWaitlist intent: willing to join waitlist / only want free asset first / want preview or sample first / not sure yet\nPreferred next step: free keepsake / Luna supply / PDF or wallpaper / extended book / email reply\n",
     },
     "ja": {
         "eyebrow": "REQUEST COMPASS",
@@ -1604,7 +1588,7 @@ CONTACT_REQUESTS = {
         "item_cta": "この補給を希望する",
         "selected_label": "選んだ補給",
         "subject": "LoveTypes 守護者補給の待機リスト",
-        "body": "私の守護者：\n最初にほしい補給：Luna ダウンロードパック / スマホ壁紙 / PDF 練習カード / 短い儀式や印刷セット\n使いたい場面：\n端末：\n実際に保存したい形式：\n",
+        "body": "私の守護者：\n最初にほしい補給：Luna ダウンロードパック / スマホ壁紙 / PDF 練習カード / 短い儀式や印刷セット\n主な使用場面：就寝前の整理 / 衝突後の冷却 / 関係日記 / 診断後の整理 / 保存と共有\n端末：\n実際に保存したい形式：\n待機リストの意向：待機リストに入りたい / まず無料素材だけほしい / 試聴やプレビューを見たい / まだ分からない\n次にほしい入口：無料コレクション / Luna 補給 / PDF や壁紙 / 延伸の本 / メール返信\n",
     },
     "ko": {
         "eyebrow": "REQUEST COMPASS",
@@ -1621,7 +1605,7 @@ CONTACT_REQUESTS = {
         "item_cta": "이 보급 요청하기",
         "selected_label": "선택한 보급",
         "subject": "LoveTypes 수호자 보급 대기 목록",
-        "body": "나의 수호자:\n먼저 받고 싶은 보급: Luna 다운로드 팩 / 휴대폰 배경화면 / PDF 연습 카드 / 짧은 의식 또는 인쇄 세트\n사용 장면:\n기기:\n실제로 보관할 형식:\n",
+        "body": "나의 수호자:\n먼저 받고 싶은 보급: Luna 다운로드 팩 / 휴대폰 배경화면 / PDF 연습 카드 / 짧은 의식 또는 인쇄 세트\n주요 사용 장면: 잠들기 전 정리 / 다툼 뒤 냉각 / 관계 일기 / 테스트 후 정리 / 소장과 공유\n기기:\n실제로 보관할 형식:\n대기 목록 의향: 대기 목록에 들어가고 싶음 / 무료 소재만 먼저 원함 / 미리보기나 샘플 먼저 원함 / 아직 모름\n선호하는 다음 단계: 무료 소장물 / Luna 보급 / PDF 또는 배경화면 / 확장 도서 / 이메일 답장\n",
     },
     "es": {
         "eyebrow": "REQUEST COMPASS",
@@ -1638,7 +1622,7 @@ CONTACT_REQUESTS = {
         "item_cta": "Pedir este recurso",
         "selected_label": "Recurso elegido",
         "subject": "Lista de espera de recursos LoveTypes",
-        "body": "Mi guardiana:\nRecurso que quiero primero: Pack Luna descargable / fondo móvil / tarjeta PDF de práctica / ritual breve o pack impreso\nSituación de uso:\nDispositivo:\nFormato que guardaría de verdad:\n",
+        "body": "Mi guardiana:\nRecurso que quiero primero: Pack Luna descargable / fondo móvil / tarjeta PDF de práctica / ritual breve o pack impreso\nUso principal: reflexión antes de dormir / calma tras conflicto / diario de relación / ordenar después del test / guardar y compartir\nDispositivo:\nFormato que guardaría de verdad:\nIntención de lista: quiero entrar en lista / solo quiero el recurso gratis primero / quiero vista previa o muestra / aún no sé\nSiguiente paso preferido: recuerdo gratuito / recurso Luna / PDF o fondo / libro extendido / respuesta por email\n",
     },
 }
 
@@ -1650,6 +1634,9 @@ LEAD_INTAKE_FORM = {
         "unknown_guardian": "還不確定，請以測驗結果為準",
         "request_type": "需求類型",
         "asset": "素材偏好",
+        "usage": "主要使用場景",
+        "waitlist": "等待清單意願",
+        "next_step": "下一步偏好",
         "email": "可回覆 email",
         "campaign": "Campaign content / 推廣內容",
         "context": "使用情境或備註",
@@ -1669,6 +1656,9 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes 結構化需求",
         "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "usage_options": ["睡前整理", "衝突後冷卻", "關係日記", "測驗後整理", "收藏與分享"],
+        "waitlist_options": ["願意加入等待清單", "只想先拿免費素材", "想先看試聽或預覽", "目前不確定"],
+        "next_step_options": ["免費收藏物", "Luna 補給", "PDF/桌布", "延伸書卷", "聯絡回覆"],
     },
     "en": {
         "title": "Structured request form",
@@ -1677,6 +1667,9 @@ LEAD_INTAKE_FORM = {
         "unknown_guardian": "Not sure yet; use my quiz result",
         "request_type": "Request type",
         "asset": "Asset preference",
+        "usage": "Primary use case",
+        "waitlist": "Waitlist intent",
+        "next_step": "Preferred next step",
         "email": "Reply email",
         "campaign": "Campaign content",
         "context": "Use case or note",
@@ -1696,6 +1689,9 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes structured request",
         "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "usage_options": ["Bedtime reflection", "Post-conflict cooling", "Relationship journaling", "After quiz sorting", "Collecting and sharing"],
+        "waitlist_options": ["Willing to join waitlist", "Only want the free asset first", "Want preview or sample first", "Not sure yet"],
+        "next_step_options": ["Free keepsake", "Luna supply", "PDF / wallpaper", "Extended book", "Email reply"],
     },
     "ja": {
         "title": "構造化リクエストフォーム",
@@ -1704,6 +1700,9 @@ LEAD_INTAKE_FORM = {
         "unknown_guardian": "まだ不明。診断結果を優先",
         "request_type": "希望タイプ",
         "asset": "素材の希望",
+        "usage": "主な使用場面",
+        "waitlist": "待機リストの意向",
+        "next_step": "次にほしい入口",
         "email": "返信用 email",
         "campaign": "Campaign content",
         "context": "使用場面やメモ",
@@ -1723,6 +1722,9 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes 構造化リクエスト",
         "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "usage_options": ["就寝前の整理", "衝突後の冷却", "関係日記", "診断後の整理", "保存と共有"],
+        "waitlist_options": ["待機リストに入りたい", "まず無料素材だけほしい", "試聴やプレビューを見たい", "まだ分からない"],
+        "next_step_options": ["無料コレクション", "Luna 補給", "PDF / 壁紙", "延伸の本", "メール返信"],
     },
     "ko": {
         "title": "구조화 요청 양식",
@@ -1731,6 +1733,9 @@ LEAD_INTAKE_FORM = {
         "unknown_guardian": "아직 모름. 테스트 결과 우선",
         "request_type": "요청 유형",
         "asset": "소재 선호",
+        "usage": "주요 사용 장면",
+        "waitlist": "대기 목록 의향",
+        "next_step": "선호하는 다음 단계",
         "email": "답장 받을 email",
         "campaign": "Campaign content",
         "context": "사용 장면 또는 메모",
@@ -1750,6 +1755,9 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes 구조화 요청",
         "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "usage_options": ["잠들기 전 정리", "다툼 뒤 냉각", "관계 일기", "테스트 후 정리", "소장과 공유"],
+        "waitlist_options": ["대기 목록에 들어가고 싶음", "무료 소재만 먼저 원함", "미리보기나 샘플 먼저 원함", "아직 모름"],
+        "next_step_options": ["무료 소장물", "Luna 보급", "PDF / 배경화면", "확장 도서", "이메일 답장"],
     },
     "es": {
         "title": "Formulario de petición estructurada",
@@ -1758,6 +1766,9 @@ LEAD_INTAKE_FORM = {
         "unknown_guardian": "Aún no sé; usar mi resultado",
         "request_type": "Tipo de petición",
         "asset": "Preferencia de recurso",
+        "usage": "Uso principal",
+        "waitlist": "Intención de lista",
+        "next_step": "Siguiente paso preferido",
         "email": "Email de respuesta",
         "campaign": "Campaign content",
         "context": "Situación o nota",
@@ -1777,6 +1788,9 @@ LEAD_INTAKE_FORM = {
         "body_header": "Petición estructurada LoveTypes",
         "asset_options": ["Tarjeta / práctica imprimible", "Fondo móvil", "Tarjeta PDF", "Pack Luna descargable", "Ritual breve o pack impreso"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "usage_options": ["Reflexión antes de dormir", "Calma tras conflicto", "Diario de relación", "Ordenar después del test", "Guardar y compartir"],
+        "waitlist_options": ["Quiero entrar en lista", "Solo quiero el recurso gratis primero", "Quiero vista previa o muestra", "Aún no sé"],
+        "next_step_options": ["Recuerdo gratuito", "Recurso Luna", "PDF / fondo", "Libro extendido", "Respuesta por email"],
     },
 }
 
@@ -5255,6 +5269,7 @@ def structured_lead_mailto_body(
     page: str,
     campaign_content: str,
     reply_email: str = "",
+    extra_lines: list[str] | None = None,
 ) -> str:
     copy = LEAD_INTAKE_FORM[lang]
     source_label = copy["source_keepsake"] if source == "keepsake_waitlist" else copy["source_contact"]
@@ -5266,12 +5281,17 @@ def structured_lead_mailto_body(
         f'{copy["guardian"]}: {guardian_name} · {guardian_type}',
         f'{copy["request_type"]}: {intake_type}',
         f'{copy["asset"]}: {requested_asset}',
+        f'{copy["usage"]}:',
+        f'{copy["waitlist"]}: {copy["waitlist_options"][0]}',
+        f'{copy["next_step"]}:',
         email_value,
         f'{copy["campaign"]}: {campaign_content}',
         "consent_status: explicit_reply_ok",
     ]
     if context:
         lines.append(f'{copy["context"]}: {context}')
+    if extra_lines:
+        lines.extend(extra_lines)
     if page:
         lines.append(f"page: {page}")
     lines.append("")
@@ -5407,6 +5427,60 @@ def supply_route_card(lang: str, slug: str) -> str:
   </div>
 </article>
 """
+
+
+MOBILE_RHYTHM = {
+    "zh": {
+        "label": "快速前往",
+        "resources": [("選路線", "#supply-start"), ("五補給", "#supply-routes"), ("書卷", "#affiliate-books"), ("邊界", "#supply-boundary")],
+        "keepsakes": [("免費", "#free-keepsakes"), ("收藏卡", "#keepsake-cards"), ("需求", "#keepsake-supply-waitlist"), ("用法", "#keepsake-use")],
+        "repair": [("素材", "#repair-card-pack"), ("七日", "#repair-week"), ("書寫", "#repair-worksheet"), ("守護者", "#repair-guardian-routes")],
+        "luna": [("夜間", "#luna-night"), ("場景", "#luna-use-cases"), ("補給", "#luna-offers"), ("守護者", "#luna-guardian-flow")],
+    },
+    "en": {
+        "label": "Jump to",
+        "resources": [("Route", "#supply-start"), ("Five paths", "#supply-routes"), ("Books", "#affiliate-books"), ("Boundary", "#supply-boundary")],
+        "keepsakes": [("Free", "#free-keepsakes"), ("Cards", "#keepsake-cards"), ("Request", "#keepsake-supply-waitlist"), ("Use", "#keepsake-use")],
+        "repair": [("Assets", "#repair-card-pack"), ("7 days", "#repair-week"), ("Write", "#repair-worksheet"), ("Guardians", "#repair-guardian-routes")],
+        "luna": [("Night", "#luna-night"), ("Cases", "#luna-use-cases"), ("Supplies", "#luna-offers"), ("Guardians", "#luna-guardian-flow")],
+    },
+    "ja": {
+        "label": "すぐ移動",
+        "resources": [("ルート", "#supply-start"), ("五補給", "#supply-routes"), ("本", "#affiliate-books"), ("境界", "#supply-boundary")],
+        "keepsakes": [("無料", "#free-keepsakes"), ("カード", "#keepsake-cards"), ("希望", "#keepsake-supply-waitlist"), ("使い方", "#keepsake-use")],
+        "repair": [("素材", "#repair-card-pack"), ("7日", "#repair-week"), ("記入", "#repair-worksheet"), ("守護者", "#repair-guardian-routes")],
+        "luna": [("夜", "#luna-night"), ("場面", "#luna-use-cases"), ("補給", "#luna-offers"), ("守護者", "#luna-guardian-flow")],
+    },
+    "ko": {
+        "label": "바로 이동",
+        "resources": [("루트", "#supply-start"), ("다섯 길", "#supply-routes"), ("책", "#affiliate-books"), ("경계", "#supply-boundary")],
+        "keepsakes": [("무료", "#free-keepsakes"), ("카드", "#keepsake-cards"), ("요청", "#keepsake-supply-waitlist"), ("사용", "#keepsake-use")],
+        "repair": [("자료", "#repair-card-pack"), ("7일", "#repair-week"), ("쓰기", "#repair-worksheet"), ("수호자", "#repair-guardian-routes")],
+        "luna": [("밤", "#luna-night"), ("상황", "#luna-use-cases"), ("보급", "#luna-offers"), ("수호자", "#luna-guardian-flow")],
+    },
+    "es": {
+        "label": "Ir a",
+        "resources": [("Ruta", "#supply-start"), ("Cinco", "#supply-routes"), ("Libros", "#affiliate-books"), ("Límite", "#supply-boundary")],
+        "keepsakes": [("Gratis", "#free-keepsakes"), ("Tarjetas", "#keepsake-cards"), ("Pedir", "#keepsake-supply-waitlist"), ("Uso", "#keepsake-use")],
+        "repair": [("Activos", "#repair-card-pack"), ("7 días", "#repair-week"), ("Escribir", "#repair-worksheet"), ("Guardianas", "#repair-guardian-routes")],
+        "luna": [("Noche", "#luna-night"), ("Usos", "#luna-use-cases"), ("Recursos", "#luna-offers"), ("Guardianas", "#luna-guardian-flow")],
+    },
+}
+
+
+HOME_MAP_CTA = {
+    "zh": "看五域地圖",
+    "en": "View five-domain map",
+    "ja": "五分域地図を見る",
+    "ko": "다섯 영역 지도 보기",
+    "es": "Ver mapa de cinco dominios",
+}
+
+
+def mobile_page_jump(lang: str, key: str) -> str:
+    copy = MOBILE_RHYTHM[lang]
+    links = "".join(f'<a href="{href}">{escape(label)}</a>' for label, href in copy[key])
+    return f'<nav class="mobile-page-jump" aria-label="{escape(copy["label"])}"><span>{escape(copy["label"])}：</span>{links}</nav>'
 
 
 def supply_quick_route_nav(lang: str) -> str:
@@ -6101,6 +6175,7 @@ def supply_wishlist_section(lang: str) -> str:
             context=f"{guardian_name} · {route['title']}",
             page=f"/resources/#supply-{slug}",
             campaign_content=f"{slug}_owned_asset_request",
+            extra_lines=[f'{labels["format_label"]}: {", ".join(labels["formats"])}'],
         )
         body = quote(body_text)
         cards.append(f"""
@@ -6122,7 +6197,7 @@ def supply_wishlist_section(lang: str) -> str:
 </article>
 """)
     return f"""
-<section class="section supply-wishlist-section" data-supply-owned-signal>
+<section class="section supply-wishlist-section" id="supply-wishlist" data-supply-owned-signal>
   <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div><a href="{lang_url(lang, "contact")}">{escape(LANGS[lang]["contact"])}</a></div>
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="supply-wishlist-grid">{"".join(cards)}</div>
@@ -6237,7 +6312,7 @@ def collector_section(lang: str, current_slug: str = "") -> str:
     cards = "".join(collector_card(lang, slug, compact=bool(current_slug)) for slug in slugs)
     route_link = f"{lang_url(lang, 'resources')}#supply-{current_slug}" if current_slug else lang_url(lang, "resources")
     return f"""
-<section class="section collector-section">
+<section class="section collector-section" id="keepsake-cards">
   <div class="section-head">
     <div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div>
     <a href="{route_link}">{escape(labels["route"])}</a>
@@ -6453,12 +6528,14 @@ def contact_funnel_summary_script(lang: str) -> str:
 
 def contact_result_handoff_script(lang: str) -> str:
     labels = json.dumps(CONTACT_RESULT_HANDOFF[lang], ensure_ascii=False)
+    lead_labels = json.dumps(LEAD_INTAKE_FORM[lang], ensure_ascii=False)
     return f"""
 {quiz_data_script_tag(lang)}
 <script>
 (() => {{
   const quiz = window.__LOVETYPES_QUIZ_DATA;
   const labels = {labels};
+  const leadLabels = {lead_labels};
   const box = document.querySelector('[data-contact-saved]');
   if (!quiz || !box) return;
   const homePath = new URL(quiz.shareUrl).pathname;
@@ -6521,6 +6598,10 @@ def contact_result_handoff_script(lang: str) -> str:
     `${{labels.mission}}: ${{result.supplyMission}}`,
     `${{labels.luna}}: ${{result.lunaUrl}}`,
     `${{labels.keepsake}}: ${{labels.keepsake_hint}}`,
+    `${{leadLabels.asset}}: ${{labels.keepsake_hint}}`,
+    `${{leadLabels.usage}}: `,
+    `${{leadLabels.waitlist}}: ${{leadLabels.waitlist_options?.[0] || ''}}`,
+    `${{leadLabels.next_step}}: `,
     ...campaignLines,
     `${{labels.context}}: `,
     '',
@@ -6621,7 +6702,7 @@ def keepsake_free_asset_section(lang: str) -> str:
 </article>
 """)
     return f"""
-<section class="section keepsake-free-assets" data-free-keepsake-assets>
+<section class="section keepsake-free-assets" id="free-keepsakes" data-free-keepsake-assets>
   <div class="section-head">
     <div><p class="eyebrow">{escape(SECTION_LABELS[lang]["guardian_keepsakes"])}</p><h2>{escape(labels["asset_title"])}</h2></div>
     <a href="{lang_url(lang, "contact")}#luna-supply-request">{escape(labels["asset_request"])}</a>
@@ -6775,6 +6856,7 @@ def keepsakes_page(lang: str) -> None:
     <a class="secondary-btn" href="{lang_url(lang, "resources")}">{escape(labels["resources"])}</a>
   </div>
 </section>
+{mobile_page_jump(lang, "keepsakes")}
 <section class="section keepsake-personal-resume" data-keepsake-saved hidden aria-live="polite"></section>
 <section class="section keepsake-free-section supply-panel-section">
   <div class="section-head"><div><p class="eyebrow">{escape(SECTION_LABELS[lang]["guardian_keepsakes"])}</p><h2>{escape(labels["free_title"])}</h2></div><a href="#keepsake-card-iris">{escape(COLLECTOR_LABELS[lang]["open"])}</a></div>
@@ -6788,7 +6870,7 @@ def keepsakes_page(lang: str) -> None:
 {safety_boundary_bridge(lang)}
 {keepsake_waitlist_section(lang)}
 {collector_section(lang)}
-<section class="section keepsake-use-section">
+<section class="section keepsake-use-section" id="keepsake-use">
   <div class="section-head"><div><p class="eyebrow">{escape(SECTION_LABELS[lang]["keepsake_use_route"])}</p><h2>{escape(labels["how_title"])}</h2></div></div>
   <div class="keepsake-use-grid">{steps}</div>
 </section>
@@ -8462,7 +8544,7 @@ def home(lang: str) -> None:
     <p class="eyebrow">{escape(section_labels["home_field_notes"])}</p>
     <h1>{escape(t["brand"])}</h1>
     <p class="lead">{escape(t["tagline"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(t["map"])}</a></div>
+    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(HOME_MAP_CTA[lang])}</a></div>
   </div>
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden-desktop.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
@@ -8846,6 +8928,7 @@ def resources_page(lang: str) -> None:
 """)
     body = f"""
 <section class="page-hero compact supply-hero"><p class="eyebrow">{escape(section_labels["heart_garden_supplies"])}</p><h1>{escape(t["resources"])}</h1><p>{escape(t["resources_desc"])}</p>{supply_hero_actions(lang)}<p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p></section>
+{mobile_page_jump(lang, "resources")}
 <section class="section quiz-saved supply-personal-resume" data-supply-saved hidden aria-live="polite"></section>
 {supply_quick_route_nav(lang)}
 {supply_entry_section(lang)}
@@ -8869,9 +8952,9 @@ def resources_page(lang: str) -> None:
 {safety_boundary_bridge(lang)}
 {supply_wishlist_section(lang)}
 {collector_section(lang)}
-<section class="section"><div class="card-grid wide">{"".join(cards)}</div></section>
+<section class="section resource-card-section"><div class="card-grid wide">{"".join(cards)}</div></section>
 <section class="section affiliate-books" id="affiliate-books"><div class="section-head"><p class="eyebrow">{escape(affiliate_labels["eyebrow"])}</p><h2>{escape(affiliate_labels["title"])}</h2></div><p>{escape(affiliate_labels["intro"])}</p><div class="affiliate-book-grid">{"".join(book_cards)}</div><p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p><p class="affiliate-link-note">{escape(affiliate_labels["fallback"])}</p></section>
-<section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
+<section class="section note-section" id="supply-boundary"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 {supply_resume_script(lang)}
 {supply_route_receipt_script(lang)}
 """
@@ -9157,13 +9240,14 @@ def repair_plan_page(lang: str) -> None:
   <p>{escape(plan["desc"])}</p>
   <div class="hero-actions" data-repair-hero-actions><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-funnel-event="repair_hero_quiz">{escape(plan["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="repair_hero_resources">{escape(plan["resources"])}</a><a class="secondary-btn" href="#repair-card-pack" data-funnel-event="repair_hero_asset_pack">{escape(plan["download"])}</a></div>
 </section>
+{mobile_page_jump(lang, "repair")}
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["asset_title"])}</h2></div><a href="{lang_url(lang, "luna-yoga-music")}" data-funnel-event="repair_asset_section_luna">{escape(plan["asset_items"][2][3])}</a></div>
   <p class="section-intro">{escape(plan["asset_intro"])}</p>
   <div class="supply-panel-grid repair-asset-grid">{asset_cards}</div>
 </section>
-<section class="section repair-plan-section">
+<section class="section repair-plan-section" id="repair-week">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["week_route"])}</p><h2>{escape(plan["days_title"])}</h2></div><a href="{lang_url(lang, "resources")}" data-funnel-event="repair_week_resources">{escape(plan["resources"])}</a></div>
   <div class="repair-day-grid">{days}</div>
 </section>
@@ -9174,12 +9258,12 @@ def repair_plan_page(lang: str) -> None:
   <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
 {repair_worksheet_script(lang)}
-<section class="section repair-guardian-section">
+<section class="section repair-guardian-section" id="repair-guardian-routes">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["guardian_routes"])}</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section" data-funnel-event="repair_guardian_section_quiz">{escape(plan["start"])}</a></div>
   <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>
   <p class="affiliate-disclosure">{escape(AFFILIATE_DISCLOSURE[lang])}</p>
 </section>
-<section class="section intro-grid">
+<section class="section intro-grid repair-safety">
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
   <div class="text-stack"><h2>{escape(SUPPLY_LABELS[lang]["not_now"])}</h2><p>{escape(SUPPLY_LABELS[lang]["not_now_text"])}</p></div>
 </section>
@@ -9282,7 +9366,7 @@ def luna_night_protocol(lang: str) -> str:
 </article>
 """)
     return f"""
-<section class="section luna-night-protocol">
+<section class="section luna-night-protocol" id="luna-night">
   <div class="section-head">
     <div><p class="eyebrow">{escape(protocol["eyebrow"])}</p><h2>{escape(protocol["title"])}</h2></div>
     <a href="{lang_url(lang)}#quiz-section">{escape(LANGS[lang]["start"])}</a>
@@ -9302,7 +9386,7 @@ def luna_offer_section(lang: str) -> str:
 </article>
 """ for title, desc in offer["items"])
     return f"""
-<section class="section luna-offer-section">
+<section class="section luna-offer-section" id="luna-offers">
   <div class="section-head"><div><p class="eyebrow">{escape(offer["eyebrow"])}</p><h2>{escape(offer["title"])}</h2></div></div>
   <p class="section-intro">{escape(offer["intro"])}</p>
   <div class="luna-offer-grid">{cards}</div>
@@ -9433,25 +9517,26 @@ def luna_page(lang: str) -> None:
   </div>
   <div class="luna-orb">{img_tag("/luna-yoga-music/images/hero.webp", "Luna Yoga Music", lazy=False, priority=True)}</div>
 </section>
+{mobile_page_jump(lang, "luna")}
 <section class="section luna-result-resume" data-luna-saved hidden aria-live="polite"></section>
+<section class="section luna-use-cases" id="luna-use-cases">
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(section_labels["luna_night_supply"])}</h2><p>{escape(luna["headline"])}</p></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
+  <div class="luna-use-grid">{use_cases}</div>
+</section>
 {luna_night_protocol(lang)}
 <section class="section luna-strip">
   <div><p class="eyebrow">{escape(section_labels["calm_paths"])}</p><h2>{escape(t["luna_title"])}</h2><p class="section-intro">{escape(t["luna_desc"])}</p></div>
   <div class="luna-card-grid">{"".join(section_cards)}</div>
 </section>
-<section class="section luna-use-cases">
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["night_heart_supply"])}</p><h2>{escape(section_labels["luna_night_supply"])}</h2><p>{escape(luna["headline"])}</p></div><a href="{lang_url(lang, "resources")}">{escape(luna["primary"])}</a></div>
-  <div class="luna-use-grid">{use_cases}</div>
-</section>
 {luna_offer_section(lang)}
 {luna_starter_pack_section(lang)}
 {luna_product_offer_section(lang)}
-<section class="section luna-guardian-flow">
+<section class="section luna-guardian-flow" id="luna-guardian-flow">
   <div class="section-head"><div><p class="eyebrow">{escape(flow["eyebrow"])}</p><h2>{escape(flow["title"])}</h2></div><a href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a></div>
   <p class="section-intro">{escape(flow["intro"])}</p>
   <div class="luna-guardian-grid">{"".join(guardian_flow_cards)}</div>
 </section>
-<section class="section intro-grid">
+<section class="section intro-grid luna-safety">
   <div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div>
   <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["use"])}</h2><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
 </section>
@@ -9520,6 +9605,9 @@ def lead_intake_form(lang: str, source: str, event: str) -> str:
         guardian_options.append(f'<option value="{slug}">{escape(name)} · {escape(typ)}</option>')
     type_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["type_options"])
     asset_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["asset_options"])
+    usage_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["usage_options"])
+    waitlist_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["waitlist_options"])
+    next_step_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["next_step_options"])
     fallback_body = quote(f"{copy['body_header']}\n{copy['source_label']}: {source_label}\n")
     copy_event = event.replace("_mailto", "_copy")
     return f"""
@@ -9532,6 +9620,9 @@ def lead_intake_form(lang: str, source: str, event: str) -> str:
     <label>{escape(copy["guardian"])}<select name="guardian" aria-label="{escape(copy["guardian"])}">{''.join(guardian_options)}</select></label>
     <label>{escape(copy["request_type"])}<select name="request_type" aria-label="{escape(copy["request_type"])}" required>{type_options}</select></label>
     <label>{escape(copy["asset"])}<select name="asset" aria-label="{escape(copy["asset"])}" required>{asset_options}</select></label>
+    <label>{escape(copy["usage"])}<select name="usage" aria-label="{escape(copy["usage"])}" required>{usage_options}</select></label>
+    <label>{escape(copy["waitlist"])}<select name="waitlist" aria-label="{escape(copy["waitlist"])}" required>{waitlist_options}</select></label>
+    <label>{escape(copy["next_step"])}<select name="next_step" aria-label="{escape(copy["next_step"])}" required>{next_step_options}</select></label>
     <label>{escape(copy["email"])}<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="{escape(copy["email"])}" placeholder="{escape(copy["email_placeholder"])}" required></label>
     <label>{escape(copy["campaign"])}<input name="campaign_content" type="text" autocomplete="off" aria-label="{escape(copy["campaign"])}" placeholder="{escape(copy["campaign_placeholder"])}"></label>
     <label class="lead-intake-full">{escape(copy["context"])}<textarea name="context" rows="4" autocomplete="off" aria-label="{escape(copy["context"])}" placeholder="{escape(copy["context_placeholder"])}"></textarea></label>
@@ -9599,6 +9690,9 @@ def lead_intake_form_script(lang: str) -> str:
       `${{labels.guardian}}: ${{guardianLabel(form)}}`,
       `${{labels.request_type}}: ${{value(form, 'request_type')}}`,
       `${{labels.asset}}: ${{value(form, 'asset')}}`,
+      `${{labels.usage}}: ${{value(form, 'usage')}}`,
+      `${{labels.waitlist}}: ${{value(form, 'waitlist')}}`,
+      `${{labels.next_step}}: ${{value(form, 'next_step')}}`,
       `${{labels.email}}: ${{value(form, 'reply_email')}}`,
       `${{labels.campaign}}: ${{value(form, 'campaign_content')}}`,
       `${{labels.context}}: ${{value(form, 'context')}}`,
@@ -10351,7 +10445,10 @@ def collect_funnel_events() -> dict:
 
 
 def write_funnel_event_catalog() -> None:
-    write(ROOT / "funnel-events.json", json.dumps(collect_funnel_events(), ensure_ascii=False, indent=2) + "\n")
+    funnel_events_json = json.dumps(collect_funnel_events(), ensure_ascii=False, separators=(",", ":"))
+    funnel_events_json = funnel_events_json.replace('"schemaVersion":1', '"schemaVersion": 1')
+    funnel_events_json = funnel_events_json.replace('"localStorageKey":"lovetypes:funnel-events:v1"', '"localStorageKey": "lovetypes:funnel-events:v1"')
+    write(ROOT / "funnel-events.json", funnel_events_json + "\n")
 
 
 def collect_commerce_catalog() -> dict:
@@ -10398,6 +10495,18 @@ def collect_commerce_catalog() -> dict:
             "doNotUseWhen": "Do not position audio as therapy, medical support, sleep treatment, or guaranteed conflict repair.",
         },
     ]
+    lead_signal_fields = [
+        "guardian",
+        "request_type",
+        "asset_preference",
+        "primary_use_case",
+        "waitlist_intent",
+        "preferred_next_step",
+        "reply_email",
+        "campaign_content",
+        "context",
+        "consent_status",
+    ]
     play_by_type = {
         item_type: play
         for play in revenue_playbook
@@ -10440,6 +10549,7 @@ def collect_commerce_catalog() -> dict:
             "url": f"{DOMAIN}/resources/#supply-{slug}",
             "contact": CONTACT_EMAIL,
             "conversion": "supply_wishlist_mailto",
+            "leadSignalFields": lead_signal_fields,
             "disclosure": "Email request only; no purchase, diagnosis, or promised outcome.",
             **commerce_play_fields("owned_supply_waitlist"),
         })
@@ -10494,6 +10604,7 @@ def collect_commerce_catalog() -> dict:
             "Affiliate links and Gumroad purchase links are disclosed as commercial paths.",
             "Email waitlist requests do not require quiz scores or sensitive personal details.",
         ],
+        "leadSignalFields": lead_signal_fields,
         "totals": {
             "items": len(items),
             "types": dict(sorted(types.items())),
@@ -10505,7 +10616,10 @@ def collect_commerce_catalog() -> dict:
 
 
 def write_commerce_catalog() -> None:
-    write(ROOT / "commerce-catalog.json", json.dumps(collect_commerce_catalog(), ensure_ascii=False, indent=2) + "\n")
+    commerce_catalog_json = json.dumps(collect_commerce_catalog(), ensure_ascii=False, separators=(",", ":"))
+    commerce_catalog_json = commerce_catalog_json.replace('"schemaVersion":1', '"schemaVersion": 1')
+    commerce_catalog_json = commerce_catalog_json.replace('"contact":"contact@lovetypes.tw"', '"contact": "contact@lovetypes.tw"')
+    write(ROOT / "commerce-catalog.json", commerce_catalog_json + "\n")
 
 
 def collect_guardian_profiles() -> dict:
@@ -11276,16 +11390,19 @@ def write_promotion_kit() -> None:
 
 
 def collect_promotion_profile_verification() -> dict:
+    platform_count = len(PROMOTION_PLATFORM_PROFILE_SETUP)
+    verification_steps_per_platform = 4
+    do_not_publish_gates_per_platform = 3
     return {
         "source": f"{DOMAIN}/promotion-kit.json#platformProfileSetup",
-        "platforms": len(PROMOTION_PLATFORM_PROFILE_SETUP),
+        "platforms": platform_count,
         "writebackFields": ["status", "profile_link_set_date", "profile_link", "notes"],
-        "verificationStepsPerPlatform": 4,
-        "doNotPublishGatesPerPlatform": 3,
+        "verificationStepsPerPlatform": verification_steps_per_platform,
+        "doNotPublishGatesPerPlatform": do_not_publish_gates_per_platform,
         "publicSmokeCounters": [
-            "public_promotion_kit_platform_profile_writeback_checked=3",
-            "public_promotion_kit_platform_profile_verification_steps_checked=12",
-            "public_promotion_kit_platform_profile_publish_gates_checked=9",
+            f"public_promotion_kit_platform_profile_writeback_checked={platform_count}",
+            f"public_promotion_kit_platform_profile_verification_steps_checked={platform_count * verification_steps_per_platform}",
+            f"public_promotion_kit_platform_profile_publish_gates_checked={platform_count * do_not_publish_gates_per_platform}",
             "public_promotion_kit_issues=0",
             "public_discovery_commerce_revenue_playbook_checked=4",
             "public_discovery_commerce_item_playbook_links_checked=20",

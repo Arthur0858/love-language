@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "profileProofCapture": "docs/promotion/first-round/profile-proof-capture-quickstart.json",
     "profileWritebackPlaybook": "docs/promotion/first-round/profile-writeback-playbook.json",
@@ -9,18 +9,18 @@
     "masterGate": "docs/promotion/first-round/master-gate.json"
   },
   "metrics": {
-    "platforms": 3,
-    "pendingEvidenceRows": 18,
+    "platforms": 1,
+    "pendingEvidenceRows": 6,
     "captureIssues": 0,
-    "configured": 0,
+    "configured": 1,
     "writebackIssues": 0,
-    "completionConfigured": 0,
-    "completionExpectedProfiles": 3,
-    "completionReady": 0,
+    "completionConfigured": 1,
+    "completionExpectedProfiles": 1,
+    "completionReady": 1,
     "handoffReadyToPublish": 0,
-    "launchReadyToPublish": 0,
+    "launchReadyToPublish": 1,
     "masterStageIndex": 0,
-    "masterProfileConfigured": 0,
+    "masterProfileConfigured": 1,
     "masterFirstBatchPublished": 0,
     "issues": 0
   },
@@ -46,19 +46,19 @@
     },
     {
       "stepId": "refresh_ops_docs",
-      "status": "blocked_until_writeback",
+      "status": "ready",
       "command": "python3 tools/promotion_daily_ops_refresh.py",
       "stopCondition": "Do not publish from stale generated packets after tracker writeback."
     },
     {
       "stepId": "verify_profile_gates",
-      "status": "blocked_until_refresh",
+      "status": "complete",
       "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_launch_readiness_gate.py --check",
       "stopCondition": "Publish only when all profile gates agree ready_to_publish is open."
     },
     {
       "stepId": "open_first_batch_publish",
-      "status": "blocked_until_profile_gate",
+      "status": "ready",
       "command": "python3 tools/promotion_first_batch_publish_quickstart.py --check",
       "stopCondition": "Do not publish if any first-batch row remains blocked_until_profile_links."
     }
@@ -72,35 +72,9 @@
       "pendingEvidence": 6,
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
       "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
-      "currentStatus": "planned",
-      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
-    },
-    {
-      "platform": "tiktok",
-      "label": "TikTok",
-      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
-      "proofFile": "docs/promotion/first-round/proof-tiktok.txt",
-      "pendingEvidence": 6,
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
-      "currentStatus": "planned",
-      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
-    },
-    {
-      "platform": "instagram_reels",
-      "label": "Instagram Reels",
-      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
-      "proofFile": "docs/promotion/first-round/proof-instagram_reels.txt",
-      "pendingEvidence": 6,
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
-      "currentStatus": "planned",
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-15 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-15 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
+      "currentStatus": "set",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
     }
   ],

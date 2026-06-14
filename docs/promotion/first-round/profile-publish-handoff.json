@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "profileActionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
     "profileSetupHandoff": "docs/promotion/first-round/profile-setup-handoff-pack.json",
@@ -12,10 +12,10 @@
   },
   "metrics": {
     "rows": 10,
-    "completeRows": 6,
-    "currentBlockers": 1,
-    "blockedUpstreamRows": 3,
-    "readyToPublish": 0,
+    "completeRows": 10,
+    "currentBlockers": 0,
+    "blockedUpstreamRows": 0,
+    "readyToPublish": 1,
     "issues": 0
   },
   "policy": {
@@ -28,10 +28,10 @@
     {
       "step_id": "profile_action_sheet_ready",
       "phase": "profile_setup",
-      "current_value": 3,
-      "required_value": 3,
+      "current_value": 1,
+      "required_value": 1,
       "owner_action": "Use the platform-specific Bio/Profile link copy from the action sheet.",
-      "evidence_required": "Action sheet has three platforms, valid /start/ UTM links, and no issues.",
+      "evidence_required": "Action sheet has active platforms, valid /start/ UTM links, and no issues.",
       "command": "python3 tools/promotion_profile_setup_action_sheet.py --check",
       "stop_condition": "Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.",
       "status": "complete"
@@ -39,10 +39,10 @@
     {
       "step_id": "profile_setup_handoff_ready",
       "phase": "profile_setup",
-      "current_value": 3,
-      "required_value": 3,
+      "current_value": 1,
+      "required_value": 1,
       "owner_action": "Use the consolidated profile setup handoff pack before touching platform profiles.",
-      "evidence_required": "profile-setup-handoff-pack has three ready_to_configure rows and no issues.",
+      "evidence_required": "profile-setup-handoff-pack has active ready_to_configure rows, or profile setup is already configured with traceable proof.",
       "command": "python3 tools/promotion_profile_setup_handoff_pack.py --check",
       "stop_condition": "Stop if any platform lacks a public-ready profile link, proof template, or identity check.",
       "status": "complete"
@@ -50,24 +50,24 @@
     {
       "step_id": "profile_writeback_complete",
       "phase": "profile_writeback",
-      "current_value": 0,
-      "required_value": 3,
+      "current_value": 1,
+      "required_value": 1,
       "owner_action": "After setting each public profile link, write back status set/live with a proof note.",
       "evidence_required": "platform-profile-tracker.csv has status set/live, set date, and traceable proof for all platforms.",
       "command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
       "stop_condition": "Do not write set/live without screenshot, clicked public link, or platform timestamp evidence.",
-      "status": "current_blocker"
+      "status": "complete"
     },
     {
       "step_id": "profile_evidence_complete",
       "phase": "profile_writeback",
-      "current_value": 0,
-      "required_value": 3,
+      "current_value": 1,
+      "required_value": 1,
       "owner_action": "Confirm every completed profile row has proof in the evidence ledger.",
       "evidence_required": "Evidence ledger traceable count equals required count and evidence issues are zero.",
       "command": "python3 tools/promotion_evidence_ledger.py --check",
       "stop_condition": "Stop if proof note is vague, missing, or not tied to a platform/date.",
-      "status": "blocked_upstream"
+      "status": "complete"
     },
     {
       "step_id": "ops_refresh_after_profile",
@@ -83,32 +83,32 @@
     {
       "step_id": "launch_readiness_open",
       "phase": "handoff",
-      "current_value": 0,
+      "current_value": 1,
       "required_value": 1,
       "owner_action": "Confirm launch readiness opens first-batch publishing.",
       "evidence_required": "launch-readiness-gate.json readiness.readyToPublishPosts is true.",
       "command": "python3 tools/promotion_launch_readiness_gate.py --check",
       "stop_condition": "Stop if profile links are incomplete, campaign UTM is invalid, or assets are not ready.",
-      "status": "blocked_upstream"
+      "status": "complete"
     },
     {
       "step_id": "first_batch_action_sheet_ready",
       "phase": "publish",
-      "current_value": 0,
-      "required_value": 3,
+      "current_value": 1,
+      "required_value": 1,
       "owner_action": "Publish only the first batch rows that become ready after the profile gate opens.",
-      "evidence_required": "First-batch publish action sheet has three ready rows and zero issues.",
+      "evidence_required": "First-batch publish action sheet has active ready rows and zero issues.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
-      "status": "blocked_upstream"
+      "status": "complete"
     },
     {
       "step_id": "publish_readiness_guarded",
       "phase": "publish",
-      "current_value": 6,
-      "required_value": 6,
+      "current_value": 2,
+      "required_value": 2,
       "owner_action": "Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.",
-      "evidence_required": "first-batch-publish-readiness-pack has three asset-ready rows and three safely rejected proof templates.",
+      "evidence_required": "first-batch-publish-readiness-pack has active asset-ready rows and safely rejected proof templates.",
       "command": "python3 tools/promotion_first_batch_publish_readiness_pack.py --check",
       "stop_condition": "Do not publish if proof templates become importable before real public post URLs exist.",
       "status": "complete"
@@ -116,10 +116,10 @@
     {
       "step_id": "post_proof_handoff_guarded",
       "phase": "post_proof",
-      "current_value": 6,
-      "required_value": 6,
+      "current_value": 2,
+      "required_value": 2,
       "owner_action": "Keep post proof handoff files ready for real URLs while rejecting placeholders.",
-      "evidence_required": "post-proof-handoff-pack has three proof files and three safely rejected templates.",
+      "evidence_required": "post-proof-handoff-pack has active proof files and safely rejected templates.",
       "command": "python3 tools/promotion_post_proof_handoff_pack.py --check",
       "stop_condition": "Do not run writeback until the proof check becomes ready_to_import with real platform URLs.",
       "status": "complete"

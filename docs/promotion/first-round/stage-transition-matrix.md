@@ -1,16 +1,16 @@
 # LoveTypes Stage Transition Matrix
 
-- 產生日期：2026-06-14
-- current stage：`profile_setup`
+- 產生日期：2026-06-15
+- current stage：`first_batch_publish`
 - rows：6
-- complete rows：0
+- complete rows：1
 - current blockers：1
-- blocked upstream rows：5
-- command rows ready / blocked：3 / 18
-- real profile proof ready：0 / 3
-- external profile proof blockers：3
-- current true blockers：1
-- empty data mode：1
+- blocked upstream rows：4
+- command rows ready / blocked：3 / 3
+- real profile proof ready：0 / 1
+- external profile proof blockers：1
+- current true blockers：0
+- empty data mode：0
 - issues：0
 
 ## Policy
@@ -24,20 +24,20 @@
 
 ### `profile_setup` -> `first_batch_publish`
 
-- status：`current_blocker`
+- status：`complete`
 - gate：`profile_completion`
-- value：0 / 3 `profileConfigured`
-- release：All three platform profile rows are set/live with profile_link_set_date and traceable proof.
+- value：1 / 1 `profileConfigured`
+- release：All active platform profile rows are set/live with profile_link_set_date and traceable proof.
 - next command：`python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_launch_readiness_gate.py --check`
 - fallback：Use profile proof import templates; do not publish first batch yet.
-- blocker：profile_link_youtube_shorts, profile_link_tiktok, profile_link_instagram_reels
+- blocker：none
 
 ### `first_batch_publish` -> `first_batch_kpi`
 
-- status：`blocked_upstream`
+- status：`current_blocker`
 - gate：`first_batch_publication`
-- value：0 / 3 `firstBatchPublished`
-- release：First batch has three verified HTTPS post URLs written back.
+- value：0 / 1 `firstBatchPublished`
+- release：First batch has verified HTTPS post URLs written back for all active platforms.
 - next command：`python3 tools/promotion_first_batch_completion_gate.py --check`
 - fallback：Publish only after profile gate opens; reject placeholder URLs.
 - blocker：first batch post URLs are not all verified
@@ -46,8 +46,8 @@
 
 - status：`blocked_upstream`
 - gate：`minimum_kpi`
-- value：0 / 3 `firstBatchMinimumKpiRows`
-- release：Each first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.
+- value：0 / 1 `firstBatchMinimumKpiRows`
+- release：Each active first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.
 - next command：`python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check`
 - fallback：Keep KPI rows blank until the source was checked; 0 requires proof.
 - blocker：minimum KPI rows need checked source proof
@@ -60,7 +60,7 @@
 - release：Weekly review is ready and empty-data mode is false before changing route or commerce emphasis.
 - next command：`python3 tools/promotion_decision_input_matrix.py --check && python3 tools/promotion_weekly_decision_evidence_checklist.py --check`
 - fallback：Keep collect_signal active; do not choose winner, paid CTA, Luna, or affiliate emphasis.
-- blocker：empty data mode is still active
+- blocker：weekly review gate is not ready
 
 ### `lead_collection` -> `offer_experiment`
 

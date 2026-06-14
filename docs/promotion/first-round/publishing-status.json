@@ -1,11 +1,9 @@
 {
-  "generatedAt": "2026-06-14",
-  "queueRows": 45,
+  "generatedAt": "2026-06-15",
+  "queueRows": 15,
   "trackerRows": 15,
-  "platformTrackerRows": 45,
+  "platformTrackerRows": 15,
   "platforms": [
-    "instagram_reels",
-    "tiktok",
     "youtube_shorts"
   ],
   "requiredScriptPublishFields": [
@@ -18,47 +16,39 @@
     "post_url"
   ],
   "queueByPlatform": {
-    "instagram_reels": 15,
-    "tiktok": 15,
     "youtube_shorts": 15
   },
   "queueByStatus": {
-    "planned": 45
+    "planned": 15
   },
   "queueByGuardian": {
-    "claire": 9,
-    "dora": 9,
-    "iris": 9,
-    "noah": 9,
-    "vivian": 9
+    "claire": 3,
+    "dora": 3,
+    "iris": 3,
+    "noah": 3,
+    "vivian": 3
   },
   "publishedByPlatform": {},
   "platformStatus": {
-    "instagram_reels": {
-      "planned": 15
-    },
-    "tiktok": {
-      "planned": 15
-    },
     "youtube_shorts": {
       "planned": 15
     }
   },
   "guardianStatus": {
     "claire": {
-      "planned": 9
+      "planned": 3
     },
     "dora": {
-      "planned": 9
+      "planned": 3
     },
     "iris": {
-      "planned": 9
+      "planned": 3
     },
     "noah": {
-      "planned": 9
+      "planned": 3
     },
     "vivian": {
-      "planned": 9
+      "planned": 3
     }
   },
   "publishedScripts": [],

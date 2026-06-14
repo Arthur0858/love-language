@@ -1,20 +1,20 @@
 # LoveTypes 下一批推廣動作建議
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 影片追蹤列數：0
-- 平台首頁待設定列數：3 / 3
-- Profile proof ready / blocked：0 / 3
-- Post proof ready / blocked：0 / 3
-- 空資料安全模式：是
+- 平台首頁待設定列數：0 / 1
+- Profile proof ready / blocked：0 / 1
+- Post proof ready / blocked：0 / 1
+- 空資料安全模式：否
 - 行動選擇規則：When profile links are pending, finish platform profile setup first; then select the first three planned tasks by week and slot and keep Shorts CTA focused on the 15-question quiz.
 - 商品調整 gate：Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.
 
 ## 優先動作
 
-- [high] 先依 launch-proof-control-sheet 完成 YouTube、TikTok、Instagram 的 Profile proof；三筆 ready 後才執行 profile batch add。
-- [high] 平台首頁設定後先更新三個 proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。
-- [blocked] Profile link 完成並回填後，才發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
-- [blocked] 發布被 profile setup gate 鎖住；發布後才回填 post_url、site_clicks、quiz_starts、quiz_completions。
+- [high] 先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。
+- [high] 平台首頁設定後先更新 active proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。
+- [high] 發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
+- [high] 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。
 - [medium] 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
 
 ## Proof Control
@@ -23,11 +23,11 @@
 
 - status：`current_action`
 - command：`python3 tools/promotion_profile_batch_import.py --check`
-- release：profile batch readyRows is 3.
+- release：profile batch readyRows is 1.
 
 ### `write_profile_batch`
 
-- status：`blocked_until_profile_ready`
+- status：`complete`
 - command：`python3 tools/promotion_profile_batch_import.py --add`
 - release：master gate moves from profile_setup to first_batch_publish.
 
@@ -35,13 +35,13 @@
 
 - status：`blocked_until_profile_gate`
 - command：`python3 tools/promotion_post_batch_import.py --check`
-- release：post batch readyRows is 3.
+- release：post batch readyRows is 1.
 
 ### `write_post_batch`
 
 - status：`blocked_until_post_ready`
 - command：`python3 tools/promotion_post_batch_import.py --add`
-- release：first batch has 3 published rows and minimum KPI rows.
+- release：first batch has 1 published rows and minimum KPI rows.
 
 ### `refresh_and_review`
 
@@ -52,134 +52,12 @@
 Proof rows:
 
 - `profile` / `youtube_shorts`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
-- `profile` / `tiktok`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-tiktok.txt`
-- `profile` / `instagram_reels`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-instagram_reels.txt`
 - `post` / `youtube_shorts`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- `post` / `tiktok`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- `post` / `instagram_reels`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
 
 
 ## 平台首頁設定
 
-### YouTube Shorts（`youtube_shorts`）
-
-- 連結位置：Channel description / video description
-- Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-- 狀態：`planned`
-- Bio：
-
-```text
-LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
-```
-
-- 置頂留言 / 首則留言：
-
-```text
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-留言 A/B/C，我們會用守護者路線回覆你。
-```
-
-- 設定後回填值：
-
-  - `status`：set
-  - `profile_link_set_date`：YYYY-MM-DD
-  - `profile_link`：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-  - `notes`：YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。
-
-- 設定後驗證：
-
-  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
-  - 確認 URL 保留 utm_source=youtube、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
-  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
-  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
-
-- 未完成前不要發布：
-
-  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
-  - profile_link_set_date 已填入設定日期。
-  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
-
-- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
-
-### TikTok（`tiktok`）
-
-- 連結位置：Profile website link
-- Profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- 狀態：`planned`
-- Bio：
-
-```text
-五種愛之語測驗｜進入心語庭園，找到你的情感守護者。
-```
-
-- 置頂留言 / 首則留言：
-
-```text
-完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。
-留言 A/B/C，選出最像你的心語。
-```
-
-- 設定後回填值：
-
-  - `status`：set
-  - `profile_link_set_date`：YYYY-MM-DD
-  - `profile_link`：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-  - `notes`：若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。
-
-- 設定後驗證：
-
-  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
-  - 確認 URL 保留 utm_source=tiktok、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
-  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
-  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
-
-- 未完成前不要發布：
-
-  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
-  - profile_link_set_date 已填入設定日期。
-  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
-
-- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
-
-### Instagram Reels（`instagram_reels`）
-
-- 連結位置：Profile link in bio
-- Profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- 狀態：`planned`
-- Bio：
-
-```text
-LoveTypes 心語庭園｜15 題找到你的情感守護者。
-```
-
-- 置頂留言 / 首則留言：
-
-```text
-完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。
-留言你的 A/B/C，讓守護者把心語接住。
-```
-
-- 設定後回填值：
-
-  - `status`：set
-  - `profile_link_set_date`：YYYY-MM-DD
-  - `profile_link`：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-  - `notes`：IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。
-
-- 設定後驗證：
-
-  - 在無痕視窗開啟 profile link，確認會到 /start/ 且沒有 404。
-  - 確認 URL 保留 utm_source=instagram、utm_medium=social_profile、utm_campaign=first_round_quiz_completion。
-  - 確認 Bio 或置頂留言只出現測驗 CTA，沒有 Luna、聯盟書卷或療效承諾。
-  - 設定後先截圖或記錄平台時間，再回填 platform-profile-tracker.csv。
-
-- 未完成前不要發布：
-
-  - platform-profile-tracker.csv 的 status 已改為 set 或 live。
-  - profile_link_set_date 已填入設定日期。
-  - profile link 已手動開啟並確認 UTM 沒被平台截斷。
-
-- 優先回填欄位：`status`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 平台首頁追蹤列已設定，下一步看 profile_clicks、site_clicks、quiz_starts、quiz_completions。
 
 ## 建議發布任務
 

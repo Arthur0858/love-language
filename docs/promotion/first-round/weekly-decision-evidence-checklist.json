@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
     "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
@@ -10,11 +10,11 @@
   },
   "metrics": {
     "rows": 8,
-    "completeRows": 1,
-    "pendingRows": 7,
+    "completeRows": 2,
+    "pendingRows": 6,
     "weeklyReady": 0,
     "decisionReady": 0,
-    "emptyDataMode": 1
+    "emptyDataMode": 0
   },
   "policy": {
     "doNotUseSingleMetricForCommerce": true,
@@ -25,16 +25,16 @@
     {
       "phase": "profile_setup",
       "check_id": "profiles_configured",
-      "expected_value": "3 platform profile links are set/live with traceable evidence.",
+      "expected_value": "All active platform profile links are set/live with traceable evidence.",
       "operator_status": "pending",
-      "evidence_note": "三個平台 profile 尚未全部 set/live。"
+      "evidence_note": "啟用平台 profile 尚未全部 set/live。"
     },
     {
       "phase": "publish_first_batch",
       "check_id": "first_batch_published",
-      "expected_value": "First-batch posts are published on all three platforms.",
+      "expected_value": "First-batch posts are published on all active platforms.",
       "operator_status": "pending",
-      "evidence_note": "首批三平台尚未全部發布。"
+      "evidence_note": "首批啟用平台尚未全部發布。"
     },
     {
       "phase": "publish_first_batch",
@@ -61,8 +61,8 @@
       "phase": "weekly_review",
       "check_id": "not_empty_data_mode",
       "expected_value": "Empty data mode is false before commerce or prioritization decisions.",
-      "operator_status": "pending",
-      "evidence_note": "目前仍是空資料安全模式。"
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
     },
     {
       "phase": "weekly_decision",

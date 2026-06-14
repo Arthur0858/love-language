@@ -140,7 +140,7 @@ def build_report(rows: list[dict[str, str]], week: int) -> dict:
         "發布後先在 posting-queue.csv 回填 status、published_date、post_url。",
         f"同一天或隔天先回填 platform-kpi-tracker.csv 的平台列最小 KPI：{', '.join(MINIMUM_KPI_FIELDS)}。",
         f"一旦測驗結果頁、守護者路線、Luna、收藏物、補給或聯盟書卷有互動，接著回填下游欄位：{', '.join(DOWNSTREAM_KPI_FIELDS)}。",
-        "週回顧時再把三平台合計彙總到 kpi-tracker.csv。",
+        "週回顧時再把 YouTube Shorts 成效彙總到 kpi-tracker.csv。",
         "只有在 publishing-status.md 顯示可做週決策後，才放大守護者或商品承接方向。",
     ]
     return {

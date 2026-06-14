@@ -13,7 +13,7 @@ import promotion_profile_writeback as writeback
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
-PROFILE_PROOF_FILES = (
+PROFILE_PROOF_FILE_CANDIDATES = (
     SOURCE_DIR / "proof-youtube_shorts.txt",
     SOURCE_DIR / "proof-tiktok.txt",
     SOURCE_DIR / "proof-instagram_reels.txt",
@@ -76,6 +76,24 @@ def platform_from_text(text: str) -> str:
     return ""
 
 
+def current_profile_platforms() -> set[str]:
+    _, rows = read_rows(SOURCE_DIR / "platform-profile-tracker.csv")
+    return {
+        (row.get("platform") or "").strip()
+        for row in rows
+        if (row.get("platform") or "").strip()
+    }
+
+
+def current_profile_proof_files() -> tuple[Path, ...]:
+    active_platforms = current_profile_platforms()
+    files: list[Path] = []
+    for proof_file in PROFILE_PROOF_FILE_CANDIDATES:
+        if platform_from_text(proof_file.read_text(encoding="utf-8")) in active_platforms:
+            files.append(proof_file)
+    return tuple(files)
+
+
 def real_proof_text(path: Path) -> str:
     text = path.read_text(encoding="utf-8")
     platform = platform_from_text(text)
@@ -124,6 +142,9 @@ def generic_proof_text() -> str:
 def run_dry_run() -> dict[str, int]:
     watched_files = (SOURCE_DIR / "platform-profile-tracker.csv", SOURCE_DIR / "launch-readiness-gate.json")
     source_before = {path: path.read_text(encoding="utf-8") for path in watched_files}
+    profile_proof_files = current_profile_proof_files()
+    if not profile_proof_files:
+        raise SystemExit("no current profile proof files found")
     with tempfile.TemporaryDirectory() as tmp:
         temp_root = Path(tmp)
         temp_docs = temp_root / "docs" / "promotion" / "first-round"
@@ -133,16 +154,20 @@ def run_dry_run() -> dict[str, int]:
 
         tracker = temp_docs / "platform-profile-tracker.csv"
         fieldnames, rows = read_rows(tracker)
+        for row in rows:
+            row["status"] = "planned"
+            row["profile_link_set_date"] = ""
+        write_rows(tracker, fieldnames, rows)
         initial_gate = build_readiness_state(temp_docs)
         initial_ready = int(bool(initial_gate.get("readiness", {}).get("readyToPublishPosts")))
 
         placeholder_rejected = 0
-        for proof_file in PROFILE_PROOF_FILES:
+        for proof_file in profile_proof_files:
             if expect_rejected(lambda proof_file=proof_file: update_from_text(proof_file.read_text(encoding="utf-8"), rows)):
                 placeholder_rejected += 1
 
         imported = 0
-        for proof_file in PROFILE_PROOF_FILES:
+        for proof_file in profile_proof_files:
             update_from_text(real_proof_text(proof_file), rows)
             imported += 1
         issues = writeback.validate_tracker(fieldnames, rows)
@@ -171,17 +196,18 @@ def run_dry_run() -> dict[str, int]:
 
 def main() -> int:
     metrics = run_dry_run()
+    expected_profiles = len(current_profile_proof_files())
     issues: list[str] = []
-    if metrics["promotion_profile_setup_dry_run_placeholder_rejected"] != 3:
-        issues.append("expected 3 placeholder profile proof imports to be rejected")
-    if metrics["promotion_profile_setup_dry_run_imports"] != 3:
-        issues.append("expected 3 profile proof imports")
+    if metrics["promotion_profile_setup_dry_run_placeholder_rejected"] != expected_profiles:
+        issues.append(f"expected {expected_profiles} placeholder profile proof import(s) to be rejected")
+    if metrics["promotion_profile_setup_dry_run_imports"] != expected_profiles:
+        issues.append(f"expected {expected_profiles} profile proof import(s)")
     if metrics["promotion_profile_setup_dry_run_initial_ready"] != 0:
         issues.append("profile dry run should start with publishing closed")
-    if metrics["promotion_profile_setup_dry_run_configured"] != 3:
-        issues.append("dry run should configure all 3 profiles")
+    if metrics["promotion_profile_setup_dry_run_configured"] != expected_profiles:
+        issues.append(f"dry run should configure all {expected_profiles} profile(s)")
     if metrics["promotion_profile_setup_dry_run_ready_to_publish"] != 1:
-        issues.append("all 3 profile proofs should open ready_to_publish in dry run")
+        issues.append(f"all {expected_profiles} profile proof(s) should open ready_to_publish in dry run")
     if metrics["promotion_profile_setup_dry_run_generic_proof_rejected"] != 1:
         issues.append("generic proof note should be rejected")
     if metrics["promotion_profile_setup_dry_run_wrong_link_rejected"] != 1:

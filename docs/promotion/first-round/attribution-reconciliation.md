@@ -1,8 +1,8 @@
 # LoveTypes Attribution Reconciliation
 
-- 產生日期：2026-06-14
-- Attribution rows：18
-- Profile rows：3
+- 產生日期：2026-06-15
+- Attribution rows：16
+- Profile rows：1
 - Shorts rows：15
 - 已有 KPI row：15
 - 已完整回填 KPI row：0
@@ -26,30 +26,6 @@
 - `test_soft_offer`: 有 Luna 或聯盟點擊，再測柔性商品承接。
 
 ## Rows
-
-### instagram_reels_bio
-
-- type：`profile`
-- platform：`instagram_reels`
-- guardian：`` 
-- angle：
-- KPI status：`profile_link_only`
-- decision：`collect_signal`
-- Contact 對照：`Campaign content / 推廣內容 = instagram_reels_bio`
-- 下一步：Publish or backfill KPI first; do not pick a winning guardian from empty data.
-- URL：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-
-### tiktok_bio
-
-- type：`profile`
-- platform：`tiktok`
-- guardian：`` 
-- angle：
-- KPI status：`profile_link_only`
-- decision：`collect_signal`
-- Contact 對照：`Campaign content / 推廣內容 = tiktok_bio`
-- 下一步：Publish or backfill KPI first; do not pick a winning guardian from empty data.
-- URL：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
 
 ### youtube_shorts_bio
 

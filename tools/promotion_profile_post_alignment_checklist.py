@@ -46,7 +46,7 @@ CHECKS = [
         "check_id": "post_utm_content_preserved",
         "phase": "pre_publish",
         "label": "Post UTM content is preserved",
-        "expected": "All three platform posts for this first-batch script keep the planned utm_content.",
+        "expected": "All active first-batch posts keep the planned utm_content.",
     },
     {
         "check_id": "primary_cta_is_quiz",
@@ -69,7 +69,10 @@ CHECKS = [
 ]
 
 COMMERCE_TERMS = ("gumroad", "amazon", "博客來", "聯盟", "buy", "purchase", "購買", "下單")
-QUIZ_CTA_TERMS = ("15 題測驗", "情感守護者")
+QUIZ_CTA_GROUPS = (
+    ("15 題測驗", "情感守護者"),
+    ("15-question quiz", "emotional guardian"),
+)
 
 
 def today() -> str:
@@ -128,7 +131,8 @@ def row_status(profile: dict[str, str], post: dict, check_id: str, script_utm: s
         ok = first_value(post_params, "utm_content") == script_utm == str(post.get("utmContent", ""))
         return ("complete" if ok else "missing", str(post.get("utmContent", "")) or "missing post utm_content")
     if check_id == "primary_cta_is_quiz":
-        ok = all(term in primary_cta or term in caption for term in QUIZ_CTA_TERMS)
+        combined = f"{primary_cta}\n{caption}".lower()
+        ok = any(all(term.lower() in combined for term in terms) for terms in QUIZ_CTA_GROUPS)
         return ("complete" if ok else "missing", primary_cta or "missing primary CTA")
     if check_id == "no_commerce_first_cta":
         first_block = "\n".join(caption.splitlines()[:4]).lower()
@@ -188,7 +192,7 @@ def build_payload() -> dict:
         },
         "policy": {
             "profileMustBeLiveBeforePublish": True,
-            "firstBatchCta": "完成 15 題測驗，找到你的情感守護者",
+            "firstBatchCta": "Take the 15-question quiz to find your emotional guardian",
             "doNotUseCommerceFirstCta": True,
         },
         "items": rows,
@@ -198,10 +202,10 @@ def build_payload() -> dict:
 def validate(payload: dict) -> list[str]:
     issues: list[str] = []
     metrics = payload["metrics"]
-    if metrics["posts"] != 3:
-        issues.append(f"expected 3 first-batch posts, got {metrics['posts']}")
-    if metrics["platforms"] != 3:
-        issues.append(f"expected 3 platforms, got {metrics['platforms']}")
+    if metrics["posts"] < 1:
+        issues.append("expected at least 1 first-batch post")
+    if metrics["platforms"] < 1:
+        issues.append("expected at least 1 platform")
     if metrics["rows"] != metrics["posts"] * metrics["checksPerPost"]:
         issues.append("alignment checklist row count mismatch")
     if metrics["uniquePostUtmContents"] != 1:
@@ -232,11 +236,11 @@ def render_markdown(payload: dict, issues: list[str]) -> str:
         f"- complete rows：{metrics['completeRows']}",
         f"- pending operator rows：{metrics['pendingRows']}",
         f"- missing rows：{metrics['missingRows']}",
-        "- 用途：發布第一批 Shorts/Reels/TikTok 前，確認平台 profile link 與貼文 CTA/UTM 對齊。",
+        "- 用途：發布第一批 YouTube Shorts 前，確認平台 profile link 與貼文 CTA/UTM 對齊。",
         "",
         "## Rule",
         "",
-        "- 三個平台 profile link 都必須先設為 live/configured，才進入發布。",
+        "- 啟用平台 profile link 必須先設為 live/configured，才進入發布。",
         "- 第一批貼文只推測驗，不把 Luna、聯盟書卷或付費商品放成第一 CTA。",
         "- `utm_content` 必須保留，否則後續 KPI 與守護者路線無法回填。",
         "",

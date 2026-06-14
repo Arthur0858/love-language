@@ -1,6 +1,6 @@
 # LoveTypes Weekly to Lead and Offer Handoff
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - rows：8
 - complete rows：2
 - current blockers：1
@@ -34,7 +34,7 @@
 
 - phase：`weekly_review`
 - status：`blocked_upstream`
-- value：0 / 3
+- value：1 / 3
 - action：Confirm weekly review, week decision gate, and non-empty data mode before route decisions.
 - evidence：weekly review ready=1, weeklyDecision gate=1, emptyDataMode=0.
 - command：`python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check`
@@ -44,7 +44,7 @@
 
 - phase：`weekly_review`
 - status：`blocked_upstream`
-- value：1 / 8
+- value：2 / 8
 - action：Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.
 - evidence：weekly-decision-evidence-checklist completeRows equals rows.
 - command：`python3 tools/promotion_weekly_decision_evidence_checklist.py --check`

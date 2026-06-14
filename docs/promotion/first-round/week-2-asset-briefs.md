@@ -1,9 +1,9 @@
 # LoveTypes Week 2 Asset Briefs
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 製作手卡：3
 - 場景卡：9
-- 平台 caption：9
+- 平台 caption：3
 
 ## 使用方式
 
@@ -46,42 +46,10 @@
 ```text
 你不是要他每分每秒陪你，你只是希望他在的時候真的在。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
 
 留言 A/B/C，你最不能接受哪一種不在場？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-06-22 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
-
-```text
-你不是要他每分每秒陪你，你只是希望他在的時候真的在。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
-
-留言 A/B/C，你最不能接受哪一種不在場？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-06-22 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
-
-```text
-你不是要他每分每秒陪你，你只是希望他在的時候真的在。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_phone
-
-留言 A/B/C，你最不能接受哪一種不在場？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -92,7 +60,7 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 諾雅 · 約定一再被取消，你會怎麼保護自己？
@@ -130,42 +98,10 @@
 ```text
 每一次被延後，都像星海裡少了一盞燈。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
 
 留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-06-24 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
-
-```text
-每一次被延後，都像星海裡少了一盞燈。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
-
-留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-06-24 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
-
-```text
-每一次被延後，都像星海裡少了一盞燈。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_cancel
-
-留言 A/B/C，諾雅會替你留下一盞還沒熄掉的燈。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -176,7 +112,7 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 諾雅 · 你最想被怎樣陪伴？
@@ -214,42 +150,10 @@
 ```text
 有些人要的不是熱鬧，而是一段不被打斷的在場。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
 
 留言你的選項，或寫下你最想被陪伴的 15 分鐘。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-06-26 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
-
-```text
-有些人要的不是熱鬧，而是一段不被打斷的在場。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
-
-留言你的選項，或寫下你最想被陪伴的 15 分鐘。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-06-26 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
-
-```text
-有些人要的不是熱鬧，而是一段不被打斷的在場。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=noah_quiet_time
-
-留言你的選項，或寫下你最想被陪伴的 15 分鐘。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -260,5 +164,5 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。

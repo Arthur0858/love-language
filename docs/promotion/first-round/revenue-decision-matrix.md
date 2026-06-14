@@ -1,9 +1,9 @@
 # LoveTypes 獲利決策矩陣
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 影片追蹤列數：0 / 15
-- 平台首頁追蹤列數：0 / 3
-- 空資料安全模式：是
+- 平台首頁追蹤列數：1 / 1
+- 空資料安全模式：否
 
 ## 判斷規則
 
@@ -17,7 +17,7 @@
 
 - 目前階段：`collect_signal`
 - 建議動作：[low] 先完成平台首頁回填
-- 建議補強：先設定三平台 Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。
+- 建議補強：先設定 YouTube Shorts Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。
 - 目標入口：https://lovetypes.tw/start/
 - Bio/Profile 點擊：0
 - 網站點擊：0

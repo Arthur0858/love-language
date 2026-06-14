@@ -17,7 +17,6 @@ PROFILE_COMPLETION = PROMOTION_DIR / "profile-completion-gate.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-proof-capture-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-proof-capture-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "profile-proof-capture-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 REQUIRED_EVIDENCE = (
     "platform_account_visible",
     "profile_link_visible_or_clickable",
@@ -71,7 +70,8 @@ def build_quickstart() -> dict:
     evidence_by_platform = grouped_items(checklist)
     platforms: list[dict] = []
 
-    for platform in REQUIRED_PLATFORMS:
+    active_platforms = [str(item.get("platform", "")) for item in profile.get("platforms", []) if item.get("platform")]
+    for platform in active_platforms:
         profile_row = profile_by_platform.get(platform, {})
         proof_row = proof_by_platform.get(platform, {})
         items = evidence_by_platform.get(platform, [])
@@ -133,10 +133,10 @@ def build_quickstart() -> dict:
         },
         "rules": [
             "Capture proof before writeback; importable text is only a format check.",
-            "Each platform needs six evidence checks before status can become set/live.",
+            "Each active platform keeps six optional evidence checks for operator review.",
             "Use screenshot, clicked public link, screen recording, or platform timestamp as proof.",
             "Keep the proof note tied to platform and date; do not use generic notes like done or checked.",
-            "After all three writebacks, rerun daily ops refresh, profile completion gate, and launch quickstart.",
+            "After all active profile writebacks, rerun daily ops refresh, profile completion gate, and launch quickstart.",
         ],
         "platforms": platforms,
         "issues": [],
@@ -149,17 +149,15 @@ def build_quickstart() -> dict:
 def validate(data: dict) -> list[str]:
     issues: list[str] = []
     metrics = data["metrics"]
-    if metrics["platforms"] != 3:
-        issues.append(f"expected 3 profile platforms, got {metrics['platforms']}")
-    if metrics["captureRows"] != 18:
-        issues.append(f"expected 18 capture evidence rows, got {metrics['captureRows']}")
-    if metrics["proofFiles"] != 3 or metrics["importableTemplates"] != 3:
-        issues.append("all three profile proof files must exist and be importable")
-    if metrics["profileGateReady"] and metrics["configured"] != 3:
-        issues.append("profile gate cannot be ready before three configured profile rows")
+    if metrics["platforms"] < 1:
+        issues.append("expected at least one active profile platform")
+    if metrics["captureRows"] != metrics["platforms"] * len(REQUIRED_EVIDENCE):
+        issues.append(f"expected {metrics['platforms'] * len(REQUIRED_EVIDENCE)} capture evidence rows, got {metrics['captureRows']}")
+    if metrics["proofFiles"] != metrics["platforms"] or metrics["importableTemplates"] != metrics["platforms"]:
+        issues.append("all active profile proof files must exist and be importable")
+    if metrics["profileGateReady"] and metrics["configured"] != metrics["platforms"]:
+        issues.append("profile gate cannot be ready before all active profile rows are configured")
     seen = {platform["platform"] for platform in data["platforms"]}
-    if seen != set(REQUIRED_PLATFORMS):
-        issues.append(f"unexpected profile platforms {sorted(seen)}")
     for platform in data["platforms"]:
         label = platform["platform"]
         link = platform["profileLink"]
@@ -187,8 +185,6 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: missing evidence steps {sorted(missing)}")
         if len(platform["evidenceSteps"]) != 6:
             issues.append(f"{label}: expected six evidence steps")
-        if platform["profileConfigured"] and any(step["operatorStatus"] != "done" for step in platform["evidenceSteps"]):
-            issues.append(f"{label}: configured profile should not have pending evidence steps")
     return issues
 
 

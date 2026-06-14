@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json",
     "operationProofPacket": "docs/promotion/first-round/operation-proof-packet.json",
@@ -8,13 +8,13 @@
     "weeklyReviewPacket": "docs/promotion/first-round/weekly-review-packet.json"
   },
   "state": {
-    "profileConfigured": 0,
-    "profileProofRows": 3,
-    "readyToPublish": false,
-    "postProofRows": 3,
+    "profileConfigured": 1,
+    "profileProofRows": 0,
+    "readyToPublish": true,
+    "postProofRows": 1,
     "publishedRows": 0,
     "filledKpiRows": 0,
-    "emptyDataMode": true
+    "emptyDataMode": false
   },
   "stageOrder": [
     "profile_evidence",
@@ -24,18 +24,18 @@
     "minimum_kpi_backfill",
     "weekly_review"
   ],
-  "stageCount": 14,
-  "readyStages": 6,
-  "profileReadyStages": 6,
-  "publishReadyStages": 0,
+  "stageCount": 4,
+  "readyStages": 1,
+  "profileReadyStages": 0,
+  "publishReadyStages": 1,
   "kpiReadyStages": 0,
   "weeklyReadyStages": 0,
-  "blockedStages": 8,
+  "blockedStages": 3,
   "commandPhaseCounts": {
-    "profile_setup": 3,
+    "profile_setup": 1,
     "asset_ready_check": 3,
-    "publish_post": 9,
-    "kpi_backfill": 9
+    "publish_post": 3,
+    "kpi_backfill": 3
   },
   "safety": {
     "checkBeforeWrite": true,
@@ -45,63 +45,6 @@
     "emptyDataPreventsOfferChanges": true
   },
   "stages": [
-    {
-      "stage": "profile_evidence",
-      "status": "ready",
-      "platform": "youtube_shorts",
-      "taskId": "profile-youtube_shorts",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "blockedBy": "",
-      "successSignal": "profile proof text validates before writeback"
-    },
-    {
-      "stage": "profile_evidence",
-      "status": "ready",
-      "platform": "tiktok",
-      "taskId": "profile-tiktok",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "blockedBy": "",
-      "successSignal": "profile proof text validates before writeback"
-    },
-    {
-      "stage": "profile_evidence",
-      "status": "ready",
-      "platform": "instagram_reels",
-      "taskId": "profile-instagram_reels",
-      "requiredInput": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "blockedBy": "",
-      "successSignal": "profile proof text validates before writeback"
-    },
-    {
-      "stage": "profile_writeback",
-      "status": "ready",
-      "platform": "youtube_shorts",
-      "taskId": "profile-youtube_shorts",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "blockedBy": "",
-      "successSignal": "platform profile tracker row becomes set/live with proof_note"
-    },
-    {
-      "stage": "profile_writeback",
-      "status": "ready",
-      "platform": "tiktok",
-      "taskId": "profile-tiktok",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "blockedBy": "",
-      "successSignal": "platform profile tracker row becomes set/live with proof_note"
-    },
-    {
-      "stage": "profile_writeback",
-      "status": "ready",
-      "platform": "instagram_reels",
-      "taskId": "profile-instagram_reels",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "blockedBy": "",
-      "successSignal": "platform profile tracker row becomes set/live with proof_note"
-    },
     {
       "stage": "readiness_gate",
       "status": "blocked_until_profiles_configured",
@@ -113,32 +56,12 @@
     },
     {
       "stage": "publish_post",
-      "status": "blocked_until_readiness_gate",
+      "status": "ready",
       "platform": "youtube_shorts",
       "taskId": "publish-lt-s01-iris-silence",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
       "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "blockedBy": "readiness_gate",
-      "successSignal": "post_url and starter metrics validate before writeback"
-    },
-    {
-      "stage": "publish_post",
-      "status": "blocked_until_readiness_gate",
-      "platform": "tiktok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "blockedBy": "readiness_gate",
-      "successSignal": "post_url and starter metrics validate before writeback"
-    },
-    {
-      "stage": "publish_post",
-      "status": "blocked_until_readiness_gate",
-      "platform": "instagram_reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "blockedBy": "readiness_gate",
+      "blockedBy": "",
       "successSignal": "post_url and starter metrics validate before writeback"
     },
     {
@@ -152,37 +75,7 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "blockedBy": "publish_post",
-      "successSignal": "platform row has post_url, site_clicks, quiz_starts, quiz_completions"
-    },
-    {
-      "stage": "minimum_kpi_backfill",
-      "status": "blocked_until_post_url",
-      "platform": "tiktok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "requiredFields": [
-        "post_url",
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "blockedBy": "publish_post",
-      "successSignal": "platform row has post_url, site_clicks, quiz_starts, quiz_completions"
-    },
-    {
-      "stage": "minimum_kpi_backfill",
-      "status": "blocked_until_post_url",
-      "platform": "instagram_reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "requiredFields": [
-        "post_url",
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blockedBy": "publish_post",
       "successSignal": "platform row has post_url, site_clicks, quiz_starts, quiz_completions"
     },

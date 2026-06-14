@@ -20,7 +20,6 @@ LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 PUBLISHING_STATUS = PROMOTION_DIR / "publishing-status.json"
 
 PUBLISH_STATUSES = {"published", "live", "posted"}
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 METRIC_FIELDS = (
     "views",
     "likes",
@@ -153,8 +152,9 @@ def validate() -> tuple[dict[str, int], list[str]]:
 
     if platform_json.get("rowCount") != len(platform_rows):
         issues.append("platform KPI JSON rowCount should match platform KPI CSV rows")
-    if platform_json.get("platforms") != list(PLATFORMS):
-        issues.append("platform KPI JSON platforms should match canonical platform list")
+    active_platforms = sorted({(row.get("platform") or "").strip() for row in queue_rows if row.get("platform")})
+    if sorted(platform_json.get("platforms") or []) != active_platforms:
+        issues.append("platform KPI JSON platforms should match active posting queue platforms")
     if platform_json.get("metricFields") != list(METRIC_FIELDS):
         issues.append("platform KPI JSON metricFields should match canonical metric fields")
     if platform_json.get("rows") != platform_rows:

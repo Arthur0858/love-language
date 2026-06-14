@@ -250,13 +250,13 @@ def build_actions(
                 "id": "set_platform_profile_links",
                 "priority": "high",
                 "type": "distribution",
-                "summary": "先依 launch-proof-control-sheet 完成 YouTube、TikTok、Instagram 的 Profile proof；三筆 ready 後才執行 profile batch add。",
+                "summary": "先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。",
             },
             {
                 "id": "fill_platform_profile_kpis",
                 "priority": "high",
                 "type": "measurement",
-                "summary": "平台首頁設定後先更新三個 proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。",
+                "summary": "平台首頁設定後先更新 active proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。",
             },
             {
                 "id": "publish_first_batch",
@@ -524,8 +524,10 @@ def main() -> int:
             issues.append("expected at least one action")
         if len(plan["selectedTasks"]) < 1:
             issues.append("expected at least one selected task")
-        if plan["dataState"]["proofControlRows"] != 6:
-            issues.append("proof control should expose six profile/post proof rows")
+        proof_rows = plan.get("proofControl", {}).get("rows", [])
+        expected_proof_rows = int((proof_control.get("metrics") or {}).get("rows", 0) or 0)
+        if plan["dataState"]["proofControlRows"] != expected_proof_rows or len(proof_rows) != expected_proof_rows:
+            issues.append("proof control row count should match launch-proof-control-sheet metrics")
         if plan["dataState"]["emptyDataMode"] and plan["dataState"]["profileProofBlocked"] < 1:
             issues.append("empty data mode should expose blocked profile proof rows")
         proof_steps = [step.get("id") for step in plan.get("proofControl", {}).get("steps", [])]

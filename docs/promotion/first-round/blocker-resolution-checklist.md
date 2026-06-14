@@ -1,57 +1,33 @@
 # LoveTypes Blocker Resolution Checklist
 
-- 產生日期：2026-06-14
-- current stage：`profile_setup`
-- rows：14
-- active blockers：14
-- ready now：3
-- empty data mode：1
+- 產生日期：2026-06-15
+- current stage：`first_batch_publish`
+- rows：10
+- active blockers：8
+- ready now：1
+- empty data mode：0
 - issues：0
 
 ## Rule
 
 - 只解除有外部證據的 blocker；不可用預設模板當成已完成。
-- Profile 三平台完成前，不發布第一批貼文。
+- 啟用平台 Profile 完成前，不發布第一批貼文。
 - 公開 URL 與 KPI 來源確認前，不做週決策、商品化或 Luna / 聯盟權重調整。
 
 ## Checklist
 
-- [ ] `profile_link_youtube_shorts`（profile_setup / ready_to_act）
+- [x] `profile_link_youtube_shorts`（profile_setup / complete）
   - scope：`youtube_shorts`
   - action：Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.
   - release：platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.
   - evidence：`https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio`
   - writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- [ ] `profile_link_tiktok`（profile_setup / ready_to_act）
-  - scope：`tiktok`
-  - action：Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.
-  - release：platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.
-  - evidence：`https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio`
-  - writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- [ ] `profile_link_instagram_reels`（profile_setup / ready_to_act）
-  - scope：`instagram_reels`
-  - action：Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.
-  - release：platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.
-  - evidence：`https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio`
-  - writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- [ ] `publish_youtube_shorts_publish-lt-s01-iris-silence`（publish_first_batch / blocked_until_profile_links）
+- [ ] `publish_youtube_shorts_publish-lt-s01-iris-silence`（publish_first_batch / ready_to_act）
   - scope：`youtube_shorts:publish-lt-s01-iris-silence`
   - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
   - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
   - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
   - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-- [ ] `publish_tiktok_publish-lt-s01-iris-silence`（publish_first_batch / blocked_until_profile_links）
-  - scope：`tiktok:publish-lt-s01-iris-silence`
-  - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
-  - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
-  - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
-  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-- [ ] `publish_instagram_reels_publish-lt-s01-iris-silence`（publish_first_batch / blocked_until_profile_links）
-  - scope：`instagram_reels:publish-lt-s01-iris-silence`
-  - action：Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.
-  - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
-  - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
-  - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 - [ ] `public_post_urls_verified`（publish_first_batch / blocked_until_evidence）
   - scope：`first_round`
   - action：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.
@@ -70,10 +46,10 @@
   - release：weekly review 尚未達可決策狀態。
   - evidence：`docs/promotion/first-round/weekly-decision-evidence-checklist.json`
   - writeback：`python3 tools/promotion_daily_ops_refresh.py`
-- [ ] `not_empty_data_mode`（weekly_review / blocked_until_evidence）
+- [x] `not_empty_data_mode`（weekly_review / complete）
   - scope：`first_round`
   - action：Empty data mode is false before commerce or prioritization decisions.
-  - release：目前仍是空資料安全模式。
+  - release：證據已滿足。
   - evidence：`docs/promotion/first-round/weekly-decision-evidence-checklist.json`
   - writeback：`python3 tools/promotion_daily_ops_refresh.py`
 - [ ] `decision_gate_ready`（weekly_decision / blocked_until_evidence）

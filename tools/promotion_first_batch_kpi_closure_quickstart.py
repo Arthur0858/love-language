@@ -20,7 +20,6 @@ MASTER_GATE = PROMOTION_DIR / "master-gate.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "first-batch-kpi-closure-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "first-batch-kpi-closure-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "first-batch-kpi-closure-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 MINIMUM_KPIS = ("site_clicks", "quiz_starts", "quiz_completions")
 
 
@@ -56,8 +55,16 @@ def rows_by_platform(payload: dict) -> dict[str, dict]:
     return {str(row.get("platform", "")): row for row in rows if isinstance(row, dict) and row.get("platform")}
 
 
-def zero_checks_by_platform(payload: dict) -> dict[str, list[dict]]:
-    grouped = {platform: [] for platform in REQUIRED_PLATFORMS}
+def active_platforms(payload: dict) -> tuple[str, ...]:
+    rows = payload.get("rows", [])
+    if not isinstance(rows, list):
+        return ("youtube_shorts",)
+    platforms = tuple(str(row.get("platform", "")) for row in rows if isinstance(row, dict) and row.get("platform"))
+    return platforms or ("youtube_shorts",)
+
+
+def zero_checks_by_platform(payload: dict, platforms: tuple[str, ...]) -> dict[str, list[dict]]:
+    grouped = {platform: [] for platform in platforms}
     items = payload.get("items", [])
     if not isinstance(items, list):
         return grouped
@@ -77,17 +84,18 @@ def zero_checks_by_platform(payload: dict) -> dict[str, list[dict]]:
     return grouped
 
 
-def closure_steps(metrics: dict) -> list[dict[str, str]]:
-    post_urls_ready = metrics["publishedRows"] == len(REQUIRED_PLATFORMS)
-    kpi_ready = metrics["readyForKpi"] == len(REQUIRED_PLATFORMS)
-    minimum_kpi_ready = metrics["minimumKpiRows"] == len(REQUIRED_PLATFORMS)
+def closure_steps(metrics: dict, platforms: tuple[str, ...]) -> list[dict[str, str]]:
+    active_count = len(platforms)
+    post_urls_ready = metrics["publishedRows"] == active_count
+    kpi_ready = metrics["readyForKpi"] == active_count
+    minimum_kpi_ready = metrics["minimumKpiRows"] == active_count
     weekly_ready = bool(metrics["weeklyReady"])
     return [
         {
             "id": "post_url_writeback_complete",
             "status": "complete" if post_urls_ready else "current_blocker",
             "command": "python3 tools/promotion_first_batch_publish_closure_quickstart.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check",
-            "release": "All three first-batch posts have real public HTTPS post_url values.",
+            "release": "All active first-batch posts have real public HTTPS post_url values.",
             "stop": "Do not continue with KPI proof while post_url fields are blank, scheduled-only, private, or placeholders.",
         },
         {
@@ -134,9 +142,10 @@ def build_closure() -> dict:
     kpi_rows = rows_by_platform(kpi_quickstart)
     action_rows = rows_by_platform(kpi_action)
     post_ops_rows = rows_by_platform(post_ops)
-    zero_checks = zero_checks_by_platform(zero_evidence)
+    platforms = active_platforms(kpi_quickstart)
+    zero_checks = zero_checks_by_platform(zero_evidence, platforms)
     rows: list[dict] = []
-    for platform in REQUIRED_PLATFORMS:
+    for platform in platforms:
         kpi = kpi_rows.get(platform, {})
         action = action_rows.get(platform, {})
         ops = post_ops_rows.get(platform, {})
@@ -178,8 +187,8 @@ def build_closure() -> dict:
         "masterProfileConfigured": metric(master, "profileConfigured"),
         "handoffReadyForWeekly": metric(handoff, "readyForWeeklyReview"),
     }
-    steps = closure_steps(metrics)
-    issues = validate(rows, metrics, steps)
+    steps = closure_steps(metrics, platforms)
+    issues = validate(rows, metrics, steps, platforms)
     metrics["issues"] = len(issues)
     return {
         "generatedAt": today(),
@@ -207,22 +216,23 @@ def build_closure() -> dict:
     }
 
 
-def validate(rows: list[dict], metrics: dict, steps: list[dict]) -> list[str]:
+def validate(rows: list[dict], metrics: dict, steps: list[dict], platforms: tuple[str, ...]) -> list[str]:
     issues: list[str] = []
-    if metrics["rows"] != len(REQUIRED_PLATFORMS):
-        issues.append(f"expected {len(REQUIRED_PLATFORMS)} first-batch KPI closure rows, got {metrics['rows']}")
-    platforms = {str(row.get("platform", "")) for row in rows}
-    if platforms != set(REQUIRED_PLATFORMS):
-        issues.append("first-batch KPI closure rows must cover YouTube Shorts, TikTok, and Instagram Reels")
+    active_count = len(platforms)
+    if metrics["rows"] != active_count:
+        issues.append(f"expected {active_count} first-batch KPI closure rows, got {metrics['rows']}")
+    row_platforms = {str(row.get("platform", "")) for row in rows}
+    if row_platforms != set(platforms):
+        issues.append("first-batch KPI closure rows must cover all active platforms")
     if metrics["publishedRows"] == 0 and metrics["readyForKpi"] != 0:
         issues.append("readyForKpi must stay zero before public post URLs exist")
     if metrics["publishedRows"] == 0 and metrics["zeroSourceProofCompleteRows"] != 0:
         issues.append("zero source proof cannot be complete before public posts exist")
-    if metrics["zeroPendingRows"] + metrics["zeroNeedsSourceProofRows"] + metrics["zeroSourceProofCompleteRows"] + metrics["zeroSourceProofMissingRows"] != len(REQUIRED_PLATFORMS) * len(MINIMUM_KPIS):
+    if metrics["zeroPendingRows"] + metrics["zeroNeedsSourceProofRows"] + metrics["zeroSourceProofCompleteRows"] + metrics["zeroSourceProofMissingRows"] != active_count * len(MINIMUM_KPIS):
         issues.append("zero KPI evidence rows must partition into pending, needs-source, complete, or missing")
     if metrics["minimumKpiRows"] == 0 and metrics["weeklyReady"]:
         issues.append("weeklyReady cannot be true before minimum KPI rows exist")
-    if metrics["completionReady"] and metrics["minimumKpiRows"] != len(REQUIRED_PLATFORMS):
+    if metrics["completionReady"] and metrics["minimumKpiRows"] != active_count:
         issues.append("completionReady cannot be true until all first-batch KPI rows are complete")
     if not metrics["emptyData"] and not metrics["weeklyReady"]:
         issues.append("emptyData must stay true until weekly review is ready")

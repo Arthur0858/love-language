@@ -1,15 +1,15 @@
 # LoveTypes 第一輪 Week 4 發布包
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 任務數：3
-- 主 CTA：完成 15 題測驗，找到你的情感守護者
+- 主 CTA：Take the 15-question quiz to find your emotional guardian
 
 ## 發布規則
 
-- 每支 Shorts 只放一個主 CTA：完成 15 題測驗。
-- 說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。
-- 不把守護者結果描述成診斷、療效、保證修復或購買要求。
-- 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。
+- Each Short keeps one primary CTA: take the 15-question quiz.
+- Use trackedUrl in the description; if the platform limits long links, keep at least https://lovetypes.tw/start/.
+- Do not frame guardian results as diagnosis, therapy, guaranteed repair, or required purchase.
+- After publishing, first backfill post_url, site_clicks, quiz_starts, and quiz_completions; review route, Luna, keepsake, lead, affiliate, and contact fields only after real signals exist.
 
 ## 1. 你不是愛計較，你只是太久沒人主動幫你
 
@@ -24,10 +24,10 @@
 ```text
 如果每一次都是你收拾，那不是成熟，是失衡。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_tired
 
 留言 A/B/C，你最希望有人替你分擔哪一件事？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -81,10 +81,10 @@
 ```text
 對克萊兒來說，真正的承諾會變成你不用一個人完成的事。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_promises
 
 留言 A/B/C，哪一種只說不做最讓你累？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -139,10 +139,10 @@
 ```text
 你不是不需要被照顧，你只是太習慣先照顧別人。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=claire_ask_help
 
 留言 A/B/C，或寫下一件你其實很想被幫忙的事。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏

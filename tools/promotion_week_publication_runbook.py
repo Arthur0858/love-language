@@ -16,7 +16,8 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 POSTING_QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_WEEK = 1
-PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORM_ORDER = ("youtube_shorts",)
+QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 POST_URL_PLACEHOLDERS = {
     "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
     "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
@@ -156,7 +157,7 @@ def build_runbook(week: int) -> dict:
                 "launch readiness ready_to_publish=1。",
                 "profile link 已完成 set/live，且平台個人頁只導向測驗。",
                 "影片素材已完成 9:16、字幕、封面或首幀 QA。",
-                "Caption 保留單一 CTA：完成 15 題測驗。",
+                "Caption 保留單一 CTA：take the 15-question quiz。",
                 "Tracked URL 指向 /start/ 且 UTM content 與任務一致。",
                 "不加入 Luna、聯盟書卷或付費商品作為第一 CTA。",
             ],
@@ -167,7 +168,11 @@ def build_runbook(week: int) -> dict:
                 "週回顧前重新跑 publishing status、weekly summary、week decision gate。",
             ],
         })
-    platform_distribution = {platform: 0 for platform in PLATFORM_ORDER}
+    active_platforms = tuple(platform for platform in PLATFORM_ORDER if any(task["platform"] == platform for task in tasks))
+    active_platforms = active_platforms + tuple(
+        sorted({str(task["platform"]) for task in tasks if task["platform"] not in active_platforms})
+    )
+    platform_distribution = {platform: 0 for platform in active_platforms}
     for task in tasks:
         if task["platform"] in platform_distribution:
             platform_distribution[task["platform"]] += 1
@@ -198,10 +203,11 @@ def build_runbook(week: int) -> dict:
 def validate_runbook(runbook: dict) -> list[str]:
     issues: list[str] = []
     tasks = runbook.get("tasks", [])
-    expected_task_count = runbook.get("scriptCount", 0) * len(PLATFORM_ORDER)
+    active_platforms = tuple(runbook.get("platformDistribution", {}).keys())
+    expected_task_count = runbook.get("scriptCount", 0) * len(active_platforms)
     if runbook.get("taskCount") != expected_task_count:
         issues.append(f"expected {expected_task_count} platform tasks")
-    if runbook.get("platformDistribution") != {platform: runbook.get("scriptCount", 0) for platform in PLATFORM_ORDER}:
+    if runbook.get("platformDistribution") != {platform: runbook.get("scriptCount", 0) for platform in active_platforms}:
         issues.append("platform distribution should be balanced across the week")
     if set(runbook.get("minimumKpiFields", [])) != set(MINIMUM_KPI_FIELDS):
         issues.append("minimum KPI fields do not match policy")
@@ -209,7 +215,7 @@ def validate_runbook(runbook: dict) -> list[str]:
         label = f"{task.get('platform', '<platform>')}/{task.get('taskId', '<task>')}"
         platform = str(task.get("platform", ""))
         placeholder = str(task.get("postUrlPlaceholder", ""))
-        if platform not in PLATFORM_ORDER:
+        if platform not in active_platforms:
             issues.append(f"{label}: unexpected platform")
             continue
         if placeholder != post_url_placeholder(platform):
@@ -228,7 +234,7 @@ def validate_runbook(runbook: dict) -> list[str]:
             issues.append(f"{label}: KPI command should include minimum KPI fields")
         if not valid_tracked_url(str(task.get("trackedUrl", "")), str(task.get("utmContent", ""))):
             issues.append(f"{label}: tracked URL should point to /start/ with matching first-round UTM")
-        if "完成 15 題測驗" not in str(task.get("caption", "")):
+        if not any(marker in str(task.get("caption", "")) for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: caption missing quiz CTA")
         for forbidden in FORBIDDEN_COPY:
             if forbidden in str(task.get("caption", "")):
@@ -259,7 +265,7 @@ def render_markdown(runbook: dict, issues: list[str]) -> str:
         "",
         "## Rules",
         "",
-        "- 先完成三平台 profile gate，再發布 Week 任務。",
+        "- 先完成 YouTube profile gate，再發布 Week 任務。",
         "- 每則貼文只導向 15 題測驗，不把 caption 變成導購。",
         "- `<REAL_...>` 必須替換成公開平台上的真實 https post URL；沒有真實 URL 時，匯入檢查應拒絕。",
         "- 0 KPI 只能在平台或網站來源檢查後回填，不用空資料做商品判斷。",

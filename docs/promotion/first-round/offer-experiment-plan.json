@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
     "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
@@ -413,8 +413,7 @@
   "readyExperiments": 0,
   "holdExperiments": 20,
   "blockers": [
-    "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
-    "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+    "尚未達週決策門檻：發布狀態或 KPI 回填不足。"
   ],
   "thresholds": [
     {

@@ -12,7 +12,8 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 KIT_PATH = ROOT / "promotion-kit.json"
 DEFAULT_WEEK = 1
 DEFAULT_WEEKS = [1, 2, 3, 4, 5]
-HASHTAGS = ["#五種愛之語測驗", "#情感守護者", "#心語庭園", "#錯頻修復", "#LoveTypes"]
+HASHTAGS = ["#LoveLanguages", "#RelationshipQuiz", "#EmotionalGuardian", "#HeartLanguage", "#LoveTypes"]
+PRIMARY_CTA = "Take the 15-question quiz to find your emotional guardian"
 KPI_FIELDS = [
     "week",
     "slot",
@@ -73,10 +74,12 @@ def select_week_tasks(tasks: list[dict], week: int) -> list[dict]:
 
 
 def caption_for(task: dict) -> str:
+    if str(task.get("caption", "")).strip():
+        return str(task.get("caption", "")).strip()
     lines = [
         str(task.get("hook", "")).strip(),
         "",
-        f"完成 15 題測驗，找到你的情感守護者：{task.get('trackedUrl', '')}",
+        f"{PRIMARY_CTA}: {task.get('trackedUrl', '')}",
         "",
         str(task.get("commentCta", "")).strip(),
         " ".join(HASHTAGS),
@@ -137,12 +140,12 @@ def build_pack(tasks: list[dict], week: int) -> dict:
         "campaign": "first_round_quiz_completion",
         "week": week,
         "taskCount": len(selected),
-        "primaryCta": "完成 15 題測驗，找到你的情感守護者",
+        "primaryCta": PRIMARY_CTA,
         "publishingRules": [
-            "每支 Shorts 只放一個主 CTA：完成 15 題測驗。",
-            "說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。",
-            "不把守護者結果描述成診斷、療效、保證修復或購買要求。",
-            "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。",
+            "Each Short keeps one primary CTA: take the 15-question quiz.",
+            "Use trackedUrl in the description; if the platform limits long links, keep at least https://lovetypes.tw/start/.",
+            "Do not frame guardian results as diagnosis, therapy, guaranteed repair, or required purchase.",
+            "After publishing, first backfill post_url, site_clicks, quiz_starts, and quiz_completions; review route, Luna, keepsake, lead, affiliate, and contact fields only after real signals exist.",
         ],
         "tasks": [task_payload(task) for task in selected],
     }

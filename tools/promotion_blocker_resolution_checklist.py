@@ -148,7 +148,9 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
     lead = read_json(LEAD_DEMAND_PATH)
     offer = read_json(OFFER_EXPERIMENT_PATH)
 
-    profile_configured = int(master.get("metrics", {}).get("profileConfigured", 0) or 0) >= int(master.get("metrics", {}).get("expectedProfiles", 3) or 3)
+    configured_profiles = sum(1 for item in launch.get("platformChecklist", []) if item.get("configured"))
+    expected_profiles = max(1, len(launch.get("platformChecklist", [])))
+    profile_configured = configured_profiles >= expected_profiles
     rows = []
     rows.extend(profile_rows(launch))
     rows.extend(publish_rows(launch, profile_configured))
@@ -205,7 +207,7 @@ def render_markdown(rows: list[dict[str, str]], metrics: dict[str, object], issu
         "## Rule",
         "",
         "- 只解除有外部證據的 blocker；不可用預設模板當成已完成。",
-        "- Profile 三平台完成前，不發布第一批貼文。",
+        "- 啟用平台 Profile 完成前，不發布第一批貼文。",
         "- 公開 URL 與 KPI 來源確認前，不做週決策、商品化或 Luna / 聯盟權重調整。",
         "",
         "## Checklist",

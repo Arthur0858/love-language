@@ -19,13 +19,11 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 TRACKER_PATH = PROMOTION_DIR / "platform-profile-tracker.csv"
 PLAYBOOK_MD = PROMOTION_DIR / "profile-writeback-playbook.md"
 PLAYBOOK_JSON = PROMOTION_DIR / "profile-writeback-playbook.json"
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORMS = ("youtube_shorts",)
 STATUS_VALUES = ("planned", "set", "live", "paused", "blocked")
 CONFIGURED_STATUSES = ("set", "live")
 PROFILE_SOURCES = {
     "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
 }
 METRIC_FIELDS = (
     "profile_clicks",

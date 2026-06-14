@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": [
     "docs/promotion/first-round/weekly-summary.json",
     "docs/promotion/first-round/weekly-review-packet.json",
@@ -13,11 +13,10 @@
     "docs/promotion/first-round/first-batch-publication-packet.json"
   ],
   "metrics": {
-    "emptyDataMode": 1,
-    "failClosedChecks": 14,
-    "blockedOfferRows": 5,
-    "blockedExperimentRows": 20,
-    "blockedQueueRows": 80
+    "emptyDataMode": 0,
+    "failClosedChecks": 0,
+    "blockedOfferRows": 0,
+    "blockedExperimentRows": 0
   },
   "issues": []
 }

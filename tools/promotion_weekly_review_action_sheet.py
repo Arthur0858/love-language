@@ -59,7 +59,7 @@ def build_rows(
             "step_id": "first-batch-public-url",
             "phase": "publish",
             "status": "blocked" if int(first_metrics.get("ready", 0) or 0) == 0 else "ready_to_publish",
-            "operator_action": "Publish or verify the first three platform posts and record the real public post URLs.",
+            "operator_action": "Publish or verify the first YouTube Shorts post and record the real public post URL.",
             "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
             "evidence_required": "Three real platform post_url values, not placeholders.",
             "decision_boundary": "No public URL means no weekly decision.",

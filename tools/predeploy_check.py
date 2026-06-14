@@ -125,6 +125,7 @@ PYTHON_TOOLS = [
     "tools/promotion_now_asset_queue.py",
     "tools/promotion_now_asset_briefs.py",
     "tools/promotion_week_asset_briefs.py",
+    "tools/promotion_render_bridge.py",
     "tools/promotion_launch_command_center.py",
     "tools/promotion_ops_closure_audit.py",
     "tools/promotion_operation_proof_packet.py",

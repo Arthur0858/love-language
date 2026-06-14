@@ -15,7 +15,6 @@ PUBLISHING_STATUS = PROMOTION_DIR / "publishing-status.json"
 KPI_CONSISTENCY = PROMOTION_DIR / "attribution-reconciliation.json"
 MD_OUTPUT = PROMOTION_DIR / "first-batch-completion-gate.md"
 JSON_OUTPUT = PROMOTION_DIR / "first-batch-completion-gate.json"
-EXPECTED_PLATFORM_COUNT = 3
 MINIMUM_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
 
 
@@ -49,6 +48,7 @@ def build_gate() -> dict:
     attribution = load_json(KPI_CONSISTENCY)
 
     rows = first_batch.get("rows", []) if isinstance(first_batch.get("rows"), list) else []
+    expected_platform_count = max(1, int(first_batch.get("rowCount") or len(rows) or 0))
     published_rows = int(first_batch.get("publishedRows") or 0)
     minimum_kpi_rows = int(first_batch.get("minimumKpiRows") or 0)
     evidence_rows = first_batch_evidence_rows(evidence)
@@ -58,17 +58,17 @@ def build_gate() -> dict:
     publishing_ready = bool(publishing.get("readyForWeeklyDecision"))
     attribution_filled_rows = int(attribution.get("metrics", {}).get("filledKpiRows") or 0) if isinstance(attribution.get("metrics"), dict) else 0
 
-    first_batch_published = published_rows == EXPECTED_PLATFORM_COUNT
+    first_batch_published = published_rows == expected_platform_count
     evidence_complete = traceable_post_evidence >= published_rows and generic_post_evidence == 0 and missing_post_evidence == 0
-    minimum_kpi_complete = minimum_kpi_rows == EXPECTED_PLATFORM_COUNT
-    row_shape_complete = len(rows) == EXPECTED_PLATFORM_COUNT and all(row_has_minimum_kpi(row) for row in rows)
+    minimum_kpi_complete = minimum_kpi_rows == expected_platform_count
+    row_shape_complete = len(rows) == expected_platform_count and all(row_has_minimum_kpi(row) for row in rows)
     ready_for_weekly_review = first_batch_published and evidence_complete and minimum_kpi_complete and publishing_ready
 
     blockers: list[dict[str, str]] = []
     if not first_batch_published:
         blockers.append({
             "id": "first_batch_not_published",
-            "message": f"published rows {published_rows}/{EXPECTED_PLATFORM_COUNT}; publish each platform post and write back post_url.",
+            "message": f"published rows {published_rows}/{expected_platform_count}; publish each platform post and write back post_url.",
             "release": "All first-batch rows are marked published/live/posted with real post_url values.",
         })
     if not evidence_complete:
@@ -80,7 +80,7 @@ def build_gate() -> dict:
     if not minimum_kpi_complete:
         blockers.append({
             "id": "minimum_kpi_not_backfilled",
-            "message": f"minimum KPI rows {minimum_kpi_rows}/{EXPECTED_PLATFORM_COUNT}; fill or verified-zero site_clicks, quiz_starts, quiz_completions.",
+            "message": f"minimum KPI rows {minimum_kpi_rows}/{expected_platform_count}; fill or verified-zero site_clicks, quiz_starts, quiz_completions.",
             "release": "Every first-batch platform row has checked minimum KPI values.",
         })
     if first_batch_published and not publishing_ready:
@@ -91,11 +91,11 @@ def build_gate() -> dict:
         })
 
     issues: list[str] = []
-    if len(rows) != EXPECTED_PLATFORM_COUNT:
-        issues.append(f"expected {EXPECTED_PLATFORM_COUNT} first-batch rows, got {len(rows)}")
-    if published_rows > EXPECTED_PLATFORM_COUNT:
+    if len(rows) != expected_platform_count:
+        issues.append(f"expected {expected_platform_count} first-batch rows, got {len(rows)}")
+    if published_rows > expected_platform_count:
         issues.append("publishedRows cannot exceed expected platform count")
-    if minimum_kpi_rows > EXPECTED_PLATFORM_COUNT:
+    if minimum_kpi_rows > expected_platform_count:
         issues.append("minimumKpiRows cannot exceed expected platform count")
     if traceable_post_evidence > published_rows and published_rows:
         issues.append("traceable post evidence should not exceed published first-batch rows")
@@ -114,6 +114,7 @@ def build_gate() -> dict:
         },
         "metrics": {
             "rows": len(rows),
+            "expectedRows": expected_platform_count,
             "publishedRows": published_rows,
             "minimumKpiRows": minimum_kpi_rows,
             "traceablePostEvidence": traceable_post_evidence,
@@ -149,8 +150,8 @@ def render_markdown(gate: dict) -> str:
         "# LoveTypes First Batch Completion Gate",
         "",
         f"- 產生日期：{gate['generatedAt']}",
-        f"- first batch published：{metrics['publishedRows']} / {EXPECTED_PLATFORM_COUNT}",
-        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {EXPECTED_PLATFORM_COUNT}",
+        f"- first batch published：{metrics['publishedRows']} / {metrics['expectedRows']}",
+        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {metrics['expectedRows']}",
         f"- traceable post evidence：{metrics['traceablePostEvidence']} / {metrics['publishedRows']}",
         f"- generic / missing evidence：{metrics['genericPostEvidence']} / {metrics['missingPostEvidence']}",
         f"- ready for weekly review：{int(state['readyForWeeklyReview'])}",

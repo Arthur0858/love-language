@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
     "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
@@ -20,55 +20,55 @@
       "blocked_action": "Change offer order, paid CTA, Luna emphasis, affiliate emphasis, or winning guardian.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "pending",
-      "notes": "matrix_stage=; empty_data=1; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
     },
     {
       "decision_id": "scale_content",
       "status": "blocked",
       "required_signal": "quiz_completions",
       "current_value": "0",
-      "required_value": "At least the configured scale-content quiz completion threshold and acceptable completion rate. Current threshold: 10 quiz completions. Empty-data mode forces this decision closed.",
+      "required_value": "At least the configured scale-content quiz completion threshold and acceptable completion rate. Current threshold: 10 quiz completions.",
       "allowed_action": "Publish more variants for the strongest guardian or pain point while keeping quiz CTA.",
       "blocked_action": "Treat content interest as proof of purchase intent.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=1; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
     },
     {
       "decision_id": "deepen_identity_asset",
       "status": "blocked",
       "required_signal": "identityRouteInterest",
       "current_value": "0",
-      "required_value": "Any guardian result, route, keepsake, or resource interest after weekly gate is ready. Empty-data mode forces this decision closed.",
+      "required_value": "Any guardian result, route, keepsake, or resource interest after weekly gate is ready.",
       "allowed_action": "Improve free keepsakes, story cards, share images, and result-route assets.",
       "blocked_action": "Move the primary CTA directly to paid products.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=1; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
     },
     {
       "decision_id": "build_owned_lead_asset",
       "status": "blocked",
       "required_signal": "leadIntent",
       "current_value": "0",
-      "required_value": "Any supply lead, contact request, or explicit downloadable asset request. Empty-data mode forces this decision closed.",
+      "required_value": "Any supply lead, contact request, or explicit downloadable asset request.",
       "allowed_action": "Build one low-risk email/download asset for the signaled guardian or route.",
       "blocked_action": "Build a paid product before repeated lead evidence exists.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=1; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
     },
     {
       "decision_id": "test_soft_offer",
       "status": "blocked",
       "required_signal": "paidRevenueIntent",
       "current_value": "0",
-      "required_value": "Any Luna pack, affiliate book, or other revenue-route click after result-route context. Empty-data mode forces this decision closed.",
+      "required_value": "Any Luna pack, affiliate book, or other revenue-route click after result-route context.",
       "allowed_action": "Test a soft result-route offer; keep Shorts and profile CTAs focused on the quiz.",
       "blocked_action": "Use direct sales language in first-touch Shorts or profile bio.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=1; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
     }
   ],
   "issues": []

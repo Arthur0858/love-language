@@ -18,12 +18,7 @@ MASTER_GATE_PATH = PROMOTION_DIR / "master-gate.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-setup-runbook.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-setup-runbook.json"
 DEFAULT_CLIPBOARD_OUTPUT = PROMOTION_DIR / "profile-setup-clipboard.txt"
-PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
-EXPECTED_SOURCES = {
-    "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
-}
+DEFAULT_PLATFORM_ORDER = ("youtube_shorts",)
 CONFIGURED_STATUSES = {"set", "live"}
 FORBIDDEN_CLAIMS = ("診斷", "療效", "保證修復", "必須購買")
 
@@ -43,12 +38,22 @@ def by_id(items: list[dict], key: str) -> dict[str, dict]:
     return {str(item.get(key, "")): item for item in items}
 
 
-def validate_profile_url(platform: str, value: str) -> list[str]:
+def platform_order(setup_items: dict[str, dict]) -> tuple[str, ...]:
+    ordered = tuple(platform for platform in DEFAULT_PLATFORM_ORDER if platform in setup_items)
+    return ordered + tuple(platform for platform in setup_items if platform not in ordered)
+
+
+def expected_source(platform: str, setup_item: dict) -> str:
+    query = parse_qs(urlparse(str(setup_item.get("profileLink", ""))).query)
+    return query.get("utm_source", [""])[0]
+
+
+def validate_profile_url(platform: str, value: str, setup_item: dict) -> list[str]:
     issues: list[str] = []
     parsed = urlparse(value)
     query = parse_qs(parsed.query)
     expected = {
-        "utm_source": EXPECTED_SOURCES.get(platform, ""),
+        "utm_source": expected_source(platform, setup_item),
         "utm_medium": "social_profile",
         "utm_campaign": "first_round_quiz_completion",
         "utm_content": f"{platform}_bio",
@@ -78,7 +83,7 @@ def build_runbook() -> dict:
     master_gate = load_json(MASTER_GATE_PATH)
 
     platforms: list[dict] = []
-    for platform in PLATFORM_ORDER:
+    for platform in platform_order(setup_items):
         setup_item = setup_items.get(platform, {})
         tracker_item = tracker_items.get(platform, {})
         profile_link = tracker_item.get("profile_link") or setup_item.get("profileLink", "")
@@ -116,7 +121,7 @@ def build_runbook() -> dict:
             "verificationSteps": [
                 "貼上 profile link 後，從平台畫面點擊或複製連結。",
                 "確認瀏覽器抵達 https://lovetypes.tw/start/，且沒有 404。",
-                f"確認 UTM 保留 utm_source={EXPECTED_SOURCES[platform]}、utm_medium=social_profile、utm_campaign=first_round_quiz_completion、utm_content={platform}_bio。",
+                f"確認 UTM 保留 utm_source={expected_source(platform, setup_item)}、utm_medium=social_profile、utm_campaign=first_round_quiz_completion、utm_content={platform}_bio。",
                 "確認 Bio / 置頂留言只有測驗 CTA，沒有 Luna、聯盟書卷、診斷或療效承諾。",
                 "保存截圖或公開點擊紀錄，proof note 必須含 screenshot / public URL / clicked / verified 等可追溯詞。",
             ],
@@ -129,7 +134,7 @@ def build_runbook() -> dict:
                 "python3 tools/promotion_profile_completion_gate.py --check",
                 "python3 tools/promotion_master_gate.py --check",
             ],
-            "urlIssues": validate_profile_url(platform, profile_link),
+            "urlIssues": validate_profile_url(platform, profile_link, setup_item),
         })
 
     configured_count = sum(1 for item in platforms if item["configured"])
@@ -149,7 +154,7 @@ def build_runbook() -> dict:
         "readyToPublish": bool(completion_gate.get("readyToPublish")),
         "platforms": platforms,
         "rules": {
-            "publishGate": "三個 profile link 都完成 set/live 並通過 gate 後，才發布第一批 Shorts/Reels。",
+            "publishGate": "目前活動平台的 profile link 都完成 set/live 並通過 gate 後，才發布第一批 Shorts。",
             "singleCta": "平台個人頁先只承接 15 題測驗，不直接導購。",
             "noFakeProof": "沒有外部平台截圖、公開點擊或可追溯紀錄時，不回填 set/live。",
             "forbiddenClaims": list(FORBIDDEN_CLAIMS),
@@ -159,15 +164,16 @@ def build_runbook() -> dict:
 
 def validate_runbook(runbook: dict) -> list[str]:
     issues: list[str] = []
-    if runbook.get("platformCount") != len(PLATFORM_ORDER):
-        issues.append(f"expected {len(PLATFORM_ORDER)} platforms")
-    if runbook.get("clipboardBlocks") != len(PLATFORM_ORDER):
-        issues.append(f"expected {len(PLATFORM_ORDER)} clipboard blocks")
+    active_platforms = tuple(item.get("platform", "") for item in runbook.get("platforms", []))
+    if runbook.get("platformCount") != len(active_platforms):
+        issues.append(f"expected {len(active_platforms)} platforms")
+    if runbook.get("clipboardBlocks") != len(active_platforms):
+        issues.append(f"expected {len(active_platforms)} clipboard blocks")
     seen: set[str] = set()
     for item in runbook.get("platforms", []):
         platform = item.get("platform", "")
         label = platform or "<platform>"
-        if platform not in PLATFORM_ORDER:
+        if platform not in active_platforms:
             issues.append(f"{label}: unexpected platform")
             continue
         if platform in seen:
@@ -178,7 +184,7 @@ def validate_runbook(runbook: dict) -> list[str]:
         if not item.get("profileLinkLabel"):
             issues.append(f"{label}: missing profile link location")
         text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
-        if "完成 15 題測驗" not in text:
+        if "完成 15 題測驗" not in text and "15-question quiz" not in text:
             issues.append(f"{label}: missing quiz CTA")
         for forbidden in FORBIDDEN_CLAIMS:
             if forbidden in text:
@@ -204,7 +210,7 @@ def validate_runbook(runbook: dict) -> list[str]:
         ):
             if expected not in commands:
                 issues.append(f"{label}: missing post-writeback command {expected}")
-    missing = set(PLATFORM_ORDER) - seen
+    missing = set(active_platforms) - seen
     if missing:
         issues.append("missing platforms: " + ", ".join(sorted(missing)))
     return issues

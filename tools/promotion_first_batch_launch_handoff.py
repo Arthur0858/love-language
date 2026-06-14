@@ -99,12 +99,12 @@ def build() -> dict:
         "postBatchReady": sum(int(r["postBatchReady"]) for r in rows),
         "postProofBlocked": int(proof_metrics.get("postBlocked", 0) or 0),
     }
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 launch handoff rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least one launch handoff row")
     if metrics["assetReady"] != metrics["rows"]:
         issues.append("all first-batch assets must be prepared")
     if metrics["publishReady"] and metrics["profileGateReady"] != metrics["rows"]:
-        issues.append("publish-ready rows require all three profile proofs")
+        issues.append("publish-ready rows require all active profile proofs")
     if metrics["postBatchReady"] and metrics["postProofBlocked"]:
         issues.append("post batch cannot be ready while proof control is blocked")
     for row in rows:

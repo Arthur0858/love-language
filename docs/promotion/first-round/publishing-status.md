@@ -1,24 +1,22 @@
 # LoveTypes 第一輪發布狀態對帳
 
-- 產生日期：2026-06-14
-- 發文佇列列數：45
+- 產生日期：2026-06-15
+- 發文佇列列數：15
 - 腳本級 KPI 追蹤列數：15
-- 平台級 KPI 追蹤列數：45
+- 平台級 KPI 追蹤列數：15
 - 是否可做週決策：尚不可
 
 ## 平台進度
 
-- instagram_reels: planned: 15
-- tiktok: planned: 15
 - youtube_shorts: planned: 15
 
 ## 守護者進度
 
-- claire: planned: 9
-- dora: planned: 9
-- iris: planned: 9
-- noah: planned: 9
-- vivian: planned: 9
+- claire: planned: 3
+- dora: planned: 3
+- iris: planned: 3
+- noah: planned: 3
+- vivian: planned: 3
 
 ## KPI 對帳
 

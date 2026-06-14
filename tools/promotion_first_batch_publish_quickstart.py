@@ -17,7 +17,6 @@ PROFILE_HANDOFF = PROMOTION_DIR / "profile-publish-handoff.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "first-batch-publish-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "first-batch-publish-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "first-batch-publish-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 POST_URL_PLACEHOLDERS = {
     "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
     "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
@@ -85,11 +84,13 @@ def build_quickstart() -> dict:
     ready_to_publish = bool(profile_handoff.get("metrics", {}).get("readyToPublish")) or bool(action.get("metrics", {}).get("ready"))
     rows: list[dict] = []
 
-    for platform in REQUIRED_PLATFORMS:
+    active_platforms = [str(row.get("platform", "")) for row in action.get("rows", []) if row.get("platform")]
+    for platform in active_platforms:
         row = action_rows.get(platform, {})
         readiness_row = readiness_rows.get(platform, {})
         blocked_by = str(row.get("blocked_by", ""))
         readiness_status = str(readiness_row.get("operator_status") or readiness_row.get("status") or "")
+        row_ready = bool(ready_to_publish and not blocked_by)
         rows.append({
             "platform": platform,
             "taskId": str(row.get("task_id", "")),
@@ -99,8 +100,8 @@ def build_quickstart() -> dict:
             "scheduled": str(row.get("scheduled", "")),
             "actionStatus": str(row.get("action_status", "")),
             "readinessStatus": readiness_status,
-            "readyToPublish": bool(ready_to_publish and not blocked_by),
-            "blockedBy": blocked_by or readiness_status,
+            "readyToPublish": row_ready,
+            "blockedBy": "" if row_ready else (blocked_by or readiness_status),
             "trackedUrl": str(row.get("tracked_url", "")),
             "utmContent": str(row.get("utm_content", "")),
             "caption": str(row.get("caption", "")),
@@ -146,15 +147,14 @@ def build_quickstart() -> dict:
 
 def validate(rows: list[dict], ready_to_publish: bool) -> list[str]:
     issues: list[str] = []
-    seen = {row.get("platform") for row in rows}
-    if seen != set(REQUIRED_PLATFORMS):
-        issues.append("first-batch publish quickstart must include YouTube Shorts, TikTok, and Instagram Reels")
+    if not rows:
+        issues.append("first-batch publish quickstart must include at least one active platform")
     for row in rows:
         label = f"{row.get('platform', '<platform>')}/{row.get('taskId', '<task>')}"
         caption = str(row.get("caption", ""))
         tracked_url = str(row.get("trackedUrl", ""))
         proof = str(row.get("proofTemplate", ""))
-        if "完成 15 題測驗" not in caption and "15 題" not in caption:
+        if "完成 15 題測驗" not in caption and "15 題" not in caption and "15-question quiz" not in caption:
             issues.append(f"{label}: caption should keep the 15-question quiz CTA")
         if "/start/" not in tracked_url or "utm_campaign=first_round_quiz_completion" not in tracked_url:
             issues.append(f"{label}: tracked URL should use the first-round /start/ campaign")

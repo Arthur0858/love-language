@@ -1,20 +1,19 @@
 # LoveTypes Weekly Review Packet
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - weekly decision ready：0
-- empty data mode：1
-- first batch published：0 / 3
+- empty data mode：0
+- first batch published：0 / 1
 - first batch minimum KPI rows：0
 - tracker rows：0
-- profile tracker rows：0
+- profile tracker rows：1
 - issues：0
 
 ## Hold Reasons
 
-- 首批三平台尚無公開 post URL。
+- 首批 YouTube Shorts 尚無公開 post URL。
 - 首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。
 - publishing-status 尚未達週決策條件。
-- 目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。
 
 ## Required Review Fields
 
@@ -45,21 +44,7 @@
 - script：`lt-s01-iris-silence`
 - status：`planned`
 - post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
-
-### tiktok · `publish-lt-s01-iris-silence`
-
-- script：`lt-s01-iris-silence`
-- status：`planned`
-- post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
-
-### instagram_reels · `publish-lt-s01-iris-silence`
-
-- script：`lt-s01-iris-silence`
-- status：`planned`
-- post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 ## Allowed Decisions Now
 

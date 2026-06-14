@@ -103,8 +103,9 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("command center profile_setup rows should match profile packet platformCount")
     if len(handoff_by_phase.get("profile_setup", [])) != profile_pending:
         issues.append("operator handoff profile_setup steps should match profile pendingCount")
-    if len(command_by_phase.get("publish_post", [])) != first_batch_pending * int(profile.get("platformCount", 0) or 0):
-        issues.append("command center publish_post rows should cover pending first-batch scripts on each platform")
+    expected_publish_rows = int(command.get("expectedPhaseCounts", {}).get("publish_post", 0) or 0)
+    if len(command_by_phase.get("publish_post", [])) != expected_publish_rows:
+        issues.append("command center publish_post rows should match expected publish phase count")
     if len(handoff_by_phase.get("publish_first_batch", [])) != first_batch_pending:
         issues.append("operator handoff publish_first_batch steps should match first batch pendingRows")
 
@@ -164,8 +165,12 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("profile publish handoff currentBlockers should match row statuses")
     if int(profile_publish_metrics.get("blockedUpstreamRows", 0) or 0) != profile_publish_blocked:
         issues.append("profile publish handoff blockedUpstreamRows should match row statuses")
-    if profile_publish_current != 1:
-        issues.append("profile publish handoff should expose exactly one current blocker")
+    profile_publish_ready = bool(profile_publish_metrics.get("readyToPublish"))
+    if profile_publish_ready:
+        if profile_publish_current != 0:
+            issues.append("profile publish handoff should expose no current blocker when readyToPublish is true")
+    elif profile_publish_current != 1:
+        issues.append("profile publish handoff should expose exactly one current blocker before readyToPublish")
     if bool(profile_publish_metrics.get("readyToPublish")) != bool(readiness.get("readiness", {}).get("readyToPublishPosts")):
         issues.append("profile publish handoff readyToPublish should match launch readiness readyToPublishPosts")
     guarded_steps = {"profile_setup_handoff_ready", "publish_readiness_guarded", "post_proof_handoff_guarded"}
@@ -180,7 +185,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
     for row in command_rows:
         phase = row.get("phase", "")
         title = row.get("title", "<row>")
-        if phase in {"publish_post", "kpi_backfill"} and not row.get("blocked_by"):
+        if phase in {"publish_post", "kpi_backfill"} and str(row.get("status", "")).startswith("blocked") and not row.get("blocked_by"):
             issues.append(f"{title}: publish/kpi command rows should declare blocked_by")
         safety = str(row.get("safety_note", ""))
         if "測驗" not in safety and "不" not in safety:

@@ -64,7 +64,8 @@ def next_actions_status(master: dict, next_actions: dict) -> str:
         return "waiting"
     master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
     profile_configured = int(master_metrics.get("profileConfigured", 0) or 0)
-    if str(master.get("stage", "")) == "profile_setup" and profile_configured < 3:
+    expected_profiles = max(1, int(master_metrics.get("expectedProfiles", 1) or 1))
+    if str(master.get("stage", "")) == "profile_setup" and profile_configured < expected_profiles:
         return "actionable_profile_setup"
     if any(str(action.get("priority", "")) == "blocked" for action in next_actions.get("actions", [])):
         return "blocked"
@@ -107,15 +108,15 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
             "ready": str(master_metrics.get("commandReadyRows", 0)),
             "blocked": str(master_metrics.get("commandBlockedRows", 0)),
             "next_action": str(master.get("nextAction", "Follow current stage gate.")),
-            "evidence": f"profile={master_metrics.get('profileConfigured', 0)}/3, first_batch={master_metrics.get('firstBatchPublished', 0)}/3, kpi_rows={master_metrics.get('firstBatchMinimumKpiRows', 0)}",
+            "evidence": f"profile={master_metrics.get('profileConfigured', 0)}/{master_metrics.get('expectedProfiles', 1)}, first_batch={master_metrics.get('firstBatchPublished', 0)}, kpi_rows={master_metrics.get('firstBatchMinimumKpiRows', 0)}",
             "safety": "Use master gate as final stage source; do not skip profile_setup.",
         },
         {
             "area": "profile_setup",
             "status": profile_status,
             "ready": str(profile_ready_to_configure),
-            "blocked": str(3 - profile_configured),
-            "next_action": "Set three platform profile links and write back proof.",
+            "blocked": str(max(0, int(master_metrics.get("expectedProfiles", 1) or 1) - profile_configured)),
+            "next_action": "Set active platform profile links and write back proof.",
             "evidence": f"public_ready={profile_public_ready}, configured={profile_configured}, real_proof={profile_proof_real_ready}/{profile_proof_rows}, ready_to_writeback={metric(profile, 'readyToWriteback')}",
             "safety": "Do not mark set/live without real screenshot or click proof from the platform.",
         },
@@ -124,7 +125,7 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
             "status": status_from_counts(metric(publish, "ready"), metric(publish, "blocked")),
             "ready": str(metric(publish, "ready")),
             "blocked": str(metric(publish, "blocked")),
-            "next_action": "Publish first three posts only after profile gate is ready.",
+            "next_action": "Publish first-batch posts only after profile gate is ready.",
             "evidence": f"complete={metric(publish, 'complete')}, profile_gate={metric(publish, 'profileGateReady')}",
             "safety": "No placeholder post URLs; keep CTA focused on quiz.",
         },
@@ -179,7 +180,7 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
             "ready": str(metric(publish_kpi_handoff, "completeRows")),
             "blocked": str(metric(publish_kpi_handoff, "currentBlockers") + metric(publish_kpi_handoff, "blockedUpstreamRows")),
             "next_action": "Use this gate to hand off public post URLs and minimum KPI into weekly review.",
-            "evidence": f"published={metric(publish_kpi_handoff, 'publishedRows')}/3, minimum_kpi={metric(publish_kpi_handoff, 'minimumKpiRows')}/3, weekly={metric(publish_kpi_handoff, 'readyForWeeklyReview')}",
+            "evidence": f"published={metric(publish_kpi_handoff, 'publishedRows')}, minimum_kpi={metric(publish_kpi_handoff, 'minimumKpiRows')}, weekly={metric(publish_kpi_handoff, 'readyForWeeklyReview')}",
             "safety": "No weekly review or commerce decision until post URL, proof, and KPI checks are complete.",
         },
         {
@@ -238,6 +239,7 @@ def build_dashboard() -> dict:
         "holdAreas": hold,
         "masterStageIndex": int(bundle["master"].get("stageIndex", 0) or 0),
         "profileConfigured": int(master_metrics.get("profileConfigured", 0) or 0),
+        "expectedProfiles": max(1, int(master_metrics.get("expectedProfiles", 1) or 1)),
         "profileProofRows": profile_proof_rows,
         "profileProofRealReadyRows": profile_proof_real_ready,
         "externalProfileProofBlockers": external_profile_proof_blockers,
@@ -254,15 +256,15 @@ def build_dashboard() -> dict:
     if metrics["profileConfigured"] == 0 and rows[0]["status"] != "profile_setup":
         issues.append("dashboard should show master stage profile_setup while no profiles are configured")
     profile_row = next((row for row in rows if row["area"] == "profile_setup"), {})
-    if metrics["profileConfigured"] < 3 and profile_row.get("status") != "actionable":
+    if metrics["profileConfigured"] < metrics["expectedProfiles"] and profile_row.get("status") != "actionable":
         issues.append("profile setup should be actionable while public profile links are ready but not configured")
-    if metrics["profileConfigured"] < 3 and metrics["actionableAreas"] < 2:
+    if metrics["profileConfigured"] < metrics["expectedProfiles"] and metrics["actionableAreas"] < 2:
         issues.append("dashboard should expose actionable profile setup and next actions before external profile proof")
-    if metrics["profileConfigured"] < 3 and metrics["externalProfileProofBlockers"] == 0:
+    if metrics["profileConfigured"] < metrics["expectedProfiles"] and metrics["externalProfileProofBlockers"] == 0:
         issues.append("dashboard should show external profile proof blockers before profile setup completes")
     if metrics["minimumKpiRows"] == 0 and any(row["area"] == "weekly_review" and row["status"] == "ready" for row in rows):
         issues.append("weekly review cannot be ready without minimum KPI rows")
-    if metrics["profileConfigured"] < 3 and any(row["area"] == "next_actions" and row["status"] == "ready" for row in rows):
+    if metrics["profileConfigured"] < metrics["expectedProfiles"] and any(row["area"] == "next_actions" and row["status"] == "ready" for row in rows):
         issues.append("next actions cannot be fully ready before profile setup completes")
     return {
         "generatedAt": today(),

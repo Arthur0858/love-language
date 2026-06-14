@@ -14,7 +14,7 @@ import promotion_profile_text_import as profile_import
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
-PROFILE_PROOF_FILES = (
+PROFILE_PROOF_FILE_CANDIDATES = (
     SOURCE_DIR / "proof-youtube_shorts.txt",
     SOURCE_DIR / "proof-tiktok.txt",
     SOURCE_DIR / "proof-instagram_reels.txt",
@@ -38,6 +38,31 @@ def run_tool(args: list[str], cwd: Path) -> tuple[int, str]:
         check=False,
     )
     return result.returncode, result.stdout
+
+
+def platform_from_text(text: str) -> str:
+    for line in text.splitlines():
+        if line.lower().startswith("platform:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def current_profile_platforms() -> set[str]:
+    fields, rows = profile_import.writeback.read_rows(SOURCE_DIR / "platform-profile-tracker.csv")
+    return {
+        (row.get("platform") or "").strip()
+        for row in rows
+        if (row.get("platform") or "").strip()
+    }
+
+
+def current_profile_proof_files() -> tuple[Path, ...]:
+    active_platforms = current_profile_platforms()
+    files: list[Path] = []
+    for proof_file in PROFILE_PROOF_FILE_CANDIDATES:
+        if platform_from_text(proof_file.read_text(encoding="utf-8")) in active_platforms:
+            files.append(proof_file)
+    return tuple(files)
 
 
 def patch_profile_paths(temp_root: Path, temp_docs: Path) -> None:
@@ -91,11 +116,13 @@ def main() -> int:
         temp_docs = temp_root / "docs" / "promotion" / "first-round"
         temp_docs.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(SOURCE_DIR, temp_docs)
+        profile_proof_files = current_profile_proof_files()
+        expected_profiles = len(profile_proof_files)
 
         checked = 0
         rejected = 0
         accepted = 0
-        for proof_file in PROFILE_PROOF_FILES:
+        for proof_file in profile_proof_files:
             temp_proof = temp_docs / proof_file.name
             code, output = run_tool(["check", "--input", str(temp_proof)], ROOT)
             checked += 1
@@ -108,7 +135,7 @@ def main() -> int:
                 issues.append(f"{proof_file.name}: scaffold add should be rejected\n{output}")
 
         patch_profile_paths(temp_root, temp_docs)
-        for proof_file in PROFILE_PROOF_FILES:
+        for proof_file in profile_proof_files:
             text = real_profile_text(proof_file.read_text(encoding="utf-8"))
             data, parse_issues = profile_import.parse_text(text)
             if parse_issues:
@@ -123,8 +150,8 @@ def main() -> int:
         gate = build_readiness_state(temp_docs)
         profile_configured = int(gate.get("metrics", {}).get("profileConfigured") or 0)
         ready_to_publish = int(bool(gate.get("readiness", {}).get("readyToPublishPosts")))
-        if profile_configured != 3:
-            issues.append(f"real proof add should configure 3 profiles, got {profile_configured}")
+        if profile_configured != expected_profiles:
+            issues.append(f"real proof add should configure {expected_profiles} profile(s), got {profile_configured}")
         if ready_to_publish != 1:
             issues.append("real proof add should open ready_to_publish")
 

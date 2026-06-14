@@ -1,15 +1,15 @@
 # LoveTypes 第一輪 Week 3 發布包
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 任務數：3
-- 主 CTA：完成 15 題測驗，找到你的情感守護者
+- 主 CTA：Take the 15-question quiz to find your emotional guardian
 
 ## 發布規則
 
-- 每支 Shorts 只放一個主 CTA：完成 15 題測驗。
-- 說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。
-- 不把守護者結果描述成診斷、療效、保證修復或購買要求。
-- 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。
+- Each Short keeps one primary CTA: take the 15-question quiz.
+- Use trackedUrl in the description; if the platform limits long links, keep at least https://lovetypes.tw/start/.
+- Do not frame guardian results as diagnosis, therapy, guaranteed repair, or required purchase.
+- After publishing, first backfill post_url, site_clicks, quiz_starts, and quiz_completions; review route, Luna, keepsake, lead, affiliate, and contact fields only after real signals exist.
 
 ## 1. 你在乎的真的是禮物嗎？
 
@@ -24,10 +24,10 @@
 ```text
 你不是物質，你只是想知道自己有沒有被放在心上。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 
 留言 A/B/C，哪一種小心意最能打動你？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -81,10 +81,10 @@
 ```text
 那一天不是日期而已，是你想確認自己有沒有被記得。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
 
 留言 A/B/C，或寫下一個你希望被記得的日子。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -138,10 +138,10 @@
 ```text
 有些人把愛藏在細節裡，等你發現自己被記得。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
 
 留言 A/B/C，薇薇安會替你把那份心意歸檔。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏

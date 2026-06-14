@@ -73,7 +73,7 @@ def build_rows() -> list[dict[str, object]]:
     profile_action_issues = len(profile_action.get("issues", []) or [])
     profile_handoff_ready = metric(profile_setup, "readyToConfigure")
     profile_configured = metric(completion, "profileConfigured")
-    expected_profiles = metric(completion, "expectedProfiles", 3)
+    expected_profiles = metric(completion, "expectedProfiles", 1)
     evidence_traceable = metric(completion, "evidenceTraceable")
     evidence_required = max(metric(completion, "evidenceRequired"), expected_profiles)
     packets_in_sync = state(completion, "packetsInSync")
@@ -91,19 +91,19 @@ def build_rows() -> list[dict[str, object]]:
             "step_id": "profile_action_sheet_ready",
             "phase": "profile_setup",
             "current_value": profile_rows if profile_action_issues == 0 else 0,
-            "required_value": 3,
+            "required_value": expected_profiles,
             "owner_action": "Use the platform-specific Bio/Profile link copy from the action sheet.",
-            "evidence_required": "Action sheet has three platforms, valid /start/ UTM links, and no issues.",
+            "evidence_required": "Action sheet has active platforms, valid /start/ UTM links, and no issues.",
             "command": "python3 tools/promotion_profile_setup_action_sheet.py --check",
             "stop_condition": "Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.",
         },
         {
             "step_id": "profile_setup_handoff_ready",
             "phase": "profile_setup",
-            "current_value": profile_handoff_ready,
+            "current_value": max(profile_handoff_ready, profile_configured),
             "required_value": expected_profiles,
             "owner_action": "Use the consolidated profile setup handoff pack before touching platform profiles.",
-            "evidence_required": "profile-setup-handoff-pack has three ready_to_configure rows and no issues.",
+            "evidence_required": "profile-setup-handoff-pack has active ready_to_configure rows, or profile setup is already configured with traceable proof.",
             "command": "python3 tools/promotion_profile_setup_handoff_pack.py --check",
             "stop_condition": "Stop if any platform lacks a public-ready profile link, proof template, or identity check.",
         },
@@ -153,7 +153,7 @@ def build_rows() -> list[dict[str, object]]:
             "current_value": first_batch_ready,
             "required_value": first_batch_rows,
             "owner_action": "Publish only the first batch rows that become ready after the profile gate opens.",
-            "evidence_required": "First-batch publish action sheet has three ready rows and zero issues.",
+            "evidence_required": "First-batch publish action sheet has active ready rows and zero issues.",
             "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
             "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
         },
@@ -163,7 +163,7 @@ def build_rows() -> list[dict[str, object]]:
             "current_value": publish_asset_ready + proof_templates_rejected,
             "required_value": first_batch_rows * 2,
             "owner_action": "Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.",
-            "evidence_required": "first-batch-publish-readiness-pack has three asset-ready rows and three safely rejected proof templates.",
+            "evidence_required": "first-batch-publish-readiness-pack has active asset-ready rows and safely rejected proof templates.",
             "command": "python3 tools/promotion_first_batch_publish_readiness_pack.py --check",
             "stop_condition": "Do not publish if proof templates become importable before real public post URLs exist.",
         },
@@ -173,7 +173,7 @@ def build_rows() -> list[dict[str, object]]:
             "current_value": post_proof_files + post_proof_rejected,
             "required_value": first_batch_rows * 2,
             "owner_action": "Keep post proof handoff files ready for real URLs while rejecting placeholders.",
-            "evidence_required": "post-proof-handoff-pack has three proof files and three safely rejected templates.",
+            "evidence_required": "post-proof-handoff-pack has active proof files and safely rejected templates.",
             "command": "python3 tools/promotion_post_proof_handoff_pack.py --check",
             "stop_condition": "Do not run writeback until the proof check becomes ready_to_import with real platform URLs.",
         },
@@ -242,8 +242,12 @@ def validate_rows(rows: list[dict[str, object]]) -> list[str]:
     if not statuses <= {"complete", "current_blocker", "blocked_upstream"}:
         issues.append("handoff rows contain invalid statuses")
     current_blockers = sum(1 for row in rows if row.get("status") == "current_blocker")
-    if current_blockers != 1:
-        issues.append("handoff should expose exactly one current blocker")
+    complete_rows = sum(1 for row in rows if row.get("status") == "complete")
+    if current_blockers == 0:
+        if complete_rows != len(rows):
+            issues.append("handoff without a current blocker should have all rows complete")
+    elif current_blockers != 1:
+        issues.append("handoff should expose at most one current blocker")
     for row in rows:
         label = str(row.get("step_id", "<missing>"))
         if not row.get("command") or not row.get("stop_condition"):

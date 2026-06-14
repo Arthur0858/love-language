@@ -1,33 +1,21 @@
 LoveTypes operator next action closure quickstart
-generated: 2026-06-14
-stage: profile_setup
-ready actions: 3 / 3
-profile configured: 0
-proof profile template valid: 3
-proof profile placeholder rows: 3
+generated: 2026-06-15
+stage: first_batch_publish
+ready actions: 0 / 1
+profile configured: 1
+proof profile template valid: 0
+proof profile placeholder rows: 1
 proof profile real ready rows: 0
 
 Allowed actions:
 
-youtube_shorts: ready_to_configure
+youtube_shorts: complete
 profile URL: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
 write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 stop: A real platform screenshot/click proof must exist before running the write command.
 
-tiktok: ready_to_configure
-profile URL: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
-write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-stop: A real platform screenshot/click proof must exist before running the write command.
-
-instagram_reels: ready_to_configure
-profile URL: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
-write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-stop: A real platform screenshot/click proof must exist before running the write command.
-
 After external proof:
-- refresh_after_profile_writeback: python3 tools/promotion_daily_ops_refresh.py | profileConfigured moves toward 3 only after real proof writeback.
-- check_profile_to_publish_gate: python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check | readyToPublish remains 0 until all three profiles are set/live.
-- keep_publish_locked_until_gate: python3 tools/promotion_first_batch_publish_closure_quickstart.py --check | first-batch publishing remains blocked before profile gate completion.
+- refresh_after_profile_writeback: python3 tools/promotion_daily_ops_refresh.py | profileConfigured reflects active platform proof writeback.
+- check_profile_to_publish_gate: python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check | readyToPublish opens only after active profile setup is complete.
+- keep_publish_locked_until_gate: python3 tools/promotion_first_batch_publish_closure_quickstart.py --check | first-batch publishing stays proof-gated until a real public post URL exists.

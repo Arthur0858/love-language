@@ -1,17 +1,17 @@
 # LoveTypes First Batch KPI Closure Quickstart
 
-- 產生日期：2026-06-14
-- rows：3
+- 產生日期：2026-06-15
+- rows：1
 - ready for KPI：0
-- blocked rows：3
+- blocked rows：1
 - published rows：0
-- zero pending rows：9
+- zero pending rows：3
 - zero source proof needs / complete / missing：0 / 0 / 0
 - minimum KPI rows：0
 - weekly ready：0
 - empty data：1
-- master stage：`profile_setup`
-- master profile configured：0
+- master stage：`first_batch_publish`
+- master profile configured：1
 - issues：0
 
 ## Rules
@@ -28,7 +28,7 @@
 
 - status：`current_blocker`
 - command：`python3 tools/promotion_first_batch_publish_closure_quickstart.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check`
-- release：All three first-batch posts have real public HTTPS post_url values.
+- release：All active first-batch posts have real public HTTPS post_url values.
 - stop：Do not continue with KPI proof while post_url fields are blank, scheduled-only, private, or placeholders.
 
 ### `verify_zero_kpi_sources`
@@ -79,7 +79,7 @@ Zero checks:
 Writeback command after source proof:
 
 ```text
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Proof template:
@@ -89,88 +89,12 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-14
+published_date: 2026-06-15
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 site_clicks: <CHECKED_SITE_CLICKS>
 quiz_starts: <CHECKED_QUIZ_STARTS>
 quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
-proof_note: analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence
-```
-
-- next：Publish the post and replace the placeholder URL with a real public post URL.
-
-### tiktok · `publish-lt-s01-iris-silence`
-
-- status：`blocked_until_post_url`
-- published：0
-- ready for KPI：0
-- post URL：(not published)
-- blocked by：first-batch post is not published
-- minimum KPIs：`site_clicks, quiz_starts, quiz_completions`
-
-Zero checks:
-
-- `site_clicks`：status `pending_publish`；source：Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- `quiz_starts`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
-- `quiz_completions`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
-
-Writeback command after source proof:
-
-```text
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
-```
-
-Proof template:
-
-```text
-LoveTypes platform post writeback
-platform: tiktok
-task_id: publish-lt-s01-iris-silence
-status: published
-published_date: 2026-06-14
-post_url: <REAL_TIKTOK_VIDEO_URL>
-site_clicks: <CHECKED_SITE_CLICKS>
-quiz_starts: <CHECKED_QUIZ_STARTS>
-quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
-proof_note: analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence
-```
-
-- next：Publish the post and replace the placeholder URL with a real public post URL.
-
-### instagram_reels · `publish-lt-s01-iris-silence`
-
-- status：`blocked_until_post_url`
-- published：0
-- ready for KPI：0
-- post URL：(not published)
-- blocked by：first-batch post is not published
-- minimum KPIs：`site_clicks, quiz_starts, quiz_completions`
-
-Zero checks:
-
-- `site_clicks`：status `pending_publish`；source：Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- `quiz_starts`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
-- `quiz_completions`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
-
-Writeback command after source proof:
-
-```text
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
-```
-
-Proof template:
-
-```text
-LoveTypes platform post writeback
-platform: instagram_reels
-task_id: publish-lt-s01-iris-silence
-status: published
-published_date: 2026-06-14
-post_url: <REAL_INSTAGRAM_REEL_URL>
-site_clicks: <CHECKED_SITE_CLICKS>
-quiz_starts: <CHECKED_QUIZ_STARTS>
-quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
-proof_note: analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence
+proof_note: analytics source checked 2026-06-15 for youtube_shorts/publish-lt-s01-iris-silence
 ```
 
 - next：Publish the post and replace the placeholder URL with a real public post URL.

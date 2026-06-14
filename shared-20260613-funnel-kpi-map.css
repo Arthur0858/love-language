@@ -553,23 +553,13 @@ button.secondary-btn {
   box-shadow: var(--shadow-lift);
 }
 
-.section { padding: 64px min(7vw, 92px); }
+.section{padding:64px min(7vw,92px)}
 
-.garden-map-hero {
-  background:
-    radial-gradient(circle at 90% 10%, rgba(183, 139, 69, .12), transparent 32%),
-    linear-gradient(135deg, #fff7f4, #f7fbf4);
-}
+.mobile-page-jump{display:none}
 
-.garden-map-result-resume {
-  background:
-    radial-gradient(circle at 85% 20%, rgba(189, 82, 96, .12), transparent 30%),
-    linear-gradient(180deg, #fffdf9, #fff7f4);
-}
-
-.garden-map-result-resume[hidden] {
-  display: none;
-}
+.garden-map-hero{background:radial-gradient(circle at 90% 10%,rgba(183,139,69,.12),transparent 32%),linear-gradient(135deg,#fff7f4,#f7fbf4)}
+.garden-map-result-resume{background:radial-gradient(circle at 85% 20%,rgba(189,82,96,.12),transparent 30%),linear-gradient(180deg,#fffdf9,#fff7f4)}
+.garden-map-result-resume[hidden]{display:none}
 
 .garden-map-resume-card {
   display: grid;
@@ -620,47 +610,14 @@ button.secondary-btn {
   text-align: center;
 }
 
-.garden-map-routes,
-.garden-map-handoff,
-.garden-map-tools,
-.garden-map-guides {
-  background: #fff;
-}
+.garden-map-routes,.garden-map-handoff,.garden-map-tools,.garden-map-guides{background:#fff}
 
-.garden-map-route-grid,
-.garden-map-handoff-grid,
-.garden-map-tool-grid,
-.garden-map-trust-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
+.garden-map-route-grid,.garden-map-handoff-grid,.garden-map-tool-grid,.garden-map-trust-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 
-.garden-map-handoff-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
+.garden-map-handoff-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.garden-map-tool-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 
-.garden-map-tool-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.garden-map-route-card,
-.garden-map-handoff-card,
-.garden-map-tool-card,
-.garden-map-trust-card {
-  display: grid;
-  gap: 10px;
-  min-height: 100%;
-  padding: 18px;
-  border: 1px solid rgba(224, 199, 182, .88);
-  border-radius: 8px;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(255, 248, 241, .86));
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 0 12px 30px rgba(76, 42, 43, .055);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
+.garden-map-route-card,.garden-map-handoff-card,.garden-map-tool-card,.garden-map-trust-card{display:grid;gap:10px;min-height:100%;padding:18px;border:1px solid rgba(224,199,182,.88);border-radius:8px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(255,248,241,.86));color:inherit;text-decoration:none;box-shadow:0 12px 30px rgba(76,42,43,.055);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
 
 .garden-map-handoff-card {
   position: relative;
@@ -688,45 +645,13 @@ button.secondary-btn {
     linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(247, 251, 244, .90));
 }
 
-.garden-map-route-card span,
-.garden-map-handoff-card span,
-.garden-map-tool-card span {
-  width: fit-content;
-  color: var(--rose);
-  font-size: .82rem;
-  font-weight: 900;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
+.garden-map-route-card span,.garden-map-handoff-card span,.garden-map-tool-card span{width:fit-content;color:var(--rose);font-size:.82rem;font-weight:900;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
 
-.garden-map-route-card h3,
-.garden-map-handoff-card h3,
-.garden-map-tool-card h3,
-.garden-map-trust-card h3 {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: 1.16rem;
-  line-height: 1.24;
-}
+.garden-map-route-card h3,.garden-map-handoff-card h3,.garden-map-tool-card h3,.garden-map-trust-card h3{margin:0;font-family:var(--serif);font-size:1.16rem;line-height:1.24}
 
-.garden-map-route-card p,
-.garden-map-handoff-card p,
-.garden-map-tool-card p,
-.garden-map-trust-card p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.58;
-}
+.garden-map-route-card p,.garden-map-handoff-card p,.garden-map-tool-card p,.garden-map-trust-card p{margin:0;color:var(--muted);line-height:1.58}
 
-.garden-map-route-card:hover,
-.garden-map-handoff-card:hover,
-.garden-map-tool-card:hover,
-.garden-map-trust-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(189, 82, 96, .42);
-  box-shadow: var(--shadow-lift);
-}
+.garden-map-route-card:hover,.garden-map-handoff-card:hover,.garden-map-tool-card:hover,.garden-map-trust-card:hover{transform:translateY(-2px);border-color:rgba(189,82,96,.42);box-shadow:var(--shadow-lift)}
 
 .garden-map-guardians,
 .garden-map-trust {
@@ -4566,7 +4491,12 @@ button.secondary-btn {
     text-wrap: balance;
   }
 
-  .section { padding: 52px min(7vw, 92px); }
+  .section{padding:52px min(7vw,92px)}
+
+  .mobile-page-jump{display:flex;flex-wrap:wrap;gap:8px;padding:14px 7vw;border-block:1px solid #ead3d6}
+  .mobile-page-jump span,.mobile-page-jump a{font-weight:800}
+  .mobile-page-jump a{color:var(--accent);text-decoration:none}
+  .mobile-page-jump a+a::before{content:"·";margin-right:10px}
 
   .section-head { display: block; }
 
@@ -5043,6 +4973,7 @@ button.secondary-btn {
   .supply-quick-routes .section-intro {
     display: none;
   }
+
 
   .supply-quick-card {
     grid-template-columns: 1fr;

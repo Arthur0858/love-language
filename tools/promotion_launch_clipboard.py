@@ -18,6 +18,7 @@ LAUNCH_DASHBOARD = PROMOTION_DIR / "launch-ops-dashboard.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "launch-clipboard.txt"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "launch-clipboard.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "launch-clipboard.json"
+QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 
 
 def load_json(path: Path) -> dict:
@@ -149,10 +150,12 @@ def validate_blocks(blocks: list[dict[str, str]], profile: dict, publish: dict, 
     issues: list[str] = []
     profile_count = sum(1 for block in blocks if block["kind"] == "profile")
     post_count = sum(1 for block in blocks if block["kind"] == "post")
-    if profile_count != 3:
-        issues.append(f"expected 3 profile clipboard blocks, got {profile_count}")
-    if post_count != 3:
-        issues.append(f"expected 3 post clipboard blocks, got {post_count}")
+    expected_profile_count = len(profile.get("rows", []) if isinstance(profile.get("rows"), list) else [])
+    expected_post_count = len(publish.get("rows", []) if isinstance(publish.get("rows"), list) else [])
+    if profile_count != expected_profile_count:
+        issues.append(f"expected {expected_profile_count} profile clipboard blocks, got {profile_count}")
+    if post_count != expected_post_count:
+        issues.append(f"expected {expected_post_count} post clipboard blocks, got {post_count}")
     if metric(profile, "configured") and metric(publish, "blocked") == 0 and not metric(publish, "ready"):
         issues.append("publish action metrics look inconsistent after profile configuration")
     for block in blocks:
@@ -166,7 +169,7 @@ def validate_blocks(blocks: list[dict[str, str]], profile: dict, publish: dict, 
                 issues.append(f"{label}: profile proof should force real proof replacement")
             if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in block["write_command"]:
                 issues.append(f"{label}: profile write command should force real proof replacement")
-        if block["kind"] == "post" and "完成 15 題測驗" not in block["copy"]:
+        if block["kind"] == "post" and not any(marker in block["copy"] for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: post copy should keep quiz CTA")
         if not block.get("check_command"):
             issues.append(f"{label}: missing check command")

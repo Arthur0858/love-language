@@ -21,6 +21,16 @@ PROOF_FILES = {
 OUTPUT_MD = PROMOTION_DIR / "profile-batch-import-quickstart.md"
 OUTPUT_JSON = PROMOTION_DIR / "profile-batch-import-quickstart.json"
 OUTPUT_TXT = PROMOTION_DIR / "profile-batch-import-quickstart.txt"
+PROFILE_QUICKSTART = PROMOTION_DIR / "profile-quickstart.json"
+
+
+def active_proof_files() -> dict[str, Path]:
+    if PROFILE_QUICKSTART.exists():
+        data = json.loads(PROFILE_QUICKSTART.read_text(encoding="utf-8"))
+        active = {str(row.get("platform", "")) for row in data.get("platforms", []) if row.get("platform")}
+        if active:
+            return {platform: path for platform, path in PROOF_FILES.items() if platform in active}
+    return dict(PROOF_FILES)
 
 
 def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -79,7 +89,8 @@ def classify_proof(path: Path) -> dict[str, object]:
 
 
 def build_packet() -> dict:
-    rows = [classify_proof(path) for path in PROOF_FILES.values()]
+    proof_files = active_proof_files()
+    rows = [classify_proof(path) for path in proof_files.values()]
     ready_rows = sum(int(row["ready"]) for row in rows)
     blocked_rows = sum(1 for row in rows if row["status"] == "blocked_until_real_proof")
     placeholder_proof_rows = sum(int(row.get("placeholderProof", 0) or 0) for row in rows)
@@ -87,15 +98,15 @@ def build_packet() -> dict:
     invalid_rows = sum(1 for row in rows if row["status"] not in {"ready", "blocked_until_real_proof"})
     duplicate_platforms = len({str(row.get("platform", "")) for row in rows if row.get("platform")}) != ready_rows + blocked_rows
     issues: list[str] = []
-    if len(rows) != len(PROOF_FILES):
-        issues.append("expected exactly three profile proof files")
+    if len(rows) != len(proof_files):
+        issues.append("profile proof file count should match active platforms")
     if invalid_rows:
         issues.append(f"invalid profile proof rows: {invalid_rows}")
     if duplicate_platforms:
         issues.append("profile proof files contain duplicate or missing platforms")
     return {
         "generatedAt": text_import.TODAY,
-        "proofFiles": [str(path.relative_to(ROOT)) for path in PROOF_FILES.values()],
+        "proofFiles": [str(path.relative_to(ROOT)) for path in proof_files.values()],
         "metrics": {
             "proofFiles": len(rows),
             "readyRows": ready_rows,
@@ -107,9 +118,9 @@ def build_packet() -> dict:
         },
         "rows": rows,
         "rules": [
-            "Use this batch only after all three external profile links are visibly set and verified.",
+            "Use this batch only after all active external profile links are visibly set and verified.",
             "Placeholder proof notes are allowed in check mode and treated as blocked, not ready.",
-            "The add mode writes all three profile rows together, then runs the full daily ops refresh once.",
+            "The add mode writes all active profile rows together, then runs the full daily ops refresh once.",
             "If any proof file is blocked or invalid, add mode stops without writing tracker rows.",
         ],
         "commands": {
@@ -123,12 +134,13 @@ def build_packet() -> dict:
 
 def apply_batch(packet: dict) -> None:
     metrics = packet["metrics"]
-    if metrics["readyRows"] != len(PROOF_FILES) or metrics["issues"]:
+    proof_files = active_proof_files()
+    if metrics["readyRows"] != len(proof_files) or metrics["issues"]:
         details = []
         for row in packet["rows"]:
             if row["issues"]:
                 details.append(f"{row.get('platform') or row.get('proofFile')}: " + "; ".join(row["issues"]))
-        raise SystemExit("profile batch import requires all three proof files ready\n" + "\n".join(details))
+        raise SystemExit("profile batch import requires all active proof files ready\n" + "\n".join(details))
 
     fieldnames, tracker_rows = read_rows(writeback.TRACKER_PATH)
     candidate = [dict(row) for row in tracker_rows]
@@ -211,7 +223,7 @@ def write_outputs(packet: dict) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check or import all three LoveTypes profile proof files as one guarded batch.")
+    parser = argparse.ArgumentParser(description="Check or import active LoveTypes profile proof files as one guarded batch.")
     parser.add_argument("--check", action="store_true", help="Validate current proof files without writing generated docs.")
     parser.add_argument("--add", action="store_true", help="Import all three ready proof files and refresh downstream ops docs.")
     args = parser.parse_args()

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "weeklyAction": "docs/promotion/first-round/weekly-review-action-sheet.json",
     "weeklyEvidence": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
@@ -9,15 +9,15 @@
   },
   "metrics": {
     "actionRows": 7,
-    "readyRows": 0,
-    "blockedRows": 5,
+    "readyRows": 2,
+    "blockedRows": 3,
     "holdRows": 2,
     "evidenceRows": 8,
-    "evidenceComplete": 1,
-    "evidencePending": 7,
+    "evidenceComplete": 2,
+    "evidencePending": 6,
     "weeklyReady": 0,
     "decisionReady": 0,
-    "emptyDataMode": 1,
+    "emptyDataMode": 0,
     "blockedDecisionRows": 4,
     "issues": 0
   },
@@ -32,7 +32,7 @@
     {
       "step_id": "profile-before-review",
       "phase": "precondition",
-      "status": "blocked",
+      "status": "ready",
       "operator_action": "Confirm all platform profile links are set/live before using first-batch posts for weekly review.",
       "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check",
       "evidence_required": "profile_configured=3 and profile gate ready before publish/review.",
@@ -41,8 +41,8 @@
     {
       "step_id": "first-batch-public-url",
       "phase": "publish",
-      "status": "blocked",
-      "operator_action": "Publish or verify the first three platform posts and record the real public post URLs.",
+      "status": "ready_to_publish",
+      "operator_action": "Publish or verify the first YouTube Shorts post and record the real public post URL.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "evidence_required": "Three real platform post_url values, not placeholders.",
       "decision_boundary": "No public URL means no weekly decision."
@@ -62,7 +62,7 @@
       "status": "blocked",
       "operator_action": "Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.",
       "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
-      "evidence_required": "complete=1, pending=7.",
+      "evidence_required": "complete=2, pending=6.",
       "decision_boundary": "Pending evidence keeps all commerce and winner decisions on HOLD."
     },
     {
@@ -71,7 +71,7 @@
       "status": "hold",
       "operator_action": "Regenerate weekly summary, decision gate and review packet before changing the next content batch.",
       "command": "python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py",
-      "evidence_required": "weekly_ready=0, empty_data=1.",
+      "evidence_required": "weekly_ready=0, empty_data=0.",
       "decision_boundary": "Empty data mode allows only setup, publish, and KPI backfill actions."
     },
     {
@@ -97,16 +97,16 @@
     {
       "phase": "profile_setup",
       "check_id": "profiles_configured",
-      "expected_value": "3 platform profile links are set/live with traceable evidence.",
+      "expected_value": "All active platform profile links are set/live with traceable evidence.",
       "operator_status": "pending",
-      "evidence_note": "三個平台 profile 尚未全部 set/live。"
+      "evidence_note": "啟用平台 profile 尚未全部 set/live。"
     },
     {
       "phase": "publish_first_batch",
       "check_id": "first_batch_published",
-      "expected_value": "First-batch posts are published on all three platforms.",
+      "expected_value": "First-batch posts are published on all active platforms.",
       "operator_status": "pending",
-      "evidence_note": "首批三平台尚未全部發布。"
+      "evidence_note": "首批啟用平台尚未全部發布。"
     },
     {
       "phase": "publish_first_batch",
@@ -133,8 +133,8 @@
       "phase": "weekly_review",
       "check_id": "not_empty_data_mode",
       "expected_value": "Empty data mode is false before commerce or prioritization decisions.",
-      "operator_status": "pending",
-      "evidence_note": "目前仍是空資料安全模式。"
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
     },
     {
       "phase": "weekly_decision",

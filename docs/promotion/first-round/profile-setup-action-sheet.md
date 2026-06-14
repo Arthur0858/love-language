@@ -1,13 +1,13 @@
 # LoveTypes Profile Setup Action Sheet
 
-- 產生日期：2026-06-14
-- platforms：3
-- ready to configure：3
+- 產生日期：2026-06-15
+- platforms：1
+- ready to configure：0
 - ready to writeback：0
-- configured：0
-- identity checks：21
-- evidence checks：18
-- profile gate ready：0
+- configured：1
+- identity checks：7
+- evidence checks：6
+- profile gate ready：1
 - issues：0
 
 ## Rule
@@ -18,8 +18,8 @@
 
 ## YouTube Shorts（`youtube_shorts`）
 
-- action status：`ready_to_configure`
-- current tracker status：`planned`
+- action status：`complete`
+- current tracker status：`set`
 - link location：Channel description / video description
 - profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 - identity / evidence checks：7 / 6
@@ -27,72 +27,18 @@
 Bio:
 
 ```text
-LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
+LoveTypes Heart-Language Garden | Take the 15-question quiz to find your emotional guardian.
 ```
 
 Pinned / first comment:
 
 ```text
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-留言 A/B/C，我們會用守護者路線回覆你。
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
+Comment A/B/C and we will point you to a guardian route.
 ```
 
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
 - suggested proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
 - check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
 - write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
-
-## TikTok（`tiktok`）
-
-- action status：`ready_to_configure`
-- current tracker status：`planned`
-- link location：Profile website link
-- profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- identity / evidence checks：7 / 6
-
-Bio:
-
-```text
-五種愛之語測驗｜進入心語庭園，找到你的情感守護者。
-```
-
-Pinned / first comment:
-
-```text
-完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。
-留言 A/B/C，選出最像你的心語。
-```
-
-- proof file：`docs/promotion/first-round/proof-tiktok.txt`
-- suggested proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
-- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
-
-## Instagram Reels（`instagram_reels`）
-
-- action status：`ready_to_configure`
-- current tracker status：`planned`
-- link location：Profile link in bio
-- profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- identity / evidence checks：7 / 6
-
-Bio:
-
-```text
-LoveTypes 心語庭園｜15 題找到你的情感守護者。
-```
-
-Pinned / first comment:
-
-```text
-完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。
-留言你的 A/B/C，讓守護者把心語接住。
-```
-
-- proof file：`docs/promotion/first-round/proof-instagram_reels.txt`
-- suggested proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
-- check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 - stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.

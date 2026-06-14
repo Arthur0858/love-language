@@ -955,6 +955,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_launch_readiness_empty_data_mode",
         "promotion_launch_readiness_blockers",
         "promotion_launch_readiness_issues",
+        "promotion_render_bridge_issues",
         "promotion_ops_closure_command_rows",
         "promotion_ops_closure_handoff_steps",
         "promotion_ops_closure_profile_publish_rows",

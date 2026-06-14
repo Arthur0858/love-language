@@ -1,46 +1,46 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "weekCount": 5,
-  "platformPostCount": 45,
+  "platformPostCount": 15,
   "issueCount": 0,
   "sheets": [
     {
       "week": 1,
-      "profilePendingCount": 3,
-      "profileGateCount": 3,
-      "platformPostCount": 9,
+      "profilePendingCount": 0,
+      "profileGateCount": 1,
+      "platformPostCount": 3,
       "scriptCount": 3,
       "issues": []
     },
     {
       "week": 2,
-      "profilePendingCount": 3,
-      "profileGateCount": 3,
-      "platformPostCount": 9,
+      "profilePendingCount": 0,
+      "profileGateCount": 1,
+      "platformPostCount": 3,
       "scriptCount": 3,
       "issues": []
     },
     {
       "week": 3,
-      "profilePendingCount": 3,
-      "profileGateCount": 3,
-      "platformPostCount": 9,
+      "profilePendingCount": 0,
+      "profileGateCount": 1,
+      "platformPostCount": 3,
       "scriptCount": 3,
       "issues": []
     },
     {
       "week": 4,
-      "profilePendingCount": 3,
-      "profileGateCount": 3,
-      "platformPostCount": 9,
+      "profilePendingCount": 0,
+      "profileGateCount": 1,
+      "platformPostCount": 3,
       "scriptCount": 3,
       "issues": []
     },
     {
       "week": 5,
-      "profilePendingCount": 3,
-      "profileGateCount": 3,
-      "platformPostCount": 9,
+      "profilePendingCount": 0,
+      "profileGateCount": 1,
+      "platformPostCount": 3,
       "scriptCount": 3,
       "issues": []
     }

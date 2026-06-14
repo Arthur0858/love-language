@@ -1383,18 +1383,21 @@ def check_promotion_profile_verification(source_path: str, data: dict) -> tuple[
     verification = data.get("promotionProfileVerification")
     if not isinstance(verification, dict):
         return [f"{source_path}: promotionProfileVerification should be an object"], 0, 0, 0
+    platform_count = int(verification.get("platforms") or 0)
+    verification_steps_per_platform = int(verification.get("verificationStepsPerPlatform") or 0)
+    do_not_publish_gates_per_platform = int(verification.get("doNotPublishGatesPerPlatform") or 0)
     expected_counters = {
-        "public_promotion_kit_platform_profile_writeback_checked=3",
-        "public_promotion_kit_platform_profile_verification_steps_checked=12",
-        "public_promotion_kit_platform_profile_publish_gates_checked=9",
+        f"public_promotion_kit_platform_profile_writeback_checked={platform_count}",
+        f"public_promotion_kit_platform_profile_verification_steps_checked={platform_count * verification_steps_per_platform}",
+        f"public_promotion_kit_platform_profile_publish_gates_checked={platform_count * do_not_publish_gates_per_platform}",
         "public_promotion_kit_issues=0",
         "public_discovery_commerce_revenue_playbook_checked=4",
         "public_discovery_commerce_item_playbook_links_checked=20",
     }
     if verification.get("source") != "https://lovetypes.tw/promotion-kit.json#platformProfileSetup":
         issues.append(f"{source_path}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")
-    if verification.get("platforms") != 3:
-        issues.append(f"{source_path}: promotionProfileVerification.platforms should be 3")
+    if platform_count != 1:
+        issues.append(f"{source_path}: promotionProfileVerification.platforms should be 1")
     writeback_fields = verification.get("writebackFields")
     expected_fields = {"status", "profile_link_set_date", "profile_link", "notes"}
     if not isinstance(writeback_fields, list) or set(writeback_fields) != expected_fields:

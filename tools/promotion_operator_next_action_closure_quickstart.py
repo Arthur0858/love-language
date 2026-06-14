@@ -22,7 +22,6 @@ PUBLISH_KPI = PROMOTION_DIR / "publish-kpi-handoff.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "operator-next-action-closure-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "operator-next-action-closure-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "operator-next-action-closure-quickstart.txt"
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 
 
 def today() -> str:
@@ -87,6 +86,13 @@ def blocker_by_scope(payload: dict) -> dict[str, dict]:
     }
 
 
+def active_platforms(*sources: dict[str, dict]) -> tuple[str, ...]:
+    platforms: set[str] = set()
+    for source in sources:
+        platforms.update(platform for platform in source if platform)
+    return tuple(sorted(platforms)) or ("youtube_shorts",)
+
+
 def build_quickstart() -> dict:
     master = read_json(MASTER_GATE)
     next_actions = read_json(NEXT_ACTIONS)
@@ -102,8 +108,9 @@ def build_quickstart() -> dict:
     day_by_platform = launch_day_by_platform(launch_day)
     handoff_platform = handoff_by_platform(handoff)
     blocker_scope = blocker_by_scope(blockers)
+    platforms = active_platforms(clip_by_platform, day_by_platform, handoff_platform, blocker_scope)
     actions: list[dict] = []
-    for platform in PLATFORMS:
+    for platform in platforms:
         clip = clip_by_platform.get(platform, {})
         day = day_by_platform.get(platform, {})
         handoff_row = handoff_platform.get(platform, {})
@@ -129,6 +136,7 @@ def build_quickstart() -> dict:
         "minimumKpiRows": metric(master, "firstBatchMinimumKpiRows"),
         "readyActions": sum(1 for item in actions if item["status"] in {"ready_to_configure", "ready_to_act", "ready"}),
         "profileActions": len(actions),
+        "activePlatforms": len(platforms),
         "proofProfileValid": metric(proof_import, "profileValid"),
         "proofProfileTemplateValid": metric(proof_import, "profileTemplateValid") or metric(proof_import, "profileValid"),
         "proofProfilePlaceholderRows": metric(proof_import, "profilePlaceholderProofRows"),
@@ -158,9 +166,9 @@ def build_quickstart() -> dict:
         },
         "metrics": metrics,
         "rules": [
-            "The only allowed external actions now are the three profile setup actions.",
+            "Active platforms only are considered for first-round promotion operations.",
             "Run the check command before any writeback command.",
-            "Do not publish first-batch posts until profile publish handoff is ready.",
+            "If profile setup is complete, the next external action is first-batch YouTube Shorts publishing.",
             "Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions while empty data mode is active.",
             "Stop immediately if account identity, permission, URL preservation, or safety copy is uncertain.",
         ],
@@ -169,17 +177,17 @@ def build_quickstart() -> dict:
             {
                 "id": "refresh_after_profile_writeback",
                 "command": "python3 tools/promotion_daily_ops_refresh.py",
-                "expected": "profileConfigured moves toward 3 only after real proof writeback.",
+                "expected": "profileConfigured reflects active platform proof writeback.",
             },
             {
                 "id": "check_profile_to_publish_gate",
                 "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check",
-                "expected": "readyToPublish remains 0 until all three profiles are set/live.",
+                "expected": "readyToPublish opens only after active profile setup is complete.",
             },
             {
                 "id": "keep_publish_locked_until_gate",
                 "command": "python3 tools/promotion_first_batch_publish_closure_quickstart.py --check",
-                "expected": "first-batch publishing remains blocked before profile gate completion.",
+                "expected": "first-batch publishing stays proof-gated until a real public post URL exists.",
             },
         ],
         "issues": [],
@@ -191,23 +199,26 @@ def build_quickstart() -> dict:
 
 def validate(data: dict) -> list[str]:
     metrics = data["metrics"]
+    expected = metrics["activePlatforms"]
     issues: list[str] = []
-    if metrics["stage"] != "profile_setup":
-        issues.append("operator next action closure expects current stage to remain profile_setup")
-    if len(data["actions"]) != len(PLATFORMS):
-        issues.append("expected three profile setup actions")
-    if metrics["readyActions"] != len(PLATFORMS):
-        issues.append("all three profile setup actions should be ready to act")
+    if metrics["stage"] not in {"profile_setup", "first_batch_publish", "weekly_evidence"}:
+        issues.append("operator next action closure expects profile_setup, first_batch_publish, or weekly_evidence stage")
+    if len(data["actions"]) != expected:
+        issues.append(f"expected {expected} active profile setup actions")
+    if metrics["profileConfigured"] < expected and metrics["readyActions"] != expected:
+        issues.append("all active profile setup actions should be ready to act before profile configuration")
     if metrics["profileConfigured"] == 0 and metrics["profilePublishReady"] != 0:
         issues.append("profile publish handoff cannot be ready before profile writeback")
     if metrics["firstBatchPublished"] == 0 and metrics["publishKpiWeeklyReady"] != 0:
         issues.append("publish/KPI handoff cannot open weekly review before posts are published")
-    if metrics["proofProfileTemplateValid"] != len(PLATFORMS):
-        issues.append("proof import closure should validate three profile proof templates")
-    if metrics["proofPostRejected"] != len(PLATFORMS):
-        issues.append("proof import closure should reject three post placeholder templates")
+    if metrics["profileConfigured"] < expected and metrics["proofProfileTemplateValid"] != expected:
+        issues.append("proof import closure should validate active profile proof templates before profile configuration")
+    if metrics["proofPostRejected"] != expected:
+        issues.append("proof import closure should reject active post placeholder templates")
     for action in data["actions"]:
         label = action.get("platform", "<platform>")
+        if metrics["profileConfigured"] >= expected:
+            continue
         if not action.get("copyBlock") or not action.get("proofTemplate"):
             issues.append(f"{label}: missing copy block or proof template")
         if "promotion_profile_text_import.py check" not in action.get("checkCommand", ""):
@@ -233,10 +244,11 @@ def render_markdown(data: dict) -> str:
         "",
         f"- 產生日期：{data['generatedAt']}",
         f"- stage：`{metrics['stage']}`",
-        f"- profile configured：{metrics['profileConfigured']} / {len(PLATFORMS)}",
+        f"- active platforms：{metrics['activePlatforms']}",
+        f"- profile configured：{metrics['profileConfigured']} / {metrics['activePlatforms']}",
         f"- ready actions：{metrics['readyActions']} / {metrics['profileActions']}",
-        f"- first batch published：{metrics['firstBatchPublished']} / {len(PLATFORMS)}",
-        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {len(PLATFORMS)}",
+        f"- first batch published：{metrics['firstBatchPublished']} / {metrics['activePlatforms']}",
+        f"- minimum KPI rows：{metrics['minimumKpiRows']} / {metrics['activePlatforms']}",
         f"- proof profile template valid：{metrics['proofProfileTemplateValid']}",
         f"- proof profile placeholder rows：{metrics['proofProfilePlaceholderRows']}",
         f"- proof profile real ready rows：{metrics['proofProfileRealReadyRows']}",

@@ -20,7 +20,7 @@ GUARDIAN_TAGS = {
     "dora": ["#朵拉", "#身體接觸", "#安全感"],
 }
 COMMON_TAGS = ["#LoveTypes", "#五種愛之語", "#情感守護者", "#心語庭園"]
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORMS = ("youtube_shorts",)
 SCENE_SUBTITLE_GROUP_SIZE = 3
 MIN_SCENE_CARDS_PER_BRIEF = 3
 
@@ -53,10 +53,8 @@ def caption_for(script: dict, platform: str) -> str:
     cta = "完成 15 題測驗，找到你的情感守護者。"
     if platform == "youtube_shorts":
         link_line = f"{cta}\n測驗入口：{script['tracked_url']}"
-    elif platform == "tiktok":
-        link_line = f"{cta}\n從個人頁連結進入測驗。"
     else:
-        link_line = f"{cta}\n從個人頁連結進入心語庭園。"
+        link_line = f"{cta}\n測驗入口：{script['tracked_url']}"
     return "\n".join([
         script["hook"],
         "",

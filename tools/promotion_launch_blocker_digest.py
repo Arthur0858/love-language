@@ -59,14 +59,14 @@ def current_stage(launch: dict, weekly: dict) -> str:
 def next_action_for(stage: str) -> dict[str, str]:
     actions = {
         "profile_setup": {
-            "action": "Set the three external platform profile links, capture real proof, then import profile proof text.",
+            "action": "Set the active external platform profile links, capture real proof, then import profile proof text.",
             "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-            "release": "promotion_launch_readiness_profile_configured=3 and ready_to_publish=1",
+            "release": "promotion_launch_readiness_profile_configured matches active profile rows and ready_to_publish=1",
         },
         "first_batch_publish": {
-            "action": "Publish the first three platform posts and write back real public post URLs.",
+            "action": "Publish the active first-batch platform post and write back the real public post URL.",
             "command": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\"",
-            "release": "first-batch post_url values exist for YouTube Shorts, TikTok, and Instagram Reels",
+            "release": "first-batch post_url values exist for all active platforms",
         },
         "kpi_backfill": {
             "action": "Backfill source-checked site_clicks, quiz_starts, and quiz_completions for the first batch.",
@@ -148,16 +148,16 @@ def build_digest() -> dict:
     }
 
     issues: list[str] = []
-    if metrics["profileRows"] != 3 or metrics["firstBatchRows"] != 3:
-        issues.append("launch digest expects exactly three profile rows and three first-batch rows")
+    if metrics["profileRows"] < 1 or metrics["firstBatchRows"] < 1:
+        issues.append("launch digest expects at least one active profile row and one first-batch row")
     if metrics["blockers"] != len(blockers):
         issues.append("launch readiness blocker count does not match blocker rows")
     if metrics["checklistActiveBlockers"] < metrics["blockers"]:
         issues.append("blocker checklist should not have fewer active blockers than launch readiness")
     if metrics["emptyDataMode"] == 0 and metrics["filledKpiRows"] == 0:
         issues.append("empty data mode should stay on until KPI evidence exists")
-    if stage == "profile_setup" and metrics["checklistReadyNow"] < 3:
-        issues.append("profile setup stage should expose three ready-now profile actions")
+    if stage == "profile_setup" and metrics["checklistReadyNow"] < max(1, metrics["profileRows"] - metrics["profileConfigured"]):
+        issues.append("profile setup stage should expose ready-now profile actions")
     if kpi.get("issues"):
         issues.append("KPI attribution health report has issues")
     if launch.get("issues"):

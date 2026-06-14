@@ -127,8 +127,8 @@ def build_payload() -> dict:
 def validate(payload: dict) -> list[str]:
     issues: list[str] = []
     metrics = payload["metrics"]
-    if metrics["posts"] != 3:
-        issues.append(f"expected 3 first-batch posts, got {metrics['posts']}")
+    if metrics["posts"] < 1:
+        issues.append("expected at least 1 first-batch post")
     if metrics["rows"] != metrics["posts"] * metrics["checksPerPost"]:
         issues.append("public post URL checklist row count mismatch")
     if metrics["missingRows"]:

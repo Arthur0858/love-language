@@ -1,18 +1,18 @@
 LoveTypes profile proof capture quickstart
-generated: 2026-06-14
+generated: 2026-06-15
 
 Rules:
 - Capture proof before writeback; importable text is only a format check.
-- Each platform needs six evidence checks before status can become set/live.
+- Each active platform keeps six optional evidence checks for operator review.
 - Use screenshot, clicked public link, screen recording, or platform timestamp as proof.
 - Keep the proof note tied to platform and date; do not use generic notes like done or checked.
-- After all three writebacks, rerun daily ops refresh, profile completion gate, and launch quickstart.
+- After all active profile writebacks, rerun daily ops refresh, profile completion gate, and launch quickstart.
 
 === YouTube Shorts / youtube_shorts ===
-status: ready_to_configure
+status: complete
 profile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof file: docs/promotion/first-round/proof-youtube_shorts.txt
-suggested capture: profile-youtube_shorts-2026-06-14.png
+suggested capture: profile-youtube_shorts-2026-06-15.png
 capture artifact required: 1
 safe writeback ready: 0
 proof note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
@@ -24,52 +24,8 @@ post-writeback check: python3 tools/promotion_daily_ops_refresh.py && python3 to
 stop: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 Evidence:
 - platform_account_visible: The correct platform account/profile page is visible before editing.
-- profile_link_visible_or_clickable: The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.
 - start_url_resolves: Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.
 - utm_parameters_preserved: utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.
-- quiz_only_copy: Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.
-- proof_note_present: A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.
-
-=== TikTok / tiktok ===
-status: ready_to_configure
-profile link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-proof file: docs/promotion/first-round/proof-tiktok.txt
-suggested capture: profile-tiktok-2026-06-14.png
-capture artifact required: 1
-safe writeback ready: 0
-proof note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
-required proof-note tokens: screenshot, public URL, clicked, screen recording, verified
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
-proof bundle check: python3 tools/promotion_profile_batch_import.py --check
-write after proof: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-post-writeback check: python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check
-stop: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
-Evidence:
-- platform_account_visible: The correct platform account/profile page is visible before editing.
 - profile_link_visible_or_clickable: The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.
-- start_url_resolves: Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.
-- utm_parameters_preserved: utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.
-- quiz_only_copy: Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.
 - proof_note_present: A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.
-
-=== Instagram Reels / instagram_reels ===
-status: ready_to_configure
-profile link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-proof file: docs/promotion/first-round/proof-instagram_reels.txt
-suggested capture: profile-instagram_reels-2026-06-14.png
-capture artifact required: 1
-safe writeback ready: 0
-proof note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
-required proof-note tokens: screenshot, public URL, clicked, screen recording, verified
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
-proof bundle check: python3 tools/promotion_profile_batch_import.py --check
-write after proof: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-post-writeback check: python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check
-stop: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
-Evidence:
-- platform_account_visible: The correct platform account/profile page is visible before editing.
-- profile_link_visible_or_clickable: The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.
-- start_url_resolves: Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.
-- utm_parameters_preserved: utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.
 - quiz_only_copy: Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.
-- proof_note_present: A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.

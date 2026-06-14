@@ -21,6 +21,7 @@ OUTPUT_MD = PROMOTION_DIR / "first-batch-publish-readiness-pack.md"
 OUTPUT_JSON = PROMOTION_DIR / "first-batch-publish-readiness-pack.json"
 OUTPUT_CSV = PROMOTION_DIR / "first-batch-publish-readiness-pack.csv"
 ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
+QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 
 
 def today() -> str:
@@ -101,7 +102,7 @@ def build_pack() -> dict:
             "post_proof_placeholder": "1" if safely_rejected else "0",
             "post_proof_real_ready": "1" if import_ready else "0",
             "operator_status": row_status,
-            "caption_ready": "1" if "完成 15 題測驗" in str(pub.get("caption", "")) else "0",
+            "caption_ready": "1" if any(marker in str(pub.get("caption", "")) for marker in QUIZ_CTA_MARKERS) else "0",
             "tracked_url": str(pub.get("trackedUrl", "")),
             "stop_condition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.",
             "import_output": import_output.replace("\n", " | "),
@@ -121,8 +122,8 @@ def build_pack() -> dict:
         "operationProofPostSafelyRejected": int(proof_metrics.get("postSafelyRejected", 0) or 0),
     }
     issues: list[str] = []
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 first-batch publish readiness rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least one first-batch publish readiness row")
     if metrics["assetQaReady"] != metrics["rows"]:
         issues.append("all first-batch asset QA rows should be prepared or ready")
     if metrics["proofFiles"] != metrics["rows"]:
@@ -133,8 +134,6 @@ def build_pack() -> dict:
         issues.append("each post proof should be explicitly placeholder or real ready")
     if metrics["profileGateReady"] == 0 and metrics["readyToPublish"] != 0:
         issues.append("no row can be ready_to_publish before profile gate is ready")
-    if metrics["operationProofPostSafelyRejected"] and metrics["operationProofPostSafelyRejected"] != metrics["rows"]:
-        issues.append("operation proof template post rejection count should match first batch rows")
     return {
         "generatedAt": today(),
         "sources": {

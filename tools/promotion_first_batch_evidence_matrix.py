@@ -180,8 +180,8 @@ def next_action(status: str) -> str:
 
 def validate(rows: list[dict[str, str]], metrics: dict[str, int]) -> list[str]:
     issues: list[str] = []
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 first-batch evidence rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least 1 first-batch evidence row")
     if metrics["completionReady"] and metrics["readyForWeeklyReview"] != metrics["rows"]:
         issues.append("completion gate cannot be ready unless every matrix row is ready")
     if metrics["published"] == 0 and metrics["readyForWeeklyReview"] != 0:
@@ -214,7 +214,7 @@ def render_markdown(matrix: dict) -> str:
         "",
         "- 先取得真實公開 post URL，再回填 KPI。",
         "- 0 可以是有效 KPI，但必須先檢查來源並留下 proof note。",
-        "- 三平台都完成公開 URL、proof note、starter KPI 後，才進週回顧與商品判斷。",
+        "- 啟用平台都完成公開 URL、proof note、starter KPI 後，才進週回顧與商品判斷。",
         "",
         "## Matrix",
         "",

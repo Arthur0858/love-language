@@ -1,7 +1,7 @@
 # LoveTypes Post Writeback Playbook
 
-- 產生日期：2026-06-14
-- 已發布列：0 / 45
+- 產生日期：2026-06-15
+- 已發布列：0 / 15
 - issues：0
 - 原則：只有平台貼文已公開且 post URL 可驗證時，才能標記 published/live/posted。
 
@@ -12,21 +12,7 @@
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-
-### tiktok · `publish-lt-s01-iris-silence`
-
-- script：`lt-s01-iris-silence`
-- 標題：他沉默時，你最想聽見哪一句話？
-- 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-
-### instagram_reels · `publish-lt-s01-iris-silence`
-
-- script：`lt-s01-iris-silence`
-- 標題：他沉默時，你最想聽見哪一句話？
-- 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ## 平台文字匯入
 

@@ -1,6 +1,6 @@
 # LoveTypes Decision Readiness Checklist
 
-- Generated: `2026-06-14`
+- Generated: `2026-06-15`
 - Decisions: `5`
 - Active signal rows: `1`
 - Ready rows: `0`
@@ -28,7 +28,7 @@
 - Status: `blocked`
 - Required signal: quiz_completions
 - Current value: `0`
-- Required value: At least the configured scale-content quiz completion threshold and acceptable completion rate. Current threshold: 10 quiz completions. Empty-data mode forces this decision closed.
+- Required value: At least the configured scale-content quiz completion threshold and acceptable completion rate. Current threshold: 10 quiz completions.
 - Allowed: Publish more variants for the strongest guardian or pain point while keeping quiz CTA.
 - Blocked: Treat content interest as proof of purchase intent.
 - Evidence: `docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json`
@@ -38,7 +38,7 @@
 - Status: `blocked`
 - Required signal: identityRouteInterest
 - Current value: `0`
-- Required value: Any guardian result, route, keepsake, or resource interest after weekly gate is ready. Empty-data mode forces this decision closed.
+- Required value: Any guardian result, route, keepsake, or resource interest after weekly gate is ready.
 - Allowed: Improve free keepsakes, story cards, share images, and result-route assets.
 - Blocked: Move the primary CTA directly to paid products.
 - Evidence: `docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json`
@@ -48,7 +48,7 @@
 - Status: `blocked`
 - Required signal: leadIntent
 - Current value: `0`
-- Required value: Any supply lead, contact request, or explicit downloadable asset request. Empty-data mode forces this decision closed.
+- Required value: Any supply lead, contact request, or explicit downloadable asset request.
 - Allowed: Build one low-risk email/download asset for the signaled guardian or route.
 - Blocked: Build a paid product before repeated lead evidence exists.
 - Evidence: `docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json`
@@ -58,7 +58,7 @@
 - Status: `blocked`
 - Required signal: paidRevenueIntent
 - Current value: `0`
-- Required value: Any Luna pack, affiliate book, or other revenue-route click after result-route context. Empty-data mode forces this decision closed.
+- Required value: Any Luna pack, affiliate book, or other revenue-route click after result-route context.
 - Allowed: Test a soft result-route offer; keep Shorts and profile CTAs focused on the quiz.
 - Blocked: Use direct sales language in first-touch Shorts or profile bio.
 - Evidence: `docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json`

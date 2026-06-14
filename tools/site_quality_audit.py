@@ -2189,11 +2189,9 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
     platform_profile_setup = data.get("platformProfileSetup")
     expected_profile_sources = {
         "youtube_shorts": "youtube",
-        "tiktok": "tiktok",
-        "instagram_reels": "instagram",
     }
     if not isinstance(platform_profile_setup, list) or len(platform_profile_setup) != len(expected_profile_sources):
-        issues.append(f"{PROMOTION_KIT_PATH}: platformProfileSetup should include three platform setups")
+        issues.append(f"{PROMOTION_KIT_PATH}: platformProfileSetup should include {len(expected_profile_sources)} platform setup(s)")
         platform_profile_setup = []
     seen_profile_platforms: set[str] = set()
     for item in platform_profile_setup:
@@ -2221,7 +2219,7 @@ def parse_promotion_kit() -> tuple[list[str], Counter]:
             if query.get(key, [""])[0] != expected_value:
                 issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} profileLink missing {key}={expected_value}")
         setup_text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
-        if "完成 15 題測驗" not in setup_text:
+        if "完成 15 題測驗" not in setup_text and "15-question quiz" not in setup_text:
             issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should include quiz CTA")
         if any(word in setup_text for word in ("診斷", "療效", "保證修復", "必須購買")):
             issues.append(f"{PROMOTION_KIT_PATH}: {platform_id} setup copy should not include unsafe commercial claims")
@@ -2620,18 +2618,21 @@ def validate_promotion_profile_verification(source: str, data: dict, stats: Coun
     verification = data.get("promotionProfileVerification")
     if not isinstance(verification, dict):
         return [f"{source}: promotionProfileVerification should be an object"]
+    platform_count = int(verification.get("platforms") or 0)
+    verification_steps_per_platform = int(verification.get("verificationStepsPerPlatform") or 0)
+    do_not_publish_gates_per_platform = int(verification.get("doNotPublishGatesPerPlatform") or 0)
     expected_counters = {
-        "public_promotion_kit_platform_profile_writeback_checked=3",
-        "public_promotion_kit_platform_profile_verification_steps_checked=12",
-        "public_promotion_kit_platform_profile_publish_gates_checked=9",
+        f"public_promotion_kit_platform_profile_writeback_checked={platform_count}",
+        f"public_promotion_kit_platform_profile_verification_steps_checked={platform_count * verification_steps_per_platform}",
+        f"public_promotion_kit_platform_profile_publish_gates_checked={platform_count * do_not_publish_gates_per_platform}",
         "public_promotion_kit_issues=0",
         "public_discovery_commerce_revenue_playbook_checked=4",
         "public_discovery_commerce_item_playbook_links_checked=20",
     }
     if verification.get("source") != f"{DOMAIN}/promotion-kit.json#platformProfileSetup":
         issues.append(f"{source}: promotionProfileVerification.source should point to promotion kit platformProfileSetup")
-    if verification.get("platforms") != 3:
-        issues.append(f"{source}: promotionProfileVerification.platforms should be 3")
+    if platform_count != 1:
+        issues.append(f"{source}: promotionProfileVerification.platforms should be 1")
     writeback_fields = verification.get("writebackFields")
     expected_fields = {"status", "profile_link_set_date", "profile_link", "notes"}
     if not isinstance(writeback_fields, list) or set(writeback_fields) != expected_fields:

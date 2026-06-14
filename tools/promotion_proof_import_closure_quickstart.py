@@ -19,7 +19,6 @@ OPERATOR_HANDOFF = PROMOTION_DIR / "operator-handoff-packet.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "proof-import-closure-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "proof-import-closure-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "import-proof-closure-quickstart.txt"
-EXPECTED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 PROFILE_EVIDENCE_CHECKS = 6
 PROOF_IMPORTS = ("profile_setup_import", "post_publish_import", "lead_request_import")
 
@@ -72,27 +71,40 @@ def post_template_rows(templates: dict) -> list[dict]:
     return [row for row in rows(templates) if row.get("kind") == "post_publish"]
 
 
+def active_count(metrics: dict) -> int:
+    return max(
+        1,
+        int(metrics.get("profileEvidencePlatforms", 0) or 0),
+        int(metrics.get("profilePlaceholderProofRows", 0) or 0) + int(metrics.get("profileRealProofReadyRows", 0) or 0),
+        int(metrics.get("postTemplates", 0) or 0),
+        int(metrics.get("rehearsalProfilePass", 0) or 0),
+        int(metrics.get("rehearsalPostPlaceholderRejected", 0) or 0),
+        int(metrics.get("rehearsalPostRealUrlPass", 0) or 0),
+    )
+
+
 def closure_steps(metrics: dict) -> list[dict[str, str]]:
-    profile_ready = metrics["profileValid"] == len(EXPECTED_PLATFORMS)
-    post_guard_ready = metrics["postSafelyRejected"] == len(EXPECTED_PLATFORMS)
+    expected = active_count(metrics)
+    profile_ready = (not metrics["proofPacketProfilePending"]) or metrics["profileValid"] == expected
+    post_guard_ready = metrics["postSafelyRejected"] == expected
     rehearsal_ready = (
-        metrics["rehearsalProfilePass"] == len(EXPECTED_PLATFORMS)
-        and metrics["rehearsalPostPlaceholderRejected"] == len(EXPECTED_PLATFORMS)
-        and metrics["rehearsalPostRealUrlPass"] == len(EXPECTED_PLATFORMS)
+        metrics["rehearsalProfilePass"] == expected
+        and metrics["rehearsalPostPlaceholderRejected"] == expected
+        and metrics["rehearsalPostRealUrlPass"] == expected
     )
     return [
         {
             "id": "validate_profile_proof_templates",
             "status": "ready_to_use" if profile_ready else "blocked",
             "command": "python3 tools/promotion_operation_proof_templates.py --check && python3 tools/promotion_profile_evidence_checklist.py --check",
-            "release": "Three profile proof templates validate and each platform has six evidence checks.",
+            "release": "Active profile proof templates validate and each active platform has six evidence checks.",
             "stop": "Do not write profile status unless all six evidence checks are backed by real platform proof.",
         },
         {
             "id": "reject_post_placeholders",
             "status": "guard_active" if post_guard_ready else "blocked",
             "command": "python3 tools/promotion_operation_proof_templates.py --check",
-            "release": "Three post proof templates are safely rejected while their post URLs are placeholders.",
+            "release": "Active post proof templates are safely rejected while their post URLs are placeholders.",
             "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers.",
         },
         {
@@ -160,6 +172,7 @@ def build_quickstart() -> dict:
         "launchReadyToPublish": 1 if launch_rehearsal.get("state", {}).get("readyToPublish") else 0,
         "launchEmptyDataMode": 1 if launch_rehearsal.get("state", {}).get("emptyDataMode") else 0,
     }
+    metrics["activePlatforms"] = active_count(metrics)
     proof_rows = []
     for row in [*profile_rows, *post_rows]:
         proof_rows.append({
@@ -203,26 +216,27 @@ def build_quickstart() -> dict:
 
 def validate(data: dict) -> list[str]:
     metrics = data["metrics"]
+    expected = metrics["activePlatforms"]
     issues: list[str] = []
-    if metrics["profileTemplates"] != len(EXPECTED_PLATFORMS):
-        issues.append("expected three profile proof templates")
-    if metrics["postTemplates"] != len(EXPECTED_PLATFORMS):
-        issues.append("expected three post proof templates")
-    if metrics["profileValid"] != len(EXPECTED_PLATFORMS):
-        issues.append("profile proof templates should all validate")
-    if metrics["profilePlaceholderProofRows"] + metrics["profileRealProofReadyRows"] > len(EXPECTED_PLATFORMS):
+    if metrics["proofPacketProfilePending"] and metrics["profileTemplates"] != expected:
+        issues.append(f"expected {expected} active profile proof templates while profile proof is pending")
+    if metrics["postTemplates"] != expected:
+        issues.append(f"expected {expected} active post proof templates")
+    if metrics["proofPacketProfilePending"] and metrics["profileValid"] != expected:
+        issues.append("active profile proof templates should all validate while profile proof is pending")
+    if metrics["profilePlaceholderProofRows"] + metrics["profileRealProofReadyRows"] > expected:
         issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
-    if metrics["postSafelyRejected"] != len(EXPECTED_PLATFORMS):
-        issues.append("post proof templates should all be safely rejected while placeholder URLs remain")
-    if metrics["rehearsalProfilePass"] != len(EXPECTED_PLATFORMS):
-        issues.append("proof rehearsal should pass all profile imports")
-    if metrics["rehearsalPostPlaceholderRejected"] != len(EXPECTED_PLATFORMS):
-        issues.append("proof rehearsal should reject all placeholder post imports")
-    if metrics["rehearsalPostRealUrlPass"] != len(EXPECTED_PLATFORMS):
-        issues.append("proof rehearsal should pass sample real post URL imports")
-    if metrics["profileEvidencePlatforms"] != len(EXPECTED_PLATFORMS):
-        issues.append("profile evidence checklist should cover three platforms")
-    expected_evidence_rows = len(EXPECTED_PLATFORMS) * PROFILE_EVIDENCE_CHECKS
+    if metrics["postSafelyRejected"] != expected:
+        issues.append("active post proof templates should all be safely rejected while placeholder URLs remain")
+    if metrics["rehearsalProfilePass"] != expected:
+        issues.append("proof rehearsal should pass all active profile imports")
+    if metrics["rehearsalPostPlaceholderRejected"] != expected:
+        issues.append("proof rehearsal should reject all active placeholder post imports")
+    if metrics["rehearsalPostRealUrlPass"] != expected:
+        issues.append("proof rehearsal should pass sample active post URL imports")
+    if metrics["profileEvidencePlatforms"] != expected:
+        issues.append("profile evidence checklist should cover active platforms")
+    expected_evidence_rows = expected * PROFILE_EVIDENCE_CHECKS
     if metrics["profileEvidenceRows"] != expected_evidence_rows:
         issues.append(f"profile evidence checklist should expose {expected_evidence_rows} rows")
     if set(data["structuredImportIds"]) != set(PROOF_IMPORTS):
@@ -255,6 +269,7 @@ def render_markdown(data: dict) -> str:
         f"- 產生日期：{data['generatedAt']}",
         f"- profile templates：{metrics['profileTemplates']}",
         f"- post templates：{metrics['postTemplates']}",
+        f"- active platforms：{metrics['activePlatforms']}",
         f"- profile template valid：{metrics['profileTemplateValid']}",
         f"- profile placeholder proof rows：{metrics['profilePlaceholderProofRows']}",
         f"- profile real proof ready rows：{metrics['profileRealProofReadyRows']}",

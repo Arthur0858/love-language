@@ -141,11 +141,12 @@ def build_rows() -> list[dict[str, str]]:
 def validate_rows(rows: list[dict[str, str]]) -> list[str]:
     issues: list[str] = []
     expected_metrics = {row["metric_id"] for row in KPI_ROWS}
-    if len(rows) != 21:
-        issues.append(f"expected 21 first-batch KPI checklist rows, got {len(rows)}")
     tasks = {(row["platform"], row["task_id"]) for row in rows}
-    if len(tasks) != 3:
-        issues.append(f"expected 3 first-batch tasks, got {len(tasks)}")
+    expected_row_count = len(tasks) * len(KPI_ROWS)
+    if len(rows) != expected_row_count:
+        issues.append(f"expected {expected_row_count} first-batch KPI checklist rows, got {len(rows)}")
+    if not tasks:
+        issues.append("expected at least 1 first-batch task")
     for platform, task_id in sorted(tasks):
         task_rows = [row for row in rows if row["platform"] == platform and row["task_id"] == task_id]
         metrics = {row["metric_id"] for row in task_rows}

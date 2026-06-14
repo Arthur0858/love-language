@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "firstBatchKpiAction": "docs/promotion/first-round/first-batch-kpi-action-sheet.json",
     "zeroKpiEvidence": "docs/promotion/first-round/zero-kpi-evidence-checklist.json",
@@ -7,14 +7,14 @@
     "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json"
   },
   "metrics": {
-    "rows": 3,
+    "rows": 1,
     "readyForKpi": 0,
-    "blockedRows": 3,
+    "blockedRows": 1,
     "publishedRows": 0,
-    "zeroSourceRows": 9,
+    "zeroSourceRows": 3,
     "handoffReadyForWeekly": 0,
     "weeklyReady": 0,
-    "emptyDataMode": 1,
+    "emptyDataMode": 0,
     "issues": 0
   },
   "rules": [
@@ -60,88 +60,8 @@
           "value": "0"
         }
       ],
-      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence",
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "blockedBy": "first-batch post is not published",
-      "stopCondition": "Stop if the post URL is not public HTTPS, analytics source was not checked, or a zero value lacks source proof."
-    },
-    {
-      "platform": "tiktok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "guardianId": "iris",
-      "actionStatus": "blocked_until_public_post_url",
-      "readyForKpi": false,
-      "published": 0,
-      "postUrl": "",
-      "minimumKpis": [
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "zeroSourceRows": 3,
-      "zeroChecks": [
-        {
-          "metric": "site_clicks",
-          "status": "pending_publish",
-          "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
-          "value": "0"
-        },
-        {
-          "metric": "quiz_starts",
-          "status": "pending_publish",
-          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
-          "value": "0"
-        },
-        {
-          "metric": "quiz_completions",
-          "status": "pending_publish",
-          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
-          "value": "0"
-        }
-      ],
-      "proofTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence",
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "blockedBy": "first-batch post is not published",
-      "stopCondition": "Stop if the post URL is not public HTTPS, analytics source was not checked, or a zero value lacks source proof."
-    },
-    {
-      "platform": "instagram_reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "guardianId": "iris",
-      "actionStatus": "blocked_until_public_post_url",
-      "readyForKpi": false,
-      "published": 0,
-      "postUrl": "",
-      "minimumKpis": [
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "zeroSourceRows": 3,
-      "zeroChecks": [
-        {
-          "metric": "site_clicks",
-          "status": "pending_publish",
-          "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
-          "value": "0"
-        },
-        {
-          "metric": "quiz_starts",
-          "status": "pending_publish",
-          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
-          "value": "0"
-        },
-        {
-          "metric": "quiz_completions",
-          "status": "pending_publish",
-          "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
-          "value": "0"
-        }
-      ],
-      "proofTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence",
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-15\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-15 for youtube_shorts/publish-lt-s01-iris-silence",
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blockedBy": "first-batch post is not published",
       "stopCondition": "Stop if the post URL is not public HTTPS, analytics source was not checked, or a zero value lacks source proof."
     }

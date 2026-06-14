@@ -19,7 +19,7 @@ COMMAND_CENTER_PATH = PROMOTION_DIR / "launch-command-center.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 
-EXPECTED_PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
+EXPECTED_PLATFORM_ORDER = ("youtube_shorts",)
 EXPECTED_PLATFORMS = set(EXPECTED_PLATFORM_ORDER)
 CAMPAIGN = "first_round_quiz_completion"
 REQUIRED_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
@@ -55,7 +55,7 @@ def readiness_policy() -> dict[str, object]:
             "publish_first_batch": "The first-batch posting-queue.csv platform rows are marked published and have post_url values.",
             "backfill_first_batch_kpis": "At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.",
         },
-        "rule": "三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。",
+        "rule": "YouTube profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。",
     }
 
 
@@ -317,9 +317,9 @@ def build_gate(
             "emptyDataMode": filled_kpi_rows == 0,
         },
         "nextDecision": (
-            "先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。"
+            "先設定 YouTube 頻道個人頁連結；完成 set/live 後發布首批 YouTube Shorts。"
             if not ready_to_publish_posts
-            else "可發布首批三平台貼文；發布後立即回填 post_url 與最小 KPI。"
+            else "可發布首批 YouTube Shorts；發布後立即回填 post_url 與最小 KPI。"
         ),
         "platformChecklist": platform_rows,
         "firstBatchSchedule": first_batch,

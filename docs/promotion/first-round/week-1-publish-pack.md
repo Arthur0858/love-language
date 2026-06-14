@@ -1,15 +1,15 @@
 # LoveTypes 第一輪 Week 1 發布包
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 任務數：3
-- 主 CTA：完成 15 題測驗，找到你的情感守護者
+- 主 CTA：Take the 15-question quiz to find your emotional guardian
 
 ## 發布規則
 
-- 每支 Shorts 只放一個主 CTA：完成 15 題測驗。
-- 說明欄使用 trackedUrl；若平台不允許長連結，至少保留 https://lovetypes.tw/start/。
-- 不把守護者結果描述成診斷、療效、保證修復或購買要求。
-- 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時再看守護者路線、補給、Luna、收藏、名單與聯盟欄位。
+- Each Short keeps one primary CTA: take the 15-question quiz.
+- Use trackedUrl in the description; if the platform limits long links, keep at least https://lovetypes.tw/start/.
+- Do not frame guardian results as diagnosis, therapy, guaranteed repair, or required purchase.
+- After publishing, first backfill post_url, site_clicks, quiz_starts, and quiz_completions; review route, Luna, keepsake, lead, affiliate, and contact fields only after real signals exist.
 
 ## 1. 他沉默時，你最想聽見哪一句話？
 
@@ -24,10 +24,10 @@
 ```text
 你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
 留言 A/B/C，或寫下一句你最想被說出口的話。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -82,10 +82,10 @@
 ```text
 真正的肯定，不是把你說得完美，而是讓你知道自己被看見。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
 
 留言你選的句子，艾莉絲會把它收進晨曦玻璃花園。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏
@@ -139,10 +139,10 @@
 ```text
 有時候你不是太敏感，你只是一直在替沉默找理由。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
 
 留言「我想被清楚回應」，或選 A：等話、B：等行動、C：等陪伴。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 ### 字幕節奏

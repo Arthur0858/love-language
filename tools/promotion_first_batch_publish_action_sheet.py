@@ -101,17 +101,17 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
             "blocked_by": "" if profile_gate_ready else "profile links are not all set/live",
         })
 
-    if len(rows) != 3:
-        issues.append(f"expected 3 first-batch publish rows, got {len(rows)}")
-    if int(readiness.get("metrics", {}).get("publicReady", 0) or 0) != 3:
-        issues.append("profile link readiness should report 3 public-ready profile links")
-    if profile_gate_ready and int(readiness.get("metrics", {}).get("configured", 0) or 0) != 3:
-        issues.append("profile gate cannot be ready unless three profiles are configured")
+    if len(rows) < 1:
+        issues.append("expected at least one first-batch publish row")
+    if int(readiness.get("metrics", {}).get("publicReady", 0) or 0) != len(rows):
+        issues.append("profile link readiness should match active first-batch platform count")
+    if profile_gate_ready and int(readiness.get("metrics", {}).get("configured", 0) or 0) != len(rows):
+        issues.append("profile gate cannot be ready unless all active profiles are configured")
     for row in rows:
         label = f"{row['platform']}/{row['task_id']}"
         if not url_ok(row["tracked_url"], row["utm_content"]):
             issues.append(f"{label}: tracked_url should be /start/ with first-round social UTM")
-        if "完成 15 題測驗" not in row["caption"]:
+        if "完成 15 題測驗" not in row["caption"] and "15-question quiz" not in row["caption"]:
             issues.append(f"{label}: caption should keep the quiz CTA")
         if any(forbidden in row["caption"] for forbidden in ("診斷", "療效", "必須購買")):
             issues.append(f"{label}: caption contains forbidden commercial or clinical claim")
@@ -149,7 +149,7 @@ def render_markdown(payload: dict) -> str:
         "",
         "## Rule",
         "",
-        "- 三個平台 profile link 都 set/live 且 gate ready 前，不發布首批貼文。",
+        "- 啟用平台 profile link 都 set/live 且 gate ready 前，不發布首批貼文。",
         "- 發布後必須先用 proof text import `check` 驗證，再用 `add` 回填真實 post URL。",
         "- KPI 只能填平台或網站來源確認後的值；0 也必須是確認後的 0。",
         "",

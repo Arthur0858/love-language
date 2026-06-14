@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "profileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
     "postingQueue": "docs/promotion/first-round/posting-queue.csv",
@@ -8,11 +8,9 @@
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json"
   },
   "readinessPolicy": {
-    "expectedPlatformCount": 3,
+    "expectedPlatformCount": 1,
     "expectedPlatforms": [
-      "youtube_shorts",
-      "tiktok",
-      "instagram_reels"
+      "youtube_shorts"
     ],
     "campaign": "first_round_quiz_completion",
     "startPath": "/start/",
@@ -28,7 +26,7 @@
     ],
     "firstBatchWeek": 1,
     "firstBatchSlot": 1,
-    "minimumAssetPreparedChecks": 3,
+    "minimumAssetPreparedChecks": 1,
     "blockerOrder": [
       "set_platform_profile_links",
       "publish_first_batch",
@@ -44,59 +42,41 @@
       "publish_first_batch": "The first-batch posting-queue.csv platform rows are marked published and have post_url values.",
       "backfill_first_batch_kpis": "At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions."
     },
-    "rule": "三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。"
+    "rule": "YouTube profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。"
   },
   "metrics": {
-    "profileRows": 3,
-    "profileLinksValid": 3,
-    "profileConfigured": 0,
-    "firstBatchRows": 3,
-    "firstBatchScheduled": 3,
-    "firstWeekRows": 9,
-    "firstWeekScheduled": 9,
+    "profileRows": 1,
+    "profileLinksValid": 1,
+    "profileConfigured": 1,
+    "firstBatchRows": 1,
+    "firstBatchScheduled": 1,
+    "firstWeekRows": 3,
+    "firstWeekScheduled": 3,
     "assetReady": 3,
     "assetPrepared": 3,
     "publishedRows": 0,
     "filledKpiRows": 0,
-    "platformChecklistRows": 3,
-    "firstBatchScheduleRows": 3,
-    "blockers": 3,
+    "platformChecklistRows": 1,
+    "firstBatchScheduleRows": 1,
+    "blockers": 2,
     "issues": 0
   },
   "readiness": {
     "structureReady": true,
     "readyToStartSetup": true,
-    "readyToPublishPosts": false,
+    "readyToPublishPosts": true,
     "readyForKpiDecision": false,
     "emptyDataMode": true
   },
-  "nextDecision": "先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。",
+  "nextDecision": "可發布首批 YouTube Shorts；發布後立即回填 post_url 與最小 KPI。",
   "platformChecklist": [
     {
       "platform": "youtube_shorts",
       "label": "YouTube Shorts",
-      "status": "planned",
+      "status": "set",
       "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profileLinkValid": true,
-      "configured": false,
-      "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
-    },
-    {
-      "platform": "tiktok",
-      "label": "TikTok",
-      "status": "planned",
-      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
-      "profileLinkValid": true,
-      "configured": false,
-      "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
-    },
-    {
-      "platform": "instagram_reels",
-      "label": "Instagram Reels",
-      "status": "planned",
-      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
-      "profileLinkValid": true,
-      "configured": false,
+      "configured": true,
       "writeback": "platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions"
     }
   ],
@@ -116,58 +96,20 @@
       "trackedUrlValid": true,
       "primaryCta": "完成 15 題測驗，找到你的情感守護者",
       "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
-    },
-    {
-      "platform": "tiktok",
-      "label": "TikTok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "guardianId": "iris",
-      "guardianName": "艾莉絲",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "scheduledDate": "2026-06-15",
-      "scheduledTime": "21:00",
-      "timezone": "Asia/Taipei",
-      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "trackedUrlValid": true,
-      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
-    },
-    {
-      "platform": "instagram_reels",
-      "label": "Instagram Reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "guardianId": "iris",
-      "guardianName": "艾莉絲",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "scheduledDate": "2026-06-15",
-      "scheduledTime": "21:30",
-      "timezone": "Asia/Taipei",
-      "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "trackedUrlValid": true,
-      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "writeback": "posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup"
     }
   ],
   "blockers": [
     {
-      "id": "set_platform_profile_links",
-      "phase": "profile_setup",
-      "severity": "launch_blocker",
-      "message": "3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。"
-    },
-    {
       "id": "publish_first_batch",
       "phase": "publish",
       "severity": "measurement_blocker",
-      "message": "首批 3 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。"
+      "message": "首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。"
     },
     {
       "id": "backfill_first_batch_kpis",
       "phase": "measurement",
       "severity": "decision_blocker",
-      "message": "KPI 尚未回填到前 3 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。"
+      "message": "KPI 尚未回填到前 1 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。"
     }
   ],
   "safety": {

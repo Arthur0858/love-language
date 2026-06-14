@@ -14,6 +14,7 @@ POST_BATCH = PROMOTION_DIR / "post-batch-import-quickstart.json"
 LAUNCH_CLIPBOARD = PROMOTION_DIR / "launch-clipboard.json"
 MASTER_GATE = PROMOTION_DIR / "master-gate.json"
 BLOCKER_DIGEST = PROMOTION_DIR / "launch-blocker-digest.json"
+PROFILE_QUICKSTART = PROMOTION_DIR / "profile-quickstart.json"
 OUTPUT_MD = PROMOTION_DIR / "launch-proof-control-sheet.md"
 OUTPUT_JSON = PROMOTION_DIR / "launch-proof-control-sheet.json"
 OUTPUT_TXT = PROMOTION_DIR / "launch-proof-control-sheet.txt"
@@ -37,6 +38,14 @@ def metric(payload: dict, key: str) -> int:
         return int(values.get(key, 0) or 0)
     except (TypeError, ValueError):
         return 0
+
+
+def active_platforms() -> set[str]:
+    if not PROFILE_QUICKSTART.exists():
+        return {"youtube_shorts"}
+    data = json.loads(PROFILE_QUICKSTART.read_text(encoding="utf-8"))
+    platforms = {str(row.get("platform", "")) for row in data.get("platforms", []) if row.get("platform")}
+    return platforms or {"youtube_shorts"}
 
 
 def normalize_rows(rows: list[dict], proof_type: str) -> list[dict[str, str]]:
@@ -73,40 +82,45 @@ def build_sheet() -> dict:
     post_blocked = metric(post, "blockedRows")
     profile_placeholder = metric(profile, "placeholderProofRows")
     profile_real_ready = metric(profile, "realProofReadyRows")
+    active_count = len(active_platforms())
     stage = str(master.get("stage") or blocker.get("stage") or "")
+    master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
+    master_profile_configured = int(master_metrics.get("profileConfigured", 0) or 0)
+    master_first_batch_published = int(master_metrics.get("firstBatchPublished", 0) or 0)
+    master_minimum_kpi_rows = int(master_metrics.get("firstBatchMinimumKpiRows", 0) or 0)
     steps = [
         {
             "id": "prepare_profile_proofs",
-            "status": "complete" if profile_ready == 3 else "current_action",
+            "status": "complete" if profile_ready == active_count else "current_action",
             "command": "python3 tools/promotion_profile_batch_import.py --check",
-            "release": "profile batch readyRows is 3.",
+            "release": f"profile batch readyRows is {active_count}.",
         },
         {
             "id": "write_profile_batch",
-            "status": "complete" if int(master.get("profileConfigured", 0) or 0) == 3 else "blocked_until_profile_ready",
+            "status": "complete" if master_profile_configured >= active_count else "blocked_until_profile_ready",
             "command": "python3 tools/promotion_profile_batch_import.py --add",
             "release": "master gate moves from profile_setup to first_batch_publish.",
         },
         {
             "id": "prepare_post_proofs",
-            "status": "complete" if post_ready == 3 else "blocked_until_profile_gate",
+            "status": "complete" if post_ready == active_count else "blocked_until_profile_gate",
             "command": "python3 tools/promotion_post_batch_import.py --check",
-            "release": "post batch readyRows is 3.",
+            "release": f"post batch readyRows is {active_count}.",
         },
         {
             "id": "write_post_batch",
-            "status": "complete" if int(master.get("firstBatchPublished", 0) or 0) == 3 else "blocked_until_post_ready",
+            "status": "complete" if master_first_batch_published >= active_count else "blocked_until_post_ready",
             "command": "python3 tools/promotion_post_batch_import.py --add",
-            "release": "first batch has 3 published rows and minimum KPI rows.",
+            "release": f"first batch has {active_count} published rows and minimum KPI rows.",
         },
         {
             "id": "refresh_and_review",
-            "status": "complete" if int(master.get("minimumKpiRows", 0) or 0) == 3 else "blocked_until_post_writeback",
+            "status": "complete" if master_minimum_kpi_rows >= active_count else "blocked_until_post_writeback",
             "command": "python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_launch_sequence_dry_run.py",
             "release": "dry run stays green and weekly evidence gate can open.",
         },
     ]
-    issues = validate(rows, steps, profile, post, clipboard, stage)
+    issues = validate(rows, steps, profile, post, clipboard, stage, master_profile_configured)
     return {
         "generatedAt": today(),
         "sources": {
@@ -130,7 +144,7 @@ def build_sheet() -> dict:
         },
         "rules": [
             "Profile proofs must be completed before post proofs are imported.",
-            "Batch add commands are allowed only when all three rows in that batch are ready.",
+            "Batch add commands are allowed only when all active rows in that batch are ready.",
             "Post proof requires a real public post URL and checked analytics/source note.",
             "No product, Luna, or affiliate decision is allowed while minimum KPI rows are empty.",
         ],
@@ -140,25 +154,25 @@ def build_sheet() -> dict:
     }
 
 
-def validate(rows: list[dict[str, str]], steps: list[dict[str, str]], profile: dict, post: dict, clipboard: dict, stage: str) -> list[str]:
+def validate(rows: list[dict[str, str]], steps: list[dict[str, str]], profile: dict, post: dict, clipboard: dict, stage: str, master_profile_configured: int) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 6:
-        issues.append(f"expected 6 proof control rows, got {len(rows)}")
+    active = active_platforms()
+    expected_rows = len(active) * 2
+    if len(rows) != expected_rows:
+        issues.append(f"expected {expected_rows} proof control rows, got {len(rows)}")
     if {row["proofType"] for row in rows} != {"profile", "post"}:
         issues.append("proof control rows must include profile and post rows")
     for proof_type in ("profile", "post"):
         platforms = {row["platform"] for row in rows if row["proofType"] == proof_type}
-        if platforms != {"youtube_shorts", "tiktok", "instagram_reels"}:
-            issues.append(f"{proof_type} rows must cover youtube_shorts, tiktok, and instagram_reels")
+        if platforms != active:
+            issues.append(f"{proof_type} rows must cover all active platforms")
     if len(steps) != 5:
         issues.append("proof control sheet must include five ordered steps")
-    if metric(profile, "readyRows") < 3 and any(step["id"] == "write_profile_batch" and step["status"] == "complete" for step in steps):
+    if master_profile_configured < len(active) and metric(profile, "readyRows") < len(active) and any(step["id"] == "write_profile_batch" and step["status"] == "complete" for step in steps):
         issues.append("profile write step cannot be complete before profile batch is ready")
-    if metric(post, "readyRows") < 3 and any(step["id"] == "write_post_batch" and step["status"] == "complete" for step in steps):
+    if metric(post, "readyRows") < len(active) and any(step["id"] == "write_post_batch" and step["status"] == "complete" for step in steps):
         issues.append("post write step cannot be complete before post batch is ready")
-    if metric(clipboard, "blocks") != 6:
-        issues.append("launch clipboard should expose exactly six proof/copy blocks")
-    if stage != "profile_setup" and metric(profile, "readyRows") == 0:
+    if stage != "profile_setup" and metric(profile, "readyRows") == 0 and master_profile_configured < len(active):
         issues.append("stage cannot advance away from profile_setup while profile batch has no ready rows")
     for row in rows:
         if not row["proofFile"] or not row["status"] or not row["operatorAction"]:

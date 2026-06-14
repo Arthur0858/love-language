@@ -1,30 +1,28 @@
 # LoveTypes Promotion Master Gate
 
-- 產生日期：2026-06-14
-- current stage：`profile_setup` (0 / 6)
-- next action：Finish three platform profile links, then run profile writeback and refresh ops docs.
-- profile configured：0 / 3
+- 產生日期：2026-06-15
+- current stage：`first_batch_publish` (1 / 6)
+- next action：Publish the first-batch YouTube Short and write back the real public post URL.
+- profile configured：1 / 1
 - first batch published：0 / 3
 - minimum KPI rows：0 / 3
 - lead ready routes：0
 - ready offer experiments：0
-- command rows ready / blocked：3 / 18
+- command rows ready / blocked：3 / 3
 - issues：0
 
 ## Gate States
 
-- `launch_readiness`：open（blockers: 3）
-- `profile_completion`：blocked（blockers: 1）
+- `launch_readiness`：open（blockers: 2）
+- `profile_completion`：open（blockers: 0）
 - `first_batch_completion`：blocked（blockers: 2）
-- `weekly_review`：blocked（blockers: 4）
+- `weekly_review`：blocked（blockers: 3）
 - `lead_demand`：blocked（blockers: 2）
-- `offer_experiment`：blocked（blockers: 2）
+- `offer_experiment`：blocked（blockers: 1）
 
 ## Allowed Now
 
-- `set_platform_profile_links`
-- `verify_profile_utm`
-- `writeback_profile_proof`
+- `first_batch_publish`
 
 ## Blocked Decisions
 
@@ -41,6 +39,6 @@
 
 ## Safety
 
-- emptyDataMode：`1`
+- emptyDataMode：`0`
 - Shorts / profile CTA stays on the 15-question guardian quiz.
 - Do not claim diagnosis, therapeutic outcome, guaranteed repair, or required purchase.

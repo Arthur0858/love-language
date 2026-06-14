@@ -1,11 +1,11 @@
 # LoveTypes Empty Data Safety Audit
 
-- 產生日期：2026-06-14
-- empty data mode：`1`
-- fail-closed checks：14
-- blocked offer rows：5
-- blocked experiment rows：20
-- blocked queue rows：80
+- 產生日期：2026-06-15
+- empty data mode：`0`
+- fail-closed checks：0
+- blocked offer rows：0
+- blocked experiment rows：0
+- blocked queue rows：0
 - issues：0
 
 ## Rule

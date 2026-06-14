@@ -116,8 +116,8 @@ def build_pack() -> dict:
         "postWritebackFirstBatch": len(writeback.get("firstBatch", [])),
     }
     issues: list[str] = []
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 first-batch proof handoff rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least 1 first-batch proof handoff row")
     if metrics["proofFiles"] != metrics["rows"]:
         issues.append("all first-batch proof files should exist")
     if metrics["readyToImport"] + metrics["templatesSafelyRejected"] != metrics["rows"]:
@@ -130,8 +130,8 @@ def build_pack() -> dict:
         issues.append("post ops rows should match first-batch proof rows")
     if metrics["postWritebackFirstBatch"] != metrics["rows"]:
         issues.append("post writeback first-batch rows should match proof rows")
-    if metrics["launchDayPostOpsRows"] and metrics["launchDayPostOpsRows"] != metrics["rows"]:
-        issues.append("launch day post ops rows should match proof rows")
+    if metrics["launchDayPostOpsRows"] and metrics["launchDayPostOpsRows"] < metrics["rows"]:
+        issues.append("launch day post ops rows should cover proof rows")
 
     return {
         "generatedAt": today(),

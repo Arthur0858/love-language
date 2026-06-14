@@ -55,6 +55,15 @@ WEEKLY_REVIEW_PATH = SOURCE_DIR / "weekly-review-packet.json"
 TODAY = date.today().isoformat()
 
 
+def active_platforms(docs_dir: Path = SOURCE_DIR) -> set[str]:
+    path = docs_dir / "profile-quickstart.json"
+    if not path.exists():
+        return {"youtube_shorts"}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    platforms = {str(row.get("platform", "")) for row in data.get("platforms", []) if row.get("platform")}
+    return platforms or {"youtube_shorts"}
+
+
 def file_hashes(paths: tuple[Path, ...]) -> dict[Path, str]:
     return {path: hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
 
@@ -77,6 +86,7 @@ def write_json(path: Path, payload: dict) -> None:
 
 
 def patch_paths(temp_root: Path, temp_docs: Path) -> None:
+    active = active_platforms(temp_docs)
     profile_batch.ROOT = temp_root
     profile_batch.PROMOTION_DIR = temp_docs
     profile_batch.PROOF_FILES = {
@@ -84,6 +94,8 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
         "tiktok": temp_docs / "proof-tiktok.txt",
         "instagram_reels": temp_docs / "proof-instagram_reels.txt",
     }
+    profile_batch.PROOF_FILES = {platform: path for platform, path in profile_batch.PROOF_FILES.items() if platform in active}
+    profile_batch.PROFILE_QUICKSTART = temp_docs / "profile-quickstart.json"
     profile_batch.OUTPUT_MD = temp_docs / "profile-batch-import-quickstart.md"
     profile_batch.OUTPUT_JSON = temp_docs / "profile-batch-import-quickstart.json"
     profile_batch.OUTPUT_TXT = temp_docs / "profile-batch-import-quickstart.txt"
@@ -137,6 +149,7 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
         "tiktok": temp_docs / f"proof-tiktok-{post_batch.TASK_ID}.txt",
         "instagram_reels": temp_docs / f"proof-instagram_reels-{post_batch.TASK_ID}.txt",
     }
+    post_batch.PROOF_FILES = {platform: path for platform, path in post_batch.PROOF_FILES.items() if platform in active}
     post_batch.OUTPUT_MD = temp_docs / "post-batch-import-quickstart.md"
     post_batch.OUTPUT_JSON = temp_docs / "post-batch-import-quickstart.json"
     post_batch.OUTPUT_TXT = temp_docs / "post-batch-import-quickstart.txt"
@@ -271,10 +284,13 @@ def run_sequence() -> dict[str, int]:
         temp_docs.parent.mkdir(parents=True, exist_ok=True)
         shutil.copytree(SOURCE_DIR, temp_docs)
         patch_paths(temp_root, temp_docs)
+        active = active_platforms(temp_docs)
 
         initial_readiness = build_readiness(temp_docs)
         initial_stage = transition_stage(initial_readiness, temp_docs)
         for proof_file in PROFILE_PROOF_FILES:
+            if platform_from_text(proof_file.read_text(encoding="utf-8")) not in active:
+                continue
             (temp_docs / proof_file.name).write_text(sample_profile_text(proof_file), encoding="utf-8")
         old_refresh_flag = os.environ.get(promotion_refresh.REFRESH_FLAG)
         os.environ[promotion_refresh.REFRESH_FLAG] = "1"
@@ -298,6 +314,8 @@ def run_sequence() -> dict[str, int]:
         write_json(temp_docs / "profile-completion-gate.json", profile_gate)
 
         for proof_file in POST_PROOF_FILES:
+            if platform_from_text(proof_file.read_text(encoding="utf-8")) not in active:
+                continue
             (temp_docs / proof_file.name).write_text(sample_post_text(proof_file), encoding="utf-8")
         old_refresh_flag = os.environ.get(promotion_refresh.REFRESH_FLAG)
         os.environ[promotion_refresh.REFRESH_FLAG] = "1"
@@ -342,17 +360,18 @@ def run_sequence() -> dict[str, int]:
 
 
 def validate_metrics(metrics: dict[str, int]) -> list[str]:
+    active_count = len(active_platforms())
+    initial_profile_open = int(metrics.get("promotion_launch_sequence_dry_run_initial_ready_to_publish", 0) or 0)
     expected = {
-        "promotion_launch_sequence_dry_run_initial_ready_to_publish": 0,
-        "promotion_launch_sequence_dry_run_profile_imports": 3,
-        "promotion_launch_sequence_dry_run_profile_batch_ready": 3,
-        "promotion_launch_sequence_dry_run_profile_configured": 3,
+        "promotion_launch_sequence_dry_run_profile_imports": active_count,
+        "promotion_launch_sequence_dry_run_profile_batch_ready": active_count,
+        "promotion_launch_sequence_dry_run_profile_configured": active_count,
         "promotion_launch_sequence_dry_run_profile_ready_to_publish": 1,
         "promotion_launch_sequence_dry_run_profile_gate_ready": 1,
-        "promotion_launch_sequence_dry_run_post_imports": 3,
-        "promotion_launch_sequence_dry_run_post_batch_ready": 3,
-        "promotion_launch_sequence_dry_run_first_batch_published": 3,
-        "promotion_launch_sequence_dry_run_minimum_kpi_rows": 3,
+        "promotion_launch_sequence_dry_run_post_imports": active_count,
+        "promotion_launch_sequence_dry_run_post_batch_ready": active_count,
+        "promotion_launch_sequence_dry_run_first_batch_published": active_count,
+        "promotion_launch_sequence_dry_run_minimum_kpi_rows": active_count,
         "promotion_launch_sequence_dry_run_publishing_ready": 1,
         "promotion_launch_sequence_dry_run_weekly_ready": 1,
         "promotion_launch_sequence_dry_run_current_files_mutated": 0,
@@ -361,7 +380,7 @@ def validate_metrics(metrics: dict[str, int]) -> list[str]:
     if metrics["promotion_launch_sequence_dry_run_traceable_evidence"] != metrics["promotion_launch_sequence_dry_run_required_evidence"]:
         issues.append("all required profile/post evidence should be traceable in the dry run")
     expected_stages = {
-        "promotion_launch_sequence_dry_run_initial_stage": "profile_setup",
+        "promotion_launch_sequence_dry_run_initial_stage": "first_batch_publish" if initial_profile_open else "profile_setup",
         "promotion_launch_sequence_dry_run_profile_stage": "first_batch_publish",
         "promotion_launch_sequence_dry_run_post_stage": "weekly_evidence",
     }
@@ -400,7 +419,7 @@ def render_markdown(report: dict) -> str:
         "",
         "- This is a temporary-directory dry run; current promotion CSV files must not mutate.",
         "- Profile proof batch import must open the profile gate before first-batch post imports.",
-        "- Post proof batch import must produce three published rows, three minimum KPI rows, and traceable evidence.",
+        "- Post proof batch import must produce active-platform published rows, minimum KPI rows, and traceable evidence.",
         "- Blocker stage must move from profile_setup to first_batch_publish, then hold at weekly_evidence until real weekly review data exists.",
         "- Weekly decision can open only after the simulated post URL and KPI evidence path is complete.",
         "",

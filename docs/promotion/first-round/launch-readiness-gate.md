@@ -1,20 +1,20 @@
 # LoveTypes Launch Readiness Gate
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 結構就緒：`1`
 - 可開始設定平台入口：`1`
-- 可發布首批貼文：`0`
+- 可發布首批貼文：`1`
 - 可做 KPI/商品判斷：`0`
 - 空資料模式：`1`
-- 規則：三個平台 profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。
+- 規則：YouTube profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。
 - blocker 順序：`set_platform_profile_links`, `publish_first_batch`, `backfill_first_batch_kpis`
 
 ## 目前數字
 
-- 平台個人頁：0 / 3 已標記 set/live
-- 平台追蹤連結：3 / 3 有效
-- 首批排程：3 / 3 有效
-- 首週排程：9 / 9 有效
+- 平台個人頁：1 / 1 已標記 set/live
+- 平台追蹤連結：1 / 1 有效
+- 首批排程：1 / 1 有效
+- 首週排程：3 / 3 有效
 - 素材預備檢查：3
 - 已發布平台列：0
 - 已回填 KPI 列：0
@@ -24,22 +24,8 @@
 
 ### YouTube Shorts
 
-- 狀態：`planned` (待設定)
+- 狀態：`set` (完成)
 - Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-- 連結檢查：有效
-- 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
-
-### TikTok
-
-- 狀態：`planned` (待設定)
-- Profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- 連結檢查：有效
-- 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
-
-### Instagram Reels
-
-- 狀態：`planned` (待設定)
-- Profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
 - 連結檢查：有效
 - 回填：platform-profile-tracker.csv: status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
 
@@ -55,35 +41,14 @@
 - 連結檢查：有效
 - 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
 
-### TikTok · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
-
-- 排程：2026-06-15 21:00 Asia/Taipei
-- task：`publish-lt-s01-iris-silence`
-- script：`lt-s01-iris-silence`
-- CTA：完成 15 題測驗，找到你的情感守護者
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- 連結檢查：有效
-- 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
-
-### Instagram Reels · 艾莉絲 · 他沉默時，你最想聽見哪一句話？
-
-- 排程：2026-06-15 21:30 Asia/Taipei
-- task：`publish-lt-s01-iris-silence`
-- script：`lt-s01-iris-silence`
-- CTA：完成 15 題測驗，找到你的情感守護者
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- 連結檢查：有效
-- 回填：posting-queue.csv: status=published, published_date, post_url; platform-kpi-tracker.csv: same platform row post_url, site_clicks, quiz_starts, quiz_completions; kpi-tracker.csv: script-level weekly rollup
-
 ## 下一個決策
 
-- 先設定三個平台個人頁連結；完成 set/live 後發布首批三平台貼文。
+- 可發布首批 YouTube Shorts；發布後立即回填 post_url 與最小 KPI。
 
 ## 阻擋項
 
-- `set_platform_profile_links` (launch_blocker)：3 個平台個人頁仍未全部標記為 set/live；發布前先把 Bio/Profile link 設為平台專屬 /start/ 追蹤連結。 解除條件：All platform-profile-tracker.csv rows are marked set/live with valid /start/ campaign profile links.
-- `publish_first_batch` (measurement_blocker)：首批 3 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。 解除條件：The first-batch posting-queue.csv platform rows are marked published and have post_url values.
-- `backfill_first_batch_kpis` (decision_blocker)：KPI 尚未回填到前 3 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。 解除條件：At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.
+- `publish_first_batch` (measurement_blocker)：首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。 解除條件：The first-batch posting-queue.csv platform rows are marked published and have post_url values.
+- `backfill_first_batch_kpis` (decision_blocker)：KPI 尚未回填到前 1 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。 解除條件：At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.
 
 ## 安全界線
 

@@ -93,24 +93,25 @@ def validate(
     rows: list[dict[str, str]],
 ) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 3:
-        issues.append(f"expected 3 profile readiness rows, got {len(rows)}")
-    if int(action_sheet.get("metrics", {}).get("rows", 0) or 0) != 3:
-        issues.append("profile setup action sheet should contain 3 rows")
-    if int(link_qa.get("profileLinks", 0) or 0) != 3:
-        issues.append("launch-link-qa should contain 3 profile links")
+    expected_rows = len(rows)
+    if expected_rows < 1:
+        issues.append("expected at least one active profile readiness row")
+    if int(action_sheet.get("metrics", {}).get("rows", 0) or 0) != expected_rows:
+        issues.append("profile setup action sheet should match active profile rows")
+    if int(link_qa.get("profileLinks", 0) or 0) != expected_rows:
+        issues.append("launch-link-qa should match active profile links")
     if smoke_code != 0:
         issues.append("profile public launch link smoke failed")
-    if smoke_metrics.get("public_launch_link_checked") != 3:
-        issues.append("profile public launch link smoke should check 3 links")
-    if smoke_metrics.get("public_launch_link_profile_checked") != 3:
-        issues.append("profile public launch link smoke should report 3 profile links")
-    if smoke_metrics.get("public_launch_link_quiz_entries") != 3:
+    if smoke_metrics.get("public_launch_link_checked") != expected_rows:
+        issues.append("profile public launch link smoke should check all active links")
+    if smoke_metrics.get("public_launch_link_profile_checked") != expected_rows:
+        issues.append("profile public launch link smoke should report active profile links")
+    if smoke_metrics.get("public_launch_link_quiz_entries") != expected_rows:
         issues.append("all profile links should expose quiz entry signals")
-    if smoke_metrics.get("public_launch_link_safety_navs") != 3:
+    if smoke_metrics.get("public_launch_link_safety_navs") != expected_rows:
         issues.append("all profile links should expose safety footer links")
-    if smoke_metrics.get("public_launch_link_utm_checks") != 12:
-        issues.append("profile public launch link smoke should validate 12 UTM fields")
+    if smoke_metrics.get("public_launch_link_utm_checks") != expected_rows * 4:
+        issues.append("profile public launch link smoke should validate UTM fields for all active links")
     if smoke_metrics.get("public_launch_link_issues", 1) != 0:
         issues.append("profile public launch link smoke reported issues")
     if int(profile_completion.get("metrics", {}).get("profileConfigured", 0) or 0) != 0 and not profile_completion.get("state", {}).get("readyForFirstBatchPublish"):
@@ -141,7 +142,7 @@ def render_markdown(payload: dict) -> str:
         "",
         "- `public ready` 只代表 LoveTypes `/start/` 追蹤連結可用，不代表平台 profile 已設定。",
         "- 只有完成外部平台設定、保存 proof note，並回填 profile tracker 後，才能解除 `profile_setup` gate。",
-        "- 三個平台 profile 都 set/live 前，不發布第一批 Shorts/Reels。",
+        "- 啟用平台 profile 都 set/live 前，不發布第一批 Shorts。",
         "",
         "## Rows",
         "",

@@ -12,7 +12,9 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 SCRIPTS_PATH = PROMOTION_DIR / "shorts-scripts.zh-TW.json"
 DEFAULT_INDEX_PATH = PROMOTION_DIR / "week-asset-briefs-index.md"
 DEFAULT_INDEX_JSON_PATH = PROMOTION_DIR / "week-asset-briefs-index.json"
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORMS = ("youtube_shorts",)
+PRIMARY_CTA = "Take the 15-question quiz to find your emotional guardian"
+QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 SCENE_SUBTITLE_GROUP_SIZE = 3
 MIN_SCENE_CARDS_PER_BRIEF = 3
 DOWNSTREAM_KPI_HINT = (
@@ -115,7 +117,7 @@ def build_brief(week: int, script_row: dict, source_script: dict) -> dict:
         "format": {
             "aspectRatio": "9:16",
             "targetDuration": "20-30s",
-            "primaryCTA": script_row.get("primaryCta", "完成 15 題測驗，找到你的情感守護者"),
+            "primaryCTA": script_row.get("primaryCta", PRIMARY_CTA),
             "recommendedOutput": f"exports/lovetypes/week-{week}/{script_row.get('scriptId', '')}.mp4",
         },
         "sceneCards": build_scene_cards(source_script),
@@ -125,7 +127,7 @@ def build_brief(week: int, script_row: dict, source_script: dict) -> dict:
             "不宣稱診斷、療效或保證修復。",
             "不把短片 CTA 改成直接購買。",
             "不交換守護者名稱、愛之語、色系或象徵物。",
-            "Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。",
+            "Caption 與畫面 CTA 維持單一路徑：15-question quiz。",
             "發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。",
         ],
     }
@@ -189,7 +191,7 @@ def validate_week_payload(payload: dict) -> list[str]:
             caption = platform.get("caption", "")
             tracked_url = platform.get("trackedUrl", "")
             platform_label = platform.get("platform", "<platform>")
-            if "完成 15 題測驗" not in caption:
+            if not any(marker in caption for marker in QUIZ_CTA_MARKERS):
                 issues.append(f"{label}/{platform_label}: caption missing quiz CTA")
             if "utm_campaign=first_round_quiz_completion" not in tracked_url:
                 issues.append(f"{label}/{platform_label}: tracked URL missing campaign marker")

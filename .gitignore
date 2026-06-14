@@ -9,6 +9,10 @@ node_modules/
 .playwright-cli/
 artifacts/
 
+# Python 檢查產物
+__pycache__/
+*.pyc
+
 # 上層目錄意外進入的資料夾
 love/
 

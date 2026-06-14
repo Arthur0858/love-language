@@ -82,8 +82,8 @@ def build_payload() -> dict:
 def validate(payload: dict) -> list[str]:
     issues: list[str] = []
     metrics = payload["metrics"]
-    if metrics["platforms"] != 3:
-        issues.append(f"expected 3 platform profiles, got {metrics['platforms']}")
+    if metrics["platforms"] < 1:
+        issues.append(f"expected at least 1 platform profile, got {metrics['platforms']}")
     if metrics["rows"] != metrics["platforms"] * metrics["checksPerPlatform"]:
         issues.append("account identity checklist row count mismatch")
     if metrics["pendingRows"] != metrics["rows"]:

@@ -1,15 +1,15 @@
 # LoveTypes Decision Input Matrix
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - decisions：5
 - ready decisions：0
 - active decisions：1
 - blocked decisions：4
-- input rows：324
+- input rows：288
 - filled input rows：0
-- blocked input rows：324
+- blocked input rows：270
 - lead ready routes：0
-- empty data mode：1
+- empty data mode：0
 - issues：0
 
 ## Rules
@@ -27,7 +27,7 @@
 - gate：`weeklyDecision` open=0
 - readiness checklist：`active`
 - required metrics：`profile_clicks, site_clicks, quiz_starts, quiz_completions`
-- inputs：72 rows; filled 0; ready 0; blocked 72
+- inputs：64 rows; filled 0; ready 4; blocked 60
 - minimum filled：0
 - blocker：none
 - allowed：Set profiles, publish first batch, and backfill public URLs plus minimum KPI evidence.
@@ -39,7 +39,7 @@
 - gate：`scaleContent` open=0
 - readiness checklist：`blocked`
 - required metrics：`site_clicks, quiz_starts, quiz_completions`
-- inputs：54 rows; filled 0; ready 0; blocked 54
+- inputs：48 rows; filled 0; ready 3; blocked 45
 - minimum filled：3
 - blocker：required source rows are still blocked by profile/post/KPI setup
 - allowed：Publish more variants for the strongest guardian or pain point while keeping quiz CTA.
@@ -51,7 +51,7 @@
 - gate：`deepenIdentityAsset` open=0
 - readiness checklist：`blocked`
 - required metrics：`guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads`
-- inputs：108 rows; filled 0; ready 0; blocked 108
+- inputs：96 rows; filled 0; ready 6; blocked 90
 - minimum filled：1
 - blocker：required source rows are still blocked by profile/post/KPI setup
 - allowed：Improve free keepsakes, story cards, share images, and result-route assets.
@@ -63,7 +63,7 @@
 - gate：`buildOwnedLeadAsset` open=0
 - readiness checklist：`blocked`
 - required metrics：`supply_lead_requests, contact_requests`
-- inputs：36 rows; filled 0; ready 0; blocked 36
+- inputs：32 rows; filled 0; ready 2; blocked 30
 - minimum filled：1
 - blocker：required source rows are still blocked by profile/post/KPI setup
 - allowed：Build one low-risk email/download asset for the signaled guardian or route.
@@ -75,7 +75,7 @@
 - gate：`testSoftOffer` open=0
 - readiness checklist：`blocked`
 - required metrics：`luna_pack_clicks, affiliate_book_clicks, quiz_completions`
-- inputs：54 rows; filled 0; ready 0; blocked 54
+- inputs：48 rows; filled 0; ready 3; blocked 45
 - minimum filled：2
 - blocker：required source rows are still blocked by profile/post/KPI setup
 - allowed：Test a soft result-route Luna or affiliate offer after the quiz/result context.

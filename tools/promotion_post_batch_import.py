@@ -22,6 +22,16 @@ PROOF_FILES = {
 OUTPUT_MD = PROMOTION_DIR / "post-batch-import-quickstart.md"
 OUTPUT_JSON = PROMOTION_DIR / "post-batch-import-quickstart.json"
 OUTPUT_TXT = PROMOTION_DIR / "post-batch-import-quickstart.txt"
+PROFILE_QUICKSTART = PROMOTION_DIR / "profile-quickstart.json"
+
+
+def active_proof_files() -> dict[str, Path]:
+    if PROFILE_QUICKSTART.exists():
+        data = json.loads(PROFILE_QUICKSTART.read_text(encoding="utf-8"))
+        active = {str(row.get("platform", "")) for row in data.get("platforms", []) if row.get("platform")}
+        if active:
+            return {platform: path for platform, path in PROOF_FILES.items() if platform in active}
+    return dict(PROOF_FILES)
 
 
 def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -80,14 +90,15 @@ def classify_proof(path: Path) -> dict[str, object]:
 
 
 def build_packet() -> dict:
-    rows = [classify_proof(path) for path in PROOF_FILES.values()]
+    proof_files = active_proof_files()
+    rows = [classify_proof(path) for path in proof_files.values()]
     ready_rows = sum(int(row["ready"]) for row in rows)
     blocked_rows = sum(1 for row in rows if row["status"] == "blocked_until_real_public_post")
     invalid_rows = sum(1 for row in rows if row["status"] not in {"ready", "blocked_until_real_public_post"})
     platforms = [str(row.get("platform", "")) for row in rows if row.get("platform")]
     issues: list[str] = []
-    if len(set(platforms)) != len(PROOF_FILES):
-        issues.append("post proof files must cover exactly youtube_shorts, tiktok, and instagram_reels")
+    if len(set(platforms)) != len(proof_files):
+        issues.append("post proof files must cover all active platforms")
     if invalid_rows:
         issues.append(f"invalid post proof rows: {invalid_rows}")
     return {
@@ -112,12 +123,13 @@ def build_packet() -> dict:
 
 def apply_batch(packet: dict) -> None:
     metrics = packet["metrics"]
-    if metrics["readyRows"] != len(PROOF_FILES) or metrics["issues"]:
+    proof_files = active_proof_files()
+    if metrics["readyRows"] != len(proof_files) or metrics["issues"]:
         details = []
         for row in packet["rows"]:
             if row["issues"] or not row["ready"]:
                 details.append(f"{row.get('platform') or row.get('proofFile')}: {row['status']}")
-        raise SystemExit("post batch import requires all three public post proof files ready\n" + "\n".join(details))
+        raise SystemExit("post batch import requires all active public post proof files ready\n" + "\n".join(details))
     profile_issue = writeback.profile_gate_issue()
     if profile_issue:
         raise SystemExit(profile_issue)
@@ -217,7 +229,7 @@ def write_outputs(packet: dict) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check or import all first-batch public post proof files as one guarded batch.")
+    parser = argparse.ArgumentParser(description="Check or import active first-batch public post proof files as one guarded batch.")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--add", action="store_true")
     args = parser.parse_args()

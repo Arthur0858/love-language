@@ -1,9 +1,9 @@
 # LoveTypes KPI Zero Source Rehearsal
 
-- 產生日期：2026-06-14
-- rows：3
-- rejects zero without source：3
-- accepts zero with source：3
+- 產生日期：2026-06-15
+- rows：1
+- rejects zero without source：1
+- accepts zero with source：1
 - issues：0
 
 ## Rule
@@ -15,5 +15,3 @@
 ## Rows
 
 - `youtube_shorts` / `publish-lt-s01-iris-silence`：reject=1 pass=1 issues=0
-- `tiktok` / `publish-lt-s01-iris-silence`：reject=1 pass=1 issues=0
-- `instagram_reels` / `publish-lt-s01-iris-silence`：reject=1 pass=1 issues=0

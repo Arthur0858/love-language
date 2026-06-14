@@ -12,7 +12,7 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 QUEUE_PATH = PROMOTION_DIR / "posting-queue.csv"
 TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 TRACKER_JSON_PATH = PROMOTION_DIR / "platform-kpi-tracker.json"
-PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORMS = ("youtube_shorts",)
 METRIC_FIELDS = [
     "views",
     "likes",

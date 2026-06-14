@@ -66,9 +66,9 @@ def first_blocker_ids(data: dict) -> list[str]:
 
 def determine_stage(profile: dict, first_batch: dict, weekly: dict, lead: dict, offer: dict) -> tuple[str, str]:
     if not state_bool(profile, "readyForFirstBatchPublish"):
-        return "profile_setup", "Finish three platform profile links, then run profile writeback and refresh ops docs."
+        return "profile_setup", "Finish active platform profile links, then run profile writeback and refresh ops docs."
     if not state_bool(first_batch, "firstBatchPublished"):
-        return "first_batch_publish", "Publish the first-batch Shorts on three platforms and write back real post URLs."
+        return "first_batch_publish", "Publish the first-batch YouTube Short and write back the real public post URL."
     if not state_bool(first_batch, "minimumKpiComplete"):
         return "first_batch_kpi", "Fill or verified-zero site_clicks, quiz_starts, and quiz_completions for each first-batch post."
     if not weekly.get("state", {}).get("readyForWeeklyDecision"):

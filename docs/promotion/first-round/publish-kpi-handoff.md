@@ -1,10 +1,10 @@
 # LoveTypes Publish to KPI Handoff
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - rows：7
-- complete rows：1
+- complete rows：2
 - current blockers：1
-- blocked upstream rows：5
+- blocked upstream rows：4
 - published rows：0 / 3
 - minimum KPI rows：0 / 3
 - ready for weekly review：0
@@ -22,8 +22,8 @@
 ### `profile_publish_handoff_open`
 
 - phase：`profile_to_publish`
-- status：`current_blocker`
-- value：0 / 1
+- status：`complete`
+- value：1 / 1
 - action：Only continue after the profile handoff says first-batch publishing is open.
 - evidence：profile-publish-handoff readyToPublish is true after profile proof writeback and refresh.
 - command：`python3 tools/promotion_profile_publish_handoff.py --check`
@@ -32,18 +32,18 @@
 ### `first_batch_publish_sheet_ready`
 
 - phase：`publish`
-- status：`blocked_upstream`
-- value：0 / 3
-- action：Confirm three first-batch rows are ready before opening platform publishing.
-- evidence：first-batch publish action sheet has three ready rows and zero issues.
+- status：`complete`
+- value：1 / 1
+- action：Confirm all active first-batch rows are ready before opening platform publishing.
+- evidence：first-batch publish action sheet has all active rows ready and zero issues.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
 - stop：Do not publish if any row remains blocked_until_profile_links.
 
 ### `post_url_writeback_complete`
 
 - phase：`post_writeback`
-- status：`blocked_upstream`
-- value：0 / 3
+- status：`current_blocker`
+- value：0 / 1
 - action：After each platform post is public, write back real HTTPS post_url with proof.
 - evidence：posting-queue.csv and platform-kpi-tracker.csv have published status, date, post_url, and proof note.
 - command：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
@@ -53,9 +53,9 @@
 
 - phase：`post_writeback`
 - status：`blocked_upstream`
-- value：0 / 3
+- value：0 / 1
 - action：Confirm every first-batch post has traceable public URL evidence.
-- evidence：first-batch completion gate traceablePostEvidence matches all three published rows.
+- evidence：first-batch completion gate traceablePostEvidence matches all active published rows.
 - command：`python3 tools/promotion_first_batch_completion_gate.py --check`
 - stop：Stop if proof is generic, missing, or not tied to platform/date/post URL.
 
@@ -82,8 +82,8 @@
 ### `empty_data_safety_locked`
 
 - phase：`decision_safety`
-- status：`complete`
-- value：1 / 1
+- status：`blocked_upstream`
+- value：0 / 1
 - action：Keep commercial decisions locked until weekly review opens with real data.
 - evidence：weekly-review remains empty-data mode and stage matrix exposes exactly one current blocker.
 - command：`python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_stage_transition_matrix.py --check`

@@ -134,8 +134,8 @@ def build_pack() -> dict:
         "profileGateReady": int(bool(completion.get("state", {}).get("readyForFirstBatchPublish"))),
     }
     issues: list[str] = []
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 profile proof rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least one active profile proof row")
     if metrics["proofFiles"] != metrics["rows"]:
         issues.append("all profile proof files should exist")
     if metrics["importableTemplates"] != metrics["rows"]:
@@ -157,7 +157,7 @@ def build_pack() -> dict:
             "Importable proof text is not proof of setup; it only means the writeback format is valid.",
             "Run the write command only after the platform profile link is actually set and verified.",
             "Keep status planned until there is a real screenshot, public click, or platform-time proof note.",
-            "After all three profile rows are set/live, rerun launch readiness before publishing first batch.",
+            "After all active profile rows are set/live, rerun launch readiness before publishing first batch.",
         ],
         "issues": issues,
     }

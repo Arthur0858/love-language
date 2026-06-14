@@ -1,10 +1,10 @@
 # LoveTypes Promotion Evidence Ledger
 
-- 產生日期：2026-06-14
-- rows：63
-- required / traceable：0 / 0
+- 產生日期：2026-06-15
+- rows：31
+- required / traceable：1 / 1
 - generic / missing：0 / 0
-- pending：63
+- pending：30
 - issues：0
 
 ## Rule
@@ -15,20 +15,21 @@
 
 ## Required Evidence
 
-- 目前沒有已完成狀態需要證據；外部平台設定與發布仍待執行。
+- `profile` `youtube_shorts` / `youtube_shorts`：traceable
+  - proof：2026-06-14 checked https://studio.youtube.com/channel/UCrOxX4L-lX-sSO_ngfURPvA/editing/profile and public handle https://www.youtube.com/@LoveTypesQuiz: English bio visible; Take the LoveTypes Quiz link uses youtube_shorts_bio UTM
 
 ## Pending Setup / Publication
 
-- `profile` `youtube_shorts` / `youtube_shorts`：planned
-- `profile` `tiktok` / `tiktok`：planned
-- `profile` `instagram_reels` / `instagram_reels`：planned
 - `post` `youtube_shorts` / `publish-lt-s01-iris-silence`：planned
-- `post` `tiktok` / `publish-lt-s01-iris-silence`：planned
-- `post` `instagram_reels` / `publish-lt-s01-iris-silence`：planned
 - `post` `youtube_shorts` / `publish-lt-s02-iris-affirmation`：planned
-- `post` `tiktok` / `publish-lt-s02-iris-affirmation`：planned
-- `post` `instagram_reels` / `publish-lt-s02-iris-affirmation`：planned
 - `post` `youtube_shorts` / `publish-lt-s03-iris-too-sensitive`：planned
-- `post` `tiktok` / `publish-lt-s03-iris-too-sensitive`：planned
-- `post` `instagram_reels` / `publish-lt-s03-iris-too-sensitive`：planned
-- ... plus 51 pending rows
+- `post` `youtube_shorts` / `publish-lt-s04-noah-phone`：planned
+- `post` `youtube_shorts` / `publish-lt-s05-noah-cancel`：planned
+- `post` `youtube_shorts` / `publish-lt-s06-noah-quiet-time`：planned
+- `post` `youtube_shorts` / `publish-lt-s07-vivian-remembered`：planned
+- `post` `youtube_shorts` / `publish-lt-s08-vivian-forgotten-date`：planned
+- `post` `youtube_shorts` / `publish-lt-s09-vivian-ritual`：planned
+- `post` `youtube_shorts` / `publish-lt-s10-claire-tired`：planned
+- `post` `youtube_shorts` / `publish-lt-s11-claire-promises`：planned
+- `post` `youtube_shorts` / `publish-lt-s12-claire-ask-help`：planned
+- ... plus 18 pending rows

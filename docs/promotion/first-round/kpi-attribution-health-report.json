@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "promotionKit": "promotion-kit.json",
     "funnelEvents": "funnel-events.json",
@@ -19,13 +19,13 @@
     "promotion_kpi_schema_revenue_bridge_kpis": 5,
     "promotion_kpi_schema_commerce_items": 20,
     "promotion_kpi_schema_commerce_playbooks": 4,
-    "promotion_kpi_schema_attribution_rows": 18,
+    "promotion_kpi_schema_attribution_rows": 16,
     "promotion_kpi_schema_issues": 0
   },
   "writebackMetrics": {
-    "postingRows": 45,
-    "platformRows": 45,
-    "platformJsonRows": 45,
+    "postingRows": 15,
+    "platformRows": 15,
+    "platformJsonRows": 15,
     "scriptRows": 15,
     "scriptJsonRows": 15,
     "publishedRows": 0,
@@ -34,8 +34,8 @@
     "rollupScripts": 0
   },
   "attributionMetrics": {
-    "rows": 18,
-    "profileRows": 3,
+    "rows": 16,
+    "profileRows": 1,
     "shortsRows": 15,
     "kpiRows": 15,
     "filledKpiRows": 0

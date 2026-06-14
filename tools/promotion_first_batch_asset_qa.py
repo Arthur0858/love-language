@@ -31,6 +31,7 @@ POST_URL_PLACEHOLDERS = {
     "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
 }
 ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
+QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 
 
 def load_json(path: Path) -> dict:
@@ -60,7 +61,7 @@ def qa_items(row: dict) -> list[dict[str, str]]:
         {
             "id": "vertical_video",
             "label": "直式影片檔",
-            "check": "確認 9:16 直式影片可播放，長度符合 Shorts/Reels/TikTok 節奏。",
+            "check": "確認 9:16 直式影片可播放，長度符合 YouTube Shorts 節奏。",
             "evidence": "實際影片檔路徑、平台預覽截圖或剪輯輸出紀錄。",
         },
         {
@@ -84,7 +85,7 @@ def qa_items(row: dict) -> list[dict[str, str]]:
         {
             "id": "caption_quiz_cta",
             "label": "Caption 單一 CTA",
-            "check": "Caption 主 CTA 維持完成 15 題測驗，不加入商品、Luna 或聯盟導購作為第一動作。",
+            "check": "Caption 主 CTA 維持 15-question quiz，不加入商品、Luna 或聯盟導購作為第一動作。",
             "evidence": "平台 caption 草稿。",
         },
         {
@@ -162,15 +163,15 @@ def build_packet() -> dict:
 def validate_packet(packet: dict) -> list[str]:
     issues: list[str] = []
     rows = packet.get("rows", [])
-    if len(rows) != 3:
-        issues.append(f"expected 3 first-batch asset QA rows, got {len(rows)}")
+    if len(rows) != int(packet.get("rowCount", 0) or 0):
+        issues.append(f"expected {packet.get('rowCount')} first-batch asset QA rows, got {len(rows)}")
     for row in rows:
         label = f"{row.get('platform', '<platform>')}/{row.get('taskId', '<task>')}"
         if row.get("guardianId") != "iris":
             issues.append(f"{label}: first-batch asset QA should be Iris")
         if row.get("assetReadyStatus") not in ACCEPTED_ASSET_QA_STATUSES:
             issues.append(f"{label}: asset QA status should be prepared or ready")
-        if "完成 15 題測驗" not in row.get("caption", ""):
+        if not any(marker in row.get("caption", "") for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: caption missing quiz CTA")
         for token in FORBIDDEN_FIRST_CTA:
             if token in row.get("caption", ""):

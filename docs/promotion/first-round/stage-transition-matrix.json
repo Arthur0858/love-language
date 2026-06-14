@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "masterGate": "docs/promotion/first-round/master-gate.json",
     "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
@@ -12,20 +12,20 @@
     "blockerResolution": "docs/promotion/first-round/blocker-resolution-checklist.json",
     "decisionInput": "docs/promotion/first-round/decision-input-matrix.json"
   },
-  "stage": "profile_setup",
+  "stage": "first_batch_publish",
   "metrics": {
     "rows": 6,
-    "completeRows": 0,
+    "completeRows": 1,
     "currentBlockers": 1,
     "nextRows": 0,
-    "blockedUpstreamRows": 5,
+    "blockedUpstreamRows": 4,
     "commandReadyRows": 3,
-    "commandBlockedRows": 18,
-    "emptyDataMode": 1,
-    "profileProofRows": 3,
+    "commandBlockedRows": 3,
+    "emptyDataMode": 0,
+    "profileProofRows": 1,
     "profileProofRealReadyRows": 0,
-    "externalProfileProofBlockers": 3,
-    "currentTrueBlockers": 1
+    "externalProfileProofBlockers": 1,
+    "currentTrueBlockers": 0
   },
   "policy": {
     "oneCurrentBlocker": true,
@@ -40,26 +40,26 @@
       "toStage": "first_batch_publish",
       "gateId": "profile_completion",
       "requiredMetric": "profileConfigured",
-      "requiredValue": 3,
-      "releaseCondition": "All three platform profile rows are set/live with profile_link_set_date and traceable proof.",
+      "requiredValue": 1,
+      "releaseCondition": "All active platform profile rows are set/live with profile_link_set_date and traceable proof.",
       "nextCommand": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_launch_readiness_gate.py --check",
       "fallbackAction": "Use profile proof import templates; do not publish first batch yet.",
-      "status": "current_blocker",
-      "activeStage": 1,
-      "currentValue": 0,
-      "blocker": "profile_link_youtube_shorts, profile_link_tiktok, profile_link_instagram_reels"
+      "status": "complete",
+      "activeStage": 0,
+      "currentValue": 1,
+      "blocker": ""
     },
     {
       "fromStage": "first_batch_publish",
       "toStage": "first_batch_kpi",
       "gateId": "first_batch_publication",
       "requiredMetric": "firstBatchPublished",
-      "requiredValue": 3,
-      "releaseCondition": "First batch has three verified HTTPS post URLs written back.",
+      "requiredValue": 1,
+      "releaseCondition": "First batch has verified HTTPS post URLs written back for all active platforms.",
       "nextCommand": "python3 tools/promotion_first_batch_completion_gate.py --check",
       "fallbackAction": "Publish only after profile gate opens; reject placeholder URLs.",
-      "status": "blocked_upstream",
-      "activeStage": 0,
+      "status": "current_blocker",
+      "activeStage": 1,
       "currentValue": 0,
       "blocker": "first batch post URLs are not all verified"
     },
@@ -68,8 +68,8 @@
       "toStage": "weekly_review",
       "gateId": "minimum_kpi",
       "requiredMetric": "firstBatchMinimumKpiRows",
-      "requiredValue": 3,
-      "releaseCondition": "Each first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
+      "requiredValue": 1,
+      "releaseCondition": "Each active first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
       "nextCommand": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
       "fallbackAction": "Keep KPI rows blank until the source was checked; 0 requires proof.",
       "status": "blocked_upstream",
@@ -89,7 +89,7 @@
       "status": "blocked_upstream",
       "activeStage": 0,
       "currentValue": 0,
-      "blocker": "empty data mode is still active"
+      "blocker": "weekly review gate is not ready"
     },
     {
       "fromStage": "lead_collection",

@@ -73,10 +73,10 @@ def build_next_actions(publish: dict, kpi: dict, lead_offer: dict) -> list[dict[
         {
             "kind": "publish",
             "status": "blocked_until_profile_links",
-            "title": "First three platform posts",
+            "title": "First YouTube Shorts post",
             "current": f"{int(publish_metrics.get('readyRows', 0) or 0)} ready / {int(publish_metrics.get('blockedRows', 0) or 0)} blocked",
             "command": "python3 tools/promotion_first_batch_publish_quickstart.py --check",
-            "stopCondition": "Do not publish until all three profile links are set/live and proof is written back.",
+            "stopCondition": "Do not publish until all active profile links are set/live and proof is written back.",
         },
         {
             "kind": "kpi",
@@ -146,7 +146,7 @@ def build_quickstart() -> dict:
             "Current allowed work is profile setup only unless the master gate advances.",
             "Run check commands before write commands, then refresh daily ops after real writeback.",
             "Profile proof must be real external evidence: screenshot, clicked public link, or timestamped platform proof.",
-            "Publishing, KPI, Luna, affiliate, and paid offer experiments remain blocked while profileConfigured is 0.",
+            "Publishing opens only after active profile rows are configured; KPI, Luna, affiliate, and paid offer experiments remain blocked until public post evidence exists.",
             "Do not use empty KPI or lead data to choose winning guardians or commercial direction.",
         ],
         "nowActions": profile_actions,
@@ -161,12 +161,12 @@ def build_quickstart() -> dict:
 def validate(data: dict) -> list[str]:
     issues: list[str] = []
     metrics = data["metrics"]
-    if metrics["stage"] != "profile_setup":
-        issues.append(f"expected current stage profile_setup before launch, got {metrics['stage']}")
+    if metrics["stage"] not in {"profile_setup", "first_batch_publish"}:
+        issues.append(f"expected current stage profile_setup or first_batch_publish before launch, got {metrics['stage']}")
     if metrics["stageCurrentBlockers"] != 1:
         issues.append("launch quickstart should expose exactly one current stage blocker")
-    if metrics["profileActions"] != 3:
-        issues.append(f"expected three profile now-actions, got {metrics['profileActions']}")
+    if metrics["profileActions"] < 1:
+        issues.append(f"expected at least one profile now-action, got {metrics['profileActions']}")
     if metrics["profileConfigured"] == 0 and metrics["publishReadyRows"] != 0:
         issues.append("publish rows must not be ready while profiles are unconfigured")
     if metrics["firstBatchPublished"] == 0 and metrics["kpiReadyRows"] != 0:
@@ -179,7 +179,7 @@ def validate(data: dict) -> list[str]:
         copy = str(action.get("copy", ""))
         if "/start/" not in link or "utm_campaign=first_round_quiz_completion" not in link:
             issues.append(f"{label}: profile link missing first-round /start/ campaign")
-        if "15 題" not in copy and "五種愛之語測驗" not in copy:
+        if "15 題" not in copy and "五種愛之語測驗" not in copy and "15-question quiz" not in copy:
             issues.append(f"{label}: profile copy should keep the quiz CTA")
         if not action.get("checkCommand") or not action.get("writeCommand"):
             issues.append(f"{label}: missing check or write command")

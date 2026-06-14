@@ -107,8 +107,8 @@ def build_pack() -> dict:
         "completionReady": 1 if completion.get("state", {}).get("readyForWeekly") else 0,
     }
     issues: list[str] = []
-    if metrics["rows"] != 3:
-        issues.append(f"expected 3 post ops rows, got {metrics['rows']}")
+    if metrics["rows"] < 1:
+        issues.append("expected at least 1 post ops row")
     if metrics["published"] == 0 and metrics["readyForWeeklyReview"] != 0:
         issues.append("cannot be ready for weekly review before any first-batch posts are published")
     if metrics["blocked"] and metrics["publicPendingRows"] == 0:
@@ -130,7 +130,7 @@ def build_pack() -> dict:
             "Post URL writeback comes before KPI interpretation.",
             "A placeholder URL must never pass public URL verification.",
             "Zero KPI values are valid only with checked-source proof.",
-            "Weekly review stays closed until all three first-batch rows pass URL and KPI evidence checks.",
+            "Weekly review stays closed until all active first-batch rows pass URL and KPI evidence checks.",
         ],
         "issues": issues,
     }

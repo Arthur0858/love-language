@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
+PLATFORM_SETUP = PROMOTION_DIR / "platform-profile-setup.json"
 PROOF_FILES = sorted(PROMOTION_DIR.glob("proof-*.txt"))
 OUTPUT_MD = PROMOTION_DIR / "proof-rehearsal.md"
 OUTPUT_JSON = PROMOTION_DIR / "proof-rehearsal.json"
@@ -21,6 +22,15 @@ SAMPLE_POST_URLS = {
     "tiktok": "https://www.tiktok.com/@lovetypes/video/1234567890123456789",
     "instagram_reels": "https://www.instagram.com/reel/lovetypesrehearsal/",
 }
+
+
+def active_platforms() -> set[str]:
+    if not PLATFORM_SETUP.exists():
+        return {"youtube_shorts"}
+    data = json.loads(PLATFORM_SETUP.read_text(encoding="utf-8"))
+    rows = data.get("platformProfileSetup", [])
+    platforms = {str(row.get("platform", "")) for row in rows if row.get("platform")}
+    return platforms or {"youtube_shorts"}
 
 
 def run_check(tool: str, path: Path) -> tuple[int, str]:
@@ -72,9 +82,12 @@ def temp_check(tool: str, text: str) -> tuple[int, str]:
 
 def build_rows() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
+    enabled = active_platforms()
     for path in PROOF_FILES:
         text = path.read_text(encoding="utf-8")
         platform = platform_from_text(text)
+        if platform not in enabled:
+            continue
         kind = proof_kind(path)
         if kind == "profile":
             code, output = run_check("promotion_profile_text_import.py", path)
@@ -114,11 +127,19 @@ def build_rows() -> list[dict[str, object]]:
 def build_rehearsal() -> dict:
     rows = build_rows()
     issues = validate_rows(rows)
+    enabled = active_platforms()
+    active_files = [
+        path
+        for path in PROOF_FILES
+        if platform_from_text(path.read_text(encoding="utf-8")) in enabled
+    ]
     return {
         "generatedAt": date.today().isoformat(),
-        "sources": [str(path.relative_to(ROOT)) for path in PROOF_FILES],
+        "activePlatforms": sorted(enabled),
+        "sources": [str(path.relative_to(ROOT)) for path in active_files],
         "metrics": {
-            "proofFiles": len(PROOF_FILES),
+            "activePlatforms": len(enabled),
+            "proofFiles": len(active_files),
             "rows": len(rows),
             "profilePass": sum(1 for row in rows if row["kind"] == "profile" and row["passed"]),
             "postPlaceholderRejected": sum(1 for row in rows if row["scenario"] == "post_placeholder_current" and row["passed"]),
@@ -138,15 +159,16 @@ def build_rehearsal() -> dict:
 
 def validate_rows(rows: list[dict[str, object]]) -> list[str]:
     issues: list[str] = []
+    expected = len(active_platforms())
     profile_rows = [row for row in rows if row["kind"] == "profile"]
     post_placeholder = [row for row in rows if row["scenario"] == "post_placeholder_current"]
     post_rehearsal = [row for row in rows if row["scenario"] == "post_rehearsal_real_url"]
-    if len(profile_rows) != 3:
-        issues.append(f"expected 3 profile proof rehearsals, got {len(profile_rows)}")
-    if len(post_placeholder) != 3:
-        issues.append(f"expected 3 post placeholder rehearsals, got {len(post_placeholder)}")
-    if len(post_rehearsal) != 3:
-        issues.append(f"expected 3 post real URL rehearsals, got {len(post_rehearsal)}")
+    if len(profile_rows) != expected:
+        issues.append(f"expected {expected} profile proof rehearsals, got {len(profile_rows)}")
+    if len(post_placeholder) != expected:
+        issues.append(f"expected {expected} post placeholder rehearsals, got {len(post_placeholder)}")
+    if len(post_rehearsal) != expected:
+        issues.append(f"expected {expected} post real URL rehearsals, got {len(post_rehearsal)}")
     for row in rows:
         if not row.get("passed"):
             issues.append(f"{row.get('path')} {row.get('scenario')} did not meet expected {row.get('expected')}")
@@ -155,15 +177,17 @@ def validate_rows(rows: list[dict[str, object]]) -> list[str]:
 
 def render_markdown(rehearsal: dict) -> str:
     metrics = rehearsal["metrics"]
+    expected = metrics["activePlatforms"]
     lines = [
         "# LoveTypes Proof Rehearsal",
         "",
         f"- 產生日期：{rehearsal['generatedAt']}",
         f"- proof files：{metrics['proofFiles']}",
         f"- rows：{metrics['rows']}",
-        f"- profile pass：{metrics['profilePass']} / 3",
-        f"- post placeholder rejected：{metrics['postPlaceholderRejected']} / 3",
-        f"- post rehearsal real URL pass：{metrics['postRehearsalPass']} / 3",
+        f"- active platforms：{expected}",
+        f"- profile pass：{metrics['profilePass']} / {expected}",
+        f"- post placeholder rejected：{metrics['postPlaceholderRejected']} / {expected}",
+        f"- post rehearsal real URL pass：{metrics['postRehearsalPass']} / {expected}",
         f"- issues：{metrics['issues']}",
         "",
         "## Rule",

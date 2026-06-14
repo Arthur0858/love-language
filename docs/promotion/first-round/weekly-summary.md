@@ -1,11 +1,11 @@
 # LoveTypes 第一輪推廣週摘要
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 影片追蹤列數：0 / 15
-- 平台首頁追蹤列數：0 / 3
+- 平台首頁追蹤列數：1 / 1
 - 已規劃待發布任務：15
 - 追蹤欄位狀態：完整
-- 週回顧規則：When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.
+- 週回顧規則：When video and profile trackers have no filled rows, only recommend publishing the first planned YouTube Shorts tasks, setting active profile links, and backfilling KPI fields.
 - 商品調整 gate：Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.
 
 ## 漏斗總覽
@@ -33,11 +33,7 @@
 
 ## 下一週建議
 
-- 先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。
-- 發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。
-- 完成平台首頁設定後，同步回填 platform-profile-tracker.csv，分開判讀 Bio/Profile link 成效。
-- 若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。
-- 下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)
+- 數據不足以調整策略，先補足本週回填。
 
 ## Planned 任務分布
 

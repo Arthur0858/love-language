@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "profileProofFiles": [
       "docs/promotion/first-round/proof-youtube_shorts.txt",
@@ -19,21 +19,21 @@
     ]
   },
   "metrics": {
-    "promotion_launch_sequence_dry_run_initial_ready_to_publish": 0,
-    "promotion_launch_sequence_dry_run_initial_stage": "profile_setup",
-    "promotion_launch_sequence_dry_run_profile_imports": 3,
-    "promotion_launch_sequence_dry_run_profile_batch_ready": 3,
-    "promotion_launch_sequence_dry_run_profile_configured": 3,
+    "promotion_launch_sequence_dry_run_initial_ready_to_publish": 1,
+    "promotion_launch_sequence_dry_run_initial_stage": "first_batch_publish",
+    "promotion_launch_sequence_dry_run_profile_imports": 1,
+    "promotion_launch_sequence_dry_run_profile_batch_ready": 1,
+    "promotion_launch_sequence_dry_run_profile_configured": 1,
     "promotion_launch_sequence_dry_run_profile_ready_to_publish": 1,
     "promotion_launch_sequence_dry_run_profile_stage": "first_batch_publish",
     "promotion_launch_sequence_dry_run_profile_gate_ready": 1,
-    "promotion_launch_sequence_dry_run_post_imports": 3,
-    "promotion_launch_sequence_dry_run_post_batch_ready": 3,
-    "promotion_launch_sequence_dry_run_first_batch_published": 3,
-    "promotion_launch_sequence_dry_run_minimum_kpi_rows": 3,
+    "promotion_launch_sequence_dry_run_post_imports": 1,
+    "promotion_launch_sequence_dry_run_post_batch_ready": 1,
+    "promotion_launch_sequence_dry_run_first_batch_published": 1,
+    "promotion_launch_sequence_dry_run_minimum_kpi_rows": 1,
     "promotion_launch_sequence_dry_run_post_stage": "weekly_evidence",
-    "promotion_launch_sequence_dry_run_traceable_evidence": 6,
-    "promotion_launch_sequence_dry_run_required_evidence": 6,
+    "promotion_launch_sequence_dry_run_traceable_evidence": 2,
+    "promotion_launch_sequence_dry_run_required_evidence": 2,
     "promotion_launch_sequence_dry_run_publishing_ready": 1,
     "promotion_launch_sequence_dry_run_weekly_ready": 1,
     "promotion_launch_sequence_dry_run_current_files_mutated": 0

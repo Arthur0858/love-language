@@ -139,7 +139,7 @@ def asset_check_rows(week_execution: dict) -> list[dict[str, str]]:
     return rows
 
 
-def publish_and_backfill_rows(week_execution: dict) -> list[dict[str, str]]:
+def publish_and_backfill_rows(week_execution: dict, profile_ready: bool) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for script in week_execution.get("scripts", []):
         for platform in script.get("platforms", []):
@@ -161,10 +161,10 @@ def publish_and_backfill_rows(week_execution: dict) -> list[dict[str, str]]:
             rows.append({
                 **base,
                 "phase": "publish_post",
-                "status": "blocked_until_ready",
+                "status": "ready" if profile_ready else "blocked_until_ready",
                 "action": f"依 {platform.get('label', platform_id)} caption 發布，確認連結與 UTM 未被改寫。",
                 "writeback": "posting-queue.csv: status=published, published_date, post_url",
-                "blocked_by": "profile_setup, asset_ready_check",
+                "blocked_by": "" if profile_ready else "profile_setup, asset_ready_check",
             })
             rows.append({
                 **base,
@@ -198,12 +198,13 @@ def assign_sequence(rows: list[dict[str, str]]) -> list[dict[str, str]]:
 
 def build_center(next_actions: dict, week_execution: dict, publishing_status: dict) -> dict:
     profile_gate_count = len(week_execution.get("profileGates", []))
+    profile_ready = profile_gate_count > 0 and all(bool(gate.get("ready")) for gate in week_execution.get("profileGates", []))
     script_count = len(week_execution.get("scripts", []))
     platform_post_count = sum(len(script.get("platforms", [])) for script in week_execution.get("scripts", []))
     rows = assign_sequence([
         *profile_rows(week_execution),
         *asset_check_rows(week_execution),
-        *publish_and_backfill_rows(week_execution),
+        *publish_and_backfill_rows(week_execution, profile_ready),
     ])
     status_counts: dict[str, int] = {}
     phase_counts: dict[str, int] = {}
@@ -222,6 +223,7 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
         "publishingReadyForWeeklyDecision": bool(publishing_status.get("readyForWeeklyDecision")),
         "rowCount": len(rows),
         "readyRows": sum(1 for row in rows if row["status"] == "ready"),
+        "doneRows": sum(1 for row in rows if row["status"] == "done"),
         "preparedRows": sum(1 for row in rows if row["status"] == "prepared"),
         "blockedRows": sum(1 for row in rows if row["status"].startswith("blocked")),
         "statusCounts": status_counts,
@@ -260,12 +262,13 @@ def validate_center(center: dict) -> list[str]:
     if not isinstance(expected_phase_counts, dict):
         expected_phase_counts = {}
     expected_row_count = sum(int(value) for value in expected_phase_counts.values() if isinstance(value, int))
-    expected_ready_rows = int(expected_phase_counts.get("profile_setup", 0))
     expected_prepared_rows = int(expected_phase_counts.get("asset_ready_check", 0))
+    profile_setup_rows = [row for row in rows if row.get("phase") == "profile_setup"]
+    profile_active_rows = [row for row in profile_setup_rows if row.get("status") in {"ready", "done"}]
     if len(rows) != expected_row_count:
         issues.append(f"expected {expected_row_count} command rows, got {len(rows)}")
-    if center.get("readyRows", 0) != expected_ready_rows:
-        issues.append(f"expected exactly {expected_ready_rows} ready rows for current profile setup gate")
+    if len(profile_active_rows) != int(expected_phase_counts.get("profile_setup", 0)):
+        issues.append("profile setup rows should stay ready or done while current profile setup gate is active")
     if center.get("preparedRows", 0) != expected_prepared_rows:
         issues.append(f"expected exactly {expected_prepared_rows} prepared asset check rows")
     if not center.get("blockedRows"):
@@ -287,14 +290,18 @@ def validate_center(center: dict) -> list[str]:
             issues.append(f"{label}: missing tracked_url")
         if row.get("tracked_url") and "first_round_quiz_completion" not in row["tracked_url"]:
             issues.append(f"{label}: tracked_url missing campaign marker")
-        if row.get("phase") in {"publish_post", "kpi_backfill"} and not row.get("blocked_by"):
+        if row.get("phase") == "kpi_backfill" and not row.get("blocked_by"):
             issues.append(f"{label}: publish/backfill rows must declare blocked_by")
+        if row.get("phase") == "publish_post" and row.get("status") != "ready" and not row.get("blocked_by"):
+            issues.append(f"{label}: blocked publish rows must declare blocked_by")
         if row.get("phase") == "asset_ready_check" and row.get("status") != "prepared":
             issues.append(f"{label}: asset check rows should be prepared, not ready")
         expected_status = BLOCKED_STATUS_BY_PHASE.get(str(row.get("phase", "")))
+        if row.get("phase") == "publish_post" and row.get("status") == "ready":
+            expected_status = ""
         if expected_status and row.get("status") != expected_status:
             issues.append(f"{label}: expected status {expected_status}")
-        if row.get("phase") == "publish_post" and row.get("blocked_by") != ", ".join(policy.get("publishBlockedBy", [])):
+        if row.get("phase") == "publish_post" and row.get("status") != "ready" and row.get("blocked_by") != ", ".join(policy.get("publishBlockedBy", [])):
             issues.append(f"{label}: publish row blocked_by should match policy")
         if row.get("phase") == "kpi_backfill" and row.get("blocked_by") != ", ".join(policy.get("kpiBackfillBlockedBy", [])):
             issues.append(f"{label}: kpi row blocked_by should match policy")
@@ -310,6 +317,7 @@ def render_markdown(center: dict) -> str:
         f"- 週次：Week {center['week']}",
         f"- 指揮列數：{center['rowCount']}",
         f"- 可立即執行：{center['readyRows']}",
+        f"- 已完成：{center['doneRows']}",
         f"- 預備檢查：{center['preparedRows']}",
         f"- 等待前置條件：{center['blockedRows']}",
         f"- 週決策：{'可判讀' if center['publishingReadyForWeeklyDecision'] else '尚不可'}",
@@ -388,6 +396,7 @@ def main() -> int:
         print(f"promotion_launch_command_center_csv={args.csv_output}")
     print(f"promotion_launch_command_rows={center['rowCount']}")
     print(f"promotion_launch_command_ready={center['readyRows']}")
+    print(f"promotion_launch_command_done={center['doneRows']}")
     print(f"promotion_launch_command_prepared={center['preparedRows']}")
     print(f"promotion_launch_command_blocked={center['blockedRows']}")
     print(f"promotion_launch_command_profile_rows={center['phaseCounts'].get('profile_setup', 0)}")

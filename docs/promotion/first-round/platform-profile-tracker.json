@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "promotionKit": "promotion-kit.json"
   },
-  "rowCount": 3,
+  "rowCount": 1,
   "profileTrackerPolicy": {
     "statusValues": [
       "planned",
@@ -17,14 +17,10 @@
       "live"
     ],
     "platformOrder": [
-      "youtube_shorts",
-      "tiktok",
-      "instagram_reels"
+      "youtube_shorts"
     ],
     "expectedPlatformSources": {
-      "youtube_shorts": "youtube",
-      "tiktok": "tiktok",
-      "instagram_reels": "instagram"
+      "youtube_shorts": "youtube"
     },
     "minimumWeeklyFields": [
       "profile_clicks",
@@ -78,8 +74,8 @@
       "utm_medium": "social_profile",
       "utm_campaign": "first_round_quiz_completion",
       "utm_content": "youtube_shorts_bio",
-      "status": "planned",
-      "profile_link_set_date": "",
+      "status": "set",
+      "profile_link_set_date": "2026-06-14",
       "profile_clicks": "",
       "site_clicks": "",
       "quiz_starts": "",
@@ -94,59 +90,7 @@
       "luna_pack_clicks": "",
       "affiliate_book_clicks": "",
       "contact_requests": "",
-      "notes": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。"
-    },
-    {
-      "platform": "tiktok",
-      "label": "TikTok",
-      "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
-      "utm_source": "tiktok",
-      "utm_medium": "social_profile",
-      "utm_campaign": "first_round_quiz_completion",
-      "utm_content": "tiktok_bio",
-      "status": "planned",
-      "profile_link_set_date": "",
-      "profile_clicks": "",
-      "site_clicks": "",
-      "quiz_starts": "",
-      "quiz_completions": "",
-      "guardian_result_clicks": "",
-      "resources_clicks": "",
-      "repair_plan_clicks": "",
-      "luna_clicks": "",
-      "keepsake_clicks": "",
-      "free_keepsake_downloads": "",
-      "supply_lead_requests": "",
-      "luna_pack_clicks": "",
-      "affiliate_book_clicks": "",
-      "contact_requests": "",
-      "notes": "若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。"
-    },
-    {
-      "platform": "instagram_reels",
-      "label": "Instagram Reels",
-      "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
-      "utm_source": "instagram",
-      "utm_medium": "social_profile",
-      "utm_campaign": "first_round_quiz_completion",
-      "utm_content": "instagram_reels_bio",
-      "status": "planned",
-      "profile_link_set_date": "",
-      "profile_clicks": "",
-      "site_clicks": "",
-      "quiz_starts": "",
-      "quiz_completions": "",
-      "guardian_result_clicks": "",
-      "resources_clicks": "",
-      "repair_plan_clicks": "",
-      "luna_clicks": "",
-      "keepsake_clicks": "",
-      "free_keepsake_downloads": "",
-      "supply_lead_requests": "",
-      "luna_pack_clicks": "",
-      "affiliate_book_clicks": "",
-      "contact_requests": "",
-      "notes": "IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。"
+      "notes": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。 | verified:2026-06-14 2026-06-14 checked https://studio.youtube.com/channel/UCrOxX4L-lX-sSO_ngfURPvA/editing/profile and public handle https://www.youtube.com/@LoveTypesQuiz: English bio visible; Take the LoveTypes Quiz link uses youtube_shorts_bio UTM"
     }
   ]
 }

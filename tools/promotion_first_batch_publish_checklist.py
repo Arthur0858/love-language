@@ -37,7 +37,7 @@ FIELDNAMES = [
 POST_PUBLISH_CHECKS = [
     {
         "id": "profile_gate_passed",
-        "expected": "launch readiness ready_to_publish=1 after all three profile links are set/live.",
+        "expected": "launch readiness ready_to_publish=1 after all active profile links are set/live.",
     },
     {
         "id": "public_post_url_present",
@@ -118,11 +118,12 @@ def build_rows() -> list[dict[str, str]]:
 
 def validate_rows(rows: list[dict[str, str]]) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 42:
-        issues.append(f"expected 42 first-batch publish checklist rows, got {len(rows)}")
     tasks = {(row["platform"], row["task_id"]) for row in rows}
-    if len(tasks) != 3:
-        issues.append(f"expected 3 platform post tasks, got {len(tasks)}")
+    if not tasks:
+        issues.append("expected at least 1 platform post task")
+    expected_rows = len(tasks) * (8 + len(POST_PUBLISH_CHECKS))
+    if len(rows) != expected_rows:
+        issues.append(f"expected {expected_rows} first-batch publish checklist rows, got {len(rows)}")
     for platform, task_id in sorted(tasks):
         task_rows = [row for row in rows if row["platform"] == platform and row["task_id"] == task_id]
         pre = [row for row in task_rows if row["phase"] == "pre_publish_asset_qa"]

@@ -88,14 +88,14 @@ def build_gate() -> dict:
         })
 
     issues: list[str] = []
-    if expected_profiles != 3:
-        issues.append(f"expected 3 profile rows, got {expected_profiles}")
+    if expected_profiles <= 0:
+        issues.append(f"expected at least 1 profile row, got {expected_profiles}")
     if evidence_required and evidence_traceable > evidence_required:
         issues.append("traceable evidence count cannot exceed required evidence count")
-    if first_batch.get("rowCount") != 3:
-        issues.append(f"expected first batch rowCount 3, got {first_batch.get('rowCount')}")
-    if profile_packet.get("platformCount") != 3:
-        issues.append(f"expected profile packet platformCount 3, got {profile_packet.get('platformCount')}")
+    if int(first_batch.get("rowCount") or 0) <= 0:
+        issues.append(f"expected first batch rowCount to be positive, got {first_batch.get('rowCount')}")
+    if int(profile_packet.get("platformCount") or 0) != expected_profiles:
+        issues.append(f"profile packet platformCount should match expected profile rows, got {profile_packet.get('platformCount')} vs {expected_profiles}")
     if packets_in_sync is False and ready_to_publish:
         issues.append("publish packets must be refreshed when readiness opens")
 
@@ -132,7 +132,7 @@ def build_gate() -> dict:
         "nextAction": (
             "Publish first-batch Shorts and write back post URLs."
             if ready_for_first_batch_publish
-            else "Finish three platform profile links, refresh ops docs, then re-run this gate."
+            else "Finish active platform profile links, refresh ops docs, then re-run this gate."
         ),
         "blockers": blockers,
         "issues": issues,

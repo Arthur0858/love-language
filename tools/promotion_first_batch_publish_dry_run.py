@@ -17,7 +17,7 @@ import promotion_publishing_status as publishing_status
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
-POST_PROOF_FILES = (
+POST_PROOF_FILE_CANDIDATES = (
     SOURCE_DIR / "proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
     SOURCE_DIR / "proof-tiktok-publish-lt-s01-iris-silence.txt",
     SOURCE_DIR / "proof-instagram_reels-publish-lt-s01-iris-silence.txt",
@@ -73,6 +73,35 @@ def platform_from_text(text: str) -> str:
         if line.lower().startswith("platform:"):
             return line.split(":", 1)[1].strip()
     return ""
+
+
+def task_id_from_text(text: str) -> str:
+    for line in text.splitlines():
+        if line.lower().startswith("task_id:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def current_first_batch_tasks() -> set[tuple[str, str]]:
+    _, rows = read_rows(SOURCE_DIR / "posting-queue.csv")
+    return {
+        ((row.get("platform") or "").strip(), (row.get("task_id") or "").strip())
+        for row in rows
+        if row.get("week") == "1"
+        and row.get("slot") == "1"
+        and (row.get("platform") or "").strip()
+        and (row.get("task_id") or "").strip()
+    }
+
+
+def current_post_proof_files() -> tuple[Path, ...]:
+    active_tasks = current_first_batch_tasks()
+    files: list[Path] = []
+    for proof_file in POST_PROOF_FILE_CANDIDATES:
+        text = proof_file.read_text(encoding="utf-8")
+        if (platform_from_text(text), task_id_from_text(text)) in active_tasks:
+            files.append(proof_file)
+    return tuple(files)
 
 
 def sample_post_text(path: Path, *, generic_proof: bool = False, wrong_platform: bool = False) -> str:
@@ -184,6 +213,9 @@ def run_dry_run() -> dict[str, int]:
         SOURCE_DIR / "kpi-tracker.csv",
     )
     source_before = {path: path.read_text(encoding="utf-8") for path in watched_files}
+    post_proof_files = current_post_proof_files()
+    if not post_proof_files:
+        raise SystemExit("no current first-batch proof files found")
     with tempfile.TemporaryDirectory() as tmp:
         temp_root = Path(tmp)
         temp_docs = temp_root / "docs" / "promotion" / "first-round"
@@ -198,18 +230,18 @@ def run_dry_run() -> dict[str, int]:
 
         placeholder_rejected = sum(
             1
-            for proof_file in POST_PROOF_FILES
+            for proof_file in post_proof_files
             if post_import.parse_text(proof_file.read_text(encoding="utf-8"))[1]
         )
         generic_proof_rejected = expect_rejected(
-            lambda: update_from_text(sample_post_text(POST_PROOF_FILES[0], generic_proof=True), queue_rows, platform_rows, script_rows)
+            lambda: update_from_text(sample_post_text(post_proof_files[0], generic_proof=True), queue_rows, platform_rows, script_rows)
         )
         wrong_platform_rejected = expect_rejected(
-            lambda: update_from_text(sample_post_text(POST_PROOF_FILES[0], wrong_platform=True), queue_rows, platform_rows, script_rows)
+            lambda: update_from_text(sample_post_text(post_proof_files[0], wrong_platform=True), queue_rows, platform_rows, script_rows)
         )
 
         imports = 0
-        for proof_file in POST_PROOF_FILES:
+        for proof_file in post_proof_files:
             update_from_text(sample_post_text(proof_file), queue_rows, platform_rows, script_rows)
             imports += 1
         issues = post_writeback.validate_rows(queue_fields, queue_rows, platform_fields, platform_rows, script_fields, script_rows)
@@ -245,17 +277,18 @@ def run_dry_run() -> dict[str, int]:
 
 def main() -> int:
     metrics = run_dry_run()
+    expected_first_batch_rows = len(current_post_proof_files())
     expected = {
-        "promotion_first_batch_publish_dry_run_imports": 3,
-        "promotion_first_batch_publish_dry_run_placeholder_rejected": 3,
+        "promotion_first_batch_publish_dry_run_imports": expected_first_batch_rows,
+        "promotion_first_batch_publish_dry_run_placeholder_rejected": expected_first_batch_rows,
         "promotion_first_batch_publish_dry_run_generic_proof_rejected": 1,
         "promotion_first_batch_publish_dry_run_wrong_platform_rejected": 1,
-        "promotion_first_batch_publish_dry_run_published_rows": 3,
-        "promotion_first_batch_publish_dry_run_minimum_kpi_rows": 3,
+        "promotion_first_batch_publish_dry_run_published_rows": expected_first_batch_rows,
+        "promotion_first_batch_publish_dry_run_minimum_kpi_rows": expected_first_batch_rows,
         "promotion_first_batch_publish_dry_run_script_rollup_ready": 1,
         "promotion_first_batch_publish_dry_run_status_ready": 1,
-        "promotion_first_batch_publish_dry_run_packet_published": 3,
-        "promotion_first_batch_publish_dry_run_packet_minimum_kpi": 3,
+        "promotion_first_batch_publish_dry_run_packet_published": expected_first_batch_rows,
+        "promotion_first_batch_publish_dry_run_packet_minimum_kpi": expected_first_batch_rows,
         "promotion_first_batch_publish_dry_run_current_files_mutated": 0,
     }
     issues = [f"{key} expected {value}" for key, value in expected.items() if metrics.get(key) != value]

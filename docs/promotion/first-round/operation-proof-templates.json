@@ -1,66 +1,15 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": "docs/promotion/first-round/operation-proof-packet.json",
   "metrics": {
-    "proofRows": 6,
-    "files": 6,
-    "profile": 3,
-    "post": 3,
-    "profileValid": 3,
-    "postSafelyRejected": 3
+    "proofRows": 1,
+    "files": 1,
+    "profile": 0,
+    "post": 1,
+    "profileValid": 0,
+    "postSafelyRejected": 1
   },
   "rows": [
-    {
-      "kind": "profile_setup",
-      "platform": "youtube_shorts",
-      "taskId": "",
-      "path": "docs/promotion/first-round/proof-youtube_shorts.txt",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "requiredEvidence": [
-        "platform_account_visible",
-        "profile_link_visible_or_clickable",
-        "start_url_resolves",
-        "utm_parameters_preserved",
-        "quiz_only_copy",
-        "proof_note_present"
-      ],
-      "status": "written"
-    },
-    {
-      "kind": "profile_setup",
-      "platform": "tiktok",
-      "taskId": "",
-      "path": "docs/promotion/first-round/proof-tiktok.txt",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "requiredEvidence": [
-        "platform_account_visible",
-        "profile_link_visible_or_clickable",
-        "start_url_resolves",
-        "utm_parameters_preserved",
-        "quiz_only_copy",
-        "proof_note_present"
-      ],
-      "status": "written"
-    },
-    {
-      "kind": "profile_setup",
-      "platform": "instagram_reels",
-      "taskId": "",
-      "path": "docs/promotion/first-round/proof-instagram_reels.txt",
-      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "requiredEvidence": [
-        "platform_account_visible",
-        "profile_link_visible_or_clickable",
-        "start_url_resolves",
-        "utm_parameters_preserved",
-        "quiz_only_copy",
-        "proof_note_present"
-      ],
-      "status": "written"
-    },
     {
       "kind": "post_publish",
       "platform": "youtube_shorts",
@@ -68,42 +17,6 @@
       "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
       "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "requiredEvidence": [
-        "profile_gate_passed",
-        "public_post_url_present",
-        "post_url_is_not_placeholder",
-        "quiz_cta_preserved",
-        "utm_content_preserved",
-        "no_paid_or_affiliate_primary_cta",
-        "proof_note_present"
-      ],
-      "status": "written"
-    },
-    {
-      "kind": "post_publish",
-      "platform": "tiktok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "path": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "requiredEvidence": [
-        "profile_gate_passed",
-        "public_post_url_present",
-        "post_url_is_not_placeholder",
-        "quiz_cta_preserved",
-        "utm_content_preserved",
-        "no_paid_or_affiliate_primary_cta",
-        "proof_note_present"
-      ],
-      "status": "written"
-    },
-    {
-      "kind": "post_publish",
-      "platform": "instagram_reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "path": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "requiredEvidence": [
         "profile_gate_passed",
         "public_post_url_present",

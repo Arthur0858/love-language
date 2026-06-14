@@ -16,13 +16,8 @@ SETUP_PATH = PROMOTION_DIR / "platform-profile-setup.json"
 READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "profile-verification-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "profile-verification-packet.json"
-PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
+DEFAULT_PLATFORM_ORDER = ("youtube_shorts",)
 CONFIGURED_STATUSES = {"set", "live"}
-PROFILE_SOURCES = {
-    "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
-}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -38,12 +33,22 @@ def setup_by_platform(setup: dict) -> dict[str, dict]:
     return {str(item.get("platformId", "")): item for item in setup.get("platforms", [])}
 
 
-def validate_profile_url(platform: str, value: str) -> list[str]:
+def platform_order(setup: dict[str, dict]) -> tuple[str, ...]:
+    ordered = tuple(platform for platform in DEFAULT_PLATFORM_ORDER if platform in setup)
+    return ordered + tuple(platform for platform in setup if platform not in ordered)
+
+
+def profile_source(setup_item: dict) -> str:
+    query = parse_qs(urlparse(str(setup_item.get("profileLink", ""))).query)
+    return query.get("utm_source", [""])[0]
+
+
+def validate_profile_url(platform: str, value: str, setup_item: dict) -> list[str]:
     issues: list[str] = []
     parsed = urlparse(value)
     query = parse_qs(parsed.query)
     expected = {
-        "utm_source": PROFILE_SOURCES.get(platform, ""),
+        "utm_source": profile_source(setup_item),
         "utm_medium": "social_profile",
         "utm_campaign": "first_round_quiz_completion",
         "utm_content": f"{platform}_bio",
@@ -73,14 +78,14 @@ def build_packet() -> dict:
     readiness_metrics = readiness.get("metrics", {}) if isinstance(readiness.get("metrics"), dict) else {}
     readiness_state = readiness.get("readiness", {}) if isinstance(readiness.get("readiness"), dict) else {}
     platforms = []
-    for platform in PLATFORM_ORDER:
+    for platform in platform_order(setup):
         tracker = tracker_rows.get(platform, {})
         setup_item = setup.get(platform, {})
         link = tracker.get("profile_link") or setup_item.get("profileLink", "")
         status = tracker.get("status", "")
         set_date = tracker.get("profile_link_set_date", "")
         configured = status in CONFIGURED_STATUSES and bool(set_date)
-        url_issues = validate_profile_url(platform, link)
+        url_issues = validate_profile_url(platform, link, setup_item)
         platforms.append({
             "platform": platform,
             "label": tracker.get("label") or setup_item.get("label") or platform,
@@ -104,7 +109,7 @@ def build_packet() -> dict:
             ),
             "postWritebackCheck": [
                 "重新跑 promotion_launch_readiness_gate.py。",
-                "確認 promotion_launch_readiness_profile_configured 變成 3。",
+                f"確認 promotion_launch_readiness_profile_configured 變成 {len(setup)}。",
                 "只有 promotion_launch_readiness_ready_to_publish=1 時才發布第一批。",
             ],
         })
@@ -129,7 +134,7 @@ def build_packet() -> dict:
         "policy": {
             "doNotFake": True,
             "configuredRequires": ["status set/live", "profile_link_set_date", "verified proof note", "valid UTM profile link"],
-            "publishBoundary": "Do not publish first batch until all three profile links are set/live and readiness ready_to_publish is true.",
+            "publishBoundary": "Do not publish first batch until all active profile links are set/live and readiness ready_to_publish is true.",
             "commercialBoundary": "Profile copy keeps the CTA on the 15-question guardian quiz and does not promote Luna, books, or paid products first.",
         },
     }
@@ -137,13 +142,14 @@ def build_packet() -> dict:
 
 def validate_packet(packet: dict) -> list[str]:
     issues: list[str] = []
-    if packet.get("platformCount") != len(PLATFORM_ORDER):
-        issues.append(f"expected {len(PLATFORM_ORDER)} platforms")
+    active_platforms = tuple(item.get("platform", "") for item in packet.get("platforms", []))
+    if packet.get("platformCount") != len(active_platforms):
+        issues.append(f"expected {len(active_platforms)} platforms")
     seen = set()
     for item in packet.get("platforms", []):
         platform = item.get("platform", "")
         label = platform or "<platform>"
-        if platform not in PLATFORM_ORDER:
+        if platform not in active_platforms:
             issues.append(f"{label}: unexpected platform")
             continue
         if platform in seen:
@@ -156,7 +162,7 @@ def validate_packet(packet: dict) -> list[str]:
         if not item.get("bio"):
             issues.append(f"{label}: missing bio")
         text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
-        if "完成 15 題測驗" not in text:
+        if "完成 15 題測驗" not in text and "15-question quiz" not in text:
             issues.append(f"{label}: profile copy missing quiz CTA")
         for forbidden in ("診斷", "療效", "保證修復", "必須購買"):
             if forbidden in text:
@@ -171,7 +177,7 @@ def validate_packet(packet: dict) -> list[str]:
             issues.append(f"{label}: writeback command must force real proof replacement")
         if not item.get("postWritebackCheck"):
             issues.append(f"{label}: missing post writeback checks")
-    missing = set(PLATFORM_ORDER) - seen
+    missing = set(active_platforms) - seen
     if missing:
         issues.append("missing platforms: " + ", ".join(sorted(missing)))
     counters = packet.get("readinessCounters", {})

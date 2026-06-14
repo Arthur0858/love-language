@@ -15,7 +15,6 @@ EVIDENCE_PATH = PROMOTION_DIR / "profile-evidence-checklist.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "profile-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 FORBIDDEN_TERMS = ("診斷", "療效", "保證修復", "必須購買")
 
 
@@ -33,8 +32,8 @@ def by_platform(rows: list[dict]) -> dict[str, dict]:
     return {str(row.get("platform", "")): row for row in rows if row.get("platform")}
 
 
-def evidence_counts(evidence: dict) -> dict[str, dict[str, int]]:
-    counts = {platform: {"total": 0, "pending": 0, "done": 0} for platform in REQUIRED_PLATFORMS}
+def evidence_counts(evidence: dict, platforms: list[str]) -> dict[str, dict[str, int]]:
+    counts = {platform: {"total": 0, "pending": 0, "done": 0} for platform in platforms}
     for item in evidence.get("items", []):
         platform = str(item.get("platform", ""))
         status = str(item.get("operator_status", "pending"))
@@ -76,10 +75,11 @@ def build_quickstart() -> dict:
     evidence = read_json(EVIDENCE_PATH)
     action_rows = by_platform(action.get("rows", []))
     tracker_rows = by_platform(tracker.get("rows", []))
-    evidence_by_platform = evidence_counts(evidence)
+    active_platforms = [str(row.get("platform", "")) for row in action.get("rows", []) if row.get("platform")]
+    evidence_by_platform = evidence_counts(evidence, active_platforms)
     platforms: list[dict] = []
 
-    for platform in REQUIRED_PLATFORMS:
+    for platform in active_platforms:
         row = action_rows.get(platform, {})
         tracker_row = tracker_rows.get(platform, {})
         proof_file = str(row.get("proof_file") or f"docs/promotion/first-round/proof-{platform}.txt")
@@ -122,7 +122,8 @@ def build_quickstart() -> dict:
             "Only complete profile setup when the external platform profile visibly contains the tracked /start/ link.",
             "Use the profile proof text after replacing the proof placeholder with real evidence.",
             "Run the check command before the write command.",
-            "Do not publish first-batch posts until all three profile links are set or live.",
+            "Do not publish first-batch posts until all active profile links are set or live.",
+            "First-round promotion currently uses YouTube Shorts as the only active publishing channel.",
             "Keep profile copy focused on the 15-question quiz; do not add paid, affiliate, diagnosis, or treatment claims.",
         ],
         "platforms": platforms,
@@ -132,9 +133,6 @@ def build_quickstart() -> dict:
 
 def validate(platforms: list[dict]) -> list[str]:
     issues: list[str] = []
-    seen = {item.get("platform") for item in platforms}
-    if seen != set(REQUIRED_PLATFORMS):
-        issues.append("profile quickstart must include YouTube Shorts, TikTok, and Instagram Reels")
     for item in platforms:
         label = str(item.get("platform", "<platform>"))
         link = str(item.get("profileLink", ""))
@@ -144,7 +142,7 @@ def validate(platforms: list[dict]) -> list[str]:
         ])
         if "/start/" not in link or "utm_campaign=first_round_quiz_completion" not in link:
             issues.append(f"{label}: profile link must use the first-round /start/ campaign URL")
-        if "完成 15 題測驗" not in combined_copy and "15 題" not in combined_copy:
+        if "完成 15 題測驗" not in combined_copy and "15 題" not in combined_copy and "15-question quiz" not in combined_copy:
             issues.append(f"{label}: profile copy should keep the 15-question quiz CTA")
         if any(term in combined_copy for term in FORBIDDEN_TERMS):
             issues.append(f"{label}: profile copy contains forbidden claim language")

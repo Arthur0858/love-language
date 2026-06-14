@@ -66,7 +66,7 @@ def build_packet() -> dict:
         })
     hold_reasons: list[str] = []
     if not first_batch.get("publishedRows"):
-        hold_reasons.append("首批三平台尚無公開 post URL。")
+        hold_reasons.append("首批 YouTube Shorts 尚無公開 post URL。")
     if not first_batch.get("minimumKpiRows"):
         hold_reasons.append("首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。")
     if not status.get("readyForWeeklyDecision"):
@@ -149,8 +149,8 @@ def build_packet() -> dict:
 def validate_packet(packet: dict) -> list[str]:
     issues: list[str] = []
     state = packet.get("state", {})
-    if state.get("firstBatchRows") != 3:
-        issues.append(f"expected 3 first batch rows, got {state.get('firstBatchRows')}")
+    if int(state.get("firstBatchRows", 0) or 0) < 1:
+        issues.append("expected at least 1 first batch row")
     if len(packet.get("rowsToUpdate", [])) != state.get("firstBatchRows"):
         issues.append("rowsToUpdate should match first batch rows")
     if set(packet.get("reviewFields", {}).get("minimum", [])) != set(MINIMUM_REVIEW_FIELDS):

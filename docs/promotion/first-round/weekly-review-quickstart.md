@@ -1,12 +1,12 @@
 # LoveTypes Weekly Review Quickstart
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - action rows：7
-- ready / blocked / hold rows：0 / 5 / 2
-- evidence complete / pending：1 / 7
+- ready / blocked / hold rows：2 / 3 / 2
+- evidence complete / pending：2 / 6
 - weekly ready：0
 - decision ready：0
-- empty data mode：1
+- empty data mode：0
 - issues：0
 
 ## Rules
@@ -22,7 +22,7 @@
 ### `profile-before-review`
 
 - phase：`precondition`
-- status：`blocked`
+- status：`ready`
 - action：Confirm all platform profile links are set/live before using first-batch posts for weekly review.
 - command：`python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check`
 - evidence：profile_configured=3 and profile gate ready before publish/review.
@@ -31,8 +31,8 @@
 ### `first-batch-public-url`
 
 - phase：`publish`
-- status：`blocked`
-- action：Publish or verify the first three platform posts and record the real public post URLs.
+- status：`ready_to_publish`
+- action：Publish or verify the first YouTube Shorts post and record the real public post URL.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
 - evidence：Three real platform post_url values, not placeholders.
 - boundary：No public URL means no weekly decision.
@@ -52,7 +52,7 @@
 - status：`blocked`
 - action：Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.
 - command：`python3 tools/promotion_weekly_decision_evidence_checklist.py --check`
-- evidence：complete=1, pending=7.
+- evidence：complete=2, pending=6.
 - boundary：Pending evidence keeps all commerce and winner decisions on HOLD.
 
 ### `weekly-review-packet`
@@ -61,7 +61,7 @@
 - status：`hold`
 - action：Regenerate weekly summary, decision gate and review packet before changing the next content batch.
 - command：`python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py`
-- evidence：weekly_ready=0, empty_data=1.
+- evidence：weekly_ready=0, empty_data=0.
 - boundary：Empty data mode allows only setup, publish, and KPI backfill actions.
 
 ### `lead-and-offer-safety`
@@ -84,12 +84,12 @@
 
 ## Evidence Checklist
 
-- [ ] `profiles_configured`：3 platform profile links are set/live with traceable evidence.（pending；三個平台 profile 尚未全部 set/live。）
-- [ ] `first_batch_published`：First-batch posts are published on all three platforms.（pending；首批三平台尚未全部發布。）
+- [ ] `profiles_configured`：All active platform profile links are set/live with traceable evidence.（pending；啟用平台 profile 尚未全部 set/live。）
+- [ ] `first_batch_published`：First-batch posts are published on all active platforms.（pending；首批啟用平台尚未全部發布。）
 - [ ] `public_post_urls_verified`：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.（pending；公開貼文 URL 檢查仍有 pending 或缺證據。）
 - [ ] `zero_kpis_have_source`：Zero values for site_clicks, quiz_starts, and quiz_completions have checked-source proof.（pending；核心 KPI 仍未發布、未回填，或 0 值缺來源證據。）
 - [ ] `weekly_review_ready`：Weekly review packet reports readyForWeeklyDecision=1.（pending；weekly review 尚未達可決策狀態。）
-- [ ] `not_empty_data_mode`：Empty data mode is false before commerce or prioritization decisions.（pending；目前仍是空資料安全模式。）
+- [x] `not_empty_data_mode`：Empty data mode is false before commerce or prioritization decisions.（complete；證據已滿足。）
 - [ ] `decision_gate_ready`：Week decision gate allows at least weeklyDecision before changing content or commerce paths.（pending；week decision gate 仍是 HOLD。）
 - [x] `commerce_changes_still_blocked`：Paid CTA, Luna emphasis, affiliate emphasis, and offer order remain blocked until intent exists.（complete；證據已滿足。）
 

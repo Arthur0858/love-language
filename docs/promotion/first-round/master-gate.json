@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
@@ -10,8 +10,8 @@
     "commandCenter": "docs/promotion/first-round/launch-command-center.json",
     "nextActions": "docs/promotion/first-round/next-actions.json"
   },
-  "stage": "profile_setup",
-  "stageIndex": 0,
+  "stage": "first_batch_publish",
+  "stageIndex": 1,
   "stageOrder": [
     "profile_setup",
     "first_batch_publish",
@@ -21,16 +21,16 @@
     "offer_experiment",
     "scale"
   ],
-  "nextAction": "Finish three platform profile links, then run profile writeback and refresh ops docs.",
+  "nextAction": "Publish the first-batch YouTube Short and write back the real public post URL.",
   "metrics": {
-    "profileConfigured": 0,
-    "expectedProfiles": 3,
+    "profileConfigured": 1,
+    "expectedProfiles": 1,
     "firstBatchPublished": 0,
     "firstBatchMinimumKpiRows": 0,
     "leadReadyRoutes": 0,
     "readyOfferExperiments": 0,
     "commandReadyRows": 3,
-    "commandBlockedRows": 18,
+    "commandBlockedRows": 3,
     "issues": 0
   },
   "gateStates": [
@@ -38,17 +38,14 @@
       "id": "launch_readiness",
       "status": "open",
       "blockers": [
-        "set_platform_profile_links",
         "publish_first_batch",
         "backfill_first_batch_kpis"
       ]
     },
     {
       "id": "profile_completion",
-      "status": "blocked",
-      "blockers": [
-        "profile_links_not_configured"
-      ]
+      "status": "open",
+      "blockers": []
     },
     {
       "id": "first_batch_completion",
@@ -62,10 +59,9 @@
       "id": "weekly_review",
       "status": "blocked",
       "blockers": [
-        "首批三平台尚無公開 post URL。",
+        "首批 YouTube Shorts 尚無公開 post URL。",
         "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
-        "publishing-status 尚未達週決策條件。",
-        "目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。"
+        "publishing-status 尚未達週決策條件。"
       ]
     },
     {
@@ -80,15 +76,12 @@
       "id": "offer_experiment",
       "status": "blocked",
       "blockers": [
-        "尚未達週決策門檻：發布狀態或 KPI 回填不足。",
-        "目前仍是空資料模式，不能放大守護者、商品或付費 CTA。"
+        "尚未達週決策門檻：發布狀態或 KPI 回填不足。"
       ]
     }
   ],
   "allowedNow": [
-    "set_platform_profile_links",
-    "verify_profile_utm",
-    "writeback_profile_proof"
+    "first_batch_publish"
   ],
   "blockedDecisions": [
     "build_owned_asset_from_lead",
@@ -103,7 +96,7 @@
     "weekly_decision"
   ],
   "safety": {
-    "emptyDataMode": true,
+    "emptyDataMode": false,
     "keepShortsCtaQuiz": true,
     "doNotClaim": [
       "診斷",

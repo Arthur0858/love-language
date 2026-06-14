@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "publishingStatus": "docs/promotion/first-round/publishing-status.json",
     "weeklySummary": "docs/promotion/first-round/weekly-summary.json",
@@ -11,12 +11,12 @@
     "readyForWeeklyDecision": false,
     "publishingStatusReady": false,
     "weekDecisionGateReady": false,
-    "emptyDataMode": true,
-    "firstBatchRows": 3,
+    "emptyDataMode": false,
+    "firstBatchRows": 1,
     "firstBatchPublishedRows": 0,
     "firstBatchMinimumKpiRows": 0,
     "trackerRows": 0,
-    "profileTrackerRows": 0
+    "profileTrackerRows": 1
   },
   "reviewFields": {
     "minimum": [
@@ -67,70 +67,13 @@
         "affiliate_book_clicks",
         "contact_requests"
       ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\""
-    },
-    {
-      "platform": "tiktok",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "status": "planned",
-      "postUrl": "",
-      "minimumFields": [
-        "post_url",
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "routeFields": [
-        "guardian_result_clicks",
-        "resources_clicks",
-        "repair_plan_clicks",
-        "luna_clicks",
-        "keepsake_clicks"
-      ],
-      "revenueFields": [
-        "free_keepsake_downloads",
-        "supply_lead_requests",
-        "luna_pack_clicks",
-        "affiliate_book_clicks",
-        "contact_requests"
-      ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\""
-    },
-    {
-      "platform": "instagram_reels",
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "status": "planned",
-      "postUrl": "",
-      "minimumFields": [
-        "post_url",
-        "site_clicks",
-        "quiz_starts",
-        "quiz_completions"
-      ],
-      "routeFields": [
-        "guardian_result_clicks",
-        "resources_clicks",
-        "repair_plan_clicks",
-        "luna_clicks",
-        "keepsake_clicks"
-      ],
-      "revenueFields": [
-        "free_keepsake_downloads",
-        "supply_lead_requests",
-        "luna_pack_clicks",
-        "affiliate_book_clicks",
-        "contact_requests"
-      ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\""
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\""
     }
   ],
   "holdReasons": [
-    "首批三平台尚無公開 post URL。",
+    "首批 YouTube Shorts 尚無公開 post URL。",
     "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
-    "publishing-status 尚未達週決策條件。",
-    "目前仍是空資料模式，不能調整商品、付費 CTA、Luna 或聯盟優先序。"
+    "publishing-status 尚未達週決策條件。"
   ],
   "allowedDecisions": [
     "publish_or_verify_first_batch",
@@ -146,13 +89,9 @@
   ],
   "decisionOutputs": {
     "recommendedFocus": "collect_signal",
-    "matrixEmptyDataMode": true,
+    "matrixEmptyDataMode": false,
     "weeklyRecommendations": [
-      "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
-      "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
-      "完成平台首頁設定後，同步回填 platform-profile-tracker.csv，分開判讀 Bio/Profile link 成效。",
-      "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
-      "下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
+      "數據不足以調整策略，先補足本週回填。"
     ]
   },
   "policy": {

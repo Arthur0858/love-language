@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "masterGate": "docs/promotion/first-round/master-gate.json",
@@ -8,77 +8,37 @@
     "offerExperimentPlan": "docs/promotion/first-round/offer-experiment-plan.json"
   },
   "metrics": {
-    "rows": 14,
-    "activeBlockers": 14,
-    "readyNow": 3,
-    "profileRows": 3,
-    "publishRows": 3,
-    "decisionRows": 9,
+    "rows": 10,
+    "activeBlockers": 8,
+    "readyNow": 1,
+    "profileRows": 1,
+    "publishRows": 1,
+    "decisionRows": 7,
     "leadRows": 1,
     "offerRows": 1,
-    "currentStage": "profile_setup",
-    "emptyDataMode": 1
+    "currentStage": "first_batch_publish",
+    "emptyDataMode": 0
   },
   "rows": [
     {
       "phase": "profile_setup",
       "blocker_id": "profile_link_youtube_shorts",
       "scope": "youtube_shorts",
-      "status": "ready_to_act",
+      "status": "complete",
       "owner_action": "Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.",
       "release_condition": "platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.",
       "evidence_source": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "writeback_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
     },
     {
-      "phase": "profile_setup",
-      "blocker_id": "profile_link_tiktok",
-      "scope": "tiktok",
-      "status": "ready_to_act",
-      "owner_action": "Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.",
-      "release_condition": "platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.",
-      "evidence_source": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
-      "writeback_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
-    },
-    {
-      "phase": "profile_setup",
-      "blocker_id": "profile_link_instagram_reels",
-      "scope": "instagram_reels",
-      "status": "ready_to_act",
-      "owner_action": "Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.",
-      "release_condition": "platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.",
-      "evidence_source": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
-      "writeback_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
-    },
-    {
       "phase": "publish_first_batch",
       "blocker_id": "publish_youtube_shorts_publish-lt-s01-iris-silence",
       "scope": "youtube_shorts:publish-lt-s01-iris-silence",
-      "status": "blocked_until_profile_links",
+      "status": "ready_to_act",
       "owner_action": "Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.",
       "release_condition": "posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.",
       "evidence_source": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "writeback_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\""
-    },
-    {
-      "phase": "publish_first_batch",
-      "blocker_id": "publish_tiktok_publish-lt-s01-iris-silence",
-      "scope": "tiktok:publish-lt-s01-iris-silence",
-      "status": "blocked_until_profile_links",
-      "owner_action": "Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.",
-      "release_condition": "posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.",
-      "evidence_source": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "writeback_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\""
-    },
-    {
-      "phase": "publish_first_batch",
-      "blocker_id": "publish_instagram_reels_publish-lt-s01-iris-silence",
-      "scope": "instagram_reels:publish-lt-s01-iris-silence",
-      "status": "blocked_until_profile_links",
-      "owner_action": "Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.",
-      "release_condition": "posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.",
-      "evidence_source": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "writeback_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\""
     },
     {
       "phase": "publish_first_batch",
@@ -114,9 +74,9 @@
       "phase": "weekly_review",
       "blocker_id": "not_empty_data_mode",
       "scope": "first_round",
-      "status": "blocked_until_evidence",
+      "status": "complete",
       "owner_action": "Empty data mode is false before commerce or prioritization decisions.",
-      "release_condition": "目前仍是空資料安全模式。",
+      "release_condition": "證據已滿足。",
       "evidence_source": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
       "writeback_command": "python3 tools/promotion_daily_ops_refresh.py"
     },

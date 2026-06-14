@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "sources": {
     "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
     "weeklyDecisionEvidence": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
@@ -10,19 +10,19 @@
   },
   "metrics": {
     "rows": 7,
-    "readyRows": 0,
-    "blockedRows": 5,
+    "readyRows": 2,
+    "blockedRows": 3,
     "holdRows": 2,
     "weeklyReady": 0,
-    "emptyData": 1,
-    "evidencePending": 7,
-    "evidenceComplete": 1
+    "emptyData": 0,
+    "evidencePending": 6,
+    "evidenceComplete": 2
   },
   "rows": [
     {
       "step_id": "profile-before-review",
       "phase": "precondition",
-      "status": "blocked",
+      "status": "ready",
       "operator_action": "Confirm all platform profile links are set/live before using first-batch posts for weekly review.",
       "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check",
       "evidence_required": "profile_configured=3 and profile gate ready before publish/review.",
@@ -31,8 +31,8 @@
     {
       "step_id": "first-batch-public-url",
       "phase": "publish",
-      "status": "blocked",
-      "operator_action": "Publish or verify the first three platform posts and record the real public post URLs.",
+      "status": "ready_to_publish",
+      "operator_action": "Publish or verify the first YouTube Shorts post and record the real public post URL.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "evidence_required": "Three real platform post_url values, not placeholders.",
       "decision_boundary": "No public URL means no weekly decision."
@@ -52,7 +52,7 @@
       "status": "blocked",
       "operator_action": "Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.",
       "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
-      "evidence_required": "complete=1, pending=7.",
+      "evidence_required": "complete=2, pending=6.",
       "decision_boundary": "Pending evidence keeps all commerce and winner decisions on HOLD."
     },
     {
@@ -61,7 +61,7 @@
       "status": "hold",
       "operator_action": "Regenerate weekly summary, decision gate and review packet before changing the next content batch.",
       "command": "python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py",
-      "evidence_required": "weekly_ready=0, empty_data=1.",
+      "evidence_required": "weekly_ready=0, empty_data=0.",
       "decision_boundary": "Empty data mode allows only setup, publish, and KPI backfill actions."
     },
     {

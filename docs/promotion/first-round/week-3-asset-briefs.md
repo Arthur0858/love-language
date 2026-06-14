@@ -1,9 +1,9 @@
 # LoveTypes Week 3 Asset Briefs
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - 製作手卡：3
 - 場景卡：9
-- 平台 caption：9
+- 平台 caption：3
 
 ## 使用方式
 
@@ -46,42 +46,10 @@
 ```text
 你不是物質，你只是想知道自己有沒有被放在心上。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
 
 留言 A/B/C，哪一種小心意最能打動你？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-06-29 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
-
-```text
-你不是物質，你只是想知道自己有沒有被放在心上。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
-
-留言 A/B/C，哪一種小心意最能打動你？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-06-29 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
-
-```text
-你不是物質，你只是想知道自己有沒有被放在心上。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_remembered
-
-留言 A/B/C，哪一種小心意最能打動你？
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -92,7 +60,7 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 薇薇安 · 重要日子被忘記，你最痛的是哪裡？
@@ -130,42 +98,10 @@
 ```text
 那一天不是日期而已，是你想確認自己有沒有被記得。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
 
 留言 A/B/C，或寫下一個你希望被記得的日子。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-07-01 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
-
-```text
-那一天不是日期而已，是你想確認自己有沒有被記得。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
-
-留言 A/B/C，或寫下一個你希望被記得的日子。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-07-01 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
-
-```text
-那一天不是日期而已，是你想確認自己有沒有被記得。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_forgotten_date
-
-留言 A/B/C，或寫下一個你希望被記得的日子。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -176,7 +112,7 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 薇薇安 · 你的戀愛儀式感是哪一種？
@@ -214,42 +150,10 @@
 ```text
 有些人把愛藏在細節裡，等你發現自己被記得。
 
-完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
+Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
 
 留言 A/B/C，薇薇安會替你把那份心意歸檔。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### TikTok · 2026-07-03 21:00 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
-
-```text
-有些人把愛藏在細節裡，等你發現自己被記得。
-
-首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
-
-留言 A/B/C，薇薇安會替你把那份心意歸檔。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-#### Instagram Reels · 2026-07-03 21:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
-
-```text
-有些人把愛藏在細節裡，等你發現自己被記得。
-
-個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=vivian_ritual
-
-留言 A/B/C，薇薇安會替你把那份心意歸檔。
-#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes
+#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 ```
 
 - 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
@@ -260,5 +164,5 @@
 - 不宣稱診斷、療效或保證修復。
 - 不把短片 CTA 改成直接購買。
 - 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：完成 15 題測驗。
+- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
 - 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。

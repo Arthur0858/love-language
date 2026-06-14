@@ -1,6 +1,6 @@
 # LoveTypes Lead Form Health Report
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - configured forms：5
 - rendered forms：10
 - send / copy events：10 / 10

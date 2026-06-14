@@ -72,7 +72,8 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
     issues: list[str] = []
     rows: list[dict[str, str]] = []
 
-    for item in first_batch.get("rows", []):
+    first_batch_rows = first_batch.get("rows", [])
+    for item in first_batch_rows:
         platform = str(item.get("platform", ""))
         task_id = str(item.get("taskId", ""))
         task_key = (platform, task_id)
@@ -106,8 +107,8 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
         if len(zero_rows) != 3:
             issues.append(f"{platform}/{task_id}: expected 3 zero KPI evidence rows")
 
-    if len(rows) != 3:
-        issues.append(f"expected 3 first-batch KPI action rows, got {len(rows)}")
+    if len(rows) != len(first_batch_rows):
+        issues.append(f"expected {len(first_batch_rows)} first-batch KPI action rows, got {len(rows)}")
     for row in rows:
         label = f"{row['platform']}/{row['task_id']}"
         if row["published"] == "0" and row["action_status"] != "blocked_until_public_post_url":
@@ -149,7 +150,7 @@ def render_markdown(payload: dict) -> str:
         "",
         "- 沒有真實公開 post URL 前，不回填 KPI，也不把 0 視為有效數據。",
         "- `site_clicks`、`quiz_starts`、`quiz_completions` 即使是 0，也必須有平台或網站來源確認。",
-        "- 三平台最小 KPI 未回填前，不做週決策、商品化、Luna 或聯盟權重調整。",
+        "- 啟用平台的最小 KPI 未回填前，不做週決策、商品化、Luna 或聯盟權重調整。",
         "",
     ]
     for row in payload["rows"]:

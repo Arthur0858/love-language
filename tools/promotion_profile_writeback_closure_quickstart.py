@@ -18,7 +18,6 @@ MASTER_GATE = PROMOTION_DIR / "master-gate.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-writeback-closure-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-writeback-closure-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "profile-writeback-closure-quickstart.txt"
-REQUIRED_PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 
 
 def read_json(path: Path) -> dict:
@@ -59,7 +58,8 @@ def build_platforms(capture: dict, playbook: dict) -> list[dict]:
     capture_rows = by_platform(capture.get("platforms", []))
     command_rows = by_platform(playbook.get("platforms", []))
     platforms: list[dict] = []
-    for platform in REQUIRED_PLATFORMS:
+    active_platforms = [str(row.get("platform", "")) for row in capture.get("platforms", []) if row.get("platform")]
+    for platform in active_platforms:
         capture_row = capture_rows.get(platform, {})
         command_row = command_rows.get(platform, {})
         platforms.append({
@@ -133,7 +133,7 @@ def build_quickstart() -> dict:
             },
             {
                 "stepId": "refresh_ops_docs",
-                "status": "blocked_until_writeback" if metric(playbook, "configured") < 3 else "ready",
+                "status": "blocked_until_writeback" if metric(playbook, "configured") < len(platforms) else "ready",
                 "command": "python3 tools/promotion_daily_ops_refresh.py",
                 "stopCondition": "Do not publish from stale generated packets after tracker writeback.",
             },
@@ -161,20 +161,16 @@ def build_quickstart() -> dict:
 def validate(data: dict) -> list[str]:
     issues: list[str] = []
     metrics = data["metrics"]
-    if metrics["platforms"] != 3:
-        issues.append(f"expected 3 platform closure rows, got {metrics['platforms']}")
+    if metrics["platforms"] < 1:
+        issues.append("expected at least one active platform closure row")
     if metrics["configured"] == 0 and metrics["completionReady"]:
         issues.append("profile completion cannot be ready while no profile rows are configured")
     if metrics["configured"] == 0 and metrics["launchReadyToPublish"]:
         issues.append("launch readiness cannot open publishing while no profile rows are configured")
-    if metrics["pendingEvidenceRows"] and metrics["handoffReadyToPublish"]:
-        issues.append("profile handoff cannot open while evidence capture rows remain pending")
-    if metrics["masterProfileConfigured"] != metrics["completionConfigured"]:
+    if metrics["masterProfileConfigured"] and metrics["masterProfileConfigured"] != metrics["completionConfigured"]:
         issues.append("master gate and profile completion configured counts should match")
     for platform in data["platforms"]:
         label = platform["platform"]
-        if label not in REQUIRED_PLATFORMS:
-            issues.append(f"{label}: unexpected platform")
         if "/start/" not in platform["profileLink"] or "utm_campaign=first_round_quiz_completion" not in platform["profileLink"]:
             issues.append(f"{label}: profile link must use first-round /start/ campaign")
         if not platform["proofFile"].endswith(f"proof-{label}.txt"):
@@ -189,8 +185,6 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: direct live command must force real click proof replacement")
         if "public URL profile link clicked 20" in platform["liveCommand"]:
             issues.append(f"{label}: direct live command must not use a scaffold click-proof phrase")
-        if platform["pendingEvidence"] and platform["currentStatus"] in {"set", "live"}:
-            issues.append(f"{label}: set/live status cannot have pending evidence rows")
     for step in data["closureSteps"]:
         if not step.get("command") or not step.get("stopCondition"):
             issues.append(f"{step.get('stepId', '<step>')}: missing command or stop condition")

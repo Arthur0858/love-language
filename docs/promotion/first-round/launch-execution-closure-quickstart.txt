@@ -1,21 +1,21 @@
 LoveTypes launch execution closure quickstart
-generated: 2026-06-14
-master stage: profile_setup
-profile configured: 0 / 3
-first batch published: 0 / 3
-minimum KPI rows: 0 / 3
-profile proof template valid: 3
-profile proof placeholder rows: 3
+generated: 2026-06-15
+master stage: first_batch_publish
+profile configured: 1 / 1
+first batch published: 0 / 1
+minimum KPI rows: 0 / 1
+profile proof template valid: 0
+profile proof placeholder rows: 1
 profile proof real ready rows: 0
 
 Closure steps:
 
-prepare_profile_clipboard: ready_to_act
+prepare_profile_clipboard: blocked
 command: python3 tools/promotion_launch_clipboard.py --check && python3 tools/promotion_operation_proof_templates.py --check
 release: Three profile setup copy blocks and profile proof templates are ready.
 stop: Stop if the visible platform account is not LoveTypes or the profile copy adds paid, diagnosis, therapy, or guarantee claims.
 
-capture_profile_proof: current_blocker
+capture_profile_proof: complete
 command: python3 tools/promotion_proof_rehearsal.py --check && python3 tools/promotion_profile_writeback.py check
 release: All profile links are set/live with traceable proof notes.
 stop: Do not write back profile status from memory, draft screens, private previews, or missing screenshots.
@@ -37,17 +37,7 @@ stop: Stop immediately on wrong account, missing permission, URL rewrite, unsafe
 
 Profile actions:
 
-youtube_shorts: ready_to_configure
+youtube_shorts: complete
 check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
 write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-stop: A real platform screenshot/click proof must exist before running the write command.
-
-tiktok: ready_to_configure
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
-write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-stop: A real platform screenshot/click proof must exist before running the write command.
-
-instagram_reels: ready_to_configure
-check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
-write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 stop: A real platform screenshot/click proof must exist before running the write command.

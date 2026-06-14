@@ -1,6 +1,6 @@
 # LoveTypes Lead and Offer Quickstart
 
-- 產生日期：2026-06-14
+- 產生日期：2026-06-15
 - handoff rows：8
 - current blockers / blocked upstream：1 / 5
 - real leads：0
@@ -34,7 +34,7 @@
 
 - phase：`weekly_review`
 - status：`blocked_upstream`
-- value：0 / 3
+- value：1 / 3
 - action：Confirm weekly review, week decision gate, and non-empty data mode before route decisions.
 - command：`python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check`
 - stop：Do not pick winners or change commerce order while empty data mode is true.
@@ -43,7 +43,7 @@
 
 - phase：`weekly_review`
 - status：`blocked_upstream`
-- value：1 / 8
+- value：2 / 8
 - action：Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.
 - command：`python3 tools/promotion_weekly_decision_evidence_checklist.py --check`
 - stop：Stop if any weekly decision evidence row remains pending.

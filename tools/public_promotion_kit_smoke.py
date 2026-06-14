@@ -41,8 +41,6 @@ EXPECTED_BRIDGE_EVENTS = {
 }
 EXPECTED_PLATFORM_PROFILE_SOURCES = {
     "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
 }
 EXPECTED_EVENT_KPI_MAP = {
     "site_clicks": {"campaign_landing"},
@@ -279,7 +277,7 @@ def main() -> int:
             if not isinstance(item.get(key), str) or not item[key]:
                 issues.append(f"{source}: missing {key}")
         setup_text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
-        if "完成 15 題測驗" not in setup_text:
+        if "完成 15 題測驗" not in setup_text and "15-question quiz" not in setup_text:
             issues.append(f"{source}: setup copy should include the quiz CTA")
         if any(word in setup_text for word in ("診斷", "療效", "保證修復", "必須購買")):
             issues.append(f"{source}: setup copy should not include diagnosis, treatment, guarantee, or required purchase claims")

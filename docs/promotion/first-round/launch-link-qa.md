@@ -1,8 +1,8 @@
 # LoveTypes Launch Link QA
 
-- 產生日期：2026-06-14
-- 唯一追蹤連結：18
-- Profile links：3
+- 產生日期：2026-06-15
+- 唯一追蹤連結：16
+- Profile links：1
 - Shorts links：15
 
 ## 使用方式
@@ -12,26 +12,6 @@
 - Bio/Profile links 使用平台專屬 `utm_source` 與 `utm_medium=social_profile`。
 
 ## Links
-
-### profile:instagram_reels:instagram_reels_bio
-
-- type：`profile`
-- platform：`instagram_reels`
-- guardian：``
-- utm：`instagram` / `social_profile` / `first_round_quiz_completion` / `instagram_reels_bio`
-- URL：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- status：`ready_to_test`
-- notes：Bio/Profile link before first post.
-
-### profile:tiktok:tiktok_bio
-
-- type：`profile`
-- platform：`tiktok`
-- guardian：``
-- utm：`tiktok` / `social_profile` / `first_round_quiz_completion` / `tiktok_bio`
-- URL：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- status：`ready_to_test`
-- notes：Bio/Profile link before first post.
 
 ### profile:youtube_shorts:youtube_shorts_bio
 

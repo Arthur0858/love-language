@@ -19,25 +19,9 @@ PLATFORMS = {
         "label": "YouTube Shorts",
         "utm_source": "youtube",
         "profile_link_label": "Channel description / video description",
-        "bio": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
-        "pinned_comment": "完成 15 題測驗，找到你的情感守護者：{url}\n留言 A/B/C，我們會用守護者路線回覆你。",
-        "link_limit_note": "YouTube 說明欄可放完整追蹤連結；置頂留言也放同一條。",
-    },
-    "tiktok": {
-        "label": "TikTok",
-        "utm_source": "tiktok",
-        "profile_link_label": "Profile website link",
-        "bio": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
-        "pinned_comment": "完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
-        "link_limit_note": "若 caption 不能放可點連結，Bio/個人頁連結必須使用平台專屬追蹤連結。",
-    },
-    "instagram_reels": {
-        "label": "Instagram Reels",
-        "utm_source": "instagram",
-        "profile_link_label": "Profile link in bio",
-        "bio": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
-        "pinned_comment": "完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
-        "link_limit_note": "IG Reels caption 以個人檔案連結承接；Bio 連結需先於發布前更新。",
+        "bio": "LoveTypes Heart-Language Garden | Take the 15-question quiz to find your emotional guardian.",
+        "pinned_comment": "Take the 15-question quiz to find your emotional guardian: {url}\nComment A/B/C and we will point you to a guardian route.",
+        "link_limit_note": "YouTube is the first-round English channel; the channel bio, descriptions, and pinned comments can use the full tracking link.",
     },
 }
 
@@ -163,7 +147,7 @@ def validate_setup(setup: dict) -> list[str]:
             if not item.get(field):
                 issues.append(f"{label}: missing {field}")
         text = f"{item.get('bio', '')} {item.get('pinnedComment', '')}"
-        if "完成 15 題測驗" not in text:
+        if "15-question quiz" not in text and "完成 15 題測驗" not in text:
             issues.append(f"{label}: setup should include quiz CTA")
         for forbidden in ("診斷", "療效", "保證修復", "必須購買"):
             if forbidden in item.get("bio", "") or forbidden in item.get("pinnedComment", ""):
@@ -209,9 +193,9 @@ def render_markdown(setup: dict) -> str:
         "",
         "## 使用規則",
         "",
-        "- 發布第一支 Shorts/Reels 前，先完成三個平台首頁設定。",
+        "- 發布第一支 YouTube Shorts 前，先完成 YouTube 頻道首頁設定。",
         "- 首頁 Bio 和置頂留言只導向測驗，不直接導購。",
-        "- 平台若不能放可點連結，仍要在 Bio/個人頁連結使用平台專屬追蹤 URL。",
+        "- YouTube 是第一輪英文主渠道；其他平台不列入本輪必備 gate。",
         "- 發布後把 profile_clicks 與 site_clicks 一起回填，才能判斷個人頁承接是否有效。",
         "",
     ]

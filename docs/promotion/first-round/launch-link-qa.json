@@ -1,48 +1,16 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "source": {
     "postingQueue": "docs/promotion/first-round/posting-queue.csv",
     "profileSetup": "docs/promotion/first-round/platform-profile-setup.json"
   },
-  "rowCount": 18,
-  "profileLinks": 3,
+  "rowCount": 16,
+  "profileLinks": 1,
   "shortsLinks": 15,
-  "expectedProfileLinks": 3,
+  "expectedProfileLinks": 1,
   "expectedShortsLinks": 15,
-  "expectedTotalLinks": 18,
+  "expectedTotalLinks": 16,
   "rows": [
-    {
-      "link_id": "profile:instagram_reels:instagram_reels_bio",
-      "source_type": "profile",
-      "platform": "instagram_reels",
-      "task_id": "profile-instagram_reels",
-      "script_id": "",
-      "guardian_id": "",
-      "utm_source": "instagram",
-      "utm_medium": "social_profile",
-      "utm_campaign": "first_round_quiz_completion",
-      "utm_content": "instagram_reels_bio",
-      "url": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
-      "expected_path": "/start/",
-      "status": "ready_to_test",
-      "notes": "Bio/Profile link before first post."
-    },
-    {
-      "link_id": "profile:tiktok:tiktok_bio",
-      "source_type": "profile",
-      "platform": "tiktok",
-      "task_id": "profile-tiktok",
-      "script_id": "",
-      "guardian_id": "",
-      "utm_source": "tiktok",
-      "utm_medium": "social_profile",
-      "utm_campaign": "first_round_quiz_completion",
-      "utm_content": "tiktok_bio",
-      "url": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
-      "expected_path": "/start/",
-      "status": "ready_to_test",
-      "notes": "Bio/Profile link before first post."
-    },
     {
       "link_id": "profile:youtube_shorts:youtube_shorts_bio",
       "source_type": "profile",

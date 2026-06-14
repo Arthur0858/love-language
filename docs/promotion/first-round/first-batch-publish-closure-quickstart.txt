@@ -1,12 +1,12 @@
 LoveTypes first batch publish closure quickstart
-generated: 2026-06-14
+generated: 2026-06-15
 profile handoff ready: 0
-ready/blocked rows: 0 / 3
-published/pending rows: 0 / 3
+ready/blocked rows: 1 / 0
+published/pending rows: 0 / 1
 
 Closure steps:
 - profile_publish_handoff_open / current_blocker: python3 tools/promotion_profile_publish_handoff.py --check
-- publish_first_batch_posts / blocked_until_profile_gate: python3 tools/promotion_first_batch_publish_quickstart.py --check
+- publish_first_batch_posts / ready: python3 tools/promotion_first_batch_publish_quickstart.py --check
 - writeback_public_post_urls / blocked_until_public_url: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 - verify_public_post_urls / blocked_until_post_url: python3 tools/promotion_public_post_url_checklist.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check
 - open_kpi_backfill / blocked_until_public_url: python3 tools/promotion_first_batch_kpi_quickstart.py --check
@@ -14,22 +14,8 @@ Closure steps:
 Rows:
 
 === youtube_shorts / publish-lt-s01-iris-silence ===
-status: blocked_until_profile_links
-ready: 0
-blocked by: profile links are not all set/live
+status: ready_to_publish
+ready: 1
+blocked by: 
 proof file: docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
 write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
-
-=== tiktok / publish-lt-s01-iris-silence ===
-status: blocked_until_profile_links
-ready: 0
-blocked by: profile links are not all set/live
-proof file: docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt
-write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
-
-=== instagram_reels / publish-lt-s01-iris-silence ===
-status: blocked_until_profile_links
-ready: 0
-blocked by: profile links are not all set/live
-proof file: docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt
-write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"

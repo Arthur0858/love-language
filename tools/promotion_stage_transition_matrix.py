@@ -30,8 +30,8 @@ TRANSITIONS = [
         "toStage": "first_batch_publish",
         "gateId": "profile_completion",
         "requiredMetric": "profileConfigured",
-        "requiredValue": 3,
-        "releaseCondition": "All three platform profile rows are set/live with profile_link_set_date and traceable proof.",
+        "requiredValue": 1,
+        "releaseCondition": "All active platform profile rows are set/live with profile_link_set_date and traceable proof.",
         "nextCommand": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_launch_readiness_gate.py --check",
         "fallbackAction": "Use profile proof import templates; do not publish first batch yet.",
     },
@@ -40,8 +40,8 @@ TRANSITIONS = [
         "toStage": "first_batch_kpi",
         "gateId": "first_batch_publication",
         "requiredMetric": "firstBatchPublished",
-        "requiredValue": 3,
-        "releaseCondition": "First batch has three verified HTTPS post URLs written back.",
+        "requiredValue": 1,
+        "releaseCondition": "First batch has verified HTTPS post URLs written back for all active platforms.",
         "nextCommand": "python3 tools/promotion_first_batch_completion_gate.py --check",
         "fallbackAction": "Publish only after profile gate opens; reject placeholder URLs.",
     },
@@ -50,8 +50,8 @@ TRANSITIONS = [
         "toStage": "weekly_review",
         "gateId": "minimum_kpi",
         "requiredMetric": "firstBatchMinimumKpiRows",
-        "requiredValue": 3,
-        "releaseCondition": "Each first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
+        "requiredValue": 1,
+        "releaseCondition": "Each active first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
         "nextCommand": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
         "fallbackAction": "Keep KPI rows blank until the source was checked; 0 requires proof.",
     },
@@ -167,6 +167,11 @@ def build_matrix() -> dict:
 
     active_stage = str(master.get("stage", ""))
     values = current_values(master, profile, first_batch, weekly, lead, offer)
+    required_values = {
+        "profileConfigured": max(1, metric(profile, "expectedProfiles", 1)),
+        "firstBatchPublished": max(1, metric(first_batch, "rows", 1)),
+        "firstBatchMinimumKpiRows": max(1, metric(first_batch, "rows", 1)),
+    }
     proof_metrics = profile_proof.get("metrics", {}) if isinstance(profile_proof.get("metrics"), dict) else {}
     profile_proof_rows = int(proof_metrics.get("rows", 0) or 0)
     profile_proof_real_ready = int(proof_metrics.get("realProofReadyRows", 0) or 0)
@@ -174,6 +179,7 @@ def build_matrix() -> dict:
     rows = []
     passed_so_far = True
     for item in TRANSITIONS:
+        item = {**item, "requiredValue": required_values.get(item["requiredMetric"], item["requiredValue"])}
         current_value = values.get(item["requiredMetric"], 0)
         complete = current_value >= int(item["requiredValue"])
         active = item["fromStage"] == active_stage

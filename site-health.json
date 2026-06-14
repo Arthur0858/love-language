@@ -32,7 +32,7 @@
   },
   "promotionProfileVerification": {
     "source": "https://lovetypes.tw/promotion-kit.json#platformProfileSetup",
-    "platforms": 3,
+    "platforms": 1,
     "writebackFields": [
       "status",
       "profile_link_set_date",
@@ -42,9 +42,9 @@
     "verificationStepsPerPlatform": 4,
     "doNotPublishGatesPerPlatform": 3,
     "publicSmokeCounters": [
-      "public_promotion_kit_platform_profile_writeback_checked=3",
-      "public_promotion_kit_platform_profile_verification_steps_checked=12",
-      "public_promotion_kit_platform_profile_publish_gates_checked=9",
+      "public_promotion_kit_platform_profile_writeback_checked=1",
+      "public_promotion_kit_platform_profile_verification_steps_checked=4",
+      "public_promotion_kit_platform_profile_publish_gates_checked=3",
       "public_promotion_kit_issues=0",
       "public_discovery_commerce_revenue_playbook_checked=4",
       "public_discovery_commerce_item_playbook_links_checked=20"

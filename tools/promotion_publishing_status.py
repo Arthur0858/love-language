@@ -17,7 +17,7 @@ TRACKER_PATH = PROMOTION_DIR / "kpi-tracker.csv"
 PLATFORM_TRACKER_PATH = PROMOTION_DIR / "platform-kpi-tracker.csv"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "publishing-status.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "publishing-status.json"
-PLATFORMS = {"youtube_shorts", "tiktok", "instagram_reels"}
+DEFAULT_PLATFORMS = {"youtube_shorts"}
 PUBLISHED_STATUSES = {"published", "live", "posted"}
 ACTIVE_STATUSES = {"planned", "scheduled", *PUBLISHED_STATUSES}
 REVENUE_FIELDS = [
@@ -136,6 +136,11 @@ def build_report(
         if (row.get("script_id") or "").strip()
     })
     expected_platform_tracker_rows = len(queue_rows)
+    active_platforms = {
+        (row.get("platform") or "").strip()
+        for row in queue_rows
+        if (row.get("platform") or "").strip()
+    } or set(DEFAULT_PLATFORMS)
 
     for row in queue_rows:
         platform = (row.get("platform") or "").strip()
@@ -153,7 +158,7 @@ def build_report(
         queue_by_status[status] += 1
         queue_by_guardian[guardian] += 1
 
-        if platform not in PLATFORMS:
+        if platform not in active_platforms:
             invalid_platforms.append(key_label)
         if status not in ACTIVE_STATUSES:
             invalid_statuses.append(f"{key_label}={status}")
@@ -170,9 +175,9 @@ def build_report(
             if not (row.get("published_date") or "").strip():
                 missing_published_date.append(key_label)
 
-    if set(queue_by_platform) != PLATFORMS:
-        issues.append("posting queue platforms should be exactly " + ", ".join(sorted(PLATFORMS)))
-    for platform in sorted(PLATFORMS):
+    if set(queue_by_platform) != active_platforms:
+        issues.append("posting queue platforms should be exactly " + ", ".join(sorted(active_platforms)))
+    for platform in sorted(active_platforms):
         if queue_by_platform[platform] != expected_script_count:
             issues.append(f"{platform} should have {expected_script_count} queue rows, got {queue_by_platform[platform]}")
     if len(tracker_rows) != expected_script_count:

@@ -52,19 +52,19 @@ def build_payload() -> dict:
         {
             "check_id": "profiles_configured",
             "phase": "profile_setup",
-            "expected": "3 platform profile links are set/live with traceable evidence.",
+            "expected": "All active platform profile links are set/live with traceable evidence.",
             "result": status(
-                int(profile_metrics.get("configured", 0) or 0) == int(profile_metrics.get("expected", 3) or 3),
-                "三個平台 profile 尚未全部 set/live。",
+                int(profile_metrics.get("configured", 0) or 0) == int(profile_metrics.get("expected", 1) or 1),
+                "啟用平台 profile 尚未全部 set/live。",
             ),
         },
         {
             "check_id": "first_batch_published",
             "phase": "publish_first_batch",
-            "expected": "First-batch posts are published on all three platforms.",
+            "expected": "First-batch posts are published on all active platforms.",
             "result": status(
-                int(first_batch_metrics.get("publishedRows", 0) or 0) == 3,
-                "首批三平台尚未全部發布。",
+                int(first_batch_metrics.get("publishedRows", 0) or 0) == int(first_batch_metrics.get("rowCount", first_batch_metrics.get("rows", 1)) or 1),
+                "首批啟用平台尚未全部發布。",
             ),
         },
         {
@@ -72,7 +72,7 @@ def build_payload() -> dict:
             "phase": "publish_first_batch",
             "expected": "Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.",
             "result": status(
-                int(public_metrics.get("publishedPosts", 0) or 0) == 3
+                int(public_metrics.get("publishedPosts", 0) or 0) == int(public_metrics.get("posts", 1) or 1)
                 and int(public_metrics.get("pendingPublishRows", 0) or 0) == 0
                 and int(public_metrics.get("missingRows", 0) or 0) == 0,
                 "公開貼文 URL 檢查仍有 pending 或缺證據。",
@@ -83,7 +83,7 @@ def build_payload() -> dict:
             "phase": "kpi_backfill",
             "expected": "Zero values for site_clicks, quiz_starts, and quiz_completions have checked-source proof.",
             "result": status(
-                int(zero_metrics.get("publishedPosts", 0) or 0) == 3
+                int(zero_metrics.get("publishedPosts", 0) or 0) == int(zero_metrics.get("posts", 1) or 1)
                 and int(zero_metrics.get("pendingPublishRows", 0) or 0) == 0
                 and int(zero_metrics.get("needsSourceProofRows", 0) or 0) == 0
                 and int(zero_metrics.get("missingRows", 0) or 0) == 0,

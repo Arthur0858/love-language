@@ -19,7 +19,7 @@ PUBLISHING_STATUS_PATH = PROMOTION_DIR / "publishing-status.json"
 READINESS_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 DEFAULT_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.md"
 DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "first-batch-publication-packet.json"
-PLATFORM_ORDER = ("youtube_shorts", "tiktok", "instagram_reels")
+PLATFORM_ORDER = ("youtube_shorts",)
 PUBLISHED_STATUSES = {"published", "live", "posted"}
 POST_URL_PLACEHOLDERS = {
     "youtube_shorts": "<REAL_YOUTUBE_SHORTS_URL>",
@@ -38,6 +38,11 @@ FOLLOWUP_KPI_FIELDS = (
     "luna_pack_clicks",
     "affiliate_book_clicks",
     "contact_requests",
+)
+QUIZ_CTA_MARKERS = (
+    "完成 15 題測驗",
+    "Take the 15-question quiz",
+    "15-question quiz",
 )
 
 
@@ -144,7 +149,7 @@ def build_packet() -> dict:
             "prePublishChecks": [
                 "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",
                 "影片、字幕、首幀或封面使用正確守護者宇宙，不交換角色設定。",
-                "Caption 保留單一 CTA：完成 15 題測驗，找到你的情感守護者。",
+                "Caption keeps one primary CTA: take the 15-question quiz and find your emotional guardian.",
                 "Tracked URL 指向 /start/ 且保留 utm_content。",
                 "不加入 Luna、聯盟書卷或付費商品作為第一 CTA。",
             ],
@@ -178,7 +183,7 @@ def build_packet() -> dict:
             "doNotFake": True,
             "publishedRequires": ["published_date", "https post_url", "verified proof note"],
             "emptyDataBoundary": "If first batch has no post URLs or KPI rows, keep offer order, paid CTA, Luna emphasis, and affiliate emphasis unchanged.",
-            "firstBatchGoal": "Publish the first Iris script across three platforms, then measure quiz starts and quiz completions before revenue decisions.",
+            "firstBatchGoal": "Publish the first Iris script on YouTube Shorts, then measure quiz starts and quiz completions before revenue decisions.",
         },
     }
 
@@ -186,20 +191,21 @@ def build_packet() -> dict:
 def validate_packet(packet: dict) -> list[str]:
     issues: list[str] = []
     rows = packet.get("rows", [])
-    if packet.get("rowCount") != 3:
-        issues.append(f"expected 3 first batch rows, got {packet.get('rowCount')}")
+    expected_platforms = [row.get("platform", "") for row in rows]
+    if packet.get("rowCount") != len(expected_platforms):
+        issues.append(f"expected {len(expected_platforms)} first batch rows, got {packet.get('rowCount')}")
     platforms = [row.get("platform", "") for row in rows]
-    if platforms != list(PLATFORM_ORDER):
-        issues.append("first batch rows should be ordered youtube_shorts, tiktok, instagram_reels")
+    if platforms != expected_platforms:
+        issues.append("first batch rows should match the active first-batch platform order")
     for row in rows:
         label = f"{row.get('platform', '<platform>')}/{row.get('taskId', '<task>')}"
         if row.get("guardianId") != "iris":
             issues.append(f"{label}: first batch should be Iris")
         if row.get("scriptId") != "lt-s01-iris-silence":
             issues.append(f"{label}: first batch should use lt-s01-iris-silence")
-        if row.get("primaryCta") and "完成 15 題測驗" not in row.get("primaryCta", ""):
+        if row.get("primaryCta") and not any(marker in row.get("primaryCta", "") for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: primary CTA should stay on quiz completion")
-        if "完成 15 題測驗" not in row.get("caption", ""):
+        if not any(marker in row.get("caption", "") for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: caption missing quiz CTA")
         for issue in valid_tracked_url(row.get("trackedUrl", ""), row.get("utmContent", "")):
             issues.append(f"{label}: {issue}")

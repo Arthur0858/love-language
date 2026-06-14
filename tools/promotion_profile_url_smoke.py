@@ -18,11 +18,6 @@ DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "profile-url-smoke.json"
 DEFAULT_CSV_OUTPUT_PATH = PROMOTION_DIR / "profile-url-smoke.csv"
 EXPECTED_CAMPAIGN = "first_round_quiz_completion"
 EXPECTED_MEDIUM = "social_profile"
-EXPECTED_PLATFORM_SOURCES = {
-    "youtube_shorts": "youtube",
-    "tiktok": "tiktok",
-    "instagram_reels": "instagram",
-}
 FIELDNAMES = [
     "platform",
     "label",
@@ -93,8 +88,6 @@ def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[di
     rows: list[dict[str, str]] = []
     issues: list[str] = []
     platforms = profile_setup.get("platforms", [])
-    if len(platforms) != 3:
-        issues.append(f"expected 3 profile platforms, got {len(platforms)}")
 
     for item in platforms:
         platform = str(item.get("platformId", "")).strip()
@@ -103,8 +96,8 @@ def build_rows(profile_setup: dict, public: bool, timeout: int) -> tuple[list[di
         parts = url_parts(url)
         structural_issues: list[str] = []
         public_issues: list[str] = []
-        expected_source = EXPECTED_PLATFORM_SOURCES.get(platform, "")
-        if platform not in EXPECTED_PLATFORM_SOURCES:
+        expected_source = url_parts(url)["utm_source"]
+        if not platform:
             structural_issues.append("unknown platform")
         if parts["scheme"] != "https" or parts["netloc"] != "lovetypes.tw" or parts["path"] != "/start/":
             structural_issues.append("profile URL should point to https://lovetypes.tw/start/")
@@ -186,8 +179,8 @@ def render_markdown(payload: dict) -> str:
         "",
         "## 邊界",
         "",
-        "- 這份檢查只驗證三個平台 Bio/Profile 目標網址與 UTM 規格。",
-        "- 它不代表 YouTube、TikTok、Instagram 已經完成設定；完成設定仍以 profile proof 與 tracker 回填為準。",
+        "- 這份檢查只驗證目前活動平台的 Bio/Profile 目標網址與 UTM 規格。",
+        "- 它不代表外部平台已經完成設定；完成設定仍以 profile proof 與 tracker 回填為準。",
         "- 預設不打公開站；需要公開可達性時執行 `python3 tools/promotion_profile_url_smoke.py --public --check`。",
         "",
         "## URLs",

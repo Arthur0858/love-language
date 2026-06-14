@@ -195,7 +195,7 @@ def platform_stage_action(stage: str, metrics: dict[str, int]) -> dict:
     return {
         "priority": "low",
         "action": "先完成平台首頁回填",
-        "build": "先設定三平台 Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+        "build": "先設定 YouTube Shorts Bio/Profile link 並回填 profile_clicks、site_clicks、quiz_starts、quiz_completions。",
         "target": "https://lovetypes.tw/start/",
     }
 

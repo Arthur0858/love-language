@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-14",
+  "generatedAt": "2026-06-15",
   "trackerTotalRows": 15,
   "trackerRows": 0,
-  "profileTrackerTotalRows": 3,
-  "profileTrackerRows": 0,
+  "profileTrackerTotalRows": 1,
+  "profileTrackerRows": 1,
   "plannedTasks": 15,
   "fieldStatus": {
     "complete": true,
@@ -56,8 +56,8 @@
       }
     },
     "platformProfileTracker": {
-      "rows": 0,
-      "totalRows": 3,
+      "rows": 1,
+      "totalRows": 1,
       "totals": {
         "views": 0,
         "likes": 0,
@@ -107,7 +107,7 @@
     "quizStartRateMin": 0.3,
     "quizCompletionRateMin": 0.4,
     "emptyDataRecommendationCount": 5,
-    "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first three planned tasks, setting profile links, and backfilling KPI fields.",
+    "emptyDataRule": "When video and profile trackers have no filled rows, only recommend publishing the first planned YouTube Shorts tasks, setting active profile links, and backfilling KPI fields.",
     "profileTrackerSeparation": "Bio/Profile link performance stays in platform-profile-tracker.csv; single-video performance stays in kpi-tracker.csv.",
     "offerChangeGate": "Do not change product, offer, guardian priority, Luna emphasis, or affiliate emphasis from empty tracker data.",
     "minimumFilledRowRule": "A row is treated as filled when it has activity fields or any numeric metric greater than zero.",
@@ -128,11 +128,7 @@
     ]
   },
   "recommendations": [
-    "先發布前 3 個 planned 任務，保持單一 CTA：完成 15 題測驗，找到你的情感守護者。",
-    "發布後至少回填 post_url、site_clicks、quiz_starts、quiz_completions。",
-    "完成平台首頁設定後，同步回填 platform-profile-tracker.csv，分開判讀 Bio/Profile link 成效。",
-    "若有使用者點擊結果後路線，務必回填收藏物、補給名單、Luna、聯盟書卷與 Contact 欄位。",
-    "下一批建議任務：publish-lt-s01-iris-silence (艾莉絲 / 情感錯頻情境)；publish-lt-s02-iris-affirmation (艾莉絲 / 守護者人格認同)；publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
+    "數據不足以調整策略，先補足本週回填。"
   ],
   "plannedTaskDistribution": {
     "claire": 3,
@@ -147,7 +143,7 @@
     "publish-lt-s03-iris-too-sensitive (艾莉絲 / 測驗入口)"
   ],
   "safety": {
-    "emptyDataMode": true,
-    "emptyDataNote": "Do not change product, offer, or guardian priorities from empty tracker data."
+    "emptyDataMode": false,
+    "emptyDataNote": ""
   }
 }

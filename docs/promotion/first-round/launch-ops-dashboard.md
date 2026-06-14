@@ -3,7 +3,8 @@
 - 產生日期：2026-06-14
 - rows：11
 - ready areas：0
-- blocked areas：9
+- actionable areas：2
+- blocked areas：8
 - hold areas：0
 - profile configured：0 / 3
 - first batch published：0 / 3
@@ -30,7 +31,7 @@
 
 ### profile_setup
 
-- status：`blocked`
+- status：`actionable`
 - ready / blocked：3 / 3
 - next：Set three platform profile links and write back proof.
 - evidence：public_ready=3, configured=0, ready_to_writeback=0
@@ -102,7 +103,7 @@
 
 ### next_actions
 
-- status：`profile_setup`
+- status：`actionable_profile_setup`
 - ready / blocked：3 / 18
 - next：Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.
 - evidence：selected_tasks=3, command_rows=24

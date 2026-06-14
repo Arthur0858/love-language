@@ -1,6 +1,6 @@
 area,status,ready,blocked,next_action,evidence,safety
 master_gate,profile_setup,3,18,"Finish three platform profile links, then run profile writeback and refresh ops docs.","profile=0/3, first_batch=0/3, kpi_rows=0",Use master gate as final stage source; do not skip profile_setup.
-profile_setup,blocked,3,3,Set three platform profile links and write back proof.,"public_ready=3, configured=0, ready_to_writeback=0",Do not mark set/live without platform evidence.
+profile_setup,actionable,3,3,Set three platform profile links and write back proof.,"public_ready=3, configured=0, ready_to_writeback=0",Do not mark set/live without platform evidence.
 first_batch_publish,blocked,0,3,Publish first three posts only after profile gate is ready.,"complete=0, profile_gate=0",No placeholder post URLs; keep CTA focused on quiz.
 minimum_kpi,blocked,0,3,"Backfill post_url, site_clicks, quiz_starts and quiz_completions after publish.","published=0, zero_source_rows=9",A zero needs a checked source; unknown is not zero.
 lead_ops,blocked,1,3,Use structured request import when real Contact or keepsake emails arrive.,"real_leads=0, ready_routes=0, story_assets=25",No raw email in CSV; no offer build without repeated demand.
@@ -9,4 +9,4 @@ operator_handoff,blocked,3,4,Follow the handoff packet for structured proof impo
 profile_publish_handoff,blocked,6,4,Use this gate to hand off completed profile proof into first-batch publishing.,"ready_to_publish=0, current_blockers=1, blocked_upstream=3",No first-batch publishing until profile proof and refreshed packets are complete.
 publish_kpi_handoff,blocked,1,6,Use this gate to hand off public post URLs and minimum KPI into weekly review.,"published=0/3, minimum_kpi=0/3, weekly=0","No weekly review or commerce decision until post URL, proof, and KPI checks are complete."
 weekly_lead_offer_handoff,blocked,2,6,"Use this gate to move weekly signals into lead, asset, Luna, or offer work only when evidence exists.","real_leads=0, ready_routes=0, ready_offers=0","Public free assets are safe lead magnets, not proof of product demand."
-next_actions,profile_setup,3,18,Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.,"selected_tasks=3, command_rows=24",A next-actions packet can include blocked downstream work; follow status and master gate before acting.
+next_actions,actionable_profile_setup,3,18,Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.,"selected_tasks=3, command_rows=24",A next-actions packet can include blocked downstream work; follow status and master gate before acting.

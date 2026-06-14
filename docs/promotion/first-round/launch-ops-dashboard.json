@@ -17,7 +17,8 @@
   "metrics": {
     "rows": 11,
     "readyAreas": 0,
-    "blockedAreas": 9,
+    "actionableAreas": 2,
+    "blockedAreas": 8,
     "holdAreas": 0,
     "masterStageIndex": 0,
     "profileConfigured": 0,
@@ -37,7 +38,7 @@
     },
     {
       "area": "profile_setup",
-      "status": "blocked",
+      "status": "actionable",
       "ready": "3",
       "blocked": "3",
       "next_action": "Set three platform profile links and write back proof.",
@@ -118,7 +119,7 @@
     },
     {
       "area": "next_actions",
-      "status": "profile_setup",
+      "status": "actionable_profile_setup",
       "ready": "3",
       "blocked": "18",
       "next_action": "Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.",

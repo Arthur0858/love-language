@@ -842,6 +842,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "promotion_operator_next_action_closure_quickstart_issues",
         "promotion_launch_ops_dashboard_rows",
         "promotion_launch_ops_dashboard_ready_areas",
+        "promotion_launch_ops_dashboard_actionable_areas",
         "promotion_launch_ops_dashboard_blocked_areas",
         "promotion_launch_ops_dashboard_hold_areas",
         "promotion_launch_ops_dashboard_profile_configured",

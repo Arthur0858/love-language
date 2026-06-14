@@ -5,7 +5,7 @@
 - profile blocks：3
 - post blocks：3
 - ready / blocked blocks：3 / 3
-- dashboard blocked areas：9
+- dashboard blocked areas：8
 - handoff blocked steps：4
 - issues：0
 

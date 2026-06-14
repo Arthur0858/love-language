@@ -64,7 +64,7 @@ def next_actions_status(master: dict, next_actions: dict) -> str:
     master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
     profile_configured = int(master_metrics.get("profileConfigured", 0) or 0)
     if str(master.get("stage", "")) == "profile_setup" and profile_configured < 3:
-        return "profile_setup"
+        return "actionable_profile_setup"
     if any(str(action.get("priority", "")) == "blocked" for action in next_actions.get("actions", [])):
         return "blocked"
     return "ready"
@@ -85,6 +85,16 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
     weekly_lead_offer_handoff = bundle["weekly_lead_offer_handoff"]
     master_metrics = master.get("metrics", {}) if isinstance(master.get("metrics"), dict) else {}
     handoff_state = handoff.get("state", {}) if isinstance(handoff.get("state"), dict) else {}
+    profile_ready_to_configure = metric(profile, "readyToConfigure")
+    profile_configured = metric(profile, "configured")
+    profile_public_ready = metric(profile, "publicReady")
+    profile_status = (
+        "ready"
+        if metric(profile, "profileGateReady") > 0
+        else "actionable"
+        if profile_ready_to_configure > profile_configured and profile_public_ready >= profile_ready_to_configure
+        else "blocked"
+    )
     rows = [
         {
             "area": "master_gate",
@@ -97,11 +107,11 @@ def build_rows(bundle: dict[str, dict]) -> list[dict[str, str]]:
         },
         {
             "area": "profile_setup",
-            "status": "blocked" if metric(profile, "profileGateReady") == 0 else "ready",
-            "ready": str(metric(profile, "readyToConfigure")),
-            "blocked": str(3 - metric(profile, "configured")),
+            "status": profile_status,
+            "ready": str(profile_ready_to_configure),
+            "blocked": str(3 - profile_configured),
             "next_action": "Set three platform profile links and write back proof.",
-            "evidence": f"public_ready={metric(profile, 'publicReady')}, configured={metric(profile, 'configured')}, ready_to_writeback={metric(profile, 'readyToWriteback')}",
+            "evidence": f"public_ready={profile_public_ready}, configured={profile_configured}, ready_to_writeback={metric(profile, 'readyToWriteback')}",
             "safety": "Do not mark set/live without platform evidence.",
         },
         {
@@ -207,11 +217,13 @@ def build_dashboard() -> dict:
     rows = build_rows(bundle)
     blocked = sum(1 for row in rows if row["status"] == "blocked")
     hold = sum(1 for row in rows if row["status"] == "hold")
+    actionable = sum(1 for row in rows if str(row["status"]).startswith("actionable"))
     ready = sum(1 for row in rows if row["status"] == "ready")
     master_metrics = bundle["master"].get("metrics", {}) if isinstance(bundle["master"].get("metrics"), dict) else {}
     metrics = {
         "rows": len(rows),
         "readyAreas": ready,
+        "actionableAreas": actionable,
         "blockedAreas": blocked,
         "holdAreas": hold,
         "masterStageIndex": int(bundle["master"].get("stageIndex", 0) or 0),
@@ -227,6 +239,11 @@ def build_dashboard() -> dict:
         issues.append("launch ops dashboard missing core source packet")
     if metrics["profileConfigured"] == 0 and rows[0]["status"] != "profile_setup":
         issues.append("dashboard should show master stage profile_setup while no profiles are configured")
+    profile_row = next((row for row in rows if row["area"] == "profile_setup"), {})
+    if metrics["profileConfigured"] < 3 and profile_row.get("status") != "actionable":
+        issues.append("profile setup should be actionable while public profile links are ready but not configured")
+    if metrics["profileConfigured"] < 3 and metrics["actionableAreas"] < 2:
+        issues.append("dashboard should expose actionable profile setup and next actions before external profile proof")
     if metrics["minimumKpiRows"] == 0 and any(row["area"] == "weekly_review" and row["status"] == "ready" for row in rows):
         issues.append("weekly review cannot be ready without minimum KPI rows")
     if metrics["profileConfigured"] < 3 and any(row["area"] == "next_actions" and row["status"] == "ready" for row in rows):
@@ -267,6 +284,7 @@ def render_markdown(dashboard: dict) -> str:
         f"- 產生日期：{dashboard['generatedAt']}",
         f"- rows：{metrics['rows']}",
         f"- ready areas：{metrics['readyAreas']}",
+        f"- actionable areas：{metrics['actionableAreas']}",
         f"- blocked areas：{metrics['blockedAreas']}",
         f"- hold areas：{metrics['holdAreas']}",
         f"- profile configured：{metrics['profileConfigured']} / 3",
@@ -321,6 +339,7 @@ def main() -> int:
         print(f"promotion_launch_ops_dashboard_csv={OUTPUT_CSV.relative_to(ROOT)}")
     print(f"promotion_launch_ops_dashboard_rows={metrics['rows']}")
     print(f"promotion_launch_ops_dashboard_ready_areas={metrics['readyAreas']}")
+    print(f"promotion_launch_ops_dashboard_actionable_areas={metrics['actionableAreas']}")
     print(f"promotion_launch_ops_dashboard_blocked_areas={metrics['blockedAreas']}")
     print(f"promotion_launch_ops_dashboard_hold_areas={metrics['holdAreas']}")
     print(f"promotion_launch_ops_dashboard_profile_configured={metrics['profileConfigured']}")

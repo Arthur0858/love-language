@@ -61,6 +61,8 @@ CHECKS = [
     ("promotion_spreadsheet_workbook", ["node", "tools/build_promotion_spreadsheet.mjs", "--check"], 120, False),
     ("promotion_metric_source_matrix", [sys.executable, "tools/promotion_metric_source_matrix.py", "--check"], 120, False),
     ("promotion_data_collection_sheet", [sys.executable, "tools/promotion_data_collection_sheet.py", "--check"], 120, False),
+    ("promotion_lead_form_audit", [sys.executable, "tools/promotion_lead_form_audit.py"], 120, False),
+    ("promotion_lead_form_importability_audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"], 120, False),
     ("promotion_kpi_schema_audit", [sys.executable, "tools/promotion_kpi_schema_audit.py"], 120, False),
     ("promotion_attribution_reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"], 120, False),
     ("promotion_platform_kpi_tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"], 120, False),

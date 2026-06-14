@@ -70,6 +70,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_first_batch_publish_readiness_pack.py"],
     [sys.executable, "tools/promotion_first_batch_publish_quickstart.py"],
     [sys.executable, "tools/promotion_first_batch_kpi_action_sheet.py"],
+    [sys.executable, "tools/promotion_first_batch_kpi_quickstart.py"],
     [sys.executable, "tools/promotion_first_batch_publish_checklist.py"],
     [sys.executable, "tools/promotion_first_batch_kpi_checklist.py"],
     [sys.executable, "tools/promotion_profile_post_alignment_checklist.py"],

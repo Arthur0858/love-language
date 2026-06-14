@@ -183,6 +183,12 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: missing text import check/write command")
         if not platform["setCommand"] or not platform["liveCommand"]:
             issues.append(f"{label}: missing direct writeback set/live command")
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in platform["setCommand"]:
+            issues.append(f"{label}: direct set command must force real proof replacement")
+        if "<REAL_PROFILE_CLICK_NOTE>" not in platform["liveCommand"]:
+            issues.append(f"{label}: direct live command must force real click proof replacement")
+        if "public URL profile link clicked 20" in platform["liveCommand"]:
+            issues.append(f"{label}: direct live command must not use a scaffold click-proof phrase")
         if platform["pendingEvidence"] and platform["currentStatus"] in {"set", "live"}:
             issues.append(f"{label}: set/live status cannot have pending evidence rows")
     for step in data["closureSteps"]:

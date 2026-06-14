@@ -14,7 +14,7 @@
 - 設定完成後：
   - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### TikTok（`tiktok`）
 
@@ -23,7 +23,7 @@
 - 設定完成後：
   - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+  - `python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### Instagram Reels（`instagram_reels`）
 
@@ -32,7 +32,7 @@
 - 設定完成後：
   - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+  - `python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ## Profile 設定文字匯入
 

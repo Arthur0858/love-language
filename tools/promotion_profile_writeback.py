@@ -114,6 +114,9 @@ def validate_tracker(fieldnames: list[str], rows: list[dict[str, str]]) -> list[
                 issues.append(f"{label}: profile_link_set_date must be YYYY-MM-DD and not in the future")
             if "verified:" not in (row.get("notes") or ""):
                 issues.append(f"{label}: {status} requires verified proof note")
+            issue = proof_note_issue(row.get("notes") or "", f"{label} notes")
+            if issue:
+                issues.append(issue)
         for field in METRIC_FIELDS:
             value = (row.get(field) or "").strip()
             if not value:
@@ -183,7 +186,7 @@ def playbook(fieldnames: list[str], rows: list[dict[str, str]], issues: list[str
             ),
             "liveCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status live --set-date {date.today().isoformat()} --proof-note \"public URL profile link clicked {date.today().isoformat()}\""
+                f"--status live --set-date {date.today().isoformat()} --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\""
             ),
         })
     configured = sum(1 for row in rows if row.get("status") in CONFIGURED_STATUSES)

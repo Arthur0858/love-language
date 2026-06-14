@@ -100,7 +100,7 @@ def build_quickstart() -> dict:
             "writeCommand": str(profile_row.get("writeCommand") or proof_row.get("write_command", "")),
             "stopCondition": str(profile_row.get("stopCondition", "")),
             "captureFileName": f"profile-{platform}-{today()}.png",
-            "proofNote": f"screenshot profile-{platform}-{today()}.png verified",
+            "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
             "evidenceSteps": evidence_steps,
         })
 
@@ -161,6 +161,10 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: proof file should match platform")
         if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in platform["writeCommand"]:
             issues.append(f"{label}: write command must require real proof replacement")
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in platform["proofNote"]:
+            issues.append(f"{label}: proof note must be a real evidence placeholder")
+        if "screenshot profile-" in platform["proofNote"]:
+            issues.append(f"{label}: proof note must not use scaffold screenshot filenames")
         if not platform["checkCommand"] or not platform["stopCondition"]:
             issues.append(f"{label}: missing check command or stop condition")
         evidence = {step["requiredEvidence"] for step in platform["evidenceSteps"]}

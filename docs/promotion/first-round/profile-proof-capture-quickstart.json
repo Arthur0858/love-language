@@ -41,7 +41,7 @@
       "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
       "captureFileName": "profile-youtube_shorts-2026-06-14.png",
-      "proofNote": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "evidenceSteps": [
         {
           "checkId": "youtube_shorts-01-platform_account_visible",
@@ -102,7 +102,7 @@
       "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
       "captureFileName": "profile-tiktok-2026-06-14.png",
-      "proofNote": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "evidenceSteps": [
         {
           "checkId": "tiktok-01-platform_account_visible",
@@ -163,7 +163,7 @@
       "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
       "captureFileName": "profile-instagram_reels-2026-06-14.png",
-      "proofNote": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "evidenceSteps": [
         {
           "checkId": "instagram_reels-01-platform_account_visible",

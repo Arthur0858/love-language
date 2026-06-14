@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
 import json
@@ -24,6 +25,8 @@ import promotion_publishing_status as publishing_status
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
+REPORT_MD = SOURCE_DIR / "launch-sequence-dry-run.md"
+REPORT_JSON = SOURCE_DIR / "launch-sequence-dry-run.json"
 PROFILE_PROOF_FILES = (
     SOURCE_DIR / "proof-youtube_shorts.txt",
     SOURCE_DIR / "proof-tiktok.txt",
@@ -328,8 +331,7 @@ def run_sequence() -> dict[str, int]:
     }
 
 
-def main() -> int:
-    metrics = run_sequence()
+def validate_metrics(metrics: dict[str, int]) -> list[str]:
     expected = {
         "promotion_launch_sequence_dry_run_initial_ready_to_publish": 0,
         "promotion_launch_sequence_dry_run_profile_imports": 3,
@@ -346,6 +348,69 @@ def main() -> int:
     issues = [f"{key} expected {value}, got {metrics.get(key)}" for key, value in expected.items() if metrics.get(key) != value]
     if metrics["promotion_launch_sequence_dry_run_traceable_evidence"] != metrics["promotion_launch_sequence_dry_run_required_evidence"]:
         issues.append("all required profile/post evidence should be traceable in the dry run")
+    return issues
+
+
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    lines = [
+        "# LoveTypes Launch Sequence Dry Run",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- initial ready to publish：`{metrics['promotion_launch_sequence_dry_run_initial_ready_to_publish']}`",
+        f"- profile imports：{metrics['promotion_launch_sequence_dry_run_profile_imports']}",
+        f"- profile configured：{metrics['promotion_launch_sequence_dry_run_profile_configured']}",
+        f"- profile ready to publish：`{metrics['promotion_launch_sequence_dry_run_profile_ready_to_publish']}`",
+        f"- profile gate ready：`{metrics['promotion_launch_sequence_dry_run_profile_gate_ready']}`",
+        f"- post imports：{metrics['promotion_launch_sequence_dry_run_post_imports']}",
+        f"- first batch published：{metrics['promotion_launch_sequence_dry_run_first_batch_published']}",
+        f"- minimum KPI rows：{metrics['promotion_launch_sequence_dry_run_minimum_kpi_rows']}",
+        f"- traceable / required evidence：{metrics['promotion_launch_sequence_dry_run_traceable_evidence']} / {metrics['promotion_launch_sequence_dry_run_required_evidence']}",
+        f"- publishing ready：`{metrics['promotion_launch_sequence_dry_run_publishing_ready']}`",
+        f"- weekly ready：`{metrics['promotion_launch_sequence_dry_run_weekly_ready']}`",
+        f"- current files mutated：`{metrics['promotion_launch_sequence_dry_run_current_files_mutated']}`",
+        f"- issues：{len(report['issues'])}",
+        "",
+        "## Rule",
+        "",
+        "- This is a temporary-directory dry run; current promotion CSV files must not mutate.",
+        "- Profile proof imports must open the profile gate before first-batch post imports.",
+        "- Post proof imports must produce three published rows, three minimum KPI rows, and traceable evidence.",
+        "- Weekly decision can open only after the simulated post URL and KPI evidence path is complete.",
+        "",
+    ]
+    if report["issues"]:
+        lines.extend(["## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_report(metrics: dict[str, int], issues: list[str]) -> None:
+    report = {
+        "generatedAt": TODAY,
+        "sources": {
+            "profileProofFiles": [str(path.relative_to(ROOT)) for path in PROFILE_PROOF_FILES],
+            "postProofFiles": [str(path.relative_to(ROOT)) for path in POST_PROOF_FILES],
+            "watchedFiles": [str(path.relative_to(ROOT)) for path in WATCHED_FILES],
+        },
+        "metrics": metrics,
+        "issues": issues,
+    }
+    REPORT_MD.write_text(render_markdown(report), encoding="utf-8")
+    REPORT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Dry-run the LoveTypes profile to publish to KPI launch sequence.")
+    parser.add_argument("--write-report", action="store_true", help="Write a dated md/json dry-run report.")
+    args = parser.parse_args()
+    metrics = run_sequence()
+    issues = validate_metrics(metrics)
+    if args.write_report:
+        write_report(metrics, issues)
+        print(f"promotion_launch_sequence_dry_run_report={REPORT_MD.relative_to(ROOT)}")
+        print(f"promotion_launch_sequence_dry_run_report_json={REPORT_JSON.relative_to(ROOT)}")
     for key, value in metrics.items():
         print(f"{key}={value}")
     print(f"promotion_launch_sequence_dry_run_issues={len(issues)}")

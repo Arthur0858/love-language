@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profileProofFiles": [
+      "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "docs/promotion/first-round/proof-tiktok.txt",
+      "docs/promotion/first-round/proof-instagram_reels.txt"
+    ],
+    "postProofFiles": [
+      "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt"
+    ],
+    "watchedFiles": [
+      "docs/promotion/first-round/platform-profile-tracker.csv",
+      "docs/promotion/first-round/posting-queue.csv",
+      "docs/promotion/first-round/platform-kpi-tracker.csv",
+      "docs/promotion/first-round/kpi-tracker.csv"
+    ]
+  },
+  "metrics": {
+    "promotion_launch_sequence_dry_run_initial_ready_to_publish": 0,
+    "promotion_launch_sequence_dry_run_profile_imports": 3,
+    "promotion_launch_sequence_dry_run_profile_configured": 3,
+    "promotion_launch_sequence_dry_run_profile_ready_to_publish": 1,
+    "promotion_launch_sequence_dry_run_profile_gate_ready": 1,
+    "promotion_launch_sequence_dry_run_post_imports": 3,
+    "promotion_launch_sequence_dry_run_first_batch_published": 3,
+    "promotion_launch_sequence_dry_run_minimum_kpi_rows": 3,
+    "promotion_launch_sequence_dry_run_traceable_evidence": 6,
+    "promotion_launch_sequence_dry_run_required_evidence": 6,
+    "promotion_launch_sequence_dry_run_publishing_ready": 1,
+    "promotion_launch_sequence_dry_run_weekly_ready": 1,
+    "promotion_launch_sequence_dry_run_current_files_mutated": 0
+  },
+  "issues": []
+}

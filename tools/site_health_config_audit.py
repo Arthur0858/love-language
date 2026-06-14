@@ -15,6 +15,7 @@ from typing import NamedTuple
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
+DAILY_OPS_REFRESH_PATH = ROOT / "tools" / "promotion_daily_ops_refresh.py"
 SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
 AI_DISCOVERY_PATH = ROOT / "ai-discovery.json"
@@ -45,6 +46,19 @@ PROMOTION_MANUAL_RUNTIME_SCRIPTS = {
     "tools/promotion_post_writeback.py": "writes post publication rows from verified operator input",
     "tools/promotion_profile_text_import.py": "operator import parser; covered by import template audit and manual writeback flow",
     "tools/promotion_profile_writeback.py": "writes profile setup rows from verified operator input",
+}
+DAILY_OPS_REQUIRED_SCRIPTS = {
+    "tools/promotion_sync_posting_queue.py",
+    "tools/promotion_sync_kpi_tracker.py",
+    "tools/promotion_platform_kpi_tracker.py",
+    "tools/promotion_platform_profile_tracker.py",
+    "tools/promotion_profile_completion_gate.py",
+    "tools/promotion_first_batch_completion_gate.py",
+    "tools/promotion_master_gate.py",
+    "tools/promotion_stage_transition_matrix.py",
+    "tools/promotion_profile_publish_handoff.py",
+    "tools/promotion_publish_kpi_handoff.py",
+    "tools/promotion_weekly_lead_offer_handoff.py",
 }
 
 
@@ -134,6 +148,27 @@ def parse_predeploy_script_paths() -> list[str]:
         if any(isinstance(target, ast.Name) and target.id == "PYTHON_TOOLS" for target in node.targets):
             return [path for path in literal_strings(node.value) if path.startswith("tools/")]
     return []
+
+
+def parse_daily_ops_refresh_script_paths() -> list[str]:
+    tree = ast.parse(DAILY_OPS_REFRESH_PATH.read_text(encoding="utf-8"))
+    script_paths: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign):
+            continue
+        if not any(isinstance(target, ast.Name) and target.id == "REFRESH_COMMANDS" for target in node.targets):
+            continue
+        if not isinstance(node.value, ast.List):
+            continue
+        for command in node.value.elts:
+            if not isinstance(command, ast.List):
+                continue
+            script_paths.extend(
+                part.value
+                for part in command.elts
+                if isinstance(part, ast.Constant) and isinstance(part.value, str) and part.value.startswith("tools/")
+            )
+    return script_paths
 
 
 def release_verification_script_paths() -> list[str]:
@@ -337,6 +372,7 @@ def main() -> int:
     issues: list[str] = []
     check_names, check_commands, check_script_paths, important_keys, retry_names, health_checks = parse_summary()
     predeploy_script_paths = parse_predeploy_script_paths()
+    daily_ops_script_paths = parse_daily_ops_refresh_script_paths()
     release_script_paths = release_verification_script_paths()
     release_local_audit_scripts = release_local_audit_script_paths()
     site_health_local_audit_scripts, unknown_site_health_local_audits = site_health_local_audit_tools()
@@ -368,6 +404,12 @@ def main() -> int:
     missing_release_verification_scripts = sorted(set(release_script_paths).difference(check_script_paths))
     missing_release_local_audit_scripts = sorted(set(release_local_audit_scripts).difference(predeploy_script_paths))
     missing_site_health_local_audit_scripts = sorted(set(site_health_local_audit_scripts).difference(predeploy_script_paths))
+    missing_daily_ops_required_scripts = sorted(set(DAILY_OPS_REQUIRED_SCRIPTS).difference(daily_ops_script_paths))
+    stale_daily_ops_scripts = sorted(
+        set(daily_ops_script_paths).difference(
+            str(path.relative_to(ROOT)) for path in (ROOT / "tools").glob("promotion_*.py")
+        )
+    )
     (
         covered_promotion_scripts,
         predeploy_only_promotion_scripts,
@@ -453,6 +495,16 @@ def main() -> int:
             "site-health local audit scripts missing from predeploy PYTHON_TOOLS: "
             f"{', '.join(missing_site_health_local_audit_scripts)}"
         )
+    if missing_daily_ops_required_scripts:
+        issues.append(
+            "required promotion daily ops refresh scripts missing from REFRESH_COMMANDS: "
+            f"{', '.join(missing_daily_ops_required_scripts)}"
+        )
+    if stale_daily_ops_scripts:
+        issues.append(
+            "promotion daily ops refresh references missing scripts: "
+            f"{', '.join(stale_daily_ops_scripts)}"
+        )
     if site_health_release_local_audit_mismatches:
         issues.append(
             "site-health and release local audit coverage mismatch: "
@@ -534,6 +586,9 @@ def main() -> int:
     print(f"site_health_config_site_health_local_audit_scripts={len(site_health_local_audit_scripts)}")
     print(f"site_health_config_unknown_site_health_local_audits={len(unknown_site_health_local_audits)}")
     print(f"site_health_config_missing_site_health_local_audit_scripts={len(missing_site_health_local_audit_scripts)}")
+    print(f"site_health_config_daily_ops_refresh_scripts={len(daily_ops_script_paths)}")
+    print(f"site_health_config_missing_daily_ops_required_scripts={len(missing_daily_ops_required_scripts)}")
+    print(f"site_health_config_stale_daily_ops_scripts={len(stale_daily_ops_scripts)}")
     print(f"site_health_config_site_health_release_local_audit_mismatches={len(site_health_release_local_audit_mismatches)}")
     print(f"site_health_config_promotion_tools_covered={len(covered_promotion_scripts)}")
     print(f"site_health_config_promotion_tools_predeploy_only={len(predeploy_only_promotion_scripts)}")

@@ -19,6 +19,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_data_collection_sheet.py"],
     [sys.executable, "tools/promotion_platform_profile_setup.py"],
     [sys.executable, "tools/promotion_platform_profile_tracker.py"],
+    [sys.executable, "tools/promotion_platform_kpi_tracker.py"],
     [sys.executable, "tools/promotion_profile_writeback.py", "check", "--write-playbook"],
     [sys.executable, "tools/promotion_profile_setup_runbook.py"],
     [sys.executable, "tools/promotion_launch_link_qa.py"],

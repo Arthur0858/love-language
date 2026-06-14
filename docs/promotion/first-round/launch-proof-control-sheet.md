@@ -3,6 +3,7 @@
 - 產生日期：2026-06-14
 - stage：`profile_setup`
 - profile ready / blocked：0 / 3
+- profile placeholder / real proof ready：3 / 0
 - post ready / blocked：0 / 3
 - proof rows：6
 - clipboard blocks：6

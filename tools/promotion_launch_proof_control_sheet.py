@@ -71,6 +71,8 @@ def build_sheet() -> dict:
     post_ready = metric(post, "readyRows")
     profile_blocked = metric(profile, "blockedRows")
     post_blocked = metric(post, "blockedRows")
+    profile_placeholder = metric(profile, "placeholderProofRows")
+    profile_real_ready = metric(profile, "realProofReadyRows")
     stage = str(master.get("stage") or blocker.get("stage") or "")
     steps = [
         {
@@ -118,6 +120,8 @@ def build_sheet() -> dict:
             "rows": len(rows),
             "profileReady": profile_ready,
             "profileBlocked": profile_blocked,
+            "profilePlaceholderProof": profile_placeholder,
+            "profileRealProofReady": profile_real_ready,
             "postReady": post_ready,
             "postBlocked": post_blocked,
             "clipboardBlocks": metric(clipboard, "blocks"),
@@ -170,6 +174,7 @@ def render_markdown(sheet: dict) -> str:
         f"- 產生日期：{sheet['generatedAt']}",
         f"- stage：`{metrics['stage']}`",
         f"- profile ready / blocked：{metrics['profileReady']} / {metrics['profileBlocked']}",
+        f"- profile placeholder / real proof ready：{metrics['profilePlaceholderProof']} / {metrics['profileRealProofReady']}",
         f"- post ready / blocked：{metrics['postReady']} / {metrics['postBlocked']}",
         f"- proof rows：{metrics['rows']}",
         f"- clipboard blocks：{metrics['clipboardBlocks']}",
@@ -206,6 +211,7 @@ def render_text(sheet: dict) -> str:
         f"generated: {sheet['generatedAt']}",
         f"stage: {metrics['stage']}",
         f"profile ready/blocked: {metrics['profileReady']}/{metrics['profileBlocked']}",
+        f"profile placeholder/real proof ready: {metrics['profilePlaceholderProof']}/{metrics['profileRealProofReady']}",
         f"post ready/blocked: {metrics['postReady']}/{metrics['postBlocked']}",
         "",
         "steps:",
@@ -243,6 +249,8 @@ def main() -> int:
     print(f"promotion_launch_proof_control_rows={metrics['rows']}")
     print(f"promotion_launch_proof_control_profile_ready={metrics['profileReady']}")
     print(f"promotion_launch_proof_control_profile_blocked={metrics['profileBlocked']}")
+    print(f"promotion_launch_proof_control_profile_placeholder_proof={metrics['profilePlaceholderProof']}")
+    print(f"promotion_launch_proof_control_profile_real_proof_ready={metrics['profileRealProofReady']}")
     print(f"promotion_launch_proof_control_post_ready={metrics['postReady']}")
     print(f"promotion_launch_proof_control_post_blocked={metrics['postBlocked']}")
     print(f"promotion_launch_proof_control_issues={metrics['issues']}")

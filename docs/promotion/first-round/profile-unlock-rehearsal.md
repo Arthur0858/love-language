@@ -3,6 +3,7 @@
 - 產生日期：2026-06-14
 - proof files：3
 - current ready / blocked：0 / 3
+- current placeholder / real proof ready：3 / 0
 - synthetic ready：3
 - candidate tracker valid：1
 - launch dry run green：1

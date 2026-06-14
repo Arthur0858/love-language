@@ -53,6 +53,7 @@ def classify_proof(path: Path) -> dict[str, object]:
     proof = data.get("proof_note", "")
     proof_issue = proof_note_issue(proof) if proof else "proof_note is missing"
     scaffold_issue = text_import.scaffold_proof_issue(proof)
+    placeholder_proof = bool(proof_issue and "placeholder proof text" in proof_issue)
     if proof_issue or scaffold_issue:
         status = "blocked_until_real_proof"
         if proof_issue:
@@ -70,6 +71,8 @@ def classify_proof(path: Path) -> dict[str, object]:
         "proofFile": str(path.relative_to(ROOT)),
         "status": status,
         "ready": 1 if status == "ready" and not issues else 0,
+        "placeholderProof": 1 if placeholder_proof else 0,
+        "realProofReady": 1 if status == "ready" and not issues else 0,
         "data": data,
         "issues": issues,
     }
@@ -79,6 +82,8 @@ def build_packet() -> dict:
     rows = [classify_proof(path) for path in PROOF_FILES.values()]
     ready_rows = sum(int(row["ready"]) for row in rows)
     blocked_rows = sum(1 for row in rows if row["status"] == "blocked_until_real_proof")
+    placeholder_proof_rows = sum(int(row.get("placeholderProof", 0) or 0) for row in rows)
+    real_proof_ready_rows = sum(int(row.get("realProofReady", 0) or 0) for row in rows)
     invalid_rows = sum(1 for row in rows if row["status"] not in {"ready", "blocked_until_real_proof"})
     duplicate_platforms = len({str(row.get("platform", "")) for row in rows if row.get("platform")}) != ready_rows + blocked_rows
     issues: list[str] = []
@@ -95,6 +100,8 @@ def build_packet() -> dict:
             "proofFiles": len(rows),
             "readyRows": ready_rows,
             "blockedRows": blocked_rows,
+            "placeholderProofRows": placeholder_proof_rows,
+            "realProofReadyRows": real_proof_ready_rows,
             "invalidRows": invalid_rows,
             "issues": len(issues),
         },
@@ -149,6 +156,7 @@ def render_markdown(packet: dict) -> str:
         "",
         f"- 產生日期：{packet['generatedAt']}",
         f"- 狀態：ready={metrics['readyRows']} / blocked={metrics['blockedRows']} / invalid={metrics['invalidRows']} / issues={metrics['issues']}",
+        f"- proof：placeholder={metrics['placeholderProofRows']} / real_ready={metrics['realProofReadyRows']}",
         f"- check：`{packet['commands']['check']}`",
         f"- add all：`{packet['commands']['addAll']}`",
         "",
@@ -159,6 +167,7 @@ def render_markdown(packet: dict) -> str:
         issue_count = len(row["issues"])
         lines.append(
             f"- `{row['proofFile']}`：`{row.get('platform') or 'unknown'}` / `{row['status']}` / ready={row['ready']} / issues={issue_count}"
+            f" / placeholder={row.get('placeholderProof', 0)} / real_ready={row.get('realProofReady', 0)}"
         )
     if packet["issues"]:
         lines.extend(["## Issues", ""])
@@ -171,6 +180,7 @@ def render_text(packet: dict) -> str:
     lines = [
         f"generated: {packet['generatedAt']}",
         f"ready={metrics['readyRows']} blocked={metrics['blockedRows']} invalid={metrics['invalidRows']} issues={metrics['issues']}",
+        f"placeholder_proof={metrics['placeholderProofRows']} real_proof_ready={metrics['realProofReadyRows']}",
         f"check: {packet['commands']['check']}",
         f"add: {packet['commands']['addAll']}",
     ]
@@ -187,6 +197,8 @@ def write_outputs(packet: dict) -> None:
                 "file": row["proofFile"],
                 "status": row["status"],
                 "ready": row["ready"],
+                "placeholderProof": row.get("placeholderProof", 0),
+                "realProofReady": row.get("realProofReady", 0),
                 "issues": len(row["issues"]),
             }
             for row in packet["rows"]
@@ -217,6 +229,8 @@ def main() -> int:
     print(f"promotion_profile_batch_import_proof_files={metrics['proofFiles']}")
     print(f"promotion_profile_batch_import_ready_rows={metrics['readyRows']}")
     print(f"promotion_profile_batch_import_blocked_rows={metrics['blockedRows']}")
+    print(f"promotion_profile_batch_import_placeholder_proof_rows={metrics['placeholderProofRows']}")
+    print(f"promotion_profile_batch_import_real_proof_ready_rows={metrics['realProofReadyRows']}")
     print(f"promotion_profile_batch_import_invalid_rows={metrics['invalidRows']}")
     print(f"promotion_profile_batch_import_issues={metrics['issues']}")
     for issue in packet["issues"]:

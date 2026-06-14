@@ -102,6 +102,8 @@ def build_payload() -> dict:
         "proofFiles": len(rows),
         "currentReadyRows": int(current_metrics.get("readyRows", 0) or 0),
         "currentBlockedRows": int(current_metrics.get("blockedRows", 0) or 0),
+        "currentPlaceholderProofRows": int(current_metrics.get("placeholderProofRows", 0) or 0),
+        "currentRealProofReadyRows": int(current_metrics.get("realProofReadyRows", 0) or 0),
         "syntheticReadyRows": sum(int(row["syntheticReady"]) for row in rows),
         "candidateTrackerValid": 0 if tracker_issues else 1,
         "launchDryRunGreen": 0 if dry_run_issues else 1,
@@ -139,6 +141,7 @@ def render_md(payload: dict) -> str:
         f"- 產生日期：{payload['generatedAt']}",
         f"- proof files：{metrics['proofFiles']}",
         f"- current ready / blocked：{metrics['currentReadyRows']} / {metrics['currentBlockedRows']}",
+        f"- current placeholder / real proof ready：{metrics['currentPlaceholderProofRows']} / {metrics['currentRealProofReadyRows']}",
         f"- synthetic ready：{metrics['syntheticReadyRows']}",
         f"- candidate tracker valid：{metrics['candidateTrackerValid']}",
         f"- launch dry run green：{metrics['launchDryRunGreen']}",
@@ -199,6 +202,8 @@ def main() -> int:
     print(f"promotion_profile_unlock_rehearsal_proof_files={metrics['proofFiles']}")
     print(f"promotion_profile_unlock_rehearsal_current_ready_rows={metrics['currentReadyRows']}")
     print(f"promotion_profile_unlock_rehearsal_current_blocked_rows={metrics['currentBlockedRows']}")
+    print(f"promotion_profile_unlock_rehearsal_current_placeholder_proof_rows={metrics['currentPlaceholderProofRows']}")
+    print(f"promotion_profile_unlock_rehearsal_current_real_proof_ready_rows={metrics['currentRealProofReadyRows']}")
     print(f"promotion_profile_unlock_rehearsal_synthetic_ready_rows={metrics['syntheticReadyRows']}")
     print(f"promotion_profile_unlock_rehearsal_candidate_tracker_valid={metrics['candidateTrackerValid']}")
     print(f"promotion_profile_unlock_rehearsal_launch_dry_run_green={metrics['launchDryRunGreen']}")

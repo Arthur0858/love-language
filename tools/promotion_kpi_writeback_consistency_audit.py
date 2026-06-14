@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 POSTING_QUEUE = PROMOTION_DIR / "posting-queue.csv"
 PLATFORM_KPI = PROMOTION_DIR / "platform-kpi-tracker.csv"
+PLATFORM_KPI_JSON = PROMOTION_DIR / "platform-kpi-tracker.json"
 SCRIPT_KPI = PROMOTION_DIR / "kpi-tracker.csv"
 WEEKLY_SUMMARY = PROMOTION_DIR / "weekly-summary.json"
 ATTRIBUTION = PROMOTION_DIR / "attribution-reconciliation.json"
@@ -18,6 +19,7 @@ LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 PUBLISHING_STATUS = PROMOTION_DIR / "publishing-status.json"
 
 PUBLISH_STATUSES = {"published", "live", "posted"}
+PLATFORMS = ("youtube_shorts", "tiktok", "instagram_reels")
 METRIC_FIELDS = (
     "views",
     "likes",
@@ -125,6 +127,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
     issues: list[str] = []
     queue_fields, queue_rows = read_csv(POSTING_QUEUE)
     platform_fields, platform_rows = read_csv(PLATFORM_KPI)
+    platform_json = read_json(PLATFORM_KPI_JSON)
     script_fields, script_rows = read_csv(SCRIPT_KPI)
     weekly_summary = read_json(WEEKLY_SUMMARY)
     attribution = read_json(ATTRIBUTION)
@@ -145,6 +148,15 @@ def validate() -> tuple[dict[str, int], list[str]]:
     platform_published = [row for row in platform_rows if is_published(row)]
     script_filled = [row for row in script_rows if is_script_filled(row)]
     attribution_filled = [row for row in script_rows if is_attribution_filled(row)]
+
+    if platform_json.get("rowCount") != len(platform_rows):
+        issues.append("platform KPI JSON rowCount should match platform KPI CSV rows")
+    if platform_json.get("platforms") != list(PLATFORMS):
+        issues.append("platform KPI JSON platforms should match canonical platform list")
+    if platform_json.get("metricFields") != list(METRIC_FIELDS):
+        issues.append("platform KPI JSON metricFields should match canonical metric fields")
+    if platform_json.get("rows") != platform_rows:
+        issues.append("platform KPI JSON rows should match platform KPI CSV rows")
 
     for queue_row in queue_rows:
         key = row_key(queue_row)
@@ -203,6 +215,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
     return {
         "postingRows": len(queue_rows),
         "platformRows": len(platform_rows),
+        "platformJsonRows": int(platform_json.get("rowCount", 0) or 0),
         "scriptRows": len(script_rows),
         "publishedRows": len(queue_published),
         "filledScriptRows": len(script_filled),
@@ -215,6 +228,7 @@ def main() -> int:
     metrics, issues = validate()
     print(f"promotion_kpi_writeback_posting_rows={metrics['postingRows']}")
     print(f"promotion_kpi_writeback_platform_rows={metrics['platformRows']}")
+    print(f"promotion_kpi_writeback_platform_json_rows={metrics['platformJsonRows']}")
     print(f"promotion_kpi_writeback_script_rows={metrics['scriptRows']}")
     print(f"promotion_kpi_writeback_published_rows={metrics['publishedRows']}")
     print(f"promotion_kpi_writeback_filled_script_rows={metrics['filledScriptRows']}")

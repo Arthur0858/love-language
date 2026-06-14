@@ -6,6 +6,9 @@
 - pending evidence rows：18
 - proof files / importable templates：3 / 3
 - public ready / configured：3 / 0
+- artifact required rows：3
+- safe writeback rows：0
+- writeback blocked rows：3
 - profile gate ready：0
 - issues：0
 
@@ -26,9 +29,14 @@
 - profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
 - suggested capture：`profile-youtube_shorts-2026-06-14.png`
+- capture artifact required：1
+- safe writeback ready：0
 - proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
+- required proof-note tokens：screenshot, public URL, clicked, screen recording, verified
 - check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
+- proof bundle check：`python3 tools/promotion_profile_batch_import.py --check`
 - write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- post-writeback check：`python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check`
 - stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 Evidence checklist:
@@ -47,9 +55,14 @@ Evidence checklist:
 - profile link：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
 - proof file：`docs/promotion/first-round/proof-tiktok.txt`
 - suggested capture：`profile-tiktok-2026-06-14.png`
+- capture artifact required：1
+- safe writeback ready：0
 - proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
+- required proof-note tokens：screenshot, public URL, clicked, screen recording, verified
 - check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
+- proof bundle check：`python3 tools/promotion_profile_batch_import.py --check`
 - write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- post-writeback check：`python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check`
 - stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 Evidence checklist:
@@ -68,9 +81,14 @@ Evidence checklist:
 - profile link：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
 - proof file：`docs/promotion/first-round/proof-instagram_reels.txt`
 - suggested capture：`profile-instagram_reels-2026-06-14.png`
+- capture artifact required：1
+- safe writeback ready：0
 - proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`
+- required proof-note tokens：screenshot, public URL, clicked, screen recording, verified
 - check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
+- proof bundle check：`python3 tools/promotion_profile_batch_import.py --check`
 - write after proof：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- post-writeback check：`python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check`
 - stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 Evidence checklist:

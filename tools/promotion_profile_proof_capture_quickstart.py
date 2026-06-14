@@ -98,9 +98,14 @@ def build_quickstart() -> dict:
             "profileConfigured": int(str(proof_row.get("profile_configured", "0")) == "1"),
             "checkCommand": str(profile_row.get("checkCommand") or proof_row.get("check_command", "")),
             "writeCommand": str(profile_row.get("writeCommand") or proof_row.get("write_command", "")),
+            "proofBundleCheckCommand": "python3 tools/promotion_profile_batch_import.py --check",
+            "postWritebackCheckCommand": "python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check",
             "stopCondition": str(profile_row.get("stopCondition", "")),
             "captureFileName": f"profile-{platform}-{today()}.png",
+            "captureArtifactRequired": 1,
+            "safeWritebackReady": int(str(proof_row.get("operator_status", "")) == "ready_to_writeback"),
             "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+            "proofNoteRequiredTokens": ["screenshot", "public URL", "clicked", "screen recording", "verified"],
             "evidenceSteps": evidence_steps,
         })
 
@@ -120,6 +125,9 @@ def build_quickstart() -> dict:
             "importableTemplates": metric(readiness, "importableTemplates"),
             "publicReady": metric(readiness, "publicReady"),
             "configured": metric(readiness, "configured"),
+            "artifactRequiredRows": len(platforms),
+            "safeWritebackRows": sum(int(platform["safeWritebackReady"]) for platform in platforms),
+            "writebackBlockedRows": sum(1 for platform in platforms if not int(platform["safeWritebackReady"])),
             "profileGateReady": metric(readiness, "profileGateReady"),
             "completionReadyForFirstBatch": 1 if completion.get("state", {}).get("readyForFirstBatchPublish") else 0,
         },
@@ -165,6 +173,12 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: proof note must be a real evidence placeholder")
         if "screenshot profile-" in platform["proofNote"]:
             issues.append(f"{label}: proof note must not use scaffold screenshot filenames")
+        if not platform.get("captureArtifactRequired"):
+            issues.append(f"{label}: capture artifact must be required before writeback")
+        if "promotion_profile_batch_import.py --check" not in platform.get("proofBundleCheckCommand", ""):
+            issues.append(f"{label}: missing profile batch proof check command")
+        if platform.get("safeWritebackReady") and "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" in platform["proofNote"]:
+            issues.append(f"{label}: safe writeback cannot rely on placeholder proof note")
         if not platform["checkCommand"] or not platform["stopCondition"]:
             issues.append(f"{label}: missing check command or stop condition")
         evidence = {step["requiredEvidence"] for step in platform["evidenceSteps"]}
@@ -189,6 +203,9 @@ def render_markdown(data: dict) -> str:
         f"- pending evidence rows：{metrics['pendingEvidenceRows']}",
         f"- proof files / importable templates：{metrics['proofFiles']} / {metrics['importableTemplates']}",
         f"- public ready / configured：{metrics['publicReady']} / {metrics['configured']}",
+        f"- artifact required rows：{metrics['artifactRequiredRows']}",
+        f"- safe writeback rows：{metrics['safeWritebackRows']}",
+        f"- writeback blocked rows：{metrics['writebackBlockedRows']}",
         f"- profile gate ready：{metrics['profileGateReady']}",
         f"- issues：{metrics['issues']}",
         "",
@@ -206,9 +223,14 @@ def render_markdown(data: dict) -> str:
             f"- profile link：{platform['profileLink']}",
             f"- proof file：`{platform['proofFile']}`",
             f"- suggested capture：`{platform['captureFileName']}`",
+            f"- capture artifact required：{platform['captureArtifactRequired']}",
+            f"- safe writeback ready：{platform['safeWritebackReady']}",
             f"- proof note：`{platform['proofNote']}`",
+            f"- required proof-note tokens：{', '.join(platform['proofNoteRequiredTokens'])}",
             f"- check：`{platform['checkCommand']}`",
+            f"- proof bundle check：`{platform['proofBundleCheckCommand']}`",
             f"- write after proof：`{platform['writeCommand']}`",
+            f"- post-writeback check：`{platform['postWritebackCheckCommand']}`",
             f"- stop：{platform['stopCondition']}",
             "",
             "Evidence checklist:",
@@ -239,9 +261,14 @@ def render_text(data: dict) -> str:
             f"profile link: {platform['profileLink']}",
             f"proof file: {platform['proofFile']}",
             f"suggested capture: {platform['captureFileName']}",
+            f"capture artifact required: {platform['captureArtifactRequired']}",
+            f"safe writeback ready: {platform['safeWritebackReady']}",
             f"proof note: {platform['proofNote']}",
+            f"required proof-note tokens: {', '.join(platform['proofNoteRequiredTokens'])}",
             f"check: {platform['checkCommand']}",
+            f"proof bundle check: {platform['proofBundleCheckCommand']}",
             f"write after proof: {platform['writeCommand']}",
+            f"post-writeback check: {platform['postWritebackCheckCommand']}",
             f"stop: {platform['stopCondition']}",
             "Evidence:",
         ])
@@ -281,6 +308,9 @@ def main() -> int:
     print(f"promotion_profile_proof_capture_quickstart_importable_templates={metrics['importableTemplates']}")
     print(f"promotion_profile_proof_capture_quickstart_public_ready={metrics['publicReady']}")
     print(f"promotion_profile_proof_capture_quickstart_configured={metrics['configured']}")
+    print(f"promotion_profile_proof_capture_quickstart_artifact_required_rows={metrics['artifactRequiredRows']}")
+    print(f"promotion_profile_proof_capture_quickstart_safe_writeback_rows={metrics['safeWritebackRows']}")
+    print(f"promotion_profile_proof_capture_quickstart_writeback_blocked_rows={metrics['writebackBlockedRows']}")
     print(f"promotion_profile_proof_capture_quickstart_gate_ready={metrics['profileGateReady']}")
     print(f"promotion_profile_proof_capture_quickstart_issues={metrics['issues']}")
     for issue in data["issues"]:

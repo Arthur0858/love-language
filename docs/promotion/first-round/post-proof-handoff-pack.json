@@ -1,0 +1,86 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "firstBatchPublishReadinessPack": "docs/promotion/first-round/first-batch-publish-readiness-pack.json",
+    "postOpsReadinessPack": "docs/promotion/first-round/post-ops-readiness-pack.json",
+    "postWritebackPlaybook": "docs/promotion/first-round/post-writeback-playbook.json",
+    "launchDayRunSheet": "docs/promotion/first-round/launch-day-run-sheet.json"
+  },
+  "metrics": {
+    "rows": 3,
+    "proofFiles": 3,
+    "readyToImport": 0,
+    "templatesSafelyRejected": 3,
+    "blockedUntilPostUrl": 3,
+    "writebackCommands": 3,
+    "launchDayPostOpsRows": 3,
+    "postOpsRows": 3,
+    "postWritebackFirstBatch": 3
+  },
+  "rows": [
+    {
+      "platform": "youtube_shorts",
+      "task_id": "publish-lt-s01-iris-silence",
+      "script_id": "lt-s01-iris-silence",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "proof_file": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "proof_exists": "1",
+      "import_status": "template_safely_rejected",
+      "ready_to_import": "0",
+      "template_safely_rejected": "1",
+      "post_ops_status": "blocked_until_post_url",
+      "post_url": "",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "fallback_writeback_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "next_action": "Replace the placeholder post_url and proof_note date, then rerun the check command.",
+      "stop_condition": "Stop if the URL is still a placeholder, the platform domain does not match, or zero metrics lack checked-source proof.",
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+    },
+    {
+      "platform": "tiktok",
+      "task_id": "publish-lt-s01-iris-silence",
+      "script_id": "lt-s01-iris-silence",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "proof_file": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "proof_exists": "1",
+      "import_status": "template_safely_rejected",
+      "ready_to_import": "0",
+      "template_safely_rejected": "1",
+      "post_ops_status": "blocked_until_post_url",
+      "post_url": "",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "fallback_writeback_command": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "next_action": "Replace the placeholder post_url and proof_note date, then rerun the check command.",
+      "stop_condition": "Stop if the URL is still a placeholder, the platform domain does not match, or zero metrics lack checked-source proof.",
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=tiktok | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+    },
+    {
+      "platform": "instagram_reels",
+      "task_id": "publish-lt-s01-iris-silence",
+      "script_id": "lt-s01-iris-silence",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "proof_file": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "proof_exists": "1",
+      "import_status": "template_safely_rejected",
+      "ready_to_import": "0",
+      "template_safely_rejected": "1",
+      "post_ops_status": "blocked_until_post_url",
+      "post_url": "",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "fallback_writeback_command": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "next_action": "Replace the placeholder post_url and proof_note date, then rerun the check command.",
+      "stop_condition": "Stop if the URL is still a placeholder, the platform domain does not match, or zero metrics lack checked-source proof.",
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=instagram_reels | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=1 | published status requires non-placeholder https post_url"
+    }
+  ],
+  "rules": [
+    "Proof text is the handoff surface between external publishing and local KPI writeback.",
+    "Placeholder proof files must fail the import check until a real public post URL is pasted in.",
+    "Run the check command before the write command for every platform.",
+    "Do not write zero KPI values unless the proof note names the checked analytics source."
+  ],
+  "issues": []
+}

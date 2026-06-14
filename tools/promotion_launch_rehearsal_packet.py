@@ -119,6 +119,16 @@ def build_rehearsal() -> dict[str, object]:
         "blockedBy": "" if weekly_review.get("state", {}).get("readyForWeeklyDecision") else "minimum_kpi_backfill",
         "successSignal": "weeklyReviewReady becomes true before offer or revenue decisions",
     })
+    profile_ready_stages = sum(
+        1
+        for stage in stages
+        if stage.get("stage") in {"profile_evidence", "profile_writeback"} and stage.get("status") == "ready"
+    )
+    publish_ready_stages = sum(1 for stage in stages if stage.get("stage") == "publish_post" and stage.get("status") == "ready")
+    kpi_ready_stages = sum(
+        1 for stage in stages if stage.get("stage") == "minimum_kpi_backfill" and stage.get("status") == "ready"
+    )
+    weekly_ready_stages = sum(1 for stage in stages if stage.get("stage") == "weekly_review" and stage.get("status") == "ready")
 
     return {
         "generatedAt": date.today().isoformat(),
@@ -141,6 +151,10 @@ def build_rehearsal() -> dict[str, object]:
         "stageOrder": list(STAGE_ORDER),
         "stageCount": len(stages),
         "readyStages": sum(1 for stage in stages if stage.get("status") == "ready"),
+        "profileReadyStages": profile_ready_stages,
+        "publishReadyStages": publish_ready_stages,
+        "kpiReadyStages": kpi_ready_stages,
+        "weeklyReadyStages": weekly_ready_stages,
         "blockedStages": sum(1 for stage in stages if str(stage.get("status", "")).startswith("blocked")),
         "commandPhaseCounts": {phase: len(rows) for phase, rows in command_by_phase.items()},
         "safety": {
@@ -165,9 +179,29 @@ def validate_rehearsal(packet: dict[str, object]) -> list[str]:
     if packet.get("stageCount") != len(stages):
         issues.append("stageCount should match stages length")
     ready_count = sum(1 for stage in stages if stage.get("status") == "ready")
+    profile_ready_count = sum(
+        1
+        for stage in stages
+        if stage.get("stage") in {"profile_evidence", "profile_writeback"} and stage.get("status") == "ready"
+    )
+    publish_ready_count = sum(1 for stage in stages if stage.get("stage") == "publish_post" and stage.get("status") == "ready")
+    kpi_ready_count = sum(
+        1 for stage in stages if stage.get("stage") == "minimum_kpi_backfill" and stage.get("status") == "ready"
+    )
+    weekly_ready_count = sum(1 for stage in stages if stage.get("stage") == "weekly_review" and stage.get("status") == "ready")
     blocked_count = sum(1 for stage in stages if str(stage.get("status", "")).startswith("blocked"))
     if packet.get("readyStages") != ready_count:
         issues.append("readyStages should match stage statuses")
+    if packet.get("profileReadyStages") != profile_ready_count:
+        issues.append("profileReadyStages should match profile evidence/writeback ready statuses")
+    if packet.get("publishReadyStages") != publish_ready_count:
+        issues.append("publishReadyStages should match publish ready statuses")
+    if packet.get("kpiReadyStages") != kpi_ready_count:
+        issues.append("kpiReadyStages should match minimum KPI ready statuses")
+    if packet.get("weeklyReadyStages") != weekly_ready_count:
+        issues.append("weeklyReadyStages should match weekly review ready statuses")
+    if not state.get("readyToPublish") and publish_ready_count:
+        issues.append("publishReadyStages should stay zero until readyToPublish is true")
     if packet.get("blockedStages") != blocked_count:
         issues.append("blockedStages should match stage statuses")
     profile_proofs = int(state.get("profileProofRows", 0) or 0)
@@ -213,6 +247,9 @@ def render_markdown(packet: dict[str, object], issues: list[str]) -> str:
         f"- Generated: `{packet.get('generatedAt', '')}`",
         f"- Profile configured: `{state.get('profileConfigured', 0)}/{state.get('profileProofRows', 0)}`",
         f"- Ready to publish: `{1 if state.get('readyToPublish') else 0}`",
+        f"- Profile setup ready stages: `{packet.get('profileReadyStages', 0)}`",
+        f"- Publish ready stages: `{packet.get('publishReadyStages', 0)}`",
+        f"- KPI ready stages: `{packet.get('kpiReadyStages', 0)}`",
         f"- Published rows: `{state.get('publishedRows', 0)}/{state.get('postProofRows', 0)}`",
         f"- Filled KPI rows: `{state.get('filledKpiRows', 0)}/{state.get('postProofRows', 0)}`",
         f"- Empty data mode: `{1 if state.get('emptyDataMode') else 0}`",
@@ -258,6 +295,10 @@ def main() -> int:
     issues = validate_rehearsal(packet)
     print(f"promotion_launch_rehearsal_stage_rows={packet.get('stageCount', 0)}")
     print(f"promotion_launch_rehearsal_ready_stages={packet.get('readyStages', 0)}")
+    print(f"promotion_launch_rehearsal_profile_ready_stages={packet.get('profileReadyStages', 0)}")
+    print(f"promotion_launch_rehearsal_publish_ready_stages={packet.get('publishReadyStages', 0)}")
+    print(f"promotion_launch_rehearsal_kpi_ready_stages={packet.get('kpiReadyStages', 0)}")
+    print(f"promotion_launch_rehearsal_weekly_ready_stages={packet.get('weeklyReadyStages', 0)}")
     print(f"promotion_launch_rehearsal_blocked_stages={packet.get('blockedStages', 0)}")
     print(f"promotion_launch_rehearsal_profile_rows={packet.get('state', {}).get('profileProofRows', 0)}")
     print(f"promotion_launch_rehearsal_post_rows={packet.get('state', {}).get('postProofRows', 0)}")

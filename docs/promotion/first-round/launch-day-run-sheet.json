@@ -19,6 +19,10 @@
     "masterStageIndex": 0,
     "dashboardBlockedAreas": 9,
     "rehearsalReadyStages": 6,
+    "rehearsalProfileReadyStages": 6,
+    "rehearsalPublishReadyStages": 0,
+    "rehearsalKpiReadyStages": 0,
+    "rehearsalWeeklyReadyStages": 0,
     "handoffReadySteps": 3
   },
   "rows": [

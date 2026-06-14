@@ -26,6 +26,10 @@
   ],
   "stageCount": 14,
   "readyStages": 6,
+  "profileReadyStages": 6,
+  "publishReadyStages": 0,
+  "kpiReadyStages": 0,
+  "weeklyReadyStages": 0,
   "blockedStages": 8,
   "commandPhaseCounts": {
     "profile_setup": 3,

@@ -132,6 +132,10 @@ def build_run_sheet() -> dict:
         "masterStageIndex": int(master.get("stageIndex", 0) or 0),
         "dashboardBlockedAreas": int(dashboard.get("metrics", {}).get("blockedAreas", 0) or 0),
         "rehearsalReadyStages": int(rehearsal.get("readyStages", 0) or 0),
+        "rehearsalProfileReadyStages": int(rehearsal.get("profileReadyStages", 0) or 0),
+        "rehearsalPublishReadyStages": int(rehearsal.get("publishReadyStages", 0) or 0),
+        "rehearsalKpiReadyStages": int(rehearsal.get("kpiReadyStages", 0) or 0),
+        "rehearsalWeeklyReadyStages": int(rehearsal.get("weeklyReadyStages", 0) or 0),
         "handoffReadySteps": int(handoff.get("readyCount", 0) or 0),
     }
     issues: list[str] = []
@@ -237,6 +241,10 @@ def main() -> int:
     print(f"promotion_launch_day_run_ready_rows={metrics['readyRows']}")
     print(f"promotion_launch_day_run_blocked_rows={metrics['blockedRows']}")
     print(f"promotion_launch_day_run_dashboard_blocked_areas={metrics['dashboardBlockedAreas']}")
+    print(f"promotion_launch_day_run_rehearsal_profile_ready_stages={metrics['rehearsalProfileReadyStages']}")
+    print(f"promotion_launch_day_run_rehearsal_publish_ready_stages={metrics['rehearsalPublishReadyStages']}")
+    print(f"promotion_launch_day_run_rehearsal_kpi_ready_stages={metrics['rehearsalKpiReadyStages']}")
+    print(f"promotion_launch_day_run_rehearsal_weekly_ready_stages={metrics['rehearsalWeeklyReadyStages']}")
     print(f"promotion_launch_day_run_issues={len(sheet['issues'])}")
     for issue in sheet["issues"]:
         print(issue)

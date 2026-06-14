@@ -3,6 +3,9 @@
 - Generated: `2026-06-14`
 - Profile configured: `0/3`
 - Ready to publish: `0`
+- Profile setup ready stages: `6`
+- Publish ready stages: `0`
+- KPI ready stages: `0`
 - Published rows: `0/3`
 - Filled KPI rows: `0/3`
 - Empty data mode: `1`

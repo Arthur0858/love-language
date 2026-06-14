@@ -147,6 +147,10 @@ def build_quickstart() -> dict:
         "structuredImports": len(imports),
         "expectedStructuredImports": len(PROOF_IMPORTS),
         "launchRehearsalReadyStages": int(launch_rehearsal.get("readyStages", 0) or 0),
+        "launchRehearsalProfileReadyStages": int(launch_rehearsal.get("profileReadyStages", 0) or 0),
+        "launchRehearsalPublishReadyStages": int(launch_rehearsal.get("publishReadyStages", 0) or 0),
+        "launchRehearsalKpiReadyStages": int(launch_rehearsal.get("kpiReadyStages", 0) or 0),
+        "launchRehearsalWeeklyReadyStages": int(launch_rehearsal.get("weeklyReadyStages", 0) or 0),
         "launchRehearsalBlockedStages": int(launch_rehearsal.get("blockedStages", 0) or 0),
         "launchReadyToPublish": 1 if launch_rehearsal.get("state", {}).get("readyToPublish") else 0,
         "launchEmptyDataMode": 1 if launch_rehearsal.get("state", {}).get("emptyDataMode") else 0,
@@ -217,6 +221,8 @@ def validate(data: dict) -> list[str]:
         issues.append("operator handoff should expose profile, post, and lead structured import templates")
     if metrics["launchReadyToPublish"] and metrics["proofPacketProfilePending"]:
         issues.append("launch rehearsal cannot be ready to publish while profile proof rows are pending")
+    if not metrics["launchReadyToPublish"] and metrics["launchRehearsalPublishReadyStages"]:
+        issues.append("publish rehearsal stages should stay at zero until launch is ready to publish")
     for row in data["proofRows"]:
         label = f"{row.get('kind', '<kind>')}/{row.get('platform', '<platform>')}/{row.get('taskId', '')}"
         if not row.get("path") or not row.get("checkCommand"):

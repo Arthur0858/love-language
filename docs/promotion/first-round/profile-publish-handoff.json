@@ -2,14 +2,17 @@
   "generatedAt": "2026-06-14",
   "sources": {
     "profileActionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
+    "profileSetupHandoff": "docs/promotion/first-round/profile-setup-handoff-pack.json",
     "profileCompletionGate": "docs/promotion/first-round/profile-completion-gate.json",
     "launchReadinessGate": "docs/promotion/first-round/launch-readiness-gate.json",
     "firstBatchActionSheet": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
+    "firstBatchReadinessPack": "docs/promotion/first-round/first-batch-publish-readiness-pack.json",
+    "postProofHandoffPack": "docs/promotion/first-round/post-proof-handoff-pack.json",
     "stageTransitionMatrix": "docs/promotion/first-round/stage-transition-matrix.json"
   },
   "metrics": {
-    "rows": 7,
-    "completeRows": 3,
+    "rows": 10,
+    "completeRows": 6,
     "currentBlockers": 1,
     "blockedUpstreamRows": 3,
     "readyToPublish": 0,
@@ -31,6 +34,17 @@
       "evidence_required": "Action sheet has three platforms, valid /start/ UTM links, and no issues.",
       "command": "python3 tools/promotion_profile_setup_action_sheet.py --check",
       "stop_condition": "Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.",
+      "status": "complete"
+    },
+    {
+      "step_id": "profile_setup_handoff_ready",
+      "phase": "profile_setup",
+      "current_value": 3,
+      "required_value": 3,
+      "owner_action": "Use the consolidated profile setup handoff pack before touching platform profiles.",
+      "evidence_required": "profile-setup-handoff-pack has three ready_to_configure rows and no issues.",
+      "command": "python3 tools/promotion_profile_setup_handoff_pack.py --check",
+      "stop_condition": "Stop if any platform lacks a public-ready profile link, proof template, or identity check.",
       "status": "complete"
     },
     {
@@ -87,6 +101,28 @@
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
       "status": "blocked_upstream"
+    },
+    {
+      "step_id": "publish_readiness_guarded",
+      "phase": "publish",
+      "current_value": 6,
+      "required_value": 6,
+      "owner_action": "Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.",
+      "evidence_required": "first-batch-publish-readiness-pack has three asset-ready rows and three safely rejected proof templates.",
+      "command": "python3 tools/promotion_first_batch_publish_readiness_pack.py --check",
+      "stop_condition": "Do not publish if proof templates become importable before real public post URLs exist.",
+      "status": "complete"
+    },
+    {
+      "step_id": "post_proof_handoff_guarded",
+      "phase": "post_proof",
+      "current_value": 6,
+      "required_value": 6,
+      "owner_action": "Keep post proof handoff files ready for real URLs while rejecting placeholders.",
+      "evidence_required": "post-proof-handoff-pack has three proof files and three safely rejected templates.",
+      "command": "python3 tools/promotion_post_proof_handoff_pack.py --check",
+      "stop_condition": "Do not run writeback until the proof check becomes ready_to_import with real platform URLs.",
+      "status": "complete"
     },
     {
       "step_id": "single_current_blocker_visible",

@@ -1,8 +1,8 @@
 # LoveTypes Profile to Publish Handoff
 
 - 產生日期：2026-06-14
-- rows：7
-- complete rows：3
+- rows：10
+- complete rows：6
 - current blockers：1
 - blocked upstream rows：3
 - ready to publish：0
@@ -25,6 +25,16 @@
 - evidence：Action sheet has three platforms, valid /start/ UTM links, and no issues.
 - command：`python3 tools/promotion_profile_setup_action_sheet.py --check`
 - stop：Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.
+
+### `profile_setup_handoff_ready`
+
+- phase：`profile_setup`
+- status：`complete`
+- value：3 / 3
+- action：Use the consolidated profile setup handoff pack before touching platform profiles.
+- evidence：profile-setup-handoff-pack has three ready_to_configure rows and no issues.
+- command：`python3 tools/promotion_profile_setup_handoff_pack.py --check`
+- stop：Stop if any platform lacks a public-ready profile link, proof template, or identity check.
 
 ### `profile_writeback_complete`
 
@@ -75,6 +85,26 @@
 - evidence：First-batch publish action sheet has three ready rows and zero issues.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
 - stop：Do not publish if any row remains blocked_until_profile_links.
+
+### `publish_readiness_guarded`
+
+- phase：`publish`
+- status：`complete`
+- value：6 / 6
+- action：Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.
+- evidence：first-batch-publish-readiness-pack has three asset-ready rows and three safely rejected proof templates.
+- command：`python3 tools/promotion_first_batch_publish_readiness_pack.py --check`
+- stop：Do not publish if proof templates become importable before real public post URLs exist.
+
+### `post_proof_handoff_guarded`
+
+- phase：`post_proof`
+- status：`complete`
+- value：6 / 6
+- action：Keep post proof handoff files ready for real URLs while rejecting placeholders.
+- evidence：post-proof-handoff-pack has three proof files and three safely rejected templates.
+- command：`python3 tools/promotion_post_proof_handoff_pack.py --check`
+- stop：Do not run writeback until the proof check becomes ready_to_import with real platform URLs.
 
 ### `single_current_blocker_visible`
 

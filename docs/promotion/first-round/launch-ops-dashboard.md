@@ -79,7 +79,7 @@
 ### profile_publish_handoff
 
 - status：`blocked`
-- ready / blocked：3 / 4
+- ready / blocked：6 / 4
 - next：Use this gate to hand off completed profile proof into first-batch publishing.
 - evidence：ready_to_publish=0, current_blockers=1, blocked_upstream=3
 - safety：No first-batch publishing until profile proof and refreshed packets are complete.

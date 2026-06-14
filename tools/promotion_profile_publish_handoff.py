@@ -11,9 +11,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 PROFILE_ACTION = PROMOTION_DIR / "profile-setup-action-sheet.json"
+PROFILE_SETUP_HANDOFF = PROMOTION_DIR / "profile-setup-handoff-pack.json"
 PROFILE_COMPLETION = PROMOTION_DIR / "profile-completion-gate.json"
 LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 FIRST_BATCH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
+FIRST_BATCH_READINESS = PROMOTION_DIR / "first-batch-publish-readiness-pack.json"
+POST_PROOF_HANDOFF = PROMOTION_DIR / "post-proof-handoff-pack.json"
 STAGE_MATRIX = PROMOTION_DIR / "stage-transition-matrix.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-publish-handoff.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "profile-publish-handoff.json"
@@ -58,13 +61,17 @@ def readiness_flag(data: dict, key: str) -> int:
 
 def build_rows() -> list[dict[str, object]]:
     profile_action = load_json(PROFILE_ACTION)
+    profile_setup = load_json(PROFILE_SETUP_HANDOFF)
     completion = load_json(PROFILE_COMPLETION)
     readiness = load_json(LAUNCH_READINESS)
     first_batch = load_json(FIRST_BATCH_ACTION)
+    first_batch_readiness = load_json(FIRST_BATCH_READINESS)
+    post_proof = load_json(POST_PROOF_HANDOFF)
     stage = load_json(STAGE_MATRIX)
 
     profile_rows = metric(profile_action, "rows")
     profile_action_issues = len(profile_action.get("issues", []) or [])
+    profile_handoff_ready = metric(profile_setup, "readyToConfigure")
     profile_configured = metric(completion, "profileConfigured")
     expected_profiles = metric(completion, "expectedProfiles", 3)
     evidence_traceable = metric(completion, "evidenceTraceable")
@@ -73,6 +80,10 @@ def build_rows() -> list[dict[str, object]]:
     ready_to_publish = readiness_flag(readiness, "readyToPublishPosts")
     first_batch_ready = metric(first_batch, "ready")
     first_batch_rows = metric(first_batch, "rows", 3)
+    publish_asset_ready = metric(first_batch_readiness, "assetQaReady")
+    proof_templates_rejected = metric(first_batch_readiness, "proofTemplatesSafelyRejected")
+    post_proof_files = metric(post_proof, "proofFiles")
+    post_proof_rejected = metric(post_proof, "templatesSafelyRejected")
     current_blockers = metric(stage, "currentBlockers")
 
     rows: list[dict[str, object]] = [
@@ -85,6 +96,16 @@ def build_rows() -> list[dict[str, object]]:
             "evidence_required": "Action sheet has three platforms, valid /start/ UTM links, and no issues.",
             "command": "python3 tools/promotion_profile_setup_action_sheet.py --check",
             "stop_condition": "Stop if any Bio adds paid, diagnosis, therapy, or guarantee claims.",
+        },
+        {
+            "step_id": "profile_setup_handoff_ready",
+            "phase": "profile_setup",
+            "current_value": profile_handoff_ready,
+            "required_value": expected_profiles,
+            "owner_action": "Use the consolidated profile setup handoff pack before touching platform profiles.",
+            "evidence_required": "profile-setup-handoff-pack has three ready_to_configure rows and no issues.",
+            "command": "python3 tools/promotion_profile_setup_handoff_pack.py --check",
+            "stop_condition": "Stop if any platform lacks a public-ready profile link, proof template, or identity check.",
         },
         {
             "step_id": "profile_writeback_complete",
@@ -137,6 +158,26 @@ def build_rows() -> list[dict[str, object]]:
             "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
         },
         {
+            "step_id": "publish_readiness_guarded",
+            "phase": "publish",
+            "current_value": publish_asset_ready + proof_templates_rejected,
+            "required_value": first_batch_rows * 2,
+            "owner_action": "Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.",
+            "evidence_required": "first-batch-publish-readiness-pack has three asset-ready rows and three safely rejected proof templates.",
+            "command": "python3 tools/promotion_first_batch_publish_readiness_pack.py --check",
+            "stop_condition": "Do not publish if proof templates become importable before real public post URLs exist.",
+        },
+        {
+            "step_id": "post_proof_handoff_guarded",
+            "phase": "post_proof",
+            "current_value": post_proof_files + post_proof_rejected,
+            "required_value": first_batch_rows * 2,
+            "owner_action": "Keep post proof handoff files ready for real URLs while rejecting placeholders.",
+            "evidence_required": "post-proof-handoff-pack has three proof files and three safely rejected templates.",
+            "command": "python3 tools/promotion_post_proof_handoff_pack.py --check",
+            "stop_condition": "Do not run writeback until the proof check becomes ready_to_import with real platform URLs.",
+        },
+        {
             "step_id": "single_current_blocker_visible",
             "phase": "stage_control",
             "current_value": current_blockers,
@@ -166,9 +207,12 @@ def build_handoff() -> dict:
         "generatedAt": date.today().isoformat(),
         "sources": {
             "profileActionSheet": str(PROFILE_ACTION.relative_to(ROOT)),
+            "profileSetupHandoff": str(PROFILE_SETUP_HANDOFF.relative_to(ROOT)),
             "profileCompletionGate": str(PROFILE_COMPLETION.relative_to(ROOT)),
             "launchReadinessGate": str(LAUNCH_READINESS.relative_to(ROOT)),
             "firstBatchActionSheet": str(FIRST_BATCH_ACTION.relative_to(ROOT)),
+            "firstBatchReadinessPack": str(FIRST_BATCH_READINESS.relative_to(ROOT)),
+            "postProofHandoffPack": str(POST_PROOF_HANDOFF.relative_to(ROOT)),
             "stageTransitionMatrix": str(STAGE_MATRIX.relative_to(ROOT)),
         },
         "metrics": {
@@ -192,8 +236,8 @@ def build_handoff() -> dict:
 
 def validate_rows(rows: list[dict[str, object]]) -> list[str]:
     issues: list[str] = []
-    if len(rows) != 7:
-        issues.append(f"expected 7 handoff rows, got {len(rows)}")
+    if len(rows) != 10:
+        issues.append(f"expected 10 handoff rows, got {len(rows)}")
     statuses = {str(row.get("status", "")) for row in rows}
     if not statuses <= {"complete", "current_blocker", "blocked_upstream"}:
         issues.append("handoff rows contain invalid statuses")

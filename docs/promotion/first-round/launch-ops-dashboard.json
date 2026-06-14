@@ -92,7 +92,7 @@
     {
       "area": "profile_publish_handoff",
       "status": "blocked",
-      "ready": "3",
+      "ready": "6",
       "blocked": "4",
       "next_action": "Use this gate to hand off completed profile proof into first-batch publishing.",
       "evidence": "ready_to_publish=0, current_blockers=1, blocked_upstream=3",

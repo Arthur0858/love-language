@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "masterGate": "docs/promotion/first-round/master-gate.json",
+    "stageTransitionMatrix": "docs/promotion/first-round/stage-transition-matrix.json",
+    "profileQuickstart": "docs/promotion/first-round/profile-quickstart.json",
+    "firstBatchPublishQuickstart": "docs/promotion/first-round/first-batch-publish-quickstart.json",
+    "firstBatchKpiQuickstart": "docs/promotion/first-round/first-batch-kpi-quickstart.json",
+    "leadOfferQuickstart": "docs/promotion/first-round/lead-offer-quickstart.json",
+    "launchClipboard": "docs/promotion/first-round/launch-clipboard.json"
+  },
+  "metrics": {
+    "stageIndex": 0,
+    "stage": "profile_setup",
+    "profileConfigured": 0,
+    "firstBatchPublished": 0,
+    "minimumKpiRows": 0,
+    "leadReadyRoutes": 0,
+    "readyOfferExperiments": 0,
+    "commandReadyRows": 6,
+    "blockedDecisions": 18,
+    "stageCurrentBlockers": 1,
+    "profileActions": 3,
+    "profileReadyToConfigure": 3,
+    "publishReadyRows": 0,
+    "kpiReadyRows": 0,
+    "realLeads": 0,
+    "offerQueueReady": 0,
+    "clipboardReadyBlocks": 3,
+    "clipboardBlockedBlocks": 3,
+    "issues": 0
+  },
+  "rules": [
+    "Current allowed work is profile setup only unless the master gate advances.",
+    "Run check commands before write commands, then refresh daily ops after real writeback.",
+    "Profile proof must be real external evidence: screenshot, clicked public link, or timestamped platform proof.",
+    "Publishing, KPI, Luna, affiliate, and paid offer experiments remain blocked while profileConfigured is 0.",
+    "Do not use empty KPI or lead data to choose winning guardians or commercial direction."
+  ],
+  "nowActions": [
+    {
+      "kind": "profile",
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "ready_to_configure",
+      "copy": "LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "proofFile": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "kind": "profile",
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "ready_to_configure",
+      "copy": "五種愛之語測驗｜進入心語庭園，找到你的情感守護者。",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "proofFile": "docs/promotion/first-round/proof-tiktok.txt",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "kind": "profile",
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "ready_to_configure",
+      "copy": "LoveTypes 心語庭園｜15 題找到你的情感守護者。",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "proofFile": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    }
+  ],
+  "nextActions": [
+    {
+      "kind": "publish",
+      "status": "blocked_until_profile_links",
+      "title": "First three platform posts",
+      "current": "0 ready / 3 blocked",
+      "command": "python3 tools/promotion_first_batch_publish_quickstart.py --check",
+      "stopCondition": "Do not publish until all three profile links are set/live and proof is written back."
+    },
+    {
+      "kind": "kpi",
+      "status": "blocked_until_public_post_url",
+      "title": "First-batch minimum KPI backfill",
+      "current": "0 ready / 3 blocked",
+      "command": "python3 tools/promotion_first_batch_kpi_quickstart.py --check",
+      "stopCondition": "Do not write KPI values until public post URLs and analytics source proof exist."
+    },
+    {
+      "kind": "lead_offer",
+      "status": "blocked_until_real_leads",
+      "title": "Lead, asset, Luna, and offer decisions",
+      "current": "0 real leads / 0 ready offers",
+      "command": "python3 tools/promotion_lead_offer_quickstart.py --check",
+      "stopCondition": "Do not create paid or priority offer experiments without repeated traceable demand."
+    }
+  ],
+  "issues": []
+}

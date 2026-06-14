@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "masterGate": "docs/promotion/first-round/master-gate.json",
+    "launchQuickstart": "docs/promotion/first-round/launch-quickstart.json",
+    "launchClipboard": "docs/promotion/first-round/launch-clipboard.json",
+    "launchDayRunSheet": "docs/promotion/first-round/launch-day-run-sheet.json",
+    "launchExceptionRunbook": "docs/promotion/first-round/launch-exception-runbook.json",
+    "operationProofTemplates": "docs/promotion/first-round/operation-proof-templates.json",
+    "proofRehearsal": "docs/promotion/first-round/proof-rehearsal.json",
+    "operatorHandoffPacket": "docs/promotion/first-round/operator-handoff-packet.json",
+    "blockerResolutionChecklist": "docs/promotion/first-round/blocker-resolution-checklist.json",
+    "profilePublishHandoff": "docs/promotion/first-round/profile-publish-handoff.json",
+    "publishKpiHandoff": "docs/promotion/first-round/publish-kpi-handoff.json"
+  },
+  "metrics": {
+    "masterStage": "profile_setup",
+    "masterStageIndex": 0,
+    "profileConfigured": 0,
+    "firstBatchPublished": 0,
+    "minimumKpiRows": 0,
+    "commandReadyRows": 6,
+    "blockedDecisions": 18,
+    "launchCurrentBlockers": 1,
+    "profileActions": 3,
+    "profileClipboardReady": 3,
+    "postClipboardBlocked": 3,
+    "launchDayReadyRows": 3,
+    "launchDayBlockedRows": 8,
+    "exceptionStopRows": 6,
+    "exceptionHoldRows": 3,
+    "proofRows": 6,
+    "profileProofValid": 3,
+    "postProofSafelyRejected": 3,
+    "rehearsalProfilePass": 3,
+    "rehearsalPostPlaceholderRejected": 3,
+    "handoffReadyCount": 3,
+    "handoffBlockedCount": 4,
+    "activeBlockers": 14,
+    "readyNowBlockers": 3,
+    "profilePublishReady": 0,
+    "publishKpiReadyForWeekly": 0,
+    "issues": 0
+  },
+  "rules": [
+    "Use master-gate stage as the source of truth; do not skip profile_setup.",
+    "Profile setup may proceed now, but publish, KPI, weekly review, lead, and offer decisions remain blocked.",
+    "Every external action needs visible account identity, safe copy, public URL verification, and proof note.",
+    "Placeholder post URLs must be rejected until real public post URLs exist.",
+    "Exception runbook stop conditions override all quickstarts."
+  ],
+  "steps": [
+    {
+      "id": "prepare_profile_clipboard",
+      "status": "ready_to_act",
+      "command": "python3 tools/promotion_launch_clipboard.py --check && python3 tools/promotion_operation_proof_templates.py --check",
+      "release": "Three profile setup copy blocks and profile proof templates are ready.",
+      "stop": "Stop if the visible platform account is not LoveTypes or the profile copy adds paid, diagnosis, therapy, or guarantee claims."
+    },
+    {
+      "id": "capture_profile_proof",
+      "status": "current_blocker",
+      "command": "python3 tools/promotion_proof_rehearsal.py --check && python3 tools/promotion_profile_writeback.py check",
+      "release": "All profile links are set/live with traceable proof notes.",
+      "stop": "Do not write back profile status from memory, draft screens, private previews, or missing screenshots."
+    },
+    {
+      "id": "open_first_batch_publish",
+      "status": "blocked_until_profile_writeback",
+      "command": "python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check",
+      "release": "Profile handoff opens first-batch publishing.",
+      "stop": "Do not publish first-batch posts while profile setup remains incomplete."
+    },
+    {
+      "id": "close_first_batch_and_kpi",
+      "status": "blocked_until_public_posts",
+      "command": "python3 tools/promotion_publish_kpi_handoff.py --check && python3 tools/promotion_first_batch_kpi_closure_quickstart.py --check",
+      "release": "First batch posts have public URLs and checked minimum KPI rows.",
+      "stop": "Do not open weekly review from placeholder URLs, private posts, or unchecked zero KPI values."
+    },
+    {
+      "id": "keep_exception_runbook_armed",
+      "status": "armed",
+      "command": "python3 tools/promotion_launch_exception_runbook.py --check",
+      "release": "Stop/hold/escalate conditions are visible before every external platform action.",
+      "stop": "Stop immediately on wrong account, missing permission, URL rewrite, unsafe copy, or emergency/support request."
+    }
+  ],
+  "profileRows": [
+    {
+      "order": "1",
+      "phase": "profile_setup",
+      "platform": "youtube_shorts",
+      "task": "profile-youtube_shorts",
+      "status": "ready_to_configure",
+      "action": "Set the platform profile link, then verify the structured proof text before writeback.",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "success_signal": "profile proof import validates and platform tracker row can be set/live with real proof.",
+      "stop_condition": "A real platform screenshot/click proof must exist before running the write command."
+    },
+    {
+      "order": "2",
+      "phase": "profile_setup",
+      "platform": "tiktok",
+      "task": "profile-tiktok",
+      "status": "ready_to_configure",
+      "action": "Set the platform profile link, then verify the structured proof text before writeback.",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "success_signal": "profile proof import validates and platform tracker row can be set/live with real proof.",
+      "stop_condition": "A real platform screenshot/click proof must exist before running the write command."
+    },
+    {
+      "order": "3",
+      "phase": "profile_setup",
+      "platform": "instagram_reels",
+      "task": "profile-instagram_reels",
+      "status": "ready_to_configure",
+      "action": "Set the platform profile link, then verify the structured proof text before writeback.",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "success_signal": "profile proof import validates and platform tracker row can be set/live with real proof.",
+      "stop_condition": "A real platform screenshot/click proof must exist before running the write command."
+    }
+  ],
+  "profileClipboardBlocks": [
+    {
+      "kind": "profile",
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "status": "ready_to_configure",
+      "title": "YouTube Shorts profile setup",
+      "copy": "Profile link location: Channel description / video description\nProfile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n\nBio:\nLoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。\n\nPinned / first comment:\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\n留言 A/B/C，我們會用守護者路線回覆你。",
+      "proof": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "kind": "profile",
+      "platform": "tiktok",
+      "label": "TikTok",
+      "status": "ready_to_configure",
+      "title": "TikTok profile setup",
+      "copy": "Profile link location: Profile website link\nProfile link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\n\nBio:\n五種愛之語測驗｜進入心語庭園，找到你的情感守護者。\n\nPinned / first comment:\n完成 15 題測驗，找到你的情感守護者。入口在個人頁連結。\n留言 A/B/C，選出最像你的心語。",
+      "proof": "LoveTypes profile setup writeback\nplatform: tiktok\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio\nproof_note: screenshot profile-tiktok-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "kind": "profile",
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "status": "ready_to_configure",
+      "title": "Instagram Reels profile setup",
+      "copy": "Profile link location: Profile link in bio\nProfile link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\n\nBio:\nLoveTypes 心語庭園｜15 題找到你的情感守護者。\n\nPinned / first comment:\n完成 15 題測驗，找到你的情感守護者。入口在個人檔案連結。\n留言你的 A/B/C，讓守護者把心語接住。",
+      "proof": "LoveTypes profile setup writeback\nplatform: instagram_reels\nstatus: set\nset_date: 2026-06-14\nprofile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio\nproof_note: screenshot profile-instagram_reels-2026-06-14.png verified",
+      "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    }
+  ],
+  "blockedPostBlocks": [
+    {
+      "kind": "post",
+      "platform": "youtube_shorts",
+      "label": "youtube_shorts",
+      "status": "blocked_until_profile_links",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "proof": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
+    },
+    {
+      "kind": "post",
+      "platform": "tiktok",
+      "label": "tiktok",
+      "status": "blocked_until_profile_links",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "proof": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
+    },
+    {
+      "kind": "post",
+      "platform": "instagram_reels",
+      "label": "instagram_reels",
+      "status": "blocked_until_profile_links",
+      "title": "他沉默時，你最想聽見哪一句話？",
+      "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
+      "proof": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
+    }
+  ],
+  "stopRows": [
+    {
+      "id": "wrong_platform_account",
+      "phase": "profile_setup",
+      "severity": "stop",
+      "trigger": "Visible account, channel, public profile, or edit permission does not match the intended LoveTypes platform identity.",
+      "stop": "Do not set profile link, do not publish, and do not write back profile status.",
+      "recovery": "Switch to the correct account, rerun platform account identity checklist, then capture a traceable proof note.",
+      "source": "platform-account-identity-checklist.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    },
+    {
+      "id": "profile_link_wrong_or_missing",
+      "phase": "profile_setup",
+      "severity": "stop",
+      "trigger": "Profile link is not the planned /start/ UTM URL, is missing, or cannot be clicked from the public profile.",
+      "stop": "Do not mark profile set/live and do not publish first-batch posts.",
+      "recovery": "Fix the profile link, verify it opens lovetypes.tw/start/ with UTM preserved, then run profile text import check/add.",
+      "source": "profile-proof-readiness-pack.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    },
+    {
+      "id": "publish_before_profile_gate",
+      "phase": "publish_first_batch",
+      "severity": "stop",
+      "trigger": "A first-batch post is about to publish while ready_to_publish is false.",
+      "stop": "Cancel or leave draft/scheduled; do not publish manually around the gate.",
+      "recovery": "Complete all three profile rows, refresh launch readiness, then use the first-batch publish action sheet.",
+      "source": "first-batch-publication-packet.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    },
+    {
+      "id": "wrong_post_url_or_platform",
+      "phase": "post_url_writeback",
+      "severity": "stop",
+      "trigger": "Post URL domain does not match YouTube/TikTok/Instagram platform row, or URL points to the wrong post.",
+      "stop": "Do not write back; do not reuse the URL in weekly review.",
+      "recovery": "Find the correct public post URL for the platform row and rerun post text import check.",
+      "source": "first-batch-evidence-matrix.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    },
+    {
+      "id": "paid_cta_or_affiliate_first_touch",
+      "phase": "publish_first_batch",
+      "severity": "stop",
+      "trigger": "Caption/profile first action emphasizes Luna, affiliate books, paid products, or purchase before the quiz.",
+      "stop": "Do not publish, or edit immediately before public verification/writeback.",
+      "recovery": "Restore the single primary CTA: complete the 15-question quiz and find the emotional guardian.",
+      "source": "first-batch-publication-packet.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    },
+    {
+      "id": "empty_data_commerce_change",
+      "phase": "weekly_review",
+      "severity": "stop",
+      "trigger": "Offer order, paid CTA, Luna emphasis, affiliate emphasis, or winning guardian is changed while empty-data mode is true.",
+      "stop": "Revert the commerce/content-priority change and keep collect_signal focus.",
+      "recovery": "Wait until first-batch evidence, KPI rows, weekly review and decision gates are ready.",
+      "source": "weekly-review-packet.json",
+      "status": "armed",
+      "operatorAction": "If trigger appears, follow stop condition first, then recovery condition."
+    }
+  ],
+  "issues": []
+}

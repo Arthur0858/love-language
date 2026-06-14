@@ -34,10 +34,10 @@ ROUTE_FIELDS = [
 ]
 IDENTITY_FIELDS = ["guardian_result_clicks"]
 EMPTY_DATA_ACTION_IDS = (
-    "publish_first_batch",
-    "fill_required_kpis",
     "set_platform_profile_links",
     "fill_platform_profile_kpis",
+    "publish_first_batch",
+    "fill_required_kpis",
     "hold_offer_changes",
 )
 PROFILE_FIRST_KPIS = (
@@ -62,7 +62,7 @@ def decision_thresholds() -> dict[str, float]:
 def action_policy() -> dict[str, object]:
     return {
         "emptyDataActionOrder": list(EMPTY_DATA_ACTION_IDS),
-        "emptyDataSelectedTaskRule": "Select the first three planned tasks by week and slot, then keep Shorts CTA focused on the 15-question quiz.",
+        "emptyDataSelectedTaskRule": "When profile links are pending, finish platform profile setup first; then select the first three planned tasks by week and slot and keep Shorts CTA focused on the 15-question quiz.",
         "profileSetupBeforePublish": True,
         "profileFirstKpis": list(PROFILE_FIRST_KPIS),
         "shortsKpiMinimumFields": ["post_url", "site_clicks", "quiz_starts", "quiz_completions"],
@@ -229,30 +229,42 @@ def build_actions(
     actions = []
     if not active_rows:
         selected = planned_tasks(tasks)[:3]
+        publish_priority = "blocked" if pending_profile_actions else "high"
+        kpi_priority = "blocked" if pending_profile_actions else "high"
+        publish_summary = (
+            "Profile link 完成並回填後，才發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。"
+            if pending_profile_actions
+            else "發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。"
+        )
+        kpi_summary = (
+            "發布被 profile setup gate 鎖住；發布後才回填 post_url、site_clicks、quiz_starts、quiz_completions。"
+            if pending_profile_actions
+            else "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。"
+        )
         actions.extend([
-            {
-                "id": "publish_first_batch",
-                "priority": "high",
-                "type": "execution",
-                "summary": "發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。",
-            },
-            {
-                "id": "fill_required_kpis",
-                "priority": "high",
-                "type": "measurement",
-                "summary": "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。",
-            },
             {
                 "id": "set_platform_profile_links",
                 "priority": "high",
                 "type": "distribution",
-                "summary": "發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。",
+                "summary": "先同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM；未完成前不發布 Shorts。",
             },
             {
                 "id": "fill_platform_profile_kpis",
                 "priority": "high",
                 "type": "measurement",
                 "summary": "平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。",
+            },
+            {
+                "id": "publish_first_batch",
+                "priority": publish_priority,
+                "type": "execution",
+                "summary": publish_summary,
+            },
+            {
+                "id": "fill_required_kpis",
+                "priority": kpi_priority,
+                "type": "measurement",
+                "summary": kpi_summary,
             },
             {
                 "id": "hold_offer_changes",

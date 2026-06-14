@@ -4,15 +4,15 @@
 - 影片追蹤列數：0
 - 平台首頁待設定列數：3 / 3
 - 空資料安全模式：是
-- 行動選擇規則：Select the first three planned tasks by week and slot, then keep Shorts CTA focused on the 15-question quiz.
+- 行動選擇規則：When profile links are pending, finish platform profile setup first; then select the first three planned tasks by week and slot and keep Shorts CTA focused on the 15-question quiz.
 - 商品調整 gate：Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.
 
 ## 優先動作
 
-- [high] 發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
-- [high] 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。
-- [high] 發布前同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM。
+- [high] 先同步完成 YouTube、TikTok、Instagram 的 Bio/Profile link，使用平台專屬 UTM；未完成前不發布 Shorts。
 - [high] 平台首頁設定後回填 platform-profile-tracker.csv 的 status、profile_link_set_date、profile_clicks、site_clicks、quiz_starts、quiz_completions。
+- [blocked] Profile link 完成並回填後，才發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
+- [blocked] 發布被 profile setup gate 鎖住；發布後才回填 post_url、site_clicks、quiz_starts、quiz_completions。
 - [medium] 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
 
 ## 平台首頁設定

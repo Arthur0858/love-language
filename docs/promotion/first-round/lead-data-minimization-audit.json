@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-06-14",
+  "source": {
+    "leadIntakeTracker": "docs/promotion/first-round/lead-intake-tracker.csv"
+  },
+  "metrics": {
+    "fields": 21,
+    "expectedFields": 21,
+    "rows": 15,
+    "templateRows": 15,
+    "templateMinimizedRows": 15,
+    "realRows": 0,
+    "explicitConsentRows": 0,
+    "rawEmailRows": 0,
+    "sensitiveRows": 0,
+    "routeRows": 15,
+    "issues": 0
+  },
+  "expectedFields": [
+    "request_id",
+    "date",
+    "source",
+    "utm_content",
+    "contact_campaign_content",
+    "guardian_id",
+    "guardian_name",
+    "intake_type",
+    "requested_asset",
+    "related_route",
+    "kpi_writeback_field",
+    "kpi_writeback_rule",
+    "email_status",
+    "consent_status",
+    "priority",
+    "status",
+    "first_response",
+    "next_action",
+    "follow_up_deadline",
+    "fulfillment_asset",
+    "notes"
+  ],
+  "allowed": {
+    "guardians": [
+      "claire",
+      "dora",
+      "iris",
+      "noah",
+      "vivian"
+    ],
+    "intakeTypes": {
+      "owned_asset_request": "supply_lead_requests",
+      "luna_scene_request": "luna_pack_clicks",
+      "repair_or_contact_request": "contact_requests"
+    },
+    "templateConsent": "not_applicable_until_user_contacts",
+    "realConsent": [
+      "explicit_reply_ok"
+    ],
+    "realStatuses": [
+      "closed",
+      "fulfilled",
+      "new",
+      "queued",
+      "triaged"
+    ],
+    "realSources": [
+      "contact",
+      "keepsake_waitlist",
+      "luna_page",
+      "manual_reply",
+      "resources_wishlist"
+    ]
+  },
+  "safety": {
+    "rawEmailStored": false,
+    "sensitiveTokensDetected": false,
+    "templateRowsContainNoUserData": true,
+    "realRowsRequireExplicitConsent": true,
+    "relatedRoutesStayOnLoveTypes": true
+  },
+  "issues": []
+}

@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-06-14",
+  "source": {
+    "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
+    "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "profileTracker": "docs/promotion/first-round/platform-profile-tracker.csv"
+  },
+  "metrics": {
+    "promotion_lead_privacy_placeholder_email_rejected": 1,
+    "promotion_lead_privacy_sample_email_rejected": 1,
+    "promotion_lead_privacy_safe_imports": 1,
+    "promotion_lead_privacy_real_rows": 1,
+    "promotion_lead_privacy_raw_email_hits": 0,
+    "promotion_lead_privacy_do_not_contact_rejected": 1,
+    "promotion_lead_privacy_generic_proof_rejected": 1,
+    "promotion_lead_privacy_matched_utm_incremented": 1,
+    "promotion_lead_privacy_unmatched_utm_manual": 1,
+    "promotion_lead_privacy_unmatched_utm_no_kpi_increment": 1,
+    "promotion_lead_privacy_profile_raw_email_hits": 0,
+    "promotion_lead_privacy_issues": 0
+  },
+  "policy": {
+    "rejectPlaceholderEmail": true,
+    "rejectSampleEmail": true,
+    "rejectDoNotContact": true,
+    "rejectGenericProof": true,
+    "doNotStoreRawReplyEmail": true,
+    "unmatchedUtmRequiresManualReview": true,
+    "matchedUtmMayIncrementKpi": true
+  },
+  "issues": []
+}

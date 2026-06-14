@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import csv
+import json
 import re
+from datetime import date
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 LEAD_TRACKER = PROMOTION_DIR / "lead-intake-tracker.csv"
+DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "lead-data-minimization-audit.json"
+DEFAULT_MD_OUTPUT = PROMOTION_DIR / "lead-data-minimization-audit.md"
 
 EXPECTED_FIELDS = [
     "request_id",
@@ -185,9 +190,78 @@ def validate(fieldnames: list[str], rows: list[dict[str, str]]) -> tuple[dict[st
     return metrics, issues
 
 
-def main() -> int:
+def build_report() -> dict:
     fieldnames, rows = read_tracker()
     metrics, issues = validate(fieldnames, rows)
+    return {
+        "generatedAt": date.today().isoformat(),
+        "source": {"leadIntakeTracker": str(LEAD_TRACKER.relative_to(ROOT))},
+        "metrics": {**metrics, "issues": len(issues)},
+        "expectedFields": EXPECTED_FIELDS,
+        "allowed": {
+            "guardians": sorted(GUARDIANS),
+            "intakeTypes": INTAKE_TYPES,
+            "templateConsent": TEMPLATE_CONSENT,
+            "realConsent": sorted(REAL_CONSENT),
+            "realStatuses": sorted(REAL_STATUSES),
+            "realSources": sorted(REAL_SOURCES),
+        },
+        "safety": {
+            "rawEmailStored": metrics["rawEmailRows"] > 0,
+            "sensitiveTokensDetected": metrics["sensitiveRows"] > 0,
+            "templateRowsContainNoUserData": metrics["templateRows"] == metrics["templateMinimizedRows"],
+            "realRowsRequireExplicitConsent": True,
+            "relatedRoutesStayOnLoveTypes": metrics["routeRows"] == metrics["rows"],
+        },
+        "issues": issues,
+    }
+
+
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    lines = [
+        "# LoveTypes Lead Data Minimization Audit",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- tracker rows：{metrics['rows']}",
+        f"- template rows：{metrics['templateRows']}",
+        f"- real rows：{metrics['realRows']}",
+        f"- raw email rows：{metrics['rawEmailRows']}",
+        f"- sensitive rows：{metrics['sensitiveRows']}",
+        f"- issues：{metrics['issues']}",
+        "",
+        "## Safety",
+        "",
+    ]
+    for key, value in report["safety"].items():
+        lines.append(f"- {key}: `{int(bool(value))}`")
+    lines.extend(["", "## Allowed Fields", ""])
+    lines.extend(f"- `{field}`" for field in report["expectedFields"])
+    if report["issues"]:
+        lines.extend(["", "## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_outputs(report: dict, json_output: Path, md_output: Path) -> None:
+    json_output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    md_output.write_text(render_markdown(report), encoding="utf-8")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Audit LoveTypes lead tracker data minimization rules.")
+    parser.add_argument("--check", action="store_true", help="Validate without writing generated outputs.")
+    parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT))
+    parser.add_argument("--output", default=str(DEFAULT_MD_OUTPUT))
+    args = parser.parse_args()
+
+    report = build_report()
+    metrics = report["metrics"]
+    issues = report["issues"]
+    if not args.check:
+        write_outputs(report, Path(args.json_output), Path(args.output))
+        print(f"promotion_lead_data_minimization_audit={args.output}")
+        print(f"promotion_lead_data_minimization_audit_json={args.json_output}")
     print(f"promotion_lead_data_min_fields={metrics['fields']}")
     print(f"promotion_lead_data_min_expected_fields={metrics['expectedFields']}")
     print(f"promotion_lead_data_min_rows={metrics['rows']}")

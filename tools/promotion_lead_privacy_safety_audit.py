@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import csv
+import json
 import shutil
 import tempfile
 from datetime import date
@@ -13,6 +15,8 @@ import promotion_lead_writeback as writeback
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
+DEFAULT_JSON_OUTPUT = SOURCE_DIR / "lead-privacy-safety-audit.json"
+DEFAULT_MD_OUTPUT = SOURCE_DIR / "lead-privacy-safety-audit.md"
 RAW_EMAIL = "requester@customer-mail.com"
 PLACEHOLDER_EMAIL = "<REAL_REPLY_EMAIL>"
 SAMPLE_EMAIL = "sample@example.com"
@@ -131,7 +135,7 @@ def run_audit() -> dict[str, int]:
         }
 
 
-def main() -> int:
+def build_report() -> dict:
     metrics = run_audit()
     issues: list[str] = []
     required_true = (
@@ -153,10 +157,77 @@ def main() -> int:
         issues.append("raw reply email leaked into lead/KPI/playbook files")
     if metrics["promotion_lead_privacy_profile_raw_email_hits"] != 0:
         issues.append("raw reply email leaked into profile tracker")
+    return {
+        "generatedAt": TODAY,
+        "source": {
+            "leadTracker": str((SOURCE_DIR / "lead-intake-tracker.csv").relative_to(ROOT)),
+            "kpiTracker": str((SOURCE_DIR / "kpi-tracker.csv").relative_to(ROOT)),
+            "profileTracker": str((SOURCE_DIR / "platform-profile-tracker.csv").relative_to(ROOT)),
+        },
+        "metrics": {**metrics, "promotion_lead_privacy_issues": len(issues)},
+        "policy": {
+            "rejectPlaceholderEmail": True,
+            "rejectSampleEmail": True,
+            "rejectDoNotContact": True,
+            "rejectGenericProof": True,
+            "doNotStoreRawReplyEmail": True,
+            "unmatchedUtmRequiresManualReview": True,
+            "matchedUtmMayIncrementKpi": True,
+        },
+        "issues": issues,
+    }
+
+
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    lines = [
+        "# LoveTypes Lead Privacy Safety Audit",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- safe imports：{metrics['promotion_lead_privacy_safe_imports']}",
+        f"- real rows in rehearsal：{metrics['promotion_lead_privacy_real_rows']}",
+        f"- raw email hits：{metrics['promotion_lead_privacy_raw_email_hits']}",
+        f"- profile raw email hits：{metrics['promotion_lead_privacy_profile_raw_email_hits']}",
+        f"- issues：{metrics['promotion_lead_privacy_issues']}",
+        "",
+        "## Policy Checks",
+        "",
+    ]
+    for key, value in report["policy"].items():
+        lines.append(f"- {key}: `{int(bool(value))}`")
+    lines.extend(["", "## Metrics", ""])
+    for key, value in metrics.items():
+        lines.append(f"- {key}: `{value}`")
+    if report["issues"]:
+        lines.extend(["", "## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_outputs(report: dict, json_output: Path, md_output: Path) -> None:
+    json_output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    md_output.write_text(render_markdown(report), encoding="utf-8")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Audit LoveTypes lead privacy import/writeback behavior.")
+    parser.add_argument("--check", action="store_true", help="Validate without writing generated outputs.")
+    parser.add_argument("--json-output", default=str(DEFAULT_JSON_OUTPUT))
+    parser.add_argument("--output", default=str(DEFAULT_MD_OUTPUT))
+    args = parser.parse_args()
+
+    report = build_report()
+    metrics = report["metrics"]
+    issues = report["issues"]
+    if not args.check:
+        write_outputs(report, Path(args.json_output), Path(args.output))
+        print(f"promotion_lead_privacy_safety_audit={args.output}")
+        print(f"promotion_lead_privacy_safety_audit_json={args.json_output}")
 
     for key, value in metrics.items():
-        print(f"{key}={value}")
-    print(f"promotion_lead_privacy_issues={len(issues)}")
+        if key != "promotion_lead_privacy_issues":
+            print(f"{key}={value}")
+    print(f"promotion_lead_privacy_issues={metrics['promotion_lead_privacy_issues']}")
     for issue in issues:
         print(issue)
     return 1 if issues else 0

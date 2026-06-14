@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "safetyIndex": "safety-index.json",
+    "commerceCatalog": "commerce-catalog.json",
+    "commercialPages": [
+      "resources/index.html",
+      "luna-yoga-music/index.html",
+      "contact/index.html",
+      "keepsakes/index.html"
+    ]
+  },
+  "metrics": {
+    "boundaries": 5,
+    "safetyRoutes": 13,
+    "safetySnippetChecks": 7,
+    "commerceItems": 20,
+    "commercePlaybookChecks": 4,
+    "commerceItemChecks": 20,
+    "commerceLocalUrlChecks": 10,
+    "pagesChecked": 4,
+    "pageSnippetChecks": 15,
+    "externalCommercialLinks": 16
+  },
+  "issues": []
+}

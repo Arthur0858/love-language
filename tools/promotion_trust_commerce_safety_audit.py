@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import json
 import re
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -10,6 +12,8 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 SAFETY_INDEX = ROOT / "safety-index.json"
 COMMERCE_CATALOG = ROOT / "commerce-catalog.json"
+OUTPUT_MD = ROOT / "docs" / "promotion" / "first-round" / "trust-commerce-safety-audit.md"
+OUTPUT_JSON = ROOT / "docs" / "promotion" / "first-round" / "trust-commerce-safety-audit.json"
 MAIN_COMMERCIAL_PAGES = (
     "resources/index.html",
     "luna-yoga-music/index.html",
@@ -49,6 +53,10 @@ PAGE_REQUIRED_SNIPPETS = {
     "keepsakes/index.html": ("不承諾療效", "不取代諮商", "data-safety-boundary-bridge"),
 }
 EXTERNAL_COMMERCIAL_HOSTS = ("books.com.tw", "amazon.com", "gumroad.com")
+
+
+def today() -> str:
+    return date.today().isoformat()
 
 
 def load_json(path: Path) -> dict:
@@ -225,8 +233,67 @@ def validate() -> tuple[dict[str, int], list[str]]:
     }, issues
 
 
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    lines = [
+        "# LoveTypes Trust Commerce Safety Audit",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- safety boundaries：{metrics['boundaries']}",
+        f"- safety routes checked：{metrics['safetyRoutes']}",
+        f"- safety snippet checks：{metrics['safetySnippetChecks']}",
+        f"- commerce items：{metrics['commerceItems']}",
+        f"- commerce playbook checks：{metrics['commercePlaybookChecks']}",
+        f"- commerce item checks：{metrics['commerceItemChecks']}",
+        f"- local commerce URL checks：{metrics['commerceLocalUrlChecks']}",
+        f"- commercial pages checked：{metrics['pagesChecked']}",
+        f"- page snippet checks：{metrics['pageSnippetChecks']}",
+        f"- external commercial links：{metrics['externalCommercialLinks']}",
+        f"- issues：{len(report['issues'])}",
+        "",
+        "## Rule",
+        "",
+        "- Commercial paths must keep visible boundaries for diagnosis, counseling, urgent risk, external checkout, and non-guaranteed outcomes.",
+        "- Affiliate, Amazon, Books.com.tw, Gumroad, and owned waitlist items must map to the commerce playbook.",
+        "- External commercial links must use sponsored and noopener rel values.",
+        "- Contact and owned request routes must avoid sensitive over-collection and emergency handling claims.",
+        "",
+        "## Checked Pages",
+        "",
+    ]
+    lines.extend(f"- `{page}`" for page in MAIN_COMMERCIAL_PAGES)
+    lines.append("")
+    if report["issues"]:
+        lines.extend(["## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_report(metrics: dict[str, int], issues: list[str]) -> None:
+    report = {
+        "generatedAt": today(),
+        "sources": {
+            "safetyIndex": str(SAFETY_INDEX.relative_to(ROOT)),
+            "commerceCatalog": str(COMMERCE_CATALOG.relative_to(ROOT)),
+            "commercialPages": list(MAIN_COMMERCIAL_PAGES),
+        },
+        "metrics": metrics,
+        "issues": issues,
+    }
+    OUTPUT_MD.write_text(render_markdown(report), encoding="utf-8")
+    OUTPUT_JSON.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Audit LoveTypes trust and commerce safety boundaries.")
+    parser.add_argument("--write-report", action="store_true", help="Write a dated md/json trust commerce safety report.")
+    args = parser.parse_args()
     metrics, issues = validate()
+    if args.write_report:
+        write_report(metrics, issues)
+        print(f"promotion_trust_commerce_safety_report={OUTPUT_MD.relative_to(ROOT)}")
+        print(f"promotion_trust_commerce_safety_report_json={OUTPUT_JSON.relative_to(ROOT)}")
     print(f"promotion_trust_safety_boundaries={metrics['boundaries']}")
     print(f"promotion_trust_safety_routes_checked={metrics['safetyRoutes']}")
     print(f"promotion_trust_safety_snippet_checks={metrics['safetySnippetChecks']}")

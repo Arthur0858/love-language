@@ -7,7 +7,7 @@
 
 ## Rule
 
-- 這份文件只做發布前 QA，不把素材、profile、post URL 或 KPI 標成完成。
+- 這份文件只做發布前 QA；`prepared` 代表素材可預檢，不代表 profile、post URL 或 KPI 已完成。
 - 發布前逐項留下 proof note；發布後再用 post text import 回填 URL 與初始 KPI。
 
 ## youtube_shorts · `publish-lt-s01-iris-silence`
@@ -15,7 +15,7 @@
 - script：`lt-s01-iris-silence`
 - guardian：艾莉絲（`iris`）
 - title：他沉默時，你最想聽見哪一句話？
-- asset ready status：`ready`
+- asset ready status：`prepared`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
 ### QA Checklist
@@ -57,7 +57,7 @@ quiz_completions: 0
 - script：`lt-s01-iris-silence`
 - guardian：艾莉絲（`iris`）
 - title：他沉默時，你最想聽見哪一句話？
-- asset ready status：`ready`
+- asset ready status：`prepared`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
 ### QA Checklist
@@ -99,7 +99,7 @@ quiz_completions: 0
 - script：`lt-s01-iris-silence`
 - guardian：艾莉絲（`iris`）
 - title：他沉默時，你最想聽見哪一句話？
-- asset ready status：`ready`
+- asset ready status：`prepared`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
 ### QA Checklist

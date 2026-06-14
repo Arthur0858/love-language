@@ -29,7 +29,7 @@
     "firstBatchMinimumKpiRows": 0,
     "leadReadyRoutes": 0,
     "readyOfferExperiments": 0,
-    "commandReadyRows": 6,
+    "commandReadyRows": 3,
     "commandBlockedRows": 18,
     "issues": 0
   },

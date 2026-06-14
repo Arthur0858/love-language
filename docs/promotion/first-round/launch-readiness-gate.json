@@ -27,7 +27,7 @@
     ],
     "firstBatchWeek": 1,
     "firstBatchSlot": 1,
-    "minimumAssetReadyChecks": 3,
+    "minimumAssetPreparedChecks": 3,
     "blockerOrder": [
       "set_platform_profile_links",
       "publish_first_batch",
@@ -54,6 +54,7 @@
     "firstWeekRows": 9,
     "firstWeekScheduled": 9,
     "assetReady": 3,
+    "assetPrepared": 3,
     "publishedRows": 0,
     "filledKpiRows": 0,
     "platformChecklistRows": 3,

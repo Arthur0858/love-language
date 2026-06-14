@@ -3,15 +3,16 @@
 - 產生日期：2026-06-14
 - 週次：Week 1
 - 指揮列數：24
-- 可立即執行：6
+- 可立即執行：3
+- 預備檢查：3
 - 等待前置條件：18
 - 週決策：尚不可
-- 指揮板規則：Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.
+- 指揮板規則：Run profile_setup first; asset_ready_check is prepared but not an authorized publishing action; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.
 - 空資料安全：Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.
 
 ## 今日決策
 
-- 先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。
+- 先完成 profile_setup；asset_ready_check 只作預備檢查，不能取代 profile gate；未回填 KPI 前不調整商品或付費 CTA。
 
 ## 執行順序
 
@@ -54,36 +55,36 @@
 ### 4. 他沉默時，你最想聽見哪一句話？
 
 - phase：`asset_ready_check`
-- status：`ready`
+- status：`prepared`
 - priority：`high`
 - platform：`all`
 - task：`publish-lt-s01-iris-silence`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。
+- action：預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。
 - writeback：mark asset ready before platform posting
 - safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
 
 ### 5. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`asset_ready_check`
-- status：`ready`
+- status：`prepared`
 - priority：`high`
 - platform：`all`
 - task：`publish-lt-s02-iris-affirmation`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation
-- action：確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。
+- action：預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。
 - writeback：mark asset ready before platform posting
 - safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
 
 ### 6. 你真的太敏感嗎？還是你只是等一句清楚的話？
 
 - phase：`asset_ready_check`
-- status：`ready`
+- status：`prepared`
 - priority：`high`
 - platform：`all`
 - task：`publish-lt-s03-iris-too-sensitive`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive
-- action：確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。
+- action：預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。
 - writeback：mark asset ready before platform posting
 - safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
 

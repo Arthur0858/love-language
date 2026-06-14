@@ -15,7 +15,7 @@
 - 平台追蹤連結：3 / 3 有效
 - 首批排程：3 / 3 有效
 - 首週排程：9 / 9 有效
-- 素材就緒檢查：3
+- 素材預備檢查：3
 - 已發布平台列：0
 - 已回填 KPI 列：0
 - 必填 KPI 欄位：`post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`

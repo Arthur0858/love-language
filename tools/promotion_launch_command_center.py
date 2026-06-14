@@ -60,14 +60,15 @@ DOWNSTREAM_KPI_BACKFILL_FIELDS = [
 def command_center_policy() -> dict[str, object]:
     return {
         "phaseOrder": list(PHASE_ORDER),
-        "readyPhases": ["profile_setup", "asset_ready_check"],
+        "readyPhases": ["profile_setup"],
+        "preparedPhases": ["asset_ready_check"],
         "blockedPhases": ["publish_post", "kpi_backfill"],
         "publishBlockedBy": ["profile_setup", "asset_ready_check"],
         "kpiBackfillBlockedBy": ["post_url"],
         "minimumKpiBackfillFields": MINIMUM_KPI_BACKFILL_FIELDS,
         "downstreamKpiBackfillFields": DOWNSTREAM_KPI_BACKFILL_FIELDS,
         "profileWritebackFields": ["status=set/live", "profile_link_set_date", "profile_clicks", "site_clicks", "quiz_starts", "quiz_completions"],
-        "rule": "Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
+        "rule": "Run profile_setup first; asset_ready_check is prepared but not an authorized publishing action; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
         "emptyDataSafety": "Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.",
         "ctaRule": "Every launch command keeps the CTA on the 15-question guardian quiz.",
     }
@@ -79,7 +80,7 @@ def load_json(path: Path) -> dict:
 
 def write_csv(rows: list[dict[str, str]], path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -119,7 +120,7 @@ def asset_check_rows(week_execution: dict) -> list[dict[str, str]]:
         rows.append({
             "sequence": "",
             "phase": "asset_ready_check",
-            "status": "ready",
+            "status": "prepared",
             "priority": "high",
             "platform": "all",
             "task_id": str(script.get("taskId", "")),
@@ -130,7 +131,7 @@ def asset_check_rows(week_execution: dict) -> list[dict[str, str]]:
             "scheduled_date": "",
             "scheduled_time": "",
             "tracked_url": str(script.get("platforms", [{}])[0].get("trackedUrl", "")) if script.get("platforms") else "",
-            "action": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
+            "action": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
             "writeback": "mark asset ready before platform posting",
             "blocked_by": "",
             "safety_note": "短片 CTA 維持測驗入口，不把素材改成直接購買。",
@@ -221,6 +222,7 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
         "publishingReadyForWeeklyDecision": bool(publishing_status.get("readyForWeeklyDecision")),
         "rowCount": len(rows),
         "readyRows": sum(1 for row in rows if row["status"] == "ready"),
+        "preparedRows": sum(1 for row in rows if row["status"] == "prepared"),
         "blockedRows": sum(1 for row in rows if row["status"].startswith("blocked")),
         "statusCounts": status_counts,
         "phaseCounts": phase_counts,
@@ -231,7 +233,7 @@ def build_center(next_actions: dict, week_execution: dict, publishing_status: di
             "kpi_backfill": platform_post_count,
         },
         "commandCenterPolicy": command_center_policy(),
-        "nextDecision": "先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。",
+        "nextDecision": "先完成 profile_setup；asset_ready_check 只作預備檢查，不能取代 profile gate；未回填 KPI 前不調整商品或付費 CTA。",
         "rows": rows,
         "safety": {
             "quizOnlyCta": True,
@@ -258,11 +260,14 @@ def validate_center(center: dict) -> list[str]:
     if not isinstance(expected_phase_counts, dict):
         expected_phase_counts = {}
     expected_row_count = sum(int(value) for value in expected_phase_counts.values() if isinstance(value, int))
-    expected_ready_rows = int(expected_phase_counts.get("profile_setup", 0)) + int(expected_phase_counts.get("asset_ready_check", 0))
+    expected_ready_rows = int(expected_phase_counts.get("profile_setup", 0))
+    expected_prepared_rows = int(expected_phase_counts.get("asset_ready_check", 0))
     if len(rows) != expected_row_count:
         issues.append(f"expected {expected_row_count} command rows, got {len(rows)}")
-    if center.get("readyRows", 0) < expected_ready_rows:
-        issues.append(f"expected at least {expected_ready_rows} ready rows for profile setup and asset checks")
+    if center.get("readyRows", 0) != expected_ready_rows:
+        issues.append(f"expected exactly {expected_ready_rows} ready rows for current profile setup gate")
+    if center.get("preparedRows", 0) != expected_prepared_rows:
+        issues.append(f"expected exactly {expected_prepared_rows} prepared asset check rows")
     if not center.get("blockedRows"):
         issues.append("publish/backfill rows should stay blocked until prerequisites are done")
     phases = center.get("phaseCounts", {})
@@ -284,6 +289,8 @@ def validate_center(center: dict) -> list[str]:
             issues.append(f"{label}: tracked_url missing campaign marker")
         if row.get("phase") in {"publish_post", "kpi_backfill"} and not row.get("blocked_by"):
             issues.append(f"{label}: publish/backfill rows must declare blocked_by")
+        if row.get("phase") == "asset_ready_check" and row.get("status") != "prepared":
+            issues.append(f"{label}: asset check rows should be prepared, not ready")
         expected_status = BLOCKED_STATUS_BY_PHASE.get(str(row.get("phase", "")))
         if expected_status and row.get("status") != expected_status:
             issues.append(f"{label}: expected status {expected_status}")
@@ -303,6 +310,7 @@ def render_markdown(center: dict) -> str:
         f"- 週次：Week {center['week']}",
         f"- 指揮列數：{center['rowCount']}",
         f"- 可立即執行：{center['readyRows']}",
+        f"- 預備檢查：{center['preparedRows']}",
         f"- 等待前置條件：{center['blockedRows']}",
         f"- 週決策：{'可判讀' if center['publishingReadyForWeeklyDecision'] else '尚不可'}",
         f"- 指揮板規則：{center['commandCenterPolicy']['rule']}",
@@ -380,6 +388,7 @@ def main() -> int:
         print(f"promotion_launch_command_center_csv={args.csv_output}")
     print(f"promotion_launch_command_rows={center['rowCount']}")
     print(f"promotion_launch_command_ready={center['readyRows']}")
+    print(f"promotion_launch_command_prepared={center['preparedRows']}")
     print(f"promotion_launch_command_blocked={center['blockedRows']}")
     print(f"promotion_launch_command_profile_rows={center['phaseCounts'].get('profile_setup', 0)}")
     print(f"promotion_launch_command_publish_rows={center['phaseCounts'].get('publish_post', 0)}")

@@ -8,7 +8,7 @@
 - minimum KPI rows：0 / 3
 - lead ready routes：0
 - ready offer experiments：0
-- command rows ready / blocked：6 / 18
+- command rows ready / blocked：3 / 18
 - issues：0
 
 ## Gate States

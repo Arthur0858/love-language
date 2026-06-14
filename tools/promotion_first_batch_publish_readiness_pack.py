@@ -20,6 +20,7 @@ PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
 OUTPUT_MD = PROMOTION_DIR / "first-batch-publish-readiness-pack.md"
 OUTPUT_JSON = PROMOTION_DIR / "first-batch-publish-readiness-pack.json"
 OUTPUT_CSV = PROMOTION_DIR / "first-batch-publish-readiness-pack.csv"
+ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
 
 
 def today() -> str:
@@ -77,7 +78,7 @@ def build_pack() -> dict:
         proof_path = post_proof_path(platform, task_id)
         safely_rejected, import_output = run_post_import_check(proof_path)
         profile_ready = bool(profile_gate.get("state", {}).get("readyForFirstBatchPublish"))
-        asset_ready = str(asset.get("assetReadyStatus", "")) == "ready"
+        asset_ready = str(asset.get("assetReadyStatus", "")) in ACCEPTED_ASSET_QA_STATUSES
         public_url_ready = bool(pub.get("postUrl"))
         row_status = "ready_to_publish" if profile_ready and asset_ready else "blocked_until_profile_gate"
         if public_url_ready:
@@ -118,7 +119,7 @@ def build_pack() -> dict:
     if metrics["rows"] != 3:
         issues.append(f"expected 3 first-batch publish readiness rows, got {metrics['rows']}")
     if metrics["assetQaReady"] != metrics["rows"]:
-        issues.append("all first-batch asset QA rows should be ready")
+        issues.append("all first-batch asset QA rows should be prepared or ready")
     if metrics["proofFiles"] != metrics["rows"]:
         issues.append("all post proof template files should exist")
     if metrics["proofTemplatesSafelyRejected"] != metrics["rows"]:
@@ -139,7 +140,7 @@ def build_pack() -> dict:
         "metrics": metrics,
         "rows": rows,
         "rules": [
-            "Asset QA ready does not authorize publishing until profile gate is ready.",
+            "Asset QA prepared does not authorize publishing until profile gate is ready.",
             "Post proof templates must remain safely rejected while post_url is a placeholder.",
             "Only real public post URLs may move a row from blocked/ready to published.",
             "After publish, backfill minimum KPI with checked-source zeros or real values.",
@@ -156,7 +157,7 @@ def render_markdown(pack: dict) -> str:
         f"- 產生日期：{pack['generatedAt']}",
         f"- rows：{metrics['rows']}",
         f"- profile gate ready：{metrics['profileGateReady']}",
-        f"- asset QA ready：{metrics['assetQaReady']}",
+        f"- asset QA prepared：{metrics['assetQaReady']}",
         f"- ready to publish：{metrics['readyToPublish']}",
         f"- blocked：{metrics['blocked']}",
         f"- published：{metrics['published']}",
@@ -178,7 +179,7 @@ def render_markdown(pack: dict) -> str:
             f"- title：{row['title']}",
             f"- schedule：{row['scheduled_date']} {row['scheduled_time']} Asia/Taipei",
             f"- profile gate ready：{row['profile_gate_ready']}",
-            f"- asset QA ready：{row['asset_qa_ready']}",
+            f"- asset QA prepared：{row['asset_qa_ready']}",
             f"- publish action status：`{row['publish_action_status']}`",
             f"- post URL ready：{row['post_url_ready']}",
             f"- post proof file：`{row['post_proof_file']}`",
@@ -216,7 +217,7 @@ def write_outputs(pack: dict) -> None:
         "stop_condition",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in pack["rows"])
 

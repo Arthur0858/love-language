@@ -46,7 +46,7 @@ def readiness_policy() -> dict[str, object]:
         "requiredKpiFields": list(REQUIRED_KPI_FIELDS),
         "firstBatchWeek": 1,
         "firstBatchSlot": 1,
-        "minimumAssetReadyChecks": len(EXPECTED_PLATFORMS),
+        "minimumAssetPreparedChecks": len(EXPECTED_PLATFORMS),
         "blockerOrder": list(BLOCKER_ORDER),
         "blockerSeverityById": BLOCKER_SEVERITY_BY_ID,
         "blockerReleaseConditions": {
@@ -97,7 +97,7 @@ def is_kpi_filled(row: dict[str, str]) -> bool:
     return any(parse_int(row.get(field)) > 0 for field in REQUIRED_KPI_FIELDS if field != "post_url")
 
 
-def count_asset_ready(command_center: dict) -> int:
+def count_asset_prepared(command_center: dict) -> int:
     rows = command_center.get("rows", [])
     if not isinstance(rows, list):
         return 0
@@ -106,7 +106,7 @@ def count_asset_ready(command_center: dict) -> int:
         for row in rows
         if isinstance(row, dict)
         and row.get("phase") == "asset_ready_check"
-        and row.get("status") == "ready"
+        and row.get("status") in {"prepared", "ready"}
     )
 
 
@@ -189,7 +189,7 @@ def build_gate(
     )
     published_rows = sum(1 for row in posting_rows if (row.get("status") or "").strip() == "published")
     filled_kpi_rows = sum(1 for row in kpi_rows if is_kpi_filled(row))
-    asset_ready = count_asset_ready(command_center)
+    asset_prepared = count_asset_prepared(command_center)
     platform_rows = platform_checklist(profile_rows)
     first_batch = first_batch_schedule(posting_rows)
 
@@ -199,7 +199,7 @@ def build_gate(
         and profile_links_valid == expected_platform_count
         and len(first_batch_rows) == expected_platform_count
         and first_batch_scheduled == expected_platform_count
-        and asset_ready >= expected_platform_count
+        and asset_prepared >= expected_platform_count
     )
     ready_to_start_setup = structure_ready
     ready_to_publish_posts = structure_ready and profile_configured == expected_platform_count
@@ -241,8 +241,8 @@ def build_gate(
         issues.append(f"expected {expected_platform_count} scheduled first-batch rows with campaign links, got {first_batch_scheduled}")
     if first_week_scheduled != expected_first_week_rows:
         issues.append(f"expected {expected_first_week_rows} scheduled first-week platform rows, got {first_week_scheduled}")
-    if asset_ready < expected_platform_count:
-        issues.append(f"expected at least {expected_platform_count} ready asset checks, got {asset_ready}")
+    if asset_prepared < expected_platform_count:
+        issues.append(f"expected at least {expected_platform_count} prepared asset checks, got {asset_prepared}")
     if filled_kpi_rows == 0 and not blockers:
         issues.append("empty data mode must produce explicit measurement blockers")
     if expected_platform_count != len(EXPECTED_PLATFORM_ORDER):
@@ -276,7 +276,8 @@ def build_gate(
             "firstBatchScheduled": first_batch_scheduled,
             "firstWeekRows": expected_first_week_rows,
             "firstWeekScheduled": first_week_scheduled,
-            "assetReady": asset_ready,
+            "assetReady": asset_prepared,
+            "assetPrepared": asset_prepared,
             "publishedRows": published_rows,
             "filledKpiRows": filled_kpi_rows,
             "platformChecklistRows": len(platform_rows),
@@ -330,7 +331,7 @@ def render_markdown(gate: dict) -> str:
         f"- 平台追蹤連結：{metrics['profileLinksValid']} / {metrics['profileRows']} 有效",
         f"- 首批排程：{metrics['firstBatchScheduled']} / {metrics['firstBatchRows']} 有效",
         f"- 首週排程：{metrics['firstWeekScheduled']} / {metrics['firstWeekRows']} 有效",
-        f"- 素材就緒檢查：{metrics['assetReady']}",
+        f"- 素材預備檢查：{metrics['assetPrepared']}",
         f"- 已發布平台列：{metrics['publishedRows']}",
         f"- 已回填 KPI 列：{metrics['filledKpiRows']}",
         f"- 必填 KPI 欄位：{', '.join(f'`{field}`' for field in policy['requiredKpiFields'])}",
@@ -430,6 +431,7 @@ def main() -> int:
     print(f"promotion_launch_readiness_first_batch_scheduled={metrics['firstBatchScheduled']}")
     print(f"promotion_launch_readiness_first_week_scheduled={metrics['firstWeekScheduled']}")
     print(f"promotion_launch_readiness_asset_ready={metrics['assetReady']}")
+    print(f"promotion_launch_readiness_asset_prepared={metrics['assetPrepared']}")
     print(f"promotion_launch_readiness_published_rows={metrics['publishedRows']}")
     print(f"promotion_launch_readiness_filled_kpi_rows={metrics['filledKpiRows']}")
     print(f"promotion_launch_readiness_platform_checklist_rows={metrics['platformChecklistRows']}")

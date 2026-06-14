@@ -30,6 +30,7 @@ POST_URL_PLACEHOLDERS = {
     "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
     "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
 }
+ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
 
 
 def load_json(path: Path) -> dict:
@@ -167,8 +168,8 @@ def validate_packet(packet: dict) -> list[str]:
         label = f"{row.get('platform', '<platform>')}/{row.get('taskId', '<task>')}"
         if row.get("guardianId") != "iris":
             issues.append(f"{label}: first-batch asset QA should be Iris")
-        if row.get("assetReadyStatus") != "ready":
-            issues.append(f"{label}: asset ready status should be ready")
+        if row.get("assetReadyStatus") not in ACCEPTED_ASSET_QA_STATUSES:
+            issues.append(f"{label}: asset QA status should be prepared or ready")
         if "完成 15 題測驗" not in row.get("caption", ""):
             issues.append(f"{label}: caption missing quiz CTA")
         for token in FORBIDDEN_FIRST_CTA:
@@ -200,7 +201,7 @@ def render_markdown(packet: dict, issues: list[str]) -> str:
         "",
         "## Rule",
         "",
-        "- 這份文件只做發布前 QA，不把素材、profile、post URL 或 KPI 標成完成。",
+        "- 這份文件只做發布前 QA；`prepared` 代表素材可預檢，不代表 profile、post URL 或 KPI 已完成。",
         "- 發布前逐項留下 proof note；發布後再用 post text import 回填 URL 與初始 KPI。",
         "",
     ]

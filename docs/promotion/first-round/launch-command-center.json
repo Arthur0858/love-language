@@ -16,10 +16,12 @@
   },
   "publishingReadyForWeeklyDecision": false,
   "rowCount": 24,
-  "readyRows": 6,
+  "readyRows": 3,
+  "preparedRows": 3,
   "blockedRows": 18,
   "statusCounts": {
-    "ready": 6,
+    "ready": 3,
+    "prepared": 3,
     "blocked_until_ready": 9,
     "blocked_until_published": 9
   },
@@ -43,7 +45,9 @@
       "kpi_backfill"
     ],
     "readyPhases": [
-      "profile_setup",
+      "profile_setup"
+    ],
+    "preparedPhases": [
       "asset_ready_check"
     ],
     "blockedPhases": [
@@ -83,11 +87,11 @@
       "quiz_starts",
       "quiz_completions"
     ],
-    "rule": "Run profile_setup and asset_ready_check first; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
+    "rule": "Run profile_setup first; asset_ready_check is prepared but not an authorized publishing action; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.",
     "emptyDataSafety": "Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.",
     "ctaRule": "Every launch command keeps the CTA on the 15-question guardian quiz."
   },
-  "nextDecision": "先完成 profile_setup 與 asset_ready_check，再發布 Week 1 三支 Shorts；未回填 KPI 前不調整商品或付費 CTA。",
+  "nextDecision": "先完成 profile_setup；asset_ready_check 只作預備檢查，不能取代 profile gate；未回填 KPI 前不調整商品或付費 CTA。",
   "rows": [
     {
       "sequence": "1",
@@ -149,7 +153,7 @@
     {
       "sequence": "4",
       "phase": "asset_ready_check",
-      "status": "ready",
+      "status": "prepared",
       "priority": "high",
       "platform": "all",
       "task_id": "publish-lt-s01-iris-silence",
@@ -160,7 +164,7 @@
       "scheduled_date": "",
       "scheduled_time": "",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "action": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
+      "action": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
       "writeback": "mark asset ready before platform posting",
       "blocked_by": "",
       "safety_note": "短片 CTA 維持測驗入口，不把素材改成直接購買。"
@@ -168,7 +172,7 @@
     {
       "sequence": "5",
       "phase": "asset_ready_check",
-      "status": "ready",
+      "status": "prepared",
       "priority": "high",
       "platform": "all",
       "task_id": "publish-lt-s02-iris-affirmation",
@@ -179,7 +183,7 @@
       "scheduled_date": "",
       "scheduled_time": "",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
-      "action": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
+      "action": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
       "writeback": "mark asset ready before platform posting",
       "blocked_by": "",
       "safety_note": "短片 CTA 維持測驗入口，不把素材改成直接購買。"
@@ -187,7 +191,7 @@
     {
       "sequence": "6",
       "phase": "asset_ready_check",
-      "status": "ready",
+      "status": "prepared",
       "priority": "high",
       "platform": "all",
       "task_id": "publish-lt-s03-iris-too-sensitive",
@@ -198,7 +202,7 @@
       "scheduled_date": "",
       "scheduled_time": "",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
-      "action": "確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界都可發布。",
+      "action": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
       "writeback": "mark asset ready before platform posting",
       "blocked_by": "",
       "safety_note": "短片 CTA 維持測驗入口，不把素材改成直接購買。"

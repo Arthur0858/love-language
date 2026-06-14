@@ -7,7 +7,7 @@
 - first batch published：0
 - minimum KPI rows：0
 - real leads / ready offers：0 / 0
-- command ready / blocked decisions：6 / 18
+- command ready / blocked decisions：3 / 18
 - clipboard ready / blocked：3 / 3
 - issues：0
 

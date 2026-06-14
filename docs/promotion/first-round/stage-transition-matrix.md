@@ -6,7 +6,7 @@
 - complete rows：0
 - current blockers：1
 - blocked upstream rows：5
-- command rows ready / blocked：6 / 18
+- command rows ready / blocked：3 / 18
 - empty data mode：1
 - issues：0
 

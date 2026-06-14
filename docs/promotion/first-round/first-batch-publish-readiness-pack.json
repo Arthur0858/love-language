@@ -81,7 +81,7 @@
     }
   ],
   "rules": [
-    "Asset QA ready does not authorize publishing until profile gate is ready.",
+    "Asset QA prepared does not authorize publishing until profile gate is ready.",
     "Post proof templates must remain safely rejected while post_url is a placeholder.",
     "Only real public post URLs may move a row from blocked/ready to published.",
     "After publish, backfill minimum KPI with checked-source zeros or real values."

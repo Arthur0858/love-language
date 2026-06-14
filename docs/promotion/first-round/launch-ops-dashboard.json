@@ -29,7 +29,7 @@
     {
       "area": "master_gate",
       "status": "profile_setup",
-      "ready": "6",
+      "ready": "3",
       "blocked": "18",
       "next_action": "Finish three platform profile links, then run profile writeback and refresh ops docs.",
       "evidence": "profile=0/3, first_batch=0/3, kpi_rows=0",
@@ -119,7 +119,7 @@
     {
       "area": "next_actions",
       "status": "profile_setup",
-      "ready": "6",
+      "ready": "3",
       "blocked": "18",
       "next_action": "Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.",
       "evidence": "selected_tasks=3, command_rows=24",

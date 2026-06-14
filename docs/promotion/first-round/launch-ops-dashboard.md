@@ -23,7 +23,7 @@
 ### master_gate
 
 - status：`profile_setup`
-- ready / blocked：6 / 18
+- ready / blocked：3 / 18
 - next：Finish three platform profile links, then run profile writeback and refresh ops docs.
 - evidence：profile=0/3, first_batch=0/3, kpi_rows=0
 - safety：Use master gate as final stage source; do not skip profile_setup.
@@ -103,7 +103,7 @@
 ### next_actions
 
 - status：`profile_setup`
-- ready / blocked：6 / 18
+- ready / blocked：3 / 18
 - next：Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.
 - evidence：selected_tasks=3, command_rows=24
 - safety：A next-actions packet can include blocked downstream work; follow status and master gate before acting.

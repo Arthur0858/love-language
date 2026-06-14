@@ -82,6 +82,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_weekly_review_packet.py"],
     [sys.executable, "tools/promotion_weekly_decision_evidence_checklist.py"],
     [sys.executable, "tools/promotion_weekly_review_action_sheet.py"],
+    [sys.executable, "tools/promotion_weekly_review_quickstart.py"],
     [sys.executable, "tools/promotion_blocker_resolution_checklist.py"],
     [sys.executable, "tools/promotion_operator_handoff_packet.py"],
     [sys.executable, "tools/promotion_launch_ops_dashboard.py"],

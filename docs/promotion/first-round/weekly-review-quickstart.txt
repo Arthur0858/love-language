@@ -1,0 +1,80 @@
+LoveTypes weekly review quickstart
+generated: 2026-06-14
+weekly ready: 0
+decision ready: 0
+empty data mode: 1
+
+Rules:
+- Weekly review starts only after profile links, public post URLs, and minimum KPI source checks are complete.
+- If empty data mode is active, keep all commerce and prioritization decisions on HOLD.
+- Do not rank guardians, change offer order, increase paid CTA, or prioritize Luna/affiliate from zero or missing data.
+- Use weekly summary, week decision gate, and decision readiness checklist as the decision source of truth.
+- Lead and offer work requires repeated route or lead demand, not template rows or one-off clicks.
+
+Actions:
+
+=== profile-before-review ===
+status: blocked
+action: Confirm all platform profile links are set/live before using first-batch posts for weekly review.
+command: python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check
+evidence: profile_configured=3 and profile gate ready before publish/review.
+boundary: Without profile links, do not treat missing clicks as content failure.
+
+=== first-batch-public-url ===
+status: blocked
+action: Publish or verify the first three platform posts and record the real public post URLs.
+command: python3 tools/promotion_first_batch_publish_action_sheet.py --check
+evidence: Three real platform post_url values, not placeholders.
+boundary: No public URL means no weekly decision.
+
+=== minimum-kpi-backfill ===
+status: blocked
+action: Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.
+command: python3 tools/promotion_first_batch_kpi_action_sheet.py --check
+evidence: Each 0 value has a checked platform or site source, not an assumption.
+boundary: Zero without source is still unknown.
+
+=== weekly-evidence-check ===
+status: blocked
+action: Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.
+command: python3 tools/promotion_weekly_decision_evidence_checklist.py --check
+evidence: complete=1, pending=7.
+boundary: Pending evidence keeps all commerce and winner decisions on HOLD.
+
+=== weekly-review-packet ===
+status: hold
+action: Regenerate weekly summary, decision gate and review packet before changing the next content batch.
+command: python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py
+evidence: weekly_ready=0, empty_data=1.
+boundary: Empty data mode allows only setup, publish, and KPI backfill actions.
+
+=== lead-and-offer-safety ===
+status: blocked
+action: Check lead demand before building owned assets, Luna packs or paid offer experiments.
+command: python3 tools/promotion_lead_ops_action_sheet.py --check && python3 tools/promotion_lead_demand_gate.py --check
+evidence: lead_ready_routes=0, repeated_routes=0.
+boundary: No repeated lead demand means no paid or priority offer build.
+
+=== allowed-decision-scope ===
+status: hold
+action: Use week-decision-gate as the only source of truth for allowed next decisions.
+command: python3 tools/promotion_week_decision_gate.py --check
+evidence: weeklyDecision=0, testSoftOffer=0.
+boundary: Do not alter offer order, guardian priority, Luna emphasis, or affiliate weighting unless gate allows it.
+
+Evidence checklist:
+- profiles_configured: pending | 三個平台 profile 尚未全部 set/live。
+- first_batch_published: pending | 首批三平台尚未全部發布。
+- public_post_urls_verified: pending | 公開貼文 URL 檢查仍有 pending 或缺證據。
+- zero_kpis_have_source: pending | 核心 KPI 仍未發布、未回填，或 0 值缺來源證據。
+- weekly_review_ready: pending | weekly review 尚未達可決策狀態。
+- not_empty_data_mode: pending | 目前仍是空資料安全模式。
+- decision_gate_ready: pending | week decision gate 仍是 HOLD。
+- commerce_changes_still_blocked: complete | 證據已滿足。
+
+Blocked decisions:
+- change_offer_order
+- pick_winning_guardian
+- increase_paid_cta
+- prioritize_luna_or_affiliate
+- build_paid_product_from_empty_data

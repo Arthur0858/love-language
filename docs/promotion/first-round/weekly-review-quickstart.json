@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "weeklyAction": "docs/promotion/first-round/weekly-review-action-sheet.json",
+    "weeklyEvidence": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
+    "weeklyReview": "docs/promotion/first-round/weekly-review-packet.json",
+    "weekDecision": "docs/promotion/first-round/week-decision-gate.json",
+    "decisionReadiness": "docs/promotion/first-round/decision-readiness-checklist.json"
+  },
+  "metrics": {
+    "actionRows": 7,
+    "readyRows": 0,
+    "blockedRows": 5,
+    "holdRows": 2,
+    "evidenceRows": 8,
+    "evidenceComplete": 1,
+    "evidencePending": 7,
+    "weeklyReady": 0,
+    "decisionReady": 0,
+    "emptyDataMode": 1,
+    "blockedDecisionRows": 4,
+    "issues": 0
+  },
+  "rules": [
+    "Weekly review starts only after profile links, public post URLs, and minimum KPI source checks are complete.",
+    "If empty data mode is active, keep all commerce and prioritization decisions on HOLD.",
+    "Do not rank guardians, change offer order, increase paid CTA, or prioritize Luna/affiliate from zero or missing data.",
+    "Use weekly summary, week decision gate, and decision readiness checklist as the decision source of truth.",
+    "Lead and offer work requires repeated route or lead demand, not template rows or one-off clicks."
+  ],
+  "actions": [
+    {
+      "step_id": "profile-before-review",
+      "phase": "precondition",
+      "status": "blocked",
+      "operator_action": "Confirm all platform profile links are set/live before using first-batch posts for weekly review.",
+      "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_link_readiness_packet.py --check",
+      "evidence_required": "profile_configured=3 and profile gate ready before publish/review.",
+      "decision_boundary": "Without profile links, do not treat missing clicks as content failure."
+    },
+    {
+      "step_id": "first-batch-public-url",
+      "phase": "publish",
+      "status": "blocked",
+      "operator_action": "Publish or verify the first three platform posts and record the real public post URLs.",
+      "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
+      "evidence_required": "Three real platform post_url values, not placeholders.",
+      "decision_boundary": "No public URL means no weekly decision."
+    },
+    {
+      "step_id": "minimum-kpi-backfill",
+      "phase": "kpi",
+      "status": "blocked",
+      "operator_action": "Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.",
+      "command": "python3 tools/promotion_first_batch_kpi_action_sheet.py --check",
+      "evidence_required": "Each 0 value has a checked platform or site source, not an assumption.",
+      "decision_boundary": "Zero without source is still unknown."
+    },
+    {
+      "step_id": "weekly-evidence-check",
+      "phase": "review",
+      "status": "blocked",
+      "operator_action": "Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.",
+      "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
+      "evidence_required": "complete=1, pending=7.",
+      "decision_boundary": "Pending evidence keeps all commerce and winner decisions on HOLD."
+    },
+    {
+      "step_id": "weekly-review-packet",
+      "phase": "review",
+      "status": "hold",
+      "operator_action": "Regenerate weekly summary, decision gate and review packet before changing the next content batch.",
+      "command": "python3 tools/promotion_weekly_summary.py && python3 tools/promotion_week_decision_gate.py && python3 tools/promotion_weekly_review_packet.py",
+      "evidence_required": "weekly_ready=0, empty_data=1.",
+      "decision_boundary": "Empty data mode allows only setup, publish, and KPI backfill actions."
+    },
+    {
+      "step_id": "lead-and-offer-safety",
+      "phase": "commerce",
+      "status": "blocked",
+      "operator_action": "Check lead demand before building owned assets, Luna packs or paid offer experiments.",
+      "command": "python3 tools/promotion_lead_ops_action_sheet.py --check && python3 tools/promotion_lead_demand_gate.py --check",
+      "evidence_required": "lead_ready_routes=0, repeated_routes=0.",
+      "decision_boundary": "No repeated lead demand means no paid or priority offer build."
+    },
+    {
+      "step_id": "allowed-decision-scope",
+      "phase": "decision",
+      "status": "hold",
+      "operator_action": "Use week-decision-gate as the only source of truth for allowed next decisions.",
+      "command": "python3 tools/promotion_week_decision_gate.py --check",
+      "evidence_required": "weeklyDecision=0, testSoftOffer=0.",
+      "decision_boundary": "Do not alter offer order, guardian priority, Luna emphasis, or affiliate weighting unless gate allows it."
+    }
+  ],
+  "evidence": [
+    {
+      "phase": "profile_setup",
+      "check_id": "profiles_configured",
+      "expected_value": "3 platform profile links are set/live with traceable evidence.",
+      "operator_status": "pending",
+      "evidence_note": "三個平台 profile 尚未全部 set/live。"
+    },
+    {
+      "phase": "publish_first_batch",
+      "check_id": "first_batch_published",
+      "expected_value": "First-batch posts are published on all three platforms.",
+      "operator_status": "pending",
+      "evidence_note": "首批三平台尚未全部發布。"
+    },
+    {
+      "phase": "publish_first_batch",
+      "check_id": "public_post_urls_verified",
+      "expected_value": "Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.",
+      "operator_status": "pending",
+      "evidence_note": "公開貼文 URL 檢查仍有 pending 或缺證據。"
+    },
+    {
+      "phase": "kpi_backfill",
+      "check_id": "zero_kpis_have_source",
+      "expected_value": "Zero values for site_clicks, quiz_starts, and quiz_completions have checked-source proof.",
+      "operator_status": "pending",
+      "evidence_note": "核心 KPI 仍未發布、未回填，或 0 值缺來源證據。"
+    },
+    {
+      "phase": "weekly_review",
+      "check_id": "weekly_review_ready",
+      "expected_value": "Weekly review packet reports readyForWeeklyDecision=1.",
+      "operator_status": "pending",
+      "evidence_note": "weekly review 尚未達可決策狀態。"
+    },
+    {
+      "phase": "weekly_review",
+      "check_id": "not_empty_data_mode",
+      "expected_value": "Empty data mode is false before commerce or prioritization decisions.",
+      "operator_status": "pending",
+      "evidence_note": "目前仍是空資料安全模式。"
+    },
+    {
+      "phase": "weekly_decision",
+      "check_id": "decision_gate_ready",
+      "expected_value": "Week decision gate allows at least weeklyDecision before changing content or commerce paths.",
+      "operator_status": "pending",
+      "evidence_note": "week decision gate 仍是 HOLD。"
+    },
+    {
+      "phase": "commerce_safety",
+      "check_id": "commerce_changes_still_blocked",
+      "expected_value": "Paid CTA, Luna emphasis, affiliate emphasis, and offer order remain blocked until intent exists.",
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
+    }
+  ],
+  "blockedDecisions": [
+    "change_offer_order",
+    "pick_winning_guardian",
+    "increase_paid_cta",
+    "prioritize_luna_or_affiliate",
+    "build_paid_product_from_empty_data"
+  ],
+  "issues": []
+}

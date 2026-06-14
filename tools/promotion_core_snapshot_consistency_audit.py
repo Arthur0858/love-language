@@ -13,13 +13,40 @@ PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 sys.path.insert(0, str(TOOLS))
 
 from promotion_master_gate import build_gate  # noqa: E402
+from promotion_profile_completion_gate import build_gate as build_profile_completion_gate  # noqa: E402
+from promotion_first_batch_completion_gate import build_gate as build_first_batch_completion_gate  # noqa: E402
+from promotion_weekly_review_packet import build_packet as build_weekly_review_packet  # noqa: E402
+from promotion_weekly_review_packet import validate_packet as validate_weekly_review_packet  # noqa: E402
+from promotion_lead_demand_gate import build_gate as build_lead_demand_gate  # noqa: E402
+from promotion_offer_experiment_plan import build_plan as build_offer_experiment_plan  # noqa: E402
+from promotion_offer_experiment_plan import load_json as load_offer_json  # noqa: E402
 from promotion_stage_transition_matrix import build_matrix  # noqa: E402
 
 
 SnapshotBuilder = Callable[[], dict]
 
 
+def build_weekly_review_snapshot() -> dict:
+    packet = build_weekly_review_packet()
+    return {**packet, "issues": validate_weekly_review_packet(packet)}
+
+
+def build_offer_experiment_snapshot() -> dict:
+    from promotion_offer_experiment_plan import GATE_PATH, MATRIX_PATH, OFFER_BOARD_PATH  # noqa: E402
+
+    return build_offer_experiment_plan(
+        load_offer_json(MATRIX_PATH),
+        load_offer_json(GATE_PATH),
+        load_offer_json(OFFER_BOARD_PATH),
+    )
+
+
 SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
+    ("profile_completion_gate", PROMOTION_DIR / "profile-completion-gate.json", build_profile_completion_gate),
+    ("first_batch_completion_gate", PROMOTION_DIR / "first-batch-completion-gate.json", build_first_batch_completion_gate),
+    ("weekly_review_packet", PROMOTION_DIR / "weekly-review-packet.json", build_weekly_review_snapshot),
+    ("lead_demand_gate", PROMOTION_DIR / "lead-demand-gate.json", build_lead_demand_gate),
+    ("offer_experiment_plan", PROMOTION_DIR / "offer-experiment-plan.json", build_offer_experiment_snapshot),
     ("master_gate", PROMOTION_DIR / "master-gate.json", build_gate),
     ("stage_transition_matrix", PROMOTION_DIR / "stage-transition-matrix.json", build_matrix),
 )

@@ -43,7 +43,7 @@
     "commandReady": 3,
     "commandPrepared": 3,
     "commandBlocked": 18,
-    "profileCompletionBlockers": 2,
+    "profileCompletionBlockers": 1,
     "weeklyReady": 0,
     "emptyDataMode": 1,
     "kpiPostingRows": 45,

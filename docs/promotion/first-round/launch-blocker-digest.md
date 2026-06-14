@@ -39,7 +39,7 @@
 ## Evidence Snapshot
 
 - command ready / prepared / blocked：3 / 3 / 18
-- profile completion blockers：2
+- profile completion blockers：1
 - weekly ready：0
 - KPI posting / platform / script rows：45 / 45 / 15
 - attribution rows：18

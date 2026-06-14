@@ -12,8 +12,9 @@
     "evidenceRequired": 0,
     "evidenceTraceable": 0,
     "evidencePending": 63,
+    "evidenceNotRequiredYet": 63,
     "evidenceIssues": 0,
-    "blockers": 2,
+    "blockers": 1,
     "issues": 0
   },
   "state": {
@@ -22,6 +23,7 @@
     "profilePacketReadyToPublish": false,
     "firstBatchPacketReadyToPublish": false,
     "evidenceStructurallyClean": true,
+    "evidenceRequiredNow": false,
     "evidenceComplete": false,
     "packetsInSync": true,
     "readyForFirstBatchPublish": false
@@ -32,11 +34,6 @@
       "id": "profile_links_not_configured",
       "message": "profile configured 0/3; finish platform profile setup before publishing.",
       "release": "All profile rows are set/live in platform-profile-tracker.csv."
-    },
-    {
-      "id": "profile_evidence_incomplete",
-      "message": "traceable evidence 0/0, pending rows 63, evidence issues 0.",
-      "release": "Every completed profile/post/lead row has a traceable proof note."
     }
   ],
   "issues": []

@@ -47,8 +47,7 @@
       "id": "profile_completion",
       "status": "blocked",
       "blockers": [
-        "profile_links_not_configured",
-        "profile_evidence_incomplete"
+        "profile_links_not_configured"
       ]
     },
     {

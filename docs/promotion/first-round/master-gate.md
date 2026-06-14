@@ -14,7 +14,7 @@
 ## Gate States
 
 - `launch_readiness`：open（blockers: 3）
-- `profile_completion`：blocked（blockers: 2）
+- `profile_completion`：blocked（blockers: 1）
 - `first_batch_completion`：blocked（blockers: 2）
 - `weekly_review`：blocked（blockers: 4）
 - `lead_demand`：blocked（blockers: 2）

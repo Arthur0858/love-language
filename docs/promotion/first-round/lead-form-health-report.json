@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "generator": "tools/generate_multilingual_site.py",
+    "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
+    "leadIntakeTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
+    "funnelEvents": "funnel-events.json",
+    "importTool": "tools/promotion_lead_text_import.py"
+  },
+  "formMetrics": {
+    "configuredForms": 5,
+    "renderedForms": 10,
+    "renderedSendEvents": 10,
+    "renderedCopyEvents": 10,
+    "renderedRequiredFields": 70,
+    "renderedGuardianOptions": 50,
+    "renderedIntakeOptions": 30,
+    "trackerFields": 21,
+    "intakeTypes": 3,
+    "sourceOptions": 6
+  },
+  "importMetrics": {
+    "languages": 5,
+    "sources": 2,
+    "checkedTexts": 10,
+    "validTexts": 10
+  },
+  "issues": []
+}

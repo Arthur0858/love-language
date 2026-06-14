@@ -63,6 +63,7 @@ PYTHON_TOOLS = [
     "tools/promotion_lead_intake_playbook.py",
     "tools/promotion_lead_form_audit.py",
     "tools/promotion_lead_form_importability_audit.py",
+    "tools/promotion_lead_form_health_report.py",
     "tools/promotion_lead_text_import.py",
     "tools/promotion_lead_writeback.py",
     "tools/promotion_lead_data_minimization_audit.py",
@@ -292,6 +293,7 @@ def main() -> int:
         run_step("promotion lead intake playbook", [sys.executable, "tools/promotion_lead_intake_playbook.py", "--check"])
         run_step("promotion lead form audit", [sys.executable, "tools/promotion_lead_form_audit.py"])
         run_step("promotion lead form importability audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"])
+        run_step("promotion lead form health report", [sys.executable, "tools/promotion_lead_form_health_report.py", "--check"])
         run_step("promotion lead text import", [sys.executable, "tools/promotion_lead_text_import.py", "check"])
         run_step("promotion lead writeback", [sys.executable, "tools/promotion_lead_writeback.py", "check"])
         run_step("promotion lead data minimization audit", [sys.executable, "tools/promotion_lead_data_minimization_audit.py"])

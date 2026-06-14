@@ -1,0 +1,68 @@
+LoveTypes lead intake closure quickstart
+generated: 2026-06-14
+template rows: 15
+real leads: 0
+ready routes: 0
+offer queue ready: 0
+
+Closure steps:
+
+capture_structured_request: ready_to_receive
+command: python3 tools/promotion_lead_form_audit.py && python3 tools/promotion_lead_form_importability_audit.py
+release: Contact / keepsake / Luna request text is structured and importable.
+stop: Do not store raw email content in CSV; copy only the structured request fields and proof note.
+
+verify_consent_and_scope: blocked_until_real_request
+command: python3 tools/promotion_lead_evidence_checklist.py --check
+release: The request has explicit_reply_ok consent, reply email verified outside CSV, and safe non-emergency scope.
+stop: Do not use emergency, diagnostic, therapy-replacement, or sensitive-detail requests for marketing decisions.
+
+writeback_real_lead: blocked_until_verified_request
+command: python3 tools/promotion_lead_text_import.py add --input <REAL_STRUCTURED_REQUEST.txt> --proof-note "email thread checked YYYY-MM-DD"
+release: A real non-template lead row exists with traceable proof and no raw email stored.
+stop: Do not create fake leads, inferred consent, or placeholder request rows.
+
+refresh_lead_demand: blocked_until_real_lead
+command: python3 tools/promotion_daily_ops_refresh.py
+release: Lead summary, evidence checklist, demand gate, handoff, and offer quickstart reflect the real request.
+stop: Do not make lead or offer decisions from stale generated files.
+
+open_asset_or_offer_route: blocked_until_repeated_demand
+command: python3 tools/promotion_lead_demand_gate.py --check && python3 tools/promotion_lead_offer_quickstart.py --check
+release: Same guardian / intake has repeated demand and a matching ready route.
+stop: Do not build paid, Luna, or affiliate experiments from one request or empty data.
+
+=== iris ===
+template rows: 3
+intake types: owned_asset_request, luna_scene_request, repair_or_contact_request
+commands:
+python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread iris-owned request checked 2026-06-14"
+python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread iris-luna request checked 2026-06-14"
+
+=== noah ===
+template rows: 3
+intake types: owned_asset_request, luna_scene_request, repair_or_contact_request
+commands:
+python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread noah-owned request checked 2026-06-14"
+python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread noah-luna request checked 2026-06-14"
+
+=== vivian ===
+template rows: 3
+intake types: owned_asset_request, luna_scene_request, repair_or_contact_request
+commands:
+python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread vivian-owned request checked 2026-06-14"
+python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread vivian-luna request checked 2026-06-14"
+
+=== claire ===
+template rows: 3
+intake types: owned_asset_request, luna_scene_request, repair_or_contact_request
+commands:
+python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread claire-owned request checked 2026-06-14"
+python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread claire-luna request checked 2026-06-14"
+
+=== dora ===
+template rows: 3
+intake types: owned_asset_request, luna_scene_request, repair_or_contact_request
+commands:
+python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread dora-owned request checked 2026-06-14"
+python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread dora-luna request checked 2026-06-14"

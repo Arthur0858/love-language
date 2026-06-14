@@ -102,6 +102,7 @@ REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_publish_kpi_handoff.py"],
     [sys.executable, "tools/promotion_weekly_lead_offer_handoff.py"],
     [sys.executable, "tools/promotion_lead_offer_quickstart.py"],
+    [sys.executable, "tools/promotion_lead_intake_closure_quickstart.py"],
     [sys.executable, "tools/promotion_launch_clipboard.py"],
     [sys.executable, "tools/promotion_launch_quickstart.py"],
     [sys.executable, "tools/promotion_proof_rehearsal.py"],

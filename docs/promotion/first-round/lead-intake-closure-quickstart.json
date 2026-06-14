@@ -1,0 +1,196 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
+    "leadWritebackPlaybook": "docs/promotion/first-round/lead-writeback-playbook.json",
+    "leadEvidenceChecklist": "docs/promotion/first-round/lead-evidence-checklist.json",
+    "leadOpsActionSheet": "docs/promotion/first-round/lead-ops-action-sheet.json",
+    "leadRequestProofPacket": "docs/promotion/first-round/lead-request-proof-packet.json",
+    "leadTrackerSummary": "docs/promotion/first-round/lead-tracker-summary.json",
+    "leadDemandGate": "docs/promotion/first-round/lead-demand-gate.json",
+    "leadOfferQuickstart": "docs/promotion/first-round/lead-offer-quickstart.json",
+    "weeklyLeadOfferHandoff": "docs/promotion/first-round/weekly-lead-offer-handoff.json",
+    "masterGate": "docs/promotion/first-round/master-gate.json"
+  },
+  "metrics": {
+    "templateRows": 15,
+    "realLeads": 0,
+    "leadEvidenceRows": 135,
+    "evidencePendingTemplateRows": 135,
+    "evidenceOperatorVerifyRows": 0,
+    "evidenceMissingRows": 0,
+    "proofTemplates": 15,
+    "proofSafeRejected": 15,
+    "leadOpsReadyRows": 1,
+    "leadOpsBlockedRows": 2,
+    "summaryRealRows": 0,
+    "summaryExplicitConsentRows": 0,
+    "readyRoutes": 0,
+    "repeatedRoutes": 0,
+    "demandBlockers": 2,
+    "handoffCurrentBlockers": 1,
+    "handoffBlockedUpstreamRows": 5,
+    "publicFreeAssets": 5,
+    "offerQueueReady": 0,
+    "masterStage": "profile_setup",
+    "masterLeadReadyRoutes": 0,
+    "issues": 0
+  },
+  "rules": [
+    "Template rows are readiness scaffolds, not real leads.",
+    "A real lead requires explicit_reply_ok consent, a traceable proof note, and safe non-emergency scope.",
+    "Raw email addresses or message bodies must not be stored in tracker CSV files.",
+    "Matched UTM can increment KPI; unmatched UTM remains qualitative manual lead only.",
+    "Owned assets, Luna packs, or offer experiments open only after repeated same-guardian demand."
+  ],
+  "steps": [
+    {
+      "id": "capture_structured_request",
+      "status": "ready_to_receive",
+      "command": "python3 tools/promotion_lead_form_audit.py && python3 tools/promotion_lead_form_importability_audit.py",
+      "release": "Contact / keepsake / Luna request text is structured and importable.",
+      "stop": "Do not store raw email content in CSV; copy only the structured request fields and proof note."
+    },
+    {
+      "id": "verify_consent_and_scope",
+      "status": "blocked_until_real_request",
+      "command": "python3 tools/promotion_lead_evidence_checklist.py --check",
+      "release": "The request has explicit_reply_ok consent, reply email verified outside CSV, and safe non-emergency scope.",
+      "stop": "Do not use emergency, diagnostic, therapy-replacement, or sensitive-detail requests for marketing decisions."
+    },
+    {
+      "id": "writeback_real_lead",
+      "status": "blocked_until_verified_request",
+      "command": "python3 tools/promotion_lead_text_import.py add --input <REAL_STRUCTURED_REQUEST.txt> --proof-note \"email thread checked YYYY-MM-DD\"",
+      "release": "A real non-template lead row exists with traceable proof and no raw email stored.",
+      "stop": "Do not create fake leads, inferred consent, or placeholder request rows."
+    },
+    {
+      "id": "refresh_lead_demand",
+      "status": "blocked_until_real_lead",
+      "command": "python3 tools/promotion_daily_ops_refresh.py",
+      "release": "Lead summary, evidence checklist, demand gate, handoff, and offer quickstart reflect the real request.",
+      "stop": "Do not make lead or offer decisions from stale generated files."
+    },
+    {
+      "id": "open_asset_or_offer_route",
+      "status": "blocked_until_repeated_demand",
+      "command": "python3 tools/promotion_lead_demand_gate.py --check && python3 tools/promotion_lead_offer_quickstart.py --check",
+      "release": "Same guardian / intake has repeated demand and a matching ready route.",
+      "stop": "Do not build paid, Luna, or affiliate experiments from one request or empty data."
+    }
+  ],
+  "rows": [
+    {
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "templateRows": 3,
+      "intakeTypes": [
+        "owned_asset_request",
+        "luna_scene_request",
+        "repair_or_contact_request"
+      ],
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread iris-owned request checked 2026-06-14\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread iris-luna request checked 2026-06-14\"",
+      "relatedRoutes": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/keepsakes/#keepsake-iris",
+        "https://lovetypes.tw/luna-yoga-music/#luna-iris"
+      ],
+      "evidenceCheckCounts": {
+        "template-iris-owned_asset_request": 9,
+        "template-iris-luna_scene_request": 9,
+        "template-iris-repair_or_contact_request": 9
+      }
+    },
+    {
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "templateRows": 3,
+      "intakeTypes": [
+        "owned_asset_request",
+        "luna_scene_request",
+        "repair_or_contact_request"
+      ],
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread noah-owned request checked 2026-06-14\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread noah-luna request checked 2026-06-14\"",
+      "relatedRoutes": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/keepsakes/#keepsake-noah",
+        "https://lovetypes.tw/luna-yoga-music/#luna-noah"
+      ],
+      "evidenceCheckCounts": {
+        "template-noah-owned_asset_request": 9,
+        "template-noah-luna_scene_request": 9,
+        "template-noah-repair_or_contact_request": 9
+      }
+    },
+    {
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "templateRows": 3,
+      "intakeTypes": [
+        "owned_asset_request",
+        "luna_scene_request",
+        "repair_or_contact_request"
+      ],
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread vivian-owned request checked 2026-06-14\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread vivian-luna request checked 2026-06-14\"",
+      "relatedRoutes": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+        "https://lovetypes.tw/luna-yoga-music/#luna-vivian"
+      ],
+      "evidenceCheckCounts": {
+        "template-vivian-owned_asset_request": 9,
+        "template-vivian-luna_scene_request": 9,
+        "template-vivian-repair_or_contact_request": 9
+      }
+    },
+    {
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "templateRows": 3,
+      "intakeTypes": [
+        "owned_asset_request",
+        "luna_scene_request",
+        "repair_or_contact_request"
+      ],
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread claire-owned request checked 2026-06-14\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread claire-luna request checked 2026-06-14\"",
+      "relatedRoutes": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/keepsakes/#keepsake-claire",
+        "https://lovetypes.tw/luna-yoga-music/#luna-claire"
+      ],
+      "evidenceCheckCounts": {
+        "template-claire-owned_asset_request": 9,
+        "template-claire-luna_scene_request": 9,
+        "template-claire-repair_or_contact_request": 9
+      }
+    },
+    {
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "templateRows": 3,
+      "intakeTypes": [
+        "owned_asset_request",
+        "luna_scene_request",
+        "repair_or_contact_request"
+      ],
+      "ownedAssetCommand": "python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note \"email thread dora-owned request checked 2026-06-14\"",
+      "lunaCommand": "python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note \"email thread dora-luna request checked 2026-06-14\"",
+      "relatedRoutes": [
+        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/keepsakes/#keepsake-dora",
+        "https://lovetypes.tw/luna-yoga-music/#luna-dora"
+      ],
+      "evidenceCheckCounts": {
+        "template-dora-owned_asset_request": 9,
+        "template-dora-luna_scene_request": 9,
+        "template-dora-repair_or_contact_request": 9
+      }
+    }
+  ],
+  "issues": []
+}

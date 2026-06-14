@@ -7,6 +7,7 @@
 - pending template evidence rows：135
 - evidence missing rows：0
 - proof templates：15
+- proof placeholder / real ready：15 / 0
 - lead ops ready / blocked：1 / 2
 - repeated routes / ready routes：0 / 0
 - public free assets：5

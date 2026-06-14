@@ -167,6 +167,8 @@ def build_quickstart() -> dict:
         "evidenceMissingRows": metric(evidence, "missingRows"),
         "proofTemplates": metric(lead_proof, "rows"),
         "proofSafeRejected": metric(lead_proof, "safeRejected"),
+        "proofPlaceholderRows": metric(lead_proof, "placeholderProofRows"),
+        "proofRealReadyRows": metric(lead_proof, "realProofReadyRows"),
         "leadOpsReadyRows": metric(lead_ops, "readyRows"),
         "leadOpsBlockedRows": metric(lead_ops, "blockedRows"),
         "summaryRealRows": metric(lead_summary, "realRows"),
@@ -228,6 +230,10 @@ def validate(rows: list[dict], metrics: dict, steps: list[dict]) -> list[str]:
         issues.append("template-only evidence should not create missing real-lead rows")
     if metrics["proofTemplates"] != len(GUARDIAN_ORDER) * len(INTAKE_TYPES):
         issues.append("lead proof packet must expose one proof template per guardian/intake pair")
+    if metrics["proofPlaceholderRows"] + metrics["proofRealReadyRows"] > metrics["proofTemplates"]:
+        issues.append("lead proof placeholder plus real-ready rows cannot exceed proof template count")
+    if metrics["realLeads"] == 0 and metrics["proofRealReadyRows"] != 0:
+        issues.append("lead proof real-ready rows must stay zero without real leads")
     if metrics["publicFreeAssets"] < len(GUARDIAN_ORDER):
         issues.append("five public free assets should remain available as lead magnets")
     step_ids = {step.get("id") for step in steps}
@@ -265,6 +271,7 @@ def render_markdown(data: dict) -> str:
         f"- pending template evidence rows：{metrics['evidencePendingTemplateRows']}",
         f"- evidence missing rows：{metrics['evidenceMissingRows']}",
         f"- proof templates：{metrics['proofTemplates']}",
+        f"- proof placeholder / real ready：{metrics['proofPlaceholderRows']} / {metrics['proofRealReadyRows']}",
         f"- lead ops ready / blocked：{metrics['leadOpsReadyRows']} / {metrics['leadOpsBlockedRows']}",
         f"- repeated routes / ready routes：{metrics['repeatedRoutes']} / {metrics['readyRoutes']}",
         f"- public free assets：{metrics['publicFreeAssets']}",
@@ -324,6 +331,8 @@ def render_text(data: dict) -> str:
         f"generated: {data['generatedAt']}",
         f"template rows: {metrics['templateRows']}",
         f"real leads: {metrics['realLeads']}",
+        f"proof placeholder rows: {metrics['proofPlaceholderRows']}",
+        f"proof real ready rows: {metrics['proofRealReadyRows']}",
         f"ready routes: {metrics['readyRoutes']}",
         f"offer queue ready: {metrics['offerQueueReady']}",
         "",
@@ -379,6 +388,8 @@ def main() -> int:
     print(f"promotion_lead_intake_closure_quickstart_evidence_rows={metrics['leadEvidenceRows']}")
     print(f"promotion_lead_intake_closure_quickstart_evidence_missing_rows={metrics['evidenceMissingRows']}")
     print(f"promotion_lead_intake_closure_quickstart_proof_templates={metrics['proofTemplates']}")
+    print(f"promotion_lead_intake_closure_quickstart_proof_placeholder_rows={metrics['proofPlaceholderRows']}")
+    print(f"promotion_lead_intake_closure_quickstart_proof_real_ready_rows={metrics['proofRealReadyRows']}")
     print(f"promotion_lead_intake_closure_quickstart_lead_ops_ready_rows={metrics['leadOpsReadyRows']}")
     print(f"promotion_lead_intake_closure_quickstart_repeated_routes={metrics['repeatedRoutes']}")
     print(f"promotion_lead_intake_closure_quickstart_ready_routes={metrics['readyRoutes']}")

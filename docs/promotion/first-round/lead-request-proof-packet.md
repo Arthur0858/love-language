@@ -6,6 +6,8 @@
 - guardians：5
 - intake types：3
 - safely rejected templates：15
+- placeholder proof rows：15
+- real proof ready rows：0
 - real leads：0
 - issues：0
 

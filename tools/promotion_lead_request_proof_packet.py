@@ -121,6 +121,7 @@ def run_check(row: dict[str, str]) -> tuple[int, str]:
 def validate(rows: list[dict[str, str]], playbook: dict, writeback: dict, lead_rows: list[dict[str, str]]) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     safe_rejected = 0
+    import_ready = 0
     files = 0
     source_options = set(playbook.get("sourceOptions", []))
     intake_types = {item.get("type") for item in playbook.get("intakeTypes", []) if isinstance(item, dict)}
@@ -158,6 +159,8 @@ def validate(rows: list[dict[str, str]], playbook: dict, writeback: dict, lead_r
         if "非緊急" not in text and row["intakeType"] == "repair_or_contact_request":
             issues.append(f"{label}: contact template must include non-emergency scope wording")
         code, output = run_check(row)
+        if code == 0:
+            import_ready += 1
         safe_email_rejected = (
             "reply_email should look like an email address" in output
             or "reply_email must be a real requester address" in output
@@ -174,8 +177,12 @@ def validate(rows: list[dict[str, str]], playbook: dict, writeback: dict, lead_r
         "guardians": len(GUARDIANS),
         "intakeTypes": len(INTAKE_ROWS),
         "safeRejected": safe_rejected,
+        "placeholderProofRows": safe_rejected,
+        "realProofReadyRows": import_ready,
         "realLeadRows": sum(1 for row in lead_rows if row.get("status") != "template"),
     }
+    if metrics["placeholderProofRows"] + metrics["realProofReadyRows"] > metrics["rows"]:
+        issues.append("placeholder proof plus real proof ready rows cannot exceed lead proof rows")
     return issues, metrics
 
 
@@ -217,6 +224,8 @@ def render_markdown(packet: dict) -> str:
         f"- guardians：{metrics['guardians']}",
         f"- intake types：{metrics['intakeTypes']}",
         f"- safely rejected templates：{metrics['safeRejected']}",
+        f"- placeholder proof rows：{metrics['placeholderProofRows']}",
+        f"- real proof ready rows：{metrics['realProofReadyRows']}",
         f"- real leads：{metrics['realLeadRows']}",
         f"- issues：{len(packet['issues'])}",
         "",
@@ -275,6 +284,8 @@ def main() -> int:
     print(f"promotion_lead_request_proof_guardians={metrics['guardians']}")
     print(f"promotion_lead_request_proof_intake_types={metrics['intakeTypes']}")
     print(f"promotion_lead_request_proof_safe_rejected={metrics['safeRejected']}")
+    print(f"promotion_lead_request_proof_placeholder_proof_rows={metrics['placeholderProofRows']}")
+    print(f"promotion_lead_request_proof_real_proof_ready_rows={metrics['realProofReadyRows']}")
     print(f"promotion_lead_request_proof_real_leads={metrics['realLeadRows']}")
     print(f"promotion_lead_request_proof_issues={len(packet['issues'])}")
     for issue in packet["issues"]:

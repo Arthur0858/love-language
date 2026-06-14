@@ -22,6 +22,8 @@
     "guardians": 5,
     "intakeTypes": 3,
     "safeRejected": 15,
+    "placeholderProofRows": 15,
+    "realProofReadyRows": 0,
     "realLeadRows": 0
   },
   "rows": [

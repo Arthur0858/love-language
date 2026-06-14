@@ -2,6 +2,8 @@ LoveTypes lead intake closure quickstart
 generated: 2026-06-14
 template rows: 15
 real leads: 0
+proof placeholder rows: 15
+proof real ready rows: 0
 ready routes: 0
 offer queue ready: 0
 

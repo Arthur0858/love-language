@@ -21,6 +21,8 @@
     "evidenceMissingRows": 0,
     "proofTemplates": 15,
     "proofSafeRejected": 15,
+    "proofPlaceholderRows": 15,
+    "proofRealReadyRows": 0,
     "leadOpsReadyRows": 1,
     "leadOpsBlockedRows": 2,
     "summaryRealRows": 0,

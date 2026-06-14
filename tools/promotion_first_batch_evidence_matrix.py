@@ -252,7 +252,7 @@ def write_outputs(matrix: dict) -> None:
         "proofRequired", "proofDate", "proofNote", "checkCommand", "writeCommand", "nextAction",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in matrix["rows"])
 

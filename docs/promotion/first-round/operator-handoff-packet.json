@@ -95,7 +95,7 @@
       "scheduled": "2026-06-15 20:30 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {
@@ -109,7 +109,7 @@
       "scheduled": "2026-06-15 21:00 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {
@@ -123,7 +123,7 @@
       "scheduled": "2026-06-15 21:30 Asia/Taipei",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "blockedBy": "profile links are not all set/live"
     },
     {
@@ -164,8 +164,8 @@
       "id": "post_publish_import",
       "title": "Published post URL and starter KPI import",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
-      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD"
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
     },
     {
       "id": "lead_request_import",

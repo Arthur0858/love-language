@@ -200,7 +200,7 @@ def write_outputs(pack: dict) -> None:
         "kpi_command",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in pack["rows"])
 

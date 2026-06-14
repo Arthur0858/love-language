@@ -6,6 +6,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -61,7 +63,7 @@ def proof_template(row: dict) -> str:
         "site_clicks: 0",
         "quiz_starts: 0",
         "quiz_completions: 0",
-        "proof_note: public URL and analytics source checked YYYY-MM-DD",
+        f"proof_note: {post_writeback.POST_PROOF_NOTE_PLACEHOLDER}",
     ])
 
 
@@ -70,7 +72,7 @@ def write_command(row: dict) -> str:
     return (
         "python3 tools/promotion_post_text_import.py add "
         f"--input {proof_file} "
-        "--proof-note \"public URL and analytics source checked YYYY-MM-DD\""
+        f"--proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\""
     )
 
 

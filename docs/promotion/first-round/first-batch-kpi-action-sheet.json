@@ -25,8 +25,8 @@
       "post_url": "",
       "minimum_kpis": "site_clicks,quiz_starts,quiz_completions",
       "zero_source_rows": "3",
-      "proof_note_template": "platform analytics checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proof_note_template": "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified",
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blocked_by": "first-batch post is not published"
     },
     {
@@ -39,8 +39,8 @@
       "post_url": "",
       "minimum_kpis": "site_clicks,quiz_starts,quiz_completions",
       "zero_source_rows": "3",
-      "proof_note_template": "platform analytics checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proof_note_template": "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified",
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blocked_by": "first-batch post is not published"
     },
     {
@@ -53,8 +53,8 @@
       "post_url": "",
       "minimum_kpis": "site_clicks,quiz_starts,quiz_completions",
       "zero_source_rows": "3",
-      "proof_note_template": "platform analytics checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "proof_note_template": "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified",
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blocked_by": "first-batch post is not published"
     }
   ],

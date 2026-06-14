@@ -77,13 +77,13 @@ Follow-up:
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -99,7 +99,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 1 · tiktok · `publish-lt-s01-iris-silence`
@@ -145,13 +145,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -167,7 +167,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 1 · instagram_reels · `publish-lt-s01-iris-silence`
@@ -213,13 +213,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -235,7 +235,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 2 · youtube_shorts · `publish-lt-s02-iris-affirmation`
@@ -281,13 +281,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -303,7 +303,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 2 · tiktok · `publish-lt-s02-iris-affirmation`
@@ -349,13 +349,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -371,7 +371,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 2 · instagram_reels · `publish-lt-s02-iris-affirmation`
@@ -417,13 +417,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -439,7 +439,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 3 · youtube_shorts · `publish-lt-s03-iris-too-sensitive`
@@ -485,13 +485,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -507,7 +507,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 3 · tiktok · `publish-lt-s03-iris-too-sensitive`
@@ -553,13 +553,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -575,7 +575,7 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
 ## Slot 3 · instagram_reels · `publish-lt-s03-iris-too-sensitive`
@@ -621,13 +621,13 @@ proof_note: public URL and analytics source checked YYYY-MM-DD
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "public URL and analytics source checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"
+python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -643,5 +643,5 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```

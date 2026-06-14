@@ -7,6 +7,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -74,7 +76,7 @@ def publish_rows(launch: dict, profile_configured: bool) -> list[dict[str, str]]
             "owner_action": "Publish or schedule the first-batch Shorts post with quiz-only CTA, then copy the real public post URL.",
             "release_condition": "posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.",
             "evidence_source": str(item.get("trackedUrl", "")),
-            "writeback_command": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"public URL and analytics source checked {today()}\"",
+            "writeback_command": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-{platform}-{task_id}.txt --proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\"",
         })
     return rows
 

@@ -8,6 +8,8 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -130,13 +132,13 @@ def build_packet() -> dict:
             "writebackCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "
-                f"--proof-note \"public URL and analytics source checked {date.today().isoformat()}\""
+                f"--proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\""
             ),
             "kpiExampleCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {placeholder} "
                 "--site-clicks 0 --quiz-starts 0 --quiz-completions 0 "
-                f"--proof-note \"platform analytics checked {date.today().isoformat()}\""
+                f"--proof-note \"{post_writeback.ANALYTICS_PROOF_NOTE_PLACEHOLDER}\""
             ),
             "postUrlPlaceholder": placeholder,
             "prePublishChecks": [

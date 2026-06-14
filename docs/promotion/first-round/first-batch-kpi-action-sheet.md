@@ -22,8 +22,8 @@
 - post URL：(not published)
 - minimum KPI：`site_clicks,quiz_starts,quiz_completions`
 - zero-source rows：3
-- proof note：`platform analytics checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence`
-- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
+- proof note：`<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified`
+- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - blocked by：first-batch post is not published
 
 ## tiktok · `publish-lt-s01-iris-silence`
@@ -33,8 +33,8 @@
 - post URL：(not published)
 - minimum KPI：`site_clicks,quiz_starts,quiz_completions`
 - zero-source rows：3
-- proof note：`platform analytics checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence`
-- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
+- proof note：`<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified`
+- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - blocked by：first-batch post is not published
 
 ## instagram_reels · `publish-lt-s01-iris-silence`
@@ -44,6 +44,6 @@
 - post URL：(not published)
 - minimum KPI：`site_clicks,quiz_starts,quiz_completions`
 - zero-source rows：3
-- proof note：`platform analytics checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence`
-- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "platform analytics checked 2026-06-14"`
+- proof note：`<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified`
+- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - blocked by：first-batch post is not published

@@ -109,7 +109,7 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for youtube_shorts/publish-lt-s01-iris-silence",
       "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
     },
@@ -152,7 +152,7 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "proofTemplate": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for tiktok/publish-lt-s01-iris-silence",
       "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
     },
@@ -195,7 +195,7 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"platform analytics checked 2026-06-14\"",
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "proofTemplate": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-14 for instagram_reels/publish-lt-s01-iris-silence",
       "nextAction": "Publish the post and replace the placeholder URL with a real public post URL."
     }

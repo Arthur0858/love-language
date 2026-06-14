@@ -56,6 +56,8 @@ METRIC_FIELDS = (
     "contact_requests",
 )
 MINIMUM_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
+POST_PROOF_NOTE_PLACEHOLDER = "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+ANALYTICS_PROOF_NOTE_PLACEHOLDER = "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ZERO_SOURCE_TOKENS = (
     "analytics source checked",
     "platform analytics checked",
@@ -322,7 +324,7 @@ def first_batch_commands(queue_rows: list[dict[str, str]]) -> list[dict[str, str
             "publishCommand": (
                 f"python3 tools/promotion_post_writeback.py update --platform {platform} --task-id {task_id} "
                 f"--status published --published-date {date.today().isoformat()} --post-url {post_url_placeholder(platform)} "
-                f"--proof-note \"public URL and analytics source checked {date.today().isoformat()}\""
+                f"--proof-note \"{POST_PROOF_NOTE_PLACEHOLDER}\""
             ),
         })
     return commands
@@ -380,7 +382,7 @@ def render_markdown(data: dict) -> str:
         "",
         "- 發布後可把平台、task_id、post_url、發布日期與初始 KPI 貼成一段文字，再用匯入工具檢查。",
         "- 檢查：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`",
-        "- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"`",
+        f"- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"{POST_PROOF_NOTE_PLACEHOLDER}\"`",
         "- 寫入時仍會同步 posting queue、platform KPI tracker、script KPI tracker 與後續摘要文件。",
         "",
         "## 安全規則",

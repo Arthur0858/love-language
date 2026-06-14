@@ -6,6 +6,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -62,7 +64,7 @@ def next_action_for(stage: str) -> dict[str, str]:
         },
         "first_batch_publish": {
             "action": "Publish the first three platform posts and write back real public post URLs.",
-            "command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+            "command": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\"",
             "release": "first-batch post_url values exist for YouTube Shorts, TikTok, and Instagram Reels",
         },
         "kpi_backfill": {

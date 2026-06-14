@@ -7,6 +7,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -94,7 +96,7 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
             "post_url": post_url,
             "minimum_kpis": ",".join(MINIMUM_KPIS),
             "zero_source_rows": str(sum(1 for row in zero_rows if row.get("metric_id") in MINIMUM_KPIS)),
-            "proof_note_template": f"platform analytics checked {today()} for {platform}/{task_id}",
+            "proof_note_template": post_writeback.ANALYTICS_PROOF_NOTE_PLACEHOLDER,
             "kpi_command": str(item.get("kpiExampleCommand", "")),
             "blocked_by": blocked_by,
         })
@@ -174,7 +176,7 @@ def render_markdown(payload: dict) -> str:
 
 def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

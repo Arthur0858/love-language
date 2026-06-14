@@ -12,27 +12,27 @@
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "public URL and analytics source checked 2026-06-14"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ### tiktok · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "public URL and analytics source checked 2026-06-14"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform tiktok --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_TIKTOK_VIDEO_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ### instagram_reels · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`planned`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "public URL and analytics source checked 2026-06-14"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform instagram_reels --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-14 --post-url <REAL_INSTAGRAM_REEL_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ## 平台文字匯入
 
 - 發布後可把平台、task_id、post_url、發布日期與初始 KPI 貼成一段文字，再用匯入工具檢查。
 - 檢查：`python3 tools/promotion_post_text_import.py check --input /path/to/post.txt`
-- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "public URL and analytics source checked YYYY-MM-DD"`
+- 寫入：`python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 - 寫入時仍會同步 posting queue、platform KPI tracker、script KPI tracker 與後續摘要文件。
 
 ## 安全規則

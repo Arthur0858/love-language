@@ -7,6 +7,8 @@ from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -159,7 +161,7 @@ def build_quickstart() -> dict:
             {
                 "stepId": "writeback_public_post_urls",
                 "status": "blocked_until_public_url" if not int(packet.get("publishedRows", 0) or 0) else "ready_after_publish",
-                "command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked YYYY-MM-DD\"",
+                "command": f"python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note \"{post_writeback.POST_PROOF_NOTE_PLACEHOLDER}\"",
                 "stopCondition": "Replace <REAL_...> with a real public HTTPS post URL before writeback.",
             },
             {

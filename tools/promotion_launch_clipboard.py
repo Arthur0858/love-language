@@ -6,6 +6,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -96,7 +98,7 @@ def post_blocks(publish: dict) -> list[dict[str, str]]:
                 "site_clicks: 0",
                 "quiz_starts: 0",
                 "quiz_completions: 0",
-                "proof_note: public URL and analytics source checked YYYY-MM-DD",
+                f"proof_note: {post_writeback.POST_PROOF_NOTE_PLACEHOLDER}",
             ]).strip(),
             "check_command": str(row.get("check_command", "")),
             "write_command": str(row.get("write_command", "")),

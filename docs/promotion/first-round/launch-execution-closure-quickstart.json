@@ -170,9 +170,9 @@
       "status": "blocked_until_profile_links",
       "title": "他沉默時，你最想聽見哪一句話？",
       "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n完成 15 題測驗，找到你的情感守護者：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "proof": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "proof": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
     },
     {
@@ -182,9 +182,9 @@
       "status": "blocked_until_profile_links",
       "title": "他沉默時，你最想聽見哪一句話？",
       "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n首頁連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "proof": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "proof": "LoveTypes platform post writeback\nplatform: tiktok\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_TIKTOK_VIDEO_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
-      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
     },
     {
@@ -194,9 +194,9 @@
       "status": "blocked_until_profile_links",
       "title": "他沉默時，你最想聽見哪一句話？",
       "copy": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\n個人檔案連結完成 15 題測驗：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#五種愛之語測驗 #情感守護者 #心語庭園 #錯頻修復 #LoveTypes",
-      "proof": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: public URL and analytics source checked YYYY-MM-DD",
+      "proof": "LoveTypes platform post writeback\nplatform: instagram_reels\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-14\npost_url: <REAL_INSTAGRAM_REEL_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
-      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "stop_condition": "Stop while profile links are not all set/live; replace placeholder URL with real public post URL before writeback."
     }
   ],

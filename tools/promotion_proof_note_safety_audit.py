@@ -19,6 +19,11 @@ GENERIC_NOTES = (
     "verified",
 )
 GENERIC_DOC_NOTES = tuple(note for note in GENERIC_NOTES if note != "verified")
+FORBIDDEN_GENERATED_PROOF_PHRASES = (
+    "public URL and analytics source checked 20",
+    "public URL and analytics source checked YYYY-MM-DD",
+    "platform analytics checked 20",
+)
 TRACEABLE_NOTES = (
     "screenshot profile-youtube_shorts-2026-06-15.png verified",
     "public URL post checked 2026-06-15",
@@ -100,6 +105,10 @@ def validate() -> tuple[dict[str, int], list[str]]:
             if note in text:
                 doc_hits += 1
                 issues.append(f"{path.relative_to(ROOT)} should not contain generic proof note: {note}")
+        for phrase in FORBIDDEN_GENERATED_PROOF_PHRASES:
+            if phrase in text:
+                doc_hits += 1
+                issues.append(f"{path.relative_to(ROOT)} should not contain scaffold proof phrase: {phrase}")
 
     return {
         "genericNotes": len(GENERIC_NOTES),

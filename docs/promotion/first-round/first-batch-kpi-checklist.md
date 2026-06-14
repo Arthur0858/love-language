@@ -19,11 +19,11 @@
 - Guardian: `iris`
 - Proof file: `docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 - [ ] `post_url`：Real public HTTPS post URL from the platform. Source: Published platform post page.
 - [ ] `published_date`：YYYY-MM-DD date when the platform post became public. Source: Platform post timestamp or publishing dashboard.
-- [ ] `proof_note`：Traceable note such as public URL and analytics source checked YYYY-MM-DD, screenshot filename, or platform timestamp. Source: Public URL check, screenshot, or platform dashboard.
+- [ ] `proof_note`：Traceable analytics proof such as screenshot filename, platform analytics URL, report export, platform timestamp, or checked source note. Source: Public URL check, screenshot, or platform dashboard.
 - [ ] `site_clicks`：Number of visits/clicks from this platform post or verified 0. Source: Cloudflare/Web analytics, platform link analytics, or tracked UTM report. Zero requires source check.
 - [ ] `quiz_starts`：Number of quiz starts attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.
 - [ ] `quiz_completions`：Number of quiz completions attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.
@@ -35,11 +35,11 @@
 - Guardian: `iris`
 - Proof file: `docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 - [ ] `post_url`：Real public HTTPS post URL from the platform. Source: Published platform post page.
 - [ ] `published_date`：YYYY-MM-DD date when the platform post became public. Source: Platform post timestamp or publishing dashboard.
-- [ ] `proof_note`：Traceable note such as public URL and analytics source checked YYYY-MM-DD, screenshot filename, or platform timestamp. Source: Public URL check, screenshot, or platform dashboard.
+- [ ] `proof_note`：Traceable analytics proof such as screenshot filename, platform analytics URL, report export, platform timestamp, or checked source note. Source: Public URL check, screenshot, or platform dashboard.
 - [ ] `site_clicks`：Number of visits/clicks from this platform post or verified 0. Source: Cloudflare/Web analytics, platform link analytics, or tracked UTM report. Zero requires source check.
 - [ ] `quiz_starts`：Number of quiz starts attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.
 - [ ] `quiz_completions`：Number of quiz completions attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.
@@ -51,11 +51,11 @@
 - Guardian: `iris`
 - Proof file: `docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "public URL and analytics source checked 2026-06-14"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 - [ ] `post_url`：Real public HTTPS post URL from the platform. Source: Published platform post page.
 - [ ] `published_date`：YYYY-MM-DD date when the platform post became public. Source: Platform post timestamp or publishing dashboard.
-- [ ] `proof_note`：Traceable note such as public URL and analytics source checked YYYY-MM-DD, screenshot filename, or platform timestamp. Source: Public URL check, screenshot, or platform dashboard.
+- [ ] `proof_note`：Traceable analytics proof such as screenshot filename, platform analytics URL, report export, platform timestamp, or checked source note. Source: Public URL check, screenshot, or platform dashboard.
 - [ ] `site_clicks`：Number of visits/clicks from this platform post or verified 0. Source: Cloudflare/Web analytics, platform link analytics, or tracked UTM report. Zero requires source check.
 - [ ] `quiz_starts`：Number of quiz starts attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.
 - [ ] `quiz_completions`：Number of quiz completions attributed to this post or verified 0. Source: Funnel event catalog/report, analytics event export, or manual verified source. Zero requires source check.

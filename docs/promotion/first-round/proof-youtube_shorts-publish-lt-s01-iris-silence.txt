@@ -8,4 +8,4 @@ views: 0
 site_clicks: 0
 quiz_starts: 0
 quiz_completions: 0
-proof_note: public URL and analytics source checked YYYY-MM-DD
+proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified

@@ -55,7 +55,7 @@ KPI_ROWS = [
     {
         "metric_id": "proof_note",
         "required": "1",
-        "expected": "Traceable note such as public URL and analytics source checked YYYY-MM-DD, screenshot filename, or platform timestamp.",
+        "expected": "Traceable analytics proof such as screenshot filename, platform analytics URL, report export, platform timestamp, or checked source note.",
         "allowed_empty": "0",
         "zero_requires_source_check": "0",
         "source": "Public URL check, screenshot, or platform dashboard.",
@@ -172,7 +172,7 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
 
 def write_csv(rows: list[dict[str, str]], path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

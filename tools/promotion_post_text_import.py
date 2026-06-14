@@ -116,9 +116,10 @@ def parse_text(text: str) -> tuple[dict[str, str], list[str]]:
         proof_issue = writeback.proof_note_issue(proof)
         if proof_issue:
             issues.append(proof_issue)
-        zero_issue = writeback.zero_metric_source_issue(proof, data)
-        if zero_issue:
-            issues.append(zero_issue)
+        else:
+            zero_issue = writeback.zero_metric_source_issue(proof, data)
+            if zero_issue:
+                issues.append(zero_issue)
     if data.get("task_id") and not task_exists(data.get("platform", ""), data["task_id"]):
         issues.append(f"unknown platform/task_id {data.get('platform')}/{data.get('task_id')}")
     for field in writeback.METRIC_FIELDS:

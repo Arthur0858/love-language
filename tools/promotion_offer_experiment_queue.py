@@ -110,21 +110,45 @@ def build_queue(plan: dict) -> dict:
                 "writeback": step["writeback"],
                 "safetyBoundary": experiment["safetyBoundary"],
             })
+    ready_rows = sum(1 for row in rows if row["status"] == "ready")
+    waiting_rows = sum(1 for row in rows if row["status"] == "waiting_for_signal")
+    blocked_rows = sum(1 for row in rows if row["status"] == "blocked_by_gate")
+    experiment_count = len(plan.get("experiments", []))
+    step_count = len(STEPS)
+    expected_queue_rows = experiment_count * step_count
+    blocked_by_empty_data = bool(plan.get("safety", {}).get("emptyDataFailClosed"))
+    blocked_by_weekly_gate = bool(blockers)
     return {
         "generatedAt": date.today().isoformat(),
         "source": {"offerExperimentPlan": str(PLAN_PATH.relative_to(ROOT))},
         "queuePolicy": queue_policy(),
         "queueRows": rows,
-        "experimentCount": len(plan.get("experiments", [])),
-        "stepCount": len(STEPS),
-        "expectedQueueRows": len(plan.get("experiments", [])) * len(STEPS),
-        "readyRows": sum(1 for row in rows if row["status"] == "ready"),
-        "waitingRows": sum(1 for row in rows if row["status"] == "waiting_for_signal"),
-        "blockedRows": sum(1 for row in rows if row["status"] == "blocked_by_gate"),
+        "experimentCount": experiment_count,
+        "stepCount": step_count,
+        "expectedQueueRows": expected_queue_rows,
+        "readyRows": ready_rows,
+        "waitingRows": waiting_rows,
+        "blockedRows": blocked_rows,
+        "ready": ready_rows,
+        "waiting": waiting_rows,
+        "blocked": blocked_rows,
+        "metrics": {
+            "experiments": experiment_count,
+            "stepCount": step_count,
+            "expectedQueueRows": expected_queue_rows,
+            "queueRows": len(rows),
+            "readyRows": ready_rows,
+            "waitingRows": waiting_rows,
+            "blockedRows": blocked_rows,
+            "blockers": len(blockers),
+            "blockedByEmptyData": 1 if blocked_by_empty_data else 0,
+            "blockedByWeeklyGate": 1 if blocked_by_weekly_gate else 0,
+        },
         "blockers": blockers,
         "safety": {
             "noPaidCtaBeforeReady": True,
             "shortsCtaMustRemainQuiz": True,
+            "emptyDataFailClosed": blocked_by_empty_data,
             "doNotClaim": ["診斷", "療效", "保證修復", "必須購買"],
         },
     }
@@ -207,6 +231,18 @@ def validate_queue(queue: dict) -> list[str]:
         issues.append("queue policy does not match configured steps or statuses")
     if len(rows) != expected_rows:
         issues.append(f"expected {expected_rows} experiment queue rows, got {len(rows)}")
+    metrics = queue.get("metrics", {})
+    if not isinstance(metrics, dict):
+        issues.append("queue metrics should be present")
+    else:
+        for key, expected in {
+            "queueRows": len(rows),
+            "readyRows": queue.get("readyRows", 0),
+            "waitingRows": queue.get("waitingRows", 0),
+            "blockedRows": queue.get("blockedRows", 0),
+        }.items():
+            if int(metrics.get(key, -1) or 0) != int(expected or 0):
+                issues.append(f"metrics.{key} should match top-level queue counts")
     if policy.get("blockedGateReadyRowsMustBeZero") and queue.get("blockers") and queue.get("readyRows", 0) != 0:
         issues.append("blocked gate must not expose ready experiment queue rows")
     for row in rows:
@@ -237,6 +273,9 @@ def main() -> int:
     print(f"promotion_offer_experiment_queue_ready={queue['readyRows']}")
     print(f"promotion_offer_experiment_queue_waiting={queue['waitingRows']}")
     print(f"promotion_offer_experiment_queue_blocked={queue['blockedRows']}")
+    print(f"promotion_offer_experiment_queue_blockers={len(queue['blockers'])}")
+    print(f"promotion_offer_experiment_queue_blocked_by_empty_data={queue['metrics']['blockedByEmptyData']}")
+    print(f"promotion_offer_experiment_queue_blocked_by_weekly_gate={queue['metrics']['blockedByWeeklyGate']}")
     print(f"promotion_offer_experiment_queue_issues={len(issues)}")
     for issue in issues:
         print(issue)

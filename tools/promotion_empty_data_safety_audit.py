@@ -95,8 +95,14 @@ def validate() -> tuple[dict[str, int], list[str]]:
     if any(row.get("status") != "HOLD" for row in offer_plan.get("experiments", [])):
         issues.append("offer experiments should all be HOLD")
     checks += 1
-    if not all_rows_status(offer_queue, "rows", {"blocked"}):
-        issues.append("offer experiment queue rows should all be blocked")
+    if not all_rows_status(offer_queue, "queueRows", {"blocked_by_gate"}):
+        issues.append("offer experiment queue rows should all be blocked_by_gate")
+    checks += 1
+    if int(offer_queue.get("readyRows", 0) or 0) != 0:
+        issues.append("offer experiment queue readyRows should stay zero in empty data mode")
+    checks += 1
+    if not offer_queue.get("safety", {}).get("emptyDataFailClosed"):
+        issues.append("offer experiment queue should carry emptyDataFailClosed safety")
     checks += 1
     if not next_actions.get("dataState", {}).get("emptyDataMode"):
         issues.append("next actions should preserve empty data mode")
@@ -116,6 +122,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
         "failClosedChecks": checks,
         "blockedOfferRows": sum(1 for row in offer_board.get("rows", []) if row.get("readiness") == "HOLD"),
         "blockedExperimentRows": sum(1 for row in offer_plan.get("experiments", []) if row.get("status") == "HOLD"),
+        "blockedQueueRows": sum(1 for row in offer_queue.get("queueRows", []) if row.get("status") == "blocked_by_gate"),
     }, issues
 
 
@@ -125,6 +132,7 @@ def main() -> int:
     print(f"promotion_empty_data_safety_fail_closed_checks={metrics['failClosedChecks']}")
     print(f"promotion_empty_data_safety_blocked_offer_rows={metrics['blockedOfferRows']}")
     print(f"promotion_empty_data_safety_blocked_experiment_rows={metrics['blockedExperimentRows']}")
+    print(f"promotion_empty_data_safety_blocked_queue_rows={metrics.get('blockedQueueRows', 0)}")
     print(f"promotion_empty_data_safety_issues={len(issues)}")
     for issue in issues:
         print(issue)

@@ -20,6 +20,13 @@ from promotion_weekly_review_packet import validate_packet as validate_weekly_re
 from promotion_lead_demand_gate import build_gate as build_lead_demand_gate  # noqa: E402
 from promotion_offer_experiment_plan import build_plan as build_offer_experiment_plan  # noqa: E402
 from promotion_offer_experiment_plan import load_json as load_offer_json  # noqa: E402
+from promotion_operator_handoff_packet import build_handoff as build_operator_handoff  # noqa: E402
+from promotion_operator_handoff_packet import validate_handoff as validate_operator_handoff  # noqa: E402
+from promotion_launch_clipboard import build_clipboard as build_launch_clipboard  # noqa: E402
+from promotion_launch_ops_dashboard import build_dashboard as build_launch_ops_dashboard  # noqa: E402
+from promotion_launch_day_run_sheet import build_run_sheet as build_launch_day_run_sheet  # noqa: E402
+from promotion_launch_exception_runbook import build_runbook as build_launch_exception_runbook  # noqa: E402
+from promotion_operation_proof_packet import build_packet as build_operation_proof_packet  # noqa: E402
 from promotion_profile_publish_handoff import build_handoff as build_profile_publish_handoff  # noqa: E402
 from promotion_publish_kpi_handoff import build_handoff as build_publish_kpi_handoff  # noqa: E402
 from promotion_stage_transition_matrix import build_matrix  # noqa: E402
@@ -44,6 +51,11 @@ def build_offer_experiment_snapshot() -> dict:
     )
 
 
+def build_operator_handoff_snapshot() -> dict:
+    handoff = build_operator_handoff()
+    return {**handoff, "issues": validate_operator_handoff(handoff)}
+
+
 SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
     ("profile_completion_gate", PROMOTION_DIR / "profile-completion-gate.json", build_profile_completion_gate),
     ("first_batch_completion_gate", PROMOTION_DIR / "first-batch-completion-gate.json", build_first_batch_completion_gate),
@@ -55,6 +67,12 @@ SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
     ("profile_publish_handoff", PROMOTION_DIR / "profile-publish-handoff.json", build_profile_publish_handoff),
     ("publish_kpi_handoff", PROMOTION_DIR / "publish-kpi-handoff.json", build_publish_kpi_handoff),
     ("weekly_lead_offer_handoff", PROMOTION_DIR / "weekly-lead-offer-handoff.json", build_weekly_lead_offer_handoff),
+    ("operator_handoff_packet", PROMOTION_DIR / "operator-handoff-packet.json", build_operator_handoff_snapshot),
+    ("launch_clipboard", PROMOTION_DIR / "launch-clipboard.json", build_launch_clipboard),
+    ("launch_ops_dashboard", PROMOTION_DIR / "launch-ops-dashboard.json", build_launch_ops_dashboard),
+    ("launch_day_run_sheet", PROMOTION_DIR / "launch-day-run-sheet.json", build_launch_day_run_sheet),
+    ("launch_exception_runbook", PROMOTION_DIR / "launch-exception-runbook.json", build_launch_exception_runbook),
+    ("operation_proof_packet", PROMOTION_DIR / "operation-proof-packet.json", build_operation_proof_packet),
 )
 
 

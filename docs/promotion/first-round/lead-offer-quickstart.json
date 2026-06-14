@@ -1,0 +1,426 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "weeklyLeadOfferHandoff": "docs/promotion/first-round/weekly-lead-offer-handoff.json",
+    "leadOpsAction": "docs/promotion/first-round/lead-ops-action-sheet.json",
+    "leadDemandGate": "docs/promotion/first-round/lead-demand-gate.json",
+    "assetFulfillmentGate": "docs/promotion/first-round/asset-fulfillment-gate.json",
+    "offerExperimentQueue": "docs/promotion/first-round/offer-experiment-queue.json",
+    "offerHypothesisBoard": "docs/promotion/first-round/offer-hypothesis-board.json"
+  },
+  "metrics": {
+    "handoffRows": 8,
+    "handoffCurrentBlockers": 1,
+    "handoffBlockedUpstreamRows": 5,
+    "realLeads": 0,
+    "readyLeadRoutes": 0,
+    "repeatedRoutes": 0,
+    "leadOpsReadyRows": 1,
+    "publicFreeAssets": 5,
+    "readyToPrepareAssets": 5,
+    "blockedAssets": 30,
+    "offerQueueReady": 0,
+    "offerQueueBlocked": 80,
+    "offerBoardReady": 0,
+    "offerBoardHold": 5,
+    "issues": 0
+  },
+  "rules": [
+    "Do not build paid, Luna, affiliate, or priority offer experiments until weekly review and lead demand gates are open.",
+    "Real lead demand requires explicit reply consent, traceable proof, and repeated same-guardian demand.",
+    "Public free keepsakes and content variants can remain available, but they are not proof of purchase intent.",
+    "Owned PDFs, wallpapers, email templates, and short rituals remain blocked until a real matching request exists.",
+    "Offer queue rows must remain blocked while empty data mode or weekly review blockers are active."
+  ],
+  "handoffRows": [
+    {
+      "step_id": "weekly_review_open",
+      "phase": "weekly_review",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Start lead and offer evaluation only after publish/KPI handoff opens weekly review.",
+      "evidence_required": "publish-kpi-handoff readyForWeeklyReview is true.",
+      "command": "python3 tools/promotion_publish_kpi_handoff.py --check",
+      "stop_condition": "Do not evaluate lead or offer routes while post URLs or minimum KPI proof are incomplete.",
+      "status": "current_blocker"
+    },
+    {
+      "step_id": "weekly_decision_ready",
+      "phase": "weekly_review",
+      "current_value": 0,
+      "required_value": 3,
+      "owner_action": "Confirm weekly review, week decision gate, and non-empty data mode before route decisions.",
+      "evidence_required": "weekly review ready=1, weeklyDecision gate=1, emptyDataMode=0.",
+      "command": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
+      "stop_condition": "Do not pick winners or change commerce order while empty data mode is true.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "weekly_evidence_complete",
+      "phase": "weekly_review",
+      "current_value": 1,
+      "required_value": 8,
+      "owner_action": "Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.",
+      "evidence_required": "weekly-decision-evidence-checklist completeRows equals rows.",
+      "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
+      "stop_condition": "Stop if any weekly decision evidence row remains pending.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "lead_capture_ready",
+      "phase": "lead_collection",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep Contact, keepsake, and Luna requests importable before using them as lead signals.",
+      "evidence_required": "lead ops action sheet has ready capture checks and lead magnet inventory issues=0.",
+      "command": "python3 tools/promotion_lead_ops_action_sheet.py --check",
+      "stop_condition": "Do not collect raw sensitive content or use requests without explicit reply consent.",
+      "status": "complete"
+    },
+    {
+      "step_id": "lead_demand_ready",
+      "phase": "lead_collection",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Advance to owned assets or Luna only after repeated same-guardian demand creates a ready route.",
+      "evidence_required": "lead-demand-gate readyRoutes >= 1 with traceable evidence and explicit consent.",
+      "command": "python3 tools/promotion_lead_demand_gate.py --check",
+      "stop_condition": "Do not create paid or priority assets from a single request, weak signal, or no consent.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "asset_fulfillment_ready",
+      "phase": "asset_fulfillment",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Prepare only the smallest matching free asset or Luna aftercare item for proven demand.",
+      "evidence_required": "asset-fulfillment-gate has at least one ready demand pair or ready offer asset.",
+      "command": "python3 tools/promotion_asset_fulfillment_gate.py --check",
+      "stop_condition": "Keep public free assets available, but do not build custom products before demand proof.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "offer_experiment_ready",
+      "phase": "offer_experiment",
+      "current_value": 0,
+      "required_value": 1,
+      "owner_action": "Only run low-risk offer experiments when both plan and queue have READY rows.",
+      "evidence_required": "offer-experiment-plan and offer-experiment-queue both have at least one READY row.",
+      "command": "python3 tools/promotion_offer_experiment_plan.py --check && python3 tools/promotion_offer_experiment_queue.py --check",
+      "stop_condition": "Do not add paid CTA to Shorts or claim diagnosis, therapy, guarantee, or required purchase.",
+      "status": "blocked_upstream"
+    },
+    {
+      "step_id": "public_free_assets_remain_safe",
+      "phase": "safety",
+      "current_value": 1,
+      "required_value": 1,
+      "owner_action": "Keep five public free assets as safe lead magnets while real demand is absent.",
+      "evidence_required": "asset-fulfillment-gate publicFreeReady >= 5 and lead-demand-gate has no repeated route.",
+      "command": "python3 tools/promotion_asset_fulfillment_gate.py --check && python3 tools/promotion_lead_demand_gate.py --check",
+      "stop_condition": "Stop if public free assets are treated as proof of product demand without tracked requests.",
+      "status": "complete"
+    }
+  ],
+  "leadActions": [
+    {
+      "step_id": "lead-form-health",
+      "phase": "capture",
+      "status": "ready_to_check",
+      "owner_action": "Run lead form and importability audits before treating Contact or keepsake requests as structured leads.",
+      "command": "python3 tools/promotion_lead_form_audit.py && python3 tools/promotion_lead_form_importability_audit.py",
+      "evidence_required": "configured/rendered forms and importable sample texts must report issues=0.",
+      "next_gate": "structured_request_can_be_copied"
+    },
+    {
+      "step_id": "incoming-request-triage",
+      "phase": "triage",
+      "status": "waiting_for_real_email",
+      "owner_action": "For each real Contact or keepsake email, copy only the LoveTypes structured request block into a temporary text file.",
+      "command": "python3 tools/promotion_lead_text_import.py check --input /path/to/request.txt",
+      "evidence_required": "source, guardian, intake_type, reply email presence, consent and utm_content parsing all visible in check output.",
+      "next_gate": "safe_to_writeback"
+    },
+    {
+      "step_id": "lead-writeback",
+      "phase": "writeback",
+      "status": "blocked_until_real_request",
+      "owner_action": "Write back only real requests with explicit reply consent and a traceable proof note; never store raw email in the CSV.",
+      "command": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked 2026-06-14\"",
+      "evidence_required": "lead-intake-tracker.csv gains one real row, and matched utm_content increments the mapped KPI field.",
+      "next_gate": "lead_evidence_checklist"
+    },
+    {
+      "step_id": "evidence-and-demand",
+      "phase": "gate",
+      "status": "blocked_until_traceable_leads",
+      "owner_action": "Refresh evidence and demand gates before deciding whether to build a free asset, Luna pack, or offer experiment.",
+      "command": "python3 tools/promotion_evidence_ledger.py && python3 tools/promotion_lead_evidence_checklist.py && python3 tools/promotion_lead_demand_gate.py",
+      "evidence_required": "real leads have traceable evidence and explicit consent; repeated guardian demand reaches the threshold before any offer build.",
+      "next_gate": "offer_or_asset_queue"
+    },
+    {
+      "step_id": "manual-command-fallback",
+      "phase": "fallback",
+      "status": "available",
+      "owner_action": "If structured text parsing fails, use guardian-specific command examples from lead-writeback-playbook.md after manual validation.",
+      "command": "python3 tools/promotion_lead_writeback.py add --source contact --guardian <guardian> --intake-type <type> --consent-status explicit_reply_ok --proof-note \"email thread checked YYYY-MM-DD\"",
+      "evidence_required": "manual command still requires explicit consent, safe scope and proof note policy.",
+      "next_gate": "lead_evidence_checklist"
+    },
+    {
+      "step_id": "current-demand-state",
+      "phase": "state",
+      "status": "hold",
+      "owner_action": "Use the demand gate state as the only source for asset or offer priority.",
+      "command": "python3 tools/promotion_lead_demand_gate.py --check",
+      "evidence_required": "real_leads=0, ready_routes=0, blockers=no_real_leads,no_repeated_guardian_demand",
+      "next_gate": "master_gate_lead_ready_routes"
+    }
+  ],
+  "safeAssetsNow": [
+    {
+      "assetId": "iris-free_story_card_upgrade",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "free_story_card_upgrade",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+      "fulfillmentStatus": "public_free_ready",
+      "evidence": "Existing keepsake story card and practice-card route are present across all languages.",
+      "stopCondition": "Do not treat saves/downloads as demand until tracked externally.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-content_variant",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "content_variant",
+      "priority": "now",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "fulfillmentStatus": "ready_to_prepare",
+      "evidence": "Content variants can be prepared in empty-data mode as long as the Shorts CTA stays focused on the quiz.",
+      "stopCondition": "Do not publish as a winning variant until KPI rows exist.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-free_story_card_upgrade",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "free_story_card_upgrade",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
+      "fulfillmentStatus": "public_free_ready",
+      "evidence": "Existing keepsake story card and practice-card route are present across all languages.",
+      "stopCondition": "Do not treat saves/downloads as demand until tracked externally.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-content_variant",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "content_variant",
+      "priority": "now",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "fulfillmentStatus": "ready_to_prepare",
+      "evidence": "Content variants can be prepared in empty-data mode as long as the Shorts CTA stays focused on the quiz.",
+      "stopCondition": "Do not publish as a winning variant until KPI rows exist.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "vivian-free_story_card_upgrade",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "assetType": "free_story_card_upgrade",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-vivian",
+      "fulfillmentStatus": "public_free_ready",
+      "evidence": "Existing keepsake story card and practice-card route are present across all languages.",
+      "stopCondition": "Do not treat saves/downloads as demand until tracked externally.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "vivian-content_variant",
+      "guardianId": "vivian",
+      "guardianName": "薇薇安",
+      "assetType": "content_variant",
+      "priority": "now",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "fulfillmentStatus": "ready_to_prepare",
+      "evidence": "Content variants can be prepared in empty-data mode as long as the Shorts CTA stays focused on the quiz.",
+      "stopCondition": "Do not publish as a winning variant until KPI rows exist.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "claire-free_story_card_upgrade",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "assetType": "free_story_card_upgrade",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-claire",
+      "fulfillmentStatus": "public_free_ready",
+      "evidence": "Existing keepsake story card and practice-card route are present across all languages.",
+      "stopCondition": "Do not treat saves/downloads as demand until tracked externally.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "claire-content_variant",
+      "guardianId": "claire",
+      "guardianName": "克萊兒",
+      "assetType": "content_variant",
+      "priority": "now",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "fulfillmentStatus": "ready_to_prepare",
+      "evidence": "Content variants can be prepared in empty-data mode as long as the Shorts CTA stays focused on the quiz.",
+      "stopCondition": "Do not publish as a winning variant until KPI rows exist.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "dora-free_story_card_upgrade",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "assetType": "free_story_card_upgrade",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-dora",
+      "fulfillmentStatus": "public_free_ready",
+      "evidence": "Existing keepsake story card and practice-card route are present across all languages.",
+      "stopCondition": "Do not treat saves/downloads as demand until tracked externally.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "dora-content_variant",
+      "guardianId": "dora",
+      "guardianName": "朵拉",
+      "assetType": "content_variant",
+      "priority": "now",
+      "targetUrl": "https://lovetypes.tw/start/",
+      "fulfillmentStatus": "ready_to_prepare",
+      "evidence": "Content variants can be prepared in empty-data mode as long as the Shorts CTA stays focused on the quiz.",
+      "stopCondition": "Do not publish as a winning variant until KPI rows exist.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    }
+  ],
+  "blockedAssets": [
+    {
+      "assetId": "iris-pdf_practice_card",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "pdf_practice_card",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-phone_wallpaper",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "phone_wallpaper",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-iris",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-email_lead_template",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "email_lead_template",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-short_ritual",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "short_ritual",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/repair-plan/#plan-iris",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-luna_scene_cta",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "luna_scene_cta",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
+      "fulfillmentStatus": "blocked_until_offer_ready",
+      "evidence": "Commercial or Luna assets require a READY offer experiment.",
+      "stopCondition": "Keep Luna/affiliate as secondary routes until KPI evidence is non-empty.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "iris-affiliate_book_bundle",
+      "guardianId": "iris",
+      "guardianName": "艾莉絲",
+      "assetType": "affiliate_book_bundle",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/resources/#supply-iris",
+      "fulfillmentStatus": "blocked_until_offer_ready",
+      "evidence": "Commercial or Luna assets require a READY offer experiment.",
+      "stopCondition": "Keep Luna/affiliate as secondary routes until KPI evidence is non-empty.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-pdf_practice_card",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "pdf_practice_card",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-phone_wallpaper",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "phone_wallpaper",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/keepsakes/#keepsake-noah",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-email_lead_template",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "email_lead_template",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/contact/#luna-supply-request",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    },
+    {
+      "assetId": "noah-short_ritual",
+      "guardianId": "noah",
+      "guardianName": "諾雅",
+      "assetType": "short_ritual",
+      "priority": "later",
+      "targetUrl": "https://lovetypes.tw/repair-plan/#plan-noah",
+      "fulfillmentStatus": "blocked_until_real_request",
+      "evidence": "Owned assets require at least one traceable request for this specific asset type.",
+      "stopCondition": "Wait for lead-intake-tracker.csv evidence before building or sending.",
+      "safetyBoundary": "不承諾療效，不替代諮商，不把短影片 CTA 改成直接購買。"
+    }
+  ],
+  "issues": []
+}

@@ -5,6 +5,7 @@
     "operationProofTemplates": "docs/promotion/first-round/operation-proof-templates.json",
     "proofRehearsal": "docs/promotion/first-round/proof-rehearsal.json",
     "profileEvidenceChecklist": "docs/promotion/first-round/profile-evidence-checklist.json",
+    "profileBatchImport": "docs/promotion/first-round/profile-batch-import-quickstart.json",
     "launchRehearsalPacket": "docs/promotion/first-round/launch-rehearsal-packet.json",
     "operatorHandoffPacket": "docs/promotion/first-round/operator-handoff-packet.json"
   },
@@ -15,6 +16,9 @@
     "postTemplates": 3,
     "proofFiles": 6,
     "profileValid": 3,
+    "profileTemplateValid": 3,
+    "profilePlaceholderProofRows": 3,
+    "profileRealProofReadyRows": 0,
     "postSafelyRejected": 3,
     "rehearsalRows": 9,
     "rehearsalProfilePass": 3,

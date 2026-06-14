@@ -15,6 +15,7 @@ LAUNCH_CLIPBOARD = PROMOTION_DIR / "launch-clipboard.json"
 LAUNCH_DAY = PROMOTION_DIR / "launch-day-run-sheet.json"
 EXCEPTION_RUNBOOK = PROMOTION_DIR / "launch-exception-runbook.json"
 PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
+PROFILE_BATCH_IMPORT = PROMOTION_DIR / "profile-batch-import-quickstart.json"
 PROOF_REHEARSAL = PROMOTION_DIR / "proof-rehearsal.json"
 HANDOFF = PROMOTION_DIR / "operator-handoff-packet.json"
 BLOCKERS = PROMOTION_DIR / "blocker-resolution-checklist.json"
@@ -130,6 +131,7 @@ def build_quickstart() -> dict:
     launch_day = read_json(LAUNCH_DAY)
     exception = read_json(EXCEPTION_RUNBOOK)
     proof_templates = read_json(PROOF_TEMPLATES)
+    profile_batch_import = read_json(PROFILE_BATCH_IMPORT)
     rehearsal = read_json(PROOF_REHEARSAL)
     handoff = read_json(HANDOFF)
     blockers = read_json(BLOCKERS)
@@ -158,6 +160,9 @@ def build_quickstart() -> dict:
         "exceptionHoldRows": metric(exception, "holdRows"),
         "proofRows": metric(proof_templates, "proofRows"),
         "profileProofValid": metric(proof_templates, "profileValid"),
+        "profileProofTemplateValid": metric(proof_templates, "profileValid"),
+        "profileProofPlaceholderRows": metric(profile_batch_import, "placeholderProofRows"),
+        "profileProofRealReadyRows": metric(profile_batch_import, "realProofReadyRows"),
         "postProofSafelyRejected": metric(proof_templates, "postSafelyRejected"),
         "rehearsalProfilePass": metric(rehearsal, "profilePass"),
         "rehearsalPostPlaceholderRejected": metric(rehearsal, "postPlaceholderRejected"),
@@ -177,6 +182,7 @@ def build_quickstart() -> dict:
             "launchDayRunSheet": str(LAUNCH_DAY.relative_to(ROOT)),
             "launchExceptionRunbook": str(EXCEPTION_RUNBOOK.relative_to(ROOT)),
             "operationProofTemplates": str(PROOF_TEMPLATES.relative_to(ROOT)),
+            "profileBatchImport": str(PROFILE_BATCH_IMPORT.relative_to(ROOT)),
             "proofRehearsal": str(PROOF_REHEARSAL.relative_to(ROOT)),
             "operatorHandoffPacket": str(HANDOFF.relative_to(ROOT)),
             "blockerResolutionChecklist": str(BLOCKERS.relative_to(ROOT)),
@@ -214,8 +220,10 @@ def validate(data: dict) -> list[str]:
         issues.append("launch clipboard should expose three ready profile blocks")
     if metrics["postClipboardBlocked"] != len(EXPECTED_PLATFORMS):
         issues.append("launch clipboard should keep three post blocks blocked before profile completion")
-    if metrics["profileProofValid"] != len(EXPECTED_PLATFORMS):
+    if metrics["profileProofTemplateValid"] != len(EXPECTED_PLATFORMS):
         issues.append("operation proof templates should validate three profile proof files")
+    if metrics["profileProofPlaceholderRows"] + metrics["profileProofRealReadyRows"] > len(EXPECTED_PLATFORMS):
+        issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
     if metrics["postProofSafelyRejected"] != len(EXPECTED_PLATFORMS):
         issues.append("operation proof templates should safely reject three placeholder post proof files")
     if metrics["rehearsalProfilePass"] != len(EXPECTED_PLATFORMS):
@@ -252,7 +260,9 @@ def render_markdown(data: dict) -> str:
         f"- post clipboard blocked：{metrics['postClipboardBlocked']}",
         f"- launch day ready / blocked：{metrics['launchDayReadyRows']} / {metrics['launchDayBlockedRows']}",
         f"- exception stop / hold：{metrics['exceptionStopRows']} / {metrics['exceptionHoldRows']}",
-        f"- proof profile pass / post rejected：{metrics['rehearsalProfilePass']} / {metrics['rehearsalPostPlaceholderRejected']}",
+        f"- proof profile template valid / post rejected：{metrics['profileProofTemplateValid']} / {metrics['postProofSafelyRejected']}",
+        f"- proof profile placeholder / real ready：{metrics['profileProofPlaceholderRows']} / {metrics['profileProofRealReadyRows']}",
+        f"- proof rehearsal profile pass / post placeholder rejected：{metrics['rehearsalProfilePass']} / {metrics['rehearsalPostPlaceholderRejected']}",
         f"- profile publish ready：{metrics['profilePublishReady']}",
         f"- publish KPI weekly ready：{metrics['publishKpiReadyForWeekly']}",
         f"- issues：{metrics['issues']}",
@@ -302,6 +312,9 @@ def render_text(data: dict) -> str:
         f"profile configured: {metrics['profileConfigured']} / {len(EXPECTED_PLATFORMS)}",
         f"first batch published: {metrics['firstBatchPublished']} / {len(EXPECTED_PLATFORMS)}",
         f"minimum KPI rows: {metrics['minimumKpiRows']} / {len(EXPECTED_PLATFORMS)}",
+        f"profile proof template valid: {metrics['profileProofTemplateValid']}",
+        f"profile proof placeholder rows: {metrics['profileProofPlaceholderRows']}",
+        f"profile proof real ready rows: {metrics['profileProofRealReadyRows']}",
         "",
         "Closure steps:",
     ]
@@ -359,6 +372,9 @@ def main() -> int:
     print(f"promotion_launch_execution_closure_quickstart_launch_blocked_rows={metrics['launchDayBlockedRows']}")
     print(f"promotion_launch_execution_closure_quickstart_exception_stop_rows={metrics['exceptionStopRows']}")
     print(f"promotion_launch_execution_closure_quickstart_profile_proof_valid={metrics['profileProofValid']}")
+    print(f"promotion_launch_execution_closure_quickstart_profile_proof_template_valid={metrics['profileProofTemplateValid']}")
+    print(f"promotion_launch_execution_closure_quickstart_profile_proof_placeholder_rows={metrics['profileProofPlaceholderRows']}")
+    print(f"promotion_launch_execution_closure_quickstart_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
     print(f"promotion_launch_execution_closure_quickstart_post_proof_rejected={metrics['postProofSafelyRejected']}")
     print(f"promotion_launch_execution_closure_quickstart_profile_publish_ready={metrics['profilePublishReady']}")
     print(f"promotion_launch_execution_closure_quickstart_publish_kpi_weekly_ready={metrics['publishKpiReadyForWeekly']}")

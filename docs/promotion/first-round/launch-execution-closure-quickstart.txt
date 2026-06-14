@@ -4,6 +4,9 @@ master stage: profile_setup
 profile configured: 0 / 3
 first batch published: 0 / 3
 minimum KPI rows: 0 / 3
+profile proof template valid: 3
+profile proof placeholder rows: 3
+profile proof real ready rows: 0
 
 Closure steps:
 

@@ -9,7 +9,9 @@
 - post clipboard blocked：3
 - launch day ready / blocked：3 / 8
 - exception stop / hold：6 / 3
-- proof profile pass / post rejected：3 / 3
+- proof profile template valid / post rejected：3 / 3
+- proof profile placeholder / real ready：3 / 0
+- proof rehearsal profile pass / post placeholder rejected：3 / 3
 - profile publish ready：0
 - publish KPI weekly ready：0
 - issues：0

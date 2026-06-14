@@ -130,6 +130,9 @@ def build_quickstart() -> dict:
         "readyActions": sum(1 for item in actions if item["status"] in {"ready_to_configure", "ready_to_act", "ready"}),
         "profileActions": len(actions),
         "proofProfileValid": metric(proof_import, "profileValid"),
+        "proofProfileTemplateValid": metric(proof_import, "profileTemplateValid") or metric(proof_import, "profileValid"),
+        "proofProfilePlaceholderRows": metric(proof_import, "profilePlaceholderProofRows"),
+        "proofProfileRealReadyRows": metric(proof_import, "profileRealProofReadyRows"),
         "proofPostRejected": metric(proof_import, "postSafelyRejected"),
         "launchProfileClipboardReady": metric(launch_execution, "profileClipboardReady"),
         "launchPostClipboardBlocked": metric(launch_execution, "postClipboardBlocked"),
@@ -199,7 +202,7 @@ def validate(data: dict) -> list[str]:
         issues.append("profile publish handoff cannot be ready before profile writeback")
     if metrics["firstBatchPublished"] == 0 and metrics["publishKpiWeeklyReady"] != 0:
         issues.append("publish/KPI handoff cannot open weekly review before posts are published")
-    if metrics["proofProfileValid"] != len(PLATFORMS):
+    if metrics["proofProfileTemplateValid"] != len(PLATFORMS):
         issues.append("proof import closure should validate three profile proof templates")
     if metrics["proofPostRejected"] != len(PLATFORMS):
         issues.append("proof import closure should reject three post placeholder templates")
@@ -234,7 +237,9 @@ def render_markdown(data: dict) -> str:
         f"- ready actions：{metrics['readyActions']} / {metrics['profileActions']}",
         f"- first batch published：{metrics['firstBatchPublished']} / {len(PLATFORMS)}",
         f"- minimum KPI rows：{metrics['minimumKpiRows']} / {len(PLATFORMS)}",
-        f"- proof profile valid：{metrics['proofProfileValid']}",
+        f"- proof profile template valid：{metrics['proofProfileTemplateValid']}",
+        f"- proof profile placeholder rows：{metrics['proofProfilePlaceholderRows']}",
+        f"- proof profile real ready rows：{metrics['proofProfileRealReadyRows']}",
         f"- proof post rejected：{metrics['proofPostRejected']}",
         f"- profile publish ready：{metrics['profilePublishReady']}",
         f"- publish KPI weekly ready：{metrics['publishKpiWeeklyReady']}",
@@ -288,6 +293,9 @@ def render_text(data: dict) -> str:
         f"stage: {metrics['stage']}",
         f"ready actions: {metrics['readyActions']} / {metrics['profileActions']}",
         f"profile configured: {metrics['profileConfigured']}",
+        f"proof profile template valid: {metrics['proofProfileTemplateValid']}",
+        f"proof profile placeholder rows: {metrics['proofProfilePlaceholderRows']}",
+        f"proof profile real ready rows: {metrics['proofProfileRealReadyRows']}",
         "",
         "Allowed actions:",
     ]
@@ -337,6 +345,9 @@ def main() -> int:
     print(f"promotion_operator_next_action_closure_quickstart_first_batch_published={metrics['firstBatchPublished']}")
     print(f"promotion_operator_next_action_closure_quickstart_minimum_kpi_rows={metrics['minimumKpiRows']}")
     print(f"promotion_operator_next_action_closure_quickstart_proof_profile_valid={metrics['proofProfileValid']}")
+    print(f"promotion_operator_next_action_closure_quickstart_proof_profile_template_valid={metrics['proofProfileTemplateValid']}")
+    print(f"promotion_operator_next_action_closure_quickstart_proof_profile_placeholder_rows={metrics['proofProfilePlaceholderRows']}")
+    print(f"promotion_operator_next_action_closure_quickstart_proof_profile_real_ready={metrics['proofProfileRealReadyRows']}")
     print(f"promotion_operator_next_action_closure_quickstart_proof_post_rejected={metrics['proofPostRejected']}")
     print(f"promotion_operator_next_action_closure_quickstart_profile_publish_ready={metrics['profilePublishReady']}")
     print(f"promotion_operator_next_action_closure_quickstart_publish_kpi_weekly_ready={metrics['publishKpiWeeklyReady']}")

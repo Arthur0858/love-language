@@ -3,7 +3,9 @@
 - 產生日期：2026-06-14
 - profile templates：3
 - post templates：3
-- profile valid：3
+- profile template valid：3
+- profile placeholder proof rows：3
+- profile real proof ready rows：0
 - post safely rejected：3
 - rehearsal rows：9
 - rehearsal profile pass：3

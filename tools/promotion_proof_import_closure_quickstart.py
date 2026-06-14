@@ -13,6 +13,7 @@ PROOF_PACKET = PROMOTION_DIR / "operation-proof-packet.json"
 PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
 PROOF_REHEARSAL = PROMOTION_DIR / "proof-rehearsal.json"
 PROFILE_EVIDENCE = PROMOTION_DIR / "profile-evidence-checklist.json"
+PROFILE_BATCH_IMPORT = PROMOTION_DIR / "profile-batch-import-quickstart.json"
 LAUNCH_REHEARSAL = PROMOTION_DIR / "launch-rehearsal-packet.json"
 OPERATOR_HANDOFF = PROMOTION_DIR / "operator-handoff-packet.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "proof-import-closure-quickstart.md"
@@ -123,6 +124,7 @@ def build_quickstart() -> dict:
     templates = read_json(PROOF_TEMPLATES)
     rehearsal = read_json(PROOF_REHEARSAL)
     evidence = read_json(PROFILE_EVIDENCE)
+    profile_batch_import = read_json(PROFILE_BATCH_IMPORT)
     launch_rehearsal = read_json(LAUNCH_REHEARSAL)
     handoff = read_json(OPERATOR_HANDOFF)
     profile_rows = profile_template_rows(templates)
@@ -136,6 +138,9 @@ def build_quickstart() -> dict:
         "postTemplates": len(post_rows),
         "proofFiles": metric(templates, "files"),
         "profileValid": metric(templates, "profileValid"),
+        "profileTemplateValid": metric(templates, "profileValid"),
+        "profilePlaceholderProofRows": metric(profile_batch_import, "placeholderProofRows"),
+        "profileRealProofReadyRows": metric(profile_batch_import, "realProofReadyRows"),
         "postSafelyRejected": metric(templates, "postSafelyRejected"),
         "rehearsalRows": metric(rehearsal, "rows"),
         "rehearsalProfilePass": metric(rehearsal, "profilePass"),
@@ -174,6 +179,7 @@ def build_quickstart() -> dict:
             "operationProofTemplates": str(PROOF_TEMPLATES.relative_to(ROOT)),
             "proofRehearsal": str(PROOF_REHEARSAL.relative_to(ROOT)),
             "profileEvidenceChecklist": str(PROFILE_EVIDENCE.relative_to(ROOT)),
+            "profileBatchImport": str(PROFILE_BATCH_IMPORT.relative_to(ROOT)),
             "launchRehearsalPacket": str(LAUNCH_REHEARSAL.relative_to(ROOT)),
             "operatorHandoffPacket": str(OPERATOR_HANDOFF.relative_to(ROOT)),
         },
@@ -204,6 +210,8 @@ def validate(data: dict) -> list[str]:
         issues.append("expected three post proof templates")
     if metrics["profileValid"] != len(EXPECTED_PLATFORMS):
         issues.append("profile proof templates should all validate")
+    if metrics["profilePlaceholderProofRows"] + metrics["profileRealProofReadyRows"] > len(EXPECTED_PLATFORMS):
+        issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
     if metrics["postSafelyRejected"] != len(EXPECTED_PLATFORMS):
         issues.append("post proof templates should all be safely rejected while placeholder URLs remain")
     if metrics["rehearsalProfilePass"] != len(EXPECTED_PLATFORMS):
@@ -247,7 +255,9 @@ def render_markdown(data: dict) -> str:
         f"- 產生日期：{data['generatedAt']}",
         f"- profile templates：{metrics['profileTemplates']}",
         f"- post templates：{metrics['postTemplates']}",
-        f"- profile valid：{metrics['profileValid']}",
+        f"- profile template valid：{metrics['profileTemplateValid']}",
+        f"- profile placeholder proof rows：{metrics['profilePlaceholderProofRows']}",
+        f"- profile real proof ready rows：{metrics['profileRealProofReadyRows']}",
         f"- post safely rejected：{metrics['postSafelyRejected']}",
         f"- rehearsal rows：{metrics['rehearsalRows']}",
         f"- rehearsal profile pass：{metrics['rehearsalProfilePass']}",
@@ -300,7 +310,9 @@ def render_text(data: dict) -> str:
     lines = [
         "LoveTypes proof import closure quickstart",
         f"generated: {data['generatedAt']}",
-        f"profile valid: {metrics['profileValid']}",
+        f"profile template valid: {metrics['profileTemplateValid']}",
+        f"profile placeholder proof rows: {metrics['profilePlaceholderProofRows']}",
+        f"profile real proof ready rows: {metrics['profileRealProofReadyRows']}",
         f"post safely rejected: {metrics['postSafelyRejected']}",
         f"rehearsal rows: {metrics['rehearsalRows']}",
         f"profile evidence rows: {metrics['profileEvidenceRows']}",
@@ -354,6 +366,9 @@ def main() -> int:
     print(f"promotion_proof_import_closure_quickstart_profile_templates={metrics['profileTemplates']}")
     print(f"promotion_proof_import_closure_quickstart_post_templates={metrics['postTemplates']}")
     print(f"promotion_proof_import_closure_quickstart_profile_valid={metrics['profileValid']}")
+    print(f"promotion_proof_import_closure_quickstart_profile_template_valid={metrics['profileTemplateValid']}")
+    print(f"promotion_proof_import_closure_quickstart_profile_placeholder_proof_rows={metrics['profilePlaceholderProofRows']}")
+    print(f"promotion_proof_import_closure_quickstart_profile_real_proof_ready_rows={metrics['profileRealProofReadyRows']}")
     print(f"promotion_proof_import_closure_quickstart_post_rejected={metrics['postSafelyRejected']}")
     print(f"promotion_proof_import_closure_quickstart_rehearsal_rows={metrics['rehearsalRows']}")
     print(f"promotion_proof_import_closure_quickstart_profile_rehearsal_pass={metrics['rehearsalProfilePass']}")

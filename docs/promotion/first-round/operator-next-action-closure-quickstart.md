@@ -6,7 +6,9 @@
 - ready actions：3 / 3
 - first batch published：0 / 3
 - minimum KPI rows：0 / 3
-- proof profile valid：3
+- proof profile template valid：3
+- proof profile placeholder rows：3
+- proof profile real ready rows：0
 - proof post rejected：3
 - profile publish ready：0
 - publish KPI weekly ready：0

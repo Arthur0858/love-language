@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "promotionKit": "promotion-kit.json",
+    "funnelEvents": "funnel-events.json",
+    "commerceCatalog": "commerce-catalog.json",
+    "kpiTracker": "docs/promotion/first-round/kpi-tracker.csv",
+    "platformKpiTracker": "docs/promotion/first-round/platform-kpi-tracker.csv",
+    "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
+    "attributionReconciliation": "docs/promotion/first-round/attribution-reconciliation.csv"
+  },
+  "schemaMetrics": {
+    "promotion_kpi_schema_fields": 31,
+    "promotion_kpi_schema_post_metrics": 18,
+    "promotion_kpi_schema_profile_metrics": 14,
+    "promotion_kpi_schema_event_kpis": 13,
+    "promotion_kpi_schema_event_names": 60,
+    "promotion_kpi_schema_catalog_events": 207,
+    "promotion_kpi_schema_revenue_bridge_kpis": 5,
+    "promotion_kpi_schema_commerce_items": 20,
+    "promotion_kpi_schema_commerce_playbooks": 4,
+    "promotion_kpi_schema_attribution_rows": 18,
+    "promotion_kpi_schema_issues": 0
+  },
+  "writebackMetrics": {
+    "postingRows": 45,
+    "platformRows": 45,
+    "platformJsonRows": 45,
+    "scriptRows": 15,
+    "scriptJsonRows": 15,
+    "publishedRows": 0,
+    "filledScriptRows": 0,
+    "attributionFilledRows": 0,
+    "rollupScripts": 0
+  },
+  "attributionMetrics": {
+    "rows": 18,
+    "profileRows": 3,
+    "shortsRows": 15,
+    "kpiRows": 15,
+    "filledKpiRows": 0
+  },
+  "issues": []
+}

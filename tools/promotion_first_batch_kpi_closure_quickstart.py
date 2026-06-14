@@ -167,6 +167,9 @@ def build_closure() -> dict:
         "blockedRows": metric(kpi_quickstart, "blockedRows"),
         "publishedRows": metric(kpi_quickstart, "publishedRows"),
         "zeroPendingRows": metric(zero_evidence, "pendingPublishRows"),
+        "zeroNeedsSourceProofRows": metric(zero_evidence, "needsSourceProofRows"),
+        "zeroSourceProofCompleteRows": metric(zero_evidence, "completeRows"),
+        "zeroSourceProofMissingRows": metric(zero_evidence, "missingRows"),
         "minimumKpiRows": metric(completion, "minimumKpiRows"),
         "weeklyReady": 1 if state_bool(weekly, "readyForWeeklyDecision") else 0,
         "completionReady": 1 if state_bool(completion, "readyForWeeklyReview") else 0,
@@ -213,6 +216,10 @@ def validate(rows: list[dict], metrics: dict, steps: list[dict]) -> list[str]:
         issues.append("first-batch KPI closure rows must cover YouTube Shorts, TikTok, and Instagram Reels")
     if metrics["publishedRows"] == 0 and metrics["readyForKpi"] != 0:
         issues.append("readyForKpi must stay zero before public post URLs exist")
+    if metrics["publishedRows"] == 0 and metrics["zeroSourceProofCompleteRows"] != 0:
+        issues.append("zero source proof cannot be complete before public posts exist")
+    if metrics["zeroPendingRows"] + metrics["zeroNeedsSourceProofRows"] + metrics["zeroSourceProofCompleteRows"] + metrics["zeroSourceProofMissingRows"] != len(REQUIRED_PLATFORMS) * len(MINIMUM_KPIS):
+        issues.append("zero KPI evidence rows must partition into pending, needs-source, complete, or missing")
     if metrics["minimumKpiRows"] == 0 and metrics["weeklyReady"]:
         issues.append("weeklyReady cannot be true before minimum KPI rows exist")
     if metrics["completionReady"] and metrics["minimumKpiRows"] != len(REQUIRED_PLATFORMS):
@@ -258,6 +265,7 @@ def render_markdown(data: dict) -> str:
         f"- blocked rows：{metrics['blockedRows']}",
         f"- published rows：{metrics['publishedRows']}",
         f"- zero pending rows：{metrics['zeroPendingRows']}",
+        f"- zero source proof needs / complete / missing：{metrics['zeroNeedsSourceProofRows']} / {metrics['zeroSourceProofCompleteRows']} / {metrics['zeroSourceProofMissingRows']}",
         f"- minimum KPI rows：{metrics['minimumKpiRows']}",
         f"- weekly ready：{metrics['weeklyReady']}",
         f"- empty data：{metrics['emptyData']}",
@@ -329,6 +337,10 @@ def render_text(data: dict) -> str:
         f"rows: {metrics['rows']}",
         f"ready for KPI: {metrics['readyForKpi']}",
         f"published rows: {metrics['publishedRows']}",
+        f"zero pending rows: {metrics['zeroPendingRows']}",
+        f"zero source proof needs rows: {metrics['zeroNeedsSourceProofRows']}",
+        f"zero source proof complete rows: {metrics['zeroSourceProofCompleteRows']}",
+        f"zero source proof missing rows: {metrics['zeroSourceProofMissingRows']}",
         f"minimum KPI rows: {metrics['minimumKpiRows']}",
         f"weekly ready: {metrics['weeklyReady']}",
         f"empty data: {metrics['emptyData']}",
@@ -392,6 +404,9 @@ def main() -> int:
     print(f"promotion_first_batch_kpi_closure_quickstart_blocked_rows={metrics['blockedRows']}")
     print(f"promotion_first_batch_kpi_closure_quickstart_published_rows={metrics['publishedRows']}")
     print(f"promotion_first_batch_kpi_closure_quickstart_zero_pending_rows={metrics['zeroPendingRows']}")
+    print(f"promotion_first_batch_kpi_closure_quickstart_zero_needs_source_proof_rows={metrics['zeroNeedsSourceProofRows']}")
+    print(f"promotion_first_batch_kpi_closure_quickstart_zero_source_proof_complete_rows={metrics['zeroSourceProofCompleteRows']}")
+    print(f"promotion_first_batch_kpi_closure_quickstart_zero_source_proof_missing_rows={metrics['zeroSourceProofMissingRows']}")
     print(f"promotion_first_batch_kpi_closure_quickstart_minimum_kpi_rows={metrics['minimumKpiRows']}")
     print(f"promotion_first_batch_kpi_closure_quickstart_weekly_ready={metrics['weeklyReady']}")
     print(f"promotion_first_batch_kpi_closure_quickstart_empty_data={metrics['emptyData']}")

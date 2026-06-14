@@ -6,6 +6,7 @@
 - blocked rows：3
 - published rows：0
 - zero pending rows：9
+- zero source proof needs / complete / missing：0 / 0 / 0
 - minimum KPI rows：0
 - weekly ready：0
 - empty data：1

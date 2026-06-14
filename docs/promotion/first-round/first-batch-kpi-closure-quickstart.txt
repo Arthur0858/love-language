@@ -3,6 +3,10 @@ generated: 2026-06-14
 rows: 3
 ready for KPI: 0
 published rows: 0
+zero pending rows: 9
+zero source proof needs rows: 0
+zero source proof complete rows: 0
+zero source proof missing rows: 0
 minimum KPI rows: 0
 weekly ready: 0
 empty data: 1

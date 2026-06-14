@@ -229,10 +229,12 @@ def main() -> int:
     print(f"promotion_weekly_review_quickstart_ready_rows={metrics['readyRows']}")
     print(f"promotion_weekly_review_quickstart_blocked_rows={metrics['blockedRows']}")
     print(f"promotion_weekly_review_quickstart_hold_rows={metrics['holdRows']}")
+    print(f"promotion_weekly_review_quickstart_evidence_complete={metrics['evidenceComplete']}")
     print(f"promotion_weekly_review_quickstart_evidence_pending={metrics['evidencePending']}")
     print(f"promotion_weekly_review_quickstart_weekly_ready={metrics['weeklyReady']}")
     print(f"promotion_weekly_review_quickstart_decision_ready={metrics['decisionReady']}")
     print(f"promotion_weekly_review_quickstart_empty_data={metrics['emptyDataMode']}")
+    print(f"promotion_weekly_review_quickstart_blocked_decision_rows={metrics['blockedDecisionRows']}")
     print(f"promotion_weekly_review_quickstart_issues={metrics['issues']}")
     for issue in data["issues"]:
         print(issue)

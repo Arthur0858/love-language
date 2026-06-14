@@ -1,0 +1,146 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "operationProofPacket": "docs/promotion/first-round/operation-proof-packet.json",
+    "operationProofTemplates": "docs/promotion/first-round/operation-proof-templates.json",
+    "proofRehearsal": "docs/promotion/first-round/proof-rehearsal.json",
+    "profileEvidenceChecklist": "docs/promotion/first-round/profile-evidence-checklist.json",
+    "launchRehearsalPacket": "docs/promotion/first-round/launch-rehearsal-packet.json",
+    "operatorHandoffPacket": "docs/promotion/first-round/operator-handoff-packet.json"
+  },
+  "metrics": {
+    "proofPacketProfilePending": 3,
+    "proofPacketPostPending": 3,
+    "profileTemplates": 3,
+    "postTemplates": 3,
+    "proofFiles": 6,
+    "profileValid": 3,
+    "postSafelyRejected": 3,
+    "rehearsalRows": 9,
+    "rehearsalProfilePass": 3,
+    "rehearsalPostPlaceholderRejected": 3,
+    "rehearsalPostRealUrlPass": 3,
+    "profileEvidencePlatforms": 3,
+    "profileEvidenceRows": 18,
+    "profileEvidencePendingRows": 18,
+    "structuredImports": 3,
+    "expectedStructuredImports": 3,
+    "launchRehearsalReadyStages": 6,
+    "launchRehearsalBlockedStages": 8,
+    "launchReadyToPublish": 0,
+    "launchEmptyDataMode": 1,
+    "issues": 0
+  },
+  "rules": [
+    "Check commands must pass before any add/writeback command is allowed.",
+    "Profile proof templates may pass structurally, but still require real external evidence before writeback.",
+    "Post proof templates must fail while placeholder URLs remain in place.",
+    "A zero KPI is valid only after a real analytics source check.",
+    "Rehearsal data, sample URLs, and templates are never production evidence."
+  ],
+  "steps": [
+    {
+      "id": "validate_profile_proof_templates",
+      "status": "ready_to_use",
+      "command": "python3 tools/promotion_operation_proof_templates.py --check && python3 tools/promotion_profile_evidence_checklist.py --check",
+      "release": "Three profile proof templates validate and each platform has six evidence checks.",
+      "stop": "Do not write profile status unless all six evidence checks are backed by real platform proof."
+    },
+    {
+      "id": "reject_post_placeholders",
+      "status": "guard_active",
+      "command": "python3 tools/promotion_operation_proof_templates.py --check",
+      "release": "Three post proof templates are safely rejected while their post URLs are placeholders.",
+      "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers."
+    },
+    {
+      "id": "rehearse_import_paths",
+      "status": "complete",
+      "command": "python3 tools/promotion_proof_rehearsal.py --check && python3 tools/promotion_operator_import_template_audit.py",
+      "release": "Profile import passes, placeholder post import fails, sample real post URLs pass, and operator import templates enforce safe rejection.",
+      "stop": "Do not run add/writeback commands until the check path behaves as expected."
+    },
+    {
+      "id": "writeback_after_external_proof",
+      "status": "blocked_until_external_proof",
+      "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"screenshot profile-<platform>-YYYY-MM-DD.png verified\"",
+      "release": "A real platform screenshot/click proof exists and the profile proof text passed check.",
+      "stop": "Do not write back from rehearsal data, templates, private previews, or memory."
+    },
+    {
+      "id": "open_publish_only_after_profile_gate",
+      "status": "blocked_until_profile_writeback",
+      "command": "python3 tools/promotion_launch_rehearsal_packet.py --check && python3 tools/promotion_profile_publish_handoff.py --check",
+      "release": "Profile writeback is complete and first-batch publishing is explicitly open.",
+      "stop": "Do not publish or backfill KPI while launch rehearsal says publish is blocked."
+    }
+  ],
+  "proofRows": [
+    {
+      "kind": "profile_setup",
+      "platform": "youtube_shorts",
+      "taskId": "",
+      "path": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "requiredEvidenceCount": 6
+    },
+    {
+      "kind": "profile_setup",
+      "platform": "tiktok",
+      "taskId": "",
+      "path": "docs/promotion/first-round/proof-tiktok.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "requiredEvidenceCount": 6
+    },
+    {
+      "kind": "profile_setup",
+      "platform": "instagram_reels",
+      "taskId": "",
+      "path": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "requiredEvidenceCount": 6
+    },
+    {
+      "kind": "post_publish",
+      "platform": "youtube_shorts",
+      "taskId": "publish-lt-s01-iris-silence",
+      "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "requiredEvidenceCount": 7
+    },
+    {
+      "kind": "post_publish",
+      "platform": "tiktok",
+      "taskId": "publish-lt-s01-iris-silence",
+      "path": "docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-tiktok-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "requiredEvidenceCount": 7
+    },
+    {
+      "kind": "post_publish",
+      "platform": "instagram_reels",
+      "taskId": "publish-lt-s01-iris-silence",
+      "path": "docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "status": "written",
+      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt",
+      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-instagram_reels-publish-lt-s01-iris-silence.txt --proof-note \"public URL and analytics source checked 2026-06-14\"",
+      "requiredEvidenceCount": 7
+    }
+  ],
+  "structuredImportIds": [
+    "lead_request_import",
+    "post_publish_import",
+    "profile_setup_import"
+  ],
+  "issues": []
+}

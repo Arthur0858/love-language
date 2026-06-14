@@ -55,7 +55,7 @@ def profile_rows(launch: dict) -> list[dict[str, str]]:
             "owner_action": "Set the platform profile/Bio link to the listed /start/ URL, then verify the copied platform link still keeps UTM.",
             "release_condition": "platform-profile-tracker.csv row is set/live with profile_link_set_date and traceable proof note.",
             "evidence_source": str(item.get("profileLink", "")),
-            "writeback_command": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"screenshot profile-{platform}-{today()}.png verified\"",
+            "writeback_command": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
         })
     return rows
 
@@ -106,7 +106,7 @@ def decision_rows(weekly: dict, launch: dict) -> list[dict[str, str]]:
             "owner_action": "After public URLs exist, check platform analytics and site analytics before entering site_clicks, quiz_starts, and quiz_completions.",
             "release_condition": "At least first-batch rows have real source-checked KPI values or source-checked zeros.",
             "evidence_source": "docs/promotion/first-round/platform-kpi-tracker.csv",
-            "writeback_command": "python3 tools/promotion_post_text_import.py add --input <post-proof.txt> --proof-note \"public URL and KPI source checked YYYY-MM-DD\"",
+            "writeback_command": "python3 tools/promotion_post_text_import.py add --input <post-proof.txt> --proof-note \"<REAL_PUBLIC_POST_URL_AND_ANALYTICS_SOURCE_PROOF>\"",
         })
     return rows
 
@@ -123,7 +123,7 @@ def lead_and_offer_rows(lead: dict, offer: dict) -> list[dict[str, str]]:
             "owner_action": "Collect a real Contact/Keepsakes/Luna request with guardian, request type, reply email, consent, and source.",
             "release_condition": "lead-intake-tracker.csv has at least one non-template row with explicit consent and traceable source.",
             "evidence_source": "docs/promotion/first-round/lead-intake-tracker.csv",
-            "writeback_command": "python3 tools/promotion_lead_text_import.py add --input <lead-request.txt> --proof-note \"email thread or form request checked YYYY-MM-DD\"",
+            "writeback_command": "python3 tools/promotion_lead_text_import.py add --input <lead-request.txt> --proof-note \"<REAL_EMAIL_THREAD_OR_FORM_REQUEST_PROOF>\"",
         },
         {
             "phase": "offer_experiment",
@@ -160,6 +160,18 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
         issues.append("master gate reports issues")
     if int(launch.get("metrics", {}).get("issues", 0) or 0) != 0:
         issues.append("launch readiness gate reports issues")
+    for row in rows:
+        command = row.get("writeback_command", "")
+        label = row.get("blocker_id", "<blocker>")
+        if row.get("phase") == "profile_setup":
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in command:
+                issues.append(f"{label}: profile writeback command must force real screenshot/click proof replacement")
+            if "screenshot profile-" in command:
+                issues.append(f"{label}: profile writeback command must not include scaffold screenshot filename")
+        if row.get("blocker_id") == "first_batch_minimum_kpi_rows" and "<REAL_PUBLIC_POST_URL_AND_ANALYTICS_SOURCE_PROOF>" not in command:
+            issues.append(f"{label}: KPI writeback command must force real post URL and analytics source proof replacement")
+        if row.get("phase") == "lead_collection" and "<REAL_EMAIL_THREAD_OR_FORM_REQUEST_PROOF>" not in command:
+            issues.append(f"{label}: lead writeback command must force real email/form proof replacement")
 
     metrics = {
         "rows": len(rows),
@@ -216,7 +228,7 @@ def render_markdown(rows: list[dict[str, str]], metrics: dict[str, object], issu
 
 def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

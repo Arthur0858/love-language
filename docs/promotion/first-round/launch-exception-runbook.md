@@ -6,6 +6,9 @@
 - holds：3
 - escalations：1
 - profile configured：0
+- real profile proof ready：0 / 3
+- placeholder proof rows：3
+- external profile proof blockers：3
 - ready to publish：0
 - first batch published：0
 - empty data mode：1

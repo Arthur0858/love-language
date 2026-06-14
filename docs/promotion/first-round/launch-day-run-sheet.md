@@ -5,8 +5,13 @@
 - profile rows：3
 - publish rows：3
 - post ops rows：3
-- ready rows：3
+- operator action rows：3
+- safe writeback rows：0
+- ready rows：0
 - blocked rows：8
+- real profile proof ready：0 / 3
+- placeholder proof rows：3
+- external profile proof blockers：3
 - issues：0
 
 ## Rule

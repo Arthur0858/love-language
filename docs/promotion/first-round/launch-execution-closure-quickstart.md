@@ -7,7 +7,7 @@
 - minimum KPI rows：0 / 3
 - profile clipboard ready：3
 - post clipboard blocked：3
-- launch day ready / blocked：3 / 8
+- launch day ready / blocked：0 / 8
 - exception stop / hold：6 / 3
 - proof profile template valid / post rejected：3 / 3
 - proof profile placeholder / real ready：3 / 0

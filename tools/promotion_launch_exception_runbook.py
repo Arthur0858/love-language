@@ -134,12 +134,19 @@ def build_runbook() -> dict:
     context = {
         "identityPendingRows": int(identity.get("metrics", {}).get("pendingRows", 0) or 0),
         "profileConfigured": int(profile.get("metrics", {}).get("configured", 0) or 0),
+        "profileProofRows": int(profile.get("metrics", {}).get("rows", 0) or 0),
+        "profileProofRealReadyRows": int(profile.get("metrics", {}).get("realProofReadyRows", 0) or 0),
+        "profileProofPlaceholderRows": int(profile.get("metrics", {}).get("placeholderProofRows", 0) or 0),
         "readyToPublish": 1 if first.get("readyToPublish") else 0,
         "firstBatchPublished": int(first.get("publishedRows", 0) or 0),
         "evidenceReadyWeekly": int(matrix.get("metrics", {}).get("readyForWeeklyReview", 0) or 0),
         "postOpsReadyWeekly": int(post_ops.get("metrics", {}).get("readyForWeeklyReview", 0) or 0),
         "emptyDataMode": 1 if weekly.get("state", {}).get("emptyDataMode") else 0,
     }
+    context["externalProfileProofBlockers"] = max(
+        0,
+        context["profileProofRows"] - context["profileProofRealReadyRows"],
+    )
     rows = []
     for item in EXCEPTIONS:
         rows.append({
@@ -198,6 +205,8 @@ def validate(rows: list[dict[str, str]], metrics: dict[str, int]) -> list[str]:
         issues.append("exception IDs must be unique")
     if metrics["emptyDataMode"] and not any(row["id"] == "empty_data_commerce_change" for row in rows):
         issues.append("empty-data mode must include commerce-change exception")
+    if metrics["profileConfigured"] < 3 and metrics.get("externalProfileProofBlockers", 0) < 1:
+        issues.append("profile setup exception context should expose external profile proof blockers")
     return issues
 
 
@@ -212,6 +221,9 @@ def render_markdown(runbook: dict) -> str:
         f"- holds：{metrics['holdRows']}",
         f"- escalations：{metrics['escalateRows']}",
         f"- profile configured：{metrics['profileConfigured']}",
+        f"- real profile proof ready：{metrics['profileProofRealReadyRows']} / {metrics['profileProofRows']}",
+        f"- placeholder proof rows：{metrics['profileProofPlaceholderRows']}",
+        f"- external profile proof blockers：{metrics['externalProfileProofBlockers']}",
         f"- ready to publish：{metrics['readyToPublish']}",
         f"- first batch published：{metrics['firstBatchPublished']}",
         f"- empty data mode：{metrics['emptyDataMode']}",
@@ -272,6 +284,9 @@ def main() -> int:
     print(f"promotion_launch_exception_hold_rows={metrics['holdRows']}")
     print(f"promotion_launch_exception_escalate_rows={metrics['escalateRows']}")
     print(f"promotion_launch_exception_profile_configured={metrics['profileConfigured']}")
+    print(f"promotion_launch_exception_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
+    print(f"promotion_launch_exception_profile_proof_placeholder_rows={metrics['profileProofPlaceholderRows']}")
+    print(f"promotion_launch_exception_external_profile_proof_blockers={metrics['externalProfileProofBlockers']}")
     print(f"promotion_launch_exception_ready_to_publish={metrics['readyToPublish']}")
     print(f"promotion_launch_exception_first_batch_published={metrics['firstBatchPublished']}")
     print(f"promotion_launch_exception_empty_data_mode={metrics['emptyDataMode']}")

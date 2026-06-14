@@ -127,8 +127,18 @@ def build_run_sheet() -> dict:
         "profileRows": sum(1 for row in rows if row["phase"] == "profile_setup"),
         "publishRows": sum(1 for row in rows if row["phase"] == "publish_first_batch"),
         "postOpsRows": sum(1 for row in rows if row["phase"] == "post_url_and_kpi"),
-        "readyRows": sum(1 for row in rows if row["status"] in {"ready", "ready_to_configure", "ready_to_publish"}),
+        "operatorActionRows": sum(1 for row in rows if row["status"] == "ready_to_configure"),
+        "safeWritebackRows": sum(1 for row in rows if row["status"] in {"ready", "ready_to_writeback", "ready_to_publish"}),
+        "readyRows": sum(1 for row in rows if row["status"] in {"ready", "ready_to_writeback", "ready_to_publish"}),
         "blockedRows": sum(1 for row in rows if row["status"].startswith("blocked")),
+        "profileProofRows": int(profile.get("metrics", {}).get("rows", 0) or 0),
+        "profileProofRealReadyRows": int(profile.get("metrics", {}).get("realProofReadyRows", 0) or 0),
+        "profileProofPlaceholderRows": int(profile.get("metrics", {}).get("placeholderProofRows", 0) or 0),
+        "externalProfileProofBlockers": max(
+            0,
+            int(profile.get("metrics", {}).get("rows", 0) or 0)
+            - int(profile.get("metrics", {}).get("realProofReadyRows", 0) or 0),
+        ),
         "masterStageIndex": int(master.get("stageIndex", 0) or 0),
         "dashboardBlockedAreas": int(dashboard.get("metrics", {}).get("blockedAreas", 0) or 0),
         "rehearsalReadyStages": int(rehearsal.get("readyStages", 0) or 0),
@@ -149,6 +159,8 @@ def build_run_sheet() -> dict:
         issues.append(f"expected 11 launch day rows, got {metrics['rows']}")
     if master.get("stage") == "profile_setup" and not any(row["phase"] == "readiness_gate" and row["status"] == "blocked" for row in rows):
         issues.append("readiness gate should stay blocked while master stage is profile_setup")
+    if metrics["externalProfileProofBlockers"] and metrics["readyRows"]:
+        issues.append("safe ready rows should stay zero while external profile proof blockers exist")
     for row in rows:
         if not row["action"] or not row["success_signal"] or not row["stop_condition"]:
             issues.append(f"{row['phase']}/{row['platform']}/{row['task']}: missing action, success signal, or stop condition")
@@ -185,8 +197,13 @@ def render_markdown(sheet: dict) -> str:
         f"- profile rows：{metrics['profileRows']}",
         f"- publish rows：{metrics['publishRows']}",
         f"- post ops rows：{metrics['postOpsRows']}",
+        f"- operator action rows：{metrics['operatorActionRows']}",
+        f"- safe writeback rows：{metrics['safeWritebackRows']}",
         f"- ready rows：{metrics['readyRows']}",
         f"- blocked rows：{metrics['blockedRows']}",
+        f"- real profile proof ready：{metrics['profileProofRealReadyRows']} / {metrics['profileProofRows']}",
+        f"- placeholder proof rows：{metrics['profileProofPlaceholderRows']}",
+        f"- external profile proof blockers：{metrics['externalProfileProofBlockers']}",
         f"- issues：{len(sheet['issues'])}",
         "",
         "## Rule",
@@ -238,8 +255,13 @@ def main() -> int:
     print(f"promotion_launch_day_run_profile_rows={metrics['profileRows']}")
     print(f"promotion_launch_day_run_publish_rows={metrics['publishRows']}")
     print(f"promotion_launch_day_run_post_ops_rows={metrics['postOpsRows']}")
+    print(f"promotion_launch_day_run_operator_action_rows={metrics['operatorActionRows']}")
+    print(f"promotion_launch_day_run_safe_writeback_rows={metrics['safeWritebackRows']}")
     print(f"promotion_launch_day_run_ready_rows={metrics['readyRows']}")
     print(f"promotion_launch_day_run_blocked_rows={metrics['blockedRows']}")
+    print(f"promotion_launch_day_run_profile_proof_real_ready={metrics['profileProofRealReadyRows']}")
+    print(f"promotion_launch_day_run_profile_proof_placeholder_rows={metrics['profileProofPlaceholderRows']}")
+    print(f"promotion_launch_day_run_external_profile_proof_blockers={metrics['externalProfileProofBlockers']}")
     print(f"promotion_launch_day_run_dashboard_blocked_areas={metrics['dashboardBlockedAreas']}")
     print(f"promotion_launch_day_run_rehearsal_profile_ready_stages={metrics['rehearsalProfileReadyStages']}")
     print(f"promotion_launch_day_run_rehearsal_publish_ready_stages={metrics['rehearsalPublishReadyStages']}")

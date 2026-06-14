@@ -21,11 +21,15 @@
     "escalateRows": 1,
     "identityPendingRows": 21,
     "profileConfigured": 0,
+    "profileProofRows": 3,
+    "profileProofRealReadyRows": 0,
+    "profileProofPlaceholderRows": 3,
     "readyToPublish": 0,
     "firstBatchPublished": 0,
     "evidenceReadyWeekly": 0,
     "postOpsReadyWeekly": 0,
-    "emptyDataMode": 1
+    "emptyDataMode": 1,
+    "externalProfileProofBlockers": 3
   },
   "rows": [
     {

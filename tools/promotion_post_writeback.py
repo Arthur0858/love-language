@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import promotion_profile_writeback as profile_writeback
+import promotion_refresh
 from promotion_proof_note_policy import proof_note_issue
 
 
@@ -403,16 +404,7 @@ def write_playbook(data: dict) -> None:
 
 
 def regenerate_dependent_docs() -> None:
-    commands = [
-        [sys.executable, "tools/promotion_platform_kpi_tracker.py"],
-        [sys.executable, "tools/promotion_sync_kpi_tracker.py"],
-        [sys.executable, "tools/promotion_publishing_status.py"],
-        [sys.executable, "tools/promotion_launch_readiness_gate.py"],
-        [sys.executable, "tools/promotion_next_actions.py"],
-        [sys.executable, "tools/promotion_weekly_summary.py"],
-    ]
-    for command in commands:
-        subprocess.run(command, cwd=ROOT, check=True)
+    promotion_refresh.run_daily_ops_refresh()
 
 
 def main() -> int:

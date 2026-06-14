@@ -40,6 +40,7 @@ PYTHON_TOOLS = [
     "tools/promotion_placeholder_url_safety_audit.py",
     "tools/promotion_proof_note_policy.py",
     "tools/promotion_proof_note_safety_audit.py",
+    "tools/promotion_refresh.py",
     "tools/promotion_temporal_writeback_safety_audit.py",
     "tools/promotion_evidence_ledger.py",
     "tools/promotion_first_batch_publication_packet.py",
@@ -56,6 +57,7 @@ PYTHON_TOOLS = [
     "tools/promotion_publishing_status.py",
     "tools/promotion_kpi_writeback_consistency_audit.py",
     "tools/promotion_writeback_flow_audit.py",
+    "tools/promotion_writeback_refresh_audit.py",
     "tools/promotion_launch_brief.py",
     "tools/promotion_revenue_decision_matrix.py",
     "tools/promotion_week_decision_gate.py",
@@ -288,6 +290,7 @@ def main() -> int:
         run_step("promotion publishing status", [sys.executable, "tools/promotion_publishing_status.py", "--check"])
         run_step("promotion KPI writeback consistency audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"])
         run_step("promotion writeback flow audit", [sys.executable, "tools/promotion_writeback_flow_audit.py"])
+        run_step("promotion writeback refresh audit", [sys.executable, "tools/promotion_writeback_refresh_audit.py"])
         run_step("promotion launch brief", [sys.executable, "tools/promotion_launch_brief.py", "--all", "--check"])
         run_step("promotion revenue decision matrix", [sys.executable, "tools/promotion_revenue_decision_matrix.py", "--check"])
         run_step("promotion week decision gate", [sys.executable, "tools/promotion_week_decision_gate.py", "--check"])

@@ -10,6 +10,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+import promotion_refresh
 from promotion_proof_note_policy import proof_note_issue
 
 
@@ -263,13 +264,7 @@ def write_playbook(data: dict) -> None:
 
 
 def regenerate_dependent_docs() -> None:
-    commands = [
-        [sys.executable, "tools/promotion_platform_profile_tracker.py"],
-        [sys.executable, "tools/promotion_launch_readiness_gate.py"],
-        [sys.executable, "tools/promotion_next_actions.py"],
-    ]
-    for command in commands:
-        subprocess.run(command, cwd=ROOT, check=True)
+    promotion_refresh.run_daily_ops_refresh()
 
 
 def main() -> int:

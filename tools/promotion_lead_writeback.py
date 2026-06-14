@@ -8,6 +8,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import promotion_refresh
 from promotion_proof_note_policy import proof_note_issue
 
 
@@ -330,6 +331,10 @@ def write_playbook(data: dict) -> None:
     PLAYBOOK_MD.write_text(render_markdown(data), encoding="utf-8")
 
 
+def regenerate_dependent_docs() -> None:
+    promotion_refresh.run_daily_ops_refresh()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Safely append real LoveTypes lead intake requests and write back matched KPI signals.")
     subparsers = parser.add_subparsers(dest="command")
@@ -362,6 +367,7 @@ def main() -> int:
             return 1
         write_csv(LEAD_TRACKER, fieldnames, candidate)
         kpi_status = writeback_kpi(new_row)
+        regenerate_dependent_docs()
         fieldnames, rows = read_csv(LEAD_TRACKER)
         print(f"promotion_lead_writeback_kpi_status={kpi_status}")
 

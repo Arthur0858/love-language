@@ -227,6 +227,7 @@ def add_lead(data: dict[str, str], proof_note: str, request_date: str = "") -> s
         raise SystemExit("\n".join(issues))
     writeback.write_csv(writeback.LEAD_TRACKER, fieldnames, candidate)
     kpi_status = writeback.writeback_kpi(new_row)
+    writeback.regenerate_dependent_docs()
     _, refreshed = writeback.read_csv(writeback.LEAD_TRACKER)
     playbook = writeback.playbook(fieldnames, refreshed, writeback.validate_tracker(fieldnames, refreshed))
     writeback.write_playbook(playbook)

@@ -87,7 +87,7 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
         configured = bool(platform.get("configured"))
         identity_pending = identity_status.get(platform_id, {}).get("pending", 0)
         evidence_pending = evidence_status.get(platform_id, {}).get("pending", 0)
-        suggested_proof_note = f"screenshot profile-{platform_id}-{today()}.png verified"
+        suggested_proof_note = "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
         action_status = "complete" if configured else "ready_to_configure"
         if identity_pending == 0 and evidence_pending == 0 and not configured:
             action_status = "ready_to_writeback"
@@ -123,8 +123,8 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
             issues.append(f"{platform}: missing bio copy")
         if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in row["write_command"]:
             issues.append(f"{platform}: write command must force real proof replacement")
-        if row["proof_note"] in row["write_command"]:
-            issues.append(f"{platform}: write command must not reuse the scaffold proof note")
+        if "screenshot profile-" in row["proof_note"] or "screenshot profile-" in row["write_command"]:
+            issues.append(f"{platform}: write command must not reuse scaffold screenshot proof")
     if int(completion.get("metrics", {}).get("issues", 0) or 0) != 0:
         issues.append("profile completion gate reports issues")
 

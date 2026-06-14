@@ -48,21 +48,21 @@
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 ### profile_writeback: tiktok profile-tiktok
 
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 ### profile_writeback: instagram_reels profile-instagram_reels
 
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform profile tracker row becomes set/live with proof_note`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 ### readiness_gate: all launch-readiness
 

@@ -21,7 +21,7 @@ CHECKS = [
     ("account_permission", "profile_edit_permission_visible", "可編輯 profile/bio", "畫面顯示可編輯 bio、website、description 或 channel profile。"),
     ("account_permission", "profile_link_field_located", "已找到 profile link 欄位", "操作者知道連結要貼到哪個欄位，不把追蹤連結貼到錯誤位置。"),
     ("profile_link", "planned_profile_url_ready", "平台專屬 profile URL 已備妥", "使用 platform-profile-tracker.csv 的平台專屬 /start/ UTM 連結。"),
-    ("proof", "proof_capture_ready", "截圖或證據命名已準備", "設定前先準備 proof note，例如 screenshot profile-{platform}-YYYY-MM-DD.png verified。"),
+    ("proof", "proof_capture_ready", "截圖或證據命名已準備", "設定前先準備 proof note，寫入前必須把 <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> 換成真截圖、公開點擊或平台 URL 證據。"),
     ("publish_gate", "do_not_publish_wrong_account", "錯帳號時停止發布", "若帳號名稱、頻道、權限或公開頁不一致，不設定 profile link，也不發布貼文。"),
 ]
 
@@ -36,7 +36,7 @@ def read_profiles() -> list[dict[str, str]]:
 
 
 def proof_note(platform: str) -> str:
-    return f"screenshot profile-{platform}-{today()}.png verified"
+    return "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 
 
 def build_payload() -> dict:
@@ -93,8 +93,11 @@ def validate(payload: dict) -> list[str]:
             issues.append("identity row missing platform, check_id, or profile_link")
         if row["operator_status"] != "pending":
             issues.append(f"{row['platform']}/{row['check_id']}: generated status must be pending")
-        if "profile-" not in row["proof_note_template"] or "verified" not in row["proof_note_template"]:
-            issues.append(f"{row['platform']}/{row['check_id']}: proof note template must be traceable")
+        proof_template = row["proof_note_template"]
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in proof_template or "verified" not in proof_template:
+            issues.append(f"{row['platform']}/{row['check_id']}: proof note template must force real proof replacement")
+        if "screenshot profile-" in proof_template:
+            issues.append(f"{row['platform']}/{row['check_id']}: proof note template must not look like completed scaffold proof")
     if not payload["policy"].get("stopOnWrongAccount"):
         issues.append("policy must stop publishing on wrong account")
     if not payload["policy"].get("doNotWritebackWithoutProof"):
@@ -161,7 +164,7 @@ def write_outputs(payload: dict, issues: list[str]) -> None:
         "notes",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(payload["items"])
 

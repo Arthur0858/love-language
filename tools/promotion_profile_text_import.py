@@ -16,7 +16,7 @@ platform: youtube_shorts
 status: set
 set_date: {TODAY}
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: screenshot profile-youtube_shorts-{TODAY}.png verified
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 """
 
 PLATFORM_ALIASES = {

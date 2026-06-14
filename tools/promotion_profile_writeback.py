@@ -179,7 +179,7 @@ def playbook(fieldnames: list[str], rows: list[dict[str, str]], issues: list[str
             "currentStatus": row.get("status", "planned"),
             "setCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status set --set-date {date.today().isoformat()} --proof-note \"screenshot profile-{platform}-{date.today().isoformat()}.png verified\""
+                f"--status set --set-date {date.today().isoformat()} --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
             ),
             "liveCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
@@ -239,7 +239,7 @@ def render_markdown(data: dict) -> str:
         "",
         "- 設定平台 profile link 後，可把平台、狀態、日期、profile link 與 proof note 貼成一段文字，再用匯入工具檢查。",
         "- 檢查：`python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt`",
-        "- 寫入：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"screenshot profile-youtube_shorts-YYYY-MM-DD.png verified\"`",
+        "- 寫入：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"`",
         "- 寫入時仍會驗證平台專屬 `/start/` UTM、同步 readiness 與 next actions。",
         "",
         "## 安全規則",

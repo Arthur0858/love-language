@@ -16,7 +16,7 @@
 
 - Proof file: `docs/promotion/first-round/proof-youtube_shorts.txt`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 - [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing.
 - [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.
@@ -29,7 +29,7 @@
 
 - Proof file: `docs/promotion/first-round/proof-tiktok.txt`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 - [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing.
 - [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.
@@ -42,7 +42,7 @@
 
 - Proof file: `docs/promotion/first-round/proof-instagram_reels.txt`
 - Check: `python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt`
-- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
+- Write: `python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 - [ ] `platform_account_visible`：The correct platform account/profile page is visible before editing.
 - [ ] `profile_link_visible_or_clickable`：The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.

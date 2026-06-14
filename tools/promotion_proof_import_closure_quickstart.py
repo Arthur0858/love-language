@@ -104,7 +104,7 @@ def closure_steps(metrics: dict) -> list[dict[str, str]]:
         {
             "id": "writeback_after_external_proof",
             "status": "blocked_until_external_proof",
-            "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"screenshot profile-<platform>-YYYY-MM-DD.png verified\"",
+            "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
             "release": "A real platform screenshot/click proof exists and the profile proof text passed check.",
             "stop": "Do not write back from rehearsal data, templates, private previews, or memory.",
         },

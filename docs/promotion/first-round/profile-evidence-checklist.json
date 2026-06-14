@@ -16,7 +16,7 @@
       "expected_value": "The correct platform account/profile page is visible before editing.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "profile link 已實際貼到平台個人頁或說明欄。"
@@ -29,7 +29,7 @@
       "expected_value": "The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Link location: Channel description / video description; URL: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio"
@@ -42,7 +42,7 @@
       "expected_value": "Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。"
@@ -55,7 +55,7 @@
       "expected_value": "utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "UTM source / medium / campaign / content 沒有被平台移除或改寫。"
@@ -68,7 +68,7 @@
       "expected_value": "Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。"
@@ -81,7 +81,7 @@
       "expected_value": "A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.",
       "proof_file": "docs/promotion/first-round/proof-youtube_shorts.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
@@ -94,7 +94,7 @@
       "expected_value": "The correct platform account/profile page is visible before editing.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "profile link 已實際貼到平台個人頁或說明欄。"
@@ -107,7 +107,7 @@
       "expected_value": "The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Link location: Profile website link; URL: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio"
@@ -120,7 +120,7 @@
       "expected_value": "Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。"
@@ -133,7 +133,7 @@
       "expected_value": "utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "UTM source / medium / campaign / content 沒有被平台移除或改寫。"
@@ -146,7 +146,7 @@
       "expected_value": "Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。"
@@ -159,7 +159,7 @@
       "expected_value": "A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.",
       "proof_file": "docs/promotion/first-round/proof-tiktok.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
@@ -172,7 +172,7 @@
       "expected_value": "The correct platform account/profile page is visible before editing.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "profile link 已實際貼到平台個人頁或說明欄。"
@@ -185,7 +185,7 @@
       "expected_value": "The platform profile, website field, description, or pinned comment visibly contains the tracked /start/ link.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Link location: Profile link in bio; URL: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio"
@@ -198,7 +198,7 @@
       "expected_value": "Clicking or copying the platform link reaches https://lovetypes.tw/start/ without 404.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "從平台畫面點擊或複製連結後，仍可抵達 https://lovetypes.tw/start/。"
@@ -211,7 +211,7 @@
       "expected_value": "utm_source, utm_medium, utm_campaign, and utm_content are still present after platform handling.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "UTM source / medium / campaign / content 沒有被平台移除或改寫。"
@@ -224,7 +224,7 @@
       "expected_value": "Bio/comment copy only promotes the 15-question guardian quiz; no Luna, affiliate, paid, diagnosis, or treatment promise.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "Bio 與置頂留言只導向 15 題測驗，沒有導購、療效或診斷承諾。"
@@ -237,7 +237,7 @@
       "expected_value": "A traceable proof note exists, such as screenshot filename, public clicked URL, or screen recording filename.",
       "proof_file": "docs/promotion/first-round/proof-instagram_reels.txt",
       "check_command": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
-      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "write_command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "evidence_value": "",
       "operator_status": "pending",
       "notes": "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"

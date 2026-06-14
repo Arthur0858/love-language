@@ -57,7 +57,7 @@ def profile_template(item: dict) -> str:
         "status: set",
         f"set_date: {date.today().isoformat()}",
         f"profile_link: {item.get('profileLink', '')}",
-        f"proof_note: screenshot profile-{platform}-{date.today().isoformat()}.png verified",
+        "proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
     ])
 
 
@@ -100,7 +100,7 @@ def build_profile_proofs(profile_packet: dict) -> list[dict[str, object]]:
             "requiredEvidence": list(PROFILE_REQUIRED_EVIDENCE),
             "minimumProofNote": "platform + set time + screenshot filename or manually clicked live link",
             "checkCommand": f"python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-{platform}.txt",
-            "writeCommand": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"screenshot profile-{platform}-{date.today().isoformat()}.png verified\"",
+            "writeCommand": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
             "template": profile_template(item),
         })
     return proofs
@@ -201,6 +201,10 @@ def validate_packet(packet: dict[str, object]) -> list[str]:
                 issues.append(f"{label}: profile evidence checklist is incomplete")
             if "/start/?" not in str(item.get("targetUrl", "")):
                 issues.append(f"{label}: profile target should point to tracked /start/")
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(item.get("writeCommand", "")):
+                issues.append(f"{label}: profile write command must force real proof replacement")
+            if "screenshot profile-" in str(item.get("writeCommand", "")) or "screenshot profile-" in template:
+                issues.append(f"{label}: profile proof must not look like completed scaffold proof")
         if item.get("kind") == "post_publish":
             required = set(POST_REQUIRED_EVIDENCE)
             if not required.issubset(set(item.get("requiredEvidence", []))):

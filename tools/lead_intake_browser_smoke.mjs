@@ -137,6 +137,16 @@ async function checkCase(browser, baseUrl, urlPath) {
     if (message.type() === 'error') issues.push(`console error: ${message.text()}`);
   });
   page.on('pageerror', (error) => issues.push(`page error: ${error.message}`));
+  page.on('dialog', async (dialog) => {
+    try {
+      await dialog.dismiss();
+    } catch (error) {
+      const message = String(error?.message || error);
+      if (!/session closed|target closed|page closed|browser has been closed/i.test(message)) {
+        issues.push(`dialog dismiss error: ${message}`);
+      }
+    }
+  });
 
   const response = await page.goto(pageUrl(baseUrl, urlPath), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
@@ -145,7 +155,7 @@ async function checkCase(browser, baseUrl, urlPath) {
   const form = page.locator('[data-lead-intake-form]').first();
   await form.waitFor({ state: 'visible', timeout: 10000 }).catch(() => issues.push('lead intake form missing'));
   if (issues.length) {
-    await context.close();
+    await context.close().catch(() => {});
     return { urlPath, invalidRejected: false, validAccepted: false, issues };
   }
 
@@ -167,7 +177,7 @@ async function checkCase(browser, baseUrl, urlPath) {
   const validAccepted = validHidden !== null && preview.includes('traveler@realmail.com') && preview.includes('consent_status: explicit_reply_ok');
   if (!validAccepted) issues.push('real-format email did not produce a valid structured request preview');
 
-  await context.close();
+  await context.close().catch(() => {});
   return { urlPath, invalidRejected, validAccepted, issues };
 }
 

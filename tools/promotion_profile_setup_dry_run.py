@@ -19,6 +19,11 @@ PROFILE_PROOF_FILES = (
     SOURCE_DIR / "proof-instagram_reels.txt",
 )
 GENERIC_PROOF = "profile link manually verified"
+REAL_PROOF_BY_PLATFORM = {
+    "youtube_shorts": "dry-run public profile URL clicked https://www.youtube.com/@lovetypes",
+    "tiktok": "dry-run public profile URL clicked https://www.tiktok.com/@lovetypes",
+    "instagram_reels": "dry-run public profile URL clicked https://www.instagram.com/lovetypes/",
+}
 
 
 def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -62,6 +67,25 @@ def update_from_text(text: str, rows: list[dict[str, str]]) -> None:
         data.get("proof_note", ""),
         {field: data.get(field, "") for field in writeback.METRIC_FIELDS},
     )
+
+
+def platform_from_text(text: str) -> str:
+    for line in text.splitlines():
+        if line.lower().startswith("platform:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def real_proof_text(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    platform = platform_from_text(text)
+    lines = []
+    for line in text.splitlines():
+        if line.lower().startswith("proof_note:"):
+            lines.append(f"proof_note: {REAL_PROOF_BY_PLATFORM[platform]}")
+        else:
+            lines.append(line)
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def expect_rejected(action) -> bool:
@@ -112,9 +136,14 @@ def run_dry_run() -> dict[str, int]:
         initial_gate = build_readiness_state(temp_docs)
         initial_ready = int(bool(initial_gate.get("readiness", {}).get("readyToPublishPosts")))
 
+        placeholder_rejected = 0
+        for proof_file in PROFILE_PROOF_FILES:
+            if expect_rejected(lambda proof_file=proof_file: update_from_text(proof_file.read_text(encoding="utf-8"), rows)):
+                placeholder_rejected += 1
+
         imported = 0
         for proof_file in PROFILE_PROOF_FILES:
-            update_from_text(proof_file.read_text(encoding="utf-8"), rows)
+            update_from_text(real_proof_text(proof_file), rows)
             imported += 1
         issues = writeback.validate_tracker(fieldnames, rows)
         if issues:
@@ -129,6 +158,7 @@ def run_dry_run() -> dict[str, int]:
         current_files_mutated = any(path.read_text(encoding="utf-8") != before for path, before in source_before.items())
 
         return {
+            "promotion_profile_setup_dry_run_placeholder_rejected": placeholder_rejected,
             "promotion_profile_setup_dry_run_imports": imported,
             "promotion_profile_setup_dry_run_initial_ready": initial_ready,
             "promotion_profile_setup_dry_run_configured": int(final_metrics.get("profileConfigured") or 0),
@@ -142,6 +172,8 @@ def run_dry_run() -> dict[str, int]:
 def main() -> int:
     metrics = run_dry_run()
     issues: list[str] = []
+    if metrics["promotion_profile_setup_dry_run_placeholder_rejected"] != 3:
+        issues.append("expected 3 placeholder profile proof imports to be rejected")
     if metrics["promotion_profile_setup_dry_run_imports"] != 3:
         issues.append("expected 3 profile proof imports")
     if metrics["promotion_profile_setup_dry_run_initial_ready"] != 0:

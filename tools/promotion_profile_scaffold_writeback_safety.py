@@ -19,7 +19,7 @@ PROFILE_PROOF_FILES = (
     SOURCE_DIR / "proof-tiktok.txt",
     SOURCE_DIR / "proof-instagram_reels.txt",
 )
-EXPECTED_REJECTION = "profile proof_note still looks like the scaffold screenshot filename"
+EXPECTED_REJECTION = "proof_note must replace placeholder proof text with real evidence"
 TODAY = date.today().isoformat()
 REAL_PROOF_BY_PLATFORM = {
     "youtube_shorts": f"screenshot actual-youtube-shorts-bio-{TODAY}.png profile URL clicked https://www.youtube.com/@lovetypes {TODAY}",

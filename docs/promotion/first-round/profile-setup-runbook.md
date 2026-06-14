@@ -60,13 +60,13 @@ Pinned / first comment:
 設定完成後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"
+python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 ```
 
 公開可點後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"
+python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
 ```
 
 Structured import template:
@@ -77,14 +77,14 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: screenshot profile-youtube_shorts-2026-06-14.png verified
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
 
 Traceable proof note examples:
 
-- `screenshot profile-youtube_shorts-2026-06-14.png verified`
-- `public URL profile link clicked 2026-06-14`
-- `screen recording profile-youtube_shorts-2026-06-14.mov verified`
+- `<REAL_SCREENSHOT_FILENAME> verified`
+- `<REAL_PUBLIC_PROFILE_CLICK_URL_OR_TIMESTAMP> verified`
+- `<REAL_SCREEN_RECORDING_FILENAME> verified`
 
 ## TikTok（`tiktok`）
 
@@ -122,13 +122,13 @@ Pinned / first comment:
 設定完成後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "screenshot profile-tiktok-2026-06-14.png verified"
+python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 ```
 
 公開可點後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"
+python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
 ```
 
 Structured import template:
@@ -139,14 +139,14 @@ platform: tiktok
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-proof_note: screenshot profile-tiktok-2026-06-14.png verified
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
 
 Traceable proof note examples:
 
-- `screenshot profile-tiktok-2026-06-14.png verified`
-- `public URL profile link clicked 2026-06-14`
-- `screen recording profile-tiktok-2026-06-14.mov verified`
+- `<REAL_SCREENSHOT_FILENAME> verified`
+- `<REAL_PUBLIC_PROFILE_CLICK_URL_OR_TIMESTAMP> verified`
+- `<REAL_SCREEN_RECORDING_FILENAME> verified`
 
 ## Instagram Reels（`instagram_reels`）
 
@@ -184,13 +184,13 @@ Pinned / first comment:
 設定完成後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"
+python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 ```
 
 公開可點後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"
+python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
 ```
 
 Structured import template:
@@ -201,11 +201,11 @@ platform: instagram_reels
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-proof_note: screenshot profile-instagram_reels-2026-06-14.png verified
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
 
 Traceable proof note examples:
 
-- `screenshot profile-instagram_reels-2026-06-14.png verified`
-- `public URL profile link clicked 2026-06-14`
-- `screen recording profile-instagram_reels-2026-06-14.mov verified`
+- `<REAL_SCREENSHOT_FILENAME> verified`
+- `<REAL_PUBLIC_PROFILE_CLICK_URL_OR_TIMESTAMP> verified`
+- `<REAL_SCREEN_RECORDING_FILENAME> verified`

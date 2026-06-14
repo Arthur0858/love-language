@@ -224,6 +224,18 @@ def platform_from_text(text: str) -> str:
     return ""
 
 
+def sample_profile_text(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    platform = platform_from_text(text)
+    lines = []
+    for line in text.splitlines():
+        if line.lower().startswith("proof_note:"):
+            lines.append(f"proof_note: dry-run public profile URL clicked for {platform} {TODAY}")
+        else:
+            lines.append(line)
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def sample_post_text(path: Path) -> str:
     text = path.read_text(encoding="utf-8")
     platform = platform_from_text(text)
@@ -288,7 +300,7 @@ def run_sequence() -> dict[str, int]:
         initial_stage = transition_stage(initial_readiness, temp_docs)
         profile_imports = 0
         for proof_file in PROFILE_PROOF_FILES:
-            update_profile_from_text(proof_file.read_text(encoding="utf-8"), profile_rows)
+            update_profile_from_text(sample_profile_text(proof_file), profile_rows)
             profile_imports += 1
         profile_issues = profile_writeback.validate_tracker(profile_fields, profile_rows)
         if profile_issues:

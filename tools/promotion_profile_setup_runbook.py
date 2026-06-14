@@ -63,9 +63,9 @@ def validate_profile_url(platform: str, value: str) -> list[str]:
 
 def proof_examples(platform: str, today_value: str) -> list[str]:
     return [
-        f"screenshot profile-{platform}-{today_value}.png verified",
-        f"public URL profile link clicked {today_value}",
-        f"screen recording profile-{platform}-{today_value}.mov verified",
+        "<REAL_SCREENSHOT_FILENAME> verified",
+        "<REAL_PUBLIC_PROFILE_CLICK_URL_OR_TIMESTAMP> verified",
+        "<REAL_SCREEN_RECORDING_FILENAME> verified",
     ]
 
 
@@ -88,12 +88,12 @@ def build_runbook() -> dict:
         writeback_set = (
             f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
             f"--status set --set-date {today_value} "
-            f"--proof-note \"screenshot profile-{platform}-{today_value}.png verified\""
+            "--proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
         )
         writeback_live = (
             f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
             f"--status live --set-date {today_value} "
-            f"--proof-note \"public URL profile link clicked {today_value}\""
+            "--proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\""
         )
         import_template = "\n".join([
             "LoveTypes profile setup writeback",
@@ -101,7 +101,7 @@ def build_runbook() -> dict:
             "status: set",
             f"set_date: {today_value}",
             f"profile_link: {profile_link}",
-            f"proof_note: screenshot profile-{platform}-{today_value}.png verified",
+            "proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
         ])
         platforms.append({
             "platform": platform,
@@ -192,8 +192,10 @@ def validate_runbook(runbook: dict) -> list[str]:
         if "LoveTypes profile setup writeback" not in item.get("importTemplate", ""):
             issues.append(f"{label}: missing structured import template")
         examples = " ".join(item.get("proofExamples", []))
-        if not any(token in examples for token in ("screenshot", "public URL", "clicked", "verified")):
-            issues.append(f"{label}: proof examples are not traceable")
+        if "<REAL_" not in examples:
+            issues.append(f"{label}: proof examples must force real proof replacement")
+        if f"screenshot profile-{platform}-" in examples:
+            issues.append(f"{label}: proof examples must not look like completed scaffold proof")
         commands = item.get("postWritebackCommands", [])
         for expected in (
             "python3 tools/promotion_daily_ops_refresh.py",

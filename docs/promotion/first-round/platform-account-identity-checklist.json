@@ -24,7 +24,7 @@
       "expected_value": "平台右上角、個人頁或頻道名稱能證明正在操作 LoveTypes 相關帳號。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -38,7 +38,7 @@
       "expected_value": "從平台公開頁確認目前帳號/頻道是即將貼 profile link 的公開頁。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -52,7 +52,7 @@
       "expected_value": "畫面顯示可編輯 bio、website、description 或 channel profile。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -66,7 +66,7 @@
       "expected_value": "操作者知道連結要貼到哪個欄位，不把追蹤連結貼到錯誤位置。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -80,7 +80,7 @@
       "expected_value": "使用 platform-profile-tracker.csv 的平台專屬 /start/ UTM 連結。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -91,10 +91,10 @@
       "phase": "proof",
       "check_id": "proof_capture_ready",
       "check_label": "截圖或證據命名已準備",
-      "expected_value": "設定前先準備 proof note，例如 screenshot profile-{platform}-YYYY-MM-DD.png verified。",
+      "expected_value": "設定前先準備 proof note，寫入前必須把 <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> 換成真截圖、公開點擊或平台 URL 證據。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -108,7 +108,7 @@
       "expected_value": "若帳號名稱、頻道、權限或公開頁不一致，不設定 profile link，也不發布貼文。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-youtube_shorts-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -122,7 +122,7 @@
       "expected_value": "平台右上角、個人頁或頻道名稱能證明正在操作 LoveTypes 相關帳號。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -136,7 +136,7 @@
       "expected_value": "從平台公開頁確認目前帳號/頻道是即將貼 profile link 的公開頁。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -150,7 +150,7 @@
       "expected_value": "畫面顯示可編輯 bio、website、description 或 channel profile。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -164,7 +164,7 @@
       "expected_value": "操作者知道連結要貼到哪個欄位，不把追蹤連結貼到錯誤位置。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -178,7 +178,7 @@
       "expected_value": "使用 platform-profile-tracker.csv 的平台專屬 /start/ UTM 連結。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -189,10 +189,10 @@
       "phase": "proof",
       "check_id": "proof_capture_ready",
       "check_label": "截圖或證據命名已準備",
-      "expected_value": "設定前先準備 proof note，例如 screenshot profile-{platform}-YYYY-MM-DD.png verified。",
+      "expected_value": "設定前先準備 proof note，寫入前必須把 <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> 換成真截圖、公開點擊或平台 URL 證據。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -206,7 +206,7 @@
       "expected_value": "若帳號名稱、頻道、權限或公開頁不一致，不設定 profile link，也不發布貼文。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-tiktok-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -220,7 +220,7 @@
       "expected_value": "平台右上角、個人頁或頻道名稱能證明正在操作 LoveTypes 相關帳號。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -234,7 +234,7 @@
       "expected_value": "從平台公開頁確認目前帳號/頻道是即將貼 profile link 的公開頁。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -248,7 +248,7 @@
       "expected_value": "畫面顯示可編輯 bio、website、description 或 channel profile。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -262,7 +262,7 @@
       "expected_value": "操作者知道連結要貼到哪個欄位，不把追蹤連結貼到錯誤位置。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -276,7 +276,7 @@
       "expected_value": "使用 platform-profile-tracker.csv 的平台專屬 /start/ UTM 連結。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -287,10 +287,10 @@
       "phase": "proof",
       "check_id": "proof_capture_ready",
       "check_label": "截圖或證據命名已準備",
-      "expected_value": "設定前先準備 proof note，例如 screenshot profile-{platform}-YYYY-MM-DD.png verified。",
+      "expected_value": "設定前先準備 proof note，寫入前必須把 <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> 換成真截圖、公開點擊或平台 URL 證據。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"
@@ -304,7 +304,7 @@
       "expected_value": "若帳號名稱、頻道、權限或公開頁不一致，不設定 profile link，也不發布貼文。",
       "profile_link": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
       "profile_status": "planned",
-      "proof_note_template": "screenshot profile-instagram_reels-2026-06-14.png verified",
+      "proof_note_template": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "operator_status": "pending",
       "evidence_value": "",
       "notes": "完成後再回填 profile-writeback；不要用本清單假設帳號已驗證。"

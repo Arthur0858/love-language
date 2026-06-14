@@ -36,12 +36,19 @@ def build_gate() -> dict:
     ready_to_publish = bool(readiness_state.get("readyToPublishPosts"))
     evidence_required = int(evidence_metrics.get("required") or 0)
     evidence_traceable = int(evidence_metrics.get("traceable") or 0)
+    evidence_pending = int(evidence_metrics.get("pending") or 0)
     evidence_issues = int(evidence_metrics.get("issues") or 0)
     profile_packet_ready = bool(profile_packet.get("readyToPublish"))
     first_batch_ready = bool(first_batch.get("readyToPublish"))
 
     all_profiles_configured = expected_profiles > 0 and profile_configured == expected_profiles
-    evidence_complete = evidence_issues == 0 and evidence_required == evidence_traceable
+    evidence_structurally_clean = evidence_issues == 0
+    evidence_complete = (
+        all_profiles_configured
+        and evidence_structurally_clean
+        and evidence_required > 0
+        and evidence_required == evidence_traceable
+    )
     packets_in_sync = profile_packet_ready == ready_to_publish and first_batch_ready == ready_to_publish
     ready_for_first_batch_publish = all_profiles_configured and ready_to_publish and evidence_complete and packets_in_sync
 
@@ -55,7 +62,10 @@ def build_gate() -> dict:
     if not evidence_complete:
         blockers.append({
             "id": "profile_evidence_incomplete",
-            "message": f"traceable evidence {evidence_traceable}/{evidence_required}, evidence issues {evidence_issues}.",
+            "message": (
+                f"traceable evidence {evidence_traceable}/{evidence_required}, "
+                f"pending rows {evidence_pending}, evidence issues {evidence_issues}."
+            ),
             "release": "Every completed profile/post/lead row has a traceable proof note.",
         })
     if not packets_in_sync:
@@ -96,6 +106,7 @@ def build_gate() -> dict:
             "expectedProfiles": expected_profiles,
             "evidenceRequired": evidence_required,
             "evidenceTraceable": evidence_traceable,
+            "evidencePending": evidence_pending,
             "evidenceIssues": evidence_issues,
             "blockers": len(blockers),
             "issues": len(issues),
@@ -105,6 +116,7 @@ def build_gate() -> dict:
             "readinessReadyToPublish": ready_to_publish,
             "profilePacketReadyToPublish": profile_packet_ready,
             "firstBatchPacketReadyToPublish": first_batch_ready,
+            "evidenceStructurallyClean": evidence_structurally_clean,
             "evidenceComplete": evidence_complete,
             "packetsInSync": packets_in_sync,
             "readyForFirstBatchPublish": ready_for_first_batch_publish,
@@ -128,6 +140,7 @@ def render_markdown(gate: dict) -> str:
         f"- 產生日期：{gate['generatedAt']}",
         f"- profile configured：{metrics['profileConfigured']} / {metrics['expectedProfiles']}",
         f"- evidence traceable：{metrics['evidenceTraceable']} / {metrics['evidenceRequired']}",
+        f"- evidence pending：{metrics['evidencePending']}",
         f"- evidence issues：{metrics['evidenceIssues']}",
         f"- packets in sync：{int(state['packetsInSync'])}",
         f"- ready for first batch publish：{int(state['readyForFirstBatchPublish'])}",
@@ -140,6 +153,7 @@ def render_markdown(gate: dict) -> str:
         f"- readinessReadyToPublish：`{int(state['readinessReadyToPublish'])}`",
         f"- profilePacketReadyToPublish：`{int(state['profilePacketReadyToPublish'])}`",
         f"- firstBatchPacketReadyToPublish：`{int(state['firstBatchPacketReadyToPublish'])}`",
+        f"- evidenceStructurallyClean：`{int(state['evidenceStructurallyClean'])}`",
         f"- evidenceComplete：`{int(state['evidenceComplete'])}`",
         "",
         "## Next Action",
@@ -181,7 +195,10 @@ def main() -> int:
     print(f"promotion_profile_completion_expected={metrics['expectedProfiles']}")
     print(f"promotion_profile_completion_evidence_required={metrics['evidenceRequired']}")
     print(f"promotion_profile_completion_evidence_traceable={metrics['evidenceTraceable']}")
+    print(f"promotion_profile_completion_evidence_pending={metrics['evidencePending']}")
     print(f"promotion_profile_completion_evidence_issues={metrics['evidenceIssues']}")
+    print(f"promotion_profile_completion_evidence_structurally_clean={int(state['evidenceStructurallyClean'])}")
+    print(f"promotion_profile_completion_evidence_complete={int(state['evidenceComplete'])}")
     print(f"promotion_profile_completion_packets_in_sync={int(state['packetsInSync'])}")
     print(f"promotion_profile_completion_ready_to_publish={int(state['readyForFirstBatchPublish'])}")
     print(f"promotion_profile_completion_blockers={metrics['blockers']}")

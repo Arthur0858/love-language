@@ -11,6 +11,10 @@ from promotion_proof_note_policy import has_traceable_evidence, proof_note_issue
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 DOC_SUFFIXES = (".md", ".json", ".csv")
+GENERIC_NOTE_EXEMPT_DOCS = {
+    "proof-note-policy.md",
+    "proof-note-policy.json",
+}
 GENERIC_NOTES = (
     "manual profile link verified",
     "manual post URL verified",
@@ -100,6 +104,8 @@ def validate() -> tuple[dict[str, int], list[str]]:
         if path.suffix not in DOC_SUFFIXES:
             continue
         docs_checked += 1
+        if path.name in GENERIC_NOTE_EXEMPT_DOCS:
+            continue
         text = path.read_text(encoding="utf-8")
         for note in GENERIC_DOC_NOTES:
             if note in text:

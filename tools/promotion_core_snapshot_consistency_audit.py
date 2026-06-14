@@ -20,7 +20,10 @@ from promotion_weekly_review_packet import validate_packet as validate_weekly_re
 from promotion_lead_demand_gate import build_gate as build_lead_demand_gate  # noqa: E402
 from promotion_offer_experiment_plan import build_plan as build_offer_experiment_plan  # noqa: E402
 from promotion_offer_experiment_plan import load_json as load_offer_json  # noqa: E402
+from promotion_profile_publish_handoff import build_handoff as build_profile_publish_handoff  # noqa: E402
+from promotion_publish_kpi_handoff import build_handoff as build_publish_kpi_handoff  # noqa: E402
 from promotion_stage_transition_matrix import build_matrix  # noqa: E402
+from promotion_weekly_lead_offer_handoff import build_handoff as build_weekly_lead_offer_handoff  # noqa: E402
 
 
 SnapshotBuilder = Callable[[], dict]
@@ -49,6 +52,9 @@ SNAPSHOTS: tuple[tuple[str, Path, SnapshotBuilder], ...] = (
     ("offer_experiment_plan", PROMOTION_DIR / "offer-experiment-plan.json", build_offer_experiment_snapshot),
     ("master_gate", PROMOTION_DIR / "master-gate.json", build_gate),
     ("stage_transition_matrix", PROMOTION_DIR / "stage-transition-matrix.json", build_matrix),
+    ("profile_publish_handoff", PROMOTION_DIR / "profile-publish-handoff.json", build_profile_publish_handoff),
+    ("publish_kpi_handoff", PROMOTION_DIR / "publish-kpi-handoff.json", build_publish_kpi_handoff),
+    ("weekly_lead_offer_handoff", PROMOTION_DIR / "weekly-lead-offer-handoff.json", build_weekly_lead_offer_handoff),
 )
 
 

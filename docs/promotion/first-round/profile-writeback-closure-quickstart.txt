@@ -1,0 +1,35 @@
+LoveTypes profile writeback closure quickstart
+generated: 2026-06-14
+pending evidence rows: 18
+configured: 0 / 3
+launch ready to publish: 0
+
+Closure steps:
+- capture_evidence / current: python3 tools/promotion_profile_proof_capture_quickstart.py --check
+- writeback_profile_rows / blocked_until_evidence: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+- refresh_ops_docs / blocked_until_writeback: python3 tools/promotion_daily_ops_refresh.py
+- verify_profile_gates / blocked_until_refresh: python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_launch_readiness_gate.py --check
+- open_first_batch_publish / blocked_until_profile_gate: python3 tools/promotion_first_batch_publish_quickstart.py --check
+
+Platforms:
+
+=== YouTube Shorts / youtube_shorts ===
+pending evidence: 6
+check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
+text import write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+direct set: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"
+direct live: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"
+
+=== TikTok / tiktok ===
+pending evidence: 6
+check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
+text import write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+direct set: python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "screenshot profile-tiktok-2026-06-14.png verified"
+direct live: python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"
+
+=== Instagram Reels / instagram_reels ===
+pending evidence: 6
+check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
+text import write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+direct set: python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"
+direct live: python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"

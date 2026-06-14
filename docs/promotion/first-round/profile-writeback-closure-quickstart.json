@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "profileProofCapture": "docs/promotion/first-round/profile-proof-capture-quickstart.json",
+    "profileWritebackPlaybook": "docs/promotion/first-round/profile-writeback-playbook.json",
+    "profileCompletionGate": "docs/promotion/first-round/profile-completion-gate.json",
+    "profilePublishHandoff": "docs/promotion/first-round/profile-publish-handoff.json",
+    "launchReadinessGate": "docs/promotion/first-round/launch-readiness-gate.json",
+    "masterGate": "docs/promotion/first-round/master-gate.json"
+  },
+  "metrics": {
+    "platforms": 3,
+    "pendingEvidenceRows": 18,
+    "captureIssues": 0,
+    "configured": 0,
+    "writebackIssues": 0,
+    "completionConfigured": 0,
+    "completionExpectedProfiles": 3,
+    "completionReady": 0,
+    "handoffReadyToPublish": 0,
+    "launchReadyToPublish": 0,
+    "masterStageIndex": 0,
+    "masterProfileConfigured": 0,
+    "masterFirstBatchPublished": 0,
+    "issues": 0
+  },
+  "rules": [
+    "Do not run any add/writeback command until all six evidence checks for that platform are true.",
+    "Use profile_text_import add only with a real proof note; scaffold screenshot names must be replaced by real evidence.",
+    "After each writeback, run daily ops refresh before trusting downstream quickstarts.",
+    "Publish can open only when profile completion, profile handoff, launch readiness, and master gate all agree.",
+    "If any gate stays closed after writeback, stop and inspect that gate instead of publishing manually."
+  ],
+  "closureSteps": [
+    {
+      "stepId": "capture_evidence",
+      "status": "current",
+      "command": "python3 tools/promotion_profile_proof_capture_quickstart.py --check",
+      "stopCondition": "Stop if any required evidence row remains unverified for the platform you plan to write back."
+    },
+    {
+      "stepId": "writeback_profile_rows",
+      "status": "blocked_until_evidence",
+      "command": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-<platform>.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "stopCondition": "Stop if the proof note is generic, scaffold-only, missing, or not tied to platform/date."
+    },
+    {
+      "stepId": "refresh_ops_docs",
+      "status": "blocked_until_writeback",
+      "command": "python3 tools/promotion_daily_ops_refresh.py",
+      "stopCondition": "Do not publish from stale generated packets after tracker writeback."
+    },
+    {
+      "stepId": "verify_profile_gates",
+      "status": "blocked_until_refresh",
+      "command": "python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_launch_readiness_gate.py --check",
+      "stopCondition": "Publish only when all profile gates agree ready_to_publish is open."
+    },
+    {
+      "stepId": "open_first_batch_publish",
+      "status": "blocked_until_profile_gate",
+      "command": "python3 tools/promotion_first_batch_publish_quickstart.py --check",
+      "stopCondition": "Do not publish if any first-batch row remains blocked_until_profile_links."
+    }
+  ],
+  "platforms": [
+    {
+      "platform": "youtube_shorts",
+      "label": "YouTube Shorts",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio",
+      "proofFile": "docs/promotion/first-round/proof-youtube_shorts.txt",
+      "pendingEvidence": 6,
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
+      "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note \"screenshot profile-youtube_shorts-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
+      "currentStatus": "planned",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio",
+      "proofFile": "docs/promotion/first-round/proof-tiktok.txt",
+      "pendingEvidence": 6,
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt",
+      "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note \"screenshot profile-tiktok-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
+      "currentStatus": "planned",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    },
+    {
+      "platform": "instagram_reels",
+      "label": "Instagram Reels",
+      "profileLink": "https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio",
+      "proofFile": "docs/promotion/first-round/proof-instagram_reels.txt",
+      "pendingEvidence": 6,
+      "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt",
+      "textImportWriteCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "setCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note \"screenshot profile-instagram_reels-2026-06-14.png verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note \"public URL profile link clicked 2026-06-14\"",
+      "currentStatus": "planned",
+      "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."
+    }
+  ],
+  "issues": []
+}

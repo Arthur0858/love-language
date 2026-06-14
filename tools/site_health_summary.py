@@ -65,6 +65,7 @@ CHECKS = [
     ("promotion_attribution_reconciliation", [sys.executable, "tools/promotion_attribution_reconciliation.py", "--check"], 120, False),
     ("promotion_platform_kpi_tracker", [sys.executable, "tools/promotion_platform_kpi_tracker.py", "--check"], 120, False),
     ("promotion_launch_readiness_gate", [sys.executable, "tools/promotion_launch_readiness_gate.py", "--check"], 120, False),
+    ("promotion_ops_closure_audit", [sys.executable, "tools/promotion_ops_closure_audit.py"], 120, False),
     ("promotion_profile_url_smoke", [sys.executable, "tools/promotion_profile_url_smoke.py", "--check"], 120, False),
     ("promotion_evidence_ledger", [sys.executable, "tools/promotion_evidence_ledger.py", "--check"], 120, False),
     ("promotion_profile_setup_runbook", [sys.executable, "tools/promotion_profile_setup_runbook.py", "--check"], 120, False),

@@ -361,7 +361,7 @@ def main() -> int:
         json_output = Path(args.json_output)
         csv_output = Path(args.csv_output)
         output.write_text(render_markdown(sheet, issues), encoding="utf-8")
-        json_output.write_text(json.dumps(sheet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        json_output.write_text(json.dumps(sheet, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
         write_csv(csv_output, sheet["rows"])
         print(f"promotion_data_collection_sheet={output.relative_to(ROOT)}")
         print(f"promotion_data_collection_sheet_json={json_output.relative_to(ROOT)}")

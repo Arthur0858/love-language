@@ -105,6 +105,7 @@ PYTHON_TOOLS = [
     "tools/promotion_profile_batch_import.py",
     "tools/promotion_profile_setup_handoff_pack.py",
     "tools/promotion_profile_writeback_closure_quickstart.py",
+    "tools/promotion_post_batch_import.py",
     "tools/promotion_profile_setup_dry_run.py",
     "tools/promotion_launch_sequence_dry_run.py",
     "tools/promotion_first_batch_publish_action_sheet.py",
@@ -340,6 +341,7 @@ def main() -> int:
         run_step("promotion profile batch import", [sys.executable, "tools/promotion_profile_batch_import.py", "--check"])
         run_step("promotion profile setup handoff pack", [sys.executable, "tools/promotion_profile_setup_handoff_pack.py", "--check"])
         run_step("promotion profile writeback closure quickstart", [sys.executable, "tools/promotion_profile_writeback_closure_quickstart.py", "--check"])
+        run_step("promotion post batch import", [sys.executable, "tools/promotion_post_batch_import.py", "--check"])
         run_step("promotion profile setup dry run", [sys.executable, "tools/promotion_profile_setup_dry_run.py"])
         run_step("promotion launch sequence dry run", [sys.executable, "tools/promotion_launch_sequence_dry_run.py"])
         run_step("promotion first batch publish action sheet", [sys.executable, "tools/promotion_first_batch_publish_action_sheet.py", "--check"])

@@ -5,6 +5,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import shutil
 import tempfile
 from datetime import date
@@ -15,12 +16,13 @@ import promotion_first_batch_completion_gate as first_batch_completion
 import promotion_first_batch_publication_packet as first_batch_packet
 import promotion_launch_blocker_digest as blocker_digest
 import promotion_launch_readiness_gate as readiness
-import promotion_post_text_import as post_import
 import promotion_post_writeback as post_writeback
+import promotion_post_batch_import as post_batch
 import promotion_profile_completion_gate as profile_completion
-import promotion_profile_text_import as profile_import
 import promotion_profile_verification_packet as profile_packet
 import promotion_profile_writeback as profile_writeback
+import promotion_profile_batch_import as profile_batch
+import promotion_refresh
 import promotion_publishing_status as publishing_status
 
 
@@ -75,6 +77,17 @@ def write_json(path: Path, payload: dict) -> None:
 
 
 def patch_paths(temp_root: Path, temp_docs: Path) -> None:
+    profile_batch.ROOT = temp_root
+    profile_batch.PROMOTION_DIR = temp_docs
+    profile_batch.PROOF_FILES = {
+        "youtube_shorts": temp_docs / "proof-youtube_shorts.txt",
+        "tiktok": temp_docs / "proof-tiktok.txt",
+        "instagram_reels": temp_docs / "proof-instagram_reels.txt",
+    }
+    profile_batch.OUTPUT_MD = temp_docs / "profile-batch-import-quickstart.md"
+    profile_batch.OUTPUT_JSON = temp_docs / "profile-batch-import-quickstart.json"
+    profile_batch.OUTPUT_TXT = temp_docs / "profile-batch-import-quickstart.txt"
+
     profile_writeback.ROOT = temp_root
     profile_writeback.PROMOTION_DIR = temp_docs
     profile_writeback.TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
@@ -116,6 +129,17 @@ def patch_paths(temp_root: Path, temp_docs: Path) -> None:
     post_writeback.PROFILE_TRACKER_PATH = temp_docs / "platform-profile-tracker.csv"
     post_writeback.PLAYBOOK_MD = temp_docs / "post-writeback-playbook.md"
     post_writeback.PLAYBOOK_JSON = temp_docs / "post-writeback-playbook.json"
+
+    post_batch.ROOT = temp_root
+    post_batch.PROMOTION_DIR = temp_docs
+    post_batch.PROOF_FILES = {
+        "youtube_shorts": temp_docs / f"proof-youtube_shorts-{post_batch.TASK_ID}.txt",
+        "tiktok": temp_docs / f"proof-tiktok-{post_batch.TASK_ID}.txt",
+        "instagram_reels": temp_docs / f"proof-instagram_reels-{post_batch.TASK_ID}.txt",
+    }
+    post_batch.OUTPUT_MD = temp_docs / "post-batch-import-quickstart.md"
+    post_batch.OUTPUT_JSON = temp_docs / "post-batch-import-quickstart.json"
+    post_batch.OUTPUT_TXT = temp_docs / "post-batch-import-quickstart.txt"
 
     publishing_status.ROOT = temp_root
     publishing_status.PROMOTION_DIR = temp_docs
@@ -203,20 +227,6 @@ def build_publishing(temp_docs: Path) -> dict:
     return report
 
 
-def update_profile_from_text(text: str, rows: list[dict[str, str]]) -> None:
-    data, issues = profile_import.parse_text(text)
-    if issues:
-        raise SystemExit("\n".join(issues))
-    profile_writeback.update_row(
-        rows,
-        data["platform"],
-        data["status"],
-        data["set_date"],
-        data.get("proof_note", ""),
-        {field: data.get(field, "") for field in profile_writeback.METRIC_FIELDS},
-    )
-
-
 def platform_from_text(text: str) -> str:
     for line in text.splitlines():
         if line.lower().startswith("platform:"):
@@ -253,39 +263,6 @@ def sample_post_text(path: Path) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def update_post_from_text(
-    text: str,
-    queue_rows: list[dict[str, str]],
-    platform_rows: list[dict[str, str]],
-    script_rows: list[dict[str, str]],
-) -> None:
-    data, issues = post_import.parse_text(text)
-    if issues:
-        raise SystemExit("\n".join(issues))
-    metrics = {field: data.get(field, "") for field in post_writeback.METRIC_FIELDS}
-    queue_row = post_writeback.update_platform_rows(
-        queue_rows,
-        data["platform"],
-        data["task_id"],
-        data["status"],
-        data["published_date"],
-        data["post_url"],
-        data.get("proof_note", ""),
-        metrics,
-    )
-    post_writeback.update_platform_rows(
-        platform_rows,
-        data["platform"],
-        data["task_id"],
-        data["status"],
-        data["published_date"],
-        data["post_url"],
-        data.get("proof_note", ""),
-        metrics,
-    )
-    post_writeback.rollup_script_tracker(script_rows, platform_rows, queue_row["script_id"])
-
-
 def run_sequence() -> dict[str, int]:
     before = file_hashes(WATCHED_FILES)
     with tempfile.TemporaryDirectory(prefix="lovetypes-launch-sequence-") as temp_name:
@@ -295,17 +272,21 @@ def run_sequence() -> dict[str, int]:
         shutil.copytree(SOURCE_DIR, temp_docs)
         patch_paths(temp_root, temp_docs)
 
-        profile_fields, profile_rows = read_csv(temp_docs / "platform-profile-tracker.csv")
         initial_readiness = build_readiness(temp_docs)
         initial_stage = transition_stage(initial_readiness, temp_docs)
-        profile_imports = 0
         for proof_file in PROFILE_PROOF_FILES:
-            update_profile_from_text(sample_profile_text(proof_file), profile_rows)
-            profile_imports += 1
-        profile_issues = profile_writeback.validate_tracker(profile_fields, profile_rows)
-        if profile_issues:
-            raise SystemExit("\n".join(profile_issues))
-        write_csv(temp_docs / "platform-profile-tracker.csv", profile_fields, profile_rows)
+            (temp_docs / proof_file.name).write_text(sample_profile_text(proof_file), encoding="utf-8")
+        old_refresh_flag = os.environ.get(promotion_refresh.REFRESH_FLAG)
+        os.environ[promotion_refresh.REFRESH_FLAG] = "1"
+        try:
+            profile_batch_packet = profile_batch.build_packet()
+            profile_batch.apply_batch(profile_batch_packet)
+        finally:
+            if old_refresh_flag is None:
+                os.environ.pop(promotion_refresh.REFRESH_FLAG, None)
+            else:
+                os.environ[promotion_refresh.REFRESH_FLAG] = old_refresh_flag
+        profile_imports = int(profile_batch_packet["metrics"]["readyRows"])
 
         profile_readiness = build_readiness(temp_docs)
         profile_stage = transition_stage(profile_readiness, temp_docs)
@@ -316,19 +297,19 @@ def run_sequence() -> dict[str, int]:
         profile_gate = profile_completion.build_gate()
         write_json(temp_docs / "profile-completion-gate.json", profile_gate)
 
-        queue_fields, queue_rows = read_csv(temp_docs / "posting-queue.csv")
-        platform_fields, platform_rows = read_csv(temp_docs / "platform-kpi-tracker.csv")
-        script_fields, script_rows = read_csv(temp_docs / "kpi-tracker.csv")
-        post_imports = 0
         for proof_file in POST_PROOF_FILES:
-            update_post_from_text(sample_post_text(proof_file), queue_rows, platform_rows, script_rows)
-            post_imports += 1
-        post_issues = post_writeback.validate_rows(queue_fields, queue_rows, platform_fields, platform_rows, script_fields, script_rows)
-        if post_issues:
-            raise SystemExit("\n".join(post_issues))
-        write_csv(temp_docs / "posting-queue.csv", queue_fields, queue_rows)
-        write_csv(temp_docs / "platform-kpi-tracker.csv", platform_fields, platform_rows)
-        write_csv(temp_docs / "kpi-tracker.csv", script_fields, script_rows)
+            (temp_docs / proof_file.name).write_text(sample_post_text(proof_file), encoding="utf-8")
+        old_refresh_flag = os.environ.get(promotion_refresh.REFRESH_FLAG)
+        os.environ[promotion_refresh.REFRESH_FLAG] = "1"
+        try:
+            post_batch_packet = post_batch.build_packet()
+            post_batch.apply_batch(post_batch_packet)
+        finally:
+            if old_refresh_flag is None:
+                os.environ.pop(promotion_refresh.REFRESH_FLAG, None)
+            else:
+                os.environ[promotion_refresh.REFRESH_FLAG] = old_refresh_flag
+        post_imports = int(post_batch_packet["metrics"]["readyRows"])
 
         post_readiness = build_readiness(temp_docs)
         post_stage = transition_stage(post_readiness, temp_docs)
@@ -342,11 +323,13 @@ def run_sequence() -> dict[str, int]:
         "promotion_launch_sequence_dry_run_initial_ready_to_publish": int(bool(initial_readiness["readiness"]["readyToPublishPosts"])),
         "promotion_launch_sequence_dry_run_initial_stage": initial_stage,
         "promotion_launch_sequence_dry_run_profile_imports": profile_imports,
+        "promotion_launch_sequence_dry_run_profile_batch_ready": int(profile_batch_packet["metrics"]["readyRows"]),
         "promotion_launch_sequence_dry_run_profile_configured": int(profile_readiness["metrics"]["profileConfigured"]),
         "promotion_launch_sequence_dry_run_profile_ready_to_publish": int(bool(profile_readiness["readiness"]["readyToPublishPosts"])),
         "promotion_launch_sequence_dry_run_profile_stage": profile_stage,
         "promotion_launch_sequence_dry_run_profile_gate_ready": int(bool(profile_gate["state"]["readyForFirstBatchPublish"])),
         "promotion_launch_sequence_dry_run_post_imports": post_imports,
+        "promotion_launch_sequence_dry_run_post_batch_ready": int(post_batch_packet["metrics"]["readyRows"]),
         "promotion_launch_sequence_dry_run_first_batch_published": int(first_packet["publishedRows"]),
         "promotion_launch_sequence_dry_run_minimum_kpi_rows": int(first_packet["minimumKpiRows"]),
         "promotion_launch_sequence_dry_run_post_stage": post_stage,
@@ -362,10 +345,12 @@ def validate_metrics(metrics: dict[str, int]) -> list[str]:
     expected = {
         "promotion_launch_sequence_dry_run_initial_ready_to_publish": 0,
         "promotion_launch_sequence_dry_run_profile_imports": 3,
+        "promotion_launch_sequence_dry_run_profile_batch_ready": 3,
         "promotion_launch_sequence_dry_run_profile_configured": 3,
         "promotion_launch_sequence_dry_run_profile_ready_to_publish": 1,
         "promotion_launch_sequence_dry_run_profile_gate_ready": 1,
         "promotion_launch_sequence_dry_run_post_imports": 3,
+        "promotion_launch_sequence_dry_run_post_batch_ready": 3,
         "promotion_launch_sequence_dry_run_first_batch_published": 3,
         "promotion_launch_sequence_dry_run_minimum_kpi_rows": 3,
         "promotion_launch_sequence_dry_run_publishing_ready": 1,
@@ -395,11 +380,13 @@ def render_markdown(report: dict) -> str:
         f"- initial ready to publish：`{metrics['promotion_launch_sequence_dry_run_initial_ready_to_publish']}`",
         f"- initial stage：`{metrics['promotion_launch_sequence_dry_run_initial_stage']}`",
         f"- profile imports：{metrics['promotion_launch_sequence_dry_run_profile_imports']}",
+        f"- profile batch ready：{metrics['promotion_launch_sequence_dry_run_profile_batch_ready']}",
         f"- profile configured：{metrics['promotion_launch_sequence_dry_run_profile_configured']}",
         f"- profile ready to publish：`{metrics['promotion_launch_sequence_dry_run_profile_ready_to_publish']}`",
         f"- profile stage：`{metrics['promotion_launch_sequence_dry_run_profile_stage']}`",
         f"- profile gate ready：`{metrics['promotion_launch_sequence_dry_run_profile_gate_ready']}`",
         f"- post imports：{metrics['promotion_launch_sequence_dry_run_post_imports']}",
+        f"- post batch ready：{metrics['promotion_launch_sequence_dry_run_post_batch_ready']}",
         f"- first batch published：{metrics['promotion_launch_sequence_dry_run_first_batch_published']}",
         f"- minimum KPI rows：{metrics['promotion_launch_sequence_dry_run_minimum_kpi_rows']}",
         f"- post stage：`{metrics['promotion_launch_sequence_dry_run_post_stage']}`",
@@ -412,8 +399,8 @@ def render_markdown(report: dict) -> str:
         "## Rule",
         "",
         "- This is a temporary-directory dry run; current promotion CSV files must not mutate.",
-        "- Profile proof imports must open the profile gate before first-batch post imports.",
-        "- Post proof imports must produce three published rows, three minimum KPI rows, and traceable evidence.",
+        "- Profile proof batch import must open the profile gate before first-batch post imports.",
+        "- Post proof batch import must produce three published rows, three minimum KPI rows, and traceable evidence.",
         "- Blocker stage must move from profile_setup to first_batch_publish, then hold at weekly_evidence until real weekly review data exists.",
         "- Weekly decision can open only after the simulated post URL and KPI evidence path is complete.",
         "",

@@ -87,7 +87,7 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
         configured = bool(platform.get("configured"))
         identity_pending = identity_status.get(platform_id, {}).get("pending", 0)
         evidence_pending = evidence_status.get(platform_id, {}).get("pending", 0)
-        proof_note = f"screenshot profile-{platform_id}-{today()}.png verified"
+        suggested_proof_note = f"screenshot profile-{platform_id}-{today()}.png verified"
         action_status = "complete" if configured else "ready_to_configure"
         if identity_pending == 0 and evidence_pending == 0 and not configured:
             action_status = "ready_to_writeback"
@@ -103,9 +103,9 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
             "identity_checks": str(identity_counts.get(platform_id, 0)),
             "evidence_checks": str(evidence_counts.get(platform_id, 0)),
             "proof_file": f"docs/promotion/first-round/proof-{platform_id}.txt",
-            "proof_note": proof_note,
+            "proof_note": suggested_proof_note,
             "check_command": f"python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-{platform_id}.txt",
-            "write_command": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform_id}.txt --proof-note \"{proof_note}\"",
+            "write_command": f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform_id}.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
             "stop_condition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
         })
 
@@ -121,6 +121,10 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, object], list[str]]:
             issues.append(f"{platform}: profile link should be the first-round /start/ campaign URL")
         if not row["bio"]:
             issues.append(f"{platform}: missing bio copy")
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in row["write_command"]:
+            issues.append(f"{platform}: write command must force real proof replacement")
+        if row["proof_note"] in row["write_command"]:
+            issues.append(f"{platform}: write command must not reuse the scaffold proof note")
     if int(completion.get("metrics", {}).get("issues", 0) or 0) != 0:
         issues.append("profile completion gate reports issues")
 
@@ -180,7 +184,7 @@ def render_markdown(rows: list[dict[str, str]], metrics: dict[str, object], issu
             "```",
             "",
             f"- proof file：`{row['proof_file']}`",
-            f"- proof note：`{row['proof_note']}`",
+            f"- suggested proof note：`{row['proof_note']}`",
             f"- check：`{row['check_command']}`",
             f"- write：`{row['write_command']}`",
             f"- stop：{row['stop_condition']}",
@@ -195,7 +199,7 @@ def render_markdown(rows: list[dict[str, str]], metrics: dict[str, object], issu
 
 def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(fh, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

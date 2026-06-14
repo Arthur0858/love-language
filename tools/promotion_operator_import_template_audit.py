@@ -99,6 +99,12 @@ def validate() -> tuple[dict[str, int], list[str]]:
         expected_tool = EXPECTED_IMPORTS[import_id]["tool"]
         if expected_tool not in check_command:
             issues.append(f"{import_id}: checkCommand should reference {expected_tool}")
+        if import_id == "profile_setup_import":
+            write_command = str(item.get("writeCommand", ""))
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in write_command:
+                issues.append(f"{import_id}: writeCommand should force real proof replacement")
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in template:
+                issues.append(f"{import_id}: template should force real proof replacement")
         if not template:
             issues.append(f"{import_id}: template is empty")
             continue

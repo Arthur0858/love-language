@@ -29,7 +29,7 @@ profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_p
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 
 CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
-WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 === TikTok / tiktok ===
@@ -53,7 +53,7 @@ profile_link: https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_pr
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 
 CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-tiktok.txt
-WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "screenshot profile-tiktok-2026-06-14.png verified"
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 === Instagram Reels / instagram_reels ===
@@ -77,5 +77,5 @@ profile_link: https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 
 CHECK: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-instagram_reels.txt
-WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"
+WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.

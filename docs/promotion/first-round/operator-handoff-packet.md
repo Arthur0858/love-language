@@ -22,7 +22,7 @@
 ### Profile setup proof import
 
 - check：`python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt`
-- write：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note "screenshot profile-youtube_shorts-YYYY-MM-DD.png verified"`
+- write：`python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 ```text
 LoveTypes profile setup writeback
@@ -30,7 +30,7 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: screenshot profile-youtube_shorts-YYYY-MM-DD.png verified
+proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
 
 ### Published post URL and starter KPI import
@@ -80,7 +80,7 @@ page: https://lovetypes.tw/keepsakes/
 - priority：`high`
 - platform：youtube_shorts
 - url：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
+- writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -96,7 +96,7 @@ Evidence:
 - priority：`high`
 - platform：tiktok
 - url：https://lovetypes.tw/start/?utm_source=tiktok&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=tiktok_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
+- writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。
@@ -112,7 +112,7 @@ Evidence:
 - priority：`high`
 - platform：instagram_reels
 - url：https://lovetypes.tw/start/?utm_source=instagram&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=instagram_reels_bio
-- writeback：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
+- writeback：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 
 Evidence:
 - profile link 已實際貼到平台個人頁或說明欄。

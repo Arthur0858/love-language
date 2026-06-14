@@ -58,7 +58,7 @@ def profile_blocks(profile: dict) -> list[dict[str, str]]:
                 "status: set",
                 f"set_date: {date.today().isoformat()}",
                 f"profile_link: {row.get('profile_link', '')}",
-                f"proof_note: {row.get('proof_note', '')}",
+                "proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
             ]).strip(),
             "check_command": str(row.get("check_command", "")),
             "write_command": str(row.get("write_command", "")),
@@ -159,6 +159,11 @@ def validate_blocks(blocks: list[dict[str, str]], profile: dict, publish: dict, 
             issues.append(f"{label}: missing copy or proof block")
         if block["kind"] == "profile" and "Profile link:" not in block["copy"]:
             issues.append(f"{label}: profile copy missing Profile link")
+        if block["kind"] == "profile":
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in block["proof"]:
+                issues.append(f"{label}: profile proof should force real proof replacement")
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in block["write_command"]:
+                issues.append(f"{label}: profile write command should force real proof replacement")
         if block["kind"] == "post" and "完成 15 題測驗" not in block["copy"]:
             issues.append(f"{label}: post copy should keep quiz CTA")
         if not block.get("check_command"):

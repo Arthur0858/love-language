@@ -95,12 +95,12 @@ def build_packet() -> dict:
             "urlIssues": url_issues,
             "evidenceRequirements": evidence_requirements(),
             "writebackCommand": (
-                f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status set --set-date {date.today().isoformat()} --proof-note \"screenshot profile-{platform}-{date.today().isoformat()}.png verified\""
+                f"python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-{platform}.txt "
+                "--proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\""
             ),
             "liveCommand": (
                 f"python3 tools/promotion_profile_writeback.py update --platform {platform} "
-                f"--status live --set-date {date.today().isoformat()} --proof-note \"public URL profile link clicked {date.today().isoformat()}\""
+                f"--status live --set-date {date.today().isoformat()} --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\""
             ),
             "postWritebackCheck": [
                 "重新跑 promotion_launch_readiness_gate.py。",
@@ -165,8 +165,10 @@ def validate_packet(packet: dict) -> list[str]:
             issues.append(f"{label}: evidence requirements are incomplete")
         if "--proof-note" not in item.get("writebackCommand", ""):
             issues.append(f"{label}: writeback command must require proof note")
-        if "--status set" not in item.get("writebackCommand", ""):
-            issues.append(f"{label}: writeback command must set status")
+        if "promotion_profile_text_import.py add" not in item.get("writebackCommand", ""):
+            issues.append(f"{label}: writeback command should use profile text import")
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in item.get("writebackCommand", ""):
+            issues.append(f"{label}: writeback command must force real proof replacement")
         if not item.get("postWritebackCheck"):
             issues.append(f"{label}: missing post writeback checks")
     missing = set(PLATFORM_ORDER) - seen

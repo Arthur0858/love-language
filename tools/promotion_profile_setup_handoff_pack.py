@@ -136,6 +136,8 @@ def validate_rows(rows: list[dict[str, object]], action: dict, quickstart: dict,
             issues.append(f"{platform}: expected 6 evidence checks")
         if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(row.get("proofTemplate", "")):
             issues.append(f"{platform}: proof template should force real proof replacement")
+        if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(row.get("writeCommand", "")):
+            issues.append(f"{platform}: write command should force real proof replacement")
         if "--proof-note" not in str(row.get("writeCommand", "")):
             issues.append(f"{platform}: write command should require proof note")
         if not row.get("checkCommand") or not row.get("stopCondition"):

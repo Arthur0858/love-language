@@ -43,8 +43,8 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-14 --proof-note "screenshot profile-youtube_shorts-2026-06-14.png verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+- 設定完成：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### After Writeback
 
@@ -82,8 +82,8 @@ LoveTypes 心語庭園｜完成 15 題測驗，找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status set --set-date 2026-06-14 --proof-note "screenshot profile-tiktok-2026-06-14.png verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+- 設定完成：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-tiktok.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform tiktok --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### After Writeback
 
@@ -121,8 +121,8 @@ LoveTypes 心語庭園｜15 題找到你的情感守護者。
 
 ### Writeback
 
-- 設定完成：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status set --set-date 2026-06-14 --proof-note "screenshot profile-instagram_reels-2026-06-14.png verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "public URL profile link clicked 2026-06-14"`
+- 設定完成：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-instagram_reels.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform instagram_reels --status live --set-date 2026-06-14 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### After Writeback
 

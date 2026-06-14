@@ -207,7 +207,7 @@ def write_outputs(pack: dict) -> None:
             "write_command",
             "evidence_required",
         ]
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in pack["rows"])
 

@@ -184,14 +184,14 @@ def build_structured_imports(first_profile: dict[str, object], first_publish: di
             "id": "profile_setup_import",
             "title": "Profile setup proof import",
             "checkCommand": "python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt",
-            "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"screenshot profile-youtube_shorts-YYYY-MM-DD.png verified\"",
+            "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
             "template": "\n".join([
                 "LoveTypes profile setup writeback",
                 f"platform: {profile_platform}",
                 "status: set",
                 f"set_date: {date.today().isoformat()}",
                 f"profile_link: {profile_url}",
-                "proof_note: screenshot profile-youtube_shorts-YYYY-MM-DD.png verified",
+                "proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
             ]),
         },
         {
@@ -267,6 +267,11 @@ def validate_handoff(handoff: dict) -> list[str]:
                 issues.append(f"{label}: post import template should not contain URL-like placeholders")
             if "<REAL_" not in template:
                 issues.append(f"{label}: post import template should use explicit platform placeholder")
+        if item.get("id") == "profile_setup_import":
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in template:
+                issues.append(f"{label}: profile import template should force real proof replacement")
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(item.get("writeCommand", "")):
+                issues.append(f"{label}: profile import write command should force real proof replacement")
     for step in steps:
         label = f"{step.get('phase', '<phase>')}/{step.get('platform', step.get('taskId', ''))}"
         if not step.get("phase") or not step.get("status") or not step.get("priority"):
@@ -274,6 +279,10 @@ def validate_handoff(handoff: dict) -> list[str]:
         if step.get("phase") == "profile_setup":
             if "--proof-note" not in str(step.get("writebackCommand", "")):
                 issues.append(f"{label}: profile writeback should require proof note")
+            if "promotion_profile_text_import.py add" not in str(step.get("writebackCommand", "")):
+                issues.append(f"{label}: profile writeback should use profile text import")
+            if "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE>" not in str(step.get("writebackCommand", "")):
+                issues.append(f"{label}: profile writeback should force real proof replacement")
             if len(step.get("evidenceRequired", [])) < 5:
                 issues.append(f"{label}: profile evidence requirements incomplete")
         if step.get("phase") == "publish_first_batch":

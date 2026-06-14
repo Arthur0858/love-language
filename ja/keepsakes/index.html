@@ -423,7 +423,7 @@
     <label>私の守護者<select name="guardian" aria-label="私の守護者"><option value="">まだ不明。診断結果を優先</option><option value="iris">アイリス · 肯定の言葉</option><option value="noah">ノア · 上質な時間</option><option value="vivian">ヴィヴィアン · 贈り物</option><option value="claire">クレア · 奉仕の行動</option><option value="dora">ドーラ · 身体的なふれあい</option></select></label>
     <label>希望タイプ<select name="request_type" aria-label="希望タイプ" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
     <label>素材の希望<select name="asset" aria-label="素材の希望" required><option value="ストーリーカード / 印刷練習カード">ストーリーカード / 印刷練習カード</option><option value="スマホ壁紙">スマホ壁紙</option><option value="PDF 練習カード">PDF 練習カード</option><option value="Luna ダウンロードパック">Luna ダウンロードパック</option><option value="短い儀式や印刷セット">短い儀式や印刷セット</option></select></label>
-    <label>返信用 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="返信用 email" placeholder="name@example.com" required></label>
+    <label>返信用 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="返信用 email" placeholder="your@email.com" required></label>
     <label>Campaign content<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content" placeholder="例 iris_silence。なければ空欄"></label>
     <label class="lead-intake-full">使用場面やメモ<textarea name="context" rows="4" autocomplete="off" aria-label="使用場面やメモ" placeholder="例 就寝前の整理、衝突後の冷却、壁紙や PDF"></textarea></label>
   </div>
@@ -488,12 +488,38 @@
 
 <script>
 (() => {
-  const labels = {"title": "構造化リクエストフォーム", "intro": "希望を欄に整理してから、自分のメールで送信します。LoveTypes は次の無料カード、Luna 補給、修復素材の優先順位を決めるためだけに使い、テンプレート行を実際の名簿として扱いません。", "guardian": "私の守護者", "unknown_guardian": "まだ不明。診断結果を優先", "request_type": "希望タイプ", "asset": "素材の希望", "email": "返信用 email", "campaign": "Campaign content", "context": "使用場面やメモ", "consent": "LoveTypes がこの希望に返信してよいこと、緊急支援、診断、相談支援ではないことに同意します。", "email_placeholder": "name@example.com", "campaign_placeholder": "例 iris_silence。なければ空欄", "context_placeholder": "例 就寝前の整理、衝突後の冷却、壁紙や PDF", "submit": "整理して送信", "copy": "本文をコピー", "copied": "コピー済み", "required": "返信用 email を入力し、同意にチェックしてください。", "subject": "LoveTypes 守護者の構造化リクエスト", "source_label": "來源", "source_contact": "Contact 構造化リクエスト", "source_keepsake": "コレクション室の無料素材希望", "body_header": "LoveTypes 構造化リクエスト", "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
+  const labels = {"title": "構造化リクエストフォーム", "intro": "希望を欄に整理してから、自分のメールで送信します。LoveTypes は次の無料カード、Luna 補給、修復素材の優先順位を決めるためだけに使い、テンプレート行を実際の名簿として扱いません。", "guardian": "私の守護者", "unknown_guardian": "まだ不明。診断結果を優先", "request_type": "希望タイプ", "asset": "素材の希望", "email": "返信用 email", "campaign": "Campaign content", "context": "使用場面やメモ", "consent": "LoveTypes がこの希望に返信してよいこと、緊急支援、診断、相談支援ではないことに同意します。", "email_placeholder": "your@email.com", "campaign_placeholder": "例 iris_silence。なければ空欄", "context_placeholder": "例 就寝前の整理、衝突後の冷却、壁紙や PDF", "submit": "整理して送信", "copy": "本文をコピー", "copied": "コピー済み", "required": "返信用 email を入力し、同意にチェックしてください。", "invalid_email": "返信できる実際の email を使ってください。example、test、placeholder ドメインは使えません。", "subject": "LoveTypes 守護者の構造化リクエスト", "source_label": "來源", "source_contact": "Contact 構造化リクエスト", "source_keepsake": "コレクション室の無料素材希望", "body_header": "LoveTypes 構造化リクエスト", "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
   const forms = document.querySelectorAll('[data-lead-intake-form]');
   if (!forms.length) return;
 
   function value(form, name) {
     return (form.elements[name]?.value || '').trim();
+  }
+
+  function replyEmailIssue(form) {
+    const email = value(form, 'reply_email').toLowerCase();
+    const domain = email.includes('@') ? email.split('@').pop() : '';
+    const blockedTokens = ['example.', 'placeholder', 'replace', 'dummy', 'sample@', 'test@'];
+    const blockedDomains = ['example.com', 'example.net', 'example.org', 'test', 'invalid', 'localhost'];
+    if (!email) return '';
+    if (blockedTokens.some((token) => email.includes(token))) return labels.invalid_email;
+    if (blockedDomains.includes(domain) || domain.endsWith('.invalid') || domain.endsWith('.test')) return labels.invalid_email;
+    return '';
+  }
+
+  function formReady(form, error) {
+    const emailInput = form.elements.reply_email;
+    const issue = replyEmailIssue(form);
+    emailInput?.setCustomValidity(issue);
+    if (!form.checkValidity()) {
+      if (error) {
+        error.textContent = issue || labels.required;
+        error.hidden = false;
+      }
+      return false;
+    }
+    if (error) error.hidden = true;
+    return true;
   }
 
   function guardianLabel(form) {
@@ -550,23 +576,18 @@
       if (preview) preview.value = buildText(form);
       if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
       if (copyButton) copyButton.dataset.copyText = text;
+      form.elements.reply_email?.setCustomValidity(replyEmailIssue(form));
       if (error) error.hidden = true;
     }
     form.addEventListener('input', update);
     form.addEventListener('change', update);
     copyButton?.addEventListener('click', () => {
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       copyText(buildText(form), copyButton);
     });
     sendLink?.addEventListener('click', (event) => {
       event.preventDefault();
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       const text = buildText(form);
       if (preview) preview.value = text;
       location.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;

@@ -107,7 +107,7 @@
     <label>My guardian<select name="guardian" aria-label="My guardian"><option value="">Not sure yet; use my quiz result</option><option value="iris">Iris · Words of affirmation</option><option value="noah">Noah · Quality time</option><option value="vivian">Vivian · Receiving gifts</option><option value="claire">Claire · Acts of service</option><option value="dora">Dora · Physical touch</option></select></label>
     <label>Request type<select name="request_type" aria-label="Request type" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
     <label>Asset preference<select name="asset" aria-label="Asset preference" required><option value="Story card / printable practice card">Story card / printable practice card</option><option value="Phone wallpaper">Phone wallpaper</option><option value="PDF practice card">PDF practice card</option><option value="Luna download pack">Luna download pack</option><option value="Short ritual or printed pack">Short ritual or printed pack</option></select></label>
-    <label>Reply email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="Reply email" placeholder="name@example.com" required></label>
+    <label>Reply email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="Reply email" placeholder="your@email.com" required></label>
     <label>Campaign content<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content" placeholder="Example: iris_silence; leave blank if none"></label>
     <label class="lead-intake-full">Use case or note<textarea name="context" rows="4" autocomplete="off" aria-label="Use case or note" placeholder="Example: bedtime reflection, post-conflict cooling, wallpaper or PDF"></textarea></label>
   </div>
@@ -221,12 +221,38 @@ Extra screenshot or notes:
 
 <script>
 (() => {
-  const labels = {"title": "Structured request form", "intro": "Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.", "guardian": "My guardian", "unknown_guardian": "Not sure yet; use my quiz result", "request_type": "Request type", "asset": "Asset preference", "email": "Reply email", "campaign": "Campaign content", "context": "Use case or note", "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.", "email_placeholder": "name@example.com", "campaign_placeholder": "Example: iris_silence; leave blank if none", "context_placeholder": "Example: bedtime reflection, post-conflict cooling, wallpaper or PDF", "submit": "Prepare and send request", "copy": "Copy request text", "copied": "Copied", "required": "Enter a reply email and check consent first.", "subject": "LoveTypes structured guardian request", "source_label": "Source", "source_contact": "Contact structured request", "source_keepsake": "Keepsake free asset request", "body_header": "LoveTypes structured request", "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
+  const labels = {"title": "Structured request form", "intro": "Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.", "guardian": "My guardian", "unknown_guardian": "Not sure yet; use my quiz result", "request_type": "Request type", "asset": "Asset preference", "email": "Reply email", "campaign": "Campaign content", "context": "Use case or note", "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.", "email_placeholder": "your@email.com", "campaign_placeholder": "Example: iris_silence; leave blank if none", "context_placeholder": "Example: bedtime reflection, post-conflict cooling, wallpaper or PDF", "submit": "Prepare and send request", "copy": "Copy request text", "copied": "Copied", "required": "Enter a reply email and check consent first.", "invalid_email": "Use a real reply email; example, test, or placeholder domains are not accepted.", "subject": "LoveTypes structured guardian request", "source_label": "Source", "source_contact": "Contact structured request", "source_keepsake": "Keepsake free asset request", "body_header": "LoveTypes structured request", "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
   const forms = document.querySelectorAll('[data-lead-intake-form]');
   if (!forms.length) return;
 
   function value(form, name) {
     return (form.elements[name]?.value || '').trim();
+  }
+
+  function replyEmailIssue(form) {
+    const email = value(form, 'reply_email').toLowerCase();
+    const domain = email.includes('@') ? email.split('@').pop() : '';
+    const blockedTokens = ['example.', 'placeholder', 'replace', 'dummy', 'sample@', 'test@'];
+    const blockedDomains = ['example.com', 'example.net', 'example.org', 'test', 'invalid', 'localhost'];
+    if (!email) return '';
+    if (blockedTokens.some((token) => email.includes(token))) return labels.invalid_email;
+    if (blockedDomains.includes(domain) || domain.endsWith('.invalid') || domain.endsWith('.test')) return labels.invalid_email;
+    return '';
+  }
+
+  function formReady(form, error) {
+    const emailInput = form.elements.reply_email;
+    const issue = replyEmailIssue(form);
+    emailInput?.setCustomValidity(issue);
+    if (!form.checkValidity()) {
+      if (error) {
+        error.textContent = issue || labels.required;
+        error.hidden = false;
+      }
+      return false;
+    }
+    if (error) error.hidden = true;
+    return true;
   }
 
   function guardianLabel(form) {
@@ -283,23 +309,18 @@ Extra screenshot or notes:
       if (preview) preview.value = buildText(form);
       if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
       if (copyButton) copyButton.dataset.copyText = text;
+      form.elements.reply_email?.setCustomValidity(replyEmailIssue(form));
       if (error) error.hidden = true;
     }
     form.addEventListener('input', update);
     form.addEventListener('change', update);
     copyButton?.addEventListener('click', () => {
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       copyText(buildText(form), copyButton);
     });
     sendLink?.addEventListener('click', (event) => {
       event.preventDefault();
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       const text = buildText(form);
       if (preview) preview.value = text;
       location.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;

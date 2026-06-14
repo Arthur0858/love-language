@@ -1654,13 +1654,14 @@ LEAD_INTAKE_FORM = {
         "campaign": "Campaign content / 推廣內容",
         "context": "使用情境或備註",
         "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。",
-        "email_placeholder": "name@example.com",
+        "email_placeholder": "your@email.com",
         "campaign_placeholder": "例如 iris_silence；沒有可留白",
         "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF",
         "submit": "整理並寄出需求",
         "copy": "複製需求內容",
         "copied": "已複製",
         "required": "請先填寫可回覆 email 並勾選同意。",
+        "invalid_email": "請使用可回覆的真實 email；不要使用 example、test 或 placeholder 網域。",
         "subject": "LoveTypes 結構化守護者需求",
         "source_label": "來源",
         "source_contact": "Contact 結構化需求",
@@ -1680,13 +1681,14 @@ LEAD_INTAKE_FORM = {
         "campaign": "Campaign content",
         "context": "Use case or note",
         "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.",
-        "email_placeholder": "name@example.com",
+        "email_placeholder": "your@email.com",
         "campaign_placeholder": "Example: iris_silence; leave blank if none",
         "context_placeholder": "Example: bedtime reflection, post-conflict cooling, wallpaper or PDF",
         "submit": "Prepare and send request",
         "copy": "Copy request text",
         "copied": "Copied",
         "required": "Enter a reply email and check consent first.",
+        "invalid_email": "Use a real reply email; example, test, or placeholder domains are not accepted.",
         "subject": "LoveTypes structured guardian request",
         "source_label": "Source",
         "source_contact": "Contact structured request",
@@ -1706,13 +1708,14 @@ LEAD_INTAKE_FORM = {
         "campaign": "Campaign content",
         "context": "使用場面やメモ",
         "consent": "LoveTypes がこの希望に返信してよいこと、緊急支援、診断、相談支援ではないことに同意します。",
-        "email_placeholder": "name@example.com",
+        "email_placeholder": "your@email.com",
         "campaign_placeholder": "例 iris_silence。なければ空欄",
         "context_placeholder": "例 就寝前の整理、衝突後の冷却、壁紙や PDF",
         "submit": "整理して送信",
         "copy": "本文をコピー",
         "copied": "コピー済み",
         "required": "返信用 email を入力し、同意にチェックしてください。",
+        "invalid_email": "返信できる実際の email を使ってください。example、test、placeholder ドメインは使えません。",
         "subject": "LoveTypes 守護者の構造化リクエスト",
         "source_label": "來源",
         "source_contact": "Contact 構造化リクエスト",
@@ -1732,13 +1735,14 @@ LEAD_INTAKE_FORM = {
         "campaign": "Campaign content",
         "context": "사용 장면 또는 메모",
         "consent": "LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.",
-        "email_placeholder": "name@example.com",
+        "email_placeholder": "your@email.com",
         "campaign_placeholder": "예: iris_silence. 없으면 비워 두세요",
         "context_placeholder": "예: 잠들기 전 정리, 다툼 뒤 냉각, 배경화면 또는 PDF",
         "submit": "정리해서 보내기",
         "copy": "요청 내용 복사",
         "copied": "복사됨",
         "required": "답장 받을 email을 입력하고 동의에 체크해 주세요.",
+        "invalid_email": "답장 가능한 실제 email을 사용해 주세요. example, test, placeholder 도메인은 사용할 수 없습니다.",
         "subject": "LoveTypes 구조화 수호자 요청",
         "source_label": "출처",
         "source_contact": "Contact 구조화 요청",
@@ -1758,13 +1762,14 @@ LEAD_INTAKE_FORM = {
         "campaign": "Campaign content",
         "context": "Situación o nota",
         "consent": "Acepto que LoveTypes responda a esta petición y entiendo que no es apoyo de emergencia, diagnóstico ni terapia.",
-        "email_placeholder": "name@example.com",
+        "email_placeholder": "your@email.com",
         "campaign_placeholder": "Ejemplo: iris_silence; deja vacío si no hay",
         "context_placeholder": "Ejemplo: reflexión antes de dormir, calma tras conflicto, fondo o PDF",
         "submit": "Preparar y enviar",
         "copy": "Copiar petición",
         "copied": "Copiado",
         "required": "Escribe un email de respuesta y marca el consentimiento.",
+        "invalid_email": "Usa un email real de respuesta; no se aceptan dominios example, test ni placeholder.",
         "subject": "Petición estructurada LoveTypes",
         "source_label": "Fuente",
         "source_contact": "Petición estructurada de Contacto",
@@ -9511,6 +9516,32 @@ def lead_intake_form_script(lang: str) -> str:
     return (form.elements[name]?.value || '').trim();
   }}
 
+  function replyEmailIssue(form) {{
+    const email = value(form, 'reply_email').toLowerCase();
+    const domain = email.includes('@') ? email.split('@').pop() : '';
+    const blockedTokens = ['example.', 'placeholder', 'replace', 'dummy', 'sample@', 'test@'];
+    const blockedDomains = ['example.com', 'example.net', 'example.org', 'test', 'invalid', 'localhost'];
+    if (!email) return '';
+    if (blockedTokens.some((token) => email.includes(token))) return labels.invalid_email;
+    if (blockedDomains.includes(domain) || domain.endsWith('.invalid') || domain.endsWith('.test')) return labels.invalid_email;
+    return '';
+  }}
+
+  function formReady(form, error) {{
+    const emailInput = form.elements.reply_email;
+    const issue = replyEmailIssue(form);
+    emailInput?.setCustomValidity(issue);
+    if (!form.checkValidity()) {{
+      if (error) {{
+        error.textContent = issue || labels.required;
+        error.hidden = false;
+      }}
+      return false;
+    }}
+    if (error) error.hidden = true;
+    return true;
+  }}
+
   function guardianLabel(form) {{
     const select = form.elements.guardian;
     return select?.selectedOptions?.[0]?.textContent?.trim() || labels.unknown_guardian;
@@ -9565,23 +9596,18 @@ def lead_intake_form_script(lang: str) -> str:
       if (preview) preview.value = buildText(form);
       if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(text)}}`;
       if (copyButton) copyButton.dataset.copyText = text;
+      form.elements.reply_email?.setCustomValidity(replyEmailIssue(form));
       if (error) error.hidden = true;
     }}
     form.addEventListener('input', update);
     form.addEventListener('change', update);
     copyButton?.addEventListener('click', () => {{
-      if (!form.checkValidity()) {{
-        if (error) error.hidden = false;
-        return;
-      }}
+      if (!formReady(form, error)) return;
       copyText(buildText(form), copyButton);
     }});
     sendLink?.addEventListener('click', (event) => {{
       event.preventDefault();
-      if (!form.checkValidity()) {{
-        if (error) error.hidden = false;
-        return;
-      }}
+      if (!formReady(form, error)) return;
       const text = buildText(form);
       if (preview) preview.value = text;
       location.href = `mailto:contact@lovetypes.tw?subject=${{encodeURIComponent(labels.subject)}}&body=${{encodeURIComponent(text)}}`;

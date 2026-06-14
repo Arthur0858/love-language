@@ -31,6 +31,7 @@ REQUIRED_FORM_KEYS = {
     "copy",
     "copied",
     "required",
+    "invalid_email",
     "subject",
     "source_label",
     "source_contact",
@@ -134,6 +135,10 @@ def audit() -> dict:
             issues.append(f"{lang}: lead form type_options do not match lead-intake playbook")
         if len(form["asset_options"]) < 5:
             issues.append(f"{lang}: lead form should offer at least five asset preferences")
+        if "example.com" in form["email_placeholder"].lower() or "name@" in form["email_placeholder"].lower():
+            issues.append(f"{lang}: lead form email placeholder should not use example/sample email text")
+        if not any(token in form["invalid_email"].lower() for token in ("example", "test", "placeholder")):
+            issues.append(f"{lang}: invalid_email text should mention blocked placeholder/test email domains")
         for safety_token in ("emergency", "診斷", "諮商", "diagnosis", "counseling", "緊急", "상담", "terapia"):
             if safety_token.lower() in form["consent"].lower():
                 break
@@ -146,6 +151,10 @@ def audit() -> dict:
                 issues.append(f"{lang}/{slug}: missing rendered page")
                 continue
             html = html_path.read_text(encoding="utf-8")
+            if 'placeholder="name@example.com"' in html:
+                issues.append(f"{lang}/{slug}: rendered lead form should not use name@example.com placeholder")
+            if "blockedDomains" not in html or "setCustomValidity" not in html:
+                issues.append(f"{lang}/{slug}: rendered lead form missing reserved email domain guard")
             source_marker = f'data-lead-intake-source="{source}"'
             if source_marker not in html:
                 issues.append(f"{lang}/{slug}: missing {source_marker}")

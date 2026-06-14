@@ -107,7 +107,7 @@
     <label>我的守護者<select name="guardian" aria-label="我的守護者"><option value="">還不確定，請以測驗結果為準</option><option value="iris">艾莉絲 · 肯定的言詞</option><option value="noah">諾雅 · 優質的時光</option><option value="vivian">薇薇安 · 接受禮物</option><option value="claire">克萊兒 · 服務的行動</option><option value="dora">朵拉 · 身體的接觸</option></select></label>
     <label>需求類型<select name="request_type" aria-label="需求類型" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
     <label>素材偏好<select name="asset" aria-label="素材偏好" required><option value="故事卡 / 可列印練習卡">故事卡 / 可列印練習卡</option><option value="手機桌布">手機桌布</option><option value="PDF 練習卡">PDF 練習卡</option><option value="Luna 下載包">Luna 下載包</option><option value="短儀式或印刷包">短儀式或印刷包</option></select></label>
-    <label>可回覆 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="可回覆 email" placeholder="name@example.com" required></label>
+    <label>可回覆 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="可回覆 email" placeholder="your@email.com" required></label>
     <label>Campaign content / 推廣內容<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content / 推廣內容" placeholder="例如 iris_silence；沒有可留白"></label>
     <label class="lead-intake-full">使用情境或備註<textarea name="context" rows="4" autocomplete="off" aria-label="使用情境或備註" placeholder="例如睡前整理、衝突後冷卻、想要桌布或 PDF"></textarea></label>
   </div>
@@ -221,12 +221,38 @@
 
 <script>
 (() => {
-  const labels = {"title": "結構化需求表單", "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。", "guardian": "我的守護者", "unknown_guardian": "還不確定，請以測驗結果為準", "request_type": "需求類型", "asset": "素材偏好", "email": "可回覆 email", "campaign": "Campaign content / 推廣內容", "context": "使用情境或備註", "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。", "email_placeholder": "name@example.com", "campaign_placeholder": "例如 iris_silence；沒有可留白", "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF", "submit": "整理並寄出需求", "copy": "複製需求內容", "copied": "已複製", "required": "請先填寫可回覆 email 並勾選同意。", "subject": "LoveTypes 結構化守護者需求", "source_label": "來源", "source_contact": "Contact 結構化需求", "source_keepsake": "收藏室免費素材需求", "body_header": "LoveTypes 結構化需求", "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
+  const labels = {"title": "結構化需求表單", "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。", "guardian": "我的守護者", "unknown_guardian": "還不確定，請以測驗結果為準", "request_type": "需求類型", "asset": "素材偏好", "email": "可回覆 email", "campaign": "Campaign content / 推廣內容", "context": "使用情境或備註", "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。", "email_placeholder": "your@email.com", "campaign_placeholder": "例如 iris_silence；沒有可留白", "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF", "submit": "整理並寄出需求", "copy": "複製需求內容", "copied": "已複製", "required": "請先填寫可回覆 email 並勾選同意。", "invalid_email": "請使用可回覆的真實 email；不要使用 example、test 或 placeholder 網域。", "subject": "LoveTypes 結構化守護者需求", "source_label": "來源", "source_contact": "Contact 結構化需求", "source_keepsake": "收藏室免費素材需求", "body_header": "LoveTypes 結構化需求", "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"]};
   const forms = document.querySelectorAll('[data-lead-intake-form]');
   if (!forms.length) return;
 
   function value(form, name) {
     return (form.elements[name]?.value || '').trim();
+  }
+
+  function replyEmailIssue(form) {
+    const email = value(form, 'reply_email').toLowerCase();
+    const domain = email.includes('@') ? email.split('@').pop() : '';
+    const blockedTokens = ['example.', 'placeholder', 'replace', 'dummy', 'sample@', 'test@'];
+    const blockedDomains = ['example.com', 'example.net', 'example.org', 'test', 'invalid', 'localhost'];
+    if (!email) return '';
+    if (blockedTokens.some((token) => email.includes(token))) return labels.invalid_email;
+    if (blockedDomains.includes(domain) || domain.endsWith('.invalid') || domain.endsWith('.test')) return labels.invalid_email;
+    return '';
+  }
+
+  function formReady(form, error) {
+    const emailInput = form.elements.reply_email;
+    const issue = replyEmailIssue(form);
+    emailInput?.setCustomValidity(issue);
+    if (!form.checkValidity()) {
+      if (error) {
+        error.textContent = issue || labels.required;
+        error.hidden = false;
+      }
+      return false;
+    }
+    if (error) error.hidden = true;
+    return true;
   }
 
   function guardianLabel(form) {
@@ -283,23 +309,18 @@
       if (preview) preview.value = buildText(form);
       if (sendLink) sendLink.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;
       if (copyButton) copyButton.dataset.copyText = text;
+      form.elements.reply_email?.setCustomValidity(replyEmailIssue(form));
       if (error) error.hidden = true;
     }
     form.addEventListener('input', update);
     form.addEventListener('change', update);
     copyButton?.addEventListener('click', () => {
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       copyText(buildText(form), copyButton);
     });
     sendLink?.addEventListener('click', (event) => {
       event.preventDefault();
-      if (!form.checkValidity()) {
-        if (error) error.hidden = false;
-        return;
-      }
+      if (!formReady(form, error)) return;
       const text = buildText(form);
       if (preview) preview.value = text;
       location.href = `mailto:contact@lovetypes.tw?subject=${encodeURIComponent(labels.subject)}&body=${encodeURIComponent(text)}`;

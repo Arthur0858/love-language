@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-06-14",
+  "sources": {
+    "trackedFiles": [
+      "docs/promotion/first-round/lead-intake-tracker.csv",
+      "docs/promotion/first-round/asset-build-backlog.json",
+      "docs/promotion/first-round/lead-magnet-inventory.json",
+      "docs/promotion/first-round/lead-demand-gate.json",
+      "docs/promotion/first-round/offer-experiment-queue.json"
+    ],
+    "syntheticRequest": "iris owned_asset_request PDF practice card in a temporary directory"
+  },
+  "metrics": {
+    "rows": 40,
+    "readyToPrepare": 5,
+    "publicFreeReady": 5,
+    "readyAfterRealRequest": 1,
+    "readyAfterOfferGate": 0,
+    "blockedUntilRealRequest": 19,
+    "blockedUntilOfferReady": 10,
+    "blockedMissingInventory": 0,
+    "realLeads": 1,
+    "requestedAssetTypes": 1,
+    "readyOfferAssets": 0,
+    "readyDemandPairs": 0
+  },
+  "checks": {
+    "real_leads": true,
+    "requested_asset_types": true,
+    "ready_after_real_request": true,
+    "pdf_ready": true,
+    "wallpaper_blocked": true,
+    "short_ritual_blocked": true,
+    "email_template_blocked": true,
+    "commercial_ready": true,
+    "current_files_mutated": true
+  },
+  "statuses": {
+    "pdf": "ready_after_real_request",
+    "wallpaper": "blocked_until_real_request",
+    "short_ritual": "blocked_until_real_request",
+    "email_template": "blocked_until_real_request"
+  },
+  "commercialReady": 0,
+  "currentFilesMutated": false,
+  "issues": []
+}

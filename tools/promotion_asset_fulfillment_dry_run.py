@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
+import json
 import shutil
 import tempfile
+from datetime import date
 from pathlib import Path
 
 import promotion_asset_fulfillment_gate as fulfillment
@@ -12,6 +15,8 @@ import promotion_asset_fulfillment_gate as fulfillment
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "docs" / "promotion" / "first-round"
+REPORT_MD = SOURCE_DIR / "asset-fulfillment-dry-run.md"
+REPORT_JSON = SOURCE_DIR / "asset-fulfillment-dry-run.json"
 TRACKED_FILES = (
     SOURCE_DIR / "lead-intake-tracker.csv",
     SOURCE_DIR / "asset-build-backlog.json",
@@ -19,6 +24,10 @@ TRACKED_FILES = (
     SOURCE_DIR / "lead-demand-gate.json",
     SOURCE_DIR / "offer-experiment-queue.json",
 )
+
+
+def today() -> str:
+    return date.today().isoformat()
 
 
 def file_hashes(paths: tuple[Path, ...]) -> dict[Path, str]:
@@ -72,7 +81,50 @@ def row_status(gate: dict, asset_id: str) -> str:
     return ""
 
 
-def main() -> int:
+def render_markdown(report: dict) -> str:
+    metrics = report["metrics"]
+    checks = report["checks"]
+    lines = [
+        "# LoveTypes Asset Fulfillment Dry Run",
+        "",
+        f"- 產生日期：{report['generatedAt']}",
+        f"- real leads：{metrics['realLeads']}",
+        f"- requested asset types：{metrics['requestedAssetTypes']}",
+        f"- ready after real request：{metrics['readyAfterRealRequest']}",
+        f"- PDF ready：`{int(checks['pdf_ready'])}`",
+        f"- wallpaper blocked：`{int(checks['wallpaper_blocked'])}`",
+        f"- short ritual blocked：`{int(checks['short_ritual_blocked'])}`",
+        f"- email template blocked：`{int(checks['email_template_blocked'])}`",
+        f"- commercial ready：{report['commercialReady']}",
+        f"- current files mutated：`{int(report['currentFilesMutated'])}`",
+        f"- issues：{len(report['issues'])}",
+        "",
+        "## Rule",
+        "",
+        "- This dry run appends one synthetic PDF request inside a temporary directory only.",
+        "- One real owned-asset request may open the matching free PDF practice card.",
+        "- Wallpaper, short ritual, email template, paid assets, Luna packs, and commercial offers must remain blocked without stronger evidence.",
+        "- Current lead, asset, demand, and offer files must not mutate.",
+        "",
+        "## Asset Status",
+        "",
+    ]
+    for asset, status in report["statuses"].items():
+        lines.append(f"- `{asset}`：`{status}`")
+    lines.append("")
+    if report["issues"]:
+        lines.extend(["## Issues", ""])
+        lines.extend(f"- {issue}" for issue in report["issues"])
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_report(payload: dict) -> None:
+    REPORT_MD.write_text(render_markdown(payload), encoding="utf-8")
+    REPORT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def run_dry_run() -> tuple[dict, dict, dict[str, str], int, bool, list[str]]:
     before = file_hashes(TRACKED_FILES)
     issues: list[str] = []
     with tempfile.TemporaryDirectory(prefix="lovetypes-asset-fulfillment-") as temp_name:
@@ -113,6 +165,30 @@ def main() -> int:
         if not ok:
             issues.append(name)
     issues.extend(gate["issues"])
+    return metrics, checks, statuses, commercial_ready, mutated, issues
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Dry-run LoveTypes asset fulfillment gating from one real PDF request.")
+    parser.add_argument("--write-report", action="store_true", help="Write a dated md/json dry-run report.")
+    args = parser.parse_args()
+    metrics, checks, statuses, commercial_ready, mutated, issues = run_dry_run()
+    if args.write_report:
+        write_report({
+            "generatedAt": today(),
+            "sources": {
+                "trackedFiles": [str(path.relative_to(ROOT)) for path in TRACKED_FILES],
+                "syntheticRequest": "iris owned_asset_request PDF practice card in a temporary directory",
+            },
+            "metrics": metrics,
+            "checks": checks,
+            "statuses": statuses,
+            "commercialReady": commercial_ready,
+            "currentFilesMutated": mutated,
+            "issues": issues,
+        })
+        print(f"promotion_asset_fulfillment_dry_run_report={REPORT_MD.relative_to(ROOT)}")
+        print(f"promotion_asset_fulfillment_dry_run_report_json={REPORT_JSON.relative_to(ROOT)}")
 
     print(f"promotion_asset_fulfillment_dry_run_real_leads={metrics['realLeads']}")
     print(f"promotion_asset_fulfillment_dry_run_requested_asset_types={metrics['requestedAssetTypes']}")

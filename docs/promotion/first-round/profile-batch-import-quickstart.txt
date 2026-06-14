@@ -1,0 +1,4 @@
+generated: 2026-06-14
+ready=0 blocked=3 invalid=0 issues=0
+check: python3 tools/promotion_profile_batch_import.py --check
+add: python3 tools/promotion_profile_batch_import.py --add

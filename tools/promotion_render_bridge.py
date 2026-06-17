@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shlex
 import subprocess
 import sys
 from datetime import date, datetime
@@ -31,10 +32,10 @@ CLAIM_GUARDRAILS = [
 ]
 VOICE_ROLE_BY_GUARDIAN = {
     "iris": "heroine_warm",
-    "noah": "calm_male",
-    "vivian": "elegant_feminine",
-    "claire": "grounded_feminine",
-    "dora": "soft_feminine",
+    "noah": "mysterious_strong",
+    "vivian": "bright_girl",
+    "claire": "calm_analyst",
+    "dora": "mature_narrator",
 }
 SCENE_IDS = ("hook", "mirror", "choices", "insight", "cta")
 SCENE_DURATIONS = (2.5, 3.5, 7.0, 4.0, 6.0)
@@ -131,7 +132,7 @@ def build_script(row: dict, task: dict, job_id: str) -> dict:
     guardian = str(row.get("guardianId") or task.get("guardianId") or "iris")
     guardian_name = str(task.get("guardianName") or row.get("guardianName") or guardian.title())
     scheduled = str(row.get("scheduledDate") or date.today().isoformat())
-    publish_at = f"{scheduled}T20:30:00-04:00"
+    publish_at = f"{scheduled}T20:30:00+08:00"
     subtitles = compress_subtitles([str(item) for item in task.get("subtitleLines", [])])
     prompt = visual_prompt(task)
     narration = "\n".join(subtitles)
@@ -149,11 +150,11 @@ def build_script(row: dict, task: dict, job_id: str) -> dict:
         "id": job_id,
         "guardian_id": guardian,
         "guardian_name": guardian_name,
-        "language": "en-US",
-        "locale": "en-US",
-        "market": "United States",
+        "language": "zh-TW",
+        "locale": "zh-TW",
+        "market": "Taiwan",
         "scheduled_publish_time": publish_at,
-        "publish_timezone": "America/New_York",
+        "publish_timezone": "Asia/Taipei",
         "target_platform": "youtube_shorts",
         "destination_url": str(row.get("trackedUrl") or task.get("trackedUrl") or "https://lovetypes.tw/start/"),
         "voice_role_id": VOICE_ROLE_BY_GUARDIAN.get(guardian, "heroine_warm"),
@@ -214,6 +215,119 @@ def count_guardian_loops(guardian_id: str) -> int:
     return len(seen)
 
 
+def select_guardian_loop(guardian_id: str, resolution: str = "720p") -> dict:
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SHORTS_FACTORY / "scripts" / "select_pika_loop_from_library.py"),
+            "--guardian-id",
+            guardian_id,
+            "--library-root",
+            str(LOOP_LIBRARY_ROOT),
+            "--resolution",
+            resolution,
+        ],
+        cwd=str(SHORTS_FACTORY),
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+    )
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "resolution": resolution,
+            "error": result.stdout.strip(),
+        }
+    try:
+        payload = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {
+            "ok": False,
+            "resolution": resolution,
+            "error": result.stdout.strip(),
+        }
+    return {
+        "ok": True,
+        "resolution": payload.get("resolution") or resolution,
+        "selected_video": payload.get("selected_video"),
+        "selected_metadata": payload.get("selected_metadata"),
+        "variant_id": payload.get("variant_id"),
+    }
+
+
+def arthurnb_loop_availability(guardian_id: str, resolution: str = "720p") -> dict:
+    remote_root = "/mnt/project-data-center/assets/pika-loop-library"
+    code = f"""
+import json
+from pathlib import Path
+guardian = {guardian_id!r}
+root = Path({remote_root!r})
+loops = sorted((root / "guardians" / guardian / "loops").glob("*.mp4")) if root.exists() else []
+manifest = root / "guardians" / guardian / "metadata" / "approved_assets.json"
+approved_count = 0
+manifest_readable = False
+if manifest.exists():
+    try:
+        data = json.loads(manifest.read_text(encoding="utf-8"))
+        manifest_readable = True
+        if isinstance(data, dict):
+            data = data.get("assets", [])
+        if isinstance(data, list):
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                item_resolution = str(item.get("resolution") or item.get("pika_resolution_setting") or {resolution!r}).lower()
+                if item.get("guardian_id") == guardian and item.get("approved_for_random_render") is True and {resolution!r} in item_resolution:
+                    approved_count += 1
+    except Exception:
+        pass
+print(json.dumps({{
+    "ok": bool(root.exists() and loops and manifest_readable and approved_count > 0),
+    "root": str(root),
+    "root_exists": root.exists(),
+    "loop_count": len(loops),
+    "manifest": str(manifest),
+    "manifest_exists": manifest.exists(),
+    "manifest_readable": manifest_readable,
+    "approved_manifest_count": approved_count,
+    "resolution": {resolution!r},
+}}, ensure_ascii=False))
+"""
+    result = subprocess.run(
+        [
+            "ssh",
+            "-o",
+            "BatchMode=yes",
+            "-o",
+            "ConnectTimeout=8",
+            "arthurnb-wsl",
+            f"python3 -c {shlex.quote(code)}",
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+        timeout=15,
+    )
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "root": remote_root,
+            "resolution": resolution,
+            "error": result.stdout.strip(),
+        }
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {
+            "ok": False,
+            "root": remote_root,
+            "resolution": resolution,
+            "error": result.stdout.strip(),
+        }
+
+
 def render_preflight(rows: list[dict]) -> dict:
     guardians = sorted({str(row.get("guardianId") or "iris") for row in rows})
     required_paths = {
@@ -223,6 +337,8 @@ def render_preflight(rows: list[dict]) -> dict:
         "loopLibraryRoot": LOOP_LIBRARY_ROOT.exists(),
     }
     loop_counts = {guardian: count_guardian_loops(guardian) for guardian in guardians}
+    loop_selections = {guardian: select_guardian_loop(guardian) for guardian in guardians}
+    arthur_loop_availability = {guardian: arthurnb_loop_availability(guardian) for guardian in guardians}
     busy_jobs: list[dict] = []
     for state in ("pending", "in-progress"):
         state_root = JOBS_ROOT / state
@@ -241,11 +357,19 @@ def render_preflight(rows: list[dict]) -> dict:
     for guardian, count in loop_counts.items():
         if count <= 0:
             issues.append(f"no approved loop mp4 found for guardian: {guardian}")
+    for guardian, selection in loop_selections.items():
+        if not selection.get("ok"):
+            issues.append(f"local selector cannot choose approved 720p loop for guardian: {guardian}: {selection.get('error')}")
+    for guardian, availability in arthur_loop_availability.items():
+        if not availability.get("ok"):
+            issues.append(f"ArthurNB cannot see approved 720p loop library for guardian: {guardian}: {availability}")
     return {
         "checkedAt": datetime.now().astimezone().isoformat(timespec="seconds"),
         "projectDataCenterRoot": str(DATA_CENTER_ROOT),
         "requiredPaths": required_paths,
         "guardianLoopCounts": loop_counts,
+        "guardianLoopSelections": loop_selections,
+        "arthurNBRuntimeLoopAvailability": arthur_loop_availability,
         "busyRenderJobs": busy_jobs,
         "busyRenderJobCount": len(busy_jobs),
         "ready": not issues,

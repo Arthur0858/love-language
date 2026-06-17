@@ -106,6 +106,19 @@ def choose_job_id(row: dict) -> tuple[str, int]:
     raise SystemExit(f"no unused promo job id available for {guardian} on {scheduled}")
 
 
+def existing_rendered_job(row: dict) -> tuple[str, int] | None:
+    guardian = str(row.get("guardianId", "iris") or "iris")
+    scheduled = str(row.get("scheduledDate") or date.today().isoformat())
+    for week in range(51, 100):
+        job_id = f"guardian-en-us-{scheduled}-{guardian}-w{week:02d}"
+        output_dir = OUTPUTS_ROOT / job_id
+        final_video = output_dir / f"{job_id}.mp4"
+        ready_marker = output_dir / "ready_for_desktop_publish.json"
+        if final_video.exists() and ready_marker.exists():
+            return job_id, week
+    return None
+
+
 def compress_subtitles(lines: list[str]) -> list[str]:
     cleaned = [line.strip() for line in lines if str(line).strip()]
     if len(cleaned) >= 5:
@@ -382,10 +395,11 @@ def write_handoff_run(output_dir: Path, payload: dict) -> dict:
     for row in payload.get("rows", []):
         handoff_rows.append({
             "job_id": row["renderJobId"],
-            "status": "bridge_ready",
-            "ready_for_desktop_publish": False,
+            "status": "ready_for_desktop_publish" if row.get("readyForDesktopPublish") else "bridge_ready",
+            "ready_for_desktop_publish": bool(row.get("readyForDesktopPublish")),
             "script_json": row["scriptJson"],
             "expected_output": row["projectDataCenterOutput"],
+            "ready_marker": row.get("readyForDesktopPublishJson"),
             "source_task_id": row.get("taskId"),
             "validation": row.get("validation", {}),
         })
@@ -395,12 +409,12 @@ def write_handoff_run(output_dir: Path, payload: dict) -> dict:
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "mode": "dry_run",
         "bridge_mode": "promotion_render_bridge",
-        "ready_for_upload_queue": False,
+        "ready_for_upload_queue": any(row.get("ready_for_desktop_publish") for row in handoff_rows),
         "safety": payload.get("safety", {}),
         "jobs": handoff_rows,
         "notes": [
-            "This handoff does not contain rendered MP4 outputs.",
-            "Upload queue creation must wait until ready_for_desktop_publish.json and the final MP4 exist under ProjectDataCenter outputs.",
+            "Upload queue creation requires ready_for_desktop_publish.json and the final MP4 under ProjectDataCenter outputs.",
+            "This handoff does not upload, publish, or schedule anything.",
         ],
     }
     results = {
@@ -426,9 +440,17 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
     for row in rows:
         task_id = str(row.get("taskId", ""))
         task = tasks.get(task_id, {})
-        job_id, week = choose_job_id(row)
+        rendered = existing_rendered_job(row)
+        if rendered:
+            job_id, week = rendered
+        else:
+            job_id, week = choose_job_id(row)
         script = build_script(row, task, job_id)
         script_path = output_dir / "scripts" / f"{job_id}.json"
+        output_dir_for_job = OUTPUTS_ROOT / job_id
+        final_video = output_dir_for_job / f"{job_id}.mp4"
+        ready_marker = output_dir_for_job / "ready_for_desktop_publish.json"
+        ready_for_desktop = final_video.exists() and ready_marker.exists()
         validation = {"valid": False, "error": "not written"}
         if write_scripts:
             write_json(script_path, script)
@@ -443,10 +465,13 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
             "renderJobId": job_id,
             "renderWeek": week,
             "scriptJson": str(script_path),
-            "projectDataCenterOutput": str(OUTPUTS_ROOT / job_id / f"{job_id}.mp4"),
+            "projectDataCenterOutput": str(final_video),
+            "projectDataCenterOutputExists": final_video.exists(),
+            "readyForDesktopPublishJson": str(ready_marker),
+            "readyForDesktopPublish": ready_for_desktop,
             "nightlyCompatible": True,
-            "uploadQueueCompatible": False,
-            "uploadQueueCompatibleAfterRender": True,
+            "uploadQueueCompatible": ready_for_desktop,
+            "uploadQueueCompatibleAfterRender": not ready_for_desktop,
             "validation": validation,
             "existingJobQueueLocation": job_queue_location(job_id),
         })
@@ -459,8 +484,11 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
         validation = item.get("validation", {})
         if write_scripts and not validation.get("valid"):
             issues.append(f"{item['renderJobId']}: script validation failed: {validation.get('error')}")
-        if item.get("existingJobQueueLocation"):
+        queue_location = item.get("existingJobQueueLocation")
+        if queue_location in {"pending", "in-progress"}:
             issues.append(f"{item['renderJobId']}: job already exists in {item['existingJobQueueLocation']}")
+        if queue_location == "failed" and not item.get("readyForDesktopPublish"):
+            issues.append(f"{item['renderJobId']}: job exists in failed and has no ready output")
     preflight = render_preflight(rows) if include_render_preflight else None
     if preflight:
         issues.extend(preflight["issues"])

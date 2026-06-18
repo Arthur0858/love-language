@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15",
+  "generatedAt": "2026-06-18",
   "sources": {
     "leadTracker": "docs/promotion/first-round/lead-intake-tracker.csv",
     "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
@@ -44,7 +44,7 @@
       "phase": "writeback",
       "status": "blocked_until_real_request",
       "owner_action": "Write back only real requests with explicit reply consent and a traceable proof note; never store raw email in the CSV.",
-      "command": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked 2026-06-15\"",
+      "command": "python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note \"email thread Gmail request checked 2026-06-18\"",
       "evidence_required": "lead-intake-tracker.csv gains one real row, and matched utm_content increments the mapped KPI field.",
       "next_gate": "lead_evidence_checklist"
     },

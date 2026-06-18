@@ -1,6 +1,6 @@
 # LoveTypes Lead Writeback Playbook
 
-- 產生日期：2026-06-15
+- 產生日期：2026-06-18
 - real leads：0
 - template rows：15
 - issues：0
@@ -11,28 +11,28 @@
 
 ### 艾莉絲（`iris`）
 
-- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread iris-owned request checked 2026-06-15"`
-- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread iris-luna request checked 2026-06-15"`
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian iris --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread iris-owned request checked 2026-06-18"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian iris --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread iris-luna request checked 2026-06-18"`
 
 ### 諾雅（`noah`）
 
-- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread noah-owned request checked 2026-06-15"`
-- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread noah-luna request checked 2026-06-15"`
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian noah --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread noah-owned request checked 2026-06-18"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian noah --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread noah-luna request checked 2026-06-18"`
 
 ### 薇薇安（`vivian`）
 
-- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread vivian-owned request checked 2026-06-15"`
-- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread vivian-luna request checked 2026-06-15"`
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian vivian --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread vivian-owned request checked 2026-06-18"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian vivian --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread vivian-luna request checked 2026-06-18"`
 
 ### 克萊兒（`claire`）
 
-- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread claire-owned request checked 2026-06-15"`
-- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread claire-luna request checked 2026-06-15"`
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian claire --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread claire-owned request checked 2026-06-18"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian claire --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread claire-luna request checked 2026-06-18"`
 
 ### 朵拉（`dora`）
 
-- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread dora-owned request checked 2026-06-15"`
-- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread dora-luna request checked 2026-06-15"`
+- 自有素材需求：`python3 tools/promotion_lead_writeback.py add --source contact --guardian dora --intake-type owned_asset_request --consent-status explicit_reply_ok --proof-note "email thread dora-owned request checked 2026-06-18"`
+- Luna 場景需求：`python3 tools/promotion_lead_writeback.py add --source luna_page --guardian dora --intake-type luna_scene_request --consent-status explicit_reply_ok --proof-note "email thread dora-luna request checked 2026-06-18"`
 
 ## 結構化文字匯入
 

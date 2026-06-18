@@ -1,6 +1,6 @@
 # LoveTypes Post Ops Readiness Pack
 
-- 產生日期：2026-06-15
+- 產生日期：2026-06-18
 - rows：1
 - published：0
 - blocked：1
@@ -30,4 +30,4 @@
 - public complete / pending / verify：0 / 8 / 0
 - zero complete / pending / needs source：0 / 3 / 0
 - next：Publish the post and replace the placeholder URL with a real public post URL.
-- KPI command：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- KPI command：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`

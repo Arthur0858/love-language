@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15",
+  "generatedAt": "2026-06-18",
   "sources": {
     "firstBatchPublishReadinessPack": "docs/promotion/first-round/first-batch-publish-readiness-pack.json",
     "postOpsReadinessPack": "docs/promotion/first-round/post-ops-readiness-pack.json",
@@ -36,7 +36,7 @@
       "post_url": "",
       "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
       "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "fallback_writeback_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "fallback_writeback_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "next_action": "Replace the placeholder post_url and proof_note date, then rerun the check command.",
       "stop_condition": "Stop if the URL is still a placeholder, the platform domain does not match, or zero metrics lack checked-source proof.",
       "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=2 | published status requires non-placeholder https post_url | proof_note must replace placeholder proof text with real evidence"

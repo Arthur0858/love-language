@@ -1,5 +1,5 @@
 LoveTypes post proof handoff
-generated_at: 2026-06-15
+generated_at: 2026-06-18
 rows: 1
 ready_to_import: 0
 templates_safely_rejected: 1

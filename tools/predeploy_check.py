@@ -30,6 +30,7 @@ PYTHON_TOOLS = [
     "tools/promotion_metric_source_matrix.py",
     "tools/promotion_data_collection_sheet.py",
     "tools/promotion_kpi_schema_audit.py",
+    "tools/promotion_kpi_import_validator.py",
     "tools/promotion_kpi_attribution_health_report.py",
     "tools/promotion_sync_posting_queue.py",
     "tools/promotion_platform_kpi_tracker.py",

@@ -1,4 +1,4 @@
-generated: 2026-06-16
+generated: 2026-06-18
 stage: first_batch_publish
 profile ready/blocked: 0/1
 profile placeholder/real proof ready: 1/0

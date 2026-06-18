@@ -1,6 +1,6 @@
 # LoveTypes Lead Ops Action Sheet
 
-- 產生日期：2026-06-15
+- 產生日期：2026-06-18
 - rows：6
 - real leads：0
 - template rows：15
@@ -42,7 +42,7 @@
 - phase：`writeback`
 - status：`blocked_until_real_request`
 - action：Write back only real requests with explicit reply consent and a traceable proof note; never store raw email in the CSV.
-- command：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email thread Gmail request checked 2026-06-15"`
+- command：`python3 tools/promotion_lead_text_import.py add --input /path/to/request.txt --proof-note "email thread Gmail request checked 2026-06-18"`
 - evidence：lead-intake-tracker.csv gains one real row, and matched utm_content increments the mapped KPI field.
 - next gate：`lead_evidence_checklist`
 

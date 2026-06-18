@@ -1,6 +1,6 @@
 # LoveTypes First Batch Launch Handoff
 
-- 產生日期：2026-06-15
+- 產生日期：2026-06-18
 - rows：1
 - profile gate ready：1
 - asset ready：1

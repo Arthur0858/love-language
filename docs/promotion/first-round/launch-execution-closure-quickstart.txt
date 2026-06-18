@@ -1,5 +1,5 @@
 LoveTypes launch execution closure quickstart
-generated: 2026-06-15
+generated: 2026-06-18
 master stage: first_batch_publish
 profile configured: 1 / 1
 first batch published: 0 / 1
@@ -20,7 +20,7 @@ command: python3 tools/promotion_proof_rehearsal.py --check && python3 tools/pro
 release: All profile links are set/live with traceable proof notes.
 stop: Do not write back profile status from memory, draft screens, private previews, or missing screenshots.
 
-open_first_batch_publish: blocked_until_profile_writeback
+open_first_batch_publish: ready_to_publish
 command: python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check
 release: Profile handoff opens first-batch publishing.
 stop: Do not publish first-batch posts while profile setup remains incomplete.

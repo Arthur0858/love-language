@@ -1,6 +1,6 @@
 # LoveTypes Operation Proof Packet
 
-- Generated: `2026-06-15`
+- Generated: `2026-06-18`
 - Profile pending: `0`
 - First batch pending: `1`
 - Ready to publish: `1`
@@ -36,7 +36,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-15
+published_date: 2026-06-18
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0

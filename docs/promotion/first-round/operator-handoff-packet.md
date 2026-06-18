@@ -1,6 +1,6 @@
 # LoveTypes Operator Handoff Packet
 
-- 產生日期：2026-06-15
+- 產生日期：2026-06-18
 - profile configured / pending：1 / 0
 - ready to publish：1
 - first batch published / pending：0 / 1
@@ -28,7 +28,7 @@
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-06-15
+set_date: 2026-06-18
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
@@ -43,7 +43,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-15
+published_date: 2026-06-18
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0
@@ -83,7 +83,7 @@ page: https://lovetypes.tw/keepsakes/
 - scriptId：lt-s01-iris-silence
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-15 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 Caption:
 

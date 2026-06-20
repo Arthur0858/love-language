@@ -1,6 +1,6 @@
 # LoveTypes 平台首頁設定檢查包
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - 平台數：1
 - 主入口：https://lovetypes.tw/start/
 - UTM campaign：`first_round_quiz_completion`

@@ -1,6 +1,6 @@
 # LoveTypes KPI Zero Source Rehearsal
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - rows：1
 - rejects zero without source：1
 - accepts zero with source：1

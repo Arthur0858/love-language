@@ -1,6 +1,6 @@
 # LoveTypes Launch Quickstart
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - current stage：`first_batch_publish`
 - stage current blockers：1
 - profile configured：1

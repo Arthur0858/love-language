@@ -1,6 +1,6 @@
 # LoveTypes Data Collection Sheet
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - source rows：16
 - collection rows：284
 - profile collection rows：14

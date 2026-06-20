@@ -1,6 +1,6 @@
 # LoveTypes Lead Privacy Safety Audit
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - safe imports：1
 - real rows in rehearsal：1
 - raw email hits：0

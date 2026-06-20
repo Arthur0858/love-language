@@ -1,6 +1,6 @@
 # LoveTypes Weekly Review Packet
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - weekly decision ready：0
 - empty data mode：0
 - first batch published：0 / 1
@@ -44,7 +44,7 @@
 - script：`lt-s01-iris-silence`
 - status：`planned`
 - post URL：(pending)
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 ## Allowed Decisions Now
 

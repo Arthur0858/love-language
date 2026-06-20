@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-18",
+  "generatedAt": "2026-06-20",
   "sources": {
     "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json",
     "firstBatchKpiChecklist": "docs/promotion/first-round/first-batch-kpi-checklist.json",
@@ -26,7 +26,7 @@
       "minimum_kpis": "site_clicks,quiz_starts,quiz_completions",
       "zero_source_rows": "3",
       "proof_note_template": "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blocked_by": "first-batch post is not published"
     }
   ],

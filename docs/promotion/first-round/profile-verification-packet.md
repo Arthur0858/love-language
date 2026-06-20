@@ -1,6 +1,6 @@
 # LoveTypes Profile Verification Packet
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - platforms：1
 - configured：1
 - pending：0
@@ -44,7 +44,7 @@ Comment A/B/C and we will point you to a guardian route.
 ### Writeback
 
 - 設定完成：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-18 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
+- 公開可點：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-20 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ### After Writeback
 

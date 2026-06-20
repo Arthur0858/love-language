@@ -1,5 +1,5 @@
 LoveTypes first batch publish closure quickstart
-generated: 2026-06-18
+generated: 2026-06-20
 profile handoff ready: 1
 ready/blocked rows: 1 / 0
 published/pending rows: 0 / 1

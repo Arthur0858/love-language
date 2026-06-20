@@ -1,6 +1,6 @@
 # LoveTypes Now Asset Production Briefs
 
-- 產生日期：2026-06-18
+- 產生日期：2026-06-20
 - 製作手卡：5
 - 平台 caption：1 種
 - 場景卡：15

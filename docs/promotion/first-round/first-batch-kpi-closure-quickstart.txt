@@ -1,5 +1,5 @@
 LoveTypes first batch KPI closure quickstart
-generated: 2026-06-18
+generated: 2026-06-20
 rows: 1
 ready for KPI: 0
 published rows: 0
@@ -49,4 +49,4 @@ zero checks:
 - quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
 - quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
 writeback command after source proof:
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"

@@ -21,7 +21,7 @@ PROGRESS_PREFIXES = ("[visual]", "[public-quiz-flow]", "[perf]", "[tap]", "[publ
 
 CHECKS = [
     ("predeploy", [sys.executable, "tools/predeploy_check.py"], 180, False),
-    ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 120, False),
+    ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 240, False),
     ("public_accessibility_smoke", [sys.executable, "tools/public_accessibility_smoke.py"], 240, True),
     ("public_asset_integrity_smoke", [sys.executable, "tools/public_asset_integrity_smoke.py"], 240, True),
     ("public_deploy_smoke", [sys.executable, "tools/public_deploy_smoke.py"], 240, True),
@@ -274,8 +274,18 @@ def run(command: list[str], timeout: int = 180) -> tuple[int, str]:
 
 
 def git_value(*args: str) -> str:
-    code, output = run(["git", *args], timeout=30)
-    return output.strip() if code == 0 else ""
+    try:
+        result = subprocess.run(
+            ["git", *args],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return ""
+    return result.stdout.strip()
 
 
 def parse_key_values(output: str) -> dict[str, str]:

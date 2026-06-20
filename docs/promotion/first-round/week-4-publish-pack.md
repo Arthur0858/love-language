@@ -1,6 +1,6 @@
 # LoveTypes 第一輪 Week 4 發布包
 
-- 產生日期：2026-06-20
+- 產生日期：2026-06-21
 - 任務數：3
 - 主 CTA：Take the 15-question quiz to find your emotional guardian
 

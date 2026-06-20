@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20",
+  "generatedAt": "2026-06-21",
   "source": {
     "tracker": "docs/promotion/first-round/platform-profile-tracker.csv",
     "setup": "docs/promotion/first-round/platform-profile-setup.json",
@@ -35,7 +35,7 @@
         "留下可追溯 proof note，例如平台、設定時間、截圖檔名或手動驗證紀錄。"
       ],
       "writebackCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-20 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-21 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
       "postWritebackCheck": [
         "重新跑 promotion_launch_readiness_gate.py。",
         "確認 promotion_launch_readiness_profile_configured 變成 1。",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20",
+  "generatedAt": "2026-06-21",
   "sources": {
     "publicPostUrlChecklist": "docs/promotion/first-round/public-post-url-checklist.json",
     "zeroKpiEvidenceChecklist": "docs/promotion/first-round/zero-kpi-evidence-checklist.json",
@@ -33,7 +33,7 @@
       "zero_pending": "3",
       "zero_needs_source": "0",
       "zero_complete": "0",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "next_action": "Publish the post and replace the placeholder URL with a real public post URL."
     }
   ],

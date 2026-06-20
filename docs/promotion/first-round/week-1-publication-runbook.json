@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-20",
+  "generatedAt": "2026-06-21",
   "week": 1,
   "source": {
     "postingQueue": "docs/promotion/first-round/posting-queue.csv",
@@ -48,9 +48,9 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utmContent": "iris_silence",
       "postUrlPlaceholder": "<REAL_YOUTUBE_SHORTS_URL>",
-      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-20\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
+      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-21\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "prePublishChecks": [
         "launch readiness ready_to_publish=1。",
         "profile link 已完成 set/live，且平台個人頁只導向測驗。",
@@ -83,9 +83,9 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_affirmation",
       "utmContent": "iris_affirmation",
       "postUrlPlaceholder": "<REAL_YOUTUBE_SHORTS_URL>",
-      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s02-iris-affirmation\nstatus: published\npublished_date: 2026-06-20\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
+      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s02-iris-affirmation\nstatus: published\npublished_date: 2026-06-21\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "prePublishChecks": [
         "launch readiness ready_to_publish=1。",
         "profile link 已完成 set/live，且平台個人頁只導向測驗。",
@@ -118,9 +118,9 @@
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_too_sensitive",
       "utmContent": "iris_too_sensitive",
       "postUrlPlaceholder": "<REAL_YOUTUBE_SHORTS_URL>",
-      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-20 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s03-iris-too-sensitive\nstatus: published\npublished_date: 2026-06-20\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
+      "publishCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "kpiCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "importTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s03-iris-too-sensitive\nstatus: published\npublished_date: 2026-06-21\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "prePublishChecks": [
         "launch readiness ready_to_publish=1。",
         "profile link 已完成 set/live，且平台個人頁只導向測驗。",

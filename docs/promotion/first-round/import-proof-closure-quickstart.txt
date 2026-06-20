@@ -1,5 +1,5 @@
 LoveTypes proof import closure quickstart
-generated: 2026-06-20
+generated: 2026-06-21
 profile template valid: 0
 profile placeholder proof rows: 1
 profile real proof ready rows: 0

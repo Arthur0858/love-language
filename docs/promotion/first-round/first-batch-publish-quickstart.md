@@ -1,6 +1,6 @@
 # LoveTypes First Batch Publish Quickstart
 
-- 產生日期：2026-06-20
+- 產生日期：2026-06-21
 - rows：1
 - ready to publish：1
 - ready / blocked rows：1 / 0
@@ -48,7 +48,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-20
+published_date: 2026-06-21
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0

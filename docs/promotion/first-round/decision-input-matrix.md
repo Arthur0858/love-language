@@ -1,6 +1,6 @@
 # LoveTypes Decision Input Matrix
 
-- 產生日期：2026-06-20
+- 產生日期：2026-06-21
 - decisions：5
 - ready decisions：0
 - active decisions：1

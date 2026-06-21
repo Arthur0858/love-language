@@ -1,6 +1,6 @@
 # LoveTypes Lead Magnet Inventory
 
-- 產生日期：2026-06-21
+- 產生日期：2026-06-22
 - 語言數：5
 - 守護者數：5
 - story card assets：25

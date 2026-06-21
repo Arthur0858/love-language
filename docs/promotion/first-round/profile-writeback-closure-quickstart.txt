@@ -1,5 +1,5 @@
 LoveTypes profile writeback closure quickstart
-generated: 2026-06-21
+generated: 2026-06-22
 pending evidence rows: 6
 configured: 1 / 1
 launch ready to publish: 1
@@ -17,5 +17,5 @@ Platforms:
 pending evidence: 6
 check: python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt
 text import write: python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-direct set: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-21 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
-direct live: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-21 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
+direct set: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-22 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+direct live: python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-22 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"

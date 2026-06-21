@@ -1,6 +1,6 @@
 # LoveTypes 週決策 Gate
 
-- 產生日期：2026-06-21
+- 產生日期：2026-06-22
 - 建議焦點：`collect_signal`
 - 週決策：HOLD
 - 內容放大：HOLD

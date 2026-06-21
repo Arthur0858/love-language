@@ -1,6 +1,6 @@
 # LoveTypes Launch Day Run Sheet
 
-- 產生日期：2026-06-21
+- 產生日期：2026-06-22
 - rows：5
 - profile rows：1
 - publish rows：1
@@ -55,7 +55,7 @@
 - status：`blocked_until_post_url`
 - action：Publish the post and replace the placeholder URL with a real public post URL.
 - check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-21 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - success：post URL, site_clicks, quiz_starts and quiz_completions are backed by checked evidence.
 - stop：Do not run writeback with placeholder URLs or guessed KPI values.
 

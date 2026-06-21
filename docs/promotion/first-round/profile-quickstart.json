@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21",
+  "generatedAt": "2026-06-22",
   "sources": {
     "profileActionSheet": "docs/promotion/first-round/profile-setup-action-sheet.json",
     "profileTracker": "docs/promotion/first-round/platform-profile-tracker.json",
@@ -35,7 +35,7 @@
       "evidenceChecks": 6,
       "pendingEvidenceChecks": 6,
       "proofFile": "docs/promotion/first-round/proof-youtube_shorts.txt",
-      "proofTemplate": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-21\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+      "proofTemplate": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-22\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt",
       "writeCommand": "python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims."

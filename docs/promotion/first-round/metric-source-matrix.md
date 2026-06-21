@@ -1,6 +1,6 @@
 # LoveTypes Metric Source Matrix
 
-- 產生日期：2026-06-21
+- 產生日期：2026-06-22
 - rows：18
 - platform fields：5
 - site conversion fields：3

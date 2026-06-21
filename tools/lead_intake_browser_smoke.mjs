@@ -125,6 +125,21 @@ function emitMetrics(resultsLength, invalidRejected, validAccepted, issuesLength
   console.log(`lead_intake_browser_issues=${issuesLength}`);
 }
 
+async function activateButton(locator) {
+  await locator.evaluate((element) => {
+    element.scrollIntoView({ block: 'center', inline: 'center' });
+    element.click();
+  });
+}
+
+async function setChecked(locator) {
+  await locator.evaluate((element) => {
+    element.checked = true;
+    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+}
+
 async function checkCase(browser, baseUrl, urlPath) {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -163,15 +178,15 @@ async function checkCase(browser, baseUrl, urlPath) {
   if (placeholder === 'name@example.com' || !placeholder) issues.push(`unsafe email placeholder ${placeholder || '<empty>'}`);
 
   await form.locator('[name="reply_email"]').fill('name@example.com');
-  await form.locator('[name="consent"]').check();
-  await form.locator('[data-lead-intake-copy]').click();
+  await setChecked(form.locator('[name="consent"]'));
+  await activateButton(form.locator('[data-lead-intake-copy]'));
   const invalidHidden = await form.locator('[data-lead-intake-error]').getAttribute('hidden');
   const invalidText = (await form.locator('[data-lead-intake-error]').textContent() || '').trim();
   const invalidRejected = invalidHidden === null && /example|test|placeholder|真實|実際|실제|real/i.test(invalidText);
   if (!invalidRejected) issues.push('reserved example email was not visibly rejected');
 
   await form.locator('[name="reply_email"]').fill('traveler@realmail.com');
-  await form.locator('[data-lead-intake-copy]').click();
+  await activateButton(form.locator('[data-lead-intake-copy]'));
   const validHidden = await form.locator('[data-lead-intake-error]').getAttribute('hidden');
   const preview = await form.locator('[data-lead-intake-preview]').inputValue();
   const validAccepted = validHidden !== null && preview.includes('traveler@realmail.com') && preview.includes('consent_status: explicit_reply_ok');

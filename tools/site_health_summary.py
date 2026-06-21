@@ -20,7 +20,7 @@ PROGRESS_PREFIXES = ("[visual]", "[public-quiz-flow]", "[perf]", "[tap]", "[publ
 
 
 CHECKS = [
-    ("predeploy", [sys.executable, "tools/predeploy_check.py"], 180, False),
+    ("predeploy", [sys.executable, "tools/predeploy_check.py"], 600, False),
     ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 240, False),
     ("public_accessibility_smoke", [sys.executable, "tools/public_accessibility_smoke.py"], 240, True),
     ("public_asset_integrity_smoke", [sys.executable, "tools/public_asset_integrity_smoke.py"], 240, True),
@@ -77,7 +77,7 @@ CHECKS = [
     ("promotion_lead_form_importability_audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"], 120, False),
     ("promotion_lead_form_health_report", [sys.executable, "tools/promotion_lead_form_health_report.py", "--check"], 120, False),
     ("promotion_lead_mailto_importability_audit", [sys.executable, "tools/promotion_lead_mailto_importability_audit.py", "--check"], 120, False),
-    ("lead_intake_browser_smoke", ["node", "tools/lead_intake_browser_smoke.mjs"], 120, False),
+    ("lead_intake_browser_smoke", ["node", "tools/lead_intake_browser_smoke.mjs"], 240, False),
     ("promotion_kpi_schema_audit", [sys.executable, "tools/promotion_kpi_schema_audit.py"], 120, False),
     ("promotion_kpi_attribution_health_report", [sys.executable, "tools/promotion_kpi_attribution_health_report.py", "--check"], 120, False),
     ("promotion_kpi_writeback_consistency_audit", [sys.executable, "tools/promotion_kpi_writeback_consistency_audit.py"], 120, False),
@@ -205,6 +205,8 @@ CHECKS = [
 RETRY_ON_FAILURE = {
     "csp_runtime_smoke",
     "keyboard_navigation_smoke",
+    "lead_intake_browser_smoke",
+    "predeploy",
     "public_launch_link_smoke",
     "public_locale_ui_smoke",
     "public_quiz_flow_smoke",

@@ -1,6 +1,6 @@
 # LoveTypes Profile Setup Runbook
 
-- 產生日期：2026-06-22
+- 產生日期：2026-06-23
 - platforms：1
 - configured：1
 - pending：0
@@ -60,13 +60,13 @@ Comment A/B/C and we will point you to a guardian route.
 設定完成後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-22 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-23 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
 ```
 
 公開可點後：
 
 ```bash
-python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-22 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
+python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-23 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"
 ```
 
 Structured import template:
@@ -75,7 +75,7 @@ Structured import template:
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-06-22
+set_date: 2026-06-23
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```

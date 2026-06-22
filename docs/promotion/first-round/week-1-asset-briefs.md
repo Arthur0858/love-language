@@ -1,6 +1,6 @@
 # LoveTypes Week 1 Asset Briefs
 
-- 產生日期：2026-06-22
+- 產生日期：2026-06-23
 - 製作手卡：2
 - 場景卡：6
 - 平台 caption：2

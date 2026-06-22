@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22",
+  "generatedAt": "2026-06-23",
   "sources": {
     "masterGate": "docs/promotion/first-round/master-gate.json",
     "launchQuickstart": "docs/promotion/first-round/launch-quickstart.json",
@@ -42,7 +42,7 @@
     "handoffBlockedCount": 1,
     "activeBlockers": 7,
     "readyNowBlockers": 1,
-    "profilePublishReady": 0,
+    "profilePublishReady": 1,
     "publishKpiReadyForWeekly": 0,
     "activePlatforms": 1,
     "issues": 0
@@ -71,7 +71,7 @@
     },
     {
       "id": "open_first_batch_publish",
-      "status": "blocked_until_profile_writeback",
+      "status": "ready_to_publish",
       "command": "python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check",
       "release": "Profile handoff opens first-batch publishing.",
       "stop": "Do not publish first-batch posts while profile setup remains incomplete."

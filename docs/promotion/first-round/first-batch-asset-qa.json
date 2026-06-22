@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22",
+  "generatedAt": "2026-06-23",
   "source": {
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json",
     "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json"
@@ -29,7 +29,7 @@
       "assetReadyStatus": "published",
       "assetReadyAction": "",
       "assetReadySafety": "",
-      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-22\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
+      "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-23\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [
         {
           "id": "vertical_video",

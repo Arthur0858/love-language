@@ -1,6 +1,6 @@
 # LoveTypes Stage Transition Matrix
 
-- 產生日期：2026-06-22
+- 產生日期：2026-06-23
 - current stage：`first_batch_kpi`
 - rows：6
 - complete rows：2

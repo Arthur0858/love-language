@@ -1,6 +1,6 @@
 # LoveTypes Launch Proof Control Sheet
 
-- 產生日期：2026-06-22
+- 產生日期：2026-06-23
 - stage：`first_batch_kpi`
 - profile ready / blocked：0 / 1
 - profile placeholder / real proof ready：1 / 0

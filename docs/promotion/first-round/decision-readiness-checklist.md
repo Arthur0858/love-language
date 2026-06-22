@@ -1,6 +1,6 @@
 # LoveTypes Decision Readiness Checklist
 
-- Generated: `2026-06-22`
+- Generated: `2026-06-23`
 - Decisions: `5`
 - Active signal rows: `1`
 - Ready rows: `0`

@@ -34,7 +34,7 @@
     "handoffBlockedUpstreamRows": 5,
     "publicFreeAssets": 5,
     "offerQueueReady": 0,
-    "masterStage": "first_batch_publish",
+    "masterStage": "first_batch_kpi",
     "masterLeadReadyRoutes": 0,
     "issues": 0
   },

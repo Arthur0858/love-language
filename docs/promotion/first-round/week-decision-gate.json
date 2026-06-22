@@ -38,7 +38,7 @@
   },
   "recommendedFocus": "collect_signal",
   "blockers": [
-    "尚未達週決策門檻：發布狀態或 KPI 回填不足。"
+    "已回填 KPI，但目前所有關鍵訊號皆為 0；維持 collect_signal，不調整商品、守護者優先序或內容放大。"
   ],
   "nextSteps": [
     "先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。",
@@ -56,7 +56,7 @@
       "必須購買"
     ],
     "emptyDataFailClosed": false,
-    "noPositiveSignalFailClosed": false,
+    "noPositiveSignalFailClosed": true,
     "offerTestsOnlyAfterResultRoute": true
   }
 }

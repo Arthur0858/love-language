@@ -44,7 +44,7 @@
 
 - phase：`weekly_review`
 - status：`blocked_upstream`
-- value：2 / 8
+- value：4 / 8
 - action：Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.
 - evidence：weekly-decision-evidence-checklist completeRows equals rows.
 - command：`python3 tools/promotion_weekly_decision_evidence_checklist.py --check`

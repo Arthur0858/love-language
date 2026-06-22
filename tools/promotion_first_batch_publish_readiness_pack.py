@@ -20,7 +20,7 @@ PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
 OUTPUT_MD = PROMOTION_DIR / "first-batch-publish-readiness-pack.md"
 OUTPUT_JSON = PROMOTION_DIR / "first-batch-publish-readiness-pack.json"
 OUTPUT_CSV = PROMOTION_DIR / "first-batch-publish-readiness-pack.csv"
-ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
+ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready", "published"}
 QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 
 
@@ -125,7 +125,7 @@ def build_pack() -> dict:
     if metrics["rows"] < 1:
         issues.append("expected at least one first-batch publish readiness row")
     if metrics["assetQaReady"] != metrics["rows"]:
-        issues.append("all first-batch asset QA rows should be prepared or ready")
+        issues.append("all first-batch asset QA rows should be prepared, ready, or published")
     if metrics["proofFiles"] != metrics["rows"]:
         issues.append("all post proof template files should exist")
     if metrics["proofTemplatesSafelyRejected"] != metrics["rows"]:

@@ -21,14 +21,14 @@ evidence: profile_configured=3 and profile gate ready before publish/review.
 boundary: Without profile links, do not treat missing clicks as content failure.
 
 === first-batch-public-url ===
-status: ready_to_publish
+status: blocked
 action: Publish or verify the first YouTube Shorts post and record the real public post URL.
 command: python3 tools/promotion_first_batch_publish_action_sheet.py --check
 evidence: Three real platform post_url values, not placeholders.
 boundary: No public URL means no weekly decision.
 
 === minimum-kpi-backfill ===
-status: blocked
+status: ready_to_backfill
 action: Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.
 command: python3 tools/promotion_first_batch_kpi_action_sheet.py --check
 evidence: Each 0 value has a checked platform or site source, not an assumption.
@@ -38,7 +38,7 @@ boundary: Zero without source is still unknown.
 status: blocked
 action: Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.
 command: python3 tools/promotion_weekly_decision_evidence_checklist.py --check
-evidence: complete=2, pending=6.
+evidence: complete=4, pending=4.
 boundary: Pending evidence keeps all commerce and winner decisions on HOLD.
 
 === weekly-review-packet ===
@@ -64,8 +64,8 @@ boundary: Do not alter offer order, guardian priority, Luna emphasis, or affilia
 
 Evidence checklist:
 - profiles_configured: pending | 啟用平台 profile 尚未全部 set/live。
-- first_batch_published: pending | 首批啟用平台尚未全部發布。
-- public_post_urls_verified: pending | 公開貼文 URL 檢查仍有 pending 或缺證據。
+- first_batch_published: complete | 證據已滿足。
+- public_post_urls_verified: complete | 證據已滿足。
 - zero_kpis_have_source: pending | 核心 KPI 仍未發布、未回填，或 0 值缺來源證據。
 - weekly_review_ready: pending | weekly review 尚未達可決策狀態。
 - not_empty_data_mode: complete | 證據已滿足。

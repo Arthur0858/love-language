@@ -3,11 +3,11 @@
 - 產生日期：2026-06-22
 - week / slot：1 / 1
 - rows：1
-- published：0
-- pending：1
+- published：1
+- pending：0
 - rows with minimum KPI：0
 - ready_to_publish：1
-- weekly_decision_ready：0
+- weekly_decision_ready：1
 - issues：0
 
 ## Gate
@@ -40,10 +40,10 @@
 - script：`lt-s01-iris-silence`
 - guardian：艾莉絲（`iris`）
 - title：他沉默時，你最想聽見哪一句話？
-- status：`planned`
+- status：`published`
 - schedule：2026-06-15 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- post URL：(pending)
+- post URL：https://www.youtube.com/watch?v=uj9ZwYIKDrE
 - post URL placeholder：`<REAL_YOUTUBE_SHORTS_URL>`
 
 ### Caption

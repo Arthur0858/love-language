@@ -9,15 +9,15 @@ Rules:
 - Do not use guesses, private drafts, scheduled URLs, or placeholder post URLs.
 
 === youtube_shorts / publish-lt-s01-iris-silence ===
-ready for KPI: 0
-published: 0
-post URL: (not published)
-blocked by: first-batch post is not published
+ready for KPI: 1
+published: 1
+post URL: https://www.youtube.com/watch?v=uj9ZwYIKDrE
+blocked by: (none)
 
 ZERO-SOURCE CHECKS:
-- site_clicks: pending_publish | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-- quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
+- site_clicks: needs_source_proof | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
+- quiz_starts: needs_source_proof | Funnel event catalog/report, analytics event export, or manual verified source.
+- quiz_completions: needs_source_proof | Funnel event catalog/report, analytics event export, or manual verified source.
 
 PROOF TEXT AFTER ANALYTICS CHECK:
 LoveTypes platform post writeback
@@ -31,5 +31,5 @@ quiz_starts: <CHECKED_QUIZ_STARTS>
 quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
 proof_note: analytics source checked 2026-06-22 for youtube_shorts/publish-lt-s01-iris-silence
 
-WRITE: python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+WRITE: python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 STOP: Stop if the post URL is not public HTTPS, analytics source was not checked, or a zero value lacks source proof.

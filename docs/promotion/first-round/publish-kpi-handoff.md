@@ -2,10 +2,10 @@
 
 - 產生日期：2026-06-22
 - rows：7
-- complete rows：2
+- complete rows：3
 - current blockers：1
-- blocked upstream rows：4
-- published rows：0 / 3
+- blocked upstream rows：3
+- published rows：1 / 3
 - minimum KPI rows：0 / 3
 - ready for weekly review：0
 - issues：0
@@ -32,8 +32,8 @@
 ### `first_batch_publish_sheet_ready`
 
 - phase：`publish`
-- status：`complete`
-- value：1 / 1
+- status：`current_blocker`
+- value：0 / 1
 - action：Confirm all active first-batch rows are ready before opening platform publishing.
 - evidence：first-batch publish action sheet has all active rows ready and zero issues.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
@@ -42,8 +42,8 @@
 ### `post_url_writeback_complete`
 
 - phase：`post_writeback`
-- status：`current_blocker`
-- value：0 / 1
+- status：`complete`
+- value：1 / 1
 - action：After each platform post is public, write back real HTTPS post_url with proof.
 - evidence：posting-queue.csv and platform-kpi-tracker.csv have published status, date, post_url, and proof note.
 - command：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
@@ -52,8 +52,8 @@
 ### `post_evidence_traceable`
 
 - phase：`post_writeback`
-- status：`blocked_upstream`
-- value：0 / 1
+- status：`complete`
+- value：1 / 1
 - action：Confirm every first-batch post has traceable public URL evidence.
 - evidence：first-batch completion gate traceablePostEvidence matches all active published rows.
 - command：`python3 tools/promotion_first_batch_completion_gate.py --check`
@@ -64,7 +64,7 @@
 - phase：`kpi_writeback`
 - status：`blocked_upstream`
 - value：0 / 3
-- action：Keep KPI rows blocked until real post URLs are written back.
+- action：Run source checks and write back minimum KPI or verified-zero proof for each platform.
 - evidence：first-batch KPI action sheet has three ready rows before source checks, then minimumKpiRows reaches three.
 - command：`python3 tools/promotion_first_batch_kpi_action_sheet.py --check`
 - stop：Do not treat 0 as data unless the platform or site analytics source was checked.

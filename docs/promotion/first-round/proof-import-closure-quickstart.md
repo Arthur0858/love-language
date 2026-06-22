@@ -2,12 +2,12 @@
 
 - 產生日期：2026-06-22
 - profile templates：0
-- post templates：1
+- post templates：0
 - active platforms：1
 - profile template valid：0
 - profile placeholder proof rows：1
 - profile real proof ready rows：0
-- post safely rejected：1
+- post safely rejected：0
 - rehearsal rows：3
 - rehearsal profile pass：1
 - rehearsal post placeholder rejected：1
@@ -23,7 +23,7 @@
 
 - Check commands must pass before any add/writeback command is allowed.
 - Profile proof templates may pass structurally, but still require real external evidence before writeback.
-- Post proof templates must fail while placeholder URLs remain in place.
+- Post proof templates must fail while placeholder URLs remain in place; after public URL writeback, KPI source proof is required.
 - A zero KPI is valid only after a real analytics source check.
 - Rehearsal data, sample URLs, and templates are never production evidence.
 
@@ -38,10 +38,10 @@
 
 ### `reject_post_placeholders`
 
-- status：`guard_active`
+- status：`complete`
 - command：`python3 tools/promotion_operation_proof_templates.py --check`
-- release：Active post proof templates are safely rejected while their post URLs are placeholders.
-- stop：Do not weaken this guard; placeholder post URLs must never write to trackers.
+- release：Active post proof templates are safely rejected while their post URLs are placeholders; completed posts move to KPI source proof.
+- stop：Do not weaken this guard; placeholder post URLs must never write to trackers or KPI rows.
 
 ### `rehearse_import_paths`
 
@@ -65,14 +65,6 @@
 - stop：Do not publish or backfill KPI while launch rehearsal says publish is blocked.
 
 ## Proof Rows
-
-### post_publish · youtube_shorts publish-lt-s01-iris-silence
-
-- file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- status：`written`
-- evidence count：7
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ## Structured Imports
 

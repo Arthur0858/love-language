@@ -218,7 +218,7 @@ def write_outputs(payload: dict, issues: list[str]) -> None:
     OUTPUT_MD.write_text(render_markdown(payload, issues), encoding="utf-8")
     fieldnames = ["phase", "check_id", "expected_value", "operator_status", "evidence_note"]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(payload["items"])
 

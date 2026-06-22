@@ -4,9 +4,9 @@
 - rows：1
 - profile gate ready：1
 - asset QA prepared：1
-- ready to publish：1
+- ready to publish：0
 - blocked：0
-- published：0
+- published：1
 - proof templates safely rejected：1
 - proof placeholder rows：1
 - proof real ready rows：0
@@ -23,15 +23,15 @@
 
 ### youtube_shorts · `publish-lt-s01-iris-silence`
 
-- status：`ready_to_publish`
+- status：`published`
 - script：`lt-s01-iris-silence`
 - guardian：`iris`
 - title：他沉默時，你最想聽見哪一句話？
 - schedule：2026-06-15 20:30 Asia/Taipei
 - profile gate ready：1
 - asset QA prepared：1
-- publish action status：`ready_to_publish`
-- post URL ready：0
+- publish action status：`complete`
+- post URL ready：1
 - post proof file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - proof template safely rejected：1
 - proof：placeholder=1 / real_ready=0

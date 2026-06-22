@@ -34,7 +34,7 @@ WRITE: python3 tools/promotion_profile_text_import.py add --input docs/promotion
 STOP: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 === POST / youtube_shorts / youtube_shorts ===
-status: ready_to_publish
+status: complete
 
 COPY:
 你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
@@ -57,6 +57,6 @@ quiz_starts: 0
 quiz_completions: 0
 proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 
-CHECK: python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-WRITE: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+CHECK:
+WRITE:
 STOP: Stop while ; replace placeholder URL with real public post URL before writeback.

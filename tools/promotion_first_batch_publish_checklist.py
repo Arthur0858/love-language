@@ -83,15 +83,16 @@ def build_rows() -> list[dict[str, str]]:
         platform = str(item.get("platform", ""))
         task_id = str(item.get("taskId", ""))
         proof = proof_rows.get((platform, task_id), {})
+        proof_path = str(proof.get("path") or f"docs/promotion/first-round/proof-{platform}-{task_id}.txt")
         common = {
             "platform": platform,
             "task_id": task_id,
             "script_id": str(item.get("scriptId", "")),
             "guardian_id": str(item.get("guardianId", "")),
             "tracked_url": str(item.get("trackedUrl", "")),
-            "proof_file": str(proof.get("path", "")),
-            "check_command": str(proof.get("checkCommand", "")),
-            "write_command": str(proof.get("writeCommand", "")),
+            "proof_file": proof_path,
+            "check_command": str(proof.get("checkCommand") or f"python3 tools/promotion_post_text_import.py check --input {proof_path}"),
+            "write_command": str(proof.get("writeCommand") or f"python3 tools/promotion_post_text_import.py add --input {proof_path} --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\""),
             "evidence_value": "",
             "operator_status": "pending",
         }

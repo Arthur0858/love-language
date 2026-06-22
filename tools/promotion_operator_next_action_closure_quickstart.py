@@ -168,8 +168,8 @@ def build_quickstart() -> dict:
         "rules": [
             "Active platforms only are considered for first-round promotion operations.",
             "Run the check command before any writeback command.",
-            "If profile setup is complete, the next external action is first-batch YouTube Shorts publishing.",
-            "Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions while empty data mode is active.",
+            "If profile setup is complete and first batch is published, the next external action is KPI source-proof collection.",
+            "Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions without source-checked evidence.",
             "Stop immediately if account identity, permission, URL preservation, or safety copy is uncertain.",
         ],
         "actions": actions,
@@ -201,8 +201,8 @@ def validate(data: dict) -> list[str]:
     metrics = data["metrics"]
     expected = metrics["activePlatforms"]
     issues: list[str] = []
-    if metrics["stage"] not in {"profile_setup", "first_batch_publish", "weekly_evidence"}:
-        issues.append("operator next action closure expects profile_setup, first_batch_publish, or weekly_evidence stage")
+    if metrics["stage"] not in {"profile_setup", "first_batch_publish", "first_batch_kpi", "kpi_backfill", "weekly_evidence"}:
+        issues.append("operator next action closure expects profile_setup, first_batch_publish, first_batch_kpi, kpi_backfill, or weekly_evidence stage")
     if len(data["actions"]) != expected:
         issues.append(f"expected {expected} active profile setup actions")
     if metrics["profileConfigured"] < expected and metrics["readyActions"] != expected:
@@ -213,7 +213,7 @@ def validate(data: dict) -> list[str]:
         issues.append("publish/KPI handoff cannot open weekly review before posts are published")
     if metrics["profileConfigured"] < expected and metrics["proofProfileTemplateValid"] != expected:
         issues.append("proof import closure should validate active profile proof templates before profile configuration")
-    if metrics["proofPostRejected"] != expected:
+    if metrics["firstBatchPublished"] < expected and metrics["proofPostRejected"] != expected:
         issues.append("proof import closure should reject active post placeholder templates")
     for action in data["actions"]:
         label = action.get("platform", "<platform>")

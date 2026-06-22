@@ -86,7 +86,7 @@ def active_count(metrics: dict) -> int:
 def closure_steps(metrics: dict) -> list[dict[str, str]]:
     expected = active_count(metrics)
     profile_ready = (not metrics["proofPacketProfilePending"]) or metrics["profileValid"] == expected
-    post_guard_ready = metrics["postSafelyRejected"] == expected
+    post_guard_ready = (not metrics["proofPacketPostPending"]) or metrics["postSafelyRejected"] == expected
     rehearsal_ready = (
         metrics["rehearsalProfilePass"] == expected
         and metrics["rehearsalPostPlaceholderRejected"] == expected
@@ -102,10 +102,10 @@ def closure_steps(metrics: dict) -> list[dict[str, str]]:
         },
         {
             "id": "reject_post_placeholders",
-            "status": "guard_active" if post_guard_ready else "blocked",
+            "status": "complete" if not metrics["proofPacketPostPending"] else "guard_active" if post_guard_ready else "blocked",
             "command": "python3 tools/promotion_operation_proof_templates.py --check",
-            "release": "Active post proof templates are safely rejected while their post URLs are placeholders.",
-            "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers.",
+            "release": "Active post proof templates are safely rejected while their post URLs are placeholders; completed posts move to KPI source proof.",
+            "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers or KPI rows.",
         },
         {
             "id": "rehearse_import_paths",
@@ -200,7 +200,7 @@ def build_quickstart() -> dict:
         "rules": [
             "Check commands must pass before any add/writeback command is allowed.",
             "Profile proof templates may pass structurally, but still require real external evidence before writeback.",
-            "Post proof templates must fail while placeholder URLs remain in place.",
+            "Post proof templates must fail while placeholder URLs remain in place; after public URL writeback, KPI source proof is required.",
             "A zero KPI is valid only after a real analytics source check.",
             "Rehearsal data, sample URLs, and templates are never production evidence.",
         ],
@@ -220,13 +220,13 @@ def validate(data: dict) -> list[str]:
     issues: list[str] = []
     if metrics["proofPacketProfilePending"] and metrics["profileTemplates"] != expected:
         issues.append(f"expected {expected} active profile proof templates while profile proof is pending")
-    if metrics["postTemplates"] != expected:
+    if metrics["proofPacketPostPending"] and metrics["postTemplates"] != expected:
         issues.append(f"expected {expected} active post proof templates")
     if metrics["proofPacketProfilePending"] and metrics["profileValid"] != expected:
         issues.append("active profile proof templates should all validate while profile proof is pending")
     if metrics["profilePlaceholderProofRows"] + metrics["profileRealProofReadyRows"] > expected:
         issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
-    if metrics["postSafelyRejected"] != expected:
+    if metrics["proofPacketPostPending"] and metrics["postSafelyRejected"] != expected:
         issues.append("active post proof templates should all be safely rejected while placeholder URLs remain")
     if metrics["rehearsalProfilePass"] != expected:
         issues.append("proof rehearsal should pass all active profile imports")

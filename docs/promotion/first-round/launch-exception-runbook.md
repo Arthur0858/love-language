@@ -10,7 +10,7 @@
 - placeholder proof rows：1
 - external profile proof blockers：1
 - ready to publish：1
-- first batch published：0
+- first batch published：1
 - empty data mode：0
 - issues：0
 

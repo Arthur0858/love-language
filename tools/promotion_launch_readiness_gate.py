@@ -22,7 +22,7 @@ DEFAULT_JSON_OUTPUT_PATH = PROMOTION_DIR / "launch-readiness-gate.json"
 EXPECTED_PLATFORM_ORDER = ("youtube_shorts",)
 EXPECTED_PLATFORMS = set(EXPECTED_PLATFORM_ORDER)
 CAMPAIGN = "first_round_quiz_completion"
-REQUIRED_KPI_FIELDS = ("post_url", "site_clicks", "quiz_starts", "quiz_completions")
+REQUIRED_KPI_FIELDS = ("site_clicks", "quiz_starts", "quiz_completions")
 CONFIGURED_PROFILE_STATUSES = ("set", "live")
 BLOCKER_ORDER = ("set_platform_profile_links", "publish_first_batch", "backfill_first_batch_kpis")
 BLOCKER_SEVERITY_BY_ID = {
@@ -53,7 +53,7 @@ def readiness_policy() -> dict[str, object]:
         "blockerReleaseConditions": {
             "set_platform_profile_links": "All platform-profile-tracker.csv rows are marked set/live with valid /start/ campaign profile links.",
             "publish_first_batch": "The first-batch posting-queue.csv platform rows are marked published and have post_url values.",
-            "backfill_first_batch_kpis": "At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.",
+            "backfill_first_batch_kpis": "At least the first-batch KPI rows have source-checked values for site_clicks, quiz_starts, and quiz_completions.",
         },
         "rule": "YouTube profile link 設定完成後才發布首批；首批發布與 KPI 回填前維持空資料安全模式。",
     }
@@ -100,9 +100,7 @@ def is_profile_configured(row: dict[str, str]) -> bool:
 
 
 def is_kpi_filled(row: dict[str, str]) -> bool:
-    if (row.get("post_url") or "").strip():
-        return True
-    return any(parse_int(row.get(field)) > 0 for field in REQUIRED_KPI_FIELDS if field != "post_url")
+    return any(parse_int(row.get(field)) > 0 for field in REQUIRED_KPI_FIELDS)
 
 
 def count_first_batch_kpi_rows(rows: list[dict[str, str]], policy: dict[str, object]) -> int:

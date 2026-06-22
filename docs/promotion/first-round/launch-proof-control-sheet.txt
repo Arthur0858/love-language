@@ -1,5 +1,5 @@
 generated: 2026-06-22
-stage: first_batch_publish
+stage: first_batch_kpi
 profile ready/blocked: 0/1
 profile placeholder/real proof ready: 1/0
 post ready/blocked: 0/1
@@ -8,7 +8,7 @@ steps:
 - prepare_profile_proofs: current_action | python3 tools/promotion_profile_batch_import.py --check
 - write_profile_batch: complete | python3 tools/promotion_profile_batch_import.py --add
 - prepare_post_proofs: blocked_until_profile_gate | python3 tools/promotion_post_batch_import.py --check
-- write_post_batch: blocked_until_post_ready | python3 tools/promotion_post_batch_import.py --add
+- write_post_batch: complete | python3 tools/promotion_post_batch_import.py --add
 - refresh_and_review: blocked_until_post_writeback | python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_launch_sequence_dry_run.py
 
 proof rows:

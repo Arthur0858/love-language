@@ -9,8 +9,8 @@ Rules:
 - Do not add paid, affiliate, diagnosis, treatment, or guaranteed-repair claims.
 
 === youtube_shorts / publish-lt-s01-iris-silence ===
-ready: 1
-blocked by: (none)
+ready: 0
+blocked by: published
 scheduled: 2026-06-15 20:30 Asia/Taipei
 tracked URL: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
@@ -22,7 +22,7 @@ Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/
 留言 A/B/C，或寫下一句你最想被說出口的話。
 #LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
 
-Save this proof text to docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt after the post is public:
+Save this proof text to  after the post is public:
 LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
@@ -35,6 +35,6 @@ quiz_starts: 0
 quiz_completions: 0
 proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 
-CHECK: python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-WRITE: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+CHECK:
+WRITE: python3 tools/promotion_post_text_import.py add --input  --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 STOP: Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.

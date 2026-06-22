@@ -116,6 +116,7 @@ def build_rows() -> list[dict[str, str]]:
         platform = str(item.get("platform", ""))
         task_id = str(item.get("taskId", ""))
         proof = proof_rows.get((platform, task_id), {})
+        proof_path = str(proof.get("path") or f"docs/promotion/first-round/proof-{platform}-{task_id}.txt")
         for metric in KPI_ROWS:
             rows.append({
                 "platform": platform,
@@ -128,9 +129,9 @@ def build_rows() -> list[dict[str, str]]:
                 "allowed_empty": metric["allowed_empty"],
                 "zero_requires_source_check": metric["zero_requires_source_check"],
                 "source_to_check": metric["source"],
-                "proof_file": str(proof.get("path", "")),
-                "check_command": str(proof.get("checkCommand", "")),
-                "write_command": str(proof.get("writeCommand", "")),
+                "proof_file": proof_path,
+                "check_command": str(proof.get("checkCommand") or f"python3 tools/promotion_post_text_import.py check --input {proof_path}"),
+                "write_command": str(proof.get("writeCommand") or f"python3 tools/promotion_post_text_import.py add --input {proof_path} --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\""),
                 "evidence_value": "",
                 "operator_status": "pending",
                 "notes": f"utm_content={item.get('utmContent', '')}; tracked_url={item.get('trackedUrl', '')}",

@@ -109,13 +109,14 @@ def build() -> dict:
         issues.append("post batch cannot be ready while proof control is blocked")
     for row in rows:
         label = f"{row['platform']}/{row['taskId']}"
+        is_published = str(row["status"]) == "published"
         if not start_url_ok(str(row["trackedUrl"])):
             issues.append(f"{label}: trackedUrl must be /start/ with social first-round UTM")
-        if not str(row["proofFile"]).endswith(".txt"):
+        if not is_published and not str(row["proofFile"]).endswith(".txt"):
             issues.append(f"{label}: proofFile must be a .txt proof file")
-        if "promotion_post_text_import.py check" not in str(row["checkCommand"]):
+        if not is_published and "promotion_post_text_import.py check" not in str(row["checkCommand"]):
             issues.append(f"{label}: missing proof check command")
-        if "promotion_post_text_import.py add" not in str(row["writeCommand"]):
+        if not is_published and "promotion_post_text_import.py add" not in str(row["writeCommand"]):
             issues.append(f"{label}: missing proof write command")
         if not row["stop"]:
             issues.append(f"{label}: missing stop condition")

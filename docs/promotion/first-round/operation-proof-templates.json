@@ -2,32 +2,13 @@
   "generatedAt": "2026-06-22",
   "source": "docs/promotion/first-round/operation-proof-packet.json",
   "metrics": {
-    "proofRows": 1,
-    "files": 1,
+    "proofRows": 0,
+    "files": 0,
     "profile": 0,
-    "post": 1,
+    "post": 0,
     "profileValid": 0,
-    "postSafelyRejected": 1
+    "postSafelyRejected": 0
   },
-  "rows": [
-    {
-      "kind": "post_publish",
-      "platform": "youtube_shorts",
-      "taskId": "publish-lt-s01-iris-silence",
-      "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "requiredEvidence": [
-        "profile_gate_passed",
-        "public_post_url_present",
-        "post_url_is_not_placeholder",
-        "quiz_cta_preserved",
-        "utm_content_preserved",
-        "no_paid_or_affiliate_primary_cta",
-        "proof_note_present"
-      ],
-      "status": "written"
-    }
-  ],
+  "rows": [],
   "issues": []
 }

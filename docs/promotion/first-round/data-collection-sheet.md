@@ -7,8 +7,8 @@
 - Shorts collection rows：270
 - minimum KPI rows：48
 - lead-intent rows：48
-- blocked rows：270
-- ready rows：3
+- blocked rows：252
+- ready rows：6
 - filled rows：0
 - issues：0
 
@@ -30,7 +30,7 @@
 - `shorts` / `all` / `publish-lt-s14-dora-consent`: 18 metrics, blocked 18, minimum 3, lead-intent 3
 - `shorts` / `all` / `publish-lt-s13-dora-distance`: 18 metrics, blocked 18, minimum 3, lead-intent 3
 - `shorts` / `all` / `publish-lt-s02-iris-affirmation`: 18 metrics, blocked 18, minimum 3, lead-intent 3
-- `shorts` / `all` / `publish-lt-s01-iris-silence`: 18 metrics, blocked 18, minimum 3, lead-intent 3
+- `shorts` / `all` / `publish-lt-s01-iris-silence`: 18 metrics, blocked 0, minimum 3, lead-intent 3
 - `shorts` / `all` / `publish-lt-s03-iris-too-sensitive`: 18 metrics, blocked 18, minimum 3, lead-intent 3
 - `shorts` / `all` / `publish-lt-s05-noah-cancel`: 18 metrics, blocked 18, minimum 3, lead-intent 3
 - `shorts` / `all` / `publish-lt-s04-noah-phone`: 18 metrics, blocked 18, minimum 3, lead-intent 3

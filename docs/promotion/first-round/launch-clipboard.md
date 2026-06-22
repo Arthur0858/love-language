@@ -4,8 +4,8 @@
 - blocks：2
 - profile blocks：1
 - post blocks：1
-- ready / blocked blocks：1 / 0
-- dashboard blocked areas：6
+- ready / blocked blocks：0 / 0
+- dashboard blocked areas：5
 - handoff blocked steps：1
 - issues：0
 
@@ -51,7 +51,7 @@ proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 
 ## post · youtube_shorts · `youtube_shorts`
 
-- status：`ready_to_publish`
+- status：`complete`
 
 ### Copy
 
@@ -80,6 +80,6 @@ quiz_completions: 0
 proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- check：``
+- write：``
 - stop：Stop while ; replace placeholder URL with real public post URL before writeback.

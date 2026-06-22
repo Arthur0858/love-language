@@ -39,7 +39,7 @@
 
 ### `write_post_batch`
 
-- status：`blocked_until_post_ready`
+- status：`complete`
 - command：`python3 tools/promotion_post_batch_import.py --add`
 - release：first batch has 1 published rows and minimum KPI rows.
 

@@ -28,12 +28,12 @@
       "week": "1",
       "slot": "1",
       "platform": "youtube_shorts",
-      "status": "planned",
+      "status": "published",
       "scheduled_date": "2026-06-15",
       "scheduled_time": "20:30",
       "timezone": "Asia/Taipei",
-      "published_date": "",
-      "post_url": "",
+      "published_date": "2026-06-21",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "task_id": "publish-lt-s01-iris-silence",
       "script_id": "lt-s01-iris-silence",
       "guardian_id": "iris",
@@ -60,7 +60,7 @@
       "luna_pack_clicks": "",
       "affiliate_book_clicks": "",
       "contact_requests": "",
-      "notes": "第一支先測「沉默/已讀」痛點"
+      "notes": "第一支先測「沉默/已讀」痛點 | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked"
     },
     {
       "week": "1",

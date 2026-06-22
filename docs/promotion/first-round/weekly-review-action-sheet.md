@@ -7,7 +7,7 @@
 - hold rows：2
 - weekly ready：0
 - empty data：0
-- evidence pending：6
+- evidence pending：4
 - issues：0
 
 ## Rule
@@ -31,7 +31,7 @@
 ### first-batch-public-url
 
 - phase：`publish`
-- status：`ready_to_publish`
+- status：`blocked`
 - action：Publish or verify the first YouTube Shorts post and record the real public post URL.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
 - evidence：Three real platform post_url values, not placeholders.
@@ -40,7 +40,7 @@
 ### minimum-kpi-backfill
 
 - phase：`kpi`
-- status：`blocked`
+- status：`ready_to_backfill`
 - action：Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.
 - command：`python3 tools/promotion_first_batch_kpi_action_sheet.py --check`
 - evidence：Each 0 value has a checked platform or site source, not an assumption.
@@ -52,7 +52,7 @@
 - status：`blocked`
 - action：Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.
 - command：`python3 tools/promotion_weekly_decision_evidence_checklist.py --check`
-- evidence：complete=2, pending=6.
+- evidence：complete=4, pending=4.
 - boundary：Pending evidence keeps all commerce and winner decisions on HOLD.
 
 ### weekly-review-packet

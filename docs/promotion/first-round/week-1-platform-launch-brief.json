@@ -1,44 +1,21 @@
 {
   "generatedAt": "2026-06-22",
   "week": 1,
-  "rowCount": 3,
-  "scriptCount": 3,
+  "rowCount": 2,
+  "scriptCount": 2,
   "platformCount": 1,
-  "expectedRowCount": 3,
-  "expectedScriptCount": 3,
+  "expectedRowCount": 2,
+  "expectedScriptCount": 2,
   "expectedPlatformDistribution": {
-    "youtube_shorts": 3
+    "youtube_shorts": 2
   },
   "guardianDistribution": {
-    "iris": 3
+    "iris": 2
   },
   "platformDistribution": {
-    "youtube_shorts": 3
+    "youtube_shorts": 2
   },
   "tasks": [
-    {
-      "week": "1",
-      "slot": "1",
-      "platform": "youtube_shorts",
-      "status": "planned",
-      "scheduled_date": "2026-06-15",
-      "scheduled_time": "20:30",
-      "timezone": "Asia/Taipei",
-      "published_date": "",
-      "post_url": "",
-      "task_id": "publish-lt-s01-iris-silence",
-      "script_id": "lt-s01-iris-silence",
-      "guardian_id": "iris",
-      "guardian_name": "艾莉絲",
-      "content_angle": "情感錯頻情境",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
-      "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-      "utm_content": "iris_silence",
-      "primary_cta": "完成 15 題測驗，找到你的情感守護者",
-      "hashtags": "#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
-      "notes": "第一支先測「沉默/已讀」痛點"
-    },
     {
       "week": "1",
       "slot": "2",

@@ -7,9 +7,9 @@
   },
   "metrics": {
     "rows": 1,
-    "ready": 1,
+    "ready": 0,
     "blocked": 0,
-    "complete": 0,
+    "complete": 1,
     "profileLinksPublicReady": 1,
     "profileGateReady": 1
   },
@@ -19,15 +19,15 @@
       "task_id": "publish-lt-s01-iris-silence",
       "script_id": "lt-s01-iris-silence",
       "guardian_id": "iris",
-      "status": "planned",
-      "action_status": "ready_to_publish",
+      "status": "published",
+      "action_status": "complete",
       "scheduled": "2026-06-15 20:30 Asia/Taipei",
       "title": "他沉默時，你最想聽見哪一句話？",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "proof_file": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "write_command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "proof_file": "",
+      "check_command": "",
+      "write_command": "",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
       "blocked_by": ""
     }

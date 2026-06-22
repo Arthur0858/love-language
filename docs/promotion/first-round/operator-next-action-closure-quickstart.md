@@ -1,27 +1,27 @@
 # LoveTypes Operator Next Action Closure Quickstart
 
 - 產生日期：2026-06-22
-- stage：`first_batch_publish`
+- stage：`first_batch_kpi`
 - active platforms：1
 - profile configured：1 / 1
 - ready actions：0 / 1
-- first batch published：0 / 1
+- first batch published：1 / 1
 - minimum KPI rows：0 / 1
 - proof profile template valid：0
 - proof profile placeholder rows：1
 - proof profile real ready rows：0
-- proof post rejected：1
-- profile publish ready：1
+- proof post rejected：0
+- profile publish ready：0
 - publish KPI weekly ready：0
-- active blockers：8
+- active blockers：7
 - issues：0
 
 ## Rules
 
 - Active platforms only are considered for first-round promotion operations.
 - Run the check command before any writeback command.
-- If profile setup is complete, the next external action is first-batch YouTube Shorts publishing.
-- Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions while empty data mode is active.
+- If profile setup is complete and first batch is published, the next external action is KPI source-proof collection.
+- Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions without source-checked evidence.
 - Stop immediately if account identity, permission, URL preservation, or safety copy is uncertain.
 
 ## Allowed Actions Now

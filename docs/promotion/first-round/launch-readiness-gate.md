@@ -15,10 +15,10 @@
 - 平台追蹤連結：1 / 1 有效
 - 首批排程：1 / 1 有效
 - 首週排程：3 / 3 有效
-- 素材預備檢查：3
-- 已發布平台列：0
+- 素材預備檢查：2
+- 已發布平台列：1
 - 已回填 KPI 列：0
-- 必填 KPI 欄位：`post_url`, `site_clicks`, `quiz_starts`, `quiz_completions`
+- 必填 KPI 欄位：`site_clicks`, `quiz_starts`, `quiz_completions`
 
 ## 平台入口清單
 
@@ -47,8 +47,7 @@
 
 ## 阻擋項
 
-- `publish_first_batch` (measurement_blocker)：首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。 解除條件：The first-batch posting-queue.csv platform rows are marked published and have post_url values.
-- `backfill_first_batch_kpis` (decision_blocker)：KPI 尚未回填到前 1 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。 解除條件：At least the first-batch KPI rows have post_url or minimum KPI values for site_clicks, quiz_starts, and quiz_completions.
+- `backfill_first_batch_kpis` (decision_blocker)：KPI 尚未回填到前 1 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。 解除條件：At least the first-batch KPI rows have source-checked values for site_clicks, quiz_starts, and quiz_completions.
 
 ## 安全界線
 

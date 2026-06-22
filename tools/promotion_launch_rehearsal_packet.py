@@ -54,6 +54,7 @@ def build_rehearsal() -> dict[str, object]:
     ready_to_publish = bool(readiness.get("readiness", {}).get("readyToPublishPosts"))
     published_rows = int(readiness_metrics.get("publishedRows", 0) or 0)
     filled_kpi_rows = int(readiness_metrics.get("filledKpiRows", 0) or 0)
+    expected_first_batch_rows = max(len(post_proofs), published_rows)
 
     stages: list[dict[str, object]] = []
     for proof in profile_proofs:
@@ -112,7 +113,7 @@ def build_rehearsal() -> dict[str, object]:
         })
     stages.append({
         "stage": "weekly_review",
-        "status": "ready" if published_rows >= len(post_proofs) and filled_kpi_rows >= len(post_proofs) else "blocked_until_minimum_kpi",
+        "status": "ready" if published_rows >= expected_first_batch_rows and filled_kpi_rows >= expected_first_batch_rows else "blocked_until_minimum_kpi",
         "platform": "all",
         "taskId": "weekly-review",
         "checkCommand": "python3 tools/promotion_weekly_review_packet.py --check",
@@ -144,6 +145,7 @@ def build_rehearsal() -> dict[str, object]:
             "profileProofRows": len(profile_proofs),
             "readyToPublish": ready_to_publish,
             "postProofRows": len(post_proofs),
+            "expectedFirstBatchRows": expected_first_batch_rows,
             "publishedRows": published_rows,
             "filledKpiRows": filled_kpi_rows,
             "emptyDataMode": bool(operation_proof.get("state", {}).get("emptyDataMode")) or bool(handoff.get("state", {}).get("emptyDataMode")),
@@ -206,19 +208,20 @@ def validate_rehearsal(packet: dict[str, object]) -> list[str]:
         issues.append("blockedStages should match stage statuses")
     profile_proofs = int(state.get("profileProofRows", 0) or 0)
     post_proofs = int(state.get("postProofRows", 0) or 0)
+    expected_first_batch_rows = max(post_proofs, int(state.get("expectedFirstBatchRows", 0) or 0), int(state.get("publishedRows", 0) or 0))
     if sum(1 for stage in stages if stage.get("stage") == "profile_evidence") != profile_proofs:
         issues.append("profile evidence stages should match profile proof rows")
     if sum(1 for stage in stages if stage.get("stage") == "profile_writeback") != profile_proofs:
         issues.append("profile writeback stages should match profile proof rows")
     if sum(1 for stage in stages if stage.get("stage") == "publish_post") != post_proofs:
         issues.append("publish stages should match post proof rows")
-    if sum(1 for stage in stages if stage.get("stage") == "minimum_kpi_backfill") != post_proofs:
-        issues.append("minimum KPI stages should match post proof rows")
+    if sum(1 for stage in stages if stage.get("stage") == "minimum_kpi_backfill") != expected_first_batch_rows:
+        issues.append("minimum KPI stages should match active or published first-batch rows")
     if not state.get("readyToPublish"):
         for stage in stages:
             if stage.get("stage") == "publish_post" and stage.get("status") != "blocked_until_readiness_gate":
                 issues.append("publish stages should stay blocked until readiness gate passes")
-    if int(state.get("publishedRows", 0) or 0) < post_proofs:
+    if int(state.get("publishedRows", 0) or 0) < expected_first_batch_rows or int(state.get("filledKpiRows", 0) or 0) < expected_first_batch_rows:
         weekly = [stage for stage in stages if stage.get("stage") == "weekly_review"]
         if not weekly or weekly[0].get("status") != "blocked_until_minimum_kpi":
             issues.append("weekly review should stay blocked until first batch and KPI rows are complete")

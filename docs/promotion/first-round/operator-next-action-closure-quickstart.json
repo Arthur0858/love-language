@@ -13,9 +13,9 @@
     "publishKpiHandoff": "docs/promotion/first-round/publish-kpi-handoff.json"
   },
   "metrics": {
-    "stage": "first_batch_publish",
+    "stage": "first_batch_kpi",
     "profileConfigured": 1,
-    "firstBatchPublished": 0,
+    "firstBatchPublished": 1,
     "minimumKpiRows": 0,
     "readyActions": 0,
     "profileActions": 1,
@@ -24,21 +24,21 @@
     "proofProfileTemplateValid": 0,
     "proofProfilePlaceholderRows": 1,
     "proofProfileRealReadyRows": 0,
-    "proofPostRejected": 1,
+    "proofPostRejected": 0,
     "launchProfileClipboardReady": 0,
     "launchPostClipboardBlocked": 0,
-    "profilePublishReady": 1,
+    "profilePublishReady": 0,
     "publishKpiWeeklyReady": 0,
     "nextActionRows": 0,
-    "activeBlockers": 8,
+    "activeBlockers": 7,
     "readyNowBlockers": 1,
     "issues": 0
   },
   "rules": [
     "Active platforms only are considered for first-round promotion operations.",
     "Run the check command before any writeback command.",
-    "If profile setup is complete, the next external action is first-batch YouTube Shorts publishing.",
-    "Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions while empty data mode is active.",
+    "If profile setup is complete and first batch is published, the next external action is KPI source-proof collection.",
+    "Do not write KPI, weekly review, lead route, Luna, affiliate, or offer decisions without source-checked evidence.",
     "Stop immediately if account identity, permission, URL preservation, or safety copy is uncertain."
   ],
   "actions": [

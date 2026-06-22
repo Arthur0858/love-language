@@ -379,14 +379,16 @@ def validate_metrics(metrics: dict[str, int]) -> list[str]:
     issues = [f"{key} expected {value}, got {metrics.get(key)}" for key, value in expected.items() if metrics.get(key) != value]
     if metrics["promotion_launch_sequence_dry_run_traceable_evidence"] != metrics["promotion_launch_sequence_dry_run_required_evidence"]:
         issues.append("all required profile/post evidence should be traceable in the dry run")
-    expected_stages = {
-        "promotion_launch_sequence_dry_run_initial_stage": "first_batch_publish" if initial_profile_open else "profile_setup",
-        "promotion_launch_sequence_dry_run_profile_stage": "first_batch_publish",
-        "promotion_launch_sequence_dry_run_post_stage": "weekly_evidence",
+    stage_order = ["profile_setup", "first_batch_publish", "kpi_backfill", "weekly_evidence", "weekly_decision", "launch_monitoring"]
+    allowed_initial = stage_order[1:] if initial_profile_open else stage_order
+    stage_expectations = {
+        "promotion_launch_sequence_dry_run_initial_stage": allowed_initial,
+        "promotion_launch_sequence_dry_run_profile_stage": stage_order[1:],
+        "promotion_launch_sequence_dry_run_post_stage": stage_order[2:],
     }
-    for key, value in expected_stages.items():
-        if metrics.get(key) != value:
-            issues.append(f"{key} expected {value}, got {metrics.get(key)}")
+    for key, allowed in stage_expectations.items():
+        if metrics.get(key) not in allowed:
+            issues.append(f"{key} expected one of {', '.join(allowed)}, got {metrics.get(key)}")
     return issues
 
 
@@ -420,7 +422,7 @@ def render_markdown(report: dict) -> str:
         "- This is a temporary-directory dry run; current promotion CSV files must not mutate.",
         "- Profile proof batch import must open the profile gate before first-batch post imports.",
         "- Post proof batch import must produce active-platform published rows, minimum KPI rows, and traceable evidence.",
-        "- Blocker stage must move from profile_setup to first_batch_publish, then hold at weekly_evidence until real weekly review data exists.",
+        "- Blocker stage must not regress; after a real public post it may hold at kpi_backfill until source-checked KPI data exists.",
         "- Weekly decision can open only after the simulated post URL and KPI evidence path is complete.",
         "",
     ]

@@ -14,6 +14,7 @@ import promotion_post_writeback as writeback
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
 FIRST_BATCH_PACKET = PROMOTION_DIR / "first-batch-publication-packet.json"
+POSTING_QUEUE = PROMOTION_DIR / "posting-queue.csv"
 OUTPUT_MD = PROMOTION_DIR / "public-post-url-checklist.md"
 OUTPUT_JSON = PROMOTION_DIR / "public-post-url-checklist.json"
 OUTPUT_CSV = PROMOTION_DIR / "public-post-url-checklist.csv"
@@ -36,6 +37,16 @@ def today() -> str:
 
 def load_packet() -> dict:
     return json.loads(FIRST_BATCH_PACKET.read_text(encoding="utf-8"))
+
+
+def posting_queue_lookup() -> dict[tuple[str, str], dict[str, str]]:
+    if not POSTING_QUEUE.exists():
+        return {}
+    with POSTING_QUEUE.open(newline="", encoding="utf-8") as handle:
+        return {
+            (str(row.get("platform", "")), str(row.get("task_id", ""))): row
+            for row in csv.DictReader(handle)
+        }
 
 
 def is_placeholder(value: str) -> bool:
@@ -64,7 +75,7 @@ def status_for(row: dict, check_id: str) -> tuple[str, str]:
         return "operator_verify", "需用公開瀏覽狀態確認貼文可見。"
     if check_id == "caption_cta_checked":
         caption = str(row.get("caption", ""))
-        ok = "15 題測驗" in caption and "情感守護者" in caption
+        ok = ("15 題測驗" in caption and "情感守護者" in caption) or "15-question quiz" in caption
         return ("complete" if ok else "missing", "caption checked")
     if check_id == "tracked_url_visible":
         tracked = str(row.get("trackedUrl", ""))
@@ -83,22 +94,29 @@ def status_for(row: dict, check_id: str) -> tuple[str, str]:
 
 def build_payload() -> dict:
     packet = load_packet()
+    queue_lookup = posting_queue_lookup()
     rows: list[dict[str, str]] = []
     for item in packet.get("rows", []):
+        queue_row = queue_lookup.get((str(item.get("platform", "")), str(item.get("taskId", ""))), {})
+        merged_item = {**queue_row, **item}
+        if not merged_item.get("caption"):
+            merged_item["caption"] = queue_row.get("caption", "")
+        if not merged_item.get("notes"):
+            merged_item["notes"] = queue_row.get("notes", "")
         for check_id, label, expected in CHECKS:
-            status, evidence = status_for(item, check_id)
+            status, evidence = status_for(merged_item, check_id)
             rows.append({
-                "platform": str(item.get("platform", "")),
-                "task_id": str(item.get("taskId", "")),
-                "script_id": str(item.get("scriptId", "")),
-                "guardian_id": str(item.get("guardianId", "")),
+                "platform": str(merged_item.get("platform", "")),
+                "task_id": str(merged_item.get("taskId") or merged_item.get("task_id", "")),
+                "script_id": str(merged_item.get("scriptId") or merged_item.get("script_id", "")),
+                "guardian_id": str(merged_item.get("guardianId") or merged_item.get("guardian_id", "")),
                 "check_id": check_id,
                 "check_label": label,
                 "expected_value": expected,
-                "post_url": str(item.get("postUrl", "")),
-                "tracked_url": str(item.get("trackedUrl", "")),
-                "utm_content": str(item.get("utmContent", "")),
-                "published_status": "published" if item.get("published") else "pending",
+                "post_url": str(merged_item.get("postUrl") or merged_item.get("post_url", "")),
+                "tracked_url": str(merged_item.get("trackedUrl") or merged_item.get("tracked_url", "")),
+                "utm_content": str(merged_item.get("utmContent") or merged_item.get("utm_content", "")),
+                "published_status": "published" if merged_item.get("published") else "pending",
                 "operator_status": status,
                 "evidence_note": evidence,
             })
@@ -208,7 +226,7 @@ def write_outputs(payload: dict, issues: list[str]) -> None:
         "evidence_note",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(payload["items"])
 

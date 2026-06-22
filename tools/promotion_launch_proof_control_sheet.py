@@ -170,7 +170,7 @@ def validate(rows: list[dict[str, str]], steps: list[dict[str, str]], profile: d
         issues.append("proof control sheet must include five ordered steps")
     if master_profile_configured < len(active) and metric(profile, "readyRows") < len(active) and any(step["id"] == "write_profile_batch" and step["status"] == "complete" for step in steps):
         issues.append("profile write step cannot be complete before profile batch is ready")
-    if metric(post, "readyRows") < len(active) and any(step["id"] == "write_post_batch" and step["status"] == "complete" for step in steps):
+    if stage in {"profile_setup", "first_batch_publish"} and metric(post, "readyRows") < len(active) and any(step["id"] == "write_post_batch" and step["status"] == "complete" for step in steps):
         issues.append("post write step cannot be complete before post batch is ready")
     if stage != "profile_setup" and metric(profile, "readyRows") == 0 and master_profile_configured < len(active):
         issues.append("stage cannot advance away from profile_setup while profile batch has no ready rows")

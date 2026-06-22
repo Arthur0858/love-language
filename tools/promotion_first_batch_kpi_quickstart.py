@@ -179,7 +179,7 @@ def validate(rows: list[dict], platforms: tuple[str, ...]) -> list[str]:
         command = str(row.get("writeCommand", ""))
         if "site-clicks" not in command or "quiz-starts" not in command or "quiz-completions" not in command:
             issues.append(f"{label}: write command must include minimum KPI flags")
-        if row.get("published") and "<REAL_" in command:
+        if row.get("published") and any(placeholder in command for placeholder in POST_URL_PLACEHOLDERS.values()):
             issues.append(f"{label}: published KPI command must not contain placeholder URL")
     return issues
 

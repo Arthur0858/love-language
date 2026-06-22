@@ -1,15 +1,15 @@
 {
   "generatedAt": "2026-06-22",
   "weekCount": 5,
-  "platformPostCount": 15,
+  "platformPostCount": 14,
   "issueCount": 0,
   "sheets": [
     {
       "week": 1,
       "profilePendingCount": 0,
       "profileGateCount": 1,
-      "platformPostCount": 3,
-      "scriptCount": 3,
+      "platformPostCount": 2,
+      "scriptCount": 2,
       "issues": []
     },
     {

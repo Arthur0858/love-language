@@ -109,17 +109,18 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
         issues.append("profile gate cannot be ready unless all active profiles are configured")
     for row in rows:
         label = f"{row['platform']}/{row['task_id']}"
+        is_complete = row["action_status"] == "complete"
         if not url_ok(row["tracked_url"], row["utm_content"]):
             issues.append(f"{label}: tracked_url should be /start/ with first-round social UTM")
         if "完成 15 題測驗" not in row["caption"] and "15-question quiz" not in row["caption"]:
             issues.append(f"{label}: caption should keep the quiz CTA")
         if any(forbidden in row["caption"] for forbidden in ("診斷", "療效", "必須購買")):
             issues.append(f"{label}: caption contains forbidden commercial or clinical claim")
-        if "promotion_post_text_import.py check" not in row["check_command"]:
+        if not is_complete and "promotion_post_text_import.py check" not in row["check_command"]:
             issues.append(f"{label}: missing post text import check command")
-        if "promotion_post_text_import.py add" not in row["write_command"]:
+        if not is_complete and "promotion_post_text_import.py add" not in row["write_command"]:
             issues.append(f"{label}: missing post text import add command")
-        if not row["proof_file"].endswith(f"proof-{row['platform']}-{row['task_id']}.txt"):
+        if not is_complete and not row["proof_file"].endswith(f"proof-{row['platform']}-{row['task_id']}.txt"):
             issues.append(f"{label}: proof file should match platform and task")
 
     metrics = {

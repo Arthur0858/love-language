@@ -15,7 +15,7 @@
 - script：`lt-s01-iris-silence`
 - guardian：艾莉絲（`iris`）
 - title：他沉默時，你最想聽見哪一句話？
-- asset ready status：`prepared`
+- asset ready status：`published`
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 
 ### QA Checklist

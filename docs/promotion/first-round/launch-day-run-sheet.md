@@ -6,9 +6,9 @@
 - publish rows：1
 - post ops rows：1
 - operator action rows：0
-- safe writeback rows：2
-- ready rows：2
-- blocked rows：2
+- safe writeback rows：1
+- ready rows：1
+- blocked rows：1
 - real profile proof ready：0 / 1
 - placeholder proof rows：1
 - external profile proof blockers：1
@@ -43,7 +43,7 @@
 
 ### 3. publish_first_batch · youtube_shorts · `publish-lt-s01-iris-silence`
 
-- status：`ready_to_publish`
+- status：`published`
 - action：Publish the first Iris post only after profile gate is ready; keep quiz CTA unchanged.
 - check：`python3 tools/promotion_first_batch_publish_readiness_pack.py --check`
 - write：
@@ -52,10 +52,10 @@
 
 ### 4. post_url_and_kpi · youtube_shorts · `publish-lt-s01-iris-silence`
 
-- status：`blocked_until_post_url`
-- action：Publish the post and replace the placeholder URL with a real public post URL.
+- status：`needs_kpi_source_proof`
+- action：Attach checked-source proof for site_clicks, quiz_starts and quiz_completions.
 - check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - success：post URL, site_clicks, quiz_starts and quiz_completions are backed by checked evidence.
 - stop：Do not run writeback with placeholder URLs or guessed KPI values.
 

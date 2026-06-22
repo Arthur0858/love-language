@@ -11,10 +11,10 @@
   },
   "metrics": {
     "rows": 7,
-    "completeRows": 2,
+    "completeRows": 3,
     "currentBlockers": 1,
-    "blockedUpstreamRows": 4,
-    "publishedRows": 0,
+    "blockedUpstreamRows": 3,
+    "publishedRows": 1,
     "minimumKpiRows": 0,
     "readyForWeeklyReview": 0,
     "issues": 0
@@ -40,42 +40,42 @@
     {
       "step_id": "first_batch_publish_sheet_ready",
       "phase": "publish",
-      "current_value": 1,
+      "current_value": 0,
       "required_value": 1,
       "owner_action": "Confirm all active first-batch rows are ready before opening platform publishing.",
       "evidence_required": "first-batch publish action sheet has all active rows ready and zero issues.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
-      "status": "complete"
+      "status": "current_blocker"
     },
     {
       "step_id": "post_url_writeback_complete",
       "phase": "post_writeback",
-      "current_value": 0,
+      "current_value": 1,
       "required_value": 1,
       "owner_action": "After each platform post is public, write back real HTTPS post_url with proof.",
       "evidence_required": "posting-queue.csv and platform-kpi-tracker.csv have published status, date, post_url, and proof note.",
       "command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
       "stop_condition": "Do not mark published with placeholder URLs, private URLs, or unverified scheduled drafts.",
-      "status": "current_blocker"
+      "status": "complete"
     },
     {
       "step_id": "post_evidence_traceable",
       "phase": "post_writeback",
-      "current_value": 0,
+      "current_value": 1,
       "required_value": 1,
       "owner_action": "Confirm every first-batch post has traceable public URL evidence.",
       "evidence_required": "first-batch completion gate traceablePostEvidence matches all active published rows.",
       "command": "python3 tools/promotion_first_batch_completion_gate.py --check",
       "stop_condition": "Stop if proof is generic, missing, or not tied to platform/date/post URL.",
-      "status": "blocked_upstream"
+      "status": "complete"
     },
     {
       "step_id": "minimum_kpi_source_check",
       "phase": "kpi_writeback",
       "current_value": 0,
       "required_value": 3,
-      "owner_action": "Keep KPI rows blocked until real post URLs are written back.",
+      "owner_action": "Run source checks and write back minimum KPI or verified-zero proof for each platform.",
       "evidence_required": "first-batch KPI action sheet has three ready rows before source checks, then minimumKpiRows reaches three.",
       "command": "python3 tools/promotion_first_batch_kpi_action_sheet.py --check",
       "stop_condition": "Do not treat 0 as data unless the platform or site analytics source was checked.",

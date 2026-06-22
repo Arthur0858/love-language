@@ -55,7 +55,7 @@
     {
       "step_id": "weekly_evidence_complete",
       "phase": "weekly_review",
-      "current_value": 2,
+      "current_value": 4,
       "required_value": 8,
       "owner_action": "Complete weekly evidence checks before choosing content, asset, Luna, or affiliate direction.",
       "evidence_required": "weekly-decision-evidence-checklist completeRows equals rows.",

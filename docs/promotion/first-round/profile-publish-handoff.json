@@ -7,6 +7,7 @@
     "launchReadinessGate": "docs/promotion/first-round/launch-readiness-gate.json",
     "firstBatchActionSheet": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
     "firstBatchReadinessPack": "docs/promotion/first-round/first-batch-publish-readiness-pack.json",
+    "firstBatchPublicationPacket": "docs/promotion/first-round/first-batch-publication-packet.json",
     "postProofHandoffPack": "docs/promotion/first-round/post-proof-handoff-pack.json",
     "stageTransitionMatrix": "docs/promotion/first-round/stage-transition-matrix.json"
   },
@@ -61,8 +62,8 @@
     {
       "step_id": "profile_evidence_complete",
       "phase": "profile_writeback",
-      "current_value": 1,
-      "required_value": 1,
+      "current_value": 2,
+      "required_value": 2,
       "owner_action": "Confirm every completed profile row has proof in the evidence ledger.",
       "evidence_required": "Evidence ledger traceable count equals required count and evidence issues are zero.",
       "command": "python3 tools/promotion_evidence_ledger.py --check",
@@ -97,7 +98,7 @@
       "current_value": 1,
       "required_value": 1,
       "owner_action": "Publish only the first batch rows that become ready after the profile gate opens.",
-      "evidence_required": "First-batch publish action sheet has active ready rows and zero issues.",
+      "evidence_required": "First-batch publish action sheet has active ready rows, or the first-batch publication packet proves the row is already published.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
       "status": "complete"

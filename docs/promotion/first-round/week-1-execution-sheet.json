@@ -3,10 +3,10 @@
   "week": 1,
   "profileGateCount": 1,
   "profilePendingCount": 0,
-  "platformPostCount": 3,
-  "scriptCount": 3,
+  "platformPostCount": 2,
+  "scriptCount": 2,
   "platformDistribution": {
-    "youtube_shorts": 3
+    "youtube_shorts": 2
   },
   "profileGates": [
     {
@@ -29,46 +29,6 @@
     }
   ],
   "scripts": [
-    {
-      "taskId": "publish-lt-s01-iris-silence",
-      "scriptId": "lt-s01-iris-silence",
-      "guardianId": "iris",
-      "guardianName": "艾莉絲",
-      "contentAngle": "情感錯頻情境",
-      "title": "他沉默時，你最想聽見哪一句話？",
-      "utmContent": "iris_silence",
-      "primaryCta": "完成 15 題測驗，找到你的情感守護者",
-      "platforms": [
-        {
-          "platform": "youtube_shorts",
-          "label": "YouTube Shorts",
-          "scheduledDate": "2026-06-15",
-          "scheduledTime": "20:30",
-          "timezone": "Asia/Taipei",
-          "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
-          "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
-          "writeback": [
-            "posting-queue.csv: status=published",
-            "posting-queue.csv: published_date",
-            "posting-queue.csv: post_url",
-            "platform-kpi-tracker.csv: post_url",
-            "platform-kpi-tracker.csv: site_clicks",
-            "platform-kpi-tracker.csv: quiz_starts",
-            "platform-kpi-tracker.csv: quiz_completions",
-            "platform-kpi-tracker.csv: guardian_result_clicks",
-            "platform-kpi-tracker.csv: resources_clicks",
-            "platform-kpi-tracker.csv: repair_plan_clicks",
-            "platform-kpi-tracker.csv: luna_clicks",
-            "platform-kpi-tracker.csv: keepsake_clicks",
-            "platform-kpi-tracker.csv: free_keepsake_downloads",
-            "platform-kpi-tracker.csv: supply_lead_requests",
-            "platform-kpi-tracker.csv: luna_pack_clicks",
-            "platform-kpi-tracker.csv: affiliate_book_clicks",
-            "platform-kpi-tracker.csv: contact_requests"
-          ]
-        }
-      ]
-    },
     {
       "taskId": "publish-lt-s02-iris-affirmation",
       "scriptId": "lt-s02-iris-affirmation",

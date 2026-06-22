@@ -2,8 +2,8 @@
 
 - 產生日期：2026-06-22
 - 平台首頁 gate：0 待設定 / 1
-- 平台發布任務：3
-- 腳本數：3
+- 平台發布任務：2
+- 腳本數：2
 - 主 CTA：完成 15 題測驗，找到你的情感守護者
 
 ## 執行順序
@@ -38,32 +38,6 @@ Comment A/B/C and we will point you to a guardian route.
 - 回填：`status=set/live`, `profile_link_set_date`, `profile_clicks`, `site_clicks`, `quiz_starts`, `quiz_completions`
 
 ## 本週三支腳本與平台發布
-
-### 他沉默時，你最想聽見哪一句話？
-
-- 任務：`publish-lt-s01-iris-silence`
-- 腳本：`lt-s01-iris-silence`
-- 守護者：艾莉絲（`iris`）
-- 內容角度：情感錯頻情境
-- UTM content：`iris_silence`
-
-#### YouTube Shorts · 2026-06-15 20:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- Caption：
-
-```text
-你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
-
-Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-
-留言 A/B/C，或寫下一句你最想被說出口的話。
-#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 最小 KPI：`platform-kpi-tracker.csv: post_url`、`platform-kpi-tracker.csv: site_clicks`、`platform-kpi-tracker.csv: quiz_starts`、`platform-kpi-tracker.csv: quiz_completions`
-- 結果後互動：`platform-kpi-tracker.csv: guardian_result_clicks`、`platform-kpi-tracker.csv: resources_clicks`、`platform-kpi-tracker.csv: repair_plan_clicks`、`platform-kpi-tracker.csv: luna_clicks`、`platform-kpi-tracker.csv: keepsake_clicks`、`platform-kpi-tracker.csv: free_keepsake_downloads`、`platform-kpi-tracker.csv: supply_lead_requests`、`platform-kpi-tracker.csv: luna_pack_clicks`、`platform-kpi-tracker.csv: affiliate_book_clicks`、`platform-kpi-tracker.csv: contact_requests`
 
 ### 哪一句肯定，會讓你瞬間安心？
 

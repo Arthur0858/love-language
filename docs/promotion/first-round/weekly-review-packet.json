@@ -9,11 +9,11 @@
   },
   "state": {
     "readyForWeeklyDecision": false,
-    "publishingStatusReady": false,
+    "publishingStatusReady": true,
     "weekDecisionGateReady": false,
     "emptyDataMode": false,
     "firstBatchRows": 1,
-    "firstBatchPublishedRows": 0,
+    "firstBatchPublishedRows": 1,
     "firstBatchMinimumKpiRows": 0,
     "trackerRows": 0,
     "profileTrackerRows": 1
@@ -45,8 +45,8 @@
       "platform": "youtube_shorts",
       "taskId": "publish-lt-s01-iris-silence",
       "scriptId": "lt-s01-iris-silence",
-      "status": "planned",
-      "postUrl": "",
+      "status": "published",
+      "postUrl": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "minimumFields": [
         "post_url",
         "site_clicks",
@@ -71,9 +71,7 @@
     }
   ],
   "holdReasons": [
-    "首批 YouTube Shorts 尚無公開 post URL。",
-    "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
-    "publishing-status 尚未達週決策條件。"
+    "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。"
   ],
   "allowedDecisions": [
     "publish_or_verify_first_batch",

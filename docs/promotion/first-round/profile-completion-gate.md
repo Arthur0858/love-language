@@ -2,9 +2,9 @@
 
 - 產生日期：2026-06-22
 - profile configured：1 / 1
-- evidence traceable：1 / 1
-- evidence pending：30
-- evidence not required yet：30
+- evidence traceable：2 / 2
+- evidence pending：29
+- evidence not required yet：29
 - evidence issues：0
 - packets in sync：1
 - ready for first batch publish：1

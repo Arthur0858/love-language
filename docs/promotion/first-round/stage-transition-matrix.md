@@ -1,12 +1,12 @@
 # LoveTypes Stage Transition Matrix
 
 - 產生日期：2026-06-22
-- current stage：`first_batch_publish`
+- current stage：`first_batch_kpi`
 - rows：6
-- complete rows：1
+- complete rows：2
 - current blockers：1
-- blocked upstream rows：4
-- command rows ready / blocked：3 / 3
+- blocked upstream rows：3
+- command rows ready / blocked：2 / 2
 - real profile proof ready：0 / 1
 - external profile proof blockers：1
 - current true blockers：0
@@ -34,17 +34,17 @@
 
 ### `first_batch_publish` -> `first_batch_kpi`
 
-- status：`current_blocker`
+- status：`complete`
 - gate：`first_batch_publication`
-- value：0 / 1 `firstBatchPublished`
+- value：1 / 1 `firstBatchPublished`
 - release：First batch has verified HTTPS post URLs written back for all active platforms.
 - next command：`python3 tools/promotion_first_batch_completion_gate.py --check`
 - fallback：Publish only after profile gate opens; reject placeholder URLs.
-- blocker：first batch post URLs are not all verified
+- blocker：none
 
 ### `first_batch_kpi` -> `weekly_review`
 
-- status：`blocked_upstream`
+- status：`current_blocker`
 - gate：`minimum_kpi`
 - value：0 / 1 `firstBatchMinimumKpiRows`
 - release：Each active first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.

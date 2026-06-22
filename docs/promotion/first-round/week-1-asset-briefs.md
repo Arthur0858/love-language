@@ -1,67 +1,15 @@
 # LoveTypes Week 1 Asset Briefs
 
 - 產生日期：2026-06-22
-- 製作手卡：3
-- 場景卡：9
-- 平台 caption：3
+- 製作手卡：2
+- 場景卡：6
+- 平台 caption：2
 
 ## 使用方式
 
 - 每支影片先依場景卡完成 9:16 初版，再使用對應平台 caption 發布。
 - 發布 CTA 固定導向 15 題測驗；商品、Luna、聯盟連結只由網站結果頁承接。
 - 發布後先回填 `posting-queue.csv`，再回填 `platform-kpi-tracker.csv` 的最小 KPI；有結果後互動時補齊 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
-
-## 艾莉絲 · 他沉默時，你最想聽見哪一句話？
-
-- 任務：`publish-lt-s01-iris-silence`
-- 腳本：`lt-s01-iris-silence`
-- 守護者宇宙：肯定的言詞｜晨曦玻璃花園
-- 內容角度：情感錯頻情境
-- 格式：9:16 / 20-30s
-- 輸出檔：`exports/lovetypes/week-1/lt-s01-iris-silence.mp4`
-- 主 CTA：完成 15 題測驗，找到你的情感守護者
-- 留言引導：留言 A/B/C，或寫下一句你最想被說出口的話。
-
-### 場景卡
-
-- Scene 1（00-07s）
-  - 畫面：晨曦玻璃花園背景，羽筆在信紙上寫下發光短句。
-  - 字幕：如果他突然變安靜， / 你心裡最先冒出的念頭是什麼？ / A：我是不是不重要了。
-  - 畫面字：如果他突然變安靜，
-- Scene 2（07-14s）
-  - 畫面：手機訊息停在已讀畫面，畫面逐漸被金色光點覆蓋。
-  - 字幕：B：我是不是哪裡做錯了。 / C：他是不是根本沒看見我。 / 艾莉絲會收起那些沒被說出口的話。
-  - 畫面字：B：我是不是哪裡做錯了。
-- Scene 3（14-21s）
-  - 畫面：字幕逐字浮現，節奏溫柔但有懸念。
-  - 字幕：她守護的不是甜言蜜語。 / 而是一句準確的看見。 / 你最想聽見哪一句？ / 完成 15 題測驗，找到你的情感守護者。
-  - 畫面字：她守護的不是甜言蜜語。
-
-### 平台 Caption
-
-#### YouTube Shorts · 2026-06-15 20:30 Asia/Taipei
-
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-
-```text
-你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
-
-Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-
-留言 A/B/C，或寫下一句你最想被說出口的話。
-#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
-```
-
-- 回填：`posting-queue.csv: status=published`, `posting-queue.csv: published_date`, `posting-queue.csv: post_url`, `platform-kpi-tracker.csv: post_url`, `platform-kpi-tracker.csv: site_clicks`, `platform-kpi-tracker.csv: quiz_starts`, `platform-kpi-tracker.csv: quiz_completions`, `platform-kpi-tracker.csv: guardian_result_clicks`, `platform-kpi-tracker.csv: resources_clicks`, `platform-kpi-tracker.csv: repair_plan_clicks`, `platform-kpi-tracker.csv: luna_clicks`, `platform-kpi-tracker.csv: keepsake_clicks`, `platform-kpi-tracker.csv: free_keepsake_downloads`, `platform-kpi-tracker.csv: supply_lead_requests`, `platform-kpi-tracker.csv: luna_pack_clicks`, `platform-kpi-tracker.csv: affiliate_book_clicks`, `platform-kpi-tracker.csv: contact_requests`
-- 結果後互動欄位：`guardian_result_clicks`, `resources_clicks`, `repair_plan_clicks`, `luna_clicks`, `keepsake_clicks`, `free_keepsake_downloads`, `supply_lead_requests`, `luna_pack_clicks`, `affiliate_book_clicks`, `contact_requests`
-
-### 安全檢查
-
-- 不宣稱診斷、療效或保證修復。
-- 不把短片 CTA 改成直接購買。
-- 不交換守護者名稱、愛之語、色系或象徵物。
-- Caption 與畫面 CTA 維持單一路徑：15-question quiz。
-- 發布後先回填 posting-queue.csv，再回填 platform-kpi-tracker.csv 的最小 KPI；有結果後互動時補齊守護者、補給、Luna、收藏、名單與聯盟欄位。
 
 ## 艾莉絲 · 哪一句肯定，會讓你瞬間安心？
 

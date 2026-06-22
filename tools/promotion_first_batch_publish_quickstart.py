@@ -90,7 +90,9 @@ def build_quickstart() -> dict:
         readiness_row = readiness_rows.get(platform, {})
         blocked_by = str(row.get("blocked_by", ""))
         readiness_status = str(readiness_row.get("operator_status") or readiness_row.get("status") or "")
-        row_ready = bool(ready_to_publish and not blocked_by)
+        action_status = str(row.get("action_status", ""))
+        row_complete = action_status == "complete" or readiness_status == "published"
+        row_ready = bool(ready_to_publish and not blocked_by and not row_complete)
         rows.append({
             "platform": platform,
             "taskId": str(row.get("task_id", "")),
@@ -98,7 +100,7 @@ def build_quickstart() -> dict:
             "guardianId": str(row.get("guardian_id", "")),
             "title": str(row.get("title", "")),
             "scheduled": str(row.get("scheduled", "")),
-            "actionStatus": str(row.get("action_status", "")),
+            "actionStatus": action_status,
             "readinessStatus": readiness_status,
             "readyToPublish": row_ready,
             "blockedBy": "" if row_ready else (blocked_by or readiness_status),
@@ -162,9 +164,10 @@ def validate(rows: list[dict], ready_to_publish: bool) -> list[str]:
             issues.append(f"{label}: caption contains forbidden claim language")
         if "<REAL_" not in proof:
             issues.append(f"{label}: proof template must keep a real public post URL placeholder")
-        if not row.get("proofFile") or not row.get("checkCommand"):
+        row_complete = row.get("actionStatus") == "complete" or row.get("readinessStatus") == "published"
+        if not row_complete and (not row.get("proofFile") or not row.get("checkCommand")):
             issues.append(f"{label}: missing proof file or check command")
-        if not row.get("writeCommand") or "<REAL_" not in proof:
+        if not row_complete and (not row.get("writeCommand") or "<REAL_" not in proof):
             issues.append(f"{label}: missing safe writeback template")
         if not ready_to_publish and row.get("readyToPublish"):
             issues.append(f"{label}: row must not be ready while profile handoff is closed")
@@ -226,7 +229,7 @@ def render_markdown(data: dict) -> str:
     if data["issues"]:
         lines.extend(["", "## Issues", ""])
         lines.extend(f"- {issue}" for issue in data["issues"])
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n".join(line.rstrip() for line in lines).rstrip() + "\n"
 
 
 def render_text(data: dict) -> str:
@@ -259,7 +262,7 @@ def render_text(data: dict) -> str:
     if data["issues"]:
         lines.extend(["", "Issues:"])
         lines.extend(f"- {issue}" for issue in data["issues"])
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n".join(line.rstrip() for line in lines).rstrip() + "\n"
 
 
 def write_outputs(data: dict, md_output: Path, json_output: Path, txt_output: Path) -> None:

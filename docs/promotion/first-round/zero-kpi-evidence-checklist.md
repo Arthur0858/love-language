@@ -2,10 +2,10 @@
 
 - 產生日期：2026-06-22
 - first-batch posts：1
-- published posts：0
+- published posts：1
 - checklist rows：3
-- pending publish rows：3
-- needs source proof rows：0
+- pending publish rows：0
+- needs source proof rows：3
 - missing rows：0
 - 用途：避免把 `site_clicks`、`quiz_starts`、`quiz_completions` 的 0 當作空資料或猜測值。
 
@@ -19,8 +19,8 @@
 
 - script：`lt-s01-iris-silence`
 - guardian：`iris`
-- post URL：(pending)
+- post URL：https://www.youtube.com/watch?v=uj9ZwYIKDrE
 
-- [ ] `site_clicks`：value `0`；Cloudflare/Web analytics, platform link analytics, or tracked UTM report.（pending_publish）
-- [ ] `quiz_starts`：value `0`；Funnel event catalog/report, analytics event export, or manual verified source.（pending_publish）
-- [ ] `quiz_completions`：value `0`；Funnel event catalog/report, analytics event export, or manual verified source.（pending_publish）
+- [ ] `site_clicks`：value `0`；Cloudflare/Web analytics, platform link analytics, or tracked UTM report.（needs_source_proof）
+- [ ] `quiz_starts`：value `0`；Funnel event catalog/report, analytics event export, or manual verified source.（needs_source_proof）
+- [ ] `quiz_completions`：value `0`；Funnel event catalog/report, analytics event export, or manual verified source.（needs_source_proof）

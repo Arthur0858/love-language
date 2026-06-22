@@ -36,7 +36,7 @@ Follow-up:
 
 ## Slot 1 · youtube_shorts · `publish-lt-s01-iris-silence`
 
-- status：`planned`
+- status：`published`
 - blocked by：`none`
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - script：`lt-s01-iris-silence`

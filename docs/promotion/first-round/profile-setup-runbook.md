@@ -5,7 +5,7 @@
 - configured：1
 - pending：0
 - clipboard blocks：1
-- current stage：`first_batch_publish`
+- current stage：`first_batch_kpi`
 - ready_to_publish：0
 - issues：0
 

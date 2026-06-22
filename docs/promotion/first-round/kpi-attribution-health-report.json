@@ -28,10 +28,10 @@
     "platformJsonRows": 15,
     "scriptRows": 15,
     "scriptJsonRows": 15,
-    "publishedRows": 0,
+    "publishedRows": 1,
     "filledScriptRows": 0,
     "attributionFilledRows": 0,
-    "rollupScripts": 0
+    "rollupScripts": 1
   },
   "attributionMetrics": {
     "rows": 16,

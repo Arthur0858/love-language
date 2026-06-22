@@ -2,12 +2,12 @@
 
 - 產生日期：2026-06-22
 - 週次：Week 1
-- 指揮列數：10
-- 可立即執行：3
+- 指揮列數：7
+- 可立即執行：2
 - 已完成：1
-- 預備檢查：3
-- 等待前置條件：3
-- 週決策：尚不可
+- 預備檢查：2
+- 等待前置條件：2
+- 週決策：可判讀
 - 指揮板規則：Run profile_setup first; asset_ready_check is prepared but not an authorized publishing action; keep publish_post blocked until both are done; keep kpi_backfill blocked until post_url exists.
 - 空資料安全：Before KPI backfill, do not change offers, paid CTA, product order, Luna emphasis, affiliate emphasis, or winning guardian.
 
@@ -29,19 +29,7 @@
 - writeback：status=set/live, profile_link_set_date, profile_clicks, site_clicks, quiz_starts, quiz_completions
 - safety：入口只導向 15 題測驗，不導購、不承諾療效。
 
-### 2. 他沉默時，你最想聽見哪一句話？
-
-- phase：`asset_ready_check`
-- status：`prepared`
-- priority：`high`
-- platform：`all`
-- task：`publish-lt-s01-iris-silence`
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。
-- writeback：mark asset ready before platform posting
-- safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
-
-### 3. 哪一句肯定，會讓你瞬間安心？
+### 2. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`asset_ready_check`
 - status：`prepared`
@@ -53,7 +41,7 @@
 - writeback：mark asset ready before platform posting
 - safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
 
-### 4. 你真的太敏感嗎？還是你只是等一句清楚的話？
+### 3. 你真的太敏感嗎？還是你只是等一句清楚的話？
 
 - phase：`asset_ready_check`
 - status：`prepared`
@@ -65,20 +53,7 @@
 - writeback：mark asset ready before platform posting
 - safety：短片 CTA 維持測驗入口，不把素材改成直接購買。
 
-### 5. 他沉默時，你最想聽見哪一句話？
-
-- phase：`publish_post`
-- status：`ready`
-- priority：`high`
-- platform：`youtube_shorts`
-- task：`publish-lt-s01-iris-silence`
-- schedule：2026-06-15 20:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：依 YouTube Shorts caption 發布，確認連結與 UTM 未被改寫。
-- writeback：posting-queue.csv: status=published, published_date, post_url
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 6. 哪一句肯定，會讓你瞬間安心？
+### 4. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`publish_post`
 - status：`ready`
@@ -91,7 +66,7 @@
 - writeback：posting-queue.csv: status=published, published_date, post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 7. 你真的太敏感嗎？還是你只是等一句清楚的話？
+### 5. 你真的太敏感嗎？還是你只是等一句清楚的話？
 
 - phase：`publish_post`
 - status：`ready`
@@ -104,21 +79,7 @@
 - writeback：posting-queue.csv: status=published, published_date, post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 8. 他沉默時，你最想聽見哪一句話？
-
-- phase：`kpi_backfill`
-- status：`blocked_until_published`
-- priority：`high`
-- platform：`youtube_shorts`
-- task：`publish-lt-s01-iris-silence`
-- schedule：2026-06-15 20:30 Asia/Taipei
-- tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- action：發布後先回填平台貼文 URL 與最小 KPI；有結果後互動時補齊守護者、補給、修復計畫、Luna、收藏、名單、聯盟與 Contact 欄位；週回顧再彙總到腳本級 KPI。
-- writeback：platform-kpi-tracker.csv: platform row post_url, site_clicks, quiz_starts, quiz_completions, guardian_result_clicks, resources_clicks, repair_plan_clicks, luna_clicks, keepsake_clicks, free_keepsake_downloads, supply_lead_requests, luna_pack_clicks, affiliate_book_clicks, contact_requests; kpi-tracker.csv: script-level weekly rollup
-- blocked by：post_url
-- safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
-
-### 9. 哪一句肯定，會讓你瞬間安心？
+### 6. 哪一句肯定，會讓你瞬間安心？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`
@@ -132,7 +93,7 @@
 - blocked by：post_url
 - safety：只使用單一 CTA：完成 15 題測驗，找到你的情感守護者。
 
-### 10. 你真的太敏感嗎？還是你只是等一句清楚的話？
+### 7. 你真的太敏感嗎？還是你只是等一句清楚的話？
 
 - phase：`kpi_backfill`
 - status：`blocked_until_published`

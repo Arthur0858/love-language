@@ -2,9 +2,9 @@
 
 - 產生日期：2026-06-22
 - rows：1
-- ready：1
+- ready：0
 - blocked：0
-- complete：0
+- complete：1
 - profile links public ready：1
 - profile gate ready：1
 - issues：0
@@ -17,13 +17,13 @@
 
 ## youtube_shorts · `publish-lt-s01-iris-silence`
 
-- action status：`ready_to_publish`
+- action status：`complete`
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - title：他沉默時，你最想聽見哪一句話？
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- proof file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- proof file：``
+- check：``
+- write：``
 
 Caption:
 

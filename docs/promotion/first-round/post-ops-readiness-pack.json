@@ -9,13 +9,13 @@
   },
   "metrics": {
     "rows": 1,
-    "published": 0,
-    "blocked": 1,
+    "published": 1,
+    "blocked": 0,
     "needsPublicVerification": 0,
-    "needsKpiSourceProof": 0,
+    "needsKpiSourceProof": 1,
     "readyForWeeklyReview": 0,
-    "publicPendingRows": 8,
-    "zeroPendingRows": 3,
+    "publicPendingRows": 0,
+    "zeroPendingRows": 0,
     "completionReady": 0
   },
   "rows": [
@@ -24,17 +24,17 @@
       "task_id": "publish-lt-s01-iris-silence",
       "script_id": "lt-s01-iris-silence",
       "title": "他沉默時，你最想聽見哪一句話？",
-      "status": "blocked_until_post_url",
-      "published": "0",
-      "post_url": "",
-      "public_pending": "8",
-      "public_complete": "0",
-      "public_operator_verify": "0",
-      "zero_pending": "3",
-      "zero_needs_source": "0",
+      "status": "needs_kpi_source_proof",
+      "published": "1",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
+      "public_pending": "0",
+      "public_complete": "6",
+      "public_operator_verify": "2",
+      "zero_pending": "0",
+      "zero_needs_source": "3",
       "zero_complete": "0",
-      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "next_action": "Publish the post and replace the placeholder URL with a real public post URL."
+      "kpi_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "next_action": "Attach checked-source proof for site_clicks, quiz_starts and quiz_completions."
     }
   ],
   "rules": [

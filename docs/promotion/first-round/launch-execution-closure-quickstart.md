@@ -1,27 +1,27 @@
 # LoveTypes Launch Execution Closure Quickstart
 
 - 產生日期：2026-06-22
-- master stage：`first_batch_publish`
+- master stage：`first_batch_kpi`
 - profile configured：1 / 1
-- first batch published：0 / 1
+- first batch published：1 / 1
 - minimum KPI rows：0 / 1
 - profile clipboard ready：0
 - post clipboard blocked：0
-- launch day ready / blocked：2 / 2
+- launch day ready / blocked：1 / 1
 - exception stop / hold：6 / 3
-- proof profile template valid / post rejected：0 / 1
+- proof profile template valid / post rejected：0 / 0
 - proof profile placeholder / real ready：1 / 0
 - proof rehearsal profile pass / post placeholder rejected：1 / 1
-- profile publish ready：1
+- profile publish ready：0
 - publish KPI weekly ready：0
 - issues：0
 
 ## Rules
 
 - Use master-gate stage as the source of truth; do not skip profile_setup.
-- Profile setup may proceed now, but publish, KPI, weekly review, lead, and offer decisions remain blocked.
+- Profile setup and first-batch publishing may be complete; KPI, weekly review, lead, and offer decisions remain evidence-gated.
 - Every external action needs visible account identity, safe copy, public URL verification, and proof note.
-- Placeholder post URLs must be rejected until real public post URLs exist.
+- Placeholder post URLs must be rejected until real public post URLs exist; after writeback, KPI source proof becomes the blocker.
 - Exception runbook stop conditions override all quickstarts.
 
 ## Closure Steps
@@ -42,14 +42,14 @@
 
 ### `open_first_batch_publish`
 
-- status：`ready_to_publish`
+- status：`blocked_until_profile_writeback`
 - command：`python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check`
 - release：Profile handoff opens first-batch publishing.
 - stop：Do not publish first-batch posts while profile setup remains incomplete.
 
 ### `close_first_batch_and_kpi`
 
-- status：`blocked_until_public_posts`
+- status：`blocked_until_kpi`
 - command：`python3 tools/promotion_publish_kpi_handoff.py --check && python3 tools/promotion_first_batch_kpi_closure_quickstart.py --check`
 - release：First batch posts have public URLs and checked minimum KPI rows.
 - stop：Do not open weekly review from placeholder URLs, private posts, or unchecked zero KPI values.

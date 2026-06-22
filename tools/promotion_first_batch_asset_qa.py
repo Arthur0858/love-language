@@ -30,7 +30,7 @@ POST_URL_PLACEHOLDERS = {
     "tiktok": "<REAL_TIKTOK_VIDEO_URL>",
     "instagram_reels": "<REAL_INSTAGRAM_REEL_URL>",
 }
-ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready"}
+ACCEPTED_ASSET_QA_STATUSES = {"prepared", "ready", "published"}
 QUIZ_CTA_MARKERS = ("完成 15 題測驗", "Take the 15-question quiz", "15-question quiz")
 
 
@@ -121,6 +121,9 @@ def build_packet() -> dict:
     for row in first_batch.get("rows", []):
         task_id = row.get("taskId", "")
         command_row = asset_lookup.get(task_id, {})
+        asset_status = command_row.get("status", "")
+        if not asset_status and row.get("published") and row.get("postUrl"):
+            asset_status = "published"
         rows.append({
             "taskId": task_id,
             "scriptId": row.get("scriptId", ""),
@@ -131,7 +134,7 @@ def build_packet() -> dict:
             "caption": row.get("caption", ""),
             "trackedUrl": row.get("trackedUrl", ""),
             "utmContent": row.get("utmContent", ""),
-            "assetReadyStatus": command_row.get("status", ""),
+            "assetReadyStatus": asset_status,
             "assetReadyAction": command_row.get("action", ""),
             "assetReadySafety": command_row.get("safety", ""),
             "postImportTemplate": "\n".join([
@@ -170,7 +173,7 @@ def validate_packet(packet: dict) -> list[str]:
         if row.get("guardianId") != "iris":
             issues.append(f"{label}: first-batch asset QA should be Iris")
         if row.get("assetReadyStatus") not in ACCEPTED_ASSET_QA_STATUSES:
-            issues.append(f"{label}: asset QA status should be prepared or ready")
+            issues.append(f"{label}: asset QA status should be prepared, ready, or published")
         if not any(marker in row.get("caption", "") for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: caption missing quiz CTA")
         for token in FORBIDDEN_FIRST_CTA:

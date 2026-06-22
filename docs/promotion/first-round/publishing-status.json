@@ -19,7 +19,8 @@
     "youtube_shorts": 15
   },
   "queueByStatus": {
-    "planned": 15
+    "planned": 14,
+    "published": 1
   },
   "queueByGuardian": {
     "claire": 3,
@@ -28,10 +29,13 @@
     "noah": 3,
     "vivian": 3
   },
-  "publishedByPlatform": {},
+  "publishedByPlatform": {
+    "youtube_shorts": 1
+  },
   "platformStatus": {
     "youtube_shorts": {
-      "planned": 15
+      "planned": 14,
+      "published": 1
     }
   },
   "guardianStatus": {
@@ -42,7 +46,8 @@
       "planned": 3
     },
     "iris": {
-      "planned": 3
+      "planned": 2,
+      "published": 1
     },
     "noah": {
       "planned": 3
@@ -51,11 +56,17 @@
       "planned": 3
     }
   },
-  "publishedScripts": [],
-  "trackerReadyPublishedScripts": [],
+  "publishedScripts": [
+    "lt-s01-iris-silence"
+  ],
+  "trackerReadyPublishedScripts": [
+    "lt-s01-iris-silence"
+  ],
   "trackerMissingPublishedScripts": [],
   "trackerPartialPublishedScripts": [],
-  "platformTrackerReadyPublishedRows": [],
+  "platformTrackerReadyPublishedRows": [
+    "youtube_shorts/publish-lt-s01-iris-silence"
+  ],
   "platformTrackerMissingPublishedRows": [],
   "platformTrackerPartialPublishedRows": [],
   "platformTrackerMetricRows": 0,
@@ -73,13 +84,11 @@
     "affiliate_book_clicks": 0,
     "contact_requests": 0
   },
-  "warnings": [
-    "empty publish mode: no queue rows are marked published/live/posted yet"
-  ],
+  "warnings": [],
   "issues": [],
-  "readyForWeeklyDecision": false,
+  "readyForWeeklyDecision": true,
   "safety": {
-    "emptyPublishMode": true,
-    "note": "Do not pick winning guardians or monetization routes before published posts and KPI rows are backfilled."
+    "emptyPublishMode": false,
+    "note": ""
   }
 }

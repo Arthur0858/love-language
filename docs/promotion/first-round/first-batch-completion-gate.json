@@ -9,20 +9,20 @@
   "metrics": {
     "rows": 1,
     "expectedRows": 1,
-    "publishedRows": 0,
+    "publishedRows": 1,
     "minimumKpiRows": 0,
-    "traceablePostEvidence": 0,
+    "traceablePostEvidence": 1,
     "genericPostEvidence": 0,
     "missingPostEvidence": 0,
     "attributionFilledRows": 0,
-    "blockers": 2,
+    "blockers": 1,
     "issues": 0
   },
   "state": {
-    "firstBatchPublished": false,
+    "firstBatchPublished": true,
     "evidenceComplete": true,
     "minimumKpiComplete": false,
-    "publishingStatusReady": false,
+    "publishingStatusReady": true,
     "readyForWeeklyReview": false,
     "emptyDataMode": true
   },
@@ -33,11 +33,6 @@
     "quiz_completions"
   ],
   "blockers": [
-    {
-      "id": "first_batch_not_published",
-      "message": "published rows 0/1; publish each platform post and write back post_url.",
-      "release": "All first-batch rows are marked published/live/posted with real post_url values."
-    },
     {
       "id": "minimum_kpi_not_backfilled",
       "message": "minimum KPI rows 0/1; fill or verified-zero site_clicks, quiz_starts, quiz_completions.",

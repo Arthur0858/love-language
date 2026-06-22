@@ -16,6 +16,7 @@ PROFILE_COMPLETION = PROMOTION_DIR / "profile-completion-gate.json"
 LAUNCH_READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
 FIRST_BATCH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
 FIRST_BATCH_READINESS = PROMOTION_DIR / "first-batch-publish-readiness-pack.json"
+FIRST_BATCH_PUBLICATION = PROMOTION_DIR / "first-batch-publication-packet.json"
 POST_PROOF_HANDOFF = PROMOTION_DIR / "post-proof-handoff-pack.json"
 STAGE_MATRIX = PROMOTION_DIR / "stage-transition-matrix.json"
 DEFAULT_MD_OUTPUT = PROMOTION_DIR / "profile-publish-handoff.md"
@@ -66,6 +67,7 @@ def build_rows() -> list[dict[str, object]]:
     readiness = load_json(LAUNCH_READINESS)
     first_batch = load_json(FIRST_BATCH_ACTION)
     first_batch_readiness = load_json(FIRST_BATCH_READINESS)
+    first_batch_publication = load_json(FIRST_BATCH_PUBLICATION)
     post_proof = load_json(POST_PROOF_HANDOFF)
     stage = load_json(STAGE_MATRIX)
 
@@ -80,9 +82,14 @@ def build_rows() -> list[dict[str, object]]:
     ready_to_publish = readiness_flag(readiness, "readyToPublishPosts")
     first_batch_ready = metric(first_batch, "ready")
     first_batch_rows = metric(first_batch, "rows", 3)
+    first_batch_complete = metric(first_batch, "complete")
+    first_batch_published = int(first_batch_publication.get("publishedRows", 0) or 0)
+    first_batch_required = max(first_batch_rows, len(first_batch_publication.get("rows", []) or []), 1)
     publish_asset_ready = metric(first_batch_readiness, "assetQaReady")
+    publish_readiness_published = metric(first_batch_readiness, "published")
     proof_templates_rejected = metric(first_batch_readiness, "proofTemplatesSafelyRejected")
     post_proof_files = metric(post_proof, "proofFiles")
+    post_proof_post_writeback = metric(post_proof, "postWritebackFirstBatch")
     post_proof_rejected = metric(post_proof, "templatesSafelyRejected")
     current_blockers = metric(stage, "currentBlockers")
 
@@ -150,18 +157,22 @@ def build_rows() -> list[dict[str, object]]:
         {
             "step_id": "first_batch_action_sheet_ready",
             "phase": "publish",
-            "current_value": first_batch_ready,
-            "required_value": first_batch_rows,
+            "current_value": max(first_batch_ready, first_batch_complete, first_batch_published),
+            "required_value": first_batch_required,
             "owner_action": "Publish only the first batch rows that become ready after the profile gate opens.",
-            "evidence_required": "First-batch publish action sheet has active ready rows and zero issues.",
+            "evidence_required": "First-batch publish action sheet has active ready rows, or the first-batch publication packet proves the row is already published.",
             "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
             "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
         },
         {
             "step_id": "publish_readiness_guarded",
             "phase": "publish",
-            "current_value": publish_asset_ready + proof_templates_rejected,
-            "required_value": first_batch_rows * 2,
+            "current_value": max(
+                publish_asset_ready + proof_templates_rejected,
+                publish_readiness_published + proof_templates_rejected,
+                first_batch_published + proof_templates_rejected,
+            ),
+            "required_value": first_batch_required * 2,
             "owner_action": "Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.",
             "evidence_required": "first-batch-publish-readiness-pack has active asset-ready rows and safely rejected proof templates.",
             "command": "python3 tools/promotion_first_batch_publish_readiness_pack.py --check",
@@ -170,8 +181,11 @@ def build_rows() -> list[dict[str, object]]:
         {
             "step_id": "post_proof_handoff_guarded",
             "phase": "post_proof",
-            "current_value": post_proof_files + post_proof_rejected,
-            "required_value": first_batch_rows * 2,
+            "current_value": max(
+                post_proof_files + post_proof_rejected,
+                first_batch_published + post_proof_post_writeback,
+            ),
+            "required_value": first_batch_required * 2,
             "owner_action": "Keep post proof handoff files ready for real URLs while rejecting placeholders.",
             "evidence_required": "post-proof-handoff-pack has active proof files and safely rejected templates.",
             "command": "python3 tools/promotion_post_proof_handoff_pack.py --check",
@@ -212,6 +226,7 @@ def build_handoff() -> dict:
             "launchReadinessGate": str(LAUNCH_READINESS.relative_to(ROOT)),
             "firstBatchActionSheet": str(FIRST_BATCH_ACTION.relative_to(ROOT)),
             "firstBatchReadinessPack": str(FIRST_BATCH_READINESS.relative_to(ROOT)),
+            "firstBatchPublicationPacket": str(FIRST_BATCH_PUBLICATION.relative_to(ROOT)),
             "postProofHandoffPack": str(POST_PROOF_HANDOFF.relative_to(ROOT)),
             "stageTransitionMatrix": str(STAGE_MATRIX.relative_to(ROOT)),
         },

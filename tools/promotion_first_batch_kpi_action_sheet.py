@@ -81,6 +81,10 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
         zero_rows = zero_by_task.get(task_key, [])
         published = bool(item.get("published"))
         post_url = str(item.get("postUrl", ""))
+        kpi_command = str(item.get("kpiExampleCommand", ""))
+        placeholder = str(item.get("postUrlPlaceholder", ""))
+        if published and post_url and placeholder:
+            kpi_command = kpi_command.replace(placeholder, post_url)
         if published:
             action_status = "ready_for_kpi_source_check"
             blocked_by = ""
@@ -98,7 +102,7 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
             "minimum_kpis": ",".join(MINIMUM_KPIS),
             "zero_source_rows": str(sum(1 for row in zero_rows if row.get("metric_id") in MINIMUM_KPIS)),
             "proof_note_template": post_writeback.ANALYTICS_PROOF_NOTE_PLACEHOLDER,
-            "kpi_command": str(item.get("kpiExampleCommand", "")),
+            "kpi_command": kpi_command,
             "blocked_by": blocked_by,
         })
 
@@ -115,7 +119,8 @@ def build_rows() -> tuple[list[dict[str, str]], dict[str, int], list[str]]:
             issues.append(f"{label}: unpublished rows must stay blocked")
         if row["published"] == "1" and not row["post_url"].startswith("https://"):
             issues.append(f"{label}: published rows require real HTTPS post_url")
-        if "<REAL_" in row["kpi_command"]:
+        post_url_placeholders = set(post_writeback.POST_URL_PLACEHOLDERS.values())
+        if any(placeholder in row["kpi_command"] for placeholder in post_url_placeholders):
             # Expected while blocked; once published, the generated packet should have a real URL.
             if row["published"] == "1":
                 issues.append(f"{label}: published KPI command still contains placeholder post URL")

@@ -1,21 +1,21 @@
 LoveTypes first batch publish closure quickstart
 generated: 2026-06-22
 profile handoff ready: 1
-ready/blocked rows: 1 / 0
-published/pending rows: 0 / 1
+ready/blocked rows: 0 / 1
+published/pending rows: 1 / 0
 
 Closure steps:
 - profile_publish_handoff_open / complete: python3 tools/promotion_profile_publish_handoff.py --check
-- publish_first_batch_posts / ready: python3 tools/promotion_first_batch_publish_quickstart.py --check
-- writeback_public_post_urls / blocked_until_public_url: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
-- verify_public_post_urls / blocked_until_post_url: python3 tools/promotion_public_post_url_checklist.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check
-- open_kpi_backfill / blocked_until_public_url: python3 tools/promotion_first_batch_kpi_quickstart.py --check
+- publish_first_batch_posts / blocked_until_profile_gate: python3 tools/promotion_first_batch_publish_quickstart.py --check
+- writeback_public_post_urls / ready_after_publish: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+- verify_public_post_urls / ready: python3 tools/promotion_public_post_url_checklist.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check
+- open_kpi_backfill / ready_after_public_verification: python3 tools/promotion_first_batch_kpi_quickstart.py --check
 
 Rows:
 
 === youtube_shorts / publish-lt-s01-iris-silence ===
-status: ready_to_publish
-ready: 1
-blocked by: 
-proof file: docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+status: complete
+ready: 0
+blocked by: published
+proof file:
+write: python3 tools/promotion_post_text_import.py add --input  --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"

@@ -9,10 +9,10 @@
   "metrics": {
     "profileConfigured": 1,
     "expectedProfiles": 1,
-    "evidenceRequired": 1,
-    "evidenceTraceable": 1,
-    "evidencePending": 30,
-    "evidenceNotRequiredYet": 30,
+    "evidenceRequired": 2,
+    "evidenceTraceable": 2,
+    "evidencePending": 29,
+    "evidenceNotRequiredYet": 29,
     "evidenceIssues": 0,
     "blockers": 0,
     "issues": 0

@@ -1,8 +1,8 @@
 # LoveTypes Week 1 平台發布簡報
 
 - 產生日期：2026-06-22
-- 平台任務：3
-- 腳本數：3
+- 平台任務：2
+- 腳本數：2
 - 主 CTA：完成 15 題測驗，找到你的情感守護者
 
 ## 發布前規則
@@ -12,27 +12,6 @@
 - 不使用診斷、療效、保證修復或必須購買的說法。
 
 ## 平台任務
-
-### 2026-06-15 20:30 Asia/Taipei · YouTube Shorts
-
-- 任務：`publish-lt-s01-iris-silence`
-- 腳本：`lt-s01-iris-silence`
-- 守護者：艾莉絲（`iris`）
-- 內容角度：情感錯頻情境
-- 標題：他沉默時，你最想聽見哪一句話？
-- 追蹤連結：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- UTM content：`iris_silence`
-
-```text
-你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
-
-Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-
-留言 A/B/C，或寫下一句你最想被說出口的話。
-#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
-```
-
-回填欄位：`posting-queue.csv` 的 `status`、`published_date`、`post_url`；`platform-kpi-tracker.csv` 先填 `post_url`、`site_clicks`、`quiz_starts`、`quiz_completions`，有結果後互動時再填 `guardian_result_clicks`、`resources_clicks`、`repair_plan_clicks`、`luna_clicks`、`keepsake_clicks`、`free_keepsake_downloads`、`supply_lead_requests`、`luna_pack_clicks`、`affiliate_book_clicks`、`contact_requests`。
 
 ### 2026-06-17 20:30 Asia/Taipei · YouTube Shorts
 

@@ -146,7 +146,7 @@ def validate_rows(rows: list[dict[str, str]]) -> list[str]:
 def write_outputs(rows: list[dict[str, str]], csv_path: Path, json_path: Path) -> None:
     csv_path.parent.mkdir(parents=True, exist_ok=True)
     with csv_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(handle, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     payload = {

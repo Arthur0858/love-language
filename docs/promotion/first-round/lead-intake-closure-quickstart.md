@@ -12,7 +12,7 @@
 - repeated routes / ready routes：0 / 0
 - public free assets：5
 - offer queue ready：0
-- master stage：`first_batch_publish`
+- master stage：`first_batch_kpi`
 - master lead ready routes：0
 - issues：0
 

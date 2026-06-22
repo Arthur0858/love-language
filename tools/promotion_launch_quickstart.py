@@ -20,6 +20,7 @@ DEFAULT_MD_OUTPUT = PROMOTION_DIR / "launch-quickstart.md"
 DEFAULT_JSON_OUTPUT = PROMOTION_DIR / "launch-quickstart.json"
 DEFAULT_TXT_OUTPUT = PROMOTION_DIR / "launch-quickstart.txt"
 FORBIDDEN_TERMS = ("診斷", "療效", "保證修復", "必須購買")
+LAUNCH_QUICKSTART_STAGES = {"profile_setup", "first_batch_publish", "first_batch_kpi", "kpi_backfill"}
 
 
 def read_json(path: Path) -> dict:
@@ -146,7 +147,7 @@ def build_quickstart() -> dict:
             "Current allowed work is profile setup only unless the master gate advances.",
             "Run check commands before write commands, then refresh daily ops after real writeback.",
             "Profile proof must be real external evidence: screenshot, clicked public link, or timestamped platform proof.",
-            "Publishing opens only after active profile rows are configured; KPI, Luna, affiliate, and paid offer experiments remain blocked until public post evidence exists.",
+            "Publishing opens only after active profile rows are configured; KPI writeback opens only after public post URLs and source proof exist.",
             "Do not use empty KPI or lead data to choose winning guardians or commercial direction.",
         ],
         "nowActions": profile_actions,
@@ -161,8 +162,11 @@ def build_quickstart() -> dict:
 def validate(data: dict) -> list[str]:
     issues: list[str] = []
     metrics = data["metrics"]
-    if metrics["stage"] not in {"profile_setup", "first_batch_publish"}:
-        issues.append(f"expected current stage profile_setup or first_batch_publish before launch, got {metrics['stage']}")
+    if metrics["stage"] not in LAUNCH_QUICKSTART_STAGES:
+        issues.append(
+            "expected current stage profile_setup, first_batch_publish, first_batch_kpi, "
+            f"or kpi_backfill before decisions, got {metrics['stage']}"
+        )
     if metrics["stageCurrentBlockers"] != 1:
         issues.append("launch quickstart should expose exactly one current stage blocker")
     if metrics["profileActions"] < 1:
@@ -194,7 +198,7 @@ def validate(data: dict) -> list[str]:
         if not action.get("command") or not action.get("stopCondition"):
             issues.append(f"{label}: missing command or stop condition")
         if not str(action.get("status", "")).startswith("blocked"):
-            issues.append(f"{label}: downstream action should remain blocked in profile setup stage")
+            issues.append(f"{label}: downstream action should remain blocked until its evidence gate clears")
     return issues
 
 

@@ -3,7 +3,7 @@
 - 產生日期：2026-06-22
 - profile configured / pending：1 / 0
 - ready to publish：1
-- first batch published / pending：0 / 1
+- first batch published / pending：1 / 0
 - weekly review ready：0
 - empty data mode：0
 - ready steps：1
@@ -73,35 +73,22 @@ page: https://lovetypes.tw/keepsakes/
 
 ## Steps
 
-### 1. 他沉默時，你最想聽見哪一句話？
+### 1. publish-lt-s01-iris-silence
 
-- phase：`publish_first_batch`
+- phase：`minimum_kpi_backfill`
 - status：`ready`
 - priority：`high`
 - platform：youtube_shorts
 - taskId：publish-lt-s01-iris-silence
 - scriptId：lt-s01-iris-silence
-- scheduled：2026-06-15 20:30 Asia/Taipei
-- trackedUrl：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-
-Caption:
-
-```text
-你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。
-
-Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-
-留言 A/B/C，或寫下一句你最想被說出口的話。
-#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes
-```
+- writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 ### 2. Run weekly review and decision gates
 
 - phase：`weekly_review`
 - status：`blocked_until_kpi_backfill`
 - priority：`medium`
-- blocked by：首批 YouTube Shorts 尚無公開 post URL。; 首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。; publishing-status 尚未達週決策條件。
+- blocked by：首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。
 
 ## Completion Criteria
 

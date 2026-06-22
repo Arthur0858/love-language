@@ -86,8 +86,6 @@ def is_published(row: dict[str, str]) -> bool:
 
 
 def is_script_filled(row: dict[str, str]) -> bool:
-    if any((row.get(field) or "").strip() for field in ("date", "platform", "post_url")):
-        return True
     return any(parse_int(row.get(field)) > 0 for field in METRIC_FIELDS)
 
 

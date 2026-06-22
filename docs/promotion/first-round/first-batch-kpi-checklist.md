@@ -19,7 +19,7 @@
 - Guardian: `iris`
 - Proof file: `docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - Check: `python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- Write: `python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 - [ ] `post_url`：Real public HTTPS post URL from the platform. Source: Published platform post page.
 - [ ] `published_date`：YYYY-MM-DD date when the platform post became public. Source: Platform post timestamp or publishing dashboard.

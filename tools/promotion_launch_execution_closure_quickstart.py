@@ -196,9 +196,9 @@ def build_quickstart() -> dict:
         "metrics": metrics,
         "rules": [
             "Use master-gate stage as the source of truth; do not skip profile_setup.",
-            "Profile setup may proceed now, but publish, KPI, weekly review, lead, and offer decisions remain blocked.",
+            "Profile setup and first-batch publishing may be complete; KPI, weekly review, lead, and offer decisions remain evidence-gated.",
             "Every external action needs visible account identity, safe copy, public URL verification, and proof note.",
-            "Placeholder post URLs must be rejected until real public post URLs exist.",
+            "Placeholder post URLs must be rejected until real public post URLs exist; after writeback, KPI source proof becomes the blocker.",
             "Exception runbook stop conditions override all quickstarts.",
         ],
         "steps": closure_steps(metrics),
@@ -229,11 +229,11 @@ def validate(data: dict) -> list[str]:
         issues.append("operation proof templates should validate active profile proof files")
     if metrics["profileProofPlaceholderRows"] + metrics["profileProofRealReadyRows"] > expected:
         issues.append("profile proof placeholder plus real-ready rows cannot exceed platform count")
-    if metrics["postProofSafelyRejected"] < expected:
+    if metrics["firstBatchPublished"] < expected and metrics["postProofSafelyRejected"] < expected:
         issues.append("operation proof templates should safely reject active placeholder post proof files")
     if metrics["rehearsalProfilePass"] < expected and metrics["profileConfigured"] < expected:
         issues.append("proof rehearsal should pass active profile scenarios")
-    if metrics["rehearsalPostPlaceholderRejected"] < expected:
+    if metrics["firstBatchPublished"] < expected and metrics["rehearsalPostPlaceholderRejected"] < expected:
         issues.append("proof rehearsal should reject active placeholder post scenarios")
     if metrics["profileConfigured"] == 0 and metrics["profilePublishReady"] != 0:
         issues.append("profile publish handoff cannot open before profile links are configured")

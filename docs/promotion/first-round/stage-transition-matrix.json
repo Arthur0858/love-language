@@ -12,15 +12,15 @@
     "blockerResolution": "docs/promotion/first-round/blocker-resolution-checklist.json",
     "decisionInput": "docs/promotion/first-round/decision-input-matrix.json"
   },
-  "stage": "first_batch_publish",
+  "stage": "first_batch_kpi",
   "metrics": {
     "rows": 6,
-    "completeRows": 1,
+    "completeRows": 2,
     "currentBlockers": 1,
     "nextRows": 0,
-    "blockedUpstreamRows": 4,
-    "commandReadyRows": 3,
-    "commandBlockedRows": 3,
+    "blockedUpstreamRows": 3,
+    "commandReadyRows": 2,
+    "commandBlockedRows": 2,
     "emptyDataMode": 0,
     "profileProofRows": 1,
     "profileProofRealReadyRows": 0,
@@ -58,10 +58,10 @@
       "releaseCondition": "First batch has verified HTTPS post URLs written back for all active platforms.",
       "nextCommand": "python3 tools/promotion_first_batch_completion_gate.py --check",
       "fallbackAction": "Publish only after profile gate opens; reject placeholder URLs.",
-      "status": "current_blocker",
-      "activeStage": 1,
-      "currentValue": 0,
-      "blocker": "first batch post URLs are not all verified"
+      "status": "complete",
+      "activeStage": 0,
+      "currentValue": 1,
+      "blocker": ""
     },
     {
       "fromStage": "first_batch_kpi",
@@ -72,8 +72,8 @@
       "releaseCondition": "Each active first-batch post has site_clicks, quiz_starts, quiz_completions or checked-zero proof.",
       "nextCommand": "python3 tools/promotion_weekly_review_packet.py --check && python3 tools/promotion_week_decision_gate.py --check",
       "fallbackAction": "Keep KPI rows blank until the source was checked; 0 requires proof.",
-      "status": "blocked_upstream",
-      "activeStage": 0,
+      "status": "current_blocker",
+      "activeStage": 1,
       "currentValue": 0,
       "blocker": "minimum KPI rows need checked source proof"
     },

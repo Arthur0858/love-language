@@ -1,6 +1,6 @@
 evidence_type,platform,record_id,status,required,evidence_status,proof_date,proof_note,source
 profile,youtube_shorts,youtube_shorts,set,1,traceable,2026-06-14,2026-06-14 checked https://studio.youtube.com/channel/UCrOxX4L-lX-sSO_ngfURPvA/editing/profile and public handle https://www.youtube.com/@LoveTypesQuiz: English bio visible; Take the LoveTypes Quiz link uses youtube_shorts_bio UTM,docs/promotion/first-round/platform-profile-tracker.csv
-post,youtube_shorts,publish-lt-s01-iris-silence,planned,0,not_required_yet,,,docs/promotion/first-round/posting-queue.csv
+post,youtube_shorts,publish-lt-s01-iris-silence,published,1,traceable,2026-06-21,public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked,docs/promotion/first-round/posting-queue.csv
 post,youtube_shorts,publish-lt-s02-iris-affirmation,planned,0,not_required_yet,,,docs/promotion/first-round/posting-queue.csv
 post,youtube_shorts,publish-lt-s03-iris-too-sensitive,planned,0,not_required_yet,,,docs/promotion/first-round/posting-queue.csv
 post,youtube_shorts,publish-lt-s04-noah-phone,planned,0,not_required_yet,,,docs/promotion/first-round/posting-queue.csv

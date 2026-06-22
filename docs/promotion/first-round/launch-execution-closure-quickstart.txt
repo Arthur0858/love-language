@@ -1,8 +1,8 @@
 LoveTypes launch execution closure quickstart
 generated: 2026-06-22
-master stage: first_batch_publish
+master stage: first_batch_kpi
 profile configured: 1 / 1
-first batch published: 0 / 1
+first batch published: 1 / 1
 minimum KPI rows: 0 / 1
 profile proof template valid: 0
 profile proof placeholder rows: 1
@@ -20,12 +20,12 @@ command: python3 tools/promotion_proof_rehearsal.py --check && python3 tools/pro
 release: All profile links are set/live with traceable proof notes.
 stop: Do not write back profile status from memory, draft screens, private previews, or missing screenshots.
 
-open_first_batch_publish: ready_to_publish
+open_first_batch_publish: blocked_until_profile_writeback
 command: python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check
 release: Profile handoff opens first-batch publishing.
 stop: Do not publish first-batch posts while profile setup remains incomplete.
 
-close_first_batch_and_kpi: blocked_until_public_posts
+close_first_batch_and_kpi: blocked_until_kpi
 command: python3 tools/promotion_publish_kpi_handoff.py --check && python3 tools/promotion_first_batch_kpi_closure_quickstart.py --check
 release: First batch posts have public URLs and checked minimum KPI rows.
 stop: Do not open weekly review from placeholder URLs, private posts, or unchecked zero KPI values.

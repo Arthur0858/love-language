@@ -10,8 +10,8 @@
     "commandCenter": "docs/promotion/first-round/launch-command-center.json",
     "nextActions": "docs/promotion/first-round/next-actions.json"
   },
-  "stage": "first_batch_publish",
-  "stageIndex": 1,
+  "stage": "first_batch_kpi",
+  "stageIndex": 2,
   "stageOrder": [
     "profile_setup",
     "first_batch_publish",
@@ -21,16 +21,16 @@
     "offer_experiment",
     "scale"
   ],
-  "nextAction": "Publish the first-batch YouTube Short and write back the real public post URL.",
+  "nextAction": "Fill or verified-zero site_clicks, quiz_starts, and quiz_completions for each first-batch post.",
   "metrics": {
     "profileConfigured": 1,
     "expectedProfiles": 1,
-    "firstBatchPublished": 0,
+    "firstBatchPublished": 1,
     "firstBatchMinimumKpiRows": 0,
     "leadReadyRoutes": 0,
     "readyOfferExperiments": 0,
-    "commandReadyRows": 3,
-    "commandBlockedRows": 3,
+    "commandReadyRows": 2,
+    "commandBlockedRows": 2,
     "issues": 0
   },
   "gateStates": [
@@ -38,7 +38,6 @@
       "id": "launch_readiness",
       "status": "open",
       "blockers": [
-        "publish_first_batch",
         "backfill_first_batch_kpis"
       ]
     },
@@ -51,7 +50,6 @@
       "id": "first_batch_completion",
       "status": "blocked",
       "blockers": [
-        "first_batch_not_published",
         "minimum_kpi_not_backfilled"
       ]
     },
@@ -59,9 +57,7 @@
       "id": "weekly_review",
       "status": "blocked",
       "blockers": [
-        "首批 YouTube Shorts 尚無公開 post URL。",
-        "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。",
-        "publishing-status 尚未達週決策條件。"
+        "首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。"
       ]
     },
     {
@@ -76,12 +72,12 @@
       "id": "offer_experiment",
       "status": "blocked",
       "blockers": [
-        "尚未達週決策門檻：發布狀態或 KPI 回填不足。"
+        "已回填 KPI，但目前所有關鍵訊號皆為 0；維持 collect_signal，不調整商品、守護者優先序或內容放大。"
       ]
     }
   ],
   "allowedNow": [
-    "first_batch_publish"
+    "first_batch_kpi"
   ],
   "blockedDecisions": [
     "build_owned_asset_from_lead",

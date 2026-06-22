@@ -7,11 +7,11 @@
   ],
   "metrics": {
     "rows": 31,
-    "required": 1,
-    "traceable": 1,
+    "required": 2,
+    "traceable": 2,
     "generic": 0,
     "missing": 0,
-    "pending": 30,
+    "pending": 29,
     "issues": 0
   },
   "rows": [
@@ -30,11 +30,11 @@
       "evidence_type": "post",
       "platform": "youtube_shorts",
       "record_id": "publish-lt-s01-iris-silence",
-      "status": "planned",
-      "required": "0",
-      "evidence_status": "not_required_yet",
-      "proof_date": "",
-      "proof_note": "",
+      "status": "published",
+      "required": "1",
+      "evidence_status": "traceable",
+      "proof_date": "2026-06-21",
+      "proof_note": "public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked",
       "source": "docs/promotion/first-round/posting-queue.csv"
     },
     {

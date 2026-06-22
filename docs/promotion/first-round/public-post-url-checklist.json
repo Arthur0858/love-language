@@ -5,10 +5,10 @@
     "posts": 1,
     "checksPerPost": 8,
     "rows": 8,
-    "publishedPosts": 0,
-    "pendingPublishRows": 8,
-    "completeRows": 0,
-    "operatorVerifyRows": 0,
+    "publishedPosts": 1,
+    "pendingPublishRows": 0,
+    "completeRows": 6,
+    "operatorVerifyRows": 2,
     "missingRows": 0
   },
   "policy": {
@@ -25,12 +25,12 @@
       "check_id": "post_url_present",
       "check_label": "公開貼文 URL 已取得",
       "expected_value": "post_url is a real https URL, not a placeholder.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "https://www.youtube.com/watch?v=uj9ZwYIKDrE"
     },
     {
       "platform": "youtube_shorts",
@@ -40,12 +40,12 @@
       "check_id": "platform_domain_matches",
       "check_label": "平台網域正確",
       "expected_value": "post_url domain matches the intended publishing platform.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "https://www.youtube.com/watch?v=uj9ZwYIKDrE"
     },
     {
       "platform": "youtube_shorts",
@@ -55,12 +55,12 @@
       "check_id": "public_view_checked",
       "check_label": "一般訪客可驗證",
       "expected_value": "Open the post URL logged out or from a public browser and confirm it resolves to the post.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "operator_verify",
+      "evidence_note": "需用公開瀏覽狀態確認貼文可見。"
     },
     {
       "platform": "youtube_shorts",
@@ -70,12 +70,12 @@
       "check_id": "caption_cta_checked",
       "check_label": "Caption CTA 仍是測驗",
       "expected_value": "Published caption keeps the 15-question quiz as the first action.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "caption checked"
     },
     {
       "platform": "youtube_shorts",
@@ -85,12 +85,12 @@
       "check_id": "tracked_url_visible",
       "check_label": "追蹤連結或 bio 指引存在",
       "expected_value": "Published post or platform profile still leads to the planned /start/ tracked URL.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence"
     },
     {
       "platform": "youtube_shorts",
@@ -100,12 +100,12 @@
       "check_id": "utm_content_recorded",
       "check_label": "UTM content 已記錄",
       "expected_value": "utm_content in the tracked URL still matches the planned first-batch script.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "iris_silence"
     },
     {
       "platform": "youtube_shorts",
@@ -115,12 +115,12 @@
       "check_id": "proof_note_traceable",
       "check_label": "Proof note 可追溯",
       "expected_value": "notes include a verified proof note with public URL, screenshot, or platform timestamp.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "complete",
+      "evidence_note": "第一支先測「沉默/已讀」痛點 | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked"
     },
     {
       "platform": "youtube_shorts",
@@ -130,12 +130,12 @@
       "check_id": "starter_kpi_source_checked",
       "check_label": "初始 KPI 來源已檢查",
       "expected_value": "site_clicks, quiz_starts, and quiz_completions are from a checked source; zero is allowed only after checking.",
-      "post_url": "",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utm_content": "iris_silence",
-      "published_status": "pending",
-      "operator_status": "pending_publish",
-      "evidence_note": "等待真實公開 post_url 回填後再驗證。"
+      "published_status": "published",
+      "operator_status": "operator_verify",
+      "evidence_note": "確認平台或網站數據來源後才回填 0 或正數。"
     }
   ],
   "issues": []

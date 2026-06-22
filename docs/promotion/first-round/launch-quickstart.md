@@ -1,14 +1,14 @@
 # LoveTypes Launch Quickstart
 
 - 產生日期：2026-06-22
-- current stage：`first_batch_publish`
+- current stage：`first_batch_kpi`
 - stage current blockers：1
 - profile configured：1
-- first batch published：0
+- first batch published：1
 - minimum KPI rows：0
 - real leads / ready offers：0 / 0
-- command ready / blocked decisions：3 / 3
-- clipboard ready / blocked：1 / 0
+- command ready / blocked decisions：2 / 2
+- clipboard ready / blocked：0 / 0
 - issues：0
 
 ## Rules
@@ -16,7 +16,7 @@
 - Current allowed work is profile setup only unless the master gate advances.
 - Run check commands before write commands, then refresh daily ops after real writeback.
 - Profile proof must be real external evidence: screenshot, clicked public link, or timestamped platform proof.
-- Publishing opens only after active profile rows are configured; KPI, Luna, affiliate, and paid offer experiments remain blocked until public post evidence exists.
+- Publishing opens only after active profile rows are configured; KPI writeback opens only after public post URLs and source proof exist.
 - Do not use empty KPI or lead data to choose winning guardians or commercial direction.
 
 ## Now: Profile Setup Only
@@ -32,6 +32,6 @@
 
 ## Next: Still Blocked
 
-- `publish` / `blocked_until_profile_links`：First YouTube Shorts post；current：1 ready / 0 blocked；check：`python3 tools/promotion_first_batch_publish_quickstart.py --check`；stop：Do not publish until all active profile links are set/live and proof is written back.
-- `kpi` / `blocked_until_public_post_url`：First-batch minimum KPI backfill；current：0 ready / 1 blocked；check：`python3 tools/promotion_first_batch_kpi_quickstart.py --check`；stop：Do not write KPI values until public post URLs and analytics source proof exist.
+- `publish` / `blocked_until_profile_links`：First YouTube Shorts post；current：0 ready / 1 blocked；check：`python3 tools/promotion_first_batch_publish_quickstart.py --check`；stop：Do not publish until all active profile links are set/live and proof is written back.
+- `kpi` / `blocked_until_public_post_url`：First-batch minimum KPI backfill；current：1 ready / 0 blocked；check：`python3 tools/promotion_first_batch_kpi_quickstart.py --check`；stop：Do not write KPI values until public post URLs and analytics source proof exist.
 - `lead_offer` / `blocked_until_real_leads`：Lead, asset, Luna, and offer decisions；current：0 real leads / 0 ready offers；check：`python3 tools/promotion_lead_offer_quickstart.py --check`；stop：Do not create paid or priority offer experiments without repeated traceable demand.

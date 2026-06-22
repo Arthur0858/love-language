@@ -11,8 +11,9 @@
     "profileConfigured": 1,
     "profileProofRows": 0,
     "readyToPublish": true,
-    "postProofRows": 1,
-    "publishedRows": 0,
+    "postProofRows": 0,
+    "expectedFirstBatchRows": 1,
+    "publishedRows": 1,
     "filledKpiRows": 0,
     "emptyDataMode": false
   },
@@ -24,18 +25,18 @@
     "minimum_kpi_backfill",
     "weekly_review"
   ],
-  "stageCount": 4,
+  "stageCount": 3,
   "readyStages": 1,
   "profileReadyStages": 0,
-  "publishReadyStages": 1,
-  "kpiReadyStages": 0,
+  "publishReadyStages": 0,
+  "kpiReadyStages": 1,
   "weeklyReadyStages": 0,
-  "blockedStages": 3,
+  "blockedStages": 2,
   "commandPhaseCounts": {
     "profile_setup": 1,
-    "asset_ready_check": 3,
-    "publish_post": 3,
-    "kpi_backfill": 3
+    "asset_ready_check": 2,
+    "publish_post": 2,
+    "kpi_backfill": 2
   },
   "safety": {
     "checkBeforeWrite": true,
@@ -55,18 +56,8 @@
       "successSignal": "promotion_launch_readiness_ready_to_publish=1"
     },
     {
-      "stage": "publish_post",
-      "status": "ready",
-      "platform": "youtube_shorts",
-      "taskId": "publish-lt-s01-iris-silence",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "blockedBy": "",
-      "successSignal": "post_url and starter metrics validate before writeback"
-    },
-    {
       "stage": "minimum_kpi_backfill",
-      "status": "blocked_until_post_url",
+      "status": "ready",
       "platform": "youtube_shorts",
       "taskId": "publish-lt-s01-iris-silence",
       "requiredFields": [
@@ -76,7 +67,7 @@
         "quiz_completions"
       ],
       "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "blockedBy": "publish_post",
+      "blockedBy": "",
       "successSignal": "platform row has post_url, site_clicks, quiz_starts, quiz_completions"
     },
     {

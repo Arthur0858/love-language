@@ -1,9 +1,9 @@
 # LoveTypes Blocker Resolution Checklist
 
 - 產生日期：2026-06-22
-- current stage：`first_batch_publish`
+- current stage：`first_batch_kpi`
 - rows：10
-- active blockers：8
+- active blockers：7
 - ready now：1
 - empty data mode：0
 - issues：0
@@ -28,10 +28,10 @@
   - release：posting-queue.csv and platform-kpi-tracker.csv have status=published, published_date, and a verified HTTPS post_url.
   - evidence：`https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence`
   - writeback：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-- [ ] `public_post_urls_verified`（publish_first_batch / blocked_until_evidence）
+- [x] `public_post_urls_verified`（publish_first_batch / complete）
   - scope：`first_round`
   - action：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.
-  - release：公開貼文 URL 檢查仍有 pending 或缺證據。
+  - release：證據已滿足。
   - evidence：`docs/promotion/first-round/weekly-decision-evidence-checklist.json`
   - writeback：`python3 tools/promotion_daily_ops_refresh.py`
 - [ ] `zero_kpis_have_source`（kpi_backfill / blocked_until_evidence）

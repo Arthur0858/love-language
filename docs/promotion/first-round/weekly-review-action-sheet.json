@@ -15,8 +15,8 @@
     "holdRows": 2,
     "weeklyReady": 0,
     "emptyData": 0,
-    "evidencePending": 6,
-    "evidenceComplete": 2
+    "evidencePending": 4,
+    "evidenceComplete": 4
   },
   "rows": [
     {
@@ -31,7 +31,7 @@
     {
       "step_id": "first-batch-public-url",
       "phase": "publish",
-      "status": "ready_to_publish",
+      "status": "blocked",
       "operator_action": "Publish or verify the first YouTube Shorts post and record the real public post URL.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "evidence_required": "Three real platform post_url values, not placeholders.",
@@ -40,7 +40,7 @@
     {
       "step_id": "minimum-kpi-backfill",
       "phase": "kpi",
-      "status": "blocked",
+      "status": "ready_to_backfill",
       "operator_action": "Backfill site_clicks, quiz_starts and quiz_completions for each published first-batch post.",
       "command": "python3 tools/promotion_first_batch_kpi_action_sheet.py --check",
       "evidence_required": "Each 0 value has a checked platform or site source, not an assumption.",
@@ -52,7 +52,7 @@
       "status": "blocked",
       "operator_action": "Run the weekly decision evidence checklist and require all evidence rows to complete before ranking content.",
       "command": "python3 tools/promotion_weekly_decision_evidence_checklist.py --check",
-      "evidence_required": "complete=2, pending=6.",
+      "evidence_required": "complete=4, pending=4.",
       "decision_boundary": "Pending evidence keeps all commerce and winner decisions on HOLD."
     },
     {

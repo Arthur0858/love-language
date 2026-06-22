@@ -26,8 +26,8 @@
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
       "trackedUrl": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "utmContent": "iris_silence",
-      "assetReadyStatus": "prepared",
-      "assetReadyAction": "預先確認直式影片、字幕、封面或首幀、caption、留言 CTA 與安全邊界；等 profile gate 開啟後才進入發布。",
+      "assetReadyStatus": "published",
+      "assetReadyAction": "",
       "assetReadySafety": "",
       "postImportTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-22\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0",
       "qaItems": [

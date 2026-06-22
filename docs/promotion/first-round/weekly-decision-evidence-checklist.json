@@ -10,8 +10,8 @@
   },
   "metrics": {
     "rows": 8,
-    "completeRows": 2,
-    "pendingRows": 6,
+    "completeRows": 4,
+    "pendingRows": 4,
     "weeklyReady": 0,
     "decisionReady": 0,
     "emptyDataMode": 0
@@ -33,15 +33,15 @@
       "phase": "publish_first_batch",
       "check_id": "first_batch_published",
       "expected_value": "First-batch posts are published on all active platforms.",
-      "operator_status": "pending",
-      "evidence_note": "首批啟用平台尚未全部發布。"
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
     },
     {
       "phase": "publish_first_batch",
       "check_id": "public_post_urls_verified",
       "expected_value": "Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.",
-      "operator_status": "pending",
-      "evidence_note": "公開貼文 URL 檢查仍有 pending 或缺證據。"
+      "operator_status": "complete",
+      "evidence_note": "證據已滿足。"
     },
     {
       "phase": "kpi_backfill",

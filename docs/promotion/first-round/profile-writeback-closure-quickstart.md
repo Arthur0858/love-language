@@ -5,7 +5,7 @@
 - pending evidence rows：6
 - configured：1 / 1
 - completion ready：1
-- handoff ready to publish：1
+- handoff ready to publish：0
 - launch ready to publish：1
 - master stage index：0
 - issues：0

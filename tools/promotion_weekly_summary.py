@@ -90,8 +90,6 @@ def read_tracker(path: Path) -> tuple[list[str], list[dict[str, str]]]:
 
 
 def is_filled(row: dict[str, str]) -> bool:
-    if any((row.get(field) or "").strip() for field in ACTIVITY_FIELDS):
-        return True
     return any(parse_int(row.get(field)) > 0 for field in NUMERIC_FIELDS)
 
 

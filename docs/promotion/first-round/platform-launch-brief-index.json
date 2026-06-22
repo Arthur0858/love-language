@@ -1,17 +1,17 @@
 {
   "generatedAt": "2026-06-22",
   "weekCount": 5,
-  "rowCount": 15,
-  "scriptCount": 15,
+  "rowCount": 14,
+  "scriptCount": 14,
   "issueCount": 0,
   "reports": [
     {
       "week": 1,
-      "rowCount": 3,
-      "scriptCount": 3,
+      "rowCount": 2,
+      "scriptCount": 2,
       "platformCount": 1,
       "guardianDistribution": {
-        "iris": 3
+        "iris": 2
       },
       "issues": []
     },

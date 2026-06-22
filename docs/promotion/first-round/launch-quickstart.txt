@@ -1,15 +1,15 @@
 LoveTypes launch quickstart
 generated: 2026-06-22
-stage: first_batch_publish
+stage: first_batch_kpi
 profile configured: 1
-first batch published: 0
+first batch published: 1
 minimum KPI rows: 0
 
 Rules:
 - Current allowed work is profile setup only unless the master gate advances.
 - Run check commands before write commands, then refresh daily ops after real writeback.
 - Profile proof must be real external evidence: screenshot, clicked public link, or timestamped platform proof.
-- Publishing opens only after active profile rows are configured; KPI, Luna, affiliate, and paid offer experiments remain blocked until public post evidence exists.
+- Publishing opens only after active profile rows are configured; KPI writeback opens only after public post URLs and source proof exist.
 - Do not use empty KPI or lead data to choose winning guardians or commercial direction.
 
 Now:
@@ -23,6 +23,6 @@ write: python3 tools/promotion_profile_text_import.py add --input docs/promotion
 stop: Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.
 
 Next blocked:
-- publish / blocked_until_profile_links: 1 ready / 0 blocked
-- kpi / blocked_until_public_post_url: 0 ready / 1 blocked
+- publish / blocked_until_profile_links: 0 ready / 1 blocked
+- kpi / blocked_until_public_post_url: 1 ready / 0 blocked
 - lead_offer / blocked_until_real_leads: 0 real leads / 0 ready offers

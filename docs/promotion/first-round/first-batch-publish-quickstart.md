@@ -3,9 +3,9 @@
 - 產生日期：2026-06-22
 - rows：1
 - ready to publish：1
-- ready / blocked rows：1 / 0
+- ready / blocked rows：0 / 1
 - profile handoff ready：1
-- action ready：1
+- action ready：0
 - readiness blocked：0
 - issues：0
 
@@ -19,16 +19,16 @@
 
 ## youtube_shorts · `publish-lt-s01-iris-silence`
 
-- readiness：`ready_to_publish`
-- action status：`ready_to_publish`
-- ready to publish：`1`
-- blocked by：(none)
+- readiness：`published`
+- action status：`complete`
+- ready to publish：`0`
+- blocked by：published
 - script：`lt-s01-iris-silence`
 - guardian：`iris`
 - title：他沉默時，你最想聽見哪一句話？
 - scheduled：2026-06-15 20:30 Asia/Taipei
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
-- proof file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
+- proof file：``
 
 Caption:
 
@@ -57,6 +57,6 @@ quiz_completions: 0
 proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
 ```
 
-- check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- check：``
+- write：`python3 tools/promotion_post_text_import.py add --input  --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.

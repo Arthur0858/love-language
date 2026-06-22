@@ -2,13 +2,13 @@
 
 - 產生日期：2026-06-22
 - rows：1
-- published：0
-- blocked：1
+- published：1
+- blocked：0
 - needs public verification：0
-- needs KPI source proof：0
+- needs KPI source proof：1
 - ready for weekly review：0
-- public pending rows：8
-- zero KPI pending rows：3
+- public pending rows：0
+- zero KPI pending rows：0
 - issues：0
 
 ## Rule
@@ -22,12 +22,12 @@
 
 ### youtube_shorts · `publish-lt-s01-iris-silence`
 
-- status：`blocked_until_post_url`
+- status：`needs_kpi_source_proof`
 - script：`lt-s01-iris-silence`
 - title：他沉默時，你最想聽見哪一句話？
-- published：0
-- post URL：(pending)
-- public complete / pending / verify：0 / 8 / 0
-- zero complete / pending / needs source：0 / 3 / 0
-- next：Publish the post and replace the placeholder URL with a real public post URL.
-- KPI command：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- published：1
+- post URL：https://www.youtube.com/watch?v=uj9ZwYIKDrE
+- public complete / pending / verify：6 / 0 / 2
+- zero complete / pending / needs source：0 / 0 / 3
+- next：Attach checked-source proof for site_clicks, quiz_starts and quiz_completions.
+- KPI command：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`

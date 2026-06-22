@@ -9,14 +9,14 @@
   },
   "metrics": {
     "rows": 10,
-    "activeBlockers": 8,
+    "activeBlockers": 7,
     "readyNow": 1,
     "profileRows": 1,
     "publishRows": 1,
     "decisionRows": 7,
     "leadRows": 1,
     "offerRows": 1,
-    "currentStage": "first_batch_publish",
+    "currentStage": "first_batch_kpi",
     "emptyDataMode": 0
   },
   "rows": [
@@ -44,9 +44,9 @@
       "phase": "publish_first_batch",
       "blocker_id": "public_post_urls_verified",
       "scope": "first_round",
-      "status": "blocked_until_evidence",
+      "status": "complete",
       "owner_action": "Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.",
-      "release_condition": "公開貼文 URL 檢查仍有 pending 或缺證據。",
+      "release_condition": "證據已滿足。",
       "evidence_source": "docs/promotion/first-round/weekly-decision-evidence-checklist.json",
       "writeback_command": "python3 tools/promotion_daily_ops_refresh.py"
     },

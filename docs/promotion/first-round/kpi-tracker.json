@@ -62,9 +62,9 @@
       "week": "1",
       "slot": "1",
       "task_id": "publish-lt-s01-iris-silence",
-      "date": "",
-      "platform": "",
-      "post_url": "",
+      "date": "2026-06-21",
+      "platform": "youtube_shorts",
+      "post_url": "https://www.youtube.com/watch?v=uj9ZwYIKDrE",
       "script_id": "lt-s01-iris-silence",
       "guardian_id": "iris",
       "guardian_name": "艾莉絲",
@@ -89,7 +89,7 @@
       "luna_pack_clicks": "",
       "affiliate_book_clicks": "",
       "contact_requests": "",
-      "notes": "第一支先測「沉默/已讀」痛點"
+      "notes": "第一支先測「沉默/已讀」痛點 | verified:2026-06-21 script rollup from 1 platform post(s)"
     },
     {
       "week": "1",

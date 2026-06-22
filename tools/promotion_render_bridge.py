@@ -478,8 +478,7 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
     issues: list[str] = []
     if schedule_status() != "PAUSED":
         issues.append("lovetypes-nightly-shorts-render schedule is not PAUSED")
-    if not rows:
-        issues.append("no ready unpublished YouTube Shorts rows found")
+    no_ready_unpublished_rows = not rows
     for item in bridge_rows:
         validation = item.get("validation", {})
         if write_scripts and not validation.get("valid"):
@@ -512,6 +511,7 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
             "bridgeRows": len(bridge_rows),
             "validScripts": sum(1 for item in bridge_rows if item.get("validation", {}).get("valid")),
             "renderPreflightReady": preflight["ready"] if preflight else None,
+            "noReadyUnpublishedRows": no_ready_unpublished_rows,
             "issues": len(issues),
         },
         "rows": bridge_rows,
@@ -535,6 +535,7 @@ def render_markdown(payload: dict) -> str:
         f"- bridge rows：{payload['metrics']['bridgeRows']}",
         f"- valid scripts：{payload['metrics']['validScripts']}",
         f"- render preflight ready：`{payload['metrics']['renderPreflightReady']}`",
+        f"- no ready unpublished rows：`{payload['metrics']['noReadyUnpublishedRows']}`",
         f"- issues：{payload['metrics']['issues']}",
         "",
         "## Safety",
@@ -600,6 +601,7 @@ def main() -> int:
     print(f"promotion_render_bridge_rows={metrics['bridgeRows']}")
     print(f"promotion_render_bridge_valid_scripts={metrics['validScripts']}")
     print(f"promotion_render_bridge_render_preflight_ready={metrics['renderPreflightReady']}")
+    print(f"promotion_render_bridge_no_ready_unpublished_rows={int(metrics['noReadyUnpublishedRows'])}")
     print(f"promotion_render_bridge_issues={metrics['issues']}")
     for row in payload["rows"]:
         print(f"promotion_render_bridge_job={row['renderJobId']}")

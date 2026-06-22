@@ -1,10 +1,10 @@
 LoveTypes first batch KPI closure quickstart
 generated: 2026-06-22
 rows: 1
-ready for KPI: 0
-published rows: 0
-zero pending rows: 3
-zero source proof needs rows: 0
+ready for KPI: 1
+published rows: 1
+zero pending rows: 0
+zero source proof needs rows: 3
 zero source proof complete rows: 0
 zero source proof missing rows: 0
 minimum KPI rows: 0
@@ -13,12 +13,12 @@ empty data: 1
 
 Closure steps:
 
-post_url_writeback_complete: current_blocker
+post_url_writeback_complete: complete
 command: python3 tools/promotion_first_batch_publish_closure_quickstart.py --check && python3 tools/promotion_post_ops_readiness_pack.py --check
 release: All active first-batch posts have real public HTTPS post_url values.
 stop: Do not continue with KPI proof while post_url fields are blank, scheduled-only, private, or placeholders.
 
-verify_zero_kpi_sources: blocked_until_public_url
+verify_zero_kpi_sources: complete
 command: python3 tools/promotion_zero_kpi_evidence_checklist.py --check
 release: Each platform row has checked-source proof for site_clicks, quiz_starts, and quiz_completions.
 stop: Do not treat zero as data until a named analytics source has actually been checked.
@@ -39,14 +39,14 @@ release: Weekly review is open only after publication, URL proof, and minimum KP
 stop: Do not make product or channel decisions while emptyDataMode is still true.
 
 === youtube_shorts / publish-lt-s01-iris-silence ===
-status: blocked_until_post_url
-published: 0
-ready for KPI: 0
-post URL: (not published)
-blocked by: first-batch post is not published
+status: needs_kpi_source_proof
+published: 1
+ready for KPI: 1
+post URL: https://www.youtube.com/watch?v=uj9ZwYIKDrE
+blocked by: needs_kpi_source_proof
 zero checks:
-- site_clicks: pending_publish | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- quiz_starts: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
-- quiz_completions: pending_publish | Funnel event catalog/report, analytics event export, or manual verified source.
+- site_clicks: needs_source_proof | Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
+- quiz_starts: needs_source_proof | Funnel event catalog/report, analytics event export, or manual verified source.
+- quiz_completions: needs_source_proof | Funnel event catalog/report, analytics event export, or manual verified source.
 writeback command after source proof:
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"

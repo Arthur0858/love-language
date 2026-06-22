@@ -50,7 +50,7 @@
 
 - phase：`profile_writeback`
 - status：`complete`
-- value：1 / 1
+- value：2 / 2
 - action：Confirm every completed profile row has proof in the evidence ledger.
 - evidence：Evidence ledger traceable count equals required count and evidence issues are zero.
 - command：`python3 tools/promotion_evidence_ledger.py --check`
@@ -82,7 +82,7 @@
 - status：`complete`
 - value：1 / 1
 - action：Publish only the first batch rows that become ready after the profile gate opens.
-- evidence：First-batch publish action sheet has active ready rows and zero issues.
+- evidence：First-batch publish action sheet has active ready rows, or the first-batch publication packet proves the row is already published.
 - command：`python3 tools/promotion_first_batch_publish_action_sheet.py --check`
 - stop：Do not publish if any row remains blocked_until_profile_links.
 

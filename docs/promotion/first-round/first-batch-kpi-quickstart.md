@@ -2,9 +2,9 @@
 
 - 產生日期：2026-06-22
 - rows：1
-- ready for KPI：0
-- blocked rows：1
-- published rows：0
+- ready for KPI：1
+- blocked rows：0
+- published rows：1
 - zero-source rows：3
 - weekly ready：0
 - empty data mode：0
@@ -20,19 +20,19 @@
 
 ## youtube_shorts · `publish-lt-s01-iris-silence`
 
-- action status：`blocked_until_public_post_url`
-- ready for KPI：`0`
-- published：`0`
-- post URL：(not published)
-- blocked by：first-batch post is not published
+- action status：`ready_for_kpi_source_check`
+- ready for KPI：`1`
+- published：`1`
+- post URL：https://www.youtube.com/watch?v=uj9ZwYIKDrE
+- blocked by：(none)
 - minimum KPIs：`site_clicks, quiz_starts, quiz_completions`
 - zero-source rows：3
 
 Zero-source checks:
 
-- `site_clicks`：status `pending_publish`；source：Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
-- `quiz_starts`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
-- `quiz_completions`：status `pending_publish`；source：Funnel event catalog/report, analytics event export, or manual verified source.
+- `site_clicks`：status `needs_source_proof`；source：Cloudflare/Web analytics, platform link analytics, or tracked UTM report.
+- `quiz_starts`：status `needs_source_proof`；source：Funnel event catalog/report, analytics event export, or manual verified source.
+- `quiz_completions`：status `needs_source_proof`；source：Funnel event catalog/report, analytics event export, or manual verified source.
 
 Proof text after analytics source is checked:
 
@@ -49,5 +49,5 @@ quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
 proof_note: analytics source checked 2026-06-22 for youtube_shorts/publish-lt-s01-iris-silence
 ```
 
-- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- write：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - stop：Stop if the post URL is not public HTTPS, analytics source was not checked, or a zero value lacks source proof.

@@ -3,7 +3,7 @@ generated: 2026-06-22
 profile template valid: 0
 profile placeholder proof rows: 1
 profile real proof ready rows: 0
-post safely rejected: 1
+post safely rejected: 0
 rehearsal rows: 3
 profile evidence rows: 6
 launch ready to publish: 1
@@ -15,10 +15,10 @@ command: python3 tools/promotion_operation_proof_templates.py --check && python3
 release: Active profile proof templates validate and each active platform has six evidence checks.
 stop: Do not write profile status unless all six evidence checks are backed by real platform proof.
 
-reject_post_placeholders: guard_active
+reject_post_placeholders: complete
 command: python3 tools/promotion_operation_proof_templates.py --check
-release: Active post proof templates are safely rejected while their post URLs are placeholders.
-stop: Do not weaken this guard; placeholder post URLs must never write to trackers.
+release: Active post proof templates are safely rejected while their post URLs are placeholders; completed posts move to KPI source proof.
+stop: Do not weaken this guard; placeholder post URLs must never write to trackers or KPI rows.
 
 rehearse_import_paths: complete
 command: python3 tools/promotion_proof_rehearsal.py --check && python3 tools/promotion_operator_import_template_audit.py
@@ -34,8 +34,3 @@ open_publish_only_after_profile_gate: blocked_until_profile_writeback
 command: python3 tools/promotion_launch_rehearsal_packet.py --check && python3 tools/promotion_profile_publish_handoff.py --check
 release: Profile writeback is complete and first-batch publishing is explicitly open.
 stop: Do not publish or backfill KPI while launch rehearsal says publish is blocked.
-
-post_publish / youtube_shorts / publish-lt-s01-iris-silence
-file: docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-check: python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"

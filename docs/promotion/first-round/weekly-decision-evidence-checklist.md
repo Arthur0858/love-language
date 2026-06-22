@@ -2,8 +2,8 @@
 
 - 產生日期：2026-06-22
 - checklist rows：8
-- complete rows：2
-- pending rows：6
+- complete rows：4
+- pending rows：4
 - weekly ready：0
 - decision ready：0
 - empty data mode：0
@@ -16,8 +16,8 @@
 - 只要仍是 empty data mode，就保持收集訊號，不做商品化判斷。
 
 - [ ] `profiles_configured`：All active platform profile links are set/live with traceable evidence.（pending；啟用平台 profile 尚未全部 set/live。）
-- [ ] `first_batch_published`：First-batch posts are published on all active platforms.（pending；首批啟用平台尚未全部發布。）
-- [ ] `public_post_urls_verified`：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.（pending；公開貼文 URL 檢查仍有 pending 或缺證據。）
+- [x] `first_batch_published`：First-batch posts are published on all active platforms.（complete；證據已滿足。）
+- [x] `public_post_urls_verified`：Every public post URL has platform domain, public view, CTA, UTM, and proof evidence checked.（complete；證據已滿足。）
 - [ ] `zero_kpis_have_source`：Zero values for site_clicks, quiz_starts, and quiz_completions have checked-source proof.（pending；核心 KPI 仍未發布、未回填，或 0 值缺來源證據。）
 - [ ] `weekly_review_ready`：Weekly review packet reports readyForWeeklyDecision=1.（pending；weekly review 尚未達可決策狀態。）
 - [x] `not_empty_data_mode`：Empty data mode is false before commerce or prioritization decisions.（complete；證據已滿足。）

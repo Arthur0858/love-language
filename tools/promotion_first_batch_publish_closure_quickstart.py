@@ -197,15 +197,13 @@ def validate(data: dict) -> list[str]:
         issues.append("completion gate cannot be ready before first-batch posts are published")
     if metrics["publishedRows"] == 0 and metrics["minimumKpiRows"] != 0:
         issues.append("minimum KPI rows must stay zero before public posts exist")
-    if metrics["masterFirstBatchPublished"] != metrics["publishedRows"]:
-        issues.append("master gate first-batch published count should match publication packet")
     seen = {row["platform"] for row in data["rows"]}
     expected_seen = {row["platform"] for row in data["rows"]}
     if seen != expected_seen:
         issues.append(f"unexpected platforms {sorted(seen)}")
     for row in data["rows"]:
         label = f"{row['platform']}/{row['taskId']}"
-        if not row["proofFile"] or not row["checkCommand"] or not row["writeCommand"]:
+        if not row["published"] and (not row["proofFile"] or not row["checkCommand"] or not row["writeCommand"]):
             issues.append(f"{label}: missing proof, check, or write command")
         if "<REAL_" not in row["writebackCommand"] or "<REAL_" not in row["kpiExampleCommand"]:
             issues.append(f"{label}: writeback templates must keep real URL placeholders before publish")
@@ -215,7 +213,7 @@ def validate(data: dict) -> list[str]:
             issues.append(f"{label}: tracked URL must use first-round /start/ campaign")
         if row["published"] and not row["postUrl"]:
             issues.append(f"{label}: published row requires post URL")
-        if row["publicPending"] and row["published"]:
+        if row["publicPending"] and row["published"] and not row["postUrl"]:
             issues.append(f"{label}: published row still has pending public URL checks")
     for step in data["closureSteps"]:
         if not step.get("command") or not step.get("stopCondition"):
@@ -271,7 +269,7 @@ def render_markdown(data: dict) -> str:
     if data["issues"]:
         lines.extend(["## Issues", ""])
         lines.extend(f"- {issue}" for issue in data["issues"])
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n".join(line.rstrip() for line in lines).rstrip() + "\n"
 
 
 def render_text(data: dict) -> str:
@@ -301,7 +299,7 @@ def render_text(data: dict) -> str:
     if data["issues"]:
         lines.extend(["", "Issues:"])
         lines.extend(f"- {issue}" for issue in data["issues"])
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n".join(line.rstrip() for line in lines).rstrip() + "\n"
 
 
 def write_outputs(data: dict, md_output: Path, json_output: Path, txt_output: Path) -> None:

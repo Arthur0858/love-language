@@ -11,15 +11,15 @@
   },
   "metrics": {
     "proofPacketProfilePending": 0,
-    "proofPacketPostPending": 1,
+    "proofPacketPostPending": 0,
     "profileTemplates": 0,
-    "postTemplates": 1,
-    "proofFiles": 1,
+    "postTemplates": 0,
+    "proofFiles": 0,
     "profileValid": 0,
     "profileTemplateValid": 0,
     "profilePlaceholderProofRows": 1,
     "profileRealProofReadyRows": 0,
-    "postSafelyRejected": 1,
+    "postSafelyRejected": 0,
     "rehearsalRows": 3,
     "rehearsalProfilePass": 1,
     "rehearsalPostPlaceholderRejected": 1,
@@ -31,10 +31,10 @@
     "expectedStructuredImports": 3,
     "launchRehearsalReadyStages": 1,
     "launchRehearsalProfileReadyStages": 0,
-    "launchRehearsalPublishReadyStages": 1,
-    "launchRehearsalKpiReadyStages": 0,
+    "launchRehearsalPublishReadyStages": 0,
+    "launchRehearsalKpiReadyStages": 1,
     "launchRehearsalWeeklyReadyStages": 0,
-    "launchRehearsalBlockedStages": 3,
+    "launchRehearsalBlockedStages": 2,
     "launchReadyToPublish": 1,
     "launchEmptyDataMode": 0,
     "activePlatforms": 1,
@@ -43,7 +43,7 @@
   "rules": [
     "Check commands must pass before any add/writeback command is allowed.",
     "Profile proof templates may pass structurally, but still require real external evidence before writeback.",
-    "Post proof templates must fail while placeholder URLs remain in place.",
+    "Post proof templates must fail while placeholder URLs remain in place; after public URL writeback, KPI source proof is required.",
     "A zero KPI is valid only after a real analytics source check.",
     "Rehearsal data, sample URLs, and templates are never production evidence."
   ],
@@ -57,10 +57,10 @@
     },
     {
       "id": "reject_post_placeholders",
-      "status": "guard_active",
+      "status": "complete",
       "command": "python3 tools/promotion_operation_proof_templates.py --check",
-      "release": "Active post proof templates are safely rejected while their post URLs are placeholders.",
-      "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers."
+      "release": "Active post proof templates are safely rejected while their post URLs are placeholders; completed posts move to KPI source proof.",
+      "stop": "Do not weaken this guard; placeholder post URLs must never write to trackers or KPI rows."
     },
     {
       "id": "rehearse_import_paths",
@@ -84,18 +84,7 @@
       "stop": "Do not publish or backfill KPI while launch rehearsal says publish is blocked."
     }
   ],
-  "proofRows": [
-    {
-      "kind": "post_publish",
-      "platform": "youtube_shorts",
-      "taskId": "publish-lt-s01-iris-silence",
-      "path": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "status": "written",
-      "checkCommand": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "writeCommand": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "requiredEvidenceCount": 7
-    }
-  ],
+  "proofRows": [],
   "structuredImportIds": [
     "lead_request_import",
     "post_publish_import",

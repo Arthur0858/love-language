@@ -4,13 +4,13 @@
 - rows：11
 - ready areas：4
 - actionable areas：0
-- blocked areas：6
+- blocked areas：5
 - hold areas：0
 - profile configured：1 / 3
 - real profile proof ready：0 / 1
 - external profile proof blockers：1
 - current true blockers：0
-- first batch published：0 / 3
+- first batch published：1 / 3
 - minimum KPI rows：0
 - lead ready routes：0
 - issues：0
@@ -26,10 +26,10 @@
 
 ### master_gate
 
-- status：`first_batch_publish`
-- ready / blocked：3 / 3
-- next：Publish the first-batch YouTube Short and write back the real public post URL.
-- evidence：profile=1/1, first_batch=0, kpi_rows=0
+- status：`first_batch_kpi`
+- ready / blocked：2 / 2
+- next：Fill or verified-zero site_clicks, quiz_starts, and quiz_completions for each first-batch post.
+- evidence：profile=1/1, first_batch=1, kpi_rows=0
 - safety：Use master gate as final stage source; do not skip profile_setup.
 
 ### profile_setup
@@ -42,18 +42,18 @@
 
 ### first_batch_publish
 
-- status：`ready`
-- ready / blocked：1 / 0
+- status：`waiting`
+- ready / blocked：0 / 0
 - next：Publish first-batch posts only after profile gate is ready.
-- evidence：complete=0, profile_gate=1
+- evidence：complete=1, profile_gate=1
 - safety：No placeholder post URLs; keep CTA focused on quiz.
 
 ### minimum_kpi
 
-- status：`blocked`
-- ready / blocked：0 / 1
+- status：`ready`
+- ready / blocked：1 / 0
 - next：Backfill post_url, site_clicks, quiz_starts and quiz_completions after publish.
-- evidence：published=0, zero_source_rows=3
+- evidence：published=1, zero_source_rows=3
 - safety：A zero needs a checked source; unknown is not zero.
 
 ### lead_ops
@@ -69,7 +69,7 @@
 - status：`blocked`
 - ready / blocked：2 / 5
 - next：Keep weekly review on hold until public URLs, KPIs and evidence rows are complete.
-- evidence：weekly_ready=0, empty_data=0, evidence_pending=6
+- evidence：weekly_ready=0, empty_data=0, evidence_pending=4
 - safety：No winning guardian, offer order change, Luna emphasis or affiliate weighting in empty data mode.
 
 ### operator_handoff
@@ -77,7 +77,7 @@
 - status：`blocked`
 - ready / blocked：1 / 1
 - next：Follow the handoff packet for structured proof imports and do-not-do rules.
-- evidence：profile_pending=0, first_batch_pending=1, weekly_ready=0
+- evidence：profile_pending=0, first_batch_pending=0, weekly_ready=0
 - safety：Keep external operations evidence-backed.
 
 ### profile_publish_handoff
@@ -91,9 +91,9 @@
 ### publish_kpi_handoff
 
 - status：`blocked`
-- ready / blocked：2 / 5
+- ready / blocked：3 / 4
 - next：Use this gate to hand off public post URLs and minimum KPI into weekly review.
-- evidence：published=0, minimum_kpi=0, weekly=0
+- evidence：published=1, minimum_kpi=0, weekly=0
 - safety：No weekly review or commerce decision until post URL, proof, and KPI checks are complete.
 
 ### weekly_lead_offer_handoff
@@ -107,7 +107,7 @@
 ### next_actions
 
 - status：`ready`
-- ready / blocked：3 / 3
+- ready / blocked：2 / 2
 - next：Only profile setup is currently actionable; publishing remains blocked until profile proof is written back.
-- evidence：selected_tasks=3, command_rows=10
+- evidence：selected_tasks=3, command_rows=7
 - safety：A next-actions packet can include blocked downstream work; follow status and master gate before acting.

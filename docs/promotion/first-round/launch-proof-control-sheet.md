@@ -1,7 +1,7 @@
 # LoveTypes Launch Proof Control Sheet
 
 - 產生日期：2026-06-22
-- stage：`first_batch_publish`
+- stage：`first_batch_kpi`
 - profile ready / blocked：0 / 1
 - profile placeholder / real proof ready：1 / 0
 - post ready / blocked：0 / 1
@@ -38,7 +38,7 @@
 
 ### `write_post_batch`
 
-- status：`blocked_until_post_ready`
+- status：`complete`
 - command：`python3 tools/promotion_post_batch_import.py --add`
 - release：first batch has 1 published rows and minimum KPI rows.
 

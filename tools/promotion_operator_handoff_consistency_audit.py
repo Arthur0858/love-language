@@ -19,6 +19,7 @@ PROOF_TEMPLATES = PROMOTION_DIR / "operation-proof-templates.json"
 PROFILE_ACTION = PROMOTION_DIR / "profile-setup-action-sheet.json"
 PUBLISH_ACTION = PROMOTION_DIR / "first-batch-publish-action-sheet.json"
 READINESS = PROMOTION_DIR / "launch-readiness-gate.json"
+FIRST_BATCH_PUBLICATION = PROMOTION_DIR / "first-batch-publication-packet.json"
 
 PROFILE_SOURCES = {
     "youtube_shorts": "youtube",
@@ -46,6 +47,16 @@ def active_platforms() -> tuple[str, ...]:
 
 def ready_to_publish() -> bool:
     return bool(load_json(READINESS).get("readiness", {}).get("readyToPublishPosts"))
+
+
+def first_batch_already_published() -> bool:
+    packet = load_json(FIRST_BATCH_PUBLICATION)
+    try:
+        published = int(packet.get("publishedRows", 0) or 0)
+        rows = len(packet.get("rows", []) or [])
+    except (TypeError, ValueError):
+        return False
+    return rows > 0 and published >= rows
 
 
 def platform_configured(platform: str) -> bool:
@@ -179,6 +190,7 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
     clipboard_rows = by_platform([row for row in clipboard.get("blocks", []) if row.get("kind") == "post"])
     template_rows = by_platform([row for row in proof_templates.get("rows", []) if row.get("kind") == "post_publish"])
     gate_open = ready_to_publish()
+    already_published = first_batch_already_published()
     for platform in active_platforms():
         expected_path = proof_path_for(platform, "post")
         placeholder = POST_PLACEHOLDERS[platform]
@@ -216,11 +228,15 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
             status = str(row.get("action_status") or row.get("status") or "")
             if source_name in {"publish_action", "clipboard"} and not gate_open and "blocked" not in status:
                 issues.append(f"{platform}: {source_name} post should remain blocked before profile gate")
-            if source_name in {"publish_action", "clipboard"} and gate_open and status not in {"ready", "ready_to_publish"}:
+            if (
+                source_name in {"publish_action", "clipboard"}
+                and gate_open
+                and status not in {"ready", "ready_to_publish", "complete"}
+            ):
                 issues.append(f"{platform}: {source_name} post should be ready after profile gate")
         expected_handoff_status = "ready" if gate_open else "blocked_until_profile_links"
-        if rows["handoff"].get("status") != expected_handoff_status:
-            issues.append(f"{platform}: handoff post step should remain blocked_until_profile_links")
+        if rows["handoff"].get("status") != expected_handoff_status and not already_published:
+            issues.append(f"{platform}: handoff post step should be {expected_handoff_status}")
         proof_text = str(rows["clipboard"].get("proof", ""))
         if placeholder not in proof_text:
             issues.append(f"{platform}: clipboard post proof should show the platform placeholder URL")

@@ -156,7 +156,7 @@ def validate_blocks(blocks: list[dict[str, str]], profile: dict, publish: dict, 
         issues.append(f"expected {expected_profile_count} profile clipboard blocks, got {profile_count}")
     if post_count != expected_post_count:
         issues.append(f"expected {expected_post_count} post clipboard blocks, got {post_count}")
-    if metric(profile, "configured") and metric(publish, "blocked") == 0 and not metric(publish, "ready"):
+    if metric(profile, "configured") and metric(publish, "blocked") == 0 and not metric(publish, "ready") and not metric(publish, "complete"):
         issues.append("publish action metrics look inconsistent after profile configuration")
     for block in blocks:
         label = f"{block['kind']}/{block['platform']}"
@@ -171,7 +171,7 @@ def validate_blocks(blocks: list[dict[str, str]], profile: dict, publish: dict, 
                 issues.append(f"{label}: profile write command should force real proof replacement")
         if block["kind"] == "post" and not any(marker in block["copy"] for marker in QUIZ_CTA_MARKERS):
             issues.append(f"{label}: post copy should keep quiz CTA")
-        if not block.get("check_command"):
+        if not block.get("check_command") and block.get("status") != "complete":
             issues.append(f"{label}: missing check command")
         if not block.get("stop_condition"):
             issues.append(f"{label}: missing stop condition")
@@ -214,7 +214,7 @@ def render_text(clipboard: dict) -> str:
     if clipboard["issues"]:
         lines.extend(["", "Issues:"])
         lines.extend(f"- {issue}" for issue in clipboard["issues"])
-    return "\n".join(lines).rstrip() + "\n"
+    return "\n".join(line.rstrip() for line in lines).rstrip() + "\n"
 
 
 def render_markdown(clipboard: dict) -> str:

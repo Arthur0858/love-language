@@ -3,7 +3,7 @@
 - 產生日期：2026-06-22
 - weekly decision ready：0
 - empty data mode：0
-- first batch published：0 / 1
+- first batch published：1 / 1
 - first batch minimum KPI rows：0
 - tracker rows：0
 - profile tracker rows：1
@@ -11,9 +11,7 @@
 
 ## Hold Reasons
 
-- 首批 YouTube Shorts 尚無公開 post URL。
 - 首批尚無 site_clicks / quiz_starts / quiz_completions 回填列。
-- publishing-status 尚未達週決策條件。
 
 ## Required Review Fields
 
@@ -42,8 +40,8 @@
 ### youtube_shorts · `publish-lt-s01-iris-silence`
 
 - script：`lt-s01-iris-silence`
-- status：`planned`
-- post URL：(pending)
+- status：`published`
+- post URL：https://www.youtube.com/watch?v=uj9ZwYIKDrE
 - writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-22 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 ## Allowed Decisions Now

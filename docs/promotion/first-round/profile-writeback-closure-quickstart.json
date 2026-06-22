@@ -17,11 +17,11 @@
     "completionConfigured": 1,
     "completionExpectedProfiles": 1,
     "completionReady": 1,
-    "handoffReadyToPublish": 1,
+    "handoffReadyToPublish": 0,
     "launchReadyToPublish": 1,
     "masterStageIndex": 0,
     "masterProfileConfigured": 1,
-    "masterFirstBatchPublished": 0,
+    "masterFirstBatchPublished": 1,
     "issues": 0
   },
   "rules": [

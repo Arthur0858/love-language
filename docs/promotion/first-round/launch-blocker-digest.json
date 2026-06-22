@@ -9,20 +9,20 @@
     "blockerChecklist": "docs/promotion/first-round/blocker-resolution-checklist.json",
     "kpiHealth": "docs/promotion/first-round/kpi-attribution-health-report.json"
   },
-  "stage": "first_batch_publish",
+  "stage": "kpi_backfill",
   "firstBlocker": {
-    "id": "publish_first_batch",
-    "phase": "publish",
-    "severity": "measurement_blocker",
-    "message": "首批 1 個平台貼文尚未全部標記 published；沒有 post_url 前不能開始 KPI 判讀。"
+    "id": "backfill_first_batch_kpis",
+    "phase": "measurement",
+    "severity": "decision_blocker",
+    "message": "KPI 尚未回填到前 1 筆；保持測驗 CTA，不調整商品、Luna 或聯盟權重。"
   },
   "nextAction": {
-    "action": "Publish the active first-batch platform post and write back the real public post URL.",
-    "command": "python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-<platform>-<task>.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-    "release": "first-batch post_url values exist for all active platforms"
+    "action": "Backfill source-checked site_clicks, quiz_starts, and quiz_completions for the first batch.",
+    "command": "python3 tools/promotion_post_text_import.py add --input <post-proof.txt> --proof-note \"public URL and KPI source checked YYYY-MM-DD\"",
+    "release": "filled KPI rows cover the first batch or source-checked zeros are recorded"
   },
   "allowedNow": [
-    "Publish the active first-batch platform post and write back the real public post URL.",
+    "Backfill source-checked site_clicks, quiz_starts, and quiz_completions for the first batch.",
     "Refresh daily ops packets after any writeback."
   ],
   "doNotDo": [
@@ -39,15 +39,15 @@
     "profileProofPlaceholderRows": 1,
     "externalProfileProofBlockers": 0,
     "currentTrueBlockers": 0,
-    "publishedRows": 0,
+    "publishedRows": 1,
     "firstBatchRows": 1,
     "filledKpiRows": 0,
-    "blockers": 2,
-    "checklistActiveBlockers": 8,
+    "blockers": 1,
+    "checklistActiveBlockers": 7,
     "checklistReadyNow": 1,
-    "commandReady": 3,
-    "commandPrepared": 3,
-    "commandBlocked": 3,
+    "commandReady": 2,
+    "commandPrepared": 2,
+    "commandBlocked": 2,
     "profileCompletionBlockers": 0,
     "weeklyReady": 0,
     "emptyDataMode": 1,
@@ -58,9 +58,9 @@
   },
   "commandPhaseCounts": {
     "profile_setup": 1,
-    "asset_ready_check": 3,
-    "publish_post": 3,
-    "kpi_backfill": 3
+    "asset_ready_check": 2,
+    "publish_post": 2,
+    "kpi_backfill": 2
   },
   "issues": []
 }

@@ -12,7 +12,7 @@
   "readinessCounters": {
     "profileConfigured": 1,
     "readyToPublish": true,
-    "blockers": 2
+    "blockers": 1
   },
   "platforms": [
     {

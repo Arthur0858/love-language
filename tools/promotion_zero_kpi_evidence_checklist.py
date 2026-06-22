@@ -173,7 +173,7 @@ def write_outputs(payload: dict, issues: list[str]) -> None:
         "proof_note_template",
     ]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(payload["items"])
 

@@ -1,6 +1,6 @@
 # LoveTypes Publish to KPI Handoff
 
-- 產生日期：2026-06-23
+- 產生日期：2026-06-24
 - rows：7
 - complete rows：3
 - current blockers：1

@@ -1,6 +1,6 @@
 # LoveTypes Weekly to Lead and Offer Handoff
 
-- 產生日期：2026-06-23
+- 產生日期：2026-06-24
 - rows：8
 - complete rows：2
 - current blockers：1

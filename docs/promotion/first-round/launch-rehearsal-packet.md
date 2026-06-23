@@ -1,6 +1,6 @@
 # LoveTypes Launch Rehearsal Packet
 
-- Generated: `2026-06-23`
+- Generated: `2026-06-24`
 - Profile configured: `1/0`
 - Ready to publish: `1`
 - Profile setup ready stages: `0`
@@ -34,7 +34,7 @@
 - Status: `ready`
 - Blocked by: ``
 - Success signal: `platform row has post_url, site_clicks, quiz_starts, quiz_completions`
-- Writeback: `python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-23 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- Writeback: `python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 
 ### weekly_review: all weekly-review
 

@@ -1,6 +1,6 @@
 # LoveTypes Week 1 Publication Runbook
 
-- 產生日期：2026-06-24
+- 產生日期：2026-06-25
 - tasks：3
 - scripts：3
 - platforms：1
@@ -77,13 +77,13 @@ Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -93,7 +93,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-24
+published_date: 2026-06-25
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0
@@ -145,13 +145,13 @@ Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s02-iris-affirmation --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -161,7 +161,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s02-iris-affirmation
 status: published
-published_date: 2026-06-24
+published_date: 2026-06-25
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0
@@ -213,13 +213,13 @@ Take the 15-question quiz to find your emotional guardian: https://lovetypes.tw/
 Published URL:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
 ```
 
 Minimum KPI after source check:
 
 ```bash
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-24 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s03-iris-too-sensitive --status published --published-date 2026-06-25 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Structured import template:
@@ -229,7 +229,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s03-iris-too-sensitive
 status: published
-published_date: 2026-06-24
+published_date: 2026-06-25
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0

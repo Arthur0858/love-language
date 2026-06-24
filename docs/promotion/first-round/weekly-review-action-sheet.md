@@ -1,6 +1,6 @@
 # LoveTypes Weekly Review Action Sheet
 
-- 產生日期：2026-06-24
+- 產生日期：2026-06-25
 - rows：7
 - ready rows：2
 - blocked rows：3

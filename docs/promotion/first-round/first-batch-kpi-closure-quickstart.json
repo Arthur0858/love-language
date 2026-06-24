@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "sources": {
     "firstBatchKpiQuickstart": "docs/promotion/first-round/first-batch-kpi-quickstart.json",
     "zeroKpiEvidenceChecklist": "docs/promotion/first-round/zero-kpi-evidence-checklist.json",
@@ -90,21 +90,21 @@
           "status": "needs_source_proof",
           "source": "Cloudflare/Web analytics, platform link analytics, or tracked UTM report.",
           "value": "0",
-          "proofNoteTemplate": "analytics source checked 2026-06-23 for youtube_shorts/publish-lt-s01-iris-silence/site_clicks"
+          "proofNoteTemplate": "analytics source checked 2026-06-24 for youtube_shorts/publish-lt-s01-iris-silence/site_clicks"
         },
         {
           "metric": "quiz_starts",
           "status": "needs_source_proof",
           "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
           "value": "0",
-          "proofNoteTemplate": "analytics source checked 2026-06-23 for youtube_shorts/publish-lt-s01-iris-silence/quiz_starts"
+          "proofNoteTemplate": "analytics source checked 2026-06-24 for youtube_shorts/publish-lt-s01-iris-silence/quiz_starts"
         },
         {
           "metric": "quiz_completions",
           "status": "needs_source_proof",
           "source": "Funnel event catalog/report, analytics event export, or manual verified source.",
           "value": "0",
-          "proofNoteTemplate": "analytics source checked 2026-06-23 for youtube_shorts/publish-lt-s01-iris-silence/quiz_completions"
+          "proofNoteTemplate": "analytics source checked 2026-06-24 for youtube_shorts/publish-lt-s01-iris-silence/quiz_completions"
         }
       ],
       "minimumKpis": [
@@ -112,8 +112,8 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-24 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
-      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-24\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-24 for youtube_shorts/publish-lt-s01-iris-silence",
+      "writeCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-25 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-25\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nsite_clicks: <CHECKED_SITE_CLICKS>\nquiz_starts: <CHECKED_QUIZ_STARTS>\nquiz_completions: <CHECKED_QUIZ_COMPLETIONS>\nproof_note: analytics source checked 2026-06-25 for youtube_shorts/publish-lt-s01-iris-silence",
       "nextAction": "Attach checked-source proof for site_clicks, quiz_starts and quiz_completions."
     }
   ],

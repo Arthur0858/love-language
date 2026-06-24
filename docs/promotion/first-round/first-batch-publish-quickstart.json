@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24",
+  "generatedAt": "2026-06-25",
   "sources": {
     "firstBatchPublishAction": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
     "firstBatchPublishReadiness": "docs/promotion/first-round/first-batch-publish-readiness-pack.json",
@@ -38,7 +38,7 @@
       "utmContent": "iris_silence",
       "caption": "你不是想聽甜言蜜語，你只是想確認自己有沒有被看見。\n\nTake the 15-question quiz to find your emotional guardian: https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence\n\n留言 A/B/C，或寫下一句你最想被說出口的話。\n#LoveLanguages #RelationshipQuiz #EmotionalGuardian #HeartLanguage #LoveTypes",
       "proofFile": "",
-      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-24\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
+      "proofTemplate": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-25\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified",
       "checkCommand": "",
       "writeCommand": "python3 tools/promotion_post_text_import.py add --input  --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
       "stopCondition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims."

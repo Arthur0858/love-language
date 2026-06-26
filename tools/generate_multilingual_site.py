@@ -4029,6 +4029,10 @@ TOPIC_DETAILS = {
         "mistakes": "常見誤區",
         "next": "下一步閱讀",
         "reflection": "反思問題",
+        "scene": "先把問題放回真實場景",
+        "steps": "五分鐘修復流程",
+        "example": "範例對話",
+        "pause": "什麼時候先停下",
     },
     "en": {
         "why": "Why this matters",
@@ -4038,6 +4042,10 @@ TOPIC_DETAILS = {
         "mistakes": "Common mistakes",
         "next": "Read next",
         "reflection": "Reflection questions",
+        "scene": "Put the issue back into a real scene",
+        "steps": "Five-minute repair flow",
+        "example": "Example dialogue",
+        "pause": "When to pause first",
     },
     "ja": {
         "why": "なぜ大切なのか",
@@ -4047,6 +4055,10 @@ TOPIC_DETAILS = {
         "mistakes": "よくある誤解",
         "next": "次に読む",
         "reflection": "ふり返り質問",
+        "scene": "問題を現実の場面へ戻す",
+        "steps": "五分間の修復フロー",
+        "example": "会話例",
+        "pause": "先に止まるべき時",
     },
     "ko": {
         "why": "왜 중요한가",
@@ -4056,6 +4068,10 @@ TOPIC_DETAILS = {
         "mistakes": "흔한 오해",
         "next": "다음 읽기",
         "reflection": "성찰 질문",
+        "scene": "문제를 실제 장면으로 되돌리기",
+        "steps": "5분 회복 흐름",
+        "example": "대화 예시",
+        "pause": "먼저 멈춰야 할 때",
     },
     "es": {
         "why": "Por qué importa",
@@ -4065,6 +4081,10 @@ TOPIC_DETAILS = {
         "mistakes": "Errores comunes",
         "next": "Leer después",
         "reflection": "Preguntas de reflexión",
+        "scene": "Devuelve el tema a una escena real",
+        "steps": "Flujo de reparación de cinco minutos",
+        "example": "Diálogo de ejemplo",
+        "pause": "Cuándo pausar primero",
     },
 }
 
@@ -7096,6 +7116,10 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "mistakes": "不要把「{title}」當成要求對方立刻改變的證據。它比較像一張地圖，提醒你在 {name} 守護的入口前，把感受、界線與請求分開說清楚。",
             "scripts": ["我想談的不是對錯，而是「{desc}」這件事對我代表什麼。", "如果我們只修「{title}」裡的一小步，我希望先從這個可做到的行動開始。", "我需要你理解的不是標籤，而是 {name} 守護的這個情境裡，我怎麼接收愛。"],
             "reflection": ["「{title}」提到的情境，最像我最近哪一次錯頻？", "面對「{desc}」，我希望對方具體做什麼，而不是只猜我的感受？", "如果我用 {typ} 的語言表達，請求會不會更清楚？"],
+            "scene": "低價值的關係建議常停在口號，例如「多溝通」或「互相體諒」。LoveTypes 的做法相反：先把「{title}」放回一個可以被回想的場景。請寫下時間、地點、誰在場、你期待收到什麼，以及最後真正收到的是什麼。當場景變清楚，你才知道自己是在要一句話、一段專心時間、一個被記得的細節、一個分擔行動，或一次有同意感的靠近。",
+            "steps": ["用一句話描述事件，不加入人格判斷。", "圈出讓你最受傷或最失落的那個瞬間。", "把受傷翻成 {typ} 的需求，而不是翻成責備。", "提出一個二十四小時內能完成的小請求。", "約定下次怎麼提醒彼此，而不是要求對方立刻完美。"],
+            "example": "你可以說：「剛剛那件事讓我想到『{desc}』。我不是要你猜我全部的情緒，而是想先修一小步：下次我們遇到類似狀況時，可以先用一句話確認彼此還站在同一邊嗎？」如果對方願意回應，再補上 {name} 的守護語言；如果對方防衛，先回到事實與時間點。",
+            "pause": "如果這個場景牽涉羞辱、威脅、控制、暴力、強迫親密或長期恐懼，請不要把它當成單純的愛之語錯頻。先停止練習，保護安全，找可信任的人或專業支援。LoveTypes 的指南適合整理日常溝通，不適合處理高風險關係或急迫危機。",
         },
         "en": {
             "lede": "{title} is not a generic reminder. It places \"{desc}\" inside {name}'s guardian lens so you can name where this love language misses and translate it into one receivable step.",
@@ -7106,6 +7130,10 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "mistakes": "Do not use {title} as evidence that someone must immediately change. Treat it as a map for separating feeling, boundary, and request at {name}'s doorway.",
             "scripts": ["I am not trying to decide who is right; I want to explain what \"{desc}\" means to me.", "If we repair only one small step in {title}, I would like to begin with this doable action.", "I need you to understand the {name} situation, not just the label."],
             "reflection": ["Which recent misfrequency looks most like {title}?", "For \"{desc}\", what do I want the other person to do specifically instead of guessing my feelings?", "Would the request become clearer if I used the language of {typ}?"],
+            "scene": "Low-value relationship advice often stays at slogans such as communicate more or be considerate. LoveTypes does the opposite: it returns {title} to a scene you can actually remember. Write down the time, place, people present, what you expected to receive, and what you actually received. Once the scene is clear, you can tell whether you needed words, focused time, a remembered detail, a shared action, or closeness that felt consensual and safe.",
+            "steps": ["Describe the event in one sentence without judging anyone's character.", "Circle the moment that felt most painful, lonely, or unseen.", "Translate that pain into a {typ} need instead of an accusation.", "Make one request small enough to try within twenty-four hours.", "Agree on how to remind each other next time instead of demanding instant perfection."],
+            "example": "You might say: \"That moment reminded me of '{desc}'. I am not asking you to guess all my feelings. I want to repair one small step first: next time something similar happens, can we pause and confirm that we are still on the same side?\" If the other person can respond, add the guardian language from {name}; if they become defensive, return to the concrete time and behavior.",
+            "pause": "If the scene includes humiliation, threats, coercive control, violence, pressured intimacy, or chronic fear, do not treat it as a simple love-language misfrequency. Pause the exercise, protect safety, and seek trusted or professional support. LoveTypes guides are for everyday reflection and communication, not urgent risk or abusive relationship repair.",
         },
         "ja": {
             "lede": "「{title}」は一般的な注意書きではありません。「{desc}」を {name} の守護者視点に置き、この愛の言語がどこですれ違い、どの一歩なら届くかを見ます。",
@@ -7116,6 +7144,10 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "mistakes": "「{title}」を、相手がすぐ変わるべき証拠として使わないでください。{name} の入口で、感情、境界線、お願いを分ける地図として使います。",
             "scripts": ["正しさを決めたいのではなく、「{desc}」が私にとって何を意味するかを話したい。", "「{title}」で一つだけ修復するなら、まずこの小さな行動から始めたい。", "理解してほしいのはラベルではなく、{name} が守るこの場面で私がどう愛を受け取るかです。"],
             "reflection": ["「{title}」の場面は、最近のどのすれ違いに近いか。", "「{desc}」について、相手に察してほしいのではなく具体的に何をしてほしいか。", "{typ} の言語で言えば、お願いはもっと明確になるか。"],
+            "scene": "価値の低い関係アドバイスは、「もっと話し合う」「思いやる」といった標語で止まりがちです。LoveTypes では逆に、「{title}」を思い出せる一つの場面へ戻します。時間、場所、誰がいたか、何を受け取りたかったか、実際に何を受け取ったかを書きます。場面が具体的になると、必要だったものが言葉なのか、集中した時間なのか、覚えてくれた細部なのか、分担行動なのか、同意のある近さなのかが見えます。",
+            "steps": ["出来事を一文で書き、人格判断を入れない。", "いちばん痛かった、寂しかった、見えなくなった瞬間を丸で囲む。", "その痛みを責め言葉ではなく {typ} のニーズへ翻訳する。", "二十四時間以内に試せる小さなお願いにする。", "次回どう気づき合うかを決め、すぐ完璧になることを求めない。"],
+            "example": "たとえば「さっきの場面で『{desc}』を思い出した。全部の感情を当ててほしいわけではなく、まず一つだけ修復したい。次に似たことが起きたら、私たちは同じ側にいると一言確認してもらえる？」と言えます。相手が受け取れるなら {name} の守護言語を足し、防衛的になるなら時間と行動の事実へ戻ります。",
+            "pause": "その場面に侮辱、脅し、支配、暴力、望まない親密さ、長く続く恐怖が含まれる場合、単なる愛の言語のすれ違いとして扱わないでください。練習を止め、安全を優先し、信頼できる人や専門的な支援につなげてください。LoveTypes のガイドは日常の内省と会話のためで、緊急リスクや虐待関係の修復を目的にしていません。",
         },
         "ko": {
             "lede": "{title}은 일반적인 조언이 아닙니다. \"{desc}\"를 {name}의 수호자 관점에 놓고, 이 사랑의 언어가 어디에서 어긋나는지와 어떤 한 걸음이면 받을 수 있는지 봅니다.",
@@ -7126,6 +7158,10 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "mistakes": "{title}을 상대가 즉시 바뀌어야 한다는 증거로 쓰지 마세요. {name}의 입구에서 감정, 경계, 요청을 나누는 지도로 사용하세요.",
             "scripts": ["옳고 그름을 가리려는 게 아니라 \"{desc}\"가 나에게 무엇을 의미하는지 말하고 싶어.", "{title}에서 한 걸음만 회복한다면 이 작은 행동부터 시작하고 싶어.", "내가 이해받고 싶은 것은 라벨이 아니라 {name}가 지키는 이 상황에서 사랑을 받는 방식이야."],
             "reflection": ["{title}의 장면은 최근 어떤 어긋남과 가장 닮았나?", "\"{desc}\"에 대해 상대가 추측하기보다 구체적으로 무엇을 해 주길 바라나?", "{typ}의 언어로 말하면 요청이 더 분명해질까?"],
+            "scene": "낮은 가치의 관계 조언은 흔히 더 대화하라거나 배려하라는 말에서 멈춥니다. LoveTypes는 반대로 {title}을 실제로 떠올릴 수 있는 한 장면으로 되돌립니다. 시간, 장소, 함께 있던 사람, 기대했던 것, 실제로 받은 것을 적어 보세요. 장면이 선명해지면 필요한 것이 말인지, 집중된 시간인지, 기억된 세부인지, 나눠 진 행동인지, 동의와 안전이 있는 가까움인지 구분할 수 있습니다.",
+            "steps": ["사건을 한 문장으로 쓰고 인격 판단은 넣지 않습니다.", "가장 아프거나 외롭거나 보이지 않았던 순간에 표시합니다.", "그 아픔을 비난이 아니라 {typ}의 욕구로 번역합니다.", "24시간 안에 시도할 수 있을 만큼 작은 요청 하나로 만듭니다.", "다음에 어떻게 서로를 상기시킬지 정하고 즉시 완벽해지라고 요구하지 않습니다."],
+            "example": "이렇게 말할 수 있습니다. “방금 그 장면에서 ‘{desc}’가 떠올랐어. 내 감정을 전부 맞혀 달라는 뜻은 아니야. 먼저 작은 한 걸음만 회복하고 싶어. 다음에 비슷한 일이 생기면 우리가 같은 편이라는 걸 한 문장으로 확인해 줄 수 있을까?” 상대가 받을 수 있으면 {name}의 수호 언어를 더하고, 방어적이면 구체적인 시간과 행동으로 돌아가세요.",
+            "pause": "그 장면에 모욕, 협박, 통제, 폭력, 원하지 않는 친밀함, 지속적인 두려움이 포함된다면 단순한 사랑의 언어 어긋남으로 다루지 마세요. 연습을 멈추고 안전을 우선하며 신뢰할 수 있는 사람이나 전문 지원을 찾으세요. LoveTypes 가이드는 일상적 성찰과 대화를 위한 것이며 긴급 위험이나 학대 관계를 해결하기 위한 도구가 아닙니다.",
         },
         "es": {
             "lede": "{title} no es un recordatorio genérico. Coloca \"{desc}\" dentro de la mirada de {name} para nombrar dónde se desajusta este lenguaje y traducirlo en un paso que sí pueda recibirse.",
@@ -7136,6 +7172,10 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "mistakes": "No uses {title} como prueba de que alguien debe cambiar de inmediato. Úsalo como mapa para separar emoción, límite y petición en la puerta de {name}.",
             "scripts": ["No quiero decidir quién tiene razón; quiero explicar qué significa para mí \"{desc}\".", "Si reparamos solo un paso pequeño de {title}, me gustaría empezar con esta acción posible.", "Necesito que entiendas la situación de {name}, no solo la etiqueta."],
             "reflection": ["¿Qué desajuste reciente se parece más a {title}?", "Para \"{desc}\", ¿qué quiero que la otra persona haga concretamente en lugar de adivinar mis emociones?", "¿La petición sería más clara si uso el lenguaje de {typ}?"],
+            "scene": "El consejo relacional de bajo valor suele quedarse en lemas como comunica más o sé considerada. LoveTypes hace lo contrario: devuelve {title} a una escena que puedas recordar. Escribe hora, lugar, quién estaba, qué esperabas recibir y qué recibiste realmente. Cuando la escena se aclara, puedes distinguir si necesitabas palabras, tiempo atento, un detalle recordado, una acción compartida o una cercanía con consentimiento y seguridad.",
+            "steps": ["Describe el hecho en una frase sin juzgar el carácter de nadie.", "Marca el momento que se sintió más doloroso, solitario o invisible.", "Traduce ese dolor en una necesidad de {typ}, no en una acusación.", "Haz una petición pequeña que pueda intentarse en veinticuatro horas.", "Acuerden cómo recordárselo la próxima vez sin exigir perfección inmediata."],
+            "example": "Podrías decir: “Ese momento me recordó ‘{desc}’. No te estoy pidiendo que adivines todo lo que siento. Quiero reparar un paso pequeño: la próxima vez que pase algo parecido, ¿podemos pausar y confirmar que seguimos del mismo lado?” Si la otra persona puede responder, añade el lenguaje guardián de {name}; si se defiende, vuelve al tiempo y la conducta concreta.",
+            "pause": "Si la escena incluye humillación, amenazas, control coercitivo, violencia, intimidad presionada o miedo crónico, no la trates como un simple desajuste de lenguajes del amor. Pausa el ejercicio, protege la seguridad y busca apoyo confiable o profesional. Las guías de LoveTypes son para reflexión y comunicación cotidiana, no para riesgo urgente ni reparación de relaciones abusivas.",
         },
     }
     raw = templates[lang]
@@ -8715,6 +8755,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     next_b = related[(index + 4) % len(related)]
     scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
     reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
+    steps = "".join(f"<li>{escape(item)}</li>" for item in detail["steps"])
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -8725,12 +8766,16 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
   <article class="article-body">
     <p class="lede">{escape(detail["lede"])}</p>
     <h2>{escape(labels["why"])}</h2><p>{escape(detail["why"])}</p>
+    <h2>{escape(labels["scene"])}</h2><p>{escape(detail["scene"])}</p>
     <h2>{escape(labels["notice"])}</h2><p>{escape(detail["notice"])}</p>
     <h2>{escape(labels["scripts"])}</h2><ul>{scripts}</ul>
+    <h2>{escape(labels["example"])}</h2><p>{escape(detail["example"])}</p>
     <h2>{escape(labels["practice"])}</h2><p>{escape(detail["practice"])}</p>
+    <h2>{escape(labels["steps"])}</h2><ol>{steps}</ol>
     <div class="callout"><strong>{escape(t["practice"])}</strong><p>{escape(detail["callout"])}</p></div>
     <h2>{escape(labels["mistakes"])}</h2><p>{escape(detail["mistakes"])}</p>
     <h2>{escape(labels["reflection"])}</h2><ol>{reflections}</ol>
+    <h2>{escape(labels["pause"])}</h2><p>{escape(detail["pause"])}</p>
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
   </article>
   <aside class="article-side">

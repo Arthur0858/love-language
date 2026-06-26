@@ -318,6 +318,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "generated_fresh_issues",
         "issues",
         "content_uniqueness_issues",
+        "content_value_issues",
         "multilingual_route_issues",
         "guardian_conversion_issues",
         "affiliate_locale_issues",

@@ -18,6 +18,7 @@ PYTHON_TOOLS = [
     "tools/site_quality_audit.py",
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
+    "tools/content_value_audit.py",
     "tools/multilingual_route_audit.py",
     "tools/guardian_conversion_audit.py",
     "tools/affiliate_locale_audit.py",
@@ -263,6 +264,7 @@ def main() -> int:
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
         run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
+        run_step("content value audit", [sys.executable, "tools/content_value_audit.py"])
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
         run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("affiliate locale audit", [sys.executable, "tools/affiliate_locale_audit.py"])

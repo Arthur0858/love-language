@@ -1,5 +1,5 @@
 LoveTypes launch quickstart
-generated: 2026-06-25
+generated: 2026-06-27
 stage: first_batch_kpi
 profile configured: 1
 first batch published: 1

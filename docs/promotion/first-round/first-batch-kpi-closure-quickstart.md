@@ -1,6 +1,6 @@
 # LoveTypes First Batch KPI Closure Quickstart
 
-- 產生日期：2026-06-25
+- 產生日期：2026-06-27
 - rows：1
 - ready for KPI：1
 - blocked rows：0
@@ -79,7 +79,7 @@ Zero checks:
 Writeback command after source proof:
 
 ```text
-python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-25 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
+python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-27 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"
 ```
 
 Proof template:
@@ -89,12 +89,12 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-25
+published_date: 2026-06-27
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 site_clicks: <CHECKED_SITE_CLICKS>
 quiz_starts: <CHECKED_QUIZ_STARTS>
 quiz_completions: <CHECKED_QUIZ_COMPLETIONS>
-proof_note: analytics source checked 2026-06-25 for youtube_shorts/publish-lt-s01-iris-silence
+proof_note: analytics source checked 2026-06-27 for youtube_shorts/publish-lt-s01-iris-silence
 ```
 
 - next：Attach checked-source proof for site_clicks, quiz_starts and quiz_completions.

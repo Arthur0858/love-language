@@ -1,5 +1,5 @@
 LoveTypes profile proof capture quickstart
-generated: 2026-06-25
+generated: 2026-06-27
 
 Rules:
 - Capture proof before writeback; importable text is only a format check.
@@ -12,7 +12,7 @@ Rules:
 status: complete
 profile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof file: docs/promotion/first-round/proof-youtube_shorts.txt
-suggested capture: profile-youtube_shorts-2026-06-25.png
+suggested capture: profile-youtube_shorts-2026-06-27.png
 capture artifact required: 1
 safe writeback ready: 0
 proof note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified

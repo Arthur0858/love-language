@@ -1,6 +1,6 @@
 # LoveTypes Lead Data Minimization Audit
 
-- 產生日期：2026-06-27
+- 產生日期：2026-06-28
 - tracker rows：15
 - template rows：15
 - real rows：0

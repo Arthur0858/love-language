@@ -1,6 +1,6 @@
 # LoveTypes Launch Blocker Digest
 
-- 產生日期：2026-06-27
+- 產生日期：2026-06-28
 - current stage：`kpi_backfill`
 - first blocker：`backfill_first_batch_kpis`
 - profile configured：1 / 1

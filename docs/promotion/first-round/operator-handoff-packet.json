@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27",
+  "generatedAt": "2026-06-28",
   "source": {
     "nextActions": "docs/promotion/first-round/next-actions.json",
     "profileVerificationPacket": "docs/promotion/first-round/profile-verification-packet.json",
@@ -33,7 +33,7 @@
         "quiz_starts",
         "quiz_completions"
       ],
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-27 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-28 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "blockedBy": ""
     },
     {
@@ -68,14 +68,14 @@
       "title": "Profile setup proof import",
       "checkCommand": "python3 tools/promotion_profile_text_import.py check --input /path/to/profile.txt",
       "writeCommand": "python3 tools/promotion_profile_text_import.py add --input /path/to/profile.txt --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "template": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-27\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
+      "template": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-28\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"
     },
     {
       "id": "post_publish_import",
       "title": "Published post URL and starter KPI import",
       "checkCommand": "python3 tools/promotion_post_text_import.py check --input /path/to/post.txt",
       "writeCommand": "python3 tools/promotion_post_text_import.py add --input /path/to/post.txt --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-27\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
+      "template": "LoveTypes platform post writeback\nplatform: youtube_shorts\ntask_id: publish-lt-s01-iris-silence\nstatus: published\npublished_date: 2026-06-28\npost_url: <REAL_YOUTUBE_SHORTS_URL>\nviews: 0\nsite_clicks: 0\nquiz_starts: 0\nquiz_completions: 0\nproof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"
     },
     {
       "id": "lead_request_import",

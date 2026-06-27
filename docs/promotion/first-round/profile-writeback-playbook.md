@@ -1,6 +1,6 @@
 # LoveTypes Profile Writeback Playbook
 
-- 產生日期：2026-06-27
+- 產生日期：2026-06-28
 - configured：1 / 1
 - issues：0
 - 原則：只有實際設定並確認平台 profile link 後，才能用 `set` 或 `live`。
@@ -12,9 +12,9 @@
 - 目前狀態：`set`
 - Profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 - 設定完成後：
-  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-27 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-28 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
 - 已確認公開可點後：
-  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-27 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
+  - `python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-28 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 
 ## Profile 設定文字匯入
 

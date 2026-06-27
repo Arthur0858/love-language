@@ -4707,6 +4707,178 @@ THEORY_SECTIONS = {
 }
 
 
+EDITORIAL_METHOD = {
+    "zh": {
+        "eyebrow": "EDITORIAL METHOD",
+        "title": "LoveTypes 如何把守護者宇宙寫成可用內容",
+        "intro": "每一頁都先從關係中的具體困惑開始，再把它放回五種愛之語、心語庭園與可執行練習。這讓網站不是只提供氣氛、角色設定或測驗結果，而是把情緒語言翻成可以被討論的小步驟。",
+        "cards": [
+            ("01", "先有場景", "正式指南會要求讀者回想時間、地點、對話、身體反應與最想被接住的需求，而不是只閱讀抽象口號。"),
+            ("02", "再對應愛之語", "五位守護者不是新的性格分類，而是把肯定言詞、優質時光、接受禮物、服務行動與身體接觸轉成更容易辨認的入口。"),
+            ("03", "最後縮小行動", "每篇內容都會把需求縮成 24 小時內可以嘗試的小請求，避免把一段關係一次推向過度修復。"),
+            ("04", "定期清理薄頁", "如果頁面只剩重複文案、過度導購、沒有實作步驟，或沒有清楚安全邊界，就會進入下一輪重寫清單。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "EDITORIAL METHOD",
+        "title": "How LoveTypes turns the guardian universe into usable content",
+        "intro": "Each page begins with a concrete relationship question, then returns it to the five love languages, the Heart Garden, and one practical exercise. The site is meant to be more than atmosphere, character lore, or a quiz result: it translates emotional language into small steps that can be discussed.",
+        "cards": [
+            ("01", "Start with a scene", "Formal guides ask for time, place, words spoken, body response, and the need that most wants to be received instead of staying with abstract slogans."),
+            ("02", "Map to a love language", "The five guardians are not a new personality system. They are doorways into words, time, gifts, service, and safe touch."),
+            ("03", "Shrink into action", "Each guide reduces the need into one small request that can be tried within 24 hours, instead of pushing the whole relationship into over-repair."),
+            ("04", "Revise thin pages", "Pages that become repetitive, overly promotional, missing practice steps, or unclear about safety boundaries are returned to the rewrite list."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "EDITORIAL METHOD",
+        "title": "LoveTypes が守護者の宇宙を使える内容へ変える方法",
+        "intro": "各ページは具体的な関係の悩みから始まり、五つの愛の言語、心語の庭、一つの実践へ戻ります。雰囲気、キャラクター設定、診断結果だけで終わらせず、感情の言葉を話し合える小さな手順へ翻訳します。",
+        "cards": [
+            ("01", "場面から始める", "正式ガイドでは時間、場所、言葉、身体反応、受け止めてほしいニーズを確認し、抽象的な合言葉だけで終わらせません。"),
+            ("02", "愛の言語へ対応させる", "五人の守護者は新しい性格分類ではありません。言葉、時間、贈り物、行動、安全なふれあいへの入口です。"),
+            ("03", "行動を小さくする", "各ガイドはニーズを二十四時間以内に試せる小さなお願いへ縮め、関係全体を急いで直そうとしません。"),
+            ("04", "薄いページを見直す", "重複、宣伝寄り、実践不足、安全境界の不足があるページは、次の改稿リストへ戻します。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "EDITORIAL METHOD",
+        "title": "LoveTypes가 수호자 세계를 실제로 쓸 수 있는 콘텐츠로 바꾸는 방식",
+        "intro": "각 페이지는 구체적인 관계 질문에서 시작해 다섯 가지 사랑의 언어, 마음의 정원, 하나의 실천으로 돌아갑니다. 분위기, 캐릭터 설정, 테스트 결과에 머물지 않고 감정 언어를 대화 가능한 작은 단계로 번역합니다.",
+        "cards": [
+            ("01", "상황에서 시작", "공식 가이드는 시간, 장소, 말, 몸의 반응, 가장 받아들여지고 싶은 욕구를 확인하며 추상적인 구호에 머물지 않습니다."),
+            ("02", "사랑의 언어로 연결", "다섯 수호자는 새로운 성격 분류가 아닙니다. 말, 시간, 선물, 행동, 안전한 가까움으로 들어가는 문입니다."),
+            ("03", "행동을 작게 줄이기", "각 가이드는 욕구를 24시간 안에 시도할 수 있는 작은 요청으로 줄여 관계 전체를 과하게 고치려 하지 않습니다."),
+            ("04", "얇은 페이지 정리", "반복적이거나 홍보가 강하거나 실천 단계와 안전 경계가 부족한 페이지는 다시 작성 목록으로 돌립니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "EDITORIAL METHOD",
+        "title": "Cómo LoveTypes convierte el universo guardián en contenido útil",
+        "intro": "Cada página empieza con una pregunta concreta de relación y la devuelve a los cinco lenguajes del amor, el Jardín del Corazón y un ejercicio practicable. El sitio no busca quedarse en atmósfera, historia de personajes o resultado de test: traduce lenguaje emocional en pasos pequeños que se pueden conversar.",
+        "cards": [
+            ("01", "Empezar con una escena", "Las guías formales piden tiempo, lugar, palabras, respuesta corporal y la necesidad que quiere ser recibida; no se quedan en lemas abstractos."),
+            ("02", "Mapear al lenguaje", "Las cinco guardianas no son un nuevo sistema de personalidad. Son puertas hacia palabras, tiempo, regalos, servicio y cercanía segura."),
+            ("03", "Reducir a acción", "Cada guía convierte la necesidad en una petición pequeña que se puede probar en 24 horas, sin empujar toda la relación a sobrerreparar."),
+            ("04", "Revisar páginas delgadas", "Las páginas repetitivas, demasiado promocionales, sin pasos prácticos o sin límites de seguridad vuelven a la lista de reescritura."),
+        ],
+    },
+}
+
+
+RESULT_READING_METHOD = {
+    "zh": {
+        "eyebrow": "RESULT READING METHOD",
+        "title": "測驗結果應該怎麼被使用",
+        "intro": "LoveTypes 的結果只描述此刻最亮、也最容易受傷的被愛入口。它適合幫你整理語言，不適合替你診斷關係，也不適合拿來要求伴侶照單全收。",
+        "items": [
+            ("可以用來", "開啟對話、選一篇指南、填入 7 日修復計畫、把一個請求說得更具體。"),
+            ("不要用來", "貼標籤、證明誰比較愛、要求對方立刻改變、忽略界線或安全問題。"),
+            ("需要重測時", "當關係階段、壓力來源、遠距狀態或身體安全感明顯改變，可以重新做一次測驗。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "RESULT READING METHOD",
+        "title": "How a quiz result should be used",
+        "intro": "A LoveTypes result only describes the doorway that feels most lit, and most easily wounded, right now. It helps you organize language; it should not diagnose a relationship or force a partner to comply.",
+        "items": [
+            ("Use it for", "Starting a conversation, choosing one guide, filling the 7-day repair plan, or making one request more specific."),
+            ("Do not use it for", "Labeling, proving who loves more, demanding immediate change, or ignoring boundaries and safety concerns."),
+            ("Retake when", "A relationship stage, stress source, distance pattern, or sense of bodily safety has clearly changed."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "RESULT READING METHOD",
+        "title": "診断結果の使い方",
+        "intro": "LoveTypes の結果は、今もっとも灯りやすく、同時に傷つきやすい入口を示すだけです。言葉を整理する助けであり、関係を診断したり相手に従わせたりするものではありません。",
+        "items": [
+            ("使えること", "会話の入口、ガイド選び、7日間修復プラン、一つのお願いを具体化すること。"),
+            ("使わないこと", "ラベル貼り、どちらがより愛しているかの証明、即時変化の要求、境界や安全の無視。"),
+            ("再診断する時", "関係段階、ストレス、遠距離の状態、身体的な安全感が大きく変わった時。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "RESULT READING METHOD",
+        "title": "테스트 결과를 사용하는 방법",
+        "intro": "LoveTypes 결과는 지금 가장 밝고 동시에 가장 쉽게 다치는 입구를 설명할 뿐입니다. 언어를 정리하는 데 도움을 주지만 관계를 진단하거나 상대에게 따르라고 요구하는 도구가 아닙니다.",
+        "items": [
+            ("사용할 수 있는 것", "대화 시작, 가이드 선택, 7일 회복 계획 작성, 요청을 더 구체적으로 만드는 일."),
+            ("사용하지 말 것", "라벨 붙이기, 누가 더 사랑하는지 증명하기, 즉각 변화 요구, 경계와 안전 문제 무시."),
+            ("다시 할 때", "관계 단계, 스트레스 원인, 거리감, 몸의 안전감이 분명히 달라졌을 때."),
+        ],
+    },
+    "es": {
+        "eyebrow": "RESULT READING METHOD",
+        "title": "Cómo usar un resultado del test",
+        "intro": "Un resultado de LoveTypes solo describe la puerta que ahora está más encendida y más sensible a la herida. Ayuda a ordenar el lenguaje; no debe diagnosticar la relación ni obligar a la otra persona.",
+        "items": [
+            ("Úsalo para", "Iniciar conversación, elegir una guía, completar el plan de 7 días o hacer una petición más específica."),
+            ("No lo uses para", "Etiquetar, probar quién ama más, exigir cambio inmediato o ignorar límites y seguridad."),
+            ("Repite el test si", "Cambia claramente la etapa de relación, la fuente de estrés, la distancia o la seguridad corporal."),
+        ],
+    },
+}
+
+
+CORE_READING_PATH = {
+    "zh": {
+        "eyebrow": "CORE READING PATH",
+        "title": "第一次來 LoveTypes，建議先讀這條路線",
+        "intro": "如果你是從搜尋、AI 摘要或審核流程第一次進站，這條路線能最快看懂網站的核心價值：先理解理論，再做測驗，最後把結果變成練習。",
+        "items": [
+            ("1", "先讀愛之語理論", "了解五種愛之語不是人格分類，而是關係溝通語彙。", "theory"),
+            ("2", "認識五位守護者", "看每位守護者如何把一種愛之語變成更容易記住的分域。", "characters"),
+            ("3", "閱讀一篇指南", "選一個最像你近期情境的錯頻，照著範例對話與五分鐘流程練習。", "guides"),
+            ("4", "再決定補給", "如果需要延伸素材，先用免費任務，再看 Luna 或書卷。", "resources"),
+        ],
+    },
+    "en": {
+        "eyebrow": "CORE READING PATH",
+        "title": "If you are new to LoveTypes, start with this route",
+        "intro": "If you arrived from search, an AI answer, or a review path, this route shows the site value fastest: understand the theory, take the quiz, then turn a result into practice.",
+        "items": [
+            ("1", "Read the theory first", "See why the five love languages are communication vocabulary, not personality boxes.", "theory"),
+            ("2", "Meet the guardians", "See how each guardian turns one love language into a memorable domain.", "characters"),
+            ("3", "Read one guide", "Choose the misfrequency closest to your recent situation and practice with dialogue and a five-minute flow.", "guides"),
+            ("4", "Then choose supplies", "If you need extended material, start with a free task before Luna or book links.", "resources"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "CORE READING PATH",
+        "title": "初めて LoveTypes に来たら、この順路から",
+        "intro": "検索、AI の回答、審査経路から来た場合、この順路で価値が最も早く分かります。理論を理解し、診断し、結果を練習へ変えます。",
+        "items": [
+            ("1", "先に理論を読む", "五つの愛の言語は人格分類ではなく、関係の語彙であることを確認します。", "theory"),
+            ("2", "守護者を知る", "各守護者が一つの愛の言語を記憶しやすい分域へ変える方法を見ます。", "characters"),
+            ("3", "ガイドを一つ読む", "最近の場面に近いすれ違いを選び、会話例と五分の流れで練習します。", "guides"),
+            ("4", "その後で補給を選ぶ", "追加素材が必要なら、Luna や本の前に無料タスクから始めます。", "resources"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "CORE READING PATH",
+        "title": "LoveTypes가 처음이라면 이 순서로 읽기",
+        "intro": "검색, AI 답변, 심사 경로에서 들어왔다면 이 경로가 사이트 가치를 가장 빨리 보여 줍니다. 이론을 이해하고, 테스트하고, 결과를 연습으로 바꿉니다.",
+        "items": [
+            ("1", "이론 먼저 읽기", "다섯 가지 사랑의 언어가 성격 상자가 아니라 관계 대화 언어임을 봅니다.", "theory"),
+            ("2", "수호자 만나기", "각 수호자가 하나의 사랑의 언어를 기억하기 쉬운 영역으로 바꾸는 방식을 봅니다.", "characters"),
+            ("3", "가이드 하나 읽기", "최근 상황과 가까운 어긋남을 골라 대화 예시와 5분 흐름으로 연습합니다.", "guides"),
+            ("4", "그다음 보급 선택", "추가 자료가 필요하다면 Luna나 책 링크 전에 무료 과제부터 시작합니다.", "resources"),
+        ],
+    },
+    "es": {
+        "eyebrow": "CORE READING PATH",
+        "title": "Si llegas por primera vez, empieza por esta ruta",
+        "intro": "Si vienes desde búsqueda, una respuesta de IA o una revisión, esta ruta muestra el valor del sitio más rápido: entender la teoría, hacer el test y convertir el resultado en práctica.",
+        "items": [
+            ("1", "Lee primero la teoría", "Ve por qué los cinco lenguajes son vocabulario de comunicación, no cajas de personalidad.", "theory"),
+            ("2", "Conoce las guardianas", "Mira cómo cada guardiana convierte un lenguaje en un dominio fácil de recordar.", "characters"),
+            ("3", "Lee una guía", "Elige el desajuste más cercano a tu situación reciente y practica con diálogo y flujo de cinco minutos.", "guides"),
+            ("4", "Luego elige recursos", "Si necesitas material extendido, empieza con una tarea gratuita antes de Luna o libros.", "resources"),
+        ],
+    },
+}
+
+
 def lang_url(lang: str, path: str = "") -> str:
     prefix = LANGS[lang]["prefix"]
     clean = path.strip("/")
@@ -8596,6 +8768,7 @@ def home(lang: str) -> None:
   <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(section_labels["home_field_notes"])}</h2><p>{escape(t["trust_intro"])}</p></div>
   <div class="text-stack"><p>{escape(PRACTICAL_COPY[lang]["why"])}</p><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p></div>
 </section>
+{core_reading_path_section(lang)}
 <section class="section" id="guides-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["guardian_field_guides"])}</p><h2>{escape(t["guides"])}</h2><a href="{lang_url(lang, "guides")}">{escape(t["learn_more"])}</a></div><div class="card-grid">{guide_cards}</div></section>
 <section class="section" id="types-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid">{guardian_cards}</div></section>
 {quiz_section(lang)}
@@ -8629,6 +8802,7 @@ def characters_index_page(lang: str) -> None:
 <section class="section guardian-result-resume" data-guardian-saved hidden aria-live="polite"></section>
 {guardian_entry_section(lang)}
 {guardian_need_router_section(lang)}
+{result_reading_method_section(lang)}
 {universe_map_section(lang)}
 <section class="section intro-grid">
   <div><h2>{escape(PAGE_SECTIONS[lang]["how"])}</h2><p>{escape(PRACTICAL_COPY[lang]["why"])}</p></div>
@@ -8648,6 +8822,7 @@ def guides_index(lang: str) -> None:
     body = f"""
 <section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="resources" href="{lang_url(lang, "resources")}" data-funnel-event="guide_index_hero_resources">{escape(t["resources"])}</a></div></section>
 {guide_index_compass(lang)}
+{core_reading_path_section(lang)}
 {guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
@@ -9915,6 +10090,66 @@ def theory_domain_compass(lang: str) -> str:
 """
 
 
+def editorial_method_section(lang: str) -> str:
+    copy = EDITORIAL_METHOD[lang]
+    cards = "".join(
+        f"""
+<article class="content-card">
+  <span class="eyebrow">{escape(step)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for step, title, text in copy["cards"]
+    )
+    return f"""
+<section class="section" id="editorial-method" data-editorial-method>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
+def result_reading_method_section(lang: str) -> str:
+    copy = RESULT_READING_METHOD[lang]
+    cards = "".join(
+        f"""
+<article class="mini-card">
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for title, text in copy["items"]
+    )
+    return f"""
+<section class="section intro-grid" id="result-reading-method" data-result-reading-method>
+  <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2><p>{escape(copy["intro"])}</p></div>
+  <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
+def core_reading_path_section(lang: str) -> str:
+    copy = CORE_READING_PATH[lang]
+    cards = []
+    for step, title, text, target in copy["items"]:
+        cards.append(f"""
+<a class="content-card" href="{lang_url(lang, target)}" data-core-reading-path="{escape(target)}">
+  <span class="eyebrow">{escape(step)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</a>
+""")
+    return f"""
+<section class="section" id="core-reading-path" data-core-reading-path-section>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
+</section>
+"""
+
+
 def simple_page(lang: str, slug: str) -> None:
     t = LANGS[lang]
     labels = PAGE_SECTIONS[lang]
@@ -9935,6 +10170,8 @@ def simple_page(lang: str, slug: str) -> None:
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{trust_hero_actions(lang, slug)}</section>
 {about_garden_pass(lang)}
+{editorial_method_section(lang)}
+{core_reading_path_section(lang)}
 <section class="section article-body standalone">
   {about_items}
   <h2>{escape(t["boundary"])}</h2>
@@ -9955,6 +10192,7 @@ def simple_page(lang: str, slug: str) -> None:
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions" data-trust-hero-actions="theory"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-trust-hero-link="quiz" data-funnel-event="trust_hero_theory_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-trust-hero-link="guardians" data-funnel-event="trust_hero_theory_guardians">{escape(t["guardians"])}</a></div></section>
 {theory_domain_compass(lang)}
+{result_reading_method_section(lang)}
 <section class="section article-body standalone">
   {theory_items}
   <h2>{escape(t["boundary"])}</h2>

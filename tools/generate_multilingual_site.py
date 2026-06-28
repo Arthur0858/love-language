@@ -4032,6 +4032,8 @@ TOPIC_DETAILS = {
         "scene": "先把問題放回真實場景",
         "steps": "五分鐘修復流程",
         "example": "範例對話",
+        "checklist": "高意圖判斷清單",
+        "faq": "常見高意圖問題",
         "pause": "什麼時候先停下",
     },
     "en": {
@@ -4045,6 +4047,8 @@ TOPIC_DETAILS = {
         "scene": "Put the issue back into a real scene",
         "steps": "Five-minute repair flow",
         "example": "Example dialogue",
+        "checklist": "Decision checklist",
+        "faq": "High-intent FAQ",
         "pause": "When to pause first",
     },
     "ja": {
@@ -4058,6 +4062,8 @@ TOPIC_DETAILS = {
         "scene": "問題を現実の場面へ戻す",
         "steps": "五分間の修復フロー",
         "example": "会話例",
+        "checklist": "判断チェックリスト",
+        "faq": "よくある高意図の質問",
         "pause": "先に止まるべき時",
     },
     "ko": {
@@ -4071,6 +4077,8 @@ TOPIC_DETAILS = {
         "scene": "문제를 실제 장면으로 되돌리기",
         "steps": "5분 회복 흐름",
         "example": "대화 예시",
+        "checklist": "판단 체크리스트",
+        "faq": "자주 묻는 고의도 질문",
         "pause": "먼저 멈춰야 할 때",
     },
     "es": {
@@ -4084,6 +4092,8 @@ TOPIC_DETAILS = {
         "scene": "Devuelve el tema a una escena real",
         "steps": "Flujo de reparación de cinco minutos",
         "example": "Diálogo de ejemplo",
+        "checklist": "Lista de decisión",
+        "faq": "FAQ de alta intención",
         "pause": "Cuándo pausar primero",
     },
 }
@@ -7290,7 +7300,9 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "reflection": ["「{title}」提到的情境，最像我最近哪一次錯頻？", "面對「{desc}」，我希望對方具體做什麼，而不是只猜我的感受？", "如果我用 {typ} 的語言表達，請求會不會更清楚？"],
             "scene": "低價值的關係建議常停在口號，例如「多溝通」或「互相體諒」。LoveTypes 的做法相反：先把「{title}」放回一個可以被回想的場景。請寫下時間、地點、誰在場、你期待收到什麼，以及最後真正收到的是什麼。當場景變清楚，你才知道自己是在要一句話、一段專心時間、一個被記得的細節、一個分擔行動，或一次有同意感的靠近。",
             "steps": ["用一句話描述事件，不加入人格判斷。", "圈出讓你最受傷或最失落的那個瞬間。", "把受傷翻成 {typ} 的需求，而不是翻成責備。", "提出一個二十四小時內能完成的小請求。", "約定下次怎麼提醒彼此，而不是要求對方立刻完美。"],
+            "checklist": ["我能說出「{desc}」發生在哪一個具體場景，而不是只說對方不懂我。", "我能把期待縮成一個 {typ} 的小請求，並說明希望什麼時候完成。", "我知道這次修復要先求穩定，不急著要求對方立刻完全理解 {name}。", "如果對方願意回應，我已準備好用感謝或確認收尾，而不是繼續加碼要求。"],
             "example": "你可以說：「剛剛那件事讓我想到『{desc}』。我不是要你猜我全部的情緒，而是想先修一小步：下次我們遇到類似狀況時，可以先用一句話確認彼此還站在同一邊嗎？」如果對方願意回應，再補上 {name} 的守護語言；如果對方防衛，先回到事實與時間點。",
+            "faq": ["Q：這篇指南能直接判斷對方愛不愛我嗎？A：不能。它比較適合判斷「{desc}」在哪裡錯頻，並把下一步請求說得更清楚。", "Q：如果對方不接受 {typ} 的語言怎麼辦？A：先把請求縮小到一個可觀察行動，再看對方是否願意嘗試，而不是用標籤逼迫對方。", "Q：什麼時候該搭配補給或 Luna？A：當你已經完成小請求，仍需要睡前整理、衝突後冷卻或七日修復節奏時，再把它作為輔助。"],
             "pause": "如果這個場景牽涉羞辱、威脅、控制、暴力、強迫親密或長期恐懼，請不要把它當成單純的愛之語錯頻。先停止練習，保護安全，找可信任的人或專業支援。LoveTypes 的指南適合整理日常溝通，不適合處理高風險關係或急迫危機。",
         },
         "en": {
@@ -7304,7 +7316,9 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "reflection": ["Which recent misfrequency looks most like {title}?", "For \"{desc}\", what do I want the other person to do specifically instead of guessing my feelings?", "Would the request become clearer if I used the language of {typ}?"],
             "scene": "Low-value relationship advice often stays at slogans such as communicate more or be considerate. LoveTypes does the opposite: it returns {title} to a scene you can actually remember. Write down the time, place, people present, what you expected to receive, and what you actually received. Once the scene is clear, you can tell whether you needed words, focused time, a remembered detail, a shared action, or closeness that felt consensual and safe.",
             "steps": ["Describe the event in one sentence without judging anyone's character.", "Circle the moment that felt most painful, lonely, or unseen.", "Translate that pain into a {typ} need instead of an accusation.", "Make one request small enough to try within twenty-four hours.", "Agree on how to remind each other next time instead of demanding instant perfection."],
+            "checklist": ["I can name the concrete scene behind \"{desc}\" instead of only saying the other person does not understand me.", "I can shrink the expectation into one small {typ} request and say when I hope it can happen.", "I know this repair is about stabilizing first, not making the other person instantly understand {name}.", "If the other person responds, I am ready to close with thanks or confirmation instead of adding more demands."],
             "example": "You might say: \"That moment reminded me of '{desc}'. I am not asking you to guess all my feelings. I want to repair one small step first: next time something similar happens, can we pause and confirm that we are still on the same side?\" If the other person can respond, add the guardian language from {name}; if they become defensive, return to the concrete time and behavior.",
+            "faq": ["Q: Can this guide tell me whether someone loves me? A: No. It helps you see where \"{desc}\" is misfiring and make the next request clearer.", "Q: What if the other person does not accept the language of {typ}? A: Shrink the request into one observable action first, then notice whether they are willing to try instead of forcing the label.", "Q: When should I use supplies or Luna with this? A: After you have made the small request and still need bedtime reflection, post-conflict cooling, or a seven-day repair rhythm."],
             "pause": "If the scene includes humiliation, threats, coercive control, violence, pressured intimacy, or chronic fear, do not treat it as a simple love-language misfrequency. Pause the exercise, protect safety, and seek trusted or professional support. LoveTypes guides are for everyday reflection and communication, not urgent risk or abusive relationship repair.",
         },
         "ja": {
@@ -7318,7 +7332,9 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "reflection": ["「{title}」の場面は、最近のどのすれ違いに近いか。", "「{desc}」について、相手に察してほしいのではなく具体的に何をしてほしいか。", "{typ} の言語で言えば、お願いはもっと明確になるか。"],
             "scene": "価値の低い関係アドバイスは、「もっと話し合う」「思いやる」といった標語で止まりがちです。LoveTypes では逆に、「{title}」を思い出せる一つの場面へ戻します。時間、場所、誰がいたか、何を受け取りたかったか、実際に何を受け取ったかを書きます。場面が具体的になると、必要だったものが言葉なのか、集中した時間なのか、覚えてくれた細部なのか、分担行動なのか、同意のある近さなのかが見えます。",
             "steps": ["出来事を一文で書き、人格判断を入れない。", "いちばん痛かった、寂しかった、見えなくなった瞬間を丸で囲む。", "その痛みを責め言葉ではなく {typ} のニーズへ翻訳する。", "二十四時間以内に試せる小さなお願いにする。", "次回どう気づき合うかを決め、すぐ完璧になることを求めない。"],
+            "checklist": ["「{desc}」が起きた具体的な場面を言える。相手がわかってくれない、だけで終わらせない。", "期待を {typ} の小さなお願いに縮め、いつ試したいかを言える。", "今回の修復はまず安定させるためで、相手にすぐ {name} を完全理解させるためではないと分かっている。", "相手が応じたら、さらに要求を重ねるのではなく、感謝や確認で終われる。"],
             "example": "たとえば「さっきの場面で『{desc}』を思い出した。全部の感情を当ててほしいわけではなく、まず一つだけ修復したい。次に似たことが起きたら、私たちは同じ側にいると一言確認してもらえる？」と言えます。相手が受け取れるなら {name} の守護言語を足し、防衛的になるなら時間と行動の事実へ戻ります。",
+            "faq": ["Q：このガイドで相手が愛しているか判断できますか。A：できません。「{desc}」がどこですれ違うかを見て、次のお願いを明確にするためのものです。", "Q：相手が {typ} の言語を受け入れない時は。A：まず一つの観察できる行動へ縮め、ラベルを押しつけるのではなく試す意思があるかを見ます。", "Q：補給や Luna はいつ使うべきですか。A：小さなお願いをした後、睡前の整理、衝突後のクールダウン、七日間の修復リズムが必要な時に補助として使います。"],
             "pause": "その場面に侮辱、脅し、支配、暴力、望まない親密さ、長く続く恐怖が含まれる場合、単なる愛の言語のすれ違いとして扱わないでください。練習を止め、安全を優先し、信頼できる人や専門的な支援につなげてください。LoveTypes のガイドは日常の内省と会話のためで、緊急リスクや虐待関係の修復を目的にしていません。",
         },
         "ko": {
@@ -7332,7 +7348,9 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "reflection": ["{title}의 장면은 최근 어떤 어긋남과 가장 닮았나?", "\"{desc}\"에 대해 상대가 추측하기보다 구체적으로 무엇을 해 주길 바라나?", "{typ}의 언어로 말하면 요청이 더 분명해질까?"],
             "scene": "낮은 가치의 관계 조언은 흔히 더 대화하라거나 배려하라는 말에서 멈춥니다. LoveTypes는 반대로 {title}을 실제로 떠올릴 수 있는 한 장면으로 되돌립니다. 시간, 장소, 함께 있던 사람, 기대했던 것, 실제로 받은 것을 적어 보세요. 장면이 선명해지면 필요한 것이 말인지, 집중된 시간인지, 기억된 세부인지, 나눠 진 행동인지, 동의와 안전이 있는 가까움인지 구분할 수 있습니다.",
             "steps": ["사건을 한 문장으로 쓰고 인격 판단은 넣지 않습니다.", "가장 아프거나 외롭거나 보이지 않았던 순간에 표시합니다.", "그 아픔을 비난이 아니라 {typ}의 욕구로 번역합니다.", "24시간 안에 시도할 수 있을 만큼 작은 요청 하나로 만듭니다.", "다음에 어떻게 서로를 상기시킬지 정하고 즉시 완벽해지라고 요구하지 않습니다."],
+            "checklist": ["\"{desc}\"가 일어난 구체적인 장면을 말할 수 있고, 상대가 나를 모른다는 말로만 끝내지 않습니다.", "기대를 {typ}의 작은 요청 하나로 줄이고 언제 해보면 좋을지 말할 수 있습니다.", "이번 회복은 먼저 안정시키는 과정이지, 상대가 즉시 {name}을 완전히 이해하게 만드는 과정이 아님을 압니다.", "상대가 응답하면 더 요구를 보태기보다 감사나 확인으로 마무리할 준비가 되어 있습니다."],
             "example": "이렇게 말할 수 있습니다. “방금 그 장면에서 ‘{desc}’가 떠올랐어. 내 감정을 전부 맞혀 달라는 뜻은 아니야. 먼저 작은 한 걸음만 회복하고 싶어. 다음에 비슷한 일이 생기면 우리가 같은 편이라는 걸 한 문장으로 확인해 줄 수 있을까?” 상대가 받을 수 있으면 {name}의 수호 언어를 더하고, 방어적이면 구체적인 시간과 행동으로 돌아가세요.",
+            "faq": ["Q: 이 가이드로 상대가 나를 사랑하는지 판단할 수 있나요? A: 아닙니다. \"{desc}\"가 어디에서 어긋나는지 보고 다음 요청을 더 분명히 하기 위한 글입니다.", "Q: 상대가 {typ}의 언어를 받아들이지 않으면요? A: 먼저 관찰 가능한 행동 하나로 요청을 줄이고, 라벨을 강요하기보다 시도할 의지가 있는지 봅니다.", "Q: 보급품이나 Luna는 언제 함께 쓰나요? A: 작은 요청을 한 뒤에도 잠들기 전 정리, 갈등 후 냉각, 7일 회복 리듬이 필요할 때 보조로 사용하세요."],
             "pause": "그 장면에 모욕, 협박, 통제, 폭력, 원하지 않는 친밀함, 지속적인 두려움이 포함된다면 단순한 사랑의 언어 어긋남으로 다루지 마세요. 연습을 멈추고 안전을 우선하며 신뢰할 수 있는 사람이나 전문 지원을 찾으세요. LoveTypes 가이드는 일상적 성찰과 대화를 위한 것이며 긴급 위험이나 학대 관계를 해결하기 위한 도구가 아닙니다.",
         },
         "es": {
@@ -7346,7 +7364,9 @@ def guide_detail_copy(lang: str, title: str, desc: str, guardian: tuple[str, str
             "reflection": ["¿Qué desajuste reciente se parece más a {title}?", "Para \"{desc}\", ¿qué quiero que la otra persona haga concretamente en lugar de adivinar mis emociones?", "¿La petición sería más clara si uso el lenguaje de {typ}?"],
             "scene": "El consejo relacional de bajo valor suele quedarse en lemas como comunica más o sé considerada. LoveTypes hace lo contrario: devuelve {title} a una escena que puedas recordar. Escribe hora, lugar, quién estaba, qué esperabas recibir y qué recibiste realmente. Cuando la escena se aclara, puedes distinguir si necesitabas palabras, tiempo atento, un detalle recordado, una acción compartida o una cercanía con consentimiento y seguridad.",
             "steps": ["Describe el hecho en una frase sin juzgar el carácter de nadie.", "Marca el momento que se sintió más doloroso, solitario o invisible.", "Traduce ese dolor en una necesidad de {typ}, no en una acusación.", "Haz una petición pequeña que pueda intentarse en veinticuatro horas.", "Acuerden cómo recordárselo la próxima vez sin exigir perfección inmediata."],
+            "checklist": ["Puedo nombrar la escena concreta detrás de \"{desc}\" sin quedarme solo en decir que la otra persona no me entiende.", "Puedo reducir la expectativa a una petición pequeña de {typ} y decir cuándo espero intentarla.", "Sé que esta reparación busca estabilizar primero, no hacer que la otra persona entienda de inmediato a {name}.", "Si la otra persona responde, puedo cerrar con gratitud o confirmación en lugar de sumar más exigencias."],
             "example": "Podrías decir: “Ese momento me recordó ‘{desc}’. No te estoy pidiendo que adivines todo lo que siento. Quiero reparar un paso pequeño: la próxima vez que pase algo parecido, ¿podemos pausar y confirmar que seguimos del mismo lado?” Si la otra persona puede responder, añade el lenguaje guardián de {name}; si se defiende, vuelve al tiempo y la conducta concreta.",
+            "faq": ["P: ¿Esta guía puede decirme si alguien me ama? R: No. Te ayuda a ver dónde se desajusta \"{desc}\" y a formular con más claridad el siguiente pedido.", "P: ¿Qué pasa si la otra persona no acepta el lenguaje de {typ}? R: Reduce primero la petición a una acción observable y mira si hay disposición a intentarlo, sin imponer la etiqueta.", "P: ¿Cuándo conviene usar suministros o Luna junto con esto? R: Después de hacer la petición pequeña, si aún necesitas reflexión antes de dormir, enfriar un conflicto o sostener un ritmo de reparación de siete días."],
             "pause": "Si la escena incluye humillación, amenazas, control coercitivo, violencia, intimidad presionada o miedo crónico, no la trates como un simple desajuste de lenguajes del amor. Pausa el ejercicio, protege la seguridad y busca apoyo confiable o profesional. Las guías de LoveTypes son para reflexión y comunicación cotidiana, no para riesgo urgente ni reparación de relaciones abusivas.",
         },
     }
@@ -8931,6 +8951,8 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
     reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
     steps = "".join(f"<li>{escape(item)}</li>" for item in detail["steps"])
+    checklist = "".join(f"<li>{escape(item)}</li>" for item in detail["checklist"])
+    faq = "".join(f"<li>{escape(item)}</li>" for item in detail["faq"])
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -8947,8 +8969,10 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     <h2>{escape(labels["example"])}</h2><p>{escape(detail["example"])}</p>
     <h2>{escape(labels["practice"])}</h2><p>{escape(detail["practice"])}</p>
     <h2>{escape(labels["steps"])}</h2><ol>{steps}</ol>
+    <h2>{escape(labels["checklist"])}</h2><ul>{checklist}</ul>
     <div class="callout"><strong>{escape(t["practice"])}</strong><p>{escape(detail["callout"])}</p></div>
     <h2>{escape(labels["mistakes"])}</h2><p>{escape(detail["mistakes"])}</p>
+    <h2>{escape(labels["faq"])}</h2><ul>{faq}</ul>
     <h2>{escape(labels["reflection"])}</h2><ol>{reflections}</ol>
     <h2>{escape(labels["pause"])}</h2><p>{escape(detail["pause"])}</p>
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>

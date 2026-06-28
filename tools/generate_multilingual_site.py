@@ -10135,7 +10135,7 @@ def core_reading_path_section(lang: str) -> str:
     cards = []
     for step, title, text, target in copy["items"]:
         cards.append(f"""
-<a class="content-card" href="{lang_url(lang, target)}" data-core-reading-path="{escape(target)}">
+<a class="guardian-card core-path-card" href="{lang_url(lang, target)}" data-core-reading-path="{escape(target)}">
   <span class="eyebrow">{escape(step)}</span>
   <h3>{escape(title)}</h3>
   <p>{escape(text)}</p>

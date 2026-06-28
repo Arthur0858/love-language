@@ -1,6 +1,6 @@
 # LoveTypes Post Proof Handoff Pack
 
-- 產生日期：2026-06-28
+- 產生日期：2026-06-29
 - rows：1
 - proof files：1
 - ready to import：0
@@ -29,6 +29,6 @@
 - title：他沉默時，你最想聽見哪一句話？
 - check：`python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - write：`python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- fallback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-28 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- fallback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-29 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - next：Replace the placeholder post_url and proof_note date, then rerun the check command.
 - stop：Stop if the URL is still a placeholder, the platform domain does not match, or zero metrics lack checked-source proof.

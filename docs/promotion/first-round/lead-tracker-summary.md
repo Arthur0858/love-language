@@ -1,6 +1,6 @@
 # LoveTypes Lead Tracker Summary
 
-- 產生日期：2026-06-28
+- 產生日期：2026-06-29
 - source：`docs/promotion/first-round/lead-intake-tracker.csv`
 - total rows：15
 - template rows：15

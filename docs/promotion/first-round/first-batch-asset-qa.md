@@ -1,6 +1,6 @@
 # LoveTypes First Batch Asset QA
 
-- 產生日期：2026-06-28
+- 產生日期：2026-06-29
 - QA rows：1
 - required QA items：8
 - issues：0
@@ -44,7 +44,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-28
+published_date: 2026-06-29
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0

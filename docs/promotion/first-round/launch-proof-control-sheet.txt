@@ -1,4 +1,4 @@
-generated: 2026-06-28
+generated: 2026-06-29
 stage: first_batch_kpi
 profile ready/blocked: 0/1
 profile placeholder/real proof ready: 1/0

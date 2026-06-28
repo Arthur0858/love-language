@@ -1,6 +1,6 @@
 # LoveTypes Blocker Resolution Checklist
 
-- 產生日期：2026-06-28
+- 產生日期：2026-06-29
 - current stage：`first_batch_kpi`
 - rows：10
 - active blockers：7

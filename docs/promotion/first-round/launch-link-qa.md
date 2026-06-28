@@ -1,6 +1,6 @@
 # LoveTypes Launch Link QA
 
-- 產生日期：2026-06-28
+- 產生日期：2026-06-29
 - 唯一追蹤連結：16
 - Profile links：1
 - Shorts links：15

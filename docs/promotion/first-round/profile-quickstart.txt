@@ -1,5 +1,5 @@
 LoveTypes profile quickstart
-generated: 2026-06-29
+generated: 2026-06-30
 
 Rules:
 - Only complete profile setup when the external platform profile visibly contains the tracked /start/ link.
@@ -25,7 +25,7 @@ Save this proof text to docs/promotion/first-round/proof-youtube_shorts.txt afte
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-06-29
+set_date: 2026-06-30
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 

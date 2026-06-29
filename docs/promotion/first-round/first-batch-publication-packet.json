@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29",
+  "generatedAt": "2026-06-30",
   "source": {
     "postingQueue": "docs/promotion/first-round/posting-queue.csv",
     "platformKpiTracker": "docs/promotion/first-round/platform-kpi-tracker.csv",
@@ -55,8 +55,8 @@
         "quiz_completions": 0
       },
       "minimumKpiFilled": false,
-      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-29 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
-      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-29 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "writebackCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-30 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note \"<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified\"",
+      "kpiExampleCommand": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-06-30 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "postUrlPlaceholder": "<REAL_YOUTUBE_SHORTS_URL>",
       "prePublishChecks": [
         "Profile link 已完成 set/live，且 launch readiness ready_to_publish=1。",

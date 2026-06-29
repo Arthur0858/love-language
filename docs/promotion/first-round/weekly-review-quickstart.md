@@ -1,6 +1,6 @@
 # LoveTypes Weekly Review Quickstart
 
-- 產生日期：2026-06-29
+- 產生日期：2026-06-30
 - action rows：7
 - ready / blocked / hold rows：2 / 3 / 2
 - evidence complete / pending：4 / 4

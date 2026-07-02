@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30",
+  "generatedAt": "2026-07-02",
   "sourceFiles": {
     "setup": "docs/promotion/first-round/platform-profile-setup.json",
     "tracker": "docs/promotion/first-round/platform-profile-tracker.csv",
@@ -30,14 +30,14 @@
         "確認 Bio / 置頂留言只有測驗 CTA，沒有 Luna、聯盟書卷、診斷或療效承諾。",
         "保存截圖或公開點擊紀錄，proof note 必須含 screenshot / public URL / clicked / verified 等可追溯詞。"
       ],
-      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-06-30 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
-      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-06-30 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
+      "writebackCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-07-02 --proof-note \"<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified\"",
+      "liveCommand": "python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-07-02 --proof-note \"<REAL_PROFILE_CLICK_NOTE> verified\"",
       "proofExamples": [
         "<REAL_SCREENSHOT_FILENAME> verified",
         "<REAL_PUBLIC_PROFILE_CLICK_URL_OR_TIMESTAMP> verified",
         "<REAL_SCREEN_RECORDING_FILENAME> verified"
       ],
-      "importTemplate": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-06-30\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
+      "importTemplate": "LoveTypes profile setup writeback\nplatform: youtube_shorts\nstatus: set\nset_date: 2026-07-02\nprofile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio\nproof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",
       "postWritebackCommands": [
         "python3 tools/promotion_daily_ops_refresh.py",
         "python3 tools/promotion_profile_completion_gate.py --check",

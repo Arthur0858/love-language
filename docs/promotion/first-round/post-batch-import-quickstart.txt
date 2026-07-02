@@ -1,4 +1,4 @@
-generated: 2026-06-30
+generated: 2026-07-02
 task: publish-lt-s01-iris-silence
 ready=0 blocked=1 invalid=0 issues=0
 check: python3 tools/promotion_post_batch_import.py --check

@@ -1,5 +1,5 @@
 LoveTypes lead and offer quickstart
-generated: 2026-06-30
+generated: 2026-07-02
 real leads: 0
 ready lead routes: 0
 offer queue ready/blocked: 0 / 80

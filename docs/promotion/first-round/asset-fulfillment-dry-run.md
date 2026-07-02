@@ -1,6 +1,6 @@
 # LoveTypes Asset Fulfillment Dry Run
 
-- 產生日期：2026-06-30
+- 產生日期：2026-07-02
 - dry-run mode：`1`
 - synthetic real leads：1
 - current real leads：0

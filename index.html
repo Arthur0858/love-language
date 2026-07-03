@@ -41,6 +41,13 @@
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-desktop.webp" media="(min-width: 721px)" fetchpriority="high" />
   <link rel="stylesheet" href="/shared-20260613-funnel-kpi-map.css" />
+<style>
+.quiz-lead-capture { padding: 2rem 1rem; border-radius: 1rem; margin: 1.5rem 0; background: var(--card-bg, #fff); border: 1px solid var(--result-accent, #7a4d6d); }
+.lead-capture-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.lead-capture-form label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; }
+.lead-capture-form input[type="email"] { padding: 0.7rem; border: 1px solid #ccc; border-radius: 0.5rem; font-size: 1rem; }
+.lead-capture-form .primary-btn { align-self: flex-start; }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">跳到主要內容</a>
@@ -729,6 +736,23 @@
           `).join('')}
         </div>
       </section>
+      <section class="quiz-lead-capture" data-quiz-lead-capture style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
+        <div class="quiz-action-head">
+          <p class="eyebrow">守護者補給路線</p>
+          <h3>留下 Email，收到你的個人化補給</h3>
+        </div>
+        <p>填寫 Email，我們會把你的守護者結果與適合的練習、Luna 音樂與延伸書卷整理成一封專屬補給信。</p>
+        <form class="lead-capture-form" data-lead-capture-form>
+          <input type="hidden" name="guardian" value="${result.name}">
+          <input type="hidden" name="guardian_slug" value="${result.slug}">
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" inputmode="email" autocomplete="email" required placeholder="your@email.com">
+          </label>
+          <button type="submit" class="primary-btn">取得守護者補給路線</button>
+          <p class="affiliate-disclosure">${quiz.affiliateDisclosure}</p>
+        </form>
+      </section>
       <section class="quiz-supply-card">
         <p class="eyebrow">${quiz.labels.resources_link}</p>
         <h3>${result.supplyTitle}</h3>
@@ -761,6 +785,22 @@
     resultBox.querySelector('[data-copy-result]').addEventListener('click', async (event) => {
       await copyShareText(shareText, event.currentTarget);
     });
+    const leadForm = resultBox.querySelector('[data-lead-capture-form]');
+    if (leadForm) {
+      leadForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = leadForm.querySelector('[name="email"]').value.trim();
+        if (!email) return;
+        const guardian = leadForm.querySelector('[name="guardian"]').value;
+        const encodedSubject = encodeURIComponent(`LoveTypes 守護者補給路線請求：${guardian}`);
+        const encodedBody = encodeURIComponent(
+          `我的守護者：${guardian}\n\n我的 Email：${email}\n\n我想優先收到的補給：我的守護者專屬練習與延伸路線\n\n（LoveTypes 會把結果與補給路線整理後回覆到此信箱。）`
+        );
+        window.open(`mailto:contact@lovetypes.tw?subject=${encodedSubject}&body=${encodedBody}`, '_blank');
+        leadForm.querySelector('button[type="submit"]').textContent = '已送出，請檢查郵件用戶端';
+        leadForm.querySelector('button[type="submit"]').disabled = true;
+      });
+    }
     if (savedBox) {
       hide(savedBox);
       savedBox.innerHTML = '';

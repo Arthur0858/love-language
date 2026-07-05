@@ -201,6 +201,10 @@
   };
 
   var l = labels[lang] || labels.en;
+  // Ponytail: fall back buy links to EN when locale reportBuyLinks is empty
+  if (!l.reportBuyLinks || !Object.keys(l.reportBuyLinks).length) {
+    l.reportBuyLinks = labels.en.reportBuyLinks;
+  }
   // Fall back to EN pair data if locale data is missing
   if (!data.pairings || !Object.keys(data.pairings).length || Object.keys(data.pairings).length < 20) {
     // Load EN data as fallback for pairings

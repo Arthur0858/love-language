@@ -51,6 +51,111 @@
       resultFooter: 'This compass is a starting reflection, not a verdict. Your love may not be absent — it may just arrive in different languages. The map is a reminder, not a judgment.',
       recalc: 'Try again with different inputs'
     },
+    ja: {
+      title: 'LoveTypes 関係コンパス',
+      subtitle: 'あなたと相手の愛の言語がどこで交差しているかを見つけ、今日から始められる一歩を無料で手に入れましょう。',
+      selfLabel: '私のLoveTypesガーディアン',
+      partnerLabel: '相手のLoveTypesガーディアン',
+      dobLabel: '生年月日（任意）',
+      dobSelf: '私の誕生日',
+      dobPartner: '相手の誕生日',
+      dobHint: '月/日/年 — 任意。リズムの洞察に役立ちます',
+      statusLabel: '現在の関係',
+      issueLabel: '一番改善したいこと',
+      submit: 'コンパスを取得',
+      loading: '2つの言語を読み取り中…',
+      resultTitle: 'あなたのコンパスリーディング',
+      misfrequencyTitle: '主なクロスシグナル',
+      misunderstoodTitle: '最も理解が必要なこと',
+      sentenceTitle: '相手に伝えられる一言',
+      actionTitle: '24時間以内にできる小さなアクション',
+      paidTitle: '完全なマップが必要ですか？',
+      paidIntro: '無料コンパスは最初の一歩を示します。これらのレポートは、スクリプト、スケジュール、そしてあなたのペアリングの深い理解を提供します。',
+      pdfTitle: 'PDFコレクターズエディションを追加',
+      pdfNote: '美しいデザイン、印刷可能、永久保存。',
+      buy: '購入 ',
+      whatInside: '含まれるもの',
+      reportLabels: {
+        'emotional-pattern': 'あなたの感情パターンレポート',
+        'compatibility': 'LoveTypes 相性レポート',
+        'bazi': '四柱推命 相性レポート',
+        'timing-2026': '2026年 恋愛タイミング',
+        'repair-plan': '7日間の関係修復プラン'
+      },
+      reportBuyLinks: {},
+      resultFooter: 'このコンパスは判断ではなく、振り返りの出発点です。愛がないのではなく、届き方が違うだけかもしれません。マップは判決ではなく、関係を思い出すためのリマインダーです。',
+      recalc: '再入力'
+    },
+    ko: {
+      title: 'LoveTypes 관계 컴퍼스',
+      subtitle: '두 사람의 사랑 언어가 어디에서 엇갈리는지 보고, 오늘 시작할 수 있는 첫걸음을 무료로 찾으세요.',
+      selfLabel: '나의 LoveTypes 가디언',
+      partnerLabel: '상대의 LoveTypes 가디언',
+      dobLabel: '생년월일 (선택)',
+      dobSelf: '내 생일',
+      dobPartner: '상대 생일',
+      dobHint: '월/일/년 — 선택 사항. 타이밍 인사이트에 도움',
+      statusLabel: '현재 관계 상태',
+      issueLabel: '가장 개선하고 싶은 것',
+      submit: '컴퍼스 받기',
+      loading: '두 언어를 읽는 중…',
+      resultTitle: '컴퍼스 리딩',
+      misfrequencyTitle: '주요 크로스 시그널',
+      misunderstoodTitle: '가장 이해가 필요한 부분',
+      sentenceTitle: '상대에게 할 수 있는 한마디',
+      actionTitle: '24시간 안에 할 수 있는 작은 행동',
+      paidTitle: '전체 지도가 필요하신가요?',
+      paidIntro: '무료 컴퍼스는 첫걸음을 보여줍니다. 이 레포트들은 대화 스크립트, 일정, 그리고 두 분의 독특한 페어링에 대한 깊은 이해를 제공합니다.',
+      pdfTitle: 'PDF 컬렉터 에디션 추가',
+      pdfNote: '아름답게 디자인되어 인쇄 가능, 영구 보관.',
+      buy: '구매 ',
+      whatInside: '포함 내용',
+      reportLabels: {
+        'emotional-pattern': '감정 패턴 레포트',
+        'compatibility': 'LoveTypes 궁합 레포트',
+        'bazi': '사주 궁합 레포트',
+        'timing-2026': '2026 연애 타이밍',
+        'repair-plan': '7일 관계 회복 플랜'
+      },
+      reportBuyLinks: {},
+      resultFooter: '이 컴퍼스는 판단이 아닌, 성찰의 출발점입니다. 사랑이 없는 것이 아니라, 도착하는 방식이 다를 수 있습니다. 지도는 판결이 아니라, 관계를 돌보는 길을 상기시켜 줍니다.',
+      recalc: '다시 입력'
+    },
+    es: {
+      title: 'LoveTypes Brújula de Relación',
+      subtitle: 'Descubre dónde se cruzan sus lenguajes del amor y encuentra un punto de partida hoy, gratis.',
+      selfLabel: 'Mi guardián LoveTypes',
+      partnerLabel: 'Su guardián LoveTypes',
+      dobLabel: 'Fechas de nacimiento (opcional)',
+      dobSelf: 'Mi cumpleaños',
+      dobPartner: 'Su cumpleaños',
+      dobHint: 'DD/MM/AAAA — opcional, ayuda con insights de ritmo',
+      statusLabel: 'Estado actual',
+      issueLabel: 'Lo que más quiero mejorar',
+      submit: 'Obtener mi Brújula',
+      loading: 'Leyendo sus dos idiomas…',
+      resultTitle: 'Tu Lectura de Brújula',
+      misfrequencyTitle: 'Tu señal cruzada principal',
+      misunderstoodTitle: 'Lo que más necesita ser comprendido',
+      sentenceTitle: 'Una frase que puedes decir',
+      actionTitle: 'Una pequeña acción en 24 horas',
+      paidTitle: '¿Quieres el mapa completo?',
+      paidIntro: 'La brújula gratuita te muestra el primer paso. Estos informes te dan el camino completo: guiones, horarios y una comprensión profunda de tu combinación única.',
+      pdfTitle: 'Añadir Edición Coleccionable en PDF',
+      pdfNote: 'Bellamente diseñado, imprimible, para conservar siempre.',
+      buy: 'Comprar ',
+      whatInside: 'Qué incluye',
+      reportLabels: {
+        'emotional-pattern': 'Tu Patrón Emocional de Amor',
+        'compatibility': 'Informe de Compatibilidad LoveTypes',
+        'bazi': 'Compatibilidad Amorosa BaZi',
+        'timing-2026': 'Ritmo Amoroso 2026',
+        'repair-plan': 'Plan de Reparación de 7 Días'
+      },
+      reportBuyLinks: {},
+      resultFooter: 'Esta brújula es un punto de partida para la reflexión, no un veredicto. Tu amor puede no estar ausente — puede que simplemente llegue en idiomas diferentes. El mapa es un recordatorio, no un juicio.',
+      recalc: 'Intentar de nuevo'
+    },
     zh: {
       title: 'LoveTypes 關係羅盤',
       subtitle: '看見你們的愛在哪裡錯頻，找到一個今天就能開始的地方，免費。',
@@ -96,6 +201,11 @@
   };
 
   var l = labels[lang] || labels.en;
+  // Fall back to EN pair data if locale data is missing
+  if (!data.pairings || !Object.keys(data.pairings).length || Object.keys(data.pairings).length < 20) {
+    // Load EN data as fallback for pairings
+    if (window.__COMPASS_DATA_EN) data.pairings = window.__COMPASS_DATA_EN.pairings;
+  }
 
   // ---- Build form HTML ----
   var guardianOptions = Object.entries(data.guardians).map(function (e) {
@@ -200,9 +310,9 @@
       '<article class="compass-result-card" style="--result-accent:' + accent + ';--domain-glow:' + glow + '">',
         '<div class="compass-result-hero">',
           '<div class="compass-guardians-display">',
-            '<span class="compass-guardian-tag" style="background:' + selfG.color + '">' + selfG.name + '<small>' + selfG.shortType + '</small></span>',
+            '<span class="compass-guardian-tag" style="--tag-color:' + selfG.domainAccent + '">' + selfG.name + '<small>' + selfG.shortType + '</small></span>',
             '<span class="compass-cross">×</span>',
-            '<span class="compass-guardian-tag" style="background:' + partnerG.color + '">' + partnerG.name + '<small>' + partnerG.shortType + '</small></span>',
+            '<span class="compass-guardian-tag" style="--tag-color:' + partnerG.domainAccent + '">' + partnerG.name + '<small>' + partnerG.shortType + '</small></span>',
           '</div>',
           '<p class="eyebrow">COMPASS READING</p>',
           '<h2>' + l.resultTitle + '</h2>',

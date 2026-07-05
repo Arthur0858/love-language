@@ -5776,3 +5776,83 @@ button.secondary-btn {
     align-items: flex-start;
   }
 }
+
+/* ==== Polish: result animation ==== */
+.compass-result-card {
+  animation: compass-fade-in .45s ease-out;
+}
+@keyframes compass-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==== Polish: guardian tag gradient ==== */
+.compass-guardian-tag {
+  background: linear-gradient(135deg,
+    var(--tag-color, var(--rose)) 0%,
+    color-mix(in srgb, var(--tag-color, var(--rose)), #2d0a0d 22%) 100%);
+  border: 2px solid rgba(255,255,255,0.15);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* ==== Polish: hero divider ==== */
+.compass-hero {
+  position: relative;
+}
+.compass-hero::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 1.25rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--rose), transparent);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* ==== Polish: form shadow depth ==== */
+.compass-form {
+  box-shadow: 0 4px 32px rgba(148, 55, 67, 0.06), 0 1px 4px rgba(0,0,0,0.04);
+  transition: box-shadow .3s;
+}
+.compass-form:focus-within {
+  box-shadow: 0 4px 40px rgba(148, 55, 67, 0.1), 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* ==== Polish: paid card subtle accent ==== */
+.compass-report-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--rose-deep));
+  border-radius: 1rem 1rem 0 0;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.compass-report-card {
+  position: relative;
+  overflow: hidden;
+}
+.compass-report-card:hover::before {
+  opacity: 1;
+}
+
+/* ==== Polish: insight card hover lift ==== */
+.compass-insight-card {
+  transition: background .2s;
+}
+.compass-insight-card:hover {
+  background: rgba(148, 55, 67, 0.015);
+}
+
+/* ==== Polish: buy button gradient ==== */
+.compass-buy-btn.primary-btn {
+  background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+  border: none;
+  transition: transform .15s, box-shadow .2s;
+}
+.compass-buy-btn.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(148, 55, 67, 0.25);
+}

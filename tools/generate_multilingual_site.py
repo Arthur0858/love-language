@@ -10738,7 +10738,7 @@ def lead_intake_form(lang: str, source: str, event: str) -> str:
   </div>
   <textarea class="lead-intake-preview" data-lead-intake-preview aria-label="{escape(copy["body_header"])}" autocomplete="off" readonly hidden></textarea>
 </form>
-"""
+""".lstrip()
 
 
 def lead_intake_form_script(lang: str) -> str:

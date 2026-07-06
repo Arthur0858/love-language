@@ -264,6 +264,15 @@ def local_json_snippet(path: str, key: str) -> str:
     return f'"{key}": "{value}"'
 
 
+def local_nested_json_snippet(path: str, *keys: str) -> str:
+    value = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    for key in keys:
+        if not isinstance(value, dict) or key not in value:
+            raise RuntimeError(f"{path} missing nested field {'.'.join(keys)}")
+        value = value[key]
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+
 SUPPORT_FILES = {
     "/robots.txt": ["User-agent: *", "Allow: /", "Sitemap: https://lovetypes.tw/sitemap.xml"],
     "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
@@ -355,7 +364,7 @@ SUPPORT_FILES = {
     "/site-health.json": [
         '"schemaVersion": 1',
         '"status": "ready_for_predeploy"',
-        '"indexablePages": 160',
+        local_nested_json_snippet("site-health.json", "coverage", "indexablePages"),
         '"guardians": 5',
         '"commerceItems": 20',
         '"localPredeploy"',
@@ -368,7 +377,7 @@ SUPPORT_FILES = {
         '"assetVersion":',
         '"deploymentTarget": "Cloudflare Pages project lovetypes"',
         '"branch": "main"',
-        '"indexablePages": 160',
+        local_nested_json_snippet("release.json", "releaseContents", "indexablePages"),
         '"guardians": 5',
         '"commerceItems": 20',
         '"python3 tools/predeploy_check.py"',

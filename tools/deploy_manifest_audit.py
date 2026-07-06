@@ -52,6 +52,13 @@ FORBIDDEN_FILES = {
     "_headers",
     "_redirects",
 }
+PUBLIC_TOOL_HTML_PATHS = {
+    "tools/love-compatibility/index.html",
+    "en/tools/love-compatibility/index.html",
+    "es/tools/love-compatibility/index.html",
+    "ja/tools/love-compatibility/index.html",
+    "ko/tools/love-compatibility/index.html",
+}
 
 
 def load_deploy_module():
@@ -80,7 +87,7 @@ def required_manifest_files() -> set[str]:
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
-    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()}
+    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()} | PUBLIC_TOOL_HTML_PATHS
 
 
 def declared_index_and_support_files() -> set[str]:
@@ -153,7 +160,7 @@ def main() -> int:
     for rel_path in sorted(manifest_paths):
         if rel_path in FORBIDDEN_FILES:
             issues.append(f"forbidden file in manifest: {rel_path}")
-        if any(rel_path.startswith(prefix) for prefix in FORBIDDEN_PREFIXES):
+        if any(rel_path.startswith(prefix) for prefix in FORBIDDEN_PREFIXES) and rel_path not in PUBLIC_TOOL_HTML_PATHS:
             issues.append(f"forbidden path in manifest: {rel_path}")
         if any(rel_path.endswith(suffix) for suffix in FORBIDDEN_SUFFIXES):
             issues.append(f"forbidden suffix in manifest: {rel_path}")

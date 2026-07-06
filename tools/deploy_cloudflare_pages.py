@@ -46,7 +46,6 @@ EXCLUDED_DIR_NAMES = {
     "docs",
     "node_modules",
     "output",
-    "tools",
 }
 ALLOWED_HIDDEN_DIR_NAMES = {
     ".well-known",
@@ -59,6 +58,13 @@ EXCLUDED_FILE_NAMES = {
     "_redirects",
     "_routes.json",
     "_worker.js",
+}
+PUBLIC_TOOL_HTML_PATHS = {
+    "tools/love-compatibility/index.html",
+    "en/tools/love-compatibility/index.html",
+    "es/tools/love-compatibility/index.html",
+    "ja/tools/love-compatibility/index.html",
+    "ko/tools/love-compatibility/index.html",
 }
 
 
@@ -181,8 +187,12 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
+    if rel_path in PUBLIC_TOOL_HTML_PATHS:
+        return False
     parts = rel_path.split("/")
     if any(part in EXCLUDED_DIR_NAMES for part in parts[:-1]):
+        return True
+    if "tools" in parts[:-1]:
         return True
     name = parts[-1]
     if name.startswith("."):

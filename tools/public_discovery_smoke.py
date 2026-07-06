@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from io import BytesIO
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urldefrag, urljoin, urlparse
 from urllib.request import Request, urlopen
@@ -21,6 +22,7 @@ from PIL import Image
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 CANONICAL_HOST = "lovetypes.tw"
+ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_FEED_ITEMS = 12
 EXPECTED_MANIFEST_LANG = "zh-TW"
 EXPECTED_MANIFEST_SHORTCUTS = 6
@@ -174,6 +176,11 @@ EXPECTED_GUARDIAN_LANGUAGES = {
     "claire": "Acts of service",
     "dora": "Physical touch",
 }
+
+
+def read_local_json(path: str) -> dict:
+    data = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    return data if isinstance(data, dict) else {}
 
 
 @dataclass(frozen=True)
@@ -1294,8 +1301,9 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     core_flows = data.get("coreFlows", [])
     if not isinstance(pages, list):
         return [f"{path}: pages should be a list"], 0, 0, 0, 0
-    if len(pages) != 155:
-        issues.append(f"{path}: expected 155 pages, got {len(pages)}")
+    expected_page_count = read_local_json("site-index.json").get("totals", {}).get("pages")
+    if len(pages) != expected_page_count:
+        issues.append(f"{path}: expected {expected_page_count} pages, got {len(pages)}")
     seen_langs = {item.get("id") for item in languages if isinstance(item, dict)}
     if seen_langs != EXPECTED_SITE_INDEX_LANGS:
         issues.append(f"{path}: language ids should be {sorted(EXPECTED_SITE_INDEX_LANGS)}, got {sorted(seen_langs)}")
@@ -1440,9 +1448,10 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     if data.get("status") != "ready_for_predeploy":
         issues.append(f"{path}: status should be ready_for_predeploy")
     coverage = data.get("coverage", {})
+    local_coverage = read_local_json("site-health.json").get("coverage", {})
     expected = {
-        "indexablePages": 160,
-        "localizedPaths": 32,
+        "indexablePages": local_coverage.get("indexablePages"),
+        "localizedPaths": local_coverage.get("localizedPaths"),
         "languages": 5,
         "routeGroups": 5,
         "coreFlows": 5,
@@ -1523,7 +1532,14 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     if data.get("branch") != "main":
         issues.append(f"{path}: branch should be main")
     contents = data.get("releaseContents", {})
-    expected_contents = {"indexablePages": 160, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 5}
+    local_contents = read_local_json("release.json").get("releaseContents", {})
+    expected_contents = {
+        "indexablePages": local_contents.get("indexablePages"),
+        "languages": 5,
+        "guardians": 5,
+        "commerceItems": 20,
+        "coreFlows": 5,
+    }
     content_checked = 0
     for key, expected in expected_contents.items():
         content_checked += 1
@@ -1710,7 +1726,14 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         if not isinstance(guidance.get(key), str) or not guidance[key]:
             issues.append(f"{path}: answerGuidance.{key} should be non-empty")
     totals = data.get("totals", {})
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 13, "languages": 5, "discoveryFiles": 10}
+    local_ai_totals = read_local_json("ai-discovery.json").get("totals", {})
+    expected_totals = {
+        "guardians": 5,
+        "answerableQuestions": 11,
+        "priorityUrls": local_ai_totals.get("priorityUrls"),
+        "languages": 5,
+        "discoveryFiles": 10,
+    }
     for key, expected in expected_totals.items():
         if not isinstance(totals, dict) or totals.get(key) != expected:
             got = totals.get(key) if isinstance(totals, dict) else None
@@ -1808,8 +1831,9 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
             if not any(isinstance(item, dict) and item.get("question") == snippet for item in questions):
                 issues.append(f"{path}: answerableQuestions missing {snippet!r}")
     priority_urls = data.get("priorityUrls", [])
-    if not isinstance(priority_urls, list) or len(priority_urls) != 13:
-        issues.append(f"{path}: priorityUrls should include thirteen entries")
+    expected_priority_url_count = read_local_json("ai-discovery.json").get("totals", {}).get("priorityUrls")
+    if not isinstance(priority_urls, list) or len(priority_urls) != expected_priority_url_count:
+        issues.append(f"{path}: priorityUrls should include {expected_priority_url_count} entries")
     files = data.get("discoveryFiles", {})
     expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:

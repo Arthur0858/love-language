@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-06-13",
+  "updated": "2026-07-05",
   "production": "https://lovetypes.tw/",
   "languages": [
     {
@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 155,
-    "paths": 31,
+    "pages": 165,
+    "paths": 33,
     "languages": 5,
     "groups": {
-      "content": 80,
-      "conversion": 25,
+      "content": 85,
+      "conversion": 30,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -117,6 +117,22 @@
       "path": "/garden-map/",
       "canonical": "https://lovetypes.tw/garden-map/",
       "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/compass/",
+      "canonical": "https://lovetypes.tw/compass/",
+      "group": "content",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/love-compatibility/",
+      "canonical": "https://lovetypes.tw/tools/love-compatibility/",
+      "group": "conversion",
       "primary": true
     },
     {
@@ -370,6 +386,22 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/compass/",
+      "canonical": "https://lovetypes.tw/en/compass/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/tools/love-compatibility/",
+      "canonical": "https://lovetypes.tw/en/tools/love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/guides/",
       "canonical": "https://lovetypes.tw/en/guides/",
       "group": "content",
@@ -613,6 +645,22 @@
       "path": "/ja/garden-map/",
       "canonical": "https://lovetypes.tw/ja/garden-map/",
       "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/compass/",
+      "canonical": "https://lovetypes.tw/ja/compass/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/love-compatibility/",
+      "canonical": "https://lovetypes.tw/ja/tools/love-compatibility/",
+      "group": "conversion",
       "primary": false
     },
     {
@@ -866,6 +914,22 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/compass/",
+      "canonical": "https://lovetypes.tw/ko/compass/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/tools/love-compatibility/",
+      "canonical": "https://lovetypes.tw/ko/tools/love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/guides/",
       "canonical": "https://lovetypes.tw/ko/guides/",
       "group": "content",
@@ -1109,6 +1173,22 @@
       "path": "/es/garden-map/",
       "canonical": "https://lovetypes.tw/es/garden-map/",
       "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/compass/",
+      "canonical": "https://lovetypes.tw/es/compass/",
+      "group": "content",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/love-compatibility/",
+      "canonical": "https://lovetypes.tw/es/tools/love-compatibility/",
+      "group": "conversion",
       "primary": false
     },
     {

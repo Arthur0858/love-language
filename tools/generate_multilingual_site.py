@@ -17,7 +17,7 @@ DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
-UPDATED = "2026-06-13"
+UPDATED = "2026-07-05"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 QUIZ_DATA_VERSION = "20260613-localized-affiliate"
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
@@ -133,6 +133,8 @@ LANGS = {
         "updated_label": "更新日期",
         "boundary": "內容邊界",
         "boundary_text": "LoveTypes 的守護者與心語庭園是自我理解與關係溝通的隱喻工具，不提供心理諮商、醫療建議、法律建議或個別關係診斷。若你正面臨暴力、控制、創傷或高風險處境，請先離開高風險場域，尋求可信任的人與專業支援。",
+        "unofficial_label": "非官方聲明",
+        "unofficial_disclosure": "LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。",
         "home_title": "LoveTypes｜五種愛之語測驗與關係溝通指南",
         "home_desc": "LoveTypes 將五種愛之語化為五位情感守護者，帶你在心語庭園中認領被愛入口、辨認錯頻，並練習伴侶溝通與關係修復。",
         "guide_index_title": "LoveTypes 守護者指南｜把愛之語帶回真實關係",
@@ -171,6 +173,8 @@ LANGS = {
         "updated_label": "Updated",
         "boundary": "Editorial boundary",
         "boundary_text": "The LoveTypes guardians and Heart Garden are metaphor tools for self-reflection and relationship communication. They are not therapy, medical advice, legal advice, or a relationship diagnosis. If you are facing violence, coercive control, trauma, or urgent risk, seek trusted local and professional support first.",
+        "unofficial_label": "Unofficial notice",
+        "unofficial_disclosure": "LoveTypes is an original guardian universe for relationship communication and emotional self-understanding. It is not the official The 5 Love Languages® website or an authorized quiz.",
         "home_title": "LoveTypes | Love Language Quiz and Relationship Guides",
         "home_desc": "LoveTypes turns the five love languages into emotion guardians, helping you enter the Heart Garden, name your loved doorway, spot misfrequency, and practice repair.",
         "guide_index_title": "LoveTypes Guardian Guides | Bring Love Languages Into Real Relationships",
@@ -209,6 +213,8 @@ LANGS = {
         "updated_label": "更新日",
         "boundary": "内容の範囲",
         "boundary_text": "LoveTypes の守護者と心語の庭は、自己理解と関係コミュニケーションのための比喩ツールです。心理療法、医療助言、法律助言、個別の関係診断ではありません。暴力、支配、トラウマ、緊急の危険がある場合は、まず信頼できる人や専門機関に相談してください。",
+        "unofficial_label": "非公式に関する表記",
+        "unofficial_disclosure": "LoveTypes は、関係コミュニケーションと感情の自己理解のためのオリジナル守護者宇宙です。The 5 Love Languages® の公式サイトまたは認定診断ではありません。",
         "home_title": "LoveTypes｜愛の言語診断と関係コミュニケーションガイド",
         "home_desc": "LoveTypes は五つの愛の言語を五人の感情の守護者に変え、心語の庭で愛される入口、すれ違い、会話と修復の練習を見つけるガイドです。",
         "guide_index_title": "LoveTypes 守護者ガイド｜愛の言語を現実の関係へ",
@@ -247,6 +253,8 @@ LANGS = {
         "updated_label": "업데이트",
         "boundary": "콘텐츠 범위",
         "boundary_text": "LoveTypes의 수호자와 마음의 정원은 자기 이해와 관계 대화를 위한 은유적 도구입니다. 심리상담, 의료 조언, 법률 조언, 개별 관계 진단을 제공하지 않습니다. 폭력, 통제, 트라우마, 긴급 위험이 있다면 먼저 신뢰할 수 있는 사람과 전문 기관의 도움을 받으세요.",
+        "unofficial_label": "비공식 고지",
+        "unofficial_disclosure": "LoveTypes는 관계 대화와 감정 자기 이해를 위한 오리지널 수호자 세계관입니다. The 5 Love Languages® 공식 사이트나 공인 테스트가 아닙니다.",
         "home_title": "LoveTypes｜사랑의 언어 테스트와 관계 대화 가이드",
         "home_desc": "LoveTypes는 다섯 가지 사랑의 언어를 다섯 감정 수호자로 풀어내며, 마음의 정원에서 사랑받는 입구와 어긋남을 알아차리고 대화와 회복을 연습하게 돕습니다.",
         "guide_index_title": "LoveTypes 수호자 가이드｜사랑의 언어를 실제 관계로",
@@ -285,6 +293,8 @@ LANGS = {
         "updated_label": "Actualización",
         "boundary": "Límite editorial",
         "boundary_text": "Las guardianas de LoveTypes y el Jardín del Corazón son herramientas metafóricas para la autorreflexión y la comunicación relacional. No ofrecen terapia, consejo médico, consejo legal ni diagnóstico individual. Si enfrentas violencia, control, trauma o riesgo urgente, busca primero apoyo profesional y personas de confianza.",
+        "unofficial_label": "Aviso no oficial",
+        "unofficial_disclosure": "LoveTypes es un universo original de guardianas para comunicación relacional y autocomprensión emocional. No es el sitio oficial de The 5 Love Languages® ni un test autorizado.",
         "home_title": "LoveTypes | Test de lenguajes del amor y guías de relación",
         "home_desc": "LoveTypes convierte los cinco lenguajes del amor en guardianas emocionales para entrar al Jardín del Corazón, reconocer tu entrada al amor y practicar reparación.",
         "guide_index_title": "Guías de Guardianas LoveTypes | Lleva los lenguajes del amor a la vida real",
@@ -711,6 +721,17 @@ QUIZ_LABELS = {
         "secondary_plan": "填入 7 日修復計畫",
         "next_pack_title": "你的下一步補給包",
         "next_pack_intro": "先做一個免費任務，再用 Luna 降噪，最後只在合適時選一個延伸書卷。",
+        "conversion_path_title": "測完後，照這 3 步走",
+        "conversion_path_intro": "先把結果變成一個可完成的修復行動，再看兩人的錯頻，最後只在情緒需要沉澱時選低價 Luna 補給。",
+        "conversion_free_title": "先做免費修復",
+        "conversion_free_desc": "把今天最需要被理解的一句話寫進 7 日修復計畫。",
+        "conversion_free_action": "填 7 日修復",
+        "conversion_compass_title": "看兩人的錯頻",
+        "conversion_compass_desc": "用關係羅盤整理你和對方的守護者、狀態與下一步。",
+        "conversion_compass_action": "打開關係羅盤",
+        "conversion_paid_title": "需要安靜時再買",
+        "conversion_paid_desc": "Healing Vibes Starter Pack 適合睡前、冷卻或書寫前先降噪。",
+        "conversion_paid_action": "看 Starter Pack",
         "retake": "重新測驗",
         "copy": "複製結果",
         "copied": "已複製",
@@ -767,6 +788,17 @@ QUIZ_LABELS = {
         "secondary_plan": "Fill the 7-day repair plan",
         "next_pack_title": "Your next-step supply pack",
         "next_pack_intro": "Start with one free task, use Luna to lower the noise, then choose one extended book only if it fits.",
+        "conversion_path_title": "After the quiz, follow these 3 steps",
+        "conversion_path_intro": "Turn the result into one doable repair action, map the cross-signal between two people, then choose a low-priced Luna supply only when you need a calmer space.",
+        "conversion_free_title": "Start with free repair",
+        "conversion_free_desc": "Put the sentence you most need understood into the 7-day repair plan.",
+        "conversion_free_action": "Use 7-day repair",
+        "conversion_compass_title": "Map the cross-signal",
+        "conversion_compass_desc": "Use Relationship Compass to organize both guardians, status, and the next step.",
+        "conversion_compass_action": "Open compass",
+        "conversion_paid_title": "Buy only when you need quiet",
+        "conversion_paid_desc": "Healing Vibes Starter Pack is for bedtime, cooling down, or journaling before you speak.",
+        "conversion_paid_action": "View Starter Pack",
         "retake": "Retake",
         "copy": "Copy result",
         "copied": "Copied",
@@ -823,6 +855,17 @@ QUIZ_LABELS = {
         "secondary_plan": "7日間の修復プランへ記入",
         "next_pack_title": "次の一歩の補給パック",
         "next_pack_intro": "まず無料の課題を一つ行い、Luna で感情の音量を下げ、合う時だけ本を一つ選びます。",
+        "conversion_path_title": "診断後はこの3ステップで進む",
+        "conversion_path_intro": "結果を一つの修復行動にし、二人のすれ違いを見て、静かな時間が必要な時だけ低価格の Luna 補給を選びます。",
+        "conversion_free_title": "まず無料で修復",
+        "conversion_free_desc": "いちばん理解してほしい一文を7日間の修復プランへ入れます。",
+        "conversion_free_action": "7日間修復へ",
+        "conversion_compass_title": "二人のすれ違いを見る",
+        "conversion_compass_desc": "関係コンパスで、二人の守護者、状態、次の一歩を整理します。",
+        "conversion_compass_action": "コンパスを開く",
+        "conversion_paid_title": "静けさが必要な時だけ購入",
+        "conversion_paid_desc": "Healing Vibes Starter Pack は、眠る前、冷却、書く前の落ち着きに使えます。",
+        "conversion_paid_action": "Starter Pack を見る",
         "retake": "もう一度",
         "copy": "結果をコピー",
         "copied": "コピー済み",
@@ -879,6 +922,17 @@ QUIZ_LABELS = {
         "secondary_plan": "7일 회복 계획 채우기",
         "next_pack_title": "나의 다음 단계 보급 팩",
         "next_pack_intro": "무료 과제 하나부터 시작하고 Luna로 감정 소음을 낮춘 뒤, 맞을 때만 책 하나를 고르세요.",
+        "conversion_path_title": "테스트 후에는 이 3단계로 이동",
+        "conversion_path_intro": "결과를 하나의 회복 행동으로 바꾸고, 두 사람의 엇갈림을 본 뒤, 조용한 시간이 필요할 때만 저가 Luna 보급을 선택합니다.",
+        "conversion_free_title": "무료 회복부터",
+        "conversion_free_desc": "가장 이해받고 싶은 한 문장을 7일 회복 계획에 적습니다.",
+        "conversion_free_action": "7일 회복 쓰기",
+        "conversion_compass_title": "두 사람의 엇갈림 보기",
+        "conversion_compass_desc": "관계 컴퍼스로 두 수호자, 상태, 다음 단계를 정리합니다.",
+        "conversion_compass_action": "컴퍼스 열기",
+        "conversion_paid_title": "조용함이 필요할 때만 구매",
+        "conversion_paid_desc": "Healing Vibes Starter Pack은 잠들기 전, 감정 식히기, 기록 전에 사용하기 좋습니다.",
+        "conversion_paid_action": "Starter Pack 보기",
         "retake": "다시 하기",
         "copy": "결과 복사",
         "copied": "복사됨",
@@ -935,6 +989,17 @@ QUIZ_LABELS = {
         "secondary_plan": "Completar plan de 7 días",
         "next_pack_title": "Tu pack de siguiente paso",
         "next_pack_intro": "Empieza con una tarea gratuita, usa Luna para bajar el ruido y elige un libro solo si encaja.",
+        "conversion_path_title": "Después del test, sigue estos 3 pasos",
+        "conversion_path_intro": "Convierte el resultado en una acción de reparación, mira la señal cruzada entre dos personas y compra Luna solo cuando necesites un espacio más tranquilo.",
+        "conversion_free_title": "Empieza con reparación gratis",
+        "conversion_free_desc": "Pon la frase que más necesitas que se entienda en el plan de 7 días.",
+        "conversion_free_action": "Usar plan de 7 días",
+        "conversion_compass_title": "Mapea la señal cruzada",
+        "conversion_compass_desc": "Usa la Brújula de Relación para ordenar guardianas, estado y siguiente paso.",
+        "conversion_compass_action": "Abrir brújula",
+        "conversion_paid_title": "Compra solo si necesitas calma",
+        "conversion_paid_desc": "Healing Vibes Starter Pack acompaña sueño, calma tras conflicto o escritura antes de hablar.",
+        "conversion_paid_action": "Ver Starter Pack",
         "retake": "Repetir",
         "copy": "Copiar resultado",
         "copied": "Copiado",
@@ -1653,6 +1718,7 @@ LEAD_INTAKE_FORM = {
         "source_label": "來源",
         "source_contact": "Contact 結構化需求",
         "source_keepsake": "收藏室免費素材需求",
+        "source_repair": "7 日修復計畫補給需求",
         "body_header": "LoveTypes 結構化需求",
         "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
@@ -1686,6 +1752,7 @@ LEAD_INTAKE_FORM = {
         "source_label": "Source",
         "source_contact": "Contact structured request",
         "source_keepsake": "Keepsake free asset request",
+        "source_repair": "7-day repair plan supply request",
         "body_header": "LoveTypes structured request",
         "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
@@ -1719,6 +1786,7 @@ LEAD_INTAKE_FORM = {
         "source_label": "來源",
         "source_contact": "Contact 構造化リクエスト",
         "source_keepsake": "コレクション室の無料素材希望",
+        "source_repair": "7日間修復プランの補給希望",
         "body_header": "LoveTypes 構造化リクエスト",
         "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
@@ -1752,6 +1820,7 @@ LEAD_INTAKE_FORM = {
         "source_label": "출처",
         "source_contact": "Contact 구조화 요청",
         "source_keepsake": "소장실 무료 소재 요청",
+        "source_repair": "7일 회복 계획 보급 요청",
         "body_header": "LoveTypes 구조화 요청",
         "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
@@ -1785,6 +1854,7 @@ LEAD_INTAKE_FORM = {
         "source_label": "Fuente",
         "source_contact": "Petición estructurada de Contacto",
         "source_keepsake": "Petición de recurso gratuito",
+        "source_repair": "Petición del plan de reparación de 7 días",
         "body_header": "Petición estructurada LoveTypes",
         "asset_options": ["Tarjeta / práctica imprimible", "Fondo móvil", "Tarjeta PDF", "Pack Luna descargable", "Ritual breve o pack impreso"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
@@ -5136,8 +5206,60 @@ def footer(lang: str) -> str:
     return f"""
 <footer class="site-footer">
   <div class="footer-grid">{card_html}</div>
+  <p class="footer-disclosure">{escape(t["unofficial_disclosure"])}</p>
   <p>© 2026 LoveTypes · <a href="{lang_url(lang, "privacy")}">{escape(t["privacy"])}</a> · <a href="{lang_url(lang, "terms")}">{escape(t["terms"])}</a> · <a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></p>
 </footer>
+"""
+
+
+CONVERSION_DOCK_COPY = {
+    "zh": {
+        "aria": "快速前往下一步",
+        "label": "下一步",
+        "quiz": "測驗",
+        "repair": "修復",
+        "compass": "羅盤",
+    },
+    "en": {
+        "aria": "Quick next steps",
+        "label": "Next",
+        "quiz": "Quiz",
+        "repair": "Repair",
+        "compass": "Compass",
+    },
+    "ja": {
+        "aria": "次のステップへすぐ移動",
+        "label": "次へ",
+        "quiz": "診断",
+        "repair": "修復",
+        "compass": "羅針盤",
+    },
+    "ko": {
+        "aria": "다음 단계 바로가기",
+        "label": "다음",
+        "quiz": "테스트",
+        "repair": "회복",
+        "compass": "나침반",
+    },
+    "es": {
+        "aria": "Accesos rápidos al siguiente paso",
+        "label": "Siguiente",
+        "quiz": "Test",
+        "repair": "Reparar",
+        "compass": "Brújula",
+    },
+}
+
+
+def conversion_dock(lang: str) -> str:
+    copy = CONVERSION_DOCK_COPY[lang]
+    return f"""
+<nav class="conversion-dock" aria-label="{escape(copy["aria"])}" data-conversion-dock>
+  <span hidden>{escape(copy["label"])}</span>
+  <a href="{lang_url(lang)}#quiz-section" data-funnel-event="conversion_dock_quiz">{escape(copy["quiz"])}</a>
+  <a href="{lang_url(lang, "repair-plan")}#repair-lead-pack" data-funnel-event="conversion_dock_repair">{escape(copy["repair"])}</a>
+  <a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="conversion_dock_compass">{escape(copy["compass"])}</a>
+</nav>
 """
 
 
@@ -5345,6 +5467,7 @@ def layout(
     external_script = ""
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
+    conversion_dock_html = conversion_dock(lang) if robots.startswith("index") else ""
     return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path, robots) + f"""<body>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
 {nav(lang, active, path, alternate_path)}
@@ -5355,6 +5478,7 @@ def layout(
 <main id="main" tabindex="-1">
 {body}
 </main>
+{conversion_dock_html}
 {footer(lang)}
 <script src="{INTERACTIONS_ASSET}" defer></script>
 {external_script}
@@ -5679,6 +5803,619 @@ HOME_MAP_CTA = {
 }
 
 
+HOME_HERO_COPY = {
+    "zh": {
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "2 分鐘找到你的情感守護者",
+        "lead": "用 15 道心語問題，辨認你最容易感到被愛、也最容易受傷的愛的入口。",
+        "primary": "開始免費測驗",
+        "secondary": "先看五位守護者",
+        "tertiary": "下載 7 日修復表",
+        "trust": "免註冊｜結果保存在本機｜不取代諮商｜可搭配 7 日修復計畫",
+    },
+    "en": {
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "Find your emotion guardian in 2 minutes",
+        "lead": "Answer 15 heart-language prompts to see where love reaches you fastest and where hurt arrives first.",
+        "primary": "Start free quiz",
+        "secondary": "Meet the guardians",
+        "tertiary": "Open 7-day repair",
+        "trust": "No signup | Result saved locally | Not counseling | Pairs with the 7-day repair plan",
+    },
+    "ja": {
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "2分で感情の守護者を見つける",
+        "lead": "15 の心語質問で、愛が届きやすい入口と、傷つきやすい入口を見つけます。",
+        "primary": "無料診断を始める",
+        "secondary": "五人の守護者を見る",
+        "tertiary": "7日間修復を開く",
+        "trust": "登録不要｜結果は端末内保存｜相談支援の代替ではありません｜7日間修復と併用できます",
+    },
+    "ko": {
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "2분 안에 감정 수호자 찾기",
+        "lead": "15개의 마음 언어 질문으로 사랑이 가장 빨리 닿는 입구와 상처받기 쉬운 입구를 확인합니다.",
+        "primary": "무료 테스트 시작",
+        "secondary": "다섯 수호자 보기",
+        "tertiary": "7일 회복 열기",
+        "trust": "가입 없음｜결과는 기기에 저장｜상담 대체 아님｜7일 회복 계획과 함께 사용",
+    },
+    "es": {
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "Encuentra tu guardiana emocional en 2 minutos",
+        "lead": "Responde 15 señales del corazón para ver por dónde recibes amor y por dónde aparece la herida.",
+        "primary": "Empezar test gratis",
+        "secondary": "Ver guardianas",
+        "tertiary": "Abrir reparación de 7 días",
+        "trust": "Sin registro | Resultado local | No reemplaza terapia | Compatible con el plan de 7 días",
+    },
+}
+
+
+COMPASS_PAGE = {
+    "zh": {
+        "title": "LoveTypes 關係羅盤",
+        "desc": "不是判斷你們合不合，而是看見愛在哪裡錯頻。輸入雙方守護者與關係狀態，取得免費關係羅盤與下一步修復入口。",
+        "eyebrow": "RELATIONSHIP COMPASS",
+        "h1": "不是判斷你們合不合，而是看見愛在哪裡錯頻",
+        "intro": "LoveTypes Relationship Compass 把五種愛之語配對、關係狀態與可選出生節奏整理成一張溫柔地圖。命盤不是判決，而是一張提醒你如何相處的關係洞察工具。",
+        "primary": "開始免費羅盤",
+        "secondary": "先做守護者測驗",
+        "tertiary": "看 7 日修復",
+        "how_title": "免費版會先給你四個答案",
+        "how": [
+            ("01", "主要錯頻", "看見兩個人愛的接收方式在哪裡交錯。"),
+            ("02", "最需要被理解的地方", "把不被愛的感覺翻成可以討論的需要。"),
+            ("03", "一句可以說出口的話", "先給一個不指責、能開始對話的句子。"),
+            ("04", "24 小時小行動", "不要一次修完整段關係，先做一件可完成的事。"),
+        ],
+        "boundary_title": "命理只作為關係洞察，不作為判決",
+        "boundary": "這個工具可以結合 LoveTypes 類型與可選出生日期做關係節奏提示；它不預測命中注定、不替你決定婚姻可否，也不取代諮商、醫療、法律或安全支援。",
+        "tool_title": "開始 LoveTypes Relationship Compass",
+    },
+    "en": {
+        "title": "LoveTypes Relationship Compass",
+        "desc": "Not a verdict on your relationship, but a map of where love gets misread. Enter both guardians and relationship context for a free compass reading.",
+        "eyebrow": "RELATIONSHIP COMPASS",
+        "h1": "Not a verdict on your relationship — a map of where love gets misread",
+        "intro": "LoveTypes Relationship Compass blends love-language pairings, relationship context, and optional birthdate rhythm into a gentle insight map. A chart is not a judgment; it is a reminder of how to relate.",
+        "primary": "Start free compass",
+        "secondary": "Take guardian quiz",
+        "tertiary": "Open 7-day repair",
+        "how_title": "The free version gives you four answers first",
+        "how": [
+            ("01", "Main cross-signal", "See where two ways of receiving love pass each other."),
+            ("02", "What needs understanding", "Translate the feeling of not being loved into a need you can discuss."),
+            ("03", "One sentence to say", "Start with words that open a conversation without blame."),
+            ("04", "24-hour action", "Do one doable repair step instead of trying to fix the whole relationship at once."),
+        ],
+        "boundary_title": "Astrology is used as relationship insight, not a verdict",
+        "boundary": "This tool may combine LoveTypes patterns with optional birthdate rhythm prompts. It does not predict destiny, decide whether you should marry, or replace counseling, medical, legal, or safety support.",
+        "tool_title": "Start LoveTypes Relationship Compass",
+    },
+    "ja": {
+        "title": "LoveTypes 関係コンパス",
+        "desc": "関係を裁くのではなく、愛がどこですれ違うかを見る地図です。守護者と関係状況を入力し、無料の関係コンパスを受け取れます。",
+        "eyebrow": "RELATIONSHIP COMPASS",
+        "h1": "関係を裁くのではなく、愛がどこですれ違うかを見る",
+        "intro": "LoveTypes 関係コンパスは、愛の言語の組み合わせ、関係状況、任意の生年月日のリズムを、やさしい洞察地図にします。命盤は判決ではなく、相處を思い出すための地図です。",
+        "primary": "無料コンパスを始める",
+        "secondary": "守護者診断へ",
+        "tertiary": "7日間修復へ",
+        "how_title": "無料版で先に見える四つの答え",
+        "how": [
+            ("01", "主なすれ違い", "二人の愛の受け取り方がどこで交差するかを見る。"),
+            ("02", "理解が必要なこと", "愛されていない感覚を、話し合えるニーズへ翻訳する。"),
+            ("03", "言える一文", "責めずに会話を始める言葉を一つ持つ。"),
+            ("04", "24時間の小さな行動", "全部を直そうとせず、一つの実行可能な修復から始める。"),
+        ],
+        "boundary_title": "占術は関係洞察であり、判決ではありません",
+        "boundary": "このツールは LoveTypes の型と任意の生年月日リズムを組み合わせることがあります。運命を断定したり、結婚可否を決めたり、相談支援・医療・法律・安全支援を代替したりしません。",
+        "tool_title": "LoveTypes 関係コンパスを始める",
+    },
+    "ko": {
+        "title": "LoveTypes 관계 컴퍼스",
+        "desc": "관계를 판정하는 것이 아니라 사랑이 어디서 잘못 읽히는지 보는 지도입니다. 두 수호자와 관계 상황을 입력해 무료 컴퍼스 리딩을 받으세요.",
+        "eyebrow": "RELATIONSHIP COMPASS",
+        "h1": "관계를 판정하지 않고, 사랑이 어디서 잘못 읽히는지 보기",
+        "intro": "LoveTypes 관계 컴퍼스는 사랑의 언어 조합, 관계 상황, 선택 생년월일 리듬을 부드러운 관계 지도 안에 정리합니다. 명식은 판결이 아니라 함께 지내는 방식을 떠올리는 지도입니다.",
+        "primary": "무료 컴퍼스 시작",
+        "secondary": "수호자 테스트",
+        "tertiary": "7일 회복 열기",
+        "how_title": "무료 버전이 먼저 주는 네 가지 답",
+        "how": [
+            ("01", "주요 엇갈림", "두 사람이 사랑을 받는 방식이 어디서 스치는지 봅니다."),
+            ("02", "이해가 필요한 부분", "사랑받지 못한 느낌을 대화 가능한 필요로 바꿉니다."),
+            ("03", "말할 수 있는 한 문장", "비난 없이 대화를 여는 문장을 먼저 얻습니다."),
+            ("04", "24시간 작은 행동", "관계 전체를 고치려 하지 말고 가능한 한 가지 회복부터 시작합니다."),
+        ],
+        "boundary_title": "명리는 관계 통찰 도구이지 판결이 아닙니다",
+        "boundary": "이 도구는 LoveTypes 유형과 선택 생년월일 리듬을 함께 볼 수 있습니다. 운명을 단정하거나 결혼 가능 여부를 판단하지 않으며 상담, 의료, 법률, 안전 지원을 대신하지 않습니다.",
+        "tool_title": "LoveTypes 관계 컴퍼스 시작",
+    },
+    "es": {
+        "title": "LoveTypes Brújula de Relación",
+        "desc": "No es un veredicto sobre tu relación, sino un mapa de dónde el amor se malinterpreta. Ingresa guardianas y contexto para una lectura gratuita.",
+        "eyebrow": "RELATIONSHIP COMPASS",
+        "h1": "No es un veredicto sobre tu relación: es un mapa de dónde el amor se malinterpreta",
+        "intro": "La Brújula de Relación LoveTypes combina lenguajes del amor, contexto relacional y fechas de nacimiento opcionales como un mapa suave de insight. Una carta no es juicio; es una guía para relacionarse.",
+        "primary": "Empezar gratis",
+        "secondary": "Hacer test de guardiana",
+        "tertiary": "Abrir reparación de 7 días",
+        "how_title": "La versión gratuita te da cuatro respuestas primero",
+        "how": [
+            ("01", "Señal cruzada principal", "Mira dónde se cruzan dos formas de recibir amor."),
+            ("02", "Lo que necesita comprensión", "Traduce la sensación de no ser amada en una necesidad conversable."),
+            ("03", "Una frase para decir", "Empieza con una frase que abre conversación sin culpar."),
+            ("04", "Acción de 24 horas", "Haz un paso posible en vez de intentar reparar toda la relación a la vez."),
+        ],
+        "boundary_title": "La astrología se usa como insight relacional, no como veredicto",
+        "boundary": "Esta herramienta puede combinar patrones LoveTypes con ritmo opcional de nacimiento. No predice destino, no decide si debes casarte y no reemplaza terapia, atención médica, asesoría legal ni apoyo de seguridad.",
+        "tool_title": "Iniciar Brújula de Relación LoveTypes",
+    },
+}
+
+
+COMPASS_REPORT_OFFER = {
+    "zh": {
+        "eyebrow": "PAID REPORT MVP",
+        "title": "免費羅盤之後，可以解鎖更完整的關係報告",
+        "intro": "先用免費結果確認你真的需要哪一種洞察；若想把它變成可保存、可執行的報告，再送出需求。我們會優先製作有人明確需要的報告。",
+        "cta": "登記這份報告需求",
+        "subject": "LoveTypes 關係報告需求",
+        "body": "我想登記這份 LoveTypes 關係報告：",
+        "items": [
+            ("Your Emotional Love Pattern", "US$4.99", "單人感情模式報告：你的主要情感入口、受傷觸發與自我安放練習。"),
+            ("LoveTypes Compatibility Report", "US$9.99", "雙人關係合盤：兩位守護者的錯頻地圖、對話盲點與修復句型。"),
+            ("BaZi Love Compatibility Report", "US$9.99", "八字愛情合盤：把五行與出生節奏轉成關係提醒，不做命運判決。"),
+            ("2026 Love Timing Report", "US$9.99", "2026 感情節奏：適合談難題、休息、修復與推進關係的月份提醒。"),
+            ("7-Day Relationship Repair Plan", "US$4.99", "7 日修復報告：每天一個 5 分鐘任務、對話腳本與安全回顧。"),
+        ],
+        "note": "報告是關係溝通與自我理解工具，不預測正緣、不判定分手或結婚，也不取代諮商、醫療、法律或安全支援。",
+    },
+    "en": {
+        "eyebrow": "PAID REPORT MVP",
+        "title": "After the free compass, unlock a deeper relationship report",
+        "intro": "Use the free result to see which insight you actually need. If you want a saved, actionable report, send a request so the first paid reports follow real demand.",
+        "cta": "Request this report",
+        "subject": "LoveTypes relationship report request",
+        "body": "I want to request this LoveTypes relationship report:",
+        "items": [
+            ("Your Emotional Love Pattern", "US$4.99", "A single-person love pattern report: emotional doorway, wound triggers, and self-soothing practice."),
+            ("LoveTypes Compatibility Report", "US$9.99", "A two-person compatibility map: cross-signals, blind spots, and repair scripts."),
+            ("BaZi Love Compatibility Report", "US$9.99", "Eastern love pattern reading using Five Elements and birth rhythm as relationship reminders, not verdicts."),
+            ("2026 Love Timing Report", "US$9.99", "A seasonal relationship rhythm report for hard talks, rest, repair, and next steps."),
+            ("7-Day Relationship Repair Plan", "US$4.99", "A seven-day report with daily 5-minute tasks, dialogue scripts, and safety reflection."),
+        ],
+        "note": "Reports are tools for communication and self-understanding. They do not predict fate, decide marriage or breakup, or replace counseling, medical, legal, or safety support.",
+    },
+    "ja": {
+        "eyebrow": "PAID REPORT MVP",
+        "title": "無料コンパスの後、より深い関係レポートへ",
+        "intro": "まず無料結果で必要な洞察を確かめます。保存できる実行型レポートが必要な場合は、希望を送ってください。実際の需要から優先制作します。",
+        "cta": "このレポートを希望する",
+        "subject": "LoveTypes 関係レポート希望",
+        "body": "この LoveTypes 関係レポートを希望します：",
+        "items": [
+            ("Your Emotional Love Pattern", "US$4.99", "一人用の感情パターン、傷つきやすい入口、落ち着く練習。"),
+            ("LoveTypes Compatibility Report", "US$9.99", "二人の守護者のすれ違い、会話の盲点、修復の言葉。"),
+            ("BaZi Love Compatibility Report", "US$9.99", "五行と出生リズムを関係のリマインダーとして使う洞察。判決ではありません。"),
+            ("2026 Love Timing Report", "US$9.99", "難しい会話、休息、修復、次の一歩の季節リズム。"),
+            ("7-Day Relationship Repair Plan", "US$4.99", "毎日5分の課題、会話スクリプト、安全な振り返り。"),
+        ],
+        "note": "レポートは関係コミュニケーションと自己理解の道具です。運命、結婚可否、別れを断定せず、相談支援・医療・法律・安全支援を代替しません。",
+    },
+    "ko": {
+        "eyebrow": "PAID REPORT MVP",
+        "title": "무료 컴퍼스 이후, 더 깊은 관계 리포트로",
+        "intro": "무료 결과로 필요한 통찰을 먼저 확인하세요. 저장하고 실행할 수 있는 리포트가 필요하다면 요청을 보내 주세요. 실제 수요가 있는 리포트부터 제작합니다.",
+        "cta": "이 리포트 요청하기",
+        "subject": "LoveTypes 관계 리포트 요청",
+        "body": "이 LoveTypes 관계 리포트를 요청합니다:",
+        "items": [
+            ("Your Emotional Love Pattern", "US$4.99", "1인 감정 패턴, 상처 트리거, 자기 안정 연습."),
+            ("LoveTypes Compatibility Report", "US$9.99", "두 수호자의 엇갈림 지도, 대화盲점, 회복 문장."),
+            ("BaZi Love Compatibility Report", "US$9.99", "오행과 출생 리듬을 관계 알림으로 쓰는 통찰. 판결이 아닙니다."),
+            ("2026 Love Timing Report", "US$9.99", "어려운 대화, 휴식, 회복, 다음 단계를 위한 계절 리듬."),
+            ("7-Day Relationship Repair Plan", "US$4.99", "매일 5분 과제, 대화 스크립트, 안전 회고."),
+        ],
+        "note": "리포트는 관계 대화와 자기 이해 도구입니다. 운명, 결혼, 이별을 단정하지 않으며 상담, 의료, 법률, 안전 지원을 대신하지 않습니다.",
+    },
+    "es": {
+        "eyebrow": "PAID REPORT MVP",
+        "title": "Después de la brújula gratis, desbloquea un informe más profundo",
+        "intro": "Usa el resultado gratuito para ver qué insight necesitas. Si quieres un informe guardable y accionable, envía una petición para priorizar los productos con demanda real.",
+        "cta": "Pedir este informe",
+        "subject": "Petición de informe LoveTypes",
+        "body": "Quiero pedir este informe LoveTypes:",
+        "items": [
+            ("Your Emotional Love Pattern", "US$4.99", "Informe individual: puerta emocional, heridas detonantes y práctica de calma."),
+            ("LoveTypes Compatibility Report", "US$9.99", "Mapa de compatibilidad: señales cruzadas, puntos ciegos y guiones de reparación."),
+            ("BaZi Love Compatibility Report", "US$9.99", "Lectura oriental de amor con Cinco Elementos y ritmo natal como recordatorio, no veredicto."),
+            ("2026 Love Timing Report", "US$9.99", "Ritmo relacional de temporada para conversaciones difíciles, descanso, reparación y próximos pasos."),
+            ("7-Day Relationship Repair Plan", "US$4.99", "Siete días con tareas de 5 minutos, guiones de diálogo y reflexión segura."),
+        ],
+        "note": "Los informes son herramientas de comunicación y autocomprensión. No predicen destino, matrimonio o ruptura, ni reemplazan terapia, salud, asesoría legal o apoyo de seguridad.",
+    },
+}
+
+
+COMPASS_TRAFFIC_LAYER = {
+    "zh": {
+        "hero_kicker": "免費 · 2 分鐘 · 不需要註冊",
+        "hero_badges": ["雙人錯頻地圖", "五位守護者", "可選生日節奏", "24 小時行動"],
+        "visual_title": "先選兩位守護者，再看愛在哪裡被誤讀",
+        "visual_intro": "從短影音、搜尋或伴侶對話進來的人，不需要先讀完整理論。先用羅盤拿到一句能說出口的話，再決定要不要保存報告。",
+        "visual_cta": "直接開始免費羅盤",
+        "audience_title": "適合從這三種情境進來",
+        "audience": [
+            ("剛測完守護者", "想知道自己和對方為什麼一再錯頻。"),
+            ("正在吵架後冷卻", "需要一句不責備、但能說清楚需要的話。"),
+            ("想做內容分享", "需要一個比單純測驗結果更有討論感的關係地圖。"),
+        ],
+    },
+    "en": {
+        "hero_kicker": "Free · 2 minutes · no signup",
+        "hero_badges": ["Two-person cross-signal", "Five guardians", "Optional birth rhythm", "24-hour action"],
+        "visual_title": "Choose two guardians, then see where love gets misread",
+        "visual_intro": "Visitors from Shorts, search, or a partner conversation do not need the full theory first. Start with one sentence you can say, then decide whether a saved report is worth requesting.",
+        "visual_cta": "Start the free compass",
+        "audience_title": "Built for three entry moments",
+        "audience": [
+            ("After the quiz", "You want to know why you and someone else keep missing each other."),
+            ("After conflict", "You need one non-blaming sentence that still names the need."),
+            ("For sharing", "You want a relationship map that invites discussion beyond a quiz label."),
+        ],
+    },
+    "ja": {
+        "hero_kicker": "無料 · 2分 · 登録不要",
+        "hero_badges": ["二人のすれ違い", "五人の守護者", "任意の出生リズム", "24時間の行動"],
+        "visual_title": "二人の守護者を選び、愛がどこで誤読されるかを見る",
+        "visual_intro": "ショート動画、検索、パートナーとの会話から来た人も、理論を全部読む必要はありません。まず言える一文を受け取り、必要なら保存できるレポートを希望できます。",
+        "visual_cta": "無料コンパスを始める",
+        "audience_title": "三つの入口に向いています",
+        "audience": [
+            ("診断の直後", "自分と相手がなぜすれ違うのかを知りたい時。"),
+            ("衝突後の冷却", "責めずにニーズを伝える一文が必要な時。"),
+            ("共有したい時", "診断ラベル以上に話し合える関係地図が欲しい時。"),
+        ],
+    },
+    "ko": {
+        "hero_kicker": "무료 · 2분 · 가입 없음",
+        "hero_badges": ["두 사람 엇갈림", "다섯 수호자", "선택 출생 리듬", "24시간 행동"],
+        "visual_title": "두 수호자를 고르고 사랑이 어디서 잘못 읽히는지 보기",
+        "visual_intro": "Shorts, 검색, 대화에서 들어온 사람도 이론을 전부 읽을 필요는 없습니다. 먼저 말할 수 있는 한 문장을 받고, 필요할 때 저장형 리포트를 요청하세요.",
+        "visual_cta": "무료 컴퍼스 시작",
+        "audience_title": "세 가지 진입 순간에 적합",
+        "audience": [
+            ("테스트 직후", "나와 상대가 왜 반복해서 엇갈리는지 알고 싶을 때."),
+            ("다툼 뒤 식히기", "비난하지 않으면서 필요를 말하는 한 문장이 필요할 때."),
+            ("공유용", "테스트 라벨보다 더 이야기할 수 있는 관계 지도가 필요할 때."),
+        ],
+    },
+    "es": {
+        "hero_kicker": "Gratis · 2 minutos · sin registro",
+        "hero_badges": ["Señal cruzada", "Cinco guardianas", "Ritmo natal opcional", "Acción de 24 horas"],
+        "visual_title": "Elige dos guardianas y mira dónde el amor se malinterpreta",
+        "visual_intro": "Quien llega desde Shorts, búsqueda o una conversación no necesita leer toda la teoría. Empieza con una frase que puedas decir y decide después si quieres pedir un informe guardable.",
+        "visual_cta": "Empezar brújula gratis",
+        "audience_title": "Diseñada para tres momentos de entrada",
+        "audience": [
+            ("Después del test", "Quieres entender por qué tú y otra persona se cruzan sin encontrarse."),
+            ("Después de un conflicto", "Necesitas una frase sin culpa que nombre la necesidad."),
+            ("Para compartir", "Quieres un mapa relacional más conversable que una etiqueta de test."),
+        ],
+    },
+}
+
+
+LOVE_COMPATIBILITY_PAGE = {
+    "zh": {
+        "title": "心語合盤｜愛之語測驗與八字愛情合盤",
+        "desc": "用 LoveTypes 守護者、愛之語配對與可選出生節奏，看見兩個人愛在哪裡錯頻；不是判決合不合，而是找到下一句可以說出口的話。",
+        "eyebrow": "LOVE COMPATIBILITY",
+        "h1": "愛之語合盤，不是判斷你們合不合",
+        "intro": "這頁承接想搜尋八字合婚、關係測驗、love compatibility 的人，但 LoveTypes 只把命理當成可選的關係節奏線索。核心仍是：你們怎麼感覺被愛、哪裡容易錯頻、下一步怎麼修復。",
+        "primary": "開始免費關係羅盤",
+        "secondary": "先做守護者測驗",
+        "tertiary": "看 7 日修復",
+        "cards_title": "LoveTypes 合盤看三件事",
+        "cards": [
+            ("01", "愛之語配對", "先看雙方守護者如何接收愛，不用先下結論。"),
+            ("02", "可選出生節奏", "生日只用來提示關係節奏，不做命中注定或婚姻判決。"),
+            ("03", "修復入口", "把錯頻變成一句能說出口的請求與一個 24 小時小行動。"),
+        ],
+        "seo_title": "適合這些搜尋意圖",
+        "seo_items": ["愛之語測驗 合盤", "八字合婚 免費", "關係測驗", "感情溝通 修復", "2026 感情節奏"],
+        "offer_title": "想要完整報告時，先登記需求",
+        "offer_intro": "免費羅盤會先給主要錯頻、理解點、可說句子與今日行動。若你想要 PDF 合盤、八字愛情節奏或 7 日修復報告，再送出需求。",
+        "offer_cta": "登記合盤報告需求",
+        "offer_subject": "LoveTypes 心語合盤報告需求",
+        "offer_body": "我想登記 LoveTypes 心語合盤報告。\n想看的報告：LoveTypes Compatibility / BaZi Love Compatibility / 2026 Love Timing / 7-Day Repair\n我的守護者：\n對方守護者：\n目前狀態：\n最想改善的問題：\n可回覆 email：\n",
+        "boundary_title": "邊界",
+        "boundary": "LoveTypes 不預測正緣、不替你決定婚姻可否、不判定分手，也不取代諮商、醫療、法律或安全支援。若關係中有暴力、控制、威脅或急迫風險，請優先尋求可信任的人與專業協助。",
+        "faq": [
+            ("這是八字合婚嗎？", "它可以加入可選的出生節奏，但前台定位是關係洞察與溝通修復，不是傳統命運判決。"),
+            ("一定要填生日嗎？", "不用。只用雙方 LoveTypes 守護者也可以取得免費羅盤。"),
+            ("免費版會給什麼？", "免費版會給主要錯頻、最需要理解的地方、一句可說出口的話與 24 小時小行動。"),
+        ],
+    },
+    "en": {
+        "title": "BaZi Love Compatibility and Love Language Compatibility",
+        "desc": "A gentle compatibility entry for love languages, LoveTypes guardians, and optional birth rhythm. Not a verdict, but a map of where love gets misread.",
+        "eyebrow": "LOVE COMPATIBILITY",
+        "h1": "Love compatibility without turning your relationship into a verdict",
+        "intro": "This page is built for people searching BaZi love compatibility, love language compatibility, or a relationship compatibility test. LoveTypes treats astrology as optional rhythm insight; the core is still how each person receives love, where signals get crossed, and what to repair next.",
+        "primary": "Start free Relationship Compass",
+        "secondary": "Take guardian quiz",
+        "tertiary": "Open 7-day repair",
+        "cards_title": "LoveTypes compatibility looks at three things",
+        "cards": [
+            ("01", "Love-language pairing", "Start with how both guardians receive love before deciding what anything means."),
+            ("02", "Optional birth rhythm", "Birthdates can add timing prompts, but they do not decide destiny or marriage."),
+            ("03", "Repair doorway", "Turn the cross-signal into one request you can say and one 24-hour action."),
+        ],
+        "seo_title": "Built for these search intents",
+        "seo_items": ["bazi love compatibility", "love language compatibility", "relationship compatibility test", "chinese astrology compatibility", "2026 love timing"],
+        "offer_title": "Want the full report? Request it first",
+        "offer_intro": "The free compass gives the main cross-signal, the point that needs understanding, one sentence, and one action. If you want a PDF compatibility report, BaZi love rhythm, or 7-day repair report, send a request.",
+        "offer_cta": "Request compatibility report",
+        "offer_subject": "LoveTypes compatibility report request",
+        "offer_body": "I want to request a LoveTypes compatibility report.\nReport type: LoveTypes Compatibility / BaZi Love Compatibility / 2026 Love Timing / 7-Day Repair\nMy guardian:\nTheir guardian:\nCurrent status:\nMain issue:\nReply email:\n",
+        "boundary_title": "Boundary",
+        "boundary": "LoveTypes does not predict destiny, decide marriage or breakup, or replace counseling, medical, legal, or safety support. If there is violence, control, threat, or urgent risk, seek trusted and professional help first.",
+        "faq": [
+            ("Is this BaZi compatibility?", "It can include optional birth rhythm, but the front-end product is relationship insight and repair, not a traditional destiny verdict."),
+            ("Do I need to enter birthdays?", "No. You can use only two LoveTypes guardians and still get the free compass."),
+            ("What does the free version give?", "The free version gives the main cross-signal, what needs understanding, one sentence to say, and one 24-hour action."),
+        ],
+    },
+    "ja": {
+        "title": "LoveTypes 相性｜愛の言語と任意の出生リズム",
+        "desc": "愛の言語、守護者、任意の出生リズムから、二人の愛がどこですれ違うかを見る相性入口。判決ではなく、関係を整える地図です。",
+        "eyebrow": "LOVE COMPATIBILITY",
+        "h1": "相性を判決にせず、愛のすれ違いを見る",
+        "intro": "このページは相性、愛の言語、東洋占術のリズムを探す人の入口です。LoveTypes は占術を任意の関係リズムとして扱い、中心に置くのは受け取り方、すれ違い、次の修復です。",
+        "primary": "無料コンパスを始める",
+        "secondary": "守護者診断へ",
+        "tertiary": "7日間修復へ",
+        "cards_title": "LoveTypes 相性で見る三つのこと",
+        "cards": [
+            ("01", "愛の言語の組み合わせ", "まず二人の守護者がどう愛を受け取るかを見る。"),
+            ("02", "任意の出生リズム", "誕生日は関係リズムのヒントであり、運命や結婚可否を決めません。"),
+            ("03", "修復の入口", "すれ違いを、言えるお願いと24時間の小さな行動に変える。"),
+        ],
+        "seo_title": "この検索意図に対応",
+        "seo_items": ["愛の言語 相性", "東洋占術 恋愛 相性", "関係診断", "すれ違い 修復", "2026 恋愛リズム"],
+        "offer_title": "完全レポートが必要な場合は、まず希望を送る",
+        "offer_intro": "無料コンパスは主なすれ違い、理解点、言える一文、今日の行動を出します。PDF相性、出生リズム、7日間修復が必要なら希望を送ってください。",
+        "offer_cta": "相性レポートを希望する",
+        "offer_subject": "LoveTypes 相性レポート希望",
+        "offer_body": "LoveTypes 相性レポートを希望します。\n希望レポート：LoveTypes Compatibility / BaZi Love Compatibility / 2026 Love Timing / 7-Day Repair\n私の守護者：\n相手の守護者：\n現在の関係：\n一番改善したいこと：\n返信用 email：\n",
+        "boundary_title": "境界",
+        "boundary": "LoveTypes は運命、結婚可否、別れを断定せず、相談支援・医療・法律・安全支援を代替しません。暴力、支配、脅し、急迫した危険がある場合は、信頼できる人と専門支援を優先してください。",
+        "faq": [
+            ("これは八字の相性ですか？", "任意の出生リズムを含めることはできますが、前台は関係洞察と修復であり、伝統的な判決ではありません。"),
+            ("誕生日は必要ですか？", "不要です。二人の LoveTypes 守護者だけでも無料コンパスを使えます。"),
+            ("無料版では何が分かりますか？", "主なすれ違い、理解が必要な点、言える一文、24時間の小さな行動が分かります。"),
+        ],
+    },
+    "ko": {
+        "title": "LoveTypes 궁합｜사랑의 언어와 선택 출생 리듬",
+        "desc": "사랑의 언어, LoveTypes 수호자, 선택 출생 리듬으로 사랑이 어디서 엇갈리는지 보는 관계 궁합 입구입니다.",
+        "eyebrow": "LOVE COMPATIBILITY",
+        "h1": "궁합을 판결로 만들지 않고, 사랑의 엇갈림을 보기",
+        "intro": "이 페이지는 궁합, 사랑의 언어, 동양 리듬을 찾는 사람을 위한 입구입니다. LoveTypes는 명리를 선택 관계 리듬으로 다루며 핵심은 사랑을 받는 방식, 엇갈림, 다음 회복입니다.",
+        "primary": "무료 관계 컴퍼스 시작",
+        "secondary": "수호자 테스트",
+        "tertiary": "7일 회복 열기",
+        "cards_title": "LoveTypes 궁합이 보는 세 가지",
+        "cards": [
+            ("01", "사랑의 언어 조합", "먼저 두 수호자가 사랑을 어떻게 받는지 봅니다."),
+            ("02", "선택 출생 리듬", "생일은 관계 리듬 힌트일 뿐 운명이나 결혼을 결정하지 않습니다."),
+            ("03", "회복 입구", "엇갈림을 말할 수 있는 요청과 24시간 행동으로 바꿉니다."),
+        ],
+        "seo_title": "이런 검색 의도에 맞춤",
+        "seo_items": ["사랑의 언어 궁합", "연애 궁합 테스트", "동양 점성 궁합", "관계 회복", "2026 연애 리듬"],
+        "offer_title": "전체 리포트가 필요하면 먼저 요청하기",
+        "offer_intro": "무료 컴퍼스는 주요 엇갈림, 이해 지점, 말할 문장, 오늘 행동을 줍니다. PDF 궁합, 출생 리듬, 7일 회복 리포트가 필요하면 요청을 보내 주세요.",
+        "offer_cta": "궁합 리포트 요청하기",
+        "offer_subject": "LoveTypes 궁합 리포트 요청",
+        "offer_body": "LoveTypes 궁합 리포트를 요청합니다.\n원하는 리포트: LoveTypes Compatibility / BaZi Love Compatibility / 2026 Love Timing / 7-Day Repair\n나의 수호자:\n상대 수호자:\n현재 상태:\n가장 개선하고 싶은 점:\n답장 email:\n",
+        "boundary_title": "경계",
+        "boundary": "LoveTypes는 운명, 결혼, 이별을 단정하지 않으며 상담, 의료, 법률, 안전 지원을 대신하지 않습니다. 폭력, 통제, 위협, 긴급 위험이 있다면 신뢰할 수 있는 사람과 전문 지원을 먼저 찾으세요.",
+        "faq": [
+            ("이것은 사주 궁합인가요?", "선택 출생 리듬을 포함할 수 있지만 전면 제품은 관계 통찰과 회복이며 전통적 운명 판정이 아닙니다."),
+            ("생일을 꼭 넣어야 하나요?", "아니요. 두 LoveTypes 수호자만으로도 무료 컴퍼스를 사용할 수 있습니다."),
+            ("무료 버전은 무엇을 주나요?", "주요 엇갈림, 이해가 필요한 부분, 말할 수 있는 한 문장, 24시간 행동을 줍니다."),
+        ],
+    },
+    "es": {
+        "title": "Compatibilidad LoveTypes｜Lenguajes del amor y ritmo natal opcional",
+        "desc": "Una entrada suave para compatibilidad de lenguajes del amor, guardianas LoveTypes y ritmo natal opcional. No es veredicto: es mapa relacional.",
+        "eyebrow": "LOVE COMPATIBILITY",
+        "h1": "Compatibilidad sin convertir tu relación en un veredicto",
+        "intro": "Esta página es para quien busca compatibilidad, lenguajes del amor o astrología relacional. LoveTypes usa el ritmo natal como insight opcional; el centro sigue siendo cómo cada persona recibe amor, dónde se cruza la señal y qué reparar después.",
+        "primary": "Empezar brújula gratis",
+        "secondary": "Hacer test de guardiana",
+        "tertiary": "Abrir reparación de 7 días",
+        "cards_title": "La compatibilidad LoveTypes mira tres cosas",
+        "cards": [
+            ("01", "Pareja de lenguajes", "Empieza con cómo cada guardiana recibe amor antes de concluir nada."),
+            ("02", "Ritmo natal opcional", "Las fechas pueden añadir ritmo, pero no deciden destino ni matrimonio."),
+            ("03", "Puerta de reparación", "Convierte la señal cruzada en una petición y una acción de 24 horas."),
+        ],
+        "seo_title": "Pensado para estas búsquedas",
+        "seo_items": ["compatibilidad lenguajes del amor", "test de compatibilidad de pareja", "astrología china compatibilidad", "reparación de relación", "ritmo amoroso 2026"],
+        "offer_title": "¿Quieres el informe completo? Pídelo primero",
+        "offer_intro": "La brújula gratis da la señal cruzada, el punto que necesita comprensión, una frase y una acción. Si quieres PDF de compatibilidad, ritmo natal o plan de 7 días, envía una petición.",
+        "offer_cta": "Pedir informe de compatibilidad",
+        "offer_subject": "Petición de informe de compatibilidad LoveTypes",
+        "offer_body": "Quiero pedir un informe de compatibilidad LoveTypes.\nTipo de informe: LoveTypes Compatibility / BaZi Love Compatibility / 2026 Love Timing / 7-Day Repair\nMi guardiana:\nSu guardiana:\nEstado actual:\nProblema principal:\nEmail de respuesta:\n",
+        "boundary_title": "Límite",
+        "boundary": "LoveTypes no predice destino, matrimonio o ruptura, ni reemplaza terapia, salud, asesoría legal o apoyo de seguridad. Si hay violencia, control, amenaza o riesgo urgente, busca primero ayuda confiable y profesional.",
+        "faq": [
+            ("¿Es compatibilidad BaZi?", "Puede incluir ritmo natal opcional, pero el producto frontal es insight relacional y reparación, no veredicto de destino."),
+            ("¿Necesito ingresar cumpleaños?", "No. Puedes usar solo dos guardianas LoveTypes y obtener la brújula gratis."),
+            ("¿Qué entrega la versión gratuita?", "La señal cruzada principal, lo que necesita comprensión, una frase para decir y una acción de 24 horas."),
+        ],
+    },
+}
+
+
+def compass_visual_layer(lang: str) -> str:
+    copy = COMPASS_TRAFFIC_LAYER[lang]
+    guardian_tiles = []
+    for slug, data in GUARDIANS.items():
+        name, typ, _desc = data[lang]
+        domain = GUARDIAN_DOMAINS[slug]
+        guardian_tiles.append(f"""
+<a class="content-card compass-guardian-tile" href="{lang_url(lang, "characters/" + slug)}" data-compass-guardian-tile="{slug}" data-funnel-event="compass_guardian_tile" style="--domain-accent:{domain["accent"]};--domain-glow:{domain["glow"]}">
+  {img_tag(data["prop"], f"{name} {typ}", "compass-guardian-prop")}
+  <span>{escape(name)}</span>
+  <small>{escape(typ)}</small>
+</a>
+""")
+    audience_cards = "".join(f"""
+<article class="content-card compass-audience-card" data-compass-audience-card>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</article>
+""" for title, desc in copy["audience"])
+    return f"""
+<section class="section compass-visual-layer" data-compass-visual-layer>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["hero_kicker"])}</p><h2>{escape(copy["visual_title"])}</h2><p>{escape(copy["visual_intro"])}</p></div>
+    <a href="#relationship-compass-tool" data-funnel-event="compass_visual_start">{escape(copy["visual_cta"])}</a>
+  </div>
+  <div class="card-grid compact compass-guardian-strip" data-compass-guardian-strip>{"".join(guardian_tiles)}</div>
+  <div class="compass-audience-panel" data-compass-audience-panel>
+    <h2>{escape(copy["audience_title"])}</h2>
+    <div class="card-grid compact compass-audience-grid">{audience_cards}</div>
+  </div>
+</section>
+"""
+
+
+def compass_report_offer_section(lang: str) -> str:
+    copy = COMPASS_REPORT_OFFER[lang]
+    cards = []
+    for title, price, desc in copy["items"]:
+        body = quote(f'{copy["body"]} {title}\n\nPrice: {price}\nPage: {abs_url(lang, "compass")}')
+        subject = quote(f'{copy["subject"]}: {title}')
+        cards.append(f"""
+<article class="compass-report-card" data-compass-report-offer>
+  <div class="compass-report-head"><h3>{escape(title)}</h3><span class="compass-report-price">{escape(price)}</span></div>
+  <p>{escape(desc)}</p>
+  <a class="secondary-btn compass-buy-btn" href="mailto:{CONTACT_EMAIL}?subject={subject}&body={body}" data-funnel-event="compass_report_request">{escape(copy["cta"])}</a>
+</article>
+""")
+    return f"""
+<section class="section compass-paid" id="compass-report-offers" data-compass-report-offers>
+  <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h2>{escape(copy["title"])}</h2>
+  <p class="compass-paid-intro">{escape(copy["intro"])}</p>
+  <div class="compass-reports-grid">{"".join(cards)}</div>
+  <p class="compass-boundary">{escape(copy["note"])}</p>
+</section>
+"""
+
+
+def love_compatibility_page(lang: str) -> None:
+    copy = LOVE_COMPATIBILITY_PAGE[lang]
+    t = LANGS[lang]
+    report_subject = quote(copy["offer_subject"])
+    report_body = quote(copy["offer_body"] + f"\nPage: {abs_url(lang, 'tools/love-compatibility')}\n")
+    cards = "".join(
+        f"""
+<article class="content-card">
+  <span class="eyebrow">{escape(number)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for number, title, text in copy["cards"]
+    )
+    seo_items = "".join(f"<li>{escape(item)}</li>" for item in copy["seo_items"])
+    faq_items = "".join(
+        f"""
+<details>
+  <summary>{escape(question)}</summary>
+  <p>{escape(answer)}</p>
+</details>
+"""
+        for question, answer in copy["faq"]
+    )
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": copy["title"],
+        "description": copy["desc"],
+        "url": abs_url(lang, "tools/love-compatibility"),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "isPartOf": website_ref(lang),
+        "about": [
+            {"@type": "Thing", "name": "love language compatibility"},
+            {"@type": "Thing", "name": "relationship compatibility"},
+            {"@type": "Thing", "name": "BaZi love compatibility"},
+        ],
+        "mainEntity": {
+            "@type": "WebApplication",
+            "name": "LoveTypes Relationship Compass",
+            "url": abs_url(lang, "compass"),
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Any",
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+        },
+    }) + json_ld({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": question,
+                "acceptedAnswer": {"@type": "Answer", "text": answer},
+            }
+            for question, answer in copy["faq"]
+        ],
+    })
+    body = f"""
+<section class="page-hero compact">
+  <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h1>{escape(copy["h1"])}</h1>
+  <p>{escape(copy["intro"])}</p>
+  <div class="hero-actions" data-love-compatibility-hero>
+    <a class="primary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_compass_start">{escape(copy["primary"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang)}#quiz-section" data-funnel-event="love_compatibility_quiz">{escape(copy["secondary"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "repair-plan")}" data-funnel-event="love_compatibility_repair">{escape(copy["tertiary"])}</a>
+  </div>
+</section>
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["cards_title"])}</h2></div><a href="{lang_url(lang, "compass")}" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
+  <div class="content-grid">{cards}</div>
+</section>
+<section class="section article-body standalone">
+  <h2>{escape(copy["seo_title"])}</h2>
+  <ul>{seo_items}</ul>
+  <div class="callout"><strong>{escape(copy["boundary_title"])}</strong><p>{escape(copy["boundary"])}</p></div>
+</section>
+<section class="section supply-panel-section">
+  <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>
+  <p class="section-intro">{escape(copy["offer_intro"])}</p>
+  <div class="hero-actions">
+    <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={report_subject}&body={report_body}" data-funnel-event="love_compatibility_report_request">{escape(copy["offer_cta"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_offer_compass">{escape(copy["primary"])}</a>
+  </div>
+</section>
+<section class="section article-body standalone">
+  <h2>FAQ</h2>
+  {faq_items}
+</section>
+"""
+    write(page_path(lang, "tools/love-compatibility"), layout(lang, copy["title"], copy["desc"], "tools/love-compatibility", body, "", "website", "/og-cover.jpg", schema))
+
+
 def mobile_page_jump(lang: str, key: str) -> str:
     copy = MOBILE_RHYTHM[lang]
     links = "".join(f'<a href="{href}">{escape(label)}</a>' for label, href in copy[key])
@@ -5879,6 +6616,7 @@ GARDEN_MAP = {
             ("寫成修復週期", "把情緒整理成 7 日練習，不一次修完整段關係。", "打開修復計畫", "repair-plan"),
         ],
         "tools": [
+            ("LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與可選出生節奏整理成錯頻地圖。", "打開關係羅盤", "compass"),
             ("7 日修復計畫", "把測驗結果寫成一週內能完成的小修復。", "打開修復計畫", "repair-plan"),
             ("守護者收藏室", "保存五位守護者卡片，讓結果變成可回訪、可分享的標記。", "前往收藏室", "keepsakes"),
             ("Luna 夜間補給", "睡前、冷卻或書寫時，用低光音樂先降低情緒噪音。", "開啟 Luna", "luna-yoga-music"),
@@ -5917,6 +6655,7 @@ GARDEN_MAP = {
             ("Make a repair week", "Turn the emotion into seven days of practice without repairing everything at once.", "Open repair plan", "repair-plan"),
         ],
         "tools": [
+            ("LoveTypes Relationship Compass", "Turn two guardians, relationship context, and optional birthdate rhythm into a cross-signal map.", "Open compass", "compass"),
             ("7-Day Repair Plan", "Turn your result into one week of small repair practice.", "Open repair plan", "repair-plan"),
             ("Guardian Keepsake Hall", "Save the five guardian cards as a revisitable and shareable marker.", "Open keepsakes", "keepsakes"),
             ("Luna Night Supply", "Use low-light audio before sleep, cooling down, or journaling.", "Open Luna", "luna-yoga-music"),
@@ -5955,6 +6694,7 @@ GARDEN_MAP = {
             ("修復週間にする", "感情を七日間の練習へ変え、一度にすべてを直そうとしません。", "修復プランへ", "repair-plan"),
         ],
         "tools": [
+            ("LoveTypes 関係コンパス", "二人の守護者、関係状況、任意の生年月日リズムをすれ違い地図にします。", "コンパスへ", "compass"),
             ("7日間の修復プラン", "結果を一週間でできる小さな修復練習へ変えます。", "修復プランへ", "repair-plan"),
             ("守護者コレクション室", "五人の守護者カードを保存し、戻って見られる印にします。", "コレクション室へ", "keepsakes"),
             ("Luna 夜の補給", "眠る前、冷却、日記の時間に、低い音で感情のノイズを下げます。", "Luna を開く", "luna-yoga-music"),
@@ -5993,6 +6733,7 @@ GARDEN_MAP = {
             ("회복 주간 만들기", "감정을 7일 연습으로 바꾸고 한 번에 모든 것을 고치려 하지 않습니다.", "회복 계획 열기", "repair-plan"),
         ],
         "tools": [
+            ("LoveTypes 관계 컴퍼스", "두 수호자, 관계 상황, 선택 생년월일 리듬을 엇갈림 지도로 정리합니다.", "컴퍼스 열기", "compass"),
             ("7일 회복 계획", "결과를 일주일 안에 해볼 작은 회복 연습으로 바꿉니다.", "회복 계획 열기", "repair-plan"),
             ("수호자 소장실", "다섯 수호자 카드를 저장해 다시 보고 공유할 표시로 만듭니다.", "소장실 열기", "keepsakes"),
             ("Luna 밤 보급", "잠들기 전, 식히는 시간, 기록할 때 낮은 음악으로 감정 소음을 낮춥니다.", "Luna 열기", "luna-yoga-music"),
@@ -6031,6 +6772,7 @@ GARDEN_MAP = {
             ("Crear una semana", "Convierte la emoción en siete días de práctica sin arreglar todo a la vez.", "Abrir plan", "repair-plan"),
         ],
         "tools": [
+            ("Brújula de Relación LoveTypes", "Convierte dos guardianas, contexto y fechas opcionales en un mapa de señales cruzadas.", "Abrir brújula", "compass"),
             ("Plan de 7 días", "Convierte tu resultado en una semana de reparación pequeña.", "Abrir plan", "repair-plan"),
             ("Sala de recuerdos", "Guarda las cinco tarjetas para volver a ellas y compartirlas.", "Abrir recuerdos", "keepsakes"),
             ("Luna nocturna", "Usa audio de baja luz antes de dormir, enfriar o escribir.", "Abrir Luna", "luna-yoga-music"),
@@ -6282,6 +7024,81 @@ def garden_map_page(lang: str) -> None:
     schema += item_list_schema(copy["routes_title"], copy["intro"], list_items)
     page_title = f"{copy['title']} | LoveTypes" if lang == "zh" else f"{copy['title']} | LoveTypes {t['name']}"
     write(page_path(lang, "garden-map"), layout(lang, page_title, copy["desc"], "garden-map", body, t["map"], "website", "/og-cover.jpg", schema))
+
+
+def compass_page(lang: str) -> None:
+    t = LANGS[lang]
+    copy = COMPASS_PAGE[lang]
+    traffic = COMPASS_TRAFFIC_LAYER[lang]
+    badges = "".join(f"<span>{escape(label)}</span>" for label in traffic["hero_badges"])
+    cards = "".join(
+        f"""
+<article class="mini-card">
+  <p class="eyebrow">{escape(number)}</p>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for number, title, text in copy["how"]
+    )
+    body = f"""
+<section class="page-hero compact compass-landing-hero" data-compass-landing-hero>
+  <div class="compass-hero-copy">
+    <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+    <p class="compass-hero-kicker">{escape(traffic["hero_kicker"])}</p>
+    <h1>{escape(copy["h1"])}</h1>
+    <p>{escape(copy["intro"])}</p>
+    <div class="compass-hero-badges" data-compass-hero-badges>{badges}</div>
+    <div class="hero-actions" data-compass-hero-actions>
+      <a class="primary-btn" href="#relationship-compass-tool" data-funnel-event="compass_hero_start">{escape(copy["primary"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang)}#quiz-section" data-funnel-event="compass_hero_quiz">{escape(copy["secondary"])}</a>
+      <a class="secondary-btn" href="{lang_url(lang, "repair-plan")}" data-funnel-event="compass_hero_repair">{escape(copy["tertiary"])}</a>
+    </div>
+  </div>
+</section>
+{compass_visual_layer(lang)}
+<section class="section intro-grid">
+  <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["how_title"])}</h2></div>
+  <div class="card-grid compact">{cards}</div>
+</section>
+<section class="section note-section">
+  <h2>{escape(copy["boundary_title"])}</h2>
+  <p>{escape(copy["boundary"])}</p>
+  <p>{escape(t["unofficial_disclosure"])}</p>
+</section>
+{compass_report_offer_section(lang)}
+<section class="section" id="relationship-compass-tool">
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["tool_title"])}</h2></div></div>
+  <div data-compass-root></div>
+</section>
+"""
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": ["WebPage", "WebApplication"],
+        "@id": f"{abs_url(lang, 'compass')}#webapp",
+        "name": copy["title"],
+        "description": copy["desc"],
+        "url": abs_url(lang, "compass"),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Web",
+        "isPartOf": website_ref(lang),
+        "publisher": organization_ref(),
+        "offers": [
+            {"@type": "Offer", "name": "Free Relationship Compass", "price": "0", "priceCurrency": "USD"},
+            *[
+                {"@type": "Offer", "name": title, "price": price.replace("US$", ""), "priceCurrency": "USD"}
+                for title, price, _desc in COMPASS_REPORT_OFFER[lang]["items"]
+            ],
+        ],
+    })
+    fallback_data = '<script src="/compass-data-en.js"></script>\n' if lang in {"ja", "ko", "es"} else ""
+    scripts = f"""
+{fallback_data}<script src="/compass-data-{lang}.js"></script>
+<script src="/compass-tool-20260705.js" defer></script>
+"""
+    write(page_path(lang, "compass"), layout(lang, f"{copy['title']} | LoveTypes", copy["desc"], "compass", body + scripts, copy["title"], "website", "/og-cover.jpg", schema))
 
 
 def garden_map_resume_script(lang: str) -> str:
@@ -7431,7 +8248,7 @@ POLICY_SECTIONS = {
             ("資料請求與刪除", "若你曾透過 contact@lovetypes.tw 聯絡我們，可以要求查詢、更正或刪除相關通信紀錄。我們會在合理範圍內處理，除非法律、安全或防濫用需求要求保留最少必要紀錄。"),
         ],
         "terms": [
-            ("內容用途", "LoveTypes 的測驗、指南與守護者設定是自我理解與關係溝通工具。你可以用它們整理語言、準備對話與練習修復，但不應把結果當成永久標籤或判定一段關係的唯一依據。"),
+            ("內容用途", "LoveTypes 的測驗、指南與守護者設定是自我理解與關係溝通工具。LoveTypes 並非 The 5 Love Languages® 官方網站或授權測驗。你可以用它們整理語言、準備對話與練習修復，但不應把結果當成永久標籤或判定一段關係的唯一依據。"),
             ("責任邊界", "本站內容不能取代心理治療、醫療、法律、財務或危機介入建議。任何基於本站內容做出的行動，都需要結合你的真實情境、雙方同意與必要的專業支持。"),
             ("智慧財產與外部連結", "LoveTypes 的文字、角色設定、圖片與版面屬於網站內容資產，除合理引用外請勿未經許可大量重製。外部與聯盟連結會帶你離開本站，購買與使用條款由各服務自行負責。"),
         ],
@@ -7448,7 +8265,7 @@ POLICY_SECTIONS = {
             ("Access and Deletion", "If you contacted us through contact@lovetypes.tw, you may ask to access, correct, or delete related communication records. We will handle reasonable requests unless law, safety, or abuse-prevention needs require minimal retention."),
         ],
         "terms": [
-            ("How to Use the Content", "LoveTypes quizzes, guides, and guardian stories are tools for self-understanding and relationship conversation. Use them to organize language, prepare dialogue, and practice repair, not as permanent labels or the sole judgment of a relationship."),
+            ("How to Use the Content", "LoveTypes quizzes, guides, and guardian stories are tools for self-understanding and relationship conversation. LoveTypes is not the official The 5 Love Languages® website or an authorized quiz. Use the content to organize language, prepare dialogue, and practice repair, not as permanent labels or the sole judgment of a relationship."),
             ("Responsibility Boundary", "The site does not replace therapy, medical care, legal advice, financial advice, or crisis support. Actions based on this content should account for real context, consent from everyone involved, and professional support when needed."),
             ("Intellectual Property and Links", "LoveTypes text, character settings, images, and layouts are site assets. Please do not reproduce them at scale without permission beyond reasonable citation. External and affiliate links take you away from this site, and their purchases or terms are handled by each service."),
         ],
@@ -7465,7 +8282,7 @@ POLICY_SECTIONS = {
             ("確認と削除", "contact@lovetypes.tw に連絡したことがある場合、関連する通信記録の確認、修正、削除を依頼できます。法律、安全、不正利用防止のために最小限の保持が必要な場合を除き、合理的に対応します。"),
         ],
         "terms": [
-            ("内容の使い方", "LoveTypes の測験、ガイド、守護者設定は自己理解と関係の対話のための道具です。言葉を整理し、会話を準備し、修復を練習するために使い、永続的なラベルや関係判断の唯一の根拠にはしないでください。"),
+            ("内容の使い方", "LoveTypes の測験、ガイド、守護者設定は自己理解と関係の対話のための道具です。The 5 Love Languages® の公式サイトまたは認定診断ではありません。言葉を整理し、会話を準備し、修復を練習するために使い、永続的なラベルや関係判断の唯一の根拠にはしないでください。"),
             ("責任の境界", "本站は心理療法、医療、法律、財務、危機介入の助言を代替しません。内容に基づく行動は、現実の状況、関係者の同意、必要な専門支援を合わせて考えてください。"),
             ("知的財産とリンク", "LoveTypes の文章、キャラクター設定、画像、レイアウトはサイト資産です。合理的な引用を超える大量複製は許可なく行わないでください。外部リンクやアフィリエイトリンク先の購入・規約は各サービスの責任です。"),
         ],
@@ -7482,7 +8299,7 @@ POLICY_SECTIONS = {
             ("조회와 삭제 요청", "contact@lovetypes.tw 로 연락한 적이 있다면 관련 통신 기록의 조회, 수정, 삭제를 요청할 수 있습니다. 법률, 안전, 남용 방지를 위해 최소 보관이 필요한 경우를 제외하고 합리적으로 처리합니다."),
         ],
         "terms": [
-            ("콘텐츠 사용", "LoveTypes의 테스트, 가이드, 수호자 설정은 자기 이해와 관계 대화를 돕는 도구입니다. 언어를 정리하고 대화를 준비하며 회복을 연습하는 데 사용하되, 영구 라벨이나 관계 판단의 유일한 근거로 삼지 마세요."),
+            ("콘텐츠 사용", "LoveTypes의 테스트, 가이드, 수호자 설정은 자기 이해와 관계 대화를 돕는 도구입니다. The 5 Love Languages® 공식 사이트나 공인 테스트가 아닙니다. 언어를 정리하고 대화를 준비하며 회복을 연습하는 데 사용하되, 영구 라벨이나 관계 판단의 유일한 근거로 삼지 마세요."),
             ("책임의 경계", "이 사이트는 심리치료, 의료, 법률, 재정, 위기 개입 조언을 대신하지 않습니다. 콘텐츠를 바탕으로 한 행동은 실제 상황, 모두의 동의, 필요한 전문 지원을 함께 고려해야 합니다."),
             ("지식재산과 외부 링크", "LoveTypes의 글, 캐릭터 설정, 이미지, 레이아웃은 사이트 콘텐츠 자산입니다. 합리적 인용을 넘는 대량 복제는 허가 없이 하지 마세요. 외부 및 제휴 링크의 구매와 약관은 각 서비스가 책임집니다."),
         ],
@@ -7499,7 +8316,7 @@ POLICY_SECTIONS = {
             ("Acceso y Eliminación", "Si contactaste a contact@lovetypes.tw, puedes pedir acceso, corrección o eliminación de registros relacionados. Atenderemos solicitudes razonables salvo que la ley, la seguridad o la prevención de abuso requieran conservar lo mínimo necesario."),
         ],
         "terms": [
-            ("Uso del Contenido", "Los tests, guías e historias de guardianes de LoveTypes son herramientas de autocomprensión y conversación relacional. Úsalos para ordenar lenguaje, preparar diálogo y practicar reparación, no como etiquetas permanentes ni como único juicio de una relación."),
+            ("Uso del Contenido", "Los tests, guías e historias de guardianes de LoveTypes son herramientas de autocomprensión y conversación relacional. LoveTypes no es el sitio oficial de The 5 Love Languages® ni un test autorizado. Úsalos para ordenar lenguaje, preparar diálogo y practicar reparación, no como etiquetas permanentes ni como único juicio de una relación."),
             ("Límite de Responsabilidad", "El sitio no reemplaza terapia, atención médica, asesoría legal, financiera ni apoyo de crisis. Toda acción basada en este contenido debe considerar el contexto real, el consentimiento de las personas involucradas y apoyo profesional cuando haga falta."),
             ("Propiedad Intelectual y Enlaces", "Los textos, personajes, imágenes y diseños de LoveTypes son activos del sitio. No los reproduzcas a gran escala sin permiso más allá de una cita razonable. Los enlaces externos y afiliados te llevan fuera del sitio, y sus compras o términos dependen de cada servicio."),
         ],
@@ -7809,6 +8626,7 @@ def quiz_payload(lang: str) -> str:
             "collectorStoryKicker": COLLECTOR_LABELS[lang]["story_kicker"],
             "collectorStoryCta": guardian_story_cta(lang, meta["slug"]),
             "collectorStoryError": COLLECTOR_LABELS[lang]["story_error"],
+            "compassUrl": lang_url(lang, "compass") + "#relationship-compass-tool",
             "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
@@ -8124,12 +8942,40 @@ def quiz_script(lang: str) -> str:
       <nav class="quiz-route-card" aria-label="${{quiz.labels.routes_title}}">
         <a class="primary-btn" href="${{result.resourceUrl}}" data-conversion-route>${{quiz.labels.primary_route}}</a>
         <a class="secondary-btn" href="${{result.planUrl}}" data-conversion-plan>${{quiz.labels.secondary_plan}}</a>
+        <a class="secondary-btn" href="${{result.compassUrl}}" data-conversion-compass>${{quiz.labels.conversion_compass_action}}</a>
         <a class="secondary-btn" href="${{result.lunaUrl}}" data-conversion-luna>${{quiz.labels.luna_action}}</a>
         <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-conversion-keepsake>${{quiz.labels.saved_card}}</a>
         <a class="secondary-btn" href="${{result.contactUrl}}" data-conversion-contact>${{quiz.labels.saved_contact}}</a>
         <a class="secondary-btn" href="${{result.guideUrl}}" data-conversion-guide>${{quiz.labels.guide_link}}</a>
         <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
       </nav>
+      <section class="quiz-conversion-path" aria-label="${{quiz.labels.conversion_path_title}}" data-quiz-conversion-path>
+        <div class="quiz-action-head">
+          <p class="eyebrow">${{quiz.labels.routes_title}}</p>
+          <h3>${{quiz.labels.conversion_path_title}}</h3>
+        </div>
+        <p>${{quiz.labels.conversion_path_intro}}</p>
+        <div class="quiz-conversion-grid">
+          <article>
+            <span>1</span>
+            <h4>${{quiz.labels.conversion_free_title}}</h4>
+            <p>${{quiz.labels.conversion_free_desc}}</p>
+            <a class="primary-btn" href="${{result.planUrl}}" data-funnel-event="quiz_conversion_path_repair">${{quiz.labels.conversion_free_action}}</a>
+          </article>
+          <article>
+            <span>2</span>
+            <h4>${{quiz.labels.conversion_compass_title}}</h4>
+            <p>${{quiz.labels.conversion_compass_desc}}</p>
+            <a class="secondary-btn" href="${{result.compassUrl}}" data-funnel-event="quiz_conversion_path_compass">${{quiz.labels.conversion_compass_action}}</a>
+          </article>
+          <article>
+            <span>3</span>
+            <h4>${{quiz.labels.conversion_paid_title}}</h4>
+            <p>${{quiz.labels.conversion_paid_desc}}</p>
+            <a class="secondary-btn" href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${{lunaStarterPack.slug}}">${{quiz.labels.conversion_paid_action}}</a>
+          </article>
+        </div>
+      </section>
       <section class="quiz-score-card"><h3>${{quiz.labels.score_title}}</h3>
         ${{sorted.map(([key, count]) => {{
           const item = quiz.results[key];
@@ -8739,6 +9585,7 @@ def start_page(lang: str) -> None:
   <h1>{escape(copy["title"])}</h1>
   <p>{escape(copy["lead"])}</p>
   <div class="hero-actions" data-start-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="start_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="start_hero_guardians">{escape(copy["map"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="start_hero_resources">{escape(copy["resources"])}</a></div>
+  <p class="hero-trust-line">{escape(HOME_HERO_COPY[lang]["trust"])}</p>
 </section>
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(section_labels["destiny_ritual"])}</p><h2>{escape(copy["preview_title"])}</h2></div>
@@ -8767,16 +9614,18 @@ def start_page(lang: str) -> None:
 
 def home(lang: str) -> None:
     t = LANGS[lang]
+    hero = HOME_HERO_COPY[lang]
     section_labels = SECTION_LABELS[lang]
     guide_cards = "".join(guide_card(lang, g) for g in GUIDES[:6])
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     body = f"""
 <section class="hero">
   <div class="hero-copy">
-    <p class="eyebrow">{escape(section_labels["home_field_notes"])}</p>
-    <h1>{escape(t["brand"])}</h1>
-    <p class="lead">{escape(t["tagline"])}</p>
-    <div class="hero-actions"><a class="primary-btn" href="#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}">{escape(HOME_MAP_CTA[lang])}</a></div>
+    <p class="eyebrow">{escape(hero["eyebrow"])}</p>
+    <h1>{escape(hero["title"])}</h1>
+    <p class="lead">{escape(hero["lead"])}</p>
+    <div class="hero-actions" data-home-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="home_hero_quiz">{escape(hero["primary"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="home_hero_guardians">{escape(hero["secondary"])}</a><a class="secondary-btn" href="{lang_url(lang, "repair-plan")}#repair-card-pack" data-funnel-event="home_hero_repair_asset">{escape(hero["tertiary"])}</a><a class="secondary-btn" href="{lang_url(lang, "garden-map")}" data-funnel-event="home_hero_garden_map">{escape(HOME_MAP_CTA[lang])}</a></div>
+    <p class="hero-trust-line">{escape(hero["trust"])}</p>
   </div>
   <picture><source media="(max-width: 720px)" srcset="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" width="900" height="506" />{img_tag("/assets/lovetypes/backgrounds/guardian-garden-desktop.webp", "LoveTypes guardian garden", lazy=False, priority=True)}</picture>
 </section>
@@ -9502,6 +10351,12 @@ def repair_plan_page(lang: str) -> None:
   <form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form>
 </section>
 {repair_worksheet_script(lang)}
+<section class="section repair-lead-section supply-panel-section" id="repair-lead-pack" data-repair-lead-pack>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["printable_worksheet"])}</p><h2>{escape(plan["asset_items"][3][0])}</h2></div><a href="{lang_url(lang, "luna-yoga-music")}#luna-starter-pack" data-funnel-event="repair_lead_luna_starter">{escape(LUNA_GUMROAD_PRODUCTS[0]["title"])}</a></div>
+  <p class="section-intro">{escape(plan["asset_items"][3][1])}</p>
+  {lead_intake_form(lang, "repair_plan", "repair_plan_structured_request_mailto")}
+</section>
+{lead_intake_form_script(lang)}
 <section class="section repair-guardian-section" id="repair-guardian-routes">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["guardian_routes"])}</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="{lang_url(lang)}#quiz-section" data-funnel-event="repair_guardian_section_quiz">{escape(plan["start"])}</a></div>
   <div class="repair-guardian-grid">{"".join(guardian_rows)}</div>
@@ -9651,9 +10506,9 @@ def luna_starter_pack_section(lang: str) -> str:
   <div class="section-head"><div><p class="eyebrow">{escape(labels["starter_eyebrow"])}</p><h2>{escape(labels["starter_title"])}</h2></div><span>{escape(product["price"])}</span></div>
   <p class="section-intro">{escape(labels["starter_intro"])}</p>
   <div class="luna-offer-actions">
-    <a class="primary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_starter_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["starter_cta"])}</a>
+    <a class="primary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer" data-funnel-event="luna_starter_listen">{escape(LUNA_OFFER[lang]["listen"])}</a>
+    <a class="secondary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_starter_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["starter_cta"])}</a>
     <a class="secondary-btn" href="#luna-download-packs" data-funnel-event="luna_starter_compare">{escape(labels["cta"])}</a>
-    <a class="secondary-btn" href="https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w" target="_blank" rel="noopener noreferrer" data-funnel-event="luna_starter_listen">{escape(LUNA_OFFER[lang]["listen"])}</a>
   </div>
   <p class="section-intro">{escape(labels["note"])}</p>
 </section>
@@ -9842,7 +10697,11 @@ def contact_option_cards(items: list[tuple[str, str]], copy: dict, selected_labe
 
 def lead_intake_form(lang: str, source: str, event: str) -> str:
     copy = LEAD_INTAKE_FORM[lang]
-    source_label = copy["source_keepsake"] if source == "keepsake_waitlist" else copy["source_contact"]
+    source_labels = {
+        "keepsake_waitlist": copy["source_keepsake"],
+        "repair_plan": copy["source_repair"],
+    }
+    source_label = source_labels.get(source, copy["source_contact"])
     guardian_options = [f'<option value="">{escape(copy["unknown_guardian"])}</option>']
     for slug, guardian in GUARDIANS.items():
         name, typ, _desc = guardian[lang]
@@ -10198,6 +11057,8 @@ def simple_page(lang: str, slug: str) -> None:
 {core_reading_path_section(lang)}
 <section class="section article-body standalone">
   {about_items}
+  <h2>{escape(t["unofficial_label"])}</h2>
+  <p>{escape(t["unofficial_disclosure"])}</p>
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
@@ -10708,6 +11569,9 @@ def collect_funnel_events() -> dict:
     for page in ["/start/", "/en/start/", "/ja/start/", "/ko/start/", "/es/start/"]:
         add_event("campaign_landing", page)
 
+    for page in ["/compass/", "/en/compass/", "/ja/compass/", "/ko/compass/", "/es/compass/"]:
+        add_event("compass_result_report_request", page)
+
     for page in ["/", "/start/", "/en/", "/en/start/", "/ja/", "/ja/start/", "/ko/", "/ko/start/", "/es/", "/es/start/"]:
         add_event("quiz_started", page)
         add_event("quiz_completed", page)
@@ -10996,7 +11860,7 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths() -> list[str]:
-    paths = ["", "start", "garden-map", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     return paths
@@ -11007,8 +11871,10 @@ def site_index_group(path: str) -> str:
         return "home"
     if path == "start":
         return "conversion"
-    if path in {"garden-map", "guides", "theory", "about"} or path.startswith("guides/"):
+    if path in {"garden-map", "guides", "compass", "theory", "about"} or path.startswith("guides/"):
         return "content"
+    if path.startswith("tools/"):
+        return "conversion"
     if path == "characters" or path.startswith("characters/"):
         return "guardians"
     if path in {"resources", "repair-plan", "keepsakes", "luna-yoga-music"}:
@@ -11241,6 +12107,8 @@ def collect_ai_discovery_index() -> dict:
         {"url": f"{DOMAIN}/start/", "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery", "priority": 1.0},
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
+        {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
+        {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass", "priority": 0.94},
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
         {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
         {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},
@@ -12061,6 +12929,8 @@ def main() -> None:
         home(lang)
         start_page(lang)
         garden_map_page(lang)
+        compass_page(lang)
+        love_compatibility_page(lang)
         guides_index(lang)
         characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):

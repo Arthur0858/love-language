@@ -1,6 +1,6 @@
 # LoveTypes Profile Proof Capture Quickstart
 
-- 產生日期：2026-07-02
+- 產生日期：2026-07-06
 - platforms：1
 - capture rows：6
 - pending evidence rows：6
@@ -28,7 +28,7 @@
 - profile link location：Channel description / video description
 - profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
-- suggested capture：`profile-youtube_shorts-2026-07-02.png`
+- suggested capture：`profile-youtube_shorts-2026-07-06.png`
 - capture artifact required：1
 - safe writeback ready：0
 - proof note：`<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified`

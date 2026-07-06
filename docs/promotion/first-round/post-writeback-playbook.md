@@ -1,6 +1,6 @@
 # LoveTypes Post Writeback Playbook
 
-- 產生日期：2026-07-02
+- 產生日期：2026-07-06
 - 已發布列：1 / 15
 - issues：0
 - 原則：只有平台貼文已公開且 post URL 可驗證時，才能標記 published/live/posted。
@@ -12,7 +12,7 @@
 - script：`lt-s01-iris-silence`
 - 標題：他沉默時，你最想聽見哪一句話？
 - 目前狀態：`published`
-- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-02 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- 回填：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-06 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
 
 ## 平台文字匯入
 

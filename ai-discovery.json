@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-06-13",
+  "updated": "2026-07-05",
   "production": "https://lovetypes.tw/",
   "siteName": "LoveTypes",
   "preferredLanguage": "zh-TW",
@@ -372,6 +372,16 @@
       "priority": 0.95
     },
     {
+      "url": "https://lovetypes.tw/compass/",
+      "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm",
+      "priority": 0.95
+    },
+    {
+      "url": "https://lovetypes.tw/tools/love-compatibility/",
+      "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass",
+      "priority": 0.94
+    },
+    {
       "url": "https://lovetypes.tw/characters/",
       "intent": "five guardian universe overview",
       "priority": 0.95
@@ -431,12 +441,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 155,
-      "paths": 31,
+      "pages": 165,
+      "paths": 33,
       "languages": 5,
       "groups": {
-        "content": 80,
-        "conversion": 25,
+        "content": 85,
+        "conversion": 30,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -465,7 +475,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 12,
+    "priorityUrls": 14,
     "languages": 5,
     "discoveryFiles": 10
   }

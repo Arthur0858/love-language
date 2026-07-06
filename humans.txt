@@ -2,7 +2,7 @@
 Site: LoveTypes
 Contact: contact@lovetypes.tw
 Production: https://lovetypes.tw/
-Updated: 2026-06-13
+Updated: 2026-07-05
 
 /* SITE */
 Purpose: Heart Garden five love language reflection, guardian quiz, repair practices, Luna night support, keepsakes, and supply routes.

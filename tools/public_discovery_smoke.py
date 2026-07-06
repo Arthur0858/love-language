@@ -1441,8 +1441,8 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
         issues.append(f"{path}: status should be ready_for_predeploy")
     coverage = data.get("coverage", {})
     expected = {
-        "indexablePages": 155,
-        "localizedPaths": 31,
+        "indexablePages": 160,
+        "localizedPaths": 32,
         "languages": 5,
         "routeGroups": 5,
         "coreFlows": 5,
@@ -1523,7 +1523,7 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     if data.get("branch") != "main":
         issues.append(f"{path}: branch should be main")
     contents = data.get("releaseContents", {})
-    expected_contents = {"indexablePages": 155, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 5}
+    expected_contents = {"indexablePages": 160, "languages": 5, "guardians": 5, "commerceItems": 20, "coreFlows": 5}
     content_checked = 0
     for key, expected in expected_contents.items():
         content_checked += 1
@@ -1710,7 +1710,7 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         if not isinstance(guidance.get(key), str) or not guidance[key]:
             issues.append(f"{path}: answerGuidance.{key} should be non-empty")
     totals = data.get("totals", {})
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 10}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 13, "languages": 5, "discoveryFiles": 10}
     for key, expected in expected_totals.items():
         if not isinstance(totals, dict) or totals.get(key) != expected:
             got = totals.get(key) if isinstance(totals, dict) else None
@@ -1808,8 +1808,8 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
             if not any(isinstance(item, dict) and item.get("question") == snippet for item in questions):
                 issues.append(f"{path}: answerableQuestions missing {snippet!r}")
     priority_urls = data.get("priorityUrls", [])
-    if not isinstance(priority_urls, list) or len(priority_urls) != 12:
-        issues.append(f"{path}: priorityUrls should include twelve entries")
+    if not isinstance(priority_urls, list) or len(priority_urls) != 13:
+        issues.append(f"{path}: priorityUrls should include thirteen entries")
     files = data.get("discoveryFiles", {})
     expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:

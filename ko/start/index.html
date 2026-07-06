@@ -53,7 +53,7 @@
 </header>
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://lovetypes.tw/#organization","name":"LoveTypes","url":"https://lovetypes.tw/","logo":"https://lovetypes.tw/apple-touch-icon.png","email":"contact@lovetypes.tw","sameAs":["https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"],"description":"LoveTypes는 다섯 가지 사랑의 언어를 지도로 삼은 마음의 정원입니다. 다섯 감정 수호자, 상황형 성찰, 실용 가이드를 통해 사랑받는 욕구, 어긋남의 상처, 다음에 말할 수 있는 문장을 정리합니다.","knowsAbout":["Five love languages","Relationship repair","Guardian personality quiz","Luna yoga music"],"contactPoint":{"@type":"ContactPoint","email":"contact@lovetypes.tw","contactType":"content corrections and privacy inquiries","availableLanguage":["zh-TW","en","ja","ko","es"]},"publishingPrinciples":"https://lovetypes.tw/ko/about/","privacyPolicy":"https://lovetypes.tw/ko/privacy/"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://lovetypes.tw/ko/start/#webpage","name":"다섯 가지 사랑의 언어 테스트 입구","description":"15개의 마음 언어 의식으로 감정 수호자를 찾고 보급, 회복 계획, Luna, 소장 카드로 이어갑니다.","url":"https://lovetypes.tw/ko/start/","inLanguage":"ko","dateModified":"2026-06-13","isPartOf":{"@id":"https://lovetypes.tw/ko/#website"},"publisher":{"@type":"Organization","@id":"https://lovetypes.tw/#organization","name":"LoveTypes","url":"https://lovetypes.tw/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://lovetypes.tw/ko/start/#webpage","name":"다섯 가지 사랑의 언어 테스트 입구","description":"15개의 마음 언어 의식으로 감정 수호자를 찾고 보급, 회복 계획, Luna, 소장 카드로 이어갑니다.","url":"https://lovetypes.tw/ko/start/","inLanguage":"ko","dateModified":"2026-07-05","isPartOf":{"@id":"https://lovetypes.tw/ko/#website"},"publisher":{"@type":"Organization","@id":"https://lovetypes.tw/#organization","name":"LoveTypes","url":"https://lovetypes.tw/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LoveTypes 감정 수호자","item":"https://lovetypes.tw/ko/"},{"@type":"ListItem","position":2,"name":"다섯 가지 사랑의 언어 테스트 입구","item":"https://lovetypes.tw/ko/start/"}]}</script>
 <nav class="breadcrumb" aria-label="이동 경로"><a href="/ko/">LoveTypes 감정 수호자</a><span>/</span><span aria-current="page">다섯 가지 사랑의 언어 테스트 입구</span></nav>
 <main id="main" tabindex="-1">
@@ -63,6 +63,7 @@
   <h1>다섯 가지 사랑의 언어 테스트 입구</h1>
   <p>여기서 수호자 인식 의식을 바로 시작합니다. 가입 없이 약 2~3분, 결과는 이 브라우저에만 저장됩니다.</p>
   <div class="hero-actions" data-start-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="start_hero_quiz">인정 의식 시작하기</a><a class="secondary-btn" href="/ko/characters/" data-funnel-event="start_hero_guardians">수호자 지도 보기</a><a class="secondary-btn" href="/ko/resources/" data-funnel-event="start_hero_resources">보급 먼저 보기</a></div>
+  <p class="hero-trust-line">가입 없음｜결과는 기기에 저장｜상담 대체 아님｜7일 회복 계획과 함께 사용</p>
 </section>
 <section class="section intro-grid">
   <div><p class="eyebrow">운명 의식</p><h2>완료 후 열리는 세 갈래 길</h2></div>
@@ -402,12 +403,40 @@
       <nav class="quiz-route-card" aria-label="${quiz.labels.routes_title}">
         <a class="primary-btn" href="${result.resourceUrl}" data-conversion-route>${quiz.labels.primary_route}</a>
         <a class="secondary-btn" href="${result.planUrl}" data-conversion-plan>${quiz.labels.secondary_plan}</a>
+        <a class="secondary-btn" href="${result.compassUrl}" data-conversion-compass>${quiz.labels.conversion_compass_action}</a>
         <a class="secondary-btn" href="${result.lunaUrl}" data-conversion-luna>${quiz.labels.luna_action}</a>
         <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-keepsake>${quiz.labels.saved_card}</a>
         <a class="secondary-btn" href="${result.contactUrl}" data-conversion-contact>${quiz.labels.saved_contact}</a>
         <a class="secondary-btn" href="${result.guideUrl}" data-conversion-guide>${quiz.labels.guide_link}</a>
         <a class="secondary-btn" href="${result.guardianUrl}">${quiz.labels.guardian_link}</a>
       </nav>
+      <section class="quiz-conversion-path" aria-label="${quiz.labels.conversion_path_title}" data-quiz-conversion-path>
+        <div class="quiz-action-head">
+          <p class="eyebrow">${quiz.labels.routes_title}</p>
+          <h3>${quiz.labels.conversion_path_title}</h3>
+        </div>
+        <p>${quiz.labels.conversion_path_intro}</p>
+        <div class="quiz-conversion-grid">
+          <article>
+            <span>1</span>
+            <h4>${quiz.labels.conversion_free_title}</h4>
+            <p>${quiz.labels.conversion_free_desc}</p>
+            <a class="primary-btn" href="${result.planUrl}" data-funnel-event="quiz_conversion_path_repair">${quiz.labels.conversion_free_action}</a>
+          </article>
+          <article>
+            <span>2</span>
+            <h4>${quiz.labels.conversion_compass_title}</h4>
+            <p>${quiz.labels.conversion_compass_desc}</p>
+            <a class="secondary-btn" href="${result.compassUrl}" data-funnel-event="quiz_conversion_path_compass">${quiz.labels.conversion_compass_action}</a>
+          </article>
+          <article>
+            <span>3</span>
+            <h4>${quiz.labels.conversion_paid_title}</h4>
+            <p>${quiz.labels.conversion_paid_desc}</p>
+            <a class="secondary-btn" href="${lunaStarterPack.href}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${lunaStarterPack.slug}">${quiz.labels.conversion_paid_action}</a>
+          </article>
+        </div>
+      </section>
       <section class="quiz-score-card"><h3>${quiz.labels.score_title}</h3>
         ${sorted.map(([key, count]) => {
           const item = quiz.results[key];
@@ -556,8 +585,17 @@
 
 </main>
 
+<nav class="conversion-dock" aria-label="다음 단계 바로가기" data-conversion-dock>
+  <span hidden>다음</span>
+  <a href="/ko/#quiz-section" data-funnel-event="conversion_dock_quiz">테스트</a>
+  <a href="/ko/repair-plan/#repair-lead-pack" data-funnel-event="conversion_dock_repair">회복</a>
+  <a href="/ko/compass/#relationship-compass-tool" data-funnel-event="conversion_dock_compass">나침반</a>
+</nav>
+
+
 <footer class="site-footer">
   <div class="footer-grid"><a href="/ko/garden-map/"><strong>마음의 정원 지도</strong><span>LoveTypes 테스트, 다섯 수호자, 가이드, 보급, Luna, 회복 계획, 신뢰 페이지를 한 장의 지도로 정리합니다.</span></a><a href="/ko/characters/"><strong>다섯 감정 수호자 한눈에 보기</strong><span>각 수호자는 사랑을 받는 입구이자 회복으로 이어지는 길입니다. 가장 예민하게 느껴지는 사랑의 언어에서 가이드, 연습, 보급 루트로 이어가세요.</span></a><a href="/ko/resources/"><strong>자료</strong><span>마음의 정원 가이드 입구, 다섯 수호자 프로필, 사랑의 언어 이론, 실천 연습을 모아 다음 등불을 찾기 쉽게 합니다.</span></a><a href="/ko/guides/"><strong>가이드</strong><span>마음의 정원 가이드에서 테스트 결과, 갈등 회복, 장거리의 존재감, 경계, 안전감, 파트너 대화를 다룹니다.</span></a><a href="/ko/repair-plan/"><strong>7일 마음 언어 회복 계획</strong><span>테스트 뒤 관계 전체를 한 번에 고칠 필요는 없습니다. 일주일 동안 수호자 결과를 다시 볼 수 있는 연습 루트로 바꾸세요. 상처를 보고, 작은 요청을 만들고, 보급 하나를 선택합니다.</span></a></div>
+  <p class="footer-disclosure">LoveTypes는 관계 대화와 감정 자기 이해를 위한 오리지널 수호자 세계관입니다. The 5 Love Languages® 공식 사이트나 공인 테스트가 아닙니다.</p>
   <p>© 2026 LoveTypes · <a href="/ko/privacy/">개인정보</a> · <a href="/ko/terms/">이용약관</a> · <a href="/ko/contact/">연락</a></p>
 </footer>
 

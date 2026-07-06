@@ -33,6 +33,11 @@
       pdfNote: 'Beautifully designed, printable, keeps forever.',
       buy: 'Get for ',
       whatInside: 'What\'s inside',
+      resultOfferTitle: 'Turn this result into a saved report',
+      resultOfferIntro: 'Want a printable compatibility report with scripts and a 7-day next step? Send us this pairing first, and we will prioritize the report format people actually request.',
+      resultOfferCta: 'Request this report',
+      resultOfferSubject: 'LoveTypes Compass report request',
+      resultOfferBody: 'I want a saved Relationship Compass report for this pairing.',
       reportLabels: {
         'emotional-pattern': 'Your Emotional Love Pattern',
         'compatibility': 'LoveTypes Compatibility Report',
@@ -75,6 +80,11 @@
       pdfNote: '美しいデザイン、印刷可能、永久保存。',
       buy: '購入 ',
       whatInside: '含まれるもの',
+      resultOfferTitle: 'この結果を保存版レポートにする',
+      resultOfferIntro: '会話例と7日間の次の一歩を入れたPDF相性レポートが必要な場合は、この組み合わせを送ってください。実際に依頼が多い形式から優先します。',
+      resultOfferCta: 'このレポートを依頼する',
+      resultOfferSubject: 'LoveTypes コンパスレポート依頼',
+      resultOfferBody: 'この組み合わせの保存版Relationship Compassレポートを希望します。',
       reportLabels: {
         'emotional-pattern': 'あなたの感情パターンレポート',
         'compatibility': 'LoveTypes 相性レポート',
@@ -110,6 +120,11 @@
       pdfNote: '아름답게 디자인되어 인쇄 가능, 영구 보관.',
       buy: '구매 ',
       whatInside: '포함 내용',
+      resultOfferTitle: '이 결과를 저장용 리포트로 만들기',
+      resultOfferIntro: '대화 스크립트와 7일 다음 단계를 담은 PDF 궁합 리포트가 필요하다면 이 조합을 보내주세요. 실제 요청이 많은 형식부터 우선 제작합니다.',
+      resultOfferCta: '이 리포트 요청하기',
+      resultOfferSubject: 'LoveTypes 컴퍼스 리포트 요청',
+      resultOfferBody: '이 조합의 저장용 Relationship Compass 리포트를 원합니다.',
       reportLabels: {
         'emotional-pattern': '감정 패턴 레포트',
         'compatibility': 'LoveTypes 궁합 레포트',
@@ -145,6 +160,11 @@
       pdfNote: 'Bellamente diseñado, imprimible, para conservar siempre.',
       buy: 'Comprar ',
       whatInside: 'Qué incluye',
+      resultOfferTitle: 'Convertir este resultado en un informe guardable',
+      resultOfferIntro: 'Si quieres un PDF de compatibilidad con guiones y un siguiente paso de 7 días, envíanos esta combinación. Priorizaremos los formatos que la gente realmente pida.',
+      resultOfferCta: 'Solicitar este informe',
+      resultOfferSubject: 'Solicitud de informe LoveTypes Compass',
+      resultOfferBody: 'Quiero un informe guardable de Relationship Compass para esta combinación.',
       reportLabels: {
         'emotional-pattern': 'Tu Patrón Emocional de Amor',
         'compatibility': 'Informe de Compatibilidad LoveTypes',
@@ -180,6 +200,11 @@
       pdfNote: '精美設計，可列印，永久保存。',
       buy: '購買 ',
       whatInside: '內容包含',
+      resultOfferTitle: '把這份結果變成可保存報告',
+      resultOfferIntro: '如果你想要含對話句型與 7 日下一步的 PDF 合盤報告，先把這組配對寄給我們。我們會優先製作真正有人需要的格式。',
+      resultOfferCta: '需求這份報告',
+      resultOfferSubject: 'LoveTypes 羅盤報告需求',
+      resultOfferBody: '我想要這組配對的可保存 Relationship Compass 報告。',
       reportLabels: {
         'emotional-pattern': '你的情感模式報告',
         'compatibility': 'LoveTypes 關係合盤報告',
@@ -205,10 +230,17 @@
   if (!l.reportBuyLinks || !Object.keys(l.reportBuyLinks).length) {
     l.reportBuyLinks = labels.en.reportBuyLinks;
   }
-  // Fall back to EN pair data if locale data is missing
-  if (!data.pairings || !Object.keys(data.pairings).length || Object.keys(data.pairings).length < 20) {
-    // Load EN data as fallback for pairings
-    if (window.__COMPASS_DATA_EN) data.pairings = window.__COMPASS_DATA_EN.pairings;
+  // Fall back to EN commerce/deep data when a locale only ships UI labels.
+  if (window.__COMPASS_DATA_EN) {
+    if (!data.pairings || !Object.keys(data.pairings).length || Object.keys(data.pairings).length < 20) {
+      data.pairings = window.__COMPASS_DATA_EN.pairings;
+    }
+    if (!data.reports || !Object.keys(data.reports).length) {
+      data.reports = window.__COMPASS_DATA_EN.reports;
+    }
+    if (!data.pdfUpgrade) {
+      data.pdfUpgrade = window.__COMPASS_DATA_EN.pdfUpgrade;
+    }
   }
 
   // ---- Build form HTML ----
@@ -229,7 +261,7 @@
   root.insertAdjacentHTML('beforeend', [
     '<section class="compass-hero">',
       '<p class="eyebrow">RELATIONSHIP COMPASS</p>',
-      '<h1>' + l.title + '</h1>',
+      '<h2>' + l.title + '</h2>',
       '<p class="lead">' + l.subtitle + '</p>',
     '</section>',
 
@@ -299,6 +331,19 @@
   function show(el) { el.hidden = false; }
   function hide(el) { el.hidden = true; }
 
+  function reportRequestHref(pairKey, selfG, partnerG) {
+    var subject = l.resultOfferSubject + ': ' + selfG.name + ' × ' + partnerG.name;
+    var body = [
+      l.resultOfferBody,
+      '',
+      'Pair: ' + pairKey,
+      'Self: ' + selfG.name + ' / ' + selfG.type,
+      'Partner: ' + partnerG.name + ' / ' + partnerG.type,
+      'Page: ' + window.location.href
+    ].join('\n');
+    return 'mailto:contact@lovetypes.tw?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
   function renderResult(pairKey, selfG, partnerG) {
     var pairData = data.pairings[pairKey];
     if (!pairData) {
@@ -345,6 +390,13 @@
           '<h3>' + l.actionTitle + '</h3>',
           '<p>' + pairData.action + '</p>',
         '</div>',
+
+        '<div class="compass-insight-card compass-result-offer" data-compass-result-offer>',
+          '<span class="compass-insight-icon">◆</span>',
+          '<h3>' + l.resultOfferTitle + '</h3>',
+          '<p>' + l.resultOfferIntro + '</p>',
+          '<a class="primary-btn compass-buy-btn" href="' + reportRequestHref(pairKey, selfG, partnerG) + '" data-compass-result-report-request data-funnel-event="compass_result_report_request">' + l.resultOfferCta + '</a>',
+        '</div>',
       '</article>',
 
       '<p class="compass-boundary">' + l.resultFooter + '</p>',
@@ -361,6 +413,15 @@
       form.reset();
       root.querySelector('[data-compass-form-section]').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+
+    var requestBtn = resultBox.querySelector('[data-compass-result-report-request]');
+    if (requestBtn) {
+      requestBtn.addEventListener('click', function () {
+        if (window.lovetypesRecordFunnelEvent) {
+          window.lovetypesRecordFunnelEvent('compass_result_report_request', pairKey, requestBtn);
+        }
+      });
+    }
 
     // Render paid section
     renderPaid();

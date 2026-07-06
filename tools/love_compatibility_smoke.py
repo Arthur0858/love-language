@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import re
+import time
+from html.parser import HTMLParser
+from urllib.error import HTTPError, URLError
+from urllib.parse import urljoin
+from urllib.request import Request, urlopen
+
+
+DEFAULT_BASE_URL = "https://lovetypes.tw"
+LANG_PATHS = {
+    "zh": "/tools/love-compatibility/",
+    "en": "/en/tools/love-compatibility/",
+    "ja": "/ja/tools/love-compatibility/",
+    "ko": "/ko/tools/love-compatibility/",
+    "es": "/es/tools/love-compatibility/",
+}
+REQUIRED_EVENTS = {
+    "love_compatibility_compass_start",
+    "love_compatibility_quiz",
+    "love_compatibility_repair",
+    "love_compatibility_section_compass",
+    "love_compatibility_report_ladder",
+    "love_compatibility_report_request",
+    "love_compatibility_offer_compass",
+}
+HARD_VERDICT_PHRASES = (
+    "一定會分手",
+    "不能結婚",
+    "命中注定不適合",
+    "will definitely break up",
+    "should not marry",
+    "destined to fail",
+)
+
+
+class LoveCompatibilityParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.h1 = 0
+        self.events: set[str] = set()
+        self.mailtos: list[str] = []
+        self.faq_details = 0
+        self.jsonld_blocks = 0
+        self.text_parts: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attr = {key.lower(): value or "" for key, value in attrs}
+        if tag.lower() == "h1":
+            self.h1 += 1
+        event = attr.get("data-funnel-event", "")
+        if event:
+            self.events.add(event)
+        href = attr.get("href", "")
+        if href.startswith("mailto:"):
+            self.mailtos.append(href)
+        if tag.lower() == "details":
+            self.faq_details += 1
+        if tag.lower() == "script" and attr.get("type") == "application/ld+json":
+            self.jsonld_blocks += 1
+
+    def handle_data(self, data: str) -> None:
+        if data.strip():
+            self.text_parts.append(data.strip())
+
+
+def normalize_base_url(value: str) -> str:
+    return value.rstrip("/") or DEFAULT_BASE_URL
+
+
+def request_text(url: str, attempts: int = 3) -> tuple[int, str]:
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            request = Request(url, headers={"User-Agent": "LoveTypes love compatibility smoke/1.0"})
+            with urlopen(request, timeout=20) as response:
+                return response.status, response.read().decode("utf-8", errors="replace")
+        except HTTPError as error:
+            return error.code, error.read().decode("utf-8", errors="replace")
+        except (URLError, TimeoutError, OSError) as error:
+            last_error = error
+            if attempt < attempts:
+                time.sleep(0.5 * attempt)
+    raise RuntimeError(f"Failed to fetch {url}: {last_error}")
+
+
+def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
+    status, text = request_text(urljoin(base_url + "/", path.lstrip("/")))
+    stats = {
+        "pages": 0,
+        "h1": 0,
+        "events": 0,
+        "mailto_links": 0,
+        "faq_details": 0,
+        "jsonld_blocks": 0,
+        "boundary_phrases": 0,
+    }
+    issues: list[str] = []
+    if status != 200:
+        return [f"{path}: expected status 200, got {status}"], stats
+    stats["pages"] = 1
+
+    parser = LoveCompatibilityParser()
+    parser.feed(text)
+    full_text = "\n".join(parser.text_parts)
+    stats["h1"] = parser.h1
+    stats["events"] = len(parser.events)
+    stats["mailto_links"] = len(parser.mailtos)
+    stats["faq_details"] = parser.faq_details
+    stats["jsonld_blocks"] = parser.jsonld_blocks
+    stats["boundary_phrases"] = sum(
+        1
+        for phrase in ("不取代", "replace", "代替", "대신", "reemplaza")
+        if phrase in full_text
+    )
+    if parser.h1 != 1:
+        issues.append(f"{path}: expected one h1, got {parser.h1}")
+    missing_events = sorted(REQUIRED_EVENTS.difference(parser.events))
+    if missing_events:
+        issues.append(f"{path}: missing funnel events {', '.join(missing_events)}")
+    report_mailtos = [href for href in parser.mailtos if href.startswith("mailto:contact@lovetypes.tw?")]
+    if len(report_mailtos) != 1:
+        issues.append(f"{path}: expected one report mailto to contact@lovetypes.tw, got {len(report_mailtos)}")
+    for href in report_mailtos:
+        if "subject=" not in href or "body=" not in href:
+            issues.append(f"{path}: report mailto missing subject/body")
+    if parser.faq_details < 3:
+        issues.append(f"{path}: expected at least 3 FAQ details, got {parser.faq_details}")
+    if parser.jsonld_blocks < 4:
+        issues.append(f"{path}: expected organization, breadcrumb, webpage, and FAQ JSON-LD")
+    if stats["boundary_phrases"] < 1:
+        issues.append(f"{path}: missing safety boundary wording")
+    for phrase in HARD_VERDICT_PHRASES:
+        if re.search(re.escape(phrase), full_text, re.I):
+            issues.append(f"{path}: includes hard verdict phrase {phrase!r}")
+    return issues, stats
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Check LoveTypes love compatibility SEO landing pages.")
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
+    args = parser.parse_args()
+    base_url = normalize_base_url(args.base_url)
+
+    totals = {
+        "pages": 0,
+        "h1": 0,
+        "events": 0,
+        "mailto_links": 0,
+        "faq_details": 0,
+        "jsonld_blocks": 0,
+        "boundary_phrases": 0,
+    }
+    issues: list[str] = []
+    for path in LANG_PATHS.values():
+        page_issues, stats = validate_page(base_url, path)
+        issues.extend(page_issues)
+        for key, value in stats.items():
+            totals[key] += value
+
+    print(f"love_compatibility_pages_checked={totals['pages']}")
+    print(f"love_compatibility_h1_checked={totals['h1']}")
+    print(f"love_compatibility_events_checked={totals['events']}")
+    print(f"love_compatibility_mailto_links_checked={totals['mailto_links']}")
+    print(f"love_compatibility_faq_details_checked={totals['faq_details']}")
+    print(f"love_compatibility_jsonld_blocks_checked={totals['jsonld_blocks']}")
+    print(f"love_compatibility_boundary_phrases_checked={totals['boundary_phrases']}")
+    print(f"love_compatibility_issues={len(issues)}")
+    for issue in issues[:100]:
+        print(issue)
+    if len(issues) > 100:
+        print(f"... {len(issues) - 100} more issue(s)")
+    return 1 if issues else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

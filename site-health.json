@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-06-13",
+  "updated": "2026-07-05",
   "production": "https://lovetypes.tw/",
   "status": "ready_for_predeploy",
   "description": "Machine-readable LoveTypes generated-site health snapshot for structure, conversion catalogs, guardian universe coverage, and required verification gates.",
   "coverage": {
-    "indexablePages": 155,
-    "localizedPaths": 31,
+    "indexablePages": 165,
+    "localizedPaths": 33,
     "languages": 5,
     "routeGroups": 5,
     "coreFlows": 5,
@@ -17,8 +17,8 @@
     "commerceItems": 20,
     "commerceTypes": 4,
     "commerceRoles": 3,
-    "funnelEvents": 207,
-    "funnelTrackedOccurrences": 3868,
+    "funnelEvents": 234,
+    "funnelTrackedOccurrences": 4538,
     "supportFiles": 18
   },
   "requiredGates": {

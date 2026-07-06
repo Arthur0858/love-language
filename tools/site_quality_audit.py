@@ -2682,8 +2682,8 @@ def parse_site_health() -> tuple[list[str], Counter]:
         issues.append(f"{SITE_HEALTH_PATH}: coverage should be an object")
         return issues, stats
     expected_coverage = {
-        "indexablePages": 155,
-        "localizedPaths": 31,
+        "indexablePages": 165,
+        "localizedPaths": 33,
         "languages": 5,
         "routeGroups": 5,
         "coreFlows": 5,
@@ -2800,7 +2800,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         issues.append(f"{RELEASE_PATH}: branch should be main")
     contents = data.get("releaseContents")
     expected_contents = {
-        "indexablePages": 155,
+        "indexablePages": 165,
         "languages": 5,
         "guardians": 5,
         "commerceItems": 20,
@@ -3042,7 +3042,7 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     issues.extend(validate_promotion_profile_verification(str(AI_DISCOVERY_PATH), data, stats, "ai_discovery_promotion_profile_verification"))
 
     totals = data.get("totals")
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 12, "languages": 5, "discoveryFiles": 10}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 14, "languages": 5, "discoveryFiles": 10}
     if not isinstance(totals, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
     else:
@@ -3148,8 +3148,8 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
                         issues.append(f"{AI_DISCOVERY_PATH}: {question_id} fragment missing: {url}")
 
     priority_urls = data.get("priorityUrls")
-    if not isinstance(priority_urls, list) or len(priority_urls) != 12:
-        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include twelve entries")
+    if not isinstance(priority_urls, list) or len(priority_urls) != 14:
+        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include fourteen entries")
     else:
         for item in priority_urls:
             if not isinstance(item, dict):
@@ -3714,8 +3714,8 @@ def main() -> int:
                 issues.append(f"{page}: expected 4 garden map route cards, found {route_card_count}")
             if tool_section_count != 1:
                 issues.append(f"{page}: expected one garden map tools section, found {tool_section_count}")
-            if tool_card_count != 3:
-                issues.append(f"{page}: expected 3 garden map tool cards, found {tool_card_count}")
+            if tool_card_count != 4:
+                issues.append(f"{page}: expected 4 garden map tool cards, found {tool_card_count}")
             if guardian_section_count != 1:
                 issues.append(f"{page}: expected one garden map guardians section, found {guardian_section_count}")
             if guardian_card_count != 5:

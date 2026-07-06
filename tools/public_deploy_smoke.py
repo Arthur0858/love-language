@@ -355,7 +355,7 @@ SUPPORT_FILES = {
     "/site-health.json": [
         '"schemaVersion": 1',
         '"status": "ready_for_predeploy"',
-        '"indexablePages": 155',
+        '"indexablePages": 160',
         '"guardians": 5',
         '"commerceItems": 20',
         '"localPredeploy"',
@@ -368,7 +368,7 @@ SUPPORT_FILES = {
         '"assetVersion":',
         '"deploymentTarget": "Cloudflare Pages project lovetypes"',
         '"branch": "main"',
-        '"indexablePages": 155',
+        '"indexablePages": 160',
         '"guardians": 5',
         '"commerceItems": 20',
         '"python3 tools/predeploy_check.py"',

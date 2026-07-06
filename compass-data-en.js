@@ -240,3 +240,4 @@ window.__COMPASS_DATA = {
     note: "Add to any report for a beautifully designed PDF version you can keep, print, or share."
   }
 };
+window.__COMPASS_DATA_EN = window.__COMPASS_DATA;

@@ -148,7 +148,7 @@ EXPECTED_TYPES = {"W", "T", "G", "S", "P"}
 TYPE_SLUGS = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora"}
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
-INTERNAL_RESULT_URL_FIELDS = ("guardianUrl", "guideUrl", "resourceUrl", "contactUrl", "lunaUrl", "collectorHallUrl", "planUrl")
+INTERNAL_RESULT_URL_FIELDS = ("guardianUrl", "guideUrl", "resourceUrl", "contactUrl", "lunaUrl", "collectorHallUrl", "planUrl", "compassUrl")
 RESULT_IMAGE_FIELDS = ("image", "resultImage", "storyImage", "domainProp")
 RESULT_TEXT_FIELDS = ("domainTitle", "domainDesc", "domainCta", "domainAccent", "domainGlow", "domainMotif")
 RESULT_NUMBER_FIELDS = ("domainPropWidth", "domainPropHeight")
@@ -486,7 +486,17 @@ def main() -> int:
         if not isinstance(labels, dict):
             issues.append(f"{script}: labels should be an object")
         else:
-            for label in ("pass_title", "pass_code", "next_pack_title", "primary_route"):
+            for label in (
+                "pass_title",
+                "pass_code",
+                "next_pack_title",
+                "primary_route",
+                "conversion_path_title",
+                "conversion_path_intro",
+                "conversion_free_action",
+                "conversion_compass_action",
+                "conversion_paid_action",
+            ):
                 result_pass_fields_checked += 1
                 if not isinstance(labels.get(label), str) or not labels[label].strip():
                     issues.append(f"{script}: labels missing {label}")
@@ -504,6 +514,18 @@ def main() -> int:
         else:
             result_pass_fields_checked += 2
         for snippet in ("data-quiz-luna-starter", "data-quiz-luna-starter-link", "quiz_luna_starter_pack_click"):
+            if snippet not in home_response.text:
+                issues.append(f"{home_path}: quiz result template missing {snippet}")
+            else:
+                result_pass_fields_checked += 1
+        for snippet in (
+            "data-quiz-conversion-path",
+            "data-conversion-compass",
+            "quiz_conversion_path_repair",
+            "quiz_conversion_path_compass",
+            "quiz_conversion_path_luna_starter",
+            "result.compassUrl",
+        ):
             if snippet not in home_response.text:
                 issues.append(f"{home_path}: quiz result template missing {snippet}")
             else:

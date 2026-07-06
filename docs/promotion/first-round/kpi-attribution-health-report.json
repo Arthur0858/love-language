@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02",
+  "generatedAt": "2026-07-06",
   "sources": {
     "promotionKit": "promotion-kit.json",
     "funnelEvents": "funnel-events.json",
@@ -15,7 +15,7 @@
     "promotion_kpi_schema_profile_metrics": 14,
     "promotion_kpi_schema_event_kpis": 13,
     "promotion_kpi_schema_event_names": 60,
-    "promotion_kpi_schema_catalog_events": 207,
+    "promotion_kpi_schema_catalog_events": 223,
     "promotion_kpi_schema_revenue_bridge_kpis": 5,
     "promotion_kpi_schema_commerce_items": 20,
     "promotion_kpi_schema_commerce_playbooks": 4,

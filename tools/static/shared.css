@@ -92,6 +92,10 @@ button:focus-visible {
   border-bottom: 1px solid rgba(236, 216, 213, .88);
 }
 
+.conversion-dock {
+  display: none;
+}
+
 .brand {
   text-decoration: none;
   font-weight: 900;
@@ -508,6 +512,15 @@ button:focus-visible {
   gap: 14px;
   flex-wrap: wrap;
   margin-top: 30px;
+}
+
+.hero-trust-line {
+  margin: 16px 0 0;
+  max-width: 720px;
+  color: var(--muted);
+  font-size: .92rem;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
 .primary-btn,
@@ -2991,6 +3004,7 @@ button.secondary-btn {
 .quiz-score-card,
 .quiz-advice-card,
 .quiz-action-compass,
+.quiz-conversion-path,
 .quiz-starter-kit,
 .quiz-route-card {
   background: rgba(255, 255, 255, .1);
@@ -3003,6 +3017,7 @@ button.secondary-btn {
 .quiz-score-card,
 .quiz-advice-card,
 .quiz-action-compass,
+.quiz-conversion-path,
 .quiz-starter-kit,
 .quiz-route-card,
 .quiz-tools,
@@ -3349,6 +3364,71 @@ button.secondary-btn {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
+}
+
+.quiz-conversion-path {
+  display: grid;
+  gap: 16px;
+  border-color: rgba(255, 232, 188, .36);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 221, 170, .18), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .08)),
+    rgba(30, 21, 23, .62);
+}
+
+.quiz-conversion-path > p {
+  max-width: 760px;
+  margin: 0;
+  color: #fff0e9;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.quiz-conversion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quiz-conversion-grid article {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .11);
+}
+
+.quiz-conversion-grid span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(255, 232, 188, .18);
+  color: #ffe7bc;
+  font-weight: 900;
+}
+
+.quiz-conversion-grid h4 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.04rem;
+}
+
+.quiz-conversion-grid p {
+  margin: 0;
+  color: #f4dfdc;
+  font-size: .94rem;
+  line-height: 1.65;
+}
+
+.quiz-conversion-grid a {
+  align-self: end;
+  justify-self: start;
+  margin-top: 2px;
 }
 
 .quiz-starter-kit {
@@ -4335,7 +4415,58 @@ button.secondary-btn {
 .site-footer p,
 .site-footer span { color: #ead6d4; }
 
+.footer-disclosure {
+  max-width: 980px;
+  margin-top: 0;
+  line-height: 1.65;
+}
+
 .site-footer a { color: #fff; }
+
+.compass-hero {
+  padding: 0 0 22px;
+}
+
+.compass-hero h1 {
+  display: none;
+}
+
+.compass-hero-badges{display:flex;flex-wrap:wrap;gap:8px}.compass-hero-badges span{color:var(--sage);font-weight:900}.compass-guardian-prop{width:82px;height:72px}
+
+.compass-form-section,.compass-result{max-width:920px;margin:0 auto}
+.compass-form,.compass-result-card,.compass-paid,.compass-pdf-upgrade{background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+
+.compass-form{padding:clamp(20px,4vw,34px)}
+
+.compass-form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.compass-form-field{display:grid;gap:7px}
+.compass-form-field label{color:var(--ink);font-weight:900}
+.compass-form-field select,.compass-form-field input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit}
+.compass-dob-hint,.compass-boundary,.compass-paid-intro,.compass-insight-card p,.compass-report-card p{color:var(--muted);line-height:1.65}
+.compass-submit,.compass-recalc,.compass-buy-btn{min-height:48px;border-radius:8px;font-weight:900}
+.compass-submit{width:100%;border:0;background:var(--rose);color:#fff}
+.compass-result-card{overflow:hidden}
+.compass-result-hero{padding:clamp(22px,4vw,38px);border-bottom:1px solid var(--line);text-align:center}
+.compass-guardians-display{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.compass-guardian-tag{display:inline-flex;flex-direction:column;gap:2px;min-width:132px;padding:12px 18px;border-radius:8px;color:#fff;font-weight:900}
+.compass-guardian-tag small{font-size:.78rem;opacity:.86}
+.compass-insight-card{position:relative;padding:24px clamp(20px,4vw,34px);border-bottom:1px solid var(--line)}
+.compass-insight-card h3,.compass-paid h3,.compass-report-card h4{margin:0 0 8px;font-family:var(--serif);line-height:1.2}
+.compass-insight-icon{display:inline-flex;margin-bottom:8px;color:var(--rose);font-weight:900}
+.compass-paid,.compass-pdf-upgrade{margin:24px;padding:clamp(20px,4vw,30px)}
+.compass-paid{background:var(--paper)}
+.compass-reports-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+.compass-report-card{display:grid;gap:10px;padding:18px;border:1px solid var(--line);border-radius:8px;background:#fffdf9}
+.compass-report-head{display:flex;justify-content:space-between;gap:10px}
+.compass-report-price,.compass-pdf-price{color:var(--rose);font-size:.92rem;font-weight:900;white-space:nowrap}
+.compass-buy-btn,.compass-recalc{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border:1px solid var(--rose);color:var(--rose);text-decoration:none}
+
+.compass-buy-btn{background:#fff}
+
+.compass-recalc {
+  margin: 0 24px 24px;
+  background: transparent;
+}
 
 @media (max-width: 1180px) {
   .universe-gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -4476,6 +4607,11 @@ button.secondary-btn {
     padding-top: 36px;
   }
 
+  .compass-hero-badges span {
+    flex: 1 1 calc(50% - 8px);
+    text-align: center;
+  }
+
   .hero picture,
   .hero img {
     min-height: 260px;
@@ -4497,6 +4633,11 @@ button.secondary-btn {
   .mobile-page-jump span,.mobile-page-jump a{font-weight:800}
   .mobile-page-jump a{color:var(--accent);text-decoration:none}
   .mobile-page-jump a+a::before{content:"·";margin-right:10px}
+
+  body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+  .conversion-dock{position:fixed;inset:auto 8px calc(8px + env(safe-area-inset-bottom));display:flex;gap:6px;padding:8px;background:#fff}
+  .conversion-dock a{flex:1;padding:10px 4px;background:#f2e9eb;color:var(--rose);font-weight:900;text-align:center;text-decoration:none}
+  .conversion-dock a:first-of-type{background:var(--rose);color:#fff}
 
   .section-head { display: block; }
 
@@ -4524,6 +4665,17 @@ button.secondary-btn {
 
   .guide-compass-grid {
     gap: 10px;
+  }
+
+  .compass-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .compass-paid,
+  .compass-pdf-upgrade,
+  .compass-recalc {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .guide-compass-grid article {
@@ -4629,6 +4781,7 @@ button.secondary-btn {
   .collector-grid,
   .repair-day-grid,
   .repair-guardian-grid,
+  .quiz-conversion-grid,
   .keepsake-resume-card,
   .collector-card.compact,
   .quiz-collector-card {

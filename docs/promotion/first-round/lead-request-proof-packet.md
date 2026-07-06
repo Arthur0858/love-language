@@ -1,6 +1,6 @@
 # LoveTypes Lead Request Proof Packet
 
-- 產生日期：2026-07-02
+- 產生日期：2026-07-06
 - template rows：15
 - template files：15
 - guardians：5
@@ -26,7 +26,7 @@
 - source：`keepsake_waitlist`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt --proof-note "email thread iris-owned_asset_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt --proof-note "email thread iris-owned_asset_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 艾莉絲 · `luna_scene_request`
@@ -34,7 +34,7 @@
 - source：`luna_page`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt --proof-note "email thread iris-luna_scene_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt --proof-note "email thread iris-luna_scene_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 艾莉絲 · `repair_or_contact_request`
@@ -42,7 +42,7 @@
 - source：`contact`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt --proof-note "email thread iris-repair_or_contact_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt --proof-note "email thread iris-repair_or_contact_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 諾雅 · `owned_asset_request`
@@ -50,7 +50,7 @@
 - source：`keepsake_waitlist`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt --proof-note "email thread noah-owned_asset_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt --proof-note "email thread noah-owned_asset_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 諾雅 · `luna_scene_request`
@@ -58,7 +58,7 @@
 - source：`luna_page`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt --proof-note "email thread noah-luna_scene_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt --proof-note "email thread noah-luna_scene_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 諾雅 · `repair_or_contact_request`
@@ -66,7 +66,7 @@
 - source：`contact`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt --proof-note "email thread noah-repair_or_contact_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt --proof-note "email thread noah-repair_or_contact_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 薇薇安 · `owned_asset_request`
@@ -74,7 +74,7 @@
 - source：`keepsake_waitlist`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt --proof-note "email thread vivian-owned_asset_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt --proof-note "email thread vivian-owned_asset_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 薇薇安 · `luna_scene_request`
@@ -82,7 +82,7 @@
 - source：`luna_page`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt --proof-note "email thread vivian-luna_scene_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt --proof-note "email thread vivian-luna_scene_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 薇薇安 · `repair_or_contact_request`
@@ -90,7 +90,7 @@
 - source：`contact`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt --proof-note "email thread vivian-repair_or_contact_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt --proof-note "email thread vivian-repair_or_contact_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 克萊兒 · `owned_asset_request`
@@ -98,7 +98,7 @@
 - source：`keepsake_waitlist`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt --proof-note "email thread claire-owned_asset_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt --proof-note "email thread claire-owned_asset_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 克萊兒 · `luna_scene_request`
@@ -106,7 +106,7 @@
 - source：`luna_page`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt --proof-note "email thread claire-luna_scene_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt --proof-note "email thread claire-luna_scene_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 克萊兒 · `repair_or_contact_request`
@@ -114,7 +114,7 @@
 - source：`contact`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt --proof-note "email thread claire-repair_or_contact_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt --proof-note "email thread claire-repair_or_contact_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 朵拉 · `owned_asset_request`
@@ -122,7 +122,7 @@
 - source：`keepsake_waitlist`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt --proof-note "email thread dora-owned_asset_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt --proof-note "email thread dora-owned_asset_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 朵拉 · `luna_scene_request`
@@ -130,7 +130,7 @@
 - source：`luna_page`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt --proof-note "email thread dora-luna_scene_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt --proof-note "email thread dora-luna_scene_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker
 
 ### 朵拉 · `repair_or_contact_request`
@@ -138,5 +138,5 @@
 - source：`contact`
 - file：`docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt`
 - check：`python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt`
-- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt --proof-note "email thread dora-repair_or_contact_request request checked 2026-07-02"`
+- write：`python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt --proof-note "email thread dora-repair_or_contact_request request checked 2026-07-06"`
 - evidence：real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker

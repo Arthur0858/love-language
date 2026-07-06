@@ -1,6 +1,6 @@
 # LoveTypes Launch Quickstart
 
-- 產生日期：2026-07-02
+- 產生日期：2026-07-06
 - current stage：`first_batch_kpi`
 - stage current blockers：1
 - profile configured：1

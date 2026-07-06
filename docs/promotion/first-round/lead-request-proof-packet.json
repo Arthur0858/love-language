@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02",
+  "generatedAt": "2026-07-06",
   "sources": {
     "leadIntakePlaybook": "docs/promotion/first-round/lead-intake-playbook.json",
     "leadWritebackPlaybook": "docs/promotion/first-round/lead-writeback-playbook.json",
@@ -34,7 +34,7 @@
       "source": "keepsake_waitlist",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt --proof-note \"email thread iris-owned_asset_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-owned_asset_request.txt --proof-note \"email thread iris-owned_asset_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -44,7 +44,7 @@
       "source": "luna_page",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt --proof-note \"email thread iris-luna_scene_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-luna_scene_request.txt --proof-note \"email thread iris-luna_scene_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -54,7 +54,7 @@
       "source": "contact",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt --proof-note \"email thread iris-repair_or_contact_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-iris-repair_or_contact_request.txt --proof-note \"email thread iris-repair_or_contact_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -64,7 +64,7 @@
       "source": "keepsake_waitlist",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt --proof-note \"email thread noah-owned_asset_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-owned_asset_request.txt --proof-note \"email thread noah-owned_asset_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -74,7 +74,7 @@
       "source": "luna_page",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt --proof-note \"email thread noah-luna_scene_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-luna_scene_request.txt --proof-note \"email thread noah-luna_scene_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -84,7 +84,7 @@
       "source": "contact",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt --proof-note \"email thread noah-repair_or_contact_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-noah-repair_or_contact_request.txt --proof-note \"email thread noah-repair_or_contact_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -94,7 +94,7 @@
       "source": "keepsake_waitlist",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt --proof-note \"email thread vivian-owned_asset_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-owned_asset_request.txt --proof-note \"email thread vivian-owned_asset_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -104,7 +104,7 @@
       "source": "luna_page",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt --proof-note \"email thread vivian-luna_scene_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-luna_scene_request.txt --proof-note \"email thread vivian-luna_scene_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -114,7 +114,7 @@
       "source": "contact",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt --proof-note \"email thread vivian-repair_or_contact_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-vivian-repair_or_contact_request.txt --proof-note \"email thread vivian-repair_or_contact_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -124,7 +124,7 @@
       "source": "keepsake_waitlist",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt --proof-note \"email thread claire-owned_asset_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-owned_asset_request.txt --proof-note \"email thread claire-owned_asset_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -134,7 +134,7 @@
       "source": "luna_page",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt --proof-note \"email thread claire-luna_scene_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-luna_scene_request.txt --proof-note \"email thread claire-luna_scene_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -144,7 +144,7 @@
       "source": "contact",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt --proof-note \"email thread claire-repair_or_contact_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-claire-repair_or_contact_request.txt --proof-note \"email thread claire-repair_or_contact_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -154,7 +154,7 @@
       "source": "keepsake_waitlist",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt --proof-note \"email thread dora-owned_asset_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-owned_asset_request.txt --proof-note \"email thread dora-owned_asset_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -164,7 +164,7 @@
       "source": "luna_page",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt --proof-note \"email thread dora-luna_scene_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-luna_scene_request.txt --proof-note \"email thread dora-luna_scene_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     },
     {
@@ -174,7 +174,7 @@
       "source": "contact",
       "templatePath": "docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt",
       "checkCommand": "python3 tools/promotion_lead_text_import.py check --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt",
-      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt --proof-note \"email thread dora-repair_or_contact_request request checked 2026-07-02\"",
+      "writeCommand": "python3 tools/promotion_lead_text_import.py add --input docs/promotion/first-round/lead-request-proof-templates/lead-dora-repair_or_contact_request.txt --proof-note \"email thread dora-repair_or_contact_request request checked 2026-07-06\"",
       "requiredEvidence": "real reply email, explicit_reply_ok consent, safe non-emergency scope, proof note, no raw email stored in tracker"
     }
   ],

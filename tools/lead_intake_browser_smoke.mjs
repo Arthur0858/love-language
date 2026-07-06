@@ -8,14 +8,19 @@ const METRIC_PREFIX = process.env.METRIC_PREFIX || 'lead_intake_browser';
 const CASES = [
   '/contact/',
   '/keepsakes/',
+  '/repair-plan/',
   '/en/contact/',
   '/en/keepsakes/',
+  '/en/repair-plan/',
   '/ja/contact/',
   '/ja/keepsakes/',
+  '/ja/repair-plan/',
   '/ko/contact/',
   '/ko/keepsakes/',
+  '/ko/repair-plan/',
   '/es/contact/',
   '/es/keepsakes/',
+  '/es/repair-plan/',
 ];
 
 async function loadPlaywright() {

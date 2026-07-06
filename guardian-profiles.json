@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-06-13",
+  "updated": "2026-07-05",
   "production": "https://lovetypes.tw/",
   "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, and conversion routes.",
   "rules": [

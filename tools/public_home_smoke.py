@@ -227,6 +227,9 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
         "safety_sections": 0,
         "safety_links": 0,
         "hero_ctas": 0,
+        "conversion_docks": 0,
+        "conversion_dock_links": 0,
+        "conversion_dock_events": 0,
         "quiz_scripts": 0,
         "quiz_questions": 0,
         "quiz_results": 0,
@@ -295,6 +298,29 @@ def validate_home(base_url: str, lang: str, path: str) -> tuple[list[str], dict[
                 issues.append(f"{path}: hero missing CTA {expected}")
             else:
                 stats["hero_ctas"] += 1
+
+    docks = find_all(root, attr="data-conversion-dock")
+    if len(docks) != 1:
+        issues.append(f"{path}: expected one conversion dock, got {len(docks)}")
+    else:
+        stats["conversion_docks"] = 1
+        dock_hrefs = set(hrefs_under(docks[0]))
+        expected_hrefs = {
+            localized_path(lang) + "#quiz-section",
+            localized_path(lang, "repair-plan") + "#repair-lead-pack",
+            localized_path(lang, "compass") + "#relationship-compass-tool",
+        }
+        for expected in expected_hrefs:
+            if expected not in dock_hrefs:
+                issues.append(f"{path}: conversion dock missing {expected}")
+            else:
+                stats["conversion_dock_links"] += 1
+        dock_events = {link.attrs.get("data-funnel-event", "") for link in descendants(docks[0], "a")}
+        for expected in ("conversion_dock_quiz", "conversion_dock_repair", "conversion_dock_compass"):
+            if expected not in dock_events:
+                issues.append(f"{path}: conversion dock missing funnel event {expected}")
+            else:
+                stats["conversion_dock_events"] += 1
 
     gates = find_all(root, attr="data-universe-gates")
     if len(gates) != 1:
@@ -366,6 +392,9 @@ def main() -> int:
         "safety_sections": 0,
         "safety_links": 0,
         "hero_ctas": 0,
+        "conversion_docks": 0,
+        "conversion_dock_links": 0,
+        "conversion_dock_events": 0,
     }
     issues: list[str] = []
     for lang, path in LANG_PATHS.items():
@@ -391,6 +420,9 @@ def main() -> int:
     print(f"public_home_safety_sections_checked={totals['safety_sections']}")
     print(f"public_home_safety_links_checked={totals['safety_links']}")
     print(f"public_home_hero_ctas_checked={totals['hero_ctas']}")
+    print(f"public_home_conversion_docks_checked={totals['conversion_docks']}")
+    print(f"public_home_conversion_dock_links_checked={totals['conversion_dock_links']}")
+    print(f"public_home_conversion_dock_events_checked={totals['conversion_dock_events']}")
     print(f"public_home_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

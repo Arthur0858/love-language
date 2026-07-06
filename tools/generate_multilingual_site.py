@@ -5872,6 +5872,9 @@ COMPASS_PAGE = {
         "boundary_title": "命理只作為關係洞察，不作為判決",
         "boundary": "這個工具可以結合 LoveTypes 類型與可選出生日期做關係節奏提示；它不預測命中注定、不替你決定婚姻可否，也不取代諮商、醫療、法律或安全支援。",
         "tool_title": "開始 LoveTypes Relationship Compass",
+        "compatibility_title": "想先理解心語合盤定位？",
+        "compatibility_intro": "如果你是從八字合婚、love compatibility 或關係測驗搜尋進來，先讀合盤入口頁，再回到免費羅盤開始。",
+        "compatibility_cta": "看心語合盤入口",
     },
     "en": {
         "title": "LoveTypes Relationship Compass",
@@ -5892,6 +5895,9 @@ COMPASS_PAGE = {
         "boundary_title": "Astrology is used as relationship insight, not a verdict",
         "boundary": "This tool may combine LoveTypes patterns with optional birthdate rhythm prompts. It does not predict destiny, decide whether you should marry, or replace counseling, medical, legal, or safety support.",
         "tool_title": "Start LoveTypes Relationship Compass",
+        "compatibility_title": "Want the compatibility framing first?",
+        "compatibility_intro": "If you arrived from BaZi love compatibility, love language compatibility, or relationship compatibility search, read the compatibility entry first, then return to the free compass.",
+        "compatibility_cta": "Open compatibility entry",
     },
     "ja": {
         "title": "LoveTypes 関係コンパス",
@@ -5912,6 +5918,9 @@ COMPASS_PAGE = {
         "boundary_title": "占術は関係洞察であり、判決ではありません",
         "boundary": "このツールは LoveTypes の型と任意の生年月日リズムを組み合わせることがあります。運命を断定したり、結婚可否を決めたり、相談支援・医療・法律・安全支援を代替したりしません。",
         "tool_title": "LoveTypes 関係コンパスを始める",
+        "compatibility_title": "先に相性の位置づけを読みますか？",
+        "compatibility_intro": "相性、愛の言語、東洋占術の検索から来た場合は、先に相性入口を読み、無料コンパスへ戻れます。",
+        "compatibility_cta": "相性入口を見る",
     },
     "ko": {
         "title": "LoveTypes 관계 컴퍼스",
@@ -5932,6 +5941,9 @@ COMPASS_PAGE = {
         "boundary_title": "명리는 관계 통찰 도구이지 판결이 아닙니다",
         "boundary": "이 도구는 LoveTypes 유형과 선택 생년월일 리듬을 함께 볼 수 있습니다. 운명을 단정하거나 결혼 가능 여부를 판단하지 않으며 상담, 의료, 법률, 안전 지원을 대신하지 않습니다.",
         "tool_title": "LoveTypes 관계 컴퍼스 시작",
+        "compatibility_title": "궁합 설명을 먼저 볼까요?",
+        "compatibility_intro": "사주 궁합, 사랑의 언어 궁합, 관계 궁합 검색에서 왔다면 궁합 입구를 먼저 읽고 무료 컴퍼스로 돌아오세요.",
+        "compatibility_cta": "궁합 입구 보기",
     },
     "es": {
         "title": "LoveTypes Brújula de Relación",
@@ -5952,6 +5964,9 @@ COMPASS_PAGE = {
         "boundary_title": "La astrología se usa como insight relacional, no como veredicto",
         "boundary": "Esta herramienta puede combinar patrones LoveTypes con ritmo opcional de nacimiento. No predice destino, no decide si debes casarte y no reemplaza terapia, atención médica, asesoría legal ni apoyo de seguridad.",
         "tool_title": "Iniciar Brújula de Relación LoveTypes",
+        "compatibility_title": "¿Quieres ver primero el marco de compatibilidad?",
+        "compatibility_intro": "Si llegaste por compatibilidad BaZi, lenguajes del amor o búsqueda de pareja, lee la entrada de compatibilidad y vuelve a la brújula gratis.",
+        "compatibility_cta": "Abrir entrada de compatibilidad",
     },
 }
 
@@ -7057,6 +7072,11 @@ def compass_page(lang: str) -> None:
   </div>
 </section>
 {compass_visual_layer(lang)}
+<section class="section note-section">
+  <h2>{escape(copy["compatibility_title"])}</h2>
+  <p>{escape(copy["compatibility_intro"])}</p>
+  <p><a class="secondary-btn" href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></p>
+</section>
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["how_title"])}</h2></div>
   <div class="card-grid compact">{cards}</div>

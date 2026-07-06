@@ -6322,7 +6322,9 @@ def compass_report_offer_section(lang: str) -> str:
 <article class="compass-report-card" data-compass-report-offer>
   <div class="compass-report-head"><h3>{escape(title)}</h3><span class="compass-report-price">{escape(price)}</span></div>
   <p>{escape(desc)}</p>
+  <!--email_off-->
   <a class="secondary-btn compass-buy-btn" href="mailto:{CONTACT_EMAIL}?subject={subject}&body={body}" data-funnel-event="compass_report_request">{escape(copy["cta"])}</a>
+  <!--/email_off-->
 </article>
 """)
     return f"""
@@ -6419,7 +6421,9 @@ def love_compatibility_page(lang: str) -> None:
   <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>
   <p class="section-intro">{escape(copy["offer_intro"])}</p>
   <div class="hero-actions">
+    <!--email_off-->
     <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={report_subject}&body={report_body}" data-funnel-event="love_compatibility_report_request">{escape(copy["offer_cta"])}</a>
+    <!--/email_off-->
     <a class="secondary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_offer_compass">{escape(copy["primary"])}</a>
   </div>
 </section>

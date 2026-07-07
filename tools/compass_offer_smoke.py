@@ -317,6 +317,10 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "result_offer_mailtos": 0,
         "result_offer_subjects": 0,
         "result_offer_locales": 0,
+        "result_copy_templates": 0,
+        "result_copy_events": 0,
+        "result_copy_payloads": 0,
+        "result_copy_labels": 0,
     }
     issues: list[str] = []
     if status != 200:
@@ -327,6 +331,13 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "data-compass-result-offer": "result offer template",
         "data-compass-result-report-request": "result report request link",
         'data-funnel-event="compass_result_report_request"': "result report funnel event",
+        "data-compass-result-share": "result share template",
+        "data-compass-result-copy": "result copy button",
+        'data-funnel-event="compass_result_copy"': "result copy funnel event",
+        'data-copy-text=""': "result copy payload placeholder",
+        "function resultShareText": "result share text builder",
+        "function copyText": "result copy helper",
+        "copyResultIntro": "result copy intro label",
         "mailto:contact@lovetypes.tw?subject=": "result report mailto",
         "resultOfferSubject": "result offer subject label",
         "Free compass result:": "result report free summary",
@@ -344,6 +355,11 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
     stats["result_offer_mailtos"] = text.count("mailto:contact@lovetypes.tw?subject=")
     stats["result_offer_subjects"] = text.count("resultOfferSubject")
     stats["result_offer_locales"] = text.count("resultOfferTitle")
+    stats["result_copy_templates"] = text.count("data-compass-result-share")
+    stats["result_copy_events"] = text.count("compass_result_copy")
+    stats["result_copy_payloads"] = text.count("data-copy-text")
+    result_copy_label_keys = ("copyResult:", "copyResultIntro:", "copiedResult:", "copyUnavailable:")
+    stats["result_copy_labels"] = sum(text.count(key) for key in result_copy_label_keys)
     if stats["result_offer_templates"] < 1:
         issues.append(f"{path}: expected at least one result offer template")
     if stats["result_offer_events"] < 2:
@@ -352,6 +368,14 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected result report mailto template")
     if stats["result_offer_subjects"] < 5 or stats["result_offer_locales"] < 5:
         issues.append(f"{path}: expected localized result offer labels for five languages")
+    if stats["result_copy_templates"] < 1:
+        issues.append(f"{path}: expected result copy template")
+    if stats["result_copy_events"] < 1:
+        issues.append(f"{path}: expected markup event for compass_result_copy")
+    if stats["result_copy_payloads"] < 1:
+        issues.append(f"{path}: expected result copy data-copy-text payload")
+    if stats["result_copy_labels"] < 20:
+        issues.append(f"{path}: expected localized copy labels for five languages")
     for phrase in HARD_VERDICT_PHRASES:
         if re.search(re.escape(phrase), text, re.I):
             issues.append(f"{path}: result template includes hard verdict phrase {phrase!r}")
@@ -397,6 +421,10 @@ def main() -> int:
         "result_offer_mailtos": 0,
         "result_offer_subjects": 0,
         "result_offer_locales": 0,
+        "result_copy_templates": 0,
+        "result_copy_events": 0,
+        "result_copy_payloads": 0,
+        "result_copy_labels": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -442,6 +470,10 @@ def main() -> int:
     print(f"compass_offer_result_mailtos_checked={totals['result_offer_mailtos']}")
     print(f"compass_offer_result_subjects_checked={totals['result_offer_subjects']}")
     print(f"compass_offer_result_locales_checked={totals['result_offer_locales']}")
+    print(f"compass_offer_result_copy_templates_checked={totals['result_copy_templates']}")
+    print(f"compass_offer_result_copy_events_checked={totals['result_copy_events']}")
+    print(f"compass_offer_result_copy_payloads_checked={totals['result_copy_payloads']}")
+    print(f"compass_offer_result_copy_labels_checked={totals['result_copy_labels']}")
     print(f"compass_offer_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

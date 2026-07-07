@@ -38,6 +38,10 @@
       resultOfferCta: 'Request this report',
       resultOfferSubject: 'LoveTypes Compass report request',
       resultOfferBody: 'I want a saved Relationship Compass report for this pairing.',
+      copyResult: 'Copy free result',
+      copyResultIntro: 'Save the free reading or paste it into a message before the insight disappears into the day.',
+      copiedResult: 'Copied',
+      copyUnavailable: 'Copy manually',
       reportLabels: {
         'emotional-pattern': 'Your Emotional Love Pattern',
         'compatibility': 'LoveTypes Compatibility Report',
@@ -85,6 +89,10 @@
       resultOfferCta: 'このレポートを依頼する',
       resultOfferSubject: 'LoveTypes コンパスレポート依頼',
       resultOfferBody: 'この組み合わせの保存版Relationship Compassレポートを希望します。',
+      copyResult: '無料結果をコピー',
+      copyResultIntro: '無料リーディングを保存したり、相手に送るメッセージへ貼り付けたりできます。',
+      copiedResult: 'コピーしました',
+      copyUnavailable: '手動でコピー',
       reportLabels: {
         'emotional-pattern': 'あなたの感情パターンレポート',
         'compatibility': 'LoveTypes 相性レポート',
@@ -125,6 +133,10 @@
       resultOfferCta: '이 리포트 요청하기',
       resultOfferSubject: 'LoveTypes 컴퍼스 리포트 요청',
       resultOfferBody: '이 조합의 저장용 Relationship Compass 리포트를 원합니다.',
+      copyResult: '무료 결과 복사',
+      copyResultIntro: '무료 리딩을 저장하거나 상대에게 보낼 메시지에 붙여 넣을 수 있습니다.',
+      copiedResult: '복사됨',
+      copyUnavailable: '직접 복사',
       reportLabels: {
         'emotional-pattern': '감정 패턴 레포트',
         'compatibility': 'LoveTypes 궁합 레포트',
@@ -165,6 +177,10 @@
       resultOfferCta: 'Solicitar este informe',
       resultOfferSubject: 'Solicitud de informe LoveTypes Compass',
       resultOfferBody: 'Quiero un informe guardable de Relationship Compass para esta combinación.',
+      copyResult: 'Copiar resultado gratis',
+      copyResultIntro: 'Guarda la lectura gratuita o pégala en un mensaje antes de que el insight se pierda en el día.',
+      copiedResult: 'Copiado',
+      copyUnavailable: 'Copiar manualmente',
       reportLabels: {
         'emotional-pattern': 'Tu Patrón Emocional de Amor',
         'compatibility': 'Informe de Compatibilidad LoveTypes',
@@ -205,6 +221,10 @@
       resultOfferCta: '需求這份報告',
       resultOfferSubject: 'LoveTypes 羅盤報告需求',
       resultOfferBody: '我想要這組配對的可保存 Relationship Compass 報告。',
+      copyResult: '複製免費結果',
+      copyResultIntro: '把免費解讀先保存下來，或直接貼進訊息裡，讓對話有一個比較溫柔的起點。',
+      copiedResult: '已複製',
+      copyUnavailable: '請手動複製',
       reportLabels: {
         'emotional-pattern': '你的情感模式報告',
         'compatibility': 'LoveTypes 關係合盤報告',
@@ -361,6 +381,65 @@
     return 'mailto:contact@lovetypes.tw?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 
+  function resultShareText(pairKey, selfG, partnerG, pairData, intake) {
+    return [
+      l.title,
+      selfG.name + ' × ' + partnerG.name,
+      '',
+      l.misfrequencyTitle + ':',
+      pairData.misfrequency,
+      '',
+      l.misunderstoodTitle + ':',
+      pairData.misunderstood,
+      '',
+      l.sentenceTitle + ':',
+      pairData.sentence,
+      '',
+      l.actionTitle + ':',
+      pairData.action,
+      '',
+      l.statusLabel + ': ' + (intake.status || '-'),
+      l.issueLabel + ': ' + (intake.issue || '-'),
+      'Pair: ' + pairKey,
+      'LoveTypes: ' + window.location.href
+    ].join('\n');
+  }
+
+  function copyText(text, button) {
+    function mark(label) {
+      if (!button) return;
+      button.textContent = label;
+      window.setTimeout(function () {
+        button.textContent = l.copyResult;
+      }, 1800);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function () {
+        mark(l.copiedResult);
+        return true;
+      }).catch(function () {
+        mark(l.copyUnavailable);
+        return false;
+      });
+    }
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (error) {
+      ok = false;
+    }
+    document.body.removeChild(textarea);
+    mark(ok ? l.copiedResult : l.copyUnavailable);
+    return Promise.resolve(ok);
+  }
+
   function renderResult(pairKey, selfG, partnerG, intake) {
     var pairData = data.pairings[pairKey];
     if (!pairData) {
@@ -408,6 +487,13 @@
           '<p>' + pairData.action + '</p>',
         '</div>',
 
+        '<div class="compass-insight-card compass-result-share" data-compass-result-share>',
+          '<span class="compass-insight-icon">⤴</span>',
+          '<h3>' + l.copyResult + '</h3>',
+          '<p>' + l.copyResultIntro + '</p>',
+          '<button type="button" class="secondary-btn compass-buy-btn" data-compass-result-copy data-funnel-event="compass_result_copy" data-copy-text="">' + l.copyResult + '</button>',
+        '</div>',
+
         '<div class="compass-insight-card compass-result-offer" data-compass-result-offer>',
           '<span class="compass-insight-icon">◆</span>',
           '<h3>' + l.resultOfferTitle + '</h3>',
@@ -422,6 +508,15 @@
 
     show(resultBox);
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    var copyBtn = resultBox.querySelector('[data-compass-result-copy]');
+    if (copyBtn) {
+      var shareText = resultShareText(pairKey, selfG, partnerG, pairData, intake);
+      copyBtn.dataset.copyText = shareText;
+      copyBtn.addEventListener('click', function () {
+        copyText(shareText, copyBtn);
+      });
+    }
 
     // Recalc button
     resultBox.querySelector('[data-compass-recalc]').addEventListener('click', function () {

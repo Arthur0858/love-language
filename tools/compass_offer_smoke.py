@@ -55,6 +55,9 @@ class CompassParser(HTMLParser):
         self.popular_pairing_sections = 0
         self.popular_pairing_cards = 0
         self.popular_pairing_events = 0
+        self.situation_route_sections = 0
+        self.situation_route_cards = 0
+        self.situation_route_events = 0
         self.pair_matrix_sections = 0
         self.pair_matrix_cards = 0
         self.pair_matrix_events = 0
@@ -99,6 +102,10 @@ class CompassParser(HTMLParser):
             self.popular_pairing_sections += 1
         if "data-compass-popular-pair" in attr:
             self.popular_pairing_cards += 1
+        if "data-compass-situation-routes" in attr:
+            self.situation_route_sections += 1
+        if "data-compass-situation-route" in attr:
+            self.situation_route_cards += 1
         if "data-compass-pair-matrix" in attr:
             if tag.lower() == "section":
                 self.pair_matrix_sections += 1
@@ -128,6 +135,8 @@ class CompassParser(HTMLParser):
             self.result_preview_events += 1
         if event in {"compass_popular_pair", "compass_popular_pair_tool"}:
             self.popular_pairing_events += 1
+        if event in {"compass_situation_route", "compass_situation_tool"}:
+            self.situation_route_events += 1
         if event in {"compass_pair_matrix", "compass_pair_matrix_tool"}:
             self.pair_matrix_events += 1
         if event == "compass_use_flow_start":
@@ -210,6 +219,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "popular_pairing_sections": 0,
         "popular_pairing_cards": 0,
         "popular_pairing_events": 0,
+        "situation_route_sections": 0,
+        "situation_route_cards": 0,
+        "situation_route_events": 0,
         "pair_matrix_sections": 0,
         "pair_matrix_cards": 0,
         "pair_matrix_events": 0,
@@ -249,6 +261,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["popular_pairing_sections"] = parser.popular_pairing_sections
     stats["popular_pairing_cards"] = parser.popular_pairing_cards
     stats["popular_pairing_events"] = parser.popular_pairing_events
+    stats["situation_route_sections"] = parser.situation_route_sections
+    stats["situation_route_cards"] = parser.situation_route_cards
+    stats["situation_route_events"] = parser.situation_route_events
     stats["pair_matrix_sections"] = parser.pair_matrix_sections
     stats["pair_matrix_cards"] = parser.pair_matrix_cards
     stats["pair_matrix_events"] = parser.pair_matrix_events
@@ -288,6 +303,12 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected 5 popular pairing cards, got {parser.popular_pairing_cards}")
     if parser.popular_pairing_events != 6:
         issues.append(f"{path}: expected 6 popular pairing events, got {parser.popular_pairing_events}")
+    if parser.situation_route_sections != 1:
+        issues.append(f"{path}: expected one situation route section, got {parser.situation_route_sections}")
+    if parser.situation_route_cards != 4:
+        issues.append(f"{path}: expected 4 situation route cards, got {parser.situation_route_cards}")
+    if parser.situation_route_events != 5:
+        issues.append(f"{path}: expected 5 situation route events, got {parser.situation_route_events}")
     if parser.pair_matrix_sections != 1:
         issues.append(f"{path}: expected one pair matrix section, got {parser.pair_matrix_sections}")
     if parser.pair_matrix_cards != 25:
@@ -545,6 +566,9 @@ def main() -> int:
         "popular_pairing_sections": 0,
         "popular_pairing_cards": 0,
         "popular_pairing_events": 0,
+        "situation_route_sections": 0,
+        "situation_route_cards": 0,
+        "situation_route_events": 0,
         "pair_matrix_sections": 0,
         "pair_matrix_cards": 0,
         "pair_matrix_events": 0,
@@ -612,6 +636,9 @@ def main() -> int:
     print(f"compass_offer_popular_pairing_sections_checked={totals['popular_pairing_sections']}")
     print(f"compass_offer_popular_pairing_cards_checked={totals['popular_pairing_cards']}")
     print(f"compass_offer_popular_pairing_events_checked={totals['popular_pairing_events']}")
+    print(f"compass_offer_situation_route_sections_checked={totals['situation_route_sections']}")
+    print(f"compass_offer_situation_route_cards_checked={totals['situation_route_cards']}")
+    print(f"compass_offer_situation_route_events_checked={totals['situation_route_events']}")
     print(f"compass_offer_pair_matrix_sections_checked={totals['pair_matrix_sections']}")
     print(f"compass_offer_pair_matrix_cards_checked={totals['pair_matrix_cards']}")
     print(f"compass_offer_pair_matrix_events_checked={totals['pair_matrix_events']}")

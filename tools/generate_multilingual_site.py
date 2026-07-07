@@ -6756,6 +6756,70 @@ COMPASS_POPULAR_PAIRINGS = {
 }
 
 
+COMPASS_SITUATION_ROUTES = {
+    "zh": {
+        "eyebrow": "SITUATION ROUTES",
+        "title": "從你現在最卡的情境開始",
+        "intro": "不一定要先知道完整類型。先選一個最像此刻的關係情境，羅盤會帶入狀態與議題，再讓你補上雙方守護者。",
+        "cta": "用這個情境開始",
+        "routes": [
+            ("long-distance", "after-fight", "遠距吵架後修復", "適合遠距、訊息誤會、同一件事反覆爭執。先把吵架翻成一個能說出口的小請求。"),
+            ("situationship", "different-needs", "曖昧關係卡住", "適合還沒定義關係、期待不一致、怕一開口就失去對方。先看雙方要的靠近方式。"),
+            ("married", "emotional-distance", "長期伴侶變冷", "適合同住、已婚或長期關係裡，生活很滿但心變遠。先找回被誤讀的照顧。"),
+            ("post-breakup", "trust", "分手後想修復信任", "適合分手後、冷靜期或重啟對話前。先確認安全界線，再決定能不能修復。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SITUATION ROUTES",
+        "title": "Start from the relationship situation that feels stuck now",
+        "intro": "You do not need the full theory first. Pick the situation closest to now; the compass will prefill status and issue before you choose both guardians.",
+        "cta": "Start with this situation",
+        "routes": [
+            ("long-distance", "after-fight", "Repair after a long-distance fight", "For distance, text misreads, and repeated arguments. Turn the fight into one smaller request."),
+            ("situationship", "different-needs", "Situationship feels stuck", "For undefined closeness, uneven expectations, and fear of asking too much. See how both people seek closeness."),
+            ("married", "emotional-distance", "Long-term partner feels distant", "For married or long-term relationships where life is full but emotional contact is thin. Find the care being misread."),
+            ("post-breakup", "trust", "Rebuild trust after breakup", "For post-breakup pauses or before restarting a talk. Name safety boundaries before deciding whether repair is possible."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SITUATION ROUTES",
+        "title": "今いちばん詰まっている状況から始める",
+        "intro": "最初に理論を全部読む必要はありません。今に近い状況を選ぶと、コンパスが関係状況と課題を先に入力します。",
+        "cta": "この状況で始める",
+        "routes": [
+            ("long-distance", "after-fight", "遠距離のけんか後に修復する", "遠距離、メッセージの誤読、同じことで繰り返し衝突する時に。"),
+            ("situationship", "different-needs", "曖昧な関係が止まっている", "関係が未定義で、期待の温度差や言い出す怖さがある時に。"),
+            ("married", "emotional-distance", "長期パートナーと心が離れた", "同居、結婚、長期関係で生活はあるのに心の接点が薄い時に。"),
+            ("post-breakup", "trust", "別れた後に信頼を見直す", "別れた後、冷却期間、話し合いを再開する前に。安全な境界から確認します。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SITUATION ROUTES",
+        "title": "지금 가장 막힌 관계 상황에서 시작하기",
+        "intro": "처음부터 이론을 모두 읽을 필요는 없습니다. 지금과 가까운 상황을 고르면 컴퍼스가 관계 상태와 이슈를 먼저 채웁니다.",
+        "cta": "이 상황으로 시작",
+        "routes": [
+            ("long-distance", "after-fight", "장거리 다툼 후 회복", "장거리, 메시지 오해, 같은 문제로 반복해서 싸울 때 작은 요청으로 바꿉니다."),
+            ("situationship", "different-needs", "애매한 관계가 멈춘 느낌", "관계가 정의되지 않았고 기대가 다르거나 말 꺼내기 두려울 때."),
+            ("married", "emotional-distance", "오래된 관계의 거리감", "동거, 결혼, 장기 관계에서 생활은 있지만 마음의 접점이 얇을 때."),
+            ("post-breakup", "trust", "이별 후 신뢰 다시 보기", "이별 후, 냉각기, 대화를 다시 시작하기 전 안전한 경계부터 확인합니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "SITUATION ROUTES",
+        "title": "Empieza desde la situación que se siente bloqueada ahora",
+        "intro": "No necesitas leer toda la teoría primero. Elige la situación más cercana; la brújula prellenará estado y tema antes de elegir guardianas.",
+        "cta": "Empezar con esta situación",
+        "routes": [
+            ("long-distance", "after-fight", "Reparar después de una pelea a distancia", "Para distancia, malentendidos por mensajes y discusiones repetidas. Convierte la pelea en una petición pequeña."),
+            ("situationship", "different-needs", "Situationship bloqueada", "Para cercanía indefinida, expectativas distintas y miedo a pedir demasiado."),
+            ("married", "emotional-distance", "Pareja de largo plazo distante", "Para matrimonio o relación larga donde la vida sigue pero el contacto emocional se adelgaza."),
+            ("post-breakup", "trust", "Reconstruir confianza tras ruptura", "Para pausa después de ruptura o antes de volver a hablar. Nombra límites seguros primero."),
+        ],
+    },
+}
+
+
 COMPASS_PAIR_MATRIX = {
     "zh": {
         "eyebrow": "PAIRING MATRIX",
@@ -6895,6 +6959,28 @@ def compass_popular_pairings_section(lang: str) -> str:
     return f"""
 <section class="section compass-popular-pairings" data-compass-popular-pairings>
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_popular_pair_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
+</section>
+"""
+
+
+def compass_situation_routes_section(lang: str) -> str:
+    copy = COMPASS_SITUATION_ROUTES[lang]
+    cards = []
+    for status, issue, title, desc in copy["routes"]:
+        href = f"{lang_url(lang, 'compass')}?status={status}&issue={issue}#relationship-compass-tool"
+        cards.append(f"""
+<a class="content-card compass-situation-card" href="{href}" data-compass-situation-route="{status}_{issue}" data-funnel-event="compass_situation_route">
+  <span class="eyebrow">{escape(status.replace("-", " "))} · {escape(issue.replace("-", " "))}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <span class="card-link">{escape(copy["cta"])}</span>
+</a>
+""")
+    return f"""
+<section class="section compass-situation-routes" data-compass-situation-routes>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_situation_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="card-grid compact">{"".join(cards)}</div>
 </section>
@@ -7937,6 +8023,7 @@ def compass_page(lang: str) -> None:
 {compass_visual_layer(lang)}
 {compass_result_preview_section(lang)}
 {compass_popular_pairings_section(lang)}
+{compass_situation_routes_section(lang)}
 {compass_pair_matrix_section(lang)}
 {compass_use_flow_section(lang)}
 <section class="section note-section">

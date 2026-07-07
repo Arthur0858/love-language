@@ -437,9 +437,14 @@
       "priority": 0.72
     },
     {
+      "url": "https://lovetypes.tw/tools/feeling-misunderstood-relationship/",
+      "intent": "When you feel misunderstood by your partner, use the LoveTypes Compass to translate complaints into love-language needs and one answerable request.",
+      "priority": 0.7
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.7
+      "priority": 0.68
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -501,12 +506,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 225,
-      "paths": 45,
+      "pages": 230,
+      "paths": 46,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 90,
+        "conversion": 95,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -535,7 +540,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 26,
+    "priorityUrls": 27,
     "languages": 5,
     "discoveryFiles": 10
   }

@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 225,
-    "paths": 45,
+    "pages": 230,
+    "paths": 46,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 90,
+      "conversion": 95,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -220,6 +220,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/breakup-signs-relationship/",
       "canonical": "https://lovetypes.tw/tools/breakup-signs-relationship/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/feeling-misunderstood-relationship/",
+      "canonical": "https://lovetypes.tw/tools/feeling-misunderstood-relationship/",
       "group": "conversion",
       "primary": true
     },
@@ -586,6 +594,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/feeling-misunderstood-relationship/",
+      "canonical": "https://lovetypes.tw/en/tools/feeling-misunderstood-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -940,6 +956,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/breakup-signs-relationship/",
       "canonical": "https://lovetypes.tw/ja/tools/breakup-signs-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/feeling-misunderstood-relationship/",
+      "canonical": "https://lovetypes.tw/ja/tools/feeling-misunderstood-relationship/",
       "group": "conversion",
       "primary": false
     },
@@ -1306,6 +1330,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/feeling-misunderstood-relationship/",
+      "canonical": "https://lovetypes.tw/ko/tools/feeling-misunderstood-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1660,6 +1692,14 @@
       "hreflang": "es",
       "path": "/es/tools/breakup-signs-relationship/",
       "canonical": "https://lovetypes.tw/es/tools/breakup-signs-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/feeling-misunderstood-relationship/",
+      "canonical": "https://lovetypes.tw/es/tools/feeling-misunderstood-relationship/",
       "group": "conversion",
       "primary": false
     },

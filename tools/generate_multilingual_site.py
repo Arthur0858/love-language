@@ -6072,6 +6072,8 @@ COMPASS_FAQ = {
             ("關係羅盤是免費的嗎？", "免費版會先給主要錯頻、最需要理解的地方、一句可說出口的話與 24 小時小行動。"),
             ("一定要填生日或出生時間嗎？", "不用。你可以只輸入雙方 LoveTypes 守護者與關係狀態；生日或出生時間只是選填的節奏線索。"),
             ("羅盤會判斷我們合不合嗎？", "不會。LoveTypes 不做命運、婚姻或分手判決，只把錯頻整理成可討論、可修復的下一步。"),
+            ("遠距離吵架後可以用關係羅盤嗎？", "可以。先選遠距離與吵架後情境，羅盤會把訊息誤會、陪伴不足或重複爭執整理成一個比較小、比較能開口的修復請求。"),
+            ("曖昧或分手後也適合使用嗎？", "可以，但請先確認安全與界線。羅盤適合幫你整理想說的話與下一步，不會替你判斷是否復合、告白或繼續等待。"),
         ],
     },
     "en": {
@@ -6080,6 +6082,8 @@ COMPASS_FAQ = {
             ("Is the Relationship Compass free?", "The free version gives the main cross-signal, what needs understanding, one sentence to say, and one 24-hour action."),
             ("Do I need a birthday or birth time?", "No. You can use only two LoveTypes guardians and relationship context; birth data is optional rhythm context."),
             ("Will the compass judge whether we are compatible?", "No. LoveTypes does not make destiny, marriage, or breakup verdicts. It turns cross-signals into repairable next steps."),
+            ("Can I use it after a long-distance fight?", "Yes. Choose the long-distance and after-fight situation route to turn text misunderstandings, missing presence, or repeated arguments into a smaller repair request."),
+            ("Can I use it for a situationship or after a breakup?", "Yes, with safety and boundaries first. The compass helps organize words and next steps; it does not decide whether to reconcile, confess, or keep waiting."),
         ],
     },
     "ja": {
@@ -6088,6 +6092,8 @@ COMPASS_FAQ = {
             ("関係コンパスは無料ですか？", "無料版では主なすれ違い、理解が必要な点、言える一文、24時間の行動が分かります。"),
             ("生年月日や出生時間は必要ですか？", "不要です。二人の LoveTypes 守護者と関係状況だけで使えます。出生情報は任意のリズム情報です。"),
             ("相性を判定しますか？", "しません。LoveTypes は運命、結婚、別れを断定せず、すれ違いを修復可能な次の一歩へ変えます。"),
+            ("遠距離のけんか後にも使えますか？", "使えます。遠距離とけんか後の状況を選ぶと、メッセージの誤読や繰り返す衝突を、小さな修復リクエストへ整理します。"),
+            ("曖昧な関係や別れた後にも向いていますか？", "使えますが、まず安全と境界を確認してください。コンパスは言葉と次の一歩を整理する道具で、復縁や告白を決めるものではありません。"),
         ],
     },
     "ko": {
@@ -6096,6 +6102,8 @@ COMPASS_FAQ = {
             ("관계 컴퍼스는 무료인가요?", "무료 버전은 주요 엇갈림, 이해가 필요한 부분, 말할 수 있는 한 문장, 24시간 행동을 줍니다."),
             ("생일이나 출생 시간이 꼭 필요한가요?", "아니요. 두 LoveTypes 수호자와 관계 상황만으로 사용할 수 있습니다. 출생 정보는 선택 리듬 단서입니다."),
             ("컴퍼스가 궁합을 판정하나요?", "아니요. LoveTypes는 운명, 결혼, 이별을 단정하지 않고 엇갈림을 회복 가능한 다음 단계로 바꿉니다."),
+            ("장거리 다툼 후에도 사용할 수 있나요?", "가능합니다. 장거리와 다툼 후 상황을 선택하면 메시지 오해, 부족한 현존감, 반복되는 싸움을 더 작은 회복 요청으로 정리합니다."),
+            ("애매한 관계나 이별 후에도 적합한가요?", "가능하지만 먼저 안전과 경계를 확인해야 합니다. 컴퍼스는 말과 다음 단계를 정리하는 도구이며 재회, 고백, 기다림을 대신 결정하지 않습니다."),
         ],
     },
     "es": {
@@ -6104,6 +6112,8 @@ COMPASS_FAQ = {
             ("¿La Brújula de Relación es gratis?", "La versión gratuita entrega la señal cruzada principal, lo que necesita comprensión, una frase y una acción de 24 horas."),
             ("¿Necesito cumpleaños u hora de nacimiento?", "No. Puedes usar solo dos guardianas LoveTypes y el contexto relacional; los datos natales son ritmo opcional."),
             ("¿La brújula juzga si somos compatibles?", "No. LoveTypes no da veredictos de destino, matrimonio o ruptura. Convierte señales cruzadas en próximos pasos reparables."),
+            ("¿Sirve después de una pelea a distancia?", "Sí. Elige la ruta de distancia y pelea para convertir malentendidos por mensajes, poca presencia o discusiones repetidas en una petición de reparación más pequeña."),
+            ("¿Sirve para una situationship o después de una ruptura?", "Sí, primero con seguridad y límites. La brújula ayuda a ordenar palabras y próximos pasos; no decide reconciliación, confesión ni espera."),
         ],
     },
 }

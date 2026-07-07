@@ -323,8 +323,8 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected one compass use flow CTA event, got {parser.use_flow_events}")
     if parser.faq_sections != 1:
         issues.append(f"{path}: expected one compass FAQ section, got {parser.faq_sections}")
-    if parser.faq_details != 3:
-        issues.append(f"{path}: expected 3 compass FAQ details, got {parser.faq_details}")
+    if parser.faq_details != 5:
+        issues.append(f"{path}: expected 5 compass FAQ details, got {parser.faq_details}")
     if parser.jsonld_blocks < 2:
         issues.append(f"{path}: expected WebApplication and FAQ JSON-LD blocks, got {parser.jsonld_blocks}")
 

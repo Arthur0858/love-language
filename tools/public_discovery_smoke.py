@@ -1877,6 +1877,8 @@ def check_search_indexing(base_url: str) -> tuple[list[str], int, int, int, int]
     expected_observation_fields = {"indexed", "lastSubmitted", "impressions", "clicks", "averagePosition", "queries", "notes"}
     expected_events = {
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed",

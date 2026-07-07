@@ -20,6 +20,8 @@
       "urlCount": 4,
       "relatedFunnelEvents": [
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed"
@@ -63,6 +65,8 @@
   "relatedFunnelEvents": [
     "campaign_landing",
     "compass_long_tail_entry",
+    "compass_search_task",
+    "compass_search_task_tool",
     "free_keepsake_download",
     "love_compatibility_compass_start",
     "love_compatibility_quick_answer_compass",
@@ -93,6 +97,8 @@
       ],
       "expectedEvents": [
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed"
@@ -127,6 +133,8 @@
       ],
       "expectedEvents": [
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed"
@@ -195,6 +203,8 @@
       ],
       "expectedEvents": [
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed"
@@ -229,6 +239,8 @@
       ],
       "expectedEvents": [
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed"
@@ -1181,6 +1193,6 @@
     "priorityUrls": 33,
     "submissionBatches": 3,
     "observationFields": 7,
-    "relatedFunnelEvents": 10
+    "relatedFunnelEvents": 12
   }
 }

@@ -3224,6 +3224,8 @@ def parse_search_indexing_plan(parsers: dict[Path, PageParser]) -> tuple[list[st
     expected_observation_fields = {"indexed", "lastSubmitted", "impressions", "clicks", "averagePosition", "queries", "notes"}
     expected_events = {
         "campaign_landing",
+        "compass_search_task",
+        "compass_search_task_tool",
         "love_compatibility_compass_start",
         "quiz_started",
         "quiz_completed",

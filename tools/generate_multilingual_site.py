@@ -8645,6 +8645,70 @@ COMPASS_INTENT_FAST_TRACK = {
 }
 
 
+COMPASS_SEARCH_TASKS = {
+    "zh": {
+        "eyebrow": "SEARCH ROUTER",
+        "title": "你是為了哪一種關係問題進來？",
+        "intro": "不用先讀完整理論。先選最接近的搜尋意圖，LoveTypes 會把你帶到對應入口，再回到免費羅盤整理下一句話。",
+        "tool_cta": "直接開始免費羅盤",
+        "items": [
+            ("想知道我們合不合", "看愛之語、心語合盤與可選出生節奏，但不做命運判決。", "tools/love-compatibility", "love_compatibility"),
+            ("吵架後想修復", "把爭執縮成一個可說出口的小請求與 24 小時行動。", "tools/relationship-repair-after-fight", "after_fight"),
+            ("對方沉默或需要空間", "分辨健康冷卻、逃避溝通與需要優先保護的界線。", "tools/silent-treatment-relationship", "silence_space"),
+            ("一直覺得不被愛", "先辨認安全感、被看見、被聽見或被記得的錯頻。", "tools/insecure-in-relationship", "unloved"),
+        ],
+    },
+    "en": {
+        "eyebrow": "SEARCH ROUTER",
+        "title": "Which relationship question brought you here?",
+        "intro": "You do not need the full theory first. Choose the closest search intent, open the matching route, then return to the free compass for one next sentence.",
+        "tool_cta": "Start free compass",
+        "items": [
+            ("Are we compatible?", "Read love-language compatibility and optional birth rhythm without turning it into a destiny verdict.", "tools/love-compatibility", "love_compatibility"),
+            ("We fought and need repair", "Shrink the argument into one speakable request and one 24-hour action.", "tools/relationship-repair-after-fight", "after_fight"),
+            ("They are silent or need space", "Separate healthy cooling down, communication avoidance, and boundaries that need safety first.", "tools/silent-treatment-relationship", "silence_space"),
+            ("I keep feeling unloved", "Name the mismatch around reassurance, being seen, being heard, or being remembered.", "tools/insecure-in-relationship", "unloved"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "SEARCH ROUTER",
+        "title": "どの関係の悩みで来ましたか？",
+        "intro": "最初から理論を全部読む必要はありません。近い検索意図を選び、対応する入口を見てから無料コンパスで次の一文を整理します。",
+        "tool_cta": "無料コンパスを始める",
+        "items": [
+            ("相性を知りたい", "愛の言語、相性、任意の出生リズムを読みますが、運命判決にはしません。", "tools/love-compatibility", "love_compatibility"),
+            ("喧嘩のあと修復したい", "争いを、言える小さなお願いと 24 時間の行動に縮めます。", "tools/relationship-repair-after-fight", "after_fight"),
+            ("沈黙や距離がつらい", "健康な冷却、会話回避、安全が必要な境界を分けます。", "tools/silent-treatment-relationship", "silence_space"),
+            ("愛されていない気がする", "安心、見てもらうこと、聞いてもらうこと、覚えてもらうことの錯頻を整理します。", "tools/insecure-in-relationship", "unloved"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "SEARCH ROUTER",
+        "title": "어떤 관계 질문 때문에 들어왔나요?",
+        "intro": "처음부터 이론을 모두 읽지 않아도 됩니다. 가장 가까운 검색 의도를 고르고 맞는 입구를 본 뒤 무료 컴퍼스로 다음 한 문장을 정리하세요.",
+        "tool_cta": "무료 컴퍼스 시작",
+        "items": [
+            ("우리 잘 맞는지 알고 싶다", "사랑의 언어 궁합과 선택 출생 리듬을 보되 운명 판정으로 만들지 않습니다.", "tools/love-compatibility", "love_compatibility"),
+            ("싸운 뒤 회복하고 싶다", "다툼을 말할 수 있는 작은 요청과 24시간 행동으로 줄입니다.", "tools/relationship-repair-after-fight", "after_fight"),
+            ("침묵하거나 시간이 필요하대요", "건강한 진정, 대화 회피, 먼저 지켜야 할 경계를 구분합니다.", "tools/silent-treatment-relationship", "silence_space"),
+            ("계속 사랑받지 못하는 느낌", "안정감, 보임, 들림, 기억됨의 엇갈림을 먼저 이름 붙입니다.", "tools/insecure-in-relationship", "unloved"),
+        ],
+    },
+    "es": {
+        "eyebrow": "SEARCH ROUTER",
+        "title": "¿Qué pregunta de relación te trajo aquí?",
+        "intro": "No necesitas leer toda la teoría primero. Elige la intención más cercana, abre la ruta adecuada y vuelve a la brújula gratis para una frase siguiente.",
+        "tool_cta": "Empezar brújula gratis",
+        "items": [
+            ("¿Somos compatibles?", "Lee compatibilidad de lenguajes del amor y ritmo natal opcional sin convertirlo en veredicto.", "tools/love-compatibility", "love_compatibility"),
+            ("Discutimos y quiero reparar", "Reduce la discusión a una petición clara y una acción de 24 horas.", "tools/relationship-repair-after-fight", "after_fight"),
+            ("Hay silencio o pide espacio", "Separa enfriamiento sano, evitación de conversación y límites que necesitan seguridad.", "tools/silent-treatment-relationship", "silence_space"),
+            ("Sigo sintiéndome no amada", "Nombra el desajuste alrededor de seguridad, ser vista, escuchada o recordada.", "tools/insecure-in-relationship", "unloved"),
+        ],
+    },
+}
+
+
 def long_tail_compatibility_urls() -> list[tuple[str, str, str]]:
     return [
         (slug, f"{DOMAIN}/tools/{slug}/", LONG_TAIL_COMPATIBILITY_PAGES[slug]["en"]["desc"])
@@ -8854,6 +8918,28 @@ def compass_visual_layer(lang: str) -> str:
     <h2>{escape(copy["audience_title"])}</h2>
     <div class="card-grid compact compass-audience-grid">{audience_cards}</div>
   </div>
+</section>
+"""
+
+
+def compass_search_task_router_section(lang: str) -> str:
+    copy = COMPASS_SEARCH_TASKS[lang]
+    cards = []
+    for index, (title, desc, target, task_id) in enumerate(copy["items"], start=1):
+        cards.append(f"""
+<a class="content-card compass-task-card" href="{lang_url(lang, target)}" data-compass-search-task="{escape(task_id)}" data-funnel-event="compass_search_task">
+  <p class="eyebrow">{index:02d}</p>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""")
+    return f"""
+<section class="section compass-search-task-router" data-compass-search-task-router>
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2><p>{escape(copy["intro"])}</p></div>
+    <a href="#relationship-compass-tool" data-funnel-event="compass_search_task_tool">{escape(copy["tool_cta"])}</a>
+  </div>
+  <div class="card-grid compact">{"".join(cards)}</div>
 </section>
 """
 
@@ -10091,6 +10177,7 @@ def compass_page(lang: str) -> None:
     </div>
   </div>
 </section>
+{compass_search_task_router_section(lang)}
 {compass_visual_layer(lang)}
 {compass_intent_fast_track_section(lang)}
 {compass_result_preview_section(lang)}
@@ -10144,7 +10231,13 @@ def compass_page(lang: str) -> None:
                 for title, price, _desc in COMPASS_REPORT_OFFER[lang]["items"]
             ],
         ],
-    }) + json_ld({
+    })
+    task_items = [
+        (title, abs_url(lang, target))
+        for title, _desc, target, _task_id in COMPASS_SEARCH_TASKS[lang]["items"]
+    ]
+    schema += item_list_schema(COMPASS_SEARCH_TASKS[lang]["title"], COMPASS_SEARCH_TASKS[lang]["intro"], task_items)
+    schema += json_ld({
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
@@ -15304,6 +15397,8 @@ def collect_search_indexing_plan() -> dict:
     batch_events = {
         "core_conversion": [
             "campaign_landing",
+            "compass_search_task",
+            "compass_search_task_tool",
             "love_compatibility_compass_start",
             "quiz_started",
             "quiz_completed",

@@ -432,9 +432,14 @@
       "priority": 0.74
     },
     {
+      "url": "https://lovetypes.tw/tools/breakup-signs-relationship/",
+      "intent": "Searching for breakup signs or whether the relationship can be repaired? Use the LoveTypes Compass to separate warning signs, repairable mismatch, and boundaries.",
+      "priority": 0.72
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.72
+      "priority": 0.7
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -496,12 +501,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 220,
-      "paths": 44,
+      "pages": 225,
+      "paths": 45,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 85,
+        "conversion": 90,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -530,7 +535,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 25,
+    "priorityUrls": 26,
     "languages": 5,
     "discoveryFiles": 10
   }

@@ -40,6 +40,7 @@ REQUIRED_EVENTS = {
     "love_compatibility_report_ladder",
     "love_compatibility_report_request",
     "love_compatibility_offer_compass",
+    "love_compatibility_long_tail_entry",
 }
 LONG_TAIL_REQUIRED_EVENTS = {
     "love_compatibility_compass_start",
@@ -217,6 +218,24 @@ def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
     return issues, stats
 
 
+def validate_hub_long_tail_links(base_url: str) -> tuple[list[str], int]:
+    issues: list[str] = []
+    links_checked = 0
+    for lang, hub_path in LANG_PATHS.items():
+        status, text = request_text(urljoin(base_url + "/", hub_path.lstrip("/")))
+        if status != 200:
+            issues.append(f"{hub_path}: expected status 200, got {status}")
+            continue
+        parser = LoveCompatibilityParser()
+        parser.feed(text)
+        for long_tail_path in LONG_TAIL_PATHS[lang]:
+            if long_tail_path not in parser.hrefs:
+                issues.append(f"{hub_path}: missing long-tail link to {long_tail_path}")
+            else:
+                links_checked += 1
+    return issues, links_checked
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check LoveTypes love compatibility SEO landing pages.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
@@ -234,6 +253,7 @@ def main() -> int:
         "inbound_pages": 0,
         "inbound_links": 0,
         "inbound_events": 0,
+        "hub_long_tail_links": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -251,6 +271,9 @@ def main() -> int:
     issues.extend(inbound_issues)
     for key, value in inbound_stats.items():
         totals[key] += value
+    hub_long_tail_issues, hub_long_tail_links = validate_hub_long_tail_links(base_url)
+    issues.extend(hub_long_tail_issues)
+    totals["hub_long_tail_links"] += hub_long_tail_links
 
     print(f"love_compatibility_pages_checked={totals['pages']}")
     print(f"love_compatibility_h1_checked={totals['h1']}")
@@ -262,6 +285,7 @@ def main() -> int:
     print(f"love_compatibility_inbound_pages_checked={totals['inbound_pages']}")
     print(f"love_compatibility_inbound_links_checked={totals['inbound_links']}")
     print(f"love_compatibility_inbound_events_checked={totals['inbound_events']}")
+    print(f"love_compatibility_hub_long_tail_links_checked={totals['hub_long_tail_links']}")
     print(f"love_compatibility_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

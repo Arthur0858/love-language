@@ -6516,6 +6516,15 @@ LONG_TAIL_COMPATIBILITY_PAGES = {
 }
 
 
+LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
+    "zh": "延伸搜尋路線",
+    "en": "Related search routes",
+    "ja": "関連する検索ルート",
+    "ko": "관련 검색 루트",
+    "es": "Rutas de búsqueda relacionadas",
+}
+
+
 def compass_visual_layer(lang: str) -> str:
     copy = COMPASS_TRAFFIC_LAYER[lang]
     guardian_tiles = []
@@ -6592,6 +6601,20 @@ def love_compatibility_page(lang: str) -> None:
         for number, title, text in copy["cards"]
     )
     seo_items = "".join(f"<li>{escape(item)}</li>" for item in copy["seo_items"])
+    long_tail_cards = "".join(
+        f"""
+<a class="content-card" href="{lang_url(lang, "tools/" + slug)}" data-funnel-event="love_compatibility_long_tail_entry">
+  <span class="eyebrow">{escape(page_copy["eyebrow"])}</span>
+  <h3>{escape(page_copy["title"])}</h3>
+  <p>{escape(page_copy["desc"])}</p>
+  <span class="card-link">{escape(page_copy["secondary"])}</span>
+</a>
+"""
+        for slug, page_copy in (
+            (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
+            for slug in LONG_TAIL_COMPATIBILITY_PAGES
+        )
+    )
     faq_items = "".join(
         f"""
 <details>
@@ -6654,6 +6677,10 @@ def love_compatibility_page(lang: str) -> None:
   <h2>{escape(copy["seo_title"])}</h2>
   <ul>{seo_items}</ul>
   <div class="callout"><strong>{escape(copy["boundary_title"])}</strong><p>{escape(copy["boundary"])}</p></div>
+</section>
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
+  <div class="card-grid compact">{long_tail_cards}</div>
 </section>
 <section class="section supply-panel-section">
   <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>

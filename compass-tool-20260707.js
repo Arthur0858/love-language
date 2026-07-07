@@ -42,6 +42,11 @@
       copyResultIntro: 'Save the free reading or paste it into a message before the insight disappears into the day.',
       copiedResult: 'Copied',
       copyUnavailable: 'Copy manually',
+      nextStepsTitle: 'Keep going from here',
+      nextStepsIntro: 'Move the free result into one useful next step before it becomes another saved screenshot.',
+      nextStepsGuardian: 'Read my guardian',
+      nextStepsRepair: 'Open 7-day repair',
+      nextStepsSupply: 'Open supply route',
       reportLabels: {
         'emotional-pattern': 'Your Emotional Love Pattern',
         'compatibility': 'LoveTypes Compatibility Report',
@@ -93,6 +98,11 @@
       copyResultIntro: '無料リーディングを保存したり、相手に送るメッセージへ貼り付けたりできます。',
       copiedResult: 'コピーしました',
       copyUnavailable: '手動でコピー',
+      nextStepsTitle: '次に進む',
+      nextStepsIntro: '無料結果を保存だけで終わらせず、今できる一歩につなげましょう。',
+      nextStepsGuardian: '私のガーディアンを見る',
+      nextStepsRepair: '7日修復を開く',
+      nextStepsSupply: '補給ルートを見る',
       reportLabels: {
         'emotional-pattern': 'あなたの感情パターンレポート',
         'compatibility': 'LoveTypes 相性レポート',
@@ -137,6 +147,11 @@
       copyResultIntro: '무료 리딩을 저장하거나 상대에게 보낼 메시지에 붙여 넣을 수 있습니다.',
       copiedResult: '복사됨',
       copyUnavailable: '직접 복사',
+      nextStepsTitle: '다음 단계',
+      nextStepsIntro: '무료 결과를 캡처로만 남기지 말고, 지금 할 수 있는 한 걸음으로 이어가세요.',
+      nextStepsGuardian: '내 가디언 보기',
+      nextStepsRepair: '7일 회복 열기',
+      nextStepsSupply: '보급 루트 보기',
       reportLabels: {
         'emotional-pattern': '감정 패턴 레포트',
         'compatibility': 'LoveTypes 궁합 레포트',
@@ -181,6 +196,11 @@
       copyResultIntro: 'Guarda la lectura gratuita o pégala en un mensaje antes de que el insight se pierda en el día.',
       copiedResult: 'Copiado',
       copyUnavailable: 'Copiar manualmente',
+      nextStepsTitle: 'Sigue desde aquí',
+      nextStepsIntro: 'Convierte el resultado gratis en un siguiente paso útil antes de que quede solo como captura.',
+      nextStepsGuardian: 'Leer mi guardián',
+      nextStepsRepair: 'Abrir reparación de 7 días',
+      nextStepsSupply: 'Abrir ruta de apoyo',
       reportLabels: {
         'emotional-pattern': 'Tu Patrón Emocional de Amor',
         'compatibility': 'Informe de Compatibilidad LoveTypes',
@@ -225,6 +245,11 @@
       copyResultIntro: '把免費解讀先保存下來，或直接貼進訊息裡，讓對話有一個比較溫柔的起點。',
       copiedResult: '已複製',
       copyUnavailable: '請手動複製',
+      nextStepsTitle: '接下來做什麼',
+      nextStepsIntro: '先把免費結果接到一個可完成的下一步，避免它只停在截圖裡。',
+      nextStepsGuardian: '看我的守護者',
+      nextStepsRepair: '進入 7 日修復',
+      nextStepsSupply: '打開補給路線',
       reportLabels: {
         'emotional-pattern': '你的情感模式報告',
         'compatibility': 'LoveTypes 關係合盤報告',
@@ -381,6 +406,21 @@
     return 'mailto:contact@lovetypes.tw?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 
+  function localizedPath(path) {
+    var clean = String(path || '').replace(/^\/+/, '').replace(/\/?$/, '/');
+    return lang === 'zh' ? '/' + clean : '/' + lang + '/' + clean;
+  }
+
+  function guardianSlug(key) {
+    return {
+      W: 'iris',
+      T: 'noah',
+      G: 'vivian',
+      S: 'claire',
+      P: 'dora'
+    }[key] || 'iris';
+  }
+
   function resultShareText(pairKey, selfG, partnerG, pairData, intake) {
     return [
       l.title,
@@ -450,6 +490,7 @@
 
     var accent = partnerG.domainAccent || partnerG.color;
     var glow = partnerG.domainGlow || partnerG.color;
+    var selfSlug = guardianSlug(pairKey.split('_')[0]);
 
     resultBox.innerHTML = [
       '<article class="compass-result-card" style="--result-accent:' + accent + ';--domain-glow:' + glow + '">',
@@ -492,6 +533,17 @@
           '<h3>' + l.copyResult + '</h3>',
           '<p>' + l.copyResultIntro + '</p>',
           '<button type="button" class="secondary-btn compass-buy-btn" data-compass-result-copy data-funnel-event="compass_result_copy" data-copy-text="">' + l.copyResult + '</button>',
+        '</div>',
+
+        '<div class="compass-insight-card compass-result-next-steps" data-compass-result-next-steps>',
+          '<span class="compass-insight-icon">↗</span>',
+          '<h3>' + l.nextStepsTitle + '</h3>',
+          '<p>' + l.nextStepsIntro + '</p>',
+          '<div class="compass-next-step-actions" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">',
+            '<a class="secondary-btn compass-buy-btn" href="' + localizedPath('characters/' + selfSlug) + '" data-compass-result-next-link data-funnel-event="compass_result_guardian">' + l.nextStepsGuardian + '</a>',
+            '<a class="secondary-btn compass-buy-btn" href="' + localizedPath('repair-plan') + '#plan-' + selfSlug + '" data-compass-result-next-link data-funnel-event="compass_result_repair">' + l.nextStepsRepair + '</a>',
+            '<a class="secondary-btn compass-buy-btn" href="' + localizedPath('resources') + '#supply-' + selfSlug + '" data-compass-result-next-link data-funnel-event="compass_result_supply">' + l.nextStepsSupply + '</a>',
+          '</div>',
         '</div>',
 
         '<div class="compass-insight-card compass-result-offer" data-compass-result-offer>',

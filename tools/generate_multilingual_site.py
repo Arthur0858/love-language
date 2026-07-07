@@ -12320,6 +12320,10 @@ def collect_funnel_events() -> dict:
         add_event("campaign_landing", page)
 
     for page in ["/compass/", "/en/compass/", "/ja/compass/", "/ko/compass/", "/es/compass/"]:
+        add_event("compass_result_copy", page)
+        add_event("compass_result_guardian", page)
+        add_event("compass_result_repair", page)
+        add_event("compass_result_supply", page)
         add_event("compass_result_report_request", page)
 
     for page in ["/", "/start/", "/en/", "/en/start/", "/ja/", "/ja/start/", "/ko/", "/ko/start/", "/es/", "/es/start/"]:

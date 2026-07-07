@@ -321,6 +321,9 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "result_copy_events": 0,
         "result_copy_payloads": 0,
         "result_copy_labels": 0,
+        "result_next_step_templates": 0,
+        "result_next_step_events": 0,
+        "result_next_step_labels": 0,
     }
     issues: list[str] = []
     if status != 200:
@@ -338,6 +341,14 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "function resultShareText": "result share text builder",
         "function copyText": "result copy helper",
         "copyResultIntro": "result copy intro label",
+        "data-compass-result-next-steps": "result next-step template",
+        "data-compass-result-next-link": "result next-step links",
+        'data-funnel-event="compass_result_guardian"': "result guardian next-step funnel event",
+        'data-funnel-event="compass_result_repair"': "result repair next-step funnel event",
+        'data-funnel-event="compass_result_supply"': "result supply next-step funnel event",
+        "function localizedPath": "localized next-step path helper",
+        "function guardianSlug": "guardian slug helper",
+        "nextStepsTitle": "result next-step localized labels",
         "mailto:contact@lovetypes.tw?subject=": "result report mailto",
         "resultOfferSubject": "result offer subject label",
         "Free compass result:": "result report free summary",
@@ -360,6 +371,23 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
     stats["result_copy_payloads"] = text.count("data-copy-text")
     result_copy_label_keys = ("copyResult:", "copyResultIntro:", "copiedResult:", "copyUnavailable:")
     stats["result_copy_labels"] = sum(text.count(key) for key in result_copy_label_keys)
+    stats["result_next_step_templates"] = text.count("data-compass-result-next-steps")
+    stats["result_next_step_events"] = sum(
+        text.count(name)
+        for name in (
+            "compass_result_guardian",
+            "compass_result_repair",
+            "compass_result_supply",
+        )
+    )
+    result_next_step_label_keys = (
+        "nextStepsTitle:",
+        "nextStepsIntro:",
+        "nextStepsGuardian:",
+        "nextStepsRepair:",
+        "nextStepsSupply:",
+    )
+    stats["result_next_step_labels"] = sum(text.count(key) for key in result_next_step_label_keys)
     if stats["result_offer_templates"] < 1:
         issues.append(f"{path}: expected at least one result offer template")
     if stats["result_offer_events"] < 2:
@@ -376,6 +404,12 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected result copy data-copy-text payload")
     if stats["result_copy_labels"] < 20:
         issues.append(f"{path}: expected localized copy labels for five languages")
+    if stats["result_next_step_templates"] < 1:
+        issues.append(f"{path}: expected result next-step template")
+    if stats["result_next_step_events"] < 3:
+        issues.append(f"{path}: expected guardian, repair, and supply next-step events")
+    if stats["result_next_step_labels"] < 25:
+        issues.append(f"{path}: expected localized next-step labels for five languages")
     for phrase in HARD_VERDICT_PHRASES:
         if re.search(re.escape(phrase), text, re.I):
             issues.append(f"{path}: result template includes hard verdict phrase {phrase!r}")
@@ -425,6 +459,9 @@ def main() -> int:
         "result_copy_events": 0,
         "result_copy_payloads": 0,
         "result_copy_labels": 0,
+        "result_next_step_templates": 0,
+        "result_next_step_events": 0,
+        "result_next_step_labels": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -474,6 +511,9 @@ def main() -> int:
     print(f"compass_offer_result_copy_events_checked={totals['result_copy_events']}")
     print(f"compass_offer_result_copy_payloads_checked={totals['result_copy_payloads']}")
     print(f"compass_offer_result_copy_labels_checked={totals['result_copy_labels']}")
+    print(f"compass_offer_result_next_step_templates_checked={totals['result_next_step_templates']}")
+    print(f"compass_offer_result_next_step_events_checked={totals['result_next_step_events']}")
+    print(f"compass_offer_result_next_step_labels_checked={totals['result_next_step_labels']}")
     print(f"compass_offer_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

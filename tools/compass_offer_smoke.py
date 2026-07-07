@@ -52,6 +52,9 @@ class CompassParser(HTMLParser):
         self.result_preview_sections = 0
         self.result_preview_cards = 0
         self.result_preview_events = 0
+        self.popular_pairing_sections = 0
+        self.popular_pairing_cards = 0
+        self.popular_pairing_events = 0
         self.use_flow_sections = 0
         self.use_flow_steps = 0
         self.use_flow_events = 0
@@ -89,6 +92,10 @@ class CompassParser(HTMLParser):
             self.result_preview_sections += 1
         if "data-compass-result-preview-card" in attr:
             self.result_preview_cards += 1
+        if "data-compass-popular-pairings" in attr:
+            self.popular_pairing_sections += 1
+        if "data-compass-popular-pair" in attr:
+            self.popular_pairing_cards += 1
         if "data-compass-use-flow" in attr:
             self.use_flow_sections += 1
         if "data-compass-use-flow-step" in attr:
@@ -111,6 +118,8 @@ class CompassParser(HTMLParser):
             self.visual_events += 1
         if event == "compass_result_preview_start":
             self.result_preview_events += 1
+        if event in {"compass_popular_pair", "compass_popular_pair_tool"}:
+            self.popular_pairing_events += 1
         if event == "compass_use_flow_start":
             self.use_flow_events += 1
         if "data-compass-report-offers" in attr:
@@ -188,6 +197,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
+        "popular_pairing_sections": 0,
+        "popular_pairing_cards": 0,
+        "popular_pairing_events": 0,
         "use_flow_sections": 0,
         "use_flow_steps": 0,
         "use_flow_events": 0,
@@ -221,6 +233,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["result_preview_sections"] = parser.result_preview_sections
     stats["result_preview_cards"] = parser.result_preview_cards
     stats["result_preview_events"] = parser.result_preview_events
+    stats["popular_pairing_sections"] = parser.popular_pairing_sections
+    stats["popular_pairing_cards"] = parser.popular_pairing_cards
+    stats["popular_pairing_events"] = parser.popular_pairing_events
     stats["use_flow_sections"] = parser.use_flow_sections
     stats["use_flow_steps"] = parser.use_flow_steps
     stats["use_flow_events"] = parser.use_flow_events
@@ -251,6 +266,12 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected 3 compass result preview cards, got {parser.result_preview_cards}")
     if parser.result_preview_events != 1:
         issues.append(f"{path}: expected one compass result preview CTA event, got {parser.result_preview_events}")
+    if parser.popular_pairing_sections != 1:
+        issues.append(f"{path}: expected one popular pairing section, got {parser.popular_pairing_sections}")
+    if parser.popular_pairing_cards != 5:
+        issues.append(f"{path}: expected 5 popular pairing cards, got {parser.popular_pairing_cards}")
+    if parser.popular_pairing_events != 6:
+        issues.append(f"{path}: expected 6 popular pairing events, got {parser.popular_pairing_events}")
     if parser.use_flow_sections != 1:
         issues.append(f"{path}: expected one compass use flow section, got {parser.use_flow_sections}")
     if parser.use_flow_steps != 3:
@@ -324,6 +345,7 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "result_next_step_templates": 0,
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
+        "result_query_prefill_helpers": 0,
     }
     issues: list[str] = []
     if status != 200:
@@ -349,6 +371,9 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "function localizedPath": "localized next-step path helper",
         "function guardianSlug": "guardian slug helper",
         "nextStepsTitle": "result next-step localized labels",
+        "function applyQueryPrefill": "query prefill helper",
+        "new URLSearchParams": "query string parser",
+        "applyQueryPrefill();": "query prefill initializer",
         "mailto:contact@lovetypes.tw?subject=": "result report mailto",
         "resultOfferSubject": "result offer subject label",
         "Free compass result:": "result report free summary",
@@ -388,6 +413,14 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "nextStepsSupply:",
     )
     stats["result_next_step_labels"] = sum(text.count(key) for key in result_next_step_label_keys)
+    stats["result_query_prefill_helpers"] = sum(
+        text.count(marker)
+        for marker in (
+            "function applyQueryPrefill",
+            "new URLSearchParams",
+            "applyQueryPrefill();",
+        )
+    )
     if stats["result_offer_templates"] < 1:
         issues.append(f"{path}: expected at least one result offer template")
     if stats["result_offer_events"] < 2:
@@ -410,6 +443,8 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected guardian, repair, and supply next-step events")
     if stats["result_next_step_labels"] < 25:
         issues.append(f"{path}: expected localized next-step labels for five languages")
+    if stats["result_query_prefill_helpers"] < 3:
+        issues.append(f"{path}: expected query prefill helper, parser, and initializer")
     for phrase in HARD_VERDICT_PHRASES:
         if re.search(re.escape(phrase), text, re.I):
             issues.append(f"{path}: result template includes hard verdict phrase {phrase!r}")
@@ -436,6 +471,9 @@ def main() -> int:
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
+        "popular_pairing_sections": 0,
+        "popular_pairing_cards": 0,
+        "popular_pairing_events": 0,
         "use_flow_sections": 0,
         "use_flow_steps": 0,
         "use_flow_events": 0,
@@ -462,6 +500,7 @@ def main() -> int:
         "result_next_step_templates": 0,
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
+        "result_query_prefill_helpers": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -488,6 +527,9 @@ def main() -> int:
     print(f"compass_offer_result_preview_sections_checked={totals['result_preview_sections']}")
     print(f"compass_offer_result_preview_cards_checked={totals['result_preview_cards']}")
     print(f"compass_offer_result_preview_events_checked={totals['result_preview_events']}")
+    print(f"compass_offer_popular_pairing_sections_checked={totals['popular_pairing_sections']}")
+    print(f"compass_offer_popular_pairing_cards_checked={totals['popular_pairing_cards']}")
+    print(f"compass_offer_popular_pairing_events_checked={totals['popular_pairing_events']}")
     print(f"compass_offer_use_flow_sections_checked={totals['use_flow_sections']}")
     print(f"compass_offer_use_flow_steps_checked={totals['use_flow_steps']}")
     print(f"compass_offer_use_flow_events_checked={totals['use_flow_events']}")
@@ -514,6 +556,7 @@ def main() -> int:
     print(f"compass_offer_result_next_step_templates_checked={totals['result_next_step_templates']}")
     print(f"compass_offer_result_next_step_events_checked={totals['result_next_step_events']}")
     print(f"compass_offer_result_next_step_labels_checked={totals['result_next_step_labels']}")
+    print(f"compass_offer_result_query_prefill_helpers_checked={totals['result_query_prefill_helpers']}")
     print(f"compass_offer_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

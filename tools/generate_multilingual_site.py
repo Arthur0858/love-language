@@ -6687,6 +6687,75 @@ LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
 }
 
 
+COMPASS_POPULAR_PAIRINGS = {
+    "zh": {
+        "eyebrow": "POPULAR PAIRINGS",
+        "title": "先從熱門心語配對開始",
+        "intro": "如果你還不知道要怎麼選，先點一組常見配對。羅盤會先替你預填雙方守護者，再讓你補上關係狀態。",
+        "cta": "用這組開始",
+        "pairs": [
+            ("W", "T", "肯定言詞 × 優質時光", "一方需要被說清楚，一方需要被真正陪伴時，最容易把愛誤讀成敷衍。"),
+            ("T", "G", "優質時光 × 收到禮物", "一方在意當下陪伴，一方在意被記得；錯頻常發生在紀念日與日常安排。"),
+            ("G", "S", "收到禮物 × 服務行動", "一方用象徵保存愛，一方用實際分擔表達愛，容易互相覺得對方不懂重點。"),
+            ("S", "P", "服務行動 × 身體接觸", "一方想被分擔，一方想安全靠近；疲累與距離感會同時放大。"),
+            ("P", "W", "身體接觸 × 肯定言詞", "一方需要靠近，一方需要被說出來；沉默或拒絕靠近都可能被放大。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "POPULAR PAIRINGS",
+        "title": "Start with a common LoveTypes pairing",
+        "intro": "If you are not sure where to begin, choose a common pairing. The compass will prefill both guardians before you add relationship context.",
+        "cta": "Start with this pair",
+        "pairs": [
+            ("W", "T", "Words × Quality Time", "One needs love named clearly while the other needs real presence; care can be misread as distance."),
+            ("T", "G", "Quality Time × Receiving Gifts", "One values present attention while the other values being remembered, especially around dates and rituals."),
+            ("G", "S", "Receiving Gifts × Acts of Service", "One preserves love through symbols while the other shows love through practical help."),
+            ("S", "P", "Acts of Service × Physical Touch", "One wants shared load while the other wants safe closeness; fatigue can make both needs louder."),
+            ("P", "W", "Physical Touch × Words", "One needs closeness while the other needs spoken affirmation; silence and distance can both hurt."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "POPULAR PAIRINGS",
+        "title": "よくある組み合わせから始める",
+        "intro": "迷う場合は、よくある組み合わせを選んでください。コンパスが二人の守護者を先に入力します。",
+        "cta": "この組み合わせで始める",
+        "pairs": [
+            ("W", "T", "肯定の言葉 × 上質な時間", "言葉で確認したい人と、そばにいる実感が必要な人のすれ違い。"),
+            ("T", "G", "上質な時間 × 贈り物", "今ここにいることと、覚えていてくれることの優先順位がずれる組み合わせ。"),
+            ("G", "S", "贈り物 × サービス行動", "象徴で愛を残す人と、実際の手助けで愛を示す人の違い。"),
+            ("S", "P", "サービス行動 × スキンシップ", "負担を分けたい人と、安全に近づきたい人のニーズが重なります。"),
+            ("P", "W", "スキンシップ × 肯定の言葉", "近さが必要な人と、言葉で安心したい人の組み合わせ。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "POPULAR PAIRINGS",
+        "title": "자주 보는 조합으로 시작하기",
+        "intro": "어디서 시작할지 모르겠다면 흔한 조합을 선택하세요. 컴퍼스가 두 수호자를 먼저 채웁니다.",
+        "cta": "이 조합으로 시작",
+        "pairs": [
+            ("W", "T", "인정의 말 × 함께하는 시간", "한 사람은 분명한 말이 필요하고, 한 사람은 진짜 함께 있음이 필요합니다."),
+            ("T", "G", "함께하는 시간 × 선물", "현재의 집중과 기억받는 느낌 사이에서 엇갈리기 쉬운 조합입니다."),
+            ("G", "S", "선물 × 서비스 행동", "상징으로 사랑을 남기는 사람과 실제 도움으로 표현하는 사람의 차이입니다."),
+            ("S", "P", "서비스 행동 × 신체 접촉", "분담을 원하는 마음과 안전한 가까움을 원하는 마음이 함께 커집니다."),
+            ("P", "W", "신체 접촉 × 인정의 말", "가까움이 필요한 사람과 말로 안심하고 싶은 사람의 조합입니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "POPULAR PAIRINGS",
+        "title": "Empieza con una combinación común",
+        "intro": "Si no sabes por dónde empezar, elige una combinación común. La brújula prellenará ambas guardianas antes del contexto.",
+        "cta": "Empezar con esta combinación",
+        "pairs": [
+            ("W", "T", "Palabras × Tiempo de calidad", "Una persona necesita que el amor se diga; la otra necesita presencia real."),
+            ("T", "G", "Tiempo de calidad × Regalos", "Una valora atención presente y la otra sentirse recordada en detalles y fechas."),
+            ("G", "S", "Regalos × Actos de servicio", "Una guarda símbolos de amor y la otra expresa amor ayudando de forma práctica."),
+            ("S", "P", "Actos de servicio × Contacto físico", "Una necesita compartir carga y la otra acercamiento seguro; el cansancio amplifica ambas."),
+            ("P", "W", "Contacto físico × Palabras", "Una necesita cercanía y la otra afirmación verbal; silencio y distancia pueden doler."),
+        ],
+    },
+}
+
+
 def compass_visual_layer(lang: str) -> str:
     copy = COMPASS_TRAFFIC_LAYER[lang]
     guardian_tiles = []
@@ -6767,6 +6836,28 @@ def compass_use_flow_section(lang: str) -> str:
     <p><a class="secondary-btn" href="#relationship-compass-tool" data-funnel-event="compass_use_flow_start">{escape(copy["cta"])}</a></p>
   </div>
   <div class="card-grid compact">{steps}</div>
+</section>
+"""
+
+
+def compass_popular_pairings_section(lang: str) -> str:
+    copy = COMPASS_POPULAR_PAIRINGS[lang]
+    cards = []
+    for self_key, partner_key, title, desc in copy["pairs"]:
+        href = f"{lang_url(lang, 'compass')}?self={self_key}&partner={partner_key}#relationship-compass-tool"
+        cards.append(f"""
+<a class="content-card compass-popular-pair-card" href="{href}" data-compass-popular-pair="{self_key}_{partner_key}" data-funnel-event="compass_popular_pair">
+  <span class="eyebrow">{escape(self_key)} × {escape(partner_key)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <span class="card-link">{escape(copy["cta"])}</span>
+</a>
+""")
+    return f"""
+<section class="section compass-popular-pairings" data-compass-popular-pairings>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_popular_pair_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
 </section>
 """
 
@@ -7775,6 +7866,7 @@ def compass_page(lang: str) -> None:
 </section>
 {compass_visual_layer(lang)}
 {compass_result_preview_section(lang)}
+{compass_popular_pairings_section(lang)}
 {compass_use_flow_section(lang)}
 <section class="section note-section">
   <h2>{escape(copy["compatibility_title"])}</h2>

@@ -480,6 +480,28 @@
     return Promise.resolve(ok);
   }
 
+  function applyQueryPrefill() {
+    if (!window.URLSearchParams) return;
+    var params = new URLSearchParams(window.location.search || '');
+    [
+      ['self', 'self'],
+      ['partner', 'partner'],
+      ['status', 'status'],
+      ['issue', 'issue']
+    ].forEach(function (item) {
+      var field = form.querySelector('[name="' + item[0] + '"]');
+      var value = params.get(item[1]);
+      if (!field || !value) return;
+      var hasOption = Array.prototype.some.call(field.options || [], function (option) {
+        return option.value === value;
+      });
+      if (hasOption) {
+        field.value = value;
+        field.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  }
+
   function renderResult(pairKey, selfG, partnerG, intake) {
     var pairData = data.pairings[pairKey];
     if (!pairData) {
@@ -670,4 +692,6 @@
 
     renderResult(pairKey, selfG, partnerG, intake);
   });
+
+  applyQueryPrefill();
 })();

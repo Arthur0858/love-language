@@ -8887,7 +8887,7 @@ def compass_intent_fast_track_section(lang: str) -> str:
     copy = COMPASS_INTENT_FAST_TRACK[lang]
     cards = "".join(
         f"""
-<a class="content-card compass-intent-card" href="{lang_url(lang, "tools/" + slug)}" data-compass-intent-card="{escape(slug)}" data-funnel-event="compass_long_tail_entry">
+<a class="content-card compass-intent-card" href="{lang_url(lang, "tools/" + slug)}" data-compass-intent-card="{escape(slug)}" data-funnel-route="{escape(slug)}" data-funnel-intent="{escape(page_copy["eyebrow"])}" data-funnel-event="compass_long_tail_entry">
   <span class="eyebrow">{escape(page_copy["eyebrow"])}</span>
   <h3>{escape(page_copy["h1"])}</h3>
   <p>{escape(page_copy["desc"])}</p>
@@ -8900,7 +8900,7 @@ def compass_intent_fast_track_section(lang: str) -> str:
         )
     )
     return f"""
-<section class="section compass-intent-fast-track" data-compass-intent-fast-track>
+<section class="section compass-intent-fast-track" data-compass-intent-fast-track data-funnel-source="compass_intent_fast_track">
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_intent_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="card-grid compact">{"".join(cards)}</div>

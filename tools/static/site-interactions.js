@@ -74,6 +74,11 @@
     return className || sourceNode.tagName.toLowerCase();
   }
 
+  function funnelDataValue(element, attribute) {
+    var node = closest(element, '[' + attribute + ']');
+    return node ? String(node.getAttribute(attribute) || '').slice(0, 160) : '';
+  }
+
   function targetType(target) {
     if (!target) return 'button';
     if (target.indexOf('mailto:') === 0) return 'email';
@@ -142,6 +147,8 @@
       category: funnelCategory(name),
       guardian: guardianFromElement(element, target || ''),
       source: funnelSource(element),
+      route: funnelDataValue(element, 'data-funnel-route'),
+      intent: funnelDataValue(element, 'data-funnel-intent'),
       campaign: campaign,
       at: new Date().toISOString()
     };

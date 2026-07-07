@@ -19,11 +19,11 @@ LANG_PATHS = {
     "es": "/es/tools/love-compatibility/",
 }
 LONG_TAIL_PATHS = {
-    "zh": ("/tools/bazi-love-compatibility/", "/tools/2026-love-timing/", "/tools/long-distance-fight-repair/", "/tools/love-language-compatibility/", "/tools/relationship-compatibility-test/"),
-    "en": ("/en/tools/bazi-love-compatibility/", "/en/tools/2026-love-timing/", "/en/tools/long-distance-fight-repair/", "/en/tools/love-language-compatibility/", "/en/tools/relationship-compatibility-test/"),
-    "ja": ("/ja/tools/bazi-love-compatibility/", "/ja/tools/2026-love-timing/", "/ja/tools/long-distance-fight-repair/", "/ja/tools/love-language-compatibility/", "/ja/tools/relationship-compatibility-test/"),
-    "ko": ("/ko/tools/bazi-love-compatibility/", "/ko/tools/2026-love-timing/", "/ko/tools/long-distance-fight-repair/", "/ko/tools/love-language-compatibility/", "/ko/tools/relationship-compatibility-test/"),
-    "es": ("/es/tools/bazi-love-compatibility/", "/es/tools/2026-love-timing/", "/es/tools/long-distance-fight-repair/", "/es/tools/love-language-compatibility/", "/es/tools/relationship-compatibility-test/"),
+    "zh": ("/tools/bazi-love-compatibility/", "/tools/2026-love-timing/", "/tools/long-distance-fight-repair/", "/tools/love-language-compatibility/", "/tools/relationship-compatibility-test/", "/tools/couples-communication-quiz/"),
+    "en": ("/en/tools/bazi-love-compatibility/", "/en/tools/2026-love-timing/", "/en/tools/long-distance-fight-repair/", "/en/tools/love-language-compatibility/", "/en/tools/relationship-compatibility-test/", "/en/tools/couples-communication-quiz/"),
+    "ja": ("/ja/tools/bazi-love-compatibility/", "/ja/tools/2026-love-timing/", "/ja/tools/long-distance-fight-repair/", "/ja/tools/love-language-compatibility/", "/ja/tools/relationship-compatibility-test/", "/ja/tools/couples-communication-quiz/"),
+    "ko": ("/ko/tools/bazi-love-compatibility/", "/ko/tools/2026-love-timing/", "/ko/tools/long-distance-fight-repair/", "/ko/tools/love-language-compatibility/", "/ko/tools/relationship-compatibility-test/", "/ko/tools/couples-communication-quiz/"),
+    "es": ("/es/tools/bazi-love-compatibility/", "/es/tools/2026-love-timing/", "/es/tools/long-distance-fight-repair/", "/es/tools/love-language-compatibility/", "/es/tools/relationship-compatibility-test/", "/es/tools/couples-communication-quiz/"),
 }
 INBOUND_PATHS = {
     "zh": ("/", "/compass/", "/garden-map/", "/resources/"),

@@ -402,9 +402,14 @@
       "priority": 0.86
     },
     {
+      "url": "https://lovetypes.tw/tools/couples-communication-quiz/",
+      "intent": "A couples communication quiz that turns complaints, silence, and conflict into one small request and a repair route.",
+      "priority": 0.84
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.84
+      "priority": 0.82
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -466,12 +471,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 190,
-      "paths": 38,
+      "pages": 195,
+      "paths": 39,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 55,
+        "conversion": 60,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -500,7 +505,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 19,
+    "priorityUrls": 20,
     "languages": 5,
     "discoveryFiles": 10
   }

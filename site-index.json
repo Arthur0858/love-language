@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 190,
-    "paths": 38,
+    "pages": 195,
+    "paths": 39,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 55,
+      "conversion": 60,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -164,6 +164,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/relationship-compatibility-test/",
       "canonical": "https://lovetypes.tw/tools/relationship-compatibility-test/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/couples-communication-quiz/",
+      "canonical": "https://lovetypes.tw/tools/couples-communication-quiz/",
       "group": "conversion",
       "primary": true
     },
@@ -474,6 +482,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/couples-communication-quiz/",
+      "canonical": "https://lovetypes.tw/en/tools/couples-communication-quiz/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -772,6 +788,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/relationship-compatibility-test/",
       "canonical": "https://lovetypes.tw/ja/tools/relationship-compatibility-test/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/couples-communication-quiz/",
+      "canonical": "https://lovetypes.tw/ja/tools/couples-communication-quiz/",
       "group": "conversion",
       "primary": false
     },
@@ -1082,6 +1106,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/couples-communication-quiz/",
+      "canonical": "https://lovetypes.tw/ko/tools/couples-communication-quiz/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1380,6 +1412,14 @@
       "hreflang": "es",
       "path": "/es/tools/relationship-compatibility-test/",
       "canonical": "https://lovetypes.tw/es/tools/relationship-compatibility-test/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/couples-communication-quiz/",
+      "canonical": "https://lovetypes.tw/es/tools/couples-communication-quiz/",
       "group": "conversion",
       "primary": false
     },

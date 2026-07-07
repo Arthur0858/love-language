@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 210,
-    "paths": 42,
+    "pages": 215,
+    "paths": 43,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 75,
+      "conversion": 80,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -196,6 +196,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/trust-issues-relationship/",
       "canonical": "https://lovetypes.tw/tools/trust-issues-relationship/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/insecure-in-relationship/",
+      "canonical": "https://lovetypes.tw/tools/insecure-in-relationship/",
       "group": "conversion",
       "primary": true
     },
@@ -538,6 +546,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/insecure-in-relationship/",
+      "canonical": "https://lovetypes.tw/en/tools/insecure-in-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -868,6 +884,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/trust-issues-relationship/",
       "canonical": "https://lovetypes.tw/ja/tools/trust-issues-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/insecure-in-relationship/",
+      "canonical": "https://lovetypes.tw/ja/tools/insecure-in-relationship/",
       "group": "conversion",
       "primary": false
     },
@@ -1210,6 +1234,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/insecure-in-relationship/",
+      "canonical": "https://lovetypes.tw/ko/tools/insecure-in-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1540,6 +1572,14 @@
       "hreflang": "es",
       "path": "/es/tools/trust-issues-relationship/",
       "canonical": "https://lovetypes.tw/es/tools/trust-issues-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/insecure-in-relationship/",
+      "canonical": "https://lovetypes.tw/es/tools/insecure-in-relationship/",
       "group": "conversion",
       "primary": false
     },

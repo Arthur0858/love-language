@@ -422,9 +422,14 @@
       "priority": 0.78
     },
     {
+      "url": "https://lovetypes.tw/tools/insecure-in-relationship/",
+      "intent": "When you feel insecure in a relationship, use the LoveTypes Compass to separate triggers, love-language needs, and one request that can be answered.",
+      "priority": 0.76
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.76
+      "priority": 0.74
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -486,12 +491,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 210,
-      "paths": 42,
+      "pages": 215,
+      "paths": 43,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 75,
+        "conversion": 80,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -520,7 +525,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 23,
+    "priorityUrls": 24,
     "languages": 5,
     "discoveryFiles": 10
   }

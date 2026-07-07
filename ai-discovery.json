@@ -457,9 +457,14 @@
       "priority": 0.64
     },
     {
+      "url": "https://lovetypes.tw/tools/partner-doesnt-listen/",
+      "intent": "If your partner does not listen, use the LoveTypes Compass to separate response gaps, love-language mismatch, pressure defense, and one answerable request.",
+      "priority": 0.62
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.62
+      "priority": 0.6
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -521,12 +526,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 245,
-      "paths": 49,
+      "pages": 250,
+      "paths": 50,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 110,
+        "conversion": 115,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -555,7 +560,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 30,
+    "priorityUrls": 31,
     "languages": 5,
     "discoveryFiles": 10
   }

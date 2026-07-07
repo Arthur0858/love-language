@@ -9077,6 +9077,86 @@ def compass_faq_section(lang: str) -> str:
 """
 
 
+LONG_TAIL_QUICK_ANSWER = {
+    "zh": {
+        "eyebrow": "SEARCH ANSWER",
+        "title": "先用 30 秒抓住這個關係問題",
+        "intro": "如果你是從搜尋進來，先不要急著把關係貼上結論。LoveTypes 會把問題拆成一個場景、一個可能錯頻，以及一個可以立刻嘗試的小請求。",
+        "scene": "先看見場景",
+        "pattern": "再辨認錯頻",
+        "next": "下一步",
+        "cta": "用免費羅盤整理這段關係",
+    },
+    "en": {
+        "eyebrow": "SEARCH ANSWER",
+        "title": "Get a 30-second read on this relationship issue",
+        "intro": "If you came from search, do not turn the relationship into a verdict yet. LoveTypes breaks the issue into one scene, one possible mismatch, and one small request you can try next.",
+        "scene": "Name the scene",
+        "pattern": "Read the mismatch",
+        "next": "Next step",
+        "cta": "Map this with the free compass",
+    },
+    "ja": {
+        "eyebrow": "SEARCH ANSWER",
+        "title": "まず 30 秒でこの関係の問題を整理する",
+        "intro": "検索から来た場合、すぐに関係の結論を出さないでください。LoveTypes は一つの場面、一つのすれ違い、一つの小さなお願いに分けます。",
+        "scene": "場面を見る",
+        "pattern": "すれ違いを読む",
+        "next": "次の一歩",
+        "cta": "無料コンパスで整理する",
+    },
+    "ko": {
+        "eyebrow": "SEARCH ANSWER",
+        "title": "30초 안에 이 관계 문제를 먼저 정리하세요",
+        "intro": "검색으로 들어왔다면 관계를 바로 결론 내리지 마세요. LoveTypes는 문제를 한 장면, 가능한 엇갈림, 지금 시도할 작은 요청으로 나눕니다.",
+        "scene": "장면 보기",
+        "pattern": "엇갈림 읽기",
+        "next": "다음 단계",
+        "cta": "무료 컴퍼스로 정리하기",
+    },
+    "es": {
+        "eyebrow": "SEARCH ANSWER",
+        "title": "Lee este problema relacional en 30 segundos",
+        "intro": "Si llegaste desde búsqueda, no conviertas la relación en una sentencia todavía. LoveTypes separa el problema en una escena, un posible desajuste y una petición pequeña para probar.",
+        "scene": "Nombrar la escena",
+        "pattern": "Leer el desajuste",
+        "next": "Siguiente paso",
+        "cta": "Mapear con la brújula gratis",
+    },
+}
+
+
+def long_tail_quick_answer_section(lang: str, copy: dict) -> str:
+    labels = LONG_TAIL_QUICK_ANSWER[lang]
+    section_titles = [title for title, _text in copy["sections"]]
+    section_texts = [text for _title, text in copy["sections"]]
+    cards = "".join(
+        f"""
+<article class="content-card quick-answer-card">
+  <span class="eyebrow">{escape(label)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for label, title, text in (
+            (labels["scene"], section_titles[0], section_texts[0]),
+            (labels["pattern"], section_titles[1], section_texts[1]),
+            (labels["next"], section_titles[2], section_texts[2]),
+        )
+    )
+    return f"""
+<section class="section intro-grid quick-answer-section" data-love-compatibility-quick-answer>
+  <div class="quick-answer-copy">
+    <p class="eyebrow">{escape(labels["eyebrow"])}</p>
+    <h2>{escape(labels["title"])}</h2>
+    <p>{escape(labels["intro"])}</p>
+    <a class="primary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_quick_answer_compass">{escape(labels["cta"])}</a>
+  </div>
+  <div class="card-grid compact quick-answer-grid">{cards}</div>
+</section>
+"""
+
+
 def love_compatibility_page(lang: str) -> None:
     copy = LOVE_COMPATIBILITY_PAGE[lang]
     t = LANGS[lang]
@@ -9259,6 +9339,7 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
     <a class="secondary-btn" href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="love_compatibility_hub">{escape(copy["secondary"])}</a>
   </div>
 </section>
+{long_tail_quick_answer_section(lang, copy)}
 <section class="section">
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
   <div class="content-grid">{section_cards}</div>

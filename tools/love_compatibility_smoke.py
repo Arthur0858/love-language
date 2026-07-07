@@ -49,6 +49,7 @@ LONG_TAIL_REQUIRED_EVENTS = {
     "love_compatibility_report_ladder",
     "love_compatibility_report_request",
     "love_compatibility_repair",
+    "love_compatibility_quick_answer_compass",
 }
 HARD_VERDICT_PHRASES = (
     "一定會分手",
@@ -68,6 +69,7 @@ class LoveCompatibilityParser(HTMLParser):
         self.hrefs: set[str] = set()
         self.mailtos: list[str] = []
         self.faq_details = 0
+        self.quick_answer_sections = 0
         self.jsonld_blocks = 0
         self.text_parts: list[str] = []
 
@@ -85,6 +87,8 @@ class LoveCompatibilityParser(HTMLParser):
             self.mailtos.append(href)
         if tag.lower() == "details":
             self.faq_details += 1
+        if "data-love-compatibility-quick-answer" in attr:
+            self.quick_answer_sections += 1
         if tag.lower() == "script" and attr.get("type") == "application/ld+json":
             self.jsonld_blocks += 1
 
@@ -121,6 +125,7 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "events": 0,
         "mailto_links": 0,
         "faq_details": 0,
+        "quick_answer_sections": 0,
         "jsonld_blocks": 0,
         "boundary_phrases": 0,
     }
@@ -136,6 +141,7 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["events"] = len(parser.events)
     stats["mailto_links"] = len(parser.mailtos)
     stats["faq_details"] = parser.faq_details
+    stats["quick_answer_sections"] = parser.quick_answer_sections
     stats["jsonld_blocks"] = parser.jsonld_blocks
     stats["boundary_phrases"] = sum(
         1
@@ -181,6 +187,8 @@ def validate_long_tail_page(base_url: str, path: str) -> tuple[list[str], dict[s
         issues.append(f"{path}: expected organization, breadcrumb, webpage, and FAQ JSON-LD")
     if parser.faq_details < 3:
         issues.append(f"{path}: expected at least 3 FAQ details, got {parser.faq_details}")
+    if parser.quick_answer_sections != 1:
+        issues.append(f"{path}: expected one quick answer section, got {parser.quick_answer_sections}")
     return issues, stats
 
 
@@ -268,6 +276,7 @@ def main() -> int:
         "events": 0,
         "mailto_links": 0,
         "faq_details": 0,
+        "quick_answer_sections": 0,
         "jsonld_blocks": 0,
         "boundary_phrases": 0,
         "inbound_pages": 0,
@@ -302,6 +311,7 @@ def main() -> int:
     print(f"love_compatibility_events_checked={totals['events']}")
     print(f"love_compatibility_mailto_links_checked={totals['mailto_links']}")
     print(f"love_compatibility_faq_details_checked={totals['faq_details']}")
+    print(f"love_compatibility_quick_answer_sections_checked={totals['quick_answer_sections']}")
     print(f"love_compatibility_jsonld_blocks_checked={totals['jsonld_blocks']}")
     print(f"love_compatibility_boundary_phrases_checked={totals['boundary_phrases']}")
     print(f"love_compatibility_inbound_pages_checked={totals['inbound_pages']}")

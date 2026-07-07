@@ -452,9 +452,14 @@
       "priority": 0.66
     },
     {
+      "url": "https://lovetypes.tw/tools/lonely-in-relationship/",
+      "intent": "If you feel lonely in a relationship, use the LoveTypes Compass to separate quality-time mismatch, response gaps, emotional distance, and one small request.",
+      "priority": 0.64
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.64
+      "priority": 0.62
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -516,12 +521,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 240,
-      "paths": 48,
+      "pages": 245,
+      "paths": 49,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 105,
+        "conversion": 110,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -550,7 +555,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 29,
+    "priorityUrls": 30,
     "languages": 5,
     "discoveryFiles": 10
   }

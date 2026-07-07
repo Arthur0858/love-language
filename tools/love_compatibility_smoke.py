@@ -19,11 +19,11 @@ LANG_PATHS = {
     "es": "/es/tools/love-compatibility/",
 }
 LONG_TAIL_PATHS = {
-    "zh": ("/tools/bazi-love-compatibility/", "/tools/2026-love-timing/"),
-    "en": ("/en/tools/bazi-love-compatibility/", "/en/tools/2026-love-timing/"),
-    "ja": ("/ja/tools/bazi-love-compatibility/", "/ja/tools/2026-love-timing/"),
-    "ko": ("/ko/tools/bazi-love-compatibility/", "/ko/tools/2026-love-timing/"),
-    "es": ("/es/tools/bazi-love-compatibility/", "/es/tools/2026-love-timing/"),
+    "zh": ("/tools/bazi-love-compatibility/", "/tools/2026-love-timing/", "/tools/long-distance-fight-repair/"),
+    "en": ("/en/tools/bazi-love-compatibility/", "/en/tools/2026-love-timing/", "/en/tools/long-distance-fight-repair/"),
+    "ja": ("/ja/tools/bazi-love-compatibility/", "/ja/tools/2026-love-timing/", "/ja/tools/long-distance-fight-repair/"),
+    "ko": ("/ko/tools/bazi-love-compatibility/", "/ko/tools/2026-love-timing/", "/ko/tools/long-distance-fight-repair/"),
+    "es": ("/es/tools/bazi-love-compatibility/", "/es/tools/2026-love-timing/", "/es/tools/long-distance-fight-repair/"),
 }
 INBOUND_PATHS = {
     "zh": ("/", "/compass/", "/garden-map/", "/resources/"),

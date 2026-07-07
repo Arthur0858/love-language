@@ -344,6 +344,9 @@ def load_generator_config():
 
 GENERATOR_CONFIG = load_generator_config()
 ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
+EXPECTED_LOCALIZED_PATHS = len(GENERATOR_CONFIG.site_index_paths())
+EXPECTED_INDEXABLE_PAGES = EXPECTED_LOCALIZED_PATHS * len(GENERATOR_CONFIG.LANGS)
+EXPECTED_AI_DISCOVERY_PRIORITY_URLS = len(GENERATOR_CONFIG.collect_ai_discovery_index()["priorityUrls"])
 EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0"
 FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
 LEGACY_ZH_GUIDE_TARGETS = {slug: target for slug, _title, _desc, target in GENERATOR_CONFIG.LEGACY_ZH_GUIDES}
@@ -2690,8 +2693,8 @@ def parse_site_health() -> tuple[list[str], Counter]:
         issues.append(f"{SITE_HEALTH_PATH}: coverage should be an object")
         return issues, stats
     expected_coverage = {
-        "indexablePages": 175,
-        "localizedPaths": 35,
+        "indexablePages": EXPECTED_INDEXABLE_PAGES,
+        "localizedPaths": EXPECTED_LOCALIZED_PATHS,
         "languages": 5,
         "routeGroups": 5,
         "coreFlows": 5,
@@ -2808,7 +2811,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         issues.append(f"{RELEASE_PATH}: branch should be main")
     contents = data.get("releaseContents")
     expected_contents = {
-        "indexablePages": 175,
+        "indexablePages": EXPECTED_INDEXABLE_PAGES,
         "languages": 5,
         "guardians": 5,
         "commerceItems": 20,
@@ -3050,7 +3053,7 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     issues.extend(validate_promotion_profile_verification(str(AI_DISCOVERY_PATH), data, stats, "ai_discovery_promotion_profile_verification"))
 
     totals = data.get("totals")
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": 16, "languages": 5, "discoveryFiles": 10}
+    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": EXPECTED_AI_DISCOVERY_PRIORITY_URLS, "languages": 5, "discoveryFiles": 10}
     if not isinstance(totals, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
     else:
@@ -3156,8 +3159,8 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
                         issues.append(f"{AI_DISCOVERY_PATH}: {question_id} fragment missing: {url}")
 
     priority_urls = data.get("priorityUrls")
-    if not isinstance(priority_urls, list) or len(priority_urls) != 16:
-        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include sixteen entries")
+    if not isinstance(priority_urls, list) or len(priority_urls) != EXPECTED_AI_DISCOVERY_PRIORITY_URLS:
+        issues.append(f"{AI_DISCOVERY_PATH}: priorityUrls should include {EXPECTED_AI_DISCOVERY_PRIORITY_URLS} entries")
     else:
         for item in priority_urls:
             if not isinstance(item, dict):

@@ -1393,6 +1393,118 @@ LUNA_GUARDIAN_FLOW = {
             "dora": "Nota si tu cuerpo se siente seguro y escribe una frase de consentimiento y límite de cercanía.",
         },
     },
+    "long-distance-fight-repair": {
+        "zh": {
+            "title": "遠距離吵架後怎麼修復｜LoveTypes 關係羅盤",
+            "desc": "遠距離吵架後先不要急著判斷合不合，用 LoveTypes 關係羅盤把訊息誤會、陪伴落差與修復請求整理清楚。",
+            "eyebrow": "LONG-DISTANCE REPAIR",
+            "h1": "遠距離吵架後，先把誤會縮成一句能說出口的請求",
+            "intro": "遠距離最難的不是距離本身，而是訊息延遲、語氣誤讀與沒有被陪伴的感覺一起放大。LoveTypes 會先把你們的錯頻整理成可討論的需求，而不是急著判斷關係輸贏。",
+            "primary": "開始遠距修復羅盤",
+            "secondary": "看心語合盤總入口",
+            "offer": "登記遠距修復報告",
+            "offer_subject": "LoveTypes 遠距修復報告需求",
+            "offer_body": "我想登記 LoveTypes 遠距修復報告。\n我的守護者：\n對方守護者：\n目前遠距狀態：\n最近反覆吵架的主題：\n想先修復的一句話：\n可回覆 email：\n",
+            "sections": [
+                ("先停下判斷", "吵架後不要立刻把沉默讀成不愛，先看你們各自用什麼方式確認安全感。"),
+                ("翻譯訊息誤會", "把已讀不回、回太短、錯過通話這類事件，翻成背後真正需要的陪伴或肯定。"),
+                ("只做 24 小時修復", "先選一句能說出口的話與一個小行動，不把整段遠距關係一次修完。"),
+            ],
+            "faq": [
+                ("遠距吵架後要先道歉還是先冷靜？", "先確認安全與冷靜時間，再用一句小請求重新開口。羅盤會幫你把情緒縮成比較能被接住的句子。"),
+                ("對方已讀不回也能用嗎？", "可以。先不要把已讀不回直接判成不在乎，羅盤會幫你辨認自己真正缺的是肯定、時間、行動還是安全靠近。"),
+                ("這會判斷我們遠距適不適合嗎？", "不會。LoveTypes 不做分手或命運判決，只把遠距錯頻整理成下一個可修復步驟。"),
+            ],
+        },
+        "en": {
+            "title": "How to Repair After a Long-Distance Fight | LoveTypes",
+            "desc": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
+            "eyebrow": "LONG-DISTANCE REPAIR",
+            "h1": "After a long-distance fight, shrink the misunderstanding into one request",
+            "intro": "Long distance often hurts through delayed replies, tone misreads, and the feeling of not being accompanied. LoveTypes turns the cross-signal into a need you can discuss before the relationship becomes a verdict.",
+            "primary": "Start long-distance compass",
+            "secondary": "Open compatibility hub",
+            "offer": "Request long-distance repair report",
+            "offer_subject": "LoveTypes long-distance repair report request",
+            "offer_body": "I want to request a LoveTypes long-distance repair report.\nMy guardian:\nTheir guardian:\nCurrent long-distance status:\nRepeated fight topic:\nOne sentence I want to repair:\nReply email:\n",
+            "sections": [
+                ("Pause the verdict", "Do not turn silence into proof of not being loved too quickly. First see how each person confirms safety."),
+                ("Translate text misreads", "Read receipts, short replies, and missed calls often point to needs for words, time, action, or closeness."),
+                ("Repair for 24 hours", "Choose one sentence and one small action instead of trying to fix the whole distance at once."),
+            ],
+            "faq": [
+                ("Should we apologize or cool down first?", "Start by naming a safe cooldown window, then reopen with one small request. The compass helps make the sentence easier to receive."),
+                ("Can I use it when they left me on read?", "Yes. Instead of treating it as proof they do not care, use the compass to identify what you needed in that moment."),
+                ("Will it decide whether long distance can work?", "No. LoveTypes does not make breakup or destiny verdicts. It maps the next repair step."),
+            ],
+        },
+        "ja": {
+            "title": "遠距離のけんか後に修復する方法｜LoveTypes",
+            "desc": "遠距離のけんか後、メッセージの誤読や不足した安心感を LoveTypes 関係コンパスで小さな修復リクエストへ整理します。",
+            "eyebrow": "LONG-DISTANCE REPAIR",
+            "h1": "遠距離のけんか後、誤解を一つのリクエストへ縮める",
+            "intro": "遠距離でつらいのは距離だけではありません。返信の遅れ、文面の温度差、そばにいない感覚が同時に大きくなります。LoveTypes は判決ではなく、話せるニーズへ戻します。",
+            "primary": "遠距離コンパスを始める",
+            "secondary": "相性入口を見る",
+            "offer": "遠距離修復レポートを希望",
+            "offer_subject": "LoveTypes 遠距離修復レポート希望",
+            "offer_body": "LoveTypes 遠距離修復レポートを希望します。\n私の守護者：\n相手の守護者：\n現在の遠距離状況：\n繰り返すけんかのテーマ：\n先に修復したい一文：\n返信用 email：\n",
+            "sections": [
+                ("判決を急がない", "沈黙をすぐに愛がない証拠にせず、二人が安心を確認する方法を見る。"),
+                ("メッセージの誤読を翻訳する", "既読、短い返信、通話のすれ違いを、言葉・時間・行動・近さのニーズへ戻します。"),
+                ("24時間だけ修復する", "遠距離全体を直そうとせず、一文と一つの小さな行動から始めます。"),
+            ],
+            "faq": [
+                ("先に謝るべきですか、冷静になるべきですか？", "まず安全な冷却時間を決め、その後で小さなリクエストとして話します。"),
+                ("既読スルーされた時も使えますか？", "使えます。それを不在の証拠にせず、自分が本当に必要としていたものを見ます。"),
+                ("遠距離が続くか判定しますか？", "しません。LoveTypes は別れや運命を判定せず、次の修復ステップを整理します。"),
+            ],
+        },
+        "ko": {
+            "title": "장거리 다툼 후 회복하는 법｜LoveTypes",
+            "desc": "장거리 다툼 후 메시지 오해, 부족한 현존감, 반복되는 싸움을 LoveTypes 관계 컴퍼스로 작은 회복 요청으로 바꿉니다.",
+            "eyebrow": "LONG-DISTANCE REPAIR",
+            "h1": "장거리 다툼 후, 오해를 말할 수 있는 요청 하나로 줄이기",
+            "intro": "장거리에서 아픈 것은 거리만이 아닙니다. 답장 지연, 문장의 온도 차, 함께 있지 않다는 느낌이 함께 커집니다. LoveTypes는 판정이 아니라 대화 가능한 필요로 돌아갑니다.",
+            "primary": "장거리 컴퍼스 시작",
+            "secondary": "궁합 허브 보기",
+            "offer": "장거리 회복 리포트 요청",
+            "offer_subject": "LoveTypes 장거리 회복 리포트 요청",
+            "offer_body": "LoveTypes 장거리 회복 리포트를 요청합니다.\n나의 수호자:\n상대 수호자:\n현재 장거리 상태:\n반복되는 다툼 주제:\n먼저 회복하고 싶은 한 문장:\n답장 email:\n",
+            "sections": [
+                ("판정을 멈추기", "침묵을 곧바로 사랑이 없다는 증거로 읽기 전에, 두 사람이 안전감을 확인하는 방식을 봅니다."),
+                ("메시지 오해 번역하기", "읽씹, 짧은 답장, 놓친 통화 뒤에는 말, 시간, 행동, 가까움의 필요가 있을 수 있습니다."),
+                ("24시간만 회복하기", "장거리 전체를 한 번에 고치려 하지 말고 한 문장과 작은 행동부터 시작합니다."),
+            ],
+            "faq": [
+                ("먼저 사과해야 하나요, 식혀야 하나요?", "먼저 안전한 냉각 시간을 정하고, 그 다음 작은 요청으로 다시 말하는 것이 좋습니다."),
+                ("상대가 읽고 답하지 않아도 쓸 수 있나요?", "가능합니다. 그것을 곧바로 무관심의 증거로 보기보다, 그 순간 내가 필요했던 것을 확인합니다."),
+                ("장거리가 가능한지 판단해 주나요?", "아니요. LoveTypes는 이별이나 운명을 판단하지 않고 다음 회복 단계를 정리합니다."),
+            ],
+        },
+        "es": {
+            "title": "Cómo reparar después de una pelea a distancia | LoveTypes",
+            "desc": "Después de una pelea a distancia, usa la Brújula LoveTypes para convertir malentendidos por mensajes y falta de presencia en una petición reparable.",
+            "eyebrow": "LONG-DISTANCE REPAIR",
+            "h1": "Después de una pelea a distancia, convierte el malentendido en una petición",
+            "intro": "La distancia duele por respuestas tardías, tono mal leído y la sensación de no estar acompañada. LoveTypes ordena la señal cruzada como una necesidad conversable, no como un veredicto.",
+            "primary": "Empezar brújula a distancia",
+            "secondary": "Abrir hub de compatibilidad",
+            "offer": "Pedir informe de reparación a distancia",
+            "offer_subject": "Petición de informe LoveTypes de reparación a distancia",
+            "offer_body": "Quiero pedir un informe LoveTypes de reparación a distancia.\nMi guardiana:\nSu guardiana:\nEstado actual a distancia:\nTema repetido de pelea:\nUna frase que quiero reparar:\nEmail de respuesta:\n",
+            "sections": [
+                ("Pausar el veredicto", "No conviertas el silencio en prueba de desamor demasiado rápido. Primero mira cómo cada persona confirma seguridad."),
+                ("Traducir mensajes mal leídos", "Vistos sin respuesta, respuestas cortas y llamadas perdidas suelen señalar necesidades de palabras, tiempo, acción o cercanía."),
+                ("Reparar por 24 horas", "Elige una frase y una acción pequeña en vez de intentar arreglar toda la distancia a la vez."),
+            ],
+            "faq": [
+                ("¿Primero pedimos perdón o nos calmamos?", "Primero define una ventana segura de calma y luego vuelve con una petición pequeña."),
+                ("¿Sirve si me dejó en visto?", "Sí. En vez de tratarlo como prueba de desinterés, usa la brújula para identificar qué necesitabas en ese momento."),
+                ("¿Decide si la distancia funcionará?", "No. LoveTypes no da veredictos de ruptura o destino. Ordena el siguiente paso reparable."),
+            ],
+        },
+    },
 }
 
 
@@ -6688,6 +6800,9 @@ LONG_TAIL_COMPATIBILITY_PAGES = {
 }
 
 
+LONG_TAIL_COMPATIBILITY_PAGES["long-distance-fight-repair"] = LUNA_GUARDIAN_FLOW.pop("long-distance-fight-repair")
+
+
 LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
     "zh": "延伸搜尋路線",
     "en": "Related search routes",
@@ -6695,6 +6810,13 @@ LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
     "ko": "관련 검색 루트",
     "es": "Rutas de búsqueda relacionadas",
 }
+
+
+def long_tail_compatibility_urls() -> list[tuple[str, str, str]]:
+    return [
+        (slug, f"{DOMAIN}/tools/{slug}/", LONG_TAIL_COMPATIBILITY_PAGES[slug]["en"]["desc"])
+        for slug in LONG_TAIL_COMPATIBILITY_PAGES
+    ]
 
 
 COMPASS_POPULAR_PAIRINGS = {
@@ -12289,6 +12411,10 @@ def write_llms_txt() -> None:
         title, desc = guide["zh"]
         guardian = GUARDIANS[guide["guardian"]]["zh"][0]
         guide_lines.append(f"- {title}: {desc} Guardian: {guardian}. {DOMAIN}/guides/{guide['slug']}/")
+    long_tail_lines = [
+        f"- {LONG_TAIL_COMPATIBILITY_PAGES[slug]['en']['title']}: {desc} {url}"
+        for slug, url, desc in long_tail_compatibility_urls()
+    ]
 
     content = f"""# LoveTypes - Heart Garden Emotion Guardians
 
@@ -12316,8 +12442,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Human-readable Heart Garden map: {DOMAIN}/garden-map/
 - Relationship Compass: {DOMAIN}/compass/
 - Love compatibility hub: {DOMAIN}/tools/love-compatibility/
-- BaZi love compatibility rhythm entry: {DOMAIN}/tools/bazi-love-compatibility/
-- 2026 love timing rhythm entry: {DOMAIN}/tools/2026-love-timing/
+{chr(10).join(long_tail_lines)}
 - Guardian overview: {DOMAIN}/characters/
 - Field guides: {DOMAIN}/guides/
 - Guardian supply routes and affiliate resources: {DOMAIN}/resources/
@@ -12378,8 +12503,7 @@ Quiz: {DOMAIN}/start/
 Garden map: {DOMAIN}/garden-map/
 Relationship Compass: {DOMAIN}/compass/
 Love compatibility: {DOMAIN}/tools/love-compatibility/
-BaZi love compatibility: {DOMAIN}/tools/bazi-love-compatibility/
-2026 love timing: {DOMAIN}/tools/2026-love-timing/
+{chr(10).join(f"{LONG_TAIL_COMPATIBILITY_PAGES[slug]['en']['title']}: {url}" for slug, url, _desc in long_tail_compatibility_urls())}
 Guardians: {DOMAIN}/characters/
 Resources: {DOMAIN}/resources/
 Keepsakes: {DOMAIN}/keepsakes/
@@ -12879,7 +13003,8 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths() -> list[str]:
-    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "tools/bazi-love-compatibility", "tools/2026-love-timing", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    long_tail_paths = [f"tools/{slug}" for slug in LONG_TAIL_COMPATIBILITY_PAGES]
+    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", *long_tail_paths, "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     return paths
@@ -13122,14 +13247,21 @@ def collect_ai_discovery_index() -> dict:
         },
     ]
 
+    long_tail_priority_urls = [
+        {
+            "url": url,
+            "intent": desc,
+            "priority": round(0.92 - (index * 0.02), 2),
+        }
+        for index, (_slug, url, desc) in enumerate(long_tail_compatibility_urls())
+    ]
     priority_urls = [
         {"url": f"{DOMAIN}/start/", "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery", "priority": 1.0},
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
         {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass", "priority": 0.94},
-        {"url": f"{DOMAIN}/tools/bazi-love-compatibility/", "intent": "BaZi love compatibility SEO entry reframed as relationship rhythm and repair", "priority": 0.92},
-        {"url": f"{DOMAIN}/tools/2026-love-timing/", "intent": "2026 love timing SEO entry reframed as relationship rhythm and repair planning", "priority": 0.9},
+        *long_tail_priority_urls,
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
         {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
         {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},

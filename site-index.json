@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 175,
-    "paths": 35,
+    "pages": 180,
+    "paths": 36,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 40,
+      "conversion": 45,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -148,6 +148,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/2026-love-timing/",
       "canonical": "https://lovetypes.tw/tools/2026-love-timing/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/long-distance-fight-repair/",
+      "canonical": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "group": "conversion",
       "primary": true
     },
@@ -434,6 +442,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/long-distance-fight-repair/",
+      "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/guides/",
       "canonical": "https://lovetypes.tw/en/guides/",
       "group": "content",
@@ -708,6 +724,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/2026-love-timing/",
       "canonical": "https://lovetypes.tw/ja/tools/2026-love-timing/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/long-distance-fight-repair/",
+      "canonical": "https://lovetypes.tw/ja/tools/long-distance-fight-repair/",
       "group": "conversion",
       "primary": false
     },
@@ -994,6 +1018,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/long-distance-fight-repair/",
+      "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/guides/",
       "canonical": "https://lovetypes.tw/ko/guides/",
       "group": "content",
@@ -1268,6 +1300,14 @@
       "hreflang": "es",
       "path": "/es/tools/2026-love-timing/",
       "canonical": "https://lovetypes.tw/es/tools/2026-love-timing/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/long-distance-fight-repair/",
+      "canonical": "https://lovetypes.tw/es/tools/long-distance-fight-repair/",
       "group": "conversion",
       "primary": false
     },

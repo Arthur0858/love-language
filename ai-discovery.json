@@ -383,13 +383,18 @@
     },
     {
       "url": "https://lovetypes.tw/tools/bazi-love-compatibility/",
-      "intent": "BaZi love compatibility SEO entry reframed as relationship rhythm and repair",
+      "intent": "A BaZi love compatibility entry that turns birth rhythm into relationship insight, not a destiny verdict.",
       "priority": 0.92
     },
     {
       "url": "https://lovetypes.tw/tools/2026-love-timing/",
-      "intent": "2026 love timing SEO entry reframed as relationship rhythm and repair planning",
+      "intent": "Turn 2026 love forecast search intent into relationship rhythm: hard talks, rest, repair, and next steps.",
       "priority": 0.9
+    },
+    {
+      "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
+      "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
+      "priority": 0.88
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -451,12 +456,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 175,
-      "paths": 35,
+      "pages": 180,
+      "paths": 36,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 40,
+        "conversion": 45,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -485,7 +490,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 16,
+    "priorityUrls": 17,
     "languages": 5,
     "discoveryFiles": 10
   }

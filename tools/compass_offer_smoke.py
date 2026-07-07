@@ -364,6 +364,9 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "result_copy_events": 0,
         "result_copy_payloads": 0,
         "result_copy_labels": 0,
+        "result_share_link_templates": 0,
+        "result_share_link_events": 0,
+        "result_share_link_labels": 0,
         "result_next_step_templates": 0,
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
@@ -387,9 +390,14 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "data-compass-result-copy": "result copy button",
         'data-funnel-event="compass_result_copy"': "result copy funnel event",
         'data-copy-text=""': "result copy payload placeholder",
+        "data-compass-result-share-link": "result share link button",
+        'data-funnel-event="compass_result_share_link"': "result share link funnel event",
+        "function compassPrefillUrl": "result prefill URL builder",
         "function resultShareText": "result share text builder",
         "function copyText": "result copy helper",
         "copyResultIntro": "result copy intro label",
+        "copyResultLink": "result share link localized label",
+        "copiedResultLink": "result share link copied localized label",
         "data-compass-result-next-steps": "result next-step template",
         "data-compass-result-next-link": "result next-step links",
         'data-funnel-event="compass_result_guardian"': "result guardian next-step funnel event",
@@ -432,6 +440,10 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
     stats["result_copy_payloads"] = text.count("data-copy-text")
     result_copy_label_keys = ("copyResult:", "copyResultIntro:", "copiedResult:", "copyUnavailable:")
     stats["result_copy_labels"] = sum(text.count(key) for key in result_copy_label_keys)
+    stats["result_share_link_templates"] = text.count("data-compass-result-share-link")
+    stats["result_share_link_events"] = text.count("compass_result_share_link")
+    result_share_link_label_keys = ("copyResultLink:", "copiedResultLink:")
+    stats["result_share_link_labels"] = sum(text.count(key) for key in result_share_link_label_keys)
     stats["result_next_step_templates"] = text.count("data-compass-result-next-steps")
     stats["result_next_step_events"] = sum(
         text.count(name)
@@ -480,6 +492,12 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected result copy data-copy-text payload")
     if stats["result_copy_labels"] < 20:
         issues.append(f"{path}: expected localized copy labels for five languages")
+    if stats["result_share_link_templates"] < 1:
+        issues.append(f"{path}: expected result share link button")
+    if stats["result_share_link_events"] < 1:
+        issues.append(f"{path}: expected compass_result_share_link event")
+    if stats["result_share_link_labels"] < 10:
+        issues.append(f"{path}: expected localized result share link labels for five languages")
     if stats["result_next_step_templates"] < 1:
         issues.append(f"{path}: expected result next-step template")
     if stats["result_next_step_events"] < 3:
@@ -553,6 +571,9 @@ def main() -> int:
         "result_copy_events": 0,
         "result_copy_payloads": 0,
         "result_copy_labels": 0,
+        "result_share_link_templates": 0,
+        "result_share_link_events": 0,
+        "result_share_link_labels": 0,
         "result_next_step_templates": 0,
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
@@ -617,6 +638,9 @@ def main() -> int:
     print(f"compass_offer_result_copy_events_checked={totals['result_copy_events']}")
     print(f"compass_offer_result_copy_payloads_checked={totals['result_copy_payloads']}")
     print(f"compass_offer_result_copy_labels_checked={totals['result_copy_labels']}")
+    print(f"compass_offer_result_share_link_templates_checked={totals['result_share_link_templates']}")
+    print(f"compass_offer_result_share_link_events_checked={totals['result_share_link_events']}")
+    print(f"compass_offer_result_share_link_labels_checked={totals['result_share_link_labels']}")
     print(f"compass_offer_result_next_step_templates_checked={totals['result_next_step_templates']}")
     print(f"compass_offer_result_next_step_events_checked={totals['result_next_step_events']}")
     print(f"compass_offer_result_next_step_labels_checked={totals['result_next_step_labels']}")

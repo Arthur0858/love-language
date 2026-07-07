@@ -40,6 +40,8 @@
       resultOfferBody: 'I want a saved Relationship Compass report for this pairing.',
       copyResult: 'Copy free result',
       copyResultIntro: 'Save the free reading or paste it into a message before the insight disappears into the day.',
+      copyResultLink: 'Copy result link',
+      copiedResultLink: 'Result link copied',
       copiedResult: 'Copied',
       copyUnavailable: 'Copy manually',
       prefillTitle: 'Pairing loaded',
@@ -100,6 +102,8 @@
       resultOfferBody: 'この組み合わせの保存版Relationship Compassレポートを希望します。',
       copyResult: '無料結果をコピー',
       copyResultIntro: '無料リーディングを保存したり、相手に送るメッセージへ貼り付けたりできます。',
+      copyResultLink: '結果リンクをコピー',
+      copiedResultLink: '結果リンクをコピーしました',
       copiedResult: 'コピーしました',
       copyUnavailable: '手動でコピー',
       prefillTitle: '組み合わせを入力しました',
@@ -153,6 +157,8 @@
       resultOfferBody: '이 조합의 저장용 Relationship Compass 리포트를 원합니다.',
       copyResult: '무료 결과 복사',
       copyResultIntro: '무료 리딩을 저장하거나 상대에게 보낼 메시지에 붙여 넣을 수 있습니다.',
+      copyResultLink: '결과 링크 복사',
+      copiedResultLink: '결과 링크 복사됨',
       copiedResult: '복사됨',
       copyUnavailable: '직접 복사',
       prefillTitle: '조합이 입력되었습니다',
@@ -206,6 +212,8 @@
       resultOfferBody: 'Quiero un informe guardable de Relationship Compass para esta combinación.',
       copyResult: 'Copiar resultado gratis',
       copyResultIntro: 'Guarda la lectura gratuita o pégala en un mensaje antes de que el insight se pierda en el día.',
+      copyResultLink: 'Copiar enlace',
+      copiedResultLink: 'Enlace copiado',
       copiedResult: 'Copiado',
       copyUnavailable: 'Copiar manualmente',
       prefillTitle: 'Combinación cargada',
@@ -259,6 +267,8 @@
       resultOfferBody: '我想要這組配對的可保存 Relationship Compass 報告。',
       copyResult: '複製免費結果',
       copyResultIntro: '把免費解讀先保存下來，或直接貼進訊息裡，讓對話有一個比較溫柔的起點。',
+      copyResultLink: '複製結果連結',
+      copiedResultLink: '已複製結果連結',
       copiedResult: '已複製',
       copyUnavailable: '請手動複製',
       prefillTitle: '已帶入守護者配對',
@@ -443,7 +453,18 @@
     }[key] || 'iris';
   }
 
+  function compassPrefillUrl(selfKey, partnerKey, statusValue, issueValue) {
+    var params = new URLSearchParams();
+    params.set('self', selfKey);
+    params.set('partner', partnerKey);
+    if (statusValue) params.set('status', statusValue);
+    if (issueValue) params.set('issue', issueValue);
+    return window.location.origin + localizedPath('compass') + '?' + params.toString() + '#relationship-compass-tool';
+  }
+
   function resultShareText(pairKey, selfG, partnerG, pairData, intake) {
+    var keys = pairKey.split('_');
+    var resultUrl = compassPrefillUrl(keys[0], keys[1], intake.statusValue, intake.issueValue);
     return [
       l.title,
       selfG.name + ' × ' + partnerG.name,
@@ -463,7 +484,7 @@
       l.statusLabel + ': ' + (intake.status || '-'),
       l.issueLabel + ': ' + (intake.issue || '-'),
       'Pair: ' + pairKey,
-      'LoveTypes: ' + window.location.href
+      'LoveTypes: ' + resultUrl
     ].join('\n');
   }
 
@@ -548,7 +569,7 @@
       var copyLinkBtn = prefillNotice.querySelector('[data-compass-prefill-copy-link]');
       if (copyLinkBtn) {
         copyLinkBtn.addEventListener('click', function () {
-          var shareUrl = window.location.origin + localizedPath('compass') + '?self=' + encodeURIComponent(applied.self) + '&partner=' + encodeURIComponent(applied.partner) + '#relationship-compass-tool';
+          var shareUrl = compassPrefillUrl(applied.self, applied.partner, applied.status, applied.issue);
           copyText(shareUrl, copyLinkBtn, l.prefillCopyLink, l.prefillCopiedLink, l.copyUnavailable);
         });
       }
@@ -609,6 +630,7 @@
           '<h3>' + l.copyResult + '</h3>',
           '<p>' + l.copyResultIntro + '</p>',
           '<button type="button" class="secondary-btn compass-buy-btn" data-compass-result-copy data-funnel-event="compass_result_copy" data-copy-text="">' + l.copyResult + '</button>',
+          '<button type="button" class="secondary-btn compass-buy-btn" data-compass-result-share-link data-funnel-event="compass_result_share_link">' + l.copyResultLink + '</button>',
         '</div>',
 
         '<div class="compass-insight-card compass-result-next-steps" data-compass-result-next-steps>',
@@ -638,11 +660,19 @@
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     var copyBtn = resultBox.querySelector('[data-compass-result-copy]');
+    var shareLinkBtn = resultBox.querySelector('[data-compass-result-share-link]');
+    var pairKeys = pairKey.split('_');
+    var resultUrl = compassPrefillUrl(pairKeys[0], pairKeys[1], intake.statusValue, intake.issueValue);
     if (copyBtn) {
       var shareText = resultShareText(pairKey, selfG, partnerG, pairData, intake);
       copyBtn.dataset.copyText = shareText;
       copyBtn.addEventListener('click', function () {
         copyText(shareText, copyBtn);
+      });
+    }
+    if (shareLinkBtn) {
+      shareLinkBtn.addEventListener('click', function () {
+        copyText(resultUrl, shareLinkBtn, l.copyResultLink, l.copiedResultLink, l.copyUnavailable);
       });
     }
 
@@ -735,6 +765,8 @@
     var intake = {
       status: selectedLabel('[name="status"]'),
       issue: selectedLabel('[name="issue"]'),
+      statusValue: form.querySelector('[name="status"]').value,
+      issueValue: form.querySelector('[name="issue"]').value,
       dobSelf: form.querySelector('[name="dobSelf"]').value,
       dobPartner: form.querySelector('[name="dobPartner"]').value
     };

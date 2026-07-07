@@ -12492,6 +12492,7 @@ def collect_funnel_events() -> dict:
         add_event("compass_result_repair", page)
         add_event("compass_result_supply", page)
         add_event("compass_result_report_request", page)
+        add_event("compass_result_share_link", page)
 
     for page in ["/", "/start/", "/en/", "/en/start/", "/ja/", "/ja/start/", "/ko/", "/ko/start/", "/es/", "/es/start/"]:
         add_event("quiz_started", page)

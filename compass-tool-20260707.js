@@ -261,7 +261,7 @@
       copyResultIntro: '把免費解讀先保存下來，或直接貼進訊息裡，讓對話有一個比較溫柔的起點。',
       copiedResult: '已複製',
       copyUnavailable: '請手動複製',
-      prefillTitle: '已帶入熱門配對',
+      prefillTitle: '已帶入守護者配對',
       prefillIntro: '已選好 {pair}。補上目前關係狀態與最想改善的地方，就可以取得免費羅盤。',
       prefillCopyLink: '複製這組配對連結',
       prefillCopiedLink: '已複製連結',

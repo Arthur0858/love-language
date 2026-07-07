@@ -87,7 +87,7 @@ function summarizeFailures(results) {
     if (result.textLength < 120) failures.push('page text too short');
     if (result.name.startsWith('garden-map-') && result.gardenMapHandoffCount !== 4) failures.push('missing four garden map handoff steps');
     if (result.name.startsWith('garden-map-') && result.gardenMapRouteCount !== 4) failures.push('missing four garden map routes');
-    if (result.name.startsWith('garden-map-') && result.gardenMapToolCount !== 3) failures.push('missing three garden map function rooms');
+    if (result.name.startsWith('garden-map-') && result.gardenMapToolCount !== 5) failures.push('missing five garden map function rooms');
     if (result.name.startsWith('garden-map-') && result.gardenMapGuardianCount !== 5) failures.push('missing five garden map guardian cards');
     if (result.name.startsWith('garden-map-') && result.gardenMapGuideCount < 10) failures.push('missing garden map guide lamps');
     if (result.name.startsWith('garden-map-') && result.gardenMapTrustCount !== 4) failures.push('missing four garden map trust routes');

@@ -208,7 +208,7 @@ def validate_garden_map(base_url: str, lang: str) -> tuple[list[str], dict[str, 
     expected_sections = {
         "data-garden-map-handoff": ("garden-map-handoff-card", 4, "handoff_cards"),
         "data-garden-map-routes": ("garden-map-route-card", 4, "route_cards"),
-        "data-garden-map-tools": ("garden-map-tool-card", 3, "tool_cards"),
+        "data-garden-map-tools": ("garden-map-tool-card", 5, "tool_cards"),
         "data-garden-map-guardians": ("guardian-card", 5, "guardian_cards"),
         "data-garden-map-guides": ("content-card", len(GUIDE_SLUGS), "guide_cards"),
         "data-garden-map-trust": ("garden-map-trust-card", 4, "trust_cards"),

@@ -407,9 +407,14 @@
       "priority": 0.84
     },
     {
+      "url": "https://lovetypes.tw/tools/relationship-repair-after-fight/",
+      "intent": "After a fight, use the LoveTypes Relationship Compass to turn hurt, cross-signals, and silence into one safer repair request.",
+      "priority": 0.82
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.82
+      "priority": 0.8
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -471,12 +476,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 195,
-      "paths": 39,
+      "pages": 200,
+      "paths": 40,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 60,
+        "conversion": 65,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -505,7 +510,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 20,
+    "priorityUrls": 21,
     "languages": 5,
     "discoveryFiles": 10
   }

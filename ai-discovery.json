@@ -382,6 +382,16 @@
       "priority": 0.94
     },
     {
+      "url": "https://lovetypes.tw/tools/bazi-love-compatibility/",
+      "intent": "BaZi love compatibility SEO entry reframed as relationship rhythm and repair",
+      "priority": 0.92
+    },
+    {
+      "url": "https://lovetypes.tw/tools/2026-love-timing/",
+      "intent": "2026 love timing SEO entry reframed as relationship rhythm and repair planning",
+      "priority": 0.9
+    },
+    {
       "url": "https://lovetypes.tw/characters/",
       "intent": "five guardian universe overview",
       "priority": 0.95
@@ -441,12 +451,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 165,
-      "paths": 33,
+      "pages": 175,
+      "paths": 35,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 30,
+        "conversion": 40,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -475,7 +485,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 14,
+    "priorityUrls": 16,
     "languages": 5,
     "discoveryFiles": 10
   }

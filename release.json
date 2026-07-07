@@ -8,11 +8,11 @@
   "branch": "main",
   "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
   "releaseContents": {
-    "indexablePages": 165,
+    "indexablePages": 175,
     "languages": 5,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 238,
+    "funnelEvents": 239,
     "coreFlows": 5
   },
   "publicIndexes": {

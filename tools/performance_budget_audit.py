@@ -128,7 +128,7 @@ def main() -> int:
     files = site_files()
     deploy_files = deploy_manifest_files()
     issues: list[str] = []
-    total_bytes = sum(path.stat().st_size for path in files)
+    total_bytes = sum(path.stat().st_size for path in deploy_files)
     text_assets_checked = 0
     raster_assets_checked = 0
 

@@ -6,8 +6,8 @@
   "status": "ready_for_predeploy",
   "description": "Machine-readable LoveTypes generated-site health snapshot for structure, conversion catalogs, guardian universe coverage, and required verification gates.",
   "coverage": {
-    "indexablePages": 165,
-    "localizedPaths": 33,
+    "indexablePages": 175,
+    "localizedPaths": 35,
     "languages": 5,
     "routeGroups": 5,
     "coreFlows": 5,
@@ -17,8 +17,8 @@
     "commerceItems": 20,
     "commerceTypes": 4,
     "commerceRoles": 3,
-    "funnelEvents": 238,
-    "funnelTrackedOccurrences": 4558,
+    "funnelEvents": 239,
+    "funnelTrackedOccurrences": 4648,
     "supportFiles": 18
   },
   "requiredGates": {

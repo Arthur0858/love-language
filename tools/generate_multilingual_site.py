@@ -6288,6 +6288,234 @@ LOVE_COMPATIBILITY_PAGE = {
 }
 
 
+LONG_TAIL_COMPATIBILITY_PAGES = {
+    "bazi-love-compatibility": {
+        "zh": {
+            "title": "八字愛情合盤｜LoveTypes 關係節奏",
+            "desc": "用八字合盤搜尋意圖進入 LoveTypes 關係羅盤：把出生節奏當成可選線索，不做命運判決。",
+            "eyebrow": "BAZI LOVE COMPATIBILITY",
+            "h1": "八字愛情合盤，可以先變成一張關係節奏地圖",
+            "intro": "如果你搜尋八字合婚、八字愛情合盤或感情命理，LoveTypes 會先把它放回關係溝通：你們怎麼接收愛、哪裡容易錯頻、下一步如何修復。",
+            "primary": "開始免費關係羅盤",
+            "secondary": "看心語合盤總入口",
+            "offer": "登記八字愛情合盤報告",
+            "offer_subject": "LoveTypes 八字愛情合盤報告需求",
+            "offer_body": "我想登記 LoveTypes 八字愛情合盤報告。\n我的守護者：\n對方守護者：\n雙方生日或出生時間：\n目前關係狀態：\n最想改善的問題：\n可回覆 email：\n",
+            "sections": [
+                ("不先判定合不合", "出生節奏只作為關係提醒，不用來斷定正緣、婚姻或分手。"),
+                ("接回 LoveTypes 守護者", "先看兩個人的愛之語入口，再看五行或節奏可能放大的溝通盲點。"),
+                ("轉成可做的小修復", "報告需求會回到一句可說的話、一個 24 小時行動與 7 日修復。"),
+            ],
+            "faq": [
+                ("這是傳統八字合婚嗎？", "不是。它可以承接八字合婚搜尋，但前台產品是關係洞察與溝通修復。"),
+                ("沒有出生時間可以用嗎？", "可以。免費羅盤只需要雙方守護者，生日資料是選填。"),
+                ("會替我做婚姻決定嗎？", "不會。LoveTypes 不替你做婚姻判決，只整理關係節奏、錯頻與修復入口。"),
+            ],
+        },
+        "en": {
+            "title": "BaZi Love Compatibility | LoveTypes Relationship Rhythm",
+            "desc": "A BaZi love compatibility entry that turns birth rhythm into relationship insight, not a destiny verdict.",
+            "eyebrow": "BAZI LOVE COMPATIBILITY",
+            "h1": "BaZi love compatibility as a relationship rhythm map",
+            "intro": "If you searched BaZi love compatibility, Chinese astrology compatibility, or relationship compatibility, LoveTypes keeps the front-end gentle: how each person receives love, where signals cross, and what to repair next.",
+            "primary": "Start free Relationship Compass",
+            "secondary": "Open compatibility hub",
+            "offer": "Request BaZi love report",
+            "offer_subject": "LoveTypes BaZi love compatibility report request",
+            "offer_body": "I want to request a LoveTypes BaZi love compatibility report.\nMy guardian:\nTheir guardian:\nBirthdates or birth times:\nCurrent status:\nMain issue:\nReply email:\n",
+            "sections": [
+                ("No hard verdict first", "Birth rhythm is used as a relationship reminder, not to decide destiny, marriage, or breakup."),
+                ("Return to LoveTypes guardians", "Start with love-language doorways, then notice which rhythm may amplify a communication blind spot."),
+                ("Turn it into repair", "The report request points back to one sentence, one 24-hour action, and a 7-day repair route."),
+            ],
+            "faq": [
+                ("Is this traditional BaZi matching?", "No. It catches BaZi compatibility intent, but the front-end product is relationship insight and repair."),
+                ("Can I use it without birth time?", "Yes. The free compass only needs two guardians; birth data is optional."),
+                ("Will it tell me whether to marry?", "No. LoveTypes does not make marriage verdicts. It maps rhythm, cross-signal, and repair entry points."),
+            ],
+        },
+        "ja": {
+            "title": "四柱推命の恋愛相性｜LoveTypes 関係リズム",
+            "desc": "出生リズムを判決ではなく関係洞察として扱う LoveTypes の相性入口。",
+            "eyebrow": "BAZI LOVE COMPATIBILITY",
+            "h1": "四柱推命の恋愛相性を、関係リズムの地図として読む",
+            "intro": "恋愛相性や東洋占術を探している場合も、LoveTypes は愛の受け取り方、すれ違い、次の修復へ戻します。",
+            "primary": "無料コンパスを始める",
+            "secondary": "相性入口を見る",
+            "offer": "出生リズム相性レポートを希望",
+            "offer_subject": "LoveTypes 出生リズム相性レポート希望",
+            "offer_body": "LoveTypes 出生リズム相性レポートを希望します。\n私の守護者：\n相手の守護者：\n生年月日または出生時間：\n現在の関係：\n一番改善したいこと：\n返信用 email：\n",
+            "sections": [
+                ("判決を先に置かない", "出生リズムは関係のリマインダーであり、運命や結婚可否を決めません。"),
+                ("守護者へ戻る", "二人の愛の言語を見てから、リズムが強める盲点を読む。"),
+                ("修復へ変える", "言える一文、24時間の行動、7日間の修復へ接続します。"),
+            ],
+            "faq": [
+                ("伝統的な相性占いですか？", "いいえ。検索意図は受けますが、前台は関係洞察と修復です。"),
+                ("出生時間がなくても使えますか？", "使えます。無料コンパスは二人の守護者だけで始められます。"),
+                ("結婚できるか判断しますか？", "しません。LoveTypes は判決ではなく、リズムと修復入口を整理します。"),
+            ],
+        },
+        "ko": {
+            "title": "사주 궁합｜LoveTypes 관계 리듬",
+            "desc": "사주 궁합 검색을 관계 통찰과 회복 입구로 바꾸는 LoveTypes 페이지입니다.",
+            "eyebrow": "BAZI LOVE COMPATIBILITY",
+            "h1": "사주 궁합을 관계 리듬 지도로 읽기",
+            "intro": "사주 궁합이나 연애 궁합을 찾는 사람도 LoveTypes에서는 사랑을 받는 방식, 엇갈림, 다음 회복으로 돌아옵니다.",
+            "primary": "무료 컴퍼스 시작",
+            "secondary": "궁합 허브 보기",
+            "offer": "사주 사랑 리포트 요청",
+            "offer_subject": "LoveTypes 사주 사랑 궁합 리포트 요청",
+            "offer_body": "LoveTypes 사주 사랑 궁합 리포트를 요청합니다.\n나의 수호자:\n상대 수호자:\n생일 또는 출생 시간:\n현재 상태:\n가장 개선하고 싶은 점:\n답장 email:\n",
+            "sections": [
+                ("판정을 먼저 하지 않기", "출생 리듬은 관계 알림으로만 쓰며 운명, 결혼, 이별을 결정하지 않습니다."),
+                ("수호자로 돌아가기", "두 사람의 사랑 언어를 먼저 보고 리듬이 키우는 대화盲點을 봅니다."),
+                ("회복으로 바꾸기", "말할 문장, 24시간 행동, 7일 회복으로 연결합니다."),
+            ],
+            "faq": [
+                ("전통 사주 궁합인가요?", "아닙니다. 검색 의도는 받지만 전면 제품은 관계 통찰과 회복입니다."),
+                ("출생 시간이 없어도 되나요?", "됩니다. 무료 컴퍼스는 두 수호자만으로 시작할 수 있습니다."),
+                ("결혼 여부를 판단하나요?", "판단하지 않습니다. LoveTypes는 리듬과 회복 입구를 정리합니다."),
+            ],
+        },
+        "es": {
+            "title": "Compatibilidad BaZi Amorosa | Ritmo relacional LoveTypes",
+            "desc": "Una entrada de compatibilidad BaZi que convierte el ritmo natal en insight relacional, no en veredicto.",
+            "eyebrow": "BAZI LOVE COMPATIBILITY",
+            "h1": "Compatibilidad BaZi como mapa de ritmo relacional",
+            "intro": "Si buscaste compatibilidad BaZi, astrología china o compatibilidad de pareja, LoveTypes vuelve al centro: cómo reciben amor, dónde se cruza la señal y qué reparar.",
+            "primary": "Empezar brújula gratis",
+            "secondary": "Abrir hub de compatibilidad",
+            "offer": "Pedir informe BaZi amoroso",
+            "offer_subject": "Petición de informe BaZi amoroso LoveTypes",
+            "offer_body": "Quiero pedir un informe BaZi amoroso LoveTypes.\nMi guardiana:\nSu guardiana:\nFechas u horas de nacimiento:\nEstado actual:\nProblema principal:\nEmail de respuesta:\n",
+            "sections": [
+                ("Sin veredicto duro", "El ritmo natal se usa como recordatorio relacional, no para decidir destino, matrimonio o ruptura."),
+                ("Volver a guardianas", "Primero mira las puertas de amor y luego qué ritmo amplifica un punto ciego."),
+                ("Convertirlo en reparación", "La petición vuelve a una frase, una acción de 24 horas y una ruta de 7 días."),
+            ],
+            "faq": [
+                ("¿Es compatibilidad BaZi tradicional?", "No. Recibe esa intención de búsqueda, pero el producto frontal es insight y reparación."),
+                ("¿Puedo usarlo sin hora de nacimiento?", "Sí. La brújula gratis solo necesita dos guardianas; los datos natales son opcionales."),
+                ("¿Dirá si debo casarme?", "No. LoveTypes no da veredictos de matrimonio; mapea ritmo, señales cruzadas y reparación."),
+            ],
+        },
+    },
+    "2026-love-timing": {
+        "zh": {
+            "title": "2026 感情節奏｜LoveTypes Love Timing",
+            "desc": "把 2026 感情運搜尋轉成關係節奏提醒：何時適合談難題、休息、修復與推進。",
+            "eyebrow": "2026 LOVE TIMING",
+            "h1": "2026 感情節奏，不是預言正緣，而是安排修復時機",
+            "intro": "如果你搜尋 2026 感情運或 love timing，LoveTypes 會把它轉成可行的關係節奏：哪些時候適合說清楚、哪些時候先冷卻、哪些時候回到 7 日修復。",
+            "primary": "開始免費關係羅盤",
+            "secondary": "看心語合盤總入口",
+            "offer": "登記 2026 感情節奏報告",
+            "offer_subject": "LoveTypes 2026 感情節奏報告需求",
+            "offer_body": "我想登記 LoveTypes 2026 感情節奏報告。\n我的守護者：\n對方守護者：\n目前關係狀態：\n最想改善的問題：\n想看的月份或主題：\n可回覆 email：\n",
+            "sections": [
+                ("不承諾正緣", "年度節奏不是預言，而是提醒你何時適合開口、停下或修復。"),
+                ("先看目前錯頻", "羅盤會先找出你們現在最容易誤讀的地方。"),
+                ("再排 7 日行動", "把年度焦慮縮成一週內能做的小步驟。"),
+            ],
+            "faq": [
+                ("會預測我 2026 會遇到誰嗎？", "不會。這頁不做正緣預言，只做關係節奏與修復規劃。"),
+                ("單身可以用嗎？", "可以。你可以先用自己的守護者看情感模式與年度練習主題。"),
+                ("有伴侶要先做什麼？", "先用免費羅盤看兩人的錯頻，再決定是否登記完整報告。"),
+            ],
+        },
+        "en": {
+            "title": "2026 Love Timing | LoveTypes Relationship Rhythm",
+            "desc": "Turn 2026 love forecast search intent into relationship rhythm: hard talks, rest, repair, and next steps.",
+            "eyebrow": "2026 LOVE TIMING",
+            "h1": "2026 love timing without predicting your destined partner",
+            "intro": "If you searched 2026 love horoscope, love timing, or relationship forecast, LoveTypes turns it into a practical rhythm: when to talk, when to cool down, and when to use a 7-day repair path.",
+            "primary": "Start free Relationship Compass",
+            "secondary": "Open compatibility hub",
+            "offer": "Request 2026 love timing report",
+            "offer_subject": "LoveTypes 2026 love timing report request",
+            "offer_body": "I want to request a LoveTypes 2026 love timing report.\nMy guardian:\nTheir guardian:\nCurrent status:\nMain issue:\nMonth or theme I want:\nReply email:\n",
+            "sections": [
+                ("No destined-partner promise", "Annual rhythm is not a prophecy. It is a prompt for talking, pausing, and repairing."),
+                ("Start with current cross-signal", "The compass first names where the relationship is being misread now."),
+                ("Then plan seven days", "Shrink annual anxiety into a small route you can practice this week."),
+            ],
+            "faq": [
+                ("Will it predict who I meet in 2026?", "No. This page does not predict destined partners; it supports relationship rhythm and repair planning."),
+                ("Can singles use it?", "Yes. Start with your own guardian to read emotional patterns and yearly practice themes."),
+                ("What should couples do first?", "Use the free compass to name the cross-signal before requesting a full report."),
+            ],
+        },
+        "ja": {
+            "title": "2026 恋愛タイミング｜LoveTypes 関係リズム",
+            "desc": "2026年の恋愛運検索を、会話・休息・修復の関係リズムへ変える入口。",
+            "eyebrow": "2026 LOVE TIMING",
+            "h1": "2026年の恋愛タイミングを、予言ではなく修復計画にする",
+            "intro": "2026年の恋愛運やタイミングを探している場合、LoveTypes は話す時、冷却する時、7日間修復へ戻る時を整理します。",
+            "primary": "無料コンパスを始める",
+            "secondary": "相性入口を見る",
+            "offer": "2026恋愛タイミングレポートを希望",
+            "offer_subject": "LoveTypes 2026恋愛タイミングレポート希望",
+            "offer_body": "LoveTypes 2026恋愛タイミングレポートを希望します。\n私の守護者：\n相手の守護者：\n現在の関係：\n一番改善したいこと：\n見たい月またはテーマ：\n返信用 email：\n",
+            "sections": [
+                ("運命の相手を約束しない", "年間リズムは予言ではなく、話す・休む・修復するためのヒントです。"),
+                ("今のすれ違いから始める", "まずコンパスで今どこが誤読されているかを見ます。"),
+                ("7日間へ縮める", "一年の不安を、今週できる小さな練習にします。"),
+            ],
+            "faq": [
+                ("2026年に誰と出会うか予測しますか？", "しません。運命の相手の予言ではなく、関係リズムと修復計画です。"),
+                ("一人でも使えますか？", "使えます。自分の守護者から感情パターンと年間練習を見ます。"),
+                ("カップルは何から始めますか？", "まず無料コンパスで二人のすれ違いを見てください。"),
+            ],
+        },
+        "ko": {
+            "title": "2026 연애 타이밍｜LoveTypes 관계 리듬",
+            "desc": "2026 연애운 검색을 대화, 휴식, 회복의 관계 리듬으로 바꾸는 입구입니다.",
+            "eyebrow": "2026 LOVE TIMING",
+            "h1": "2026 연애 타이밍을 예언이 아니라 회복 계획으로",
+            "intro": "2026 연애운이나 love timing을 찾는다면 LoveTypes는 말할 때, 식힐 때, 7일 회복으로 돌아갈 때를 정리합니다.",
+            "primary": "무료 컴퍼스 시작",
+            "secondary": "궁합 허브 보기",
+            "offer": "2026 연애 리듬 리포트 요청",
+            "offer_subject": "LoveTypes 2026 연애 리듬 리포트 요청",
+            "offer_body": "LoveTypes 2026 연애 리듬 리포트를 요청합니다.\n나의 수호자:\n상대 수호자:\n현재 상태:\n가장 개선하고 싶은 점:\n보고 싶은 달 또는 주제:\n답장 email:\n",
+            "sections": [
+                ("운명의 상대를 약속하지 않기", "연간 리듬은 예언이 아니라 말하기, 쉬기, 회복하기 위한 힌트입니다."),
+                ("현재 엇갈림부터 보기", "먼저 컴퍼스로 지금 어디가 오해되는지 봅니다."),
+                ("7일로 줄이기", "일 년의 불안을 이번 주 할 수 있는 작은 연습으로 줄입니다."),
+            ],
+            "faq": [
+                ("2026년에 누구를 만날지 예측하나요?", "아니요. 운명 상대 예언이 아니라 관계 리듬과 회복 계획입니다."),
+                ("혼자도 쓸 수 있나요?", "가능합니다. 자신의 수호자로 감정 패턴과 연간 연습 주제를 봅니다."),
+                ("커플은 무엇부터 하나요?", "무료 컴퍼스로 두 사람의 엇갈림을 먼저 보세요."),
+            ],
+        },
+        "es": {
+            "title": "Ritmo Amoroso 2026 | LoveTypes",
+            "desc": "Convierte búsquedas de amor 2026 en ritmo relacional: conversaciones difíciles, descanso, reparación y próximos pasos.",
+            "eyebrow": "2026 LOVE TIMING",
+            "h1": "Ritmo amoroso 2026 sin prometer pareja destinada",
+            "intro": "Si buscaste horóscopo de amor 2026, timing amoroso o pronóstico de relación, LoveTypes lo convierte en un ritmo práctico: cuándo hablar, enfriar y volver a una reparación de 7 días.",
+            "primary": "Empezar brújula gratis",
+            "secondary": "Abrir hub de compatibilidad",
+            "offer": "Pedir informe de ritmo 2026",
+            "offer_subject": "Petición de informe LoveTypes ritmo amoroso 2026",
+            "offer_body": "Quiero pedir un informe LoveTypes de ritmo amoroso 2026.\nMi guardiana:\nSu guardiana:\nEstado actual:\nProblema principal:\nMes o tema deseado:\nEmail de respuesta:\n",
+            "sections": [
+                ("Sin promesa de destino", "El ritmo anual no es profecía. Es una guía para hablar, pausar y reparar."),
+                ("Empezar por la señal actual", "La brújula nombra primero dónde se malinterpreta la relación ahora."),
+                ("Planear siete días", "Reduce la ansiedad anual a una ruta pequeña para practicar esta semana."),
+            ],
+            "faq": [
+                ("¿Predice a quién conoceré en 2026?", "No. No predice pareja destinada; apoya ritmo relacional y reparación."),
+                ("¿Sirve si estoy soltera?", "Sí. Empieza con tu guardiana para leer patrones emocionales y temas de práctica anual."),
+                ("¿Qué hace primero una pareja?", "Usar la brújula gratis para nombrar la señal cruzada antes del informe completo."),
+            ],
+        },
+    },
+}
+
+
 def compass_visual_layer(lang: str) -> str:
     copy = COMPASS_TRAFFIC_LAYER[lang]
     guardian_tiles = []
@@ -6443,6 +6671,97 @@ def love_compatibility_page(lang: str) -> None:
 </section>
 """
     write(page_path(lang, "tools/love-compatibility"), layout(lang, copy["title"], copy["desc"], "tools/love-compatibility", body, "", "website", "/og-cover.jpg", schema))
+
+
+def long_tail_compatibility_page(lang: str, slug: str) -> None:
+    copy = LONG_TAIL_COMPATIBILITY_PAGES[slug][lang]
+    t = LANGS[lang]
+    report_subject = quote(copy["offer_subject"])
+    report_body = quote(copy["offer_body"] + f"\nPage: {abs_url(lang, 'tools/' + slug)}\n")
+    section_cards = "".join(
+        f"""
+<article class="content-card">
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for title, text in copy["sections"]
+    )
+    faq_items = "".join(
+        f"""
+<details>
+  <summary>{escape(question)}</summary>
+  <p>{escape(answer)}</p>
+</details>
+"""
+        for question, answer in copy["faq"]
+    )
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": copy["title"],
+        "description": copy["desc"],
+        "url": abs_url(lang, "tools/" + slug),
+        "inLanguage": t["code"],
+        "dateModified": UPDATED,
+        "isPartOf": website_ref(lang),
+        "about": [
+            {"@type": "Thing", "name": copy["eyebrow"]},
+            {"@type": "Thing", "name": "LoveTypes Relationship Compass"},
+            {"@type": "Thing", "name": "relationship repair"},
+        ],
+        "mainEntity": {
+            "@type": "WebApplication",
+            "name": "LoveTypes Relationship Compass",
+            "url": abs_url(lang, "compass"),
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Any",
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+        },
+    }) + json_ld({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": question,
+                "acceptedAnswer": {"@type": "Answer", "text": answer},
+            }
+            for question, answer in copy["faq"]
+        ],
+    })
+    body = f"""
+<section class="page-hero compact">
+  <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+  <h1>{escape(copy["h1"])}</h1>
+  <p>{escape(copy["intro"])}</p>
+  <div class="hero-actions" data-love-compatibility-hero>
+    <a class="primary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_compass_start">{escape(copy["primary"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="love_compatibility_hub">{escape(copy["secondary"])}</a>
+  </div>
+</section>
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
+  <div class="content-grid">{section_cards}</div>
+</section>
+<section class="section article-body standalone">
+  <div class="callout"><strong>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary_title"])}</strong><p>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary"])}</p></div>
+</section>
+<section class="section supply-panel-section">
+  <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>
+  <div class="hero-actions">
+    <!--email_off-->
+    <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={report_subject}&body={report_body}" data-funnel-event="love_compatibility_report_request">{escape(copy["offer"])}</a>
+    <!--/email_off-->
+    <a class="secondary-btn" href="{lang_url(lang, "repair-plan")}" data-funnel-event="love_compatibility_repair">{escape(LOVE_COMPATIBILITY_PAGE[lang]["tertiary"])}</a>
+  </div>
+</section>
+<section class="section article-body standalone">
+  <h2>FAQ</h2>
+  {faq_items}
+</section>
+"""
+    write(page_path(lang, "tools/" + slug), layout(lang, copy["title"], copy["desc"], "tools/" + slug, body, "", "website", "/og-cover.jpg", schema))
 
 
 def mobile_page_jump(lang: str, key: str) -> str:
@@ -11970,7 +12289,7 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths() -> list[str]:
-    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
+    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "tools/bazi-love-compatibility", "tools/2026-love-timing", "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     return paths
@@ -12219,6 +12538,8 @@ def collect_ai_discovery_index() -> dict:
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
         {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass", "priority": 0.94},
+        {"url": f"{DOMAIN}/tools/bazi-love-compatibility/", "intent": "BaZi love compatibility SEO entry reframed as relationship rhythm and repair", "priority": 0.92},
+        {"url": f"{DOMAIN}/tools/2026-love-timing/", "intent": "2026 love timing SEO entry reframed as relationship rhythm and repair planning", "priority": 0.9},
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
         {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
         {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},
@@ -13041,6 +13362,8 @@ def main() -> None:
         garden_map_page(lang)
         compass_page(lang)
         love_compatibility_page(lang)
+        for slug in LONG_TAIL_COMPATIBILITY_PAGES:
+            long_tail_compatibility_page(lang, slug)
         guides_index(lang)
         characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):

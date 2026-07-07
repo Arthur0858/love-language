@@ -18,6 +18,13 @@ LANG_PATHS = {
     "ko": "/ko/tools/love-compatibility/",
     "es": "/es/tools/love-compatibility/",
 }
+LONG_TAIL_PATHS = {
+    "zh": ("/tools/bazi-love-compatibility/", "/tools/2026-love-timing/"),
+    "en": ("/en/tools/bazi-love-compatibility/", "/en/tools/2026-love-timing/"),
+    "ja": ("/ja/tools/bazi-love-compatibility/", "/ja/tools/2026-love-timing/"),
+    "ko": ("/ko/tools/bazi-love-compatibility/", "/ko/tools/2026-love-timing/"),
+    "es": ("/es/tools/bazi-love-compatibility/", "/es/tools/2026-love-timing/"),
+}
 INBOUND_PATHS = {
     "zh": ("/", "/compass/", "/garden-map/", "/resources/"),
     "en": ("/en/", "/en/compass/", "/en/garden-map/", "/en/resources/"),
@@ -33,6 +40,14 @@ REQUIRED_EVENTS = {
     "love_compatibility_report_ladder",
     "love_compatibility_report_request",
     "love_compatibility_offer_compass",
+}
+LONG_TAIL_REQUIRED_EVENTS = {
+    "love_compatibility_compass_start",
+    "love_compatibility_hub",
+    "love_compatibility_section_compass",
+    "love_compatibility_report_ladder",
+    "love_compatibility_report_request",
+    "love_compatibility_repair",
 }
 HARD_VERDICT_PHRASES = (
     "一定會分手",
@@ -149,6 +164,25 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     return issues, stats
 
 
+def validate_long_tail_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
+    issues, stats = validate_page(base_url, path)
+    if issues and any("missing funnel events" in issue for issue in issues):
+        issues = [issue for issue in issues if "missing funnel events" not in issue]
+    status, text = request_text(urljoin(base_url + "/", path.lstrip("/")))
+    if status != 200:
+        return issues, stats
+    parser = LoveCompatibilityParser()
+    parser.feed(text)
+    missing_events = sorted(LONG_TAIL_REQUIRED_EVENTS.difference(parser.events))
+    if missing_events:
+        issues.append(f"{path}: missing long-tail funnel events {', '.join(missing_events)}")
+    if parser.jsonld_blocks < 4:
+        issues.append(f"{path}: expected organization, breadcrumb, webpage, and FAQ JSON-LD")
+    if parser.faq_details < 3:
+        issues.append(f"{path}: expected at least 3 FAQ details, got {parser.faq_details}")
+    return issues, stats
+
+
 def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
     issues: list[str] = []
     stats = {
@@ -207,6 +241,12 @@ def main() -> int:
         issues.extend(page_issues)
         for key, value in stats.items():
             totals[key] += value
+    for paths in LONG_TAIL_PATHS.values():
+        for path in paths:
+            page_issues, stats = validate_long_tail_page(base_url, path)
+            issues.extend(page_issues)
+            for key, value in stats.items():
+                totals[key] += value
     inbound_issues, inbound_stats = validate_inbound_links(base_url)
     issues.extend(inbound_issues)
     for key, value in inbound_stats.items():

@@ -62,10 +62,20 @@ EXCLUDED_FILE_NAMES = {
 }
 PUBLIC_TOOL_HTML_PATHS = {
     "tools/love-compatibility/index.html",
+    "tools/bazi-love-compatibility/index.html",
+    "tools/2026-love-timing/index.html",
     "en/tools/love-compatibility/index.html",
+    "en/tools/bazi-love-compatibility/index.html",
+    "en/tools/2026-love-timing/index.html",
     "es/tools/love-compatibility/index.html",
+    "es/tools/bazi-love-compatibility/index.html",
+    "es/tools/2026-love-timing/index.html",
     "ja/tools/love-compatibility/index.html",
+    "ja/tools/bazi-love-compatibility/index.html",
+    "ja/tools/2026-love-timing/index.html",
     "ko/tools/love-compatibility/index.html",
+    "ko/tools/bazi-love-compatibility/index.html",
+    "ko/tools/2026-love-timing/index.html",
 }
 
 

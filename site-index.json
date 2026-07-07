@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 165,
-    "paths": 33,
+    "pages": 175,
+    "paths": 35,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 30,
+      "conversion": 40,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -132,6 +132,22 @@
       "hreflang": "zh-TW",
       "path": "/tools/love-compatibility/",
       "canonical": "https://lovetypes.tw/tools/love-compatibility/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/bazi-love-compatibility/",
+      "canonical": "https://lovetypes.tw/tools/bazi-love-compatibility/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/2026-love-timing/",
+      "canonical": "https://lovetypes.tw/tools/2026-love-timing/",
       "group": "conversion",
       "primary": true
     },
@@ -402,6 +418,22 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/bazi-love-compatibility/",
+      "canonical": "https://lovetypes.tw/en/tools/bazi-love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
+      "path": "/en/tools/2026-love-timing/",
+      "canonical": "https://lovetypes.tw/en/tools/2026-love-timing/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/guides/",
       "canonical": "https://lovetypes.tw/en/guides/",
       "group": "content",
@@ -660,6 +692,22 @@
       "hreflang": "ja",
       "path": "/ja/tools/love-compatibility/",
       "canonical": "https://lovetypes.tw/ja/tools/love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/bazi-love-compatibility/",
+      "canonical": "https://lovetypes.tw/ja/tools/bazi-love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/2026-love-timing/",
+      "canonical": "https://lovetypes.tw/ja/tools/2026-love-timing/",
       "group": "conversion",
       "primary": false
     },
@@ -930,6 +978,22 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/bazi-love-compatibility/",
+      "canonical": "https://lovetypes.tw/ko/tools/bazi-love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
+      "path": "/ko/tools/2026-love-timing/",
+      "canonical": "https://lovetypes.tw/ko/tools/2026-love-timing/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/guides/",
       "canonical": "https://lovetypes.tw/ko/guides/",
       "group": "content",
@@ -1188,6 +1252,22 @@
       "hreflang": "es",
       "path": "/es/tools/love-compatibility/",
       "canonical": "https://lovetypes.tw/es/tools/love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/bazi-love-compatibility/",
+      "canonical": "https://lovetypes.tw/es/tools/bazi-love-compatibility/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/2026-love-timing/",
+      "canonical": "https://lovetypes.tw/es/tools/2026-love-timing/",
       "group": "conversion",
       "primary": false
     },

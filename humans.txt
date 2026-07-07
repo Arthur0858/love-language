@@ -16,6 +16,10 @@ Safety: Reflection and communication support only; not therapy, medical, legal, 
 /* HIGH-VALUE ROUTES */
 Quiz: https://lovetypes.tw/start/
 Garden map: https://lovetypes.tw/garden-map/
+Relationship Compass: https://lovetypes.tw/compass/
+Love compatibility: https://lovetypes.tw/tools/love-compatibility/
+BaZi love compatibility: https://lovetypes.tw/tools/bazi-love-compatibility/
+2026 love timing: https://lovetypes.tw/tools/2026-love-timing/
 Guardians: https://lovetypes.tw/characters/
 Resources: https://lovetypes.tw/resources/
 Keepsakes: https://lovetypes.tw/keepsakes/

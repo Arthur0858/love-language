@@ -11880,6 +11880,10 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 - Quiz campaign entrance: {DOMAIN}/start/
 - Quiz and home entrance: {DOMAIN}/
 - Human-readable Heart Garden map: {DOMAIN}/garden-map/
+- Relationship Compass: {DOMAIN}/compass/
+- Love compatibility hub: {DOMAIN}/tools/love-compatibility/
+- BaZi love compatibility rhythm entry: {DOMAIN}/tools/bazi-love-compatibility/
+- 2026 love timing rhythm entry: {DOMAIN}/tools/2026-love-timing/
 - Guardian overview: {DOMAIN}/characters/
 - Field guides: {DOMAIN}/guides/
 - Guardian supply routes and affiliate resources: {DOMAIN}/resources/
@@ -11938,6 +11942,10 @@ Safety: Reflection and communication support only; not therapy, medical, legal, 
 /* HIGH-VALUE ROUTES */
 Quiz: {DOMAIN}/start/
 Garden map: {DOMAIN}/garden-map/
+Relationship Compass: {DOMAIN}/compass/
+Love compatibility: {DOMAIN}/tools/love-compatibility/
+BaZi love compatibility: {DOMAIN}/tools/bazi-love-compatibility/
+2026 love timing: {DOMAIN}/tools/2026-love-timing/
 Guardians: {DOMAIN}/characters/
 Resources: {DOMAIN}/resources/
 Keepsakes: {DOMAIN}/keepsakes/

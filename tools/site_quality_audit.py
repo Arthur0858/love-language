@@ -1372,6 +1372,10 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
 
     high_value_urls = {
         f"{DOMAIN}/",
+        f"{DOMAIN}/compass/",
+        f"{DOMAIN}/tools/love-compatibility/",
+        f"{DOMAIN}/tools/bazi-love-compatibility/",
+        f"{DOMAIN}/tools/2026-love-timing/",
         f"{DOMAIN}/garden-map/",
         f"{DOMAIN}/characters/",
         f"{DOMAIN}/guides/",
@@ -1478,6 +1482,10 @@ def parse_humans_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) ->
 
     required_urls = {
         f"{DOMAIN}/",
+        f"{DOMAIN}/compass/",
+        f"{DOMAIN}/tools/love-compatibility/",
+        f"{DOMAIN}/tools/bazi-love-compatibility/",
+        f"{DOMAIN}/tools/2026-love-timing/",
         f"{DOMAIN}/garden-map/",
         f"{DOMAIN}/characters/",
         f"{DOMAIN}/resources/",

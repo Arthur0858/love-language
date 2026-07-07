@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 255,
-    "paths": 51,
+    "pages": 260,
+    "paths": 52,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 120,
+      "conversion": 125,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -268,6 +268,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/taken-for-granted-relationship/",
       "canonical": "https://lovetypes.tw/tools/taken-for-granted-relationship/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/partner-needs-space-relationship/",
+      "canonical": "https://lovetypes.tw/tools/partner-needs-space-relationship/",
       "group": "conversion",
       "primary": true
     },
@@ -682,6 +690,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/partner-needs-space-relationship/",
+      "canonical": "https://lovetypes.tw/en/tools/partner-needs-space-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1084,6 +1100,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/taken-for-granted-relationship/",
       "canonical": "https://lovetypes.tw/ja/tools/taken-for-granted-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/partner-needs-space-relationship/",
+      "canonical": "https://lovetypes.tw/ja/tools/partner-needs-space-relationship/",
       "group": "conversion",
       "primary": false
     },
@@ -1498,6 +1522,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/partner-needs-space-relationship/",
+      "canonical": "https://lovetypes.tw/ko/tools/partner-needs-space-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1900,6 +1932,14 @@
       "hreflang": "es",
       "path": "/es/tools/taken-for-granted-relationship/",
       "canonical": "https://lovetypes.tw/es/tools/taken-for-granted-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/partner-needs-space-relationship/",
+      "canonical": "https://lovetypes.tw/es/tools/partner-needs-space-relationship/",
       "group": "conversion",
       "primary": false
     },

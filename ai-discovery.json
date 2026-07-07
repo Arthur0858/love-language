@@ -467,9 +467,14 @@
       "priority": 0.6
     },
     {
+      "url": "https://lovetypes.tw/tools/partner-needs-space-relationship/",
+      "intent": "If your partner says they need space, use the LoveTypes Compass to separate cooling down, avoidance, contact rhythm, boundaries, and one safe request.",
+      "priority": 0.58
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.58
+      "priority": 0.56
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -531,12 +536,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 255,
-      "paths": 51,
+      "pages": 260,
+      "paths": 52,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 120,
+        "conversion": 125,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -565,7 +570,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 32,
+    "priorityUrls": 33,
     "languages": 5,
     "discoveryFiles": 10
   }

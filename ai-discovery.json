@@ -442,9 +442,14 @@
       "priority": 0.7
     },
     {
+      "url": "https://lovetypes.tw/tools/partner-wont-communicate/",
+      "intent": "When your partner refuses to talk or shuts down, use the LoveTypes Compass to separate pressure response, love-language mismatch, boundaries, and one small request.",
+      "priority": 0.68
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.68
+      "priority": 0.66
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -506,12 +511,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 230,
-      "paths": 46,
+      "pages": 235,
+      "paths": 47,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 95,
+        "conversion": 100,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -540,7 +545,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 27,
+    "priorityUrls": 28,
     "languages": 5,
     "discoveryFiles": 10
   }

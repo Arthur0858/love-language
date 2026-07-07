@@ -6756,6 +6756,45 @@ COMPASS_POPULAR_PAIRINGS = {
 }
 
 
+COMPASS_PAIR_MATRIX = {
+    "zh": {
+        "eyebrow": "PAIRING MATRIX",
+        "title": "完整 25 組守護者配對入口",
+        "intro": "每一組都會直接帶入免費羅盤。適合從搜尋、短影音留言或伴侶對話中快速分享一條路線。",
+        "cta": "打開這組羅盤",
+        "desc": "查看 {self_name} 與 {partner_name} 的錯頻地圖、可說出口的一句話與 24 小時小行動。",
+    },
+    "en": {
+        "eyebrow": "PAIRING MATRIX",
+        "title": "All 25 guardian pairing entry points",
+        "intro": "Each link opens the free compass with both guardians prefilled, useful for search, Shorts comments, and partner conversations.",
+        "cta": "Open this compass",
+        "desc": "See the cross-signal map, one sentence to say, and one 24-hour action for {self_name} and {partner_name}.",
+    },
+    "ja": {
+        "eyebrow": "PAIRING MATRIX",
+        "title": "25組すべての守護者ペア入口",
+        "intro": "各リンクは二人の守護者を入力済みで無料コンパスを開きます。検索、ショート動画、会話の共有に使えます。",
+        "cta": "このコンパスを開く",
+        "desc": "{self_name} と {partner_name} のすれ違い地図、言える一文、24時間の行動を見る。",
+    },
+    "ko": {
+        "eyebrow": "PAIRING MATRIX",
+        "title": "25가지 수호자 조합 전체 입구",
+        "intro": "각 링크는 두 수호자가 미리 입력된 무료 컴퍼스를 엽니다. 검색, Shorts 댓글, 대화 공유에 적합합니다.",
+        "cta": "이 컴퍼스 열기",
+        "desc": "{self_name}와 {partner_name}의 엇갈림 지도, 말할 수 있는 한 문장, 24시간 행동을 확인하세요.",
+    },
+    "es": {
+        "eyebrow": "PAIRING MATRIX",
+        "title": "Las 25 entradas de combinaciones guardianas",
+        "intro": "Cada enlace abre la brújula gratis con ambas guardianas prellenadas, útil para búsqueda, comentarios de Shorts y conversaciones.",
+        "cta": "Abrir esta brújula",
+        "desc": "Mira el mapa de señales cruzadas, una frase y una acción de 24 horas para {self_name} y {partner_name}.",
+    },
+}
+
+
 def compass_visual_layer(lang: str) -> str:
     copy = COMPASS_TRAFFIC_LAYER[lang]
     guardian_tiles = []
@@ -6856,6 +6895,37 @@ def compass_popular_pairings_section(lang: str) -> str:
     return f"""
 <section class="section compass-popular-pairings" data-compass-popular-pairings>
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_popular_pair_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
+</section>
+"""
+
+
+def compass_pair_matrix_section(lang: str) -> str:
+    copy = COMPASS_PAIR_MATRIX[lang]
+    cards = []
+    guardian_keys = ["W", "T", "G", "S", "P"]
+    slug_by_key = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora"}
+    for self_key in guardian_keys:
+        for partner_key in guardian_keys:
+            self_slug = slug_by_key[self_key]
+            partner_slug = slug_by_key[partner_key]
+            self_name, self_type, _self_desc = GUARDIANS[self_slug][lang]
+            partner_name, partner_type, _partner_desc = GUARDIANS[partner_slug][lang]
+            href = f"{lang_url(lang, 'compass')}?self={self_key}&partner={partner_key}#relationship-compass-tool"
+            title = f"{self_type} × {partner_type}"
+            desc = copy["desc"].format(self_name=self_name, partner_name=partner_name)
+            cards.append(f"""
+<a class="content-card compass-pair-matrix-card" href="{href}" data-compass-pair-matrix="{self_key}_{partner_key}" data-funnel-event="compass_pair_matrix">
+  <span class="eyebrow">{escape(self_key)} × {escape(partner_key)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <span class="card-link">{escape(copy["cta"])}</span>
+</a>
+""")
+    return f"""
+<section class="section compass-pair-matrix" data-compass-pair-matrix>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_pair_matrix_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="card-grid compact">{"".join(cards)}</div>
 </section>
@@ -7867,6 +7937,7 @@ def compass_page(lang: str) -> None:
 {compass_visual_layer(lang)}
 {compass_result_preview_section(lang)}
 {compass_popular_pairings_section(lang)}
+{compass_pair_matrix_section(lang)}
 {compass_use_flow_section(lang)}
 <section class="section note-section">
   <h2>{escape(copy["compatibility_title"])}</h2>
@@ -12412,6 +12483,8 @@ def collect_funnel_events() -> dict:
         add_event("campaign_landing", page)
 
     for page in ["/compass/", "/en/compass/", "/ja/compass/", "/ko/compass/", "/es/compass/"]:
+        add_event("compass_pair_matrix", page)
+        add_event("compass_pair_matrix_tool", page)
         add_event("compass_prefill_copy_link", page)
         add_event("compass_prefill_pair", page)
         add_event("compass_result_copy", page)

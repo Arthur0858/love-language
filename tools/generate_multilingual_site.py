@@ -7205,7 +7205,7 @@ def compass_page(lang: str) -> None:
     fallback_data = '<script src="/compass-data-en.js"></script>\n' if lang in {"ja", "ko", "es"} else ""
     scripts = f"""
 {fallback_data}<script src="/compass-data-{lang}.js"></script>
-<script src="/compass-tool-20260705.js" defer></script>
+<script src="/compass-tool-20260707.js" defer></script>
 """
     write(page_path(lang, "compass"), layout(lang, f"{copy['title']} | LoveTypes", copy["desc"], "compass", body + scripts, copy["title"], "website", "/og-cover.jpg", schema))
 

@@ -2,28 +2,44 @@
 from __future__ import annotations
 
 import sys
+import importlib.util
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+GENERATOR_SCRIPT = ROOT / "tools" / "generate_multilingual_site.py"
 AMAZON_TAG = "parenttechche-20"
-ZH_TARGETS = [
-    ROOT / "resources" / "index.html",
-    ROOT / "repair-plan" / "index.html",
-    ROOT / "quiz-data-zh-20260613-localized-affiliate.js",
-    *(ROOT / "characters" / slug / "index.html" for slug in ("iris", "noah", "vivian", "claire", "dora")),
-]
 OTHER_LANGS = ("en", "ja", "ko", "es")
-OTHER_TARGET_NAMES = [
-    "resources/index.html",
-    "repair-plan/index.html",
-    "quiz-data-{lang}-20260613-localized-affiliate.js",
-    "characters/iris/index.html",
-    "characters/noah/index.html",
-    "characters/vivian/index.html",
-    "characters/claire/index.html",
-    "characters/dora/index.html",
-]
+
+
+def load_generator_module():
+    spec = importlib.util.spec_from_file_location("lovetypes_generate_multilingual_site", GENERATOR_SCRIPT)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load generator script: {GENERATOR_SCRIPT}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def zh_targets() -> list[Path]:
+    generator = load_generator_module()
+    return [
+        ROOT / "resources" / "index.html",
+        ROOT / "repair-plan" / "index.html",
+        ROOT / generator.QUIZ_DATA_ASSETS["zh"].lstrip("/"),
+        *(ROOT / "characters" / slug / "index.html" for slug in ("iris", "noah", "vivian", "claire", "dora")),
+    ]
+
+
+def other_targets(lang: str) -> list[Path]:
+    generator = load_generator_module()
+    return [
+        ROOT / lang / "resources" / "index.html",
+        ROOT / lang / "repair-plan" / "index.html",
+        ROOT / generator.QUIZ_DATA_ASSETS[lang].lstrip("/"),
+        *(ROOT / lang / "characters" / slug / "index.html" for slug in ("iris", "noah", "vivian", "claire", "dora")),
+    ]
 
 
 def read(path: Path) -> str:
@@ -37,7 +53,7 @@ def main() -> int:
     zh_files_checked = 0
     other_files_checked = 0
 
-    for path in ZH_TARGETS:
+    for path in zh_targets():
         text = read(path)
         zh_files_checked += 1
         if "books.com.tw" not in text:
@@ -46,8 +62,7 @@ def main() -> int:
             issues.append(f"{path.relative_to(ROOT)}: Traditional Chinese affiliate path should not use Amazon")
 
     for lang in OTHER_LANGS:
-        for name in OTHER_TARGET_NAMES:
-            path = ROOT / (name.format(lang=lang) if name.startswith("quiz-data-") else f"{lang}/{name}")
+        for path in other_targets(lang):
             text = read(path)
             other_files_checked += 1
             if "books.com.tw" in text:

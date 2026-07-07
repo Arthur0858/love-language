@@ -18,7 +18,7 @@ LANG_PATHS = {
     "ko": "/ko/compass/",
     "es": "/es/compass/",
 }
-SCRIPT_PATHS = ("/compass-tool-20260705.js", "/compass-tool.js")
+SCRIPT_PATHS = ("/compass-tool-20260707.js",)
 EXPECTED_TITLES = {
     "Your Emotional Love Pattern",
     "LoveTypes Compatibility Report",

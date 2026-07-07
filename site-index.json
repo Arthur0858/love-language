@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 200,
-    "paths": 40,
+    "pages": 205,
+    "paths": 41,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 65,
+      "conversion": 70,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -180,6 +180,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/relationship-repair-after-fight/",
       "canonical": "https://lovetypes.tw/tools/relationship-repair-after-fight/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/emotional-distance-relationship/",
+      "canonical": "https://lovetypes.tw/tools/emotional-distance-relationship/",
       "group": "conversion",
       "primary": true
     },
@@ -506,6 +514,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/emotional-distance-relationship/",
+      "canonical": "https://lovetypes.tw/en/tools/emotional-distance-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -820,6 +836,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/relationship-repair-after-fight/",
       "canonical": "https://lovetypes.tw/ja/tools/relationship-repair-after-fight/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/emotional-distance-relationship/",
+      "canonical": "https://lovetypes.tw/ja/tools/emotional-distance-relationship/",
       "group": "conversion",
       "primary": false
     },
@@ -1146,6 +1170,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/emotional-distance-relationship/",
+      "canonical": "https://lovetypes.tw/ko/tools/emotional-distance-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1460,6 +1492,14 @@
       "hreflang": "es",
       "path": "/es/tools/relationship-repair-after-fight/",
       "canonical": "https://lovetypes.tw/es/tools/relationship-repair-after-fight/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/emotional-distance-relationship/",
+      "canonical": "https://lovetypes.tw/es/tools/emotional-distance-relationship/",
       "group": "conversion",
       "primary": false
     },

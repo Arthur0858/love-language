@@ -49,6 +49,9 @@ class CompassParser(HTMLParser):
         self.guardian_tiles = 0
         self.audience_panels = 0
         self.audience_cards = 0
+        self.result_preview_sections = 0
+        self.result_preview_cards = 0
+        self.result_preview_events = 0
         self.in_offer_section = False
         self.offer_depth = 0
         self.offer_cards = 0
@@ -79,6 +82,10 @@ class CompassParser(HTMLParser):
             self.audience_panels += 1
         if "data-compass-audience-card" in attr:
             self.audience_cards += 1
+        if "data-compass-result-preview" in attr:
+            self.result_preview_sections += 1
+        if "data-compass-result-preview-card" in attr:
+            self.result_preview_cards += 1
         if "data-compass-faq" in attr:
             self.faq_sections += 1
             self.in_faq_section = True
@@ -95,6 +102,8 @@ class CompassParser(HTMLParser):
             self.hero_events += 1
         if event in {"compass_visual_start", "compass_guardian_tile"}:
             self.visual_events += 1
+        if event == "compass_result_preview_start":
+            self.result_preview_events += 1
         if "data-compass-report-offers" in attr:
             self.in_offer_section = True
             self.offer_depth = 1
@@ -167,6 +176,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "guardian_tiles": 0,
         "audience_panels": 0,
         "audience_cards": 0,
+        "result_preview_sections": 0,
+        "result_preview_cards": 0,
+        "result_preview_events": 0,
         "offer_sections": 0,
         "offer_cards": 0,
         "offer_events": 0,
@@ -194,6 +206,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["guardian_tiles"] = parser.guardian_tiles
     stats["audience_panels"] = parser.audience_panels
     stats["audience_cards"] = parser.audience_cards
+    stats["result_preview_sections"] = parser.result_preview_sections
+    stats["result_preview_cards"] = parser.result_preview_cards
+    stats["result_preview_events"] = parser.result_preview_events
     stats["faq_sections"] = parser.faq_sections
     stats["faq_details"] = parser.faq_details
     stats["jsonld_blocks"] = parser.jsonld_blocks
@@ -215,6 +230,12 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected one audience panel, got {parser.audience_panels}")
     if parser.audience_cards != 3:
         issues.append(f"{path}: expected 3 audience cards, got {parser.audience_cards}")
+    if parser.result_preview_sections != 1:
+        issues.append(f"{path}: expected one compass result preview section, got {parser.result_preview_sections}")
+    if parser.result_preview_cards != 3:
+        issues.append(f"{path}: expected 3 compass result preview cards, got {parser.result_preview_cards}")
+    if parser.result_preview_events != 1:
+        issues.append(f"{path}: expected one compass result preview CTA event, got {parser.result_preview_events}")
     if parser.faq_sections != 1:
         issues.append(f"{path}: expected one compass FAQ section, got {parser.faq_sections}")
     if parser.faq_details != 3:
@@ -333,6 +354,9 @@ def main() -> int:
         "guardian_tiles": 0,
         "audience_panels": 0,
         "audience_cards": 0,
+        "result_preview_sections": 0,
+        "result_preview_cards": 0,
+        "result_preview_events": 0,
         "offer_sections": 0,
         "offer_cards": 0,
         "offer_events": 0,
@@ -372,6 +396,9 @@ def main() -> int:
     print(f"compass_offer_guardian_tiles_checked={totals['guardian_tiles']}")
     print(f"compass_offer_audience_panels_checked={totals['audience_panels']}")
     print(f"compass_offer_audience_cards_checked={totals['audience_cards']}")
+    print(f"compass_offer_result_preview_sections_checked={totals['result_preview_sections']}")
+    print(f"compass_offer_result_preview_cards_checked={totals['result_preview_cards']}")
+    print(f"compass_offer_result_preview_events_checked={totals['result_preview_events']}")
     print(f"compass_offer_sections_checked={totals['offer_sections']}")
     print(f"compass_offer_cards_checked={totals['offer_cards']}")
     print(f"compass_offer_events_checked={totals['offer_events']}")

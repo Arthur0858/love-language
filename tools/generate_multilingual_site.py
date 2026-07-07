@@ -6178,6 +6178,65 @@ COMPASS_TRAFFIC_LAYER = {
 }
 
 
+COMPASS_RESULT_PREVIEW = {
+    "zh": {
+        "eyebrow": "FREE RESULT PREVIEW",
+        "title": "開始前，先看免費結果會長什麼樣",
+        "intro": "羅盤不會只丟給你一個分數。完成後會先把最容易錯頻的地方、可說出口的一句話與今天能做的小行動放在一起。",
+        "cta": "看自己的免費結果",
+        "items": [
+            ("主要錯頻", "你用行動證明在乎，對方卻可能先等一句明確的肯定。"),
+            ("可以說出口的一句話", "「我不是要你立刻改變，只是想讓你知道，這件事對我很重要。」"),
+            ("24 小時小行動", "今天先選一件 5 分鐘內能完成的回應，不把整段關係一次修完。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "FREE RESULT PREVIEW",
+        "title": "Before you start, see what the free result looks like",
+        "intro": "The compass does not stop at a score. It gives the main cross-signal, one sentence you can say, and one small action for today.",
+        "cta": "Get my free result",
+        "items": [
+            ("Main cross-signal", "You may show care through action while the other person waits for clear affirmation."),
+            ("One sentence to say", "\"I am not asking you to change instantly. I just want you to know this matters to me.\""),
+            ("24-hour action", "Choose one response you can finish in five minutes today instead of fixing the whole relationship at once."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "FREE RESULT PREVIEW",
+        "title": "始める前に、無料結果の形を見る",
+        "intro": "コンパスは点数だけで終わりません。主なすれ違い、言える一文、今日できる小さな行動を一緒に返します。",
+        "cta": "無料結果を見る",
+        "items": [
+            ("主なすれ違い", "あなたは行動で大切にしているのに、相手は先に明確な肯定を待っているかもしれません。"),
+            ("言える一文", "「すぐ変わってほしいのではなく、これが私にとって大切だと知ってほしい。」"),
+            ("24時間の行動", "関係全体を直そうとせず、今日5分でできる返事を一つ選びます。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "FREE RESULT PREVIEW",
+        "title": "시작하기 전, 무료 결과가 어떻게 보이는지 확인하기",
+        "intro": "컴퍼스는 점수만 주고 끝나지 않습니다. 주요 엇갈림, 말할 수 있는 한 문장, 오늘의 작은 행동을 함께 보여 줍니다.",
+        "cta": "내 무료 결과 보기",
+        "items": [
+            ("주요 엇갈림", "나는 행동으로 마음을 보이지만, 상대는 먼저 분명한 인정의 말을 기다릴 수 있습니다."),
+            ("말할 수 있는 한 문장", "\"당장 바꾸라는 뜻은 아니야. 다만 이 일이 나에게 중요하다는 걸 알아줬으면 해.\""),
+            ("24시간 행동", "관계 전체를 한 번에 고치려 하지 말고, 오늘 5분 안에 할 수 있는 반응을 하나 고릅니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "FREE RESULT PREVIEW",
+        "title": "Antes de empezar, mira cómo se ve el resultado gratis",
+        "intro": "La brújula no se queda en una puntuación. Entrega la señal cruzada principal, una frase que puedes decir y una acción pequeña para hoy.",
+        "cta": "Ver mi resultado gratis",
+        "items": [
+            ("Señal cruzada principal", "Puedes mostrar cuidado con acciones mientras la otra persona espera una afirmación clara."),
+            ("Una frase para decir", "\"No te pido que cambies de inmediato. Solo quiero que sepas que esto importa para mí.\""),
+            ("Acción de 24 horas", "Elige una respuesta que puedas completar en cinco minutos hoy, sin reparar toda la relación de una vez."),
+        ],
+    },
+}
+
+
 LOVE_COMPATIBILITY_PAGE = {
     "zh": {
         "title": "心語合盤｜愛之語測驗與八字愛情合盤",
@@ -6599,6 +6658,31 @@ def compass_visual_layer(lang: str) -> str:
     <h2>{escape(copy["audience_title"])}</h2>
     <div class="card-grid compact compass-audience-grid">{audience_cards}</div>
   </div>
+</section>
+"""
+
+
+def compass_result_preview_section(lang: str) -> str:
+    copy = COMPASS_RESULT_PREVIEW[lang]
+    cards = "".join(
+        f"""
+<article class="mini-card" data-compass-result-preview-card>
+  <p class="eyebrow">{escape(str(index).zfill(2))}</p>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for index, (title, text) in enumerate(copy["items"], start=1)
+    )
+    return f"""
+<section class="section intro-grid compass-result-preview" data-compass-result-preview>
+  <div>
+    <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+    <h2>{escape(copy["title"])}</h2>
+    <p>{escape(copy["intro"])}</p>
+    <p><a class="primary-btn" href="#relationship-compass-tool" data-funnel-event="compass_result_preview_start">{escape(copy["cta"])}</a></p>
+  </div>
+  <div class="card-grid compact">{cards}</div>
 </section>
 """
 
@@ -7606,6 +7690,7 @@ def compass_page(lang: str) -> None:
   </div>
 </section>
 {compass_visual_layer(lang)}
+{compass_result_preview_section(lang)}
 <section class="section note-section">
   <h2>{escape(copy["compatibility_title"])}</h2>
   <p>{escape(copy["compatibility_intro"])}</p>

@@ -7424,6 +7424,18 @@ def home_compass_bridge_section(lang: str) -> str:
   <span class="card-link">{escape(action)}</span>
 </a>
 """)
+    for slug, page_copy in (
+        (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
+        for slug in LONG_TAIL_COMPATIBILITY_PAGES
+    ):
+        cards.append(f"""
+<a class="content-card" href="{lang_url(lang, "tools/" + slug)}" data-funnel-event="home_compass_bridge_long_tail">
+  <span class="eyebrow">{escape(page_copy["eyebrow"])}</span>
+  <h3>{escape(page_copy["title"])}</h3>
+  <p>{escape(page_copy["desc"])}</p>
+  <span class="card-link">{escape(page_copy["primary"])}</span>
+</a>
+""")
     return f"""
 <section class="section home-compass-bridge" data-home-compass-bridge>
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "compass")}" data-funnel-event="home_compass_bridge_header">{escape(COMPASS_PAGE[lang]["title"])}</a></div>

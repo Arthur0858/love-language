@@ -6237,6 +6237,65 @@ COMPASS_RESULT_PREVIEW = {
 }
 
 
+COMPASS_USE_FLOW = {
+    "zh": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "三步完成免費關係羅盤",
+        "intro": "不需要先準備完整命盤，也不需要註冊帳號。先用 LoveTypes 守護者建立對話地圖，再視需要補上生日節奏。",
+        "cta": "現在開始三步流程",
+        "steps": [
+            ("選擇雙方守護者", "可以從測驗結果帶入，也可以先用你最接近的守護者開始。"),
+            ("補上關係狀態", "選擇曖昧、伴侶、遠距、修復中等狀態；生日與出生時間維持選填。"),
+            ("拿到一句話與小行動", "結果會先給主要錯頻、可說出口的句子與 24 小時內能做的一步。"),
+        ],
+    },
+    "en": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "Finish the free Relationship Compass in three steps",
+        "intro": "You do not need a full birth chart or an account. Start with LoveTypes guardians, then add optional birth rhythm only if it helps.",
+        "cta": "Start the three-step flow",
+        "steps": [
+            ("Choose both guardians", "Use quiz results if you have them, or begin with the guardians that feel closest."),
+            ("Add relationship context", "Pick dating, partnership, long-distance, repair, or another status; birthday and birth time stay optional."),
+            ("Receive one sentence and action", "The result gives the main cross-signal, words you can say, and one doable step within 24 hours."),
+        ],
+    },
+    "ja": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "無料の関係コンパスは三ステップで完了",
+        "intro": "完全な命盤も登録も必要ありません。まず LoveTypes 守護者で対話地図を作り、必要な場合だけ出生リズムを足します。",
+        "cta": "三ステップを始める",
+        "steps": [
+            ("二人の守護者を選ぶ", "診断結果を使っても、近いと感じる守護者から始めても大丈夫です。"),
+            ("関係状況を足す", "曖昧、パートナー、遠距離、修復中などを選びます。生年月日と出生時間は任意です。"),
+            ("一文と小さな行動を受け取る", "主なすれ違い、言える言葉、24時間以内にできる一歩が出ます。"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "무료 관계 컴퍼스는 세 단계로 끝납니다",
+        "intro": "완전한 명식이나 가입이 필요하지 않습니다. LoveTypes 수호자로 대화 지도를 만들고, 필요할 때만 출생 리듬을 더하세요.",
+        "cta": "세 단계 시작",
+        "steps": [
+            ("두 수호자 선택", "테스트 결과를 쓰거나 가장 가까운 수호자로 먼저 시작할 수 있습니다."),
+            ("관계 상황 추가", "썸, 연인, 장거리, 회복 중 같은 상태를 선택합니다. 생일과 출생 시간은 선택입니다."),
+            ("한 문장과 작은 행동 받기", "결과는 주요 엇갈림, 말할 수 있는 문장, 24시간 안에 가능한 한 걸음을 줍니다."),
+        ],
+    },
+    "es": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "Completa la Brújula de Relación gratis en tres pasos",
+        "intro": "No necesitas una carta completa ni crear cuenta. Empieza con las guardianas LoveTypes y agrega ritmo natal solo si ayuda.",
+        "cta": "Empezar los tres pasos",
+        "steps": [
+            ("Elige dos guardianas", "Usa los resultados del test o empieza con las guardianas que se sientan más cercanas."),
+            ("Añade el contexto", "Elige citas, pareja, distancia, reparación u otro estado; cumpleaños y hora natal son opcionales."),
+            ("Recibe una frase y una acción", "El resultado entrega la señal cruzada principal, palabras para decir y un paso posible en 24 horas."),
+        ],
+    },
+}
+
+
 LOVE_COMPATIBILITY_PAGE = {
     "zh": {
         "title": "心語合盤｜愛之語測驗與八字愛情合盤",
@@ -6683,6 +6742,31 @@ def compass_result_preview_section(lang: str) -> str:
     <p><a class="primary-btn" href="#relationship-compass-tool" data-funnel-event="compass_result_preview_start">{escape(copy["cta"])}</a></p>
   </div>
   <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
+def compass_use_flow_section(lang: str) -> str:
+    copy = COMPASS_USE_FLOW[lang]
+    steps = "".join(
+        f"""
+<article class="mini-card" data-compass-use-flow-step>
+  <p class="eyebrow">{escape(str(index).zfill(2))}</p>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text)}</p>
+</article>
+"""
+        for index, (title, text) in enumerate(copy["steps"], start=1)
+    )
+    return f"""
+<section class="section intro-grid compass-use-flow" data-compass-use-flow>
+  <div>
+    <p class="eyebrow">{escape(copy["eyebrow"])}</p>
+    <h2>{escape(copy["title"])}</h2>
+    <p>{escape(copy["intro"])}</p>
+    <p><a class="secondary-btn" href="#relationship-compass-tool" data-funnel-event="compass_use_flow_start">{escape(copy["cta"])}</a></p>
+  </div>
+  <div class="card-grid compact">{steps}</div>
 </section>
 """
 
@@ -7691,6 +7775,7 @@ def compass_page(lang: str) -> None:
 </section>
 {compass_visual_layer(lang)}
 {compass_result_preview_section(lang)}
+{compass_use_flow_section(lang)}
 <section class="section note-section">
   <h2>{escape(copy["compatibility_title"])}</h2>
   <p>{escape(copy["compatibility_intro"])}</p>
@@ -7715,7 +7800,7 @@ def compass_page(lang: str) -> None:
 """
     schema = json_ld({
         "@context": "https://schema.org",
-        "@type": ["WebPage", "WebApplication"],
+        "@type": ["WebPage", "WebApplication", "HowTo"],
         "@id": f"{abs_url(lang, 'compass')}#webapp",
         "name": copy["title"],
         "description": copy["desc"],
@@ -7726,6 +7811,10 @@ def compass_page(lang: str) -> None:
         "operatingSystem": "Web",
         "isPartOf": website_ref(lang),
         "publisher": organization_ref(),
+        "step": [
+            {"@type": "HowToStep", "position": idx, "name": title, "text": text}
+            for idx, (title, text) in enumerate(COMPASS_USE_FLOW[lang]["steps"], start=1)
+        ],
         "offers": [
             {"@type": "Offer", "name": "Free Relationship Compass", "price": "0", "priceCurrency": "USD"},
             *[

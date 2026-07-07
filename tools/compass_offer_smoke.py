@@ -52,6 +52,9 @@ class CompassParser(HTMLParser):
         self.result_preview_sections = 0
         self.result_preview_cards = 0
         self.result_preview_events = 0
+        self.use_flow_sections = 0
+        self.use_flow_steps = 0
+        self.use_flow_events = 0
         self.in_offer_section = False
         self.offer_depth = 0
         self.offer_cards = 0
@@ -86,6 +89,10 @@ class CompassParser(HTMLParser):
             self.result_preview_sections += 1
         if "data-compass-result-preview-card" in attr:
             self.result_preview_cards += 1
+        if "data-compass-use-flow" in attr:
+            self.use_flow_sections += 1
+        if "data-compass-use-flow-step" in attr:
+            self.use_flow_steps += 1
         if "data-compass-faq" in attr:
             self.faq_sections += 1
             self.in_faq_section = True
@@ -104,6 +111,8 @@ class CompassParser(HTMLParser):
             self.visual_events += 1
         if event == "compass_result_preview_start":
             self.result_preview_events += 1
+        if event == "compass_use_flow_start":
+            self.use_flow_events += 1
         if "data-compass-report-offers" in attr:
             self.in_offer_section = True
             self.offer_depth = 1
@@ -179,6 +188,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
+        "use_flow_sections": 0,
+        "use_flow_steps": 0,
+        "use_flow_events": 0,
         "offer_sections": 0,
         "offer_cards": 0,
         "offer_events": 0,
@@ -209,6 +221,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["result_preview_sections"] = parser.result_preview_sections
     stats["result_preview_cards"] = parser.result_preview_cards
     stats["result_preview_events"] = parser.result_preview_events
+    stats["use_flow_sections"] = parser.use_flow_sections
+    stats["use_flow_steps"] = parser.use_flow_steps
+    stats["use_flow_events"] = parser.use_flow_events
     stats["faq_sections"] = parser.faq_sections
     stats["faq_details"] = parser.faq_details
     stats["jsonld_blocks"] = parser.jsonld_blocks
@@ -236,6 +251,12 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected 3 compass result preview cards, got {parser.result_preview_cards}")
     if parser.result_preview_events != 1:
         issues.append(f"{path}: expected one compass result preview CTA event, got {parser.result_preview_events}")
+    if parser.use_flow_sections != 1:
+        issues.append(f"{path}: expected one compass use flow section, got {parser.use_flow_sections}")
+    if parser.use_flow_steps != 3:
+        issues.append(f"{path}: expected 3 compass use flow steps, got {parser.use_flow_steps}")
+    if parser.use_flow_events != 1:
+        issues.append(f"{path}: expected one compass use flow CTA event, got {parser.use_flow_events}")
     if parser.faq_sections != 1:
         issues.append(f"{path}: expected one compass FAQ section, got {parser.faq_sections}")
     if parser.faq_details != 3:
@@ -357,6 +378,9 @@ def main() -> int:
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
+        "use_flow_sections": 0,
+        "use_flow_steps": 0,
+        "use_flow_events": 0,
         "offer_sections": 0,
         "offer_cards": 0,
         "offer_events": 0,
@@ -399,6 +423,9 @@ def main() -> int:
     print(f"compass_offer_result_preview_sections_checked={totals['result_preview_sections']}")
     print(f"compass_offer_result_preview_cards_checked={totals['result_preview_cards']}")
     print(f"compass_offer_result_preview_events_checked={totals['result_preview_events']}")
+    print(f"compass_offer_use_flow_sections_checked={totals['use_flow_sections']}")
+    print(f"compass_offer_use_flow_steps_checked={totals['use_flow_steps']}")
+    print(f"compass_offer_use_flow_events_checked={totals['use_flow_events']}")
     print(f"compass_offer_sections_checked={totals['offer_sections']}")
     print(f"compass_offer_cards_checked={totals['offer_cards']}")
     print(f"compass_offer_events_checked={totals['offer_events']}")

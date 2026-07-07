@@ -6065,6 +6065,50 @@ COMPASS_REPORT_OFFER = {
 }
 
 
+COMPASS_FAQ = {
+    "zh": {
+        "title": "羅盤常見問題",
+        "items": [
+            ("關係羅盤是免費的嗎？", "免費版會先給主要錯頻、最需要理解的地方、一句可說出口的話與 24 小時小行動。"),
+            ("一定要填生日或出生時間嗎？", "不用。你可以只輸入雙方 LoveTypes 守護者與關係狀態；生日或出生時間只是選填的節奏線索。"),
+            ("羅盤會判斷我們合不合嗎？", "不會。LoveTypes 不做命運、婚姻或分手判決，只把錯頻整理成可討論、可修復的下一步。"),
+        ],
+    },
+    "en": {
+        "title": "Compass FAQ",
+        "items": [
+            ("Is the Relationship Compass free?", "The free version gives the main cross-signal, what needs understanding, one sentence to say, and one 24-hour action."),
+            ("Do I need a birthday or birth time?", "No. You can use only two LoveTypes guardians and relationship context; birth data is optional rhythm context."),
+            ("Will the compass judge whether we are compatible?", "No. LoveTypes does not make destiny, marriage, or breakup verdicts. It turns cross-signals into repairable next steps."),
+        ],
+    },
+    "ja": {
+        "title": "コンパス FAQ",
+        "items": [
+            ("関係コンパスは無料ですか？", "無料版では主なすれ違い、理解が必要な点、言える一文、24時間の行動が分かります。"),
+            ("生年月日や出生時間は必要ですか？", "不要です。二人の LoveTypes 守護者と関係状況だけで使えます。出生情報は任意のリズム情報です。"),
+            ("相性を判定しますか？", "しません。LoveTypes は運命、結婚、別れを断定せず、すれ違いを修復可能な次の一歩へ変えます。"),
+        ],
+    },
+    "ko": {
+        "title": "컴퍼스 FAQ",
+        "items": [
+            ("관계 컴퍼스는 무료인가요?", "무료 버전은 주요 엇갈림, 이해가 필요한 부분, 말할 수 있는 한 문장, 24시간 행동을 줍니다."),
+            ("생일이나 출생 시간이 꼭 필요한가요?", "아니요. 두 LoveTypes 수호자와 관계 상황만으로 사용할 수 있습니다. 출생 정보는 선택 리듬 단서입니다."),
+            ("컴퍼스가 궁합을 판정하나요?", "아니요. LoveTypes는 운명, 결혼, 이별을 단정하지 않고 엇갈림을 회복 가능한 다음 단계로 바꿉니다."),
+        ],
+    },
+    "es": {
+        "title": "FAQ de la brújula",
+        "items": [
+            ("¿La Brújula de Relación es gratis?", "La versión gratuita entrega la señal cruzada principal, lo que necesita comprensión, una frase y una acción de 24 horas."),
+            ("¿Necesito cumpleaños u hora de nacimiento?", "No. Puedes usar solo dos guardianas LoveTypes y el contexto relacional; los datos natales son ritmo opcional."),
+            ("¿La brújula juzga si somos compatibles?", "No. LoveTypes no da veredictos de destino, matrimonio o ruptura. Convierte señales cruzadas en próximos pasos reparables."),
+        ],
+    },
+}
+
+
 COMPASS_TRAFFIC_LAYER = {
     "zh": {
         "hero_kicker": "免費 · 2 分鐘 · 不需要註冊",
@@ -6605,6 +6649,25 @@ def compass_search_routes_section(lang: str) -> str:
 <section class="section compass-search-routes" data-compass-search-routes>
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></div>
   <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
+def compass_faq_section(lang: str) -> str:
+    faq = COMPASS_FAQ[lang]
+    items = "".join(
+        f"""
+<details>
+  <summary>{escape(question)}</summary>
+  <p>{escape(answer)}</p>
+</details>
+"""
+        for question, answer in faq["items"]
+    )
+    return f"""
+<section class="section article-body standalone compass-faq" data-compass-faq>
+  <h2>{escape(faq["title"])}</h2>
+  {items}
 </section>
 """
 
@@ -7547,6 +7610,7 @@ def compass_page(lang: str) -> None:
   <p>{escape(t["unofficial_disclosure"])}</p>
 </section>
 {compass_report_offer_section(lang)}
+{compass_faq_section(lang)}
 <section class="section" id="relationship-compass-tool">
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["tool_title"])}</h2></div></div>
   <div data-compass-root></div>
@@ -7571,6 +7635,17 @@ def compass_page(lang: str) -> None:
                 {"@type": "Offer", "name": title, "price": price.replace("US$", ""), "priceCurrency": "USD"}
                 for title, price, _desc in COMPASS_REPORT_OFFER[lang]["items"]
             ],
+        ],
+    }) + json_ld({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": question,
+                "acceptedAnswer": {"@type": "Answer", "text": answer},
+            }
+            for question, answer in COMPASS_FAQ[lang]["items"]
         ],
     })
     fallback_data = '<script src="/compass-data-en.js"></script>\n' if lang in {"ja", "ko", "es"} else ""

@@ -55,6 +55,13 @@ class CompassParser(HTMLParser):
         self.offer_events = 0
         self.offer_hrefs: list[str] = []
         self.offer_text: list[str] = []
+        self.faq_sections = 0
+        self.faq_details = 0
+        self.in_faq_section = False
+        self.faq_depth = 0
+        self.jsonld_blocks = 0
+        self.in_jsonld = False
+        self._jsonld_buf: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attr = {key.lower(): value or "" for key, value in attrs}
@@ -72,6 +79,17 @@ class CompassParser(HTMLParser):
             self.audience_panels += 1
         if "data-compass-audience-card" in attr:
             self.audience_cards += 1
+        if "data-compass-faq" in attr:
+            self.faq_sections += 1
+            self.in_faq_section = True
+            self.faq_depth = 1
+        elif self.in_faq_section:
+            self.faq_depth += 1
+        if self.in_faq_section and tag.lower() == "details":
+            self.faq_details += 1
+        if tag.lower() == "script" and attr.get("type") == "application/ld+json":
+            self.in_jsonld = True
+            self._jsonld_buf = []
         event = attr.get("data-funnel-event", "")
         if event.startswith("compass_hero_"):
             self.hero_events += 1
@@ -93,6 +111,15 @@ class CompassParser(HTMLParser):
             self.offer_hrefs.append(attr.get("href", ""))
 
     def handle_endtag(self, tag: str) -> None:
+        if self.in_jsonld and tag.lower() == "script":
+            self.in_jsonld = False
+            self.jsonld_blocks += 1
+            self._jsonld_buf = []
+        if self.in_faq_section:
+            self.faq_depth -= 1
+            if self.faq_depth <= 0:
+                self.in_faq_section = False
+                self.faq_depth = 0
         if not self.in_offer_section:
             return
         self.offer_depth -= 1
@@ -101,6 +128,8 @@ class CompassParser(HTMLParser):
             self.offer_depth = 0
 
     def handle_data(self, data: str) -> None:
+        if self.in_jsonld:
+            self._jsonld_buf.append(data)
         if self.in_offer_section and data.strip():
             self.offer_text.append(data.strip())
 
@@ -145,6 +174,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "prices": 0,
         "titles": 0,
         "boundary_phrases": 0,
+        "faq_sections": 0,
+        "faq_details": 0,
+        "jsonld_blocks": 0,
     }
     issues: list[str] = []
     if status != 200:
@@ -162,6 +194,9 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["guardian_tiles"] = parser.guardian_tiles
     stats["audience_panels"] = parser.audience_panels
     stats["audience_cards"] = parser.audience_cards
+    stats["faq_sections"] = parser.faq_sections
+    stats["faq_details"] = parser.faq_details
+    stats["jsonld_blocks"] = parser.jsonld_blocks
     if parser.hero_sections != 1:
         issues.append(f"{path}: expected one compass landing hero, got {parser.hero_sections}")
     if parser.hero_badges != 1:
@@ -180,6 +215,12 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{path}: expected one audience panel, got {parser.audience_panels}")
     if parser.audience_cards != 3:
         issues.append(f"{path}: expected 3 audience cards, got {parser.audience_cards}")
+    if parser.faq_sections != 1:
+        issues.append(f"{path}: expected one compass FAQ section, got {parser.faq_sections}")
+    if parser.faq_details != 3:
+        issues.append(f"{path}: expected 3 compass FAQ details, got {parser.faq_details}")
+    if parser.jsonld_blocks < 2:
+        issues.append(f"{path}: expected WebApplication and FAQ JSON-LD blocks, got {parser.jsonld_blocks}")
 
     offer_text = "\n".join(parser.offer_text)
     if not offer_text:
@@ -299,6 +340,9 @@ def main() -> int:
         "prices": 0,
         "titles": 0,
         "boundary_phrases": 0,
+        "faq_sections": 0,
+        "faq_details": 0,
+        "jsonld_blocks": 0,
         "scripts": 0,
         "result_offer_templates": 0,
         "result_offer_events": 0,
@@ -335,6 +379,9 @@ def main() -> int:
     print(f"compass_offer_prices_checked={totals['prices']}")
     print(f"compass_offer_titles_checked={totals['titles']}")
     print(f"compass_offer_boundary_phrases_checked={totals['boundary_phrases']}")
+    print(f"compass_offer_faq_sections_checked={totals['faq_sections']}")
+    print(f"compass_offer_faq_details_checked={totals['faq_details']}")
+    print(f"compass_offer_jsonld_blocks_checked={totals['jsonld_blocks']}")
     print(f"compass_offer_result_scripts_checked={totals['scripts']}")
     print(f"compass_offer_result_templates_checked={totals['result_offer_templates']}")
     print(f"compass_offer_result_events_checked={totals['result_offer_events']}")

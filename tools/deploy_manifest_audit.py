@@ -52,25 +52,6 @@ FORBIDDEN_FILES = {
     "_headers",
     "_redirects",
 }
-PUBLIC_TOOL_HTML_PATHS = {
-    "tools/love-compatibility/index.html",
-    "tools/bazi-love-compatibility/index.html",
-    "tools/2026-love-timing/index.html",
-    "en/tools/love-compatibility/index.html",
-    "en/tools/bazi-love-compatibility/index.html",
-    "en/tools/2026-love-timing/index.html",
-    "es/tools/love-compatibility/index.html",
-    "es/tools/bazi-love-compatibility/index.html",
-    "es/tools/2026-love-timing/index.html",
-    "ja/tools/love-compatibility/index.html",
-    "ja/tools/bazi-love-compatibility/index.html",
-    "ja/tools/2026-love-timing/index.html",
-    "ko/tools/love-compatibility/index.html",
-    "ko/tools/bazi-love-compatibility/index.html",
-    "ko/tools/2026-love-timing/index.html",
-}
-
-
 def load_deploy_module():
     spec = importlib.util.spec_from_file_location("lovetypes_deploy_cloudflare_pages", DEPLOY_SCRIPT)
     if spec is None or spec.loader is None:
@@ -93,11 +74,12 @@ def load_generator_module():
 
 def required_manifest_files() -> set[str]:
     generator = load_generator_module()
+    deploy = load_deploy_module()
     return BASE_REQUIRED_MANIFEST_FILES | declared_index_and_support_files() | {
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
-    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()} | PUBLIC_TOOL_HTML_PATHS
+    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()} | deploy.PUBLIC_TOOL_HTML_PATHS
 
 
 def declared_index_and_support_files() -> set[str]:
@@ -170,7 +152,7 @@ def main() -> int:
     for rel_path in sorted(manifest_paths):
         if rel_path in FORBIDDEN_FILES:
             issues.append(f"forbidden file in manifest: {rel_path}")
-        if any(rel_path.startswith(prefix) for prefix in FORBIDDEN_PREFIXES) and rel_path not in PUBLIC_TOOL_HTML_PATHS:
+        if any(rel_path.startswith(prefix) for prefix in FORBIDDEN_PREFIXES) and rel_path not in deploy.PUBLIC_TOOL_HTML_PATHS:
             issues.append(f"forbidden path in manifest: {rel_path}")
         if any(rel_path.endswith(suffix) for suffix in FORBIDDEN_SUFFIXES):
             issues.append(f"forbidden suffix in manifest: {rel_path}")

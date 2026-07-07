@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import importlib.util
 import json
 import mimetypes
 import os
@@ -60,23 +61,34 @@ EXCLUDED_FILE_NAMES = {
     "_routes.json",
     "_worker.js",
 }
-PUBLIC_TOOL_HTML_PATHS = {
-    "tools/love-compatibility/index.html",
-    "tools/bazi-love-compatibility/index.html",
-    "tools/2026-love-timing/index.html",
-    "en/tools/love-compatibility/index.html",
-    "en/tools/bazi-love-compatibility/index.html",
-    "en/tools/2026-love-timing/index.html",
-    "es/tools/love-compatibility/index.html",
-    "es/tools/bazi-love-compatibility/index.html",
-    "es/tools/2026-love-timing/index.html",
-    "ja/tools/love-compatibility/index.html",
-    "ja/tools/bazi-love-compatibility/index.html",
-    "ja/tools/2026-love-timing/index.html",
-    "ko/tools/love-compatibility/index.html",
-    "ko/tools/bazi-love-compatibility/index.html",
-    "ko/tools/2026-love-timing/index.html",
-}
+
+
+def load_generator_config():
+    generator_path = Path(__file__).resolve().parent / "generate_multilingual_site.py"
+    spec = importlib.util.spec_from_file_location("lovetypes_site_generator_for_deploy", generator_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Cannot load generator config from {generator_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def collect_public_tool_html_paths() -> set[str]:
+    generator = load_generator_config()
+    slugs = ["love-compatibility", *generator.LONG_TAIL_COMPATIBILITY_PAGES.keys()]
+    paths: set[str] = set()
+    for _lang, cfg in generator.LANGS.items():
+        prefix = cfg["prefix"]
+        for slug in slugs:
+            rel_path = f"tools/{slug}/index.html"
+            if prefix:
+                rel_path = f"{prefix}/{rel_path}"
+            paths.add(rel_path)
+    return paths
+
+
+PUBLIC_TOOL_HTML_PATHS = collect_public_tool_html_paths()
 
 
 class DeployError(RuntimeError):

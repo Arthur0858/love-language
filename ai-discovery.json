@@ -397,9 +397,14 @@
       "priority": 0.88
     },
     {
+      "url": "https://lovetypes.tw/tools/relationship-compatibility-test/",
+      "intent": "A 3-minute relationship compatibility test that maps cross-signals, love-language needs, and one next repair step.",
+      "priority": 0.86
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.86
+      "priority": 0.84
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -461,12 +466,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 185,
-      "paths": 37,
+      "pages": 190,
+      "paths": 38,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 50,
+        "conversion": 55,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -495,7 +500,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 18,
+    "priorityUrls": 19,
     "languages": 5,
     "discoveryFiles": 10
   }

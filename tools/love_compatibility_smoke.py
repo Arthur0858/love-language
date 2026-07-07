@@ -19,11 +19,11 @@ LANG_PATHS = {
     "es": "/es/tools/love-compatibility/",
 }
 INBOUND_PATHS = {
-    "zh": ("/compass/", "/garden-map/"),
-    "en": ("/en/compass/", "/en/garden-map/"),
-    "ja": ("/ja/compass/", "/ja/garden-map/"),
-    "ko": ("/ko/compass/", "/ko/garden-map/"),
-    "es": ("/es/compass/", "/es/garden-map/"),
+    "zh": ("/", "/compass/", "/garden-map/", "/resources/"),
+    "en": ("/en/", "/en/compass/", "/en/garden-map/", "/en/resources/"),
+    "ja": ("/ja/", "/ja/compass/", "/ja/garden-map/", "/ja/resources/"),
+    "ko": ("/ko/", "/ko/compass/", "/ko/garden-map/", "/ko/resources/"),
+    "es": ("/es/", "/es/compass/", "/es/garden-map/", "/es/resources/"),
 }
 REQUIRED_EVENTS = {
     "love_compatibility_compass_start",
@@ -173,6 +173,11 @@ def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
             if path.endswith("/compass/"):
                 if "compass_compatibility_entry" not in parser.events:
                     issues.append(f"{path}: missing compass_compatibility_entry event")
+                else:
+                    stats["inbound_events"] += 1
+            if path in {"/", "/en/", "/ja/", "/ko/", "/es/"}:
+                if "home_compass_bridge_entry" not in parser.events:
+                    issues.append(f"{path}: missing home_compass_bridge_entry event")
                 else:
                     stats["inbound_events"] += 1
     return issues, stats

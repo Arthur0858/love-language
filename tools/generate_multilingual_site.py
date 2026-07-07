@@ -6635,7 +6635,7 @@ HOME_COMPASS_BRIDGE = {
     },
     "en": {
         "eyebrow": "COMPASS ROUTE",
-        "title": "If you want to read the cross-signal between two people, start with the compass",
+        "title": "Start With The Compass",
         "intro": "LoveTypes does not treat compatibility as a verdict. It starts with two heart-language doorways, then turns the difference into a route for communication, repair, and revisiting.",
         "cards": [
             ("Free Relationship Compass", "Enter both guardians and relationship context to get a cross-signal map and next step.", "Open compass", "compass", "home_compass_bridge_tool"),
@@ -6662,7 +6662,7 @@ HOME_COMPASS_BRIDGE = {
     },
     "es": {
         "eyebrow": "COMPASS ROUTE",
-        "title": "Si quieres leer la señal cruzada entre dos personas, empieza por la brújula",
+        "title": "Empieza Por La Brújula",
         "intro": "LoveTypes no convierte la compatibilidad en sentencia. Primero ubica las puertas emocionales y luego transforma la diferencia en una ruta de conversación y reparación.",
         "cards": [
             ("Brújula gratis", "Ingresa guardianas y contexto para recibir un mapa de señales cruzadas y siguiente paso.", "Abrir brújula", "compass", "home_compass_bridge_tool"),
@@ -6975,6 +6975,27 @@ def home_journey_section(lang: str) -> str:
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "garden-map")}">{escape(GARDEN_MAP[lang]["title"])}</a></div>
   <p class="section-intro">{escape(copy["intro"])}</p>
   <div class="home-journey-grid">{"".join(cards)}</div>
+</section>
+"""
+
+
+def home_compass_bridge_section(lang: str) -> str:
+    copy = HOME_COMPASS_BRIDGE[lang]
+    cards = []
+    for title, desc, action, target, event in copy["cards"]:
+        cards.append(f"""
+<a class="content-card" href="{lang_url(lang, target)}" data-funnel-event="{escape(event)}">
+  <span class="eyebrow">{escape(copy["eyebrow"])}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <span class="card-link">{escape(action)}</span>
+</a>
+""")
+    return f"""
+<section class="section home-compass-bridge" data-home-compass-bridge>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "compass")}" data-funnel-event="home_compass_bridge_header">{escape(COMPASS_PAGE[lang]["title"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
 </section>
 """
 
@@ -9720,6 +9741,7 @@ def home(lang: str) -> None:
 {universe_gate_section(lang)}
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
+{home_compass_bridge_section(lang)}
 {home_safety_compass(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(section_labels["home_field_notes"])}</h2><p>{escape(t["trust_intro"])}</p></div>

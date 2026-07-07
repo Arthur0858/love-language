@@ -3668,6 +3668,15 @@ def main() -> int:
                 issues.append(f"{page}: expected 4 home journey cards, found {journey_card_count}")
             if journey_section_count == 1 and journey_card_count == 4:
                 stats["home_journey_pages"] += 1
+            compass_bridge_count = parser.source.count("data-home-compass-bridge")
+            if compass_bridge_count != 1:
+                issues.append(f"{page}: expected one home compass bridge, found {compass_bridge_count}")
+            elif lang_url_for_page(page, "compass") not in page_hrefs:
+                issues.append(f"{page}: home compass bridge missing compass link")
+            elif lang_url_for_page(page, "tools/love-compatibility") not in page_hrefs:
+                issues.append(f"{page}: home compass bridge missing love compatibility link")
+            else:
+                stats["home_compass_bridge_pages"] += 1
             home_hrefs = {anchor.get("href", "") for anchor in parser.anchors}
             required_home_hrefs = {
                 "#quiz-section",
@@ -4546,6 +4555,7 @@ def main() -> int:
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")
     print(f"home_quiz_entry_pages={stats['home_quiz_entry_pages']}")
     print(f"home_journey_pages={stats['home_journey_pages']}")
+    print(f"home_compass_bridge_pages={stats['home_compass_bridge_pages']}")
     print(f"garden_map_pages={stats['garden_map_pages']}")
     print(f"resources_supply_entry_pages={stats['resources_supply_entry_pages']}")
     print(f"resources_hero_action_pages={stats['resources_hero_action_pages']}")

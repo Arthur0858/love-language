@@ -14398,6 +14398,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 ## AI Discovery Files
 
 - Generative answer index: /ai-discovery.json
+- Search indexing submission plan: /search-indexing.json
 - Public route index: /site-index.json
 - Guardian profile index: /guardian-profiles.json
 - Commerce catalog: /commerce-catalog.json
@@ -14449,6 +14450,7 @@ Resources: {DOMAIN}/resources/
 Keepsakes: {DOMAIN}/keepsakes/
 Luna: {DOMAIN}/luna-yoga-music/
 Contact: {DOMAIN}/contact/
+Search indexing plan: /search-indexing.json
 """
     write(ROOT / "humans.txt", content)
 
@@ -15214,6 +15216,7 @@ def collect_ai_discovery_index() -> dict:
     ]
     discovery_files = {
         "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
+        "searchIndexing": f"{DOMAIN}/search-indexing.json",
         "llms": f"{DOMAIN}/llms.txt",
         "siteIndex": f"{DOMAIN}/site-index.json",
         "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
@@ -15276,6 +15279,146 @@ def collect_ai_discovery_index() -> dict:
 
 def write_ai_discovery_index() -> None:
     write(ROOT / "ai-discovery.json", json.dumps(collect_ai_discovery_index(), ensure_ascii=False, indent=2) + "\n")
+
+
+def collect_search_indexing_plan() -> dict:
+    ai_discovery = collect_ai_discovery_index()
+    priority_urls = ai_discovery["priorityUrls"]
+    batch_definitions = {
+        "core_conversion": {
+            "label": "Core conversion entrances",
+            "purpose": "Submit first because these pages explain the quiz promise, Compass, and main conversion path.",
+            "target": "Cold visitors should understand what to do next within one click.",
+        },
+        "long_tail_search": {
+            "label": "Long-tail search routes",
+            "purpose": "Submit next because these pages match specific love compatibility, BaZi compatibility, and relationship question searches.",
+            "target": "Search visitors should land on a focused answer and continue into Compass or quiz.",
+        },
+        "retention_and_trust": {
+            "label": "Retention, product, and trust routes",
+            "purpose": "Submit after the search routes so users and crawlers see the full support, safety, and commerce boundary.",
+            "target": "Returning visitors should find repair tasks, keepsakes, Luna, and trust pages clearly.",
+        },
+    }
+    batch_events = {
+        "core_conversion": [
+            "campaign_landing",
+            "love_compatibility_compass_start",
+            "quiz_started",
+            "quiz_completed",
+        ],
+        "long_tail_search": [
+            "compass_long_tail_entry",
+            "love_compatibility_quick_answer_compass",
+            "love_compatibility_compass_start",
+        ],
+        "retention_and_trust": [
+            "quiz_result_supply_route",
+            "quiz_result_repair_plan",
+            "free_keepsake_download",
+            "luna_gumroad_pack_click",
+        ],
+    }
+    core_urls = {
+        f"{DOMAIN}/",
+        f"{DOMAIN}/start/",
+        f"{DOMAIN}/compass/",
+        f"{DOMAIN}/tools/love-compatibility/",
+    }
+
+    def batch_for(url: str) -> str:
+        if url in core_urls:
+            return "core_conversion"
+        if "/tools/" in url:
+            return "long_tail_search"
+        return "retention_and_trust"
+
+    urls = []
+    batch_counts = Counter()
+    for position, item in enumerate(priority_urls, start=1):
+        url = item["url"]
+        batch = batch_for(url)
+        batch_counts[batch] += 1
+        urls.append(
+            {
+                "position": position,
+                "url": url,
+                "batch": batch,
+                "intent": item["intent"],
+                "priority": item["priority"],
+                "submitTo": [
+                    "Google Search Console URL inspection",
+                    "Bing Webmaster Tools URL submission",
+                    "sitemap.xml recrawl request",
+                ],
+                "observeWith": [
+                    "GSC indexed status",
+                    "GSC query impressions",
+                    "GSC clicks",
+                    "GA4 landing page sessions",
+                    "LoveTypes funnel events",
+                ],
+                "expectedEvents": batch_events[batch],
+                "manualObservation": {
+                    "indexed": None,
+                    "lastSubmitted": None,
+                    "impressions": None,
+                    "clicks": None,
+                    "averagePosition": None,
+                    "queries": [],
+                    "notes": "",
+                },
+            }
+        )
+
+    submission_batches = [
+        {
+            "id": batch_id,
+            **definition,
+            "urlCount": batch_counts[batch_id],
+            "relatedFunnelEvents": batch_events[batch_id],
+        }
+        for batch_id, definition in batch_definitions.items()
+    ]
+    observation_fields = [
+        "indexed",
+        "lastSubmitted",
+        "impressions",
+        "clicks",
+        "averagePosition",
+        "queries",
+        "notes",
+    ]
+    related_funnel_events = sorted({event for events in batch_events.values() for event in events})
+    return {
+        "schemaVersion": 1,
+        "generatedBy": "tools/generate_multilingual_site.py",
+        "updated": UPDATED,
+        "production": f"{DOMAIN}/",
+        "siteName": "LoveTypes",
+        "objective": "Prioritize public URL submission and post-indexing traffic observation for the Relationship Compass, quiz funnel, long-tail compatibility pages, and retention routes.",
+        "sourceFiles": {
+            "sitemap": f"{DOMAIN}/sitemap.xml",
+            "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
+            "siteIndex": f"{DOMAIN}/site-index.json",
+            "funnelEvents": f"{DOMAIN}/funnel-events.json",
+        },
+        "submissionBatches": submission_batches,
+        "observationFields": observation_fields,
+        "relatedFunnelEvents": related_funnel_events,
+        "urls": urls,
+        "totals": {
+            "priorityUrls": len(urls),
+            "submissionBatches": len(submission_batches),
+            "observationFields": len(observation_fields),
+            "relatedFunnelEvents": len(related_funnel_events),
+        },
+    }
+
+
+def write_search_indexing_plan() -> None:
+    write(ROOT / "search-indexing.json", json.dumps(collect_search_indexing_plan(), ensure_ascii=False, indent=2) + "\n")
 
 
 def promotion_event_kpi_map() -> list[dict]:
@@ -15708,6 +15851,7 @@ def collect_release_info() -> dict:
         },
         "publicIndexes": {
             "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
+            "searchIndexing": f"{DOMAIN}/search-indexing.json",
             "siteHealth": f"{DOMAIN}/site-health.json",
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
@@ -15794,6 +15938,7 @@ def collect_site_health() -> dict:
         "guardian-profiles.json",
         "safety-index.json",
         "ai-discovery.json",
+        "search-indexing.json",
         "promotion-kit.json",
         "release.json",
         "site-health.json",
@@ -15840,6 +15985,7 @@ def collect_site_health() -> dict:
         "supportFiles": support_files,
         "primaryIndexes": {
             "aiDiscovery": f"{DOMAIN}/ai-discovery.json",
+            "searchIndexing": f"{DOMAIN}/search-indexing.json",
             "siteIndex": f"{DOMAIN}/site-index.json",
             "guardianProfiles": f"{DOMAIN}/guardian-profiles.json",
             "safetyIndex": f"{DOMAIN}/safety-index.json",
@@ -15966,6 +16112,7 @@ https://:version.lovetypes.pages.dev/*
     write_site_index()
     write_safety_index()
     write_ai_discovery_index()
+    write_search_indexing_plan()
     write_promotion_kit()
     write_release_info()
     write_site_health()

@@ -40,6 +40,7 @@ FORCE_UPLOAD_PATHS = {
     "funnel-events.json",
     "site-index.json",
     "ai-discovery.json",
+    "search-indexing.json",
     "release.json",
     "site-health.json",
 }

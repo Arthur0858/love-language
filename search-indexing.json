@@ -1,0 +1,1186 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/generate_multilingual_site.py",
+  "updated": "2026-07-05",
+  "production": "https://lovetypes.tw/",
+  "siteName": "LoveTypes",
+  "objective": "Prioritize public URL submission and post-indexing traffic observation for the Relationship Compass, quiz funnel, long-tail compatibility pages, and retention routes.",
+  "sourceFiles": {
+    "sitemap": "https://lovetypes.tw/sitemap.xml",
+    "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
+    "siteIndex": "https://lovetypes.tw/site-index.json",
+    "funnelEvents": "https://lovetypes.tw/funnel-events.json"
+  },
+  "submissionBatches": [
+    {
+      "id": "core_conversion",
+      "label": "Core conversion entrances",
+      "purpose": "Submit first because these pages explain the quiz promise, Compass, and main conversion path.",
+      "target": "Cold visitors should understand what to do next within one click.",
+      "urlCount": 4,
+      "relatedFunnelEvents": [
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed"
+      ]
+    },
+    {
+      "id": "long_tail_search",
+      "label": "Long-tail search routes",
+      "purpose": "Submit next because these pages match specific love compatibility, BaZi compatibility, and relationship question searches.",
+      "target": "Search visitors should land on a focused answer and continue into Compass or quiz.",
+      "urlCount": 19,
+      "relatedFunnelEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ]
+    },
+    {
+      "id": "retention_and_trust",
+      "label": "Retention, product, and trust routes",
+      "purpose": "Submit after the search routes so users and crawlers see the full support, safety, and commerce boundary.",
+      "target": "Returning visitors should find repair tasks, keepsakes, Luna, and trust pages clearly.",
+      "urlCount": 10,
+      "relatedFunnelEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ]
+    }
+  ],
+  "observationFields": [
+    "indexed",
+    "lastSubmitted",
+    "impressions",
+    "clicks",
+    "averagePosition",
+    "queries",
+    "notes"
+  ],
+  "relatedFunnelEvents": [
+    "campaign_landing",
+    "compass_long_tail_entry",
+    "free_keepsake_download",
+    "love_compatibility_compass_start",
+    "love_compatibility_quick_answer_compass",
+    "luna_gumroad_pack_click",
+    "quiz_completed",
+    "quiz_result_repair_plan",
+    "quiz_result_supply_route",
+    "quiz_started"
+  ],
+  "urls": [
+    {
+      "position": 1,
+      "url": "https://lovetypes.tw/start/",
+      "batch": "core_conversion",
+      "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery",
+      "priority": 1.0,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 2,
+      "url": "https://lovetypes.tw/",
+      "batch": "core_conversion",
+      "intent": "quiz and guardian recognition entrance",
+      "priority": 1.0,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 3,
+      "url": "https://lovetypes.tw/garden-map/",
+      "batch": "retention_and_trust",
+      "intent": "human-readable Heart Garden route map",
+      "priority": 0.95,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 4,
+      "url": "https://lovetypes.tw/compass/",
+      "batch": "core_conversion",
+      "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm",
+      "priority": 0.95,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 5,
+      "url": "https://lovetypes.tw/tools/love-compatibility/",
+      "batch": "core_conversion",
+      "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass",
+      "priority": 0.94,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 6,
+      "url": "https://lovetypes.tw/tools/bazi-love-compatibility/",
+      "batch": "long_tail_search",
+      "intent": "A BaZi love compatibility entry that turns birth rhythm into relationship insight, not a destiny verdict.",
+      "priority": 0.92,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 7,
+      "url": "https://lovetypes.tw/tools/2026-love-timing/",
+      "batch": "long_tail_search",
+      "intent": "Turn 2026 love forecast search intent into relationship rhythm: hard talks, rest, repair, and next steps.",
+      "priority": 0.9,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 8,
+      "url": "https://lovetypes.tw/tools/love-language-compatibility/",
+      "batch": "long_tail_search",
+      "intent": "A love language compatibility entry for seeing how two people receive love, where signals cross, and what to say next.",
+      "priority": 0.88,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 9,
+      "url": "https://lovetypes.tw/tools/relationship-compatibility-test/",
+      "batch": "long_tail_search",
+      "intent": "A 3-minute relationship compatibility test that maps cross-signals, love-language needs, and one next repair step.",
+      "priority": 0.86,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 10,
+      "url": "https://lovetypes.tw/tools/couples-communication-quiz/",
+      "batch": "long_tail_search",
+      "intent": "A couples communication quiz that turns complaints, silence, and conflict into one small request and a repair route.",
+      "priority": 0.84,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 11,
+      "url": "https://lovetypes.tw/tools/relationship-repair-after-fight/",
+      "batch": "long_tail_search",
+      "intent": "After a fight, use the LoveTypes Relationship Compass to turn hurt, cross-signals, and silence into one safer repair request.",
+      "priority": 0.82,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 12,
+      "url": "https://lovetypes.tw/tools/emotional-distance-relationship/",
+      "batch": "long_tail_search",
+      "intent": "When a relationship feels distant, use the LoveTypes Compass to find the care being misread, the missing presence, and one repair step.",
+      "priority": 0.8,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 13,
+      "url": "https://lovetypes.tw/tools/trust-issues-relationship/",
+      "batch": "long_tail_search",
+      "intent": "When trust feels damaged, use the LoveTypes Compass to separate hurt, boundaries, and one visible repair action.",
+      "priority": 0.78,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 14,
+      "url": "https://lovetypes.tw/tools/insecure-in-relationship/",
+      "batch": "long_tail_search",
+      "intent": "When you feel insecure in a relationship, use the LoveTypes Compass to separate triggers, love-language needs, and one request that can be answered.",
+      "priority": 0.76,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 15,
+      "url": "https://lovetypes.tw/tools/silent-treatment-relationship/",
+      "batch": "long_tail_search",
+      "intent": "When silence, disappearing, or no replies hurt the relationship, use the LoveTypes Compass to separate cooling down, avoidance, control, and boundaries.",
+      "priority": 0.74,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 16,
+      "url": "https://lovetypes.tw/tools/breakup-signs-relationship/",
+      "batch": "long_tail_search",
+      "intent": "Searching for breakup signs or whether the relationship can be repaired? Use the LoveTypes Compass to separate warning signs, repairable mismatch, and boundaries.",
+      "priority": 0.72,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 17,
+      "url": "https://lovetypes.tw/tools/feeling-misunderstood-relationship/",
+      "batch": "long_tail_search",
+      "intent": "When you feel misunderstood by your partner, use the LoveTypes Compass to translate complaints into love-language needs and one answerable request.",
+      "priority": 0.7,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 18,
+      "url": "https://lovetypes.tw/tools/partner-wont-communicate/",
+      "batch": "long_tail_search",
+      "intent": "When your partner refuses to talk or shuts down, use the LoveTypes Compass to separate pressure response, love-language mismatch, boundaries, and one small request.",
+      "priority": 0.68,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 19,
+      "url": "https://lovetypes.tw/tools/one-sided-relationship/",
+      "batch": "long_tail_search",
+      "intent": "If you feel like you are the only one trying, use the LoveTypes Compass to separate love-language mismatch, uneven responsibility, boundaries, and one concrete request.",
+      "priority": 0.66,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 20,
+      "url": "https://lovetypes.tw/tools/lonely-in-relationship/",
+      "batch": "long_tail_search",
+      "intent": "If you feel lonely in a relationship, use the LoveTypes Compass to separate quality-time mismatch, response gaps, emotional distance, and one small request.",
+      "priority": 0.64,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 21,
+      "url": "https://lovetypes.tw/tools/partner-doesnt-listen/",
+      "batch": "long_tail_search",
+      "intent": "If your partner does not listen, use the LoveTypes Compass to separate response gaps, love-language mismatch, pressure defense, and one answerable request.",
+      "priority": 0.62,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 22,
+      "url": "https://lovetypes.tw/tools/taken-for-granted-relationship/",
+      "batch": "long_tail_search",
+      "intent": "If you feel taken for granted in a relationship, use the LoveTypes Compass to separate unseen effort, affirmation needs, shared responsibility, and one observable change.",
+      "priority": 0.6,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 23,
+      "url": "https://lovetypes.tw/tools/partner-needs-space-relationship/",
+      "batch": "long_tail_search",
+      "intent": "If your partner says they need space, use the LoveTypes Compass to separate cooling down, avoidance, contact rhythm, boundaries, and one safe request.",
+      "priority": 0.58,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 24,
+      "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
+      "batch": "long_tail_search",
+      "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
+      "priority": 0.56,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "love_compatibility_compass_start"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 25,
+      "url": "https://lovetypes.tw/characters/",
+      "batch": "retention_and_trust",
+      "intent": "five guardian universe overview",
+      "priority": 0.95,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 26,
+      "url": "https://lovetypes.tw/resources/",
+      "batch": "retention_and_trust",
+      "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries",
+      "priority": 0.92,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 27,
+      "url": "https://lovetypes.tw/repair-plan/",
+      "batch": "retention_and_trust",
+      "intent": "free misfrequency repair tasks after quiz result",
+      "priority": 0.9,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 28,
+      "url": "https://lovetypes.tw/keepsakes/",
+      "batch": "retention_and_trust",
+      "intent": "free guardian keepsake lead magnet center",
+      "priority": 0.86,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 29,
+      "url": "https://lovetypes.tw/luna-yoga-music/",
+      "batch": "retention_and_trust",
+      "intent": "Luna night support and Gumroad conversion page",
+      "priority": 0.86,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 30,
+      "url": "https://lovetypes.tw/about/",
+      "batch": "retention_and_trust",
+      "intent": "Heart Garden and brand explanation",
+      "priority": 0.82,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 31,
+      "url": "https://lovetypes.tw/theory/",
+      "batch": "retention_and_trust",
+      "intent": "five love languages theory boundary",
+      "priority": 0.8,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 32,
+      "url": "https://lovetypes.tw/contact/",
+      "batch": "retention_and_trust",
+      "intent": "email support, supply request, and repair report",
+      "priority": 0.78,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    },
+    {
+      "position": 33,
+      "url": "https://lovetypes.tw/terms/",
+      "batch": "retention_and_trust",
+      "intent": "safety, purchase, and non-therapy boundary",
+      "priority": 0.76,
+      "submitTo": [
+        "Google Search Console URL inspection",
+        "Bing Webmaster Tools URL submission",
+        "sitemap.xml recrawl request"
+      ],
+      "observeWith": [
+        "GSC indexed status",
+        "GSC query impressions",
+        "GSC clicks",
+        "GA4 landing page sessions",
+        "LoveTypes funnel events"
+      ],
+      "expectedEvents": [
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click"
+      ],
+      "manualObservation": {
+        "indexed": null,
+        "lastSubmitted": null,
+        "impressions": null,
+        "clicks": null,
+        "averagePosition": null,
+        "queries": [],
+        "notes": ""
+      }
+    }
+  ],
+  "totals": {
+    "priorityUrls": 33,
+    "submissionBatches": 3,
+    "observationFields": 7,
+    "relatedFunnelEvents": 10
+  }
+}

@@ -17,6 +17,7 @@
   },
   "publicIndexes": {
     "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
+    "searchIndexing": "https://lovetypes.tw/search-indexing.json",
     "siteHealth": "https://lovetypes.tw/site-health.json",
     "siteIndex": "https://lovetypes.tw/site-index.json",
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",

@@ -62,6 +62,7 @@ LoveTypes uses the five love languages as reflective communication tools, not as
 ## AI Discovery Files
 
 - Generative answer index: /ai-discovery.json
+- Search indexing submission plan: /search-indexing.json
 - Public route index: /site-index.json
 - Guardian profile index: /guardian-profiles.json
 - Commerce catalog: /commerce-catalog.json

@@ -524,6 +524,7 @@
   ],
   "discoveryFiles": {
     "aiDiscovery": "https://lovetypes.tw/ai-discovery.json",
+    "searchIndexing": "https://lovetypes.tw/search-indexing.json",
     "llms": "https://lovetypes.tw/llms.txt",
     "siteIndex": "https://lovetypes.tw/site-index.json",
     "guardianProfiles": "https://lovetypes.tw/guardian-profiles.json",
@@ -572,6 +573,6 @@
     "answerableQuestions": 11,
     "priorityUrls": 33,
     "languages": 5,
-    "discoveryFiles": 10
+    "discoveryFiles": 11
   }
 }

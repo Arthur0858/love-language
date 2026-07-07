@@ -55,6 +55,7 @@ EXPECTED_SUPPORT_FILES = {
     "guardian-profiles.json",
     "safety-index.json",
     "ai-discovery.json",
+    "search-indexing.json",
     "promotion-kit.json",
     "release.json",
     "site-health.json",
@@ -1555,6 +1556,7 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     local_audits = data.get("localAuditCoverage", {})
     expected_indexes = {
         "aiDiscovery",
+        "searchIndexing",
         "siteHealth",
         "siteIndex",
         "guardianProfiles",
@@ -1727,12 +1729,13 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
             issues.append(f"{path}: answerGuidance.{key} should be non-empty")
     totals = data.get("totals", {})
     local_ai_totals = read_local_json("ai-discovery.json").get("totals", {})
+    expected_files = {"aiDiscovery", "searchIndexing", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     expected_totals = {
         "guardians": 5,
         "answerableQuestions": 11,
         "priorityUrls": local_ai_totals.get("priorityUrls"),
         "languages": 5,
-        "discoveryFiles": 10,
+        "discoveryFiles": len(expected_files),
     }
     for key, expected in expected_totals.items():
         if not isinstance(totals, dict) or totals.get(key) != expected:
@@ -1835,7 +1838,6 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
     if not isinstance(priority_urls, list) or len(priority_urls) != expected_priority_url_count:
         issues.append(f"{path}: priorityUrls should include {expected_priority_url_count} entries")
     files = data.get("discoveryFiles", {})
-    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:
         issues.append(f"{path}: discoveryFiles should contain {sorted(expected_files)}")
     profile_issues, _writeback_fields, profile_smoke_counters, _checked_by = check_promotion_profile_verification(path, data)
@@ -1850,6 +1852,81 @@ def check_ai_discovery(base_url: str) -> tuple[list[str], int, int, int, int, in
         len(files) if isinstance(files, dict) else 0,
         len(guidance) if isinstance(guidance, dict) else 0,
         profile_smoke_counters,
+    )
+
+
+def check_search_indexing(base_url: str) -> tuple[list[str], int, int, int, int]:
+    path = "/search-indexing.json"
+    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    issues: list[str] = []
+    if response.status != 200:
+        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
+    if "json" not in response.headers.get("content-type", ""):
+        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
+    try:
+        data = json.loads(response.text)
+    except json.JSONDecodeError as exc:
+        return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
+    if not isinstance(data, dict):
+        return [f"{path}: root should be an object"], 0, 0, 0, 0
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{path}: schemaVersion should be 1")
+    if data.get("siteName") != "LoveTypes":
+        issues.append(f"{path}: siteName should be LoveTypes")
+    expected_batches = {"core_conversion", "long_tail_search", "retention_and_trust"}
+    expected_observation_fields = {"indexed", "lastSubmitted", "impressions", "clicks", "averagePosition", "queries", "notes"}
+    expected_events = {
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed",
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click",
+    }
+    batches = data.get("submissionBatches", [])
+    batch_ids = {item.get("id") for item in batches if isinstance(item, dict)}
+    if not isinstance(batches, list) or batch_ids != expected_batches:
+        issues.append(f"{path}: submissionBatches should contain {sorted(expected_batches)}")
+    observation_fields = data.get("observationFields", [])
+    if not isinstance(observation_fields, list) or set(observation_fields) != expected_observation_fields:
+        issues.append(f"{path}: observationFields should contain {sorted(expected_observation_fields)}")
+    related_events = data.get("relatedFunnelEvents", [])
+    if not isinstance(related_events, list) or set(related_events) != expected_events:
+        issues.append(f"{path}: relatedFunnelEvents should contain {sorted(expected_events)}")
+    urls = data.get("urls", [])
+    expected_priority_urls = read_local_json("ai-discovery.json").get("totals", {}).get("priorityUrls")
+    if not isinstance(urls, list) or len(urls) != expected_priority_urls:
+        issues.append(f"{path}: urls should include {expected_priority_urls} entries")
+    else:
+        seen_urls: set[str] = set()
+        for index, item in enumerate(urls, start=1):
+            if not isinstance(item, dict):
+                issues.append(f"{path}: urls entry should be an object")
+                continue
+            if item.get("position") != index:
+                issues.append(f"{path}: url position should be {index}")
+            url = item.get("url")
+            if not isinstance(url, str) or not url.startswith(base_url.rstrip("/")):
+                issues.append(f"{path}: url should point to {base_url.rstrip('/')}: {url!r}")
+            elif url in seen_urls:
+                issues.append(f"{path}: duplicate url {url}")
+            else:
+                seen_urls.add(url)
+            if item.get("batch") not in expected_batches:
+                issues.append(f"{path}: unexpected batch {item.get('batch')!r}")
+            manual_observation = item.get("manualObservation")
+            if not isinstance(manual_observation, dict) or set(manual_observation) != expected_observation_fields:
+                issues.append(f"{path}: manualObservation should contain {sorted(expected_observation_fields)}")
+    return (
+        issues,
+        len(batches) if isinstance(batches, list) else 0,
+        len(observation_fields) if isinstance(observation_fields, list) else 0,
+        len(related_events) if isinstance(related_events, list) else 0,
+        len(urls) if isinstance(urls, list) else 0,
     )
 
 
@@ -1938,6 +2015,7 @@ def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int
         "/guardian-profiles.json",
         "/commerce-catalog.json",
         "/safety-index.json",
+        "/search-indexing.json",
         "/promotion-kit.json",
         "/site-health.json",
         "/release.json",
@@ -2092,6 +2170,13 @@ def main() -> int:
         ai_discovery_guidance_fields_checked,
         ai_discovery_profile_smoke_counters_checked,
     ) = check_ai_discovery(base_url)
+    (
+        search_indexing_issues,
+        search_indexing_batches_checked,
+        search_indexing_observation_fields_checked,
+        search_indexing_related_events_checked,
+        search_indexing_urls_checked,
+    ) = check_search_indexing(base_url)
     discovery_cross_issues, discovery_cross_indexes_checked, discovery_cross_urls_checked, discovery_cross_targets_checked, discovery_cross_fragments_checked, discovery_cross_core_routes_checked = check_discovery_cross_index(base_url)
     issues.extend(feed_issues)
     issues.extend(manifest_issues)
@@ -2107,6 +2192,7 @@ def main() -> int:
     issues.extend(release_issues)
     issues.extend(safety_index_issues)
     issues.extend(ai_discovery_issues)
+    issues.extend(search_indexing_issues)
     issues.extend(discovery_cross_issues)
 
     print(f"public_discovery_feed_items={feed_items}")
@@ -2197,6 +2283,10 @@ def main() -> int:
     print(f"public_discovery_ai_discovery_files_checked={ai_discovery_discovery_files_checked}")
     print(f"public_discovery_ai_guidance_fields_checked={ai_discovery_guidance_fields_checked}")
     print(f"public_discovery_ai_profile_smoke_counters_checked={ai_discovery_profile_smoke_counters_checked}")
+    print(f"public_discovery_search_indexing_batches_checked={search_indexing_batches_checked}")
+    print(f"public_discovery_search_indexing_observation_fields_checked={search_indexing_observation_fields_checked}")
+    print(f"public_discovery_search_indexing_related_events_checked={search_indexing_related_events_checked}")
+    print(f"public_discovery_search_indexing_urls_checked={search_indexing_urls_checked}")
     print(f"public_discovery_cross_indexes_checked={discovery_cross_indexes_checked}")
     print(f"public_discovery_cross_index_urls_checked={discovery_cross_urls_checked}")
     print(f"public_discovery_cross_index_targets_checked={discovery_cross_targets_checked}")

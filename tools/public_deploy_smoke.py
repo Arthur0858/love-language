@@ -407,6 +407,15 @@ SUPPORT_FILES = {
         '"safetyBoundary"',
         '"aiDiscovery"',
     ],
+    "/search-indexing.json": [
+        '"schemaVersion": 1',
+        '"siteName": "LoveTypes"',
+        '"core_conversion"',
+        '"long_tail_search"',
+        '"retention_and_trust"',
+        '"love_compatibility_quick_answer_compass"',
+        '"manualObservation"',
+    ],
 }
 EXPECTED_SUPPORT_FILE_COUNT = len(SUPPORT_FILES) + len(DEDICATED_SUPPORT_FILES)
 SUPPORT_FILES["/site-health.json"].append(f'"supportFiles": {EXPECTED_SUPPORT_FILE_COUNT}')

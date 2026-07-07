@@ -42,3 +42,4 @@ Resources: https://lovetypes.tw/resources/
 Keepsakes: https://lovetypes.tw/keepsakes/
 Luna: https://lovetypes.tw/luna-yoga-music/
 Contact: https://lovetypes.tw/contact/
+Search indexing plan: /search-indexing.json

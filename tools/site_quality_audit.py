@@ -36,6 +36,7 @@ EXPECTED_SUPPORT_FILES = {
     "guardian-profiles.json",
     "safety-index.json",
     "ai-discovery.json",
+    "search-indexing.json",
     "promotion-kit.json",
     "release.json",
     "site-health.json",
@@ -177,6 +178,7 @@ SITE_HEALTH_PATH = ROOT / "site-health.json"
 RELEASE_PATH = ROOT / "release.json"
 SAFETY_INDEX_PATH = ROOT / "safety-index.json"
 AI_DISCOVERY_PATH = ROOT / "ai-discovery.json"
+SEARCH_INDEXING_PATH = ROOT / "search-indexing.json"
 HEADERS_PATH = ROOT / "_headers"
 REDIRECTS_PATH = ROOT / "_redirects"
 SECURITY_PATH = ROOT / "security.txt"
@@ -2829,7 +2831,7 @@ def parse_release_info() -> tuple[list[str], Counter]:
         else:
             stats["release_content_fields_checked"] += 1
     indexes = data.get("publicIndexes")
-    expected_indexes = {"aiDiscovery", "siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "promotionKit", "llms", "humans"}
+    expected_indexes = {"aiDiscovery", "searchIndexing", "siteHealth", "siteIndex", "guardianProfiles", "safetyIndex", "commerceCatalog", "funnelEvents", "promotionKit", "llms", "humans"}
     if not isinstance(indexes, dict) or set(indexes) != expected_indexes:
         issues.append(f"{RELEASE_PATH}: publicIndexes should contain {sorted(expected_indexes)}")
     else:
@@ -3053,7 +3055,14 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     issues.extend(validate_promotion_profile_verification(str(AI_DISCOVERY_PATH), data, stats, "ai_discovery_promotion_profile_verification"))
 
     totals = data.get("totals")
-    expected_totals = {"guardians": 5, "answerableQuestions": 11, "priorityUrls": EXPECTED_AI_DISCOVERY_PRIORITY_URLS, "languages": 5, "discoveryFiles": 10}
+    expected_files = {"aiDiscovery", "searchIndexing", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
+    expected_totals = {
+        "guardians": 5,
+        "answerableQuestions": 11,
+        "priorityUrls": EXPECTED_AI_DISCOVERY_PRIORITY_URLS,
+        "languages": 5,
+        "discoveryFiles": len(expected_files),
+    }
     if not isinstance(totals, dict):
         issues.append(f"{AI_DISCOVERY_PATH}: totals should be an object")
     else:
@@ -3178,7 +3187,6 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
                 issues.append(f"{AI_DISCOVERY_PATH}: priority URL should not include fragment: {url}")
 
     files = data.get("discoveryFiles")
-    expected_files = {"aiDiscovery", "llms", "siteIndex", "guardianProfiles", "commerceCatalog", "safetyIndex", "promotionKit", "release", "siteHealth", "humans"}
     if not isinstance(files, dict) or set(files) != expected_files:
         issues.append(f"{AI_DISCOVERY_PATH}: discoveryFiles should contain {sorted(expected_files)}")
     else:
@@ -3195,6 +3203,108 @@ def parse_ai_discovery_index(parsers: dict[Path, PageParser]) -> tuple[list[str]
     return issues, stats
 
 
+def parse_search_indexing_plan(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter]:
+    issues: list[str] = []
+    stats = Counter()
+    if not SEARCH_INDEXING_PATH.exists():
+        return [f"{SEARCH_INDEXING_PATH}: missing search-indexing.json"], stats
+    try:
+        data = json.loads(SEARCH_INDEXING_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [f"{SEARCH_INDEXING_PATH}: invalid JSON: {exc}"], stats
+    if not isinstance(data, dict):
+        return [f"{SEARCH_INDEXING_PATH}: root should be an object"], stats
+    if data.get("schemaVersion") != 1:
+        issues.append(f"{SEARCH_INDEXING_PATH}: schemaVersion should be 1")
+    if data.get("updated") != GENERATOR_CONFIG.UPDATED:
+        issues.append(f"{SEARCH_INDEXING_PATH}: updated should match generator date")
+    if data.get("production") != f"{DOMAIN}/":
+        issues.append(f"{SEARCH_INDEXING_PATH}: production should be {DOMAIN}/")
+    expected_batches = {"core_conversion", "long_tail_search", "retention_and_trust"}
+    expected_observation_fields = {"indexed", "lastSubmitted", "impressions", "clicks", "averagePosition", "queries", "notes"}
+    expected_events = {
+        "campaign_landing",
+        "love_compatibility_compass_start",
+        "quiz_started",
+        "quiz_completed",
+        "compass_long_tail_entry",
+        "love_compatibility_quick_answer_compass",
+        "quiz_result_supply_route",
+        "quiz_result_repair_plan",
+        "free_keepsake_download",
+        "luna_gumroad_pack_click",
+    }
+    batches = data.get("submissionBatches")
+    if not isinstance(batches, list) or {item.get("id") for item in batches if isinstance(item, dict)} != expected_batches:
+        issues.append(f"{SEARCH_INDEXING_PATH}: submissionBatches should contain {sorted(expected_batches)}")
+    else:
+        stats["search_indexing_batches_checked"] = len(batches)
+    observation_fields = data.get("observationFields")
+    if not isinstance(observation_fields, list) or set(observation_fields) != expected_observation_fields:
+        issues.append(f"{SEARCH_INDEXING_PATH}: observationFields should contain {sorted(expected_observation_fields)}")
+    else:
+        stats["search_indexing_observation_fields_checked"] = len(observation_fields)
+    related_events = data.get("relatedFunnelEvents")
+    if not isinstance(related_events, list) or set(related_events) != expected_events:
+        issues.append(f"{SEARCH_INDEXING_PATH}: relatedFunnelEvents should contain {sorted(expected_events)}")
+    else:
+        stats["search_indexing_related_events_checked"] = len(related_events)
+
+    ai_totals = json.loads(AI_DISCOVERY_PATH.read_text(encoding="utf-8")).get("totals", {}) if AI_DISCOVERY_PATH.exists() else {}
+    urls = data.get("urls")
+    if not isinstance(urls, list) or len(urls) != ai_totals.get("priorityUrls"):
+        issues.append(f"{SEARCH_INDEXING_PATH}: urls should match ai-discovery priorityUrls count")
+    else:
+        seen_urls: set[str] = set()
+        batch_counts = Counter()
+        for index, item in enumerate(urls, start=1):
+            if not isinstance(item, dict):
+                issues.append(f"{SEARCH_INDEXING_PATH}: urls entry should be an object")
+                continue
+            stats["search_indexing_urls_checked"] += 1
+            if item.get("position") != index:
+                issues.append(f"{SEARCH_INDEXING_PATH}: url position should be {index}")
+            url = item.get("url")
+            if not isinstance(url, str) or not url.startswith(DOMAIN):
+                issues.append(f"{SEARCH_INDEXING_PATH}: url should point to {DOMAIN}: {url!r}")
+                continue
+            if url in seen_urls:
+                issues.append(f"{SEARCH_INDEXING_PATH}: duplicate url {url}")
+            seen_urls.add(url)
+            target, fragment = target_for(ROOT / "index.html", url)
+            if target is None or not target.exists():
+                issues.append(f"{SEARCH_INDEXING_PATH}: URL target missing: {url}")
+            if fragment:
+                issues.append(f"{SEARCH_INDEXING_PATH}: URL should not include fragment: {url}")
+            batch = item.get("batch")
+            if batch not in expected_batches:
+                issues.append(f"{SEARCH_INDEXING_PATH}: unexpected batch {batch!r}")
+            else:
+                batch_counts[batch] += 1
+            manual_observation = item.get("manualObservation")
+            if not isinstance(manual_observation, dict) or set(manual_observation) != expected_observation_fields:
+                issues.append(f"{SEARCH_INDEXING_PATH}: manualObservation should contain {sorted(expected_observation_fields)}")
+        for batch in batches if isinstance(batches, list) else []:
+            if isinstance(batch, dict) and batch.get("urlCount") != batch_counts[batch.get("id")]:
+                issues.append(f"{SEARCH_INDEXING_PATH}: batch {batch.get('id')} urlCount should match urls")
+    totals = data.get("totals")
+    if not isinstance(totals, dict):
+        issues.append(f"{SEARCH_INDEXING_PATH}: totals should be an object")
+    else:
+        expected_totals = {
+            "priorityUrls": len(urls) if isinstance(urls, list) else ai_totals.get("priorityUrls"),
+            "submissionBatches": len(expected_batches),
+            "observationFields": len(expected_observation_fields),
+            "relatedFunnelEvents": len(expected_events),
+        }
+        for key, expected in expected_totals.items():
+            stats["search_indexing_totals_checked"] += 1
+            if totals.get(key) != expected:
+                issues.append(f"{SEARCH_INDEXING_PATH}: totals.{key} should be {expected}, got {totals.get(key)!r}")
+    stats["search_indexing_files_checked"] = 1
+    return issues, stats
+
+
 def parse_discovery_cross_index(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> tuple[list[str], Counter]:
     issues: list[str] = []
     stats = Counter()
@@ -3205,6 +3315,7 @@ def parse_discovery_cross_index(parsers: dict[Path, PageParser], sitemap_urls: s
         GUARDIAN_PROFILES_PATH,
         COMMERCE_CATALOG_PATH,
         SAFETY_INDEX_PATH,
+        SEARCH_INDEXING_PATH,
         PROMOTION_KIT_PATH,
         SITE_HEALTH_PATH,
         RELEASE_PATH,
@@ -4496,6 +4607,9 @@ def main() -> int:
     ai_discovery_issues, ai_discovery_stats = parse_ai_discovery_index(parsers)
     issues.extend(ai_discovery_issues)
     stats.update(ai_discovery_stats)
+    search_indexing_issues, search_indexing_stats = parse_search_indexing_plan(parsers)
+    issues.extend(search_indexing_issues)
+    stats.update(search_indexing_stats)
     discovery_cross_issues, discovery_cross_stats = parse_discovery_cross_index(parsers, sitemap_urls)
     issues.extend(discovery_cross_issues)
     stats.update(discovery_cross_stats)
@@ -4725,6 +4839,12 @@ def main() -> int:
     print(f"ai_discovery_questions_checked={stats['ai_discovery_questions_checked']}")
     print(f"ai_discovery_priority_urls_checked={stats['ai_discovery_priority_urls_checked']}")
     print(f"ai_discovery_discovery_files_checked={stats['ai_discovery_discovery_files_checked']}")
+    print(f"search_indexing_files_checked={stats['search_indexing_files_checked']}")
+    print(f"search_indexing_batches_checked={stats['search_indexing_batches_checked']}")
+    print(f"search_indexing_observation_fields_checked={stats['search_indexing_observation_fields_checked']}")
+    print(f"search_indexing_related_events_checked={stats['search_indexing_related_events_checked']}")
+    print(f"search_indexing_urls_checked={stats['search_indexing_urls_checked']}")
+    print(f"search_indexing_totals_checked={stats['search_indexing_totals_checked']}")
     print(f"discovery_cross_indexes_checked={stats['discovery_cross_indexes_checked']}")
     print(f"discovery_cross_index_urls_checked={stats['discovery_cross_index_urls_checked']}")
     print(f"discovery_cross_index_targets_checked={stats['discovery_cross_index_targets_checked']}")

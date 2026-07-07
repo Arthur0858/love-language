@@ -30,6 +30,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "guardian-profiles.json",
     "safety-index.json",
     "ai-discovery.json",
+    "search-indexing.json",
     "site-health.json",
     "release.json",
 }

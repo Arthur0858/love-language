@@ -8603,6 +8603,47 @@ LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
     "es": "Rutas de búsqueda relacionadas",
 }
 
+COMPASS_INTENT_FAST_TRACK = {
+    "slugs": (
+        "relationship-repair-after-fight",
+        "silent-treatment-relationship",
+        "insecure-in-relationship",
+        "partner-wont-communicate",
+        "taken-for-granted-relationship",
+        "partner-needs-space-relationship",
+    ),
+    "zh": {
+        "eyebrow": "START FROM YOUR QUESTION",
+        "title": "先選你現在正在搜尋的問題",
+        "intro": "新訪客不一定知道自己的守護者。先從最像此刻的問題進入，再回到免費羅盤，把焦慮縮成一個可說出口的請求。",
+        "cta": "看這條路線",
+    },
+    "en": {
+        "eyebrow": "START FROM YOUR QUESTION",
+        "title": "Start with the question you are searching right now",
+        "intro": "New visitors may not know their guardian yet. Start from the situation that matches this moment, then return to the free compass and turn anxiety into one speakable request.",
+        "cta": "Open this route",
+    },
+    "ja": {
+        "eyebrow": "START FROM YOUR QUESTION",
+        "title": "今検索している悩みから始める",
+        "intro": "初めての人は自分の守護者をまだ知らないかもしれません。今に近い悩みから入り、無料コンパスで言えるお願いに変えます。",
+        "cta": "このルートを見る",
+    },
+    "ko": {
+        "eyebrow": "START FROM YOUR QUESTION",
+        "title": "지금 검색하고 있는 문제에서 시작하세요",
+        "intro": "처음 온 사람은 아직 자신의 수호자를 모를 수 있습니다. 지금과 가장 가까운 상황에서 시작하고 무료 컴퍼스로 불안을 말할 수 있는 요청으로 바꿉니다.",
+        "cta": "이 루트 보기",
+    },
+    "es": {
+        "eyebrow": "START FROM YOUR QUESTION",
+        "title": "Empieza con la pregunta que estás buscando ahora",
+        "intro": "Quien llega por primera vez quizá no conoce su guardiana. Empieza por la situación de este momento y vuelve a la brújula gratis para convertir ansiedad en una petición clara.",
+        "cta": "Abrir esta ruta",
+    },
+}
+
 
 def long_tail_compatibility_urls() -> list[tuple[str, str, str]]:
     return [
@@ -8838,6 +8879,31 @@ def compass_result_preview_section(lang: str) -> str:
     <p><a class="primary-btn" href="#relationship-compass-tool" data-funnel-event="compass_result_preview_start">{escape(copy["cta"])}</a></p>
   </div>
   <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
+def compass_intent_fast_track_section(lang: str) -> str:
+    copy = COMPASS_INTENT_FAST_TRACK[lang]
+    cards = "".join(
+        f"""
+<a class="content-card compass-intent-card" href="{lang_url(lang, "tools/" + slug)}" data-compass-intent-card="{escape(slug)}" data-funnel-event="compass_long_tail_entry">
+  <span class="eyebrow">{escape(page_copy["eyebrow"])}</span>
+  <h3>{escape(page_copy["h1"])}</h3>
+  <p>{escape(page_copy["desc"])}</p>
+  <span class="card-link">{escape(copy["cta"])}</span>
+</a>
+"""
+        for slug, page_copy in (
+            (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
+            for slug in COMPASS_INTENT_FAST_TRACK["slugs"]
+        )
+    )
+    return f"""
+<section class="section compass-intent-fast-track" data-compass-intent-fast-track>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_intent_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
 </section>
 """
 
@@ -9945,6 +10011,7 @@ def compass_page(lang: str) -> None:
   </div>
 </section>
 {compass_visual_layer(lang)}
+{compass_intent_fast_track_section(lang)}
 {compass_result_preview_section(lang)}
 {compass_popular_pairings_section(lang)}
 {compass_situation_routes_section(lang)}

@@ -49,6 +49,8 @@ class CompassParser(HTMLParser):
         self.guardian_tiles = 0
         self.audience_panels = 0
         self.audience_cards = 0
+        self.intent_fast_track_sections = 0
+        self.intent_fast_track_cards = 0
         self.result_preview_sections = 0
         self.result_preview_cards = 0
         self.result_preview_events = 0
@@ -94,6 +96,10 @@ class CompassParser(HTMLParser):
             self.audience_panels += 1
         if "data-compass-audience-card" in attr:
             self.audience_cards += 1
+        if "data-compass-intent-fast-track" in attr:
+            self.intent_fast_track_sections += 1
+        if "data-compass-intent-card" in attr:
+            self.intent_fast_track_cards += 1
         if "data-compass-result-preview" in attr:
             self.result_preview_sections += 1
         if "data-compass-result-preview-card" in attr:
@@ -213,6 +219,8 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
         "guardian_tiles": 0,
         "audience_panels": 0,
         "audience_cards": 0,
+        "intent_fast_track_sections": 0,
+        "intent_fast_track_cards": 0,
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
@@ -255,9 +263,15 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     stats["guardian_tiles"] = parser.guardian_tiles
     stats["audience_panels"] = parser.audience_panels
     stats["audience_cards"] = parser.audience_cards
+    stats["intent_fast_track_sections"] = parser.intent_fast_track_sections
+    stats["intent_fast_track_cards"] = parser.intent_fast_track_cards
     stats["result_preview_sections"] = parser.result_preview_sections
     stats["result_preview_cards"] = parser.result_preview_cards
     stats["result_preview_events"] = parser.result_preview_events
+    if parser.intent_fast_track_sections != 1:
+        issues.append(f"{path}: expected 1 intent fast-track section, got {parser.intent_fast_track_sections}")
+    if parser.intent_fast_track_cards != 6:
+        issues.append(f"{path}: expected 6 intent fast-track cards, got {parser.intent_fast_track_cards}")
     stats["popular_pairing_sections"] = parser.popular_pairing_sections
     stats["popular_pairing_cards"] = parser.popular_pairing_cards
     stats["popular_pairing_events"] = parser.popular_pairing_events
@@ -560,6 +574,8 @@ def main() -> int:
         "guardian_tiles": 0,
         "audience_panels": 0,
         "audience_cards": 0,
+        "intent_fast_track_sections": 0,
+        "intent_fast_track_cards": 0,
         "result_preview_sections": 0,
         "result_preview_cards": 0,
         "result_preview_events": 0,
@@ -630,6 +646,8 @@ def main() -> int:
     print(f"compass_offer_guardian_tiles_checked={totals['guardian_tiles']}")
     print(f"compass_offer_audience_panels_checked={totals['audience_panels']}")
     print(f"compass_offer_audience_cards_checked={totals['audience_cards']}")
+    print(f"compass_offer_intent_fast_track_sections_checked={totals['intent_fast_track_sections']}")
+    print(f"compass_offer_intent_fast_track_cards_checked={totals['intent_fast_track_cards']}")
     print(f"compass_offer_result_preview_sections_checked={totals['result_preview_sections']}")
     print(f"compass_offer_result_preview_cards_checked={totals['result_preview_cards']}")
     print(f"compass_offer_result_preview_events_checked={totals['result_preview_events']}")

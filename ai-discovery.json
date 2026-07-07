@@ -417,9 +417,14 @@
       "priority": 0.8
     },
     {
+      "url": "https://lovetypes.tw/tools/trust-issues-relationship/",
+      "intent": "When trust feels damaged, use the LoveTypes Compass to separate hurt, boundaries, and one visible repair action.",
+      "priority": 0.78
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.78
+      "priority": 0.76
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -481,12 +486,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 205,
-      "paths": 41,
+      "pages": 210,
+      "paths": 42,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 70,
+        "conversion": 75,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -515,7 +520,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 22,
+    "priorityUrls": 23,
     "languages": 5,
     "discoveryFiles": 10
   }

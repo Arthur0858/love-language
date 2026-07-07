@@ -126,6 +126,20 @@ def normalize_check_url(url: str) -> str:
     return urlunparse((parsed.scheme, parsed.netloc, path, "", query, parsed.fragment))
 
 
+def strip_query_and_fragment(url: str) -> str:
+    parsed = urlparse(url)
+    path = parsed.path or "/"
+    return urlunparse((parsed.scheme, parsed.netloc, path, "", "", ""))
+
+
+def canonical_matches_target(canonical_url: str, target_url: str) -> bool:
+    normalized_canonical = strip_fragment(normalize_check_url(canonical_url))
+    normalized_target = strip_fragment(normalize_check_url(target_url))
+    if normalized_canonical == normalized_target:
+        return True
+    return strip_query_and_fragment(normalized_canonical) == strip_query_and_fragment(normalized_target)
+
+
 def sitemap_urls(base_url: str) -> tuple[list[str], list[str]]:
     issues: list[str] = []
     response = request_url(urljoin(base_url + "/", "sitemap.xml"))
@@ -271,7 +285,7 @@ def main() -> int:
                 issues.append(f"{link.url}: internal HTML link should not target noindex page from {sources}")
             if target_parser.canonical:
                 canonical_targets_checked += 1
-                if normalize_check_url(target_parser.canonical) != final_base:
+                if not canonical_matches_target(target_parser.canonical, final_base):
                     sources = ", ".join(link.source_paths)
                     issues.append(
                         f"{link.url}: internal HTML link final canonical should be {final_base}, got {target_parser.canonical} from {sources}"

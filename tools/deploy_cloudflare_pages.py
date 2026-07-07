@@ -33,6 +33,16 @@ DEFAULT_VERIFY_PATHS = [
     "/sitemap.xml",
     "/llms.txt",
 ]
+FORCE_UPLOAD_PATHS = {
+    "sitemap.xml",
+    "llms.txt",
+    "humans.txt",
+    "funnel-events.json",
+    "site-index.json",
+    "ai-discovery.json",
+    "release.json",
+    "site-health.json",
+}
 MAX_ASSET_SIZE = 25 * 1024 * 1024
 MAX_BUCKET_SIZE = 40 * 1024 * 1024
 MAX_BUCKET_FILE_COUNT = 2000
@@ -530,6 +540,10 @@ def main() -> int:
         log("Cache mode: skip remote hash check")
     else:
         missing_hashes = set(get_missing_hashes(upload_jwt, (entry.hash_value for entry in file_map.values())))
+        force_upload_hashes = {
+            entry.hash_value for path, entry in file_map.items() if path in FORCE_UPLOAD_PATHS
+        }
+        missing_hashes.update(force_upload_hashes)
         log(f"Remote missing hashes: {len(missing_hashes)}")
 
     if args.dry_run:

@@ -427,9 +427,14 @@
       "priority": 0.76
     },
     {
+      "url": "https://lovetypes.tw/tools/silent-treatment-relationship/",
+      "intent": "When silence, disappearing, or no replies hurt the relationship, use the LoveTypes Compass to separate cooling down, avoidance, control, and boundaries.",
+      "priority": 0.74
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.74
+      "priority": 0.72
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -491,12 +496,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 215,
-      "paths": 43,
+      "pages": 220,
+      "paths": 44,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 80,
+        "conversion": 85,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -525,7 +530,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 24,
+    "priorityUrls": 25,
     "languages": 5,
     "discoveryFiles": 10
   }

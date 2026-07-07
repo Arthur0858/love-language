@@ -462,9 +462,14 @@
       "priority": 0.62
     },
     {
+      "url": "https://lovetypes.tw/tools/taken-for-granted-relationship/",
+      "intent": "If you feel taken for granted in a relationship, use the LoveTypes Compass to separate unseen effort, affirmation needs, shared responsibility, and one observable change.",
+      "priority": 0.6
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.6
+      "priority": 0.58
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -526,12 +531,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 250,
-      "paths": 50,
+      "pages": 255,
+      "paths": 51,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 115,
+        "conversion": 120,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -560,7 +565,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 31,
+    "priorityUrls": 32,
     "languages": 5,
     "discoveryFiles": 10
   }

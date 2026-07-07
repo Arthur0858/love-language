@@ -6585,6 +6585,30 @@ def compass_report_offer_section(lang: str) -> str:
 """
 
 
+def compass_search_routes_section(lang: str) -> str:
+    copy = COMPASS_PAGE[lang]
+    cards = "".join(
+        f"""
+<a class="content-card" href="{lang_url(lang, "tools/" + slug)}" data-funnel-event="compass_long_tail_entry">
+  <span class="eyebrow">{escape(page_copy["eyebrow"])}</span>
+  <h3>{escape(page_copy["title"])}</h3>
+  <p>{escape(page_copy["desc"])}</p>
+  <span class="card-link">{escape(page_copy["primary"])}</span>
+</a>
+"""
+        for slug, page_copy in (
+            (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
+            for slug in LONG_TAIL_COMPATIBILITY_PAGES
+        )
+    )
+    return f"""
+<section class="section compass-search-routes" data-compass-search-routes>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></div>
+  <div class="card-grid compact">{cards}</div>
+</section>
+"""
+
+
 def love_compatibility_page(lang: str) -> None:
     copy = LOVE_COMPATIBILITY_PAGE[lang]
     t = LANGS[lang]
@@ -7512,6 +7536,7 @@ def compass_page(lang: str) -> None:
   <p>{escape(copy["compatibility_intro"])}</p>
   <p><a class="secondary-btn" href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></p>
 </section>
+{compass_search_routes_section(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["how_title"])}</h2></div>
   <div class="card-grid compact">{cards}</div>

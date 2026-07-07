@@ -190,6 +190,7 @@ def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
         "inbound_pages": 0,
         "inbound_links": 0,
         "inbound_events": 0,
+        "compass_long_tail_links": 0,
     }
     for lang, paths in INBOUND_PATHS.items():
         expected_href = LANG_PATHS[lang]
@@ -210,6 +211,15 @@ def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
                     issues.append(f"{path}: missing compass_compatibility_entry event")
                 else:
                     stats["inbound_events"] += 1
+                if "compass_long_tail_entry" not in parser.events:
+                    issues.append(f"{path}: missing compass_long_tail_entry event")
+                else:
+                    stats["inbound_events"] += 1
+                for long_tail_path in LONG_TAIL_PATHS[lang]:
+                    if long_tail_path not in parser.hrefs:
+                        issues.append(f"{path}: missing compass long-tail link to {long_tail_path}")
+                    else:
+                        stats["compass_long_tail_links"] += 1
             if path in {"/", "/en/", "/ja/", "/ko/", "/es/"}:
                 if "home_compass_bridge_entry" not in parser.events:
                     issues.append(f"{path}: missing home_compass_bridge_entry event")
@@ -253,6 +263,7 @@ def main() -> int:
         "inbound_pages": 0,
         "inbound_links": 0,
         "inbound_events": 0,
+        "compass_long_tail_links": 0,
         "hub_long_tail_links": 0,
     }
     issues: list[str] = []
@@ -285,6 +296,7 @@ def main() -> int:
     print(f"love_compatibility_inbound_pages_checked={totals['inbound_pages']}")
     print(f"love_compatibility_inbound_links_checked={totals['inbound_links']}")
     print(f"love_compatibility_inbound_events_checked={totals['inbound_events']}")
+    print(f"love_compatibility_compass_long_tail_links_checked={totals['compass_long_tail_links']}")
     print(f"love_compatibility_hub_long_tail_links_checked={totals['hub_long_tail_links']}")
     print(f"love_compatibility_issues={len(issues)}")
     for issue in issues[:100]:

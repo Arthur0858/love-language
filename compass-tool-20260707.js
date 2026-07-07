@@ -44,6 +44,8 @@
       copyUnavailable: 'Copy manually',
       prefillTitle: 'Pairing loaded',
       prefillIntro: '{pair} is already selected. Add your relationship status and top issue, then get the free compass.',
+      prefillCopyLink: 'Copy pairing link',
+      prefillCopiedLink: 'Link copied',
       nextStepsTitle: 'Keep going from here',
       nextStepsIntro: 'Move the free result into one useful next step before it becomes another saved screenshot.',
       nextStepsGuardian: 'Read my guardian',
@@ -102,6 +104,8 @@
       copyUnavailable: '手動でコピー',
       prefillTitle: '組み合わせを入力しました',
       prefillIntro: '{pair} を選択済みです。現在の関係と改善したいことを足して、無料コンパスへ進めます。',
+      prefillCopyLink: '組み合わせリンクをコピー',
+      prefillCopiedLink: 'リンクをコピーしました',
       nextStepsTitle: '次に進む',
       nextStepsIntro: '無料結果を保存だけで終わらせず、今できる一歩につなげましょう。',
       nextStepsGuardian: '私のガーディアンを見る',
@@ -153,6 +157,8 @@
       copyUnavailable: '직접 복사',
       prefillTitle: '조합이 입력되었습니다',
       prefillIntro: '{pair} 조합이 선택되어 있습니다. 현재 상태와 개선하고 싶은 점을 더해 무료 컴퍼스를 받으세요.',
+      prefillCopyLink: '조합 링크 복사',
+      prefillCopiedLink: '링크 복사됨',
       nextStepsTitle: '다음 단계',
       nextStepsIntro: '무료 결과를 캡처로만 남기지 말고, 지금 할 수 있는 한 걸음으로 이어가세요.',
       nextStepsGuardian: '내 가디언 보기',
@@ -204,6 +210,8 @@
       copyUnavailable: 'Copiar manualmente',
       prefillTitle: 'Combinación cargada',
       prefillIntro: '{pair} ya está seleccionada. Añade el estado y el tema principal para obtener la brújula gratis.',
+      prefillCopyLink: 'Copiar enlace',
+      prefillCopiedLink: 'Enlace copiado',
       nextStepsTitle: 'Sigue desde aquí',
       nextStepsIntro: 'Convierte el resultado gratis en un siguiente paso útil antes de que quede solo como captura.',
       nextStepsGuardian: 'Leer mi guardián',
@@ -255,6 +263,8 @@
       copyUnavailable: '請手動複製',
       prefillTitle: '已帶入熱門配對',
       prefillIntro: '已選好 {pair}。補上目前關係狀態與最想改善的地方，就可以取得免費羅盤。',
+      prefillCopyLink: '複製這組配對連結',
+      prefillCopiedLink: '已複製連結',
       nextStepsTitle: '接下來做什麼',
       nextStepsIntro: '先把免費結果接到一個可完成的下一步，避免它只停在截圖裡。',
       nextStepsGuardian: '看我的守護者',
@@ -457,20 +467,20 @@
     ].join('\n');
   }
 
-  function copyText(text, button) {
+  function copyText(text, button, resetLabel, copiedLabel, unavailableLabel) {
     function mark(label) {
       if (!button) return;
       button.textContent = label;
       window.setTimeout(function () {
-        button.textContent = l.copyResult;
+        button.textContent = resetLabel || l.copyResult;
       }, 1800);
     }
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text).then(function () {
-        mark(l.copiedResult);
+        mark(copiedLabel || l.copiedResult);
         return true;
       }).catch(function () {
-        mark(l.copyUnavailable);
+        mark(unavailableLabel || l.copyUnavailable);
         return false;
       });
     }
@@ -488,7 +498,7 @@
       ok = false;
     }
     document.body.removeChild(textarea);
-    mark(ok ? l.copiedResult : l.copyUnavailable);
+    mark(ok ? (copiedLabel || l.copiedResult) : (unavailableLabel || l.copyUnavailable));
     return Promise.resolve(ok);
   }
 
@@ -531,9 +541,17 @@
       var pairLabel = data.guardians[applied.self].name + ' × ' + data.guardians[applied.partner].name;
       prefillNotice.innerHTML = [
         '<strong>' + l.prefillTitle + '</strong>',
-        '<p>' + l.prefillIntro.replace('{pair}', pairLabel) + '</p>'
+        '<p>' + l.prefillIntro.replace('{pair}', pairLabel) + '</p>',
+        '<button type="button" class="secondary-btn compact-action" data-compass-prefill-copy-link data-funnel-event="compass_prefill_copy_link">' + l.prefillCopyLink + '</button>'
       ].join('');
       prefillNotice.hidden = false;
+      var copyLinkBtn = prefillNotice.querySelector('[data-compass-prefill-copy-link]');
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', function () {
+          var shareUrl = window.location.origin + localizedPath('compass') + '?self=' + encodeURIComponent(applied.self) + '&partner=' + encodeURIComponent(applied.partner) + '#relationship-compass-tool';
+          copyText(shareUrl, copyLinkBtn, l.prefillCopyLink, l.prefillCopiedLink, l.copyUnavailable);
+        });
+      }
       recordFunnelEventWhenReady('compass_prefill_pair', pairKey, prefillNotice, 10);
     }
   }

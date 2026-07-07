@@ -3714,8 +3714,10 @@ def main() -> int:
                 issues.append(f"{page}: expected 4 garden map route cards, found {route_card_count}")
             if tool_section_count != 1:
                 issues.append(f"{page}: expected one garden map tools section, found {tool_section_count}")
-            if tool_card_count != 4:
-                issues.append(f"{page}: expected 4 garden map tool cards, found {tool_card_count}")
+            if tool_card_count != 5:
+                issues.append(f"{page}: expected 5 garden map tool cards, found {tool_card_count}")
+            if "tools/love-compatibility/" not in parser.source:
+                issues.append(f"{page}: garden map missing love compatibility entry link")
             if guardian_section_count != 1:
                 issues.append(f"{page}: expected one garden map guardians section, found {guardian_section_count}")
             if guardian_card_count != 5:

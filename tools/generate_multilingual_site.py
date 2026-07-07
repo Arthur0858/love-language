@@ -321,6 +321,8 @@ OG_LOCALES = {
 RESOURCE_CARDS = {
     "zh": [
         ("guides", "守護者深度指南", "把測驗結果、錯頻、界線與修復練習整理成可直接閱讀的路線。"),
+        ("compass", "LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與可選出生節奏整理成一張溫柔的錯頻地圖。"),
+        ("tools/love-compatibility", "心語合盤入口", "承接愛之語合盤、八字愛情合盤與 compatibility 搜尋，再導向免費羅盤。"),
         ("repair-plan", "7 日心語修復計畫", "把守護者結果帶進一週練習：整理傷口、開口請求、選擇補給與回顧修復。"),
         ("keepsakes", "守護者收藏室", "保存五位守護者故事卡，作為分享、日記與未來收藏型補給的入口。"),
         ("characters/iris", "五位情感守護者", "從艾莉絲、諾雅、薇薇安、克萊兒與朵拉開始，找到你最容易接收愛的入口。"),
@@ -330,6 +332,8 @@ RESOURCE_CARDS = {
     ],
     "en": [
         ("guides", "Guardian guides", "Read paths for results, misfrequency, boundaries, and repair practices."),
+        ("compass", "LoveTypes Relationship Compass", "Map two guardians, relationship context, and optional birthdate rhythm into a gentle cross-signal view."),
+        ("tools/love-compatibility", "Love Compatibility Entry", "Catch love-language compatibility, BaZi love compatibility, and relationship searches before the free compass."),
         ("repair-plan", "7-Day Heart-Language Repair Plan", "Carry your guardian result through one week of reflection, requests, supplies, and repair review."),
         ("keepsakes", "Guardian Keepsake Hall", "Save the five guardian story cards for sharing, journaling, and future collectible supplies."),
         ("characters/iris", "Five emotion guardians", "Begin with Iris, Noah, Vivian, Claire, and Dora to find your doorway to receiving love."),
@@ -339,6 +343,8 @@ RESOURCE_CARDS = {
     ],
     "ja": [
         ("guides", "守護者ガイド", "診断結果、すれ違い、境界線、修復練習を読むための入口です。"),
+        ("compass", "LoveTypes 関係コンパス", "二人の守護者、関係状況、任意の生年月日リズムをやさしいすれ違い地図にします。"),
+        ("tools/love-compatibility", "相性入口", "愛の言語の相性、東洋占術の恋愛リズム検索を受け、無料コンパスへ戻します。"),
         ("repair-plan", "7日間の心語修復プラン", "守護者の結果を一週間の内省、お願い、補給、修復レビューへつなげます。"),
         ("keepsakes", "守護者コレクション室", "五人の守護者ストーリーカードを保存し、共有、日記、今後のコレクション補給の入口にします。"),
         ("characters/iris", "五人の感情の守護者", "アイリス、ノア、ヴィヴィアン、クレア、ドラから、愛を受け取る入口を探します。"),
@@ -348,6 +354,8 @@ RESOURCE_CARDS = {
     ],
     "ko": [
         ("guides", "수호자 가이드", "결과, 어긋남, 경계, 회복 연습을 읽기 쉽게 모은 입구입니다."),
+        ("compass", "LoveTypes 관계 컴퍼스", "두 수호자, 관계 상황, 선택 생년월일 리듬을 부드러운 엇갈림 지도로 정리합니다."),
+        ("tools/love-compatibility", "궁합 입구", "사랑의 언어 궁합, 사주 궁합, 관계 궁합 검색을 받아 무료 컴퍼스로 연결합니다."),
         ("repair-plan", "7일 마음 언어 회복 계획", "수호자 결과를 일주일의 성찰, 요청, 보급, 회복 점검으로 이어 갑니다."),
         ("keepsakes", "수호자 소장실", "다섯 수호자 스토리 카드를 저장해 공유, 관계 일기, 향후 소장형 보급의 입구로 사용합니다."),
         ("characters/iris", "다섯 감정 수호자", "아이리스, 노아, 비비안, 클레어, 도라에서 사랑을 받는 입구를 찾습니다."),
@@ -357,6 +365,8 @@ RESOURCE_CARDS = {
     ],
     "es": [
         ("guides", "Guías de guardianas", "Entradas para resultados, desajustes, límites y prácticas de reparación."),
+        ("compass", "Brújula de Relación LoveTypes", "Convierte dos guardianas, contexto y fechas opcionales en una lectura suave de señales cruzadas."),
+        ("tools/love-compatibility", "Entrada de compatibilidad", "Recibe búsquedas de compatibilidad, lenguajes del amor y ritmo natal antes de la brújula gratis."),
         ("repair-plan", "Plan de reparación de 7 días", "Lleva tu resultado por una semana de reflexión, petición, recursos y revisión de reparación."),
         ("keepsakes", "Sala de recuerdos", "Guarda las cinco tarjetas de guardianas para compartir, escribir y preparar futuros recursos coleccionables."),
         ("characters/iris", "Cinco guardianas emocionales", "Empieza con Iris, Noah, Vivian, Claire y Dora para encontrar tu entrada al amor."),
@@ -6613,6 +6623,55 @@ HOME_JOURNEY = {
 }
 
 
+HOME_COMPASS_BRIDGE = {
+    "zh": {
+        "eyebrow": "COMPASS ROUTE",
+        "title": "如果你想看兩個人的錯頻，先從關係羅盤開始",
+        "intro": "LoveTypes 不把合盤做成判決。它會先辨認兩個人的心語入口，再把差異翻成可以溝通、修復與回訪的路線。",
+        "cards": [
+            ("免費關係羅盤", "輸入雙方守護者與關係狀態，取得錯頻地圖與下一步。", "打開羅盤", "compass", "home_compass_bridge_tool"),
+            ("心語合盤入口", "從愛之語合盤、八字愛情合盤或 compatibility 搜尋進來的人，可以先看這裡。", "看合盤入口", "tools/love-compatibility", "home_compass_bridge_entry"),
+        ],
+    },
+    "en": {
+        "eyebrow": "COMPASS ROUTE",
+        "title": "If you want to read the cross-signal between two people, start with the compass",
+        "intro": "LoveTypes does not treat compatibility as a verdict. It starts with two heart-language doorways, then turns the difference into a route for communication, repair, and revisiting.",
+        "cards": [
+            ("Free Relationship Compass", "Enter both guardians and relationship context to get a cross-signal map and next step.", "Open compass", "compass", "home_compass_bridge_tool"),
+            ("Love Compatibility Entry", "If you arrived from love-language compatibility, BaZi love compatibility, or relationship search, begin here.", "Open entry", "tools/love-compatibility", "home_compass_bridge_entry"),
+        ],
+    },
+    "ja": {
+        "eyebrow": "COMPASS ROUTE",
+        "title": "二人のすれ違いを見たい時は、関係コンパスから始めます",
+        "intro": "LoveTypes は相性を判決にしません。二人の心語の入口を見つけ、違いを対話、修復、再訪できる道へ変えます。",
+        "cards": [
+            ("無料関係コンパス", "二人の守護者と関係状況を入れ、すれ違い地図と次の一歩を受け取ります。", "コンパスへ", "compass", "home_compass_bridge_tool"),
+            ("相性入口", "愛の言語の相性、東洋占術の恋愛リズム、関係検索から来た場合はここから。", "相性入口へ", "tools/love-compatibility", "home_compass_bridge_entry"),
+        ],
+    },
+    "ko": {
+        "eyebrow": "COMPASS ROUTE",
+        "title": "두 사람의 엇갈림을 보고 싶다면 관계 컴퍼스부터 시작하세요",
+        "intro": "LoveTypes는 궁합을 판정으로 만들지 않습니다. 두 사람의 마음 언어 입구를 찾고, 차이를 대화와 회복 경로로 바꿉니다.",
+        "cards": [
+            ("무료 관계 컴퍼스", "두 수호자와 관계 상황을 입력해 엇갈림 지도와 다음 단계를 받습니다.", "컴퍼스 열기", "compass", "home_compass_bridge_tool"),
+            ("궁합 입구", "사랑의 언어 궁합, 사주 궁합, 관계 궁합 검색에서 왔다면 여기서 시작하세요.", "궁합 입구 열기", "tools/love-compatibility", "home_compass_bridge_entry"),
+        ],
+    },
+    "es": {
+        "eyebrow": "COMPASS ROUTE",
+        "title": "Si quieres leer la señal cruzada entre dos personas, empieza por la brújula",
+        "intro": "LoveTypes no convierte la compatibilidad en sentencia. Primero ubica las puertas emocionales y luego transforma la diferencia en una ruta de conversación y reparación.",
+        "cards": [
+            ("Brújula gratis", "Ingresa guardianas y contexto para recibir un mapa de señales cruzadas y siguiente paso.", "Abrir brújula", "compass", "home_compass_bridge_tool"),
+            ("Entrada de compatibilidad", "Si llegaste por compatibilidad, lenguajes del amor o ritmo natal, empieza por esta entrada.", "Abrir entrada", "tools/love-compatibility", "home_compass_bridge_entry"),
+        ],
+    },
+}
+
+
 GARDEN_MAP = {
     "zh": {
         "title": "心語庭園地圖",
@@ -6624,7 +6683,7 @@ GARDEN_MAP = {
         "handoff_title": "認領守護者後，照這個順序走",
         "handoff_intro": "測驗結果不是終點，而是一張通行證。先接住當下的需求，再把它放進可回訪、可練習、可冷卻的路線。",
         "routes_title": "四條主要路線",
-        "tools_title": "三個功能房間",
+        "tools_title": "五個功能房間",
         "guardians_title": "五個分域入口",
         "guides_title": "常用指南燈塔",
         "trust_title": "信任與邊界",
@@ -6636,6 +6695,7 @@ GARDEN_MAP = {
         ],
         "tools": [
             ("LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與可選出生節奏整理成錯頻地圖。", "打開關係羅盤", "compass"),
+            ("心語合盤入口", "承接愛之語合盤、八字愛情合盤與 love compatibility 搜尋，再導回免費羅盤。", "看合盤入口", "tools/love-compatibility"),
             ("7 日修復計畫", "把測驗結果寫成一週內能完成的小修復。", "打開修復計畫", "repair-plan"),
             ("守護者收藏室", "保存五位守護者卡片，讓結果變成可回訪、可分享的標記。", "前往收藏室", "keepsakes"),
             ("Luna 夜間補給", "睡前、冷卻或書寫時，用低光音樂先降低情緒噪音。", "開啟 Luna", "luna-yoga-music"),
@@ -6663,7 +6723,7 @@ GARDEN_MAP = {
         "handoff_title": "After recognizing your guardian, follow this order",
         "handoff_intro": "The quiz result is not the finish line. It is a pass that helps you hold the current need, then place it into a route you can revisit, practice, and cool down with.",
         "routes_title": "Four main routes",
-        "tools_title": "Three function rooms",
+        "tools_title": "Five function rooms",
         "guardians_title": "Five domain gates",
         "guides_title": "Useful guide lamps",
         "trust_title": "Trust and boundaries",
@@ -6675,6 +6735,7 @@ GARDEN_MAP = {
         ],
         "tools": [
             ("LoveTypes Relationship Compass", "Turn two guardians, relationship context, and optional birthdate rhythm into a cross-signal map.", "Open compass", "compass"),
+            ("Love Compatibility Entry", "Catch love language compatibility, BaZi love compatibility, and relationship compatibility searches before the free compass.", "Open entry", "tools/love-compatibility"),
             ("7-Day Repair Plan", "Turn your result into one week of small repair practice.", "Open repair plan", "repair-plan"),
             ("Guardian Keepsake Hall", "Save the five guardian cards as a revisitable and shareable marker.", "Open keepsakes", "keepsakes"),
             ("Luna Night Supply", "Use low-light audio before sleep, cooling down, or journaling.", "Open Luna", "luna-yoga-music"),
@@ -6702,7 +6763,7 @@ GARDEN_MAP = {
         "handoff_title": "守護者を認領した後は、この順番で進みます",
         "handoff_intro": "診断結果は終点ではなく通行証です。今の必要を受け止め、戻れて、練習でき、冷却できる道へ置きます。",
         "routes_title": "四つの主要ルート",
-        "tools_title": "三つの機能室",
+        "tools_title": "五つの機能室",
         "guardians_title": "五つの領域入口",
         "guides_title": "よく使うガイド",
         "trust_title": "信頼と境界",
@@ -6714,6 +6775,7 @@ GARDEN_MAP = {
         ],
         "tools": [
             ("LoveTypes 関係コンパス", "二人の守護者、関係状況、任意の生年月日リズムをすれ違い地図にします。", "コンパスへ", "compass"),
+            ("相性入口", "愛の言語の相性、東洋占術の恋愛リズム検索を受け、無料コンパスへ戻します。", "相性入口へ", "tools/love-compatibility"),
             ("7日間の修復プラン", "結果を一週間でできる小さな修復練習へ変えます。", "修復プランへ", "repair-plan"),
             ("守護者コレクション室", "五人の守護者カードを保存し、戻って見られる印にします。", "コレクション室へ", "keepsakes"),
             ("Luna 夜の補給", "眠る前、冷却、日記の時間に、低い音で感情のノイズを下げます。", "Luna を開く", "luna-yoga-music"),
@@ -6741,7 +6803,7 @@ GARDEN_MAP = {
         "handoff_title": "수호자를 알아본 뒤에는 이 순서로 가세요",
         "handoff_intro": "테스트 결과는 끝이 아니라 통행증입니다. 지금의 필요를 붙잡고 다시 보고, 연습하고, 식힐 수 있는 길에 놓으세요.",
         "routes_title": "네 가지 주요 길",
-        "tools_title": "세 가지 기능실",
+        "tools_title": "다섯 가지 기능실",
         "guardians_title": "다섯 영역 입구",
         "guides_title": "자주 쓰는 가이드 등불",
         "trust_title": "신뢰와 경계",
@@ -6753,6 +6815,7 @@ GARDEN_MAP = {
         ],
         "tools": [
             ("LoveTypes 관계 컴퍼스", "두 수호자, 관계 상황, 선택 생년월일 리듬을 엇갈림 지도로 정리합니다.", "컴퍼스 열기", "compass"),
+            ("궁합 입구", "사랑의 언어 궁합, 사주 궁합, 관계 궁합 검색을 받아 무료 컴퍼스로 연결합니다.", "궁합 입구 열기", "tools/love-compatibility"),
             ("7일 회복 계획", "결과를 일주일 안에 해볼 작은 회복 연습으로 바꿉니다.", "회복 계획 열기", "repair-plan"),
             ("수호자 소장실", "다섯 수호자 카드를 저장해 다시 보고 공유할 표시로 만듭니다.", "소장실 열기", "keepsakes"),
             ("Luna 밤 보급", "잠들기 전, 식히는 시간, 기록할 때 낮은 음악으로 감정 소음을 낮춥니다.", "Luna 열기", "luna-yoga-music"),
@@ -6780,7 +6843,7 @@ GARDEN_MAP = {
         "handoff_title": "Después de reconocer tu guardiana, sigue este orden",
         "handoff_intro": "El resultado no es el final. Es un pase para sostener la necesidad actual y llevarla a una ruta que puedas revisar, practicar y enfriar.",
         "routes_title": "Cuatro rutas principales",
-        "tools_title": "Tres salas funcionales",
+        "tools_title": "Cinco salas funcionales",
         "guardians_title": "Cinco puertas de dominio",
         "guides_title": "Guías útiles",
         "trust_title": "Confianza y límites",
@@ -6792,6 +6855,7 @@ GARDEN_MAP = {
         ],
         "tools": [
             ("Brújula de Relación LoveTypes", "Convierte dos guardianas, contexto y fechas opcionales en un mapa de señales cruzadas.", "Abrir brújula", "compass"),
+            ("Entrada de compatibilidad", "Recibe búsquedas de compatibilidad, lenguajes del amor y ritmo natal antes de la brújula gratis.", "Abrir entrada", "tools/love-compatibility"),
             ("Plan de 7 días", "Convierte tu resultado en una semana de reparación pequeña.", "Abrir plan", "repair-plan"),
             ("Sala de recuerdos", "Guarda las cinco tarjetas para volver a ellas y compartirlas.", "Abrir recuerdos", "keepsakes"),
             ("Luna nocturna", "Usa audio de baja luz antes de dormir, enfriar o escribir.", "Abrir Luna", "luna-yoga-music"),

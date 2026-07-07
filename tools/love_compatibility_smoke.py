@@ -18,6 +18,13 @@ LANG_PATHS = {
     "ko": "/ko/tools/love-compatibility/",
     "es": "/es/tools/love-compatibility/",
 }
+INBOUND_PATHS = {
+    "zh": ("/compass/", "/garden-map/"),
+    "en": ("/en/compass/", "/en/garden-map/"),
+    "ja": ("/ja/compass/", "/ja/garden-map/"),
+    "ko": ("/ko/compass/", "/ko/garden-map/"),
+    "es": ("/es/compass/", "/es/garden-map/"),
+}
 REQUIRED_EVENTS = {
     "love_compatibility_compass_start",
     "love_compatibility_quiz",
@@ -42,6 +49,7 @@ class LoveCompatibilityParser(HTMLParser):
         super().__init__()
         self.h1 = 0
         self.events: set[str] = set()
+        self.hrefs: set[str] = set()
         self.mailtos: list[str] = []
         self.faq_details = 0
         self.jsonld_blocks = 0
@@ -55,6 +63,8 @@ class LoveCompatibilityParser(HTMLParser):
         if event:
             self.events.add(event)
         href = attr.get("href", "")
+        if href:
+            self.hrefs.add(href)
         if href.startswith("mailto:"):
             self.mailtos.append(href)
         if tag.lower() == "details":
@@ -139,6 +149,35 @@ def validate_page(base_url: str, path: str) -> tuple[list[str], dict[str, int]]:
     return issues, stats
 
 
+def validate_inbound_links(base_url: str) -> tuple[list[str], dict[str, int]]:
+    issues: list[str] = []
+    stats = {
+        "inbound_pages": 0,
+        "inbound_links": 0,
+        "inbound_events": 0,
+    }
+    for lang, paths in INBOUND_PATHS.items():
+        expected_href = LANG_PATHS[lang]
+        for path in paths:
+            status, text = request_text(urljoin(base_url + "/", path.lstrip("/")))
+            if status != 200:
+                issues.append(f"{path}: expected status 200, got {status}")
+                continue
+            stats["inbound_pages"] += 1
+            parser = LoveCompatibilityParser()
+            parser.feed(text)
+            if expected_href not in parser.hrefs:
+                issues.append(f"{path}: missing link to {expected_href}")
+            else:
+                stats["inbound_links"] += 1
+            if path.endswith("/compass/"):
+                if "compass_compatibility_entry" not in parser.events:
+                    issues.append(f"{path}: missing compass_compatibility_entry event")
+                else:
+                    stats["inbound_events"] += 1
+    return issues, stats
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check LoveTypes love compatibility SEO landing pages.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Public deployment base URL.")
@@ -153,6 +192,9 @@ def main() -> int:
         "faq_details": 0,
         "jsonld_blocks": 0,
         "boundary_phrases": 0,
+        "inbound_pages": 0,
+        "inbound_links": 0,
+        "inbound_events": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -160,6 +202,10 @@ def main() -> int:
         issues.extend(page_issues)
         for key, value in stats.items():
             totals[key] += value
+    inbound_issues, inbound_stats = validate_inbound_links(base_url)
+    issues.extend(inbound_issues)
+    for key, value in inbound_stats.items():
+        totals[key] += value
 
     print(f"love_compatibility_pages_checked={totals['pages']}")
     print(f"love_compatibility_h1_checked={totals['h1']}")
@@ -168,6 +214,9 @@ def main() -> int:
     print(f"love_compatibility_faq_details_checked={totals['faq_details']}")
     print(f"love_compatibility_jsonld_blocks_checked={totals['jsonld_blocks']}")
     print(f"love_compatibility_boundary_phrases_checked={totals['boundary_phrases']}")
+    print(f"love_compatibility_inbound_pages_checked={totals['inbound_pages']}")
+    print(f"love_compatibility_inbound_links_checked={totals['inbound_links']}")
+    print(f"love_compatibility_inbound_events_checked={totals['inbound_events']}")
     print(f"love_compatibility_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

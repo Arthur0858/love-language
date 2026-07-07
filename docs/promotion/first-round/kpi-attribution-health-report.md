@@ -1,10 +1,10 @@
 # LoveTypes KPI Attribution Health Report
 
-- 產生日期：2026-07-06
+- 產生日期：2026-07-07
 - KPI fields：31
 - post / profile metrics：18 / 14
 - event KPIs / event names：13 / 60
-- catalog events：223
+- catalog events：235
 - revenue bridge KPIs：5
 - posting / platform / script rows：15 / 15 / 15
 - published / filled script rows：1 / 0

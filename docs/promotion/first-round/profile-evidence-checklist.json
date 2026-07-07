@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06",
+  "generatedAt": "2026-07-07",
   "sources": {
     "profileVerificationPacket": "docs/promotion/first-round/profile-verification-packet.json",
     "proofTemplates": "docs/promotion/first-round/operation-proof-templates.json"

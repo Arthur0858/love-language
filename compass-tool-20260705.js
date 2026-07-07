@@ -331,7 +331,14 @@
   function show(el) { el.hidden = false; }
   function hide(el) { el.hidden = true; }
 
-  function reportRequestHref(pairKey, selfG, partnerG) {
+  function selectedLabel(selector) {
+    var field = form.querySelector(selector);
+    if (!field) return '';
+    var option = field.options && field.selectedIndex >= 0 ? field.options[field.selectedIndex] : null;
+    return option ? option.textContent.trim() : field.value.trim();
+  }
+
+  function reportRequestHref(pairKey, selfG, partnerG, pairData, intake) {
     var subject = l.resultOfferSubject + ': ' + selfG.name + ' × ' + partnerG.name;
     var body = [
       l.resultOfferBody,
@@ -339,12 +346,22 @@
       'Pair: ' + pairKey,
       'Self: ' + selfG.name + ' / ' + selfG.type,
       'Partner: ' + partnerG.name + ' / ' + partnerG.type,
+      'Status: ' + (intake.status || '-'),
+      'Issue: ' + (intake.issue || '-'),
+      'My birthday: ' + (intake.dobSelf || '-'),
+      'Their birthday: ' + (intake.dobPartner || '-'),
+      '',
+      'Free compass result:',
+      'Main cross-signal: ' + pairData.misfrequency,
+      'Needs understanding: ' + pairData.misunderstood,
+      'Sentence to say: ' + pairData.sentence,
+      '24-hour action: ' + pairData.action,
       'Page: ' + window.location.href
     ].join('\n');
     return 'mailto:contact@lovetypes.tw?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   }
 
-  function renderResult(pairKey, selfG, partnerG) {
+  function renderResult(pairKey, selfG, partnerG, intake) {
     var pairData = data.pairings[pairKey];
     if (!pairData) {
       resultBox.innerHTML = '<p>No pairing data found. Please select both guardians.</p>';
@@ -395,7 +412,7 @@
           '<span class="compass-insight-icon">◆</span>',
           '<h3>' + l.resultOfferTitle + '</h3>',
           '<p>' + l.resultOfferIntro + '</p>',
-          '<a class="primary-btn compass-buy-btn" href="' + reportRequestHref(pairKey, selfG, partnerG) + '" data-compass-result-report-request data-funnel-event="compass_result_report_request">' + l.resultOfferCta + '</a>',
+          '<a class="primary-btn compass-buy-btn" href="' + reportRequestHref(pairKey, selfG, partnerG, pairData, intake) + '" data-compass-result-report-request data-funnel-event="compass_result_report_request">' + l.resultOfferCta + '</a>',
         '</div>',
       '</article>',
 
@@ -492,12 +509,18 @@
     if (!selfG || !partnerG) return;
 
     var pairKey = selfKey + '_' + partnerKey;
+    var intake = {
+      status: selectedLabel('[name="status"]'),
+      issue: selectedLabel('[name="issue"]'),
+      dobSelf: form.querySelector('[name="dobSelf"]').value,
+      dobPartner: form.querySelector('[name="dobPartner"]').value
+    };
 
     // Funnel event
     if (window.lovetypesRecordFunnelEvent) {
       window.lovetypesRecordFunnelEvent('compass_result', pairKey, form);
     }
 
-    renderResult(pairKey, selfG, partnerG);
+    renderResult(pairKey, selfG, partnerG, intake);
   });
 })();

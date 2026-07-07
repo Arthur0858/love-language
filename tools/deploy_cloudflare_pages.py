@@ -54,6 +54,7 @@ EXCLUDED_FILE_NAMES = {
     ".DS_Store",
     ".gitignore",
     "CNAME",
+    "compass-tool.js",
     "_headers",
     "_redirects",
     "_routes.json",

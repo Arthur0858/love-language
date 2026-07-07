@@ -246,6 +246,11 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         'data-funnel-event="compass_result_report_request"': "result report funnel event",
         "mailto:contact@lovetypes.tw?subject=": "result report mailto",
         "resultOfferSubject": "result offer subject label",
+        "Free compass result:": "result report free summary",
+        "Main cross-signal:": "result report cross-signal field",
+        "24-hour action:": "result report action field",
+        "Status: ": "result report status field",
+        "Issue: ": "result report issue field",
     }
     for marker, label in required_markers.items():
         if marker not in text:

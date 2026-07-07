@@ -447,9 +447,14 @@
       "priority": 0.68
     },
     {
+      "url": "https://lovetypes.tw/tools/one-sided-relationship/",
+      "intent": "If you feel like you are the only one trying, use the LoveTypes Compass to separate love-language mismatch, uneven responsibility, boundaries, and one concrete request.",
+      "priority": 0.66
+    },
+    {
       "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
       "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.66
+      "priority": 0.64
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -511,12 +516,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 235,
-      "paths": 47,
+      "pages": 240,
+      "paths": 48,
       "languages": 5,
       "groups": {
         "content": 85,
-        "conversion": 100,
+        "conversion": 105,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -545,7 +550,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 28,
+    "priorityUrls": 29,
     "languages": 5,
     "discoveryFiles": 10
   }

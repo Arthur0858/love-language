@@ -37,12 +37,12 @@
   ],
   "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
   "totals": {
-    "pages": 235,
-    "paths": 47,
+    "pages": 240,
+    "paths": 48,
     "languages": 5,
     "groups": {
       "content": 85,
-      "conversion": 100,
+      "conversion": 105,
       "guardians": 30,
       "home": 5,
       "trust": 15
@@ -236,6 +236,14 @@
       "hreflang": "zh-TW",
       "path": "/tools/partner-wont-communicate/",
       "canonical": "https://lovetypes.tw/tools/partner-wont-communicate/",
+      "group": "conversion",
+      "primary": true
+    },
+    {
+      "lang": "zh",
+      "hreflang": "zh-TW",
+      "path": "/tools/one-sided-relationship/",
+      "canonical": "https://lovetypes.tw/tools/one-sided-relationship/",
       "group": "conversion",
       "primary": true
     },
@@ -618,6 +626,14 @@
     {
       "lang": "en",
       "hreflang": "en",
+      "path": "/en/tools/one-sided-relationship/",
+      "canonical": "https://lovetypes.tw/en/tools/one-sided-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "en",
+      "hreflang": "en",
       "path": "/en/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/en/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -988,6 +1004,14 @@
       "hreflang": "ja",
       "path": "/ja/tools/partner-wont-communicate/",
       "canonical": "https://lovetypes.tw/ja/tools/partner-wont-communicate/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ja",
+      "hreflang": "ja",
+      "path": "/ja/tools/one-sided-relationship/",
+      "canonical": "https://lovetypes.tw/ja/tools/one-sided-relationship/",
       "group": "conversion",
       "primary": false
     },
@@ -1370,6 +1394,14 @@
     {
       "lang": "ko",
       "hreflang": "ko",
+      "path": "/ko/tools/one-sided-relationship/",
+      "canonical": "https://lovetypes.tw/ko/tools/one-sided-relationship/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "ko",
+      "hreflang": "ko",
       "path": "/ko/tools/long-distance-fight-repair/",
       "canonical": "https://lovetypes.tw/ko/tools/long-distance-fight-repair/",
       "group": "conversion",
@@ -1740,6 +1772,14 @@
       "hreflang": "es",
       "path": "/es/tools/partner-wont-communicate/",
       "canonical": "https://lovetypes.tw/es/tools/partner-wont-communicate/",
+      "group": "conversion",
+      "primary": false
+    },
+    {
+      "lang": "es",
+      "hreflang": "es",
+      "path": "/es/tools/one-sided-relationship/",
+      "canonical": "https://lovetypes.tw/es/tools/one-sided-relationship/",
       "group": "conversion",
       "primary": false
     },

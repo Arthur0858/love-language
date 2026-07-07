@@ -42,6 +42,8 @@
       copyResultIntro: 'Save the free reading or paste it into a message before the insight disappears into the day.',
       copiedResult: 'Copied',
       copyUnavailable: 'Copy manually',
+      prefillTitle: 'Pairing loaded',
+      prefillIntro: '{pair} is already selected. Add your relationship status and top issue, then get the free compass.',
       nextStepsTitle: 'Keep going from here',
       nextStepsIntro: 'Move the free result into one useful next step before it becomes another saved screenshot.',
       nextStepsGuardian: 'Read my guardian',
@@ -98,6 +100,8 @@
       copyResultIntro: '無料リーディングを保存したり、相手に送るメッセージへ貼り付けたりできます。',
       copiedResult: 'コピーしました',
       copyUnavailable: '手動でコピー',
+      prefillTitle: '組み合わせを入力しました',
+      prefillIntro: '{pair} を選択済みです。現在の関係と改善したいことを足して、無料コンパスへ進めます。',
       nextStepsTitle: '次に進む',
       nextStepsIntro: '無料結果を保存だけで終わらせず、今できる一歩につなげましょう。',
       nextStepsGuardian: '私のガーディアンを見る',
@@ -147,6 +151,8 @@
       copyResultIntro: '무료 리딩을 저장하거나 상대에게 보낼 메시지에 붙여 넣을 수 있습니다.',
       copiedResult: '복사됨',
       copyUnavailable: '직접 복사',
+      prefillTitle: '조합이 입력되었습니다',
+      prefillIntro: '{pair} 조합이 선택되어 있습니다. 현재 상태와 개선하고 싶은 점을 더해 무료 컴퍼스를 받으세요.',
       nextStepsTitle: '다음 단계',
       nextStepsIntro: '무료 결과를 캡처로만 남기지 말고, 지금 할 수 있는 한 걸음으로 이어가세요.',
       nextStepsGuardian: '내 가디언 보기',
@@ -196,6 +202,8 @@
       copyResultIntro: 'Guarda la lectura gratuita o pégala en un mensaje antes de que el insight se pierda en el día.',
       copiedResult: 'Copiado',
       copyUnavailable: 'Copiar manualmente',
+      prefillTitle: 'Combinación cargada',
+      prefillIntro: '{pair} ya está seleccionada. Añade el estado y el tema principal para obtener la brújula gratis.',
       nextStepsTitle: 'Sigue desde aquí',
       nextStepsIntro: 'Convierte el resultado gratis en un siguiente paso útil antes de que quede solo como captura.',
       nextStepsGuardian: 'Leer mi guardián',
@@ -245,6 +253,8 @@
       copyResultIntro: '把免費解讀先保存下來，或直接貼進訊息裡，讓對話有一個比較溫柔的起點。',
       copiedResult: '已複製',
       copyUnavailable: '請手動複製',
+      prefillTitle: '已帶入熱門配對',
+      prefillIntro: '已選好 {pair}。補上目前關係狀態與最想改善的地方，就可以取得免費羅盤。',
       nextStepsTitle: '接下來做什麼',
       nextStepsIntro: '先把免費結果接到一個可完成的下一步，避免它只停在截圖裡。',
       nextStepsGuardian: '看我的守護者',
@@ -311,6 +321,7 @@
     '</section>',
 
     '<section class="compass-form-section" data-compass-form-section>',
+      '<div class="compass-prefill-notice" data-compass-prefill-notice hidden aria-live="polite" style="margin:0 0 18px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fffdf9"></div>',
       '<form class="compass-form" data-compass-form>',
         '<div class="compass-form-row">',
           '<div class="compass-form-field">',
@@ -372,6 +383,7 @@
   var form = root.querySelector('[data-compass-form]');
   var resultBox = root.querySelector('[data-compass-result]');
   var paidBox = root.querySelector('[data-compass-paid]');
+  var prefillNotice = root.querySelector('[data-compass-prefill-notice]');
 
   function show(el) { el.hidden = false; }
   function hide(el) { el.hidden = true; }
@@ -480,9 +492,22 @@
     return Promise.resolve(ok);
   }
 
+  function recordFunnelEventWhenReady(name, value, element, attempts) {
+    if (window.lovetypesRecordFunnelEvent) {
+      window.lovetypesRecordFunnelEvent(name, value, element);
+      return;
+    }
+    if (attempts > 0) {
+      window.setTimeout(function () {
+        recordFunnelEventWhenReady(name, value, element, attempts - 1);
+      }, 120);
+    }
+  }
+
   function applyQueryPrefill() {
     if (!window.URLSearchParams) return;
     var params = new URLSearchParams(window.location.search || '');
+    var applied = {};
     [
       ['self', 'self'],
       ['partner', 'partner'],
@@ -497,9 +522,20 @@
       });
       if (hasOption) {
         field.value = value;
+        applied[item[0]] = value;
         field.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
+    if (applied.self && applied.partner && prefillNotice && data.guardians[applied.self] && data.guardians[applied.partner]) {
+      var pairKey = applied.self + '_' + applied.partner;
+      var pairLabel = data.guardians[applied.self].name + ' × ' + data.guardians[applied.partner].name;
+      prefillNotice.innerHTML = [
+        '<strong>' + l.prefillTitle + '</strong>',
+        '<p>' + l.prefillIntro.replace('{pair}', pairLabel) + '</p>'
+      ].join('');
+      prefillNotice.hidden = false;
+      recordFunnelEventWhenReady('compass_prefill_pair', pairKey, prefillNotice, 10);
+    }
   }
 
   function renderResult(pairKey, selfG, partnerG, intake) {

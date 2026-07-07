@@ -346,6 +346,9 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
         "result_query_prefill_helpers": 0,
+        "result_prefill_notice_templates": 0,
+        "result_prefill_events": 0,
+        "result_prefill_labels": 0,
     }
     issues: list[str] = []
     if status != 200:
@@ -372,8 +375,13 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         "function guardianSlug": "guardian slug helper",
         "nextStepsTitle": "result next-step localized labels",
         "function applyQueryPrefill": "query prefill helper",
+        "function recordFunnelEventWhenReady": "query prefill funnel retry helper",
         "new URLSearchParams": "query string parser",
         "applyQueryPrefill();": "query prefill initializer",
+        "data-compass-prefill-notice": "query prefill notice",
+        "compass_prefill_pair": "query prefill funnel event",
+        "prefillTitle": "query prefill localized title",
+        "prefillIntro": "query prefill localized intro",
         "mailto:contact@lovetypes.tw?subject=": "result report mailto",
         "resultOfferSubject": "result offer subject label",
         "Free compass result:": "result report free summary",
@@ -417,10 +425,15 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         text.count(marker)
         for marker in (
             "function applyQueryPrefill",
+            "function recordFunnelEventWhenReady",
             "new URLSearchParams",
             "applyQueryPrefill();",
         )
     )
+    stats["result_prefill_notice_templates"] = text.count("data-compass-prefill-notice")
+    stats["result_prefill_events"] = text.count("compass_prefill_pair")
+    result_prefill_label_keys = ("prefillTitle:", "prefillIntro:")
+    stats["result_prefill_labels"] = sum(text.count(key) for key in result_prefill_label_keys)
     if stats["result_offer_templates"] < 1:
         issues.append(f"{path}: expected at least one result offer template")
     if stats["result_offer_events"] < 2:
@@ -443,8 +456,14 @@ def validate_result_template(base_url: str, path: str) -> tuple[list[str], dict[
         issues.append(f"{path}: expected guardian, repair, and supply next-step events")
     if stats["result_next_step_labels"] < 25:
         issues.append(f"{path}: expected localized next-step labels for five languages")
-    if stats["result_query_prefill_helpers"] < 3:
-        issues.append(f"{path}: expected query prefill helper, parser, and initializer")
+    if stats["result_query_prefill_helpers"] < 4:
+        issues.append(f"{path}: expected query prefill helper, retry helper, parser, and initializer")
+    if stats["result_prefill_notice_templates"] < 1:
+        issues.append(f"{path}: expected query prefill notice template")
+    if stats["result_prefill_events"] < 1:
+        issues.append(f"{path}: expected compass_prefill_pair event")
+    if stats["result_prefill_labels"] < 10:
+        issues.append(f"{path}: expected localized prefill labels for five languages")
     for phrase in HARD_VERDICT_PHRASES:
         if re.search(re.escape(phrase), text, re.I):
             issues.append(f"{path}: result template includes hard verdict phrase {phrase!r}")
@@ -501,6 +520,9 @@ def main() -> int:
         "result_next_step_events": 0,
         "result_next_step_labels": 0,
         "result_query_prefill_helpers": 0,
+        "result_prefill_notice_templates": 0,
+        "result_prefill_events": 0,
+        "result_prefill_labels": 0,
     }
     issues: list[str] = []
     for path in LANG_PATHS.values():
@@ -557,6 +579,9 @@ def main() -> int:
     print(f"compass_offer_result_next_step_events_checked={totals['result_next_step_events']}")
     print(f"compass_offer_result_next_step_labels_checked={totals['result_next_step_labels']}")
     print(f"compass_offer_result_query_prefill_helpers_checked={totals['result_query_prefill_helpers']}")
+    print(f"compass_offer_result_prefill_notice_templates_checked={totals['result_prefill_notice_templates']}")
+    print(f"compass_offer_result_prefill_events_checked={totals['result_prefill_events']}")
+    print(f"compass_offer_result_prefill_labels_checked={totals['result_prefill_labels']}")
     print(f"compass_offer_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

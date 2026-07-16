@@ -1,6 +1,6 @@
 # LoveTypes Profile URL Smoke
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - Profile URLs：1
 - Structural pass：1
 - Public checked：0

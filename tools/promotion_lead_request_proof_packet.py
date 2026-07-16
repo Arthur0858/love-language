@@ -263,7 +263,7 @@ def write_outputs(packet: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(packet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     fieldnames = ["guardian", "guardianName", "intakeType", "source", "templatePath", "checkCommand", "writeCommand", "requiredEvidence"]
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows({field: row.get(field, "") for field in fieldnames} for row in packet["rows"])
 

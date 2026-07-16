@@ -1,6 +1,6 @@
 # LoveTypes First Batch KPI Action Sheet
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - rows：1
 - ready：1
 - blocked：0
@@ -23,4 +23,4 @@
 - minimum KPI：`site_clicks,quiz_starts,quiz_completions`
 - zero-source rows：3
 - proof note：`<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified`
-- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-07 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- KPI writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-17 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`

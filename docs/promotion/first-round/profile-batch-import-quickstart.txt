@@ -1,4 +1,4 @@
-generated: 2026-07-07
+generated: 2026-07-17
 ready=0 blocked=1 invalid=0 issues=0
 placeholder_proof=1 real_proof_ready=0
 check: python3 tools/promotion_profile_batch_import.py --check

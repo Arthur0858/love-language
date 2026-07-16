@@ -1,6 +1,6 @@
 # LoveTypes Weekly Asset Briefs Index
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - 週次：5
 - 製作手卡：14
 - 場景卡：42

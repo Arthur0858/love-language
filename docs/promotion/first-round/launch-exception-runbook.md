@@ -1,6 +1,6 @@
 # LoveTypes Launch Exception Runbook
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - exception rows：10
 - hard stops：6
 - holds：3

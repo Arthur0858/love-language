@@ -1,6 +1,6 @@
 # LoveTypes Zero KPI Evidence Checklist
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - first-batch posts：1
 - published posts：1
 - checklist rows：3

@@ -229,7 +229,7 @@ def write_outputs(sheet: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(sheet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as handle:
         fieldnames = ["step_id", "phase", "status", "owner_action", "command", "evidence_required", "next_gate"]
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(sheet["rows"])
 

@@ -12,6 +12,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
+RENDER_BRIDGE_REPORT = PROMOTION_DIR / "render-bridge" / "render-bridge.json"
+RENDER_BRIDGE_ACTIVE_SCHEDULE_ISSUE = "lovetypes-nightly-shorts-render schedule is not PAUSED"
 REFRESH_COMMANDS = [
     [sys.executable, "tools/promotion_sync_posting_queue.py"],
     [sys.executable, "tools/promotion_sync_kpi_tracker.py"],
@@ -196,7 +198,32 @@ def inspect_docs(expected_date: str) -> dict:
 
 def run_refresh() -> None:
     for command in REFRESH_COMMANDS:
-        subprocess.run(command, cwd=ROOT, check=True)
+        result = subprocess.run(command, cwd=ROOT, check=False)
+        if result.returncode == 0:
+            continue
+        if Path(command[1]).name == "promotion_render_bridge.py" and render_bridge_status_only_failure():
+            print("promotion_daily_ops_render_bridge_status_only=1")
+            continue
+        result.check_returncode()
+
+
+def render_bridge_status_only_failure() -> bool:
+    if not RENDER_BRIDGE_REPORT.exists():
+        return False
+    try:
+        payload = json.loads(RENDER_BRIDGE_REPORT.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return False
+    metrics = payload.get("metrics", {})
+    safety = payload.get("safety", {})
+    return (
+        payload.get("issues") == [RENDER_BRIDGE_ACTIVE_SCHEDULE_ISSUE]
+        and metrics.get("noReadyUnpublishedRows") is True
+        and metrics.get("bridgeRows") == 0
+        and safety.get("doesNotModifySchedules") is True
+        and safety.get("doesNotSubmitRemoteRender") is True
+        and safety.get("doesNotCreateUploadQueueJobs") is True
+    )
 
 
 def validate_inspection(inspection: dict, strict: bool) -> list[str]:

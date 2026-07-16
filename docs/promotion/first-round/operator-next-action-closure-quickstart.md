@@ -1,6 +1,6 @@
 # LoveTypes Operator Next Action Closure Quickstart
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - stage：`first_batch_kpi`
 - active platforms：1
 - profile configured：1 / 1
@@ -53,7 +53,7 @@ Proof template:
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-07-07
+set_date: 2026-07-17
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```

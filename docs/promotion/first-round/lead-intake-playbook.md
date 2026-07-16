@@ -1,6 +1,6 @@
 # LoveTypes 名單承接 Playbook
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - 模板列數：15
 - 用途：把 Contact、補給願望、收藏物等待清單與 Luna 需求轉成可回填、可排序、可履約的素材線索。
 - Attribution：用 Contact 信中的 `Campaign content / 推廣內容` 對回 `attribution-reconciliation.csv`。

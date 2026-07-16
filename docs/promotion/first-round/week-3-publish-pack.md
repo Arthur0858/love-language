@@ -1,6 +1,6 @@
 # LoveTypes 第一輪 Week 3 發布包
 
-- 產生日期：2026-07-07
+- 產生日期：2026-07-17
 - 任務數：3
 - 主 CTA：Take the 15-question quiz to find your emotional guardian
 

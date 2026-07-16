@@ -1,5 +1,5 @@
 LoveTypes operator next action closure quickstart
-generated: 2026-07-07
+generated: 2026-07-17
 stage: first_batch_kpi
 ready actions: 0 / 1
 profile configured: 1

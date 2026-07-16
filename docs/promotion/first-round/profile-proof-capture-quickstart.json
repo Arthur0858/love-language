@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07",
+  "generatedAt": "2026-07-17",
   "sources": {
     "profileQuickstart": "docs/promotion/first-round/profile-quickstart.json",
     "profileProofReadiness": "docs/promotion/first-round/profile-proof-readiness-pack.json",
@@ -45,7 +45,7 @@
       "proofBundleCheckCommand": "python3 tools/promotion_profile_batch_import.py --check",
       "postWritebackCheckCommand": "python3 tools/promotion_daily_ops_refresh.py && python3 tools/promotion_profile_completion_gate.py --check && python3 tools/promotion_master_gate.py --check",
       "stopCondition": "Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.",
-      "captureFileName": "profile-youtube_shorts-2026-07-07.png",
+      "captureFileName": "profile-youtube_shorts-2026-07-17.png",
       "captureArtifactRequired": 1,
       "safeWritebackReady": 0,
       "proofNote": "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified",

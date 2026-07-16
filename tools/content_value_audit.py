@@ -18,6 +18,8 @@ LATIN_MIN_WORDS = 850
 CJK_MIN_CHARS = 1200
 CORE_LATIN_MIN_WORDS = 520
 CORE_CJK_MIN_CHARS = 900
+TOOL_LATIN_MIN_WORDS = 500
+TOOL_CJK_MIN_CHARS = 800
 CORE_ROUTES = ["", "about", "theory", "guides", "characters"]
 
 
@@ -79,6 +81,15 @@ def core_paths() -> list[tuple[str, Path]]:
     return rows
 
 
+def tool_paths() -> list[tuple[str, Path]]:
+    rows: list[tuple[str, Path]] = []
+    for lang, prefix in GUIDE_LANG_PREFIXES.items():
+        base = ROOT / prefix / "tools" if prefix else ROOT / "tools"
+        for path in sorted(base.glob("*/index.html")):
+            rows.append((lang, path))
+    return rows
+
+
 def audit() -> dict:
     issues: list[str] = []
     checked = 0
@@ -119,6 +130,27 @@ def audit() -> dict:
             cjk_chars = re.findall(r"[一-龥ぁ-んァ-ン가-힣]", text)
             if len(cjk_chars) < CORE_CJK_MIN_CHARS:
                 issues.append(f"{rel}: CJK core page too thin ({len(cjk_chars)} chars < {CORE_CJK_MIN_CHARS})")
+    tool_checked = 0
+    tool_latin_checked = 0
+    tool_cjk_checked = 0
+    for lang, path in tool_paths():
+        text, noindex = read_visible_text(path)
+        if noindex:
+            continue
+        tool_checked += 1
+        rel = path.relative_to(ROOT)
+        if lang in {"en", "es"}:
+            tool_latin_checked += 1
+            words = re.findall(r"[A-Za-zÀ-ÿĀ-ž]+", text)
+            if len(words) < TOOL_LATIN_MIN_WORDS:
+                issues.append(f"{rel}: latin tool page too thin ({len(words)} words < {TOOL_LATIN_MIN_WORDS})")
+        else:
+            tool_cjk_checked += 1
+            cjk_chars = re.findall(r"[一-龥ぁ-んァ-ン가-힣]", text)
+            if len(cjk_chars) < TOOL_CJK_MIN_CHARS:
+                issues.append(f"{rel}: CJK tool page too thin ({len(cjk_chars)} chars < {TOOL_CJK_MIN_CHARS})")
+    if tool_checked < 100:
+        issues.append(f"expected at least 100 indexable tool pages, found {tool_checked}")
     return {
         "checked": checked,
         "latinChecked": latin_checked,
@@ -126,6 +158,9 @@ def audit() -> dict:
         "coreChecked": core_checked,
         "coreLatinChecked": core_latin_checked,
         "coreCjkChecked": core_cjk_checked,
+        "toolChecked": tool_checked,
+        "toolLatinChecked": tool_latin_checked,
+        "toolCjkChecked": tool_cjk_checked,
         "issues": issues,
     }
 
@@ -138,6 +173,9 @@ def main() -> int:
     print(f"content_value_core_pages_checked={result['coreChecked']}")
     print(f"content_value_core_latin_pages_checked={result['coreLatinChecked']}")
     print(f"content_value_core_cjk_pages_checked={result['coreCjkChecked']}")
+    print(f"content_value_tool_pages_checked={result['toolChecked']}")
+    print(f"content_value_tool_latin_pages_checked={result['toolLatinChecked']}")
+    print(f"content_value_tool_cjk_pages_checked={result['toolCjkChecked']}")
     print(f"content_value_issues={len(result['issues'])}")
     for issue in result["issues"]:
         print(issue)

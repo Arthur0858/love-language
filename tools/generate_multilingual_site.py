@@ -9229,6 +9229,63 @@ REPORT_SECTION_LABELS = {
 }
 
 
+LONG_TAIL_RELATED_GUIDES = {
+    "bazi-love-compatibility": ("relationship-stages", "weekly-relationship-review"),
+    "2026-love-timing": ("relationship-stages", "weekly-relationship-review"),
+    "love-language-compatibility": ("misfrequency-examples", "share-your-result"),
+    "relationship-compatibility-test": ("misfrequency-examples", "healthy-boundaries"),
+    "couples-communication-quiz": ("share-your-result", "emotional-needs-checklist"),
+    "relationship-repair-after-fight": ("repair-after-conflict", "weekly-relationship-review"),
+    "emotional-distance-relationship": ("emotional-needs-checklist", "quality-time-long-distance"),
+    "trust-issues-relationship": ("healthy-boundaries", "weekly-relationship-review"),
+    "insecure-in-relationship": ("emotional-needs-checklist", "healthy-boundaries"),
+    "silent-treatment-relationship": ("healthy-boundaries", "repair-after-conflict"),
+    "breakup-signs-relationship": ("healthy-boundaries", "relationship-stages"),
+    "feeling-misunderstood-relationship": ("misfrequency-examples", "share-your-result"),
+    "partner-wont-communicate": ("healthy-boundaries", "repair-after-conflict"),
+    "one-sided-relationship": ("acts-of-service-boundaries", "healthy-boundaries"),
+    "lonely-in-relationship": ("emotional-needs-checklist", "quality-time-long-distance"),
+    "partner-doesnt-listen": ("quality-time-long-distance", "share-your-result"),
+    "taken-for-granted-relationship": ("words-of-affirmation-scripts", "acts-of-service-boundaries"),
+    "partner-needs-space-relationship": ("quality-time-long-distance", "healthy-boundaries"),
+    "long-distance-fight-repair": ("quality-time-long-distance", "repair-after-conflict"),
+}
+
+
+LONG_TAIL_RELATED_COPY = {
+    "zh": {
+        "eyebrow": "RELATED PRACTICE",
+        "title": "接著讀兩篇真正相關的指南",
+        "intro": "先延伸目前的關係問題，不必一次讀完整座庭園。這兩篇指南分別協助你辨認錯頻與準備下一次對話。",
+        "cta": "閱讀這篇指南",
+    },
+    "en": {
+        "eyebrow": "RELATED PRACTICE",
+        "title": "Continue with two guides that fit this issue",
+        "intro": "Stay with the relationship question you came to solve instead of reading the whole garden at once. These guides help you name the mismatch and prepare the next conversation.",
+        "cta": "Read this guide",
+    },
+    "ja": {
+        "eyebrow": "RELATED PRACTICE",
+        "title": "この問題に合う二つのガイドを続けて読む",
+        "intro": "庭全体を一度に読む必要はありません。今の関係の問いに近い二つのガイドで、すれ違いを整理し、次の対話を準備します。",
+        "cta": "このガイドを読む",
+    },
+    "ko": {
+        "eyebrow": "RELATED PRACTICE",
+        "title": "이 문제에 맞는 두 가지 가이드로 이어가기",
+        "intro": "정원 전체를 한 번에 읽지 않아도 됩니다. 지금의 관계 질문과 가까운 두 가이드로 엇갈림을 정리하고 다음 대화를 준비하세요.",
+        "cta": "이 가이드 읽기",
+    },
+    "es": {
+        "eyebrow": "RELATED PRACTICE",
+        "title": "Continúa con dos guías que encajan con este problema",
+        "intro": "No necesitas leer todo el jardín de una vez. Estas dos guías te ayudan a nombrar el desajuste actual y preparar la siguiente conversación.",
+        "cta": "Leer esta guía",
+    },
+}
+
+
 LONG_TAIL_WORKSHOP = {
     "zh": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9382,6 +9439,29 @@ def long_tail_workshop_section(lang: str, copy: dict) -> str:
     <div class="callout"><strong>{escape(workshop["pause_title"])}</strong><p>{escape(workshop["pause"])}</p></div>
     <p><time datetime="{LONG_TAIL_UPDATED}">{escape(workshop["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(workshop["method"])}</a></p>
   </div>
+</section>
+"""
+
+
+def long_tail_related_guides_section(lang: str, slug: str) -> str:
+    labels = LONG_TAIL_RELATED_COPY[lang]
+    cards = []
+    for guide_slug in LONG_TAIL_RELATED_GUIDES[slug]:
+        guide = next(item for item in GUIDES if item["slug"] == guide_slug)
+        title, desc = guide[lang]
+        cards.append(f"""
+<a class="content-card" href="{lang_url(lang, 'guides/' + guide_slug)}" data-long-tail-related-guide-card data-funnel-event="long_tail_related_guide">
+  <span class="eyebrow">{escape(labels["eyebrow"])}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+  <span class="card-link">{escape(labels["cta"])}</span>
+</a>
+""")
+    return f"""
+<section class="section" data-long-tail-related-guides>
+  <div class="section-head"><div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div><a href="{lang_url(lang, 'guides/')}" data-funnel-event="long_tail_all_guides">{escape(LANGS[lang]["guides"])}</a></div>
+  <p class="section-intro">{escape(labels["intro"])}</p>
+  <div class="card-grid compact">{"".join(cards)}</div>
 </section>
 """
 
@@ -9563,6 +9643,7 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
 </section>
 {long_tail_quick_answer_section(lang, copy)}
 {long_tail_workshop_section(lang, copy)}
+{long_tail_related_guides_section(lang, slug)}
 <section class="section article-body standalone">
   <div class="callout"><strong>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary_title"])}</strong><p>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary"])}</p></div>
 </section>
@@ -14794,7 +14875,7 @@ def funnel_event_category(name: str) -> str:
         return "repair"
     if name.startswith(("guardian_", "theory_domain_guardian")):
         return "guardian"
-    if name.startswith(("guide_", "trust_", "theory_")):
+    if name.startswith(("guide_", "long_tail_", "trust_", "theory_")):
         return "content"
     return name.split("_", 1)[0]
 

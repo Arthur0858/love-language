@@ -109,11 +109,11 @@ def audit() -> dict:
             row_issues = []
             if not ok:
                 row_issues.append("mailto body is not importable after real email insertion")
+            if "promotion_lead_text_import_has_utm_content=1" not in output:
+                row_issues.append("mailto body does not produce campaign attribution")
             for required in ("consent_status: explicit_reply_ok", "owned_asset_request"):
                 if required not in body:
                     row_issues.append(f"missing {required}")
-            if "Campaign content" not in body and "推廣內容" not in body and "utm_content" not in body:
-                row_issues.append("missing campaign content field")
             issues.extend(f"{path.relative_to(ROOT)} {event}: {issue}" for issue in row_issues)
             rows.append({
                 "path": str(path.relative_to(ROOT)),
@@ -158,7 +158,7 @@ def render_md(report: dict) -> str:
         "",
         "- Legacy lead mailto links must produce structured request bodies.",
         "- After the traveler fills a real reply email, the body must pass lead text import check.",
-        "- Campaign content and explicit reply consent must remain visible in the message body.",
+        "- Campaign attribution and explicit reply consent must remain available in the message body.",
         "",
     ]
     if report["issues"]:

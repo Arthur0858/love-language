@@ -4030,6 +4030,14 @@ def main() -> int:
                 issues.append(f"{page}: expected one long-tail quick answer section")
             if parser.source.count("class=\"content-card quick-answer-card\"") != 3:
                 issues.append(f"{page}: expected 3 unique quick answer cards")
+            related_section_count = parser.source.count("data-long-tail-related-guides")
+            related_card_count = parser.source.count("data-long-tail-related-guide-card")
+            if related_section_count != 1:
+                issues.append(f"{page}: expected one related guide section, found {related_section_count}")
+            if related_card_count != 2:
+                issues.append(f"{page}: expected 2 related guide cards, found {related_card_count}")
+            if related_section_count == 1 and related_card_count == 2:
+                stats["long_tail_related_guide_pages"] += 1
 
         if is_guides_index_page(page):
             stats["guide_index_action_pages"] += 1
@@ -4605,6 +4613,8 @@ def main() -> int:
 
     if stats["long_tail_workshop_pages"] != 95:
         issues.append(f"expected 95 localized long-tail workshop pages, found {stats['long_tail_workshop_pages']}")
+    if stats["long_tail_related_guide_pages"] != 95:
+        issues.append(f"expected 95 localized long-tail related guide pages, found {stats['long_tail_related_guide_pages']}")
 
     sitemap_urls, sitemap_issues, sitemap_stats = parse_sitemap(parsers)
     issues.extend(sitemap_issues)
@@ -4756,6 +4766,7 @@ def main() -> int:
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")
     print(f"long_tail_workshop_pages={stats['long_tail_workshop_pages']}")
+    print(f"long_tail_related_guide_pages={stats['long_tail_related_guide_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"guide_focus_article_pages={stats['guide_focus_article_pages']}")
     print(f"guide_boilerplate_free_pages={stats['guide_boilerplate_free_pages']}")

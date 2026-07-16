@@ -9218,6 +9218,41 @@ LONG_TAIL_QUICK_ANSWER = {
 
 
 LONG_TAIL_UPDATED = "2026-07-17"
+GUIDE_UPDATED = "2026-07-17"
+
+
+GUIDE_EDITORIAL = {
+    "zh": {
+        "author": "LoveTypes 內容編輯團隊",
+        "updated": "內容更新：2026-07-17",
+        "method": "閱讀內容編輯與安全方法",
+        "corrections": "回報內容修正",
+    },
+    "en": {
+        "author": "LoveTypes editorial team",
+        "updated": "Content updated: 2026-07-17",
+        "method": "Read the editorial and safety method",
+        "corrections": "Report a content correction",
+    },
+    "ja": {
+        "author": "LoveTypes 編集チーム",
+        "updated": "内容更新：2026-07-17",
+        "method": "編集・安全方針を読む",
+        "corrections": "内容修正を報告",
+    },
+    "ko": {
+        "author": "LoveTypes 편집팀",
+        "updated": "콘텐츠 업데이트: 2026-07-17",
+        "method": "편집 및 안전 원칙 읽기",
+        "corrections": "콘텐츠 수정 제보",
+    },
+    "es": {
+        "author": "Equipo editorial de LoveTypes",
+        "updated": "Contenido actualizado: 2026-07-17",
+        "method": "Leer el método editorial y de seguridad",
+        "corrections": "Informar una corrección",
+    },
+}
 
 
 REPORT_SECTION_LABELS = {
@@ -13185,6 +13220,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     steps = "".join(f"<li>{escape(item)}</li>" for item in detail["steps"])
     checklist = "".join(f"<li>{escape(item)}</li>" for item in detail["checklist"])
     faq = "".join(f"<li>{escape(item)}</li>" for item in detail["faq"])
+    editorial = GUIDE_EDITORIAL[lang]
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -13193,6 +13229,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
 <section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">
   <article class="article-body">
+    <p data-guide-editorial-byline><strong>{escape(editorial["author"])}</strong> · <time datetime="{GUIDE_UPDATED}">{escape(editorial["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(editorial["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(editorial["corrections"])}</a></p>
     <p class="lede">{escape(detail["lede"])}</p>
     <h2>{escape(labels["why"])}</h2><p>{escape(detail["why"])}</p>
     <h2>{escape(labels["scene"])}</h2><p>{escape(detail["scene"])}</p>
@@ -13224,7 +13261,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
         "description": desc,
         "url": abs_url(lang, "guides/" + guide["slug"]),
         "inLanguage": t["code"],
-        "dateModified": UPDATED,
+        "dateModified": GUIDE_UPDATED,
         "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
         "author": organization_ref(),
         "publisher": organization_ref(),

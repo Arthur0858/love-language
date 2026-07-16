@@ -4128,6 +4128,24 @@ def main() -> int:
             guardian_slug = FORMAL_GUIDE_GUARDIANS[guide_slug]
             guide_body = article_body_text(parser)
             lang = lang_key_for_page(page)
+            editorial_byline_count = parser.source.count("data-guide-editorial-byline")
+            if editorial_byline_count != 1:
+                issues.append(f"{page}: expected one visible guide editorial byline, found {editorial_byline_count}")
+            else:
+                stats["guide_editorial_byline_pages"] += 1
+            guide_date_match = re.search(
+                r'data-guide-editorial-byline[^>]*>.*?<time datetime="(\d{4}-\d{2}-\d{2})">',
+                parser.source,
+                flags=re.DOTALL,
+            )
+            if not guide_date_match:
+                issues.append(f"{page}: guide editorial byline missing valid content update date")
+            elif parser.source.count(f'"dateModified":"{guide_date_match.group(1)}"') != 1:
+                issues.append(f"{page}: guide visible and schema update dates differ")
+            if 'href="' + lang_url_for_page(page, "about") + '#editorial-method"' not in parser.source:
+                issues.append(f"{page}: guide editorial byline missing editorial method link")
+            if 'href="' + lang_url_for_page(page, "contact") + '#site-repair-report"' not in parser.source:
+                issues.append(f"{page}: guide editorial byline missing content correction link")
             guide_focus_marker = GUIDE_FOCUS_MARKERS[lang]
             if guide_focus_marker not in guide_body:
                 issues.append(f"{page}: guide article body missing localized focus marker {guide_focus_marker!r}")
@@ -4633,6 +4651,8 @@ def main() -> int:
         issues.append(f"expected 95 localized long-tail related guide pages, found {stats['long_tail_related_guide_pages']}")
     if stats["long_tail_editorial_byline_pages"] != 95:
         issues.append(f"expected 95 localized long-tail editorial byline pages, found {stats['long_tail_editorial_byline_pages']}")
+    if stats["guide_editorial_byline_pages"] != 60:
+        issues.append(f"expected 60 localized guide editorial byline pages, found {stats['guide_editorial_byline_pages']}")
 
     sitemap_urls, sitemap_issues, sitemap_stats = parse_sitemap(parsers)
     issues.extend(sitemap_issues)
@@ -4786,6 +4806,7 @@ def main() -> int:
     print(f"long_tail_workshop_pages={stats['long_tail_workshop_pages']}")
     print(f"long_tail_related_guide_pages={stats['long_tail_related_guide_pages']}")
     print(f"long_tail_editorial_byline_pages={stats['long_tail_editorial_byline_pages']}")
+    print(f"guide_editorial_byline_pages={stats['guide_editorial_byline_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"guide_focus_article_pages={stats['guide_focus_article_pages']}")
     print(f"guide_boilerplate_free_pages={stats['guide_boilerplate_free_pages']}")

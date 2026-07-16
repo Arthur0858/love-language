@@ -52,6 +52,11 @@ FORBIDDEN_CONTACT_SNIPPETS = {
     "parenttechchecklist.com",
     "s755102@gmail.com",
 }
+FORBIDDEN_PUBLIC_DRAFT_SNIPPETS = {
+    "PAID REPORT MVP",
+    "REPORT MVP",
+    "Report ladder",
+}
 FORBIDDEN_SPANISH_VISIBLE_SNIPPETS = {
     "Jardin del Corazon",
     "guias, recursos",
@@ -3766,6 +3771,11 @@ def main() -> int:
 
         page_title = "".join(parser.title_parts).strip()
         page_description = parser.meta_content("description")
+        visible_text = parser.visible_text()
+        stats["public_draft_language_pages_checked"] += 1
+        for forbidden in sorted(FORBIDDEN_PUBLIC_DRAFT_SNIPPETS):
+            if forbidden.casefold() in visible_text.casefold():
+                issues.append(f"{page}: public page exposes draft or internal product wording {forbidden!r}")
 
         if len(parser.mains) != 1:
             issues.append(f"{page}: expected one <main> landmark, found {len(parser.mains)}")
@@ -4707,6 +4717,7 @@ def main() -> int:
     print(f"dynamic_live_regions={stats['dynamic_live_regions']}")
     print(f"semantic_heading_pages_checked={stats['semantic_heading_pages_checked']}")
     print(f"semantic_h2_headings_checked={stats['semantic_h2_headings_checked']}")
+    print(f"public_draft_language_pages_checked={stats['public_draft_language_pages_checked']}")
     print(f"progressbars={stats['progressbars']}")
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")

@@ -6095,10 +6095,10 @@ COMPASS_PAGE = {
 
 COMPASS_REPORT_OFFER = {
     "zh": {
-        "eyebrow": "PAID REPORT MVP",
-        "title": "免費羅盤之後，可以解鎖更完整的關係報告",
-        "intro": "先用免費結果確認你真的需要哪一種洞察；若想把它變成可保存、可執行的報告，再送出需求。我們會優先製作有人明確需要的報告。",
-        "cta": "登記這份報告需求",
+        "eyebrow": "可選關係報告",
+        "title": "免費羅盤之後，選擇真正需要的關係報告",
+        "intro": "先用免費結果確認你需要哪一種洞察。若希望收到可保存、可執行的完整報告，可以寄出詢問；LoveTypes 會先回覆內容範圍、交付方式與價格，再由你決定是否繼續。",
+        "cta": "詢問這份報告",
         "subject": "LoveTypes 關係報告需求",
         "body": "我想登記這份 LoveTypes 關係報告：",
         "items": [
@@ -6111,10 +6111,10 @@ COMPASS_REPORT_OFFER = {
         "note": "報告是關係溝通與自我理解工具，不預測正緣、不判定分手或結婚，也不取代諮商、醫療、法律或安全支援。",
     },
     "en": {
-        "eyebrow": "PAID REPORT MVP",
-        "title": "After the free compass, unlock a deeper relationship report",
-        "intro": "Use the free result to see which insight you actually need. If you want a saved, actionable report, send a request so the first paid reports follow real demand.",
-        "cta": "Request this report",
+        "eyebrow": "OPTIONAL RELATIONSHIP REPORTS",
+        "title": "After the free compass, choose the relationship report you need",
+        "intro": "Use the free result to identify the insight you need. If you want a saved, actionable report, send an inquiry. LoveTypes will confirm the scope, delivery format, and price before you decide whether to continue.",
+        "cta": "Ask about this report",
         "subject": "LoveTypes relationship report request",
         "body": "I want to request this LoveTypes relationship report:",
         "items": [
@@ -6127,10 +6127,10 @@ COMPASS_REPORT_OFFER = {
         "note": "Reports are tools for communication and self-understanding. They do not predict fate, decide marriage or breakup, or replace counseling, medical, legal, or safety support.",
     },
     "ja": {
-        "eyebrow": "PAID REPORT MVP",
-        "title": "無料コンパスの後、より深い関係レポートへ",
-        "intro": "まず無料結果で必要な洞察を確かめます。保存できる実行型レポートが必要な場合は、希望を送ってください。実際の需要から優先制作します。",
-        "cta": "このレポートを希望する",
+        "eyebrow": "選べる関係レポート",
+        "title": "無料コンパスの後、必要な関係レポートを選ぶ",
+        "intro": "まず無料結果で必要な洞察を確かめます。保存できる実行型レポートを希望する場合はお問い合わせください。内容範囲、受け取り方法、価格を先に案内し、その後に進むか決められます。",
+        "cta": "このレポートを問い合わせる",
         "subject": "LoveTypes 関係レポート希望",
         "body": "この LoveTypes 関係レポートを希望します：",
         "items": [
@@ -6143,10 +6143,10 @@ COMPASS_REPORT_OFFER = {
         "note": "レポートは関係コミュニケーションと自己理解の道具です。運命、結婚可否、別れを断定せず、相談支援・医療・法律・安全支援を代替しません。",
     },
     "ko": {
-        "eyebrow": "PAID REPORT MVP",
-        "title": "무료 컴퍼스 이후, 더 깊은 관계 리포트로",
-        "intro": "무료 결과로 필요한 통찰을 먼저 확인하세요. 저장하고 실행할 수 있는 리포트가 필요하다면 요청을 보내 주세요. 실제 수요가 있는 리포트부터 제작합니다.",
-        "cta": "이 리포트 요청하기",
+        "eyebrow": "선택 관계 리포트",
+        "title": "무료 컴퍼스 이후, 필요한 관계 리포트 선택하기",
+        "intro": "무료 결과로 필요한 통찰을 먼저 확인하세요. 저장하고 실행할 수 있는 리포트를 원한다면 문의를 보내 주세요. LoveTypes가 내용 범위, 전달 방식, 가격을 먼저 안내한 뒤 진행 여부를 결정할 수 있습니다.",
+        "cta": "이 리포트 문의하기",
         "subject": "LoveTypes 관계 리포트 요청",
         "body": "이 LoveTypes 관계 리포트를 요청합니다:",
         "items": [
@@ -6159,10 +6159,10 @@ COMPASS_REPORT_OFFER = {
         "note": "리포트는 관계 대화와 자기 이해 도구입니다. 운명, 결혼, 이별을 단정하지 않으며 상담, 의료, 법률, 안전 지원을 대신하지 않습니다.",
     },
     "es": {
-        "eyebrow": "PAID REPORT MVP",
-        "title": "Después de la brújula gratis, desbloquea un informe más profundo",
-        "intro": "Usa el resultado gratuito para ver qué insight necesitas. Si quieres un informe guardable y accionable, envía una petición para priorizar los productos con demanda real.",
-        "cta": "Pedir este informe",
+        "eyebrow": "INFORMES RELACIONALES OPCIONALES",
+        "title": "Después de la brújula gratis, elige el informe que necesitas",
+        "intro": "Usa el resultado gratuito para identificar el insight que necesitas. Si quieres un informe guardable y accionable, envía una consulta. LoveTypes confirmará alcance, formato de entrega y precio antes de que decidas continuar.",
+        "cta": "Consultar este informe",
         "subject": "Petición de informe LoveTypes",
         "body": "Quiero pedir este informe LoveTypes:",
         "items": [
@@ -9215,6 +9215,15 @@ LONG_TAIL_QUICK_ANSWER = {
 LONG_TAIL_UPDATED = "2026-07-16"
 
 
+REPORT_SECTION_LABELS = {
+    "zh": {"eyebrow": "可選關係報告", "link": "查看報告選項"},
+    "en": {"eyebrow": "OPTIONAL RELATIONSHIP REPORT", "link": "View report options"},
+    "ja": {"eyebrow": "選べる関係レポート", "link": "レポート一覧を見る"},
+    "ko": {"eyebrow": "선택 관계 리포트", "link": "리포트 옵션 보기"},
+    "es": {"eyebrow": "INFORME RELACIONAL OPCIONAL", "link": "Ver opciones de informe"},
+}
+
+
 LONG_TAIL_WORKSHOP = {
     "zh": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9374,6 +9383,7 @@ def long_tail_workshop_section(lang: str, copy: dict) -> str:
 
 def love_compatibility_page(lang: str) -> None:
     copy = LOVE_COMPATIBILITY_PAGE[lang]
+    report_labels = REPORT_SECTION_LABELS[lang]
     t = LANGS[lang]
     report_subject = quote(copy["offer_subject"])
     report_body = quote(copy["offer_body"] + f"\nPage: {abs_url(lang, 'tools/love-compatibility')}\n")
@@ -9470,7 +9480,7 @@ def love_compatibility_page(lang: str) -> None:
   <div class="card-grid compact">{long_tail_cards}</div>
 </section>
 <section class="section supply-panel-section">
-  <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(report_labels["eyebrow"])}</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">{escape(report_labels["link"])}</a></div>
   <p class="section-intro">{escape(copy["offer_intro"])}</p>
   <div class="hero-actions">
     <!--email_off-->
@@ -9489,6 +9499,7 @@ def love_compatibility_page(lang: str) -> None:
 
 def long_tail_compatibility_page(lang: str, slug: str) -> None:
     copy = LONG_TAIL_COMPATIBILITY_PAGES[slug][lang]
+    report_labels = REPORT_SECTION_LABELS[lang]
     t = LANGS[lang]
     report_subject = quote(copy["offer_subject"])
     report_body = quote(copy["offer_body"] + f"\nPage: {abs_url(lang, 'tools/' + slug)}\n")
@@ -9551,7 +9562,7 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
   <div class="callout"><strong>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary_title"])}</strong><p>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary"])}</p></div>
 </section>
 <section class="section supply-panel-section">
-  <div class="section-head"><div><p class="eyebrow">REPORT MVP</p><h2>{escape(copy["offer"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">Report ladder</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(report_labels["eyebrow"])}</p><h2>{escape(copy["offer"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">{escape(report_labels["link"])}</a></div>
   <div class="hero-actions">
     <!--email_off-->
     <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={report_subject}&body={report_body}" data-funnel-event="love_compatibility_report_request">{escape(copy["offer"])}</a>

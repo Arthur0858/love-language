@@ -9217,7 +9217,7 @@ LONG_TAIL_QUICK_ANSWER = {
 }
 
 
-LONG_TAIL_UPDATED = "2026-07-16"
+LONG_TAIL_UPDATED = "2026-07-17"
 
 
 REPORT_SECTION_LABELS = {
@@ -9303,7 +9303,9 @@ LONG_TAIL_WORKSHOP = {
         "pause_title": "需要先停下來的情況",
         "pause": "若場景涉及暴力、威脅、跟蹤、強迫、控制金錢或讓你害怕拒絕，先不要用這份練習說服對方；請優先聯絡可信任的人與所在地的專業安全資源。",
         "method": "閱讀 LoveTypes 的內容編輯與安全方法",
-        "updated": "內容更新：2026-07-16",
+        "author": "LoveTypes 內容編輯團隊",
+        "corrections": "回報內容修正",
+        "updated": "內容更新：2026-07-17",
     },
     "en": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9321,7 +9323,9 @@ LONG_TAIL_WORKSHOP = {
         "pause_title": "When to pause this exercise",
         "pause": "If the scene involves violence, threats, stalking, coercion, financial control, or fear of saying no, do not use this exercise to persuade the other person. Contact someone you trust and appropriate local safety support first.",
         "method": "Read the LoveTypes editorial and safety method",
-        "updated": "Content updated: 2026-07-16",
+        "author": "LoveTypes editorial team",
+        "corrections": "Report a content correction",
+        "updated": "Content updated: 2026-07-17",
     },
     "ja": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9339,7 +9343,9 @@ LONG_TAIL_WORKSHOP = {
         "pause_title": "この練習を先に止める場面",
         "pause": "暴力、脅し、つきまとい、強制、金銭の支配、断ることへの恐怖がある場合は、この練習で相手を説得しないでください。信頼できる人と地域の専門的な安全支援を優先してください。",
         "method": "LoveTypes の編集・安全方針を読む",
-        "updated": "内容更新：2026-07-16",
+        "author": "LoveTypes 編集チーム",
+        "corrections": "内容修正を報告",
+        "updated": "内容更新：2026-07-17",
     },
     "ko": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9357,7 +9363,9 @@ LONG_TAIL_WORKSHOP = {
         "pause_title": "이 연습을 먼저 멈춰야 할 때",
         "pause": "폭력, 위협, 스토킹, 강요, 경제적 통제, 거절에 대한 두려움이 있다면 이 연습으로 상대를 설득하지 마세요. 신뢰할 수 있는 사람과 지역의 전문 안전 지원을 먼저 찾으세요.",
         "method": "LoveTypes 편집 및 안전 원칙 읽기",
-        "updated": "콘텐츠 업데이트: 2026-07-16",
+        "author": "LoveTypes 편집팀",
+        "corrections": "콘텐츠 수정 제보",
+        "updated": "콘텐츠 업데이트: 2026-07-17",
     },
     "es": {
         "eyebrow": "24-HOUR PRACTICE",
@@ -9375,7 +9383,9 @@ LONG_TAIL_WORKSHOP = {
         "pause_title": "Cuándo pausar este ejercicio",
         "pause": "Si la escena incluye violencia, amenazas, acoso, coerción, control económico o miedo a decir no, no uses este ejercicio para convencer a la otra persona. Contacta primero a alguien de confianza y al apoyo de seguridad adecuado en tu zona.",
         "method": "Leer el método editorial y de seguridad de LoveTypes",
-        "updated": "Contenido actualizado: 2026-07-16",
+        "author": "Equipo editorial de LoveTypes",
+        "corrections": "Informar una corrección",
+        "updated": "Contenido actualizado: 2026-07-17",
     },
 }
 
@@ -9437,7 +9447,7 @@ def long_tail_workshop_section(lang: str, copy: dict) -> str:
     <h3>{escape(workshop["evidence_title"])}</h3>
     <ul>{evidence}</ul>
     <div class="callout"><strong>{escape(workshop["pause_title"])}</strong><p>{escape(workshop["pause"])}</p></div>
-    <p><time datetime="{LONG_TAIL_UPDATED}">{escape(workshop["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(workshop["method"])}</a></p>
+    <p data-long-tail-editorial-byline><strong>{escape(workshop["author"])}</strong> · <time datetime="{LONG_TAIL_UPDATED}">{escape(workshop["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(workshop["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(workshop["corrections"])}</a></p>
   </div>
 </section>
 """
@@ -9605,6 +9615,8 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
         "url": abs_url(lang, "tools/" + slug),
         "inLanguage": t["code"],
         "dateModified": LONG_TAIL_UPDATED,
+        "author": organization_ref(),
+        "publisher": organization_ref(),
         "isPartOf": website_ref(lang),
         "about": [
             {"@type": "Thing", "name": copy["eyebrow"]},

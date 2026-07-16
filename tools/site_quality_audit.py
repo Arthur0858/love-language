@@ -4022,8 +4022,15 @@ def main() -> int:
                 issues.append(f"{page}: expected one long-tail workshop, found {workshop_count}")
             if workshop_step_count != 3:
                 issues.append(f"{page}: expected 3 long-tail workshop steps, found {workshop_step_count}")
-            if '<time datetime="2026-07-16">' not in parser.source:
-                issues.append(f"{page}: long-tail workshop missing current content update date")
+            workshop_date_match = re.search(
+                r'data-long-tail-editorial-byline[^>]*>.*?<time datetime="(\d{4}-\d{2}-\d{2})">',
+                parser.source,
+                flags=re.DOTALL,
+            )
+            if not workshop_date_match:
+                issues.append(f"{page}: long-tail workshop missing valid content update date")
+            elif parser.source.count(f'"dateModified":"{workshop_date_match.group(1)}"') != 1:
+                issues.append(f"{page}: long-tail workshop visible and schema update dates differ")
             if 'href="' + lang_url_for_page(page, "about") + '#editorial-method"' not in parser.source:
                 issues.append(f"{page}: long-tail workshop missing editorial method link")
             if parser.source.count("data-love-compatibility-quick-answer") != 1:
@@ -4032,12 +4039,21 @@ def main() -> int:
                 issues.append(f"{page}: expected 3 unique quick answer cards")
             related_section_count = parser.source.count("data-long-tail-related-guides")
             related_card_count = parser.source.count("data-long-tail-related-guide-card")
+            editorial_byline_count = parser.source.count("data-long-tail-editorial-byline")
             if related_section_count != 1:
                 issues.append(f"{page}: expected one related guide section, found {related_section_count}")
             if related_card_count != 2:
                 issues.append(f"{page}: expected 2 related guide cards, found {related_card_count}")
+            if editorial_byline_count != 1:
+                issues.append(f"{page}: expected one editorial byline, found {editorial_byline_count}")
+            if parser.source.count('"author":{"@type":"Organization"') != 1:
+                issues.append(f"{page}: expected one organization author in page schema")
+            if parser.source.count('"publisher":{"@type":"Organization"') != 1:
+                issues.append(f"{page}: expected one organization publisher in page schema")
             if related_section_count == 1 and related_card_count == 2:
                 stats["long_tail_related_guide_pages"] += 1
+            if editorial_byline_count == 1:
+                stats["long_tail_editorial_byline_pages"] += 1
 
         if is_guides_index_page(page):
             stats["guide_index_action_pages"] += 1
@@ -4615,6 +4631,8 @@ def main() -> int:
         issues.append(f"expected 95 localized long-tail workshop pages, found {stats['long_tail_workshop_pages']}")
     if stats["long_tail_related_guide_pages"] != 95:
         issues.append(f"expected 95 localized long-tail related guide pages, found {stats['long_tail_related_guide_pages']}")
+    if stats["long_tail_editorial_byline_pages"] != 95:
+        issues.append(f"expected 95 localized long-tail editorial byline pages, found {stats['long_tail_editorial_byline_pages']}")
 
     sitemap_urls, sitemap_issues, sitemap_stats = parse_sitemap(parsers)
     issues.extend(sitemap_issues)
@@ -4767,6 +4785,7 @@ def main() -> int:
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")
     print(f"long_tail_workshop_pages={stats['long_tail_workshop_pages']}")
     print(f"long_tail_related_guide_pages={stats['long_tail_related_guide_pages']}")
+    print(f"long_tail_editorial_byline_pages={stats['long_tail_editorial_byline_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"guide_focus_article_pages={stats['guide_focus_article_pages']}")
     print(f"guide_boilerplate_free_pages={stats['guide_boilerplate_free_pages']}")

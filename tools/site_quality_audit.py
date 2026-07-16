@@ -728,6 +728,16 @@ def is_theory_page(page: Path) -> bool:
     return normalized_page_parts(page) == ["theory", "index.html"]
 
 
+def is_long_tail_compatibility_page(page: Path) -> bool:
+    parts = normalized_page_parts(page)
+    return (
+        len(parts) == 3
+        and parts[0] == "tools"
+        and parts[1] not in {"love-compatibility"}
+        and parts[2] == "index.html"
+    )
+
+
 def formal_guide_slug_for_page(page: Path) -> str:
     relative = page.relative_to(ROOT)
     parts = list(relative.parts)
@@ -3979,6 +3989,23 @@ def main() -> int:
             if missing_keepsake_hrefs:
                 issues.append(f"{page}: keepsake cards missing continuation hrefs {', '.join(missing_keepsake_hrefs)}")
 
+        if is_long_tail_compatibility_page(page):
+            stats["long_tail_workshop_pages"] += 1
+            workshop_count = parser.source.count('<section class="section" data-long-tail-workshop>')
+            workshop_step_count = parser.source.count("data-long-tail-workshop-step")
+            if workshop_count != 1:
+                issues.append(f"{page}: expected one long-tail workshop, found {workshop_count}")
+            if workshop_step_count != 3:
+                issues.append(f"{page}: expected 3 long-tail workshop steps, found {workshop_step_count}")
+            if '<time datetime="2026-07-16">' not in parser.source:
+                issues.append(f"{page}: long-tail workshop missing current content update date")
+            if 'href="' + lang_url_for_page(page, "about") + '#editorial-method"' not in parser.source:
+                issues.append(f"{page}: long-tail workshop missing editorial method link")
+            if parser.source.count("data-love-compatibility-quick-answer") != 1:
+                issues.append(f"{page}: expected one long-tail quick answer section")
+            if parser.source.count("class=\"content-card quick-answer-card\"") != 3:
+                issues.append(f"{page}: expected 3 unique quick answer cards")
+
         if is_guides_index_page(page):
             stats["guide_index_action_pages"] += 1
             guide_action_count = parser.source.count("data-guide-index-actions")
@@ -4551,6 +4578,9 @@ def main() -> int:
                     if target_parser and fragment not in target_parser.ids:
                         issues.append(f"{page}: missing anchor #{fragment} in {target}")
 
+    if stats["long_tail_workshop_pages"] != 95:
+        issues.append(f"expected 95 localized long-tail workshop pages, found {stats['long_tail_workshop_pages']}")
+
     sitemap_urls, sitemap_issues, sitemap_stats = parse_sitemap(parsers)
     issues.extend(sitemap_issues)
     stats.update(sitemap_stats)
@@ -4698,6 +4728,7 @@ def main() -> int:
     print(f"about_garden_pass_pages={stats['about_garden_pass_pages']}")
     print(f"theory_domain_compass_pages={stats['theory_domain_compass_pages']}")
     print(f"guide_index_action_pages={stats['guide_index_action_pages']}")
+    print(f"long_tail_workshop_pages={stats['long_tail_workshop_pages']}")
     print(f"guide_action_bridge_pages={stats['guide_action_bridge_pages']}")
     print(f"guide_focus_article_pages={stats['guide_focus_article_pages']}")
     print(f"guide_boilerplate_free_pages={stats['guide_boilerplate_free_pages']}")

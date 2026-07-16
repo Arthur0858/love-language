@@ -9212,6 +9212,103 @@ LONG_TAIL_QUICK_ANSWER = {
 }
 
 
+LONG_TAIL_UPDATED = "2026-07-16"
+
+
+LONG_TAIL_WORKSHOP = {
+    "zh": {
+        "eyebrow": "24-HOUR PRACTICE",
+        "title": "把這個問題變成一次可觀察的 24 小時練習",
+        "intro": "先不替整段關係下結論。選一個最近發生的場景，分開事實、解讀與請求，再觀察對方是否願意一起完成一個小步驟。",
+        "steps": [
+            ("只記錄發生了什麼", "回想最近一次與「{topic}」有關的場景。寫下時間、對方做了什麼、你做了什麼，不先加入『他不在乎』之類的推論。"),
+            ("檢查第二種解讀", "用「{topic}」重新看一次：這可能是愛之語錯頻、壓力、界線不同，還是已經出現需要優先處理的安全問題？"),
+            ("提出一個最小請求", "依照「{topic}」選一件 10 分鐘內能完成的事，說清楚何時做、做到什麼程度，也讓對方可以回應或調整。"),
+        ],
+        "sentence_title": "可以直接改寫的句型",
+        "sentence": "「當我遇到『{scene}』時，我會有些不安。我不是要你立刻解決全部；你願意先和我試試『{next_step}』裡的一個小步驟嗎？」",
+        "evidence_title": "怎麼判斷這一步有沒有幫助",
+        "evidence": ["請求具體到雙方都知道何時完成。", "彼此可以說不、改時間或提出替代做法。", "修復靠持續可見的行動，而不是一次性的保證。"],
+        "pause_title": "需要先停下來的情況",
+        "pause": "若場景涉及暴力、威脅、跟蹤、強迫、控制金錢或讓你害怕拒絕，先不要用這份練習說服對方；請優先聯絡可信任的人與所在地的專業安全資源。",
+        "method": "閱讀 LoveTypes 的內容編輯與安全方法",
+        "updated": "內容更新：2026-07-16",
+    },
+    "en": {
+        "eyebrow": "24-HOUR PRACTICE",
+        "title": "Turn this issue into one observable 24-hour practice",
+        "intro": "Do not decide the future of the relationship yet. Choose one recent scene, separate facts from interpretation and request, then observe whether both people can complete one small step together.",
+        "steps": [
+            ("Record only what happened", "Recall the latest scene connected to \"{topic}.\" Write the time, what the other person did, and what you did without adding a conclusion such as \"they do not care.\""),
+            ("Test a second reading", "Use \"{topic}\" to look again: is this a crossed love-language signal, stress, different boundaries, or a safety concern that needs priority?"),
+            ("Make the smallest request", "Using \"{topic},\" choose one action that takes under ten minutes. Name when it can happen and leave room for the other person to respond or adjust."),
+        ],
+        "sentence_title": "A sentence you can adapt",
+        "sentence": "\"When '{scene}' happens, I feel unsettled. I am not asking us to solve everything now. Would you try one small step from '{next_step}' with me?\"",
+        "evidence_title": "How to tell whether the step helped",
+        "evidence": ["The request is specific enough that both people know when it is complete.", "Either person can say no, change the time, or suggest an alternative.", "Repair becomes visible through repeated action, not a one-time promise."],
+        "pause_title": "When to pause this exercise",
+        "pause": "If the scene involves violence, threats, stalking, coercion, financial control, or fear of saying no, do not use this exercise to persuade the other person. Contact someone you trust and appropriate local safety support first.",
+        "method": "Read the LoveTypes editorial and safety method",
+        "updated": "Content updated: 2026-07-16",
+    },
+    "ja": {
+        "eyebrow": "24-HOUR PRACTICE",
+        "title": "この問題を、観察できる24時間の練習に変える",
+        "intro": "関係全体の結論を急がず、最近の一場面を選びます。事実、解釈、お願いを分け、二人が小さな一歩を一緒に試せるか観察します。",
+        "steps": [
+            ("起きたことだけを書く", "「{topic}」に関係する最近の場面を思い出し、時間、相手の行動、自分の行動を書きます。「大切にされていない」などの推測はまだ足しません。"),
+            ("別の読み方を確かめる", "「{topic}」から見直します。愛の言語のすれ違い、疲れ、境界の違い、安全を優先すべき問題のどれに近いかを分けます。"),
+            ("最小のお願いを出す", "「{topic}」をもとに、10分以内でできることを一つ選びます。いつ、どこまで行うかを明確にし、相手が調整できる余地も残します。"),
+        ],
+        "sentence_title": "そのまま調整できる一文",
+        "sentence": "「『{scene}』が起きると、私は少し不安になります。全部を今すぐ解決してほしいのではなく、『{next_step}』の小さな一歩を一緒に試してくれますか？」",
+        "evidence_title": "一歩が役立ったかを見る基準",
+        "evidence": ["二人とも、いつ完了したか分かる具体的なお願いになっている。", "断る、時間を変える、代案を出す余地がある。", "一度の約束ではなく、繰り返せる行動が見える。"],
+        "pause_title": "この練習を先に止める場面",
+        "pause": "暴力、脅し、つきまとい、強制、金銭の支配、断ることへの恐怖がある場合は、この練習で相手を説得しないでください。信頼できる人と地域の専門的な安全支援を優先してください。",
+        "method": "LoveTypes の編集・安全方針を読む",
+        "updated": "内容更新：2026-07-16",
+    },
+    "ko": {
+        "eyebrow": "24-HOUR PRACTICE",
+        "title": "이 문제를 관찰 가능한 24시간 연습으로 바꾸기",
+        "intro": "관계 전체를 서둘러 결론 내리지 마세요. 최근 장면 하나를 골라 사실, 해석, 요청을 나누고 두 사람이 작은 한 걸음을 함께 해볼 수 있는지 관찰합니다.",
+        "steps": [
+            ("일어난 일만 기록하기", "「{topic}」과 관련된 최근 장면의 시간, 상대가 한 행동, 내가 한 행동을 적습니다. 아직 '나를 사랑하지 않는다' 같은 추측은 더하지 않습니다."),
+            ("두 번째 해석 확인하기", "「{topic}」으로 다시 봅니다. 사랑의 언어 엇갈림, 스트레스, 경계 차이, 우선 다뤄야 할 안전 문제 중 어디에 가까운지 나눕니다."),
+            ("가장 작은 요청하기", "「{topic}」을 바탕으로 10분 안에 할 수 있는 한 가지를 고릅니다. 언제 무엇을 할지 분명히 하고 상대가 조정할 여지도 남깁니다."),
+        ],
+        "sentence_title": "바로 고쳐 쓸 수 있는 문장",
+        "sentence": "「'{scene}'이 생기면 나는 조금 불안해. 지금 모든 걸 해결해 달라는 뜻은 아니야. '{next_step}'의 작은 한 걸음을 나와 함께 해볼래?」",
+        "evidence_title": "이 단계가 도움이 됐는지 보는 기준",
+        "evidence": ["두 사람 모두 언제 끝났는지 알 만큼 요청이 구체적입니다.", "거절하거나 시간을 바꾸거나 다른 방법을 제안할 수 있습니다.", "한 번의 약속보다 반복 가능한 행동이 보입니다."],
+        "pause_title": "이 연습을 먼저 멈춰야 할 때",
+        "pause": "폭력, 위협, 스토킹, 강요, 경제적 통제, 거절에 대한 두려움이 있다면 이 연습으로 상대를 설득하지 마세요. 신뢰할 수 있는 사람과 지역의 전문 안전 지원을 먼저 찾으세요.",
+        "method": "LoveTypes 편집 및 안전 원칙 읽기",
+        "updated": "콘텐츠 업데이트: 2026-07-16",
+    },
+    "es": {
+        "eyebrow": "24-HOUR PRACTICE",
+        "title": "Convierte este problema en una práctica observable de 24 horas",
+        "intro": "No decidas todavía el futuro de toda la relación. Elige una escena reciente, separa hechos, interpretación y petición, y observa si ambos pueden completar un paso pequeño juntos.",
+        "steps": [
+            ("Registrar solo lo ocurrido", "Recuerda la escena más reciente relacionada con «{topic}». Anota la hora, lo que hizo la otra persona y lo que hiciste tú, sin añadir conclusiones como «no le importo»."),
+            ("Probar una segunda lectura", "Usa «{topic}» para mirar de nuevo: ¿es una señal cruzada de lenguajes del amor, estrés, límites distintos o un problema de seguridad que necesita prioridad?"),
+            ("Hacer la petición mínima", "Con «{topic}», elige una acción de menos de diez minutos. Di cuándo puede ocurrir y deja espacio para que la otra persona responda o la ajuste."),
+        ],
+        "sentence_title": "Una frase que puedes adaptar",
+        "sentence": "«Cuando ocurre '{scene}', me siento insegura. No te pido resolverlo todo ahora. ¿Probarías conmigo un paso pequeño de '{next_step}'?»",
+        "evidence_title": "Cómo saber si el paso ayudó",
+        "evidence": ["La petición es tan concreta que ambos saben cuándo se completa.", "Cualquiera puede decir no, cambiar la hora o proponer una alternativa.", "La reparación aparece en acciones repetidas, no en una promesa única."],
+        "pause_title": "Cuándo pausar este ejercicio",
+        "pause": "Si la escena incluye violencia, amenazas, acoso, coerción, control económico o miedo a decir no, no uses este ejercicio para convencer a la otra persona. Contacta primero a alguien de confianza y al apoyo de seguridad adecuado en tu zona.",
+        "method": "Leer el método editorial y de seguridad de LoveTypes",
+        "updated": "Contenido actualizado: 2026-07-16",
+    },
+}
+
+
 def long_tail_quick_answer_section(lang: str, copy: dict) -> str:
     labels = LONG_TAIL_QUICK_ANSWER[lang]
     section_titles = [title for title, _text in copy["sections"]]
@@ -9239,6 +9336,38 @@ def long_tail_quick_answer_section(lang: str, copy: dict) -> str:
     <a class="primary-btn" href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_quick_answer_compass">{escape(labels["cta"])}</a>
   </div>
   <div class="card-grid compact quick-answer-grid">{cards}</div>
+</section>
+"""
+
+
+def long_tail_workshop_section(lang: str, copy: dict) -> str:
+    workshop = LONG_TAIL_WORKSHOP[lang]
+    topics = [title for title, _text in copy["sections"]]
+    steps = "".join(
+        f"""
+<article class="content-card" data-long-tail-workshop-step>
+  <span class="eyebrow">{index:02d}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(text.format(topic=topics[index - 1]))}</p>
+</article>
+"""
+        for index, (title, text) in enumerate(workshop["steps"], start=1)
+    )
+    evidence = "".join(f"<li>{escape(item)}</li>" for item in workshop["evidence"])
+    sentence = workshop["sentence"].format(scene=topics[0], next_step=topics[2])
+    return f"""
+<section class="section" data-long-tail-workshop>
+  <div class="section-head"><div><p class="eyebrow">{escape(workshop["eyebrow"])}</p><h2>{escape(workshop["title"])}</h2></div></div>
+  <p class="section-intro">{escape(workshop["intro"])}</p>
+  <div class="content-grid">{steps}</div>
+  <div class="article-body standalone">
+    <h3>{escape(workshop["sentence_title"])}</h3>
+    <blockquote>{escape(sentence)}</blockquote>
+    <h3>{escape(workshop["evidence_title"])}</h3>
+    <ul>{evidence}</ul>
+    <div class="callout"><strong>{escape(workshop["pause_title"])}</strong><p>{escape(workshop["pause"])}</p></div>
+    <p><time datetime="{LONG_TAIL_UPDATED}">{escape(workshop["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(workshop["method"])}</a></p>
+  </div>
 </section>
 """
 
@@ -9363,15 +9492,6 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
     t = LANGS[lang]
     report_subject = quote(copy["offer_subject"])
     report_body = quote(copy["offer_body"] + f"\nPage: {abs_url(lang, 'tools/' + slug)}\n")
-    section_cards = "".join(
-        f"""
-<article class="content-card">
-  <h3>{escape(title)}</h3>
-  <p>{escape(text)}</p>
-</article>
-"""
-        for title, text in copy["sections"]
-    )
     faq_items = "".join(
         f"""
 <details>
@@ -9388,7 +9508,7 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
         "description": copy["desc"],
         "url": abs_url(lang, "tools/" + slug),
         "inLanguage": t["code"],
-        "dateModified": UPDATED,
+        "dateModified": LONG_TAIL_UPDATED,
         "isPartOf": website_ref(lang),
         "about": [
             {"@type": "Thing", "name": copy["eyebrow"]},
@@ -9426,10 +9546,7 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
   </div>
 </section>
 {long_tail_quick_answer_section(lang, copy)}
-<section class="section">
-  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
-  <div class="content-grid">{section_cards}</div>
-</section>
+{long_tail_workshop_section(lang, copy)}
 <section class="section article-body standalone">
   <div class="callout"><strong>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary_title"])}</strong><p>{escape(LOVE_COMPATIBILITY_PAGE[lang]["boundary"])}</p></div>
 </section>

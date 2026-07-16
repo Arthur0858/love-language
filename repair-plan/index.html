@@ -370,18 +370,18 @@
   <p class="section-intro">需要更明確的下一步時，留下你的守護者路線與想要的補給。</p>
   <form class="lead-intake-form" data-lead-intake-form data-lead-intake-source="repair_plan" data-lead-intake-source-label="7 日修復計畫補給需求" novalidate>
   <div class="lead-intake-head">
-    <h3>結構化需求表單</h3>
-    <p>先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。</p>
+    <h3>整理你的需求</h3>
+    <p>選擇你想要的素材與使用情境，再由你的信箱寄出。LoveTypes 只用這些資料回覆本次需求與安排內容優先順序，不要求生日、測驗分數或其他敏感資料。</p>
   </div>
   <div class="lead-intake-fields">
     <label>我的守護者<select name="guardian" aria-label="我的守護者"><option value="">還不確定，請以測驗結果為準</option><option value="iris">艾莉絲 · 肯定的言詞</option><option value="noah">諾雅 · 優質的時光</option><option value="vivian">薇薇安 · 接受禮物</option><option value="claire">克萊兒 · 服務的行動</option><option value="dora">朵拉 · 身體的接觸</option></select></label>
-    <label>需求類型<select name="request_type" aria-label="需求類型" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
+    <label>我想處理的事情<select name="request_type" aria-label="我想處理的事情" required><option value="owned_asset_request">索取免費素材或收藏物</option><option value="luna_scene_request">詢問 Luna 音樂使用情境</option><option value="repair_or_contact_request">提出修復或聯絡需求</option></select></label>
     <label>素材偏好<select name="asset" aria-label="素材偏好" required><option value="故事卡 / 可列印練習卡">故事卡 / 可列印練習卡</option><option value="手機桌布">手機桌布</option><option value="PDF 練習卡">PDF 練習卡</option><option value="Luna 下載包">Luna 下載包</option><option value="短儀式或印刷包">短儀式或印刷包</option></select></label>
     <label>主要使用場景<select name="usage" aria-label="主要使用場景" required><option value="睡前整理">睡前整理</option><option value="衝突後冷卻">衝突後冷卻</option><option value="關係日記">關係日記</option><option value="測驗後整理">測驗後整理</option><option value="收藏與分享">收藏與分享</option></select></label>
     <label>等待清單意願<select name="waitlist" aria-label="等待清單意願" required><option value="願意加入等待清單">願意加入等待清單</option><option value="只想先拿免費素材">只想先拿免費素材</option><option value="想先看試聽或預覽">想先看試聽或預覽</option><option value="目前不確定">目前不確定</option></select></label>
     <label>下一步偏好<select name="next_step" aria-label="下一步偏好" required><option value="免費收藏物">免費收藏物</option><option value="Luna 補給">Luna 補給</option><option value="PDF/桌布">PDF/桌布</option><option value="延伸書卷">延伸書卷</option><option value="聯絡回覆">聯絡回覆</option></select></label>
     <label>可回覆 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="可回覆 email" placeholder="your@email.com" required></label>
-    <label>Campaign content / 推廣內容<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content / 推廣內容" placeholder="例如 iris_silence；沒有可留白"></label>
+    <input name="campaign_content" type="hidden" value="">
     <label class="lead-intake-full">使用情境或備註<textarea name="context" rows="4" autocomplete="off" aria-label="使用情境或備註" placeholder="例如睡前整理、衝突後冷卻、想要桌布或 PDF"></textarea></label>
   </div>
   <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。" required> <span>我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。</span></label>
@@ -397,7 +397,7 @@
 
 <script>
 (() => {
-  const labels = {"title": "結構化需求表單", "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。", "guardian": "我的守護者", "unknown_guardian": "還不確定，請以測驗結果為準", "request_type": "需求類型", "asset": "素材偏好", "usage": "主要使用場景", "waitlist": "等待清單意願", "next_step": "下一步偏好", "email": "可回覆 email", "campaign": "Campaign content / 推廣內容", "context": "使用情境或備註", "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。", "email_placeholder": "your@email.com", "campaign_placeholder": "例如 iris_silence；沒有可留白", "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF", "submit": "整理並寄出需求", "copy": "複製需求內容", "copied": "已複製", "required": "請先填寫可回覆 email 並勾選同意。", "invalid_email": "請使用可回覆的真實 email；不要使用 example、test 或 placeholder 網域。", "subject": "LoveTypes 結構化守護者需求", "source_label": "來源", "source_contact": "Contact 結構化需求", "source_keepsake": "收藏室免費素材需求", "source_repair": "7 日修復計畫補給需求", "body_header": "LoveTypes 結構化需求", "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"], "usage_options": ["睡前整理", "衝突後冷卻", "關係日記", "測驗後整理", "收藏與分享"], "waitlist_options": ["願意加入等待清單", "只想先拿免費素材", "想先看試聽或預覽", "目前不確定"], "next_step_options": ["免費收藏物", "Luna 補給", "PDF/桌布", "延伸書卷", "聯絡回覆"]};
+  const labels = {"title": "整理你的需求", "intro": "選擇你想要的素材與使用情境，再由你的信箱寄出。LoveTypes 只用這些資料回覆本次需求與安排內容優先順序，不要求生日、測驗分數或其他敏感資料。", "guardian": "我的守護者", "unknown_guardian": "還不確定，請以測驗結果為準", "request_type": "我想處理的事情", "asset": "素材偏好", "usage": "主要使用場景", "waitlist": "等待清單意願", "next_step": "下一步偏好", "email": "可回覆 email", "campaign": "頁面來源", "context": "使用情境或備註", "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。", "email_placeholder": "your@email.com", "campaign_placeholder": "例如 iris_silence；沒有可留白", "context_placeholder": "例如睡前整理、衝突後冷卻、想要桌布或 PDF", "submit": "整理並寄出需求", "copy": "複製需求內容", "copied": "已複製", "required": "請先填寫可回覆 email 並勾選同意。", "invalid_email": "請使用可回覆的真實 email；不要使用 example、test 或 placeholder 網域。", "subject": "LoveTypes 結構化守護者需求", "source_label": "來源", "source_contact": "Contact 結構化需求", "source_keepsake": "收藏室免費素材需求", "source_repair": "7 日修復計畫補給需求", "body_header": "LoveTypes 結構化需求", "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"], "type_option_labels": ["索取免費素材或收藏物", "詢問 Luna 音樂使用情境", "提出修復或聯絡需求"], "usage_options": ["睡前整理", "衝突後冷卻", "關係日記", "測驗後整理", "收藏與分享"], "waitlist_options": ["願意加入等待清單", "只想先拿免費素材", "想先看試聽或預覽", "目前不確定"], "next_step_options": ["免費收藏物", "Luna 補給", "PDF/桌布", "延伸書卷", "聯絡回覆"]};
   const forms = document.querySelectorAll('[data-lead-intake-form]');
   if (!forms.length) return;
 
@@ -479,6 +479,8 @@
   }
 
   forms.forEach((form) => {
+    const campaign = new URLSearchParams(location.search).get('utm_content') || '';
+    if (form.elements.campaign_content) form.elements.campaign_content.value = campaign.slice(0, 120);
     const preview = form.querySelector('[data-lead-intake-preview]');
     const error = form.querySelector('[data-lead-intake-error]');
     const copyButton = form.querySelector('[data-lead-intake-copy]');

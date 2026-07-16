@@ -133,6 +133,8 @@ def audit() -> dict:
         configured_forms += 1
         if set(form["type_options"]) != intake_types:
             issues.append(f"{lang}: lead form type_options do not match lead-intake playbook")
+        if len(form.get("type_option_labels", [])) != len(form["type_options"]):
+            issues.append(f"{lang}: lead form type option labels do not match configured values")
         if len(form["asset_options"]) < 5:
             issues.append(f"{lang}: lead form should offer at least five asset preferences")
         if "example.com" in form["email_placeholder"].lower() or "name@" in form["email_placeholder"].lower():
@@ -153,6 +155,11 @@ def audit() -> dict:
             html = html_path.read_text(encoding="utf-8")
             if 'placeholder="name@example.com"' in html:
                 issues.append(f"{lang}/{slug}: rendered lead form should not use name@example.com placeholder")
+            if 'name="campaign_content" type="hidden"' not in html:
+                issues.append(f"{lang}/{slug}: campaign attribution should be hidden from the visitor form")
+            for internal_value in intake_types:
+                if f'>{internal_value}</option>' in html:
+                    issues.append(f"{lang}/{slug}: internal request type is exposed as visible option text")
             if "blockedDomains" not in html or "setCustomValidity" not in html:
                 issues.append(f"{lang}/{slug}: rendered lead form missing reserved email domain guard")
             source_marker = f'data-lead-intake-source="{source}"'

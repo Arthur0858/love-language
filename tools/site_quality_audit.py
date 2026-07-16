@@ -57,6 +57,17 @@ FORBIDDEN_PUBLIC_DRAFT_SNIPPETS = {
     "REPORT MVP",
     "Report ladder",
 }
+FORBIDDEN_PUBLIC_FORM_JARGON = {
+    "Campaign content",
+    "owned_asset_request",
+    "luna_scene_request",
+    "repair_or_contact_request",
+    "template rows are not counted as real leads",
+    "不會把模板列當成真實名單",
+    "テンプレート行を実際の名簿として扱いません",
+    "템플릿 행을 실제 명단으로 세지 않습니다",
+    "las filas de plantilla no cuentan como leads reales",
+}
 FORBIDDEN_SPANISH_VISIBLE_SNIPPETS = {
     "Jardin del Corazon",
     "guias, recursos",
@@ -3776,6 +3787,10 @@ def main() -> int:
         for forbidden in sorted(FORBIDDEN_PUBLIC_DRAFT_SNIPPETS):
             if forbidden.casefold() in visible_text.casefold():
                 issues.append(f"{page}: public page exposes draft or internal product wording {forbidden!r}")
+        stats["public_form_jargon_pages_checked"] += 1
+        for forbidden in sorted(FORBIDDEN_PUBLIC_FORM_JARGON):
+            if forbidden.casefold() in visible_text.casefold():
+                issues.append(f"{page}: public page exposes internal form wording {forbidden!r}")
 
         if len(parser.mains) != 1:
             issues.append(f"{page}: expected one <main> landmark, found {len(parser.mains)}")
@@ -4718,6 +4733,7 @@ def main() -> int:
     print(f"semantic_heading_pages_checked={stats['semantic_heading_pages_checked']}")
     print(f"semantic_h2_headings_checked={stats['semantic_h2_headings_checked']}")
     print(f"public_draft_language_pages_checked={stats['public_draft_language_pages_checked']}")
+    print(f"public_form_jargon_pages_checked={stats['public_form_jargon_pages_checked']}")
     print(f"progressbars={stats['progressbars']}")
     print(f"quiz_progressbar_scripts={stats['quiz_progressbar_scripts']}")
     print(f"quiz_pressed_state_scripts={stats['quiz_pressed_state_scripts']}")

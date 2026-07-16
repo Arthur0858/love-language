@@ -1815,17 +1815,17 @@ CONTACT_REQUESTS = {
 
 LEAD_INTAKE_FORM = {
     "zh": {
-        "title": "結構化需求表單",
-        "intro": "先用欄位整理需求，再由你的信箱寄出。LoveTypes 只用這些資料判斷下一批免費收藏物、Luna 補給或修復素材，不會把模板列當成真實名單。",
+        "title": "整理你的需求",
+        "intro": "選擇你想要的素材與使用情境，再由你的信箱寄出。LoveTypes 只用這些資料回覆本次需求與安排內容優先順序，不要求生日、測驗分數或其他敏感資料。",
         "guardian": "我的守護者",
         "unknown_guardian": "還不確定，請以測驗結果為準",
-        "request_type": "需求類型",
+        "request_type": "我想處理的事情",
         "asset": "素材偏好",
         "usage": "主要使用場景",
         "waitlist": "等待清單意願",
         "next_step": "下一步偏好",
         "email": "可回覆 email",
-        "campaign": "Campaign content / 推廣內容",
+        "campaign": "頁面來源",
         "context": "使用情境或備註",
         "consent": "我同意 LoveTypes 可依這封信回覆此需求；我知道這不是緊急支援、診斷或諮商。",
         "email_placeholder": "your@email.com",
@@ -1844,22 +1844,23 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes 結構化需求",
         "asset_options": ["故事卡 / 可列印練習卡", "手機桌布", "PDF 練習卡", "Luna 下載包", "短儀式或印刷包"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "type_option_labels": ["索取免費素材或收藏物", "詢問 Luna 音樂使用情境", "提出修復或聯絡需求"],
         "usage_options": ["睡前整理", "衝突後冷卻", "關係日記", "測驗後整理", "收藏與分享"],
         "waitlist_options": ["願意加入等待清單", "只想先拿免費素材", "想先看試聽或預覽", "目前不確定"],
         "next_step_options": ["免費收藏物", "Luna 補給", "PDF/桌布", "延伸書卷", "聯絡回覆"],
     },
     "en": {
-        "title": "Structured request form",
-        "intro": "Organize the request first, then send it from your email. LoveTypes uses this only to prioritize future free keepsakes, Luna supplies, or repair prompts; template rows are not counted as real leads.",
+        "title": "Tell us what you need",
+        "intro": "Choose the material and use case, then send the request from your email. LoveTypes uses these details only to reply and prioritize content. Birth dates, quiz scores, and other sensitive details are not required.",
         "guardian": "My guardian",
         "unknown_guardian": "Not sure yet; use my quiz result",
-        "request_type": "Request type",
+        "request_type": "What would you like help with?",
         "asset": "Asset preference",
         "usage": "Primary use case",
         "waitlist": "Waitlist intent",
         "next_step": "Preferred next step",
         "email": "Reply email",
-        "campaign": "Campaign content",
+        "campaign": "Page source",
         "context": "Use case or note",
         "consent": "I agree LoveTypes may reply to this request, and I understand this is not emergency support, diagnosis, or counseling.",
         "email_placeholder": "your@email.com",
@@ -1878,22 +1879,23 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes structured request",
         "asset_options": ["Story card / printable practice card", "Phone wallpaper", "PDF practice card", "Luna download pack", "Short ritual or printed pack"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "type_option_labels": ["Request a free asset or keepsake", "Ask about a Luna listening use case", "Send a repair or contact request"],
         "usage_options": ["Bedtime reflection", "Post-conflict cooling", "Relationship journaling", "After quiz sorting", "Collecting and sharing"],
         "waitlist_options": ["Willing to join waitlist", "Only want the free asset first", "Want preview or sample first", "Not sure yet"],
         "next_step_options": ["Free keepsake", "Luna supply", "PDF / wallpaper", "Extended book", "Email reply"],
     },
     "ja": {
-        "title": "構造化リクエストフォーム",
-        "intro": "希望を欄に整理してから、自分のメールで送信します。LoveTypes は次の無料カード、Luna 補給、修復素材の優先順位を決めるためだけに使い、テンプレート行を実際の名簿として扱いません。",
+        "title": "希望を整理する",
+        "intro": "ほしい素材と使用場面を選び、自分のメールから送信します。LoveTypes は返信と内容の優先順位づけにのみ使い、生年月日、診断点数、その他の機微な情報は求めません。",
         "guardian": "私の守護者",
         "unknown_guardian": "まだ不明。診断結果を優先",
-        "request_type": "希望タイプ",
+        "request_type": "相談内容",
         "asset": "素材の希望",
         "usage": "主な使用場面",
         "waitlist": "待機リストの意向",
         "next_step": "次にほしい入口",
         "email": "返信用 email",
-        "campaign": "Campaign content",
+        "campaign": "経路",
         "context": "使用場面やメモ",
         "consent": "LoveTypes がこの希望に返信してよいこと、緊急支援、診断、相談支援ではないことに同意します。",
         "email_placeholder": "your@email.com",
@@ -1905,29 +1907,30 @@ LEAD_INTAKE_FORM = {
         "required": "返信用 email を入力し、同意にチェックしてください。",
         "invalid_email": "返信できる実際の email を使ってください。example、test、placeholder ドメインは使えません。",
         "subject": "LoveTypes 守護者の構造化リクエスト",
-        "source_label": "來源",
+        "source_label": "送信元",
         "source_contact": "Contact 構造化リクエスト",
         "source_keepsake": "コレクション室の無料素材希望",
         "source_repair": "7日間修復プランの補給希望",
         "body_header": "LoveTypes 構造化リクエスト",
         "asset_options": ["ストーリーカード / 印刷練習カード", "スマホ壁紙", "PDF 練習カード", "Luna ダウンロードパック", "短い儀式や印刷セット"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "type_option_labels": ["無料素材やコレクションを希望", "Luna の使用場面を相談", "修復または連絡の希望を送る"],
         "usage_options": ["就寝前の整理", "衝突後の冷却", "関係日記", "診断後の整理", "保存と共有"],
         "waitlist_options": ["待機リストに入りたい", "まず無料素材だけほしい", "試聴やプレビューを見たい", "まだ分からない"],
         "next_step_options": ["無料コレクション", "Luna 補給", "PDF / 壁紙", "延伸の本", "メール返信"],
     },
     "ko": {
-        "title": "구조화 요청 양식",
-        "intro": "요청을 먼저 정리한 뒤 자신의 이메일로 보냅니다. LoveTypes는 다음 무료 소장물, Luna 보급, 회복 소재의 우선순위를 정하는 데만 사용하며 템플릿 행을 실제 명단으로 세지 않습니다.",
+        "title": "필요한 내용을 정리하세요",
+        "intro": "원하는 소재와 사용 장면을 고른 뒤 자신의 이메일로 보냅니다. LoveTypes는 답장과 콘텐츠 우선순위에만 사용하며 생년월일, 테스트 점수, 기타 민감한 정보는 요구하지 않습니다.",
         "guardian": "나의 수호자",
         "unknown_guardian": "아직 모름. 테스트 결과 우선",
-        "request_type": "요청 유형",
+        "request_type": "도움이 필요한 내용",
         "asset": "소재 선호",
         "usage": "주요 사용 장면",
         "waitlist": "대기 목록 의향",
         "next_step": "선호하는 다음 단계",
         "email": "답장 받을 email",
-        "campaign": "Campaign content",
+        "campaign": "페이지 출처",
         "context": "사용 장면 또는 메모",
         "consent": "LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.",
         "email_placeholder": "your@email.com",
@@ -1946,22 +1949,23 @@ LEAD_INTAKE_FORM = {
         "body_header": "LoveTypes 구조화 요청",
         "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "type_option_labels": ["무료 소재 또는 소장물 요청", "Luna 감상 장면 문의", "회복 또는 연락 요청 보내기"],
         "usage_options": ["잠들기 전 정리", "다툼 뒤 냉각", "관계 일기", "테스트 후 정리", "소장과 공유"],
         "waitlist_options": ["대기 목록에 들어가고 싶음", "무료 소재만 먼저 원함", "미리보기나 샘플 먼저 원함", "아직 모름"],
         "next_step_options": ["무료 소장물", "Luna 보급", "PDF / 배경화면", "확장 도서", "이메일 답장"],
     },
     "es": {
-        "title": "Formulario de petición estructurada",
-        "intro": "Ordena la petición y envíala desde tu correo. LoveTypes usa estos datos solo para priorizar futuros recuerdos gratuitos, recursos Luna o prompts de reparación; las filas de plantilla no cuentan como leads reales.",
+        "title": "Cuéntanos qué necesitas",
+        "intro": "Elige el recurso y la situación de uso, y envía la petición desde tu correo. LoveTypes usa estos datos solo para responder y priorizar contenido. No pedimos fechas de nacimiento, puntuaciones del test ni otros datos sensibles.",
         "guardian": "Mi guardiana",
         "unknown_guardian": "Aún no sé; usar mi resultado",
-        "request_type": "Tipo de petición",
+        "request_type": "¿Con qué necesitas ayuda?",
         "asset": "Preferencia de recurso",
         "usage": "Uso principal",
         "waitlist": "Intención de lista",
         "next_step": "Siguiente paso preferido",
         "email": "Email de respuesta",
-        "campaign": "Campaign content",
+        "campaign": "Origen de la página",
         "context": "Situación o nota",
         "consent": "Acepto que LoveTypes responda a esta petición y entiendo que no es apoyo de emergencia, diagnóstico ni terapia.",
         "email_placeholder": "your@email.com",
@@ -1980,6 +1984,7 @@ LEAD_INTAKE_FORM = {
         "body_header": "Petición estructurada LoveTypes",
         "asset_options": ["Tarjeta / práctica imprimible", "Fondo móvil", "Tarjeta PDF", "Pack Luna descargable", "Ritual breve o pack impreso"],
         "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"],
+        "type_option_labels": ["Pedir un recurso o recuerdo gratuito", "Consultar un uso de escucha Luna", "Enviar una petición de reparación o contacto"],
         "usage_options": ["Reflexión antes de dormir", "Calma tras conflicto", "Diario de relación", "Ordenar después del test", "Guardar y compartir"],
         "waitlist_options": ["Quiero entrar en lista", "Solo quiero el recurso gratis primero", "Quiero vista previa o muestra", "Aún no sé"],
         "next_step_options": ["Recuerdo gratuito", "Recurso Luna", "PDF / fondo", "Libro extendido", "Respuesta por email"],
@@ -13991,7 +13996,10 @@ def lead_intake_form(lang: str, source: str, event: str) -> str:
     for slug, guardian in GUARDIANS.items():
         name, typ, _desc = guardian[lang]
         guardian_options.append(f'<option value="{slug}">{escape(name)} · {escape(typ)}</option>')
-    type_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["type_options"])
+    type_options = "".join(
+        f'<option value="{escape(value)}">{escape(label)}</option>'
+        for value, label in zip(copy["type_options"], copy["type_option_labels"])
+    )
     asset_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["asset_options"])
     usage_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["usage_options"])
     waitlist_options = "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in copy["waitlist_options"])
@@ -14012,7 +14020,7 @@ def lead_intake_form(lang: str, source: str, event: str) -> str:
     <label>{escape(copy["waitlist"])}<select name="waitlist" aria-label="{escape(copy["waitlist"])}" required>{waitlist_options}</select></label>
     <label>{escape(copy["next_step"])}<select name="next_step" aria-label="{escape(copy["next_step"])}" required>{next_step_options}</select></label>
     <label>{escape(copy["email"])}<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="{escape(copy["email"])}" placeholder="{escape(copy["email_placeholder"])}" required></label>
-    <label>{escape(copy["campaign"])}<input name="campaign_content" type="text" autocomplete="off" aria-label="{escape(copy["campaign"])}" placeholder="{escape(copy["campaign_placeholder"])}"></label>
+    <input name="campaign_content" type="hidden" value="">
     <label class="lead-intake-full">{escape(copy["context"])}<textarea name="context" rows="4" autocomplete="off" aria-label="{escape(copy["context"])}" placeholder="{escape(copy["context_placeholder"])}"></textarea></label>
   </div>
   <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="{escape(copy["consent"])}" required> <span>{escape(copy["consent"])}</span></label>
@@ -14113,6 +14121,8 @@ def lead_intake_form_script(lang: str) -> str:
   }}
 
   forms.forEach((form) => {{
+    const campaign = new URLSearchParams(location.search).get('utm_content') || '';
+    if (form.elements.campaign_content) form.elements.campaign_content.value = campaign.slice(0, 120);
     const preview = form.querySelector('[data-lead-intake-preview]');
     const error = form.querySelector('[data-lead-intake-error]');
     const copyButton = form.querySelector('[data-lead-intake-copy]');

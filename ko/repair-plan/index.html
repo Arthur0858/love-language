@@ -370,18 +370,18 @@
   <p class="section-intro">다음 한 걸음이 더 필요할 때 수호자 루트와 원하는 보급을 보냅니다.</p>
   <form class="lead-intake-form" data-lead-intake-form data-lead-intake-source="repair_plan" data-lead-intake-source-label="7일 회복 계획 보급 요청" novalidate>
   <div class="lead-intake-head">
-    <h3>구조화 요청 양식</h3>
-    <p>요청을 먼저 정리한 뒤 자신의 이메일로 보냅니다. LoveTypes는 다음 무료 소장물, Luna 보급, 회복 소재의 우선순위를 정하는 데만 사용하며 템플릿 행을 실제 명단으로 세지 않습니다.</p>
+    <h3>필요한 내용을 정리하세요</h3>
+    <p>원하는 소재와 사용 장면을 고른 뒤 자신의 이메일로 보냅니다. LoveTypes는 답장과 콘텐츠 우선순위에만 사용하며 생년월일, 테스트 점수, 기타 민감한 정보는 요구하지 않습니다.</p>
   </div>
   <div class="lead-intake-fields">
     <label>나의 수호자<select name="guardian" aria-label="나의 수호자"><option value="">아직 모름. 테스트 결과 우선</option><option value="iris">아이리스 · 인정의 말</option><option value="noah">노아 · 함께하는 시간</option><option value="vivian">비비안 · 선물 받기</option><option value="claire">클레어 · 봉사의 행동</option><option value="dora">도라 · 스킨십</option></select></label>
-    <label>요청 유형<select name="request_type" aria-label="요청 유형" required><option value="owned_asset_request">owned_asset_request</option><option value="luna_scene_request">luna_scene_request</option><option value="repair_or_contact_request">repair_or_contact_request</option></select></label>
+    <label>도움이 필요한 내용<select name="request_type" aria-label="도움이 필요한 내용" required><option value="owned_asset_request">무료 소재 또는 소장물 요청</option><option value="luna_scene_request">Luna 감상 장면 문의</option><option value="repair_or_contact_request">회복 또는 연락 요청 보내기</option></select></label>
     <label>소재 선호<select name="asset" aria-label="소재 선호" required><option value="스토리 카드 / 인쇄용 연습 카드">스토리 카드 / 인쇄용 연습 카드</option><option value="휴대폰 배경화면">휴대폰 배경화면</option><option value="PDF 연습 카드">PDF 연습 카드</option><option value="Luna 다운로드 팩">Luna 다운로드 팩</option><option value="짧은 의식 또는 인쇄 세트">짧은 의식 또는 인쇄 세트</option></select></label>
     <label>주요 사용 장면<select name="usage" aria-label="주요 사용 장면" required><option value="잠들기 전 정리">잠들기 전 정리</option><option value="다툼 뒤 냉각">다툼 뒤 냉각</option><option value="관계 일기">관계 일기</option><option value="테스트 후 정리">테스트 후 정리</option><option value="소장과 공유">소장과 공유</option></select></label>
     <label>대기 목록 의향<select name="waitlist" aria-label="대기 목록 의향" required><option value="대기 목록에 들어가고 싶음">대기 목록에 들어가고 싶음</option><option value="무료 소재만 먼저 원함">무료 소재만 먼저 원함</option><option value="미리보기나 샘플 먼저 원함">미리보기나 샘플 먼저 원함</option><option value="아직 모름">아직 모름</option></select></label>
     <label>선호하는 다음 단계<select name="next_step" aria-label="선호하는 다음 단계" required><option value="무료 소장물">무료 소장물</option><option value="Luna 보급">Luna 보급</option><option value="PDF / 배경화면">PDF / 배경화면</option><option value="확장 도서">확장 도서</option><option value="이메일 답장">이메일 답장</option></select></label>
     <label>답장 받을 email<input name="reply_email" type="email" inputmode="email" autocomplete="email" aria-label="답장 받을 email" placeholder="your@email.com" required></label>
-    <label>Campaign content<input name="campaign_content" type="text" autocomplete="off" aria-label="Campaign content" placeholder="예: iris_silence. 없으면 비워 두세요"></label>
+    <input name="campaign_content" type="hidden" value="">
     <label class="lead-intake-full">사용 장면 또는 메모<textarea name="context" rows="4" autocomplete="off" aria-label="사용 장면 또는 메모" placeholder="예: 잠들기 전 정리, 다툼 뒤 냉각, 배경화면 또는 PDF"></textarea></label>
   </div>
   <label class="lead-intake-consent"><input name="consent" type="checkbox" aria-label="LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다." required> <span>LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.</span></label>
@@ -397,7 +397,7 @@
 
 <script>
 (() => {
-  const labels = {"title": "구조화 요청 양식", "intro": "요청을 먼저 정리한 뒤 자신의 이메일로 보냅니다. LoveTypes는 다음 무료 소장물, Luna 보급, 회복 소재의 우선순위를 정하는 데만 사용하며 템플릿 행을 실제 명단으로 세지 않습니다.", "guardian": "나의 수호자", "unknown_guardian": "아직 모름. 테스트 결과 우선", "request_type": "요청 유형", "asset": "소재 선호", "usage": "주요 사용 장면", "waitlist": "대기 목록 의향", "next_step": "선호하는 다음 단계", "email": "답장 받을 email", "campaign": "Campaign content", "context": "사용 장면 또는 메모", "consent": "LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.", "email_placeholder": "your@email.com", "campaign_placeholder": "예: iris_silence. 없으면 비워 두세요", "context_placeholder": "예: 잠들기 전 정리, 다툼 뒤 냉각, 배경화면 또는 PDF", "submit": "정리해서 보내기", "copy": "요청 내용 복사", "copied": "복사됨", "required": "답장 받을 email을 입력하고 동의에 체크해 주세요.", "invalid_email": "답장 가능한 실제 email을 사용해 주세요. example, test, placeholder 도메인은 사용할 수 없습니다.", "subject": "LoveTypes 구조화 수호자 요청", "source_label": "출처", "source_contact": "Contact 구조화 요청", "source_keepsake": "소장실 무료 소재 요청", "source_repair": "7일 회복 계획 보급 요청", "body_header": "LoveTypes 구조화 요청", "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"], "usage_options": ["잠들기 전 정리", "다툼 뒤 냉각", "관계 일기", "테스트 후 정리", "소장과 공유"], "waitlist_options": ["대기 목록에 들어가고 싶음", "무료 소재만 먼저 원함", "미리보기나 샘플 먼저 원함", "아직 모름"], "next_step_options": ["무료 소장물", "Luna 보급", "PDF / 배경화면", "확장 도서", "이메일 답장"]};
+  const labels = {"title": "필요한 내용을 정리하세요", "intro": "원하는 소재와 사용 장면을 고른 뒤 자신의 이메일로 보냅니다. LoveTypes는 답장과 콘텐츠 우선순위에만 사용하며 생년월일, 테스트 점수, 기타 민감한 정보는 요구하지 않습니다.", "guardian": "나의 수호자", "unknown_guardian": "아직 모름. 테스트 결과 우선", "request_type": "도움이 필요한 내용", "asset": "소재 선호", "usage": "주요 사용 장면", "waitlist": "대기 목록 의향", "next_step": "선호하는 다음 단계", "email": "답장 받을 email", "campaign": "페이지 출처", "context": "사용 장면 또는 메모", "consent": "LoveTypes가 이 요청에 답장할 수 있으며, 이것이 긴급 지원, 진단, 상담이 아님을 이해합니다.", "email_placeholder": "your@email.com", "campaign_placeholder": "예: iris_silence. 없으면 비워 두세요", "context_placeholder": "예: 잠들기 전 정리, 다툼 뒤 냉각, 배경화면 또는 PDF", "submit": "정리해서 보내기", "copy": "요청 내용 복사", "copied": "복사됨", "required": "답장 받을 email을 입력하고 동의에 체크해 주세요.", "invalid_email": "답장 가능한 실제 email을 사용해 주세요. example, test, placeholder 도메인은 사용할 수 없습니다.", "subject": "LoveTypes 구조화 수호자 요청", "source_label": "출처", "source_contact": "Contact 구조화 요청", "source_keepsake": "소장실 무료 소재 요청", "source_repair": "7일 회복 계획 보급 요청", "body_header": "LoveTypes 구조화 요청", "asset_options": ["스토리 카드 / 인쇄용 연습 카드", "휴대폰 배경화면", "PDF 연습 카드", "Luna 다운로드 팩", "짧은 의식 또는 인쇄 세트"], "type_options": ["owned_asset_request", "luna_scene_request", "repair_or_contact_request"], "type_option_labels": ["무료 소재 또는 소장물 요청", "Luna 감상 장면 문의", "회복 또는 연락 요청 보내기"], "usage_options": ["잠들기 전 정리", "다툼 뒤 냉각", "관계 일기", "테스트 후 정리", "소장과 공유"], "waitlist_options": ["대기 목록에 들어가고 싶음", "무료 소재만 먼저 원함", "미리보기나 샘플 먼저 원함", "아직 모름"], "next_step_options": ["무료 소장물", "Luna 보급", "PDF / 배경화면", "확장 도서", "이메일 답장"]};
   const forms = document.querySelectorAll('[data-lead-intake-form]');
   if (!forms.length) return;
 
@@ -479,6 +479,8 @@
   }
 
   forms.forEach((form) => {
+    const campaign = new URLSearchParams(location.search).get('utm_content') || '';
+    if (form.elements.campaign_content) form.elements.campaign_content.value = campaign.slice(0, 120);
     const preview = form.querySelector('[data-lead-intake-preview]');
     const error = form.querySelector('[data-lead-intake-error]');
     const copyButton = form.querySelector('[data-lead-intake-copy]');

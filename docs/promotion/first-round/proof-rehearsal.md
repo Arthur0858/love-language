@@ -1,6 +1,6 @@
 # LoveTypes Proof Rehearsal
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - proof files：2
 - rows：3
 - active platforms：1
@@ -13,12 +13,12 @@
 
 - This rehearsal runs check commands only; it never writes to trackers.
 - Profile templates must pass because they are ready to use after external proof exists.
-- Post placeholder templates must fail until a real public URL replaces the placeholder.
+- Temporary post placeholder samples must fail even after current proof files contain real public URLs.
 - Temporary post samples with platform-shaped URLs must pass import validation.
 
 ## Rows
 
-### `post_placeholder_current` · youtube_shorts
+### `post_placeholder_rehearsal` · youtube_shorts
 
 - file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 - expected：`reject`

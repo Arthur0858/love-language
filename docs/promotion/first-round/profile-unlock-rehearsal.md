@@ -1,9 +1,9 @@
 # LoveTypes Profile Unlock Rehearsal
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - proof files：1
-- current ready / blocked：0 / 1
-- current placeholder / real proof ready：1 / 0
+- current ready / blocked：1 / 0
+- current placeholder / real proof ready：0 / 1
 - synthetic ready：1
 - candidate tracker valid：1
 - launch dry run green：1

@@ -1,10 +1,10 @@
 # LoveTypes Launch Proof Control Sheet
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - stage：`first_batch_kpi`
-- profile ready / blocked：0 / 1
-- profile placeholder / real proof ready：1 / 0
-- post ready / blocked：0 / 1
+- profile ready / blocked：1 / 0
+- profile placeholder / real proof ready：0 / 1
+- post ready / blocked：1 / 0
 - proof rows：2
 - clipboard blocks：2
 - issues：0
@@ -20,7 +20,7 @@
 
 ### `prepare_profile_proofs`
 
-- status：`current_action`
+- status：`complete`
 - command：`python3 tools/promotion_profile_batch_import.py --check`
 - release：profile batch readyRows is 1.
 
@@ -32,7 +32,7 @@
 
 ### `prepare_post_proofs`
 
-- status：`blocked_until_profile_gate`
+- status：`complete`
 - command：`python3 tools/promotion_post_batch_import.py --check`
 - release：post batch readyRows is 1.
 
@@ -50,5 +50,5 @@
 
 ## Proof Rows
 
-- `profile` / `youtube_shorts`：`blocked_until_real_proof` ready=0 issues=1 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
-- `post` / `youtube_shorts`：`blocked_until_real_public_post` ready=0 issues=2 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
+- `profile` / `youtube_shorts`：`ready` ready=1 issues=0 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
+- `post` / `youtube_shorts`：`ready` ready=1 issues=0 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`

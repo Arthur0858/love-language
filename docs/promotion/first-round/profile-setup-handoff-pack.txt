@@ -1,5 +1,5 @@
 LoveTypes profile setup handoff
-generated: 2026-07-17
+generated: 2026-07-18
 
 Rules:
 - Use this handoff pack as the single operator view for platform profile setup.
@@ -10,7 +10,7 @@ Rules:
 
 === YouTube Shorts / youtube_shorts ===
 status: tracker=set action=complete proof=complete public=1
-proof: placeholder=1 real_ready=0
+proof: placeholder=0 real_ready=1
 location: Channel description / video description
 profile link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 
@@ -25,7 +25,7 @@ PROOF FILE: docs/promotion/first-round/proof-youtube_shorts.txt
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-07-17
+set_date: 2026-07-18
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 

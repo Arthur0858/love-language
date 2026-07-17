@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "source": {
     "nextActions": "docs/promotion/first-round/next-actions.json",
     "weekExecutionSheet": "docs/promotion/first-round/week-1-execution-sheet.json",
@@ -7,17 +7,17 @@
   },
   "week": 1,
   "dataState": {
-    "trackerRows": 0,
+    "trackerRows": 1,
     "profileTrackerRows": 1,
     "profileFilledRows": 1,
     "profilePendingRows": 0,
     "emptyDataMode": false,
     "fieldComplete": true,
     "proofControlRows": 2,
-    "profileProofReady": 0,
-    "profileProofBlocked": 1,
-    "postProofReady": 0,
-    "postProofBlocked": 1
+    "profileProofReady": 1,
+    "profileProofBlocked": 0,
+    "postProofReady": 1,
+    "postProofBlocked": 0
   },
   "publishingReadyForWeeklyDecision": true,
   "rowCount": 7,

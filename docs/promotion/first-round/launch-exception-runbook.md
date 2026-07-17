@@ -1,14 +1,14 @@
 # LoveTypes Launch Exception Runbook
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - exception rows：10
 - hard stops：6
 - holds：3
 - escalations：1
 - profile configured：1
-- real profile proof ready：0 / 1
-- placeholder proof rows：1
-- external profile proof blockers：1
+- real profile proof ready：1 / 1
+- placeholder proof rows：0
+- external profile proof blockers：0
 - ready to publish：1
 - first batch published：1
 - empty data mode：0

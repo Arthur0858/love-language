@@ -1,12 +1,12 @@
 # LoveTypes First Batch Launch Handoff
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：1
 - profile gate ready：1
 - asset ready：1
 - publish ready：0
-- post batch ready：0
-- post proof blocked：1
+- post batch ready：1
+- post proof blocked：0
 - issues：0
 
 ## Commands

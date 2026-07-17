@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "profileGate": "docs/promotion/first-round/profile-completion-gate.json",
     "assetQa": "docs/promotion/first-round/first-batch-asset-qa.json",
@@ -15,9 +15,9 @@
     "blocked": 0,
     "published": 1,
     "proofFiles": 1,
-    "proofTemplatesSafelyRejected": 1,
-    "proofPlaceholderRows": 1,
-    "proofRealReadyRows": 0,
+    "proofTemplatesSafelyRejected": 0,
+    "proofPlaceholderRows": 0,
+    "proofRealReadyRows": 1,
     "operationProofPostSafelyRejected": 0
   },
   "rows": [
@@ -34,14 +34,14 @@
       "publish_action_status": "complete",
       "post_url_ready": "1",
       "post_proof_file": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "post_proof_template_safely_rejected": "1",
-      "post_proof_placeholder": "1",
-      "post_proof_real_ready": "0",
+      "post_proof_template_safely_rejected": "0",
+      "post_proof_placeholder": "0",
+      "post_proof_real_ready": "1",
       "operator_status": "published",
       "caption_ready": "1",
       "tracked_url": "https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence",
       "stop_condition": "Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.",
-      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=4 | promotion_post_text_import_issues=2 | published status requires non-placeholder https post_url | proof_note must replace placeholder proof text with real evidence"
+      "import_output": "promotion_post_text_import_fields_parsed=10 | promotion_post_text_import_platform=youtube_shorts | promotion_post_text_import_task_id=publish-lt-s01-iris-silence | promotion_post_text_import_status=published | promotion_post_text_import_has_post_url=1 | promotion_post_text_import_metric_fields_present=1 | promotion_post_text_import_issues=0"
     }
   ],
   "rules": [

@@ -1,14 +1,14 @@
 # LoveTypes Launch Ops Dashboard
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：11
-- ready areas：4
+- ready areas：3
 - actionable areas：0
-- blocked areas：5
+- blocked areas：6
 - hold areas：0
 - profile configured：1 / 3
-- real profile proof ready：0 / 1
-- external profile proof blockers：1
+- real profile proof ready：1 / 1
+- external profile proof blockers：0
 - current true blockers：0
 - first batch published：1 / 3
 - minimum KPI rows：0
@@ -37,7 +37,7 @@
 - status：`ready`
 - ready / blocked：0 / 0
 - next：Set active platform profile links and write back proof.
-- evidence：public_ready=1, configured=1, real_proof=0/1, ready_to_writeback=0
+- evidence：public_ready=1, configured=1, real_proof=1/1, ready_to_writeback=0
 - safety：Do not mark set/live without real screenshot or click proof from the platform.
 
 ### first_batch_publish
@@ -82,16 +82,16 @@
 
 ### profile_publish_handoff
 
-- status：`ready`
-- ready / blocked：10 / 0
+- status：`blocked`
+- ready / blocked：9 / 1
 - next：Use this gate to hand off completed profile proof into first-batch publishing.
-- evidence：ready_to_publish=1, current_blockers=0, blocked_upstream=0
+- evidence：ready_to_publish=0, current_blockers=1, blocked_upstream=0
 - safety：No first-batch publishing until profile proof and refreshed packets are complete.
 
 ### publish_kpi_handoff
 
 - status：`blocked`
-- ready / blocked：3 / 4
+- ready / blocked：2 / 5
 - next：Use this gate to hand off public post URLs and minimum KPI into weekly review.
 - evidence：published=1, minimum_kpi=0, weekly=0
 - safety：No weekly review or commerce decision until post URL, proof, and KPI checks are complete.

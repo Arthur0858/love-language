@@ -1,8 +1,8 @@
 # LoveTypes First Batch Publish Closure Quickstart
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：1
-- profile handoff ready：1
+- profile handoff ready：0
 - ready / blocked rows：0 / 1
 - published / pending rows：1 / 0
 - public pending rows：0
@@ -20,7 +20,7 @@
 
 ## Closure Steps
 
-- `profile_publish_handoff_open` / `complete`：`python3 tools/promotion_profile_publish_handoff.py --check`
+- `profile_publish_handoff_open` / `current_blocker`：`python3 tools/promotion_profile_publish_handoff.py --check`
   Stop: Do not publish while profile_writeback_complete remains blocked.
 - `publish_first_batch_posts` / `blocked_until_profile_gate`：`python3 tools/promotion_first_batch_publish_quickstart.py --check`
   Stop: Publish only rows with readyToPublish=1 and unchanged quiz CTA.
@@ -45,6 +45,6 @@
 - proof file：``
 - check：``
 - write：`python3 tools/promotion_post_text_import.py add --input  --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-- URL writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-17 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
-- KPI example：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-17 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
+- URL writeback：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --proof-note "<REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified"`
+- KPI example：`python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-18 --post-url <REAL_YOUTUBE_SHORTS_URL> --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note "<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified"`
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.

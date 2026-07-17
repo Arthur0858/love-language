@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "weekDecisionGate": "docs/promotion/first-round/week-decision-gate.json",
     "revenueDecisionMatrix": "docs/promotion/first-round/revenue-decision-matrix.json",
@@ -20,7 +20,7 @@
       "blocked_action": "Change offer order, paid CTA, Luna emphasis, affiliate emphasis, or winning guardian.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "pending",
-      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=1"
     },
     {
       "decision_id": "scale_content",
@@ -32,7 +32,7 @@
       "blocked_action": "Treat content interest as proof of purchase intent.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=1"
     },
     {
       "decision_id": "deepen_identity_asset",
@@ -44,7 +44,7 @@
       "blocked_action": "Move the primary CTA directly to paid products.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=1"
     },
     {
       "decision_id": "build_owned_lead_asset",
@@ -56,7 +56,7 @@
       "blocked_action": "Build a paid product before repeated lead evidence exists.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=1"
     },
     {
       "decision_id": "test_soft_offer",
@@ -68,7 +68,7 @@
       "blocked_action": "Use direct sales language in first-touch Shorts or profile bio.",
       "evidence_source": "docs/promotion/first-round/week-decision-gate.json; docs/promotion/first-round/revenue-decision-matrix.json; docs/promotion/first-round/weekly-summary.json",
       "operator_status": "blocked",
-      "notes": "matrix_stage=; empty_data=0; summary_rows=0"
+      "notes": "matrix_stage=; empty_data=0; summary_rows=1"
     }
   ],
   "issues": []

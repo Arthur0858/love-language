@@ -1,11 +1,11 @@
 # LoveTypes Profile Writeback Closure Quickstart
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - platforms：1
 - pending evidence rows：6
 - configured：1 / 1
 - completion ready：1
-- handoff ready to publish：1
+- handoff ready to publish：0
 - launch ready to publish：1
 - master stage index：0
 - issues：0
@@ -41,6 +41,6 @@
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
 - check：`python3 tools/promotion_profile_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts.txt`
 - text import write：`python3 tools/promotion_profile_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts.txt --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- direct set：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-07-17 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
-- direct live：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-07-17 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
+- direct set：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status set --set-date 2026-07-18 --proof-note "<REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified"`
+- direct live：`python3 tools/promotion_profile_writeback.py update --platform youtube_shorts --status live --set-date 2026-07-18 --proof-note "<REAL_PROFILE_CLICK_NOTE> verified"`
 - stop：Stop if account/profile is not visibly LoveTypes, edit permission is missing, /start/ UTM is changed, or Bio copy adds paid/diagnosis claims.

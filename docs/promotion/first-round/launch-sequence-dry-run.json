@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "profileProofFiles": [
       "docs/promotion/first-round/proof-youtube_shorts.txt",
@@ -31,7 +31,7 @@
     "promotion_launch_sequence_dry_run_post_batch_ready": 1,
     "promotion_launch_sequence_dry_run_first_batch_published": 1,
     "promotion_launch_sequence_dry_run_minimum_kpi_rows": 1,
-    "promotion_launch_sequence_dry_run_post_stage": "kpi_backfill",
+    "promotion_launch_sequence_dry_run_post_stage": "weekly_evidence",
     "promotion_launch_sequence_dry_run_traceable_evidence": 2,
     "promotion_launch_sequence_dry_run_required_evidence": 2,
     "promotion_launch_sequence_dry_run_publishing_ready": 1,

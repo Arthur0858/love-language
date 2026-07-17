@@ -1,6 +1,6 @@
 # LoveTypes Launch Sequence Dry Run
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - initial ready to publish：`1`
 - initial stage：`kpi_backfill`
 - profile imports：1
@@ -13,7 +13,7 @@
 - post batch ready：1
 - first batch published：1
 - minimum KPI rows：1
-- post stage：`kpi_backfill`
+- post stage：`weekly_evidence`
 - traceable / required evidence：2 / 2
 - publishing ready：`1`
 - weekly ready：`1`

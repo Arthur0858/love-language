@@ -1,12 +1,12 @@
 # LoveTypes Proof Import Closure Quickstart
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - profile templates：0
 - post templates：0
 - active platforms：1
 - profile template valid：0
-- profile placeholder proof rows：1
-- profile real proof ready rows：0
+- profile placeholder proof rows：0
+- profile real proof ready rows：1
 - post safely rejected：0
 - rehearsal rows：3
 - rehearsal profile pass：1

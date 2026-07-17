@@ -1,11 +1,11 @@
 # LoveTypes Launch Clipboard
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - blocks：2
 - profile blocks：1
 - post blocks：1
 - ready / blocked blocks：0 / 0
-- dashboard blocked areas：5
+- dashboard blocked areas：6
 - handoff blocked steps：1
 - issues：0
 
@@ -40,7 +40,7 @@ Comment A/B/C and we will point you to a guardian route.
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-07-17
+set_date: 2026-07-18
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```
@@ -71,7 +71,7 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-07-17
+published_date: 2026-07-18
 post_url: <REAL_YOUTUBE_SHORTS_URL>
 views: 0
 site_clicks: 0

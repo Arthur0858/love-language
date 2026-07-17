@@ -1,6 +1,6 @@
 # LoveTypes Launch Execution Closure Quickstart
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - master stage：`first_batch_kpi`
 - profile configured：1 / 1
 - first batch published：1 / 1
@@ -10,9 +10,9 @@
 - launch day ready / blocked：1 / 1
 - exception stop / hold：6 / 3
 - proof profile template valid / post rejected：0 / 0
-- proof profile placeholder / real ready：1 / 0
+- proof profile placeholder / real ready：0 / 1
 - proof rehearsal profile pass / post placeholder rejected：1 / 1
-- profile publish ready：1
+- profile publish ready：0
 - publish KPI weekly ready：0
 - issues：0
 
@@ -42,7 +42,7 @@
 
 ### `open_first_batch_publish`
 
-- status：`ready_to_publish`
+- status：`blocked_until_profile_writeback`
 - command：`python3 tools/promotion_profile_publish_handoff.py --check && python3 tools/promotion_first_batch_publish_closure_quickstart.py --check`
 - release：Profile handoff opens first-batch publishing.
 - stop：Do not publish first-batch posts while profile setup remains incomplete.

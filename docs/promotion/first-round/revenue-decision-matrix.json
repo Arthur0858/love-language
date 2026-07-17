@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "source": {
     "tracker": "docs/promotion/first-round/kpi-tracker.csv",
     "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
@@ -7,7 +7,7 @@
   },
   "dataState": {
     "trackerRows": 15,
-    "filledRows": 0,
+    "filledRows": 1,
     "profileTrackerRows": 1,
     "profileFilledRows": 1,
     "missingRevenueFields": [],

@@ -1,6 +1,6 @@
 # LoveTypes Data Collection Sheet
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - source rows：16
 - collection rows：284
 - profile collection rows：14
@@ -9,7 +9,7 @@
 - lead-intent rows：48
 - blocked rows：252
 - ready rows：6
-- filled rows：0
+- filled rows：1
 - issues：0
 
 ## Rules

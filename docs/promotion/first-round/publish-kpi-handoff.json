@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "profileHandoff": "docs/promotion/first-round/profile-publish-handoff.json",
     "firstBatchPublishAction": "docs/promotion/first-round/first-batch-publish-action-sheet.json",
@@ -11,9 +11,9 @@
   },
   "metrics": {
     "rows": 7,
-    "completeRows": 3,
+    "completeRows": 2,
     "currentBlockers": 1,
-    "blockedUpstreamRows": 3,
+    "blockedUpstreamRows": 4,
     "publishedRows": 1,
     "minimumKpiRows": 0,
     "readyForWeeklyReview": 0,
@@ -29,13 +29,13 @@
     {
       "step_id": "profile_publish_handoff_open",
       "phase": "profile_to_publish",
-      "current_value": 1,
+      "current_value": 0,
       "required_value": 1,
       "owner_action": "Only continue after the profile handoff says first-batch publishing is open.",
       "evidence_required": "profile-publish-handoff readyToPublish is true after profile proof writeback and refresh.",
       "command": "python3 tools/promotion_profile_publish_handoff.py --check",
       "stop_condition": "Do not publish first-batch posts while profile_writeback_complete is still blocked.",
-      "status": "complete"
+      "status": "current_blocker"
     },
     {
       "step_id": "first_batch_publish_sheet_ready",
@@ -46,7 +46,7 @@
       "evidence_required": "first-batch publish action sheet has all active rows ready and zero issues.",
       "command": "python3 tools/promotion_first_batch_publish_action_sheet.py --check",
       "stop_condition": "Do not publish if any row remains blocked_until_profile_links.",
-      "status": "current_blocker"
+      "status": "blocked_upstream"
     },
     {
       "step_id": "post_url_writeback_complete",

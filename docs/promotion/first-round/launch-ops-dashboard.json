@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "masterGate": "docs/promotion/first-round/master-gate.json",
     "launchCommandCenter": "docs/promotion/first-round/launch-command-center.json",
@@ -17,16 +17,16 @@
   },
   "metrics": {
     "rows": 11,
-    "readyAreas": 4,
+    "readyAreas": 3,
     "actionableAreas": 0,
-    "blockedAreas": 5,
+    "blockedAreas": 6,
     "holdAreas": 0,
     "masterStageIndex": 2,
     "profileConfigured": 1,
     "expectedProfiles": 1,
     "profileProofRows": 1,
-    "profileProofRealReadyRows": 0,
-    "externalProfileProofBlockers": 1,
+    "profileProofRealReadyRows": 1,
+    "externalProfileProofBlockers": 0,
     "currentTrueBlockers": 0,
     "firstBatchPublished": 1,
     "minimumKpiRows": 0,
@@ -48,7 +48,7 @@
       "ready": "0",
       "blocked": "0",
       "next_action": "Set active platform profile links and write back proof.",
-      "evidence": "public_ready=1, configured=1, real_proof=0/1, ready_to_writeback=0",
+      "evidence": "public_ready=1, configured=1, real_proof=1/1, ready_to_writeback=0",
       "safety": "Do not mark set/live without real screenshot or click proof from the platform."
     },
     {
@@ -98,18 +98,18 @@
     },
     {
       "area": "profile_publish_handoff",
-      "status": "ready",
-      "ready": "10",
-      "blocked": "0",
+      "status": "blocked",
+      "ready": "9",
+      "blocked": "1",
       "next_action": "Use this gate to hand off completed profile proof into first-batch publishing.",
-      "evidence": "ready_to_publish=1, current_blockers=0, blocked_upstream=0",
+      "evidence": "ready_to_publish=0, current_blockers=1, blocked_upstream=0",
       "safety": "No first-batch publishing until profile proof and refreshed packets are complete."
     },
     {
       "area": "publish_kpi_handoff",
       "status": "blocked",
-      "ready": "3",
-      "blocked": "4",
+      "ready": "2",
+      "blocked": "5",
       "next_action": "Use this gate to hand off public post URLs and minimum KPI into weekly review.",
       "evidence": "published=1, minimum_kpi=0, weekly=0",
       "safety": "No weekly review or commerce decision until post URL, proof, and KPI checks are complete."

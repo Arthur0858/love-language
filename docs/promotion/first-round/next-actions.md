@@ -1,27 +1,23 @@
 # LoveTypes 下一批推廣動作建議
 
-- 產生日期：2026-07-17
-- 影片追蹤列數：0
+- 產生日期：2026-07-18
+- 影片追蹤列數：1
 - 平台首頁待設定列數：0 / 1
-- Profile proof ready / blocked：0 / 1
-- Post proof ready / blocked：0 / 1
+- Profile proof ready / blocked：1 / 0
+- Post proof ready / blocked：1 / 0
 - 空資料安全模式：否
 - 行動選擇規則：When profile links are pending, finish platform profile setup first; then select the first three planned tasks by week and slot and keep Shorts CTA focused on the 15-question quiz.
 - 商品調整 gate：Do not change products, guardian priority, paid CTA, Luna emphasis, or affiliate emphasis until filled KPI rows create quiz, route, lead, Luna, or affiliate intent.
 
 ## 優先動作
 
-- [high] 先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。
-- [high] 平台首頁設定後先更新 active proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。
-- [high] 發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
-- [high] 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。
-- [medium] 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
+- [medium] 目前數據不足以調整策略，先補足回填並維持原排程。
 
 ## Proof Control
 
 ### `prepare_profile_proofs`
 
-- status：`current_action`
+- status：`complete`
 - command：`python3 tools/promotion_profile_batch_import.py --check`
 - release：profile batch readyRows is 1.
 
@@ -33,7 +29,7 @@
 
 ### `prepare_post_proofs`
 
-- status：`blocked_until_profile_gate`
+- status：`complete`
 - command：`python3 tools/promotion_post_batch_import.py --check`
 - release：post batch readyRows is 1.
 
@@ -51,8 +47,8 @@
 
 Proof rows:
 
-- `profile` / `youtube_shorts`：`blocked_until_real_proof` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
-- `post` / `youtube_shorts`：`blocked_until_real_public_post` ready=0 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
+- `profile` / `youtube_shorts`：`ready` ready=1 file=`docs/promotion/first-round/proof-youtube_shorts.txt`
+- `post` / `youtube_shorts`：`ready` ready=1 file=`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
 
 
 ## 平台首頁設定

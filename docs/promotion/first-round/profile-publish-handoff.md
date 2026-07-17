@@ -1,11 +1,11 @@
 # LoveTypes Profile to Publish Handoff
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：10
-- complete rows：10
-- current blockers：0
+- complete rows：9
+- current blockers：1
 - blocked upstream rows：0
-- ready to publish：1
+- ready to publish：0
 - issues：0
 
 ## Rule
@@ -89,8 +89,8 @@
 ### `publish_readiness_guarded`
 
 - phase：`publish`
-- status：`complete`
-- value：2 / 2
+- status：`current_blocker`
+- value：1 / 2
 - action：Confirm first-batch assets are ready and placeholder proof templates are still safely rejected.
 - evidence：first-batch-publish-readiness-pack has active asset-ready rows and safely rejected proof templates.
 - command：`python3 tools/promotion_first_batch_publish_readiness_pack.py --check`

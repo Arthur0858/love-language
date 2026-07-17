@@ -2,10 +2,10 @@ LoveTypes platform post writeback
 platform: youtube_shorts
 task_id: publish-lt-s01-iris-silence
 status: published
-published_date: 2026-06-22
-post_url: <REAL_YOUTUBE_SHORTS_URL>
-views: 0
-site_clicks: 0
-quiz_starts: 0
-quiz_completions: 0
-proof_note: <REAL_PUBLIC_POST_AND_ANALYTICS_PROOF_NOTE> verified
+published_date: 2026-06-21
+post_url: https://www.youtube.com/watch?v=uj9ZwYIKDrE
+views: 13
+site_clicks:
+quiz_starts:
+quiz_completions:
+proof_note: public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE matched YouTube title, author LoveTypes Quiz, and public page view count 13 on 2026-07-18

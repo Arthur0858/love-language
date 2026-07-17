@@ -205,7 +205,7 @@ def validate(rows: list[dict[str, str]], metrics: dict[str, int]) -> list[str]:
         issues.append("exception IDs must be unique")
     if metrics["emptyDataMode"] and not any(row["id"] == "empty_data_commerce_change" for row in rows):
         issues.append("empty-data mode must include commerce-change exception")
-    if metrics["profileConfigured"] < 3 and metrics.get("externalProfileProofBlockers", 0) < 1:
+    if metrics["profileConfigured"] < metrics["profileProofRows"] and metrics.get("externalProfileProofBlockers", 0) < 1:
         issues.append("profile setup exception context should expose external profile proof blockers")
     return issues
 

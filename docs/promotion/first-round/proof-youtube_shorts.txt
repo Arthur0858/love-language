@@ -3,4 +3,4 @@ platform: youtube_shorts
 status: set
 set_date: 2026-06-14
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
-proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
+proof_note: public channel URL https://www.youtube.com/@LoveTypesQuiz/about displayed the tracked lovetypes.tw/start profile link on 2026-07-18

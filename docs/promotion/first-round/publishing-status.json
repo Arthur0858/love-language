@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "queueRows": 15,
   "trackerRows": 15,
   "platformTrackerRows": 15,
@@ -69,7 +69,7 @@
   ],
   "platformTrackerMissingPublishedRows": [],
   "platformTrackerPartialPublishedRows": [],
-  "platformTrackerMetricRows": 0,
+  "platformTrackerMetricRows": 1,
   "revenueIntentTotals": {
     "free_keepsake_downloads": 0,
     "supply_lead_requests": 0,

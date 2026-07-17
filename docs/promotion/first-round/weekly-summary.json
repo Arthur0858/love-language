@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "trackerTotalRows": 15,
-  "trackerRows": 0,
+  "trackerRows": 1,
   "profileTrackerTotalRows": 1,
   "profileTrackerRows": 1,
   "plannedTasks": 15,
@@ -11,7 +11,7 @@
     "profileMissingFields": []
   },
   "totals": {
-    "views": 0,
+    "views": 13,
     "likes": 0,
     "comments": 0,
     "shares": 0,
@@ -32,10 +32,10 @@
   },
   "sourceBreakdown": {
     "videoTracker": {
-      "rows": 0,
+      "rows": 1,
       "totalRows": 15,
       "totals": {
-        "views": 0,
+        "views": 13,
         "likes": 0,
         "comments": 0,
         "shares": 0,

@@ -1,10 +1,10 @@
 # LoveTypes Launch Blocker Digest
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - current stage：`kpi_backfill`
 - first blocker：`backfill_first_batch_kpis`
 - profile configured：1 / 1
-- real profile proof ready：0 / 1
+- real profile proof ready：1 / 1
 - external profile proof blockers：0
 - current true blockers：0
 - first batch published：1 / 1
@@ -42,7 +42,7 @@
 
 - command ready / prepared / blocked：2 / 2 / 2
 - profile completion blockers：0
-- profile placeholder proof rows：1
+- profile placeholder proof rows：0
 - weekly ready：0
 - KPI posting / platform / script rows：15 / 15 / 15
 - attribution rows：16

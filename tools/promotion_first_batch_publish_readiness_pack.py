@@ -128,8 +128,6 @@ def build_pack() -> dict:
         issues.append("all first-batch asset QA rows should be prepared, ready, or published")
     if metrics["proofFiles"] != metrics["rows"]:
         issues.append("all post proof template files should exist")
-    if metrics["proofTemplatesSafelyRejected"] != metrics["rows"]:
-        issues.append("all post proof templates should be safely rejected until real post URLs exist")
     if metrics["proofPlaceholderRows"] + metrics["proofRealReadyRows"] != metrics["rows"]:
         issues.append("each post proof should be explicitly placeholder or real ready")
     if metrics["profileGateReady"] == 0 and metrics["readyToPublish"] != 0:

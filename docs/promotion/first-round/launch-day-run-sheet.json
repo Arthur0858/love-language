@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "launchOpsDashboard": "docs/promotion/first-round/launch-ops-dashboard.json",
     "launchRehearsalPacket": "docs/promotion/first-round/launch-rehearsal-packet.json",
@@ -19,11 +19,11 @@
     "readyRows": 1,
     "blockedRows": 1,
     "profileProofRows": 1,
-    "profileProofRealReadyRows": 0,
-    "profileProofPlaceholderRows": 1,
-    "externalProfileProofBlockers": 1,
+    "profileProofRealReadyRows": 1,
+    "profileProofPlaceholderRows": 0,
+    "externalProfileProofBlockers": 0,
     "masterStageIndex": 2,
-    "dashboardBlockedAreas": 5,
+    "dashboardBlockedAreas": 6,
     "rehearsalReadyStages": 1,
     "rehearsalProfileReadyStages": 0,
     "rehearsalPublishReadyStages": 0,
@@ -78,7 +78,7 @@
       "status": "needs_kpi_source_proof",
       "action": "Attach checked-source proof for site_clicks, quiz_starts and quiz_completions.",
       "check_command": "python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-      "write_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-17 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
+      "write_command": "python3 tools/promotion_post_writeback.py update --platform youtube_shorts --task-id publish-lt-s01-iris-silence --status published --published-date 2026-07-18 --post-url https://www.youtube.com/watch?v=uj9ZwYIKDrE --site-clicks 0 --quiz-starts 0 --quiz-completions 0 --proof-note \"<REAL_ANALYTICS_SOURCE_PROOF_NOTE> verified\"",
       "success_signal": "post URL, site_clicks, quiz_starts and quiz_completions are backed by checked evidence.",
       "stop_condition": "Do not run writeback with placeholder URLs or guessed KPI values."
     },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "source": {
     "tracker": "docs/promotion/first-round/kpi-tracker.csv",
     "platformProfileTracker": "docs/promotion/first-round/platform-profile-tracker.csv",
@@ -8,17 +8,17 @@
     "promotionKit": "promotion-kit.json"
   },
   "dataState": {
-    "trackerRows": 0,
+    "trackerRows": 1,
     "profileTrackerRows": 1,
     "profileFilledRows": 1,
     "profilePendingRows": 0,
     "emptyDataMode": false,
     "fieldComplete": true,
     "proofControlRows": 2,
-    "profileProofReady": 0,
-    "profileProofBlocked": 1,
-    "postProofReady": 0,
-    "postProofBlocked": 1
+    "profileProofReady": 1,
+    "profileProofBlocked": 0,
+    "postProofReady": 1,
+    "postProofBlocked": 0
   },
   "leaders": {
     "guardian": null,
@@ -26,9 +26,15 @@
     "revenueGuardian": null
   },
   "scores": {
-    "guardians": {},
-    "contentAngles": {},
-    "revenueGuardians": {}
+    "guardians": {
+      "iris": 0
+    },
+    "contentAngles": {
+      "情感錯頻情境": 0
+    },
+    "revenueGuardians": {
+      "iris": 0
+    }
   },
   "decisionThresholds": {
     "quizStartRateMin": 0.3,
@@ -78,7 +84,7 @@
     "steps": [
       {
         "id": "prepare_profile_proofs",
-        "status": "current_action",
+        "status": "complete",
         "command": "python3 tools/promotion_profile_batch_import.py --check",
         "release": "profile batch readyRows is 1."
       },
@@ -90,7 +96,7 @@
       },
       {
         "id": "prepare_post_proofs",
-        "status": "blocked_until_profile_gate",
+        "status": "complete",
         "command": "python3 tools/promotion_post_batch_import.py --check",
         "release": "post batch readyRows is 1."
       },
@@ -112,18 +118,18 @@
         "proofType": "profile",
         "platform": "youtube_shorts",
         "proofFile": "docs/promotion/first-round/proof-youtube_shorts.txt",
-        "status": "blocked_until_real_proof",
-        "ready": "0",
-        "issues": "1",
+        "status": "ready",
+        "ready": "1",
+        "issues": "0",
         "operatorAction": "Replace placeholder proof note with real visible profile proof, then run profile batch check."
       },
       {
         "proofType": "post",
         "platform": "youtube_shorts",
         "proofFile": "docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt",
-        "status": "blocked_until_real_public_post",
-        "ready": "0",
-        "issues": "2",
+        "status": "ready",
+        "ready": "1",
+        "issues": "0",
         "operatorAction": "Replace placeholder post_url and proof note with real public post proof, then run post batch check."
       }
     ],
@@ -131,34 +137,10 @@
   },
   "actions": [
     {
-      "id": "set_platform_profile_links",
-      "priority": "high",
-      "type": "distribution",
-      "summary": "先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。"
-    },
-    {
-      "id": "fill_platform_profile_kpis",
-      "priority": "high",
-      "type": "measurement",
-      "summary": "平台首頁設定後先更新 active proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。"
-    },
-    {
-      "id": "publish_first_batch",
-      "priority": "high",
-      "type": "execution",
-      "summary": "發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。"
-    },
-    {
-      "id": "fill_required_kpis",
-      "priority": "high",
-      "type": "measurement",
-      "summary": "發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。"
-    },
-    {
-      "id": "hold_offer_changes",
+      "id": "collect_more_data",
       "priority": "medium",
-      "type": "safety",
-      "summary": "目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。"
+      "type": "measurement",
+      "summary": "目前數據不足以調整策略，先補足回填並維持原排程。"
     }
   ],
   "platformProfileActions": [],

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "promotionKit": "promotion-kit.json",
     "funnelEvents": "funnel-events.json",
@@ -29,7 +29,7 @@
     "scriptRows": 15,
     "scriptJsonRows": 15,
     "publishedRows": 1,
-    "filledScriptRows": 0,
+    "filledScriptRows": 1,
     "attributionFilledRows": 0,
     "rollupScripts": 1
   },

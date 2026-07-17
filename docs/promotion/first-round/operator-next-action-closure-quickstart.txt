@@ -1,11 +1,11 @@
 LoveTypes operator next action closure quickstart
-generated: 2026-07-17
+generated: 2026-07-18
 stage: first_batch_kpi
 ready actions: 0 / 1
 profile configured: 1
 proof profile template valid: 0
-proof profile placeholder rows: 1
-proof profile real ready rows: 0
+proof profile placeholder rows: 0
+proof profile real ready rows: 1
 
 Allowed actions:
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "platformAccountIdentityChecklist": "docs/promotion/first-round/platform-account-identity-checklist.json",
     "profileProofReadinessPack": "docs/promotion/first-round/profile-proof-readiness-pack.json",
@@ -22,14 +22,14 @@
     "identityPendingRows": 7,
     "profileConfigured": 1,
     "profileProofRows": 1,
-    "profileProofRealReadyRows": 0,
-    "profileProofPlaceholderRows": 1,
+    "profileProofRealReadyRows": 1,
+    "profileProofPlaceholderRows": 0,
     "readyToPublish": 1,
     "firstBatchPublished": 1,
     "evidenceReadyWeekly": 0,
     "postOpsReadyWeekly": 0,
     "emptyDataMode": 0,
-    "externalProfileProofBlockers": 1
+    "externalProfileProofBlockers": 0
   },
   "rows": [
     {

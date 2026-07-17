@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "launchReadiness": "docs/promotion/first-round/launch-readiness-gate.json",
     "commandCenter": "docs/promotion/first-round/launch-command-center.json",
@@ -35,8 +35,8 @@
     "profileConfigured": 1,
     "profileRows": 1,
     "profileProofRows": 1,
-    "profileProofRealReadyRows": 0,
-    "profileProofPlaceholderRows": 1,
+    "profileProofRealReadyRows": 1,
+    "profileProofPlaceholderRows": 0,
     "externalProfileProofBlockers": 0,
     "currentTrueBlockers": 0,
     "publishedRows": 1,

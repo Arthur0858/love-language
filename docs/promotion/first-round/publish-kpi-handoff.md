@@ -1,10 +1,10 @@
 # LoveTypes Publish to KPI Handoff
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：7
-- complete rows：3
+- complete rows：2
 - current blockers：1
-- blocked upstream rows：3
+- blocked upstream rows：4
 - published rows：1 / 3
 - minimum KPI rows：0 / 3
 - ready for weekly review：0
@@ -22,8 +22,8 @@
 ### `profile_publish_handoff_open`
 
 - phase：`profile_to_publish`
-- status：`complete`
-- value：1 / 1
+- status：`current_blocker`
+- value：0 / 1
 - action：Only continue after the profile handoff says first-batch publishing is open.
 - evidence：profile-publish-handoff readyToPublish is true after profile proof writeback and refresh.
 - command：`python3 tools/promotion_profile_publish_handoff.py --check`
@@ -32,7 +32,7 @@
 ### `first_batch_publish_sheet_ready`
 
 - phase：`publish`
-- status：`current_blocker`
+- status：`blocked_upstream`
 - value：0 / 1
 - action：Confirm all active first-batch rows are ready before opening platform publishing.
 - evidence：first-batch publish action sheet has all active rows ready and zero issues.

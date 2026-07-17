@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "masterGate": "docs/promotion/first-round/master-gate.json",
     "profileCompletion": "docs/promotion/first-round/profile-completion-gate.json",
@@ -23,8 +23,8 @@
     "commandBlockedRows": 2,
     "emptyDataMode": 0,
     "profileProofRows": 1,
-    "profileProofRealReadyRows": 0,
-    "externalProfileProofBlockers": 1,
+    "profileProofRealReadyRows": 1,
+    "externalProfileProofBlockers": 0,
     "currentTrueBlockers": 0
   },
   "policy": {

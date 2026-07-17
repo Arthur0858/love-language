@@ -1,6 +1,6 @@
 # LoveTypes Promotion Evidence Ledger
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：31
 - required / traceable：2 / 2
 - generic / missing：0 / 0
@@ -16,9 +16,9 @@
 ## Required Evidence
 
 - `profile` `youtube_shorts` / `youtube_shorts`：traceable
-  - proof：2026-06-14 checked https://studio.youtube.com/channel/UCrOxX4L-lX-sSO_ngfURPvA/editing/profile and public handle https://www.youtube.com/@LoveTypesQuiz: English bio visible; Take the LoveTypes Quiz link uses youtube_shorts_bio UTM
+  - proof：public channel URL https://www.youtube.com/@LoveTypesQuiz/about displayed the tracked lovetypes.tw/start profile link on 2026-07-18
 - `post` `youtube_shorts` / `publish-lt-s01-iris-silence`：traceable
-  - proof：public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked
+  - proof：public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE matched YouTube title, author LoveTypes Quiz, and public page view count 13 on 2026-07-18
 
 ## Pending Setup / Publication
 

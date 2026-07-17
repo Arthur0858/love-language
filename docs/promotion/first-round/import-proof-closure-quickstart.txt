@@ -1,8 +1,8 @@
 LoveTypes proof import closure quickstart
-generated: 2026-07-17
+generated: 2026-07-18
 profile template valid: 0
-profile placeholder proof rows: 1
-profile real proof ready rows: 0
+profile placeholder proof rows: 0
+profile real proof ready rows: 1
 post safely rejected: 0
 rehearsal rows: 3
 profile evidence rows: 6

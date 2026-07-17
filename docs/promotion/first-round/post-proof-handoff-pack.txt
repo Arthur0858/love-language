@@ -1,13 +1,13 @@
 LoveTypes post proof handoff
-generated_at: 2026-07-17
+generated_at: 2026-07-18
 rows: 1
-ready_to_import: 0
-templates_safely_rejected: 1
-placeholder_proof_rows: 1
-real_proof_ready_rows: 0
+ready_to_import: 1
+templates_safely_rejected: 0
+placeholder_proof_rows: 0
+real_proof_ready_rows: 1
 
 [youtube_shorts] publish-lt-s01-iris-silence
 proof: docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
 check: python3 tools/promotion_post_text_import.py check --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
 write: python3 tools/promotion_post_text_import.py add --input docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt
-next: Replace the placeholder post_url and proof_note date, then rerun the check command.
+next: Run the write command only after confirming the proof text contains the real public post URL and checked KPI source.

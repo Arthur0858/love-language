@@ -1,14 +1,14 @@
 # LoveTypes Stage Transition Matrix
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - current stage：`first_batch_kpi`
 - rows：6
 - complete rows：2
 - current blockers：1
 - blocked upstream rows：3
 - command rows ready / blocked：2 / 2
-- real profile proof ready：0 / 1
-- external profile proof blockers：1
+- real profile proof ready：1 / 1
+- external profile proof blockers：0
 - current true blockers：0
 - empty data mode：0
 - issues：0

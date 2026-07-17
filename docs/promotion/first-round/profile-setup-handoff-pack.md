@@ -1,6 +1,6 @@
 # LoveTypes Profile Setup Handoff Pack
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - platforms：1
 - ready to configure：0
 - ready to writeback：0
@@ -8,8 +8,8 @@
 - public ready：1
 - pending evidence checks：6
 - proof template ready rows：1
-- proof placeholder rows：1
-- proof real ready rows：0
+- proof placeholder rows：0
+- proof real ready rows：1
 - issues：0
 
 ## Rules
@@ -25,8 +25,8 @@
 - tracker status：`set`
 - action status：`complete`
 - proof status：`complete`
-- proof placeholder：`1`
-- proof real ready：`0`
+- proof placeholder：`0`
+- proof real ready：`1`
 - public ready：`1`
 - link location：Channel description / video description
 - profile link：https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
@@ -54,7 +54,7 @@ Save to `docs/promotion/first-round/proof-youtube_shorts.txt` after real platfor
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-07-17
+set_date: 2026-07-18
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```

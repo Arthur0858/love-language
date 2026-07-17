@@ -9,6 +9,8 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -57,8 +59,8 @@ def platform_from_text(text: str) -> str:
     return ""
 
 
-def replace_post_url(text: str, platform: str) -> str:
-    replacement = SAMPLE_POST_URLS.get(platform, "https://lovetypes.tw/rehearsal-post")
+def replace_post_url(text: str, platform: str, replacement: str | None = None) -> str:
+    replacement = replacement or SAMPLE_POST_URLS.get(platform, "https://lovetypes.tw/rehearsal-post")
     lines = []
     for line in text.splitlines():
         if line.lower().startswith("post_url:"):
@@ -101,12 +103,15 @@ def build_rows() -> list[dict[str, object]]:
                 "output": output.strip(),
             })
         else:
-            placeholder_code, placeholder_output = run_check("promotion_post_text_import.py", path)
+            placeholder_code, placeholder_output = temp_check(
+                "promotion_post_text_import.py",
+                replace_post_url(text, platform, post_writeback.POST_URL_PLACEHOLDERS[platform]),
+            )
             rows.append({
                 "path": str(path.relative_to(ROOT)),
                 "kind": kind,
                 "platform": platform,
-                "scenario": "post_placeholder_current",
+                "scenario": "post_placeholder_rehearsal",
                 "expected": "reject",
                 "passed": placeholder_code != 0 and "published status requires non-placeholder https post_url" in placeholder_output,
                 "output": placeholder_output.strip(),
@@ -142,7 +147,7 @@ def build_rehearsal() -> dict:
             "proofFiles": len(active_files),
             "rows": len(rows),
             "profilePass": sum(1 for row in rows if row["kind"] == "profile" and row["passed"]),
-            "postPlaceholderRejected": sum(1 for row in rows if row["scenario"] == "post_placeholder_current" and row["passed"]),
+            "postPlaceholderRejected": sum(1 for row in rows if row["scenario"] == "post_placeholder_rehearsal" and row["passed"]),
             "postRehearsalPass": sum(1 for row in rows if row["scenario"] == "post_rehearsal_real_url" and row["passed"]),
             "issues": len(issues),
         },
@@ -161,7 +166,7 @@ def validate_rows(rows: list[dict[str, object]]) -> list[str]:
     issues: list[str] = []
     expected = len(active_platforms())
     profile_rows = [row for row in rows if row["kind"] == "profile"]
-    post_placeholder = [row for row in rows if row["scenario"] == "post_placeholder_current"]
+    post_placeholder = [row for row in rows if row["scenario"] == "post_placeholder_rehearsal"]
     post_rehearsal = [row for row in rows if row["scenario"] == "post_rehearsal_real_url"]
     if len(profile_rows) != expected:
         issues.append(f"expected {expected} profile proof rehearsals, got {len(profile_rows)}")
@@ -194,7 +199,7 @@ def render_markdown(rehearsal: dict) -> str:
         "",
         "- This rehearsal runs check commands only; it never writes to trackers.",
         "- Profile templates must pass because they are ready to use after external proof exists.",
-        "- Post placeholder templates must fail until a real public URL replaces the placeholder.",
+        "- Temporary post placeholder samples must fail even after current proof files contain real public URLs.",
         "- Temporary post samples with platform-shaped URLs must pass import validation.",
         "",
         "## Rows",

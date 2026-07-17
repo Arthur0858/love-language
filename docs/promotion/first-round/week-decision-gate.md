@@ -1,6 +1,6 @@
 # LoveTypes 週決策 Gate
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - 建議焦點：`collect_signal`
 - 週決策：HOLD
 - 內容放大：HOLD
@@ -26,11 +26,7 @@
 
 ## 下一步
 
-- 先依 launch-proof-control-sheet 完成 YouTube Shorts 的 Profile proof；active profile ready 後才執行 profile batch add。
-- 平台首頁設定後先更新 active proof-*.txt，再跑 profile batch check/add；不要直接手改 tracker。
-- 發布 Week 1 前 3 支 Shorts，先取得測驗完成樣本。
-- 發布後先回填 post_url、site_clicks、quiz_starts、quiz_completions；有結果後互動時補齊 guardian_result_clicks、resources_clicks、repair_plan_clicks、luna_clicks、keepsake_clicks、free_keepsake_downloads、supply_lead_requests、luna_pack_clicks、affiliate_book_clicks、contact_requests。
-- 目前沒有回填數據，不調整商品、守護者優先序或付費 CTA。
+- 目前數據不足以調整策略，先補足回填並維持原排程。
 
 ## 安全邊界
 

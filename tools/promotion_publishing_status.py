@@ -9,6 +9,8 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
+import promotion_post_writeback as post_writeback
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROMOTION_DIR = ROOT / "docs" / "promotion" / "first-round"
@@ -229,11 +231,10 @@ def build_report(
     platform_revenue_intent = Counter()
     platform_metric_rows = 0
     for row in platform_tracker_rows:
-        row_has_metric = False
+        row_has_metric = any(parse_int(row.get(field)) > 0 for field in post_writeback.METRIC_FIELDS)
         for field in REVENUE_FIELDS:
             value = parse_int(row.get(field))
             platform_revenue_intent[field] += value
-            row_has_metric = row_has_metric or value > 0
         platform_metric_rows += 1 if row_has_metric else 0
 
     if published_queue_rows and tracker_missing_scripts:

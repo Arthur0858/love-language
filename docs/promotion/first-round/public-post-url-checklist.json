@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "source": "docs/promotion/first-round/first-batch-publication-packet.json",
   "metrics": {
     "posts": 1,
@@ -120,7 +120,7 @@
       "utm_content": "iris_silence",
       "published_status": "published",
       "operator_status": "complete",
-      "evidence_note": "第一支先測「沉默/已讀」痛點 | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked"
+      "evidence_note": "第一支先測「沉默/已讀」痛點 | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE and YouTube oEmbed author LoveTypes Quiz/title checked 2026-06-22; upload_result /Users/mac/Mounts/ProjectDataCenter/youtube-upload/done/guardian-en-us-2026-06-15-iris-w51/upload_result.json checked | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE matched YouTube oEmbed title and author LoveTypes Quiz on 2026-07-18 | verified:2026-06-21 public URL https://www.youtube.com/watch?v=uj9ZwYIKDrE matched YouTube title, author LoveTypes Quiz, and public page view count 13 on 2026-07-18"
     },
     {
       "platform": "youtube_shorts",

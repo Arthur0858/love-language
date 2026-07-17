@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17",
+  "generatedAt": "2026-07-18",
   "sources": {
     "operationProofPacket": "docs/promotion/first-round/operation-proof-packet.json",
     "operationProofTemplates": "docs/promotion/first-round/operation-proof-templates.json",
@@ -17,8 +17,8 @@
     "proofFiles": 0,
     "profileValid": 0,
     "profileTemplateValid": 0,
-    "profilePlaceholderProofRows": 1,
-    "profileRealProofReadyRows": 0,
+    "profilePlaceholderProofRows": 0,
+    "profileRealProofReadyRows": 1,
     "postSafelyRejected": 0,
     "rehearsalRows": 3,
     "rehearsalProfilePass": 1,

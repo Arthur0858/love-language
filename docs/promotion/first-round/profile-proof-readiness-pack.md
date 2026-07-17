@@ -1,11 +1,11 @@
 # LoveTypes Profile Proof Readiness Pack
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：1
 - proof files：1
 - importable templates：1
-- placeholder proof rows：1
-- real proof ready rows：0
+- placeholder proof rows：0
+- real proof ready rows：1
 - public ready：1
 - configured：1
 - ready to configure：0
@@ -28,8 +28,8 @@
 - proof file：`docs/promotion/first-round/proof-youtube_shorts.txt`
 - proof file exists：1
 - template importable：1
-- placeholder proof：1
-- real proof ready：0
+- placeholder proof：0
+- real proof ready：1
 - public profile link ready：1
 - profile configured：1
 - evidence required：A real platform screenshot/click proof must exist before running the write command.
@@ -42,7 +42,7 @@ Structured proof text:
 LoveTypes profile setup writeback
 platform: youtube_shorts
 status: set
-set_date: 2026-07-17
+set_date: 2026-07-18
 profile_link: https://lovetypes.tw/start/?utm_source=youtube&utm_medium=social_profile&utm_campaign=first_round_quiz_completion&utm_content=youtube_shorts_bio
 proof_note: <REAL_SCREENSHOT_OR_PROFILE_CLICK_NOTE> verified
 ```

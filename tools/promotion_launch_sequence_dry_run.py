@@ -269,6 +269,8 @@ def sample_post_text(path: Path) -> str:
             lines.append(f"post_url: {SAMPLE_POST_URLS[platform]}")
         elif lower.startswith("published_date:"):
             lines.append(f"published_date: {TODAY}")
+        elif any(lower.startswith(f"{field}:") for field in post_writeback.MINIMUM_KPI_FIELDS):
+            lines.append(f"{line.split(':', 1)[0]}: 1")
         elif lower.startswith("proof_note:"):
             lines.append(f"proof_note: public URL and analytics source checked {TODAY}")
         else:

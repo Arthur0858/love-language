@@ -1,15 +1,15 @@
 # LoveTypes First Batch Publish Readiness Pack
 
-- 產生日期：2026-07-17
+- 產生日期：2026-07-18
 - rows：1
 - profile gate ready：1
 - asset QA prepared：1
 - ready to publish：0
 - blocked：0
 - published：1
-- proof templates safely rejected：1
-- proof placeholder rows：1
-- proof real ready rows：0
+- proof templates safely rejected：0
+- proof placeholder rows：0
+- proof real ready rows：1
 - issues：0
 
 ## Rule
@@ -33,7 +33,7 @@
 - publish action status：`complete`
 - post URL ready：1
 - post proof file：`docs/promotion/first-round/proof-youtube_shorts-publish-lt-s01-iris-silence.txt`
-- proof template safely rejected：1
-- proof：placeholder=1 / real_ready=0
+- proof template safely rejected：0
+- proof：placeholder=0 / real_ready=1
 - tracked URL：https://lovetypes.tw/start/?utm_source=shorts&utm_medium=social&utm_campaign=first_round_quiz_completion&utm_content=iris_silence
 - stop：Stop if profile gate is not ready, post URL is still placeholder, caption changes CTA, or platform preview adds commercial claims.

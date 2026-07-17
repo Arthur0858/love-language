@@ -1615,7 +1615,7 @@ LUNA_GUMROAD_PRODUCTS = [
         "url": "https://lunayogamusic.gumroad.com/l/luna-flow-sessions",
     },
 ]
-LUNA_STARTER_PROXY_PATH = "/go/luna-starter/"
+LUNA_STARTER_PROXY_PATH = "/go/luna-starter-click/"
 
 
 LUNA_PRODUCT_OFFER = {

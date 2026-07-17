@@ -155,6 +155,7 @@ RESULT_NUMBER_FIELDS = ("domainPropWidth", "domainPropHeight")
 ACCEPTED_EXTERNAL_STATUSES = set(range(200, 400)) | {403, 405, 429}
 GUMROAD_HOST = "lunayogamusic.gumroad.com"
 LUNA_STARTER_SLUG = "healing-vibes-starter"
+LUNA_STARTER_PROXY_PATH = "/go/luna-starter-click/"
 
 
 @dataclass
@@ -370,23 +371,12 @@ def check_luna_starter_pack(source: str, pack: object) -> tuple[list[str], int]:
             issues.append(f"{source}: lunaStarterPack missing {field}")
     href = pack.get("href", "")
     parsed = urlparse(href)
-    query = parse_qs(parsed.query)
     checked += 1
-    if parsed.scheme != "https" or parsed.netloc != GUMROAD_HOST:
-        issues.append(f"{source}: lunaStarterPack should use Gumroad host, got {href!r}")
+    if parsed.path != LUNA_STARTER_PROXY_PATH:
+        issues.append(f"{source}: lunaStarterPack should use {LUNA_STARTER_PROXY_PATH}, got {href!r}")
     checked += 1
-    if pack.get("slug") != LUNA_STARTER_SLUG or f"/l/{LUNA_STARTER_SLUG}" not in parsed.path:
+    if pack.get("slug") != LUNA_STARTER_SLUG:
         issues.append(f"{source}: lunaStarterPack should use {LUNA_STARTER_SLUG}, got {href!r}")
-    expected_query = {
-        "utm_source": "lovetypes",
-        "utm_medium": "luna-page",
-        "utm_campaign": "luna_gumroad_offer",
-        "utm_content": LUNA_STARTER_SLUG,
-    }
-    for key, expected in expected_query.items():
-        checked += 1
-        if query.get(key, [""])[0] != expected:
-            issues.append(f"{source}: lunaStarterPack missing {key}={expected}")
     return issues, checked
 
 
@@ -406,8 +396,7 @@ def check_home_saved_template(base_url: str, lang: str, home_path: str) -> tuple
         "saved Luna starter container": "data-home-saved-luna-starter",
         "saved Luna starter link": "data-home-saved-luna-starter-link",
         "saved Luna starter event": "home_saved_luna_starter_pack_click",
-        "saved Luna starter URL": "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
-        "saved Luna starter UTM": "utm_campaign=luna_gumroad_offer",
+        "saved Luna starter proxy": LUNA_STARTER_PROXY_PATH,
         "saved supply safety": "data-home-saved-supply-safety",
         "saved supply not-buy title": "quiz.supplySafety.notNowTitle",
         "saved supply not-buy text": "quiz.supplySafety.notNowText",

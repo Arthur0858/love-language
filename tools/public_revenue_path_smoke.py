@@ -415,9 +415,7 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
             "quiz_luna_starter_pack_click",
             "data-home-saved-luna-starter-link",
             "home_saved_luna_starter_pack_click",
-            "https://lunayogamusic.gumroad.com/l/healing-vibes-starter",
-            "utm_campaign=luna_gumroad_offer",
-            "utm_content=healing-vibes-starter",
+            "/go/luna-starter-click/",
         )
         missing_starter_markers = [marker for marker in starter_markers if marker not in home_text]
         if missing_starter_markers:

@@ -1615,6 +1615,7 @@ LUNA_GUMROAD_PRODUCTS = [
         "url": "https://lunayogamusic.gumroad.com/l/luna-flow-sessions",
     },
 ]
+LUNA_STARTER_PROXY_PATH = "/go/luna-starter/"
 
 
 LUNA_PRODUCT_OFFER = {
@@ -5820,7 +5821,7 @@ def luna_starter_pack_payload(lang: str) -> dict:
     return {
         "cta": labels["starter_cta"],
         "slug": product["slug"],
-        "href": luna_product_url(product),
+        "href": LUNA_STARTER_PROXY_PATH,
     }
 
 
@@ -16375,6 +16376,7 @@ def write_site_health() -> None:
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
+        f"{LUNA_STARTER_PROXY_PATH} {luna_product_url(LUNA_GUMROAD_PRODUCTS[0])} 301",
         "/luna/ /luna-yoga-music/ 301",
         "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",
         "/images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301",

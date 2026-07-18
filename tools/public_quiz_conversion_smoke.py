@@ -148,6 +148,7 @@ EXPECTED_TYPES = {"W", "T", "G", "S", "P"}
 TYPE_SLUGS = {"W": "iris", "T": "noah", "G": "vivian", "S": "claire", "P": "dora"}
 ASSIGNMENT_RE = re.compile(r"window\.__LOVETYPES_QUIZ_DATA\s*=\s*(\{.*\})\s*;?\s*$", re.S)
 QUIZ_SRC_RE = re.compile(r"^/quiz-data-(zh|en|ja|ko|es)-[^/]+\.js$")
+INTERACTIONS_SRC_RE = re.compile(r"^/site-interactions-[^/]+\.js$")
 INTERNAL_RESULT_URL_FIELDS = ("guardianUrl", "guideUrl", "resourceUrl", "contactUrl", "lunaUrl", "collectorHallUrl", "planUrl", "compassUrl")
 RESULT_IMAGE_FIELDS = ("image", "resultImage", "storyImage", "domainProp")
 RESULT_TEXT_FIELDS = ("domainTitle", "domainDesc", "domainCta", "domainAccent", "domainGlow", "domainMotif")
@@ -449,6 +450,20 @@ def main() -> int:
     home_saved_template_checks = 0
     resume_template_pages_checked = 0
     resume_template_checks = 0
+    quiz_metric_markers_checked = 0
+
+    home_response = request_url(base_url + "/")
+    home_parser = ScriptParser()
+    home_parser.feed(home_response.text)
+    interactions_script = next((src for src in home_parser.scripts if INTERACTIONS_SRC_RE.match(src)), "")
+    if not interactions_script:
+        issues.append("/: missing versioned site interactions script")
+    else:
+        interactions_response = request_url(urljoin(base_url + "/", interactions_script.lstrip("/")))
+        for marker in ("/go/quiz-started.gif", "/go/quiz-completed.gif"):
+            quiz_metric_markers_checked += 1
+            if marker not in interactions_response.text:
+                issues.append(f"{interactions_script}: missing quiz metric marker {marker}")
 
     for lang, home_path in LANG_PATHS.items():
         template_issues, template_checks = check_home_saved_template(base_url, lang, home_path)
@@ -592,6 +607,7 @@ def main() -> int:
     print(f"public_quiz_conversion_home_saved_template_checks={home_saved_template_checks}")
     print(f"public_quiz_conversion_resume_template_pages_checked={resume_template_pages_checked}")
     print(f"public_quiz_conversion_resume_template_checks={resume_template_checks}")
+    print(f"public_quiz_conversion_metric_markers_checked={quiz_metric_markers_checked}")
     print(f"public_quiz_conversion_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

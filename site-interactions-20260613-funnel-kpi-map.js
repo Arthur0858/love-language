@@ -137,6 +137,13 @@
 
   function recordFunnelPayload(name, target, element) {
     if (!name) return;
+    var metricPath = {
+      quiz_started: '/go/quiz-started.gif',
+      quiz_completed: '/go/quiz-completed.gif'
+    }[name];
+    if (metricPath && window.fetch) {
+      window.fetch(metricPath, { credentials: 'omit', keepalive: true }).catch(function () {});
+    }
     var campaign = storedCampaignAttribution();
     var payload = {
       name: name,

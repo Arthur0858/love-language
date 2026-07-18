@@ -16376,6 +16376,8 @@ def write_site_health() -> None:
 def write_redirects() -> None:
     redirect_lines = [
         "/.well-known/security.txt /security.txt 200",
+        "/go/quiz-started.gif /favicon.ico 200",
+        "/go/quiz-completed.gif /favicon.ico 200",
         f"{LUNA_STARTER_PROXY_PATH} {luna_product_url(LUNA_GUMROAD_PRODUCTS[0])} 301",
         "/luna/ /luna-yoga-music/ 301",
         "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",

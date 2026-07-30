@@ -68,12 +68,18 @@ function watchNetwork(page) {
     && url.origin === 'https://static.cloudflareinsights.com'
     && url.pathname.includes('/beacon.min.js/')
   );
+  const isExpectedLocalPreviewRedirect = (url, method, type) => (
+    ['127.0.0.1', 'localhost'].includes(url.hostname)
+    && method === 'GET'
+    && type === 'fetch'
+    && ['/go/quiz-started.gif', '/go/quiz-completed.gif'].includes(url.pathname)
+  );
   page.on('request', (request) => {
     const url = new URL(request.url());
     const method = request.method();
     const type = request.resourceType();
     const sameOrigin = url.origin === baseOrigin;
-    if (isCloudflareRum(url, method, type) || isCloudflareInsightsScript(url, method, type)) return;
+    if (isCloudflareRum(url, method, type) || isCloudflareInsightsScript(url, method, type) || isExpectedLocalPreviewRedirect(url, method, type)) return;
     if (method !== 'GET' && method !== 'HEAD') {
       issues.push(`${method} ${type} ${url.origin}${url.pathname}`);
     }

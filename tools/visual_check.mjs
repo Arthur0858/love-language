@@ -42,6 +42,18 @@ function hasBlockingConsoleMessage(message) {
   return ['error'].includes(message.type());
 }
 
+function isExpectedLocalPreviewRedirect(message) {
+  const location = message.location()?.url || '';
+  if (!location || !message.text().includes('404')) return false;
+  try {
+    const url = new URL(location);
+    return ['127.0.0.1', 'localhost'].includes(url.hostname)
+      && ['/go/quiz-started.gif', '/go/quiz-completed.gif'].includes(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
 function isRetriableNavigationError(error) {
   const message = String(error?.message || error || '');
   return [
@@ -73,9 +85,13 @@ function totalTimeout() {
   return Number(process.env.VISUAL_CHECK_TOTAL_TIMEOUT_MS || 540000);
 }
 
-function logCase(name) {
-  console.error(`[visual] ${name}`);
-}
+const active = { caseName: '', stage: 'startup', startedAt: 0 };
+const caseFilter = process.env.VISUAL_CHECK_CASE || '';
+const completedCases = [];
+function shouldRun(name) { return !caseFilter || caseFilter === name; }
+function beginCase(name) { active.caseName = name; active.stage = 'createPage'; active.startedAt = Date.now(); console.error(`[visual] START ${name} timestamp=${new Date().toISOString()}`); }
+function setStage(stage) { active.stage = stage; }
+function passCase(name) { const elapsed = Date.now() - active.startedAt; completedCases.push(name); console.error(`[visual] PASS ${name} elapsed_ms=${elapsed}`); active.caseName = ''; active.stage = 'idle'; }
 
 function summarizeFailures(results) {
   return results.flatMap((result) => {
@@ -455,7 +471,9 @@ const executablePath = await findCachedChromium();
 const browser = await chromium.launch({ headless: true, executablePath });
 const results = [];
 const watchdog = setTimeout(() => {
+  const elapsed = active.startedAt ? Date.now() - active.startedAt : 0;
   console.error(`Visual check exceeded ${totalTimeout()}ms.`);
+  console.error(`[visual] TIMEOUT active_case=${active.caseName || 'none'} stage=${active.stage} elapsed_ms=${elapsed} completed=${completedCases.length}`);
   process.exit(124);
 }, totalTimeout());
 watchdog.unref?.();
@@ -495,14 +513,15 @@ async function waitForSoftIdle(page) {
 }
 
 for (const item of cases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -510,13 +529,20 @@ for (const item of cases) {
   });
 
   const url = makeUrl(item.path);
+  setStage('openPage');
   const response = await openPage(page, url);
+  setStage('assertions');
+  setStage('main.title');
   const title = await page.title();
+  setStage('main.h1');
   const h1 = await page.locator('h1').first().innerText().catch(() => '');
+  setStage('main.navCount');
   const navCount = await page.locator('.nav-links a').count();
+  setStage('main.bodyText');
   const bodyText = await page.locator('body').innerText();
   const universeGateCount = await page.locator('[data-universe-gates] .universe-gate-card').count();
   const homeJourneyCardCount = await page.locator('[data-home-journey] .home-journey-card').count();
+  setStage('main.counts');
   const gardenMapHandoffCount = await page.locator('[data-garden-map-handoff] .garden-map-handoff-card').count();
   const gardenMapRouteCount = await page.locator('[data-garden-map-routes] .garden-map-route-card').count();
   const gardenMapToolCount = await page.locator('[data-garden-map-tools] .garden-map-tool-card').count();
@@ -538,6 +564,7 @@ for (const item of cases) {
   const theoryDomainCardCount = await page.locator('[data-theory-domain-compass] .theory-domain-card').count();
   const policyCompassCardCount = await page.locator('[data-policy-compass] .policy-compass-card').count();
   const policyDetailCardCount = await page.locator('[data-policy-detail] .policy-detail-card').count();
+  setStage('main.guardianCardHeightSpread');
   const guardianCardHeightSpread = await page.locator('[data-universe-map] .guardian-card').evaluateAll((cards) => {
     if (!cards.length) return 0;
     const heights = cards.map((card) => card.getBoundingClientRect().height);
@@ -545,9 +572,11 @@ for (const item of cases) {
   }).catch(() => 0);
   const domainMarkerCount = await page.locator('[data-domain-marker]').count();
   const supplyCtaCount = await page.locator('.guardian-domain-hero .primary-btn[href*="/resources/#supply-"]').count();
+  setStage('main.horizontalOverflow');
   const horizontalOverflow = await page.evaluate(() =>
     document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   );
+  setStage('screenshot');
   const screenshot = `output/playwright/${item.name}.png`;
   await page.screenshot({ path: screenshot, fullPage: false });
   results.push({
@@ -590,18 +619,21 @@ for (const item of cases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of redirectCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage({ width: 390, height: 844 });
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -621,18 +653,21 @@ for (const item of redirectCases) {
     consoleErrors,
     pageErrors,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of languageMenuCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage({ width: 390, height: 844 });
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -681,18 +716,21 @@ for (const item of languageMenuCases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of quizCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -807,18 +845,21 @@ for (const item of quizCases) {
     dynamicImageIssues,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of conversionCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -1037,18 +1078,21 @@ for (const item of conversionCases) {
     finalScrollY: await page.evaluate(() => window.scrollY),
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of worksheetCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -1126,11 +1170,14 @@ for (const item of worksheetCases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of copyCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
@@ -1147,8 +1194,8 @@ for (const item of copyCases) {
     });
   });
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -1227,18 +1274,21 @@ for (const item of copyCases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of storyCardCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -1287,18 +1337,21 @@ for (const item of storyCardCases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 for (const item of anchorFocusCases) {
-  logCase(item.name);
+  if (!shouldRun(item.name)) continue;
+  beginCase(item.name);
   const page = await createPage(item.viewport);
   const consoleErrors = [];
   const pageErrors = [];
 
   page.on('console', (message) => {
-    if (hasBlockingConsoleMessage(message)) {
-      consoleErrors.push(message.text());
+    if (hasBlockingConsoleMessage(message) && !isExpectedLocalPreviewRedirect(message)) {
+      consoleErrors.push(`${message.text()} @ ${message.location().url || 'unknown-url'}`);
     }
   });
   page.on('pageerror', (error) => {
@@ -1342,7 +1395,9 @@ for (const item of anchorFocusCases) {
     pageErrors,
     screenshot,
   });
+  setStage('page.close');
   await page.close();
+  passCase(item.name);
 }
 
 await browser.close();

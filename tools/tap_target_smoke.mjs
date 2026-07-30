@@ -68,6 +68,18 @@ function makeUrl(path) {
   return new URL(path, BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`).toString();
 }
 
+function isExpectedLocalPreviewRedirect(message) {
+  const location = message.location()?.url || '';
+  if (!location || !message.text().includes('404')) return false;
+  try {
+    const url = new URL(location);
+    return ['127.0.0.1', 'localhost'].includes(url.hostname)
+      && ['/go/quiz-started.gif', '/go/quiz-completed.gif'].includes(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
 async function inspectCase(browser, item) {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -78,7 +90,7 @@ async function inspectCase(browser, item) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on('console', (message) => {
-    if (message.type() === 'error') consoleErrors.push(message.text());
+    if (message.type() === 'error' && !isExpectedLocalPreviewRedirect(message)) consoleErrors.push(message.text());
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
 

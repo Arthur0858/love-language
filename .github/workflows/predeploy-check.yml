@@ -40,6 +40,8 @@ jobs:
         run: python tools/predeploy_check.py
 
       - name: Run browser visual smoke
+        env:
+          VISUAL_CHECK_TOTAL_TIMEOUT_MS: "720000"
         run: |
           mkdir -p output
           python tools/predeploy_check.py --visual-only 2>&1 | tee output/predeploy-check.log

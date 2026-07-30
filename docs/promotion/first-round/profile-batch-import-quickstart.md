@@ -1,6 +1,6 @@
 # LoveTypes Profile Batch Import Quickstart
 
-- 產生日期：2026-07-18
+- 產生日期：2026-07-30
 - 狀態：ready=1 / blocked=0 / invalid=0 / issues=0
 - proof：placeholder=0 / real_ready=1
 - check：`python3 tools/promotion_profile_batch_import.py --check`

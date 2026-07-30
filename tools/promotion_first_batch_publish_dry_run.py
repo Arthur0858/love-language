@@ -120,6 +120,8 @@ def sample_post_text(path: Path, *, generic_proof: bool = False, wrong_platform:
         elif lower.startswith("proof_note:"):
             note = "verified" if generic_proof else f"public URL and analytics source checked {TODAY}"
             lines.append(f"proof_note: {note}")
+        elif any(lower.startswith(f"{field}:") for field in post_writeback.METRIC_FIELDS) and not line.split(":", 1)[1].strip():
+            lines.append(f"{line.split(':', 1)[0]}: 0")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"
@@ -228,11 +230,15 @@ def run_dry_run() -> dict[str, int]:
         platform_fields, platform_rows = read_rows(temp_docs / "platform-kpi-tracker.csv")
         script_fields, script_rows = read_rows(temp_docs / "kpi-tracker.csv")
 
-        placeholder_rejected = sum(
-            1
-            for proof_file in post_proof_files
-            if post_import.parse_text(proof_file.read_text(encoding="utf-8"))[1]
-        )
+        placeholder_rejected = 0
+        for proof_file in post_proof_files:
+            original = proof_file.read_text(encoding="utf-8")
+            platform = platform_from_text(original)
+            scaffold = "\n".join(
+                f"post_url: {post_writeback.post_url_placeholder(platform)}" if line.lower().startswith("post_url:") else line
+                for line in original.splitlines()
+            )
+            placeholder_rejected += int(bool(post_import.parse_text(scaffold)[1]))
         generic_proof_rejected = expect_rejected(
             lambda: update_from_text(sample_post_text(post_proof_files[0], generic_proof=True), queue_rows, platform_rows, script_rows)
         )

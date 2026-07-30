@@ -207,12 +207,16 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
             continue
         data, parse_issues = post_import.parse_text(proof_path.read_text(encoding="utf-8"))
         metrics["promotion_operator_handoff_post_proofs_checked"] += 1
-        if not parse_issues:
-            issues.append(f"{platform}: scaffold post proof should not pass until real post URL replaces placeholder")
-        elif not any("non-placeholder https post_url" in issue for issue in parse_issues):
-            issues.append(f"{platform}: post proof rejected for unexpected reason: {'; '.join(parse_issues)}")
-        if data.get("post_url") != placeholder:
-            issues.append(f"{platform}: post proof file should keep platform placeholder URL before publishing")
+        if already_published:
+            if parse_issues:
+                issues.append(f"{platform}: published post proof should parse cleanly: {'; '.join(parse_issues)}")
+        else:
+            if not parse_issues:
+                issues.append(f"{platform}: scaffold post proof should not pass until real post URL replaces placeholder")
+            elif not any("non-placeholder https post_url" in issue for issue in parse_issues):
+                issues.append(f"{platform}: post proof rejected for unexpected reason: {'; '.join(parse_issues)}")
+            if data.get("post_url") != placeholder:
+                issues.append(f"{platform}: post proof file should keep platform placeholder URL before publishing")
         commands = [
             rows["publish_action"].get("check_command", ""),
             rows["publish_action"].get("write_command", ""),
@@ -238,7 +242,7 @@ def validate_post_sources(metrics: dict[str, int], issues: list[str]) -> None:
         if rows["handoff"].get("status") != expected_handoff_status and not already_published:
             issues.append(f"{platform}: handoff post step should be {expected_handoff_status}")
         proof_text = str(rows["clipboard"].get("proof", ""))
-        if placeholder not in proof_text:
+        if not already_published and placeholder not in proof_text:
             issues.append(f"{platform}: clipboard post proof should show the platform placeholder URL")
 
 

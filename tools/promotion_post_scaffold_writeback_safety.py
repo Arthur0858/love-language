@@ -56,6 +56,8 @@ def real_post_text(text: str) -> str:
             lines.append(f"published_date: {TODAY}")
         elif lower.startswith("proof_note:"):
             lines.append(f"proof_note: public URL and analytics source checked {TODAY}")
+        elif any(lower.startswith(f"{field}:") for field in post_import.writeback.METRIC_FIELDS) and not line.split(":", 1)[1].strip():
+            lines.append(f"{line.split(':', 1)[0]}: 0")
         else:
             lines.append(line)
     return "\n".join(lines).rstrip() + "\n"
@@ -169,7 +171,14 @@ def main() -> int:
         real_texts: list[tuple[str, str]] = []
         for proof_file in post_proof_files:
             text = proof_file.read_text(encoding="utf-8")
-            _, scaffold_issues = post_import.parse_text(text)
+            platform = platform_from_text(text)
+            scaffold_lines = []
+            for line in text.splitlines():
+                if line.lower().startswith("post_url:"):
+                    scaffold_lines.append(f"post_url: {post_import.writeback.post_url_placeholder(platform)}")
+                else:
+                    scaffold_lines.append(line)
+            _, scaffold_issues = post_import.parse_text("\n".join(scaffold_lines))
             scaffold_checked += 1
             if scaffold_issues and any("non-placeholder https post_url" in issue for issue in scaffold_issues):
                 scaffold_rejected += 1

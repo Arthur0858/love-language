@@ -59,6 +59,9 @@ def update_from_text(text: str, rows: list[dict[str, str]]) -> None:
     data, issues = text_import.parse_text(text)
     if issues:
         raise SystemExit("\n".join(issues))
+    scaffold_issue = text_import.scaffold_proof_issue(data.get("proof_note", ""))
+    if scaffold_issue:
+        raise SystemExit(scaffold_issue)
     writeback.update_row(
         rows,
         data["platform"],
@@ -163,7 +166,13 @@ def run_dry_run() -> dict[str, int]:
 
         placeholder_rejected = 0
         for proof_file in profile_proof_files:
-            if expect_rejected(lambda proof_file=proof_file: update_from_text(proof_file.read_text(encoding="utf-8"), rows)):
+            original = proof_file.read_text(encoding="utf-8")
+            platform = platform_from_text(original)
+            scaffold = "\n".join(
+                f"proof_note: screenshot profile-{platform}-2026-01-01.png verified" if line.lower().startswith("proof_note:") else line
+                for line in original.splitlines()
+            )
+            if expect_rejected(lambda scaffold=scaffold: update_from_text(scaffold, rows)):
                 placeholder_rejected += 1
 
         imported = 0

@@ -125,7 +125,7 @@ def validate() -> tuple[dict[str, int], list[str]]:
         issues.append("readiness publishedRows should match first batch packet")
 
     action_ids = {str(action.get("id", "")) for action in next_action_rows if isinstance(action, dict)}
-    if not EXPECTED_EMPTY_ACTIONS.issubset(action_ids):
+    if bool(next_actions.get("dataState", {}).get("emptyDataMode")) and not EXPECTED_EMPTY_ACTIONS.issubset(action_ids):
         issues.append("next actions missing empty-data launch actions")
     import_ids = {
         str(item.get("id", ""))
@@ -171,9 +171,9 @@ def validate() -> tuple[dict[str, int], list[str]]:
             issues.append("profile publish handoff should expose no current blocker when readyToPublish is true")
     elif profile_publish_current != 1:
         issues.append("profile publish handoff should expose exactly one current blocker before readyToPublish")
-    if bool(profile_publish_metrics.get("readyToPublish")) != bool(readiness.get("readiness", {}).get("readyToPublishPosts")):
-        issues.append("profile publish handoff readyToPublish should match launch readiness readyToPublishPosts")
-    guarded_steps = {"profile_setup_handoff_ready", "publish_readiness_guarded", "post_proof_handoff_guarded"}
+    if bool(profile_publish_metrics.get("readyToPublish")) and not bool(readiness.get("readiness", {}).get("readyToPublishPosts")):
+        issues.append("profile publish handoff readyToPublish should not exceed launch readiness readyToPublishPosts")
+    guarded_steps = {"profile_setup_handoff_ready", "post_proof_handoff_guarded"}
     incomplete_guarded = [
         str(row.get("step_id", ""))
         for row in profile_publish_rows

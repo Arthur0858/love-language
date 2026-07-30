@@ -19,7 +19,7 @@ PROFILE_PROOF_FILE_CANDIDATES = (
     SOURCE_DIR / "proof-tiktok.txt",
     SOURCE_DIR / "proof-instagram_reels.txt",
 )
-EXPECTED_REJECTION = "proof_note must replace placeholder proof text with real evidence"
+EXPECTED_REJECTION = "profile proof_note still looks like the scaffold screenshot filename"
 TODAY = date.today().isoformat()
 REAL_PROOF_BY_PLATFORM = {
     "youtube_shorts": f"screenshot actual-youtube-shorts-bio-{TODAY}.png profile URL clicked https://www.youtube.com/@lovetypes {TODAY}",
@@ -83,6 +83,20 @@ def patch_profile_paths(temp_root: Path, temp_docs: Path) -> None:
     readiness.DEFAULT_JSON_OUTPUT_PATH = temp_docs / "launch-readiness-gate.json"
 
 
+def scaffold_profile_text(text: str) -> str:
+    data, issues = profile_import.parse_text(text)
+    if issues:
+        raise SystemExit("\n".join(issues))
+    platform = data["platform"]
+    lines = []
+    for line in text.splitlines():
+        if line.lower().startswith("proof_note:"):
+            lines.append(f"proof_note: screenshot profile-{platform}-{TODAY}.png verified")
+        else:
+            lines.append(line)
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def real_profile_text(text: str) -> str:
     data, issues = profile_import.parse_text(text)
     if issues:
@@ -124,6 +138,7 @@ def main() -> int:
         accepted = 0
         for proof_file in profile_proof_files:
             temp_proof = temp_docs / proof_file.name
+            temp_proof.write_text(scaffold_profile_text(proof_file.read_text(encoding="utf-8")), encoding="utf-8")
             code, output = run_tool(["check", "--input", str(temp_proof)], ROOT)
             checked += 1
             if code != 0 or "promotion_profile_text_import_issues=0" not in output:

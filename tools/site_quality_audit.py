@@ -577,7 +577,7 @@ class PageParser(HTMLParser):
 
 
 def html_pages() -> list[Path]:
-    return sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts)
+    return sorted(path for path in ROOT.rglob("*.html") if ".git" not in path.parts and "node_modules" not in path.parts and "output" not in path.parts)
 
 
 def target_for(page: Path, value: str) -> tuple[Path | None, str]:

@@ -1651,9 +1651,9 @@ def parse_redirects(parsers: dict[Path, PageParser]) -> tuple[list[str], Counter
         if status not in {"200", "301", "302", "307", "308"}:
             issues.append(f"{REDIRECTS_PATH}:{lineno}: unexpected redirect status {status}: {source}")
         target_path, target_fragment = target_for(ROOT / "index.html", target)
-        if target_path is None or not target_path.exists():
+        if target_path is not None and not target_path.exists():
             issues.append(f"{REDIRECTS_PATH}:{lineno}: redirect target missing: {target}")
-        elif target_fragment and target_path.suffix == ".html":
+        elif target_path is not None and target_fragment and target_path.suffix == ".html":
             target_parser = parsers.get(target_path)
             if target_parser and target_fragment not in target_parser.ids:
                 issues.append(f"{REDIRECTS_PATH}:{lineno}: redirect target anchor missing #{target_fragment}: {target}")

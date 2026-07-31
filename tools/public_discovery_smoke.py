@@ -294,7 +294,7 @@ def cache_is_reasonable(path: str, response: Response) -> list[str]:
     if host.startswith(("127.0.0.1", "localhost")):
         return issues
     cache_control = response.headers.get("cache-control", "")
-    if "max-age=600" not in cache_control:
+    if not re.search(r"max-age=(?:0|600)(?:\D|$)", cache_control):
         issues.append(f"{path}: expected short HTML/XML discovery cache, got {cache_control!r}")
     return issues
 

@@ -73,6 +73,10 @@ function networkIdleTimeout() {
   return Number(process.env.VISUAL_CHECK_NETWORKIDLE_TIMEOUT_MS || 1000);
 }
 
+function loadStateTimeout() {
+  return Number(process.env.VISUAL_CHECK_LOAD_STATE_TIMEOUT_MS || 2500);
+}
+
 function actionTimeout() {
   return Number(process.env.VISUAL_CHECK_ACTION_TIMEOUT_MS || 10000);
 }
@@ -495,7 +499,7 @@ async function openPage(page, url) {
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
       const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: navigationTimeout() });
-      await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
+      await page.waitForLoadState('load', { timeout: loadStateTimeout() }).catch(() => {});
       await page.waitForLoadState('networkidle', { timeout: networkIdleTimeout() }).catch(() => {});
       return response;
     } catch (error) {
@@ -512,7 +516,7 @@ async function openPage(page, url) {
 
 async function waitForSoftIdle(page) {
   await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
-  await page.waitForLoadState('load', { timeout: 10000 }).catch(() => {});
+  await page.waitForLoadState('load', { timeout: loadStateTimeout() }).catch(() => {});
   await page.waitForLoadState('networkidle', { timeout: networkIdleTimeout() }).catch(() => {});
 }
 
@@ -558,7 +562,8 @@ for (const item of cases) {
   const guardianNeedCardCount = await page.locator('[data-guardian-need-router] .guardian-need-card').count();
   const guideDomainRouteCount = await page.locator('[data-guide-domain-routes] .guide-domain-card').count();
   const guideActionCardCount = await page.locator('[data-guide-action-bridge] .guide-action-card').count();
-  const guideActionLunaHref = await page.locator('[data-guide-action-bridge] a[href*="/luna-yoga-music/#luna-"]').first().getAttribute('href').catch(() => '');
+  const guideActionLuna = page.locator('[data-guide-action-bridge] a[href*="/luna-yoga-music/#luna-"]').first();
+  const guideActionLunaHref = await guideActionLuna.count() ? await guideActionLuna.getAttribute('href') : '';
   const supplyDomainRouteCount = await page.locator('[data-supply-domain-strip] .supply-quick-card').count();
   const supplyOwnedCardCount = await page.locator('[data-supply-owned-signal] [data-supply-owned-card]').count();
   const keepsakeShelfCount = await page.locator('[data-keepsake-shelf] .keepsake-shelf-card').count();

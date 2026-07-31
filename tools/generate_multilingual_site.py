@@ -16560,6 +16560,30 @@ def write_support_files() -> None:
   Strict-Transport-Security: max-age=31536000
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self' mailto:; upgrade-insecure-requests
 
+/sitemap.xml
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
+/site-index.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
+/humans.txt
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
+/funnel-events.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
+/release.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ads.txt
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+
 /assets/*
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable

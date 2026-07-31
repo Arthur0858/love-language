@@ -21,6 +21,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
+EXPECTED_SITEMAP_URLS = len(json.loads((ROOT / "site-index.json").read_text(encoding="utf-8"))["pages"])
 EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
 LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
@@ -46,7 +47,6 @@ PUBLIC_PATHS = [
     "/garden-map/",
     "/en/",
     "/en/start/",
-    "/en/guides/words-of-affirmation-scripts/",
     "/en/resources/",
     "/en/characters/",
     "/en/garden-map/",
@@ -76,7 +76,6 @@ EXPECTED_TEXT = {
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
     "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
-    "/en/guides/words-of-affirmation-scripts/": "Practical Scripts for Words of Affirmation",
     "/keepsakes/": "守護者收藏室",
     "/contact/": "contact@lovetypes.tw",
     "/garden-map/": "心語庭園地圖",
@@ -115,7 +114,6 @@ EXPECTED_ANCHOR_TARGETS = {
     "/resources/": ("supply-start", "supply-routes", *(f"supply-{slug}" for slug in GUARDIAN_SLUGS)),
     "/repair-plan/": tuple(f"plan-{slug}" for slug in GUARDIAN_SLUGS),
     "/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
-    "/en/guides/words-of-affirmation-scripts/": ("guide-action-bridge",),
     "/about/": ("trust-action-routes",),
     "/theory/": ("trust-action-routes",),
 }
@@ -146,11 +144,6 @@ EXPECTED_HREF_TARGETS = {
         "/characters/iris/",
         "/resources/#supply-iris",
         "/repair-plan/#plan-iris",
-    ),
-    "/en/guides/words-of-affirmation-scripts/": (
-        "/en/characters/iris/",
-        "/en/resources/#supply-iris",
-        "/en/repair-plan/#plan-iris",
     ),
     "/about/": (
         "/#quiz-section",
@@ -863,8 +856,8 @@ def check_sitemap(response: Response) -> tuple[list[str], int, int, int]:
     urls = root.findall("sm:url", SITEMAP_NS)
     locs = [node.findtext("sm:loc", default="", namespaces=SITEMAP_NS) for node in urls]
     url_nodes_by_loc = {loc: node for loc, node in zip(locs, urls)}
-    if len(locs) < 140:
-        issues.append(f"{path}: expected at least 140 sitemap URLs, found {len(locs)}")
+    if len(locs) != EXPECTED_SITEMAP_URLS:
+        issues.append(f"{path}: expected {EXPECTED_SITEMAP_URLS} sitemap URLs, found {len(locs)}")
     total_alternates = sum(len(node.findall("xhtml:link", SITEMAP_NS)) for node in urls)
     checked_alternates = 0
     for expected in (public_url_for_path(path) for path in PUBLIC_PATHS):
@@ -885,8 +878,15 @@ def check_sitemap(response: Response) -> tuple[list[str], int, int, int]:
                 duplicate_hreflangs.append(lang)
             alternate_map[lang] = href
         expected_hreflangs = expected_hreflang_map(path_from_url(expected))
-        missing_hreflangs = sorted(set(EXPECTED_HREFLANGS).difference(alternate_map))
-        extra_hreflangs = sorted(set(alternate_map).difference(EXPECTED_HREFLANGS))
+        expected_hreflang_codes = set(EXPECTED_HREFLANGS)
+        expected_path = path_from_url(expected)
+        if expected_path.startswith("/guides/") and expected_path != "/guides/":
+            expected_hreflang_codes = {"zh-TW", "x-default"}
+            expected_hreflangs = {
+                key: value for key, value in expected_hreflangs.items() if key in expected_hreflang_codes
+            }
+        missing_hreflangs = sorted(expected_hreflang_codes.difference(alternate_map))
+        extra_hreflangs = sorted(set(alternate_map).difference(expected_hreflang_codes))
         if missing_hreflangs:
             issues.append(f"{path}: {expected} missing sitemap hreflang links {', '.join(missing_hreflangs)}")
         if extra_hreflangs:

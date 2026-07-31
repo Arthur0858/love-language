@@ -256,7 +256,7 @@ def main() -> int:
     parser.add_argument(
         "--visual-only",
         action="store_true",
-        help="Run only tools/visual_check.mjs, starting a temporary local server unless --base-url is set.",
+        help="Run only the AdSense review-surface visual suite, starting a temporary local server unless --base-url is set.",
     )
     parser.add_argument(
         "--site-only",
@@ -435,21 +435,23 @@ def main() -> int:
     if args.visual or args.visual_only:
         node = find_node()
         env = os.environ.copy()
-        if args.base_url:
-            env["BASE_URL"] = args.base_url
+
+        def run_visual_checks() -> None:
             run_step("AdSense review visual check", [node, "tools/adsense_review_visual_check.mjs"], env=env)
+            if args.visual_only:
+                return
             run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
             run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
             run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)
             run_step("storage privacy smoke", [node, "tools/storage_privacy_smoke.mjs"], env=env)
+
+        if args.base_url:
+            env["BASE_URL"] = args.base_url
+            run_visual_checks()
         else:
             with local_preview_server() as base_url:
                 env["BASE_URL"] = base_url
-                run_step("AdSense review visual check", [node, "tools/adsense_review_visual_check.mjs"], env=env)
-                run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
-                run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
-                run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)
-                run_step("storage privacy smoke", [node, "tools/storage_privacy_smoke.mjs"], env=env)
+                run_visual_checks()
 
     print("predeploy_checks=ok", flush=True)
     return 0

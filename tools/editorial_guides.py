@@ -22,7 +22,7 @@ GUIDE_UPDATED_BY_SLUG = {
 
 COMMON_SOURCES = {
     "love_languages": ("愛之語研究證據與限制", "https://doi.org/10.1177/09637214231217663", "用來說明愛之語是溝通比喻，不是固定人格或配對診斷。"),
-    "nvc": ("非暴力溝通的四個要素", "https://www.cnvc.org/learn-nvc/the-nvc-process", "支持把觀察、感受、需要與請求分開表達。"),
+    "nvc": ("CNVC 認證準備文件", "https://www.cnvc.org/images/pdf/certification/EN-Certification%20Preparation%20Packet.pdf", "文件以觀察、感受、需要與請求作為非暴力溝通練習的核心能力。"),
     "who": ("WHO：親密伴侶暴力第一線支援", "https://www.who.int/publications/i/item/WHO-RHR-14.26", "支持在暴力、控制或急迫風險中先處理安全，不進行一般伴侶練習。"),
     "cdc": ("CDC：親密伴侶暴力概述", "https://www.cdc.gov/intimate-partner-violence/about/index.html", "協助辨識控制、跟蹤、性暴力與心理侵害不是普通溝通錯頻。"),
     "rainn": ("RAINN：什麼是同意", "https://rainn.org/articles/what-is-consent", "支持同意必須清楚、自願、持續，而且可以隨時撤回。"),

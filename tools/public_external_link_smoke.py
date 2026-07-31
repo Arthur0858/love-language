@@ -122,7 +122,9 @@ def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalL
     issues: list[str] = []
     stats = ExternalLinkStats()
     sources_by_url: dict[str, set[str]] = {}
-    for path in smoke.PUBLIC_PATHS:
+    review_paths = [page["path"] for page in generator.collect_site_index()["pages"]]
+    review_paths.append("/resources/")
+    for path in review_paths:
         response = smoke.request_url(urljoin(base_url + "/", path.lstrip("/")))
         assets = smoke.extract_head_assets(response.text)
         if path.endswith("/resources/"):

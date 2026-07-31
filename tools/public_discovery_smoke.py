@@ -38,7 +38,7 @@ EXPECTED_MANIFEST_SCREENSHOTS = {
     "/assets/lovetypes/pwa/home-desktop-screenshot.webp": (1440, 900),
     "/assets/lovetypes/pwa/home-mobile-screenshot.webp": (390, 844),
 }
-EXPECTED_ADS_RECORD = "google.com, ca-pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+EXPECTED_ADS_RECORD = "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 EXPECTED_SUPPORT_FILES = {
     "robots.txt",
     "sitemap.xml",

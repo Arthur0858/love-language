@@ -11,8 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MIN_TEXT_CHARS = 220
 SHINGLE_SIZE = 8
-MAX_JACCARD_SIMILARITY = 0.62
-MAX_CONTAINMENT_SIMILARITY = 0.80
+MAX_JACCARD_SIMILARITY = 0.45
+MAX_CONTAINMENT_SIMILARITY = 0.65
 
 
 class MainTextParser(HTMLParser):

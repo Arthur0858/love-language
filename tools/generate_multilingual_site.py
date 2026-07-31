@@ -15,6 +15,7 @@ from xml.sax.saxutils import escape as xml_escape
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
 ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
+ADSENSE_PUBLISHER_ID = "pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-07-05"
@@ -5033,7 +5034,7 @@ CORE_READING_PATH = {
     "zh": {
         "eyebrow": "CORE READING PATH",
         "title": "第一次來 LoveTypes，建議先讀這條路線",
-        "intro": "如果你是從搜尋、AI 摘要或審核流程第一次進站，這條路線能最快看懂網站的核心價值：先理解理論，再做測驗，最後把結果變成練習。",
+        "intro": "第一次進站時，可以沿著這條路線先理解理論、完成測驗，再把結果變成一個今天能練習的小行動。",
         "items": [
             ("1", "先讀愛之語理論", "了解五種愛之語不是人格分類，而是關係溝通語彙。", "theory"),
             ("2", "認識五位守護者", "看每位守護者如何把一種愛之語變成更容易記住的分域。", "characters"),
@@ -6427,11 +6428,11 @@ COMPASS_USE_FLOW = {
 
 LOVE_COMPATIBILITY_PAGE = {
     "zh": {
-        "title": "心語合盤｜愛之語測驗與八字愛情合盤",
+        "title": "心語合盤｜LoveTypes 關係羅盤",
         "desc": "用 LoveTypes 守護者、愛之語配對與可選出生節奏，看見兩個人愛在哪裡錯頻；不是判決合不合，而是找到下一句可以說出口的話。",
         "eyebrow": "LOVE COMPATIBILITY",
         "h1": "愛之語合盤，不是判斷你們合不合",
-        "intro": "這頁承接想搜尋八字合婚、關係測驗、love compatibility 的人，但 LoveTypes 只把命理當成可選的關係節奏線索。核心仍是：你們怎麼感覺被愛、哪裡容易錯頻、下一步怎麼修復。",
+        "intro": "先選出兩個人的守護者，再決定是否加入出生節奏。LoveTypes 不替關係下判決，而是整理你們怎麼感覺被愛、哪裡容易錯頻，以及下一步怎麼修復。",
         "primary": "開始免費關係羅盤",
         "secondary": "先做守護者測驗",
         "tertiary": "看 7 日修復",
@@ -6441,8 +6442,8 @@ LOVE_COMPATIBILITY_PAGE = {
             ("02", "可選出生節奏", "生日只用來提示關係節奏，不做命中注定或婚姻判決。"),
             ("03", "修復入口", "把錯頻變成一句能說出口的請求與一個 24 小時小行動。"),
         ],
-        "seo_title": "適合這些搜尋意圖",
-        "seo_items": ["愛之語測驗 合盤", "八字合婚 免費", "關係測驗", "感情溝通 修復", "2026 感情節奏"],
+        "seo_title": "開始前先確認這五件事",
+        "seo_items": ["雙方目前最接近哪位守護者", "最近一次錯頻發生在什麼場景", "你想被理解的是感受還是行動", "出生節奏是否真的需要加入", "今天願意一起完成哪個小步驟"],
         "offer_title": "想要完整報告時，先登記需求",
         "offer_intro": "免費羅盤會先給主要錯頻、理解點、可說句子與今日行動。若你想要 PDF 合盤、八字愛情節奏或 7 日修復報告，再送出需求。",
         "offer_cta": "登記合盤報告需求",
@@ -6457,11 +6458,11 @@ LOVE_COMPATIBILITY_PAGE = {
         ],
     },
     "en": {
-        "title": "BaZi Love Compatibility and Love Language Compatibility",
+        "title": "LoveTypes Relationship Compatibility Compass",
         "desc": "A gentle compatibility entry for love languages, LoveTypes guardians, and optional birth rhythm. Not a verdict, but a map of where love gets misread.",
         "eyebrow": "LOVE COMPATIBILITY",
         "h1": "Love compatibility without turning your relationship into a verdict",
-        "intro": "This page is built for people searching BaZi love compatibility, love language compatibility, or a relationship compatibility test. LoveTypes treats astrology as optional rhythm insight; the core is still how each person receives love, where signals get crossed, and what to repair next.",
+        "intro": "Choose two guardians first, then decide whether birth rhythm adds anything useful. LoveTypes does not issue a verdict; it maps how each person receives love, where signals cross, and what repair step is realistic next.",
         "primary": "Start free Relationship Compass",
         "secondary": "Take guardian quiz",
         "tertiary": "Open 7-day repair",
@@ -6471,8 +6472,8 @@ LOVE_COMPATIBILITY_PAGE = {
             ("02", "Optional birth rhythm", "Birthdates can add timing prompts, but they do not decide destiny or marriage."),
             ("03", "Repair doorway", "Turn the cross-signal into one request you can say and one 24-hour action."),
         ],
-        "seo_title": "Built for these search intents",
-        "seo_items": ["bazi love compatibility", "love language compatibility", "relationship compatibility test", "chinese astrology compatibility", "2026 love timing"],
+        "seo_title": "Five things to name before you begin",
+        "seo_items": ["The guardian closest to each person today", "The latest scene where the signal crossed", "Whether you need emotional understanding or practical action", "Whether birth rhythm adds useful context", "One small step both people could actually try"],
         "offer_title": "Want the full report? Request it first",
         "offer_intro": "The free compass gives the main cross-signal, the point that needs understanding, one sentence, and one action. If you want a PDF compatibility report, BaZi love rhythm, or 7-day repair report, send a request.",
         "offer_cta": "Request compatibility report",
@@ -6501,8 +6502,8 @@ LOVE_COMPATIBILITY_PAGE = {
             ("02", "任意の出生リズム", "誕生日は関係リズムのヒントであり、運命や結婚可否を決めません。"),
             ("03", "修復の入口", "すれ違いを、言えるお願いと24時間の小さな行動に変える。"),
         ],
-        "seo_title": "この検索意図に対応",
-        "seo_items": ["愛の言語 相性", "東洋占術 恋愛 相性", "関係診断", "すれ違い 修復", "2026 恋愛リズム"],
+        "seo_title": "始める前に確認する五つのこと",
+        "seo_items": ["今の二人に近い守護者", "直近ですれ違った場面", "理解してほしい感情または行動", "出生リズムを加える必要があるか", "二人が今日試せる小さな一歩"],
         "offer_title": "完全レポートが必要な場合は、まず希望を送る",
         "offer_intro": "無料コンパスは主なすれ違い、理解点、言える一文、今日の行動を出します。PDF相性、出生リズム、7日間修復が必要なら希望を送ってください。",
         "offer_cta": "相性レポートを希望する",
@@ -6531,8 +6532,8 @@ LOVE_COMPATIBILITY_PAGE = {
             ("02", "선택 출생 리듬", "생일은 관계 리듬 힌트일 뿐 운명이나 결혼을 결정하지 않습니다."),
             ("03", "회복 입구", "엇갈림을 말할 수 있는 요청과 24시간 행동으로 바꿉니다."),
         ],
-        "seo_title": "이런 검색 의도에 맞춤",
-        "seo_items": ["사랑의 언어 궁합", "연애 궁합 테스트", "동양 점성 궁합", "관계 회복", "2026 연애 리듬"],
+        "seo_title": "시작 전에 확인할 다섯 가지",
+        "seo_items": ["지금 두 사람에게 가까운 수호자", "최근 신호가 엇갈린 장면", "이해받고 싶은 감정 또는 행동", "출생 리듬이 실제로 필요한지", "오늘 함께 해볼 수 있는 작은 한 걸음"],
         "offer_title": "전체 리포트가 필요하면 먼저 요청하기",
         "offer_intro": "무료 컴퍼스는 주요 엇갈림, 이해 지점, 말할 문장, 오늘 행동을 줍니다. PDF 궁합, 출생 리듬, 7일 회복 리포트가 필요하면 요청을 보내 주세요.",
         "offer_cta": "궁합 리포트 요청하기",
@@ -6561,8 +6562,8 @@ LOVE_COMPATIBILITY_PAGE = {
             ("02", "Ritmo natal opcional", "Las fechas pueden añadir ritmo, pero no deciden destino ni matrimonio."),
             ("03", "Puerta de reparación", "Convierte la señal cruzada en una petición y una acción de 24 horas."),
         ],
-        "seo_title": "Pensado para estas búsquedas",
-        "seo_items": ["compatibilidad lenguajes del amor", "test de compatibilidad de pareja", "astrología china compatibilidad", "reparación de relación", "ritmo amoroso 2026"],
+        "seo_title": "Cinco cosas que conviene nombrar antes",
+        "seo_items": ["La guardiana más cercana a cada persona hoy", "La última escena donde se cruzó la señal", "Si necesitas comprensión emocional o una acción concreta", "Si el ritmo natal aporta contexto útil", "Un paso pequeño que ambos podrían intentar"],
         "offer_title": "¿Quieres el informe completo? Pídelo primero",
         "offer_intro": "La brújula gratis da la señal cruzada, el punto que necesita comprensión, una frase y una acción. Si quieres PDF de compatibilidad, ritmo natal o plan de 7 días, envía una petición.",
         "offer_cta": "Pedir informe de compatibilidad",
@@ -6575,6 +6576,90 @@ LOVE_COMPATIBILITY_PAGE = {
             ("¿Necesito ingresar cumpleaños?", "No. Puedes usar solo dos guardianas LoveTypes y obtener la brújula gratis."),
             ("¿Qué entrega la versión gratuita?", "La señal cruzada principal, lo que necesita comprensión, una frase para decir y una acción de 24 horas."),
         ],
+    },
+}
+
+
+LOVE_COMPATIBILITY_PRACTICE = {
+    "zh": {
+        "example_title": "一個完整例子：不是不愛，而是愛沒有被收到",
+        "example": [
+            "小安偏向艾莉絲，最在意努力有沒有被說出來；伴侶偏向克萊兒，習慣用接送、處理雜事和記住待辦表達在乎。忙碌的一週裡，克萊兒做了很多事，小安卻只記得自己分享近況時沒有得到一句回應。兩個人都在付出，接收端卻各自漏掉了對方的訊號。",
+            "羅盤不會把這組配對判成不合，而會先分開三件事：已經發生的行動、當下沒有被接住的需要，以及下一次可以觀察的具體改變。小安可以說「你幫我處理事情時，我知道那是你的在乎；我分享重要進度時，也需要你用一句話告訴我你有聽見。」克萊兒則可以說「我願意回應，但請告訴我你現在想被鼓勵、被理解，還是一起想辦法。」",
+        ],
+        "practice_title": "把羅盤結果變成一次 10 分鐘對話",
+        "practice_steps": [
+            "先各自說一個最近確實感受到愛的片段，只描述可觀察的事，不急著替對方解釋動機。",
+            "各自選出一個沒有被收到的訊號，使用「當……時，我感到……，我需要……」說明，不使用總是、從不或你根本不愛我。",
+            "把需要縮成 24 小時內能完成的小請求，例如回一句收到、留 15 分鐘不看手機，或主動確認一次擁抱是否舒服。",
+            "隔天只回顧這個小行動有沒有幫助。若沒有，調整請求；不要把一次練習變成對整段關係的判決。",
+        ],
+        "read_title": "解讀時先看差異，再看安全",
+        "read": "分數高低不是愛得多或少，也不是固定人格。它只表示在目前情境中，哪一類訊號比較容易被你辨認。若雙方答案差很大，先確認是偏好不同、壓力造成的暫時變化，還是界線一直沒有被尊重。涉及控制、威脅、跟蹤、暴力或被迫接觸時，不適合用配對技巧合理化風險，應優先尋求安全支援。",
+    },
+    "en": {
+        "example_title": "A complete example: care was offered, but it was not received",
+        "example": [
+            "Mina is closest to Iris and notices love through specific words. Her partner is closest to Claire and usually shows care by driving, fixing small problems, and remembering practical tasks. During a demanding week, Claire completed several chores while Mina tried to share an important update. Mina heard no acknowledgment and felt alone. Claire felt unappreciated because all the practical support seemed invisible. Both people contributed care, yet each person missed the signal the other was sending.",
+            "The compass does not label this pair compatible or incompatible. It separates what happened, which need was missed, and what both people can observe next. Mina might say: “When you take care of practical things, I recognize that as your care. When I share something important, I also need one sentence that tells me you heard me.” Claire might answer: “I can do that. Please tell me whether you want encouragement, understanding, or help solving the problem so I do not guess.”",
+        ],
+        "practice_title": "Turn the result into one ten-minute conversation",
+        "practice_steps": [
+            "Each person names one recent moment when care genuinely landed. Describe the visible action or words without assigning a hidden motive.",
+            "Choose one signal that did not land. Use the structure “When this happened, I felt this, and I needed this,” avoiding always, never, and tests of whether the other person truly loves you.",
+            "Reduce the need to one request that can happen within 24 hours: acknowledge a message, spend fifteen phone-free minutes together, complete one agreed task, or ask before initiating touch.",
+            "Review only that small experiment the next day. Keep what helped and revise what did not. One attempt is information for the next conversation, not a verdict on the entire relationship.",
+        ],
+        "read_title": "Read the difference before judging the relationship",
+        "read": "A higher score does not mean someone loves more, and a guardian is not a fixed personality type. It shows which signals are easiest to recognize in the current context. When two answers differ, check whether the difference is a stable preference, a temporary response to stress, or evidence that a boundary is repeatedly ignored. Compatibility language must never be used to excuse coercion, threats, stalking, violence, or unwanted touch. Those situations require safety support, not a better pairing score.",
+    },
+    "ja": {
+        "example_title": "完全な例：愛がないのではなく、受け取れなかった",
+        "example": [
+            "ミナはアイリスに近く、具体的な言葉で愛を感じます。パートナーはクレアに近く、送迎、家事、用事を覚えることで気持ちを示します。忙しい一週間、クレアは多くの用事を済ませましたが、ミナが大切な近況を話した時には反応がありませんでした。ミナは一人だと感じ、クレアは自分の行動が見えていないと感じました。二人とも愛を出していても、相手が受け取れる形になっていなかったのです。",
+            "コンパスは、この二人を合う・合わないで判定しません。起きた行動、届かなかった必要、次に観察できる変化を分けます。ミナは「用事をしてくれることが、あなたの愛だと分かっている。大切な話をした時は、聞いたと分かる一言もほしい」と伝えられます。クレアは「励まし、理解、一緒に解決することのどれが必要か教えて」と確認できます。",
+        ],
+        "practice_title": "結果を10分の対話に変える",
+        "practice_steps": [
+            "最近、実際に愛が届いた場面を一つずつ話します。見えた行動や言葉だけを述べ、相手の動機を決めつけません。",
+            "届かなかった信号を一つ選び、「その時、私はこう感じ、これが必要だった」と伝えます。いつも、絶対、愛していないという表現は避けます。",
+            "必要を24時間以内にできるお願いへ小さくします。返信を一言する、スマホを置いて15分話す、役割を一つ決める、触れる前に確認する、などです。",
+            "翌日は、その小さな試みだけを振り返ります。役立った点は残し、合わなかった点は修正します。一度の結果で関係全体を判定しません。",
+        ],
+        "read_title": "差を見る前に、安全を確認する",
+        "read": "点数の高さは愛の量ではなく、守護者も固定された性格ではありません。今の状況で気づきやすい愛の信号を示すだけです。違いが大きい時は、好み、ストレスによる一時的な変化、境界が繰り返し無視されている状態を分けて考えます。支配、脅し、追跡、暴力、望まない接触は相性で正当化せず、安全支援を優先してください。",
+    },
+    "ko": {
+        "example_title": "완전한 예시: 사랑이 없는 것이 아니라 전달되지 않은 경우",
+        "example": [
+            "미나는 아이리스에 가깝고 구체적인 말에서 사랑을 느낍니다. 파트너는 클레어에 가깝고 이동을 돕거나 집안일을 처리하고 할 일을 기억하는 방식으로 마음을 표현합니다. 바쁜 한 주 동안 클레어는 여러 일을 끝냈지만, 미나가 중요한 소식을 말할 때는 반응하지 못했습니다. 미나는 혼자라고 느꼈고 클레어는 자신의 노력이 보이지 않는다고 느꼈습니다. 두 사람 모두 돌봄을 보냈지만 상대가 알아볼 수 있는 신호는 아니었습니다.",
+            "컴퍼스는 이 조합을 맞다 또는 틀리다고 판정하지 않습니다. 실제로 일어난 행동, 놓친 필요, 다음에 관찰할 변화를 나눕니다. 미나는 “실용적인 일을 해주는 것이 당신의 사랑이라는 걸 알아. 내가 중요한 이야기를 할 때는 들었다는 한 문장도 필요해”라고 말할 수 있습니다. 클레어는 “격려, 이해, 해결 중 무엇이 필요한지 알려주면 추측하지 않을게”라고 답할 수 있습니다.",
+        ],
+        "practice_title": "결과를 10분 대화로 바꾸기",
+        "practice_steps": [
+            "최근 사랑이 실제로 전달된 장면을 한 가지씩 말합니다. 보인 행동과 들은 말만 설명하고 상대의 숨은 의도를 단정하지 않습니다.",
+            "전달되지 않은 신호 하나를 골라 “그때 나는 이렇게 느꼈고 이것이 필요했다”라고 말합니다. 항상, 절대, 사랑하지 않는다는 표현은 피합니다.",
+            "필요를 24시간 안에 할 수 있는 요청으로 줄입니다. 메시지 확인 답장, 휴대폰 없이 15분 대화, 합의한 일 하나, 접촉 전 동의 확인처럼 구체적으로 정합니다.",
+            "다음 날에는 그 작은 시도만 돌아봅니다. 도움이 된 것은 유지하고 맞지 않은 것은 수정합니다. 한 번의 연습을 관계 전체의 판결로 만들지 않습니다.",
+        ],
+        "read_title": "차이를 해석하기 전에 안전을 확인하기",
+        "read": "높은 점수는 더 많이 사랑한다는 뜻이 아니며 수호자는 고정 성격 유형도 아닙니다. 지금 상황에서 어떤 신호를 더 쉽게 알아보는지 보여줄 뿐입니다. 차이가 크다면 선호 차이, 스트레스에 따른 일시적 변화, 경계가 반복해서 무시되는 상황을 구분하세요. 통제, 위협, 스토킹, 폭력, 원하지 않는 접촉은 궁합으로 정당화할 수 없으며 안전 지원이 먼저입니다.",
+    },
+    "es": {
+        "example_title": "Un ejemplo completo: hubo cuidado, pero no llegó como amor",
+        "example": [
+            "Mina se acerca a Iris y reconoce el amor mediante palabras específicas. Su pareja se acerca a Claire y suele cuidar conduciendo, resolviendo tareas y recordando pendientes. Durante una semana exigente, Claire completó varias cosas prácticas mientras Mina intentaba compartir una noticia importante. Mina no recibió ninguna respuesta y se sintió sola. Claire se sintió ignorada porque todo su apoyo parecía invisible. Ambas personas ofrecieron cuidado, pero cada una perdió la señal que la otra estaba enviando.",
+            "La brújula no declara que esta pareja sea compatible o incompatible. Separa lo que ocurrió, la necesidad que no fue recibida y el cambio concreto que pueden observar después. Mina podría decir: “Cuando resuelves cosas prácticas, reconozco que esa es tu forma de cuidar. Cuando comparto algo importante, también necesito una frase que me confirme que me escuchaste”. Claire podría responder: “Puedo hacerlo. Dime si ahora necesitas ánimo, comprensión o ayuda para resolverlo, así no tengo que adivinar”.",
+        ],
+        "practice_title": "Convierte el resultado en una conversación de diez minutos",
+        "practice_steps": [
+            "Cada persona nombra un momento reciente en que el cuidado sí llegó. Describe la acción o las palabras observables, sin atribuir una intención oculta.",
+            "Elijan una señal que no llegó. Usen la estructura “Cuando ocurrió esto, sentí esto y necesitaba esto”, evitando siempre, nunca y las pruebas sobre si la otra persona ama de verdad.",
+            "Reduzcan la necesidad a una petición posible dentro de 24 horas: confirmar un mensaje, pasar quince minutos sin teléfonos, completar una tarea acordada o preguntar antes de iniciar contacto físico.",
+            "Al día siguiente revisen solo ese pequeño experimento. Mantengan lo que ayudó y cambien lo que no funcionó. Un intento aporta información para la siguiente conversación; no dicta el valor de toda la relación.",
+        ],
+        "read_title": "Lee la diferencia antes de juzgar la relación",
+        "read": "Una puntuación alta no significa amar más y una guardiana no es un tipo de personalidad fijo. Solo muestra qué señales reconoces con más facilidad en el contexto actual. Si las respuestas son muy distintas, distingue entre una preferencia estable, un cambio temporal por estrés y un límite que se ignora repetidamente. El lenguaje de compatibilidad nunca debe justificar control, amenazas, acoso, violencia o contacto no deseado. Esas situaciones necesitan apoyo de seguridad, no una mejor puntuación.",
     },
 }
 
@@ -8601,6 +8686,12 @@ LONG_TAIL_COMPATIBILITY_PAGES = {
 
 LONG_TAIL_COMPATIBILITY_PAGES["long-distance-fight-repair"] = LUNA_GUARDIAN_FLOW.pop("long-distance-fight-repair")
 
+# These generated search-entry pages remain available for future editorial
+# rewrites, but they are intentionally excluded from public discovery until
+# each page has independent human review and first-hand value.
+INDEXABLE_LONG_TAIL_SLUGS: tuple[str, ...] = ()
+INDEXABLE_GUIDE_LANGS: tuple[str, ...] = ("zh",)
+
 
 LONG_TAIL_COMPATIBILITY_SECTION_TITLE = {
     "zh": "延伸搜尋路線",
@@ -8654,63 +8745,63 @@ COMPASS_INTENT_FAST_TRACK = {
 
 COMPASS_SEARCH_TASKS = {
     "zh": {
-        "eyebrow": "SEARCH ROUTER",
+        "eyebrow": "START FROM YOUR QUESTION",
         "title": "你是為了哪一種關係問題進來？",
-        "intro": "不用先讀完整理論。先選最接近的搜尋意圖，LoveTypes 會把你帶到對應入口，再回到免費羅盤整理下一句話。",
+        "intro": "不用先讀完整理論。選一個最接近現在的情境，再用免費羅盤把感受整理成下一句能說出口的話。",
         "tool_cta": "直接開始免費羅盤",
         "items": [
             ("想知道我們合不合", "看愛之語、心語合盤與可選出生節奏，但不做命運判決。", "tools/love-compatibility", "love_compatibility"),
-            ("吵架後想修復", "把爭執縮成一個可說出口的小請求與 24 小時行動。", "tools/relationship-repair-after-fight", "after_fight"),
-            ("對方沉默或需要空間", "分辨健康冷卻、逃避溝通與需要優先保護的界線。", "tools/silent-treatment-relationship", "silence_space"),
-            ("一直覺得不被愛", "先辨認安全感、被看見、被聽見或被記得的錯頻。", "tools/insecure-in-relationship", "unloved"),
+            ("吵架後想修復", "把爭執縮成一個可說出口的小請求與 24 小時行動。", "guides/repair-after-conflict", "after_fight"),
+            ("對方沉默或需要空間", "分辨健康冷卻、逃避溝通與需要優先保護的界線。", "guides/healthy-boundaries", "silence_space"),
+            ("一直覺得不被愛", "先辨認安全感、被看見、被聽見或被記得的錯頻。", "guides/emotional-needs-checklist", "unloved"),
         ],
     },
     "en": {
-        "eyebrow": "SEARCH ROUTER",
+        "eyebrow": "START FROM YOUR QUESTION",
         "title": "Which relationship question brought you here?",
-        "intro": "You do not need the full theory first. Choose the closest search intent, open the matching route, then return to the free compass for one next sentence.",
+        "intro": "You do not need the full theory first. Choose the situation closest to today, then use the free compass to shape one sentence you can actually say.",
         "tool_cta": "Start free compass",
         "items": [
             ("Are we compatible?", "Read love-language compatibility and optional birth rhythm without turning it into a destiny verdict.", "tools/love-compatibility", "love_compatibility"),
-            ("We fought and need repair", "Shrink the argument into one speakable request and one 24-hour action.", "tools/relationship-repair-after-fight", "after_fight"),
-            ("They are silent or need space", "Separate healthy cooling down, communication avoidance, and boundaries that need safety first.", "tools/silent-treatment-relationship", "silence_space"),
-            ("I keep feeling unloved", "Name the mismatch around reassurance, being seen, being heard, or being remembered.", "tools/insecure-in-relationship", "unloved"),
+            ("We fought and need repair", "Shrink the argument into one speakable request and one 24-hour action.", "guides/repair-after-conflict", "after_fight"),
+            ("They are silent or need space", "Separate healthy cooling down, communication avoidance, and boundaries that need safety first.", "guides/healthy-boundaries", "silence_space"),
+            ("I keep feeling unloved", "Name the mismatch around reassurance, being seen, being heard, or being remembered.", "guides/emotional-needs-checklist", "unloved"),
         ],
     },
     "ja": {
-        "eyebrow": "SEARCH ROUTER",
+        "eyebrow": "START FROM YOUR QUESTION",
         "title": "どの関係の悩みで来ましたか？",
-        "intro": "最初から理論を全部読む必要はありません。近い検索意図を選び、対応する入口を見てから無料コンパスで次の一文を整理します。",
+        "intro": "最初から理論を全部読む必要はありません。今に近い場面を選び、無料コンパスで実際に言える次の一文を整理します。",
         "tool_cta": "無料コンパスを始める",
         "items": [
             ("相性を知りたい", "愛の言語、相性、任意の出生リズムを読みますが、運命判決にはしません。", "tools/love-compatibility", "love_compatibility"),
-            ("喧嘩のあと修復したい", "争いを、言える小さなお願いと 24 時間の行動に縮めます。", "tools/relationship-repair-after-fight", "after_fight"),
-            ("沈黙や距離がつらい", "健康な冷却、会話回避、安全が必要な境界を分けます。", "tools/silent-treatment-relationship", "silence_space"),
-            ("愛されていない気がする", "安心、見てもらうこと、聞いてもらうこと、覚えてもらうことの錯頻を整理します。", "tools/insecure-in-relationship", "unloved"),
+            ("喧嘩のあと修復したい", "争いを、言える小さなお願いと 24 時間の行動に縮めます。", "guides/repair-after-conflict", "after_fight"),
+            ("沈黙や距離がつらい", "健康な冷却、会話回避、安全が必要な境界を分けます。", "guides/healthy-boundaries", "silence_space"),
+            ("愛されていない気がする", "安心、見てもらうこと、聞いてもらうこと、覚えてもらうことの錯頻を整理します。", "guides/emotional-needs-checklist", "unloved"),
         ],
     },
     "ko": {
-        "eyebrow": "SEARCH ROUTER",
+        "eyebrow": "START FROM YOUR QUESTION",
         "title": "어떤 관계 질문 때문에 들어왔나요?",
-        "intro": "처음부터 이론을 모두 읽지 않아도 됩니다. 가장 가까운 검색 의도를 고르고 맞는 입구를 본 뒤 무료 컴퍼스로 다음 한 문장을 정리하세요.",
+        "intro": "처음부터 이론을 모두 읽지 않아도 됩니다. 지금과 가까운 상황을 고르고 무료 컴퍼스로 실제로 말할 다음 한 문장을 정리하세요.",
         "tool_cta": "무료 컴퍼스 시작",
         "items": [
             ("우리 잘 맞는지 알고 싶다", "사랑의 언어 궁합과 선택 출생 리듬을 보되 운명 판정으로 만들지 않습니다.", "tools/love-compatibility", "love_compatibility"),
-            ("싸운 뒤 회복하고 싶다", "다툼을 말할 수 있는 작은 요청과 24시간 행동으로 줄입니다.", "tools/relationship-repair-after-fight", "after_fight"),
-            ("침묵하거나 시간이 필요하대요", "건강한 진정, 대화 회피, 먼저 지켜야 할 경계를 구분합니다.", "tools/silent-treatment-relationship", "silence_space"),
-            ("계속 사랑받지 못하는 느낌", "안정감, 보임, 들림, 기억됨의 엇갈림을 먼저 이름 붙입니다.", "tools/insecure-in-relationship", "unloved"),
+            ("싸운 뒤 회복하고 싶다", "다툼을 말할 수 있는 작은 요청과 24시간 행동으로 줄입니다.", "guides/repair-after-conflict", "after_fight"),
+            ("침묵하거나 시간이 필요하대요", "건강한 진정, 대화 회피, 먼저 지켜야 할 경계를 구분합니다.", "guides/healthy-boundaries", "silence_space"),
+            ("계속 사랑받지 못하는 느낌", "안정감, 보임, 들림, 기억됨의 엇갈림을 먼저 이름 붙입니다.", "guides/emotional-needs-checklist", "unloved"),
         ],
     },
     "es": {
-        "eyebrow": "SEARCH ROUTER",
+        "eyebrow": "START FROM YOUR QUESTION",
         "title": "¿Qué pregunta de relación te trajo aquí?",
-        "intro": "No necesitas leer toda la teoría primero. Elige la intención más cercana, abre la ruta adecuada y vuelve a la brújula gratis para una frase siguiente.",
+        "intro": "No necesitas leer toda la teoría primero. Elige la situación más cercana a hoy y usa la brújula gratis para preparar una frase que sí puedas decir.",
         "tool_cta": "Empezar brújula gratis",
         "items": [
             ("¿Somos compatibles?", "Lee compatibilidad de lenguajes del amor y ritmo natal opcional sin convertirlo en veredicto.", "tools/love-compatibility", "love_compatibility"),
-            ("Discutimos y quiero reparar", "Reduce la discusión a una petición clara y una acción de 24 horas.", "tools/relationship-repair-after-fight", "after_fight"),
-            ("Hay silencio o pide espacio", "Separa enfriamiento sano, evitación de conversación y límites que necesitan seguridad.", "tools/silent-treatment-relationship", "silence_space"),
-            ("Sigo sintiéndome no amada", "Nombra el desajuste alrededor de seguridad, ser vista, escuchada o recordada.", "tools/insecure-in-relationship", "unloved"),
+            ("Discutimos y quiero reparar", "Reduce la discusión a una petición clara y una acción de 24 horas.", "guides/repair-after-conflict", "after_fight"),
+            ("Hay silencio o pide espacio", "Separa enfriamiento sano, evitación de conversación y límites que necesitan seguridad.", "guides/healthy-boundaries", "silence_space"),
+            ("Sigo sintiéndome no amada", "Nombra el desajuste alrededor de seguridad, ser vista, escuchada o recordada.", "guides/emotional-needs-checklist", "unloved"),
         ],
     },
 }
@@ -8719,7 +8810,7 @@ COMPASS_SEARCH_TASKS = {
 def long_tail_compatibility_urls() -> list[tuple[str, str, str]]:
     return [
         (slug, f"{DOMAIN}/tools/{slug}/", LONG_TAIL_COMPATIBILITY_PAGES[slug]["en"]["desc"])
-        for slug in LONG_TAIL_COMPATIBILITY_PAGES
+        for slug in INDEXABLE_LONG_TAIL_SLUGS
     ]
 
 
@@ -8990,8 +9081,11 @@ def compass_intent_fast_track_section(lang: str) -> str:
         for slug, page_copy in (
             (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
             for slug in COMPASS_INTENT_FAST_TRACK["slugs"]
+            if slug in INDEXABLE_LONG_TAIL_SLUGS
         )
     )
+    if not cards:
+        return ""
     return f"""
 <section class="section compass-intent-fast-track" data-compass-intent-fast-track data-funnel-source="compass_intent_fast_track">
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div><a href="#relationship-compass-tool" data-funnel-event="compass_intent_tool">{escape(COMPASS_PAGE[lang]["primary"])}</a></div>
@@ -9140,9 +9234,11 @@ def compass_search_routes_section(lang: str) -> str:
 """
         for slug, page_copy in (
             (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
-            for slug in LONG_TAIL_COMPATIBILITY_PAGES
+            for slug in INDEXABLE_LONG_TAIL_SLUGS
         )
     )
+    if not cards:
+        return ""
     return f"""
 <section class="section compass-search-routes" data-compass-search-routes>
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></div>
@@ -9515,6 +9611,7 @@ def long_tail_related_guides_section(lang: str, slug: str) -> str:
 
 def love_compatibility_page(lang: str) -> None:
     copy = LOVE_COMPATIBILITY_PAGE[lang]
+    practice = LOVE_COMPATIBILITY_PRACTICE[lang]
     report_labels = REPORT_SECTION_LABELS[lang]
     t = LANGS[lang]
     report_subject = quote(copy["offer_subject"])
@@ -9530,6 +9627,8 @@ def love_compatibility_page(lang: str) -> None:
         for number, title, text in copy["cards"]
     )
     seo_items = "".join(f"<li>{escape(item)}</li>" for item in copy["seo_items"])
+    example_paragraphs = "".join(f"<p>{escape(item)}</p>" for item in practice["example"])
+    practice_steps = "".join(f"<li>{escape(item)}</li>" for item in practice["practice_steps"])
     long_tail_cards = "".join(
         f"""
 <a class="content-card" href="{lang_url(lang, "tools/" + slug)}" data-funnel-event="love_compatibility_long_tail_entry">
@@ -9541,7 +9640,7 @@ def love_compatibility_page(lang: str) -> None:
 """
         for slug, page_copy in (
             (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
-            for slug in LONG_TAIL_COMPATIBILITY_PAGES
+            for slug in INDEXABLE_LONG_TAIL_SLUGS
         )
     )
     faq_items = "".join(
@@ -9553,6 +9652,14 @@ def love_compatibility_page(lang: str) -> None:
 """
         for question, answer in copy["faq"]
     )
+    long_tail_section = ""
+    if long_tail_cards:
+        long_tail_section = f"""
+<section class="section">
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
+  <div class="card-grid compact">{long_tail_cards}</div>
+</section>
+"""
     schema = json_ld({
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -9605,12 +9712,17 @@ def love_compatibility_page(lang: str) -> None:
 <section class="section article-body standalone">
   <h2>{escape(copy["seo_title"])}</h2>
   <ul>{seo_items}</ul>
+</section>
+<section class="section article-body standalone" data-compatibility-example>
+  <h2>{escape(practice["example_title"])}</h2>
+  {example_paragraphs}
+  <h2>{escape(practice["practice_title"])}</h2>
+  <ol>{practice_steps}</ol>
+  <h2>{escape(practice["read_title"])}</h2>
+  <p>{escape(practice["read"])}</p>
   <div class="callout"><strong>{escape(copy["boundary_title"])}</strong><p>{escape(copy["boundary"])}</p></div>
 </section>
-<section class="section">
-  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(LONG_TAIL_COMPATIBILITY_SECTION_TITLE[lang])}</h2></div><a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="love_compatibility_section_compass">{escape(copy["primary"])}</a></div>
-  <div class="card-grid compact">{long_tail_cards}</div>
-</section>
+{long_tail_section}
 <section class="section supply-panel-section">
   <div class="section-head"><div><p class="eyebrow">{escape(report_labels["eyebrow"])}</p><h2>{escape(copy["offer_title"])}</h2></div><a href="{lang_url(lang, "compass")}#compass-report-offers" data-funnel-event="love_compatibility_report_ladder">{escape(report_labels["link"])}</a></div>
   <p class="section-intro">{escape(copy["offer_intro"])}</p>
@@ -9710,7 +9822,8 @@ def long_tail_compatibility_page(lang: str, slug: str) -> None:
   {faq_items}
 </section>
 """
-    write(page_path(lang, "tools/" + slug), layout(lang, copy["title"], copy["desc"], "tools/" + slug, body, "", "website", "/og-cover.jpg", schema))
+    robots = "index, follow, max-image-preview:large" if slug in INDEXABLE_LONG_TAIL_SLUGS else "noindex, follow"
+    write(page_path(lang, "tools/" + slug), layout(lang, copy["title"], copy["desc"], "tools/" + slug, body, "", "website", "/og-cover.jpg", schema, robots=robots))
 
 
 def mobile_page_jump(lang: str, key: str) -> str:
@@ -10261,7 +10374,7 @@ def home_compass_bridge_section(lang: str) -> str:
 """)
     for slug, page_copy in (
         (slug, LONG_TAIL_COMPATIBILITY_PAGES[slug][lang])
-        for slug in LONG_TAIL_COMPATIBILITY_PAGES
+        for slug in INDEXABLE_LONG_TAIL_SLUGS
     ):
         cards.append(f"""
 <a class="content-card" href="{lang_url(lang, "tools/" + slug)}" data-funnel-event="home_compass_bridge_long_tail">
@@ -13270,7 +13383,8 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
         "isPartOf": website_ref(lang),
         "mainEntityOfPage": {"@type": "WebPage", "@id": abs_url(lang, "guides/" + guide["slug"])},
     })
-    write(page_path(lang, "guides/" + guide["slug"]), layout(lang, title, desc, "guides/" + guide["slug"], body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+    robots = "index, follow, max-image-preview:large" if lang in INDEXABLE_GUIDE_LANGS else "noindex, follow"
+    write(page_path(lang, "guides/" + guide["slug"]), layout(lang, title, desc, "guides/" + guide["slug"], body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, robots=robots))
 
 
 def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str) -> None:
@@ -14908,7 +15022,7 @@ Policy: {DOMAIN}/privacy/
 
 
 def write_ads_txt() -> None:
-    write(ROOT / "ads.txt", f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0\n")
+    write(ROOT / "ads.txt", f"google.com, {ADSENSE_PUBLISHER_ID}, DIRECT, f08c47fec0942fa0\n")
 
 
 def funnel_event_category(name: str) -> str:
@@ -14992,7 +15106,12 @@ def collect_funnel_events() -> dict:
         for path in ROOT.rglob("*.html")
         if not any(part in {"output", "node_modules", ".git"} for part in path.parts)
     )
-    html_sources = [(path, html_page(path), path.read_text(encoding="utf-8", errors="ignore")) for path in html_paths]
+    html_sources = []
+    for path in html_paths:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        if re.search(r'<meta name="robots" content="[^"]*noindex', text, re.I):
+            continue
+        html_sources.append((path, html_page(path), text))
     for _path, page, text in html_sources:
         for _quote, name in event_re.findall(text):
             add_event(name, page)
@@ -15307,10 +15426,11 @@ def write_guardian_profiles() -> None:
     write(ROOT / "guardian-profiles.json", json.dumps(collect_guardian_profiles(), ensure_ascii=False, indent=2) + "\n")
 
 
-def site_index_paths() -> list[str]:
-    long_tail_paths = [f"tools/{slug}" for slug in LONG_TAIL_COMPATIBILITY_PAGES]
+def site_index_paths(lang: str | None = None) -> list[str]:
+    long_tail_paths = [f"tools/{slug}" for slug in INDEXABLE_LONG_TAIL_SLUGS]
     paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", *long_tail_paths, "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
-    paths += [f"guides/{guide['slug']}" for guide in GUIDES]
+    if lang is None or lang in INDEXABLE_GUIDE_LANGS:
+        paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     return paths
 
@@ -15335,9 +15455,8 @@ def site_index_group(path: str) -> str:
 
 def collect_site_index() -> dict:
     pages = []
-    paths = site_index_paths()
     for lang, cfg in LANGS.items():
-        for path in paths:
+        for path in site_index_paths(lang):
             pages.append({
                 "lang": lang,
                 "hreflang": cfg["code"],
@@ -15357,7 +15476,7 @@ def collect_site_index() -> dict:
             for lang, cfg in LANGS.items()
         ],
         "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
-        "totals": {"pages": len(pages), "paths": len(paths), "languages": len(LANGS), "groups": dict(sorted(groups.items()))},
+        "totals": {"pages": len(pages), "paths": len(site_index_paths()), "languages": len(LANGS), "groups": dict(sorted(groups.items()))},
         "coreFlows": [
             {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/resources/"]},
             {"id": "quiz_to_guardian", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"]},
@@ -15565,7 +15684,7 @@ def collect_ai_discovery_index() -> dict:
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
-        {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass", "priority": 0.94},
+        {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step", "priority": 0.94},
         *long_tail_priority_urls,
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
         {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
@@ -15654,13 +15773,13 @@ def collect_search_indexing_plan() -> dict:
             "target": "Cold visitors should understand what to do next within one click.",
         },
         "long_tail_search": {
-            "label": "Long-tail search routes",
+            "label": "Editorially reviewed relationship routes",
             "purpose": "Submit next because these pages match specific love compatibility, BaZi compatibility, and relationship question searches.",
             "target": "Search visitors should land on a focused answer and continue into Compass or quiz.",
         },
         "retention_and_trust": {
             "label": "Retention, product, and trust routes",
-            "purpose": "Submit after the search routes so users and crawlers see the full support, safety, and commerce boundary.",
+            "purpose": "Publish only routes that have independent editorial review, practical value, and clear safety boundaries.",
             "target": "Returning visitors should find repair tasks, keepsakes, Luna, and trust pages clearly.",
         },
     }
@@ -16408,15 +16527,17 @@ def write_redirects() -> None:
 
 
 def write_support_files() -> None:
-    paths = site_index_paths()
+    paths_by_lang = {lang: set(site_index_paths(lang)) for lang in LANGS}
     sitemap = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     ]
-    for path in paths:
-        alternates = [f'    <xhtml:link rel="alternate" hreflang="{cfg["code"]}" href="{xml_escape(abs_url(code, path))}" />' for code, cfg in LANGS.items()]
-        alternates.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{xml_escape(abs_url("zh", path))}" />')
-        for lang in LANGS:
+    for path in site_index_paths():
+        alternate_langs = [code for code in LANGS if path in paths_by_lang[code]]
+        alternates = [f'    <xhtml:link rel="alternate" hreflang="{LANGS[code]["code"]}" href="{xml_escape(abs_url(code, path))}" />' for code in alternate_langs]
+        if "zh" in alternate_langs:
+            alternates.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{xml_escape(abs_url("zh", path))}" />')
+        for lang in alternate_langs:
             url = abs_url(lang, path)
             sitemap.append(
                 "  <url>\n"

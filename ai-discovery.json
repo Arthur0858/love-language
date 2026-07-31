@@ -378,103 +378,8 @@
     },
     {
       "url": "https://lovetypes.tw/tools/love-compatibility/",
-      "intent": "SEO entry for love language compatibility, BaZi love compatibility, and Relationship Compass",
+      "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step",
       "priority": 0.94
-    },
-    {
-      "url": "https://lovetypes.tw/tools/bazi-love-compatibility/",
-      "intent": "A BaZi love compatibility entry that turns birth rhythm into relationship insight, not a destiny verdict.",
-      "priority": 0.92
-    },
-    {
-      "url": "https://lovetypes.tw/tools/2026-love-timing/",
-      "intent": "Turn 2026 love forecast search intent into relationship rhythm: hard talks, rest, repair, and next steps.",
-      "priority": 0.9
-    },
-    {
-      "url": "https://lovetypes.tw/tools/love-language-compatibility/",
-      "intent": "A love language compatibility entry for seeing how two people receive love, where signals cross, and what to say next.",
-      "priority": 0.88
-    },
-    {
-      "url": "https://lovetypes.tw/tools/relationship-compatibility-test/",
-      "intent": "A 3-minute relationship compatibility test that maps cross-signals, love-language needs, and one next repair step.",
-      "priority": 0.86
-    },
-    {
-      "url": "https://lovetypes.tw/tools/couples-communication-quiz/",
-      "intent": "A couples communication quiz that turns complaints, silence, and conflict into one small request and a repair route.",
-      "priority": 0.84
-    },
-    {
-      "url": "https://lovetypes.tw/tools/relationship-repair-after-fight/",
-      "intent": "After a fight, use the LoveTypes Relationship Compass to turn hurt, cross-signals, and silence into one safer repair request.",
-      "priority": 0.82
-    },
-    {
-      "url": "https://lovetypes.tw/tools/emotional-distance-relationship/",
-      "intent": "When a relationship feels distant, use the LoveTypes Compass to find the care being misread, the missing presence, and one repair step.",
-      "priority": 0.8
-    },
-    {
-      "url": "https://lovetypes.tw/tools/trust-issues-relationship/",
-      "intent": "When trust feels damaged, use the LoveTypes Compass to separate hurt, boundaries, and one visible repair action.",
-      "priority": 0.78
-    },
-    {
-      "url": "https://lovetypes.tw/tools/insecure-in-relationship/",
-      "intent": "When you feel insecure in a relationship, use the LoveTypes Compass to separate triggers, love-language needs, and one request that can be answered.",
-      "priority": 0.76
-    },
-    {
-      "url": "https://lovetypes.tw/tools/silent-treatment-relationship/",
-      "intent": "When silence, disappearing, or no replies hurt the relationship, use the LoveTypes Compass to separate cooling down, avoidance, control, and boundaries.",
-      "priority": 0.74
-    },
-    {
-      "url": "https://lovetypes.tw/tools/breakup-signs-relationship/",
-      "intent": "Searching for breakup signs or whether the relationship can be repaired? Use the LoveTypes Compass to separate warning signs, repairable mismatch, and boundaries.",
-      "priority": 0.72
-    },
-    {
-      "url": "https://lovetypes.tw/tools/feeling-misunderstood-relationship/",
-      "intent": "When you feel misunderstood by your partner, use the LoveTypes Compass to translate complaints into love-language needs and one answerable request.",
-      "priority": 0.7
-    },
-    {
-      "url": "https://lovetypes.tw/tools/partner-wont-communicate/",
-      "intent": "When your partner refuses to talk or shuts down, use the LoveTypes Compass to separate pressure response, love-language mismatch, boundaries, and one small request.",
-      "priority": 0.68
-    },
-    {
-      "url": "https://lovetypes.tw/tools/one-sided-relationship/",
-      "intent": "If you feel like you are the only one trying, use the LoveTypes Compass to separate love-language mismatch, uneven responsibility, boundaries, and one concrete request.",
-      "priority": 0.66
-    },
-    {
-      "url": "https://lovetypes.tw/tools/lonely-in-relationship/",
-      "intent": "If you feel lonely in a relationship, use the LoveTypes Compass to separate quality-time mismatch, response gaps, emotional distance, and one small request.",
-      "priority": 0.64
-    },
-    {
-      "url": "https://lovetypes.tw/tools/partner-doesnt-listen/",
-      "intent": "If your partner does not listen, use the LoveTypes Compass to separate response gaps, love-language mismatch, pressure defense, and one answerable request.",
-      "priority": 0.62
-    },
-    {
-      "url": "https://lovetypes.tw/tools/taken-for-granted-relationship/",
-      "intent": "If you feel taken for granted in a relationship, use the LoveTypes Compass to separate unseen effort, affirmation needs, shared responsibility, and one observable change.",
-      "priority": 0.6
-    },
-    {
-      "url": "https://lovetypes.tw/tools/partner-needs-space-relationship/",
-      "intent": "If your partner says they need space, use the LoveTypes Compass to separate cooling down, avoidance, contact rhythm, boundaries, and one safe request.",
-      "priority": 0.58
-    },
-    {
-      "url": "https://lovetypes.tw/tools/long-distance-fight-repair/",
-      "intent": "After a long-distance fight, use the LoveTypes Relationship Compass to turn text misunderstandings, missing presence, and repair requests into one next step.",
-      "priority": 0.56
     },
     {
       "url": "https://lovetypes.tw/characters/",
@@ -537,12 +442,12 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 260,
-      "paths": 52,
+      "pages": 117,
+      "paths": 33,
       "languages": 5,
       "groups": {
-        "content": 85,
-        "conversion": 125,
+        "content": 37,
+        "conversion": 30,
         "guardians": 30,
         "home": 5,
         "trust": 15
@@ -571,7 +476,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 33,
+    "priorityUrls": 14,
     "languages": 5,
     "discoveryFiles": 11
   }

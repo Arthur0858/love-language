@@ -20,7 +20,18 @@ CORE_LATIN_MIN_WORDS = 520
 CORE_CJK_MIN_CHARS = 900
 TOOL_LATIN_MIN_WORDS = 500
 TOOL_CJK_MIN_CHARS = 800
+MIN_INDEXABLE_TOOL_PAGES = 5
+MAX_INDEXABLE_TOOL_PAGES = 20
 CORE_ROUTES = ["", "about", "theory", "guides", "characters"]
+SEARCH_FIRST_MARKERS = (
+    "SEARCH ANSWER",
+    "SEARCH ROUTER",
+    "Built for these search intents",
+    "適合這些搜尋意圖",
+    "如果你是從搜尋進來",
+    "審核流程",
+    "SEO entry",
+)
 
 
 class PageTextParser(HTMLParser):
@@ -50,6 +61,11 @@ def read_visible_text(path: Path) -> tuple[str, bool]:
     parser = PageTextParser()
     parser.feed(path.read_text(encoding="utf-8", errors="ignore"))
     return " ".join(parser.text), parser.noindex
+
+
+def search_first_issues(path: Path, text: str) -> list[str]:
+    rel = path.relative_to(ROOT)
+    return [f"{rel}: public copy contains search-first marker {marker!r}" for marker in SEARCH_FIRST_MARKERS if marker in text]
 
 
 def guide_paths() -> list[tuple[str, Path]]:
@@ -101,6 +117,7 @@ def audit() -> dict:
             continue
         checked += 1
         rel = path.relative_to(ROOT)
+        issues.extend(search_first_issues(path, text))
         if lang in {"en", "es"}:
             latin_checked += 1
             words = re.findall(r"[A-Za-zÀ-ÿĀ-ž]+", text)
@@ -120,6 +137,7 @@ def audit() -> dict:
             continue
         core_checked += 1
         rel = path.relative_to(ROOT)
+        issues.extend(search_first_issues(path, text))
         if lang in {"en", "es"}:
             core_latin_checked += 1
             words = re.findall(r"[A-Za-zÀ-ÿĀ-ž]+", text)
@@ -139,6 +157,7 @@ def audit() -> dict:
             continue
         tool_checked += 1
         rel = path.relative_to(ROOT)
+        issues.extend(search_first_issues(path, text))
         if lang in {"en", "es"}:
             tool_latin_checked += 1
             words = re.findall(r"[A-Za-zÀ-ÿĀ-ž]+", text)
@@ -149,8 +168,13 @@ def audit() -> dict:
             cjk_chars = re.findall(r"[一-龥ぁ-んァ-ン가-힣]", text)
             if len(cjk_chars) < TOOL_CJK_MIN_CHARS:
                 issues.append(f"{rel}: CJK tool page too thin ({len(cjk_chars)} chars < {TOOL_CJK_MIN_CHARS})")
-    if tool_checked < 100:
-        issues.append(f"expected at least 100 indexable tool pages, found {tool_checked}")
+    if tool_checked < MIN_INDEXABLE_TOOL_PAGES:
+        issues.append(f"expected at least {MIN_INDEXABLE_TOOL_PAGES} indexable tool pages, found {tool_checked}")
+    if tool_checked > MAX_INDEXABLE_TOOL_PAGES:
+        issues.append(
+            f"too many indexable tool pages ({tool_checked} > {MAX_INDEXABLE_TOOL_PAGES}); "
+            "review generated search-entry pages before indexing"
+        )
     return {
         "checked": checked,
         "latinChecked": latin_checked,

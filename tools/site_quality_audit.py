@@ -362,10 +362,11 @@ def load_generator_config():
 
 GENERATOR_CONFIG = load_generator_config()
 ADSENSE_ACCOUNT = GENERATOR_CONFIG.ADSENSE_ACCOUNT
+ADSENSE_PUBLISHER_ID = GENERATOR_CONFIG.ADSENSE_PUBLISHER_ID
 EXPECTED_LOCALIZED_PATHS = len(GENERATOR_CONFIG.site_index_paths())
-EXPECTED_INDEXABLE_PAGES = EXPECTED_LOCALIZED_PATHS * len(GENERATOR_CONFIG.LANGS)
+EXPECTED_INDEXABLE_PAGES = sum(len(GENERATOR_CONFIG.site_index_paths(lang)) for lang in GENERATOR_CONFIG.LANGS)
 EXPECTED_AI_DISCOVERY_PRIORITY_URLS = len(GENERATOR_CONFIG.collect_ai_discovery_index()["priorityUrls"])
-EXPECTED_ADS_TXT = f"google.com, {ADSENSE_ACCOUNT}, DIRECT, f08c47fec0942fa0"
+EXPECTED_ADS_TXT = f"google.com, {ADSENSE_PUBLISHER_ID}, DIRECT, f08c47fec0942fa0"
 FORMAL_GUIDE_GUARDIANS = {guide["slug"]: guide["guardian"] for guide in GENERATOR_CONFIG.GUIDES}
 LEGACY_ZH_GUIDE_TARGETS = {slug: target for slug, _title, _desc, target in GENERATOR_CONFIG.LEGACY_ZH_GUIDES}
 GUIDE_FOCUS_MARKERS = {
@@ -1405,8 +1406,6 @@ def parse_llms_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) -> t
         f"{DOMAIN}/",
         f"{DOMAIN}/compass/",
         f"{DOMAIN}/tools/love-compatibility/",
-        f"{DOMAIN}/tools/bazi-love-compatibility/",
-        f"{DOMAIN}/tools/2026-love-timing/",
         f"{DOMAIN}/garden-map/",
         f"{DOMAIN}/characters/",
         f"{DOMAIN}/guides/",
@@ -1515,8 +1514,6 @@ def parse_humans_txt(parsers: dict[Path, PageParser], sitemap_urls: set[str]) ->
         f"{DOMAIN}/",
         f"{DOMAIN}/compass/",
         f"{DOMAIN}/tools/love-compatibility/",
-        f"{DOMAIN}/tools/bazi-love-compatibility/",
-        f"{DOMAIN}/tools/2026-love-timing/",
         f"{DOMAIN}/garden-map/",
         f"{DOMAIN}/characters/",
         f"{DOMAIN}/resources/",
@@ -1894,6 +1891,8 @@ def check_funnel_event_markup(parsers: dict[Path, PageParser]) -> tuple[list[str
         "free_keepsake_download",
     }
     for page, parser in parsers.items():
+        if is_noindex(parser):
+            continue
         for tag, attrs in parser.funnel_actions:
             stats["funnel_markup_actions_checked"] += 1
             event_name = attrs.get("data-funnel-event", "")
@@ -3640,15 +3639,25 @@ def parse_sitemap(parsers: dict[Path, PageParser]) -> tuple[set[str], list[str],
             elif href_target.suffix == ".html" and is_noindex(parsers.get(href_target, PageParser())):
                 issues.append(f"{SITEMAP_PATH}: alternate href points to noindex page: {href}")
 
-        missing_hreflangs = sorted(EXPECTED_HREFLANGS.difference(hreflang_map))
-        extra_hreflangs = sorted(set(hreflang_map).difference(EXPECTED_HREFLANGS))
+        expected_hreflang_map = expected_hreflang_map_for_url(loc)
+        expected_hreflang_map = {
+            hreflang: href
+            for hreflang, href in expected_hreflang_map.items()
+            if hreflang == "x-default"
+            or (
+                (target_for(ROOT / "index.html", href)[0] in parsers)
+                and not is_noindex(parsers[target_for(ROOT / "index.html", href)[0]])
+            )
+        }
+        expected_hreflangs = set(expected_hreflang_map)
+        missing_hreflangs = sorted(expected_hreflangs.difference(hreflang_map))
+        extra_hreflangs = sorted(set(hreflang_map).difference(expected_hreflangs))
         if missing_hreflangs:
             issues.append(f"{SITEMAP_PATH}: missing sitemap hreflang alternates for {loc}: {', '.join(missing_hreflangs)}")
         if extra_hreflangs:
             issues.append(f"{SITEMAP_PATH}: unexpected sitemap hreflang alternates for {loc}: {', '.join(extra_hreflangs)}")
         if hreflang_map.get("x-default") and hreflang_map.get("zh-TW") and hreflang_map["x-default"] != hreflang_map["zh-TW"]:
             issues.append(f"{SITEMAP_PATH}: x-default sitemap alternate should match zh-TW for {loc}")
-        expected_hreflang_map = expected_hreflang_map_for_url(loc)
         if loc not in set(expected_hreflang_map.values()):
             issues.append(f"{SITEMAP_PATH}: loc does not match any expected localized hreflang URL: {loc}")
         for hreflang, expected_href in expected_hreflang_map.items():

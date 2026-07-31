@@ -113,6 +113,7 @@ def main() -> int:
     ]
 
     for lang, lang_config in config.LANGS.items():
+        indexable_routes = set(config.site_index_paths(lang))
         for route in expected_routes:
             path = route_path(lang_config, route)
             routes_checked += 1
@@ -120,8 +121,11 @@ def main() -> int:
                 issues.append(f"{lang}:{route or '/'} missing localized route file: {path.relative_to(ROOT)}")
                 continue
             page = parse_page(path)
-            if page.noindex:
+            expected_indexable = route in indexable_routes
+            if expected_indexable and page.noindex:
                 issues.append(f"{lang}:{route or '/'} expected indexable route, found noindex: {path.relative_to(ROOT)}")
+            if not expected_indexable and not page.noindex:
+                issues.append(f"{lang}:{route or '/'} expected noindex route, found indexable: {path.relative_to(ROOT)}")
             if page.html_lang != lang_config["code"]:
                 issues.append(
                     f"{lang}:{route or '/'} html lang should be {lang_config['code']}, got {page.html_lang!r}"

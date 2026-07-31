@@ -15,8 +15,8 @@ from urllib.parse import urljoin, urlparse
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree as ET
 
-from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_VISIBLE
-from generate_multilingual_site import LONG_TAIL_COMPATIBILITY_PAGES
+from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_COMMERCIAL, FORBIDDEN_VISIBLE
+from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
 
 
 BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
@@ -91,6 +91,18 @@ def page_issues(route: str, response: Response) -> list[str]:
     for host in COMMERCE_HOSTS:
         if host in raw.lower():
             issues.append(f"{route}: commerce host leaked outside /resources/: {host}")
+    main_match = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
+    main_raw = main_match.group(1) if main_match else ""
+    main_visible = visible_text(main_raw)
+    if route != "/about/" and re.search(r'href="/resources/(?:#[^"]*)?"', main_raw):
+        issues.append(f"{route}: resources link outside About")
+    if re.search(r'href="/(?:luna-yoga-music|keepsakes)/(?:#[^"]*)?"', main_raw):
+        issues.append(f"{route}: noindex commercial route linked from indexed main")
+    if route != "/contact/" and "mailto:" in main_raw:
+        issues.append(f"{route}: mailto leaked into indexed main")
+    for phrase in FORBIDDEN_COMMERCIAL:
+        if phrase in main_visible:
+            issues.append(f"{route}: commercial phrase {phrase!r} leaked into indexed main")
     if 'type="application/ld+json"' not in raw:
         issues.append(f"{route}: JSON-LD missing")
     return issues
@@ -110,8 +122,8 @@ def main() -> int:
         print(f"public_review_issues=1\n/sitemap.xml: invalid XML: {exc}")
         return 1
     routes = [urlparse(url).path for url in urls]
-    if len(urls) != 40 or len(set(urls)) != 40:
-        issues.append(f"/sitemap.xml: expected 40 unique URLs, got {len(urls)}")
+    if len(urls) != 38 or len(set(urls)) != 38:
+        issues.append(f"/sitemap.xml: expected 38 unique URLs, got {len(urls)}")
     if any(not url.startswith(CANONICAL_BASE + "/") for url in urls):
         issues.append("/sitemap.xml: contains a non-production or non-zh URL")
 
@@ -124,14 +136,14 @@ def main() -> int:
     site_index = request("/site-index.json")
     try:
         index = json.loads(site_index.text)
-        if site_index.status != 200 or index.get("totals", {}).get("pages") != 40:
-            issues.append("/site-index.json: expected 40 pages")
+        if site_index.status != 200 or index.get("totals", {}).get("pages") != 38:
+            issues.append("/site-index.json: expected 38 pages")
         if {page.get("lang") for page in index.get("pages", [])} != {"zh"}:
             issues.append("/site-index.json: expected zh-only pages")
     except json.JSONDecodeError:
         issues.append("/site-index.json: invalid JSON")
 
-    for route in ("/resources/", "/luna-yoga-music/"):
+    for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/"):
         response = request(route)
         if response.status != 200 or '<meta name="robots" content="noindex, follow"' not in response.text:
             issues.append(f"{route}: expected 200 with noindex, follow")
@@ -144,14 +156,19 @@ def main() -> int:
         if response.status != 302 or response.headers.get("Location") not in ("/", CANONICAL_BASE + "/"):
             issues.append(f"/{prefix}/: expected 302 to /")
 
+    compatibility = request("/tools/love-compatibility/", follow=False)
+    if compatibility.status != 301 or compatibility.headers.get("Location") not in ("/compass/", CANONICAL_BASE + "/compass/"):
+        issues.append(f"/tools/love-compatibility/: expected 301 to /compass/, got {compatibility.status}")
+
     retired_routes = [f"/tools/{slug}/" for slug in LONG_TAIL_COMPATIBILITY_PAGES]
+    retired_routes += [f"/guides/{slug}/" for slug, _title, _desc, _target in LEGACY_ZH_GUIDES]
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(request, route, follow=False): route for route in retired_routes}
         for future in as_completed(futures):
             route = futures[future]
             status = future.result().status
-            if status != 404:
-                issues.append(f"{route}: expected 404, got {status}")
+            if status not in {404, 410}:
+                issues.append(f"{route}: expected 404/410, got {status}")
 
     ads = request("/ads.txt")
     if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:

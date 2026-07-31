@@ -52,20 +52,26 @@
 <main id="main" tabindex="-1">
 
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · 2026-07-31</p><h1>分享卡是否包含私人作答資料實測</h1><p>檢查分享文字、圖片與網址，只包含守護者摘要，不帶出逐題答案或本機修復內容。</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · LT-LAB-PR-002</p><h1>分享卡是否包含私人作答資料實測</h1><p>檢查分享文字、圖片與網址，只包含守護者摘要，不帶出逐題答案或本機修復內容。</p></div>
   <img src="/assets/lovetypes/lab/share-card-privacy-test.webp" alt="LoveTypes 守護者分享控制與分享範圍提示測試畫面" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-07-31">實測與更新：2026-07-31</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">分享功能應讓使用者知道會離開裝置的是什麼。本次逐項檢查 Web Share、複製文字、故事卡圖片與分享網址，確認輸出只包含守護者名稱、愛之語摘要與公開頁連結，不附帶 15 題答案、百分比細節、修復表文字或 localStorage 值。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>支援 Web Share 的行動版 Chromium</li><li>不支援 Web Share 時的複製備援</li><li>故事卡圖片直接開啟</li><li>網址列與 query string 人工檢查</li></ul></section>
+    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>支援 Web Share 的行動版 Chromium</li><li>不支援 Web Share 時的複製備援</li><li>故事卡圖片直接開啟</li><li>網址列與 query string 人工檢查</li></ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>先完成偏向 Claire 的固定答案，並在修復表輸入辨識字串 LT-PRIVATE-ANSWER-0731。依序擷取 Web Share payload、複製備援純文字、預製故事卡網址與頁面 URL；搜尋辨識字串、questions、scores、repair 與 localStorage 鍵名。</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol><li>完成測驗並在修復表輸入辨識用測試字串。</li><li>依序觸發分享、複製與故事卡開啟。</li><li>把輸出貼到純文字區，搜尋測試字串與逐題資料。</li><li>檢查分享網址是否含結果參數或敏感欄位。</li></ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">分享文字</th><td>只有守護者摘要與公開網址</td><td><strong>通過</strong></td></tr><tr><th scope="row">複製備援</th><td>未包含逐題答案及修復文字</td><td><strong>通過</strong></td></tr><tr><th scope="row">故事卡</th><td>為預製角色圖片，不含本機資料</td><td><strong>通過</strong></td></tr><tr><th scope="row">分享網址</th><td>沒有測驗分數或個人文字參數</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>分享標題包含 LoveTypes 與 Claire，本文包含守護者摘要及公開角色頁 URL。四種輸出都沒有逐題答案、五類分數、修復字串或 localStorage 值；網址沒有 query/hash 個人參數。故事卡是部署前產生的固定 WebP，同一角色的使用者取得相同檔案。</p><p>測試在真正送到外部平台前攔截並檢查網站準備的 payload，因為訊息送出後的保存、轉傳與刪除由接收平台控制。即使分享卡不含逐題內容，守護者名稱本身仍可能是使用者不想公開的資訊，所以介面要在按鈕附近說明範圍，且不得預設自動分享。</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是四條分享路徑只輸出公開守護者摘要與公開網址，且使用者必須主動觸發。逐題答案、五類分數、修復文字、辨識字串、保存鍵、姓名或聯絡資料任一出現即失敗；網址帶有可還原個人結果的參數也算失敗。</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>修正後以另一位守護者和新的辨識字串重跑，避免測試只對單一卡片成立。Web Share 不可用時要檢查複製備援，不得因 API 缺失改成自動下載或自動導頁。外部平台接收後的保存不由本站控制，因此界面仍要讓使用者在送出前看到分享範圍與取消空間。</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含分享範圍提示與攔截後純文字；不公開外部通訊帳號畫面，也不以平台成功接收作為本站隱私判準。 每條輸出另存雜湊與測試時間，方便確認是否為同一 build。</p></section>
+    <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/share-card-privacy-test-detail.webp" alt="LoveTypes 分享前提示與純文字 payload 的核對畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 分享前提示與純文字 payload 的核對畫面</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>使用者可能把守護者名稱誤認為完整作答紀錄已被公開，因此需要在操作附近說明分享範圍。</p></section>
     <section data-lab-fix><h2>已採取的修正</h2><p>分享區補上範圍提示，明確區分公開角色卡與只留在瀏覽器的個人內容。</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>分享完成後，接收平台如何儲存訊息由該平台決定；本站無法替外部通訊服務承諾刪除。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31：公開辨識字串、輸出搜尋條件與 Web Share／複製／圖片／URL 四路結果。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -82,7 +88,7 @@
 
 
 <footer class="site-footer">
-  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a><a href="/resources/"><strong>補給與商業揭露</strong><span>所有外部購買與聯盟連結集中於這個非索引頁面。</span></a></div>
+  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a></div>
   <p class="footer-disclosure">LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。</p>
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>

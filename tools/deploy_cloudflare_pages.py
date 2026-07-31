@@ -86,20 +86,23 @@ def load_generator_config():
 
 
 def collect_public_tool_html_paths() -> set[str]:
-    generator = load_generator_config()
-    slugs = ["love-compatibility"]
-    paths: set[str] = set()
-    for _lang, cfg in generator.LANGS.items():
-        prefix = cfg["prefix"]
-        for slug in slugs:
-            rel_path = f"tools/{slug}/index.html"
-            if prefix:
-                rel_path = f"{prefix}/{rel_path}"
-            paths.add(rel_path)
-    return paths
+    return set()
 
 
 PUBLIC_TOOL_HTML_PATHS = collect_public_tool_html_paths()
+
+
+def collect_review_html_paths() -> set[str]:
+    generator = load_generator_config()
+    paths = {
+        f"{path}/index.html" if path else "index.html"
+        for path in generator.site_index_paths()
+    }
+    paths.update({"404.html", "resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"})
+    return paths
+
+
+REVIEW_HTML_PATHS = collect_review_html_paths()
 
 
 class DeployError(RuntimeError):
@@ -221,6 +224,16 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
+    if rel_path.endswith(".html") and rel_path not in REVIEW_HTML_PATHS:
+        return True
+    if rel_path.startswith("compass-data-") and rel_path != "compass-data-zh.js":
+        return True
+    if rel_path.startswith("quiz-data-") and not rel_path.startswith("quiz-data-zh-"):
+        return True
+    if rel_path.startswith("assets/lovetypes/share/") and any(
+        rel_path.endswith(f"-story-{lang}.webp") for lang in ("en", "ja", "ko", "es")
+    ):
+        return True
     if rel_path in PUBLIC_TOOL_HTML_PATHS:
         return False
     parts = rel_path.split("/")

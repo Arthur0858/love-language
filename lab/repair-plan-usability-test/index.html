@@ -52,20 +52,26 @@
 <main id="main" tabindex="-1">
 
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · 2026-07-31</p><h1>7 日修復表手機完成流程實測</h1><p>在窄螢幕逐欄完成、重新整理、返回與清除，檢查表單是否能在不登入下使用。</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · LT-LAB-UX-001</p><h1>7 日修復表手機完成流程實測</h1><p>在窄螢幕逐欄完成、重新整理、返回與清除，檢查表單是否能在不登入下使用。</p></div>
   <img src="/assets/lovetypes/lab/repair-plan-usability-test.webp" alt="LoveTypes 7 日修復表在 360 像素手機畫面中的填寫測試" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-07-31">實測與更新：2026-07-31</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">這次測試把修復表當成真正工作工具，而不是展示頁。測試人員以手機寬度依序填入守護者、錯頻事件、小請求與補給選擇，關閉鍵盤、重新整理、離開再返回，並測試長文字、空白欄位與清除。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>Chromium 360×800 與 390×844</li><li>軟體鍵盤高度模擬</li><li>一般與較長繁中文字串</li><li>減少動態效果開啟與關閉</li></ul></section>
+    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 360×800 與 390×844</li><li>軟體鍵盤高度模擬</li><li>一般與較長繁中文字串</li><li>減少動態效果開啟與關閉</li></ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>360×800 與 390×844 各走一次。短字串依序填 Iris、昨晚訊息被略過、希望今晚有十分鐘專心聽、週日回看；長字串以 120 個繁中文字填入每個 textarea。使用 Tab、Shift+Tab、Enter 與觸控各完成一次。</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol><li>從測驗結果進入 7 日修復表。</li><li>逐欄輸入短句，再以 120 字長句測試。</li><li>重新整理與返回頁面，確認保存提示。</li><li>清除全部資料並以鍵盤重新走一次流程。</li></ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">欄位寬度</th><td>360px 下沒有水平捲動</td><td><strong>通過</strong></td></tr><tr><th scope="row">鍵盤操作</th><td>標籤、焦點與按鈕順序可理解</td><td><strong>通過</strong></td></tr><tr><th scope="row">本機保存</th><td>重新整理後仍在，清除後移除</td><td><strong>通過</strong></td></tr><tr><th scope="row">長文字</th><td>容器增高，不遮住後續控制</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>兩個寬度均無水平溢出，長文字使欄位垂直增高且不遮住下一個標籤。重新整理後四欄仍在，清除後全部回空白。鍵盤焦點依 DOM 閱讀順序移動，固定按鈕沒有蓋住目前欄位；開啟 reduced-motion 後未出現強制平滑捲動。</p><p>本測試記錄完成一張工作表所需的互動，不把表單存在視為使用者真的完成關係修復。手機軟體鍵盤以 Chromium viewport 模擬，無法涵蓋所有第三方鍵盤；因此仍保留內容可見、標籤明確與欄位可自然增高等不依賴特定鍵盤的防護。完成後只提供複製、免費指南與回看日期。</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是兩種手機寬度無水平捲動，標籤與欄位關係清楚，長文字不遮擋控制，鍵盤能依閱讀順序完成，保存與清除結果一致。固定按鈕蓋住目前輸入、清除後資料仍在、重新整理丟失未提示，或完成後只剩商品入口都算失敗。</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>重測會從空白狀態開始，以短字串完成一次，再以 120 字壓力輸入完成一次；兩輪都執行重新整理、返回與清除。觸控與鍵盤路徑分開記錄，避免一條可用掩蓋另一條中斷。若欄位、固定導覽、保存鍵或完成區改版，這份流程必須全程重跑。</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含短輸入、長輸入與清除後狀態。所有文字均為工程 fixture，不代表真人衝突，也不據此宣稱工作表能改善關係。 截圖同時保留 viewport 與測試字串，避免把桌面畫面誤標為手機。 清除後畫面另存一張，確認不是只清掉可見文字。</p></section>
+    <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/repair-plan-usability-test-detail.webp" alt="LoveTypes 7 日修復表填入長文字後仍不遮擋控制的手機畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 7 日修復表填入長文字後仍不遮擋控制的手機畫面</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>若一次展示太多商品與角色連結，工作表完成後的下一步不明確。</p></section>
     <section data-lab-fix><h2>已採取的修正</h2><p>完成區優先提供下載／複製、免費指南與回顧日期；外部購買只經補給頁前往。</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>測試未涵蓋所有第三方鍵盤、螢幕閱讀器與舊版瀏覽器；資料也不跨裝置同步。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31：加入固定欄位內容、120 字壓力輸入、鍵盤路徑與兩種手機尺寸觀察。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -82,7 +88,7 @@
 
 
 <footer class="site-footer">
-  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a><a href="/resources/"><strong>補給與商業揭露</strong><span>所有外部購買與聯盟連結集中於這個非索引頁面。</span></a></div>
+  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a></div>
   <p class="footer-disclosure">LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。</p>
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>

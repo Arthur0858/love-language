@@ -30,6 +30,7 @@ const viewports = [
 const routes = [
   { name: 'home', path: '/' },
   { name: 'quiz', path: '/', quiz: true },
+  { name: 'start', path: '/start/' },
   { name: 'guides', path: '/guides/' },
   { name: 'guide-share-result', path: '/guides/share-your-result/' },
   { name: 'guide-conflict-repair', path: '/guides/repair-after-conflict/' },
@@ -37,7 +38,8 @@ const routes = [
   { name: 'lab', path: '/lab/' },
   { name: 'lab-scoring', path: '/lab/quiz-scoring-test/' },
   { name: 'lab-accessibility', path: '/lab/keyboard-accessibility-test/' },
-  { name: 'compatibility', path: '/tools/love-compatibility/' },
+  { name: 'compass', path: '/compass/' },
+  { name: 'repair-plan', path: '/repair-plan/' },
   { name: 'about', path: '/about/' },
   { name: 'resources', path: '/resources/' },
 ];

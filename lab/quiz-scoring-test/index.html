@@ -52,20 +52,26 @@
 <main id="main" tabindex="-1">
 
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · 2026-07-31</p><h1>15 題測驗評分與同分處理實測</h1><p>逐題固定輸入，核對五位守護者分數、百分比與同分排序是否一致。</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · LT-LAB-QZ-001</p><h1>15 題測驗評分與同分處理實測</h1><p>逐題固定輸入，核對五位守護者分數、百分比與同分排序是否一致。</p></div>
   <img src="/assets/lovetypes/lab/quiz-scoring-test.webp" alt="LoveTypes 15 題測驗結果與五個分數列的行動版測試畫面" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-07-31">實測與更新：2026-07-31</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">本次測試不是驗證心理效度，而是確認網站寫出的計分規則確實照預期執行。測試人員使用固定答案序列完成 15 題，記錄原始計數、顯示百分比、主要守護者與重新整理後保存結果；再建立同分序列，確認排序使用固定題目順序而不會隨機跳動。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 桌面版 Chromium，1440×900</li><li>行動版 Chromium 模擬，360×800</li><li>正式 quiz-data-zh 資料檔</li><li>無登入、無伺服器端個人資料</li></ul></section>
+    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>macOS 桌面版 Chromium，1440×900</li><li>行動版 Chromium 模擬，360×800</li><li>正式 quiz-data-zh 資料檔</li><li>無登入、無伺服器端個人資料</li></ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>基準序列：W,T,G,S,P,W,T,G,S,P,W,T,G,S,P。人工預期 W=3、T=3、G=3、S=3、P=3；同分規則依 W→T→G→S→P 固定順序選 W。偏向序列：W,W,W,W,T,T,T,G,G,S,S,P,P,P,P，預期 W=4、P=4、T=3、G=2、S=2，同分仍選 W。</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol><li>清除 LoveTypes localStorage 後開啟首頁測驗。</li><li>依預先記錄的 15 題答案完成一次作答。</li><li>人工計算五個選項出現次數並與結果列比較。</li><li>以同分答案序列再測一次，重新整理頁面確認結果不漂移。</li></ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">一般序列</th><td>15 題皆被計入，五個百分比合計 100%</td><td><strong>通過</strong></td></tr><tr><th scope="row">同分序列</th><td>主要結果依固定排序決定，重新整理後相同</td><td><strong>通過</strong></td></tr><tr><th scope="row">未完成離開</th><td>不產生完成結果</td><td><strong>通過</strong></td></tr><tr><th scope="row">重新測驗</th><td>舊結果清除後從第 1 題開始</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>兩組序列均完成 15 次點擊。基準序列顯示五類各 20%，主要守護者為 Iris；偏向序列顯示 W 27%、P 27%、T 20%、G 13%、S 13%，四捨五入後合計 100%。重新整理三次均讀回相同 primaryKey 與 score 物件，未完成第 15 題時 localStorage 沒有 quiz-result 完成紀錄。</p><p>測試前以清除控制與開發者工具各清一次保存鍵，避免前次結果影響。每次點擊後同步記錄題號與選項代碼，再由人工加總，不直接採用畫面百分比作為預期值。百分比以原始計數除以 15 後四捨五入，因此驗收同時核對原始分數與顯示值。測試只覆蓋目前繁中題庫與固定排序；題庫或計分函式修改時必須重跑。</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是每次完成恰好記入 15 分、人工加總與畫面原始分數一致、百分比合計在四捨五入規則下為 100%，以及同分輸入在重新整理後仍選擇同一主要類別。任何漏題、多計、負分、非固定同分或完成前寫入結果都算失敗。</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>修正後先重跑兩組公開序列，再加入全選同一類、最後一題才形成同分及中途返回三個邊界案例。每個案例保存實際 score 物件與畫面，不只看角色圖片。題庫、選項代碼、排序表或百分比函式任一變更，都使本報告失效並要求新 build 重測。</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含兩組固定序列的結果畫面、五類 score 讀值與未完成狀態。報告只對標示 build 有效，不把畫面綠燈延伸成題目品質結論。</p></section>
+    <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/quiz-scoring-test-detail.webp" alt="LoveTypes 五類原始分數與同分固定排序的桌面證據畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 五類原始分數與同分固定排序的桌面證據畫面</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>早期檢查發現結果頁同時出現太多後續購買選項，容易讓計分說明被忽略。這不是計分錯誤，但會降低使用者理解分數的機會。</p></section>
-    <section data-lab-fix><h2>已採取的修正</h2><p>審核版將結果的第一層行動收斂為守護者解讀、免費修復與重新測驗；購買連結只留在獨立補給頁。</p></section>
+    <section data-lab-fix><h2>已採取的修正</h2><p>結果的第一層行動收斂為守護者解讀、免費修復與重新測驗；購買連結只留在獨立揭露頁。</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>這項測試只證明程式計數與顯示一致，不代表 15 題能診斷人格、依附型態或關係品質。近期事件與題意理解都可能影響作答。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31：公開完整 15 題固定序列、人工預期分數、實際百分比與 localStorage 讀回結果。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -82,7 +88,7 @@
 
 
 <footer class="site-footer">
-  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a><a href="/resources/"><strong>補給與商業揭露</strong><span>所有外部購買與聯盟連結集中於這個非索引頁面。</span></a></div>
+  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a></div>
   <p class="footer-disclosure">LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。</p>
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>

@@ -13,12 +13,12 @@
   ],
   "description": "Machine-readable LoveTypes Traditional Chinese editorial review surface and core user flows.",
   "totals": {
-    "pages": 40,
-    "paths": 40,
+    "pages": 38,
+    "paths": 38,
     "languages": 1,
     "groups": {
       "content": 26,
-      "conversion": 4,
+      "conversion": 2,
       "guardians": 6,
       "home": 1,
       "trust": 3
@@ -105,14 +105,6 @@
     {
       "lang": "zh",
       "hreflang": "zh-TW",
-      "path": "/tools/love-compatibility/",
-      "canonical": "https://lovetypes.tw/tools/love-compatibility/",
-      "group": "conversion",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
       "path": "/guides/",
       "canonical": "https://lovetypes.tw/guides/",
       "group": "content",
@@ -139,14 +131,6 @@
       "hreflang": "zh-TW",
       "path": "/repair-plan/",
       "canonical": "https://lovetypes.tw/repair-plan/",
-      "group": "conversion",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/keepsakes/",
-      "canonical": "https://lovetypes.tw/keepsakes/",
       "group": "conversion",
       "primary": true
     },

@@ -52,20 +52,26 @@
 <main id="main" tabindex="-1">
 
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · 2026-07-31</p><h1>瀏覽器保存、清除與跨裝置限制實測</h1><p>確認測驗與修復資料只保存在目前瀏覽器，並驗證清除功能與共用裝置風險提示。</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · LT-LAB-PR-001</p><h1>瀏覽器保存、清除與跨裝置限制實測</h1><p>確認測驗與修復資料只保存在目前瀏覽器，並驗證清除功能與共用裝置風險提示。</p></div>
   <img src="/assets/lovetypes/lab/local-storage-privacy-test.webp" alt="LoveTypes 修復表的本機保存與清除控制測試畫面" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-07-31">實測與更新：2026-07-31</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">LoveTypes 不要求帳號，測驗結果與修復表使用 localStorage。這次測試直接檢查保存鍵、重新整理、清除按鈕、無痕視窗與另一個瀏覽器，確認資料不會自動同步。公開報告不揭露任何真實作答內容，只描述技術行為。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>Chromium 一般視窗與無痕視窗</li><li>第二個獨立瀏覽器內容區</li><li>瀏覽器開發者工具 Application 面板</li><li>不使用帳號、Cookie 或遠端資料庫</li></ul></section>
+    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 一般視窗與無痕視窗</li><li>第二個獨立瀏覽器內容區</li><li>瀏覽器開發者工具 Application 面板</li><li>不使用帳號、Cookie 或遠端資料庫</li></ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>測驗 fixture 使用 W,T,G,S,P 重複三輪；修復表測試字串為 LT-LOCAL-ONLY-0731。檢查鍵包含 lovetypes:zh:quiz-result、頁面路徑版本的 quiz-result，以及 repair-plan 對應欄位。第二內容區與無痕視窗不先造訪本站。</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol><li>完成測驗並填寫一個修復欄位。</li><li>重新整理，確認目前瀏覽器仍能讀取。</li><li>按清除結果與清除工作表，再檢查保存鍵。</li><li>開啟無痕視窗及第二瀏覽器，確認沒有同步資料。</li></ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">重新整理</th><td>目前瀏覽器保留已保存內容</td><td><strong>通過</strong></td></tr><tr><th scope="row">清除按鈕</th><td>對應鍵移除且畫面回到空白狀態</td><td><strong>通過</strong></td></tr><tr><th scope="row">無痕視窗</th><td>看不到一般視窗資料</td><td><strong>通過</strong></td></tr><tr><th scope="row">另一裝置／瀏覽器</th><td>不會自動同步</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>一般視窗完成後重新整理仍可讀回結果與測試字串。依序按清除結果和清除工作表後，相關鍵不存在，頁面回到未填狀態。無痕視窗、第二瀏覽器內容區與另一個 Chrome profile 均未出現測試字串；Network 面板沒有發現把作答內容送往 LoveTypes API 的請求。</p><p>localStorage 是來源相同且以瀏覽器內容區隔保存的用戶端儲存，不等於加密保險箱。共用同一個系統帳號與瀏覽器 profile 的下一位使用者可能看見尚未清除的內容；瀏覽器擴充功能、裝置管理或備份也可能有額外存取能力。因此頁面同時提供清除控制與共用裝置提醒，不宣稱資料絕對不會離開裝置。</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是一般視窗可以依產品承諾保存與清除、無痕和獨立內容區不自動取得資料、清除後 DOM 與保存鍵都沒有辨識字串。只清空畫面但鍵仍存在，或任何作答內容出現在本站網路請求中，都視為隱私失敗。</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>重測先用唯一辨識字串避免誤判，再同時檢查 Application 與 Network。清除後重新整理兩次，搜尋頁面來源、localStorage、sessionStorage、Cookie 與請求內容。瀏覽器政策可能改變儲存行為，因此 Chrome 主版本更新、保存鍵改名或新增分析服務時，都要重新核對並更新隱私說明。</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含清除前後畫面與保存鍵狀態；公開截圖使用測試字串，不含真人作答、姓名、聯絡方式或裝置識別資訊。</p></section>
+    <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/local-storage-privacy-test-detail.webp" alt="LoveTypes 清除本機保存後欄位回到空白的證據畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 清除本機保存後欄位回到空白的證據畫面</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>共用裝置上的下一位使用者可能看到尚未清除的結果；只寫「保存在本機」不足以說明這個風險。</p></section>
     <section data-lab-fix><h2>已採取的修正</h2><p>測驗、修復與隱私頁加入共用裝置提醒，並維持容易找到的清除控制。</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>瀏覽器擴充功能、備份軟體與裝置管理政策不在本站控制範圍；使用者仍應依自己的裝置風險決定是否保存。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31：補上實際保存鍵、辨識字串、Network 觀察與共用 profile 風險。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -82,7 +88,7 @@
 
 
 <footer class="site-footer">
-  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a><a href="/resources/"><strong>補給與商業揭露</strong><span>所有外部購買與聯盟連結集中於這個非索引頁面。</span></a></div>
+  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a></div>
   <p class="footer-disclosure">LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。</p>
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>

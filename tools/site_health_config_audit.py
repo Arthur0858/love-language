@@ -28,6 +28,7 @@ SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
     "site_quality": "tools/site_quality_audit.py",
     "content_uniqueness": "tools/content_uniqueness_audit.py",
     "multilingual_routes": "tools/multilingual_route_audit.py",
+    "adsense_review_surface": "tools/adsense_review_surface_audit.py",
     "guardian_conversion": "tools/guardian_conversion_audit.py",
     "affiliate_locale": "tools/affiliate_locale_audit.py",
     "promotion_writeback_flow": "tools/promotion_writeback_flow_audit.py",

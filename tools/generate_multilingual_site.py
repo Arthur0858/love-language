@@ -11,7 +11,14 @@ from pathlib import Path
 from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
-from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_FOLLOWUP_NOTES, GUIDE_SOURCE_NOTE
+from editorial_guides import (
+    GUIDE_EDITORIAL_CONTENT,
+    GUIDE_APPLICABILITY,
+    GUIDE_ENRICHMENTS,
+    GUIDE_FOLLOWUP_NOTES,
+    GUIDE_SOURCE_NOTE,
+    GUIDE_UPDATED_BY_SLUG,
+)
 from lab_reports import LAB_REPORTS, LAB_UPDATED
 
 
@@ -31,6 +38,7 @@ AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 REVIEW_INDEX_LANGS = ("zh",)
+PUBLISHED_LANGS = ("zh",)
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
@@ -4922,6 +4930,26 @@ THEORY_SECTIONS = {
 }
 
 
+def theory_evidence_section(lang: str) -> str:
+    if lang != "zh":
+        return ""
+    return """
+<section class="section article-body standalone theory-evidence" data-theory-evidence>
+  <p class="eyebrow">EVIDENCE AND LIMITS</p>
+  <h2>研究證據支持的是對話用途，不是五種固定人格</h2>
+  <p>LoveTypes 把五個入口做成守護者，是為了幫助記憶與表達，不代表科學界已確認每個人都有一個固定主要類型。Impett、Muise 與 Park 對常見愛之語假設的證據檢視指出，「每個人有一個主要語言」「伴侶配對後關係必然更好」等說法缺乏一致支持。這不等於所有相關練習都沒有用途，而是使用時應回到具體情境、偏好與可觀察行動。</p>
+  <h2>LoveTypes 額外做了什麼</h2>
+  <p>本站的原創部分是五位守護者、錯頻翻譯、觀察／感受／需要／請求工作表，以及產品實測紀錄。這些內容屬於一般關係教育與自我反思，不是心理量表，也沒有招募受試者驗證療效。結果可能受近期事件、題目理解與作答環境影響；同一個人在不同階段得到不同排序並不表示答錯。</p>
+  <h2>參考資料</h2>
+  <ul>
+    <li><a href="https://doi.org/10.1177/09637214231217663" target="_blank" rel="noopener noreferrer">Impett、Muise、Park：Popular Psychology Through a Scientific Lens</a>：用於說明愛之語核心假設的研究限制。</li>
+    <li><a href="https://rainn.org/articles/what-is-consent" target="_blank" rel="noopener noreferrer">RAINN：What Is Consent?</a>：用於身體接觸必須自願、持續且可撤回的安全原則。</li>
+    <li><a href="https://www.who.int/publications/i/item/WHO-RHR-14.26" target="_blank" rel="noopener noreferrer">WHO 親密伴侶暴力第一線支援手冊</a>：用於暴力與控制情境先處理安全的界線。</li>
+  </ul>
+</section>
+"""
+
+
 EDITORIAL_METHOD = {
     "zh": {
         "eyebrow": "EDITORIAL METHOD",
@@ -5338,7 +5366,6 @@ def footer(lang: str) -> str:
             (lang_url(lang, "characters"), CHARACTER_INDEX_COPY[lang]["h1"], CHARACTER_INDEX_COPY[lang]["intro"]),
             (lang_url(lang, "lab"), "產品實測紀錄", "查看測驗、隱私、分享、相容性與無障礙的可重現測試。"),
             (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
-            (lang_url(lang, "resources"), "補給與商業揭露", "所有外部購買與聯盟連結集中於這個非索引頁面。"),
         ]
     else:
         cards = [
@@ -5617,6 +5644,8 @@ def layout(
     external_script = ""
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
+    if lang == "zh" and robots.startswith("index"):
+        body = sanitize_indexable_body(path, body)
     conversion_dock_html = conversion_dock(lang) if robots.startswith("index") else ""
     return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path, robots) + f"""<body>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
@@ -5637,6 +5666,22 @@ def layout(
 """
 
 
+def sanitize_indexable_body(path: str, body: str) -> str:
+    """Keep the editorial review surface focused on free, indexable paths."""
+    replacements = {
+        r'href="/luna-yoga-music/(?:#[^"]*)?"': 'href="/repair-plan/"',
+        r'href="/keepsakes/(?:#[^"]*)?"': 'href="/characters/"',
+    }
+    if path != "about":
+        replacements[r'href="/resources/(?:#[^"]*)?"'] = 'href="/repair-plan/"'
+    for pattern, replacement in replacements.items():
+        body = re.sub(pattern, replacement, body)
+    if path != "contact":
+        body = re.sub(r'href="mailto:[^"]+"', 'href="/contact/#site-repair-report"', body)
+        body = body.replace("mailto:contact@lovetypes.tw", "/contact/#site-repair-report")
+    return body
+
+
 def write(path: Path, html: str) -> None:
     if path.name == "index.html" and path != ROOT / "resources" / "index.html":
         for lang in LANGS:
@@ -5649,6 +5694,10 @@ def write(path: Path, html: str) -> None:
             r"\1",
             html,
         )
+        if '<meta name="robots" content="index, follow' in html:
+            rel = path.relative_to(ROOT).as_posix()
+            if rel != "about/index.html":
+                html = re.sub(r'href="/resources/(?:#[^"]*)?"', 'href="/repair-plan/"', html)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
 
@@ -5663,6 +5712,23 @@ def cleanup_long_tail_outputs() -> None:
                 output.parent.rmdir()
             except OSError:
                 pass
+
+
+def cleanup_unpublished_html_outputs() -> None:
+    """Remove generated HTML that is intentionally outside the review deployment."""
+    for prefix in ("en", "ja", "ko", "es"):
+        base = ROOT / prefix
+        if not base.exists():
+            continue
+        for output in base.rglob("index.html"):
+            output.unlink()
+    for slug, _title, _desc, _target in LEGACY_ZH_GUIDES:
+        output = ROOT / "guides" / slug / "index.html"
+        if output.exists():
+            output.unlink()
+    compatibility = ROOT / "tools" / "love-compatibility" / "index.html"
+    if compatibility.exists():
+        compatibility.unlink()
 
 
 def cleanup_versioned_assets() -> None:
@@ -10511,7 +10577,7 @@ def garden_map_page(lang: str) -> None:
   <h3>{escape(title)}</h3>
   <p>{escape(desc)}</p>
 </a>
-""" for title, desc, action, target in copy["tools"])
+""" for title, desc, action, target in copy["tools"] if target in {"compass", "repair-plan"})
 
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
     guide_cards = "".join(guide_card(lang, guide) for guide in GUIDES)
@@ -10604,11 +10670,6 @@ def compass_page(lang: str) -> None:
 {compass_situation_routes_section(lang)}
 {compass_pair_matrix_section(lang)}
 {compass_use_flow_section(lang)}
-<section class="section note-section">
-  <h2>{escape(copy["compatibility_title"])}</h2>
-  <p>{escape(copy["compatibility_intro"])}</p>
-  <p><a class="secondary-btn" href="{lang_url(lang, "tools/love-compatibility")}" data-funnel-event="compass_compatibility_entry">{escape(copy["compatibility_cta"])}</a></p>
-</section>
 {compass_search_routes_section(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["how_title"])}</h2></div>
@@ -10619,7 +10680,6 @@ def compass_page(lang: str) -> None:
   <p>{escape(copy["boundary"])}</p>
   <p>{escape(t["unofficial_disclosure"])}</p>
 </section>
-{compass_report_offer_section(lang)}
 {compass_faq_section(lang)}
 <section class="section" id="relationship-compass-tool">
   <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["tool_title"])}</h2></div></div>
@@ -10642,13 +10702,6 @@ def compass_page(lang: str) -> None:
         "step": [
             {"@type": "HowToStep", "position": idx, "name": title, "text": text}
             for idx, (title, text) in enumerate(COMPASS_USE_FLOW[lang]["steps"], start=1)
-        ],
-        "offers": [
-            {"@type": "Offer", "name": "Free Relationship Compass", "price": "0", "priceCurrency": "USD"},
-            *[
-                {"@type": "Offer", "name": title, "price": price.replace("US$", ""), "priceCurrency": "USD"}
-                for title, price, _desc in COMPASS_REPORT_OFFER[lang]["items"]
-            ],
         ],
     })
     task_items = [
@@ -11476,7 +11529,7 @@ def keepsakes_page(lang: str) -> None:
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(labels["title"])}","description":"{escape(labels["desc"])}","url":"{abs_url(lang, "keepsakes")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
     page_title = f"{labels['title']} | LoveTypes" if lang == "zh" else f"{labels['title']} | LoveTypes {t['name']}"
-    write(page_path(lang, "keepsakes"), layout(lang, page_title, labels["desc"], "keepsakes", body, t["resources"], "website", "/og-cover.jpg", schema))
+    write(page_path(lang, "keepsakes"), layout(lang, page_title, labels["desc"], "keepsakes", body, t["resources"], "website", "/og-cover.jpg", schema, robots="noindex, follow"))
 
 
 def guardian_entry_section(lang: str) -> str:
@@ -13145,6 +13198,27 @@ START_PAGE_COPY = {
 }
 
 
+def start_method_section(lang: str) -> str:
+    if lang != "zh":
+        return ""
+    return """
+<section class="section article-body standalone start-method" data-start-method>
+  <p class="eyebrow">QUIZ METHOD</p>
+  <h2>作答前先知道這 15 題如何計分</h2>
+  <p>每題有五個選項，分別對應肯定言詞、優質時光、接受禮物、服務行動與身體接觸。選定一項後，該類別增加一分；完成 15 題才會產生結果。結果頁同時顯示五類原始比例，最高分成為主要守護者。這套計分只是把目前偏好整理成可閱讀順序，不使用醫療量表、人格常模，也不推論關係品質。</p>
+  <h2>同分時怎麼處理</h2>
+  <p>若兩類或以上同分，程式依固定類別順序選出主要守護者，避免重新整理後隨機改變。完整分數仍會保留，讀者可以同時閱讀接近的兩個入口。固定排序是介面規則，不代表排在前面的類別比較重要。只改一題就可能改變接近同分的結果，因此不應把守護者名稱當作永久身分。</p>
+  <h2>資料保存、清除與跨裝置限制</h2>
+  <p>LoveTypes 不要求註冊。完成結果只寫入目前瀏覽器的 localStorage，不會自動傳到 LoveTypes 帳號，也不會在手機與電腦之間同步。重新整理後目前瀏覽器仍可能看見結果；使用共用裝置時，請在完成後使用「重新測驗／清除結果」。無痕視窗、另一個瀏覽器或清除網站資料後，原結果通常無法復原。</p>
+  <h2>怎麼使用結果，什麼情況不要使用</h2>
+  <p>適合的用法是選一個最近場景，把感受與需要翻成能協商的小請求，再觀察對方是否收得到。不要用結果要求伴侶證明愛、判斷相配率、替他人作答，或取代心理、醫療與法律評估。若關係包含暴力、控制、跟蹤、強迫或拒絕後的報復，請先尋求可信任的人與當地正式支援，不進行一般伴侶修復練習。</p>
+  <h2>查看我們如何核對工具</h2>
+  <p>產品實測公開固定答案、同分處理、瀏覽器保存、分享範圍與失敗案例。測試只能證明網站在記錄環境中的程式行為，不能證明心理效度或使用成效。</p>
+  <p><a class="secondary-btn" href="/lab/quiz-scoring-test/">閱讀評分實測</a> <a class="secondary-btn" href="/lab/local-storage-privacy-test/">閱讀本機保存實測</a></p>
+</section>
+"""
+
+
 def start_page(lang: str) -> None:
     t = LANGS[lang]
     copy = START_PAGE_COPY[lang]
@@ -13168,6 +13242,7 @@ def start_page(lang: str) -> None:
   <div><p class="eyebrow">{escape(section_labels["destiny_ritual"])}</p><h2>{escape(copy["preview_title"])}</h2></div>
   <div class="card-grid compact">{preview_cards}</div>
 </section>
+{start_method_section(lang)}
 {quiz_section(lang)}
 <section class="section">
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2></div><a href="{lang_url(lang, "characters")}" data-funnel-event="start_guardian_map">{escape(copy["map"])}</a></div>
@@ -13209,7 +13284,6 @@ def home(lang: str) -> None:
 {universe_gate_section(lang)}
 <section class="section quiz-saved home-result-resume" data-home-saved hidden aria-live="polite"></section>
 {home_journey_section(lang)}
-{home_compass_bridge_section(lang)}
 {home_safety_compass(lang)}
 <section class="section intro-grid">
   <div><p class="eyebrow">{escape(section_labels["universe_promise"])}</p><h2>{escape(section_labels["home_field_notes"])}</h2><p>{escape(t["trust_intro"])}</p></div>
@@ -13368,6 +13442,7 @@ def trust_action_routes(lang: str, slug: str) -> str:
 
 def render_zh_editorial_guide(slug: str) -> str:
     content = GUIDE_EDITORIAL_CONTENT[slug]
+    enrichment = GUIDE_ENRICHMENTS[slug]
     sections = []
     workbook_marked = False
     for section in content["sections"]:
@@ -13386,18 +13461,41 @@ def render_zh_editorial_guide(slug: str) -> str:
             f'<section class="guide-editorial-section" {" ".join(attrs)}>'
             f'<h2>{escape(heading)}</h2>{paragraphs}{items}</section>'
         )
+    for section in enrichment["sections"]:
+        paragraphs = "".join(f"<p>{escape(paragraph)}</p>" for paragraph in section.get("paragraphs", []))
+        items = ""
+        if section.get("items"):
+            items = "<ul>" + "".join(f"<li>{escape(item)}</li>" for item in section["items"]) + "</ul>"
+        sections.append(
+            '<section class="guide-editorial-section" data-guide-enrichment>'
+            f'<h2>{escape(section["heading"])}</h2>{paragraphs}{items}</section>'
+        )
     followup_heading, followup_body = GUIDE_FOLLOWUP_NOTES[slug]
     sections.append(
         '<section class="guide-editorial-section" data-guide-followup>'
         f'<h2>{escape(followup_heading)}</h2><p>{escape(followup_body)}</p></section>'
     )
+    sources = "".join(
+        f'<li><a href="{escape(url)}" target="_blank" rel="noopener noreferrer">{escape(title)}</a><p>{escape(note)}</p></li>'
+        for title, url, note in enrichment["sources"]
+    )
+    updated = GUIDE_UPDATED_BY_SLUG[slug]
     return f"""
     <p class="lede">{escape(content["lede"])}</p>
     {"".join(sections)}
+    <section class="guide-editorial-section" data-guide-applicability>
+      <h2>適用情況與停止條件</h2>
+      <p>{escape(GUIDE_APPLICABILITY[slug])}</p>
+    </section>
     <section class="guide-revision-note" data-guide-revision>
       <h2>版本修訂紀錄</h2>
-      <p>2026-07-31：改為逐篇人工編輯，加入兩個以上教學示例、專用工作表、適用限制、方法說明與安全邊界；移除共用文章模板。</p>
+      <p>{escape(updated)}：{escape(enrichment["revision"])}</p>
       <p>{escape(GUIDE_SOURCE_NOTE)}</p>
+    </section>
+    <section class="guide-source-list" data-guide-sources>
+      <h2>參考資料與使用方式</h2>
+      <ul>{sources}</ul>
+      <p>外部資料用來界定概念與安全邊界；本文示例、工作表與 LoveTypes 守護者轉譯由內容編輯團隊自行撰寫。</p>
     </section>
 """
 
@@ -13436,6 +13534,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     <h2>{escape(labels["reflection"])}</h2><ol>{reflections}</ol>
     <h2>{escape(labels["pause"])}</h2><p>{escape(detail["pause"])}</p>
 """
+    guide_updated = GUIDE_UPDATED_BY_SLUG.get(guide["slug"], GUIDE_UPDATED)
     body = f"""
 <section class="article-hero">
   <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
@@ -13444,7 +13543,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
 <section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
 <section class="article-shell">
   <article class="article-body">
-    <p data-guide-editorial-byline><strong>{escape(editorial["author"])}</strong> · <time datetime="{GUIDE_UPDATED}">{escape(editorial["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(editorial["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(editorial["corrections"])}</a></p>
+    <p data-guide-editorial-byline><strong>{escape(editorial["author"])}</strong> · <time datetime="{guide_updated}">內容更新：{guide_updated}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(editorial["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(editorial["corrections"])}</a></p>
     {article_content.lstrip()}
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
   </article>
@@ -13463,8 +13562,8 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
         "description": desc,
         "url": abs_url(lang, "guides/" + guide["slug"]),
         "inLanguage": t["code"],
-        "datePublished": GUIDE_UPDATED,
-        "dateModified": GUIDE_UPDATED,
+        "datePublished": guide_updated,
+        "dateModified": guide_updated,
         "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
         "author": organization_ref(),
         "publisher": organization_ref(),
@@ -13592,22 +13691,29 @@ def lab_report_page(report: dict) -> None:
         f"<tr><th scope=\"row\">{escape(case)}</th><td>{escape(observation)}</td><td><strong>{escape(status)}</strong></td></tr>"
         for case, observation, status in report["results"]
     )
+    report_updated = report["updated"]
     body = f"""
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · {escape(LAB_UPDATED)}</p><h1>{escape(report['title'])}</h1><p>{escape(report['desc'])}</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · {escape(report['test_id'])}</p><h1>{escape(report['title'])}</h1><p>{escape(report['desc'])}</p></div>
   <img src="{escape(report['screenshot'])}" alt="{escape(report['screenshot_alt'])}" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
-    <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{escape(LAB_UPDATED)}">實測與更新：{escape(LAB_UPDATED)}</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
+    <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{escape(report_updated)}">實測與更新：{escape(report_updated)}</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">{escape(report['summary'])}</p>
     <section data-lab-environment><h2>測試環境</h2><ul>{environment}</ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>{escape(report['fixture'])}</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol>{steps}</ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody>{result_rows}</tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>{escape(report['raw_observation'])}</p><p>{escape(report['method_detail'])}</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>{escape(report['acceptance'])}</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>{escape(report['retest'])}</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>{escape(report['evidence_scope'])}</p></section>
+    <figure class="lab-evidence-detail"><img src="{escape(report['secondary_screenshot'])}" alt="{escape(report['secondary_alt'])}" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：{escape(report['secondary_alt'])}</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>{escape(report['failure'])}</p></section>
     <section data-lab-fix><h2>已採取的修正</h2><p>{escape(report['fix'])}</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>{escape(report['limitations'])}</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：{escape(report_updated)}：{escape(report['revision'])}</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -13620,8 +13726,8 @@ def lab_report_page(report: dict) -> None:
         "description": report["desc"],
         "url": f"{DOMAIN}/lab/{report['slug']}/",
         "inLanguage": "zh-TW",
-        "datePublished": LAB_UPDATED,
-        "dateModified": LAB_UPDATED,
+        "datePublished": report_updated,
+        "dateModified": report_updated,
         "image": f"{DOMAIN}{report['screenshot']}",
         "author": organization_ref(),
         "publisher": organization_ref(),
@@ -14783,6 +14889,8 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{escape(t["unofficial_disclosure"])}</p>
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
+  <h2>商業內容如何分開</h2>
+  <p>外部購買與聯盟連結集中在獨立且不索引的揭露頁，不影響測驗計分、守護者結果或指南內容。<a href="/resources/">查看補給與商業揭露</a>。</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
 </section>
 {about_trust_charter(lang)}
@@ -14800,6 +14908,7 @@ def simple_page(lang: str, slug: str) -> None:
 <section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions" data-trust-hero-actions="theory"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-trust-hero-link="quiz" data-funnel-event="trust_hero_theory_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-trust-hero-link="guardians" data-funnel-event="trust_hero_theory_guardians">{escape(t["guardians"])}</a></div></section>
 {theory_domain_compass(lang)}
 {result_reading_method_section(lang)}
+{theory_evidence_section(lang)}
 <section class="section article-body standalone">
   {theory_items}
   <h2>{escape(t["boundary"])}</h2>
@@ -15016,7 +15125,7 @@ def write_llms_txt() -> None:
 
     content = f"""# LoveTypes - Heart Garden Emotion Guardians
 
-> LoveTypes is a multilingual relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by personalized guides, repair practices, guardian supply routes, Luna night support, and keepsake assets.
+> LoveTypes is a Traditional Chinese relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by original guides, repair practices, and reproducible product test records.
 
 ## Canonical Site
 
@@ -15608,7 +15717,7 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths(lang: str | None = None) -> list[str]:
-    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "guides", "characters", "theory", "repair-plan", "keepsakes", "about", "contact", "privacy", "terms"]
+    paths = ["", "start", "garden-map", "compass", "guides", "characters", "theory", "repair-plan", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
     paths += ["lab", *(f"lab/{report['slug']}" for report in LAB_REPORTS)]
@@ -15903,7 +16012,7 @@ def collect_ai_discovery_index() -> dict:
             for lang, cfg in LANGS.items()
         ],
         "siteType": "relationship reflection, five love languages, guardian quiz, repair practices, Luna night support, and guardian supply routes",
-        "canonicalSummary": "LoveTypes is a multilingual Heart Garden universe that helps visitors discover a five love languages guardian, then continue into personalized guides, repair tasks, keepsakes, Luna night support, and disclosed supply resources.",
+        "canonicalSummary": "LoveTypes is a Traditional Chinese Heart Garden universe that helps visitors discover a five love languages guardian, then continue into original guides, free repair tasks, and reproducible product tests.",
         "answerGuidance": {
             "citeCanonicalPages": True,
             "preferChineseNameWhenAnsweringZh": True,
@@ -16506,7 +16615,7 @@ def collect_release_info() -> dict:
         "assetVersion": ASSET_VERSION,
         "deploymentTarget": "Cloudflare Pages project lovetypes",
         "branch": "main",
-        "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
+        "summary": "LoveTypes approval-first Traditional Chinese release with 38 indexable editorial pages, reproducible product tests, trust files, and verification gates.",
         "releaseContents": {
             "indexablePages": site_index["totals"]["pages"],
             "languages": site_index["totals"]["languages"],
@@ -16540,7 +16649,7 @@ def collect_release_info() -> dict:
             "contentStructure": [
                 "tools/site_quality_audit.py",
                 "tools/content_uniqueness_audit.py",
-                "tools/multilingual_route_audit.py",
+                "tools/adsense_review_surface_audit.py",
             ],
             "conversionAndCommerce": [
                 "tools/guardian_conversion_audit.py",
@@ -16565,7 +16674,6 @@ def collect_release_info() -> dict:
             "public_discovery_issues=0",
             "public_deploy_issues=0",
             "public_lead_mailto_importability_issues=0",
-            "public_lead_mailto_importability_importable_rows=175",
             "public_versioned_asset_issues=0",
             "public_versioned_asset_stale_refs=0",
         ],
@@ -16638,12 +16746,12 @@ def collect_site_health() -> dict:
             "promotionWritebackFlow": "tools/promotion_writeback_flow_audit.py must report promotion_writeback_issues=0 and promotion_writeback_stale_phrase_hits=0 so platform posts use platform-kpi-tracker.csv before weekly kpi-tracker.csv rollups.",
             "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
             "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
-            "publicLeadMailtoImportability": "tools/public_lead_mailto_importability_smoke.py must report public_lead_mailto_importability_issues=0 and public_lead_mailto_importability_importable_rows=175 so Cloudflare-protected lead mailto links remain importable.",
+            "publicLeadMailtoImportability": "tools/public_lead_mailto_importability_smoke.py must report public_lead_mailto_importability_issues=0 for the remaining contact and disclosed commercial surfaces.",
             "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment.",
         },
         "promotionProfileVerification": profile_verification,
         "localAuditCoverage": {
-            "structure": ["site_quality", "content_uniqueness", "multilingual_routes"],
+            "structure": ["site_quality", "content_uniqueness", "adsense_review_surface"],
             "conversion": ["guardian_conversion", "affiliate_locale", "promotion_writeback_flow"],
             "promotion": ["platform_kpi_tracker", "publishing_status", "launch_readiness", "launch_command_center"],
             "experience": ["accessibility", "image_assets", "performance_budget"],
@@ -16682,6 +16790,7 @@ def write_redirects() -> None:
         "/go/quiz-completed.gif /favicon.ico 200",
         f"{LUNA_STARTER_PROXY_PATH} /resources/#luna-products 302",
         "/luna/ /luna-yoga-music/ 301",
+        "/tools/love-compatibility/ /compass/ 301",
         "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",
         "/images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301",
         "/images/characters/vivian.webp /assets/lovetypes/guardians/vivian.webp 301",
@@ -16705,6 +16814,10 @@ def write_redirects() -> None:
             f"{prefix}/tools/{slug}/ /404.html 404"
             for slug in LONG_TAIL_COMPATIBILITY_PAGES
         )
+    redirect_lines.extend(
+        f"/guides/{slug}/ /404.html 404"
+        for slug, _title, _desc, _target in LEGACY_ZH_GUIDES
+    )
     for cfg in LANGS.values():
         if cfg["prefix"]:
             redirect_lines.extend([
@@ -16713,6 +16826,32 @@ def write_redirects() -> None:
             ])
     redirects = "\n".join(redirect_lines) + "\n"
     write(ROOT / "_redirects", redirects)
+
+
+CORE_LASTMOD = {
+    "": "2026-07-23",
+    "start": "2026-07-31",
+    "garden-map": "2026-07-20",
+    "compass": "2026-07-31",
+    "guides": "2026-07-30",
+    "characters": "2026-07-22",
+    "theory": "2026-07-31",
+    "repair-plan": "2026-07-25",
+    "about": "2026-07-31",
+    "contact": "2026-07-21",
+    "privacy": "2026-07-21",
+    "terms": "2026-07-21",
+    "lab": "2026-07-31",
+}
+
+
+def lastmod_for_path(path: str) -> str:
+    if path.startswith("guides/"):
+        return GUIDE_UPDATED_BY_SLUG[path.split("/", 1)[1]]
+    if path.startswith("lab/"):
+        slug = path.split("/", 1)[1]
+        return next(report["updated"] for report in LAB_REPORTS if report["slug"] == slug)
+    return CORE_LASTMOD.get(path, UPDATED)
 
 
 def write_support_files() -> None:
@@ -16731,7 +16870,7 @@ def write_support_files() -> None:
             sitemap.append(
                 "  <url>\n"
                 f"    <loc>{xml_escape(url)}</loc>\n"
-                f"    <lastmod>{UPDATED}</lastmod>\n"
+                f"    <lastmod>{lastmod_for_path(path)}</lastmod>\n"
                 "    <changefreq>weekly</changefreq>\n"
                 "    <priority>0.8</priority>\n"
                 + "\n".join(alternates)
@@ -16868,12 +17007,12 @@ def main() -> None:
     write_versioned_scripts()
     write_quiz_data_assets()
     cleanup_long_tail_outputs()
-    for lang in LANGS:
+    cleanup_unpublished_html_outputs()
+    for lang in PUBLISHED_LANGS:
         home(lang)
         start_page(lang)
         garden_map_page(lang)
         compass_page(lang)
-        love_compatibility_page(lang)
         guides_index(lang)
         characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):
@@ -16891,8 +17030,6 @@ def main() -> None:
         luna_alias_page(lang)
         for slug in ["theory", "about", "contact", "privacy", "terms"]:
             simple_page(lang, slug)
-    for slug, title, desc, target in LEGACY_ZH_GUIDES:
-        legacy_zh_guide_page(slug, title, desc, target)
     write_support_files()
 
 

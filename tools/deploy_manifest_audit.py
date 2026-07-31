@@ -80,7 +80,7 @@ def required_manifest_files() -> set[str]:
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
-    } | {asset.lstrip("/") for asset in generator.QUIZ_DATA_ASSETS.values()} | deploy.PUBLIC_TOOL_HTML_PATHS
+    } | {generator.QUIZ_DATA_ASSETS["zh"].lstrip("/")} | deploy.PUBLIC_TOOL_HTML_PATHS
 
 
 def declared_index_and_support_files() -> set[str]:
@@ -125,6 +125,13 @@ def main() -> int:
         for path in deploy.collect_manifest_paths(ROOT)
     }
     issues: list[str] = []
+    manifest_html = {path for path in manifest_paths if path.endswith(".html")}
+    expected_html = deploy.REVIEW_HTML_PATHS
+    if manifest_html != expected_html:
+        issues.append(
+            "review HTML allowlist drift: "
+            f"missing={sorted(expected_html-manifest_html)} extra={sorted(manifest_html-expected_html)}"
+        )
 
     missing_declared_required_files = sorted(declared_files.difference(required_files))
     if missing_declared_required_files:

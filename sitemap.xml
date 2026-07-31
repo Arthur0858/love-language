@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://lovetypes.tw/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/" />
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/garden-map/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/garden-map/" />
@@ -33,16 +33,8 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/compass/" />
   </url>
   <url>
-    <loc>https://lovetypes.tw/tools/love-compatibility/</loc>
-    <lastmod>2026-07-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/tools/love-compatibility/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/tools/love-compatibility/" />
-  </url>
-  <url>
     <loc>https://lovetypes.tw/guides/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/" />
@@ -50,7 +42,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/characters/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/characters/" />
@@ -66,19 +58,11 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/repair-plan/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/repair-plan/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/repair-plan/" />
-  </url>
-  <url>
-    <loc>https://lovetypes.tw/keepsakes/</loc>
-    <lastmod>2026-07-31</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/keepsakes/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lovetypes.tw/keepsakes/" />
   </url>
   <url>
     <loc>https://lovetypes.tw/about/</loc>
@@ -90,7 +74,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/contact/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/contact/" />
@@ -98,7 +82,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/privacy/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/privacy/" />
@@ -106,7 +90,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/terms/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/terms/" />
@@ -114,7 +98,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/share-your-result/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/share-your-result/" />
@@ -122,7 +106,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/repair-after-conflict/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/repair-after-conflict/" />
@@ -130,7 +114,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/words-of-affirmation-scripts/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/words-of-affirmation-scripts/" />
@@ -138,7 +122,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/acts-of-service-boundaries/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/acts-of-service-boundaries/" />
@@ -146,7 +130,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/gifts-are-not-materialism/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/gifts-are-not-materialism/" />
@@ -154,7 +138,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/quality-time-long-distance/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/quality-time-long-distance/" />
@@ -162,7 +146,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/physical-touch-consent-safety/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/physical-touch-consent-safety/" />
@@ -170,7 +154,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/weekly-relationship-review/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/weekly-relationship-review/" />
@@ -178,7 +162,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/emotional-needs-checklist/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/emotional-needs-checklist/" />
@@ -186,7 +170,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/misfrequency-examples/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/misfrequency-examples/" />
@@ -194,7 +178,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/relationship-stages/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/relationship-stages/" />
@@ -202,7 +186,7 @@
   </url>
   <url>
     <loc>https://lovetypes.tw/guides/healthy-boundaries/</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="zh-TW" href="https://lovetypes.tw/guides/healthy-boundaries/" />

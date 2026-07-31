@@ -6,13 +6,13 @@
   "assetVersion": "20260613-funnel-kpi-map",
   "deploymentTarget": "Cloudflare Pages project lovetypes",
   "branch": "main",
-  "summary": "LoveTypes public static release with multilingual routes, guardian universe indexes, conversion catalogs, support files, and verification gates.",
+  "summary": "LoveTypes approval-first Traditional Chinese release with 38 indexable editorial pages, reproducible product tests, trust files, and verification gates.",
   "releaseContents": {
-    "indexablePages": 40,
+    "indexablePages": 38,
     "languages": 1,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 222,
+    "funnelEvents": 191,
     "coreFlows": 5
   },
   "publicIndexes": {
@@ -40,7 +40,7 @@
     "contentStructure": [
       "tools/site_quality_audit.py",
       "tools/content_uniqueness_audit.py",
-      "tools/multilingual_route_audit.py"
+      "tools/adsense_review_surface_audit.py"
     ],
     "conversionAndCommerce": [
       "tools/guardian_conversion_audit.py",
@@ -65,7 +65,6 @@
     "public_discovery_issues=0",
     "public_deploy_issues=0",
     "public_lead_mailto_importability_issues=0",
-    "public_lead_mailto_importability_importable_rows=175",
     "public_versioned_asset_issues=0",
     "public_versioned_asset_stale_refs=0"
   ],

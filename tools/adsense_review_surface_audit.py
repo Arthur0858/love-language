@@ -11,17 +11,18 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from editorial_guides import GUIDE_EDITORIAL_CONTENT
-from generate_multilingual_site import LONG_TAIL_COMPATIBILITY_PAGES
+from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
 from lab_reports import LAB_REPORTS
 import deploy_cloudflare_pages as deploy
 
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMERCE_HOSTS = ("amazon.", "books.com.tw", "gumroad.com")
-FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程")
+FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense")
+FORBIDDEN_COMMERCIAL = ("US$", "付費報告", "八字", "流年", "Love Timing Report")
 EXPECTED_CORE = {
-    "/", "/start/", "/garden-map/", "/compass/", "/tools/love-compatibility/",
-    "/guides/", "/characters/", "/theory/", "/repair-plan/", "/keepsakes/",
+    "/", "/start/", "/garden-map/", "/compass/",
+    "/guides/", "/characters/", "/theory/", "/repair-plan/",
     "/about/", "/contact/", "/privacy/", "/terms/", "/lab/",
 }
 
@@ -34,6 +35,11 @@ def visible_text(raw: str) -> str:
 
 def page_file(route: str) -> Path:
     return ROOT / (route.strip("/") or ".") / "index.html"
+
+
+def main_text(raw: str) -> str:
+    match = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
+    return visible_text(match.group(1)) if match else ""
 
 
 def schemas(raw: str) -> list[dict]:
@@ -58,8 +64,8 @@ def main() -> int:
 
     if routes != expected:
         issues.append(f"site-index routes differ: missing={sorted(expected-routes)} extra={sorted(routes-expected)}")
-    if index.get("totals", {}).get("pages") != 40 or len(routes) != 40:
-        issues.append(f"site-index must contain 40 unique pages, found {len(routes)}")
+    if index.get("totals", {}).get("pages") != 38 or len(routes) != 38:
+        issues.append(f"site-index must contain 38 unique pages, found {len(routes)}")
     if {page["lang"] for page in index["pages"]} != {"zh"}:
         issues.append("site-index must contain only zh pages")
 
@@ -76,7 +82,7 @@ def main() -> int:
             issues.append(f"missing review page: {route}")
             continue
         raw = path.read_text(encoding="utf-8")
-        text = visible_text(raw)
+        text = main_text(raw)
         if '<meta name="robots" content="index, follow, max-image-preview:large"' not in raw:
             issues.append(f"indexable robots missing: {route}")
         if f'<link rel="canonical" href="https://lovetypes.tw{route}"' not in raw:
@@ -91,10 +97,10 @@ def main() -> int:
     for slug in GUIDE_EDITORIAL_CONTENT:
         route = f"/guides/{slug}/"
         raw = page_file(route).read_text(encoding="utf-8")
-        text = visible_text(raw)
+        text = main_text(raw)
         cjk = len(re.findall(r"[\u3400-\u9fff]", text))
-        if not 1800 <= cjk <= 3200:
-            issues.append(f"guide CJK count outside 1800-3200: {slug}={cjk}")
+        if not 2000 <= cjk <= 2800:
+            issues.append(f"guide main CJK count outside 2000-2800: {slug}={cjk}")
         if raw.count("data-guide-example") < 2:
             issues.append(f"guide needs two examples: {slug}")
         if raw.count("data-guide-workbook") < 1:
@@ -102,6 +108,8 @@ def main() -> int:
         for marker in ("data-guide-revision", "data-guide-followup", "data-guide-editorial-byline", "適用", "限制"):
             if marker not in raw:
                 issues.append(f"guide missing {marker}: {slug}")
+        if raw.count('target="_blank" rel="noopener noreferrer"') < 2 or "data-guide-sources" not in raw:
+            issues.append(f"guide needs 2+ visible authoritative sources: {slug}")
         editorial_blocks = re.findall(
             r'<section class="guide-editorial-section"[^>]*>(.*?)</section>', raw, re.I | re.S
         )
@@ -128,14 +136,21 @@ def main() -> int:
         slug = report["slug"]
         path = ROOT / "lab" / slug / "index.html"
         raw = path.read_text(encoding="utf-8")
-        for marker in ("data-lab-environment", "data-lab-steps", "data-lab-results", "data-lab-failure", "data-lab-fix", "data-lab-limitations"):
+        report_text = main_text(raw)
+        report_cjk = len(re.findall(r"[\u3400-\u9fff]", report_text))
+        if not 1200 <= report_cjk <= 1800:
+            issues.append(f"lab main CJK count outside 1200-1800: {slug}={report_cjk}")
+        for marker in ("data-lab-environment", "data-lab-fixture", "data-lab-steps", "data-lab-results", "data-lab-raw-results", "data-lab-failure", "data-lab-fix", "data-lab-limitations"):
             if marker not in raw:
                 issues.append(f"lab report missing {marker}: {slug}")
         image = ROOT / report["screenshot"].lstrip("/")
         if not image.exists() or image.stat().st_size < 1000:
             issues.append(f"lab screenshot missing or empty: {report['screenshot']}")
+        detail_image = ROOT / report["secondary_screenshot"].lstrip("/")
+        if not detail_image.exists() or detail_image.stat().st_size < 1000:
+            issues.append(f"lab secondary screenshot missing or empty: {report['secondary_screenshot']}")
 
-    for relative in ("resources/index.html", "luna-yoga-music/index.html"):
+    for relative in ("resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"):
         raw = (ROOT / relative).read_text(encoding="utf-8")
         if '<meta name="robots" content="noindex, follow"' not in raw:
             issues.append(f"noindex missing: {relative}")
@@ -143,11 +158,23 @@ def main() -> int:
         if "https://lovetypes.tw" + route in sitemap_urls:
             issues.append(f"commercial route leaked into sitemap: {route}")
 
-    for relative in ("index.html", "start/index.html"):
-        raw = (ROOT / relative).read_text(encoding="utf-8")
+    for route in expected:
+        raw = page_file(route).read_text(encoding="utf-8")
         main = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
-        if main and re.search(r'href="/resources/(?:#[^"]*)?"', main.group(1)):
-            issues.append(f"resources must not be a cold-traffic CTA outside the footer: {relative}")
+        main_raw = main.group(1) if main else ""
+        if route != "/about/" and re.search(r'href="/resources/(?:#[^"]*)?"', main_raw):
+            issues.append(f"resources link outside About: {route}")
+        if re.search(r'href="/(?:luna-yoga-music|keepsakes)/(?:#[^"]*)?"', main_raw):
+            issues.append(f"commercial/noindex route linked from indexed main: {route}")
+        if route != "/contact/" and "mailto:" in main_raw:
+            issues.append(f"mailto leaked into indexed content: {route}")
+        text = visible_text(main_raw)
+        for phrase in FORBIDDEN_COMMERCIAL:
+            if phrase in text:
+                issues.append(f"commercial phrase {phrase!r} leaked into indexed content: {route}")
+        for item in schemas(raw):
+            if item.get("@type") == "Offer" or "Offer" in item.get("@type", []):
+                issues.append(f"Offer schema leaked into indexed page: {route}")
 
     for path in ROOT.rglob("*.html"):
         raw = path.read_text(encoding="utf-8", errors="ignore").lower()
@@ -155,6 +182,16 @@ def main() -> int:
             issues.append(f"external commerce link outside /resources/: {path.relative_to(ROOT)}")
 
     manifest = {path.relative_to(ROOT).as_posix() for path in deploy.collect_manifest_paths(ROOT)}
+    manifest_html = {path for path in manifest if path.endswith(".html")}
+    expected_manifest_html = {
+        (route.strip("/") + "/index.html") if route != "/" else "index.html"
+        for route in expected
+    } | {"404.html", "resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"}
+    if manifest_html != expected_manifest_html:
+        issues.append(
+            f"deploy HTML allowlist drift: missing={sorted(expected_manifest_html-manifest_html)} "
+            f"extra={sorted(manifest_html-expected_manifest_html)}"
+        )
     for lang_prefix in ("", "en", "ja", "ko", "es"):
         for slug in LONG_TAIL_COMPATIBILITY_PAGES:
             path = ROOT / lang_prefix / "tools" / slug / "index.html" if lang_prefix else ROOT / "tools" / slug / "index.html"
@@ -169,6 +206,11 @@ def main() -> int:
     if "lab/index.html" not in manifest:
         issues.append("lab index missing from deploy manifest")
 
+    for slug, _title, _desc, _target in LEGACY_ZH_GUIDES:
+        legacy = ROOT / "guides" / slug / "index.html"
+        if legacy.exists():
+            issues.append(f"legacy zh guide output still exists: {legacy.relative_to(ROOT)}")
+
     redirects = (ROOT / "_redirects").read_text(encoding="utf-8")
     for cfg_prefix in ("", "en", "ja", "ko", "es"):
         prefix = f"/{cfg_prefix}" if cfg_prefix else ""
@@ -179,6 +221,8 @@ def main() -> int:
     for prefix in ("en", "ja", "ko", "es"):
         if f"/{prefix}/ / 302" not in redirects or f"/{prefix}/* /:splat 302" not in redirects:
             issues.append(f"302 language redirect missing: {prefix}")
+    if "/tools/love-compatibility/ /compass/ 301" not in redirects:
+        issues.append("compatibility consolidation redirect missing")
 
     print(f"adsense_review_surface_pages={len(routes)}")
     print(f"adsense_review_surface_issues={len(issues)}")

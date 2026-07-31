@@ -52,20 +52,26 @@
 <main id="main" tabindex="-1">
 
 <section class="article-hero lab-article-hero">
-  <div><p class="eyebrow">PRODUCT LAB · 2026-07-31</p><h1>慢速網路、圖片失敗與 JavaScript 關閉實測</h1><p>限制網速並停用部分資源，確認文章、信任資訊與主要路徑仍可閱讀。</p></div>
+  <div><p class="eyebrow">PRODUCT LAB · LT-LAB-PF-001</p><h1>慢速網路、圖片失敗與 JavaScript 關閉實測</h1><p>限制網速並停用部分資源，確認文章、信任資訊與主要路徑仍可閱讀。</p></div>
   <img src="/assets/lovetypes/lab/slow-network-performance-test.webp" alt="LoveTypes 指南在圖片未載入時仍保持文字與版面可讀的測試畫面" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
 </section>
 <section class="article-shell lab-article-shell">
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-07-31">實測與更新：2026-07-31</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">本次測試關心的是失敗時仍能得到什麼。測試人員以慢速網路載入首頁與文章，阻擋一張非關鍵圖片，最後關閉 JavaScript 重新開啟指南、關於與隱私頁。互動工具在無 JavaScript 時不能運作，但內容與替代路徑必須保持清楚。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>Chromium 網路節流</li><li>圖片請求阻擋一項</li><li>JavaScript 完全停用</li><li>桌面與 360px 手機視窗</li></ul></section>
+    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 網路節流</li><li>圖片請求阻擋一項</li><li>JavaScript 完全停用</li><li>桌面與 360px 手機視窗</li></ul></section>
+    <section data-lab-fixture><h2>固定輸入與預期</h2><p>桌面與 360×800 使用 Fast 3G 模擬：下載 1.6 Mbps、上傳 750 Kbps、延遲 150 ms。阻擋 guide-toolkit-og.jpg 與一張守護者 WebP，再完全停用 JavaScript開啟首頁、指南、About、Privacy 與 Compass。</p></section>
     <section data-lab-steps><h2>重現步驟</h2><ol><li>以慢速網路首次載入首頁與一篇指南。</li><li>阻擋文章配圖，檢查替代文字與版面。</li><li>停用 JavaScript 後開啟指南、關於、隱私。</li><li>記錄工具區在無腳本時提供的說明或替代連結。</li></ol></section>
     <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">慢速載入</th><td>主標、導覽與文章文字先於非關鍵圖片可讀</td><td><strong>通過</strong></td></tr><tr><th scope="row">圖片失敗</th><td>固定尺寸避免版面跳動，替代文字存在</td><td><strong>通過</strong></td></tr><tr><th scope="row">無 JavaScript 文章</th><td>完整文章與信任內容仍可閱讀</td><td><strong>通過</strong></td></tr><tr><th scope="row">無 JavaScript 工具</th><td>不產生假結果，保留指南與聯絡路徑</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>指南標題、前言與正文在非關鍵圖片完成前可讀；阻擋圖片後保留固定寬高與 alt，沒有大幅版面跳動。關閉 JavaScript 時指南、來源、作者、修訂、About 與隱私完整可讀。Compass 保留用途、安全限制與免費閱讀路徑，但不偽造互動結果；首頁測驗控制不運作且未顯示已完成狀態。</p><p>節流是可重現的工程模擬，不等於台灣所有行動網路。驗收關心失敗時的最低可用內容：文字和信任資訊由 HTML 提供、圖片有尺寸和替代文字、互動工具在腳本失效時不產生假結果。第三方商店不在索引面，也不納入本站速度結論。後續若新增必要 JavaScript，需重新檢查無腳本狀態。</p></section>
+    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是在指定節流下先取得標題與正文、圖片失敗不造成不可閱讀的位移、關閉 JavaScript 後文章與信任內容完整存在，互動工具不顯示假結果。空白主區、只有載入動畫、安全聲明依賴腳本或圖片失敗後文字互相覆蓋都算失敗。</p></section>
+    <section data-lab-retest><h2>修正後如何重測</h2><p>重測分三輪進行：清快取的慢速首次載入、精確阻擋兩個圖片 URL、建立停用 JavaScript 的新內容區。每輪保存 console、失敗請求與畫面，不能沿用已快取資產。首頁與工具可在無腳本時降低功能，但必須解釋限制並提供可閱讀路徑；新增第三方腳本後要再次確認正文不被阻塞。</p></section>
+    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含資產失敗與無腳本畫面，並記錄被阻擋 URL。模擬數據不對外推估真實訪客速度或 Core Web Vitals。</p></section>
+    <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/slow-network-performance-test-detail.webp" alt="LoveTypes 關閉 JavaScript 後指南來源與安全文字仍可閱讀的畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 關閉 JavaScript 後指南來源與安全文字仍可閱讀的畫面</figcaption></figure>
     <section data-lab-failure><h2>本次發現的問題</h2><p>互動頁若只顯示空容器，使用者可能誤以為網站損壞。</p></section>
     <section data-lab-fix><h2>已採取的修正</h2><p>工具容器保留靜態目的說明與可用的文章路徑；腳本只負責增強互動，不承載唯一的安全資訊。</p></section>
     <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>測試使用模擬節流，不等於所有電信網路；第三方商店與外部服務的速度不在 LoveTypes 控制範圍。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31：加入明確節流數值、被阻擋資產、無腳本頁面清單與最低可用內容判準。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
   <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
@@ -82,7 +88,7 @@
 
 
 <footer class="site-footer">
-  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a><a href="/resources/"><strong>補給與商業揭露</strong><span>所有外部購買與聯盟連結集中於這個非索引頁面。</span></a></div>
+  <div class="footer-grid"><a href="/guides/"><strong>深度指南</strong><span>閱讀心語庭園裡的五種愛之語指南：測驗結果、吵架修復、遠距陪伴、界線、安全感與伴侶對話練習。</span></a><a href="/characters/"><strong>五位情感守護者總覽</strong><span>每位守護者都是一種被愛入口，也是一條修復路線。先看見你最容易接收愛的方式，再選擇對應指南、練習與旅人補給。</span></a><a href="/lab/"><strong>產品實測紀錄</strong><span>查看測驗、隱私、分享、相容性與無障礙的可重現測試。</span></a><a href="/repair-plan/"><strong>7 日心語修復計畫</strong><span>完成測驗後，不必立刻修完整段關係。用七天把守護者結果變成一張可回訪的練習路線：先看見傷口，再提出小請求，最後選一個補給支持你持續練習。</span></a></div>
   <p class="footer-disclosure">LoveTypes 是以關係溝通與情感自我理解為核心的原創守護者宇宙，並非 The 5 Love Languages® 官方網站或授權測驗。</p>
   <p>© 2026 LoveTypes · <a href="/privacy/">隱私</a> · <a href="/terms/">條款</a> · <a href="/contact/">聯絡</a></p>
 </footer>

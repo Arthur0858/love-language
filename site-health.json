@@ -6,8 +6,8 @@
   "status": "ready_for_predeploy",
   "description": "Machine-readable LoveTypes generated-site health snapshot for structure, conversion catalogs, guardian universe coverage, and required verification gates.",
   "coverage": {
-    "indexablePages": 40,
-    "localizedPaths": 40,
+    "indexablePages": 38,
+    "localizedPaths": 38,
     "languages": 1,
     "routeGroups": 5,
     "coreFlows": 5,
@@ -17,8 +17,8 @@
     "commerceItems": 20,
     "commerceTypes": 4,
     "commerceRoles": 3,
-    "funnelEvents": 222,
-    "funnelTrackedOccurrences": 963,
+    "funnelEvents": 191,
+    "funnelTrackedOccurrences": 864,
     "supportFiles": 19
   },
   "requiredGates": {
@@ -27,7 +27,7 @@
     "promotionWritebackFlow": "tools/promotion_writeback_flow_audit.py must report promotion_writeback_issues=0 and promotion_writeback_stale_phrase_hits=0 so platform posts use platform-kpi-tracker.csv before weekly kpi-tracker.csv rollups.",
     "publicDiscovery": "tools/public_discovery_smoke.py must report public_discovery_issues=0 after deployment.",
     "publicDeploy": "tools/public_deploy_smoke.py must report public_deploy_issues=0 after deployment.",
-    "publicLeadMailtoImportability": "tools/public_lead_mailto_importability_smoke.py must report public_lead_mailto_importability_issues=0 and public_lead_mailto_importability_importable_rows=175 so Cloudflare-protected lead mailto links remain importable.",
+    "publicLeadMailtoImportability": "tools/public_lead_mailto_importability_smoke.py must report public_lead_mailto_importability_issues=0 for the remaining contact and disclosed commercial surfaces.",
     "versionedAssets": "tools/public_versioned_asset_smoke.py must report public_versioned_asset_stale_refs=0 and public_versioned_asset_issues=0 after deployment."
   },
   "promotionProfileVerification": {
@@ -59,7 +59,7 @@
     "structure": [
       "site_quality",
       "content_uniqueness",
-      "multilingual_routes"
+      "adsense_review_surface"
     ],
     "conversion": [
       "guardian_conversion",

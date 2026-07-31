@@ -282,7 +282,10 @@ def main() -> int:
             robots_tokens = {token.strip().lower() for token in target_parser.robots.split(",") if token.strip()}
             if "noindex" in robots_tokens:
                 sources = ", ".join(link.source_paths)
-                issues.append(f"{link.url}: internal HTML link should not target noindex page from {sources}")
+                target_path = public_path(response.final_url)
+                allowed_disclosure = target_path == "/resources/" and set(link.source_paths) == {"/about/"}
+                if not allowed_disclosure:
+                    issues.append(f"{link.url}: internal HTML link should not target noindex page from {sources}")
             if target_parser.canonical:
                 canonical_targets_checked += 1
                 if not canonical_matches_target(target_parser.canonical, final_base):

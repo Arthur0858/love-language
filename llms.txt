@@ -1,6 +1,6 @@
 # LoveTypes - Heart Garden Emotion Guardians
 
-> LoveTypes is a multilingual relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by personalized guides, repair practices, guardian supply routes, Luna night support, and keepsake assets.
+> LoveTypes is a Traditional Chinese relationship-reflection site that translates the five love languages into the Heart Garden and five emotion guardians. The core experience is a 15-question guardian recognition ritual, followed by original guides, repair practices, and reproducible product test records.
 
 ## Canonical Site
 

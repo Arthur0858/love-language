@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""Read back the production AdSense review surface and fail closed on drift."""
+
+from __future__ import annotations
+
+import html
+import json
+import os
+import re
+import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass
+from urllib.error import HTTPError, URLError
+from urllib.parse import urljoin, urlparse
+from urllib.request import Request, build_opener, HTTPRedirectHandler
+from xml.etree import ElementTree as ET
+
+from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_VISIBLE
+from generate_multilingual_site import LONG_TAIL_COMPATIBILITY_PAGES
+
+
+BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
+CANONICAL_BASE = "https://lovetypes.tw"
+EXPECTED_ADS_TXT = "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+TIMEOUT = 20
+
+
+@dataclass
+class Response:
+    status: int
+    url: str
+    headers: dict[str, str]
+    body: bytes
+
+    @property
+    def text(self) -> str:
+        return self.body.decode("utf-8", errors="replace")
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        return None
+
+
+def request(path: str, *, follow: bool = True) -> Response:
+    url = urljoin(BASE_URL, path)
+    opener = build_opener() if follow else build_opener(NoRedirect)
+    req = Request(url, headers={"User-Agent": "LoveTypes-public-review-smoke/1.0"})
+    try:
+        with opener.open(req, timeout=TIMEOUT) as result:
+            return Response(result.status, result.url, dict(result.headers.items()), result.read())
+    except HTTPError as exc:
+        return Response(exc.code, exc.url, dict(exc.headers.items()), exc.read())
+    except URLError as exc:
+        return Response(0, url, {}, str(exc).encode())
+
+
+def visible_text(raw: str) -> str:
+    raw = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", raw, flags=re.I | re.S)
+    raw = re.sub(r"<[^>]+>", " ", raw)
+    return re.sub(r"\s+", " ", html.unescape(raw)).strip()
+
+
+def attr(raw: str, tag: str, name: str) -> str:
+    match = re.search(rf"<{tag}\b[^>]*\b{name}=[\"']([^\"']+)", raw, re.I)
+    return html.unescape(match.group(1)) if match else ""
+
+
+def page_issues(route: str, response: Response) -> list[str]:
+    issues: list[str] = []
+    raw = response.text
+    text = visible_text(raw)
+    if response.status != 200:
+        return [f"{route}: expected 200, got {response.status}"]
+    if attr(raw, "html", "lang") != "zh-TW":
+        issues.append(f"{route}: html lang must be zh-TW")
+    canonical = re.search(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)', raw, re.I)
+    expected_canonical = CANONICAL_BASE + route
+    if not canonical or html.unescape(canonical.group(1)) != expected_canonical:
+        issues.append(f"{route}: canonical must be {expected_canonical}")
+    robots = re.search(r'<meta\b[^>]*name=["\']robots["\'][^>]*content=["\']([^"\']+)', raw, re.I)
+    if not robots or "index" not in robots.group(1).lower() or "noindex" in robots.group(1).lower():
+        issues.append(f"{route}: expected indexable robots meta")
+    if 'hreflang="zh-TW"' not in raw or 'hreflang="x-default"' not in raw:
+        issues.append(f"{route}: missing zh-TW/x-default alternates")
+    if "pagead2.googlesyndication.com" in raw or "adsbygoogle" in raw:
+        issues.append(f"{route}: full AdSense runtime loaded before approval")
+    for phrase in FORBIDDEN_VISIBLE:
+        if phrase in text:
+            issues.append(f"{route}: forbidden public phrase {phrase!r}")
+    for host in COMMERCE_HOSTS:
+        if host in raw.lower():
+            issues.append(f"{route}: commerce host leaked outside /resources/: {host}")
+    if 'type="application/ld+json"' not in raw:
+        issues.append(f"{route}: JSON-LD missing")
+    return issues
+
+
+def main() -> int:
+    issues: list[str] = []
+    sitemap = request("/sitemap.xml")
+    if sitemap.status != 200:
+        print(f"public_review_issues=1\n/sitemap.xml: expected 200, got {sitemap.status}")
+        return 1
+    try:
+        root = ET.fromstring(sitemap.body)
+        ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        urls = [node.text or "" for node in root.findall("s:url/s:loc", ns)]
+    except ET.ParseError as exc:
+        print(f"public_review_issues=1\n/sitemap.xml: invalid XML: {exc}")
+        return 1
+    routes = [urlparse(url).path for url in urls]
+    if len(urls) != 40 or len(set(urls)) != 40:
+        issues.append(f"/sitemap.xml: expected 40 unique URLs, got {len(urls)}")
+    if any(not url.startswith(CANONICAL_BASE + "/") for url in urls):
+        issues.append("/sitemap.xml: contains a non-production or non-zh URL")
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(request, route): route for route in routes}
+        for future in as_completed(futures):
+            route = futures[future]
+            issues.extend(page_issues(route, future.result()))
+
+    site_index = request("/site-index.json")
+    try:
+        index = json.loads(site_index.text)
+        if site_index.status != 200 or index.get("totals", {}).get("pages") != 40:
+            issues.append("/site-index.json: expected 40 pages")
+        if {page.get("lang") for page in index.get("pages", [])} != {"zh"}:
+            issues.append("/site-index.json: expected zh-only pages")
+    except json.JSONDecodeError:
+        issues.append("/site-index.json: invalid JSON")
+
+    for route in ("/resources/", "/luna-yoga-music/"):
+        response = request(route)
+        if response.status != 200 or '<meta name="robots" content="noindex, follow"' not in response.text:
+            issues.append(f"{route}: expected 200 with noindex, follow")
+    resources = request("/resources/")
+    if not any(host in resources.text.lower() for host in COMMERCE_HOSTS):
+        issues.append("/resources/: expected disclosed commerce links")
+
+    for prefix in ("en", "ja", "ko", "es"):
+        response = request(f"/{prefix}/", follow=False)
+        if response.status != 302 or response.headers.get("Location") not in ("/", CANONICAL_BASE + "/"):
+            issues.append(f"/{prefix}/: expected 302 to /")
+
+    retired_routes = [f"/tools/{slug}/" for slug in LONG_TAIL_COMPATIBILITY_PAGES]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(request, route, follow=False): route for route in retired_routes}
+        for future in as_completed(futures):
+            route = futures[future]
+            status = future.result().status
+            if status != 404:
+                issues.append(f"{route}: expected 404, got {status}")
+
+    ads = request("/ads.txt")
+    if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:
+        issues.append("/ads.txt: missing or incorrect publisher record")
+
+    print(f"public_review_pages_checked={len(routes)}")
+    print(f"public_review_retired_routes_checked={len(retired_routes)}")
+    print(f"public_review_issues={len(issues)}")
+    for issue in issues:
+        print(issue)
+    return 1 if issues else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

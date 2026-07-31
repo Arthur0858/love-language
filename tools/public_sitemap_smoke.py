@@ -367,4 +367,6 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    from public_adsense_review_smoke import main as review_main
+
+    sys.exit(review_main())

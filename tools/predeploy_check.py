@@ -19,6 +19,7 @@ PYTHON_TOOLS = [
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
     "tools/content_value_audit.py",
+    "tools/adsense_review_surface_audit.py",
     "tools/multilingual_route_audit.py",
     "tools/guardian_conversion_audit.py",
     "tools/affiliate_locale_audit.py",
@@ -267,20 +268,26 @@ def main() -> int:
     if not args.visual_only:
         run_step("python compile", [sys.executable, "-m", "py_compile", *PYTHON_TOOLS])
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
+        if args.site_only:
+            run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
+            run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
+            run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
+            run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
+            run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
+            run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
+            run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])
+            print("predeploy_checks=ok", flush=True)
+            return 0
         run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
         run_step("content value audit", [sys.executable, "tools/content_value_audit.py"])
+        run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
         run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("affiliate locale audit", [sys.executable, "tools/affiliate_locale_audit.py"])
         run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
         run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
-        if args.site_only:
-            run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
-            run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])
-            print("predeploy_checks=ok", flush=True)
-            return 0
         run_step("promotion spreadsheet workbook", [find_node(), "tools/build_promotion_spreadsheet.mjs", "--check"])
         run_step("promotion publish pack", [sys.executable, "tools/promotion_publish_pack.py", "--all", "--check"])
         run_step("promotion kpi tracker", [sys.executable, "tools/promotion_sync_kpi_tracker.py", "--check"])
@@ -430,7 +437,7 @@ def main() -> int:
         env = os.environ.copy()
         if args.base_url:
             env["BASE_URL"] = args.base_url
-            run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
+            run_step("AdSense review visual check", [node, "tools/adsense_review_visual_check.mjs"], env=env)
             run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
             run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
             run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)
@@ -438,7 +445,7 @@ def main() -> int:
         else:
             with local_preview_server() as base_url:
                 env["BASE_URL"] = base_url
-                run_step("browser visual check", [node, "tools/visual_check.mjs"], env=env)
+                run_step("AdSense review visual check", [node, "tools/adsense_review_visual_check.mjs"], env=env)
                 run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)
                 run_step("contrast smoke", [node, "tools/contrast_smoke.mjs"], env=env)
                 run_step("user preferences smoke", [node, "tools/user_preferences_smoke.mjs"], env=env)

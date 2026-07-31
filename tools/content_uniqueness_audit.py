@@ -11,8 +11,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MIN_TEXT_CHARS = 220
 SHINGLE_SIZE = 8
-MAX_JACCARD_SIMILARITY = 0.45
-MAX_CONTAINMENT_SIMILARITY = 0.65
+MAX_JACCARD_SIMILARITY = 0.30
+MAX_CONTAINMENT_SIMILARITY = 0.45
+GENERAL_MAX_JACCARD_SIMILARITY = 0.45
+GENERAL_MAX_CONTAINMENT_SIMILARITY = 0.65
 
 
 class MainTextParser(HTMLParser):
@@ -128,10 +130,17 @@ def compare_pages(left: PageText, right: PageText) -> tuple[float, float]:
     return jaccard, containment
 
 
+def is_formal_guide(page: PageText) -> bool:
+    relative = page.path.relative_to(ROOT)
+    return len(relative.parts) == 3 and relative.parts[0] == "guides" and relative.parts[2] == "index.html"
+
+
 def main() -> int:
     pages = [page for path in html_pages() if (page := parse_page(path))]
     issues: list[str] = []
     near_duplicate_pairs = 0
+    max_guide_jaccard = 0.0
+    max_guide_containment = 0.0
 
     fingerprints: dict[str, list[PageText]] = {}
     for page in pages:
@@ -147,7 +156,13 @@ def main() -> int:
             if not same_locale(left, right):
                 continue
             jaccard, containment = compare_pages(left, right)
-            if jaccard >= MAX_JACCARD_SIMILARITY or containment >= MAX_CONTAINMENT_SIMILARITY:
+            guide_pair = is_formal_guide(left) and is_formal_guide(right)
+            if guide_pair:
+                max_guide_jaccard = max(max_guide_jaccard, jaccard)
+                max_guide_containment = max(max_guide_containment, containment)
+            max_jaccard = MAX_JACCARD_SIMILARITY if guide_pair else GENERAL_MAX_JACCARD_SIMILARITY
+            max_containment = MAX_CONTAINMENT_SIMILARITY if guide_pair else GENERAL_MAX_CONTAINMENT_SIMILARITY
+            if jaccard >= max_jaccard or containment >= max_containment:
                 near_duplicate_pairs += 1
                 issues.append(
                     "near duplicate main content "
@@ -157,6 +172,8 @@ def main() -> int:
                 )
 
     print(f"content_pages_checked={len(pages)}")
+    print(f"max_guide_jaccard={max_guide_jaccard:.3f}")
+    print(f"max_guide_containment={max_guide_containment:.3f}")
     print(f"near_duplicate_pairs={near_duplicate_pairs}")
     print(f"content_uniqueness_issues={len(issues)}")
     for issue in issues[:100]:

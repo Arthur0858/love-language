@@ -11,6 +11,9 @@ from pathlib import Path
 from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
+from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_FOLLOWUP_NOTES, GUIDE_SOURCE_NOTE
+from lab_reports import LAB_REPORTS, LAB_UPDATED
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://lovetypes.tw"
@@ -18,7 +21,7 @@ ADSENSE_ACCOUNT = "ca-pub-4093856660317740"
 ADSENSE_PUBLISHER_ID = "pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
-UPDATED = "2026-07-05"
+UPDATED = "2026-07-31"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260707-conversion-bridge"
@@ -27,6 +30,7 @@ INTERACTIONS_ASSET = f"/site-interactions-{INTERACTIONS_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
+REVIEW_INDEX_LANGS = ("zh",)
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
@@ -1687,7 +1691,7 @@ LUNA_RESUME = {
         "practice": "今晚練習",
         "repair": "寫進修復計畫",
         "route": "查看補給路線",
-        "book": "延伸書卷",
+        "book": "補給與商業揭露",
     },
     "en": {
         "eyebrow": "YOUR NIGHT SUPPLY",
@@ -4759,8 +4763,8 @@ CHARACTER_INDEX_COPY = {
 SITE_COPY = {
     "zh": {
         "guardian_use": "{name}是心語庭園裡的一扇門，不是固定身份。你可以用這位守護者說明什麼讓你感到安全、哪一種錯頻最容易刺痛你，以及哪一個小行動能讓關心更容易被你收到。",
-        "editorial": "每一個 LoveTypes 頁面都先從一個真實關係問題出發，再把問題帶回五種愛之語、心語庭園的守護者隱喻，以及讀者不需要註冊帳號也能嘗試的小練習。我們維持反思式語氣，而不是診斷式語氣；當頁面太薄、太重複，或太偏向導流而不是讀者價值時，就會重新整理，讓每盞燈都能指向實際修復。",
-        "disclosure": "LoveTypes 會在相關頁面揭露流量分析、聯盟連結或廣告資訊。旅人補給頁可能包含聯盟連結；若你透過這些連結購買，本站可能獲得少量佣金，但不影響你的購買價格。網站仍保留清楚的所有權、聯絡、sitemap 與政策資訊，方便讀者與搜尋/廣告審核系統確認這座心語庭園的來源與邊界。",
+        "editorial": "LoveTypes 內容編輯團隊先定義讀者要處理的具體問題，查核公開資料，再實際操作相關工具與表單。初稿會經人工重寫、情境與安全界線檢查，最後記錄更新日期與修訂原因。內容以可觀察行動為主，不把守護者或測驗結果包裝成診斷。",
+        "disclosure": "LoveTypes 會在相關頁面揭露流量分析、聯盟連結或廣告資訊。只有旅人補給頁提供外部購買連結；若你透過聯盟連結購買，本站可能獲得少量佣金，但不影響你的購買價格。免費測驗、指南、守護者與修復工具不需要先購買商品。",
         "contact": "若要回報內容修正、隱私問題、合作疑慮或壞頁面，請使用 <a href=\"/contact/#site-repair-report\">聯絡頁修復回報入口</a>。有效回報最好附上頁面網址、裝置、瀏覽器，以及你認為需要重新點亮或修復的句子或段落。",
     },
     "en": {
@@ -4792,8 +4796,9 @@ SITE_COPY = {
 
 ABOUT_SECTIONS = {
     "zh": [
-        ("我們是誰", "LoveTypes 是一座以五種愛之語為地圖的心語庭園，將關係裡常見的被愛需求翻成五位情感守護者、15 道心語測驗與可實作的溝通指南。網站的目標不是替人貼標籤，而是讓你更容易說出：我怎麼接收愛、哪裡容易錯頻、下一步可以怎麼修復。"),
-        ("內容怎麼產生與維護", "每一篇指南都從真實關係情境出發，再回到五種愛之語、情感安全、界線與日常練習。當頁面太薄、重複、過度導流，或沒有指向實際修復時，就會重新整理。LoveTypes 維持反思式語氣，不把測驗結果包裝成診斷。"),
+        ("我們是誰", "LoveTypes 是由 LoveTypes 內容編輯團隊製作的原創情感守護者宇宙，將關係裡常見的被愛需求翻成五位守護者、15 道心語測驗與可實作的溝通指南。團隊不具醫療、心理治療或法律專業資格，網站只提供一般性的自我理解與關係溝通教育。"),
+        ("內容怎麼產生與維護", "每一篇指南依序經過問題定義、公開資料查核、工具實測、人工編輯、安全檢查與版本修訂。教學示例均為人工設計情境，不冒充真人案例、心理研究或使用者成效；需要更正時可由每篇署名旁的修正入口聯絡團隊。"),
+        ("查看可重現實測", "實測專區公開測試日期、環境、步驟、輸入、結果、失敗案例、修正項目與尚有限制。這些紀錄只證明網站產品在特定環境中的行為，不推論心理效果。請前往 <a href=\"/lab/\">產品實測紀錄</a> 查看完整報告。"),
         ("商業與資料揭露", SITE_COPY["zh"]["disclosure"]),
         ("聯絡與修正", SITE_COPY["zh"]["contact"]),
     ],
@@ -4921,12 +4926,12 @@ EDITORIAL_METHOD = {
     "zh": {
         "eyebrow": "EDITORIAL METHOD",
         "title": "LoveTypes 如何把守護者宇宙寫成可用內容",
-        "intro": "每一頁都先從關係中的具體困惑開始，再把它放回五種愛之語、心語庭園與可執行練習。這讓網站不是只提供氣氛、角色設定或測驗結果，而是把情緒語言翻成可以被討論的小步驟。",
+        "intro": "內容由 LoveTypes 內容編輯團隊製作。團隊不具醫療、心理治療或法律專業資格；以下流程用來維持一般性關係教育內容的可追溯性，不能取代個別專業評估。",
         "cards": [
-            ("01", "先有場景", "正式指南會要求讀者回想時間、地點、對話、身體反應與最想被接住的需求，而不是只閱讀抽象口號。"),
-            ("02", "再對應愛之語", "五位守護者不是新的性格分類，而是把肯定言詞、優質時光、接受禮物、服務行動與身體接觸轉成更容易辨認的入口。"),
-            ("03", "最後縮小行動", "每篇內容都會把需求縮成 24 小時內可以嘗試的小請求，避免把一段關係一次推向過度修復。"),
-            ("04", "定期清理薄頁", "如果頁面只剩重複文案、過度導購、沒有實作步驟，或沒有清楚安全邊界，就會進入下一輪重寫清單。"),
+            ("01", "定義問題與適用範圍", "先寫清楚讀者要處理的情境、內容不處理的高風險狀況，以及完成閱讀後可採取的具體步驟。"),
+            ("02", "查核資料與工具實測", "整理公開參考資料，並在標示的裝置與瀏覽器實際操作測驗、表單、儲存、清除與分享流程。"),
+            ("03", "人工編輯與安全檢查", "逐篇重寫案例、工作表與限制，區分觀察、感受、需求、請求及安全界線，不直接發布未經人工審閱的自動內容。"),
+            ("04", "發布、回報與修訂", "標示品牌團隊署名、測試或更新日期、參考來源與修正入口；可重現問題修正後會留下版本紀錄。"),
         ],
     },
     "en": {
@@ -5039,7 +5044,7 @@ CORE_READING_PATH = {
             ("1", "先讀愛之語理論", "了解五種愛之語不是人格分類，而是關係溝通語彙。", "theory"),
             ("2", "認識五位守護者", "看每位守護者如何把一種愛之語變成更容易記住的分域。", "characters"),
             ("3", "閱讀一篇指南", "選一個最像你近期情境的錯頻，照著範例對話與五分鐘流程練習。", "guides"),
-            ("4", "再決定補給", "如果需要延伸素材，先用免費任務，再看 Luna 或書卷。", "resources"),
+            ("4", "開始 7 日修復", "把剛讀到的方法寫成一週內能完成、可以回看的小行動。", "repair-plan"),
         ],
     },
     "en": {
@@ -5292,25 +5297,27 @@ def json_text(value: str) -> str:
 def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None = None) -> str:
     t = LANGS[lang]
     language_path = alternate_path if alternate_path is not None else path
-    items = [
-        (lang_url(lang, "garden-map"), t["map"]),
-        (lang_url(lang, "guides"), t["guides"]),
-        (lang_url(lang, "characters"), t["guardians"]),
-        (lang_url(lang, "theory"), t["theory"]),
-        (lang_url(lang, "resources"), t["resources"]),
-        (lang_url(lang, "about"), t["about"]),
-    ]
+    if lang == "zh":
+        items = [
+            (lang_url(lang, "start"), "測驗"),
+            (lang_url(lang, "guides"), t["guides"]),
+            (lang_url(lang, "characters"), t["guardians"]),
+            (lang_url(lang, "lab"), "實測紀錄"),
+            (lang_url(lang, "about"), t["about"]),
+        ]
+    else:
+        items = [
+            (lang_url(lang, "start"), t["start"]),
+            (lang_url(lang, "guides"), t["guides"]),
+            (lang_url(lang, "characters"), t["guardians"]),
+            (lang_url(lang, "about"), t["about"]),
+        ]
     links = "".join(
         f'<a class="active" href="{href}" aria-current="page">{escape(label)}</a>' if active == label
         else f'<a href="{href}">{escape(label)}</a>'
         for href, label in items
     )
-    lang_links = "".join(
-        f'<a class="active" href="{lang_url(code, language_path)}" lang="{cfg["code"]}" aria-current="page">{cfg["name"]}</a>'
-        if code == lang
-        else f'<a href="{lang_url(code, language_path)}" lang="{cfg["code"]}">{cfg["name"]}</a>'
-        for code, cfg in LANGS.items()
-    )
+    lang_links = f'<a class="active" href="{lang_url("zh", language_path)}" lang="zh-TW" aria-current="page">繁體中文</a>'
     return f"""
 <header class="site-nav">
   <a class="brand" href="{lang_url(lang)}" aria-label="{escape(t["brand"])}"><span>LoveTypes</span></a>
@@ -5325,13 +5332,20 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
 
 def footer(lang: str) -> str:
     t = LANGS[lang]
-    cards = [
-        (lang_url(lang, "garden-map"), GARDEN_MAP[lang]["title"], GARDEN_MAP[lang]["desc"]),
-        (lang_url(lang, "characters"), CHARACTER_INDEX_COPY[lang]["h1"], CHARACTER_INDEX_COPY[lang]["intro"]),
-        (lang_url(lang, "resources"), t["resources"], t["resources_desc"]),
-        (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
-        (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
-    ]
+    if lang == "zh":
+        cards = [
+            (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
+            (lang_url(lang, "characters"), CHARACTER_INDEX_COPY[lang]["h1"], CHARACTER_INDEX_COPY[lang]["intro"]),
+            (lang_url(lang, "lab"), "產品實測紀錄", "查看測驗、隱私、分享、相容性與無障礙的可重現測試。"),
+            (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
+            (lang_url(lang, "resources"), "補給與商業揭露", "所有外部購買與聯盟連結集中於這個非索引頁面。"),
+        ]
+    else:
+        cards = [
+            (lang_url(lang, "characters"), CHARACTER_INDEX_COPY[lang]["h1"], CHARACTER_INDEX_COPY[lang]["intro"]),
+            (lang_url(lang, "guides"), t["guides"], t["guide_index_desc"]),
+            (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
+        ]
     card_html = "".join(f'<a href="{href}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a>' for href, title, desc in cards)
     return f"""
 <footer class="site-footer">
@@ -5414,6 +5428,7 @@ def breadcrumb_items(lang: str, path: str, title: str) -> list[tuple[str, str]]:
         "contact": t["contact"],
         "privacy": t["privacy"],
         "terms": t["terms"],
+        "lab": "產品實測紀錄" if lang == "zh" else "Product lab",
     }
     parts = path.strip("/").split("/")
     items = [(t["brand"], lang_url(lang))]
@@ -5528,13 +5543,16 @@ def head(
 ) -> str:
     canonical = abs_url(lang, canonical_path if canonical_path is not None else path)
     alternate_target = alternate_path if alternate_path is not None else path
-    alternates = "\n".join(f'  <link rel="alternate" hreflang="{cfg["code"]}" href="{abs_url(code, alternate_target)}" />' for code, cfg in LANGS.items())
-    alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", alternate_target)}" />'
+    if lang == "zh":
+        alternates = f'  <link rel="alternate" hreflang="zh-TW" href="{abs_url("zh", alternate_target)}" />'
+        alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{abs_url("zh", alternate_target)}" />'
+    else:
+        alternates = ""
     og_locale = OG_LOCALES[lang]
     og_locale_alternates = "\n".join(
         f'  <meta property="og:locale:alternate" content="{locale}" />'
         for code, locale in OG_LOCALES.items()
-        if code != lang
+        if code != lang and lang != "zh"
     )
     image_width, image_height = IMAGE_DIMENSIONS.get(image, (1200, 630))
     hero_preload = ""
@@ -5594,6 +5612,8 @@ def layout(
     canonical_path: str | None = None,
     robots: str = "index, follow, max-image-preview:large",
 ) -> str:
+    if lang not in REVIEW_INDEX_LANGS:
+        robots = "noindex, follow"
     external_script = ""
     if affiliate:
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
@@ -5618,8 +5638,31 @@ def layout(
 
 
 def write(path: Path, html: str) -> None:
+    if path.name == "index.html" and path != ROOT / "resources" / "index.html":
+        for lang in LANGS:
+            for book in AFFILIATE_BOOKS:
+                html = html.replace(affiliate_book_url(book, lang), lang_url(lang, "resources"))
+        for product in LUNA_GUMROAD_PRODUCTS:
+            html = html.replace(luna_product_url(product), "/resources/#luna-products")
+        html = re.sub(
+            r'(href="[^"]*/resources/(?:#[^"]*)?") target="_blank" rel="noopener noreferrer sponsored"',
+            r"\1",
+            html,
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
+
+
+def cleanup_long_tail_outputs() -> None:
+    for lang in LANGS:
+        for slug in LONG_TAIL_COMPATIBILITY_PAGES:
+            output = page_path(lang, f"tools/{slug}")
+            if output.exists():
+                output.unlink()
+            try:
+                output.parent.rmdir()
+            except OSError:
+                pass
 
 
 def cleanup_versioned_assets() -> None:
@@ -9316,37 +9359,37 @@ LONG_TAIL_QUICK_ANSWER = {
 
 
 LONG_TAIL_UPDATED = "2026-07-17"
-GUIDE_UPDATED = "2026-07-17"
+GUIDE_UPDATED = "2026-07-31"
 
 
 GUIDE_EDITORIAL = {
     "zh": {
         "author": "LoveTypes 內容編輯團隊",
-        "updated": "內容更新：2026-07-17",
+        "updated": "內容更新：2026-07-31",
         "method": "閱讀內容編輯與安全方法",
         "corrections": "回報內容修正",
     },
     "en": {
         "author": "LoveTypes editorial team",
-        "updated": "Content updated: 2026-07-17",
+        "updated": "Content updated: 2026-07-31",
         "method": "Read the editorial and safety method",
         "corrections": "Report a content correction",
     },
     "ja": {
         "author": "LoveTypes 編集チーム",
-        "updated": "内容更新：2026-07-17",
+        "updated": "内容更新：2026-07-31",
         "method": "編集・安全方針を読む",
         "corrections": "内容修正を報告",
     },
     "ko": {
         "author": "LoveTypes 편집팀",
-        "updated": "콘텐츠 업데이트: 2026-07-17",
+        "updated": "콘텐츠 업데이트: 2026-07-31",
         "method": "편집 및 안전 원칙 읽기",
         "corrections": "콘텐츠 수정 제보",
     },
     "es": {
         "author": "Equipo editorial de LoveTypes",
-        "updated": "Contenido actualizado: 2026-07-17",
+        "updated": "Contenido actualizado: 2026-07-31",
         "method": "Leer el método editorial y de seguridad",
         "corrections": "Informar una corrección",
     },
@@ -9953,7 +9996,7 @@ HOME_JOURNEY = {
         "steps": [
             ("01", "完成命運儀式", "用 15 道心語辨認你最容易感到被愛的入口。", "開始測驗", "#quiz-section"),
             ("02", "拜訪五個分域", "看見艾莉絲、諾雅、薇薇安、克萊兒、朵拉各自守護的關係語言。", "看守護者", "characters"),
-            ("03", "領取一個補給", "依照結果拿走對應指南、小任務、書卷或 Luna 夜間補給。", "前往補給站", "resources"),
+            ("03", "選一篇指南", "依照結果閱讀一篇情境指南，先把感受翻成可以討論的小請求。", "閱讀深度指南", "guides"),
             ("04", "寫下 7 日修復", "把感受變成一次小請求、一段冷卻時間與一個可完成行動。", "打開修復計畫", "repair-plan"),
         ],
     },
@@ -12172,7 +12215,7 @@ def quiz_payload(lang: str) -> str:
         "order": type_order,
         "shareUrl": DOMAIN + lang_url(lang).rstrip("/") + "/",
         "affiliateDisclosure": AFFILIATE_DISCLOSURE[lang],
-        "affiliateButton": AFFILIATE_COPY[lang]["button"],
+        "affiliateButton": "查看補給與商業揭露" if lang == "zh" else AFFILIATE_COPY[lang]["button"],
         "supplySafety": {
             "chooseTitle": SUPPLY_LABELS[lang]["choose"],
             "chooseText": SUPPLY_LABELS[lang]["choose_text"],
@@ -12348,7 +12391,7 @@ def quiz_script(lang: str) -> str:
             ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link data-funnel-event="${{['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}}">${{item.title}}</a>`).join('')}}
           </div>
           <div class="${{actionsClass}}" data-home-saved-luna-starter>
-            <a href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
+            <a href="${{lunaStarterPack.href}}" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${{quiz.supplySafety.notNowTitle}}</strong>
@@ -12504,7 +12547,7 @@ def quiz_script(lang: str) -> str:
             <span>3</span>
             <h4>${{quiz.labels.conversion_paid_title}}</h4>
             <p>${{quiz.labels.conversion_paid_desc}}</p>
-            <a class="secondary-btn" href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${{lunaStarterPack.slug}}">${{quiz.labels.conversion_paid_action}}</a>
+            <a class="secondary-btn" href="${{lunaStarterPack.href}}" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${{lunaStarterPack.slug}}">${{quiz.labels.conversion_paid_action}}</a>
           </article>
         </div>
       </section>
@@ -12546,7 +12589,7 @@ def quiz_script(lang: str) -> str:
             <span>3</span>
             <h4>${{quiz.labels.book_step}}</h4>
             <p>${{quiz.labels.book_intro}}：${{result.supplyBook}}</p>
-            <a href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored" data-conversion-book>${{quiz.affiliateButton}}</a>
+            <a href="${{result.supplyBookUrl}}" data-conversion-book>${{quiz.affiliateButton}}</a>
           </article>
         </div>
         <p class="affiliate-disclosure">${{quiz.affiliateDisclosure}}</p>
@@ -12570,7 +12613,7 @@ def quiz_script(lang: str) -> str:
         <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
           <strong>${{quiz.labels.luna_step}}</strong>
           <p>${{quiz.labels.next_pack_intro}}</p>
-          <a class="primary-btn" href="${{lunaStarterPack.href}}" target="_blank" rel="noopener noreferrer sponsored" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
+          <a class="primary-btn" href="${{lunaStarterPack.href}}" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
         </div>
         <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
           <strong>${{quiz.supplySafety.chooseTitle}}</strong>
@@ -13111,12 +13154,14 @@ def start_page(lang: str) -> None:
         for index, (title, text) in enumerate(copy["preview"], start=1)
     )
     guardian_cards = "".join(character_link_card(lang, slug, data) for slug, data in GUARDIANS.items())
+    third_target = "guides" if lang == "zh" else "resources"
+    third_label = "先讀深度指南" if lang == "zh" else copy["resources"]
     body = f"""
 <section class="page-hero compact guardian-index-hero">
   <p class="eyebrow">{escape(copy["eyebrow"])}</p>
   <h1>{escape(copy["title"])}</h1>
   <p>{escape(copy["lead"])}</p>
-  <div class="hero-actions" data-start-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="start_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="start_hero_guardians">{escape(copy["map"])}</a><a class="secondary-btn" href="{lang_url(lang, "resources")}" data-funnel-event="start_hero_resources">{escape(copy["resources"])}</a></div>
+  <div class="hero-actions" data-start-hero-actions><a class="primary-btn" href="#quiz-section" data-funnel-event="start_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-funnel-event="start_hero_guardians">{escape(copy["map"])}</a><a class="secondary-btn" href="{lang_url(lang, third_target)}" data-funnel-event="start_hero_editorial">{escape(third_label)}</a></div>
   <p class="hero-trust-line">{escape(HOME_HERO_COPY[lang]["trust"])}</p>
 </section>
 <section class="section intro-grid">
@@ -13321,6 +13366,42 @@ def trust_action_routes(lang: str, slug: str) -> str:
 """
 
 
+def render_zh_editorial_guide(slug: str) -> str:
+    content = GUIDE_EDITORIAL_CONTENT[slug]
+    sections = []
+    workbook_marked = False
+    for section in content["sections"]:
+        heading = section["heading"]
+        attrs = ["data-guide-editorial-section"]
+        if "示例" in heading:
+            attrs.append("data-guide-example")
+        if section.get("items") and not workbook_marked and "示例" not in heading:
+            attrs.append("data-guide-workbook")
+            workbook_marked = True
+        paragraphs = "".join(f"<p>{escape(paragraph)}</p>" for paragraph in section.get("paragraphs", []))
+        items = ""
+        if section.get("items"):
+            items = "<ul>" + "".join(f"<li>{escape(item)}</li>" for item in section["items"]) + "</ul>"
+        sections.append(
+            f'<section class="guide-editorial-section" {" ".join(attrs)}>'
+            f'<h2>{escape(heading)}</h2>{paragraphs}{items}</section>'
+        )
+    followup_heading, followup_body = GUIDE_FOLLOWUP_NOTES[slug]
+    sections.append(
+        '<section class="guide-editorial-section" data-guide-followup>'
+        f'<h2>{escape(followup_heading)}</h2><p>{escape(followup_body)}</p></section>'
+    )
+    return f"""
+    <p class="lede">{escape(content["lede"])}</p>
+    {"".join(sections)}
+    <section class="guide-revision-note" data-guide-revision>
+      <h2>版本修訂紀錄</h2>
+      <p>2026-07-31：改為逐篇人工編輯，加入兩個以上教學示例、專用工作表、適用限制、方法說明與安全邊界；移除共用文章模板。</p>
+      <p>{escape(GUIDE_SOURCE_NOTE)}</p>
+    </section>
+"""
+
+
 def guide_page(lang: str, guide: dict, index: int) -> None:
     t = LANGS[lang]
     labels = TOPIC_DETAILS[lang]
@@ -13330,21 +13411,16 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     related = [g for g in GUIDES if g["slug"] != guide["slug"]]
     next_a = related[(index + 1) % len(related)]
     next_b = related[(index + 4) % len(related)]
-    scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
-    reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
-    steps = "".join(f"<li>{escape(item)}</li>" for item in detail["steps"])
-    checklist = "".join(f"<li>{escape(item)}</li>" for item in detail["checklist"])
-    faq = "".join(f"<li>{escape(item)}</li>" for item in detail["faq"])
     editorial = GUIDE_EDITORIAL[lang]
-    body = f"""
-<section class="article-hero">
-  <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
-  {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False, priority=True)}
-</section>
-<section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
-<section class="article-shell">
-  <article class="article-body">
-    <p data-guide-editorial-byline><strong>{escape(editorial["author"])}</strong> · <time datetime="{GUIDE_UPDATED}">{escape(editorial["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(editorial["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(editorial["corrections"])}</a></p>
+    if lang == "zh":
+        article_content = render_zh_editorial_guide(guide["slug"])
+    else:
+        scripts = "".join(f"<li>{escape(item)}</li>" for item in detail["scripts"])
+        reflections = "".join(f"<li>{escape(item)}</li>" for item in detail["reflection"])
+        steps = "".join(f"<li>{escape(item)}</li>" for item in detail["steps"])
+        checklist = "".join(f"<li>{escape(item)}</li>" for item in detail["checklist"])
+        faq = "".join(f"<li>{escape(item)}</li>" for item in detail["faq"])
+        article_content = f"""
     <p class="lede">{escape(detail["lede"])}</p>
     <h2>{escape(labels["why"])}</h2><p>{escape(detail["why"])}</p>
     <h2>{escape(labels["scene"])}</h2><p>{escape(detail["scene"])}</p>
@@ -13359,6 +13435,17 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
     <h2>{escape(labels["faq"])}</h2><ul>{faq}</ul>
     <h2>{escape(labels["reflection"])}</h2><ol>{reflections}</ol>
     <h2>{escape(labels["pause"])}</h2><p>{escape(detail["pause"])}</p>
+"""
+    body = f"""
+<section class="article-hero">
+  <div><p class="eyebrow">{escape(guardian[1])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p></div>
+  {img_tag(GUARDIANS[guide["guardian"]]["prop"], guardian[1], lazy=False, priority=True)}
+</section>
+<section class="section guide-personal-resume" data-guide-saved hidden aria-live="polite"></section>
+<section class="article-shell">
+  <article class="article-body">
+    <p data-guide-editorial-byline><strong>{escape(editorial["author"])}</strong> · <time datetime="{GUIDE_UPDATED}">{escape(editorial["updated"])}</time> · <a href="{lang_url(lang, "about")}#editorial-method">{escape(editorial["method"])}</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">{escape(editorial["corrections"])}</a></p>
+    {article_content.lstrip()}
     <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
   </article>
   <aside class="article-side">
@@ -13376,6 +13463,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
         "description": desc,
         "url": abs_url(lang, "guides/" + guide["slug"]),
         "inLanguage": t["code"],
+        "datePublished": GUIDE_UPDATED,
         "dateModified": GUIDE_UPDATED,
         "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
         "author": organization_ref(),
@@ -13448,6 +13536,99 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
         "mainEntityOfPage": {"@type": "WebPage", "@id": abs_url(lang, canonical_path)},
     })
     write(page_path(lang, "guides/" + slug), layout(lang, title, desc, "guides/" + slug, body + guide_resume_script(lang), t["guides"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema, alternate_path=canonical_path, canonical_path=canonical_path, robots="noindex, follow"))
+
+
+def lab_index_page() -> None:
+    cards = "".join(
+        f"""
+<a class="content-card lab-report-card" href="/lab/{escape(report['slug'])}/">
+  <span class="eyebrow">可重現實測 · {escape(LAB_UPDATED)}</span>
+  <h2>{escape(report['title'])}</h2>
+  <p>{escape(report['desc'])}</p>
+  <span class="card-link">閱讀步驟與結果</span>
+</a>
+"""
+        for report in LAB_REPORTS
+    )
+    body = f"""
+<section class="page-hero compact">
+  <p class="eyebrow">PRODUCT LAB</p>
+  <h1>LoveTypes 產品實測紀錄</h1>
+  <p>這裡公開測驗、隱私、分享、相容性、修復表與無障礙的實際檢查方式。每份紀錄都列出環境、步驟、輸入、結果、失敗與限制；它們是軟體與內容測試，不是心理研究或使用者療效證明。</p>
+  <div class="hero-actions"><a class="primary-btn" href="#lab-reports">查看 8 份實測</a><a class="secondary-btn" href="/about/#editorial-method">內容製作方法</a></div>
+</section>
+<section class="section" id="lab-reports" data-lab-index>
+  <div class="section-head"><div><p class="eyebrow">REPRODUCIBLE RECORDS</p><h2>從輸入到限制，都可以逐項核對</h2></div></div>
+  <p class="section-intro">測試結論只涵蓋紀錄中的日期、版本、裝置與路徑。若功能改版，對應報告必須重新執行並更新日期。</p>
+  <div class="content-grid lab-report-grid">{cards}</div>
+</section>
+<section class="section article-body standalone">
+  <h2>我們如何寫實測報告</h2>
+  <p>先定義可觀察問題，再固定輸入與環境，記錄通過和失敗結果，最後說明修正及未涵蓋範圍。報告不使用虛構訪談，不把自動測試等同真人經驗，也不以單次綠燈宣稱工具具備心理效度。</p>
+  <h2>發現問題時怎麼處理</h2>
+  <p>可重現的錯誤會先修正產生器或共用程式，再重新生成全部頁面並執行公開 smoke test。內容語意或安全疑慮則回到人工編輯，不用增加模板句子掩蓋問題。</p>
+  <div class="callout safety"><strong>內容邊界</strong><p>LoveTypes 的實測只證明網站在列出的條件下如何運作，不提供心理諮商、醫療、法律或個別關係診斷。</p></div>
+</section>
+"""
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "LoveTypes 產品實測紀錄",
+        "description": "LoveTypes 測驗、隱私、分享、相容性、修復表與無障礙的可重現實測。",
+        "url": f"{DOMAIN}/lab/",
+        "inLanguage": "zh-TW",
+        "dateModified": LAB_UPDATED,
+        "author": organization_ref(),
+        "publisher": organization_ref(),
+        "hasPart": [{"@type": "Article", "name": report["title"], "url": f"{DOMAIN}/lab/{report['slug']}/"} for report in LAB_REPORTS],
+    })
+    write(ROOT / "lab" / "index.html", layout("zh", "LoveTypes 產品實測紀錄", "公開測驗、隱私、分享、相容性、修復表與無障礙的可重現測試步驟、結果與限制。", "lab", body, "實測紀錄", "website", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+
+
+def lab_report_page(report: dict) -> None:
+    environment = "".join(f"<li>{escape(item)}</li>" for item in report["environment"])
+    steps = "".join(f"<li>{escape(item)}</li>" for item in report["steps"])
+    result_rows = "".join(
+        f"<tr><th scope=\"row\">{escape(case)}</th><td>{escape(observation)}</td><td><strong>{escape(status)}</strong></td></tr>"
+        for case, observation, status in report["results"]
+    )
+    body = f"""
+<section class="article-hero lab-article-hero">
+  <div><p class="eyebrow">PRODUCT LAB · {escape(LAB_UPDATED)}</p><h1>{escape(report['title'])}</h1><p>{escape(report['desc'])}</p></div>
+  <img src="{escape(report['screenshot'])}" alt="{escape(report['screenshot_alt'])}" width="1200" height="750" loading="eager" fetchpriority="high" decoding="async" />
+</section>
+<section class="article-shell lab-article-shell">
+  <article class="article-body" data-lab-report>
+    <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{escape(LAB_UPDATED)}">實測與更新：{escape(LAB_UPDATED)}</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
+    <p class="lede">{escape(report['summary'])}</p>
+    <section data-lab-environment><h2>測試環境</h2><ul>{environment}</ul></section>
+    <section data-lab-steps><h2>重現步驟</h2><ol>{steps}</ol></section>
+    <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody>{result_rows}</tbody></table></div></section>
+    <section data-lab-failure><h2>本次發現的問題</h2><p>{escape(report['failure'])}</p></section>
+    <section data-lab-fix><h2>已採取的修正</h2><p>{escape(report['fix'])}</p></section>
+    <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>{escape(report['limitations'])}</p></section>
+    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-07-31 建立首份公開報告。</p></section>
+    <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
+  </article>
+  <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
+</section>
+"""
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": report["title"],
+        "description": report["desc"],
+        "url": f"{DOMAIN}/lab/{report['slug']}/",
+        "inLanguage": "zh-TW",
+        "datePublished": LAB_UPDATED,
+        "dateModified": LAB_UPDATED,
+        "image": f"{DOMAIN}{report['screenshot']}",
+        "author": organization_ref(),
+        "publisher": organization_ref(),
+        "isPartOf": {"@type": "CollectionPage", "@id": f"{DOMAIN}/lab/"},
+        "mainEntityOfPage": {"@type": "WebPage", "@id": f"{DOMAIN}/lab/{report['slug']}/"},
+    })
+    write(ROOT / "lab" / report["slug"] / "index.html", layout("zh", report["title"] + " | LoveTypes 實測", report["desc"], "lab/" + report["slug"], body, "實測紀錄", "article", report["screenshot"], schema))
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:
@@ -13591,7 +13772,7 @@ def resources_page(lang: str) -> None:
     route_items = [(supply_route(lang, slug)["title"], abs_url(lang, "resources") + f"#supply-{slug}") for slug in GUARDIANS]
     schema += item_list_schema(supply_labels["title"], supply_labels["intro"], route_items)
     page_title = f"{t['resources']} | LoveTypes" if lang == "zh" else f"{t['resources']} | LoveTypes {t['name']}"
-    write(page_path(lang, "resources"), layout(lang, page_title, t["resources_desc"], "resources", body, t["resources"], "website", "/og-cover.jpg", schema, affiliate=True))
+    write(page_path(lang, "resources"), layout(lang, page_title, t["resources_desc"], "resources", body, t["resources"], "website", "/og-cover.jpg", schema, affiliate=True, robots="noindex, follow"))
 
 
 def repair_worksheet_script(lang: str) -> str:
@@ -13609,7 +13790,7 @@ def repair_worksheet_script(lang: str) -> str:
     resume_intro = json.dumps(plan["resume_intro"], ensure_ascii=False)
     resume_fill = json.dumps(plan["resume_fill"], ensure_ascii=False)
     resume_plan = json.dumps(plan["resume_plan"], ensure_ascii=False)
-    bookstore_label = json.dumps(AFFILIATE_COPY[lang]["button"], ensure_ascii=False)
+    bookstore_label = json.dumps("查看補給與商業揭露" if lang == "zh" else AFFILIATE_COPY[lang]["button"], ensure_ascii=False)
     return f"""
 {quiz_data_script_tag(lang)}
 <script>
@@ -13765,7 +13946,7 @@ def repair_worksheet_script(lang: str) -> str:
             <a class="secondary-btn" href="${{result.lunaUrl}}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${{quiz.labels.saved_luna}}</a>
             <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${{result.collectorHall}}</a>
             <a class="secondary-btn" href="${{result.contactUrl}}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${{quiz.labels.saved_contact}}</a>
-            <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="repair_resume_affiliate_book">${{bookstoreLabel}}</a>
+            <a class="secondary-btn" href="${{result.supplyBookUrl}}" data-funnel-event="repair_resume_affiliate_book">${{bookstoreLabel}}</a>
           </div>
         </div>
       </article>`;
@@ -13972,7 +14153,7 @@ def luna_resume_script(lang: str) -> str:
           <a class="secondary-btn" href="${{result.lunaUrl}}" data-luna-resume-luna>${{quiz.labels.saved_luna}}</a>
           <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-luna-resume-keepsake>${{quiz.labels.saved_card}}</a>
           <a class="secondary-btn" href="${{result.contactUrl}}" data-luna-resume-contact>${{quiz.labels.saved_contact}}</a>
-          <a class="secondary-btn" href="${{result.supplyBookUrl}}" target="_blank" rel="noopener noreferrer sponsored">${{labels.book}}</a>
+          <a class="secondary-btn" href="${{result.supplyBookUrl}}">${{labels.book}}</a>
         </div>
       </div>
     </article>`;
@@ -14179,7 +14360,7 @@ def luna_page(lang: str) -> None:
 """
     schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(t["luna_title"])}","description":"{escape(t["luna_desc"])}","url":"{abs_url(lang, "luna-yoga-music")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>{luna_product_item_list_schema(lang)}'
     page_title = f"{t['luna_title']} | LoveTypes" if lang == "zh" else f"{t['luna_title']} | LoveTypes {t['name']}"
-    write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/og-cover.jpg", schema))
+    write(page_path(lang, "luna-yoga-music"), layout(lang, page_title, t["luna_desc"], "luna-yoga-music", body, t["resources"], "website", "/og-cover.jpg", schema, robots="noindex, follow"))
 
 
 def luna_alias_page(lang: str) -> None:
@@ -15427,11 +15608,10 @@ def write_guardian_profiles() -> None:
 
 
 def site_index_paths(lang: str | None = None) -> list[str]:
-    long_tail_paths = [f"tools/{slug}" for slug in INDEXABLE_LONG_TAIL_SLUGS]
-    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", *long_tail_paths, "guides", "characters", "theory", "resources", "repair-plan", "keepsakes", "luna-yoga-music", "about", "contact", "privacy", "terms"]
-    if lang is None or lang in INDEXABLE_GUIDE_LANGS:
-        paths += [f"guides/{guide['slug']}" for guide in GUIDES]
+    paths = ["", "start", "garden-map", "compass", "tools/love-compatibility", "guides", "characters", "theory", "repair-plan", "keepsakes", "about", "contact", "privacy", "terms"]
+    paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
+    paths += ["lab", *(f"lab/{report['slug']}" for report in LAB_REPORTS)]
     return paths
 
 
@@ -15440,7 +15620,7 @@ def site_index_group(path: str) -> str:
         return "home"
     if path == "start":
         return "conversion"
-    if path in {"garden-map", "guides", "compass", "theory", "about"} or path.startswith("guides/"):
+    if path in {"garden-map", "guides", "compass", "theory", "about", "lab"} or path.startswith(("guides/", "lab/")):
         return "content"
     if path.startswith("tools/"):
         return "conversion"
@@ -15455,7 +15635,8 @@ def site_index_group(path: str) -> str:
 
 def collect_site_index() -> dict:
     pages = []
-    for lang, cfg in LANGS.items():
+    for lang in REVIEW_INDEX_LANGS:
+        cfg = LANGS[lang]
         for path in site_index_paths(lang):
             pages.append({
                 "lang": lang,
@@ -15473,15 +15654,16 @@ def collect_site_index() -> dict:
         "production": f"{DOMAIN}/",
         "languages": [
             {"id": lang, "hreflang": cfg["code"], "prefix": cfg["prefix"] or "/", "name": cfg["name"]}
-            for lang, cfg in LANGS.items()
+            for lang in REVIEW_INDEX_LANGS
+            for cfg in (LANGS[lang],)
         ],
-        "description": "Machine-readable LoveTypes route index for public multilingual pages, route groups, and core user flows.",
-        "totals": {"pages": len(pages), "paths": len(site_index_paths()), "languages": len(LANGS), "groups": dict(sorted(groups.items()))},
+        "description": "Machine-readable LoveTypes Traditional Chinese editorial review surface and core user flows.",
+        "totals": {"pages": len(pages), "paths": len(site_index_paths()), "languages": len(REVIEW_INDEX_LANGS), "groups": dict(sorted(groups.items()))},
         "coreFlows": [
-            {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/resources/"]},
-            {"id": "quiz_to_guardian", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/resources/", f"{DOMAIN}/repair-plan/"]},
-            {"id": "guardian_supply", "entry": f"{DOMAIN}/characters/", "next": [f"{DOMAIN}/resources/", f"{DOMAIN}/keepsakes/", f"{DOMAIN}/luna-yoga-music/"]},
-            {"id": "supply_to_contact", "entry": f"{DOMAIN}/resources/", "next": [f"{DOMAIN}/contact/#luna-supply-request", f"{DOMAIN}/commerce-catalog.json"]},
+            {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/guides/"]},
+            {"id": "quiz_to_practice", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/repair-plan/", f"{DOMAIN}/lab/"]},
+            {"id": "editorial_evidence", "entry": f"{DOMAIN}/guides/", "next": [f"{DOMAIN}/lab/", f"{DOMAIN}/about/"]},
+            {"id": "commercial_disclosure", "entry": f"{DOMAIN}/resources/", "next": [f"{DOMAIN}/contact/#luna-supply-request"], "indexing": "noindex, follow"},
             {"id": "trust_boundary", "entry": f"{DOMAIN}/about/", "next": [f"{DOMAIN}/privacy/", f"{DOMAIN}/terms/", f"{DOMAIN}/humans.txt"]},
         ],
         "pages": pages,
@@ -16498,7 +16680,7 @@ def write_redirects() -> None:
         "/.well-known/security.txt /security.txt 200",
         "/go/quiz-started.gif /favicon.ico 200",
         "/go/quiz-completed.gif /favicon.ico 200",
-        f"{LUNA_STARTER_PROXY_PATH} {luna_product_url(LUNA_GUMROAD_PRODUCTS[0])} 301",
+        f"{LUNA_STARTER_PROXY_PATH} /resources/#luna-products 302",
         "/luna/ /luna-yoga-music/ 301",
         "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",
         "/images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301",
@@ -16517,23 +16699,24 @@ def write_redirects() -> None:
         "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp /assets/lovetypes/backgrounds/guardian-garden-mobile.webp 301",
         "/og-cover.webp /og-cover.jpg 301",
     ]
-    redirect_lines += [
-        f"/{cfg['prefix']}/luna/ /{cfg['prefix']}/luna-yoga-music/ 301"
-        for cfg in LANGS.values()
-        if cfg["prefix"]
-    ]
+    for cfg in LANGS.values():
+        if cfg["prefix"]:
+            redirect_lines.extend([
+                f"/{cfg['prefix']}/ / 302",
+                f"/{cfg['prefix']}/* /:splat 302",
+            ])
     redirects = "\n".join(redirect_lines) + "\n"
     write(ROOT / "_redirects", redirects)
 
 
 def write_support_files() -> None:
-    paths_by_lang = {lang: set(site_index_paths(lang)) for lang in LANGS}
+    paths_by_lang = {lang: set(site_index_paths(lang)) for lang in REVIEW_INDEX_LANGS}
     sitemap = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     ]
     for path in site_index_paths():
-        alternate_langs = [code for code in LANGS if path in paths_by_lang[code]]
+        alternate_langs = [code for code in REVIEW_INDEX_LANGS if path in paths_by_lang[code]]
         alternates = [f'    <xhtml:link rel="alternate" hreflang="{LANGS[code]["code"]}" href="{xml_escape(abs_url(code, path))}" />' for code in alternate_langs]
         if "zh" in alternate_langs:
             alternates.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{xml_escape(abs_url("zh", path))}" />')
@@ -16678,20 +16861,23 @@ def main() -> None:
     write_css()
     write_versioned_scripts()
     write_quiz_data_assets()
+    cleanup_long_tail_outputs()
     for lang in LANGS:
         home(lang)
         start_page(lang)
         garden_map_page(lang)
         compass_page(lang)
         love_compatibility_page(lang)
-        for slug in LONG_TAIL_COMPATIBILITY_PAGES:
-            long_tail_compatibility_page(lang, slug)
         guides_index(lang)
         characters_index_page(lang)
         for idx, guide in enumerate(GUIDES):
             guide_page(lang, guide, idx)
         for slug, data in GUARDIANS.items():
             character_page(lang, slug, data)
+        if lang == "zh":
+            lab_index_page()
+            for report in LAB_REPORTS:
+                lab_report_page(report)
         resources_page(lang)
         repair_plan_page(lang)
         keepsakes_page(lang)

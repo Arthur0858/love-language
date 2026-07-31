@@ -87,7 +87,7 @@ def load_generator_config():
 
 def collect_public_tool_html_paths() -> set[str]:
     generator = load_generator_config()
-    slugs = ["love-compatibility", *generator.LONG_TAIL_COMPATIBILITY_PAGES.keys()]
+    slugs = ["love-compatibility"]
     paths: set[str] = set()
     for _lang, cfg in generator.LANGS.items():
         prefix = cfg["prefix"]

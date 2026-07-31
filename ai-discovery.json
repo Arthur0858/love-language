@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-07-05",
+  "updated": "2026-07-31",
   "production": "https://lovetypes.tw/",
   "siteName": "LoveTypes",
   "preferredLanguage": "zh-TW",
@@ -442,15 +442,15 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 117,
-      "paths": 33,
-      "languages": 5,
+      "pages": 40,
+      "paths": 40,
+      "languages": 1,
       "groups": {
-        "content": 37,
-        "conversion": 30,
-        "guardians": 30,
-        "home": 5,
-        "trust": 15
+        "content": 26,
+        "conversion": 4,
+        "guardians": 6,
+        "home": 1,
+        "trust": 3
       }
     },
     "commerceTotals": {

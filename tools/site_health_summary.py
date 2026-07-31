@@ -319,6 +319,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "issues",
         "content_uniqueness_issues",
         "content_value_issues",
+        "adsense_review_surface_issues",
+        "adsense_visual_issues",
         "multilingual_route_issues",
         "guardian_conversion_issues",
         "affiliate_locale_issues",

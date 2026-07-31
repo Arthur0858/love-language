@@ -1,7 +1,7 @@
 /.well-known/security.txt /security.txt 200
 /go/quiz-started.gif /favicon.ico 200
 /go/quiz-completed.gif /favicon.ico 200
-/go/luna-starter-click/ https://lunayogamusic.gumroad.com/l/healing-vibes-starter?utm_source=lovetypes&utm_medium=luna-page&utm_campaign=luna_gumroad_offer&utm_content=healing-vibes-starter 301
+/go/luna-starter-click/ /resources/#luna-products 302
 /luna/ /luna-yoga-music/ 301
 /images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301
 /images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301
@@ -19,7 +19,11 @@
 /assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301
 /assets/lovetypes/backgrounds/quiz-desk-mobile.webp /assets/lovetypes/backgrounds/guardian-garden-mobile.webp 301
 /og-cover.webp /og-cover.jpg 301
-/en/luna/ /en/luna-yoga-music/ 301
-/ja/luna/ /ja/luna-yoga-music/ 301
-/ko/luna/ /ko/luna-yoga-music/ 301
-/es/luna/ /es/luna-yoga-music/ 301
+/en/ / 302
+/en/* /:splat 302
+/ja/ / 302
+/ja/* /:splat 302
+/ko/ / 302
+/ko/* /:splat 302
+/es/ / 302
+/es/* /:splat 302

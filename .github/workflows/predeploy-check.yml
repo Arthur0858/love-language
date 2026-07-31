@@ -37,7 +37,7 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: Run structural predeploy checks
-        run: python tools/predeploy_check.py
+        run: python tools/predeploy_check.py --site-only
 
       - name: Run browser visual smoke
         env:

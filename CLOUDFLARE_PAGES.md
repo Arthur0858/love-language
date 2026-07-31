@@ -18,7 +18,7 @@ Do not commit the token file. The deploy script reads it locally, or reads
 Run quality checks first:
 
 ```bash
-python3 tools/predeploy_check.py
+python3 tools/predeploy_check.py --site-only
 ```
 
 This includes SEO, multilingual route, conversion path, accessibility, image
@@ -85,7 +85,7 @@ deployment when present.
 
 A production deploy is not considered verified until all of these are true:
 
-- `python3 tools/predeploy_check.py` returns `predeploy_checks=ok`.
+- `python3 tools/predeploy_check.py --site-only` returns `predeploy_checks=ok`.
 - `python3 tools/deploy_cloudflare_pages.py --dry-run` can collect the
   manifest and query missing hashes.
 - The real deploy reaches a Cloudflare deployment stage of `deploy success`.

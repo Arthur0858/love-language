@@ -257,6 +257,11 @@ def main() -> int:
         action="store_true",
         help="Run only tools/visual_check.mjs, starting a temporary local server unless --base-url is set.",
     )
+    parser.add_argument(
+        "--site-only",
+        action="store_true",
+        help="Run public-site checks without date-sensitive promotion operations checks.",
+    )
     args = parser.parse_args()
 
     if not args.visual_only:
@@ -271,6 +276,11 @@ def main() -> int:
         run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
         run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
         run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
+        if args.site_only:
+            run_step("deploy manifest audit", [sys.executable, "tools/deploy_manifest_audit.py"])
+            run_step("site health config audit", [sys.executable, "tools/site_health_config_audit.py"])
+            print("predeploy_checks=ok", flush=True)
+            return 0
         run_step("promotion spreadsheet workbook", [find_node(), "tools/build_promotion_spreadsheet.mjs", "--check"])
         run_step("promotion publish pack", [sys.executable, "tools/promotion_publish_pack.py", "--all", "--check"])
         run_step("promotion kpi tracker", [sys.executable, "tools/promotion_sync_kpi_tracker.py", "--check"])

@@ -170,6 +170,12 @@ def main() -> int:
         issues.append("lab index missing from deploy manifest")
 
     redirects = (ROOT / "_redirects").read_text(encoding="utf-8")
+    for cfg_prefix in ("", "en", "ja", "ko", "es"):
+        prefix = f"/{cfg_prefix}" if cfg_prefix else ""
+        for slug in LONG_TAIL_COMPATIBILITY_PAGES:
+            rule = f"{prefix}/tools/{slug}/ /404.html 404"
+            if rule not in redirects:
+                issues.append(f"explicit legacy 404 rule missing: {rule}")
     for prefix in ("en", "ja", "ko", "es"):
         if f"/{prefix}/ / 302" not in redirects or f"/{prefix}/* /:splat 302" not in redirects:
             issues.append(f"302 language redirect missing: {prefix}")

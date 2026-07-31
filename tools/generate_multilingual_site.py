@@ -16700,6 +16700,12 @@ def write_redirects() -> None:
         "/og-cover.webp /og-cover.jpg 301",
     ]
     for cfg in LANGS.values():
+        prefix = f"/{cfg['prefix']}" if cfg["prefix"] else ""
+        redirect_lines.extend(
+            f"{prefix}/tools/{slug}/ /404.html 404"
+            for slug in LONG_TAIL_COMPATIBILITY_PAGES
+        )
+    for cfg in LANGS.values():
         if cfg["prefix"]:
             redirect_lines.extend([
                 f"/{cfg['prefix']}/ / 302",

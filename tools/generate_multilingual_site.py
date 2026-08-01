@@ -29,6 +29,7 @@ ADSENSE_PUBLISHER_ID = "pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-07-31"
+HOME_UPDATED = "2026-08-01"
 PRIVACY_UPDATED = "2026-08-01"
 THEORY_UPDATED = "2026-08-01"
 START_UPDATED = "2026-08-01"
@@ -157,7 +158,7 @@ LANGS = {
         "name": "繁體中文",
         "brand": "LoveTypes 情感守護者宇宙",
         "tagline": "走進心語庭園，把愛之語測驗結果翻成聽得懂、做得到、能修復錯頻的關係練習。",
-        "start": "開始認領儀式",
+        "start": "開始免費測驗",
         "map": "地圖",
         "guides": "深度指南",
         "guardians": "守護者",
@@ -731,10 +732,10 @@ AFFILIATE_BOOKS = [
 
 QUIZ_LABELS = {
     "zh": {
-        "eyebrow": "DESTINY RITUAL",
-        "title": "15 道心語命運儀式",
+        "eyebrow": "FREE GUARDIAN QUIZ",
+        "title": "15 道心語測驗",
         "intro": "不用註冊，依直覺選出最能讓你感到被愛的回應。完成後會認領一位情感守護者，並得到分數、下一步練習與延伸路線。",
-        "start": "開始 15 題儀式",
+        "start": "開始 15 題測驗",
         "question": "心語",
         "progress": "第 {current} 題，共 {total} 題",
         "next": "下一題",
@@ -1208,7 +1209,7 @@ QUIZ_TIPS = {
 THEORY_FAQ = {
     "zh": [
         ("什麼是五種愛之語？", "五種愛之語是一套關係溝通框架，用肯定言詞、優質時光、接受禮物、服務行動與身體接觸，描述人們表達與接收愛的常見方式。LoveTypes 把它翻成五位守護者，讓理解更容易被記住。"),
-        ("命運儀式需要多久？", "首頁儀式共有 15 道心語，通常 2 到 3 分鐘可完成。結果適合拿來開啟對話，不適合作為固定標籤。"),
+        ("心語測驗需要多久？", "首頁測驗共有 15 道心語，通常 2 到 3 分鐘可完成。結果適合拿來開啟對話，不適合作為固定標籤。"),
         ("愛之語會改變嗎？", "會。壓力、關係階段、遠距、創傷經驗或生活角色變化，都可能讓你當下最需要的愛之語不同。"),
         ("如果伴侶和我的守護者不同怎麼辦？", "差異不是失敗，而是翻譯任務。先說明自己如何接收愛，再請對方示範他們能做的小行動。"),
     ],
@@ -1244,7 +1245,7 @@ LUNA_USE_CASES = {
         ("睡前反思", "把白天沒說完的感受放進比較安靜的位置，不急著做判斷。"),
         ("吵架後冷卻", "先讓身體降噪，再回到一句可被接住的修復請求。"),
         ("關係日記", "用 Luna 當背景，記下今天哪一種愛之語最需要被照顧。"),
-        ("測驗後整理", "完成命運儀式後，陪你把守護者結果整理成下一步。"),
+        ("測驗後整理", "完成心語測驗後，陪你把守護者結果整理成下一步。"),
     ],
     "en": [
         ("Before sleep", "Place the day's unfinished feelings somewhere quieter before judging them."),
@@ -1278,7 +1279,7 @@ LUNA_USE_CASE_ACTIONS = {
         ("寫進修復計畫", "repair-plan"),
         ("閱讀修復指南", "guides/repair-after-conflict"),
         ("查看補給路線", "resources"),
-        ("回到命運儀式", "#quiz-section"),
+        ("回到心語測驗", "#quiz-section"),
     ],
     "en": [
         ("Use repair plan", "repair-plan"),
@@ -2478,7 +2479,7 @@ SECTION_LABELS = {
         "five_guardians": "五位守護者",
         "moonlight_supply": "月光補給",
         "book_relics": "延伸書卷",
-        "destiny_ritual": "命運儀式",
+        "destiny_ritual": "心語測驗",
         "night_supply_protocol": "夜間補給流程",
         "guardian_night_supply": "守護者夜間補給",
         "luna_supply_entry": "Luna 補給入口",
@@ -2779,7 +2780,7 @@ GUARDIAN_ENTRY = {
         "title": "先確認你要進入哪個分域",
         "intro": "五位守護者不是靜態角色列表。先知道你現在最需要哪種愛之語，再進入對應分域、修復任務與補給路線。",
         "items": [
-            ("還不知道守護者", "先完成 15 道心語，讓結果把你帶到最需要被接住的分域。", "開始認領儀式", ""),
+            ("還不知道守護者", "先完成 15 道心語，讓結果把你帶到最需要被接住的分域。", "開始免費測驗", ""),
             ("想先看五個分域", "瀏覽五域星圖，選一位最像你此刻需求的守護者。", "查看五域星圖", "#guardian-map"),
             ("已經知道守護者", "直接選一篇對應指南，再用 7 日修復表或關係羅盤整理下一步。", "開始免費練習", "repair-plan"),
         ],
@@ -2907,7 +2908,7 @@ GUIDE_INDEX_COMPASS = {
         "title": "先找到守護者，再選一篇指南",
         "intro": "指南不是一次讀完的文章庫。先確認你的心語入口，再把閱讀接到一個可執行的小任務。",
         "steps": [
-            ("1", "還不知道自己是哪位守護者", "先完成 15 道心語命運儀式，再回來讀對應指南。", "開始測驗", ""),
+            ("1", "還不知道自己是哪位守護者", "先完成 15 道心語測驗，再回來讀對應指南。", "開始測驗", ""),
             ("2", "已經知道守護者", "進入角色頁，看你的錯頻傷口、修復任務與專屬補給路線。", "查看守護者", "characters"),
             ("3", "準備把閱讀變成行動", "把指南裡的一句話放進 7 日修復計畫，再用關係羅盤整理成可協商的小請求。", "打開修復計畫", "repair-plan"),
         ],
@@ -4448,7 +4449,7 @@ TRUST_ACTION_ROUTES = {
             "title": "理解五種愛之語後，把它放進一週修復",
             "intro": "理論只是一張地圖。真正讓關係變清楚的，是你能否把一個錯頻片刻翻成守護者、請求與下一步補給。",
             "items": [
-                ("01", "開始命運儀式", "先用 15 題確認目前最亮的愛之語訊號。", "開始測驗", ""),
+                ("01", "開始心語測驗", "先用 15 題確認目前最亮的愛之語訊號。", "開始測驗", ""),
                 ("02", "對照五位守護者", "把抽象理論放回艾莉絲、諾雅、薇薇安、克萊兒與朵拉。", "查看守護者", "characters"),
                 ("03", "寫進 7 日修復", "把今天理解的一句話放進可執行的一週練習。", "使用修復計畫", "repair-plan"),
                 ("04", "選一個免費練習", "從對應指南、7 日工作表或關係羅盤中，只選一個今天能完成的入口。", "使用修復計畫", "repair-plan"),
@@ -10123,9 +10124,9 @@ HOME_JOURNEY = {
     "zh": {
         "eyebrow": "GARDEN JOURNEY",
         "title": "第一次進入心語庭園，可以照這條路走",
-        "intro": "不需要一次讀完整座宇宙。先完成命運儀式，再認出守護者，接著選一個補給，最後把它放進一個可執行的修復週期。",
+        "intro": "不需要一次讀完整座宇宙。先完成心語測驗，再認出守護者，接著選一個免費練習，最後把它放進可執行的修復週期。",
         "steps": [
-            ("01", "完成命運儀式", "用 15 道心語辨認你最容易感到被愛的入口。", "開始測驗", "#quiz-section"),
+            ("01", "完成心語測驗", "用 15 道心語辨認你最容易感到被愛的入口。", "開始測驗", "#quiz-section"),
             ("02", "拜訪五個分域", "看見艾莉絲、諾雅、薇薇安、克萊兒、朵拉各自守護的關係語言。", "看守護者", "characters"),
             ("03", "選一篇指南", "依照結果閱讀一篇情境指南，先把感受翻成可以討論的小請求。", "閱讀深度指南", "guides"),
             ("04", "寫下 7 日修復", "把感受變成一次小請求、一段冷卻時間與一個可完成行動。", "打開修復計畫", "repair-plan"),
@@ -13456,7 +13457,7 @@ START_PAGE_COPY = {
         "title": "五種愛之語測驗入口",
         "desc": "完成 15 題心語問題，找到你的情感守護者，再接到免費指南、關係羅盤與 7 日修復工作表。",
         "eyebrow": "QUIZ GATE",
-        "lead": "從這裡直接開始守護者認領儀式。不用註冊，約 2 到 3 分鐘完成，結果只保存在你的瀏覽器。",
+        "lead": "從這裡直接開始免費守護者測驗。不用註冊，約 2 到 3 分鐘完成，結果只保存在你的瀏覽器。",
         "map": "進入五守護者地圖",
         "resources": "先看旅人補給",
         "preview_title": "完成後會開啟三條路",
@@ -13630,7 +13631,7 @@ def home(lang: str) -> None:
         "name": t["brand"],
         "url": abs_url(lang),
         "inLanguage": t["code"],
-        "dateModified": UPDATED,
+        "dateModified": HOME_UPDATED if lang == "zh" else UPDATED,
         "publisher": organization_ref(),
     })
     write(page_path(lang), layout(lang, t["home_title"], t["home_desc"], "", body + quiz_script(lang), "", "website", "/og-cover.jpg", schema))
@@ -17359,7 +17360,7 @@ export default {
 
 
 CORE_LASTMOD = {
-    "": "2026-07-23",
+    "": HOME_UPDATED,
     "start": START_UPDATED,
     "garden-map": GARDEN_MAP_UPDATED,
     "compass": COMPASS_UPDATED,

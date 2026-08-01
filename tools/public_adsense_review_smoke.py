@@ -24,7 +24,7 @@ from adsense_review_surface_audit import (
     schema_types,
     schemas,
 )
-from generate_multilingual_site import COMPASS_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
+from generate_multilingual_site import COMPASS_UPDATED, HOME_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
 
 
 BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
@@ -120,6 +120,10 @@ def page_issues(route: str, response: Response) -> list[str]:
                 issues.append(f"{route}: missing {marker}")
         if f'"dateModified":"{COMPASS_UPDATED}"' not in raw:
             issues.append(f"{route}: schema dateModified mismatch")
+    if route == "/":
+        primary = [item for item in schemas(raw) if "WebSite" in schema_types(item)]
+        if len(primary) != 1 or primary[0].get("dateModified") != HOME_UPDATED:
+            issues.append(f"{route}: WebSite schema dateModified mismatch")
     if route in CORE_EDITORIAL_TRUST:
         updated, marker, expected_type = CORE_EDITORIAL_TRUST[route]
         if marker not in raw:
@@ -159,6 +163,10 @@ def main() -> int:
         root = ET.fromstring(sitemap.body)
         ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         urls = [node.text or "" for node in root.findall("s:url/s:loc", ns)]
+        sitemap_lastmods = {
+            node.findtext("s:loc", default="", namespaces=ns): node.findtext("s:lastmod", default="", namespaces=ns)
+            for node in root.findall("s:url", ns)
+        }
     except ET.ParseError as exc:
         print(f"public_review_issues=1\n/sitemap.xml: invalid XML: {exc}")
         return 1
@@ -167,6 +175,8 @@ def main() -> int:
         issues.append(f"/sitemap.xml: expected 38 unique URLs, got {len(urls)}")
     if any(not url.startswith(CANONICAL_BASE + "/") for url in urls):
         issues.append("/sitemap.xml: contains a non-production or non-zh URL")
+    if sitemap_lastmods.get(CANONICAL_BASE + "/") != HOME_UPDATED:
+        issues.append("/sitemap.xml: homepage lastmod mismatch")
 
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(request, route): route for route in routes}

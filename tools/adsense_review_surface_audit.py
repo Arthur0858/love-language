@@ -17,6 +17,7 @@ from generate_multilingual_site import (
     COMPASS_UPDATED,
     CORE_EDITORIAL_UPDATED,
     GARDEN_MAP_UPDATED,
+    HOME_UPDATED,
     LAB_INDEX_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
@@ -33,7 +34,7 @@ import deploy_cloudflare_pages as deploy
 ROOT = Path(__file__).resolve().parents[1]
 COMMERCE_HOSTS = ("amazon.", "books.com.tw", "gumroad.com")
 PRIMARY_SCHEMA_TYPES = {"AboutPage", "Article", "CollectionPage", "ContactPage", "HowTo", "WebPage", "WebSite"}
-FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense")
+FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense", "命運儀式")
 FORBIDDEN_COMMERCIAL = ("US$", "付費報告", "八字", "流年", "Love Timing Report")
 FORBIDDEN_REVIEW_POSITIONING = ("命理", "命盤", "出生節奏", "生日節奏", "出生時間", "出生日期")
 EXPECTED_CORE = {
@@ -118,6 +119,8 @@ def main() -> int:
     expected_urls = {"https://lovetypes.tw" + route for route in expected}
     if sitemap_urls != expected_urls:
         issues.append(f"sitemap must match the 38-page review surface, found {len(sitemap_urls)} URLs")
+    if sitemap_lastmods.get("https://lovetypes.tw/") != HOME_UPDATED:
+        issues.append("homepage sitemap lastmod mismatch")
     for slug in ("iris", "noah", "vivian", "claire", "dora"):
         url = f"https://lovetypes.tw/characters/{slug}/"
         if sitemap_lastmods.get(url) != GUARDIAN_UPDATED:
@@ -158,6 +161,10 @@ def main() -> int:
             meta_description = html.unescape(meta_match.group(1)) if meta_match else ""
             if primary_schemas[0].get("description") != meta_description:
                 issues.append(f"primary schema description should match meta description: {route}")
+        if route == "/":
+            website_schemas = [item for item in primary_schemas if "WebSite" in schema_types(item)]
+            if len(website_schemas) != 1 or website_schemas[0].get("dateModified") != HOME_UPDATED:
+                issues.append("homepage WebSite schema dateModified mismatch")
 
     lab_index_text = main_text(page_file("/lab/").read_text(encoding="utf-8"))
     lab_index_cjk = len(re.findall(r"[\u3400-\u9fff]", lab_index_text))

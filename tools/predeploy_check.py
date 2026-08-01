@@ -438,6 +438,12 @@ def main() -> int:
 
         def run_visual_checks() -> None:
             run_step("AdSense review visual check", [node, "tools/adsense_review_visual_check.mjs"], env=env)
+            run_step(
+                "public schema smoke",
+                [sys.executable, "tools/public_schema_smoke.py", "--base-url", env["BASE_URL"]],
+                env=env,
+            )
+            run_step("keyboard navigation smoke", [node, "tools/keyboard_navigation_smoke.mjs"], env=env)
             if args.visual_only:
                 return
             run_step("tap target smoke", [node, "tools/tap_target_smoke.mjs"], env=env)

@@ -38,6 +38,7 @@ AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 REVIEW_INDEX_LANGS = ("zh",)
+LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
@@ -5345,15 +5346,26 @@ def nav(lang: str, active: str = "", path: str = "", alternate_path: str | None 
         else f'<a href="{href}">{escape(label)}</a>'
         for href, label in items
     )
-    lang_links = f'<a class="active" href="{lang_url("zh", language_path)}" lang="zh-TW" aria-current="page">繁體中文</a>'
+    lang_links = "".join(
+        (
+            f'<a class="active" href="{lang_url(code, language_path)}" lang="{escape(LANGS[code]["code"])}" aria-current="page">{escape(LANGS[code]["name"])}</a>'
+            if code == lang
+            else f'<a href="{lang_url(code, language_path)}" lang="{escape(LANGS[code]["code"])}">{escape(LANGS[code]["name"])}</a>'
+        )
+        for code in REVIEW_INDEX_LANGS
+    )
+    language_menu = ""
+    if len(REVIEW_INDEX_LANGS) > 1:
+        language_menu = f"""
+  <details class="language-menu">
+    <summary aria-label="{escape(t["language_menu"])}"><span></span></summary>
+    <div class="language-switcher">{lang_links}</div>
+  </details>"""
     return f"""
 <header class="site-nav">
   <a class="brand" href="{lang_url(lang)}" aria-label="{escape(t["brand"])}"><span>LoveTypes</span></a>
   <nav class="nav-links" aria-label="{escape(t["primary_nav"])}">{links}</nav>
-  <details class="language-menu">
-    <summary aria-label="{escape(t["language_menu"])}"><span></span></summary>
-    <div class="language-switcher">{lang_links}</div>
-  </details>
+{language_menu}
 </header>
 """
 
@@ -5525,14 +5537,14 @@ def organization_schema(lang: str) -> str:
         "knowsAbout": [
             "Five love languages",
             "Relationship repair",
-            "Guardian personality quiz",
-            "Luna yoga music",
+            "Relationship communication exercises",
+            "Consent and relationship boundaries",
         ],
         "contactPoint": {
             "@type": "ContactPoint",
             "email": CONTACT_EMAIL,
             "contactType": "content corrections and privacy inquiries",
-            "availableLanguage": ["zh-TW", "en", "ja", "ko", "es"],
+            "availableLanguage": [LANGS[code]["code"] for code in REVIEW_INDEX_LANGS],
         },
         "publishingPrinciples": abs_url(lang, "about"),
         "privacyPolicy": abs_url(lang, "privacy"),
@@ -13638,6 +13650,7 @@ def legacy_zh_guide_page(slug: str, title: str, desc: str, canonical_target: str
 
 
 def lab_index_page() -> None:
+    lab_description = "公開測驗、隱私、分享、相容性、修復表與無障礙的可重現測試步驟、結果與限制。"
     cards = "".join(
         f"""
 <a class="content-card lab-report-card" href="/lab/{escape(report['slug'])}/">
@@ -13666,6 +13679,12 @@ def lab_index_page() -> None:
   <p>先定義可觀察問題，再固定輸入與環境，記錄通過和失敗結果，最後說明修正及未涵蓋範圍。報告不使用虛構訪談，不把自動測試等同真人經驗，也不以單次綠燈宣稱工具具備心理效度。</p>
   <h2>發現問題時怎麼處理</h2>
   <p>可重現的錯誤會先修正產生器或共用程式，再重新生成全部頁面並執行公開 smoke test。內容語意或安全疑慮則回到人工編輯，不用增加模板句子掩蓋問題。</p>
+  <h2>閱讀報告時先核對三件事</h2>
+  <p>第一，確認「固定輸入與預期」是否和你想檢查的情況相同；不同答案序列、瀏覽器版本或畫面尺寸，可能得到不同觀察。第二，把結果表中的通過與失敗分開看：通過只代表列出的步驟符合判準，不能延伸成所有裝置都沒有問題。第三，閱讀「尚有限制」，確認報告沒有涵蓋的瀏覽器、輔助技術、網路條件或真人使用情境。</p>
+  <h2>證據能回答什麼，不能回答什麼</h2>
+  <p>這些紀錄可以回答程式如何計分、資料存在哪裡、分享卡帶出哪些欄位，以及特定裝置上的操作是否完成。它們不能證明守護者分類具有臨床效度，也不能預測一段關係是否適合、會不會改善。涉及壓迫、威脅、暴力、跟蹤或無法自由表達意願時，網站工具不應被當作安全評估。</p>
+  <h2>版本、修正與讀者回報</h2>
+  <p>每份報告保留測試日期、環境與版本識別；功能有實質修改時，對應紀錄會重測，而不是只更新頁面日期。若你依照公開步驟得到不同結果，可從<a href="/contact/#site-repair-report">內容修正入口</a>提供裝置、瀏覽器版本、步驟與畫面狀態。團隊會先確認能否重現，再標示已修正或尚待處理，不將個別回報包裝成普遍成效。</p>
   <div class="callout safety"><strong>內容邊界</strong><p>LoveTypes 的實測只證明網站在列出的條件下如何運作，不提供心理諮商、醫療、法律或個別關係診斷。</p></div>
 </section>
 """
@@ -13673,15 +13692,15 @@ def lab_index_page() -> None:
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "LoveTypes 產品實測紀錄",
-        "description": "LoveTypes 測驗、隱私、分享、相容性、修復表與無障礙的可重現實測。",
+        "description": lab_description,
         "url": f"{DOMAIN}/lab/",
         "inLanguage": "zh-TW",
-        "dateModified": LAB_UPDATED,
+        "dateModified": LAB_INDEX_UPDATED,
         "author": organization_ref(),
         "publisher": organization_ref(),
         "hasPart": [{"@type": "Article", "name": report["title"], "url": f"{DOMAIN}/lab/{report['slug']}/"} for report in LAB_REPORTS],
     })
-    write(ROOT / "lab" / "index.html", layout("zh", "LoveTypes 產品實測紀錄", "公開測驗、隱私、分享、相容性、修復表與無障礙的可重現測試步驟、結果與限制。", "lab", body, "實測紀錄", "website", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+    write(ROOT / "lab" / "index.html", layout("zh", "LoveTypes 產品實測紀錄", lab_description, "lab", body, "實測紀錄", "website", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
 
 def lab_report_page(report: dict) -> None:
@@ -16890,7 +16909,7 @@ CORE_LASTMOD = {
     "contact": "2026-07-21",
     "privacy": "2026-07-21",
     "terms": "2026-07-21",
-    "lab": "2026-07-31",
+    "lab": LAB_INDEX_UPDATED,
 }
 
 

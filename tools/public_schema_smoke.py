@@ -46,7 +46,6 @@ PAGE_SCHEMA_TYPES = {
     "CollectionPage",
     "ContactPage",
     "HowTo",
-    "ProfilePage",
     "WebPage",
     "WebSite",
 }
@@ -374,7 +373,8 @@ def main() -> int:
 
     for loc in locations:
         path = public_path(loc)
-        response = request_url(loc)
+        request_target = urljoin(base_url + "/", path.lstrip("/"))
+        response = request_url(request_target)
         if response.status != 200:
             issues.append(f"{path}: expected status 200, got {response.status}")
             continue
@@ -394,10 +394,10 @@ def main() -> int:
             else:
                 issues.append(f"{path}: primary schema type should include {expected_core_type}, got {sorted(primary_types)}")
         if path in expected_guardian_profiles:
-            if "ProfilePage" in primary_types:
+            if "WebPage" in primary_types and "ProfilePage" not in primary_types:
                 guardian_profile_schema_types_checked += 1
             else:
-                issues.append(f"{path}: guardian page primary schema type should include ProfilePage, got {sorted(primary_types)}")
+                issues.append(f"{path}: guardian page primary schema should use WebPage, not ProfilePage; got {sorted(primary_types)}")
         pages_checked += 1
         jsonld_blocks_checked += parsed_blocks
         organization_entities_checked += stats["organizations"]

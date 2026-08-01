@@ -143,12 +143,25 @@ async function languageMenuKeyboardCheck(browser) {
   const issues = [];
   const response = await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
   if (!response || response.status() >= 400) issues.push(`HTTP status ${response?.status() || 'missing'}`);
+  const publishedLanguages = await page.locator('head link[rel="alternate"][hreflang]:not([hreflang="x-default"])').count();
+  const menu = page.locator('.language-menu');
+  const menuCount = await menu.count();
+  if (publishedLanguages <= 1) {
+    if (menuCount !== 0) issues.push(`single-language review surface should not expose a language menu, got ${menuCount}`);
+    await context.close();
+    return { name: 'language-menu-keyboard', tabStopsChecked: 0, namedFocuses: 0, issues };
+  }
+  if (menuCount !== 1) {
+    issues.push(`multilingual surface should expose one language menu, got ${menuCount}`);
+    await context.close();
+    return { name: 'language-menu-keyboard', tabStopsChecked: 0, namedFocuses: 0, issues };
+  }
   await page.locator('.language-menu summary').focus();
   await page.keyboard.press('Enter');
   const opened = await page.locator('.language-menu').evaluate((node) => node.hasAttribute('open')).catch(() => false);
   if (!opened) issues.push('language menu should open with Enter on summary');
   const links = await page.locator('.language-switcher a').count().catch(() => 0);
-  if (links !== 5) issues.push(`language menu should expose 5 language links, got ${links}`);
+  if (links !== publishedLanguages) issues.push(`language menu should expose ${publishedLanguages} language links, got ${links}`);
   await page.keyboard.press('Escape');
   const closed = await page.locator('.language-menu').evaluate((node) => !node.hasAttribute('open')).catch(() => false);
   if (!closed) issues.push('language menu should close with Escape');

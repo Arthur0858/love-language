@@ -18,6 +18,7 @@ import deploy_cloudflare_pages as deploy
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMERCE_HOSTS = ("amazon.", "books.com.tw", "gumroad.com")
+PRIMARY_SCHEMA_TYPES = {"AboutPage", "Article", "CollectionPage", "ContactPage", "HowTo", "WebPage", "WebSite"}
 FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense")
 FORBIDDEN_COMMERCIAL = ("US$", "付費報告", "八字", "流年", "Love Timing Report")
 EXPECTED_CORE = {
@@ -51,6 +52,15 @@ def schemas(raw: str) -> list[dict]:
             continue
         found.extend(value if isinstance(value, list) else [value])
     return [value for value in found if isinstance(value, dict)]
+
+
+def schema_types(item: dict) -> set[str]:
+    value = item.get("@type")
+    if isinstance(value, str):
+        return {value}
+    if isinstance(value, list):
+        return {entry for entry in value if isinstance(entry, str)}
+    return set()
 
 
 def main() -> int:
@@ -92,6 +102,26 @@ def main() -> int:
         for phrase in FORBIDDEN_VISIBLE:
             if phrase in text:
                 issues.append(f"forbidden public phrase {phrase!r}: {route}")
+        if 'class="language-menu"' in raw:
+            issues.append(f"single-language review page should not expose a language menu: {route}")
+        organization_schemas = [item for item in schemas(raw) if item.get("@type") == "Organization"]
+        for item in organization_schemas:
+            available = item.get("contactPoint", {}).get("availableLanguage")
+            if available != ["zh-TW"]:
+                issues.append(f"Organization availableLanguage should match the zh-only review surface: {route}")
+        primary_schemas = [item for item in schemas(raw) if schema_types(item).intersection(PRIMARY_SCHEMA_TYPES)]
+        if len(primary_schemas) != 1:
+            issues.append(f"review page should expose exactly one primary schema entity: {route}")
+        elif "WebSite" not in schema_types(primary_schemas[0]):
+            meta_match = re.search(r'<meta\s+name="description"\s+content="([^"]*)"', raw, re.I)
+            meta_description = html.unescape(meta_match.group(1)) if meta_match else ""
+            if primary_schemas[0].get("description") != meta_description:
+                issues.append(f"primary schema description should match meta description: {route}")
+
+    lab_index_text = main_text(page_file("/lab/").read_text(encoding="utf-8"))
+    lab_index_cjk = len(re.findall(r"[\u3400-\u9fff]", lab_index_text))
+    if lab_index_cjk < 1100:
+        issues.append(f"lab index needs enough methodology and evidence context: {lab_index_cjk} CJK")
 
     h2_triplets: dict[tuple[str, str, str], str] = {}
     for slug in GUIDE_EDITORIAL_CONTENT:

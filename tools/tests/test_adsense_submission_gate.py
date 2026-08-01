@@ -115,6 +115,7 @@ class AdSenseSubmissionGateTest(unittest.TestCase):
             )
         self.assertEqual(status, 0)
         self.assertIn("adsense_submission_pending_conditions=9", output.getvalue())
+        self.assertIn("adsense_submission_evidence_refresh_due=0", output.getvalue())
         self.assertIn("adsense_submission_ready=false", output.getvalue())
         self.assertIn("adsense_review_submitted=false", output.getvalue())
 
@@ -143,6 +144,19 @@ class AdSenseSubmissionGateTest(unittest.TestCase):
             )
         self.assertEqual(status, 1)
         self.assertIn("adsense_submission_validation_issues=1", output.getvalue())
+
+    def test_report_only_flags_each_stale_evidence_snapshot_once(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            status = gate.report_only(
+                self.state,
+                date(2026, 8, 5),
+                Path("config/adsense-submission-gate.json"),
+                [],
+            )
+        self.assertEqual(status, 0)
+        self.assertIn("adsense_submission_evidence_refresh_due=3", output.getvalue())
+        self.assertEqual(output.getvalue().count("- refresh:"), 3)
 
 
 if __name__ == "__main__":

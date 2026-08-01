@@ -329,8 +329,30 @@ def bool_text(value: object) -> str:
     return "true" if value is True else "false"
 
 
+def evidence_refresh_issues(state: dict, today: date) -> list[str]:
+    try:
+        maximum_age = int(state["maximumEvidenceAgeDays"])
+    except (KeyError, TypeError, ValueError):
+        maximum_age = 3
+    gates = object_value(state.get("externalGates"))
+    snapshots: dict[str, dict] = {}
+    for name in sorted(REQUIRED_GATES & set(gates)):
+        item = object_value(gates.get(name))
+        evidence = item.get("evidence")
+        if isinstance(evidence, str) and evidence:
+            snapshots.setdefault(evidence, item)
+
+    issues: list[str] = []
+    for evidence, item in sorted(snapshots.items()):
+        issue = evidence_freshness_issue(evidence, item, today, maximum_age)
+        if issue:
+            issues.append(issue)
+    return issues
+
+
 def report_only(state: dict, today: date, display_state: object, validation_issues: list[str]) -> int:
     earliest, pending = submission_issues(state, today, validation_issues)
+    refresh_due = evidence_refresh_issues(state, today)
     gates = object_value(state.get("externalGates"))
     ads_txt = object_value(gates.get("adsTxtRecognizedByAdsense")).get("confirmed")
     review_action = object_value(gates.get("reviewActionAvailable")).get("confirmed")
@@ -341,6 +363,9 @@ def report_only(state: dict, today: date, display_state: object, validation_issu
     print(f"adsense_submission_pending_conditions={len(pending)}")
     for issue in pending:
         print(f"- pending: {issue}")
+    print(f"adsense_submission_evidence_refresh_due={len(refresh_due)}")
+    for issue in refresh_due:
+        print(f"- refresh: {issue}")
     print(f"adsense_submission_ready={bool_text(not pending)}")
     print(f"adsense_review_submitted={bool_text(state.get('reviewSubmitted'))}")
     print(f"adsense_review_action_available={bool_text(review_action)}")

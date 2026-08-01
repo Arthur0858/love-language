@@ -325,6 +325,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "adsense_submission_issues",
         "adsense_submission_validation_issues",
         "adsense_submission_pending_conditions",
+        "adsense_submission_evidence_refresh_due",
         "adsense_submission_today",
         "adsense_submission_earliest",
         "adsense_submission_ready",

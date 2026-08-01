@@ -28,6 +28,8 @@ class AdSenseFinalReviewPacketTest(unittest.TestCase):
                 "public_internal_links",
                 "public_editorial_link_graph",
                 "public_metadata",
+                "public_accessibility",
+                "public_versioned_assets",
                 "public_schema",
                 "public_schema_urls",
                 "public_external_links",

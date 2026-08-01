@@ -68,6 +68,16 @@ CHECKS = (
         300,
     ),
     CheckSpec(
+        "public_accessibility",
+        (sys.executable, "tools/public_accessibility_smoke.py", "--base-url", "https://lovetypes.tw"),
+        300,
+    ),
+    CheckSpec(
+        "public_versioned_assets",
+        (sys.executable, "tools/public_versioned_asset_smoke.py", "--base-url", "https://lovetypes.tw"),
+        300,
+    ),
+    CheckSpec(
         "public_schema",
         (sys.executable, "tools/public_schema_smoke.py", "--base-url", "https://lovetypes.tw"),
         240,

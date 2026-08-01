@@ -13,6 +13,8 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
+EXPECTED_PAGE_COUNT = 38
+EXPECTED_HTML_LANG = "zh-TW"
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 IDREF_ATTRS = {
     "aria-activedescendant",
@@ -207,8 +209,8 @@ def audit_page(url: str, html: str) -> tuple[list[str], dict[str, int]]:
         issues.append(f"{url}: duplicate id #{item}")
     ids = set(parser.ids)
 
-    if not parser.html_lang:
-        issues.append(f"{url}: html missing lang")
+    if parser.html_lang != EXPECTED_HTML_LANG:
+        issues.append(f"{url}: html lang should be {EXPECTED_HTML_LANG!r}, got {parser.html_lang!r}")
     if not normalize(parser.title):
         issues.append(f"{url}: missing title")
     if parser.main_count != 1:
@@ -301,6 +303,8 @@ def main() -> int:
     base_url = normalize_base_url(args.base_url)
 
     locations, issues = sitemap_locations(base_url)
+    if len(locations) != EXPECTED_PAGE_COUNT:
+        issues.append(f"/sitemap.xml: expected {EXPECTED_PAGE_COUNT} accessibility pages, found {len(locations)}")
     pages_checked = 0
     totals = Counter()
     for loc in locations:

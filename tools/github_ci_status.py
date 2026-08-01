@@ -49,13 +49,13 @@ def parse_workflows(raw: str) -> dict[str, dict[str, object]]:
         name = visible_text(match.group(2))
         success_jobs = block.count('aria-label="This job succeeded"')
         failed_jobs = len(re.findall(r'aria-label="This job (?:failed|was cancelled|was skipped)"', block, re.I))
-        pending = "currently running" in block.lower() or "queued" in block.lower()
+        pending = success_jobs == 0 and ("currently running" in block.lower() or "queued" in block.lower())
         workflows[name] = {
             "runId": match.group(1),
             "successJobs": success_jobs,
             "failedJobs": failed_jobs,
             "pending": pending,
-            "succeeded": success_jobs > 0 and failed_jobs == 0 and not pending,
+            "succeeded": success_jobs > 0 and failed_jobs == 0,
         }
     return workflows
 

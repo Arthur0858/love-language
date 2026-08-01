@@ -26,6 +26,12 @@ class GitHubCiStatusTest(unittest.TestCase):
         self.assertEqual(ci.workflow_issues(workflows), [])
         self.assertTrue(all(workflows[name]["succeeded"] for name in ci.REQUIRED_WORKFLOWS))
 
+    def test_shared_pending_template_after_success_does_not_override_job_result(self):
+        raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 100, "success") + '<template aria-label="In progress"></template>'
+        workflows = ci.parse_workflows(raw)
+        self.assertTrue(workflows[ci.REQUIRED_WORKFLOWS[0]]["succeeded"])
+        self.assertFalse(workflows[ci.REQUIRED_WORKFLOWS[0]]["pending"])
+
     def test_failed_workflow_is_rejected(self):
         raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 100, "failed")
         workflows = ci.parse_workflows(raw)

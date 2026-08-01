@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T10:46:25Z",
+  "checkedAt": "2026-08-01T11:08:03Z",
   "site": "https://lovetypes.tw/",
   "reviewSurfaceCommit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
   "auditToolingCommit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
@@ -32,7 +32,9 @@
     "staleMachineReadableDates": 0,
     "publicFunnelCatalogs": 0,
     "indexabilityCases": 56,
-    "headerCases": 62,
+    "headerCases": 66,
+    "adsTxtUserAgents": 4,
+    "languageRedirectHeaderCases": 8,
     "noindexSupportFiles": 10,
     "aboutResourcesDisclosureLinks": 1,
     "internalReviewAssetNames": 0,

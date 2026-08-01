@@ -343,6 +343,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_review_pages_checked",
         "public_review_retired_routes_checked",
         "public_review_retired_assets_checked",
+        "public_review_ads_txt_user_agents_checked",
         "public_review_issues",
         "public_deploy_issues",
         "public_launch_link_issues",

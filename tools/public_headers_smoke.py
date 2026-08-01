@@ -86,6 +86,10 @@ CASES = [
         HeaderCase(f"language-{lang}-redirect", f"/{lang}/", expected_status=302, expected_location="/")
         for lang in ("en", "ja", "ko", "es")
     ],
+    HeaderCase("language-en-deep-redirect", "/en/guides/", expected_status=302, expected_location="/guides/"),
+    HeaderCase("language-ja-deep-redirect", "/ja/characters/iris/", expected_status=302, expected_location="/characters/iris/"),
+    HeaderCase("language-ko-deep-redirect", "/ko/repair-plan/", expected_status=302, expected_location="/repair-plan/"),
+    HeaderCase("language-es-deep-redirect", "/es/privacy/", expected_status=302, expected_location="/privacy/"),
 ]
 
 

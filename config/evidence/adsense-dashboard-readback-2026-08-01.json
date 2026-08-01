@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-01T11:08:03Z",
+  "site": "https://lovetypes.tw/",
+  "dashboard": {
+    "approvalStatus": "needs_action",
+    "statusDetail": "low_value_content",
+    "adsTxtStatus": "not_found",
+    "visibleLastUpdated": "2026-07-25 10:48 CST",
+    "reviewCheckboxChecked": false,
+    "reviewSubmitted": false,
+    "requiredMetaTag": "<meta name=\"google-adsense-account\" content=\"ca-pub-4093856660317740\">",
+    "requiredAdsTxtRecord": "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
+  },
+  "publicReadback": {
+    "url": "https://lovetypes.tw/ads.txt",
+    "userAgentsChecked": 4,
+    "statuses": [200, 200, 200, 200],
+    "contentType": "text/plain; charset=utf-8",
+    "cacheControl": "public, max-age=0, must-revalidate",
+    "xRobotsTag": "noindex, follow",
+    "recordMatchesDashboard": true,
+    "issues": 0
+  },
+  "interpretation": "The public file is correct, but the AdSense dashboard still shows an older not-found scan. This evidence does not satisfy adsTxtRecognizedByAdsense until the dashboard status changes.",
+  "result": "pending_external_recrawl"
+}

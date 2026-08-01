@@ -42,6 +42,12 @@ BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").r
 CANONICAL_BASE = "https://lovetypes.tw"
 EXPECTED_ADS_TXT = "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
 TIMEOUT = 20
+ADS_TXT_USER_AGENTS = (
+    "LoveTypes-public-review-smoke/1.0",
+    "Google-adstxt/1.0",
+    "AdsBot-Google (+http://www.google.com/adsbot.html)",
+    "Googlebot/2.1 (+http://www.google.com/bot.html)",
+)
 
 
 @dataclass
@@ -61,10 +67,10 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
-def request(path: str, *, follow: bool = True) -> Response:
+def request(path: str, *, follow: bool = True, user_agent: str = "LoveTypes-public-review-smoke/1.0") -> Response:
     url = urljoin(BASE_URL, path)
     opener = build_opener() if follow else build_opener(NoRedirect)
-    req = Request(url, headers={"User-Agent": "LoveTypes-public-review-smoke/1.0"})
+    req = Request(url, headers={"User-Agent": user_agent})
     try:
         with opener.open(req, timeout=TIMEOUT) as result:
             return Response(result.status, result.url, dict(result.headers.items()), result.read())
@@ -321,13 +327,24 @@ def main() -> int:
         if any(term in path for term in ("review-surface", "compass-tool-review", "funnel-kpi", "quiz-metrics")):
             issues.append(f"{path}: current product asset exposes internal review naming")
 
-    ads = request("/ads.txt")
-    if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:
-        issues.append("/ads.txt: missing or incorrect publisher record")
+    for user_agent in ADS_TXT_USER_AGENTS:
+        ads = request("/ads.txt", user_agent=user_agent)
+        label = f"/ads.txt [{user_agent}]"
+        if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:
+            issues.append(f"{label}: missing or incorrect publisher record")
+        normalized_headers = {key.lower(): value for key, value in ads.headers.items()}
+        if not normalized_headers.get("content-type", "").lower().startswith("text/plain"):
+            issues.append(f"{label}: expected text/plain Content-Type")
+        if normalized_headers.get("cache-control", "").lower() != "public, max-age=0, must-revalidate":
+            issues.append(f"{label}: expected must-revalidate Cache-Control")
+        robots_header = normalized_headers.get("x-robots-tag", "").lower()
+        if "noindex" not in robots_header or "follow" not in robots_header:
+            issues.append(f"{label}: expected X-Robots-Tag noindex, follow")
 
     print(f"public_review_pages_checked={len(routes)}")
     print(f"public_review_retired_routes_checked={len(retired_routes)}")
     print(f"public_review_retired_assets_checked={len(RETIRED_PUBLIC_ASSET_PATHS)}")
+    print(f"public_review_ads_txt_user_agents_checked={len(ADS_TXT_USER_AGENTS)}")
     print(f"public_review_issues={len(issues)}")
     for issue in issues:
         print(issue)

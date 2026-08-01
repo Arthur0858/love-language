@@ -14,7 +14,9 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "Arthur0858/love-language"
-REQUIRED_WORKFLOWS = ("LoveTypes predeploy check", "pages build and deployment")
+# GitHub's native Pages deployment can be attached to the preceding source commit.
+# Production deployment is verified separately by the Cloudflare evidence gate and public smokes.
+REQUIRED_WORKFLOWS = ("LoveTypes predeploy check",)
 RUN_RE = re.compile(
     rf'<a href="/{re.escape(REPOSITORY)}/actions/runs/(\d+)"[^>]*>.*?<span>(.*?)</span>',
     re.I | re.S,

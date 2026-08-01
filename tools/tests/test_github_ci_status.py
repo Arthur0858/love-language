@@ -34,13 +34,9 @@ class GitHubCiStatusTest(unittest.TestCase):
             f"required GitHub workflow is not successful: {ci.REQUIRED_WORKFLOWS[0]}",
             issues,
         )
-        self.assertIn(f"required GitHub workflow missing: {ci.REQUIRED_WORKFLOWS[1]}", issues)
 
     def test_running_workflow_is_rejected(self):
-        raw = "".join(
-            workflow_block(name, index + 100, "running" if index == 0 else "success")
-            for index, name in enumerate(ci.REQUIRED_WORKFLOWS)
-        )
+        raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 100, "running")
         workflows = ci.parse_workflows(raw)
         self.assertFalse(workflows[ci.REQUIRED_WORKFLOWS[0]]["succeeded"])
         self.assertEqual(workflows[ci.REQUIRED_WORKFLOWS[0]]["pending"], True)

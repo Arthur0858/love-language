@@ -337,7 +337,6 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "github_ci_workflows_found",
         "github_ci_workflows_succeeded",
         "github_ci_lovetypes_predeploy_check_run_id",
-        "github_ci_pages_build_and_deployment_run_id",
         "github_ci_issues",
         "privacy_runtime_issues",
         "review_commercial_issues",

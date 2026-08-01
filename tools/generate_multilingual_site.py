@@ -5288,6 +5288,21 @@ def policy_contact_route(lang: str, slug: str) -> str:
 """
 
 
+def policy_runtime_sources(lang: str, slug: str) -> str:
+    if lang != "zh" or slug != "privacy":
+        return ""
+    return """
+<section class="section article-body standalone policy-runtime-sources" data-policy-runtime-sources>
+  <h2>服務行為說明來源</h2>
+  <p>Cloudflare 官方文件說明，Web Analytics 的效能腳本會從 <code>static.cloudflareinsights.com</code> 載入，並將資料送到網站同網域的 <code>/cdn-cgi/rum</code>；該腳本不讀取 Cookie 或 localStorage。電子郵件保護功能則會在含有公開信箱的頁面注入解碼腳本。</p>
+  <ul>
+    <li><a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">Cloudflare：RUM beacon 與隱私資料說明</a></li>
+    <li><a href="https://developers.cloudflare.com/waf/tools/scrape-shield/email-address-obfuscation/" target="_blank" rel="noopener noreferrer">Cloudflare：電子郵件地址保護說明</a></li>
+  </ul>
+</section>
+"""
+
+
 def trust_hero_actions(lang: str, slug: str) -> str:
     t = LANGS[lang]
     if slug == "about":
@@ -12259,7 +12274,7 @@ POLICY_SECTIONS = {
         "privacy": [
             ("帳號、測驗與裝置內保存", "LoveTypes 不要求註冊帳號，也不要求你把測驗答案交給我們。測驗結果、7 日修復表、首次到站的 UTM 來源，以及最近 40 筆站內操作事件會使用瀏覽器 localStorage 保存在目前裝置；其中可能包含頁面路徑、按鈕目標、守護者代號與時間。這些 localStorage 內容不會由網站程式自動上傳。"),
             ("測驗開始與完成計數", "當你開始或完成測驗時，頁面會向 lovetypes.tw 同網域各送出一次不含帳號、答案、分數或守護者結果的圖片請求，用來確認核心流程是否可用。託管服務仍可能在標準請求紀錄中看到 IP 位址、瀏覽器資訊、來源網域、請求時間與該計數路徑。"),
-            ("Cloudflare 託管與必要技術紀錄", "網站由 Cloudflare Pages 提供。Cloudflare 會為傳送頁面、安全防護、錯誤與網路診斷處理一般連線資料；保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳戶驗證標記與 ads.txt 本身不會讀取測驗答案。"),
+            ("Cloudflare 託管、效能量測與信箱保護", "網站由 Cloudflare Pages 提供。正式頁面可能由 Cloudflare 邊緣層自動載入 Cloudflare Web Analytics 的 beacon.min.js，並把目前頁面網址、來源頁面與載入速度等瀏覽器效能資料送至 lovetypes.tw 同網域的 /cdn-cgi/rum。這項效能量測不讀取 Cookie、localStorage、測驗答案、修復表文字、分數或守護者結果。Cloudflare 也可能載入 email-decode.min.js，在瀏覽器內還原被保護的聯絡信箱。一般連線資料與保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳戶驗證標記與 ads.txt 本身不會讀取測驗答案。"),
             ("Cookie、外部連結與聯盟揭露", "LoveTypes 目前的頁面程式不設定第一方 Cookie。旅人補給頁可能包含標示為贊助或聯盟的外部書店與 Gumroad 連結；點擊後會離開本站，對方可能收到 lovetypes.tw 來源網域並依自己的隱私政策處理資料。未點擊外部連結不代表你已向該商店提供測驗結果。"),
             ("保存期間與你的清除方式", "localStorage 會保留到你使用頁面上的清除功能、清除瀏覽器網站資料，或由瀏覽器移除為止；網站不設定自動到期日。站內操作事件最多保留最近 40 筆。電子郵件與託管紀錄則依回覆需求、防濫用、安全及服務供應商政策保留。"),
             ("聯絡、查詢與刪除", "你主動寄信至 contact@lovetypes.tw 時，信箱地址、內容與你選擇提供的裝置資訊只用於回覆、修正問題或處理請求。你可以要求查詢、更正或刪除相關通信紀錄；除非法律、安全或防濫用需求要求保留最少必要資料，我們會在合理範圍內處理。"),
@@ -15468,13 +15483,15 @@ def simple_page(lang: str, slug: str) -> None:
         contact_requests = contact_request_section(lang) if slug == "contact" else ""
         policy_contact = policy_contact_route(lang, slug)
         policy_contact_markup = f"{policy_contact}\n" if policy_contact else ""
+        policy_runtime = policy_runtime_sources(lang, slug)
+        policy_runtime_markup = f"{policy_runtime}\n" if policy_runtime else ""
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line(f"data-{slug}-editorial-byline", CORE_EDITORIAL_UPDATED if slug != "privacy" else PRIVACY_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}{extra}</section>
 {urgent_safety_support_section(lang) if slug == "contact" else ""}
 {contact_requests}
 {policy_compass_section(lang, slug)}
 {policy_detail_section(lang, slug)}
-{policy_contact_markup}<section class="section article-body standalone policy-boundary-note">
+{policy_runtime_markup}{policy_contact_markup}<section class="section article-body standalone policy-boundary-note">
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
 </section>

@@ -76,8 +76,8 @@
 
 <article class="policy-compass-card">
   <span>03</span>
-  <h3>Cloudflare 託管與必要技術紀錄</h3>
-  <p>網站由 Cloudflare Pages 提供。Cloudflare 會為傳送頁面、安全防護、錯誤與網路診斷處理一般連線資料；保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳...</p>
+  <h3>Cloudflare 託管、效能量測與信箱保護</h3>
+  <p>網站由 Cloudflare Pages 提供。正式頁面可能由 Cloudflare 邊緣層自動載入 Cloudflare Web Analytics 的 beacon.min.js，並把目前頁面網址、來源頁面與載入速度等瀏覽器效能資...</p>
 </article>
 
 <article class="policy-compass-card">
@@ -131,8 +131,8 @@
 <article class="policy-detail-card">
   <span>03</span>
   <div>
-    <h3>Cloudflare 託管與必要技術紀錄</h3>
-    <p>網站由 Cloudflare Pages 提供。Cloudflare 會為傳送頁面、安全防護、錯誤與網路診斷處理一般連線資料；保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳戶驗證標記與 ads.txt 本身不會讀取測驗答案。</p>
+    <h3>Cloudflare 託管、效能量測與信箱保護</h3>
+    <p>網站由 Cloudflare Pages 提供。正式頁面可能由 Cloudflare 邊緣層自動載入 Cloudflare Web Analytics 的 beacon.min.js，並把目前頁面網址、來源頁面與載入速度等瀏覽器效能資料送至 lovetypes.tw 同網域的 /cdn-cgi/rum。這項效能量測不讀取 Cookie、localStorage、測驗答案、修復表文字、分數或守護者結果。Cloudflare 也可能載入 email-decode.min.js，在瀏覽器內還原被保護的聯絡信箱。一般連線資料與保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳戶驗證標記與 ads.txt 本身不會讀取測驗答案。</p>
   </div>
 </article>
 
@@ -161,6 +161,16 @@
 </article>
 
   </div>
+</section>
+
+
+<section class="section article-body standalone policy-runtime-sources" data-policy-runtime-sources>
+  <h2>服務行為說明來源</h2>
+  <p>Cloudflare 官方文件說明，Web Analytics 的效能腳本會從 <code>static.cloudflareinsights.com</code> 載入，並將資料送到網站同網域的 <code>/cdn-cgi/rum</code>；該腳本不讀取 Cookie 或 localStorage。電子郵件保護功能則會在含有公開信箱的頁面注入解碼腳本。</p>
+  <ul>
+    <li><a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">Cloudflare：RUM beacon 與隱私資料說明</a></li>
+    <li><a href="https://developers.cloudflare.com/waf/tools/scrape-shield/email-address-obfuscation/" target="_blank" rel="noopener noreferrer">Cloudflare：電子郵件地址保護說明</a></li>
+  </ul>
 </section>
 
 

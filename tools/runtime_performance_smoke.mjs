@@ -54,6 +54,7 @@ const CASES = [
   { name: 'lab-mobile', path: '/lab/quiz-scoring-test/', width: 390, height: 844, isMobile: true },
   { name: 'compass-mobile', path: '/compass/', width: 390, height: 844, isMobile: true },
   { name: 'about-mobile', path: '/about/', width: 390, height: 844, isMobile: true },
+  { name: 'privacy-mobile', path: '/privacy/', width: 390, height: 844, isMobile: true },
   { name: 'resources-noindex-mobile', path: '/resources/', width: 390, height: 844, isMobile: true },
 ];
 
@@ -160,12 +161,23 @@ async function measureCase(browser, item) {
   const pageErrors = [];
   const failedRequests = [];
   const failedResponses = [];
+  const runtimeRequests = [];
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text());
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
   page.on('requestfailed', (request) => {
     failedRequests.push(`${request.failure()?.errorText || 'request failed'} ${request.url()}`);
+  });
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    runtimeRequests.push({
+      method: request.method(),
+      resourceType: request.resourceType(),
+      origin: url.origin,
+      path: url.pathname,
+      hasPostData: Boolean(request.postData()),
+    });
   });
   page.on('response', (resourceResponse) => {
     if (resourceResponse.status() >= 400) {
@@ -192,6 +204,7 @@ async function measureCase(browser, item) {
     return {
       title: document.title,
       h1: document.querySelector('h1')?.textContent?.trim() || '',
+      mainText: document.querySelector('main')?.innerText?.trim() || '',
       mainTextLength: document.querySelector('main')?.innerText?.trim().length || 0,
       navCount: document.querySelectorAll('nav a').length,
       horizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
@@ -210,6 +223,9 @@ async function measureCase(browser, item) {
     };
   });
 
+  const finalUrl = page.url();
+  const cookies = await context.cookies();
+  const localStorageKeys = await page.evaluate(() => Object.keys(localStorage));
   await context.close();
 
   const resources = metrics.resources || [];
@@ -221,6 +237,28 @@ async function measureCase(browser, item) {
     .sort((a, b) => bytesOf(b) - bytesOf(a))
     .slice(0, 4)
     .map((entry) => `${bytesOf(entry)} ${entry.initiatorType || 'resource'} ${new URL(entry.name).pathname}`);
+  const expectedOrigin = new URL(absoluteUrl(item.path)).origin;
+  const externalOrigins = [...new Set(runtimeRequests
+    .map((entry) => entry.origin)
+    .filter((origin) => origin !== expectedOrigin))].sort();
+  const unexpectedExternalOrigins = externalOrigins.filter(
+    (origin) => origin !== 'https://static.cloudflareinsights.com'
+  );
+  const isPrivacyPage = item.path === '/privacy/';
+  const privacyText = isPrivacyPage ? metrics.mainText : '';
+  const rumObserved = runtimeRequests.some(
+    (entry) => entry.method === 'POST' && entry.origin === expectedOrigin && entry.path === '/cdn-cgi/rum'
+  );
+  const cloudflareBeaconObserved = runtimeRequests.some(
+    (entry) => entry.origin === 'https://static.cloudflareinsights.com' && entry.path.includes('/beacon.min.js')
+  );
+  const privacyDisclosureComplete = !isPrivacyPage || [
+    'Cloudflare Web Analytics',
+    'beacon.min.js',
+    '/cdn-cgi/rum',
+    '不讀取 Cookie、localStorage',
+    'email-decode.min.js',
+  ].every((marker) => privacyText.includes(marker));
 
   const budgets = BUDGETS[IS_PUBLIC ? 'public' : 'local'];
   const issues = [
@@ -237,6 +275,12 @@ async function measureCase(browser, item) {
     ...failedResponses.map((message) => `failed response: ${message}`),
     ...consoleErrors.map((message) => `console error: ${message}`),
     ...pageErrors.map((message) => `page error: ${message}`),
+    ...unexpectedExternalOrigins.map((origin) => `unexpected external request origin: ${origin}`),
+    ...(isPrivacyPage && cookies.length ? [`privacy page set ${cookies.length} cookie(s)`] : []),
+    ...(isPrivacyPage && localStorageKeys.length ? [`privacy page wrote localStorage keys: ${localStorageKeys.join(', ')}`] : []),
+    ...(isPrivacyPage && !privacyDisclosureComplete ? ['privacy runtime disclosure is incomplete'] : []),
+    ...(IS_PUBLIC && isPrivacyPage && cloudflareBeaconObserved && !rumObserved ? ['Cloudflare beacon loaded without an observed same-origin RUM POST'] : []),
+    ...(IS_PUBLIC && isPrivacyPage && rumObserved && !cloudflareBeaconObserved ? ['same-origin RUM POST observed without the disclosed Cloudflare beacon'] : []),
     ...issueForMetric('FCP', metrics.firstContentfulPaint, budgets.firstContentfulPaint),
     ...issueForMetric('LCP', metrics.largestContentfulPaint, budgets.largestContentfulPaint),
     ...issueForMetric('DOMContentLoaded', metrics.timing.domContentLoaded, budgets.domContentLoaded),
@@ -252,7 +296,7 @@ async function measureCase(browser, item) {
     name: item.name,
     url: absoluteUrl(item.path),
     status: response?.status() || 0,
-    finalUrl: page.url(),
+    finalUrl,
     title: metrics.title,
     h1: metrics.h1,
     mainTextLength: metrics.mainTextLength,
@@ -268,6 +312,13 @@ async function measureCase(browser, item) {
     styleBytes,
     imageBytes,
     largestResources,
+    externalOrigins,
+    cookieCount: cookies.length,
+    localStorageKeys,
+    privacyDisclosureComplete,
+    cloudflareBeaconObserved,
+    rumObserved,
+    privacyRuntimeRequests: isPrivacyPage ? runtimeRequests : [],
     failedRequestCount: failedRequests.length,
     failedResponseCount: failedResponses.length,
     brokenImageCount: metrics.brokenImages.length,
@@ -292,6 +343,7 @@ async function main() {
   const worstLcp = Math.max(...results.map((result) => result.largestContentfulPaint || 0));
   const worstCls = Math.max(...results.map((result) => result.cumulativeLayoutShift || 0));
   const maxTransfer = Math.max(...results.map((result) => result.totalBytes || 0));
+  const privacyResult = results.find((result) => result.name === 'privacy-mobile');
 
   if (REPORT_PATH) {
     const report = {
@@ -318,6 +370,11 @@ async function main() {
   console.log(`runtime_performance_worst_lcp_ms=${worstLcp}`);
   console.log(`runtime_performance_worst_cls=${worstCls}`);
   console.log(`runtime_performance_max_transfer_bytes=${maxTransfer}`);
+  console.log(`runtime_performance_privacy_disclosure_complete=${privacyResult?.privacyDisclosureComplete ? 1 : 0}`);
+  console.log(`runtime_performance_privacy_cookie_count=${privacyResult?.cookieCount || 0}`);
+  console.log(`runtime_performance_privacy_storage_key_count=${privacyResult?.localStorageKeys.length || 0}`);
+  console.log(`runtime_performance_cloudflare_beacon_observed=${privacyResult?.cloudflareBeaconObserved ? 1 : 0}`);
+  console.log(`runtime_performance_same_origin_rum_observed=${privacyResult?.rumObserved ? 1 : 0}`);
   console.log(`runtime_performance_issues=${issues.length}`);
   for (const result of results) {
     console.log(

@@ -26,12 +26,22 @@ REQUIRED_POLICY_PHRASES = (
     "測驗開始與完成計數",
     "不含帳號、答案、分數或守護者結果",
     "Cloudflare Pages",
+    "Cloudflare Web Analytics",
+    "beacon.min.js",
+    "/cdn-cgi/rum",
+    "不讀取 Cookie、localStorage",
+    "email-decode.min.js",
     "IP 位址",
     "第三方廣告執行程式",
     "不設定第一方 Cookie",
     "外部書店與 Gumroad",
     "不設定自動到期日",
     "contact@lovetypes.tw",
+)
+
+REQUIRED_POLICY_LINKS = (
+    "https://developers.cloudflare.com/speed/observatory/rum-beacon/",
+    "https://developers.cloudflare.com/waf/tools/scrape-shield/email-address-obfuscation/",
 )
 
 
@@ -64,6 +74,9 @@ def main() -> int:
     for phrase in REQUIRED_POLICY_PHRASES:
         if phrase not in privacy_text:
             issues.append(f"privacy policy missing runtime disclosure: {phrase}")
+    for href in REQUIRED_POLICY_LINKS:
+        if f'href="{href}"' not in privacy_raw:
+            issues.append(f"privacy policy missing authoritative runtime source: {href}")
 
     if PRIVACY_UPDATED not in privacy_text:
         issues.append(f"privacy policy visible update date should be {PRIVACY_UPDATED}")

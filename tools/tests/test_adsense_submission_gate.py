@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from datetime import date
 from pathlib import Path
 from unittest.mock import patch
@@ -101,6 +103,46 @@ class AdSenseSubmissionGateTest(unittest.TestCase):
             gate.evidence_freshness_issue("example", item, date(2026, 7, 31), 3),
             "external evidence observation is in the future: example",
         )
+
+    def test_report_only_keeps_expected_pending_gates_non_failing(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            status = gate.report_only(
+                self.state,
+                date(2026, 8, 1),
+                Path("config/adsense-submission-gate.json"),
+                [],
+            )
+        self.assertEqual(status, 0)
+        self.assertIn("adsense_submission_pending_conditions=9", output.getvalue())
+        self.assertIn("adsense_submission_ready=false", output.getvalue())
+        self.assertIn("adsense_review_submitted=false", output.getvalue())
+
+    def test_report_only_fails_invalid_evidence_contract(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            status = gate.report_only(
+                self.state,
+                date(2026, 8, 1),
+                Path("config/adsense-submission-gate.json"),
+                ["invalid evidence"],
+            )
+        self.assertEqual(status, 1)
+        self.assertIn("adsense_submission_validation_issues=1", output.getvalue())
+
+    def test_report_only_handles_invalid_gate_shape_without_crashing(self):
+        self.state["externalGates"] = None
+        validation_issues = gate.state_validation_issues(self.state)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            status = gate.report_only(
+                self.state,
+                date(2026, 8, 1),
+                Path("config/adsense-submission-gate.json"),
+                validation_issues,
+            )
+        self.assertEqual(status, 1)
+        self.assertIn("adsense_submission_validation_issues=1", output.getvalue())
 
 
 if __name__ == "__main__":

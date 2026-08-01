@@ -41,6 +41,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Validate state and evidence contracts without requiring every submission gate to be satisfied.",
     )
+    parser.add_argument(
+        "--report-only",
+        action="store_true",
+        help="Report current readiness without treating expected pending external gates as a command failure.",
+    )
     return parser.parse_args()
 
 
@@ -271,31 +276,13 @@ def state_validation_issues(state: dict) -> list[str]:
     return issues
 
 
-def main() -> int:
-    args = parse_args()
-    state = json.loads(args.state.read_text(encoding="utf-8"))
-    validation_issues = state_validation_issues(state)
-
-    try:
-        display_state = args.state.resolve().relative_to(ROOT)
-    except ValueError:
-        display_state = args.state.resolve()
-    if args.validate_only:
-        print(f"adsense_submission_state={display_state}")
-        print(f"adsense_submission_validation_issues={len(validation_issues)}")
-        for issue in validation_issues:
-            print(f"- {issue}")
-        valid = not validation_issues
-        print(f"adsense_submission_state_valid={'true' if valid else 'false'}")
-        return 0 if valid else 1
-
-    issues: list[str] = []
-    issues.extend(validation_issues)
+def submission_issues(state: dict, today: date, validation_issues: list[str] | None = None) -> tuple[date, list[str]]:
+    issues = list(validation_issues if validation_issues is not None else state_validation_issues(state))
 
     try:
         changed = date.fromisoformat(state["lastMaterialChange"])
     except (KeyError, TypeError, ValueError):
-        changed = args.today
+        changed = today
     try:
         minimum_days = int(state["minimumStableDays"])
     except (KeyError, TypeError, ValueError):
@@ -305,10 +292,10 @@ def main() -> int:
     except (KeyError, TypeError, ValueError):
         maximum_evidence_age = 3
     earliest = changed + timedelta(days=minimum_days)
-    if args.today < earliest:
+    if today < earliest:
         issues.append(f"stable observation period incomplete: earliest={earliest.isoformat()}")
 
-    gates = state.get("externalGates", {})
+    gates = object_value(state.get("externalGates"))
     for name in sorted(REQUIRED_GATES & set(gates)):
         item = gates[name]
         if not isinstance(item, dict):
@@ -325,15 +312,66 @@ def main() -> int:
         if not has_evidence_reference(item):
             issues.append(f"external evidence pending or incomplete: {name}")
             continue
-        freshness_issue = evidence_freshness_issue(name, item, args.today, maximum_evidence_age)
+        freshness_issue = evidence_freshness_issue(name, item, today, maximum_evidence_age)
         if freshness_issue:
             issues.append(freshness_issue)
             continue
         if name == "gscPagesWithImpressions":
-            value = int(item.get("value", 0))
-            minimum = int(item.get("minimum", 5))
+            value = integer_value(item.get("value"), 0)
+            minimum = integer_value(item.get("minimum"), 5)
             if value < minimum:
                 issues.append(f"GSC impression pages below threshold: {value} < {minimum}")
+
+    return earliest, issues
+
+
+def bool_text(value: object) -> str:
+    return "true" if value is True else "false"
+
+
+def report_only(state: dict, today: date, display_state: object, validation_issues: list[str]) -> int:
+    earliest, pending = submission_issues(state, today, validation_issues)
+    gates = object_value(state.get("externalGates"))
+    ads_txt = object_value(gates.get("adsTxtRecognizedByAdsense")).get("confirmed")
+    review_action = object_value(gates.get("reviewActionAvailable")).get("confirmed")
+    print(f"adsense_submission_state={display_state}")
+    print(f"adsense_submission_today={today.isoformat()}")
+    print(f"adsense_submission_earliest={earliest.isoformat()}")
+    print(f"adsense_submission_validation_issues={len(validation_issues)}")
+    print(f"adsense_submission_pending_conditions={len(pending)}")
+    for issue in pending:
+        print(f"- pending: {issue}")
+    print(f"adsense_submission_ready={bool_text(not pending)}")
+    print(f"adsense_review_submitted={bool_text(state.get('reviewSubmitted'))}")
+    print(f"adsense_review_action_available={bool_text(review_action)}")
+    print(f"adsense_ads_txt_recognized={bool_text(ads_txt)}")
+    return 0 if not validation_issues else 1
+
+
+def main() -> int:
+    args = parse_args()
+    if args.validate_only and args.report_only:
+        raise SystemExit("--validate-only and --report-only are mutually exclusive")
+    state = json.loads(args.state.read_text(encoding="utf-8"))
+    validation_issues = state_validation_issues(state)
+
+    try:
+        display_state = args.state.resolve().relative_to(ROOT)
+    except ValueError:
+        display_state = args.state.resolve()
+    if args.validate_only:
+        print(f"adsense_submission_state={display_state}")
+        print(f"adsense_submission_validation_issues={len(validation_issues)}")
+        for issue in validation_issues:
+            print(f"- {issue}")
+        valid = not validation_issues
+        print(f"adsense_submission_state_valid={'true' if valid else 'false'}")
+        return 0 if valid else 1
+
+    if args.report_only:
+        return report_only(state, args.today, display_state, validation_issues)
+
+    earliest, issues = submission_issues(state, args.today, validation_issues)
 
     print(f"adsense_submission_state={display_state}")
     print(f"adsense_submission_today={args.today.isoformat()}")

@@ -21,6 +21,7 @@ PROGRESS_PREFIXES = ("[visual]", "[public-quiz-flow]", "[perf]", "[tap]", "[publ
 
 CHECKS = [
     ("predeploy", [sys.executable, "tools/predeploy_check.py"], 600, False),
+    ("adsense_submission_status", [sys.executable, "tools/adsense_submission_gate.py", "--report-only"], 30, False),
     ("cloudflare_dry_run", [sys.executable, "tools/deploy_cloudflare_pages.py", "--dry-run"], 240, False),
     ("public_accessibility_smoke", [sys.executable, "tools/public_accessibility_smoke.py"], 240, True),
     ("public_asset_integrity_smoke", [sys.executable, "tools/public_asset_integrity_smoke.py"], 240, True),
@@ -323,6 +324,13 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "adsense_review_surface_issues",
         "adsense_submission_issues",
         "adsense_submission_validation_issues",
+        "adsense_submission_pending_conditions",
+        "adsense_submission_today",
+        "adsense_submission_earliest",
+        "adsense_submission_ready",
+        "adsense_review_submitted",
+        "adsense_review_action_available",
+        "adsense_ads_txt_recognized",
         "privacy_runtime_issues",
         "review_commercial_issues",
         "adsense_visual_issues",

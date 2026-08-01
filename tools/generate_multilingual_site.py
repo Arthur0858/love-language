@@ -32,7 +32,8 @@ UPDATED = "2026-07-31"
 PRIVACY_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
-QUIZ_DATA_VERSION = "20260707-conversion-bridge"
+QUIZ_DATA_VERSION = "20260801-review-surface"
+PREVIOUS_QUIZ_DATA_VERSIONS = ("20260707-conversion-bridge",)
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 INTERACTIONS_ASSET = f"/site-interactions-{INTERACTIONS_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
@@ -51,6 +52,11 @@ RETIRED_PUBLIC_ASSET_PATHS = (
     "/compass-tool-20260707.js",
     "/compass-tool.js",
     AFFILIATE_ASSET,
+    *(
+        f"/quiz-data-{lang}-{version}.js"
+        for version in PREVIOUS_QUIZ_DATA_VERSIONS
+        for lang in QUIZ_DATA_LANGS
+    ),
     *(f"/compass-data-{lang}.js" for lang in ("en", "ja", "ko", "es")),
     *(QUIZ_DATA_ASSETS[lang] for lang in ("en", "ja", "ko", "es")),
 )

@@ -11,25 +11,55 @@
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
 
-/site-index.json
+/feed.xml
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/site.webmanifest
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/llms.txt
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /humans.txt
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
-/funnel-events.json
+/security.txt
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
-/release.json
+/.well-known/security.txt
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /ads.txt
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/site-index.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/guardian-profiles.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/safety-index.json
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
 
 /assets/*
   ! Cache-Control

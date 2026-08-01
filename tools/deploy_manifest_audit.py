@@ -4,6 +4,7 @@ from __future__ import annotations
 import ast
 import importlib.util
 import json
+import re
 import sys
 from urllib.parse import urlparse
 from pathlib import Path
@@ -181,6 +182,18 @@ def main() -> int:
     for required_worker_signal in ('status: 410', '"X-Robots-Tag": "noindex, nofollow"', 'path === "/tools/love-compatibility/"', '301'):
         if required_worker_signal not in worker:
             issues.append(f"Pages Function missing required behavior: {required_worker_signal}")
+
+    headers = (ROOT / "_headers").read_text(encoding="utf-8")
+    missing_noindex_support_headers = sorted(
+        path
+        for path in generator.NOINDEX_SUPPORT_PATHS
+        if not re.search(
+            rf"(?m)^{re.escape(path)}\n(?:  .+\n)*  X-Robots-Tag: noindex, follow$",
+            headers,
+        )
+    )
+    if missing_noindex_support_headers:
+        issues.append(f"public support noindex headers missing: {missing_noindex_support_headers}")
 
     for rel_path in sorted(manifest_paths):
         if rel_path in FORBIDDEN_FILES:

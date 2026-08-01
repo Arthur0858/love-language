@@ -23,6 +23,7 @@ from generate_multilingual_site import (
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     MACHINE_READABLE_UPDATED,
+    NOINDEX_SUPPORT_PATHS,
     RETIRED_PUBLIC_ASSET_PATHS,
     REPAIR_PLAN_UPDATED,
     START_UPDATED,
@@ -138,6 +139,14 @@ def main() -> int:
         issues.append("funnel-events.json must remain local and must not be publicly deployed")
     if "/funnel-events.json" not in RETIRED_PUBLIC_ASSET_PATHS:
         issues.append("funnel-events.json must be covered by the public 410 retirement worker")
+    headers_text = (ROOT / "_headers").read_text(encoding="utf-8")
+    for support_path in NOINDEX_SUPPORT_PATHS:
+        pattern = rf"(?m)^{re.escape(support_path)}\n(?:  .+\n)*  X-Robots-Tag: noindex, follow$"
+        if not re.search(pattern, headers_text):
+            issues.append(f"public support file lacks noindex header rule: {support_path}")
+    for retired_header_path in ("/funnel-events.json", "/release.json"):
+        if re.search(rf"(?m)^{re.escape(retired_header_path)}$", headers_text):
+            issues.append(f"retired support file retains a static header rule: {retired_header_path}")
 
     llms_text = (ROOT / "llms.txt").read_text(encoding="utf-8")
     humans_text = (ROOT / "humans.txt").read_text(encoding="utf-8")
@@ -438,6 +447,11 @@ def main() -> int:
                 issues.append(f"Offer schema leaked into indexed page: {route}")
             if route.startswith("/characters/") and item.get("@type") == "ProfilePage":
                 issues.append(f"fictional guardian must not use ProfilePage schema: {route}")
+
+    about_main = main_text_markup(page_file("/about/").read_text(encoding="utf-8"))
+    about_resource_links = len(re.findall(r'href="/resources/(?:#[^"]*)?"', about_main))
+    if about_resource_links != 1:
+        issues.append(f"/about/ must expose exactly one resources disclosure link: {about_resource_links}")
 
     for route, (updated, marker, expected_type) in CORE_EDITORIAL_TRUST.items():
         raw = page_file(route).read_text(encoding="utf-8")

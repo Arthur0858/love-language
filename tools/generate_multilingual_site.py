@@ -52,6 +52,18 @@ REVIEW_INDEX_LANGS = ("zh",)
 CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
+NOINDEX_SUPPORT_PATHS = (
+    "/feed.xml",
+    "/site.webmanifest",
+    "/llms.txt",
+    "/humans.txt",
+    "/security.txt",
+    "/.well-known/security.txt",
+    "/ads.txt",
+    "/site-index.json",
+    "/guardian-profiles.json",
+    "/safety-index.json",
+)
 RETIRED_PUBLIC_ASSET_PATHS = (
     "/ai-discovery.json",
     "/commerce-catalog.json",
@@ -4878,7 +4890,7 @@ ABOUT_TRUST_CHARTER = {
         "cards": [
             ("01", "內容會回到真實情境", "指南必須能對應實際關係困惑，並提供可練習的小行動；太薄、重複或只剩氣氛的頁面會被整理。", "guides", "閱讀指南"),
             ("02", "測驗不是診斷", "15 道心語只指出此刻最容易被點亮的愛之語入口，不用來貼標籤、要求伴侶照單全收，或取代專業協助。", "theory", "了解理論"),
-            ("03", "補給不鼓勵過度購買", "旅人補給與延伸書卷會標示聯盟揭露，購買只應作為修復輔助；若你正在衝動消費，先使用免費任務。", "resources", "查看補給"),
+            ("03", "補給不鼓勵過度購買", "旅人補給與延伸書卷會標示聯盟揭露，購買只應作為修復輔助；若你正在衝動消費，先使用免費任務。", "", ""),
             ("04", "可以要求修正", "若你發現錯字、過時資訊、破圖、無法開啟的連結，或需要合作與隱私聯絡，可以直接回報給庭園維護者。", "contact", "聯絡我們"),
         ],
     },
@@ -5171,13 +5183,14 @@ def about_trust_charter(lang: str) -> str:
     copy = ABOUT_TRUST_CHARTER[lang]
     cards = []
     for mark, title, text, slug, cta in copy["cards"]:
+        action = f'  <a href="{lang_url(lang, slug)}">{escape(cta)}</a>' if slug and cta else ""
         cards.append(
             f"""
 <article class="about-trust-card">
   <span>{escape(mark)}</span>
   <h3>{escape(title)}</h3>
   <p>{escape(text)}</p>
-  <a href="{lang_url(lang, slug)}">{escape(cta)}</a>
+{action}
 </article>
 """
         )
@@ -17455,7 +17468,11 @@ def write_support_files() -> None:
     sitemap.append("</urlset>")
     write(ROOT / "sitemap.xml", "\n".join(sitemap) + "\n")
     write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")
-    headers = """/*
+    noindex_support_headers = "\n\n".join(
+        f"{path}\n  ! Cache-Control\n  Cache-Control: public, max-age=0, must-revalidate\n  X-Robots-Tag: noindex, follow"
+        for path in NOINDEX_SUPPORT_PATHS
+    )
+    headers = f"""/*
   Cache-Control: public, max-age=600
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -17468,25 +17485,7 @@ def write_support_files() -> None:
   ! Cache-Control
   Cache-Control: public, max-age=0, must-revalidate
 
-/site-index.json
-  ! Cache-Control
-  Cache-Control: public, max-age=0, must-revalidate
-
-/humans.txt
-  ! Cache-Control
-  Cache-Control: public, max-age=0, must-revalidate
-
-/funnel-events.json
-  ! Cache-Control
-  Cache-Control: public, max-age=0, must-revalidate
-
-/release.json
-  ! Cache-Control
-  Cache-Control: public, max-age=0, must-revalidate
-
-/ads.txt
-  ! Cache-Control
-  Cache-Control: public, max-age=0, must-revalidate
+{noindex_support_headers}
 
 /assets/*
   ! Cache-Control

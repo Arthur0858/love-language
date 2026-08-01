@@ -143,6 +143,11 @@ def main() -> int:
                 if phrase.lower() in text.lower():
                     issues.append(f"{route}: indexed page exposes sales-oriented copy {phrase}")
 
+    about_raw = page_path("/about/").read_text(encoding="utf-8", errors="ignore")
+    about_resource_links = len(re.findall(r'href=["\']/resources/(?:#[^"\']*)?["\']', about_raw, re.I))
+    if about_resource_links != 1:
+        issues.append(f"/about/: expected exactly one commercial disclosure link, got {about_resource_links}")
+
     for relative in sorted(runtime_artifacts):
         path = ROOT / relative
         if not path.exists():

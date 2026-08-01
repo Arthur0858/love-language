@@ -72,6 +72,10 @@ CORE_HTML_CASES = [
 
 CASES = [
     *CORE_HTML_CASES,
+    *[
+        HeaderCase(f"noindex-support-{path.strip('/').replace('/', '-')}", path, expect_noindex=True)
+        for path in GENERATOR_CONFIG.NOINDEX_SUPPORT_PATHS
+    ],
     HeaderCase("css", GENERATOR_CONFIG.CSS_ASSET, immutable=True),
     HeaderCase("interactions", GENERATOR_CONFIG.INTERACTIONS_ASSET, immutable=True),
     HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
@@ -161,8 +165,10 @@ def check_case(base_url: str, case: HeaderCase) -> tuple[list[str], int]:
         location_path = parsed_location.path or location
         if location_path != case.expected_location:
             issues.append(f"{case.name}: location expected {case.expected_location}, got {location!r}")
-    if case.expect_noindex and headers.get("x-robots-tag", "").lower() != "noindex":
-        issues.append(f"{case.name}: expected x-robots-tag noindex")
+    if case.expect_noindex and "noindex" not in {
+        token.strip() for token in headers.get("x-robots-tag", "").lower().split(",")
+    }:
+        issues.append(f"{case.name}: expected x-robots-tag to contain noindex")
     return issues, csp_tokens_checked
 
 

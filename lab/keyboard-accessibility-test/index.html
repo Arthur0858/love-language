@@ -56,22 +56,22 @@
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-08-01">實測與更新：2026-08-01</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">可見內容若無法被鍵盤或低視力使用者操作，就不算完整體驗。本次以 Tab、Shift+Tab、Enter、Space 與 Escape 走過首頁到結果流程，並執行對比與 reduced-motion 檢查。測試只聲明已覆蓋的路徑，不宣稱取得任何無障礙認證。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 鍵盤操作</li><li>桌面與行動 viewport</li><li>prefers-reduced-motion: reduce</li><li>自動對比稽核與人工焦點觀察</li></ul></section>
-    <section data-lab-fixture><h2>固定輸入與預期</h2><p>從網址列開始，依序使用 Tab 到跳至內容、主導覽、測驗選項、羅盤選擇與清除控制；反向以 Shift+Tab 返回。對比以 WCAG AA 一般文字 4.5:1、大字 3:1 為門檻；動畫測試設定 prefers-reduced-motion: reduce。</p></section>
-    <section data-lab-steps><h2>重現步驟</h2><ol><li>從頁首跳到主要內容，再逐項走過導覽。</li><li>不用滑鼠完成測驗與相容性選擇。</li><li>檢查 modal、details、表單與清除按鈕焦點。</li><li>開啟減少動態效果，確認捲動與轉場不強制動畫。</li></ol></section>
-    <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">跳至內容</th><td>第一個鍵盤入口可見且可用</td><td><strong>通過</strong></td></tr><tr><th scope="row">焦點順序</th><td>主要控制依閱讀順序移動</td><td><strong>通過</strong></td></tr><tr><th scope="row">色彩對比</th><td>自動稽核沒有低於門檻項目</td><td><strong>通過</strong></td></tr><tr><th scope="row">減少動態</th><td>平滑捲動與非必要動畫停用</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
-    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>跳至內容在取得焦點時可見並正確移到 main。所有原生按鈕、連結、select 與 details 都能以鍵盤操作，焦點框沒有被 overflow 裁切。自動掃描未發現門檻以下的文字對比；reduced-motion 下平滑捲動與裝飾轉場停用。未發現鍵盤陷阱或焦點跳回頁首。</p><p>自動對比與鍵盤巡覽只能發現部分問題，不能代表取得無障礙認證。報告不聲稱已涵蓋 VoiceOver、語音控制、放大軟體、切換控制或所有認知需求。每次導覽、modal 或互動元件改版後，焦點順序與可見性都必須重測；可選元素不存在時測試應明確跳過，不以長時間等待掩蓋失敗。</p></section>
-    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是所有主要命令可由鍵盤到達與啟動、焦點始終可見、順序符合閱讀流程、沒有陷阱，文字對比達到所列門檻，減少動態偏好能停用非必要動畫。只有滑鼠可用、焦點被遮住或自動工具無法完成掃描都不能以人工印象判定通過。</p></section>
-    <section data-lab-retest><h2>修正後如何重測</h2><p>重測先清除滑鼠操作痕跡，從網址列依序記錄焦點元素與動作，再反向返回。自動結果保存違規節點與實際色值，人工檢查 sticky 元件、details 與動態插入結果。VoiceOver 尚未列入本次結論，因此頁面不得使用『完全無障礙』或認證字樣；後續應另建立螢幕閱讀器紀錄。</p></section>
-    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含焦點框、跳至內容與自動檢查摘要。未測輔助科技會明列限制，不以單一工具零錯誤替代人工操作。 焦點順序另以文字清單保存，截圖只作視覺佐證。</p></section>
+    <section data-lab-environment><h2>鍵盤、對比與動畫偏好條件</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 鍵盤操作</li><li>桌面與行動 viewport</li><li>prefers-reduced-motion: reduce</li><li>自動對比稽核與人工焦點觀察</li></ul></section>
+    <section data-lab-fixture><h2>按鍵序列與 WCAG 對比門檻</h2><p>從網址列開始，依序使用 Tab 到跳至內容、主導覽、測驗選項、羅盤選擇與清除控制；反向以 Shift+Tab 返回。對比以 WCAG AA 一般文字 4.5:1、大字 3:1 為門檻；動畫測試設定 prefers-reduced-motion: reduce。</p></section>
+    <section data-lab-steps><h2>不用滑鼠走過主要命令</h2><ol><li>從頁首跳到主要內容，再逐項走過導覽。</li><li>不用滑鼠完成測驗與相容性選擇。</li><li>檢查 modal、details、表單與清除按鈕焦點。</li><li>開啟減少動態效果，確認捲動與轉場不強制動畫。</li></ol></section>
+    <section data-lab-results><h2>焦點順序、可見性與動畫結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">跳至內容</th><td>第一個鍵盤入口可見且可用</td><td><strong>通過</strong></td></tr><tr><th scope="row">焦點順序</th><td>主要控制依閱讀順序移動</td><td><strong>通過</strong></td></tr><tr><th scope="row">色彩對比</th><td>自動稽核沒有低於門檻項目</td><td><strong>通過</strong></td></tr><tr><th scope="row">減少動態</th><td>平滑捲動與非必要動畫停用</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>正向與反向巡覽觀察</h2><p>跳至內容在取得焦點時可見並正確移到 main。所有原生按鈕、連結、select 與 details 都能以鍵盤操作，焦點框沒有被 overflow 裁切。自動掃描未發現門檻以下的文字對比；reduced-motion 下平滑捲動與裝飾轉場停用。未發現鍵盤陷阱或焦點跳回頁首。</p><p>自動對比與鍵盤巡覽只能發現部分問題，不能代表取得無障礙認證。報告不聲稱已涵蓋 VoiceOver、語音控制、放大軟體、切換控制或所有認知需求。每次導覽、modal 或互動元件改版後，焦點順序與可見性都必須重測；可選元素不存在時測試應明確跳過，不以長時間等待掩蓋失敗。</p></section>
+    <section data-lab-acceptance><h2>哪些障礙不能標示通過</h2><p>驗收條件是所有主要命令可由鍵盤到達與啟動、焦點始終可見、順序符合閱讀流程、沒有陷阱，文字對比達到所列門檻，減少動態偏好能停用非必要動畫。只有滑鼠可用、焦點被遮住或自動工具無法完成掃描都不能以人工印象判定通過。</p></section>
+    <section data-lab-retest><h2>互動元件改版後如何再巡覽</h2><p>重測先清除滑鼠操作痕跡，從網址列依序記錄焦點元素與動作，再反向返回。自動結果保存違規節點與實際色值，人工檢查 sticky 元件、details 與動態插入結果。VoiceOver 尚未列入本次結論，因此頁面不得使用『完全無障礙』或認證字樣；後續應另建立螢幕閱讀器紀錄。</p></section>
+    <section data-lab-evidence-scope><h2>焦點框、色值與文字清單</h2><p>證據保存包含焦點框、跳至內容與自動檢查摘要。未測輔助科技會明列限制，不以單一工具零錯誤替代人工操作。 焦點順序另以文字清單保存，截圖只作視覺佐證。</p></section>
     <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/keyboard-accessibility-test-detail.webp" alt="LoveTypes 跳至內容連結與鍵盤焦點框的近距離證據畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 跳至內容連結與鍵盤焦點框的近距離證據畫面</figcaption></figure>
-    <section data-lab-failure><h2>本次發現的問題</h2><p>先前視覺測試曾等待不存在的元素直到逾時，表示測試工具本身會掩蓋真正結果。</p></section>
-    <section data-lab-fix><h2>已採取的修正</h2><p>缺少的可選元素改為短時間探測，完整視覺流程由約十二分鐘降至六分鐘內完成。</p></section>
-    <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>鍵盤與自動對比通過不等於所有輔助科技皆無障礙；VoiceOver、放大軟體與認知負荷仍需持續人工檢查。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-08-01：公開按鍵序列、對比門檻、reduced-motion 條件與未涵蓋輔助科技。</p></section>
+    <section data-lab-failure><h2>自動工具無法代替哪些檢查</h2><p>先前視覺測試曾等待不存在的元素直到逾時，表示測試工具本身會掩蓋真正結果。</p></section>
+    <section data-lab-fix><h2>焦點與減少動態防護如何維持</h2><p>缺少的可選元素改為短時間探測，完整視覺流程由約十二分鐘降至六分鐘內完成。</p></section>
+    <section data-lab-limitations><h2>尚未涵蓋的輔助科技</h2><p>鍵盤與自動對比通過不等於所有輔助科技皆無障礙；VoiceOver、放大軟體與認知負荷仍需持續人工檢查。</p></section>
+    <section data-lab-method><h2>無障礙工程紀錄不是認證</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-08-01：公開按鍵序列、對比門檻、reduced-motion 條件與未涵蓋輔助科技。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
-  <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
+  <aside class="article-side"><h2>接著查看失敗模式測試</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
 </section>
 
 </main>

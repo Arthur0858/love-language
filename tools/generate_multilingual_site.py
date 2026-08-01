@@ -14089,6 +14089,7 @@ def lab_index_page() -> None:
 
 
 def lab_report_page(report: dict) -> None:
+    titles = report["section_titles"]
     environment = "".join(f"<li>{escape(item)}</li>" for item in report["environment"])
     steps = "".join(f"<li>{escape(item)}</li>" for item in report["steps"])
     result_rows = "".join(
@@ -14105,22 +14106,22 @@ def lab_report_page(report: dict) -> None:
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{escape(report_updated)}">實測與更新：{escape(report_updated)}</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">{escape(report['summary'])}</p>
-    <section data-lab-environment><h2>測試環境</h2><ul>{environment}</ul></section>
-    <section data-lab-fixture><h2>固定輸入與預期</h2><p>{escape(report['fixture'])}</p></section>
-    <section data-lab-steps><h2>重現步驟</h2><ol>{steps}</ol></section>
-    <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody>{result_rows}</tbody></table></div></section>
-    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>{escape(report['raw_observation'])}</p><p>{escape(report['method_detail'])}</p></section>
-    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>{escape(report['acceptance'])}</p></section>
-    <section data-lab-retest><h2>修正後如何重測</h2><p>{escape(report['retest'])}</p></section>
-    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>{escape(report['evidence_scope'])}</p></section>
+    <section data-lab-environment><h2>{escape(titles['environment'])}</h2><ul>{environment}</ul></section>
+    <section data-lab-fixture><h2>{escape(titles['fixture'])}</h2><p>{escape(report['fixture'])}</p></section>
+    <section data-lab-steps><h2>{escape(titles['steps'])}</h2><ol>{steps}</ol></section>
+    <section data-lab-results><h2>{escape(titles['results'])}</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody>{result_rows}</tbody></table></div></section>
+    <section data-lab-raw-results><h2>{escape(titles['raw'])}</h2><p>{escape(report['raw_observation'])}</p><p>{escape(report['method_detail'])}</p></section>
+    <section data-lab-acceptance><h2>{escape(titles['acceptance'])}</h2><p>{escape(report['acceptance'])}</p></section>
+    <section data-lab-retest><h2>{escape(titles['retest'])}</h2><p>{escape(report['retest'])}</p></section>
+    <section data-lab-evidence-scope><h2>{escape(titles['evidence'])}</h2><p>{escape(report['evidence_scope'])}</p></section>
     <figure class="lab-evidence-detail"><img src="{escape(report['secondary_screenshot'])}" alt="{escape(report['secondary_alt'])}" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：{escape(report['secondary_alt'])}</figcaption></figure>
-    <section data-lab-failure><h2>本次發現的問題</h2><p>{escape(report['failure'])}</p></section>
-    <section data-lab-fix><h2>已採取的修正</h2><p>{escape(report['fix'])}</p></section>
-    <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>{escape(report['limitations'])}</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：{escape(report_updated)}：{escape(report['revision'])}</p></section>
+    <section data-lab-failure><h2>{escape(titles['failure'])}</h2><p>{escape(report['failure'])}</p></section>
+    <section data-lab-fix><h2>{escape(titles['fix'])}</h2><p>{escape(report['fix'])}</p></section>
+    <section data-lab-limitations><h2>{escape(titles['limitations'])}</h2><p>{escape(report['limitations'])}</p></section>
+    <section data-lab-method><h2>{escape(titles['method'])}</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：{escape(report_updated)}：{escape(report['revision'])}</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
-  <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
+  <aside class="article-side"><h2>{escape(titles['next'])}</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
 </section>
 """
     schema = json_ld({

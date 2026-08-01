@@ -56,22 +56,22 @@
   <article class="article-body" data-lab-report>
     <p data-lab-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="2026-08-01">實測與更新：2026-08-01</time> · <a href="/about/#editorial-method">內容與安全方法</a> · <a href="/contact/#site-repair-report">回報無法重現</a></p>
     <p class="lede">一致性測試使用三組可重現輸入：完全相同答案、只改一題、把最高分兩類拉近。完全相同答案應得到同一守護者；改一題可能只改次要排序，也可能在分數接近時改變主要結果。頁面因此不能宣稱結果永久固定，並應讓使用者看見完整分數而不只看角色名稱。</p>
-    <section data-lab-environment><h2>測試環境</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 桌面與行動視窗</li><li>同一份繁中題目資料</li><li>每輪測試前清除保存結果</li><li>關閉網路後重讀已載入頁面一次</li></ul></section>
-    <section data-lab-fixture><h2>固定輸入與預期</h2><p>A 序列：W,W,W,W,T,T,T,G,G,G,S,S,P,P,P，預期 W=4、T=3、G=3、S=2、P=3。B 序列完全重複 A。C 序列只把第 8 題 G 改為 P，預期 W=4、P=4、T=3、G=2、S=2。每輪先清除保存鍵，避免讀回前一輪。</p></section>
-    <section data-lab-steps><h2>重現步驟</h2><ol><li>完成基準答案並保存五類原始分數。</li><li>清除後輸入完全相同答案，對照結果。</li><li>第三輪只替換第 8 題答案。</li><li>第四輪調整兩題，使前兩類分數接近並觀察說明。</li></ol></section>
-    <section data-lab-results><h2>輸入與結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">完全相同答案</th><td>主要守護者與全部分數一致</td><td><strong>通過</strong></td></tr><tr><th scope="row">只改一題</th><td>只變更受影響類別，沒有其他隨機差異</td><td><strong>通過</strong></td></tr><tr><th scope="row">接近同分</th><td>完整分數仍可見，主要結果沒有被描述成唯一答案</td><td><strong>通過</strong></td></tr><tr><th scope="row">不同寬度</th><td>排序與文字不因版面改變</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
-    <section data-lab-raw-results><h2>原始觀察紀錄</h2><p>A 與 B 的五類原始分數、主要守護者、結果說明與分享文字一致。C 只改變 G 與 P 各一分，主要結果因 W/P 同分仍依固定順序保持 W；其他三類沒有漂移。360×800 與 1440×900 只改變版面排列，資料物件與文字順序一致。</p><p>本報告把『程式在同一輸入下是否穩定』與『真人隔一段時間是否會答出相同結果』分開。前者可以由固定 fixture 重現，後者需要受試者設計、時間間隔與統計分析，本站沒有進行。當一題變更足以造成主要類別更換時，結果頁必須讓完整分數可見，並提醒這是當下偏好而非永久身份。</p></section>
-    <section data-lab-acceptance><h2>通過與失敗判準</h2><p>驗收條件是完全相同輸入得到完全相同資料，單題變更只影響原類別與新類別，viewport 改變不修改排序。若重複輸入產生不同 primaryKey、未變動類別分數漂移，或版面寬度影響資料，就不能標示通過。</p></section>
-    <section data-lab-retest><h2>修正後如何重測</h2><p>重測會先保存 A 輪原始 JSON，再清除並輸入 B，不沿用前次 DOM。C 輪逐欄比較差異，只允許 G 減一、P 加一。最後以桌面與手機各重載三次。這仍不是重測信度研究；若要回答真人穩定性，必須另做有受試者、間隔與倫理設計的研究。</p></section>
-    <section data-lab-evidence-scope><h2>證據保存範圍</h2><p>證據保存包含 A/B 完全重複比較及 C 單題差異。比較基準是原始資料與實際文案，不以角色主圖看起來相同代替資料核對。 所有比較都保留題序，方便下一次逐題重放。</p></section>
+    <section data-lab-environment><h2>重測使用的瀏覽器與視窗</h2><ul><li>macOS 26.5.2；Google Chrome 150.0.7871.187</li><li>桌面 1440×900；手機 360×800（個別報告另列額外尺寸）</li><li>Build 49b06986d371；時區 Asia/Taipei (UTC+8)</li><li>Chromium 桌面與行動視窗</li><li>同一份繁中題目資料</li><li>每輪測試前清除保存結果</li><li>關閉網路後重讀已載入頁面一次</li></ul></section>
+    <section data-lab-fixture><h2>A、B、C 三組序列如何設計</h2><p>A 序列：W,W,W,W,T,T,T,G,G,G,S,S,P,P,P，預期 W=4、T=3、G=3、S=2、P=3。B 序列完全重複 A。C 序列只把第 8 題 G 改為 P，預期 W=4、P=4、T=3、G=2、S=2。每輪先清除保存鍵，避免讀回前一輪。</p></section>
+    <section data-lab-steps><h2>如何隔離每一輪保存狀態</h2><ol><li>完成基準答案並保存五類原始分數。</li><li>清除後輸入完全相同答案，對照結果。</li><li>第三輪只替換第 8 題答案。</li><li>第四輪調整兩題，使前兩類分數接近並觀察說明。</li></ol></section>
+    <section data-lab-results><h2>完全重複與單題變更結果</h2><div class="table-scroll"><table class="lab-result-table"><thead><tr><th>測試項目</th><th>觀察結果</th><th>狀態</th></tr></thead><tbody><tr><th scope="row">完全相同答案</th><td>主要守護者與全部分數一致</td><td><strong>通過</strong></td></tr><tr><th scope="row">只改一題</th><td>只變更受影響類別，沒有其他隨機差異</td><td><strong>通過</strong></td></tr><tr><th scope="row">接近同分</th><td>完整分數仍可見，主要結果沒有被描述成唯一答案</td><td><strong>通過</strong></td></tr><tr><th scope="row">不同寬度</th><td>排序與文字不因版面改變</td><td><strong>通過</strong></td></tr></tbody></table></div></section>
+    <section data-lab-raw-results><h2>三輪原始分數差異</h2><p>A 與 B 的五類原始分數、主要守護者、結果說明與分享文字一致。C 只改變 G 與 P 各一分，主要結果因 W/P 同分仍依固定順序保持 W；其他三類沒有漂移。360×800 與 1440×900 只改變版面排列，資料物件與文字順序一致。</p><p>本報告把『程式在同一輸入下是否穩定』與『真人隔一段時間是否會答出相同結果』分開。前者可以由固定 fixture 重現，後者需要受試者設計、時間間隔與統計分析，本站沒有進行。當一題變更足以造成主要類別更換時，結果頁必須讓完整分數可見，並提醒這是當下偏好而非永久身份。</p></section>
+    <section data-lab-acceptance><h2>何時不能聲稱輸出一致</h2><p>驗收條件是完全相同輸入得到完全相同資料，單題變更只影響原類別與新類別，viewport 改變不修改排序。若重複輸入產生不同 primaryKey、未變動類別分數漂移，或版面寬度影響資料，就不能標示通過。</p></section>
+    <section data-lab-retest><h2>資料或版面改動後怎麼重放</h2><p>重測會先保存 A 輪原始 JSON，再清除並輸入 B，不沿用前次 DOM。C 輪逐欄比較差異，只允許 G 減一、P 加一。最後以桌面與手機各重載三次。這仍不是重測信度研究；若要回答真人穩定性，必須另做有受試者、間隔與倫理設計的研究。</p></section>
+    <section data-lab-evidence-scope><h2>一致性比較保留哪些資料</h2><p>證據保存包含 A/B 完全重複比較及 C 單題差異。比較基準是原始資料與實際文案，不以角色主圖看起來相同代替資料核對。 所有比較都保留題序，方便下一次逐題重放。</p></section>
     <figure class="lab-evidence-detail"><img src="/assets/lovetypes/lab/result-consistency-test-detail.webp" alt="LoveTypes 單題變更前後五類分數並列比較畫面" width="1200" height="750" loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto" /><figcaption>第二證據畫面：LoveTypes 單題變更前後五類分數並列比較畫面</figcaption></figure>
-    <section data-lab-failure><h2>本次發現的問題</h2><p>舊版結果文案較像固定類型，沒有充分提醒一題變動可能影響接近同分的結果。</p></section>
-    <section data-lab-fix><h2>已採取的修正</h2><p>結果與理論頁統一加入「此刻的接收入口」及重測限制，保留五類分數供讀者自行比較。</p></section>
-    <section data-lab-limitations><h2>尚未涵蓋與限制</h2><p>這是軟體一致性測試，不是重測信度研究；沒有招募受試者，也不推論分數的臨床意義。</p></section>
-    <section data-lab-method><h2>報告性質與修訂</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-08-01：加入 A/B/C 完整序列與單題變更前後的原始分數差異。</p></section>
+    <section data-lab-failure><h2>固定類型文案造成的誤讀</h2><p>舊版結果文案較像固定類型，沒有充分提醒一題變動可能影響接近同分的結果。</p></section>
+    <section data-lab-fix><h2>如何呈現接近同分與變動</h2><p>結果與理論頁統一加入「此刻的接收入口」及重測限制，保留五類分數供讀者自行比較。</p></section>
+    <section data-lab-limitations><h2>軟體穩定不等於重測信度</h2><p>這是軟體一致性測試，不是重測信度研究；沒有招募受試者，也不推論分數的臨床意義。</p></section>
+    <section data-lab-method><h2>一致性報告的適用版本</h2><p>這是 LoveTypes 自有產品的工程與內容實測，不是受試者研究、臨床驗證或關係成效證明。頁面版本或測試條件改變時，必須重新執行後才能更新結論。</p><p>版本紀錄：2026-08-01：加入 A/B/C 完整序列與單題變更前後的原始分數差異。</p></section>
     <div class="callout safety"><strong>安全邊界</strong><p>測試通過不代表工具可以判定關係安全、人格或心理狀態。若情境包含暴力、控制、強迫或急迫危險，請先尋求當地正式支援。</p></div>
   </article>
-  <aside class="article-side"><h2>繼續核對</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
+  <aside class="article-side"><h2>比較其他產品測試證據</h2><a class="content-card" href="/lab/"><span class="eyebrow">PRODUCT LAB</span><h3>返回全部實測</h3><p>比較另外七份環境、步驟、結果與限制。</p></a><a class="content-card" href="/about/#editorial-method"><span class="eyebrow">METHOD</span><h3>內容如何產生</h3><p>查看人工編輯、安全檢查與修訂方式。</p></a></aside>
 </section>
 
 </main>

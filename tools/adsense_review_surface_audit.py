@@ -403,6 +403,8 @@ def main() -> int:
                 issues.append(f"repair plan schema {field} must be Organization")
 
     evidence_hashes: dict[str, str] = {}
+    lab_heading_owner: dict[str, str] = {}
+    lab_headings_checked = 0
     for report in LAB_REPORTS:
         slug = report["slug"]
         path = ROOT / "lab" / slug / "index.html"
@@ -414,6 +416,24 @@ def main() -> int:
         for marker in ("data-lab-environment", "data-lab-fixture", "data-lab-steps", "data-lab-results", "data-lab-raw-results", "data-lab-failure", "data-lab-fix", "data-lab-limitations"):
             if marker not in raw:
                 issues.append(f"lab report missing {marker}: {slug}")
+        report_article = re.search(r'<article\b[^>]*data-lab-report[^>]*>(.*?)</article>', raw, re.I | re.S)
+        lab_headings = [
+            visible_text(value)
+            for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", report_article.group(1) if report_article else "", re.I | re.S)
+        ]
+        expected_headings = {
+            title for key, title in report["section_titles"].items() if key != "next"
+        }
+        if len(lab_headings) != 12 or set(lab_headings) != expected_headings:
+            issues.append(f"lab report headings do not match its test-specific structure: {slug}")
+        if report["section_titles"]["next"] not in raw:
+            issues.append(f"lab report next-step heading missing: {slug}")
+        for heading in lab_headings:
+            previous = lab_heading_owner.get(heading)
+            if previous:
+                issues.append(f"lab H2 reused across reports: {heading!r} in {previous} and {slug}")
+            lab_heading_owner[heading] = slug
+            lab_headings_checked += 1
         image = ROOT / report["screenshot"].lstrip("/")
         if not image.exists() or image.stat().st_size < 1000:
             issues.append(f"lab screenshot missing or empty: {report['screenshot']}")
@@ -613,6 +633,7 @@ def main() -> int:
 
     print(f"adsense_review_surface_pages={len(routes)}")
     print(f"core_editorial_trust_pages={len(CORE_EDITORIAL_TRUST)}")
+    print(f"lab_test_specific_h2_checked={lab_headings_checked}")
     print(f"garden_map_main_cjk={garden_cjk}")
     print(f"garden_map_guide_jaccard={garden_guide_jaccard:.3f}")
     print(f"garden_map_guide_containment={garden_guide_containment:.3f}")

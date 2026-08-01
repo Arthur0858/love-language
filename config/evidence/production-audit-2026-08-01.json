@@ -24,6 +24,16 @@
       "name": "pages build and deployment after editorial trust integration",
       "conclusion": "success",
       "url": "https://github.com/Arthur0858/love-language/actions/runs/30685178178"
+    },
+    {
+      "name": "pages build and deployment after production evidence refresh",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685910051"
+    },
+    {
+      "name": "LoveTypes predeploy check after production evidence refresh",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685910318"
     }
   ],
   "productionChecks": {

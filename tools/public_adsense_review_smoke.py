@@ -157,7 +157,8 @@ def main() -> int:
             issues.append(f"/{prefix}/: expected 302 to /")
 
     compatibility = request("/tools/love-compatibility/", follow=False)
-    if compatibility.status != 301 or compatibility.headers.get("Location") not in ("/compass/", CANONICAL_BASE + "/compass/"):
+    expected_locations = {"/compass/", CANONICAL_BASE + "/compass/", BASE_URL + "/compass/"}
+    if compatibility.status != 301 or compatibility.headers.get("Location") not in expected_locations:
         issues.append(f"/tools/love-compatibility/: expected 301 to /compass/, got {compatibility.status}")
 
     retired_routes = [f"/tools/{slug}/" for slug in LONG_TAIL_COMPATIBILITY_PAGES]

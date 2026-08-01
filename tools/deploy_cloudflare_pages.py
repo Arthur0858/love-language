@@ -465,7 +465,7 @@ def create_deployment(
         fields["commit_message"] = commit_message
 
     upload_files: dict[str, tuple[str, bytes, str]] = {}
-    for special_name in ("_headers", "_redirects"):
+    for special_name in ("_headers", "_redirects", "_worker.js"):
         special_path = site_dir / special_name
         if special_path.exists():
             upload_files[special_name] = (special_name, special_path.read_bytes(), "application/octet-stream")

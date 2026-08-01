@@ -34,7 +34,7 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "site-health.json",
     "release.json",
 }
-REQUIRED_SPECIAL_FILES = {"_headers", "_redirects"}
+REQUIRED_SPECIAL_FILES = {"_headers", "_redirects", "_routes.json", "_worker.js"}
 FORBIDDEN_PREFIXES = {
     ".git/",
     ".github/",
@@ -52,6 +52,8 @@ FORBIDDEN_FILES = {
     "CNAME",
     "_headers",
     "_redirects",
+    "_routes.json",
+    "_worker.js",
 }
 def load_deploy_module():
     spec = importlib.util.spec_from_file_location("lovetypes_deploy_cloudflare_pages", DEPLOY_SCRIPT)
@@ -117,6 +119,7 @@ def deployment_special_upload_files() -> set[str]:
 
 def main() -> int:
     deploy = load_deploy_module()
+    generator = load_generator_module()
     required_files = required_manifest_files()
     declared_files = declared_index_and_support_files()
     special_upload_files = deployment_special_upload_files()
@@ -156,6 +159,29 @@ def main() -> int:
             "required special deployment files missing from deploy upload logic: "
             f"{', '.join(missing_special_upload_files)}"
         )
+
+    routes = json.loads((ROOT / "_routes.json").read_text(encoding="utf-8"))
+    expected_route_includes = {"/tools/love-compatibility*"} | {
+        f"/tools/{slug}*"
+        for slug in generator.LONG_TAIL_COMPATIBILITY_PAGES
+    } | {
+        f"/guides/{slug}*"
+        for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES
+    }
+    if routes.get("version") != 1 or set(routes.get("include", [])) != expected_route_includes or routes.get("exclude") != []:
+        issues.append("Pages Function route allowlist does not match retired review paths")
+
+    worker = (ROOT / "_worker.js").read_text(encoding="utf-8")
+    expected_retired_paths = {
+        *(f"/tools/{slug}/" for slug in generator.LONG_TAIL_COMPATIBILITY_PAGES),
+        *(f"/guides/{slug}/" for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES),
+    }
+    missing_worker_paths = sorted(path for path in expected_retired_paths if json.dumps(path) not in worker)
+    if missing_worker_paths:
+        issues.append(f"retired paths missing from Pages Function: {missing_worker_paths}")
+    for required_worker_signal in ('status: 410', '"X-Robots-Tag": "noindex, nofollow"', 'path === "/tools/love-compatibility/"', '301'):
+        if required_worker_signal not in worker:
+            issues.append(f"Pages Function missing required behavior: {required_worker_signal}")
 
     for rel_path in sorted(manifest_paths):
         if rel_path in FORBIDDEN_FILES:

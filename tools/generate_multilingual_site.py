@@ -16828,6 +16828,55 @@ def write_redirects() -> None:
     write(ROOT / "_redirects", redirects)
 
 
+def write_edge_retirement_worker() -> None:
+    retired_guides = sorted(slug for slug, _title, _desc, _target in LEGACY_ZH_GUIDES)
+    retired_paths = [
+        *(f"/guides/{slug}/" for slug in retired_guides),
+        *(f"/tools/{slug}/" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
+    ]
+    worker = """const RETIRED_PATHS = new Set(%s);
+
+function normalizedPath(pathname) {
+  return pathname.endsWith("/") ? pathname : `${pathname}/`;
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const path = normalizedPath(url.pathname);
+
+    if (path === "/tools/love-compatibility/") {
+      return Response.redirect(new URL("/compass/", url), 301);
+    }
+
+    if (path.startsWith("/tools/") || RETIRED_PATHS.has(path)) {
+      return new Response("This LoveTypes page has been retired.", {
+        status: 410,
+        headers: {
+          "Cache-Control": "no-store",
+          "Content-Type": "text/plain; charset=utf-8",
+          "X-Robots-Tag": "noindex, nofollow",
+        },
+      });
+    }
+
+    return env.ASSETS.fetch(request);
+  },
+};
+""" % json.dumps(retired_paths, ensure_ascii=True, indent=2)
+    routes = {
+        "version": 1,
+        "include": [
+            "/tools/love-compatibility*",
+            *(f"/tools/{slug}*" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
+            *(f"/guides/{slug}*" for slug in retired_guides),
+        ],
+        "exclude": [],
+    }
+    write(ROOT / "_worker.js", worker)
+    write(ROOT / "_routes.json", json.dumps(routes, ensure_ascii=True, indent=2) + "\n")
+
+
 CORE_LASTMOD = {
     "": "2026-07-23",
     "start": "2026-07-31",
@@ -16947,6 +16996,7 @@ https://:version.lovetypes.pages.dev/*
     write_security_txt()
     write_ads_txt()
     write_redirects()
+    write_edge_retirement_worker()
     write_funnel_event_catalog()
     write_commerce_catalog()
     write_guardian_profiles()

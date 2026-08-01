@@ -1,34 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T09:44:06Z",
+  "checkedAt": "2026-08-01T09:55:45Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "9228f572f818d82743ac1ea96beb110ea7b9309d",
-  "auditToolingCommit": "2b1077dcbc1507fa5d7297076ef19dafddaa962b",
+  "reviewSurfaceCommit": "5dd72f7b7f6df04278eccd02bd9de89b5e8c510c",
+  "auditToolingCommit": "5dd72f7b7f6df04278eccd02bd9de89b5e8c510c",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "ae3543e7-c380-4ca2-95f7-5a1b0e55eb70",
-    "preview": "https://ae3543e7.lovetypes.pages.dev"
+    "id": "f9d422c1-800e-4b82-b732-09d3f2b9e09f",
+    "preview": "https://f9d422c1.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for machine-readable review surface",
+      "name": "pages build and deployment for support-file noindex controls",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694206201"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694615126"
     },
     {
-      "name": "LoveTypes predeploy check for machine-readable review surface",
+      "name": "LoveTypes predeploy check for support-file noindex controls",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694206546"
-    },
-    {
-      "name": "pages build and deployment for support sync alignment",
-      "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694237086"
-    },
-    {
-      "name": "LoveTypes predeploy check for support sync alignment",
-      "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694237311"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694615380"
     }
   ],
   "productionChecks": {
@@ -42,7 +32,9 @@
     "staleMachineReadableDates": 0,
     "publicFunnelCatalogs": 0,
     "indexabilityCases": 56,
-    "headerCases": 51,
+    "headerCases": 61,
+    "noindexSupportFiles": 10,
+    "aboutResourcesDisclosureLinks": 1,
     "assetReferences": 444,
     "internalLinks": 1232,
     "jsonLdBlocks": 118,

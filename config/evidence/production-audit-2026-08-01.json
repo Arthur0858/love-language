@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T12:17:29Z",
+  "checkedAt": "2026-08-01T12:24:07Z",
   "site": "https://lovetypes.tw/",
   "reviewSurfaceCommit": "5869e88997619f0c561da682f33767c874033074",
-  "auditToolingCommit": "5869e88997619f0c561da682f33767c874033074",
+  "auditToolingCommit": "2d7b31b60cb4ea1c1a05927a2da1b39ab0f773ce",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
     "id": "b5c8569d-91b0-447c-a4d0-1aabd8f0834c",
@@ -11,14 +11,14 @@
   },
   "githubActions": [
     {
-      "name": "pages build and deployment after privacy runtime disclosure",
+      "name": "pages build and deployment after production evidence refresh",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30699312216"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30699532453"
     },
     {
-      "name": "initial predeploy check during custom-domain propagation",
-      "conclusion": "failure",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30699313246"
+      "name": "LoveTypes predeploy check after custom-domain convergence",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30699532895"
     }
   ],
   "productionChecks": {
@@ -120,5 +120,5 @@
     "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
     "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01-5869e889.json node tools/runtime_performance_smoke.mjs"
   ],
-  "result": "pass_with_ci_rerun_required"
+  "result": "pass"
 }

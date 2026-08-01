@@ -1,30 +1,25 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T10:17:29Z",
+  "checkedAt": "2026-08-01T10:46:25Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "acd7344f5deee5953019bee50b213197ea05fe7a",
-  "auditToolingCommit": "acd7344f5deee5953019bee50b213197ea05fe7a",
+  "reviewSurfaceCommit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
+  "auditToolingCommit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "8242de7e-4922-4d5c-bf49-da901f4b5573",
-    "preview": "https://8242de7e.lovetypes.pages.dev"
+    "id": "48de4eb4-0c62-4eef-9e2e-a5b2533dd877",
+    "preview": "https://48de4eb4.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for production audit evidence",
+      "name": "pages build and deployment for neutral core asset names",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30695440836"
-    },
-    {
-      "name": "LoveTypes predeploy check for production audit evidence",
-      "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30695441266"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30696101301"
     }
   ],
   "productionChecks": {
     "reviewPages": 38,
     "retiredRoutes": 33,
-    "retiredAssets": 29,
+    "retiredAssets": 31,
     "deploymentFiles": 122,
     "publicSupportFiles": 11,
     "machineReadableFiles": 5,
@@ -36,8 +31,14 @@
     "noindexSupportFiles": 10,
     "aboutResourcesDisclosureLinks": 1,
     "internalReviewAssetNames": 0,
-    "neutralProductAssets": 2,
-    "exactCachePurges": 2,
+    "internalProcessAssetNames": 0,
+    "neutralProductAssets": 4,
+    "exactCachePurges": 4,
+    "publishedLanguages": 1,
+    "redirectedLanguages": 4,
+    "languageRedirectRules": 8,
+    "affiliateCommerceFiles": 1,
+    "affiliateIsolatedFiles": 39,
     "assetReferences": 444,
     "internalLinks": 1232,
     "jsonLdBlocks": 118,
@@ -77,26 +78,29 @@
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 10,
-    "worstLcpMs": 800,
+    "worstLcpMs": 476,
     "worstCls": 0,
-    "maxTransferBytes": 352329,
+    "maxTransferBytes": 352400,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 208,
-    "gardenMapTransferBytes": 232293,
+    "gardenMapLcpMs": 212,
+    "gardenMapTransferBytes": 232370,
     "issues": 0
   },
   "commands": [
     "python3 tools/public_adsense_review_smoke.py",
     "python3 tools/public_support_sync_smoke.py",
     "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
-    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://8242de7e.lovetypes.pages.dev",
+    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://48de4eb4.lovetypes.pages.dev",
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_editorial_trust_smoke.py",
     "python3 tools/public_external_link_smoke.py",
+    "python3 tools/multilingual_route_audit.py",
+    "python3 tools/guardian_conversion_audit.py",
+    "python3 tools/affiliate_locale_audit.py",
     "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
     "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01.json node tools/runtime_performance_smoke.mjs"
   ],

@@ -14,6 +14,13 @@
     "requiredMetaTag": "<meta name=\"google-adsense-account\" content=\"ca-pub-4093856660317740\">",
     "requiredAdsTxtRecord": "google.com, pub-4093856660317740, DIRECT, f08c47fec0942fa0"
   },
+  "policyCenter": {
+    "observedAt": "2026-08-01T15:56:42Z",
+    "status": "clear",
+    "issuesDetected": false,
+    "visibleHeading": "目前沒有問題",
+    "visibleMessage": "您目前沒有任何問題會導致網站停止放送廣告或放送量受限。"
+  },
   "publicReadback": {
     "url": "https://lovetypes.tw/ads.txt",
     "userAgentsChecked": 4,

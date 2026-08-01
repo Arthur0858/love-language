@@ -46,6 +46,21 @@
       "minimum": 5,
       "reason": "The latest available seven-day window ends before the material deployment; three current editorial URLs had historical impressions, but zero are proven after deployment."
     },
+    "gscManualActionsClear": {
+      "confirmed": true,
+      "checkedAt": "2026-08-01T15:56:42Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+    },
+    "gscSecurityIssuesClear": {
+      "confirmed": true,
+      "checkedAt": "2026-08-01T15:56:42Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+    },
+    "adsensePolicyCenterClear": {
+      "confirmed": true,
+      "checkedAt": "2026-08-01T15:56:42Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
+    },
     "productionAuditGreen": {
       "confirmed": true,
       "checkedAt": "2026-08-01T13:16:33Z",

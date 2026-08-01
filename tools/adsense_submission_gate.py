@@ -20,6 +20,9 @@ REQUIRED_GATES = frozenset({
     "adsTxtRecognizedByAdsense",
     "reviewActionAvailable",
     "gscPagesWithImpressions",
+    "gscManualActionsClear",
+    "gscSecurityIssuesClear",
+    "adsensePolicyCenterClear",
     "productionAuditGreen",
 })
 GSC_GATES = frozenset({
@@ -28,8 +31,10 @@ GSC_GATES = frozenset({
     "importantPagesRecrawled",
     "legacyUrlsLeavingIndex",
     "gscPagesWithImpressions",
+    "gscManualActionsClear",
+    "gscSecurityIssuesClear",
 })
-ADSENSE_GATES = frozenset({"adsTxtRecognizedByAdsense", "reviewActionAvailable"})
+ADSENSE_GATES = frozenset({"adsTxtRecognizedByAdsense", "reviewActionAvailable", "adsensePolicyCenterClear"})
 
 
 def parse_args() -> argparse.Namespace:
@@ -200,6 +205,14 @@ def evidence_contract_issues(name: str, item: dict) -> list[str]:
             issues.append("GSC evidence does not prove post-deployment editorial impressions")
         if proven < integer_value(item.get("minimum"), 5):
             issues.append("GSC evidence page count is below the configured impression threshold")
+    elif name == "gscManualActionsClear":
+        manual_actions = object_value(payload.get("manualActions"))
+        if manual_actions.get("status") != "clear" or manual_actions.get("issuesDetected") is not False:
+            issues.append("GSC evidence does not prove a clear manual-actions report")
+    elif name == "gscSecurityIssuesClear":
+        security = object_value(payload.get("securityIssues"))
+        if security.get("status") != "clear" or security.get("issuesDetected") is not False:
+            issues.append("GSC evidence does not prove a clear security-issues report")
     elif name == "adsTxtRecognizedByAdsense":
         status = object_value(payload.get("dashboard")).get("adsTxtStatus")
         if status not in {"authorized", "found", "recognized"}:
@@ -213,6 +226,10 @@ def evidence_contract_issues(name: str, item: dict) -> list[str]:
             or dashboard.get("reviewSubmitted") is not False
         ):
             issues.append("AdSense evidence does not prove an available, unsubmitted review action")
+    elif name == "adsensePolicyCenterClear":
+        policy_center = object_value(payload.get("policyCenter"))
+        if policy_center.get("status") != "clear" or policy_center.get("issuesDetected") is not False:
+            issues.append("AdSense evidence does not prove a clear policy center")
     elif name == "productionAuditGreen":
         checks = object_value(payload.get("productionChecks"))
         if payload.get("result") != "pass" or integer_value(checks.get("issues")) != 0:

@@ -61,6 +61,18 @@
       "interpretation": "The report reflects ProfilePage markup crawled before the latest deployment and includes retired multilingual routes. The current 38-page production schema audit has no ProfilePage entities, so resolution depends on Google recrawling the current WebPage markup rather than another schema change."
     }
   },
+  "manualActions": {
+    "observedAt": "2026-08-01T15:56:42Z",
+    "status": "clear",
+    "issuesDetected": false,
+    "visibleMessage": "未偵測到任何問題"
+  },
+  "securityIssues": {
+    "observedAt": "2026-08-01T15:56:42Z",
+    "status": "clear",
+    "issuesDetected": false,
+    "visibleMessage": "未偵測到任何問題"
+  },
   "latestMaterialDeployment": {
     "commit": "e9e8beec9b10d820ced9afee6017b7e1c1371bcf",
     "commitCreatedAt": "2026-08-01T21:14:42+08:00",

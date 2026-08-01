@@ -114,7 +114,7 @@ class AdSenseSubmissionGateTest(unittest.TestCase):
                 [],
             )
         self.assertEqual(status, 0)
-        self.assertIn("adsense_submission_pending_conditions=9", output.getvalue())
+        self.assertIn("adsense_submission_pending_conditions=12", output.getvalue())
         self.assertIn("adsense_submission_evidence_refresh_due=0", output.getvalue())
         self.assertIn("adsense_submission_ready=false", output.getvalue())
         self.assertIn("adsense_review_submitted=false", output.getvalue())

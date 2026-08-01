@@ -1,30 +1,46 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T09:23:18Z",
+  "checkedAt": "2026-08-01T09:44:06Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "9a8b373f78dd49a3d0844473282b97cc86b34e8d",
-  "auditToolingCommit": "9a8b373f78dd49a3d0844473282b97cc86b34e8d",
+  "reviewSurfaceCommit": "9228f572f818d82743ac1ea96beb110ea7b9309d",
+  "auditToolingCommit": "2b1077dcbc1507fa5d7297076ef19dafddaa962b",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "dca94537-9b3c-497a-a91f-374f1054aa9a",
-    "preview": "https://dca94537.lovetypes.pages.dev"
+    "id": "ae3543e7-c380-4ca2-95f7-5a1b0e55eb70",
+    "preview": "https://ae3543e7.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for official safety routes",
+      "name": "pages build and deployment for machine-readable review surface",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30693565644"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694206201"
     },
     {
-      "name": "LoveTypes predeploy check for official safety routes",
+      "name": "LoveTypes predeploy check for machine-readable review surface",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30693566086"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694206546"
+    },
+    {
+      "name": "pages build and deployment for support sync alignment",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694237086"
+    },
+    {
+      "name": "LoveTypes predeploy check for support sync alignment",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694237311"
     }
   ],
   "productionChecks": {
     "reviewPages": 38,
     "retiredRoutes": 33,
-    "retiredAssets": 22,
+    "retiredAssets": 23,
+    "deploymentFiles": 122,
+    "publicSupportFiles": 11,
+    "machineReadableFiles": 5,
+    "machineReadableLanguageMismatches": 0,
+    "staleMachineReadableDates": 0,
+    "publicFunnelCatalogs": 0,
     "indexabilityCases": 56,
     "headerCases": 51,
     "assetReferences": 444,
@@ -78,6 +94,7 @@
   },
   "commands": [
     "python3 tools/public_adsense_review_smoke.py",
+    "python3 tools/public_support_sync_smoke.py",
     "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",

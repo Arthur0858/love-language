@@ -11,9 +11,14 @@
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for neutral core asset names",
+      "name": "pages build and deployment for neutral core asset audit evidence",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30696101301"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30696434605"
+    },
+    {
+      "name": "LoveTypes predeploy check for neutral core asset audit evidence",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30696434832"
     }
   ],
   "productionChecks": {

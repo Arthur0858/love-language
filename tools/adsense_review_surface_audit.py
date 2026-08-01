@@ -14,6 +14,7 @@ from xml.etree import ElementTree as ET
 from editorial_guides import GUIDE_EDITORIAL_CONTENT
 from generate_multilingual_site import (
     GUARDIAN_UPDATED,
+    COMPASS_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     REPAIR_PLAN_UPDATED,
@@ -28,6 +29,7 @@ COMMERCE_HOSTS = ("amazon.", "books.com.tw", "gumroad.com")
 PRIMARY_SCHEMA_TYPES = {"AboutPage", "Article", "CollectionPage", "ContactPage", "HowTo", "WebPage", "WebSite"}
 FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense")
 FORBIDDEN_COMMERCIAL = ("US$", "付費報告", "八字", "流年", "Love Timing Report")
+FORBIDDEN_REVIEW_POSITIONING = ("命理", "命盤", "出生節奏", "生日節奏", "出生時間", "出生日期")
 EXPECTED_CORE = {
     "/", "/start/", "/garden-map/", "/compass/",
     "/guides/", "/characters/", "/theory/", "/repair-plan/",
@@ -104,6 +106,8 @@ def main() -> int:
         url = f"https://lovetypes.tw/{route}/"
         if sitemap_lastmods.get(url) != updated:
             issues.append(f"{route} sitemap lastmod mismatch")
+    if sitemap_lastmods.get("https://lovetypes.tw/compass/") != COMPASS_UPDATED:
+        issues.append("compass sitemap lastmod mismatch")
 
     for route in expected:
         path = page_file(route)
@@ -306,6 +310,9 @@ def main() -> int:
         if route != "/contact/" and "mailto:" in main_raw:
             issues.append(f"mailto leaked into indexed content: {route}")
         text = visible_text(main_raw)
+        for phrase in FORBIDDEN_REVIEW_POSITIONING:
+            if phrase in raw:
+                issues.append(f"non-relationship positioning {phrase!r} leaked into indexed page: {route}")
         for phrase in FORBIDDEN_COMMERCIAL:
             if phrase in text:
                 issues.append(f"commercial phrase {phrase!r} leaked into indexed content: {route}")
@@ -314,6 +321,24 @@ def main() -> int:
                 issues.append(f"Offer schema leaked into indexed page: {route}")
             if route.startswith("/characters/") and item.get("@type") == "ProfilePage":
                 issues.append(f"fictional guardian must not use ProfilePage schema: {route}")
+
+    compass_raw = page_file("/compass/").read_text(encoding="utf-8")
+    compass_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(compass_raw)))
+    if not 2800 <= compass_cjk <= 3600:
+        issues.append(f"compass main CJK count outside 2800-3600: {compass_cjk}")
+    for marker in ("data-compass-editorial-byline", "編輯方法", "工具實測", "內容修正", "羅盤只整理輸入，不替關係評分"):
+        if marker not in compass_raw:
+            issues.append(f"compass missing {marker}")
+    compass_schemas = [item for item in schemas(compass_raw) if "WebApplication" in schema_types(item)]
+    if len(compass_schemas) != 1:
+        issues.append("compass WebApplication schema missing or duplicated")
+    else:
+        item = compass_schemas[0]
+        if item.get("dateModified") != COMPASS_UPDATED:
+            issues.append("compass schema dateModified mismatch")
+        for field in ("author", "publisher"):
+            if item.get(field, {}).get("@type") != "Organization":
+                issues.append(f"compass schema {field} must be Organization")
 
     for path in ROOT.rglob("*.html"):
         raw = path.read_text(encoding="utf-8", errors="ignore").lower()

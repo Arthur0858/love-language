@@ -15,8 +15,8 @@ from urllib.parse import urljoin, urlparse
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree as ET
 
-from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_COMMERCIAL, FORBIDDEN_VISIBLE
-from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
+from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_COMMERCIAL, FORBIDDEN_REVIEW_POSITIONING, FORBIDDEN_VISIBLE
+from generate_multilingual_site import COMPASS_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
 
 
 BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
@@ -88,6 +88,9 @@ def page_issues(route: str, response: Response) -> list[str]:
     for phrase in FORBIDDEN_VISIBLE:
         if phrase in text:
             issues.append(f"{route}: forbidden public phrase {phrase!r}")
+    for phrase in FORBIDDEN_REVIEW_POSITIONING:
+        if phrase in raw:
+            issues.append(f"{route}: non-relationship positioning {phrase!r} leaked into indexed page")
     for host in COMMERCE_HOSTS:
         if host in raw.lower():
             issues.append(f"{route}: commerce host leaked outside /resources/: {host}")
@@ -103,6 +106,12 @@ def page_issues(route: str, response: Response) -> list[str]:
     for phrase in FORBIDDEN_COMMERCIAL:
         if phrase in main_visible:
             issues.append(f"{route}: commercial phrase {phrase!r} leaked into indexed main")
+    if route == "/compass/":
+        for marker in ("data-compass-editorial-byline", "編輯方法", "工具實測", "內容修正", "羅盤只整理輸入，不替關係評分"):
+            if marker not in raw:
+                issues.append(f"{route}: missing {marker}")
+        if f'"dateModified":"{COMPASS_UPDATED}"' not in raw:
+            issues.append(f"{route}: schema dateModified mismatch")
     if 'type="application/ld+json"' not in raw:
         issues.append(f"{route}: JSON-LD missing")
     return issues

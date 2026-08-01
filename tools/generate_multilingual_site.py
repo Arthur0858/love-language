@@ -33,6 +33,7 @@ PRIVACY_UPDATED = "2026-08-01"
 THEORY_UPDATED = "2026-08-01"
 START_UPDATED = "2026-08-01"
 REPAIR_PLAN_UPDATED = "2026-08-01"
+COMPASS_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -6150,7 +6151,7 @@ COMPASS_PAGE = {
         "desc": "不是判斷你們合不合，而是看見愛在哪裡錯頻。輸入雙方守護者與關係狀態，取得免費關係羅盤與下一步修復入口。",
         "eyebrow": "RELATIONSHIP COMPASS",
         "h1": "不是判斷你們合不合，而是看見愛在哪裡錯頻",
-        "intro": "LoveTypes Relationship Compass 把五種愛之語配對、關係狀態與可選出生節奏整理成一張溫柔地圖。命盤不是判決，而是一張提醒你如何相處的關係洞察工具。",
+        "intro": "LoveTypes Relationship Compass 只使用雙方自行選擇的守護者、關係狀態與當下問題，把容易被誤讀的愛整理成一張可討論的對話地圖。",
         "primary": "開始免費羅盤",
         "secondary": "先做守護者測驗",
         "tertiary": "看 7 日修復",
@@ -6161,8 +6162,8 @@ COMPASS_PAGE = {
             ("03", "一句可以說出口的話", "先給一個不指責、能開始對話的句子。"),
             ("04", "24 小時小行動", "不要一次修完整段關係，先做一件可完成的事。"),
         ],
-        "boundary_title": "命理只作為關係洞察，不作為判決",
-        "boundary": "這個工具可以結合 LoveTypes 類型與可選出生日期做關係節奏提示；它不預測命中注定、不替你決定婚姻可否，也不取代諮商、醫療、法律或安全支援。",
+        "boundary_title": "羅盤只整理輸入，不替關係評分",
+        "boundary": "結果只根據兩位守護者、關係狀態與當下問題組合出錯頻提醒、可說句子與小行動。它不計算相配率、不推論未提供的個人資料，也不替你決定關係去留。相同輸入會得到相同規則輸出，但這不代表建議適合所有關係。",
         "tool_title": "開始 LoveTypes Relationship Compass",
         "compatibility_title": "想先理解心語合盤定位？",
         "compatibility_intro": "如果你是從八字合婚、love compatibility 或關係測驗搜尋進來，先讀合盤入口頁，再回到免費羅盤開始。",
@@ -6352,7 +6353,7 @@ COMPASS_FAQ = {
         "title": "羅盤常見問題",
         "items": [
             ("關係羅盤是免費的嗎？", "免費版會先給主要錯頻、最需要理解的地方、一句可說出口的話與 24 小時小行動。"),
-            ("需要輸入姓名或生日嗎？", "不用。羅盤只使用雙方自行選擇的 LoveTypes 守護者、關係狀態與當下問題，不要求姓名、生日或聯絡資料。"),
+            ("需要輸入個人資料嗎？", "不用。羅盤只使用雙方自行選擇的 LoveTypes 守護者、關係狀態與當下問題，不要求姓名或聯絡資料。"),
             ("羅盤會判斷我們合不合嗎？", "不會。LoveTypes 不做命運、婚姻或分手判決，只把錯頻整理成可討論、可修復的下一步。"),
             ("遠距離吵架後可以用關係羅盤嗎？", "可以。先選遠距離與吵架後情境，羅盤會把訊息誤會、陪伴不足或重複爭執整理成一個比較小、比較能開口的修復請求。"),
             ("曖昧或分手後也適合使用嗎？", "可以，但請先確認安全與界線。羅盤適合幫你整理想說的話與下一步，不會替你判斷是否復合、告白或繼續等待。"),
@@ -6404,7 +6405,7 @@ COMPASS_FAQ = {
 COMPASS_TRAFFIC_LAYER = {
     "zh": {
         "hero_kicker": "免費 · 2 分鐘 · 不需要註冊",
-        "hero_badges": ["雙人錯頻地圖", "五位守護者", "不收生日資料", "24 小時行動"],
+        "hero_badges": ["雙人錯頻地圖", "五位守護者", "不收身分資料", "24 小時行動"],
         "visual_title": "先選兩位守護者，再看愛在哪裡被誤讀",
         "visual_intro": "從短影音、搜尋或伴侶對話進來的人，不需要先讀完整理論。先用羅盤整理一句能說出口的話，再選一個免費練習。",
         "visual_cta": "直接開始免費羅盤",
@@ -6533,11 +6534,11 @@ COMPASS_USE_FLOW = {
     "zh": {
         "eyebrow": "HOW IT WORKS",
         "title": "三步完成免費關係羅盤",
-        "intro": "不需要先準備完整命盤，也不需要註冊帳號。先用 LoveTypes 守護者建立對話地圖，再視需要補上生日節奏。",
+        "intro": "不需要註冊帳號或填寫身分資料。先選兩位 LoveTypes 守護者，再補上目前關係狀態與真正卡住的問題。",
         "cta": "現在開始三步流程",
         "steps": [
             ("選擇雙方守護者", "可以從測驗結果帶入，也可以先用你最接近的守護者開始。"),
-            ("補上關係狀態", "選擇曖昧、伴侶、遠距、修復中等狀態；生日與出生時間維持選填。"),
+            ("補上關係情境", "選擇曖昧、伴侶、遠距、修復中等狀態，再指出目前最需要整理的問題。"),
             ("拿到一句話與小行動", "結果會先給主要錯頻、可說出口的句子與 24 小時內能做的一步。"),
         ],
     },
@@ -10237,7 +10238,7 @@ GARDEN_MAP = {
             ("寫成修復週期", "把情緒整理成 7 日練習，不一次修完整段關係。", "打開修復計畫", "repair-plan"),
         ],
         "tools": [
-            ("LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與可選出生節奏整理成錯頻地圖。", "打開關係羅盤", "compass"),
+            ("LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與當下問題整理成錯頻地圖。", "打開關係羅盤", "compass"),
             ("心語合盤入口", "承接愛之語合盤、八字愛情合盤與 love compatibility 搜尋，再導回免費羅盤。", "看合盤入口", "tools/love-compatibility"),
             ("7 日修復計畫", "把測驗結果寫成一週內能完成的小修復。", "打開修復計畫", "repair-plan"),
             ("產品實測紀錄", "查看計分、保存、分享與無障礙測試的可重現步驟。", "查看實測", "lab"),
@@ -10729,6 +10730,7 @@ def compass_page(lang: str) -> None:
   <div class="card-grid compact">{cards}</div>
 </section>
 <section class="section note-section">
+  {f'<p data-compass-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{COMPASS_UPDATED}">內容更新：{COMPASS_UPDATED}</time> · <a href="{lang_url(lang, "about")}#editorial-method">編輯方法</a> · <a href="{lang_url(lang, "lab/compatibility-safety-test")}">工具實測</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">內容修正</a></p>' if lang == 'zh' else ''}
   <h2>{escape(copy["boundary_title"])}</h2>
   <p>{escape(copy["boundary"])}</p>
   <p>{escape(t["unofficial_disclosure"])}</p>
@@ -10747,10 +10749,11 @@ def compass_page(lang: str) -> None:
         "description": copy["desc"],
         "url": abs_url(lang, "compass"),
         "inLanguage": t["code"],
-        "dateModified": UPDATED,
+        "dateModified": COMPASS_UPDATED if lang == "zh" else UPDATED,
         "applicationCategory": "LifestyleApplication",
         "operatingSystem": "Web",
         "isPartOf": website_ref(lang),
+        **({"author": organization_ref()} if lang == "zh" else {}),
         "publisher": organization_ref(),
         "step": [
             {"@type": "HowToStep", "position": idx, "name": title, "text": text}
@@ -17256,7 +17259,7 @@ CORE_LASTMOD = {
     "": "2026-07-23",
     "start": START_UPDATED,
     "garden-map": "2026-07-20",
-    "compass": "2026-07-31",
+    "compass": COMPASS_UPDATED,
     "guides": "2026-07-30",
     "characters": "2026-07-22",
     "theory": THEORY_UPDATED,

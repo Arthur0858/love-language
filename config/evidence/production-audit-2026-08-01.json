@@ -11,9 +11,14 @@
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for neutral product asset names",
+      "name": "pages build and deployment for production audit evidence",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30694995247"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30695440836"
+    },
+    {
+      "name": "LoveTypes predeploy check for production audit evidence",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30695441266"
     }
   ],
   "productionChecks": {

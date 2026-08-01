@@ -1,39 +1,34 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T05:27:34Z",
+  "checkedAt": "2026-08-01T06:01:26Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "f9c23e4a87bfc6bfbf3726eaead0b274a6c33d2e",
-  "auditToolingCommit": "f9c23e4a87bfc6bfbf3726eaead0b274a6c33d2e",
+  "reviewSurfaceCommit": "b1764e0078eb585d6f38525f1f3293383411c6ae",
+  "auditToolingCommit": "c77b924a3cff1756c0629e9e0bf6427a345739b9",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "ff254b24-7259-4ca1-94c4-fb8922740b86",
-    "preview": "https://ff254b24.lovetypes.pages.dev"
+    "id": "0dacbd61-6b64-4862-957c-075858b9aa9d",
+    "preview": "https://0dacbd61.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment",
+      "name": "pages build and deployment for guardian editorial surface",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094582"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30686797918"
     },
     {
-      "name": "LoveTypes predeploy check",
+      "name": "LoveTypes predeploy check for guardian editorial surface",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094864"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30686798297"
     },
     {
-      "name": "pages build and deployment after editorial trust integration",
+      "name": "pages build and deployment after guardian performance coverage",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685178178"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30686934747"
     },
     {
-      "name": "pages build and deployment after production evidence refresh",
+      "name": "LoveTypes predeploy check with guardian performance coverage",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685910051"
-    },
-    {
-      "name": "LoveTypes predeploy check after production evidence refresh",
-      "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685910318"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30686934924"
     }
   ],
   "productionChecks": {
@@ -42,16 +37,19 @@
     "retiredAssets": 22,
     "indexabilityCases": 56,
     "headerCases": 51,
-    "assetReferences": 439,
-    "internalLinks": 1262,
+    "assetReferences": 444,
+    "internalLinks": 1182,
     "jsonLdBlocks": 118,
     "editorialGuides": 12,
     "labReports": 8,
+    "guardianEditorialPages": 5,
+    "guardianMaxJaccard": 0.186,
+    "guardianMaxContainment": 0.317,
     "editorialCorePages": 4,
     "editorialSourceHosts": 5,
     "labEvidenceImages": 16,
     "externalLinks": 9,
-    "visualPages": 51,
+    "visualPages": 66,
     "noScriptPages": 5,
     "keyboardCases": 10,
     "issues": 0
@@ -59,10 +57,10 @@
   "runtimePerformance": {
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
-    "pagesChecked": 8,
-    "worstLcpMs": 296,
+    "pagesChecked": 9,
+    "worstLcpMs": 388,
     "worstCls": 0,
-    "maxTransferBytes": 220694,
+    "maxTransferBytes": 352341,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,

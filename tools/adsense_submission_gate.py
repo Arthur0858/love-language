@@ -30,7 +30,11 @@ def has_evidence(item: dict) -> bool:
         datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
     except ValueError:
         return False
-    return isinstance(evidence, str) and bool(evidence.strip())
+    if not isinstance(evidence, str) or not evidence.strip():
+        return False
+    if evidence.startswith(("https://", "http://")):
+        return True
+    return (ROOT / evidence).is_file()
 
 
 def main() -> int:

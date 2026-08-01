@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-01T04:41:35Z",
+  "site": "https://lovetypes.tw/",
+  "commit": "5de0261e7c1cffc2f82f86ffd9b1752d93abb49f",
+  "cloudflareDeployment": {
+    "id": "1840ebab-ba1f-4aba-8a51-c5a17d341dd1",
+    "preview": "https://1840ebab.lovetypes.pages.dev"
+  },
+  "githubActions": [
+    {
+      "name": "pages build and deployment",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094582"
+    },
+    {
+      "name": "LoveTypes predeploy check",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094864"
+    }
+  ],
+  "productionChecks": {
+    "reviewPages": 38,
+    "retiredRoutes": 33,
+    "retiredAssets": 22,
+    "indexabilityCases": 56,
+    "headerCases": 51,
+    "assetReferences": 439,
+    "internalLinks": 1262,
+    "jsonLdBlocks": 118,
+    "issues": 0
+  },
+  "commands": [
+    "python3 tools/public_adsense_review_smoke.py",
+    "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw"
+  ],
+  "result": "pass"
+}

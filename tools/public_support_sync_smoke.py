@@ -22,14 +22,9 @@ SUPPORT_FILES = (
     "security.txt",
     ".well-known/security.txt",
     "ads.txt",
-    "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",
-    "ai-discovery.json",
-    "promotion-kit.json",
-    "release.json",
-    "site-health.json",
 )
 
 

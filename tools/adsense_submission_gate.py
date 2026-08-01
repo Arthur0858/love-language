@@ -12,6 +12,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_STATE = ROOT / "config" / "adsense-submission-gate.json"
+REQUIRED_GATES = frozenset({
+    "gscFullAccess",
+    "sitemapAccepted",
+    "importantPagesRecrawled",
+    "legacyUrlsLeavingIndex",
+    "adsTxtRecognizedByAdsense",
+    "reviewActionAvailable",
+    "gscPagesWithImpressions",
+    "productionAuditGreen",
+})
+GSC_GATES = frozenset({
+    "gscFullAccess",
+    "sitemapAccepted",
+    "importantPagesRecrawled",
+    "legacyUrlsLeavingIndex",
+    "gscPagesWithImpressions",
+})
+ADSENSE_GATES = frozenset({"adsTxtRecognizedByAdsense", "reviewActionAvailable"})
 
 
 def parse_args() -> argparse.Namespace:
@@ -71,6 +89,71 @@ def integer_value(value: object, default: int = -1) -> int:
         return int(value)
     except (TypeError, ValueError):
         return default
+
+
+def checked_date(item: dict) -> date | None:
+    value = item.get("checkedAt")
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
+    except ValueError:
+        return None
+
+
+def evidence_freshness_issue(name: str, item: dict, today: date, maximum_age: int) -> str | None:
+    observed = checked_date(item)
+    if observed is None:
+        return f"external evidence has no valid observation date: {name}"
+    age = (today - observed).days
+    if age < 0:
+        return f"external evidence observation is in the future: {name}"
+    if age > maximum_age:
+        return f"external evidence is stale: {name} age={age}d max={maximum_age}d"
+    return None
+
+
+def shared_evidence_issues(gates: dict, names: frozenset[str], label: str) -> list[str]:
+    references = {
+        item.get("evidence")
+        for name in names
+        if isinstance((item := gates.get(name)), dict) and isinstance(item.get("evidence"), str)
+    }
+    if len(references) != 1:
+        return [f"{label} gates must share one evidence snapshot"]
+    return []
+
+
+def cross_evidence_issues(state: dict, gates: dict) -> list[str]:
+    issues = [
+        *shared_evidence_issues(gates, GSC_GATES, "GSC"),
+        *shared_evidence_issues(gates, ADSENSE_GATES, "AdSense"),
+    ]
+    gsc = read_local_evidence(object_value(gates.get("gscFullAccess")))
+    production = read_local_evidence(object_value(gates.get("productionAuditGreen")))
+    adsense = read_local_evidence(object_value(gates.get("reviewActionAvailable")))
+    if gsc is not None and production is not None:
+        material = object_value(gsc.get("latestMaterialDeployment"))
+        deployment = object_value(production.get("cloudflareDeployment"))
+        if production.get("reviewSurfaceCommit") != material.get("commit"):
+            issues.append("GSC and production evidence disagree on the material commit")
+        if deployment.get("id") != material.get("cloudflareDeployment"):
+            issues.append("GSC and production evidence disagree on the Cloudflare deployment")
+        if production.get("checkedAt") != material.get("productionVerifiedAt"):
+            issues.append("GSC and production evidence disagree on the production verification time")
+        created_at = material.get("commitCreatedAt")
+        try:
+            material_date = datetime.fromisoformat(str(created_at).replace("Z", "+00:00")).date()
+        except ValueError:
+            issues.append("GSC material deployment has an invalid commit timestamp")
+        else:
+            if state.get("lastMaterialChange") != material_date.isoformat():
+                issues.append("lastMaterialChange does not match the latest material commit date")
+    if adsense is not None:
+        dashboard = object_value(adsense.get("dashboard"))
+        if dashboard.get("reviewSubmitted") is not state.get("reviewSubmitted"):
+            issues.append("state and AdSense evidence disagree on reviewSubmitted")
+    return issues
 
 
 def evidence_contract_issues(name: str, item: dict) -> list[str]:
@@ -147,25 +230,21 @@ def state_validation_issues(state: dict) -> list[str]:
             issues.append("minimumStableDays must be at least 14")
     except (KeyError, TypeError, ValueError):
         issues.append("minimumStableDays must be an integer")
+    try:
+        maximum_evidence_age = int(state["maximumEvidenceAgeDays"])
+        if not 1 <= maximum_evidence_age <= 3:
+            issues.append("maximumEvidenceAgeDays must be between 1 and 3")
+    except (KeyError, TypeError, ValueError):
+        issues.append("maximumEvidenceAgeDays must be an integer")
 
     gates = state.get("externalGates", {})
-    required = {
-        "gscFullAccess",
-        "sitemapAccepted",
-        "importantPagesRecrawled",
-        "legacyUrlsLeavingIndex",
-        "adsTxtRecognizedByAdsense",
-        "reviewActionAvailable",
-        "gscPagesWithImpressions",
-        "productionAuditGreen",
-    }
     if not isinstance(gates, dict):
         return [*issues, "externalGates must be an object"]
-    missing = sorted(required - set(gates))
+    missing = sorted(REQUIRED_GATES - set(gates))
     if missing:
         issues.append(f"external gate definitions missing: {', '.join(missing)}")
 
-    for name in sorted(required & set(gates)):
+    for name in sorted(REQUIRED_GATES & set(gates)):
         item = gates[name]
         if not isinstance(item, dict):
             issues.append(f"external gate must be an object: {name}")
@@ -187,6 +266,8 @@ def state_validation_issues(state: dict) -> list[str]:
             else:
                 if value < 0 or minimum < 5:
                     issues.append("GSC impression values violate the configured minimum")
+    if not missing:
+        issues.extend(cross_evidence_issues(state, gates))
     return issues
 
 
@@ -219,22 +300,16 @@ def main() -> int:
         minimum_days = int(state["minimumStableDays"])
     except (KeyError, TypeError, ValueError):
         minimum_days = 14
+    try:
+        maximum_evidence_age = int(state["maximumEvidenceAgeDays"])
+    except (KeyError, TypeError, ValueError):
+        maximum_evidence_age = 3
     earliest = changed + timedelta(days=minimum_days)
     if args.today < earliest:
         issues.append(f"stable observation period incomplete: earliest={earliest.isoformat()}")
 
     gates = state.get("externalGates", {})
-    required = {
-        "gscFullAccess",
-        "sitemapAccepted",
-        "importantPagesRecrawled",
-        "legacyUrlsLeavingIndex",
-        "adsTxtRecognizedByAdsense",
-        "reviewActionAvailable",
-        "gscPagesWithImpressions",
-        "productionAuditGreen",
-    }
-    for name in sorted(required & set(gates)):
+    for name in sorted(REQUIRED_GATES & set(gates)):
         item = gates[name]
         if not isinstance(item, dict):
             issues.append(f"external evidence pending or incomplete: {name}")
@@ -249,6 +324,10 @@ def main() -> int:
             continue
         if not has_evidence_reference(item):
             issues.append(f"external evidence pending or incomplete: {name}")
+            continue
+        freshness_issue = evidence_freshness_issue(name, item, args.today, maximum_evidence_age)
+        if freshness_issue:
+            issues.append(freshness_issue)
             continue
         if name == "gscPagesWithImpressions":
             value = int(item.get("value", 0))

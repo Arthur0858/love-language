@@ -278,6 +278,10 @@ def main() -> int:
                 "AdSense submission state audit",
                 [sys.executable, "tools/adsense_submission_gate.py", "--validate-only"],
             )
+            run_step(
+                "AdSense submission gate tests",
+                [sys.executable, "-m", "unittest", "tools.tests.test_adsense_submission_gate"],
+            )
             run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
             run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])
             run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])

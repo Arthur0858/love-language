@@ -3,6 +3,7 @@
   "site": "https://lovetypes.tw/",
   "lastMaterialChange": "2026-08-01",
   "minimumStableDays": 14,
+  "maximumEvidenceAgeDays": 3,
   "reviewSubmitted": false,
   "externalGates": {
     "gscFullAccess": {

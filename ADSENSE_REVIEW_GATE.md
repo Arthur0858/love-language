@@ -9,3 +9,5 @@ The command is intentionally read-only. It never signs in, clicks the review but
 Do not submit unless the command returns `adsense_submission_ready=true`. After submission, set `reviewSubmitted` to `true` and retain the AdSense status screenshot separately.
 
 The gate also requires authenticated evidence that the AdSense review action is available, the prior submission restriction is inactive, and no review has already been submitted.
+
+Every confirmed external gate must have been rechecked within `maximumEvidenceAgeDays` (three days or less). GSC and production evidence must identify the same material commit, Cloudflare deployment, and production verification time.

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-01T11:29:09Z",
+  "timeZone": "Asia/Taipei",
+  "site": "https://lovetypes.tw/",
+  "source": "Authenticated Google Search Console UI readback in the owner's Chrome session",
+  "property": {
+    "id": "sc-domain:lovetypes.tw",
+    "access": "verified_owner",
+    "confirmed": true
+  },
+  "sitemap": {
+    "url": "https://lovetypes.tw/sitemap.xml",
+    "status": "success",
+    "submittedOn": "2026-08-01",
+    "lastReadOn": "2026-08-01",
+    "discoveredPages": 38,
+    "discoveredVideos": 0,
+    "accepted": true
+  },
+  "indexReport": {
+    "lastUpdatedOn": "2026-07-24",
+    "indexedPages": 197,
+    "notIndexedPages": 94,
+    "notIndexedReasons": {
+      "alternatePageWithCanonical": 13,
+      "excludedByNoindex": 9,
+      "redirect": 3,
+      "notFound404": 1,
+      "discoveredCurrentlyNotIndexed": 62,
+      "crawledCurrentlyNotIndexed": 6
+    },
+    "currentReviewSurfaceConfirmed": false,
+    "interpretation": "The report predates the 2026-08-01 review-surface deployment and cannot prove that the old multilingual and retired URL inventory has left the index."
+  },
+  "latestMaterialDeployment": {
+    "commit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
+    "deployedAt": "2026-08-01T18:38:18+08:00",
+    "evidence": "config/evidence/production-audit-2026-08-01.json"
+  },
+  "urlInspection": {
+    "pagesChecked": 10,
+    "indexedPages": 10,
+    "crawlSuccessPages": 10,
+    "postMaterialDeploymentRecrawledPages": 0,
+    "allInspectionsPrecedeLatestMaterialDeployment": true,
+    "liveUrlTestsRun": 0,
+    "indexingRequestsSent": 0,
+    "pages": [
+      {
+        "url": "https://lovetypes.tw/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:11:52+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/start/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T08:51:12+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/guides/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:17:55+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/lab/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:17:55+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/about/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:19:55+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/guides/words-of-affirmation-scripts/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:21:55+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/guides/acts-of-service-boundaries/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:12:13+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      },
+      {
+        "url": "https://lovetypes.tw/guides/physical-touch-consent-safety/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:21:56+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true,
+        "sitemapReferenceStatus": "temporary_processing_error"
+      },
+      {
+        "url": "https://lovetypes.tw/guides/gifts-are-not-materialism/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T02:53:54+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true,
+        "sitemapReferenceStatus": "temporary_processing_error"
+      },
+      {
+        "url": "https://lovetypes.tw/guides/share-your-result/",
+        "indexed": true,
+        "lastCrawledAt": "2026-08-01T10:19:55+08:00",
+        "crawler": "Googlebot Smartphone",
+        "fetch": "success",
+        "declaredCanonicalMatched": true
+      }
+    ]
+  },
+  "searchPerformance": {
+    "lastUpdated": "3.5 hours before the authenticated readback",
+    "sevenDayWindow": {
+      "from": "2026-07-23",
+      "to": "2026-07-29",
+      "clicks": 2,
+      "impressions": 239,
+      "currentTraditionalChineseEditorialPagesWithImpressions": 3,
+      "pages": [
+        {
+          "url": "https://lovetypes.tw/guides/acts-of-service-boundaries/",
+          "clicks": 0,
+          "impressions": 2
+        },
+        {
+          "url": "https://lovetypes.tw/guides/misfrequency-examples/",
+          "clicks": 0,
+          "impressions": 1
+        },
+        {
+          "url": "https://lovetypes.tw/guides/gifts-are-not-materialism/",
+          "clicks": 0,
+          "impressions": 1
+        }
+      ],
+      "postMaterialDeploymentEditorialPagesWithImpressions": 0,
+      "minimumRequired": 5,
+      "gateSatisfied": false
+    },
+    "legacySignalsStillVisible": true,
+    "legacyExamples": [
+      "https://lovetypes.tw/ja/",
+      "https://lovetypes.tw/ko/tools/relationship-compatibility-test/",
+      "https://lovetypes.tw/en/tools/bazi-love-compatibility/",
+      "https://lovetypes.tw/tools/relationship-compatibility-test/"
+    ]
+  },
+  "externalGates": {
+    "gscFullAccess": true,
+    "sitemapAccepted": true,
+    "importantPagesRecrawledAfterMaterialDeployment": false,
+    "legacyUrlsLeavingIndex": false,
+    "gscPagesWithPostDeploymentImpressions": false
+  },
+  "interpretation": "GSC ownership and the 38-page sitemap are confirmed. The inspected pages are indexed, but every recorded crawl predates the latest material deployment. The aggregate index report and seven-day performance window also predate that deployment, so they do not satisfy the recrawl, legacy-exit, or post-deployment impression gates.",
+  "result": "partial_external_gates"
+}

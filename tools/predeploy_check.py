@@ -20,6 +20,7 @@ PYTHON_TOOLS = [
     "tools/content_uniqueness_audit.py",
     "tools/content_value_audit.py",
     "tools/adsense_review_surface_audit.py",
+    "tools/adsense_submission_gate.py",
     "tools/public_editorial_trust_smoke.py",
     "tools/privacy_runtime_consistency_audit.py",
     "tools/review_commercial_isolation_audit.py",
@@ -273,6 +274,10 @@ def main() -> int:
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
         if args.site_only:
             run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
+            run_step(
+                "AdSense submission state audit",
+                [sys.executable, "tools/adsense_submission_gate.py", "--validate-only"],
+            )
             run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
             run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])
             run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])

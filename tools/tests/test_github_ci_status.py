@@ -16,6 +16,13 @@ def workflow_block(name: str, run_id: int, status: str) -> str:
     )
 
 
+def current_workflow_block(name: str, run_id: int, label: str) -> str:
+    return (
+        f'<a href="/{ci.REPOSITORY}/actions/runs/{run_id}"><span>{name}</span></a>'
+        f'<svg aria-label="{label}"></svg>'
+    )
+
+
 class GitHubCiStatusTest(unittest.TestCase):
     def test_required_successful_workflows_pass(self):
         raw = "".join(
@@ -31,6 +38,17 @@ class GitHubCiStatusTest(unittest.TestCase):
         workflows = ci.parse_workflows(raw)
         self.assertTrue(workflows[ci.REQUIRED_WORKFLOWS[0]]["succeeded"])
         self.assertFalse(workflows[ci.REQUIRED_WORKFLOWS[0]]["pending"])
+
+    def test_current_completed_successfully_label_passes(self):
+        raw = current_workflow_block(ci.REQUIRED_WORKFLOWS[0], 101, "completed successfully: ")
+        workflows = ci.parse_workflows(raw)
+        self.assertEqual(ci.workflow_issues(workflows), [])
+        self.assertTrue(workflows[ci.REQUIRED_WORKFLOWS[0]]["succeeded"])
+
+    def test_current_completed_with_failure_label_fails(self):
+        raw = current_workflow_block(ci.REQUIRED_WORKFLOWS[0], 102, "completed with failure: ")
+        workflows = ci.parse_workflows(raw)
+        self.assertFalse(workflows[ci.REQUIRED_WORKFLOWS[0]]["succeeded"])
 
     def test_failed_workflow_is_rejected(self):
         raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 100, "failed")

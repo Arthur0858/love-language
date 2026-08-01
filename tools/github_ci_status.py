@@ -47,8 +47,16 @@ def parse_workflows(raw: str) -> dict[str, dict[str, object]]:
         end = matches[index + 1].start() if index + 1 < len(matches) else len(raw)
         block = raw[match.start() : end]
         name = visible_text(match.group(2))
-        success_jobs = block.count('aria-label="This job succeeded"')
-        failed_jobs = len(re.findall(r'aria-label="This job (?:failed|was cancelled|was skipped)"', block, re.I))
+        success_jobs = len(
+            re.findall(r'aria-label="(?:This job succeeded|completed successfully:?)\s*"', block, re.I)
+        )
+        failed_jobs = len(
+            re.findall(
+                r'aria-label="(?:This job (?:failed|was cancelled|was skipped)|completed (?:with failure|cancelled|skipped):?)\s*"',
+                block,
+                re.I,
+            )
+        )
         pending = success_jobs == 0 and ("currently running" in block.lower() or "queued" in block.lower())
         workflows[name] = {
             "runId": match.group(1),

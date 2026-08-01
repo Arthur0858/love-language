@@ -139,6 +139,8 @@ def main() -> int:
         issues.append(f"public support allowlist missing from required manifest files: {missing_public_support}")
 
     expected_neutral_assets = {
+        generator.CSS_ASSET.lstrip("/"),
+        generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.QUIZ_DATA_ASSETS["zh"].lstrip("/"),
         generator.COMPASS_TOOL_ASSET.lstrip("/"),
     }
@@ -146,7 +148,12 @@ def main() -> int:
     if missing_neutral_assets:
         issues.append(f"neutral product assets missing from deploy manifest: {missing_neutral_assets}")
     internal_version_assets = sorted(
-        path for path in manifest_paths if "review-surface" in path.lower() or "compass-tool-review" in path.lower()
+        path
+        for path in manifest_paths
+        if any(
+            term in path.lower()
+            for term in ("review-surface", "compass-tool-review", "funnel-kpi", "quiz-metrics")
+        )
     )
     if internal_version_assets:
         issues.append(f"internal review version assets leaked into deploy manifest: {internal_version_assets}")

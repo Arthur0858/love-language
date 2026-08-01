@@ -62,7 +62,9 @@ const RETIRED_ASSETS = new Set([
   "/quiz-data-zh-20260801-review-surface.js",
   "/release.json",
   "/search-indexing.json",
-  "/site-health.json"
+  "/shared-20260613-funnel-kpi-map.css",
+  "/site-health.json",
+  "/site-interactions-20260718-quiz-metrics.js"
 ]);
 
 function normalizedPath(pathname) {

@@ -106,13 +106,17 @@ def main() -> int:
     issues: list[str] = []
     routes_checked = 0
     alias_routes_checked = 0
+    redirect_rules_checked = 0
+    published_languages = tuple(config.PUBLISHED_LANGS)
+    unpublished_languages = tuple(lang for lang in config.LANGS if lang not in published_languages)
     expected_routes = [
         *CORE_ROUTES,
         *(f"guides/{guide['slug']}" for guide in config.GUIDES),
         *(f"characters/{slug}" for slug in config.GUARDIANS),
     ]
 
-    for lang, lang_config in config.LANGS.items():
+    for lang in published_languages:
+        lang_config = config.LANGS[lang]
         indexable_routes = set(config.site_index_paths(lang))
         for route in expected_routes:
             path = route_path(lang_config, route)
@@ -153,9 +157,25 @@ def main() -> int:
                     f"{lang}:luna alias html lang should be {lang_config['code']}, got {alias_page.html_lang!r}"
                 )
 
-    print(f"languages_checked={len(config.LANGS)}")
+    redirects = (ROOT / "_redirects").read_text(encoding="utf-8").splitlines()
+    redirect_set = set(redirects)
+    for lang in unpublished_languages:
+        prefix = config.LANGS[lang]["prefix"]
+        language_root = ROOT / prefix
+        residual_files = sorted(path.relative_to(ROOT) for path in language_root.rglob("*") if path.is_file())
+        if residual_files:
+            issues.append(f"{lang}: unpublished language files must be absent: {residual_files[:10]}")
+        expected_rules = (f"/{prefix}/ / 302", f"/{prefix}/* /:splat 302")
+        redirect_rules_checked += len(expected_rules)
+        for rule in expected_rules:
+            if rule not in redirect_set:
+                issues.append(f"{lang}: missing unpublished-language redirect rule: {rule}")
+
+    print(f"languages_checked={len(published_languages)}")
+    print(f"redirected_languages_checked={len(unpublished_languages)}")
     print(f"localized_routes_checked={routes_checked}")
     print(f"luna_alias_routes_checked={alias_routes_checked}")
+    print(f"language_redirect_rules_checked={redirect_rules_checked}")
     print(f"multilingual_route_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

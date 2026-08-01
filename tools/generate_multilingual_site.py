@@ -42,9 +42,9 @@ ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-core"
 PREVIOUS_QUIZ_DATA_VERSIONS = ("20260707-conversion-bridge", "20260801-review-surface")
-CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
+CSS_ASSET = "/shared-20260801-core.css"
 GUARDIAN_EDITORIAL_ASSET = "/guardian-editorial-20260801.css"
-INTERACTIONS_ASSET = f"/site-interactions-{INTERACTIONS_VERSION}.js"
+INTERACTIONS_ASSET = "/site-interactions-20260801-core.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
@@ -76,6 +76,8 @@ RETIRED_PUBLIC_ASSET_PATHS = (
     "/compass-tool-20260707.js",
     "/compass-tool.js",
     "/compass-tool-review-20260801.js",
+    "/shared-20260613-funnel-kpi-map.css",
+    "/site-interactions-20260718-quiz-metrics.js",
     AFFILIATE_ASSET,
     *(
         f"/quiz-data-{lang}-{version}.js"

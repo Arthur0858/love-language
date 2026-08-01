@@ -200,14 +200,14 @@ def audit_guardian(config, lang: str, result_key: str, meta: dict, issues: list[
         require_local_target(config, lang, href, f"{label} {url_label}", issues)
 
     checks += 1
-    if plan_parser is not None and result_urls["lunaUrl"] not in plan_parser.hrefs:
-        issues.append(f"{label} repair plan missing guardian Luna route: {result_urls['lunaUrl']}")
+    if plan_parser is not None and result_urls["lunaUrl"] in plan_parser.hrefs:
+        issues.append(f"{label} repair plan exposes noindex Luna route: {result_urls['lunaUrl']}")
     checks += 1
     if resource_parser is not None and result_urls["lunaUrl"] not in resource_parser.hrefs:
         issues.append(f"{label} resources page missing guardian Luna route: {result_urls['lunaUrl']}")
     checks += 1
-    if character_parser is not None and result_urls["lunaUrl"] not in character_parser.hrefs:
-        issues.append(f"{label} character page missing guardian Luna route: {result_urls['lunaUrl']}")
+    if character_parser is not None and result_urls["lunaUrl"] in character_parser.hrefs:
+        issues.append(f"{label} character page exposes noindex Luna route: {result_urls['lunaUrl']}")
 
     starter_kit = config.starter_kit_payload(lang, result_urls["resourceUrl"])
     steps = starter_kit.get("steps", [])
@@ -235,12 +235,12 @@ def main() -> int:
     routes_checked = 0
     target_checks = 0
 
-    for lang in config.LANGS:
+    for lang in config.PUBLISHED_LANGS:
         for result_key, meta in config.QUIZ_TYPES.items():
             routes_checked += 1
             target_checks += audit_guardian(config, lang, result_key, meta, issues)
 
-    print(f"conversion_languages_checked={len(config.LANGS)}")
+    print(f"conversion_languages_checked={len(config.PUBLISHED_LANGS)}")
     print(f"guardian_conversion_routes_checked={routes_checked}")
     print(f"guardian_conversion_target_checks={target_checks}")
     print(f"guardian_conversion_issues={len(issues)}")

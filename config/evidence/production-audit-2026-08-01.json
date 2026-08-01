@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T12:49:45Z",
+  "checkedAt": "2026-08-01T13:05:47Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "dd47507ae6b698eab7fc1e81036200cea7156857",
-  "auditToolingCommit": "a062c40dfd0dde4cfb66bdd21146f162f1bf3b38",
+  "reviewSurfaceCommit": "cb13ba51915893de10ee11cc1f6e6c679271aa17",
+  "auditToolingCommit": "cb13ba51915893de10ee11cc1f6e6c679271aa17",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "756658f5-35e1-41ea-8148-2fa0dc2358b0",
-    "preview": "https://756658f5.lovetypes.pages.dev"
+    "id": "705c1cfd-1c2d-4efe-ab53-f62dc8116619",
+    "preview": "https://705c1cfd.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment after public lab-heading verification",
+      "name": "pages build and deployment after guide trust-heading verification",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30700414891"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30700909179"
     },
     {
-      "name": "LoveTypes predeploy check with public lab-heading verification",
+      "name": "LoveTypes predeploy check with guide trust-heading verification",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30700415086"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30700909605"
     }
   ],
   "productionChecks": {
@@ -50,6 +50,8 @@
     "internalLinks": 1232,
     "jsonLdBlocks": 118,
     "editorialGuides": 12,
+    "guideTrustSectionTitles": 36,
+    "repeatedGuideH2Triplets": 0,
     "labReports": 8,
     "labTestSpecificH2": 96,
     "guardianEditorialPages": 5,
@@ -84,17 +86,17 @@
     "issues": 0
   },
   "runtimePerformance": {
-    "evidence": "config/evidence/production-runtime-performance-2026-08-01-dd47507a.json",
+    "evidence": "config/evidence/production-runtime-performance-2026-08-01-cb13ba51.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 11,
-    "worstLcpMs": 496,
+    "worstLcpMs": 660,
     "worstCls": 0,
-    "maxTransferBytes": 352451,
+    "maxTransferBytes": 352401,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 188,
-    "gardenMapTransferBytes": 232291,
+    "gardenMapLcpMs": 244,
+    "gardenMapTransferBytes": 232362,
     "privacyDisclosureComplete": true,
     "privacyCookieCount": 0,
     "privacyStorageKeyCount": 0,
@@ -109,7 +111,7 @@
     "python3 tools/public_adsense_review_smoke.py",
     "python3 tools/public_support_sync_smoke.py",
     "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
-    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://756658f5.lovetypes.pages.dev",
+    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://705c1cfd.lovetypes.pages.dev",
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",
@@ -119,7 +121,7 @@
     "python3 tools/guardian_conversion_audit.py",
     "python3 tools/affiliate_locale_audit.py",
     "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
-    "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01-dd47507a.json node tools/runtime_performance_smoke.mjs"
+    "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01-cb13ba51.json node tools/runtime_performance_smoke.mjs"
   ],
   "result": "pass"
 }

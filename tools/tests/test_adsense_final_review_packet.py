@@ -26,6 +26,7 @@ class AdSenseFinalReviewPacketTest(unittest.TestCase):
                 "public_headers",
                 "public_assets",
                 "public_internal_links",
+                "public_editorial_link_graph",
                 "public_schema",
                 "public_schema_urls",
                 "public_external_links",

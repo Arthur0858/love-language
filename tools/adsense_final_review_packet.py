@@ -58,6 +58,11 @@ CHECKS = (
         300,
     ),
     CheckSpec(
+        "public_editorial_link_graph",
+        (sys.executable, "tools/public_editorial_link_graph_smoke.py", "--base-url", "https://lovetypes.tw"),
+        300,
+    ),
+    CheckSpec(
         "public_schema",
         (sys.executable, "tools/public_schema_smoke.py", "--base-url", "https://lovetypes.tw"),
         240,

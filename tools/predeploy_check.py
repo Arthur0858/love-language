@@ -19,11 +19,13 @@ PYTHON_TOOLS = [
     "tools/check_generated_fresh.py",
     "tools/content_uniqueness_audit.py",
     "tools/content_value_audit.py",
+    "tools/editorial_link_graph_audit.py",
     "tools/adsense_review_surface_audit.py",
     "tools/adsense_submission_gate.py",
     "tools/adsense_final_review_packet.py",
     "tools/github_ci_status.py",
     "tools/public_editorial_trust_smoke.py",
+    "tools/public_editorial_link_graph_smoke.py",
     "tools/privacy_runtime_consistency_audit.py",
     "tools/review_commercial_isolation_audit.py",
     "tools/multilingual_route_audit.py",
@@ -295,6 +297,11 @@ def main() -> int:
             run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
             run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])
             run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
+            run_step("editorial link graph audit", [sys.executable, "tools/editorial_link_graph_audit.py"])
+            run_step(
+                "editorial link graph tests",
+                [sys.executable, "-m", "unittest", "tools.tests.test_editorial_link_graph_audit"],
+            )
             run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
             run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
             run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])
@@ -305,6 +312,7 @@ def main() -> int:
         run_step("site quality audit", [sys.executable, "tools/site_quality_audit.py"])
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
         run_step("content value audit", [sys.executable, "tools/content_value_audit.py"])
+        run_step("editorial link graph audit", [sys.executable, "tools/editorial_link_graph_audit.py"])
         run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
         run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
         run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])

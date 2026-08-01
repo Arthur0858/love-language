@@ -17,9 +17,10 @@ from PIL import Image
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
-EXPECTED_OG_LOCALES = {"zh_TW", "en_US", "ja_JP", "ko_KR", "es_ES"}
-LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+EXPECTED_PAGE_COUNT = 38
+EXPECTED_HREFLANGS = {"zh-TW", "x-default"}
+EXPECTED_OG_LOCALES = {"zh_TW"}
+LOCALE_PREFIXES = {"zh-TW": ""}
 SITEMAP_NS = {
     "sm": "http://www.sitemaps.org/schemas/sitemap/0.9",
     "xhtml": "http://www.w3.org/1999/xhtml",
@@ -68,7 +69,10 @@ class MetadataParser(HTMLParser):
         self.meta_name: dict[str, str] = {}
         self.meta_property: dict[str, list[str]] = {}
         self.jsonld_blocks: list[str] = []
+        self.h1_parts: list[str] = []
+        self.h1_count = 0
         self._in_title = False
+        self._h1_depth = 0
         self._in_jsonld = False
         self._jsonld_buffer: list[str] = []
 
@@ -78,6 +82,9 @@ class MetadataParser(HTMLParser):
             self.html_lang = data.get("lang", "")
         elif tag == "title":
             self._in_title = True
+        elif tag == "h1":
+            self._h1_depth += 1
+            self.h1_count += 1
         elif tag == "meta":
             name = data.get("name", "").lower()
             prop = data.get("property", "").lower()
@@ -104,12 +111,16 @@ class MetadataParser(HTMLParser):
     def handle_data(self, data: str) -> None:
         if self._in_title:
             self.title += data
+        if self._h1_depth:
+            self.h1_parts.append(data)
         if self._in_jsonld:
             self._jsonld_buffer.append(data)
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self._in_title = False
+        elif tag == "h1" and self._h1_depth:
+            self._h1_depth -= 1
         elif tag == "script" and self._in_jsonld:
             self._in_jsonld = False
             block = "".join(self._jsonld_buffer).strip()
@@ -146,8 +157,7 @@ def public_path(url: str) -> str:
 
 
 def expected_lang(path: str) -> str:
-    first = path.strip("/").split("/", 1)[0]
-    return first if first in {"en", "ja", "ko", "es"} else "zh-TW"
+    return "zh-TW"
 
 
 def description_limits(path: str) -> tuple[int, int]:
@@ -159,18 +169,26 @@ def expected_canonical(canonical_base_url: str, path: str) -> str:
 
 
 def expected_hreflang_map(canonical_base_url: str, path: str) -> dict[str, str]:
-    parts = [part for part in path.strip("/").split("/") if part]
-    if parts and parts[0] in {"en", "ja", "ko", "es"}:
-        suffix_parts = parts[1:]
-    else:
-        suffix_parts = parts
-    suffix = "/".join(suffix_parts)
-    result: dict[str, str] = {}
-    for lang, prefix in LOCALE_PREFIXES.items():
-        route = "/".join(part for part in (prefix, suffix) if part)
-        result[lang] = urljoin(canonical_base_url + "/", f"{route}/" if route else "")
+    suffix = "/".join(part for part in path.strip("/").split("/") if part)
+    route = f"{suffix}/" if suffix else ""
+    result = {"zh-TW": urljoin(canonical_base_url + "/", route)}
     result["x-default"] = result["zh-TW"]
     return result
+
+
+def normalized_text(value: str) -> str:
+    return " ".join(value.split())
+
+
+def duplicate_value_issues(values: dict[str, str], label: str) -> list[str]:
+    paths_by_value: dict[str, list[str]] = {}
+    for path, value in values.items():
+        paths_by_value.setdefault(normalized_text(value), []).append(path)
+    return [
+        f"indexable pages share duplicate {label} {value!r}: {', '.join(sorted(paths))}"
+        for value, paths in sorted(paths_by_value.items())
+        if value and len(paths) > 1
+    ]
 
 
 def sitemap_paths(base_url: str) -> tuple[list[str], list[str]]:
@@ -230,6 +248,12 @@ def check_page(base_url: str, canonical_base_url: str, path: str) -> tuple[list[
         issues.append(f"{path}: missing title")
     elif len(title) > MAX_TITLE_LENGTH:
         issues.append(f"{path}: title too long ({len(title)} > {MAX_TITLE_LENGTH})")
+
+    h1 = normalized_text(" ".join(parser.h1_parts))
+    if parser.h1_count != 1:
+        issues.append(f"{path}: expected exactly one H1, found {parser.h1_count}")
+    elif not h1:
+        issues.append(f"{path}: H1 must contain visible text")
 
     min_description_length, max_description_length = description_limits(path)
     if len(parser.description) < min_description_length:
@@ -324,8 +348,8 @@ def check_images(image_urls: list[str], canonical_base_url: str) -> tuple[list[s
             issues.append(f"{image_url}: could not read image dimensions: {error}")
             continue
         dimensions_checked += 1
-        if (width, height) != (1200, 630):
-            issues.append(f"{image_url}: social image should be 1200x630, got {width}x{height}")
+        if width < 1200 or height < 630:
+            issues.append(f"{image_url}: social image should be at least 1200x630, got {width}x{height}")
     return issues, checked, dimensions_checked
 
 
@@ -342,12 +366,17 @@ def main() -> int:
     canonical_base_url = normalize_base_url(args.canonical_base_url)
 
     paths, issues = sitemap_paths(base_url)
+    if len(paths) != EXPECTED_PAGE_COUNT:
+        issues.append(f"/sitemap.xml: expected {EXPECTED_PAGE_COUNT} metadata pages, found {len(paths)}")
     pages_checked = 0
     jsonld_blocks_checked = 0
     app_meta_pages_checked = 0
     social_cards_checked = 0
     hreflang_links_checked = 0
     image_urls: list[str] = []
+    titles: dict[str, str] = {}
+    descriptions: dict[str, str] = {}
+    h1s: dict[str, str] = {}
 
     for path in paths:
         page_issues, page_parser, jsonld_count, app_meta_checked = check_page(base_url, canonical_base_url, path)
@@ -357,12 +386,18 @@ def main() -> int:
         app_meta_pages_checked += app_meta_checked
         social_cards_checked += 1 if page_parser.meta_property.get("og:image") else 0
         hreflang_links_checked += len(page_parser.hreflangs)
+        titles[path] = page_parser.title.strip()
+        descriptions[path] = page_parser.description
+        h1s[path] = normalized_text(" ".join(page_parser.h1_parts))
         og_image = first(page_parser.meta_property.get("og:image"))
         if og_image and og_image not in image_urls:
             image_urls.append(og_image)
 
     image_issues, images_checked, image_dimensions_checked = check_images(image_urls, canonical_base_url)
     issues.extend(image_issues)
+    issues.extend(duplicate_value_issues(titles, "title"))
+    issues.extend(duplicate_value_issues(descriptions, "meta description"))
+    issues.extend(duplicate_value_issues(h1s, "H1"))
 
     print(f"public_metadata_pages_checked={pages_checked}")
     print(f"public_metadata_social_cards_checked={social_cards_checked}")
@@ -371,6 +406,9 @@ def main() -> int:
     print(f"public_metadata_app_meta_pages_checked={app_meta_pages_checked}")
     print(f"public_metadata_images_checked={images_checked}")
     print(f"public_metadata_image_dimensions_checked={image_dimensions_checked}")
+    print(f"public_metadata_unique_titles={len(set(titles.values()))}")
+    print(f"public_metadata_unique_descriptions={len(set(descriptions.values()))}")
+    print(f"public_metadata_unique_h1s={len(set(h1s.values()))}")
     print(f"public_metadata_issues={len(issues)}")
     for issue in issues[:100]:
         print(issue)

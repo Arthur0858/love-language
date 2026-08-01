@@ -26,6 +26,7 @@ PYTHON_TOOLS = [
     "tools/github_ci_status.py",
     "tools/public_editorial_trust_smoke.py",
     "tools/public_editorial_link_graph_smoke.py",
+    "tools/public_metadata_smoke.py",
     "tools/privacy_runtime_consistency_audit.py",
     "tools/review_commercial_isolation_audit.py",
     "tools/multilingual_route_audit.py",
@@ -301,6 +302,10 @@ def main() -> int:
             run_step(
                 "editorial link graph tests",
                 [sys.executable, "-m", "unittest", "tools.tests.test_editorial_link_graph_audit"],
+            )
+            run_step(
+                "public metadata smoke tests",
+                [sys.executable, "-m", "unittest", "tools.tests.test_public_metadata_smoke"],
             )
             run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
             run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])

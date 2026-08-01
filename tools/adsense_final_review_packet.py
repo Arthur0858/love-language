@@ -63,6 +63,11 @@ CHECKS = (
         300,
     ),
     CheckSpec(
+        "public_metadata",
+        (sys.executable, "tools/public_metadata_smoke.py", "--base-url", "https://lovetypes.tw"),
+        300,
+    ),
+    CheckSpec(
         "public_schema",
         (sys.executable, "tools/public_schema_smoke.py", "--base-url", "https://lovetypes.tw"),
         240,

@@ -41,6 +41,8 @@ const routes = [
   { name: 'compass', path: '/compass/' },
   { name: 'repair-plan', path: '/repair-plan/' },
   { name: 'about', path: '/about/' },
+  { name: 'contact', path: '/contact/' },
+  { name: 'privacy', path: '/privacy/' },
   { name: 'resources', path: '/resources/' },
 ];
 const noScriptRoutes = [
@@ -48,6 +50,7 @@ const noScriptRoutes = [
   '/guides/repair-after-conflict/',
   '/lab/quiz-scoring-test/',
   '/about/',
+  '/privacy/',
 ];
 
 

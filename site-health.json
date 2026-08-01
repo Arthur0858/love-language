@@ -17,8 +17,8 @@
     "commerceItems": 20,
     "commerceTypes": 4,
     "commerceRoles": 3,
-    "funnelEvents": 191,
-    "funnelTrackedOccurrences": 864,
+    "funnelEvents": 157,
+    "funnelTrackedOccurrences": 761,
     "supportFiles": 19
   },
   "requiredGates": {
@@ -59,7 +59,9 @@
     "structure": [
       "site_quality",
       "content_uniqueness",
-      "adsense_review_surface"
+      "adsense_review_surface",
+      "privacy_runtime_consistency",
+      "review_commercial_isolation"
     ],
     "conversion": [
       "guardian_conversion",

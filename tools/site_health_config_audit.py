@@ -29,6 +29,8 @@ SITE_HEALTH_LOCAL_AUDIT_TOOLS = {
     "content_uniqueness": "tools/content_uniqueness_audit.py",
     "multilingual_routes": "tools/multilingual_route_audit.py",
     "adsense_review_surface": "tools/adsense_review_surface_audit.py",
+    "privacy_runtime_consistency": "tools/privacy_runtime_consistency_audit.py",
+    "review_commercial_isolation": "tools/review_commercial_isolation_audit.py",
     "guardian_conversion": "tools/guardian_conversion_audit.py",
     "affiliate_locale": "tools/affiliate_locale_audit.py",
     "promotion_writeback_flow": "tools/promotion_writeback_flow_audit.py",

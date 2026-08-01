@@ -12,7 +12,7 @@
     "languages": 1,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 191,
+    "funnelEvents": 157,
     "coreFlows": 5
   },
   "publicIndexes": {
@@ -40,7 +40,9 @@
     "contentStructure": [
       "tools/site_quality_audit.py",
       "tools/content_uniqueness_audit.py",
-      "tools/adsense_review_surface_audit.py"
+      "tools/adsense_review_surface_audit.py",
+      "tools/privacy_runtime_consistency_audit.py",
+      "tools/review_commercial_isolation_audit.py"
     ],
     "conversionAndCommerce": [
       "tools/guardian_conversion_audit.py",

@@ -29,6 +29,7 @@ ADSENSE_PUBLISHER_ID = "pub-4093856660317740"
 CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-07-31"
+PRIVACY_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260707-conversion-bridge"
@@ -157,7 +158,7 @@ LANGS = {
         "trust_intro": "LoveTypes 是一座以五種愛之語為地圖的心語庭園，透過五位情感守護者、情境測驗與實作指南，幫助你辨認被愛需求、錯頻傷口與可說出口的下一步。",
         "resources_desc": "旅人補給整理心語庭園的指南入口、五位守護者頁面、Luna 音樂、愛之語理論與實作練習，讓你快速找到下一盞燈。",
         "contact_desc": "聯絡 LoveTypes 團隊，回報內容修正、隱私疑問、合作需求，或指出心語庭園中需要修復的頁面。",
-        "privacy_desc": f"LoveTypes 隱私政策，說明資料使用、第三方服務與聯絡方式。更新日期 {UPDATED}。",
+        "privacy_desc": f"LoveTypes 隱私政策，說明裝置內保存、技術計數、Cloudflare 託管、外部連結與聯絡資料。更新日期 {PRIVACY_UPDATED}。",
         "terms_desc": f"LoveTypes 使用條款，說明內容邊界、智慧財產、免責與網站使用規則。更新日期 {UPDATED}。",
         "luna_title": "Luna Yoga Music｜關係反思與放鬆音樂",
         "luna_desc": "Luna Yoga Music 提供適合書寫、放鬆與關係反思的安定音樂，像心語庭園夜晚的一盞低光。",
@@ -197,7 +198,7 @@ LANGS = {
         "trust_intro": "LoveTypes is a Heart Garden mapped by the five love languages. Guardians, scenario prompts, and practical guides help you name needs, wounds, and next words.",
         "resources_desc": "Browse Heart Garden guide paths, guardian profiles, love-language theory notes, and practical exercises so you can find the next lamp on the path.",
         "contact_desc": "Contact LoveTypes for content corrections, privacy questions, partnership concerns, or pages in the Heart Garden that need repair.",
-        "privacy_desc": f"LoveTypes privacy policy covering data use, third-party services, and contact options. Updated {UPDATED}.",
+        "privacy_desc": f"LoveTypes privacy policy covering local storage, technical counts, Cloudflare hosting, external links, and contact data. Updated {PRIVACY_UPDATED}.",
         "terms_desc": f"LoveTypes terms of use covering content boundaries, intellectual property, disclaimers, and site rules. Updated {UPDATED}.",
         "luna_title": "Luna Yoga Music | Calm Audio for Reflection",
         "luna_desc": "Luna Yoga Music offers calm companion audio for journaling, decompression, and relationship reflection, like a low lamp in the Heart Garden at night.",
@@ -237,7 +238,7 @@ LANGS = {
         "trust_intro": "LoveTypes は五つの愛の言語を地図にした心語の庭です。五人の感情の守護者、状況型の内省、実用的なガイドを通じて、愛される入口、すれ違いの傷、次に言える言葉を見つけます。",
         "resources_desc": "心語の庭のガイド入口、五人の守護者プロフィール、愛の言語の理論、実践練習をまとめ、次の灯りを見つけやすくします。",
         "contact_desc": "内容修正、プライバシー、提携、または心語の庭で修復が必要なページについて LoveTypes に連絡できます。",
-        "privacy_desc": f"データ利用、第三者サービス、連絡方法を説明する LoveTypes プライバシーポリシー。更新日 {UPDATED}。",
+        "privacy_desc": f"端末内保存、技術的な回数計測、Cloudflare ホスティング、外部リンク、連絡データを説明する LoveTypes プライバシーポリシー。更新日 {PRIVACY_UPDATED}。",
         "terms_desc": f"内容の範囲、知的財産、免責、サイト利用ルールを説明する LoveTypes 利用規約。更新日 {UPDATED}。",
         "luna_title": "Luna Yoga Music｜内省のための静かな音楽",
         "luna_desc": "Luna Yoga Music は、日記、緊張をほどく時間、関係のふり返りに寄り添う静かな音楽です。心語の庭の夜にともる低い灯りのように。",
@@ -277,7 +278,7 @@ LANGS = {
         "trust_intro": "LoveTypes는 다섯 가지 사랑의 언어를 지도로 삼은 마음의 정원입니다. 다섯 감정 수호자, 상황형 성찰, 실용 가이드를 통해 사랑받는 욕구, 어긋남의 상처, 다음에 말할 수 있는 문장을 정리합니다.",
         "resources_desc": "마음의 정원 가이드 입구, 다섯 수호자 프로필, 사랑의 언어 이론, 실천 연습을 모아 다음 등불을 찾기 쉽게 합니다.",
         "contact_desc": "콘텐츠 수정, 개인정보 문의, 협업, 또는 마음의 정원에서 수리가 필요한 페이지를 LoveTypes에 알릴 수 있습니다.",
-        "privacy_desc": f"데이터 사용, 제3자 서비스, 연락 방법을 설명하는 LoveTypes 개인정보 처리방침. 업데이트 {UPDATED}.",
+        "privacy_desc": f"기기 내 저장, 기술적 횟수 집계, Cloudflare 호스팅, 외부 링크, 연락 자료를 설명하는 LoveTypes 개인정보 처리방침. 업데이트 {PRIVACY_UPDATED}.",
         "terms_desc": f"콘텐츠 범위, 지식재산권, 면책, 사이트 이용 규칙을 설명하는 LoveTypes 이용약관. 업데이트 {UPDATED}.",
         "luna_title": "Luna Yoga Music｜성찰을 위한 차분한 음악",
         "luna_desc": "Luna Yoga Music은 기록, 긴장 완화, 관계 성찰에 어울리는 차분한 음악입니다. 밤의 마음의 정원에 켜진 낮은 등불처럼 함께합니다.",
@@ -317,7 +318,7 @@ LANGS = {
         "trust_intro": "LoveTypes es un Jardín del Corazón guiado por cinco lenguajes del amor. Sus guardianas, escenas y guías ayudan a nombrar necesidades, heridas y próximas palabras.",
         "resources_desc": "Encuentra entradas del Jardín del Corazón, perfiles de guardianas, teoría de lenguajes del amor y ejercicios prácticos para hallar la siguiente luz del camino.",
         "contact_desc": "Contacta a LoveTypes para correcciones de contenido, privacidad, colaboraciones o páginas del Jardín del Corazón que necesiten reparación.",
-        "privacy_desc": f"Política de privacidad de LoveTypes sobre datos, servicios de terceros y contacto. Actualizada {UPDATED}.",
+        "privacy_desc": f"Política de privacidad de LoveTypes sobre almacenamiento local, conteos técnicos, alojamiento de Cloudflare, enlaces externos y datos de contacto. Actualizada {PRIVACY_UPDATED}.",
         "terms_desc": f"Términos de uso de LoveTypes sobre límites de contenido, propiedad intelectual, descargos y reglas del sitio. Actualizados {UPDATED}.",
         "luna_title": "Luna Yoga Music | Audio tranquilo para reflexionar",
         "luna_desc": "Luna Yoga Music ofrece audio tranquilo para escribir, descomprimir y reflexionar sobre relaciones, como una luz baja en el Jardín del Corazón de noche.",
@@ -5169,12 +5170,13 @@ def policy_compass_section(lang: str, slug: str) -> str:
     copy = POLICY_COMPASS_COPY[lang]
     cards = []
     for idx, (heading, body_text) in enumerate(POLICY_SECTIONS[lang][slug], start=1):
+        summary = body_text if len(body_text) <= 120 else body_text[:117].rstrip() + "..."
         cards.append(
             f"""
 <article class="policy-compass-card">
   <span>{idx:02d}</span>
   <h3>{escape(heading)}</h3>
-  <p>{escape(copy["card_hint"].format(number=idx))}</p>
+  <p>{escape(summary)}</p>
 </article>
 """
         )
@@ -5249,11 +5251,19 @@ def trust_hero_actions(lang: str, slug: str) -> str:
     elif slug == "contact":
         request = CONTACT_REQUESTS[lang]
         repair = CONTACT_REPAIR_REPORTS[lang]
-        actions = [
-            ("primary-btn", "luna-request", "#luna-supply-request", request["cta"]),
-            ("secondary-btn", "site-repair", "#site-repair-report", repair["cta"]),
-            ("secondary-btn", "map", lang_url(lang, "garden-map"), t["map"]),
-        ]
+        actions = (
+            [
+                ("primary-btn", "site-repair", "#site-repair-report", "回報內容或技術問題"),
+                ("secondary-btn", "privacy", lang_url(lang, "privacy"), "查看隱私政策"),
+                ("secondary-btn", "map", lang_url(lang, "garden-map"), t["map"]),
+            ]
+            if lang == "zh"
+            else [
+                ("primary-btn", "luna-request", "#luna-supply-request", request["cta"]),
+                ("secondary-btn", "site-repair", "#site-repair-report", repair["cta"]),
+                ("secondary-btn", "map", lang_url(lang, "garden-map"), t["map"]),
+            ]
+        )
     else:
         copy = POLICY_CONTACT_CTA[lang]
         actions = [
@@ -5688,6 +5698,7 @@ def sanitize_indexable_body(path: str, body: str) -> str:
         replacements[r'href="/resources/(?:#[^"]*)?"'] = 'href="/repair-plan/"'
     for pattern, replacement in replacements.items():
         body = re.sub(pattern, replacement, body)
+    body = body.replace('class="affiliate-disclosure"', 'class="content-note"')
     if path != "contact":
         body = re.sub(r'href="mailto:[^"]+"', 'href="/contact/#site-repair-report"', body)
         body = body.replace("mailto:contact@lovetypes.tw", "/contact/#site-repair-report")
@@ -10177,11 +10188,11 @@ HOME_COMPASS_BRIDGE = {
 GARDEN_MAP = {
     "zh": {
         "title": "心語庭園地圖",
-        "desc": "把 LoveTypes 的測驗、五位守護者、深度指南、旅人補給、Luna、修復計畫與信任頁整理成一張可探索的地圖。",
+        "desc": "把 LoveTypes 的測驗、五位守護者、深度指南、關係羅盤、修復計畫與信任頁整理成一張可探索的地圖。",
         "eyebrow": "HEART GARDEN MAP",
         "intro": "如果你不知道下一步該去哪裡，先從這張地圖選一盞燈。每條路都會回到同一個核心：辨認需求、說清楚、做一個小修復。",
         "resume_title": "你的守護者地圖已亮起",
-        "resume_intro": "這台裝置保留了上次測驗結果。可以直接回到你的補給路線、修復計畫、收藏卡或 Luna，不必重新找入口。",
+        "resume_intro": "這台裝置保留了上次測驗結果。可以直接回到相關指南、修復計畫、守護者頁或關係羅盤，不必重新找入口。",
         "handoff_title": "認領守護者後，照這個順序走",
         "handoff_intro": "測驗結果不是終點，而是一張通行證。先接住當下的需求，再把它放進可回訪、可練習、可冷卻的路線。",
         "routes_title": "四條主要路線",
@@ -10192,21 +10203,21 @@ GARDEN_MAP = {
         "routes": [
             ("認領守護者", "從首頁測驗開始，取得你的主要守護者與個人化下一步。", "開始測驗", "#quiz-section"),
             ("走進五域", "直接查看五位守護者與各自的錯頻傷口、修復任務。", "查看守護者", "characters"),
-            ("拿一份補給", "依照守護者選指南、任務、Luna 或延伸書卷。", "前往補給站", "resources"),
+            ("讀一篇指南", "依照目前場景選一篇具體指南，不只停在測驗標籤。", "前往指南", "guides"),
             ("寫成修復週期", "把情緒整理成 7 日練習，不一次修完整段關係。", "打開修復計畫", "repair-plan"),
         ],
         "tools": [
             ("LoveTypes 關係羅盤", "把兩個人的守護者、關係狀態與可選出生節奏整理成錯頻地圖。", "打開關係羅盤", "compass"),
             ("心語合盤入口", "承接愛之語合盤、八字愛情合盤與 love compatibility 搜尋，再導回免費羅盤。", "看合盤入口", "tools/love-compatibility"),
             ("7 日修復計畫", "把測驗結果寫成一週內能完成的小修復。", "打開修復計畫", "repair-plan"),
-            ("守護者收藏室", "保存五位守護者卡片，讓結果變成可回訪、可分享的標記。", "前往收藏室", "keepsakes"),
-            ("Luna 夜間補給", "睡前、冷卻或書寫時，用低光音樂先降低情緒噪音。", "開啟 Luna", "luna-yoga-music"),
+            ("產品實測紀錄", "查看計分、保存、分享與無障礙測試的可重現步驟。", "查看實測", "lab"),
+            ("內容製作方法", "理解資料來源、人工編輯、安全檢查與修訂流程。", "查看關於", "about"),
         ],
         "handoff": [
-            ("01", "先拿專屬補給", "依守護者進入補給站，取得一個任務、一篇指南與一份延伸書卷。", "resources"),
+            ("01", "先讀相關指南", "依守護者找到一篇具體情境指南與一個可說出口的請求。", "guides"),
             ("02", "寫成七日修復", "把情緒翻成小請求與可完成行動，避免只停在結果標籤。", "repair-plan"),
-            ("03", "收藏你的守護者", "把守護者卡片留下來，之後回訪時能快速找回自己的入口。", "keepsakes"),
-            ("04", "夜間低光整理", "睡前或爭執後，用 Luna 降低情緒噪音，再回到修復計畫。", "luna-yoga-music"),
+            ("03", "檢查下一句話", "用關係羅盤分開觀察、感受、需要、請求與安全界線。", "compass"),
+            ("04", "查看工具限制", "閱讀產品實測，確認保存、分享與跨裝置限制。", "lab"),
         ],
         "trust_routes": [
             ("關於心語庭園", "理解 LoveTypes 的宇宙觀、內容邊界與適合使用方式。", "about"),
@@ -10382,11 +10393,11 @@ HOME_SAFETY_COMPASS = {
     "zh": {
         "eyebrow": "SAFE ENTRY",
         "title": "進入心語庭園前，先保留三條安全路線",
-        "intro": "LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗、領取補給或寄出需求前，你可以先看清楚資料、購買與回報邊界。",
+        "intro": "LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗或填寫工作表前，你可以先看清楚資料保存、內容限制與回報方式。",
         "items": [
             ("01", "資料與本機儲存", "測驗結果與修復表單以本機保存為主，聯絡信件只在你主動寄出時傳送。", "查看隱私", "privacy"),
-            ("02", "內容與購買邊界", "指南、Luna、書卷與收藏物都是輔助練習，不承諾療效，也不取代諮商。", "查看條款", "terms"),
-            ("03", "網站修復入口", "若頁面、連結、翻譯或補給需求不清楚，可以直接回報需要修復的位置。", "回報問題", "contact#site-repair-report"),
+            ("02", "內容使用邊界", "測驗、指南與工作表只用於自我理解與溝通練習，不承諾療效，也不取代諮商。", "查看條款", "terms"),
+            ("03", "網站修復入口", "若頁面、連結、來源或操作不清楚，可以直接回報需要修復的位置。", "回報問題", "contact#site-repair-report"),
         ],
     },
     "en": {
@@ -10893,6 +10904,8 @@ def guardian_story_image(lang: str, slug: str) -> str:
 
 
 def guardian_story_cta(lang: str, slug: str) -> str:
+    if lang == "zh":
+        return "lovetypes.tw" + lang_url(lang, "characters/" + slug)
     return "lovetypes.tw" + lang_url(lang, "keepsakes").rstrip("/") + f"/#keepsake-{slug}"
 
 
@@ -11618,11 +11631,13 @@ def guide_index_compass(lang: str) -> str:
       <a href="{href}" data-funnel-event="guide_index_compass_{number}">{escape(action)}</a>
     </article>
 """)
+    header_href = lang_url(lang, "repair-plan") if lang == "zh" else lang_url(lang, "resources")
+    header_label = "打開 7 日修復表" if lang == "zh" else LANGS[lang]["resources"]
     return f"""
 <section class="section guide-index-compass">
   <div class="section-head">
     <div><p class="eyebrow">{escape(compass["eyebrow"])}</p><h2>{escape(compass["title"])}</h2></div>
-    <a href="{lang_url(lang, "resources")}">{escape(LANGS[lang]["resources"])}</a>
+    <a href="{header_href}">{escape(header_label)}</a>
   </div>
   <p class="section-intro">{escape(compass["intro"])}</p>
   <div class="guide-compass-grid">{"".join(cards)}</div>
@@ -11651,7 +11666,7 @@ def guide_domain_routes_section(lang: str) -> str:
   <div class="guide-domain-actions">
     <a href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guide_domain_read">{escape(copy["read"])}</a>
     <a href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="guide_domain_guardian">{escape(copy["guardian"])}</a>
-    <a href="{lang_url(lang, "resources")}#supply-{slug}" data-funnel-event="guide_domain_supply">{escape(copy["supply"])}</a>
+    <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guide_domain_practice">{"填寫免費工作表" if lang == "zh" else escape(copy["supply"])}</a>
   </div>
 </article>
 """)
@@ -11673,6 +11688,26 @@ def character_supply_panel(lang: str, slug: str) -> str:
     guide = route["guide"]
     book = route["book"]
     book_url = affiliate_book_url(book, lang)
+    if lang == "zh":
+        return f"""
+<section class="section supply-panel-section">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>把理解接回免費練習</h2></div>
+    <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_practice_header">打開工作表</a>
+  </div>
+  <p class="section-intro">{escape(route["desc"])}</p>
+  <div class="supply-panel-grid">
+    <article><span>先看見</span><h3>{escape(labels["wound"])}</h3><p>{escape(route["wound"])}</p></article>
+    <article><span>再翻譯</span><h3>{escape(labels["practice"])}</h3><p>{escape(route["mission"])}</p></article>
+    <article><span>最後驗證</span><h3>觀察是否收得到</h3><p>提出一個二十四小時內能完成的小請求，再記錄對方實際回應，不用守護者名稱替任何人下結論。</p></article>
+  </div>
+  <div class="supply-panel-actions">
+    <a class="primary-btn" href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_practice_plan">填寫 7 日修復表</a>
+    <a class="secondary-btn" href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guardian_practice_guide">{escape(labels["read_guide"])}</a>
+    <a class="secondary-btn" href="{lang_url(lang, "compass")}" data-funnel-event="guardian_practice_compass">打開關係羅盤</a>
+  </div>
+</section>
+"""
     return f"""
 <section class="section supply-panel-section">
   <div class="section-head">
@@ -11705,6 +11740,22 @@ def character_route_snapshot(lang: str, slug: str) -> str:
     guardian_name, guardian_type, _guardian_desc = route["guardian"][lang]
     guide_title, guide_desc = guide[lang]
     intro_joiner = "。" if lang == "zh" else ". "
+    if lang == "zh":
+        return f"""
+<section class="section guardian-route-snapshot">
+  <div class="section-head">
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["quick_route"])}</h2></div>
+    <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_snapshot_header_plan">開始免費練習</a>
+  </div>
+  <p class="section-intro">{escape(guardian_name)} · {escape(guardian_type)}{intro_joiner}{escape(route["desc"])}</p>
+  <div class="guardian-route-grid">
+    <article><span>01</span><h3>{escape(guide_title)}</h3><p>{escape(guide_desc)}</p><a href="{lang_url(lang, "guides/" + guide["slug"])}" data-funnel-event="guardian_snapshot_guide">{escape(labels["read_guide"])}</a></article>
+    <article><span>02</span><h3>{escape(REPAIR_PLAN[lang]["title"])}</h3><p>{escape(route["mission"])}</p><a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_snapshot_repair_plan">填寫工作表</a></article>
+    <article><span>03</span><h3>關係羅盤</h3><p>把觀察、感受、需要與請求分開，檢查下一句是否具體且能被拒絕。</p><a href="{lang_url(lang, "compass")}" data-funnel-event="guardian_snapshot_compass">打開羅盤</a></article>
+    <article><span>04</span><h3>重新測驗</h3><p>結果是當下偏好的排序，不是永久人格。需要時可以清除後重新作答。</p><a href="{lang_url(lang, "start")}#quiz-section" data-funnel-event="guardian_snapshot_quiz">回到測驗</a></article>
+  </div>
+</section>
+"""
     return f"""
 <section class="section guardian-route-snapshot">
   <div class="section-head">
@@ -11883,9 +11934,12 @@ POLICY_SECTIONS = {
             ("不適合透過本站處理的狀況", "LoveTypes 無法提供緊急諮商、醫療、法律或個案診斷。如果你正處於危急、暴力、騷擾或自傷風險，請優先尋求當地緊急資源與專業協助。"),
         ],
         "privacy": [
-            ("我們收集什麼", "LoveTypes 目前不要求註冊帳號，也不要求你提交測驗結果才能閱讀內容。你主動寄信給我們時，信件地址與內容只會用於回覆、修正問題或處理你提出的請求。"),
-            ("第三方服務", "網站可能使用託管、分析、聯盟行銷或外部連結服務。這些服務可能依各自政策處理技術資料，例如瀏覽器資訊、來源網址或點擊紀錄；我們會避免把它們設計成辨識個人情感狀態的工具。"),
-            ("資料請求與刪除", "若你曾透過 contact@lovetypes.tw 聯絡我們，可以要求查詢、更正或刪除相關通信紀錄。我們會在合理範圍內處理，除非法律、安全或防濫用需求要求保留最少必要紀錄。"),
+            ("帳號、測驗與裝置內保存", "LoveTypes 不要求註冊帳號，也不要求你把測驗答案交給我們。測驗結果、7 日修復表、首次到站的 UTM 來源，以及最近 40 筆站內操作事件會使用瀏覽器 localStorage 保存在目前裝置；其中可能包含頁面路徑、按鈕目標、守護者代號與時間。這些 localStorage 內容不會由網站程式自動上傳。"),
+            ("測驗開始與完成計數", "當你開始或完成測驗時，頁面會向 lovetypes.tw 同網域各送出一次不含帳號、答案、分數或守護者結果的圖片請求，用來確認核心流程是否可用。託管服務仍可能在標準請求紀錄中看到 IP 位址、瀏覽器資訊、來源網域、請求時間與該計數路徑。"),
+            ("Cloudflare 託管與必要技術紀錄", "網站由 Cloudflare Pages 提供。Cloudflare 會為傳送頁面、安全防護、錯誤與網路診斷處理一般連線資料；保留方式依 Cloudflare 的服務與政策。LoveTypes 目前沒有載入第三方廣告執行程式；公開的帳戶驗證標記與 ads.txt 本身不會讀取測驗答案。"),
+            ("Cookie、外部連結與聯盟揭露", "LoveTypes 目前的頁面程式不設定第一方 Cookie。旅人補給頁可能包含標示為贊助或聯盟的外部書店與 Gumroad 連結；點擊後會離開本站，對方可能收到 lovetypes.tw 來源網域並依自己的隱私政策處理資料。未點擊外部連結不代表你已向該商店提供測驗結果。"),
+            ("保存期間與你的清除方式", "localStorage 會保留到你使用頁面上的清除功能、清除瀏覽器網站資料，或由瀏覽器移除為止；網站不設定自動到期日。站內操作事件最多保留最近 40 筆。電子郵件與託管紀錄則依回覆需求、防濫用、安全及服務供應商政策保留。"),
+            ("聯絡、查詢與刪除", "你主動寄信至 contact@lovetypes.tw 時，信箱地址、內容與你選擇提供的裝置資訊只用於回覆、修正問題或處理請求。你可以要求查詢、更正或刪除相關通信紀錄；除非法律、安全或防濫用需求要求保留最少必要資料，我們會在合理範圍內處理。"),
         ],
         "terms": [
             ("內容用途", "LoveTypes 的測驗、指南與守護者設定是自我理解與關係溝通工具。LoveTypes 並非 The 5 Love Languages® 官方網站或授權測驗。你可以用它們整理語言、準備對話與練習修復，但不應把結果當成永久標籤或判定一段關係的唯一依據。"),
@@ -12220,6 +12274,26 @@ def quiz_payload(lang: str) -> str:
         story_image = guardian_story_image(lang, meta["slug"])
         story_width, story_height = IMAGE_DIMENSIONS.get(story_image, ("", ""))
         domain_prop_width, domain_prop_height = IMAGE_DIMENSIONS.get(guardian["prop"], ("", ""))
+        guide_url = lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}"
+        guardian_url = lang_url(lang, "characters/" + meta["slug"])
+        plan_url = lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}"
+        compass_url = lang_url(lang, "compass") + "#relationship-compass-tool"
+        product_pack = supply_product_pack(lang, meta["slug"])
+        if lang == "zh":
+            # Indexed pages use the shared quiz payload, so keep its destinations
+            # entirely within the free review surface. Commercial paths remain on
+            # the standalone noindex resources page instead of leaking through JS.
+            resource_url = guide_url
+            product_pack = {
+                "label": "免費練習路線",
+                "note": "依序閱讀守護者、完成工作表，再用羅盤整理下一句話。",
+                "items": [
+                    {"number": "1", "title": "閱讀守護者指南", "desc": route["desc"], "href": guide_url},
+                    {"number": "2", "title": "填寫 7 日修復表", "desc": route["mission"], "href": plan_url},
+                    {"number": "3", "title": "打開關係羅盤", "desc": "把觀察、感受、需要與請求分開。", "href": compass_url},
+                    {"number": "4", "title": "查看守護者頁", "desc": domain_desc, "href": guardian_url},
+                ],
+            }
         results[key] = {
             "name": name,
             "type": typ,
@@ -12240,18 +12314,18 @@ def quiz_payload(lang: str) -> str:
             "domainProp": guardian["prop"],
             "domainPropWidth": domain_prop_width,
             "domainPropHeight": domain_prop_height,
-            "guardianUrl": lang_url(lang, "characters/" + meta["slug"]),
-            "guideUrl": lang_url(lang, "guides/" + meta["guide"]) + f"#guide-{meta['slug']}",
+            "guardianUrl": guardian_url,
+            "guideUrl": guide_url,
             "guideTitle": guide[lang][0],
             "resourceUrl": resource_url,
-            "contactUrl": lang_url(lang, "contact") + "#luna-supply-request",
+            "contactUrl": lang_url(lang, "about") if lang == "zh" else lang_url(lang, "contact") + "#luna-supply-request",
             "supplyTitle": route["title"],
             "supplyDesc": route["desc"],
             "supplyMission": route["mission"],
             "supplyText": route["supply"],
             "supplyBook": route["book"]["title"][lang],
-            "supplyBookUrl": affiliate_book_url(route["book"], lang),
-            "lunaUrl": lang_url(lang, "luna-yoga-music") + f"#luna-{meta['slug']}",
+            "supplyBookUrl": guide_url if lang == "zh" else affiliate_book_url(route["book"], lang),
+            "lunaUrl": plan_url if lang == "zh" else lang_url(lang, "luna-yoga-music") + f"#luna-{meta['slug']}",
             "storyImage": story_image,
             "storyImageWidth": story_width,
             "storyImageHeight": story_height,
@@ -12261,26 +12335,41 @@ def quiz_payload(lang: str) -> str:
             "collectorOpen": COLLECTOR_LABELS[lang]["open"],
             "collectorSave": COLLECTOR_LABELS[lang]["download"],
             "collectorHall": COLLECTOR_LABELS[lang]["hall"],
-            "collectorHallUrl": lang_url(lang, "keepsakes") + f"#keepsake-{meta['slug']}",
+            "collectorHallUrl": guardian_url if lang == "zh" else lang_url(lang, "keepsakes") + f"#keepsake-{meta['slug']}",
             "collectorStory": COLLECTOR_LABELS[lang]["story"],
             "collectorStoryKicker": COLLECTOR_LABELS[lang]["story_kicker"],
             "collectorStoryCta": guardian_story_cta(lang, meta["slug"]),
             "collectorStoryError": COLLECTOR_LABELS[lang]["story_error"],
-            "compassUrl": lang_url(lang, "compass") + "#relationship-compass-tool",
-            "planUrl": lang_url(lang, "repair-plan") + f"#plan-{meta['slug']}",
+            "compassUrl": compass_url,
+            "planUrl": plan_url,
             "planLabel": REPAIR_PLAN[lang]["title"],
             "tips": QUIZ_TIPS[lang][key],
             "starterKit": starter_kit_payload(lang, resource_url),
-            "supplyProductPack": supply_product_pack(lang, meta["slug"]),
+            "supplyProductPack": product_pack,
         }
+    labels = dict(QUIZ_LABELS[lang])
+    if lang == "zh":
+        labels.update({
+            "saved_route": "閱讀相關指南",
+            "saved_luna": "繼續 7 日修復",
+            "saved_card": "查看守護者頁",
+            "saved_contact": "了解內容方法",
+            "primary_route": "閱讀相關指南",
+            "luna_action": "繼續 7 日修復",
+            "conversion_paid_title": "用關係羅盤整理",
+            "conversion_paid_desc": "把結果轉成一個可以協商的小請求。",
+            "conversion_paid_action": "打開免費羅盤",
+            "luna_step": "7 日修復練習",
+            "resources_link": "免費延伸路線",
+        })
     payload = {
-        "labels": QUIZ_LABELS[lang],
+        "labels": labels,
         "questions": questions,
         "results": results,
         "order": type_order,
         "shareUrl": DOMAIN + lang_url(lang).rstrip("/") + "/",
-        "affiliateDisclosure": AFFILIATE_DISCLOSURE[lang],
-        "affiliateButton": "查看補給與商業揭露" if lang == "zh" else AFFILIATE_COPY[lang]["button"],
+        "affiliateDisclosure": "所有下一步均為站內免費內容。" if lang == "zh" else AFFILIATE_DISCLOSURE[lang],
+        "affiliateButton": "閱讀相關指南" if lang == "zh" else AFFILIATE_COPY[lang]["button"],
         "supplySafety": {
             "chooseTitle": SUPPLY_LABELS[lang]["choose"],
             "chooseText": SUPPLY_LABELS[lang]["choose_text"],
@@ -12292,6 +12381,11 @@ def quiz_payload(lang: str) -> str:
 
 
 def quiz_script(lang: str) -> str:
+    next_step_payload = (
+        {"cta": "打開免費羅盤", "slug": "relationship-compass", "href": lang_url(lang, "compass") + "#relationship-compass-tool"}
+        if lang == "zh"
+        else luna_starter_pack_payload(lang)
+    )
     return f"""
 {quiz_data_script_tag(lang)}
 <script>
@@ -12308,7 +12402,7 @@ def quiz_script(lang: str) -> str:
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${{location.pathname}}:quiz-result`;
   const sharedStorageKey = "lovetypes:{lang}:quiz-result";
-  const lunaStarterPack = {json.dumps(luna_starter_pack_payload(lang), ensure_ascii=False)};
+  const lunaStarterPack = {json.dumps(next_step_payload, ensure_ascii=False)};
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
@@ -12456,7 +12550,7 @@ def quiz_script(lang: str) -> str:
             ${{result.supplyProductPack.items.map((item) => `<a href="${{item.href}}" data-home-saved-product-link data-funnel-event="${{['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}}">${{item.title}}</a>`).join('')}}
           </div>
           <div class="${{actionsClass}}" data-home-saved-luna-starter>
-            <a href="${{lunaStarterPack.href}}" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
+            <a href="${{lunaStarterPack.href}}" data-home-saved-next-step-link data-funnel-event="home_saved_next_step_click" data-next-step="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${{quiz.supplySafety.notNowTitle}}</strong>
@@ -12612,7 +12706,7 @@ def quiz_script(lang: str) -> str:
             <span>3</span>
             <h4>${{quiz.labels.conversion_paid_title}}</h4>
             <p>${{quiz.labels.conversion_paid_desc}}</p>
-            <a class="secondary-btn" href="${{lunaStarterPack.href}}" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${{lunaStarterPack.slug}}">${{quiz.labels.conversion_paid_action}}</a>
+            <a class="secondary-btn" href="${{lunaStarterPack.href}}" data-funnel-event="quiz_conversion_path_next_step" data-next-step="${{lunaStarterPack.slug}}">${{quiz.labels.conversion_paid_action}}</a>
           </article>
         </div>
       </section>
@@ -12678,7 +12772,7 @@ def quiz_script(lang: str) -> str:
         <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
           <strong>${{quiz.labels.luna_step}}</strong>
           <p>${{quiz.labels.next_pack_intro}}</p>
-          <a class="primary-btn" href="${{lunaStarterPack.href}}" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
+          <a class="primary-btn" href="${{lunaStarterPack.href}}" data-quiz-next-step-link data-funnel-event="quiz_next_step_click" data-next-step="${{lunaStarterPack.slug}}">${{lunaStarterPack.cta}}</a>
         </div>
         <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
           <strong>${{quiz.supplySafety.chooseTitle}}</strong>
@@ -13012,10 +13106,8 @@ def guide_resume_script(lang: str) -> str:
         <p>${{quiz.labels.guide_resume_intro}}</p>
         <div class="quiz-saved-actions">
           <a href="${{result.planUrl}}" data-guide-resume-plan data-funnel-event="guide_resume_plan">${{quiz.labels.saved_plan}}</a>
-          <a href="${{result.resourceUrl}}" data-guide-resume-route data-funnel-event="guide_resume_route">${{quiz.labels.saved_route}}</a>
-          <a href="${{result.lunaUrl}}" data-guide-resume-luna data-funnel-event="guide_resume_luna">${{quiz.labels.saved_luna}}</a>
-          <a href="${{result.collectorHallUrl}}" data-guide-resume-keepsake data-funnel-event="guide_resume_keepsake">${{quiz.labels.saved_card}}</a>
-          <a href="${{result.contactUrl}}" data-guide-resume-contact data-funnel-event="guide_resume_contact">${{quiz.labels.saved_contact}}</a>
+          <a href="${{result.guideUrl}}" data-guide-resume-route data-funnel-event="guide_resume_related">${{quiz.labels.saved_route}}</a>
+          <a href="${{result.compassUrl}}" data-guide-resume-compass data-funnel-event="guide_resume_compass">${{quiz.labels.conversion_compass_action}}</a>
           <a href="${{result.guardianUrl}}" data-guide-resume-guardian data-funnel-event="guide_resume_guardian">${{quiz.labels.guardian_link}}</a>
           <button type="button" data-clear-guide-result data-funnel-event="guide_resume_clear">${{quiz.labels.saved_clear}}</button>
         </div>
@@ -13078,7 +13170,7 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
   const intro = currentSlug
     ? (isCurrent ? quiz.labels.guardian_resume_match : quiz.labels.guardian_resume_other)
     : quiz.labels.guardian_resume_intro;
-  const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.resourceUrl;
+  const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.guideUrl;
   const primaryLabel = currentSlug && !isCurrent ? quiz.labels.guardian_link : quiz.labels.saved_route;
   box.innerHTML = `
     <article class="guardian-resume-card pass-resume-card" id="guardian-result-${{result.slug}}" style="--result-accent:${{result.domainAccent || result.color}};--domain-glow:${{result.domainGlow || result.color}}">
@@ -13097,9 +13189,7 @@ def guardian_resume_script(lang: str, current_slug: str = "") -> str:
           <a class="primary-btn" href="${{primaryHref}}" data-guardian-resume-primary data-funnel-event="guardian_resume_primary">${{primaryLabel}}</a>
           <a class="secondary-btn" href="${{result.guardianUrl}}" data-guardian-resume-guardian data-funnel-event="guardian_resume_profile">${{quiz.labels.guardian_link}}</a>
           <a class="secondary-btn" href="${{result.planUrl}}" data-guardian-resume-plan data-funnel-event="guardian_resume_plan">${{quiz.labels.saved_plan}}</a>
-          <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-guardian-resume-keepsake data-funnel-event="guardian_resume_keepsake">${{quiz.labels.saved_card}}</a>
-          <a class="secondary-btn" href="${{result.lunaUrl}}" data-guardian-resume-luna data-funnel-event="guardian_resume_luna">${{quiz.labels.saved_luna}}</a>
-          <a class="secondary-btn" href="${{result.contactUrl}}" data-guardian-resume-contact data-funnel-event="guardian_resume_contact">${{quiz.labels.saved_contact}}</a>
+          <a class="secondary-btn" href="${{result.compassUrl}}" data-guardian-resume-compass data-funnel-event="guardian_resume_compass">${{quiz.labels.conversion_compass_action}}</a>
           <button class="secondary-btn" type="button" data-clear-guardian-result data-funnel-event="guardian_resume_clear">${{quiz.labels.saved_clear}}</button>
         </div>
       </div>
@@ -13139,7 +13229,7 @@ def quiz_section(lang: str) -> str:
 START_PAGE_COPY = {
     "zh": {
         "title": "五種愛之語測驗入口",
-        "desc": "完成 15 題心語儀式，找到你的情感守護者，再接到專屬補給、修復計畫、Luna 與收藏卡。",
+        "desc": "完成 15 題心語問題，找到你的情感守護者，再接到免費指南、關係羅盤與 7 日修復工作表。",
         "eyebrow": "QUIZ GATE",
         "lead": "從這裡直接開始守護者認領儀式。不用註冊，約 2 到 3 分鐘完成，結果只保存在你的瀏覽器。",
         "map": "進入五守護者地圖",
@@ -13148,7 +13238,7 @@ START_PAGE_COPY = {
         "preview": [
             ("守護者結果", "知道哪一種愛之語最容易讓你感到被愛，也最容易受傷。"),
             ("免費修復任務", "先拿一個今天能做的小練習，而不是直接被推去消費。"),
-            ("個人補給路線", "再依守護者選 Luna、收藏卡、延伸書卷或 Email 需求。"),
+            ("個人練習路線", "再依守護者選一篇指南、關係羅盤或 7 日修復工作表。"),
         ],
     },
     "en": {
@@ -13353,7 +13443,7 @@ def guides_index(lang: str) -> None:
     section_labels = SECTION_LABELS[lang]
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="resources" href="{lang_url(lang, "resources")}" data-funnel-event="guide_index_hero_resources">{escape(t["resources"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="practice" href="{lang_url(lang, "repair-plan")}" data-funnel-event="guide_index_hero_practice">{"填寫 7 日修復表" if lang == "zh" else escape(t["resources"])}</a></div></section>
 {guide_index_compass(lang)}
 {core_reading_path_section(lang)}
 {guide_domain_routes_section(lang)}
@@ -13401,6 +13491,13 @@ def guide_action_bridge(lang: str, guide: dict) -> str:
             f'{lang_url(lang, "luna-yoga-music")}#luna-{slug}',
         ),
     ]
+    if lang == "zh":
+        actions = [
+            ("01", "理解守護者", "回到這位守護者的受傷場景、常見誤區與可說出口句型。", "查看守護者", lang_url(lang, f"characters/{slug}")),
+            ("02", "完成工作表", f'把「{route["title"]}」縮成一個二十四小時內能完成的小請求。', "填寫 7 日修復表", f'{lang_url(lang, "repair-plan")}#plan-{slug}'),
+            ("03", "檢查說法", "用關係羅盤分開觀察、感受、需要、請求與安全界線。", "打開關係羅盤", lang_url(lang, "compass")),
+            ("04", "閱讀另一個觀點", "回到指南總覽，依目前情境選擇不同問題，不用守護者標籤代替判斷。", "回到指南總覽", lang_url(lang, "guides")),
+        ]
     cards = "".join(
         f"""
 <article class="guide-action-card">
@@ -13915,7 +14012,6 @@ def repair_worksheet_script(lang: str) -> str:
     resume_intro = json.dumps(plan["resume_intro"], ensure_ascii=False)
     resume_fill = json.dumps(plan["resume_fill"], ensure_ascii=False)
     resume_plan = json.dumps(plan["resume_plan"], ensure_ascii=False)
-    bookstore_label = json.dumps("查看補給與商業揭露" if lang == "zh" else AFFILIATE_COPY[lang]["button"], ensure_ascii=False)
     return f"""
 {quiz_data_script_tag(lang)}
 <script>
@@ -13926,7 +14022,6 @@ def repair_worksheet_script(lang: str) -> str:
   const resumeIntro = {resume_intro};
   const resumeFill = {resume_fill};
   const resumePlan = {resume_plan};
-  const bookstoreLabel = {bookstore_label};
   const copySummaryLabel = {copy_summary};
   const summaryTitle = {summary_title};
   const summaryGuardian = {summary_guardian};
@@ -13985,7 +14080,7 @@ def repair_worksheet_script(lang: str) -> str:
       `${{result.name}} · ${{result.type}}`,
       result.supplyDesc,
       result.supplyMission,
-      `${{result.supplyTitle}} · ${{result.supplyBook}}`
+      `${{result.supplyTitle}} · ${{result.supplyMission}}`
     ];
     fields.forEach((field, index) => {{
       if (!field.value.trim()) field.value = values[index] || '';
@@ -14066,12 +14161,10 @@ def repair_worksheet_script(lang: str) -> str:
           <p><strong>${{result.supplyTitle}}</strong> · ${{result.supplyMission}}</p>
           <div class="repair-resume-actions">
             <button class="primary-btn" type="button" data-fill-repair data-funnel-event="repair_resume_fill">${{resumeFill}}</button>
-            <a class="secondary-btn" href="${{result.resourceUrl}}" data-repair-resume-route data-funnel-event="repair_resume_route">${{quiz.labels.saved_route}}</a>
+            <a class="secondary-btn" href="${{result.guideUrl}}" data-repair-resume-route data-funnel-event="repair_resume_guide">${{quiz.labels.saved_route}}</a>
             <a class="secondary-btn" href="${{result.planUrl}}" data-repair-resume-plan data-funnel-event="repair_resume_plan">${{resumePlan}}</a>
-            <a class="secondary-btn" href="${{result.lunaUrl}}" data-repair-resume-luna data-funnel-event="repair_resume_luna">${{quiz.labels.saved_luna}}</a>
-            <a class="secondary-btn" href="${{result.collectorHallUrl}}" data-repair-resume-keepsake data-funnel-event="repair_resume_keepsake">${{result.collectorHall}}</a>
-            <a class="secondary-btn" href="${{result.contactUrl}}" data-repair-resume-contact data-funnel-event="repair_resume_contact">${{quiz.labels.saved_contact}}</a>
-            <a class="secondary-btn" href="${{result.supplyBookUrl}}" data-funnel-event="repair_resume_affiliate_book">${{bookstoreLabel}}</a>
+            <a class="secondary-btn" href="${{result.compassUrl}}" data-repair-resume-compass data-funnel-event="repair_resume_compass">${{quiz.labels.conversion_compass_action}}</a>
+            <a class="secondary-btn" href="${{result.guardianUrl}}" data-repair-resume-guardian data-funnel-event="repair_resume_guardian">${{quiz.labels.guardian_link}}</a>
           </div>
         </div>
       </article>`;
@@ -14112,7 +14205,60 @@ def repair_worksheet_script(lang: str) -> str:
 """
 
 
+def repair_plan_review_page() -> None:
+    lang = "zh"
+    t = LANGS[lang]
+    plan = REPAIR_PLAN[lang]
+    days = "".join(f"""
+<article><span>{escape(day)}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p></article>
+""" for day, title, desc in plan["days"])
+    worksheet_fields = "".join(f"""
+<label><span>{escape(label)}</span><textarea data-field="{idx}" aria-label="{escape(label)}" autocomplete="off" placeholder="{escape(placeholder)}"></textarea></label>
+""" for idx, (label, placeholder) in enumerate(plan["fields"]))
+    practice_cards = [
+        ("01", "守護者結果", "把測驗結果寫成目前偏好的排序，不把它當作永久人格。", "/start/#quiz-section", "回到測驗"),
+        ("02", "情境工作表", "記錄一個具體事件，再分開觀察、感受、需要與請求。", "#repair-worksheet", "填寫工作表"),
+        ("03", "關係羅盤", "檢查請求是否具體、能協商，也允許對方拒絕或提出替代方案。", "/compass/", "打開羅盤"),
+        ("04", "方法與限制", "查看工具怎麼測試、哪些情況不適用，以及結果資料如何保存。", "/lab/", "閱讀實測"),
+    ]
+    practice_markup = "".join(f"""
+<article class="repair-asset-card"><span>{number}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p><a class="secondary-btn" href="{href}" data-funnel-event="repair_free_tool_{number}">{escape(cta)}</a></article>
+""" for number, title, desc, href, cta in practice_cards)
+    guardian_rows = []
+    for slug in GUARDIANS:
+        route = supply_route(lang, slug)
+        name, typ, _guardian_desc = route["guardian"][lang]
+        guardian_rows.append(f"""
+<article class="repair-guardian-card" id="plan-{slug}">
+  {img_tag(route["guardian"]["prop"], route["title"])}
+  <div><p class="eyebrow">{escape(name)} · {escape(typ)}</p><h3>{escape(route["title"])}</h3><p>{escape(route["wound"])}</p><p><strong>本週小任務：</strong>{escape(route["mission"])}</p>
+  <div class="repair-plan-actions"><a class="primary-btn" href="{lang_url(lang, "guides/" + route["guide"]["slug"])}" data-funnel-event="repair_guardian_guide">閱讀相關指南</a><a class="secondary-btn" href="{lang_url(lang, "characters/" + slug)}" data-funnel-event="repair_guardian_profile">查看守護者</a><a class="secondary-btn" href="{lang_url(lang, "compass")}" data-funnel-event="repair_guardian_compass">打開羅盤</a></div></div>
+</article>
+""")
+    body = f"""
+<section class="page-hero compact repair-plan-hero"><p class="eyebrow">{escape(plan["eyebrow"])}</p><h1>{escape(plan["title"])}</h1><p>{escape(plan["desc"])}</p><div class="hero-actions"><a class="primary-btn" href="#repair-worksheet" data-funnel-event="repair_hero_worksheet">開始填寫</a><a class="secondary-btn" href="/start/#quiz-section" data-funnel-event="repair_hero_quiz">先完成測驗</a><a class="secondary-btn" href="/lab/repair-plan-usability-test/" data-funnel-event="repair_hero_lab">查看手機實測</a></div></section>
+{mobile_page_jump(lang, "repair")}
+<section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
+<section class="section repair-asset-section supply-panel-section" id="repair-card-pack"><div class="section-head"><div><p class="eyebrow">FREE PRACTICE TOOLS</p><h2>四個免費練習入口</h2></div></div><p class="section-intro">不必下載商品或留下名單；先用站內工具把一個真實場景整理清楚。</p><div class="supply-panel-grid repair-asset-grid">{practice_markup}</div></section>
+<section class="section repair-plan-section" id="repair-week"><div class="section-head"><div><p class="eyebrow">SEVEN DAY ROUTE</p><h2>{escape(plan["days_title"])}</h2></div></div><div class="repair-day-grid">{days}</div></section>
+<section class="section repair-worksheet-section" id="repair-worksheet"><div class="section-head"><div><p class="eyebrow">LOCAL WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div><p class="section-intro">{escape(plan["worksheet_intro"])}</p><div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status role="status" aria-live="polite">{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div><form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form></section>
+{repair_worksheet_script(lang)}
+<section class="section repair-guardian-section" id="repair-guardian-routes"><div class="section-head"><div><p class="eyebrow">GUARDIAN PRACTICES</p><h2>{escape(plan["guardian_title"])}</h2></div><a href="/start/#quiz-section">重新測驗</a></div><div class="repair-guardian-grid">{"".join(guardian_rows)}</div></section>
+<section class="section intro-grid repair-safety"><div><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></div><div class="text-stack"><h2>停止一般修復練習的情況</h2><p>若情境涉及暴力、威脅、跟蹤、強迫、控制或拒絕後報復，請先保護安全並尋求當地正式支援，不把問題當成愛之語錯頻。</p></div></section>
+"""
+    schema = json_ld({
+        "@context": "https://schema.org", "@type": "HowTo", "name": plan["title"], "description": plan["desc"],
+        "url": abs_url(lang, "repair-plan"), "inLanguage": t["code"], "dateModified": UPDATED,
+        "isPartOf": {"@type": "WebSite", "name": "LoveTypes", "url": f"{DOMAIN}/"},
+        "step": [{"@type": "HowToStep", "position": idx, "name": title, "text": desc} for idx, (_day, title, desc) in enumerate(plan["days"], start=1)],
+    })
+    write(page_path(lang, "repair-plan"), layout(lang, f"{plan['title']} | LoveTypes", plan["desc"], "repair-plan", body, plan["title"], "article", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
+
+
 def repair_plan_page(lang: str) -> None:
+    if lang == "zh":
+        repair_plan_review_page()
+        return
     t = LANGS[lang]
     plan = REPAIR_PLAN[lang]
     section_labels = SECTION_LABELS[lang]
@@ -14708,6 +14854,22 @@ def lead_intake_form_script(lang: str) -> str:
 
 
 def contact_request_section(lang: str) -> str:
+    if lang == "zh":
+        return f"""
+<section class="section contact-request-section" id="site-repair-report">
+  <div class="section-head"><div><p class="eyebrow">CONTENT CORRECTION</p><h2>回報內容、連結或可用性問題</h2></div></div>
+  <p class="section-intro">請附上頁面網址、你看到的文字或操作、裝置與瀏覽器，以及預期結果。不要寄送測驗答案、伴侶私訊、身分證件、醫療紀錄或其他敏感資料。</p>
+  <div class="contact-request-grid">
+    <article><span>01</span><h3>內容修正</h3><p>指出錯字、來源失效、陳述不清或安全界線不足的位置。</p></article>
+    <article><span>02</span><h3>技術問題</h3><p>說明壞連結、鍵盤操作、對比、圖片或手機版面的問題與重現步驟。</p></article>
+    <article><span>03</span><h3>隱私請求</h3><p>要求查詢、更正或刪除你先前主動寄送的通信紀錄。</p></article>
+  </div>
+  <div class="contact-request-note">
+    <p>一般回報請寄至下方信箱。危急、暴力、跟蹤、強迫或自傷風險不適合透過本站處理，請優先聯絡所在地的緊急與專業支援。</p>
+    <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={quote('LoveTypes 內容或技術修正')}" data-funnel-event="contact_repair_mailto">寄送修正回報</a>
+  </div>
+</section>
+"""
     request = CONTACT_REQUESTS[lang]
     repair = CONTACT_REPAIR_REPORTS[lang]
     funnel = CONTACT_FUNNEL_SUMMARY[lang]
@@ -14945,7 +15107,8 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "contact":
         extra = '<p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p>'
     if slug in {"privacy", "terms"}:
-        extra = f"<p><strong>{escape(t['updated_label'])}:</strong> {UPDATED}</p>"
+        policy_updated = PRIVACY_UPDATED if slug == "privacy" else UPDATED
+        extra = f"<p><strong>{escape(t['updated_label'])}:</strong> {policy_updated}</p>"
     if slug in {"contact", "privacy", "terms"}:
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
         contact_requests = contact_request_section(lang) if slug == "contact" else ""
@@ -14961,7 +15124,8 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{escape(t["boundary_text"])}</p>
 </section>
 """
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"{schema_type}","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        page_updated = PRIVACY_UPDATED if slug == "privacy" else UPDATED
+        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"{schema_type}","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{page_updated}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
         write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
         return
@@ -16669,6 +16833,8 @@ def collect_release_info() -> dict:
                 "tools/site_quality_audit.py",
                 "tools/content_uniqueness_audit.py",
                 "tools/adsense_review_surface_audit.py",
+                "tools/privacy_runtime_consistency_audit.py",
+                "tools/review_commercial_isolation_audit.py",
             ],
             "conversionAndCommerce": [
                 "tools/guardian_conversion_audit.py",
@@ -16770,7 +16936,7 @@ def collect_site_health() -> dict:
         },
         "promotionProfileVerification": profile_verification,
         "localAuditCoverage": {
-            "structure": ["site_quality", "content_uniqueness", "adsense_review_surface"],
+            "structure": ["site_quality", "content_uniqueness", "adsense_review_surface", "privacy_runtime_consistency", "review_commercial_isolation"],
             "conversion": ["guardian_conversion", "affiliate_locale", "promotion_writeback_flow"],
             "promotion": ["platform_kpi_tracker", "publishing_status", "launch_readiness", "launch_command_center"],
             "experience": ["accessibility", "image_assets", "performance_budget"],
@@ -16907,7 +17073,7 @@ CORE_LASTMOD = {
     "repair-plan": "2026-07-25",
     "about": "2026-07-31",
     "contact": "2026-07-21",
-    "privacy": "2026-07-21",
+    "privacy": PRIVACY_UPDATED,
     "terms": "2026-07-21",
     "lab": LAB_INDEX_UPDATED,
 }

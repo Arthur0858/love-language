@@ -20,6 +20,8 @@ PYTHON_TOOLS = [
     "tools/content_uniqueness_audit.py",
     "tools/content_value_audit.py",
     "tools/adsense_review_surface_audit.py",
+    "tools/privacy_runtime_consistency_audit.py",
+    "tools/review_commercial_isolation_audit.py",
     "tools/multilingual_route_audit.py",
     "tools/guardian_conversion_audit.py",
     "tools/affiliate_locale_audit.py",
@@ -270,6 +272,8 @@ def main() -> int:
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
         if args.site_only:
             run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
+            run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
+            run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])
             run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
             run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
             run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
@@ -282,6 +286,8 @@ def main() -> int:
         run_step("content uniqueness audit", [sys.executable, "tools/content_uniqueness_audit.py"])
         run_step("content value audit", [sys.executable, "tools/content_value_audit.py"])
         run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
+        run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
+        run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])
         run_step("multilingual route audit", [sys.executable, "tools/multilingual_route_audit.py"])
         run_step("guardian conversion audit", [sys.executable, "tools/guardian_conversion_audit.py"])
         run_step("affiliate locale audit", [sys.executable, "tools/affiliate_locale_audit.py"])

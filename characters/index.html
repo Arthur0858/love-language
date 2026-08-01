@@ -285,7 +285,7 @@
   const intro = currentSlug
     ? (isCurrent ? quiz.labels.guardian_resume_match : quiz.labels.guardian_resume_other)
     : quiz.labels.guardian_resume_intro;
-  const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.resourceUrl;
+  const primaryHref = currentSlug && !isCurrent ? result.guardianUrl : result.guideUrl;
   const primaryLabel = currentSlug && !isCurrent ? quiz.labels.guardian_link : quiz.labels.saved_route;
   box.innerHTML = `
     <article class="guardian-resume-card pass-resume-card" id="guardian-result-${result.slug}" style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
@@ -304,9 +304,7 @@
           <a class="primary-btn" href="${primaryHref}" data-guardian-resume-primary data-funnel-event="guardian_resume_primary">${primaryLabel}</a>
           <a class="secondary-btn" href="${result.guardianUrl}" data-guardian-resume-guardian data-funnel-event="guardian_resume_profile">${quiz.labels.guardian_link}</a>
           <a class="secondary-btn" href="${result.planUrl}" data-guardian-resume-plan data-funnel-event="guardian_resume_plan">${quiz.labels.saved_plan}</a>
-          <a class="secondary-btn" href="${result.collectorHallUrl}" data-guardian-resume-keepsake data-funnel-event="guardian_resume_keepsake">${quiz.labels.saved_card}</a>
-          <a class="secondary-btn" href="${result.lunaUrl}" data-guardian-resume-luna data-funnel-event="guardian_resume_luna">${quiz.labels.saved_luna}</a>
-          <a class="secondary-btn" href="${result.contactUrl}" data-guardian-resume-contact data-funnel-event="guardian_resume_contact">${quiz.labels.saved_contact}</a>
+          <a class="secondary-btn" href="${result.compassUrl}" data-guardian-resume-compass data-funnel-event="guardian_resume_compass">${quiz.labels.conversion_compass_action}</a>
           <button class="secondary-btn" type="button" data-clear-guardian-result data-funnel-event="guardian_resume_clear">${quiz.labels.saved_clear}</button>
         </div>
       </div>

@@ -156,7 +156,7 @@
 
 <section class="section trust-action-section home-safety-compass" data-home-safety-compass>
   <div class="section-head">
-    <div><p class="eyebrow">SAFE ENTRY</p><h2>進入心語庭園前，先保留三條安全路線</h2><p>LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗、領取補給或寄出需求前，你可以先看清楚資料、購買與回報邊界。</p></div>
+    <div><p class="eyebrow">SAFE ENTRY</p><h2>進入心語庭園前，先保留三條安全路線</h2><p>LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗或填寫工作表前，你可以先看清楚資料保存、內容限制與回報方式。</p></div>
   </div>
   <div class="trust-action-grid">
 <article class="trust-action-card">
@@ -168,15 +168,15 @@
 
 <article class="trust-action-card">
   <span>02</span>
-  <h3>內容與購買邊界</h3>
-  <p>指南、Luna、書卷與收藏物都是輔助練習，不承諾療效，也不取代諮商。</p>
+  <h3>內容使用邊界</h3>
+  <p>測驗、指南與工作表只用於自我理解與溝通練習，不承諾療效，也不取代諮商。</p>
   <a href="/terms/" data-home-safety-link>查看條款</a>
 </article>
 
 <article class="trust-action-card">
   <span>03</span>
   <h3>網站修復入口</h3>
-  <p>若頁面、連結、翻譯或補給需求不清楚，可以直接回報需要修復的位置。</p>
+  <p>若頁面、連結、來源或操作不清楚，可以直接回報需要修復的位置。</p>
   <a href="/contact/#site-repair-report" data-home-safety-link>回報問題</a>
 </article>
 </div>
@@ -352,7 +352,7 @@
   const startButtons = root.querySelectorAll('[data-quiz-start]');
   const storageKey = `lovetypes:${location.pathname}:quiz-result`;
   const sharedStorageKey = "lovetypes:zh:quiz-result";
-  const lunaStarterPack = {"cta": "開啟起手包", "slug": "healing-vibes-starter", "href": "/go/luna-starter-click/"};
+  const lunaStarterPack = {"cta": "打開免費羅盤", "slug": "relationship-compass", "href": "/compass/#relationship-compass-tool"};
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
   let current = 0;
@@ -500,7 +500,7 @@
             ${result.supplyProductPack.items.map((item) => `<a href="${item.href}" data-home-saved-product-link data-funnel-event="${['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}">${item.title}</a>`).join('')}
           </div>
           <div class="${actionsClass}" data-home-saved-luna-starter>
-            <a href="${lunaStarterPack.href}" data-home-saved-luna-starter-link data-funnel-event="home_saved_luna_starter_pack_click" data-luna-product="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
+            <a href="${lunaStarterPack.href}" data-home-saved-next-step-link data-funnel-event="home_saved_next_step_click" data-next-step="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
           </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${quiz.supplySafety.notNowTitle}</strong>
@@ -656,7 +656,7 @@
             <span>3</span>
             <h4>${quiz.labels.conversion_paid_title}</h4>
             <p>${quiz.labels.conversion_paid_desc}</p>
-            <a class="secondary-btn" href="${lunaStarterPack.href}" data-funnel-event="quiz_conversion_path_luna_starter" data-luna-product="${lunaStarterPack.slug}">${quiz.labels.conversion_paid_action}</a>
+            <a class="secondary-btn" href="${lunaStarterPack.href}" data-funnel-event="quiz_conversion_path_next_step" data-next-step="${lunaStarterPack.slug}">${quiz.labels.conversion_paid_action}</a>
           </article>
         </div>
       </section>
@@ -701,7 +701,7 @@
             <a href="${result.supplyBookUrl}" data-conversion-book>${quiz.affiliateButton}</a>
           </article>
         </div>
-        <p class="affiliate-disclosure">${quiz.affiliateDisclosure}</p>
+        <p class="content-note">${quiz.affiliateDisclosure}</p>
       </section>
       <section class="quiz-action-compass guardian-supply-pass" aria-label="${result.supplyProductPack.label}" data-quiz-product-pack style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
         <div class="quiz-action-head">
@@ -722,7 +722,7 @@
         <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
           <strong>${quiz.labels.luna_step}</strong>
           <p>${quiz.labels.next_pack_intro}</p>
-          <a class="primary-btn" href="${lunaStarterPack.href}" data-quiz-luna-starter-link data-funnel-event="quiz_luna_starter_pack_click" data-luna-product="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
+          <a class="primary-btn" href="${lunaStarterPack.href}" data-quiz-next-step-link data-funnel-event="quiz_next_step_click" data-next-step="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
         </div>
         <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
           <strong>${quiz.supplySafety.chooseTitle}</strong>
@@ -753,7 +753,7 @@
         <h3>${result.supplyTitle}</h3>
         <p>${result.supplyDesc}</p>
         <ul><li>${result.supplyMission}</li><li>${result.supplyText}</li><li>${result.supplyBook}</li></ul>
-        <p class="affiliate-disclosure">${quiz.affiliateDisclosure}</p>
+        <p class="content-note">${quiz.affiliateDisclosure}</p>
         <a class="primary-btn" href="${result.resourceUrl}">${quiz.labels.primary_route}</a>
       </section>
       <section class="quiz-collector-card">

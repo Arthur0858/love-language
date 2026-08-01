@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T07:29:09Z",
+  "checkedAt": "2026-08-01T08:15:06Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "b4c11fa0f4256eaeb492f9d9d8818a766e42041b",
-  "auditToolingCommit": "b4c11fa0f4256eaeb492f9d9d8818a766e42041b",
+  "reviewSurfaceCommit": "85dca47181f7e19627a5eb5f162ded34062b814d",
+  "auditToolingCommit": "920dbf53e28bf7f36af5e64342cc3688efa17d46",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "63fd6901-a04a-4ba1-acc6-0efe169a083d",
-    "preview": "https://63fd6901.lovetypes.pages.dev"
+    "id": "2666e57d-2676-4da4-9643-e823794e7dad",
+    "preview": "https://2666e57d.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for relationship-only compass surface",
+      "name": "pages build and deployment for differentiated Heart Garden map",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30689758355"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30691300345"
     },
     {
-      "name": "LoveTypes predeploy check for relationship-only compass surface",
+      "name": "LoveTypes predeploy check with Heart Garden performance coverage",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30689758640"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30691300417"
     }
   ],
   "productionChecks": {
@@ -28,7 +28,7 @@
     "indexabilityCases": 56,
     "headerCases": 51,
     "assetReferences": 444,
-    "internalLinks": 1186,
+    "internalLinks": 1178,
     "jsonLdBlocks": 118,
     "editorialGuides": 12,
     "labReports": 8,
@@ -41,6 +41,11 @@
     "compassMainCjk": 2930,
     "compassEditorialBylines": 1,
     "forbiddenPositioningTerms": 0,
+    "gardenMapMainCjk": 1145,
+    "gardenMapDecisionCards": 5,
+    "gardenMapInteractiveTools": 2,
+    "gardenMapGuideJaccard": 0.089,
+    "gardenMapGuideContainment": 0.168,
     "editorialSourceHosts": 5,
     "labEvidenceImages": 16,
     "externalLinks": 9,
@@ -52,13 +57,15 @@
   "runtimePerformance": {
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
-    "pagesChecked": 9,
-    "worstLcpMs": 224,
+    "pagesChecked": 10,
+    "worstLcpMs": 476,
     "worstCls": 0,
     "maxTransferBytes": 352341,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
+    "gardenMapLcpMs": 308,
+    "gardenMapTransferBytes": 232310,
     "issues": 0
   },
   "commands": [

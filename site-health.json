@@ -12,13 +12,13 @@
     "routeGroups": 5,
     "coreFlows": 5,
     "guardians": 5,
-    "guardianRoutes": 35,
+    "guardianRoutes": 20,
     "guardianAssets": 20,
     "commerceItems": 20,
     "commerceTypes": 4,
     "commerceRoles": 3,
-    "funnelEvents": 157,
-    "funnelTrackedOccurrences": 761,
+    "funnelEvents": 132,
+    "funnelTrackedOccurrences": 573,
     "supportFiles": 19
   },
   "requiredGates": {

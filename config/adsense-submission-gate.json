@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "site": "https://lovetypes.tw/",
+  "lastMaterialChange": "2026-08-01",
+  "minimumStableDays": 14,
+  "reviewSubmitted": false,
+  "externalGates": {
+    "gscFullAccess": {"confirmed": false, "checkedAt": null, "evidence": null},
+    "sitemapAccepted": {"confirmed": false, "checkedAt": null, "evidence": null},
+    "importantPagesRecrawled": {"confirmed": false, "checkedAt": null, "evidence": null},
+    "legacyUrlsLeavingIndex": {"confirmed": false, "checkedAt": null, "evidence": null},
+    "adsTxtRecognizedByAdsense": {"confirmed": false, "checkedAt": null, "evidence": null},
+    "gscPagesWithImpressions": {
+      "confirmed": false,
+      "checkedAt": null,
+      "evidence": null,
+      "value": 0,
+      "minimum": 5
+    },
+    "productionAuditGreen": {"confirmed": false, "checkedAt": null, "evidence": null}
+  }
+}

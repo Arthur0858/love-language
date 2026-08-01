@@ -1,27 +1,25 @@
 /* TEAM */
 Site: LoveTypes
+Team: LoveTypes 內容編輯團隊
 Contact: contact@lovetypes.tw
 Production: https://lovetypes.tw/
 Updated: 2026-07-31
 
 /* SITE */
-Purpose: Heart Garden five love language reflection, guardian quiz, repair practices, Luna night support, keepsakes, and supply routes.
-Languages: zh-TW, en, ja, ko, es
-Canonical: https://lovetypes.tw/
+Purpose: 繁體中文的五種愛之語反思、守護者測驗、關係溝通指南、免費修復練習與產品實測紀錄。
+Primary language: zh-TW
 Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
-Commercial: Resources may contain localized affiliate links; Traditional Chinese pages use Books.com.tw, other language pages use Amazon Associates tag parenttechche-20. Luna packs use Gumroad purchase links.
-Safety: Reflection and communication support only; not therapy, medical, legal, or diagnostic advice.
+Editorial method: https://lovetypes.tw/about/
+Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
 
-/* HIGH-VALUE ROUTES */
+/* CORE ROUTES */
 Quiz: https://lovetypes.tw/start/
-Garden map: https://lovetypes.tw/garden-map/
-Relationship Compass: https://lovetypes.tw/compass/
-Love compatibility: https://lovetypes.tw/tools/love-compatibility/
-
+Guides: https://lovetypes.tw/guides/
 Guardians: https://lovetypes.tw/characters/
-Resources: https://lovetypes.tw/resources/
-Keepsakes: https://lovetypes.tw/keepsakes/
-Luna: https://lovetypes.tw/luna-yoga-music/
+Relationship Compass: https://lovetypes.tw/compass/
+Repair Plan: https://lovetypes.tw/repair-plan/
+Product Lab: https://lovetypes.tw/lab/
+Theory: https://lovetypes.tw/theory/
+About: https://lovetypes.tw/about/
 Contact: https://lovetypes.tw/contact/
-Search indexing plan: /search-indexing.json

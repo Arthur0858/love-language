@@ -3,7 +3,7 @@
   "generatedBy": "tools/generate_multilingual_site.py",
   "updated": "2026-07-31",
   "production": "https://lovetypes.tw/",
-  "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, and conversion routes.",
+  "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, free practices, and editorial routes.",
   "rules": [
     "Iris maps to words of affirmation.",
     "Noah maps to quality time.",
@@ -15,7 +15,7 @@
   "totals": {
     "guardians": 5,
     "languages": 2,
-    "routeTypes": 7
+    "routeTypes": 4
   },
   "guardians": [
     {
@@ -53,12 +53,9 @@
       },
       "routes": {
         "profile": "https://lovetypes.tw/characters/iris/",
-        "supply": "https://lovetypes.tw/resources/#supply-iris",
-        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-iris",
-        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-iris",
         "repairPlan": "https://lovetypes.tw/repair-plan/",
-        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-iris",
-        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+        "compass": "https://lovetypes.tw/compass/",
+        "contact": "https://lovetypes.tw/contact/#site-repair-report"
       },
       "supply": {
         "title": {
@@ -116,12 +113,9 @@
       },
       "routes": {
         "profile": "https://lovetypes.tw/characters/noah/",
-        "supply": "https://lovetypes.tw/resources/#supply-noah",
-        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-noah",
-        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-noah",
         "repairPlan": "https://lovetypes.tw/repair-plan/",
-        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-noah",
-        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+        "compass": "https://lovetypes.tw/compass/",
+        "contact": "https://lovetypes.tw/contact/#site-repair-report"
       },
       "supply": {
         "title": {
@@ -179,12 +173,9 @@
       },
       "routes": {
         "profile": "https://lovetypes.tw/characters/vivian/",
-        "supply": "https://lovetypes.tw/resources/#supply-vivian",
-        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-vivian",
-        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-vivian",
         "repairPlan": "https://lovetypes.tw/repair-plan/",
-        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-vivian",
-        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+        "compass": "https://lovetypes.tw/compass/",
+        "contact": "https://lovetypes.tw/contact/#site-repair-report"
       },
       "supply": {
         "title": {
@@ -241,12 +232,9 @@
       },
       "routes": {
         "profile": "https://lovetypes.tw/characters/claire/",
-        "supply": "https://lovetypes.tw/resources/#supply-claire",
-        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-claire",
-        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-claire",
         "repairPlan": "https://lovetypes.tw/repair-plan/",
-        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-claire",
-        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+        "compass": "https://lovetypes.tw/compass/",
+        "contact": "https://lovetypes.tw/contact/#site-repair-report"
       },
       "supply": {
         "title": {
@@ -303,12 +291,9 @@
       },
       "routes": {
         "profile": "https://lovetypes.tw/characters/dora/",
-        "supply": "https://lovetypes.tw/resources/#supply-dora",
-        "keepsake": "https://lovetypes.tw/keepsakes/#keepsake-card-dora",
-        "freeKeepsake": "https://lovetypes.tw/keepsakes/#free-keepsake-dora",
         "repairPlan": "https://lovetypes.tw/repair-plan/",
-        "luna": "https://lovetypes.tw/luna-yoga-music/#luna-dora",
-        "contact": "https://lovetypes.tw/contact/#luna-supply-request"
+        "compass": "https://lovetypes.tw/compass/",
+        "contact": "https://lovetypes.tw/contact/#site-repair-report"
       },
       "supply": {
         "title": {

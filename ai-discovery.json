@@ -468,8 +468,8 @@
       }
     },
     "safetyTotals": {
-      "boundaries": 5,
-      "routes": 13,
+      "boundaries": 4,
+      "routes": 10,
       "languages": 2
     }
   },

@@ -277,26 +277,15 @@
           <p class="eyebrow">${quiz.labels.saved_title}</p>
           <h3>${result.name} · ${result.type}</h3>
           <p>${quiz.labels.saved_intro}</p>
-          <p><strong>${quiz.labels.next_pack_title}</strong> · ${result.supplyTitle}</p>
-          <p class="eyebrow">${result.supplyProductPack.label}</p>
-          <div class="${actionsClass}" data-home-saved-product-pack>
-            ${result.supplyProductPack.items.map((item) => `<a href="${item.href}" data-home-saved-product-link data-funnel-event="${['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact'][Number(item.number) - 1] || 'home_saved_pack_link'}">${item.title}</a>`).join('')}
-          </div>
-          <div class="${actionsClass}" data-home-saved-luna-starter>
-            <a href="${lunaStarterPack.href}" data-home-saved-next-step-link data-funnel-event="home_saved_next_step_click" data-next-step="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
-          </div>
           <div class="callout safety supply-pack-safety-note" data-home-saved-supply-safety>
             <strong>${quiz.supplySafety.notNowTitle}</strong>
             <p>${quiz.supplySafety.notNowText}</p>
           </div>
           <div class="${actionsClass}">
-            <a href="${result.resourceUrl}" data-home-resume-route>${quiz.labels.saved_route}</a>
+            <a href="${result.guideUrl}" data-home-resume-guide>${quiz.labels.saved_route}</a>
             <a href="${result.planUrl}" data-home-saved-plan data-home-resume-plan>${quiz.labels.saved_plan}</a>
-            <a href="${result.lunaUrl}" data-home-resume-luna>${quiz.labels.saved_luna}</a>
-            <a href="${result.collectorHallUrl}" data-home-saved-keepsake data-home-resume-keepsake>${quiz.labels.saved_card}</a>
-            <a href="${result.contactUrl}" data-home-resume-contact>${quiz.labels.saved_contact}</a>
+            <a href="${result.compassUrl}" data-home-resume-compass>${quiz.labels.conversion_compass_action}</a>
             <a href="${result.guardianUrl}" data-home-resume-guardian>${quiz.labels.guardian_link}</a>
-            <button type="button" data-result-action="story" data-funnel-event="home_resume_story_generate" data-story-name="${result.name}" data-story-title="${result.type}" data-story-quote="${result.supplyMission}" data-story-image="${result.resultImage}" data-story-slug="${result.slug}" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
             <button type="button" data-share-saved-result>${quiz.labels.share}</button>
             <button type="button" data-copy-saved-result>${quiz.labels.saved_copy}</button>
             <button type="button" data-clear-saved-result ${variant === 'home' ? 'data-clear-home-result' : ''}>${quiz.labels.saved_clear}</button>
@@ -390,6 +379,11 @@
       image: result.resultImage,
       slug: result.slug
     };
+    const routeActions = `
+      <a class="primary-btn" href="${result.guideUrl}" data-conversion-guide>${quiz.labels.primary_route}</a>
+      <a class="secondary-btn" href="${result.planUrl}" data-conversion-plan>${quiz.labels.secondary_plan}</a>
+      <a class="secondary-btn" href="${result.compassUrl}" data-conversion-compass>${quiz.labels.conversion_compass_action}</a>
+      <a class="secondary-btn" href="${result.guardianUrl}">${quiz.labels.guardian_link}</a>`;
     try {
       const savedPayload = savedResultPayload(primaryKey);
       localStorage.setItem(storageKey, JSON.stringify(savedPayload));
@@ -407,14 +401,7 @@
         </div>
       </article>
       <nav class="quiz-route-card" aria-label="${quiz.labels.routes_title}">
-        <a class="primary-btn" href="${result.resourceUrl}" data-conversion-route>${quiz.labels.primary_route}</a>
-        <a class="secondary-btn" href="${result.planUrl}" data-conversion-plan>${quiz.labels.secondary_plan}</a>
-        <a class="secondary-btn" href="${result.compassUrl}" data-conversion-compass>${quiz.labels.conversion_compass_action}</a>
-        <a class="secondary-btn" href="${result.lunaUrl}" data-conversion-luna>${quiz.labels.luna_action}</a>
-        <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-keepsake>${quiz.labels.saved_card}</a>
-        <a class="secondary-btn" href="${result.contactUrl}" data-conversion-contact>${quiz.labels.saved_contact}</a>
-        <a class="secondary-btn" href="${result.guideUrl}" data-conversion-guide>${quiz.labels.guide_link}</a>
-        <a class="secondary-btn" href="${result.guardianUrl}">${quiz.labels.guardian_link}</a>
+        ${routeActions}
       </nav>
       <section class="quiz-conversion-path" aria-label="${quiz.labels.conversion_path_title}" data-quiz-conversion-path>
         <div class="quiz-action-head">
@@ -451,107 +438,11 @@
         }).join('')}
       </section>
       <section class="quiz-advice-card"><h3>${quiz.labels.tips_title}</h3><ul>${result.tips.map((tip) => `<li>${tip}</li>`).join('')}</ul></section>
-      <section class="quiz-action-compass guardian-supply-pass" aria-label="${quiz.labels.compass_title}" data-supply-pass style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
-        <div class="supply-pass-head">
-          <div>
-            <p class="eyebrow">${quiz.labels.pass_title}</p>
-            <h3>${quiz.labels.next_pack_title}</h3>
-            <p>${quiz.labels.next_pack_intro}</p>
-          </div>
-          <div class="supply-pass-stamp" aria-label="${quiz.labels.pass_code}">
-            <img src="${result.domainProp}" alt="${result.domainTitle}" width="${result.domainPropWidth}" height="${result.domainPropHeight}" loading="lazy" decoding="async" fetchpriority="low">
-            <span>${result.domainTitle}</span>
-          </div>
-        </div>
-        <p class="supply-pass-domain">${result.domainDesc}</p>
-        <div class="quiz-action-grid">
-          <article>
-            <span>1</span>
-            <h4>${quiz.labels.free_step}</h4>
-            <p>${result.supplyMission}</p>
-            <a href="${result.planUrl}">${result.planLabel}</a>
-          </article>
-          <article>
-            <span>2</span>
-            <h4>${quiz.labels.luna_step}</h4>
-            <p>${result.supplyText}</p>
-            <a href="${result.lunaUrl}">${quiz.labels.luna_action}</a>
-          </article>
-          <article>
-            <span>3</span>
-            <h4>${quiz.labels.book_step}</h4>
-            <p>${quiz.labels.book_intro}：${result.supplyBook}</p>
-            <a href="${result.supplyBookUrl}" data-conversion-book>${quiz.affiliateButton}</a>
-          </article>
-        </div>
-        <p class="content-note">${quiz.affiliateDisclosure}</p>
-      </section>
-      <section class="quiz-action-compass guardian-supply-pass" aria-label="${result.supplyProductPack.label}" data-quiz-product-pack style="--result-accent:${result.domainAccent || result.color};--domain-glow:${result.domainGlow || result.color}">
-        <div class="quiz-action-head">
-          <p class="eyebrow">${result.supplyProductPack.label}</p>
-          <h3>${result.supplyTitle}</h3>
-        </div>
-        <p class="supply-pass-domain">${result.supplyProductPack.note}</p>
-        <div class="quiz-action-grid">
-          ${result.supplyProductPack.items.map((item) => `
-            <article>
-              <span>${item.number}</span>
-              <h4>${item.title}</h4>
-              <p>${item.desc}</p>
-              <a href="${item.href}" data-quiz-product-pack-link data-funnel-event="${['supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact'][Number(item.number) - 1] || 'supply_pack_link'}">${item.title}</a>
-            </article>
-          `).join('')}
-        </div>
-        <div class="callout safety supply-pack-safety-note" data-quiz-luna-starter>
-          <strong>${quiz.labels.luna_step}</strong>
-          <p>${quiz.labels.next_pack_intro}</p>
-          <a class="primary-btn" href="${lunaStarterPack.href}" data-quiz-next-step-link data-funnel-event="quiz_next_step_click" data-next-step="${lunaStarterPack.slug}">${lunaStarterPack.cta}</a>
-        </div>
-        <div class="callout safety supply-pack-safety-note" data-quiz-supply-safety>
-          <strong>${quiz.supplySafety.chooseTitle}</strong>
-          <p>${quiz.supplySafety.chooseText}</p>
-          <strong>${quiz.supplySafety.notNowTitle}</strong>
-          <p>${quiz.supplySafety.notNowText}</p>
-        </div>
-      </section>
-      <section class="quiz-starter-kit" aria-label="${result.starterKit.title}">
-        <div class="quiz-action-head">
-          <p class="eyebrow">${result.starterKit.eyebrow}</p>
-          <h3>${result.starterKit.title}</h3>
-        </div>
-        <p>${result.starterKit.intro}</p>
-        <div class="quiz-starter-grid">
-          ${result.starterKit.steps.map((step) => `
-            <article>
-              <span>${step.number}</span>
-              <h4>${step.title}</h4>
-              <p>${step.desc}</p>
-              <a href="${step.href}">${step.action}</a>
-            </article>
-          `).join('')}
-        </div>
-      </section>
-      <section class="quiz-supply-card">
-        <p class="eyebrow">${quiz.labels.resources_link}</p>
-        <h3>${result.supplyTitle}</h3>
-        <p>${result.supplyDesc}</p>
-        <ul><li>${result.supplyMission}</li><li>${result.supplyText}</li><li>${result.supplyBook}</li></ul>
-        <p class="content-note">${quiz.affiliateDisclosure}</p>
-        <a class="primary-btn" href="${result.resourceUrl}">${quiz.labels.primary_route}</a>
-      </section>
-      <section class="quiz-collector-card">
-        <img src="${result.storyImage}" alt="${result.collectorTitle} ${result.name}" width="${result.storyImageWidth}" height="${result.storyImageHeight}" loading="lazy" decoding="async" fetchpriority="low">
-        <div>
-          <p class="eyebrow">${result.collectorTitle}</p>
-          <h3>${result.name}</h3>
-          <p>${result.collectorHint}</p>
-          <div class="quiz-collector-actions">
-            <a class="primary-btn" href="${result.storyImage}" target="_blank" rel="noopener noreferrer">${result.collectorOpen}</a>
-            <a class="secondary-btn" href="${result.storyImage}" download>${result.collectorSave}</a>
-            <button class="secondary-btn" type="button" data-result-action="story" data-funnel-event="quiz_result_story_generate" data-story-kicker="${result.collectorStoryKicker}" data-story-cta="${result.collectorStoryCta}" data-story-error="${result.collectorStoryError}">${result.collectorStory}</button>
-            <a class="secondary-btn" href="${result.collectorHallUrl}" data-conversion-collector-keepsake>${result.collectorHall}</a>
-          </div>
-        </div>
+      <section class="callout safety quiz-result-boundary" data-quiz-result-boundary>
+        <strong>${quiz.supplySafety.chooseTitle}</strong>
+        <p>${quiz.supplySafety.chooseText}</p>
+        <strong>${quiz.supplySafety.notNowTitle}</strong>
+        <p>${quiz.supplySafety.notNowText}</p>
       </section>
       <div class="quiz-tools"><button type="button" class="secondary-btn" data-share-result>${quiz.labels.share}</button><button type="button" class="secondary-btn" data-copy-result>${quiz.labels.copy}</button><button type="button" class="secondary-btn" data-retake>${quiz.labels.retake}</button></div>
       <p class="quiz-boundary">${quiz.labels.boundary}</p>`;

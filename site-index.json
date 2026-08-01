@@ -52,12 +52,12 @@
       ]
     },
     {
-      "id": "commercial_disclosure",
-      "entry": "https://lovetypes.tw/resources/",
+      "id": "tool_evidence",
+      "entry": "https://lovetypes.tw/compass/",
       "next": [
-        "https://lovetypes.tw/contact/#luna-supply-request"
-      ],
-      "indexing": "noindex, follow"
+        "https://lovetypes.tw/lab/compatibility-safety-test/",
+        "https://lovetypes.tw/repair-plan/"
+      ]
     },
     {
       "id": "trust_boundary",

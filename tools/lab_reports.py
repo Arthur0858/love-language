@@ -1,6 +1,6 @@
 """Reproducible LoveTypes product test reports shown on the public lab pages."""
 
-LAB_UPDATED = "2026-07-31"
+LAB_UPDATED = "2026-08-01"
 
 LAB_REPORTS = [
     {
@@ -120,7 +120,7 @@ LAB_REPORTS = [
 
 LAB_TEST_DETAILS = {
     "quiz-scoring-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-QZ-001",
         "fixture": "基準序列：W,T,G,S,P,W,T,G,S,P,W,T,G,S,P。人工預期 W=3、T=3、G=3、S=3、P=3；同分規則依 W→T→G→S→P 固定順序選 W。偏向序列：W,W,W,W,T,T,T,G,G,S,S,P,P,P,P，預期 W=4、P=4、T=3、G=2、S=2，同分仍選 W。",
         "raw_observation": "兩組序列均完成 15 次點擊。基準序列顯示五類各 20%，主要守護者為 Iris；偏向序列顯示 W 27%、P 27%、T 20%、G 13%、S 13%，四捨五入後合計 100%。重新整理三次均讀回相同 primaryKey 與 score 物件，未完成第 15 題時 localStorage 沒有 quiz-result 完成紀錄。",
@@ -130,7 +130,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 五類原始分數與同分固定排序的桌面證據畫面",
     },
     "result-consistency-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-QZ-002",
         "fixture": "A 序列：W,W,W,W,T,T,T,G,G,G,S,S,P,P,P，預期 W=4、T=3、G=3、S=2、P=3。B 序列完全重複 A。C 序列只把第 8 題 G 改為 P，預期 W=4、P=4、T=3、G=2、S=2。每輪先清除保存鍵，避免讀回前一輪。",
         "raw_observation": "A 與 B 的五類原始分數、主要守護者、結果說明與分享文字一致。C 只改變 G 與 P 各一分，主要結果因 W/P 同分仍依固定順序保持 W；其他三類沒有漂移。360×800 與 1440×900 只改變版面排列，資料物件與文字順序一致。",
@@ -140,7 +140,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 單題變更前後五類分數並列比較畫面",
     },
     "local-storage-privacy-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-PR-001",
         "fixture": "測驗 fixture 使用 W,T,G,S,P 重複三輪；修復表測試字串為 LT-LOCAL-ONLY-0731。檢查鍵包含 lovetypes:zh:quiz-result、頁面路徑版本的 quiz-result，以及 repair-plan 對應欄位。第二內容區與無痕視窗不先造訪本站。",
         "raw_observation": "一般視窗完成後重新整理仍可讀回結果與測試字串。依序按清除結果和清除工作表後，相關鍵不存在，頁面回到未填狀態。無痕視窗、第二瀏覽器內容區與另一個 Chrome profile 均未出現測試字串；Network 面板沒有發現把作答內容送往 LoveTypes API 的請求。",
@@ -150,7 +150,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 清除本機保存後欄位回到空白的證據畫面",
     },
     "share-card-privacy-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-PR-002",
         "fixture": "先完成偏向 Claire 的固定答案，並在修復表輸入辨識字串 LT-PRIVATE-ANSWER-0731。依序擷取 Web Share payload、複製備援純文字、預製故事卡網址與頁面 URL；搜尋辨識字串、questions、scores、repair 與 localStorage 鍵名。",
         "raw_observation": "分享標題包含 LoveTypes 與 Claire，本文包含守護者摘要及公開角色頁 URL。四種輸出都沒有逐題答案、五類分數、修復字串或 localStorage 值；網址沒有 query/hash 個人參數。故事卡是部署前產生的固定 WebP，同一角色的使用者取得相同檔案。",
@@ -160,7 +160,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 分享前提示與純文字 payload 的核對畫面",
     },
     "compatibility-safety-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-CP-001",
         "fixture": "固定組合為 W×W、W×T、T×W、G×S、P×W，關係狀態依序選交往中、遠距、衝突後、同住與尚未定義。逐一搜尋相配率、百分比、命定伴侶、關係預言、分手判決、出生推算及保證等字詞。",
         "raw_observation": "所有完整輸入都產生共同理解、可能錯頻、可說句子與今日行動，不輸出相配分數或未來預言。W×T 與 T×W 的角色描述隨位置交換，但核心差異與安全提醒一致。未選完整時按鈕不產生結果。頁面未要求姓名、生日、出生時間或聯絡資料，也沒有購買或報告索取 CTA。",
@@ -170,7 +170,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 關係羅盤僅顯示對話建議而沒有相配分數的結果畫面",
     },
     "repair-plan-usability-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-UX-001",
         "fixture": "360×800 與 390×844 各走一次。短字串依序填 Iris、昨晚訊息被略過、希望今晚有十分鐘專心聽、週日回看；長字串以 120 個繁中文字填入每個 textarea。使用 Tab、Shift+Tab、Enter 與觸控各完成一次。",
         "raw_observation": "兩個寬度均無水平溢出，長文字使欄位垂直增高且不遮住下一個標籤。重新整理後四欄仍在，清除後全部回空白。鍵盤焦點依 DOM 閱讀順序移動，固定按鈕沒有蓋住目前欄位；開啟 reduced-motion 後未出現強制平滑捲動。",
@@ -180,7 +180,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 7 日修復表填入長文字後仍不遮擋控制的手機畫面",
     },
     "keyboard-accessibility-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-A11Y-001",
         "fixture": "從網址列開始，依序使用 Tab 到跳至內容、主導覽、測驗選項、羅盤選擇與清除控制；反向以 Shift+Tab 返回。對比以 WCAG AA 一般文字 4.5:1、大字 3:1 為門檻；動畫測試設定 prefers-reduced-motion: reduce。",
         "raw_observation": "跳至內容在取得焦點時可見並正確移到 main。所有原生按鈕、連結、select 與 details 都能以鍵盤操作，焦點框沒有被 overflow 裁切。自動掃描未發現門檻以下的文字對比；reduced-motion 下平滑捲動與裝飾轉場停用。未發現鍵盤陷阱或焦點跳回頁首。",
@@ -190,7 +190,7 @@ LAB_TEST_DETAILS = {
         "secondary_alt": "LoveTypes 跳至內容連結與鍵盤焦點框的近距離證據畫面",
     },
     "slow-network-performance-test": {
-        "updated": "2026-07-31",
+        "updated": "2026-08-01",
         "test_id": "LT-LAB-PF-001",
         "fixture": "桌面與 360×800 使用 Fast 3G 模擬：下載 1.6 Mbps、上傳 750 Kbps、延遲 150 ms。阻擋 guide-toolkit-og.jpg 與一張守護者 WebP，再完全停用 JavaScript開啟首頁、指南、About、Privacy 與 Compass。",
         "raw_observation": "指南標題、前言與正文在非關鍵圖片完成前可讀；阻擋圖片後保留固定寬高與 alt，沒有大幅版面跳動。關閉 JavaScript 時指南、來源、作者、修訂、About 與隱私完整可讀。Compass 保留用途、安全限制與免費閱讀路徑，但不偽造互動結果；首頁測驗控制不運作且未顯示已完成狀態。",

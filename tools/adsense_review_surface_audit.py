@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import html
+import hashlib
 import json
 import re
 import sys
@@ -162,6 +163,7 @@ def main() -> int:
             if json.dumps(item, ensure_ascii=False).find('"@type": "Person"') >= 0:
                 issues.append(f"fictional Person schema found: {slug}")
 
+    evidence_hashes: dict[str, str] = {}
     for report in LAB_REPORTS:
         slug = report["slug"]
         path = ROOT / "lab" / slug / "index.html"
@@ -179,6 +181,16 @@ def main() -> int:
         detail_image = ROOT / report["secondary_screenshot"].lstrip("/")
         if not detail_image.exists() or detail_image.stat().st_size < 1000:
             issues.append(f"lab secondary screenshot missing or empty: {report['secondary_screenshot']}")
+        for evidence_path in (image, detail_image):
+            if not evidence_path.exists():
+                continue
+            digest = hashlib.sha256(evidence_path.read_bytes()).hexdigest()
+            if digest in evidence_hashes:
+                issues.append(
+                    f"lab evidence image duplicates {evidence_hashes[digest]}: "
+                    f"{evidence_path.relative_to(ROOT)}"
+                )
+            evidence_hashes[digest] = evidence_path.relative_to(ROOT).as_posix()
 
     for relative in ("resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"):
         raw = (ROOT / relative).read_text(encoding="utf-8")

@@ -4,10 +4,10 @@
   "updated": "2026-07-31",
   "production": "https://lovetypes.tw/",
   "contact": "contact@lovetypes.tw",
-  "description": "Machine-readable LoveTypes safety and commerce boundary index for reflection, purchase, email, and urgent-risk use cases.",
+  "description": "Machine-readable LoveTypes safety boundary index for reflection, consent, privacy, and urgent-risk use cases.",
   "totals": {
-    "boundaries": 5,
-    "routes": 13,
+    "boundaries": 4,
+    "routes": 10,
     "languages": 2
   },
   "notFor": [
@@ -16,7 +16,7 @@
     "medical advice",
     "legal advice",
     "individual diagnosis",
-    "coercive purchase pressure"
+    "coercive relationship pressure"
   ],
   "saferFirstSteps": [
     {
@@ -75,20 +75,20 @@
       ]
     },
     {
-      "id": "do_not_buy_to_fix",
-      "severity": "commercial",
+      "id": "practice_not_outcome",
+      "severity": "core",
       "title": {
-        "zh": "不要用購買代替修復",
-        "en": "Do not buy to replace repair"
+        "zh": "不要用練習取代修復",
+        "en": "Do not use exercises to replace repair"
       },
       "body": {
-        "zh": "Luna、書卷、收藏物與補給只適合作為輔助練習；若你正在衝動消費、想用商品逼對方改變，或期待商品取代道歉與溝通，請先使用免費任務。",
-        "en": "Luna, books, keepsakes, and supplies are practice supports only. If you are impulse buying, trying to force change, or expecting a product to replace apology and communication, use a free task first."
+        "zh": "網站上的測驗、句型與工作表只能協助整理想法，不能取代道歉、同意、界線協商或持續行動，也不應被用來逼迫對方改變。",
+        "en": "Quizzes, scripts, and worksheets can organize thoughts, but cannot replace apology, consent, boundary negotiation, or sustained action, and must not be used to pressure someone to change."
       },
       "routes": [
-        "https://lovetypes.tw/resources/",
         "https://lovetypes.tw/repair-plan/",
-        "https://lovetypes.tw/commerce-catalog.json"
+        "https://lovetypes.tw/theory/",
+        "https://lovetypes.tw/terms/"
       ]
     },
     {
@@ -105,23 +105,6 @@
       "routes": [
         "https://lovetypes.tw/contact/",
         "https://lovetypes.tw/privacy/"
-      ]
-    },
-    {
-      "id": "external_store_boundary",
-      "severity": "commerce",
-      "title": {
-        "zh": "外部商店由外部服務負責",
-        "en": "External stores are handled externally"
-      },
-      "body": {
-        "zh": "聯盟書卷與 Gumroad 音樂包會離開 LoveTypes；外部商店的結帳、交付、退款與帳號條款由該服務負責。",
-        "en": "Affiliate books and Gumroad audio packs leave LoveTypes. Checkout, delivery, refunds, and account terms are handled by those external services."
-      },
-      "routes": [
-        "https://lovetypes.tw/resources/",
-        "https://lovetypes.tw/luna-yoga-music/",
-        "https://lovetypes.tw/terms/"
       ]
     }
   ]

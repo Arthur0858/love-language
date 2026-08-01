@@ -1,7 +1,7 @@
 {
   "name": "LoveTypes 情感守護者宇宙",
   "short_name": "LoveTypes",
-  "description": "五種愛之語測驗、情感守護者、錯頻修復與旅人補給。",
+  "description": "五種愛之語測驗、情感守護者、關係指南與免費修復練習。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -89,9 +89,9 @@
       ]
     },
     {
-      "name": "旅人補給站",
-      "url": "/resources/",
-      "description": "依守護者路線選擇免費任務、Luna 場景與延伸書卷。",
+      "name": "深度關係指南",
+      "url": "/guides/",
+      "description": "閱讀原創關係指南、案例與文章專用工作表。",
       "icons": [
         {
           "src": "/icon-192.png",
@@ -101,9 +101,9 @@
       ]
     },
     {
-      "name": "守護者收藏室",
-      "url": "/keepsakes/",
-      "description": "保存故事卡、練習卡與未來收藏型補給入口。",
+      "name": "7 日修復計畫",
+      "url": "/repair-plan/",
+      "description": "把測驗結果轉成七天內可以完成的小練習。",
       "icons": [
         {
           "src": "/icon-192.png",
@@ -113,9 +113,9 @@
       ]
     },
     {
-      "name": "Luna 夜間補給",
-      "url": "/luna-yoga-music/",
-      "description": "睡前整理、衝突後冷卻與測驗後承接的低光入口。",
+      "name": "產品實測紀錄",
+      "url": "/lab/",
+      "description": "查看測驗、隱私、可及性與失敗情境的實測證據。",
       "icons": [
         {
           "src": "/icon-192.png",

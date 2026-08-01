@@ -39,7 +39,7 @@ const routes = [
   { name: 'lab', path: '/lab/' },
   { name: 'lab-scoring', path: '/lab/quiz-scoring-test/' },
   { name: 'lab-accessibility', path: '/lab/keyboard-accessibility-test/' },
-  { name: 'compass', path: '/compass/' },
+  { name: 'compass', path: '/compass/', compass: true },
   { name: 'repair-plan', path: '/repair-plan/' },
   { name: 'about', path: '/about/' },
   { name: 'contact', path: '/contact/' },
@@ -90,8 +90,17 @@ for (const viewport of viewports) {
       const response = await page.goto(`${base}${route.path}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
       if (!response || response.status() >= 400) issues.push(`${route.name}-${viewport.name}: HTTP ${response?.status() || 'none'}`);
       if (route.quiz) await finishQuiz(page);
+      if (route.compass) {
+        await page.locator('[data-compass-form]').waitFor({ state: 'visible', timeout: 10000 });
+        await page.locator('[name="self"]').selectOption('W');
+        await page.locator('[name="partner"]').selectOption('T');
+        await page.locator('[name="status"]').selectOption('dating');
+        await page.locator('[name="issue"]').selectOption('feeling-unheard');
+        await page.locator('[data-compass-form] button[type="submit"]').click();
+        await page.locator('[data-compass-result]').waitFor({ state: 'visible', timeout: 10000 });
+      }
       await page.waitForTimeout(100);
-      const state = await page.evaluate(() => ({
+      const state = await page.evaluate((flags) => ({
         title: document.title.trim(),
         h1: document.querySelector('h1')?.textContent?.trim() || '',
         mainText: document.querySelector('main')?.innerText?.trim().length || 0,
@@ -99,12 +108,38 @@ for (const viewport of viewports) {
         brokenImages: [...document.images]
           .filter((image) => image.getBoundingClientRect().width > 0 && image.complete && image.naturalWidth === 0)
           .map((image) => image.currentSrc || image.src),
-      }));
+        quizResultText: flags.isQuiz ? document.querySelector('[data-quiz-result]')?.innerText || '' : '',
+        quizResultHrefs: flags.isQuiz
+          ? [...document.querySelectorAll('[data-quiz-result] a[href]')].map((anchor) => anchor.getAttribute('href') || '')
+          : [],
+        compassResultText: flags.isCompass ? document.querySelector('[data-compass-result]')?.innerText || '' : '',
+        compassResultHrefs: flags.isCompass
+          ? [...document.querySelectorAll('[data-compass-result] a[href]')].map((anchor) => anchor.getAttribute('href') || '')
+          : [],
+        compassDateInputs: flags.isCompass ? document.querySelectorAll('[data-compass-root] input[type="date"]').length : 0,
+      }), { isQuiz: Boolean(route.quiz), isCompass: Boolean(route.compass) });
       if (!state.title) issues.push(`${route.name}-${viewport.name}: missing title`);
       if (!state.h1) issues.push(`${route.name}-${viewport.name}: missing H1`);
       if (state.mainText < 250) issues.push(`${route.name}-${viewport.name}: main text too short (${state.mainText})`);
       if (state.horizontalOverflow) issues.push(`${route.name}-${viewport.name}: horizontal overflow`);
       if (state.brokenImages.length) issues.push(`${route.name}-${viewport.name}: broken images ${state.brokenImages.join(', ')}`);
+      if (route.quiz) {
+        const salesPhrases = ['需要安靜時再買', 'Starter Pack', 'Luna', '博客來', 'Amazon', 'Gumroad', '聯盟行銷', '付費報告'];
+        const leakedPhrase = salesPhrases.find((phrase) => state.quizResultText.includes(phrase));
+        if (leakedPhrase) issues.push(`${route.name}-${viewport.name}: rendered result exposes sales phrase ${leakedPhrase}`);
+        const noindexPaths = ['/resources/', '/luna-yoga-music/', '/keepsakes/', '/go/luna'];
+        const leakedHref = state.quizResultHrefs.find((href) => noindexPaths.some((path) => href.includes(path)));
+        if (leakedHref) issues.push(`${route.name}-${viewport.name}: rendered result links to noindex route ${leakedHref}`);
+      }
+      if (route.compass) {
+        const forbiddenCompassPhrases = ['付費', '購買', '價格', '報告需求', '八字', '流年', 'Gumroad', '出生日期'];
+        const leakedPhrase = forbiddenCompassPhrases.find((phrase) => state.compassResultText.includes(phrase));
+        if (leakedPhrase) issues.push(`${route.name}-${viewport.name}: rendered compass exposes forbidden phrase ${leakedPhrase}`);
+        const noindexPaths = ['/resources/', '/luna-yoga-music/', '/keepsakes/', '/go/luna'];
+        const leakedHref = state.compassResultHrefs.find((href) => noindexPaths.some((path) => href.includes(path)));
+        if (leakedHref) issues.push(`${route.name}-${viewport.name}: rendered compass links to noindex route ${leakedHref}`);
+        if (state.compassDateInputs) issues.push(`${route.name}-${viewport.name}: compass still requests birth dates`);
+      }
       if (consoleErrors.length) issues.push(`${route.name}-${viewport.name}: console errors ${consoleErrors.join(' | ')}`);
       if (pageErrors.length) issues.push(`${route.name}-${viewport.name}: page errors ${pageErrors.join(' | ')}`);
       await page.screenshot({ path: `${output}/${route.name}-${viewport.name}.png`, fullPage: false });

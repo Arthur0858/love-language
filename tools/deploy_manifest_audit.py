@@ -22,23 +22,23 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "repair-plan/index.html",
     "robots.txt",
     "sitemap.xml",
+    "feed.xml",
+    "site.webmanifest",
     "llms.txt",
     "humans.txt",
+    "security.txt",
+    "ads.txt",
     "funnel-events.json",
-    "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",
-    "ai-discovery.json",
-    "search-indexing.json",
-    "site-health.json",
-    "release.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects", "_routes.json", "_worker.js"}
 FORBIDDEN_PREFIXES = {
     ".git/",
     ".github/",
     ".wrangler/",
+    "config/",
     "docs/",
     "node_modules/",
     "output/",
@@ -78,7 +78,7 @@ def load_generator_module():
 def required_manifest_files() -> set[str]:
     generator = load_generator_module()
     deploy = load_deploy_module()
-    return BASE_REQUIRED_MANIFEST_FILES | declared_index_and_support_files() | {
+    return BASE_REQUIRED_MANIFEST_FILES | {
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
         generator.AFFILIATE_ASSET.lstrip("/"),
@@ -121,7 +121,6 @@ def main() -> int:
     deploy = load_deploy_module()
     generator = load_generator_module()
     required_files = required_manifest_files()
-    declared_files = declared_index_and_support_files()
     special_upload_files = deployment_special_upload_files()
     manifest_paths = {
         path.relative_to(ROOT).as_posix()
@@ -136,12 +135,9 @@ def main() -> int:
             f"missing={sorted(expected_html-manifest_html)} extra={sorted(manifest_html-expected_html)}"
         )
 
-    missing_declared_required_files = sorted(declared_files.difference(required_files))
-    if missing_declared_required_files:
-        issues.append(
-            "required manifest files drift from release/site-health declarations: "
-            f"missing={missing_declared_required_files}"
-        )
+    missing_public_support = sorted(set(deploy.PUBLIC_SUPPORT_FILES) - required_files)
+    if missing_public_support:
+        issues.append(f"public support allowlist missing from required manifest files: {missing_public_support}")
 
     for rel_path in sorted(required_files):
         if rel_path not in manifest_paths:
@@ -193,8 +189,7 @@ def main() -> int:
 
     print(f"deploy_manifest_files={len(manifest_paths)}")
     print(f"deploy_manifest_required_files={len(required_files)}")
-    print(f"deploy_manifest_declared_files={len(declared_files)}")
-    print(f"deploy_manifest_missing_declared_required_files={len(missing_declared_required_files)}")
+    print(f"deploy_manifest_public_support_files={len(deploy.PUBLIC_SUPPORT_FILES)}")
     print(f"deploy_manifest_special_files={len(REQUIRED_SPECIAL_FILES)}")
     print(f"deploy_manifest_special_upload_files={len(special_upload_files)}")
     print(f"deploy_manifest_issues={len(issues)}")

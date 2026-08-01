@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
@@ -4994,5 +4995,35 @@ def main() -> int:
     return 1 if issues else 0
 
 
+def review_surface_main() -> int:
+    """Run the quality contract for the temporary Traditional Chinese review surface."""
+    scripts = (
+        "check_generated_fresh.py",
+        "adsense_review_surface_audit.py",
+        "content_uniqueness_audit.py",
+        "content_value_audit.py",
+        "privacy_runtime_consistency_audit.py",
+        "review_commercial_isolation_audit.py",
+        "accessibility_audit.py",
+        "image_asset_audit.py",
+        "performance_budget_audit.py",
+        "deploy_manifest_audit.py",
+    )
+    failures: list[str] = []
+    for script in scripts:
+        command = [sys.executable, str(ROOT / "tools" / script)]
+        result = subprocess.run(command, cwd=ROOT, check=False)
+        if result.returncode:
+            failures.append(script)
+    print(f"review_site_quality_checks={len(scripts)}")
+    print(f"review_site_quality_failures={len(failures)}")
+    for script in failures:
+        print(f"- {script}")
+    return 1 if failures else 0
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    if "--legacy-multilingual" in sys.argv:
+        sys.argv.remove("--legacy-multilingual")
+        sys.exit(main())
+    sys.exit(review_surface_main())

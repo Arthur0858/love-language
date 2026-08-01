@@ -39,10 +39,20 @@ FORCE_UPLOAD_PATHS = {
     "humans.txt",
     "funnel-events.json",
     "site-index.json",
-    "ai-discovery.json",
-    "search-indexing.json",
-    "release.json",
-    "site-health.json",
+}
+PUBLIC_SUPPORT_FILES = {
+    "robots.txt",
+    "sitemap.xml",
+    "feed.xml",
+    "site.webmanifest",
+    "llms.txt",
+    "humans.txt",
+    "security.txt",
+    "ads.txt",
+    "funnel-events.json",
+    "site-index.json",
+    "guardian-profiles.json",
+    "safety-index.json",
 }
 MAX_ASSET_SIZE = 25 * 1024 * 1024
 MAX_BUCKET_SIZE = 40 * 1024 * 1024
@@ -55,6 +65,7 @@ EXCLUDED_DIR_NAMES = {
     ".github",
     ".wrangler",
     "__pycache__",
+    "config",
     "docs",
     "node_modules",
     "output",
@@ -228,6 +239,8 @@ def should_skip_file(rel_path: str) -> bool:
         return True
     if rel_path.startswith("compass-data-") and rel_path != "compass-data-zh.js":
         return True
+    if rel_path == "compass-tool-20260707.js":
+        return True
     if rel_path.startswith("quiz-data-") and not rel_path.startswith("quiz-data-zh-"):
         return True
     if rel_path.startswith("assets/lovetypes/share/") and any(
@@ -242,6 +255,8 @@ def should_skip_file(rel_path: str) -> bool:
     if "tools" in parts[:-1]:
         return True
     name = parts[-1]
+    if len(parts) == 1 and name.endswith((".json", ".txt", ".xml", ".webmanifest", ".csv")):
+        return name not in PUBLIC_SUPPORT_FILES
     if name.startswith("."):
         return True
     if name in EXCLUDED_FILE_NAMES:

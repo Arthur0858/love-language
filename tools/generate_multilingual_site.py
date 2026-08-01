@@ -34,6 +34,7 @@ THEORY_UPDATED = "2026-08-01"
 START_UPDATED = "2026-08-01"
 REPAIR_PLAN_UPDATED = "2026-08-01"
 COMPASS_UPDATED = "2026-08-01"
+GARDEN_MAP_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -45,7 +46,7 @@ AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 REVIEW_INDEX_LANGS = ("zh",)
-CONVERSION_DOCK_PATHS = {"", "start", "garden-map", "compass", "characters", "guides", "lab"}
+CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 RETIRED_PUBLIC_ASSET_PATHS = (
@@ -10227,9 +10228,10 @@ GARDEN_MAP = {
         "handoff_title": "認領守護者後，照這個順序走",
         "handoff_intro": "測驗結果不是終點，而是一張通行證。先接住當下的需求，再把它放進可回訪、可練習、可冷卻的路線。",
         "routes_title": "四條主要路線",
-        "tools_title": "五個功能房間",
+        "tools_title": "兩個互動工具",
         "guardians_title": "五個分域入口",
-        "guides_title": "常用指南燈塔",
+        "guides_title": "依目前狀態選下一站",
+        "decisions_title": "現在停在哪一步？先做一個判斷",
         "trust_title": "信任與邊界",
         "routes": [
             ("認領守護者", "從首頁測驗開始，取得你的主要守護者與個人化下一步。", "開始測驗", "#quiz-section"),
@@ -10249,6 +10251,13 @@ GARDEN_MAP = {
             ("02", "寫成七日修復", "把情緒翻成小請求與可完成行動，避免只停在結果標籤。", "repair-plan"),
             ("03", "檢查下一句話", "用關係羅盤分開觀察、感受、需要、請求與安全界線。", "compass"),
             ("04", "查看工具限制", "閱讀產品實測，確認保存、分享與跨裝置限制。", "lab"),
+        ],
+        "decisions": [
+            ("還不知道自己的主要入口", "先完成 15 題測驗；不要從文章標題猜守護者，也不用把結果當成固定人格。", "先完成測驗", "#quiz-section"),
+            ("知道結果，但不知道怎麼告訴對方", "先整理一段只描述接收偏好的說法，避免把守護者名稱變成要求對方配合的標籤。", "整理分享說法", "guides/share-your-result"),
+            ("剛發生衝突，還在重複同一段爭論", "先停下責任歸屬，記錄事件、感受與一個可回答的小請求，再決定何時重談。", "進入衝突修復", "guides/repair-after-conflict"),
+            ("不確定這是錯頻，還是界線被越過", "先看拒絕能否被尊重、是否有威脅或控制；安全問題不使用一般配對解讀。", "先核對安全界線", "guides/healthy-boundaries"),
+            ("已經說清楚，想觀察行動是否改變", "把同一個小請求放進七天紀錄，只觀察可核對的回應，不用每天增加新要求。", "建立七日紀錄", "repair-plan"),
         ],
         "trust_routes": [
             ("關於心語庭園", "理解 LoveTypes 的宇宙觀、內容邊界與適合使用方式。", "about"),
@@ -10634,7 +10643,21 @@ def garden_map_page(lang: str) -> None:
 """ for title, desc, action, target in copy["tools"] if target in {"compass", "repair-plan"})
 
     guardian_cards = "".join(character_card(lang, slug, data) for slug, data in GUARDIANS.items())
-    guide_cards = "".join(guide_card(lang, guide) for guide in GUIDES)
+    if lang == "zh":
+        guide_section_attr = "data-garden-map-decisions"
+        guide_card_class = "garden-map-route-card garden-map-decision-card"
+        guide_section_title = copy["decisions_title"]
+        guide_cards = "".join(f"""
+<a class="{guide_card_class}" href="{map_href(target)}">
+  <span>{escape(action)}</span>
+  <h3>{escape(title)}</h3>
+  <p>{escape(desc)}</p>
+</a>
+""" for title, desc, action, target in copy["decisions"])
+    else:
+        guide_section_attr = "data-garden-map-guides"
+        guide_section_title = copy["guides_title"]
+        guide_cards = "".join(guide_card(lang, guide) for guide in GUIDES)
 
     trust_cards = "".join(f"""
 <a class="garden-map-trust-card" href="{lang_url(lang, path)}">
@@ -10648,11 +10671,12 @@ def garden_map_page(lang: str) -> None:
   <p class="eyebrow">{escape(copy["eyebrow"])}</p>
   <h1>{escape(copy["title"])}</h1>
   <p>{escape(copy["intro"])}</p>
+  {f'<p data-garden-map-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{GARDEN_MAP_UPDATED}">內容更新：{GARDEN_MAP_UPDATED}</time> · <a href="/about/#editorial-method">編輯方法</a> · <a href="/contact/#site-repair-report">內容修正</a></p>' if lang == 'zh' else ''}
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
 </section>
 <section class="section garden-map-result-resume" data-garden-map-saved hidden aria-live="polite"></section>
 <section class="section garden-map-handoff" data-garden-map-handoff>
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["after_ritual"])}</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "resources")}">{escape(t["resources"])}</a></div>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["after_ritual"])}</p><h2>{escape(copy["handoff_title"])}</h2></div><a href="{lang_url(lang, "repair-plan") if lang == 'zh' else lang_url(lang, 'resources')}">{escape(REPAIR_PLAN[lang]["title"]) if lang == 'zh' else escape(t["resources"])}</a></div>
   <p class="section-intro">{escape(copy["handoff_intro"])}</p>
   <div class="garden-map-handoff-grid">{handoff_cards}</div>
 </section>
@@ -10668,8 +10692,8 @@ def garden_map_page(lang: str) -> None:
   <div class="section-head"><div><p class="eyebrow">{escape(section_labels["five_domains"])}</p><h2>{escape(copy["guardians_title"])}</h2></div><a href="{lang_url(lang, "characters")}">{escape(t["guardians"])}</a></div>
   <div class="guardian-grid compact">{guardian_cards}</div>
 </section>
-<section class="section garden-map-guides" data-garden-map-guides>
-  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["field_guides"])}</p><h2>{escape(copy["guides_title"])}</h2></div><a href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
+<section class="section garden-map-guides" {guide_section_attr}>
+  <div class="section-head"><div><p class="eyebrow">{escape(section_labels["field_guides"])}</p><h2>{escape(guide_section_title)}</h2></div><a href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
   <div class="card-grid">{guide_cards}</div>
 </section>
 <section class="section garden-map-trust" data-garden-map-trust>
@@ -10679,7 +10703,18 @@ def garden_map_page(lang: str) -> None:
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 {garden_map_resume_script(lang)}
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["title"])}","description":"{escape(copy["desc"])}","url":"{abs_url(lang, "garden-map")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": copy["title"],
+        "description": copy["desc"],
+        "url": abs_url(lang, "garden-map"),
+        "inLanguage": t["code"],
+        "dateModified": GARDEN_MAP_UPDATED if lang == "zh" else UPDATED,
+        "isPartOf": website_ref(lang),
+        **({"author": organization_ref()} if lang == "zh" else {}),
+        "publisher": organization_ref(),
+    })
     list_items = [(title, abs_map_href(target)) for title, _desc, _action, target in copy["routes"]]
     schema += item_list_schema(copy["routes_title"], copy["intro"], list_items)
     page_title = f"{copy['title']} | LoveTypes" if lang == "zh" else f"{copy['title']} | LoveTypes {t['name']}"
@@ -17258,7 +17293,7 @@ export default {
 CORE_LASTMOD = {
     "": "2026-07-23",
     "start": START_UPDATED,
-    "garden-map": "2026-07-20",
+    "garden-map": GARDEN_MAP_UPDATED,
     "compass": COMPASS_UPDATED,
     "guides": "2026-07-30",
     "characters": "2026-07-22",

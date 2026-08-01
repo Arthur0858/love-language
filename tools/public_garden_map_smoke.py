@@ -12,7 +12,7 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-LANG_PREFIXES = {"zh": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+LANG_PREFIXES = {"zh": ""}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 GUIDE_SLUGS = (
     "share-your-result",
@@ -208,9 +208,9 @@ def validate_garden_map(base_url: str, lang: str) -> tuple[list[str], dict[str, 
     expected_sections = {
         "data-garden-map-handoff": ("garden-map-handoff-card", 4, "handoff_cards"),
         "data-garden-map-routes": ("garden-map-route-card", 4, "route_cards"),
-        "data-garden-map-tools": ("garden-map-tool-card", 5, "tool_cards"),
+        "data-garden-map-tools": ("garden-map-tool-card", 2, "tool_cards"),
         "data-garden-map-guardians": ("guardian-card", 5, "guardian_cards"),
-        "data-garden-map-guides": ("content-card", len(GUIDE_SLUGS), "guide_cards"),
+        "data-garden-map-decisions": ("garden-map-decision-card", 5, "guide_cards"),
         "data-garden-map-trust": ("garden-map-trust-card", 4, "trust_cards"),
     }
     for attr, (class_name, expected_count, stat_key) in expected_sections.items():
@@ -224,17 +224,17 @@ def validate_garden_map(base_url: str, lang: str) -> tuple[list[str], dict[str, 
             issues.append(f"{path}: expected {expected_count} {class_name}, got {count}")
 
     route_hrefs = hrefs_under(find_all(root, attr="data-garden-map-routes")[0]) if find_all(root, attr="data-garden-map-routes") else []
-    for expected in (localized_path(lang) + "#quiz-section", localized_path(lang, "characters"), localized_path(lang, "resources"), localized_path(lang, "repair-plan")):
+    for expected in (localized_path(lang) + "#quiz-section", localized_path(lang, "characters"), localized_path(lang, "guides"), localized_path(lang, "repair-plan")):
         if expected not in route_hrefs:
             issues.append(f"{path}: main routes missing {expected}")
 
     handoff_hrefs = hrefs_under(find_all(root, attr="data-garden-map-handoff")[0]) if find_all(root, attr="data-garden-map-handoff") else []
-    for expected in (localized_path(lang, "resources"), localized_path(lang, "repair-plan"), localized_path(lang, "keepsakes"), localized_path(lang, "luna-yoga-music")):
+    for expected in (localized_path(lang, "guides"), localized_path(lang, "repair-plan"), localized_path(lang, "compass"), localized_path(lang, "lab")):
         if expected not in handoff_hrefs:
             issues.append(f"{path}: handoff missing {expected}")
 
     tool_hrefs = hrefs_under(find_all(root, attr="data-garden-map-tools")[0]) if find_all(root, attr="data-garden-map-tools") else []
-    for expected in (localized_path(lang, "repair-plan"), localized_path(lang, "keepsakes"), localized_path(lang, "luna-yoga-music")):
+    for expected in (localized_path(lang, "compass"), localized_path(lang, "repair-plan")):
         if expected not in tool_hrefs:
             issues.append(f"{path}: function rooms missing {expected}")
 
@@ -244,11 +244,16 @@ def validate_garden_map(base_url: str, lang: str) -> tuple[list[str], dict[str, 
         if expected not in guardian_hrefs:
             issues.append(f"{path}: guardian map missing {expected}")
 
-    guide_hrefs = hrefs_under(find_all(root, attr="data-garden-map-guides")[0]) if find_all(root, attr="data-garden-map-guides") else []
-    for slug in GUIDE_SLUGS:
-        expected = localized_path(lang, f"guides/{slug}")
+    guide_hrefs = hrefs_under(find_all(root, attr="data-garden-map-decisions")[0]) if find_all(root, attr="data-garden-map-decisions") else []
+    for expected in (
+        localized_path(lang) + "#quiz-section",
+        localized_path(lang, "guides/share-your-result"),
+        localized_path(lang, "guides/repair-after-conflict"),
+        localized_path(lang, "guides/healthy-boundaries"),
+        localized_path(lang, "repair-plan"),
+    ):
         if expected not in guide_hrefs:
-            issues.append(f"{path}: guide lamps missing {expected}")
+            issues.append(f"{path}: decision route missing {expected}")
 
     trust_hrefs = hrefs_under(find_all(root, attr="data-garden-map-trust")[0]) if find_all(root, attr="data-garden-map-trust") else []
     for expected in (localized_path(lang, "about"), localized_path(lang, "theory"), localized_path(lang, "contact"), localized_path(lang, "privacy")):

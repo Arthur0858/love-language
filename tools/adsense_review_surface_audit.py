@@ -15,6 +15,7 @@ from editorial_guides import GUIDE_EDITORIAL_CONTENT
 from generate_multilingual_site import (
     GUARDIAN_UPDATED,
     COMPASS_UPDATED,
+    GARDEN_MAP_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     REPAIR_PLAN_UPDATED,
@@ -108,6 +109,8 @@ def main() -> int:
             issues.append(f"{route} sitemap lastmod mismatch")
     if sitemap_lastmods.get("https://lovetypes.tw/compass/") != COMPASS_UPDATED:
         issues.append("compass sitemap lastmod mismatch")
+    if sitemap_lastmods.get("https://lovetypes.tw/garden-map/") != GARDEN_MAP_UPDATED:
+        issues.append("garden-map sitemap lastmod mismatch")
 
     for route in expected:
         path = page_file(route)
@@ -340,6 +343,46 @@ def main() -> int:
             if item.get(field, {}).get("@type") != "Organization":
                 issues.append(f"compass schema {field} must be Organization")
 
+    garden_raw = page_file("/garden-map/").read_text(encoding="utf-8")
+    guide_index_raw = page_file("/guides/").read_text(encoding="utf-8")
+    garden_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(garden_raw)))
+    if not 1100 <= garden_cjk <= 1700:
+        issues.append(f"garden-map main CJK count outside 1100-1700: {garden_cjk}")
+    if garden_raw.count("garden-map-decision-card") != 5:
+        issues.append("garden-map needs exactly five state decision cards")
+    if garden_raw.count('class="garden-map-tool-card"') != 2:
+        issues.append("garden-map needs exactly two review-safe interactive tools")
+    for marker in ("data-garden-map-editorial-byline", "data-garden-map-decisions", "編輯方法", "內容修正", "兩個互動工具"):
+        if marker not in garden_raw:
+            issues.append(f"garden-map missing {marker}")
+    if "data-garden-map-guides" in garden_raw:
+        issues.append("garden-map must not duplicate the full guide index")
+    garden_schemas = [item for item in schemas(garden_raw) if item.get("@type") == "CollectionPage"]
+    if len(garden_schemas) != 1:
+        issues.append("garden-map CollectionPage schema missing or duplicated")
+    else:
+        item = garden_schemas[0]
+        if item.get("dateModified") != GARDEN_MAP_UPDATED:
+            issues.append("garden-map schema dateModified mismatch")
+        for field in ("author", "publisher"):
+            if item.get(field, {}).get("@type") != "Organization":
+                issues.append(f"garden-map schema {field} must be Organization")
+
+    def cjk_trigrams(raw: str) -> set[str]:
+        text = "".join(re.findall(r"[\u3400-\u9fff]", main_text(raw)))
+        return {text[index:index + 3] for index in range(max(0, len(text) - 2))}
+
+    garden_grams = cjk_trigrams(garden_raw)
+    guide_grams = cjk_trigrams(guide_index_raw)
+    shared = garden_grams & guide_grams
+    garden_guide_jaccard = len(shared) / len(garden_grams | guide_grams)
+    garden_guide_containment = max(len(shared) / len(garden_grams), len(shared) / len(guide_grams))
+    if garden_guide_jaccard > 0.25 or garden_guide_containment > 0.45:
+        issues.append(
+            f"garden-map/guide-index overlap too high: jaccard={garden_guide_jaccard:.3f} "
+            f"containment={garden_guide_containment:.3f}"
+        )
+
     for path in ROOT.rglob("*.html"):
         raw = path.read_text(encoding="utf-8", errors="ignore").lower()
         if any(host in raw for host in COMMERCE_HOSTS) and path != ROOT / "resources" / "index.html":
@@ -389,6 +432,9 @@ def main() -> int:
         issues.append("compatibility consolidation redirect missing")
 
     print(f"adsense_review_surface_pages={len(routes)}")
+    print(f"garden_map_main_cjk={garden_cjk}")
+    print(f"garden_map_guide_jaccard={garden_guide_jaccard:.3f}")
+    print(f"garden_map_guide_containment={garden_guide_containment:.3f}")
     print(f"adsense_review_surface_issues={len(issues)}")
     for issue in issues:
         print(f"- {issue}")

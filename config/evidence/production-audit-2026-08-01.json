@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T04:49:32Z",
+  "checkedAt": "2026-08-01T05:27:34Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "5de0261e7c1cffc2f82f86ffd9b1752d93abb49f",
-  "auditToolingCommit": "786f86ef",
+  "reviewSurfaceCommit": "f9c23e4a87bfc6bfbf3726eaead0b274a6c33d2e",
+  "auditToolingCommit": "f9c23e4a87bfc6bfbf3726eaead0b274a6c33d2e",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "1840ebab-ba1f-4aba-8a51-c5a17d341dd1",
-    "preview": "https://1840ebab.lovetypes.pages.dev"
+    "id": "ff254b24-7259-4ca1-94c4-fb8922740b86",
+    "preview": "https://ff254b24.lovetypes.pages.dev"
   },
   "githubActions": [
     {
@@ -21,14 +21,9 @@
       "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094864"
     },
     {
-      "name": "pages build and deployment after runtime audit integration",
+      "name": "pages build and deployment after editorial trust integration",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684721781"
-    },
-    {
-      "name": "LoveTypes predeploy check with production runtime smoke",
-      "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684721987"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30685178178"
     }
   ],
   "productionChecks": {
@@ -40,13 +35,22 @@
     "assetReferences": 439,
     "internalLinks": 1262,
     "jsonLdBlocks": 118,
+    "editorialGuides": 12,
+    "labReports": 8,
+    "editorialCorePages": 4,
+    "editorialSourceHosts": 5,
+    "labEvidenceImages": 16,
+    "externalLinks": 9,
+    "visualPages": 51,
+    "noScriptPages": 5,
+    "keyboardCases": 10,
     "issues": 0
   },
   "runtimePerformance": {
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 8,
-    "worstLcpMs": 336,
+    "worstLcpMs": 296,
     "worstCls": 0,
     "maxTransferBytes": 220694,
     "failedRequests": 0,
@@ -61,6 +65,8 @@
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_editorial_trust_smoke.py",
+    "python3 tools/public_external_link_smoke.py",
     "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
     "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01.json node tools/runtime_performance_smoke.mjs"
   ],

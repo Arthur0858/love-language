@@ -48,6 +48,10 @@ ADS_TXT_USER_AGENTS = (
     "AdsBot-Google (+http://www.google.com/adsbot.html)",
     "Googlebot/2.1 (+http://www.google.com/bot.html)",
 )
+CRAWLER_USER_AGENTS = (
+    "Googlebot/2.1 (+http://www.google.com/bot.html)",
+    "AdsBot-Google (+http://www.google.com/adsbot.html)",
+)
 
 
 @dataclass
@@ -89,6 +93,38 @@ def visible_text(raw: str) -> str:
 def attr(raw: str, tag: str, name: str) -> str:
     match = re.search(rf"<{tag}\b[^>]*\b{name}=[\"']([^\"']+)", raw, re.I)
     return html.unescape(match.group(1)) if match else ""
+
+
+def page_signature(response: Response) -> dict[str, object]:
+    raw = response.text
+    canonical = re.search(r'<link\b[^>]*rel=["\']canonical["\'][^>]*href=["\']([^"\']+)', raw, re.I)
+    robots = re.search(r'<meta\b[^>]*name=["\']robots["\'][^>]*content=["\']([^"\']+)', raw, re.I)
+    h1 = re.search(r"<h1\b[^>]*>(.*?)</h1>", raw, re.I | re.S)
+    main = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
+    return {
+        "status": response.status,
+        "path": urlparse(response.url).path,
+        "canonical": html.unescape(canonical.group(1)) if canonical else "",
+        "robots": robots.group(1).strip().lower() if robots else "",
+        "h1": visible_text(h1.group(1)) if h1 else "",
+        "main": visible_text(main.group(1)) if main else "",
+    }
+
+
+def crawler_parity_issues(route: str, baseline: Response, crawler: Response, label: str) -> list[str]:
+    expected = page_signature(baseline)
+    actual = page_signature(crawler)
+    issues: list[str] = []
+    for field in ("status", "path", "canonical", "robots", "h1", "main"):
+        if actual[field] != expected[field]:
+            if field == "main":
+                issues.append(
+                    f"{route} [{label}]: main content differs "
+                    f"(browser={len(str(expected[field]))} chars, crawler={len(str(actual[field]))} chars)"
+                )
+            else:
+                issues.append(f"{route} [{label}]: {field} differs from browser response")
+    return issues
 
 
 def page_issues(route: str, response: Response) -> list[str]:
@@ -214,11 +250,26 @@ def main() -> int:
     if sitemap_lastmods.get(CANONICAL_BASE + "/") != HOME_UPDATED:
         issues.append("/sitemap.xml: homepage lastmod mismatch")
 
+    browser_responses: dict[str, Response] = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(request, route): route for route in routes}
         for future in as_completed(futures):
             route = futures[future]
-            issues.extend(page_issues(route, future.result()))
+            response = future.result()
+            browser_responses[route] = response
+            issues.extend(page_issues(route, response))
+
+    crawler_checks = 0
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        futures = {
+            pool.submit(request, route, user_agent=user_agent): (route, user_agent)
+            for route in routes
+            for user_agent in CRAWLER_USER_AGENTS
+        }
+        for future in as_completed(futures):
+            route, user_agent = futures[future]
+            crawler_checks += 1
+            issues.extend(crawler_parity_issues(route, browser_responses[route], future.result(), user_agent))
 
     site_index = request("/site-index.json")
     try:
@@ -342,6 +393,8 @@ def main() -> int:
             issues.append(f"{label}: expected X-Robots-Tag noindex, follow")
 
     print(f"public_review_pages_checked={len(routes)}")
+    print(f"public_review_crawler_agents_checked={len(CRAWLER_USER_AGENTS)}")
+    print(f"public_review_crawler_parity_checks={crawler_checks}")
     print(f"public_review_retired_routes_checked={len(retired_routes)}")
     print(f"public_review_retired_assets_checked={len(RETIRED_PUBLIC_ASSET_PATHS)}")
     print(f"public_review_ads_txt_user_agents_checked={len(ADS_TXT_USER_AGENTS)}")

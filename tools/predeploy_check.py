@@ -313,6 +313,10 @@ def main() -> int:
                 "public accessibility smoke tests",
                 [sys.executable, "-m", "unittest", "tools.tests.test_public_accessibility_smoke"],
             )
+            run_step(
+                "public AdSense review smoke tests",
+                [sys.executable, "-m", "unittest", "tools.tests.test_public_adsense_review_smoke"],
+            )
             run_step("accessibility audit", [sys.executable, "tools/accessibility_audit.py"])
             run_step("image asset audit", [sys.executable, "tools/image_asset_audit.py"])
             run_step("performance budget audit", [sys.executable, "tools/performance_budget_audit.py"])

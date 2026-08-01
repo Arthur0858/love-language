@@ -31,6 +31,8 @@ OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuR
 UPDATED = "2026-07-31"
 PRIVACY_UPDATED = "2026-08-01"
 THEORY_UPDATED = "2026-08-01"
+START_UPDATED = "2026-08-01"
+REPAIR_PLAN_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -42,7 +44,7 @@ AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 REVIEW_INDEX_LANGS = ("zh",)
-CONVERSION_DOCK_PATHS = {"", "start", "garden-map", "compass", "repair-plan", "characters", "guides", "lab"}
+CONVERSION_DOCK_PATHS = {"", "start", "garden-map", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 RETIRED_PUBLIC_ASSET_PATHS = (
@@ -13480,6 +13482,7 @@ def start_method_section(lang: str) -> str:
         return ""
     return """
 <section class="section article-body standalone start-method" data-start-method>
+  <p data-start-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{START_UPDATED}">內容更新：{START_UPDATED}</time> · <a href="/about/#editorial-method">編輯方法</a> · <a href="/contact/#site-repair-report">內容修正</a></p>
   <p class="eyebrow">QUIZ METHOD</p>
   <h2>作答前先知道這 15 題如何計分</h2>
   <p>每題有五個選項，分別對應肯定言詞、優質時光、接受禮物、服務行動與身體接觸。選定一項後，該類別增加一分；完成 15 題才會產生結果。結果頁同時顯示五類原始比例，最高分成為主要守護者。這套計分只是把目前偏好整理成可閱讀順序，不使用醫療量表、人格常模，也不推論關係品質。</p>
@@ -13534,8 +13537,9 @@ def start_page(lang: str) -> None:
         "description": copy["desc"],
         "url": abs_url(lang, "start"),
         "inLanguage": t["code"],
-        "dateModified": UPDATED,
+        "dateModified": START_UPDATED if lang == "zh" else UPDATED,
         "isPartOf": {"@id": f"{abs_url(lang)}#website"},
+        **({"author": organization_ref()} if lang == "zh" else {}),
         "publisher": organization_ref(),
     })
     write(page_path(lang, "start"), layout(lang, copy["title"], copy["desc"], "start", body + quiz_script(lang), "start", "website", "/og-cover.jpg", schema))
@@ -14407,6 +14411,37 @@ def repair_plan_review_page() -> None:
     practice_markup = "".join(f"""
 <article class="repair-asset-card"><span>{number}</span><h3>{escape(title)}</h3><p>{escape(desc)}</p><a class="secondary-btn" href="{href}" data-funnel-event="repair_free_tool_{number}">{escape(cta)}</a></article>
 """ for number, title, desc, href, cta in practice_cards)
+    repair_method = f"""
+<section class="section article-body standalone repair-method" data-repair-method>
+  <p data-repair-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{REPAIR_PLAN_UPDATED}">內容更新：{REPAIR_PLAN_UPDATED}</time> · <a href="/about/#editorial-method">編輯方法</a> · <a href="/contact/#site-repair-report">內容修正</a></p>
+  <p class="eyebrow">HOW THE SEVEN DAYS WORK</p>
+  <h2>這七天不是保證修好關係，而是收集一個小請求的真實回應</h2>
+  <p>修復計畫一次只處理一個最近場景。前四天把事件從人格判斷拆回觀察、感受、需要與請求；第五天練習說出口，第六天記錄對方實際怎麼回應，第七天才決定繼續、調整或停止。完成七天不代表關係健康，也不證明某種守護者配對有效；它只留下比「我們到底合不合」更具體的行為紀錄。</p>
+  <div class="supply-panel-grid">
+    <article><span>OBSERVATION</span><h3>觀察不是判決</h3><p>記下時間、行為與可被雙方核對的句子，例如「兩次約定都在開始前取消」，不要先寫成「你永遠不把我放在心上」。</p></article>
+    <article><span>FEELING &amp; NEED</span><h3>感受與需要分開</h3><p>先寫失落、焦慮、疲累或不安，再辨認要的是可預期、分擔、承認、紀念或安全靠近，不要求對方為所有情緒負責。</p></article>
+    <article><span>REQUEST</span><h3>請求必須能回答</h3><p>請求要有一個動作與時間，也允許拒絕或提出替代方案。若只有答應才算愛，那仍是測驗，不是協商。</p></article>
+  </div>
+  <h2>兩個完整示例：怎麼從抱怨走到可觀察回應</h2>
+  <div class="card-grid">
+    <article class="content-card" data-repair-example><span class="eyebrow">示例一｜訊息沒有回覆</span><h3>先確認節奏，不把等待直接翻成不愛</h3><p>可觀察的是「昨天晚間七點傳出重要訊息，隔天下午仍沒有回覆」；感受是焦慮與孤單；需要是可預期。小請求可以是：如果你今天無法談，能否在睡前回一個時間，告訴我明天何時能留十五分鐘？第六天記錄的是有沒有回覆、是否重約與實際完成，而不是替對方猜理由。</p></article>
+    <article class="content-card" data-repair-example><span class="eyebrow">示例二｜家務一直需要提醒</span><h3>把「主動一點」改成完整負責一件事</h3><p>可觀察的是誰發現需求、提醒、執行與收尾；感受可能是疲累；需要是分擔。小請求可以是：這週你能完整負責兩次垃圾處理，包括判斷時間與補袋嗎？若做不到，週三前提出想交換的工作。第七天檢查負荷是否下降，而不是只確認對方口頭答應。</p></article>
+  </div>
+  <section data-repair-decision>
+    <h2>Day 7 之後只做三種決定</h2>
+    <div class="supply-panel-grid">
+      <article><span>CONTINUE</span><h3>繼續同一個小行動</h3><p>對方有回應、行動可完成，而且雙方負擔合理時，再練一週，不立刻擴大成更多要求。</p></article>
+      <article><span>ADJUST</span><h3>調整請求條件</h3><p>有意願但時間、動作或完成標準不清楚時，改一個條件再試，不把一次失敗解讀成永久結論。</p></article>
+      <article><span>STOP</span><h3>停止一般修復</h3><p>若反覆拒絕協商、出現羞辱、威脅、控制、強迫或拒絕後報復，停止加碼溝通，先處理界線與安全。</p></article>
+    </div>
+  </section>
+  <section data-repair-sources>
+    <h2>方法來源與限制</h2>
+    <p><a href="https://www.cnvc.org/images/pdf/certification/EN-Certification%20Preparation%20Packet.pdf" target="_blank" rel="noopener noreferrer">Center for Nonviolent Communication 的觀察、感受、需要與請求材料</a>支持本頁把抱怨拆成可協商句子的基本順序；LoveTypes 將它改寫成七日產品流程，不宣稱為官方課程或心理治療。</p>
+    <p><a href="https://www.who.int/publications/i/item/WHO-RHR-14.26" target="_blank" rel="noopener noreferrer">WHO 親密伴侶暴力臨床與政策手冊</a>支持暴力、強迫與控制不能被當成一般溝通錯頻處理的安全邊界。本頁不提供危機介入、個案診斷或成效保證。</p>
+  </section>
+</section>
+"""
     guardian_rows = []
     for slug in GUARDIANS:
         route = supply_route(lang, slug)
@@ -14423,6 +14458,7 @@ def repair_plan_review_page() -> None:
 {mobile_page_jump(lang, "repair")}
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack"><div class="section-head"><div><p class="eyebrow">FREE PRACTICE TOOLS</p><h2>四個免費練習入口</h2></div></div><p class="section-intro">不用註冊或留下聯絡資料；先用站內工具把一個真實場景整理清楚。</p><div class="supply-panel-grid repair-asset-grid">{practice_markup}</div></section>
+{repair_method}
 <section class="section repair-plan-section" id="repair-week"><div class="section-head"><div><p class="eyebrow">SEVEN DAY ROUTE</p><h2>{escape(plan["days_title"])}</h2></div></div><div class="repair-day-grid">{days}</div></section>
 <section class="section repair-worksheet-section" id="repair-worksheet"><div class="section-head"><div><p class="eyebrow">LOCAL WORKSHEET</p><h2>{escape(plan["worksheet_title"])}</h2></div><button class="secondary-btn print-button" type="button" onclick="window.print()">{escape(plan["print"])}</button></div><p class="section-intro">{escape(plan["worksheet_intro"])}</p><div class="worksheet-meta"><p>{escape(plan["autosave"])}</p><div><span data-worksheet-status role="status" aria-live="polite">{escape(plan["saved"])}</span><button class="primary-btn compact-action" type="button" data-copy-worksheet-summary>{escape(plan["copy_summary"])}</button><button class="secondary-btn" type="button" data-clear-worksheet>{escape(plan["clear"])}</button></div></div><form class="repair-worksheet" data-repair-worksheet>{worksheet_fields}</form></section>
 {repair_worksheet_script(lang)}
@@ -14431,7 +14467,8 @@ def repair_plan_review_page() -> None:
 """
     schema = json_ld({
         "@context": "https://schema.org", "@type": "HowTo", "name": plan["title"], "description": plan["desc"],
-        "url": abs_url(lang, "repair-plan"), "inLanguage": t["code"], "dateModified": UPDATED,
+        "url": abs_url(lang, "repair-plan"), "inLanguage": t["code"], "dateModified": REPAIR_PLAN_UPDATED,
+        "author": organization_ref(), "publisher": organization_ref(),
         "isPartOf": {"@type": "WebSite", "name": "LoveTypes", "url": f"{DOMAIN}/"},
         "step": [{"@type": "HowToStep", "position": idx, "name": title, "text": desc} for idx, (_day, title, desc) in enumerate(plan["days"], start=1)],
     })
@@ -17217,13 +17254,13 @@ export default {
 
 CORE_LASTMOD = {
     "": "2026-07-23",
-    "start": "2026-07-31",
+    "start": START_UPDATED,
     "garden-map": "2026-07-20",
     "compass": "2026-07-31",
     "guides": "2026-07-30",
     "characters": "2026-07-22",
     "theory": THEORY_UPDATED,
-    "repair-plan": "2026-07-25",
+    "repair-plan": REPAIR_PLAN_UPDATED,
     "about": "2026-07-31",
     "contact": "2026-07-21",
     "privacy": PRIVACY_UPDATED,

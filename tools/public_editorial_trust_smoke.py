@@ -36,6 +36,8 @@ LAB_MARKERS = (
 )
 AUTHOR = "LoveTypes 內容編輯團隊"
 GUARDIAN_UPDATED = "2026-08-01"
+START_UPDATED = "2026-08-01"
+REPAIR_PLAN_UPDATED = "2026-08-01"
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 METHOD_LINK = 'href="/about/#editorial-method"'
 CORRECTION_LINK = 'href="/contact/#site-repair-report"'
@@ -207,6 +209,55 @@ def main() -> int:
                     f"jaccard={jaccard:.3f} containment={containment:.3f}"
                 )
 
+    start_response = request("/start/")
+    start_raw = start_response.text
+    if start_response.status != 200:
+        issues.append(f"/start/: expected 200, got {start_response.status}")
+    else:
+        start_count = cjk_count(start_raw)
+        if not 900 <= start_count <= 1300:
+            issues.append(f"/start/: visible main CJK count outside 900-1300: {start_count}")
+        for marker in ("data-start-method", "data-start-editorial-byline", METHOD_LINK, CORRECTION_LINK):
+            if marker not in start_raw:
+                issues.append(f"/start/: missing start trust marker {marker!r}")
+        start_page = next((item for item in schemas(start_raw) if item.get("@type") == "WebPage"), None)
+        if start_page is None or start_page.get("dateModified") != START_UPDATED:
+            issues.append("/start/: missing WebPage schema or real update date")
+        elif any(start_page.get(field, {}).get("@type") != "Organization" for field in ("author", "publisher")):
+            issues.append("/start/: author and publisher must be Organization")
+
+    repair_response = request("/repair-plan/")
+    repair_raw = repair_response.text
+    if repair_response.status != 200:
+        issues.append(f"/repair-plan/: expected 200, got {repair_response.status}")
+    else:
+        repair_count = cjk_count(repair_raw)
+        if not 2000 <= repair_count <= 2800:
+            issues.append(f"/repair-plan/: visible main CJK count outside 2000-2800: {repair_count}")
+        if repair_raw.count("data-repair-example") != 2:
+            issues.append("/repair-plan/: expected exactly two labeled examples")
+        for marker in (
+            "data-repair-method",
+            "data-repair-editorial-byline",
+            "data-repair-decision",
+            "data-repair-sources",
+            METHOD_LINK,
+            CORRECTION_LINK,
+        ):
+            if marker not in repair_raw:
+                issues.append(f"/repair-plan/: missing repair trust marker {marker!r}")
+        for url in (
+            "https://www.cnvc.org/images/pdf/certification/EN-Certification%20Preparation%20Packet.pdf",
+            "https://www.who.int/publications/i/item/WHO-RHR-14.26",
+        ):
+            if f'href="{url}"' not in repair_raw:
+                issues.append(f"/repair-plan/: missing authoritative source {url}")
+        howto = next((item for item in schemas(repair_raw) if item.get("@type") == "HowTo"), None)
+        if howto is None or howto.get("dateModified") != REPAIR_PLAN_UPDATED:
+            issues.append("/repair-plan/: missing HowTo schema or real update date")
+        elif any(howto.get(field, {}).get("@type") != "Organization" for field in ("author", "publisher")):
+            issues.append("/repair-plan/: author and publisher must be Organization")
+
     for report in LAB_REPORTS:
         slug = report["slug"]
         route = f"/lab/{slug}/"
@@ -269,6 +320,8 @@ def main() -> int:
     print(f"public_editorial_trust_guardians_checked={len(guardian_shingle_sets)}")
     print(f"public_editorial_trust_guardian_max_jaccard={max_guardian_jaccard:.3f}")
     print(f"public_editorial_trust_guardian_max_containment={max_guardian_containment:.3f}")
+    print("public_editorial_trust_start_pages_checked=1")
+    print("public_editorial_trust_repair_plans_checked=1")
     print(f"public_editorial_trust_core_pages_checked={len(trust_expectations)}")
     print(f"public_editorial_trust_unique_sources={len(source_urls)}")
     print(f"public_editorial_trust_source_hosts={len(source_hosts)}")

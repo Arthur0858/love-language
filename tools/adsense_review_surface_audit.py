@@ -12,7 +12,13 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from editorial_guides import GUIDE_EDITORIAL_CONTENT
-from generate_multilingual_site import GUARDIAN_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
+from generate_multilingual_site import (
+    GUARDIAN_UPDATED,
+    LEGACY_ZH_GUIDES,
+    LONG_TAIL_COMPATIBILITY_PAGES,
+    REPAIR_PLAN_UPDATED,
+    START_UPDATED,
+)
 from lab_reports import LAB_REPORTS
 import deploy_cloudflare_pages as deploy
 
@@ -94,6 +100,10 @@ def main() -> int:
         url = f"https://lovetypes.tw/characters/{slug}/"
         if sitemap_lastmods.get(url) != GUARDIAN_UPDATED:
             issues.append(f"guardian sitemap lastmod mismatch: {slug}")
+    for route, updated in (("start", START_UPDATED), ("repair-plan", REPAIR_PLAN_UPDATED)):
+        url = f"https://lovetypes.tw/{route}/"
+        if sitemap_lastmods.get(url) != updated:
+            issues.append(f"{route} sitemap lastmod mismatch")
 
     for route in expected:
         path = page_file(route)
@@ -201,6 +211,52 @@ def main() -> int:
             for field in ("author", "publisher"):
                 if item.get(field, {}).get("@type") != "Organization":
                     issues.append(f"guardian schema {field} must be Organization: {slug}")
+
+    start_raw = page_file("/start/").read_text(encoding="utf-8")
+    start_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(start_raw)))
+    if not 900 <= start_cjk <= 1300:
+        issues.append(f"start main CJK count outside 900-1300: {start_cjk}")
+    for marker in ("data-start-method", "data-start-editorial-byline", "編輯方法", "內容修正"):
+        if marker not in start_raw:
+            issues.append(f"start missing {marker}")
+    start_schemas = [item for item in schemas(start_raw) if item.get("@type") == "WebPage"]
+    if len(start_schemas) != 1:
+        issues.append("start WebPage schema missing or duplicated")
+    else:
+        item = start_schemas[0]
+        if item.get("dateModified") != START_UPDATED:
+            issues.append("start schema dateModified mismatch")
+        for field in ("author", "publisher"):
+            if item.get(field, {}).get("@type") != "Organization":
+                issues.append(f"start schema {field} must be Organization")
+
+    repair_raw = page_file("/repair-plan/").read_text(encoding="utf-8")
+    repair_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(repair_raw)))
+    if not 2000 <= repair_cjk <= 2800:
+        issues.append(f"repair plan main CJK count outside 2000-2800: {repair_cjk}")
+    if repair_raw.count("data-repair-example") != 2:
+        issues.append("repair plan needs exactly two labeled examples")
+    for marker in (
+        "data-repair-method",
+        "data-repair-editorial-byline",
+        "data-repair-decision",
+        "data-repair-sources",
+        "方法來源與限制",
+    ):
+        if marker not in repair_raw:
+            issues.append(f"repair plan missing {marker}")
+    if repair_raw.count('target="_blank" rel="noopener noreferrer"') < 2:
+        issues.append("repair plan needs two visible authoritative sources")
+    repair_schemas = [item for item in schemas(repair_raw) if item.get("@type") == "HowTo"]
+    if len(repair_schemas) != 1:
+        issues.append("repair plan HowTo schema missing or duplicated")
+    else:
+        item = repair_schemas[0]
+        if item.get("dateModified") != REPAIR_PLAN_UPDATED:
+            issues.append("repair plan schema dateModified mismatch")
+        for field in ("author", "publisher"):
+            if item.get(field, {}).get("@type") != "Organization":
+                issues.append(f"repair plan schema {field} must be Organization")
 
     evidence_hashes: dict[str, str] = {}
     for report in LAB_REPORTS:

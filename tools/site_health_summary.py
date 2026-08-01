@@ -1676,6 +1676,8 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_editorial_trust_guardians_checked",
         "public_editorial_trust_guardian_max_jaccard",
         "public_editorial_trust_guardian_max_containment",
+        "public_editorial_trust_start_pages_checked",
+        "public_editorial_trust_repair_plans_checked",
         "public_editorial_trust_core_pages_checked",
         "public_editorial_trust_unique_sources",
         "public_editorial_trust_source_hosts",

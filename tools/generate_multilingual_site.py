@@ -13783,7 +13783,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 """
     schema = json_ld({
         "@context": "https://schema.org",
-        "@type": "ProfilePage",
+        "@type": "WebPage",
         "name": name,
         "description": desc,
         "url": abs_url(lang, "characters/" + slug),

@@ -175,6 +175,8 @@ def main() -> int:
         for item in schemas(raw):
             if item.get("@type") == "Offer" or "Offer" in item.get("@type", []):
                 issues.append(f"Offer schema leaked into indexed page: {route}")
+            if route.startswith("/characters/") and item.get("@type") == "ProfilePage":
+                issues.append(f"fictional guardian must not use ProfilePage schema: {route}")
 
     for path in ROOT.rglob("*.html"):
         raw = path.read_text(encoding="utf-8", errors="ignore").lower()

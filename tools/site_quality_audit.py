@@ -936,10 +936,10 @@ def validate_jsonld(
                 else:
                     issues.append(f"{page}: primary JSON-LD type should include {expected_core_schema_type}")
             if is_character_detail_page(page):
-                if "ProfilePage" in primary_types:
+                if "WebPage" in primary_types and "ProfilePage" not in primary_types:
                     stats["guardian_profile_schema_types_checked"] += 1
                 else:
-                    issues.append(f"{page}: guardian detail JSON-LD type should include ProfilePage")
+                    issues.append(f"{page}: guardian detail JSON-LD should use WebPage, not ProfilePage")
             if primary.get("url") != canonical:
                 issues.append(f"{page}: primary JSON-LD url should match canonical: {canonical}")
             if parser.html_lang and primary.get("inLanguage") != parser.html_lang:

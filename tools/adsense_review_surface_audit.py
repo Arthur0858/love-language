@@ -73,6 +73,11 @@ def main_text(raw: str) -> str:
     return visible_text(match.group(1)) if match else ""
 
 
+def main_text_markup(raw: str) -> str:
+    match = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
+    return match.group(1) if match else ""
+
+
 def schemas(raw: str) -> list[dict]:
     found = []
     for body in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', raw, re.I | re.S):
@@ -165,6 +170,28 @@ def main() -> int:
             website_schemas = [item for item in primary_schemas if "WebSite" in schema_types(item)]
             if len(website_schemas) != 1 or website_schemas[0].get("dateModified") != HOME_UPDATED:
                 issues.append("homepage WebSite schema dateModified mismatch")
+        if "data-footer-safety-support" not in raw or 'href="/contact/#urgent-safety-support"' not in raw:
+            issues.append(f"footer safety support route missing: {route}")
+
+    home_raw = page_file("/").read_text(encoding="utf-8")
+    if 'href="/contact/#urgent-safety-support"' not in main_text_markup(home_raw):
+        issues.append("homepage urgent safety route missing")
+
+    contact_raw = page_file("/contact/").read_text(encoding="utf-8")
+    for marker in (
+        "data-urgent-safety-support",
+        'data-safety-route="110"',
+        'data-safety-route="113"',
+        'data-safety-route="1925"',
+        'href="tel:110"',
+        'href="tel:113"',
+        'href="tel:1925"',
+        "https://www.npa.gov.tw/ch/app/artwebsite/view",
+        "https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html",
+        "https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html",
+    ):
+        if marker not in contact_raw:
+            issues.append(f"contact urgent safety support missing {marker}")
 
     lab_index_text = main_text(page_file("/lab/").read_text(encoding="utf-8"))
     lab_index_cjk = len(re.findall(r"[\u3400-\u9fff]", lab_index_text))

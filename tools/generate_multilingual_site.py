@@ -5425,11 +5425,12 @@ def footer(lang: str) -> str:
             (lang_url(lang, "repair-plan"), REPAIR_PLAN[lang]["title"], REPAIR_PLAN[lang]["desc"]),
         ]
     card_html = "".join(f'<a href="{href}"><strong>{escape(title)}</strong><span>{escape(desc)}</span></a>' for href, title, desc in cards)
+    safety_link = f' · <a href="{lang_url(lang, "contact")}#urgent-safety-support" data-footer-safety-support>安全協助</a>' if lang == "zh" else ""
     return f"""
 <footer class="site-footer">
   <div class="footer-grid">{card_html}</div>
   <p class="footer-disclosure">{escape(t["unofficial_disclosure"])}</p>
-  <p>© 2026 LoveTypes · <a href="{lang_url(lang, "privacy")}">{escape(t["privacy"])}</a> · <a href="{lang_url(lang, "terms")}">{escape(t["terms"])}</a> · <a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a></p>
+  <p>© 2026 LoveTypes · <a href="{lang_url(lang, "privacy")}">{escape(t["privacy"])}</a> · <a href="{lang_url(lang, "terms")}">{escape(t["terms"])}</a> · <a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a>{safety_link}</p>
 </footer>
 """
 
@@ -10443,12 +10444,13 @@ GARDEN_MAP = {
 HOME_SAFETY_COMPASS = {
     "zh": {
         "eyebrow": "SAFE ENTRY",
-        "title": "進入心語庭園前，先保留三條安全路線",
+        "title": "進入心語庭園前，先保留四條安全路線",
         "intro": "LoveTypes 可以陪你辨認愛之語與練習溝通，但不會替你做關係決定。開始測驗或填寫工作表前，你可以先看清楚資料保存、內容限制與回報方式。",
         "items": [
             ("01", "資料與本機儲存", "測驗結果與修復表單以本機保存為主，聯絡信件只在你主動寄出時傳送。", "查看隱私", "privacy"),
             ("02", "內容使用邊界", "測驗、指南與工作表只用於自我理解與溝通練習，不承諾療效，也不取代諮商。", "查看條款", "terms"),
             ("03", "網站修復入口", "若頁面、連結、來源或操作不清楚，可以直接回報需要修復的位置。", "回報問題", "contact#site-repair-report"),
+            ("04", "危急或受控制時", "立即危險、暴力、強迫或自傷風險不適合用一般關係練習處理，先選擇正式支援。", "查看安全協助", "contact#urgent-safety-support"),
         ],
     },
     "en": {
@@ -15227,6 +15229,23 @@ def contact_request_section(lang: str) -> str:
 """
 
 
+def urgent_safety_support_section(lang: str) -> str:
+    if lang != "zh":
+        return ""
+    return """
+<section class="section trust-action-section urgent-safety-support" id="urgent-safety-support" data-urgent-safety-support>
+  <div class="section-head"><div><p class="eyebrow">TAIWAN SAFETY SUPPORT</p><h2>危急、受控制或有自傷風險時，先離開一般關係練習</h2><p>以下是台灣官方支援。LoveTypes 不接收緊急求助，也無法代替警察、保護服務或心理危機介入；若你不在台灣，請改用所在地的緊急電話與正式支援。</p></div></div>
+  <div class="callout safety"><strong>先判斷是否需要立即行動</strong><p>若有人正受到攻擊、威脅、跟蹤、限制離開，或你擔心自己或他人會立即受傷，先前往較安全的位置並聯絡 110。不要把完成測驗、說服對方或安排一般伴侶對話放在安全之前。</p></div>
+  <div class="trust-action-grid urgent-safety-grid">
+    <article class="trust-action-card" data-safety-route="110"><span>110</span><h3>立即人身安全危險</h3><p>需要警察立即到場、正在遭受暴力或有明確威脅時，撥打 110。</p><a href="tel:110" data-safety-call="110">撥打 110</a><p><a href="https://www.npa.gov.tw/ch/app/artwebsite/view?id=1048&amp;module=artwebsite&amp;serno=e3ad2889-4dee-41cf-aef8-9b9d26dc6950" target="_blank" rel="noopener noreferrer" data-safety-source="110">警政署 110 報案說明</a></p></article>
+    <article class="trust-action-card" data-safety-route="113"><span>113</span><h3>家暴、性侵害或性騷擾</h3><p>需要保護諮詢、通報或轉介時，撥打全年無休、24 小時免付費的 113 保護專線。</p><a href="tel:113" data-safety-call="113">撥打 113</a><p><a href="https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html" target="_blank" rel="noopener noreferrer" data-safety-source="113">衛福部 113 保護專線說明</a></p></article>
+    <article class="trust-action-card" data-safety-route="1925"><span>1925</span><h3>情緒困擾或自傷危機</h3><p>需要即時心理支持，或擔心自己有自傷念頭時，撥打全年無休、24 小時免付費的 1925 安心專線。</p><a href="tel:1925" data-safety-call="1925">撥打 1925</a><p><a href="https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html" target="_blank" rel="noopener noreferrer" data-safety-source="1925">衛福部 1925 安心專線說明</a></p></article>
+  </div>
+  <p class="section-intro">若目前裝置可能被監看，請在可行且不增加風險的前提下，改用可信任的裝置或請可信任的人協助聯絡。這些電話的服務範圍與狀態以官方頁面為準。</p>
+</section>
+"""
+
+
 def about_garden_pass(lang: str) -> str:
     copy = ABOUT_GARDEN_PASS[lang]
     cards = "".join(
@@ -15432,6 +15451,7 @@ def simple_page(lang: str, slug: str) -> None:
         policy_contact_markup = f"{policy_contact}\n" if policy_contact else ""
         body = f"""
 <section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line(f"data-{slug}-editorial-byline", CORE_EDITORIAL_UPDATED if slug != "privacy" else PRIVACY_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}{extra}</section>
+{urgent_safety_support_section(lang) if slug == "contact" else ""}
 {contact_requests}
 {policy_compass_section(lang, slug)}
 {policy_detail_section(lang, slug)}

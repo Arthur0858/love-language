@@ -114,6 +114,25 @@ def page_issues(route: str, response: Response) -> list[str]:
     for phrase in FORBIDDEN_COMMERCIAL:
         if phrase in main_visible:
             issues.append(f"{route}: commercial phrase {phrase!r} leaked into indexed main")
+    if "data-footer-safety-support" not in raw or 'href="/contact/#urgent-safety-support"' not in raw:
+        issues.append(f"{route}: footer safety support route missing")
+    if route == "/" and 'href="/contact/#urgent-safety-support"' not in main_raw:
+        issues.append(f"{route}: homepage urgent safety route missing")
+    if route == "/contact/":
+        for marker in (
+            "data-urgent-safety-support",
+            'data-safety-route="110"',
+            'data-safety-route="113"',
+            'data-safety-route="1925"',
+            'href="tel:110"',
+            'href="tel:113"',
+            'href="tel:1925"',
+            "https://www.npa.gov.tw/ch/app/artwebsite/view",
+            "https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html",
+            "https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html",
+        ):
+            if marker not in raw:
+                issues.append(f"{route}: urgent safety support missing {marker}")
     if route == "/compass/":
         for marker in ("data-compass-editorial-byline", "編輯方法", "工具實測", "內容修正", "羅盤只整理輸入，不替關係評分"):
             if marker not in raw:

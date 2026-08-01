@@ -258,6 +258,8 @@ def main() -> int:
         elif any(howto.get(field, {}).get("@type") != "Organization" for field in ("author", "publisher")):
             issues.append("/repair-plan/: author and publisher must be Organization")
 
+    lab_heading_owner: dict[str, str] = {}
+    lab_headings_checked = 0
     for report in LAB_REPORTS:
         slug = report["slug"]
         route = f"/lab/{slug}/"
@@ -272,6 +274,24 @@ def main() -> int:
         for marker in LAB_MARKERS:
             if marker not in raw:
                 issues.append(f"{route}: missing {marker}")
+        report_article = re.search(r'<article\b[^>]*data-lab-report[^>]*>(.*?)</article>', raw, re.I | re.S)
+        lab_headings = [
+            visible_text(value)
+            for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", report_article.group(1) if report_article else "", re.I | re.S)
+        ]
+        expected_headings = {
+            title for key, title in report["section_titles"].items() if key != "next"
+        }
+        if len(lab_headings) != 12 or set(lab_headings) != expected_headings:
+            issues.append(f"{route}: headings do not match the test-specific structure")
+        if report["section_titles"]["next"] not in raw:
+            issues.append(f"{route}: missing test-specific next-step heading")
+        for heading in lab_headings:
+            previous = lab_heading_owner.get(heading)
+            if previous:
+                issues.append(f"{route}: H2 {heading!r} is reused by {previous}")
+            lab_heading_owner[heading] = route
+            lab_headings_checked += 1
         updated = report["updated"]
         byline = re.search(r"<p\b[^>]*data-lab-editorial-byline[^>]*>(.*?)</p>", raw, re.I | re.S)
         byline_raw = byline.group(1) if byline else ""

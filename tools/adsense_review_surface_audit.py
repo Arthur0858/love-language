@@ -38,7 +38,21 @@ import deploy_cloudflare_pages as deploy
 ROOT = Path(__file__).resolve().parents[1]
 COMMERCE_HOSTS = ("amazon.", "books.com.tw", "gumroad.com")
 PRIMARY_SCHEMA_TYPES = {"AboutPage", "Article", "CollectionPage", "ContactPage", "HowTo", "WebPage", "WebSite"}
-FORBIDDEN_VISIBLE = ("低價值", "高意圖", "SEO", "搜尋入口", "審核流程", "審核版", "審核面", "AdSense", "命運儀式")
+FORBIDDEN_VISIBLE = (
+    "低價值",
+    "高意圖",
+    "SEO",
+    "搜尋入口",
+    "審核流程",
+    "審核版",
+    "審核面",
+    "AdSense",
+    "命運儀式",
+    "不索引",
+    "索引面",
+    "核准優先",
+    "送審",
+)
 FORBIDDEN_COMMERCIAL = ("US$", "付費報告", "八字", "流年", "Love Timing Report")
 FORBIDDEN_REVIEW_POSITIONING = ("命理", "命盤", "出生節奏", "生日節奏", "出生時間", "出生日期")
 EXPECTED_CORE = {

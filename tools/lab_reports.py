@@ -194,7 +194,7 @@ LAB_TEST_DETAILS = {
         "test_id": "LT-LAB-PF-001",
         "fixture": "桌面與 360×800 使用 Fast 3G 模擬：下載 1.6 Mbps、上傳 750 Kbps、延遲 150 ms。阻擋 guide-toolkit-og.jpg 與一張守護者 WebP，再完全停用 JavaScript開啟首頁、指南、About、Privacy 與 Compass。",
         "raw_observation": "指南標題、前言與正文在非關鍵圖片完成前可讀；阻擋圖片後保留固定寬高與 alt，沒有大幅版面跳動。關閉 JavaScript 時指南、來源、作者、修訂、About 與隱私完整可讀。Compass 保留用途、安全限制與免費閱讀路徑，但不偽造互動結果；首頁測驗控制不運作且未顯示已完成狀態。",
-        "method_detail": "節流是可重現的工程模擬，不等於台灣所有行動網路。驗收關心失敗時的最低可用內容：文字和信任資訊由 HTML 提供、圖片有尺寸和替代文字、互動工具在腳本失效時不產生假結果。第三方商店不在索引面，也不納入本站速度結論。後續若新增必要 JavaScript，需重新檢查無腳本狀態。",
+        "method_detail": "節流是可重現的工程模擬，不等於台灣所有行動網路。驗收關心失敗時的最低可用內容：文字和信任資訊由 HTML 提供、圖片有尺寸和替代文字、互動工具在腳本失效時不產生假結果。第三方商店不在這次產品測試範圍，也不納入本站速度結論。後續若新增必要 JavaScript，需重新檢查無腳本狀態。",
         "revision": "加入明確節流數值、被阻擋資產、無腳本頁面清單與最低可用內容判準。",
         "secondary_screenshot": "/assets/lovetypes/lab/slow-network-performance-test-detail.webp",
         "secondary_alt": "LoveTypes 關閉 JavaScript 後指南來源與安全文字仍可閱讀的畫面",

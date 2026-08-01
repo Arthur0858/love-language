@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T08:49:45Z",
+  "checkedAt": "2026-08-01T09:07:17Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "64a14159f8858a1e75fc08fbb5dfdd46eeac7c7a",
-  "auditToolingCommit": "64a14159f8858a1e75fc08fbb5dfdd46eeac7c7a",
+  "reviewSurfaceCommit": "230656498ae2ce0d8a6f000875e567ae390e3bd3",
+  "auditToolingCommit": "230656498ae2ce0d8a6f000875e567ae390e3bd3",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "16980fc2-1ee4-4e98-8e10-a7fda63162b0",
-    "preview": "https://16980fc2.lovetypes.pages.dev"
+    "id": "a342bdc3-57f2-4f70-93b3-857170018063",
+    "preview": "https://a342bdc3.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for core editorial identity",
+      "name": "pages build and deployment for clarified quiz positioning",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692448746"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692955243"
     },
     {
-      "name": "LoveTypes predeploy check for core editorial identity",
+      "name": "LoveTypes predeploy check for clarified quiz positioning",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692449041"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692955453"
     }
   ],
   "productionChecks": {
@@ -41,6 +41,8 @@
     "coreEditorialTrustPages": 12,
     "unexpandedDatetimeTemplates": 0,
     "visibleDateMismatches": 0,
+    "homepageSchemaLastmodMismatches": 0,
+    "destinyRitualPhrases": 0,
     "compassMainCjk": 2930,
     "compassEditorialBylines": 1,
     "forbiddenPositioningTerms": 0,
@@ -61,13 +63,13 @@
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 10,
-    "worstLcpMs": 328,
+    "worstLcpMs": 724,
     "worstCls": 0,
     "maxTransferBytes": 352341,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 252,
+    "gardenMapLcpMs": 220,
     "gardenMapTransferBytes": 232310,
     "issues": 0
   },

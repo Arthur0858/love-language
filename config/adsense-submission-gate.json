@@ -19,7 +19,7 @@
     },
     "productionAuditGreen": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T08:49:45Z",
+      "checkedAt": "2026-08-01T09:07:17Z",
       "evidence": "config/evidence/production-audit-2026-08-01.json"
     }
   }

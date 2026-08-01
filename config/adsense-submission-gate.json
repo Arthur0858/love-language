@@ -29,7 +29,12 @@
     },
     "adsTxtRecognizedByAdsense": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T11:49:18Z",
+      "checkedAt": "2026-08-01T13:24:44Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
+    },
+    "reviewActionAvailable": {
+      "confirmed": true,
+      "checkedAt": "2026-08-01T13:24:44Z",
       "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
     },
     "gscPagesWithImpressions": {

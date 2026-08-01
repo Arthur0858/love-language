@@ -1,12 +1,14 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T11:08:03Z",
+  "checkedAt": "2026-08-01T13:24:44Z",
   "site": "https://lovetypes.tw/",
   "dashboard": {
     "approvalStatus": "needs_action",
     "statusDetail": "low_value_content",
     "adsTxtStatus": "not_found",
     "visibleLastUpdated": "2026-07-25 10:48 CST",
+    "submissionRestrictionActive": false,
+    "reviewActionAvailable": true,
     "reviewCheckboxChecked": false,
     "reviewSubmitted": false,
     "requiredMetaTag": "<meta name=\"google-adsense-account\" content=\"ca-pub-4093856660317740\">",
@@ -22,6 +24,6 @@
     "recordMatchesDashboard": true,
     "issues": 0
   },
-  "interpretation": "The public file is correct, but the AdSense dashboard still shows an older not-found scan. This evidence does not satisfy adsTxtRecognizedByAdsense until the dashboard status changes.",
+  "interpretation": "The review checkbox and review action are available, so the previous submission restriction is no longer active. No checkbox was selected and no review was submitted. The public ads.txt file is correct, but the AdSense dashboard still shows the older 2026-07-25 not-found scan; this evidence does not satisfy adsTxtRecognizedByAdsense until the dashboard status changes.",
   "result": "pending_external_recrawl"
 }

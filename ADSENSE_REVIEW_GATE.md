@@ -7,3 +7,5 @@ The command is intentionally read-only. It never signs in, clicks the review but
 `lastMaterialChange` must be moved forward after any material content, navigation, indexing, commercial, schema, or deployment-surface change. The 14-day stable period starts again from that date.
 
 Do not submit unless the command returns `adsense_submission_ready=true`. After submission, set `reviewSubmitted` to `true` and retain the AdSense status screenshot separately.
+
+The gate also requires authenticated evidence that the AdSense review action is available, the prior submission restriction is inactive, and no review has already been submitted.

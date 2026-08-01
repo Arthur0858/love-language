@@ -116,6 +116,15 @@ def evidence_contract_issues(name: str, item: dict) -> list[str]:
         status = object_value(payload.get("dashboard")).get("adsTxtStatus")
         if status not in {"authorized", "found", "recognized"}:
             issues.append("AdSense evidence does not prove ads.txt recognition")
+    elif name == "reviewActionAvailable":
+        dashboard = object_value(payload.get("dashboard"))
+        if (
+            dashboard.get("submissionRestrictionActive") is not False
+            or dashboard.get("reviewActionAvailable") is not True
+            or dashboard.get("reviewCheckboxChecked") is not False
+            or dashboard.get("reviewSubmitted") is not False
+        ):
+            issues.append("AdSense evidence does not prove an available, unsubmitted review action")
     elif name == "productionAuditGreen":
         checks = object_value(payload.get("productionChecks"))
         if payload.get("result") != "pass" or integer_value(checks.get("issues")) != 0:
@@ -146,6 +155,7 @@ def state_validation_issues(state: dict) -> list[str]:
         "importantPagesRecrawled",
         "legacyUrlsLeavingIndex",
         "adsTxtRecognizedByAdsense",
+        "reviewActionAvailable",
         "gscPagesWithImpressions",
         "productionAuditGreen",
     }
@@ -220,6 +230,7 @@ def main() -> int:
         "importantPagesRecrawled",
         "legacyUrlsLeavingIndex",
         "adsTxtRecognizedByAdsense",
+        "reviewActionAvailable",
         "gscPagesWithImpressions",
         "productionAuditGreen",
     }

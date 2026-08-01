@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T11:29:09Z",
+  "checkedAt": "2026-08-01T13:24:44Z",
   "timeZone": "Asia/Taipei",
   "site": "https://lovetypes.tw/",
   "source": "Authenticated Google Search Console UI readback in the owner's Chrome session",
@@ -32,6 +32,34 @@
     },
     "currentReviewSurfaceConfirmed": false,
     "interpretation": "The report predates the 2026-08-01 21:14 Asia/Taipei review-surface deployment and cannot prove that the old multilingual and retired URL inventory has left the index."
+  },
+  "structuredDataReports": {
+    "profilePage": {
+      "lastUpdatedOn": "2026-07-31",
+      "invalidItems": 24,
+      "validItems": 0,
+      "criticalIssue": "missing mainEntity",
+      "improvementIssue": "invalid dateModified datetime",
+      "validationStatus": "started",
+      "validationStartedOn": "2026-08-01",
+      "currentTraditionalChineseExamples": [
+        "https://lovetypes.tw/characters/claire/",
+        "https://lovetypes.tw/characters/dora/",
+        "https://lovetypes.tw/characters/iris/",
+        "https://lovetypes.tw/characters/vivian/"
+      ],
+      "legacyExamples": [
+        "https://lovetypes.tw/ko/characters/claire/",
+        "https://lovetypes.tw/ko/characters/noah/",
+        "https://lovetypes.tw/es/characters/vivian/",
+        "https://lovetypes.tw/en/characters/vivian/",
+        "https://lovetypes.tw/ja/characters/vivian/",
+        "https://lovetypes.tw/ja/characters/dora/"
+      ],
+      "latestProductionSchemaType": "WebPage",
+      "latestProductionUsesProfilePage": false,
+      "interpretation": "The report reflects ProfilePage markup crawled before the latest deployment and includes retired multilingual routes. The current 38-page production schema audit has no ProfilePage entities, so resolution depends on Google recrawling the current WebPage markup rather than another schema change."
+    }
   },
   "latestMaterialDeployment": {
     "commit": "e9e8beec9b10d820ced9afee6017b7e1c1371bcf",

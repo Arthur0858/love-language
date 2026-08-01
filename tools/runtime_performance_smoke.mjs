@@ -48,6 +48,7 @@ const CASES = [
   { name: 'home-desktop', path: '/', width: 1366, height: 900 },
   { name: 'home-mobile', path: '/', width: 390, height: 844, isMobile: true },
   { name: 'start-mobile', path: '/start/', width: 390, height: 844, isMobile: true },
+  { name: 'guardian-mobile', path: '/characters/iris/', width: 390, height: 844, isMobile: true },
   { name: 'guide-mobile', path: '/guides/physical-touch-consent-safety/', width: 390, height: 844, isMobile: true },
   { name: 'lab-mobile', path: '/lab/quiz-scoring-test/', width: 390, height: 844, isMobile: true },
   { name: 'compass-mobile', path: '/compass/', width: 390, height: 844, isMobile: true },

@@ -1664,6 +1664,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_visual_horizontal_overflow_issues",
         "public_visual_console_error_cases",
         "public_visual_page_error_cases",
+        "public_visual_noscript_cases",
         "public_visual_parse_error",
         "public_visual_stderr_tail",
         "public_visual_stdout_tail",

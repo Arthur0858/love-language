@@ -31,6 +31,7 @@ const routes = [
   { name: 'home', path: '/' },
   { name: 'quiz', path: '/', quiz: true },
   { name: 'start', path: '/start/' },
+  { name: 'garden-map', path: '/garden-map/' },
   { name: 'guides', path: '/guides/' },
   { name: 'guide-share-result', path: '/guides/share-your-result/' },
   { name: 'guide-conflict-repair', path: '/guides/repair-after-conflict/' },

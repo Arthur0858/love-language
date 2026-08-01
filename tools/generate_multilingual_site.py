@@ -5450,7 +5450,7 @@ def conversion_dock(lang: str) -> str:
 <nav class="conversion-dock" aria-label="{escape(copy["aria"])}" data-conversion-dock>
   <span hidden>{escape(copy["label"])}</span>
   <a href="{lang_url(lang)}#quiz-section" data-funnel-event="conversion_dock_quiz">{escape(copy["quiz"])}</a>
-  <a href="{lang_url(lang, "repair-plan")}#repair-lead-pack" data-funnel-event="conversion_dock_repair">{escape(copy["repair"])}</a>
+  <a href="{lang_url(lang, "repair-plan")}#repair-worksheet" data-funnel-event="conversion_dock_repair">{escape(copy["repair"])}</a>
   <a href="{lang_url(lang, "compass")}#relationship-compass-tool" data-funnel-event="conversion_dock_compass">{escape(copy["compass"])}</a>
 </nav>
 """

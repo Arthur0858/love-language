@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T09:07:17Z",
+  "checkedAt": "2026-08-01T09:23:18Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "230656498ae2ce0d8a6f000875e567ae390e3bd3",
-  "auditToolingCommit": "230656498ae2ce0d8a6f000875e567ae390e3bd3",
+  "reviewSurfaceCommit": "9a8b373f78dd49a3d0844473282b97cc86b34e8d",
+  "auditToolingCommit": "9a8b373f78dd49a3d0844473282b97cc86b34e8d",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "a342bdc3-57f2-4f70-93b3-857170018063",
-    "preview": "https://a342bdc3.lovetypes.pages.dev"
+    "id": "dca94537-9b3c-497a-a91f-374f1054aa9a",
+    "preview": "https://dca94537.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for clarified quiz positioning",
+      "name": "pages build and deployment for official safety routes",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692955243"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30693565644"
     },
     {
-      "name": "LoveTypes predeploy check for clarified quiz positioning",
+      "name": "LoveTypes predeploy check for official safety routes",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692955453"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30693566086"
     }
   ],
   "productionChecks": {
@@ -28,7 +28,7 @@
     "indexabilityCases": 56,
     "headerCases": 51,
     "assetReferences": 444,
-    "internalLinks": 1194,
+    "internalLinks": 1232,
     "jsonLdBlocks": 118,
     "editorialGuides": 12,
     "labReports": 8,
@@ -43,6 +43,9 @@
     "visibleDateMismatches": 0,
     "homepageSchemaLastmodMismatches": 0,
     "destinyRitualPhrases": 0,
+    "footerSafetySupportPages": 38,
+    "officialSafetyRoutes": 3,
+    "officialSafetySources": 3,
     "compassMainCjk": 2930,
     "compassEditorialBylines": 1,
     "forbiddenPositioningTerms": 0,
@@ -53,7 +56,7 @@
     "gardenMapGuideContainment": 0.185,
     "editorialSourceHosts": 5,
     "labEvidenceImages": 16,
-    "externalLinks": 9,
+    "externalLinks": 12,
     "visualPages": 75,
     "noScriptPages": 5,
     "keyboardCases": 10,
@@ -63,13 +66,13 @@
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 10,
-    "worstLcpMs": 724,
+    "worstLcpMs": 372,
     "worstCls": 0,
     "maxTransferBytes": 352341,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 220,
+    "gardenMapLcpMs": 212,
     "gardenMapTransferBytes": 232310,
     "issues": 0
   },

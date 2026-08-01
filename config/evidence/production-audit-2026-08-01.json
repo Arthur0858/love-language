@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T11:08:03Z",
+  "checkedAt": "2026-08-01T11:49:18Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "b63dd23cd10e2afbe9c5fcf69e8e77d8c9269f9d",
-  "auditToolingCommit": "b5308b0b69aafaee0c53c94a690cea0d5bf06821",
+  "reviewSurfaceCommit": "b14410bc11dc5f794aa9b396467c034262440139",
+  "auditToolingCommit": "b14410bc11dc5f794aa9b396467c034262440139",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "48de4eb4-0c62-4eef-9e2e-a5b2533dd877",
-    "preview": "https://48de4eb4.lovetypes.pages.dev"
+    "id": "41807d47-297d-4a14-9dd6-5905c5daaf48",
+    "preview": "https://41807d47.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for AdSense recrawl evidence gates",
+      "name": "pages build and deployment after reviewer-facing copy cleanup",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30697134873"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30698351933"
     },
     {
-      "name": "LoveTypes predeploy check for AdSense recrawl evidence gates",
+      "name": "LoveTypes predeploy check after reviewer-facing copy cleanup",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30697135117"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30698352171"
     }
   ],
   "productionChecks": {
@@ -68,6 +68,7 @@
     "compassMainCjk": 2930,
     "compassEditorialBylines": 1,
     "forbiddenPositioningTerms": 0,
+    "reviewerFacingInternalTerms": 0,
     "gardenMapMainCjk": 1145,
     "gardenMapDecisionCards": 5,
     "gardenMapInteractiveTools": 2,
@@ -82,24 +83,24 @@
     "issues": 0
   },
   "runtimePerformance": {
-    "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
+    "evidence": "config/evidence/production-runtime-performance-2026-08-01-b14410bc.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 10,
-    "worstLcpMs": 476,
+    "worstLcpMs": 356,
     "worstCls": 0,
-    "maxTransferBytes": 352400,
+    "maxTransferBytes": 352322,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 212,
-    "gardenMapTransferBytes": 232370,
+    "gardenMapLcpMs": 180,
+    "gardenMapTransferBytes": 232367,
     "issues": 0
   },
   "commands": [
     "python3 tools/public_adsense_review_smoke.py",
     "python3 tools/public_support_sync_smoke.py",
     "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
-    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://48de4eb4.lovetypes.pages.dev",
+    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw --preview-base-url https://41807d47.lovetypes.pages.dev",
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",

@@ -19,7 +19,7 @@
       "confirmed": false,
       "checkedAt": "2026-08-01T11:29:09Z",
       "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
-      "reason": "All 10 inspected crawl timestamps precede the 2026-08-01 18:38 Asia/Taipei material deployment."
+      "reason": "All 10 inspected crawl timestamps precede the 2026-08-01 19:46 Asia/Taipei material deployment."
     },
     "legacyUrlsLeavingIndex": {
       "confirmed": false,
@@ -29,7 +29,7 @@
     },
     "adsTxtRecognizedByAdsense": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T11:08:03Z",
+      "checkedAt": "2026-08-01T11:49:18Z",
       "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
     },
     "gscPagesWithImpressions": {

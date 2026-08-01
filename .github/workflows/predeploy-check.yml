@@ -54,6 +54,8 @@ jobs:
           test ${PIPESTATUS[0]} -eq 0
           python tools/public_sitemap_smoke.py 2>&1 | tee output/public-sitemap-smoke.log
           test ${PIPESTATUS[0]} -eq 0
+          PERFORMANCE_REPORT_PATH=output/production-runtime-performance.json node tools/runtime_performance_smoke.mjs 2>&1 | tee output/runtime-performance-smoke.log
+          test ${PIPESTATUS[0]} -eq 0
 
       - name: Upload predeploy evidence
         if: always()
@@ -64,5 +66,7 @@ jobs:
             output/predeploy-check.log
             output/public-deploy-smoke.log
             output/public-sitemap-smoke.log
+            output/runtime-performance-smoke.log
+            output/production-runtime-performance.json
             output/playwright
           if-no-files-found: ignore

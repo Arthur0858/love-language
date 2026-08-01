@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T04:41:35Z",
+  "checkedAt": "2026-08-01T04:49:32Z",
   "site": "https://lovetypes.tw/",
   "commit": "5de0261e7c1cffc2f82f86ffd9b1752d93abb49f",
   "cloudflareDeployment": {
@@ -30,6 +30,18 @@
     "jsonLdBlocks": 118,
     "issues": 0
   },
+  "runtimePerformance": {
+    "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
+    "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
+    "pagesChecked": 8,
+    "worstLcpMs": 336,
+    "worstCls": 0,
+    "maxTransferBytes": 220694,
+    "failedRequests": 0,
+    "failedResponses": 0,
+    "brokenImages": 0,
+    "issues": 0
+  },
   "commands": [
     "python3 tools/public_adsense_review_smoke.py",
     "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
@@ -37,7 +49,8 @@
     "python3 tools/public_asset_integrity_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
     "python3 tools/public_schema_smoke.py --base-url https://lovetypes.tw",
-    "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw"
+    "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
+    "PERFORMANCE_REPORT_PATH=config/evidence/production-runtime-performance-2026-08-01.json node tools/runtime_performance_smoke.mjs"
   ],
   "result": "pass"
 }

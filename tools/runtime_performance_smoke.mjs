@@ -1,4 +1,5 @@
-import { access } from 'node:fs/promises';
+import { access, mkdir, writeFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
 
 async function loadPlaywright() {
   const candidates = [
@@ -41,16 +42,17 @@ async function browserLaunchOptions() {
 const BASE_URL = process.env.BASE_URL || 'https://lovetypes.tw';
 const MODE = process.env.PERFORMANCE_SMOKE_MODE || (BASE_URL.includes('127.0.0.1') ? 'local' : 'public');
 const IS_PUBLIC = MODE === 'public';
+const REPORT_PATH = process.env.PERFORMANCE_REPORT_PATH || '';
 
 const CASES = [
   { name: 'home-desktop', path: '/', width: 1366, height: 900 },
   { name: 'home-mobile', path: '/', width: 390, height: 844, isMobile: true },
-  { name: 'garden-map-mobile', path: '/garden-map/', width: 390, height: 844, isMobile: true },
-  { name: 'garden-map-en-mobile', path: '/en/garden-map/', width: 390, height: 844, isMobile: true },
-  { name: 'characters-mobile', path: '/characters/', width: 390, height: 844, isMobile: true },
-  { name: 'iris-mobile', path: '/characters/iris/', width: 390, height: 844, isMobile: true },
-  { name: 'resources-mobile', path: '/resources/', width: 390, height: 844, isMobile: true },
-  { name: 'luna-mobile', path: '/luna-yoga-music/', width: 390, height: 844, isMobile: true },
+  { name: 'start-mobile', path: '/start/', width: 390, height: 844, isMobile: true },
+  { name: 'guide-mobile', path: '/guides/physical-touch-consent-safety/', width: 390, height: 844, isMobile: true },
+  { name: 'lab-mobile', path: '/lab/quiz-scoring-test/', width: 390, height: 844, isMobile: true },
+  { name: 'compass-mobile', path: '/compass/', width: 390, height: 844, isMobile: true },
+  { name: 'about-mobile', path: '/about/', width: 390, height: 844, isMobile: true },
+  { name: 'resources-noindex-mobile', path: '/resources/', width: 390, height: 844, isMobile: true },
 ];
 
 const BUDGETS = {
@@ -154,10 +156,20 @@ async function measureCase(browser, item) {
 
   const consoleErrors = [];
   const pageErrors = [];
+  const failedRequests = [];
+  const failedResponses = [];
   page.on('console', (message) => {
     if (message.type() === 'error') consoleErrors.push(message.text());
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('requestfailed', (request) => {
+    failedRequests.push(`${request.failure()?.errorText || 'request failed'} ${request.url()}`);
+  });
+  page.on('response', (resourceResponse) => {
+    if (resourceResponse.status() >= 400) {
+      failedResponses.push(`${resourceResponse.status()} ${resourceResponse.url()}`);
+    }
+  });
 
   const response = await page.goto(absoluteUrl(item.path), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await page.waitForLoadState('load', { timeout: 45000 }).catch(() => {});
@@ -178,8 +190,12 @@ async function measureCase(browser, item) {
     return {
       title: document.title,
       h1: document.querySelector('h1')?.textContent?.trim() || '',
+      mainTextLength: document.querySelector('main')?.innerText?.trim().length || 0,
       navCount: document.querySelectorAll('nav a').length,
       horizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+      brokenImages: [...document.images]
+        .filter((image) => image.complete && image.naturalWidth === 0)
+        .map((image) => image.currentSrc || image.src),
       timing: nav ? {
         responseStart: Math.round(nav.responseStart),
         domContentLoaded: Math.round(nav.domContentLoadedEventEnd),
@@ -209,8 +225,14 @@ async function measureCase(browser, item) {
     ...(!response || response.status() >= 400 ? [`HTTP status ${response?.status() || 'missing'}`] : []),
     ...(!metrics.title ? ['missing title'] : []),
     ...(!metrics.h1 ? ['missing h1'] : []),
+    ...(metrics.mainTextLength < 500 ? [`main text too short: ${metrics.mainTextLength}`] : []),
     ...(metrics.navCount < 4 ? [`navigation too small: ${metrics.navCount}`] : []),
     ...(metrics.horizontalOverflow ? ['horizontal overflow'] : []),
+    ...(!metrics.firstContentfulPaint ? ['FCP was not observed'] : []),
+    ...(!metrics.largestContentfulPaint ? ['LCP was not observed'] : []),
+    ...metrics.brokenImages.map((url) => `broken image: ${url}`),
+    ...failedRequests.map((message) => `failed request: ${message}`),
+    ...failedResponses.map((message) => `failed response: ${message}`),
     ...consoleErrors.map((message) => `console error: ${message}`),
     ...pageErrors.map((message) => `page error: ${message}`),
     ...issueForMetric('FCP', metrics.firstContentfulPaint, budgets.firstContentfulPaint),
@@ -228,8 +250,10 @@ async function measureCase(browser, item) {
     name: item.name,
     url: absoluteUrl(item.path),
     status: response?.status() || 0,
+    finalUrl: page.url(),
     title: metrics.title,
     h1: metrics.h1,
+    mainTextLength: metrics.mainTextLength,
     firstContentfulPaint: metrics.firstContentfulPaint,
     largestContentfulPaint: metrics.largestContentfulPaint,
     cumulativeLayoutShift: metrics.cumulativeLayoutShift,
@@ -242,6 +266,9 @@ async function measureCase(browser, item) {
     styleBytes,
     imageBytes,
     largestResources,
+    failedRequestCount: failedRequests.length,
+    failedResponseCount: failedResponses.length,
+    brokenImageCount: metrics.brokenImages.length,
     issues,
   };
 }
@@ -264,6 +291,26 @@ async function main() {
   const worstCls = Math.max(...results.map((result) => result.cumulativeLayoutShift || 0));
   const maxTransfer = Math.max(...results.map((result) => result.totalBytes || 0));
 
+  if (REPORT_PATH) {
+    const report = {
+      measuredAt: new Date().toISOString(),
+      baseUrl: BASE_URL,
+      mode: MODE,
+      methodology: 'Synthetic Chromium navigation; this is engineering evidence, not field Core Web Vitals.',
+      budgets: BUDGETS[IS_PUBLIC ? 'public' : 'local'],
+      summary: {
+        pagesChecked: results.length,
+        worstLcpMs: worstLcp,
+        worstCls,
+        maxTransferBytes: maxTransfer,
+        issueCount: issues.length,
+      },
+      results,
+    };
+    await mkdir(dirname(REPORT_PATH), { recursive: true });
+    await writeFile(REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+  }
+
   console.log(`runtime_performance_mode=${MODE}`);
   console.log(`runtime_performance_pages_checked=${results.length}`);
   console.log(`runtime_performance_worst_lcp_ms=${worstLcp}`);
@@ -272,7 +319,7 @@ async function main() {
   console.log(`runtime_performance_issues=${issues.length}`);
   for (const result of results) {
     console.log(
-      `runtime_performance_page=${result.name} status=${result.status} fcp=${result.firstContentfulPaint} lcp=${result.largestContentfulPaint} cls=${result.cumulativeLayoutShift} dcl=${result.domContentLoaded} load=${result.loadEventEnd} bytes=${result.totalBytes} scripts=${result.scriptBytes} styles=${result.styleBytes} images=${result.imageBytes}`
+      `runtime_performance_page=${result.name} status=${result.status} fcp=${result.firstContentfulPaint} lcp=${result.largestContentfulPaint} cls=${result.cumulativeLayoutShift} dcl=${result.domContentLoaded} load=${result.loadEventEnd} bytes=${result.totalBytes} scripts=${result.scriptBytes} styles=${result.styleBytes} images=${result.imageBytes} failed_requests=${result.failedRequestCount} failed_responses=${result.failedResponseCount} broken_images=${result.brokenImageCount}`
     );
     console.log(`runtime_performance_largest_resources=${result.name} ${result.largestResources.join(' | ')}`);
   }

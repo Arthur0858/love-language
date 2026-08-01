@@ -3,7 +3,7 @@ Site: LoveTypes
 Team: LoveTypes 內容編輯團隊
 Contact: contact@lovetypes.tw
 Production: https://lovetypes.tw/
-Updated: 2026-07-31
+Updated: 2026-08-01
 
 /* SITE */
 Purpose: 繁體中文的五種愛之語反思、守護者測驗、關係溝通指南、免費修復練習與產品實測紀錄。
@@ -12,6 +12,7 @@ Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
 Editorial method: https://lovetypes.tw/about/
 Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
+Taiwan safety support: https://lovetypes.tw/contact/#urgent-safety-support
 
 /* CORE ROUTES */
 Quiz: https://lovetypes.tw/start/

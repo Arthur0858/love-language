@@ -6,13 +6,20 @@
 
 - 網址：https://lovetypes.tw/
 - 主要語言：繁體中文
-- 更新日期：2026-07-31
+- 更新日期：2026-08-01
 - 製作團隊：LoveTypes 內容編輯團隊
 - 編輯方法：https://lovetypes.tw/about/
 
 ## 使用邊界
 
 LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理治療、醫療、法律意見或緊急支援。涉及暴力、控制、自傷或急迫危險時，應優先尋求當地緊急資源、可信任的人及合格專業支援。
+
+## 台灣緊急與安全支援
+
+- 緊急危險：110（警政署） https://www.npa.gov.tw/ch/app/artwebsite/view?module=artwebsite&id=1218&serno=8a8082a1884f3ce001885276bcf405e3
+- 保護專線：113（衛生福利部） https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html
+- 安心專線：1925（衛生福利部） https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html
+- LoveTypes 安全說明：https://lovetypes.tw/contact/#urgent-safety-support
 
 ## 五位守護者
 
@@ -66,5 +73,4 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 - 正式繁中路由：/site-index.json
 - 守護者資料：/guardian-profiles.json
 - 安全邊界：/safety-index.json
-- 互動事件目錄：/funnel-events.json
 - 團隊與網站資訊：/humans.txt

@@ -24,7 +24,14 @@ from adsense_review_surface_audit import (
     schema_types,
     schemas,
 )
-from generate_multilingual_site import COMPASS_UPDATED, HOME_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
+from generate_multilingual_site import (
+    COMPASS_UPDATED,
+    HOME_UPDATED,
+    LEGACY_ZH_GUIDES,
+    LONG_TAIL_COMPATIBILITY_PAGES,
+    MACHINE_READABLE_UPDATED,
+    RETIRED_PUBLIC_ASSET_PATHS,
+)
 
 
 BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
@@ -210,8 +217,62 @@ def main() -> int:
             issues.append("/site-index.json: expected 38 pages")
         if {page.get("lang") for page in index.get("pages", [])} != {"zh"}:
             issues.append("/site-index.json: expected zh-only pages")
+        if index.get("updated") != MACHINE_READABLE_UPDATED or index.get("totals", {}).get("languages") != 1:
+            issues.append("/site-index.json: stale date or published language drift")
+        if "review surface" in str(index.get("description", "")).lower():
+            issues.append("/site-index.json: internal review terminology leaked publicly")
     except json.JSONDecodeError:
         issues.append("/site-index.json: invalid JSON")
+
+    llms = request("/llms.txt")
+    if llms.status != 200 or f"更新日期：{MACHINE_READABLE_UPDATED}" not in llms.text:
+        issues.append("/llms.txt: stale or unavailable")
+    if "/funnel-events.json" in llms.text:
+        issues.append("/llms.txt: local funnel catalog advertised publicly")
+    for marker in ("/contact/#urgent-safety-support", "110", "113", "1925"):
+        if marker not in llms.text:
+            issues.append(f"/llms.txt: missing safety marker {marker}")
+
+    humans = request("/humans.txt")
+    if humans.status != 200 or f"Updated: {MACHINE_READABLE_UPDATED}" not in humans.text:
+        issues.append("/humans.txt: stale or unavailable")
+
+    guardian_response = request("/guardian-profiles.json")
+    try:
+        guardian_index = json.loads(guardian_response.text)
+        if guardian_response.status != 200:
+            issues.append("/guardian-profiles.json: expected 200")
+        if guardian_index.get("updated") != MACHINE_READABLE_UPDATED:
+            issues.append("/guardian-profiles.json: stale date")
+        if guardian_index.get("publishedLanguage") != "zh-TW" or guardian_index.get("totals", {}).get("languages") != 1:
+            issues.append("/guardian-profiles.json: must be zh-TW only")
+        if any("en" in item.get("name", {}) for item in guardian_index.get("guardians", [])):
+            issues.append("/guardian-profiles.json: unpublished English copy leaked")
+    except json.JSONDecodeError:
+        issues.append("/guardian-profiles.json: invalid JSON")
+
+    safety_response = request("/safety-index.json")
+    try:
+        safety_index = json.loads(safety_response.text)
+        if safety_response.status != 200:
+            issues.append("/safety-index.json: expected 200")
+        if safety_index.get("updated") != MACHINE_READABLE_UPDATED:
+            issues.append("/safety-index.json: stale date")
+        if safety_index.get("publishedLanguage") != "zh-TW" or safety_index.get("totals", {}).get("languages") != 1:
+            issues.append("/safety-index.json: must be zh-TW only")
+        support = safety_index.get("officialSupport", [])
+        if {item.get("id") for item in support if isinstance(item, dict)} != {"110", "113", "1925"}:
+            issues.append("/safety-index.json: official support set must be 110, 113, 1925")
+        urgent_routes = [
+            route
+            for boundary in safety_index.get("boundaries", [])
+            if isinstance(boundary, dict) and boundary.get("id") == "urgent_risk_first"
+            for route in boundary.get("routes", [])
+        ]
+        if f"{CANONICAL_BASE}/contact/#urgent-safety-support" not in urgent_routes:
+            issues.append("/safety-index.json: urgent support anchor mismatch")
+    except json.JSONDecodeError:
+        issues.append("/safety-index.json: invalid JSON")
 
     for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/"):
         response = request(route)

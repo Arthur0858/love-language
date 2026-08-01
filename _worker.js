@@ -43,6 +43,7 @@ const RETIRED_ASSETS = new Set([
   "/compass-tool-20260707.js",
   "/compass-tool.js",
   "/deferred-external-20260613-funnel-kpi-map.js",
+  "/funnel-events.json",
   "/promotion-kit.json",
   "/quiz-data-en-20260707-conversion-bridge.js",
   "/quiz-data-en-20260801-review-surface.js",

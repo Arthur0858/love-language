@@ -16,11 +16,14 @@ from generate_multilingual_site import (
     GUARDIAN_UPDATED,
     COMPASS_UPDATED,
     CORE_EDITORIAL_UPDATED,
+    DOMAIN,
     GARDEN_MAP_UPDATED,
     HOME_UPDATED,
     LAB_INDEX_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
+    MACHINE_READABLE_UPDATED,
+    RETIRED_PUBLIC_ASSET_PATHS,
     REPAIR_PLAN_UPDATED,
     START_UPDATED,
     THEORY_UPDATED,
@@ -113,6 +116,68 @@ def main() -> int:
         issues.append(f"site-index must contain 38 unique pages, found {len(routes)}")
     if {page["lang"] for page in index["pages"]} != {"zh"}:
         issues.append("site-index must contain only zh pages")
+    if index.get("updated") != MACHINE_READABLE_UPDATED:
+        issues.append("site-index machine-readable update date mismatch")
+    if index.get("totals", {}).get("languages") != 1:
+        issues.append("site-index must declare one published language")
+    if "review surface" in str(index.get("description", "")).lower():
+        issues.append("site-index exposes internal review terminology")
+
+    expected_public_support = {
+        "robots.txt", "sitemap.xml", "feed.xml", "site.webmanifest", "llms.txt",
+        "humans.txt", "security.txt", "ads.txt", "site-index.json",
+        "guardian-profiles.json", "safety-index.json",
+    }
+    if deploy.PUBLIC_SUPPORT_FILES != expected_public_support:
+        issues.append(
+            "public support allowlist drift: "
+            f"missing={sorted(expected_public_support-deploy.PUBLIC_SUPPORT_FILES)} "
+            f"extra={sorted(deploy.PUBLIC_SUPPORT_FILES-expected_public_support)}"
+        )
+    if "funnel-events.json" in deploy.PUBLIC_SUPPORT_FILES:
+        issues.append("funnel-events.json must remain local and must not be publicly deployed")
+    if "/funnel-events.json" not in RETIRED_PUBLIC_ASSET_PATHS:
+        issues.append("funnel-events.json must be covered by the public 410 retirement worker")
+
+    llms_text = (ROOT / "llms.txt").read_text(encoding="utf-8")
+    humans_text = (ROOT / "humans.txt").read_text(encoding="utf-8")
+    if f"更新日期：{MACHINE_READABLE_UPDATED}" not in llms_text:
+        issues.append("llms.txt machine-readable update date mismatch")
+    if "/funnel-events.json" in llms_text:
+        issues.append("llms.txt must not advertise the local funnel catalog")
+    for marker in ("/contact/#urgent-safety-support", "110", "113", "1925"):
+        if marker not in llms_text:
+            issues.append(f"llms.txt missing public safety marker {marker}")
+    if f"Updated: {MACHINE_READABLE_UPDATED}" not in humans_text:
+        issues.append("humans.txt machine-readable update date mismatch")
+
+    guardian_index = json.loads((ROOT / "guardian-profiles.json").read_text(encoding="utf-8"))
+    if guardian_index.get("updated") != MACHINE_READABLE_UPDATED:
+        issues.append("guardian-profiles update date mismatch")
+    if guardian_index.get("publishedLanguage") != "zh-TW" or guardian_index.get("totals", {}).get("languages") != 1:
+        issues.append("guardian-profiles must declare zh-TW as its only published language")
+    if any("en" in item.get("name", {}) or "en" in item.get("loveLanguage", {}) for item in guardian_index.get("guardians", [])):
+        issues.append("guardian-profiles contains unpublished English profile copy")
+
+    safety_index = json.loads((ROOT / "safety-index.json").read_text(encoding="utf-8"))
+    if safety_index.get("updated") != MACHINE_READABLE_UPDATED:
+        issues.append("safety-index update date mismatch")
+    if safety_index.get("publishedLanguage") != "zh-TW" or safety_index.get("totals", {}).get("languages") != 1:
+        issues.append("safety-index must declare zh-TW as its only published language")
+    official_support = safety_index.get("officialSupport", [])
+    if {item.get("id") for item in official_support if isinstance(item, dict)} != {"110", "113", "1925"}:
+        issues.append("safety-index officialSupport must contain exactly 110, 113, and 1925")
+    for item in official_support:
+        if not item.get("telephone", "").startswith("tel:") or not item.get("source", "").startswith("https://"):
+            issues.append(f"safety-index official support entry is incomplete: {item.get('id')}")
+    if not any(
+        f"{DOMAIN}/contact/#urgent-safety-support" in boundary.get("routes", [])
+        for boundary in safety_index.get("boundaries", [])
+        if isinstance(boundary, dict) and boundary.get("id") == "urgent_risk_first"
+    ):
+        issues.append("safety-index urgent risk route must point to the public safety support anchor")
+    if any("en" in boundary.get("title", {}) or "en" in boundary.get("body", {}) for boundary in safety_index.get("boundaries", [])):
+        issues.append("safety-index contains unpublished English safety copy")
 
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     sitemap_root = ET.parse(ROOT / "sitemap.xml").getroot()

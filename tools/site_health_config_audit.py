@@ -13,6 +13,7 @@ from typing import NamedTuple
 
 
 ROOT = Path(__file__).resolve().parents[1]
+LOCAL_ONLY_SUPPORT_FILES = {"/funnel-events.json"}
 SUMMARY_PATH = ROOT / "tools" / "site_health_summary.py"
 PREDEPLOY_PATH = ROOT / "tools" / "predeploy_check.py"
 DAILY_OPS_REFRESH_PATH = ROOT / "tools" / "promotion_daily_ops_refresh.py"
@@ -402,7 +403,9 @@ def main() -> int:
     missing_public_tools = sorted(set(public_tools).difference(check_script_paths))
     site_support_files = site_health_support_files()
     deploy_support_files = public_deploy_support_files()
-    missing_deploy_support_files = sorted(set(site_support_files).difference(deploy_support_files))
+    missing_deploy_support_files = sorted(
+        set(site_support_files).difference(deploy_support_files).difference(LOCAL_ONLY_SUPPORT_FILES)
+    )
     extra_deploy_support_files = sorted(set(deploy_support_files).difference(site_support_files))
     missing_release_verification_scripts = sorted(set(release_script_paths).difference(check_script_paths))
     missing_release_local_audit_scripts = sorted(set(release_local_audit_scripts).difference(predeploy_script_paths))

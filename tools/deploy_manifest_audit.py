@@ -28,7 +28,6 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "humans.txt",
     "security.txt",
     "ads.txt",
-    "funnel-events.json",
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",

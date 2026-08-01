@@ -37,7 +37,6 @@ FORCE_UPLOAD_PATHS = {
     "sitemap.xml",
     "llms.txt",
     "humans.txt",
-    "funnel-events.json",
     "site-index.json",
 }
 PUBLIC_SUPPORT_FILES = {
@@ -49,7 +48,6 @@ PUBLIC_SUPPORT_FILES = {
     "humans.txt",
     "security.txt",
     "ads.txt",
-    "funnel-events.json",
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",

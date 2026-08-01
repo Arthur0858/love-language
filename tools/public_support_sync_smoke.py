@@ -22,7 +22,6 @@ SUPPORT_FILES = (
     "security.txt",
     ".well-known/security.txt",
     "ads.txt",
-    "funnel-events.json",
     "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",

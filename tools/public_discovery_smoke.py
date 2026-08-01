@@ -49,7 +49,6 @@ EXPECTED_SUPPORT_FILES = {
     "security.txt",
     ".well-known/security.txt",
     "ads.txt",
-    "funnel-events.json",
     "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
@@ -841,15 +840,10 @@ def check_robots(base_url: str) -> tuple[list[str], int, int, int]:
 
 
 def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int, int]:
-    path = "/funnel-events.json"
-    response = request_url(urljoin(base_url + "/", path.lstrip("/")))
+    path = "local funnel-events.json"
     issues: list[str] = []
-    if response.status != 200:
-        return [f"{path}: expected status 200, got {response.status}"], 0, 0, 0, 0
-    if "json" not in response.headers.get("content-type", ""):
-        issues.append(f"{path}: expected JSON content type, got {response.headers.get('content-type')!r}")
     try:
-        data = json.loads(response.text)
+        data = json.loads((ROOT / "funnel-events.json").read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
         return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0
     if not isinstance(data, dict):
@@ -921,14 +915,11 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int, int]:
 
 def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, int, int, int, int, int]:
     issues: list[str] = []
-    funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
     kit_response = request_url(urljoin(base_url + "/", "promotion-kit.json"))
-    if funnel_response.status != 200:
-        return [f"/funnel-events.json: expected status 200, got {funnel_response.status}"], 0, 0, 0, 0, 0, 0
     if kit_response.status != 200:
         return [f"/promotion-kit.json: expected status 200, got {kit_response.status}"], 0, 0, 0, 0, 0, 0
     try:
-        funnel = json.loads(funnel_response.text)
+        funnel = json.loads((ROOT / "funnel-events.json").read_text(encoding="utf-8"))
         kit = json.loads(kit_response.text)
     except json.JSONDecodeError as exc:
         return [f"promotion/funnel alignment: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
@@ -2012,7 +2003,6 @@ def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int
     response_cache: dict[str, Response] = {}
     index_paths = (
         "/ai-discovery.json",
-        "/funnel-events.json",
         "/site-index.json",
         "/guardian-profiles.json",
         "/commerce-catalog.json",

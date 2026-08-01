@@ -37,6 +37,7 @@ REPAIR_PLAN_UPDATED = "2026-08-01"
 COMPASS_UPDATED = "2026-08-01"
 GARDEN_MAP_UPDATED = "2026-08-01"
 CORE_EDITORIAL_UPDATED = "2026-08-01"
+MACHINE_READABLE_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -58,6 +59,7 @@ RETIRED_PUBLIC_ASSET_PATHS = (
     "/release.json",
     "/search-indexing.json",
     "/site-health.json",
+    "/funnel-events.json",
     "/compass-tool-20260707.js",
     "/compass-tool.js",
     AFFILIATE_ASSET,
@@ -15662,13 +15664,20 @@ def write_llms_txt() -> None:
 
 - 網址：{DOMAIN}/
 - 主要語言：繁體中文
-- 更新日期：{UPDATED}
+- 更新日期：{MACHINE_READABLE_UPDATED}
 - 製作團隊：LoveTypes 內容編輯團隊
 - 編輯方法：{DOMAIN}/about/
 
 ## 使用邊界
 
 LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理治療、醫療、法律意見或緊急支援。涉及暴力、控制、自傷或急迫危險時，應優先尋求當地緊急資源、可信任的人及合格專業支援。
+
+## 台灣緊急與安全支援
+
+- 緊急危險：110（警政署） https://www.npa.gov.tw/ch/app/artwebsite/view?module=artwebsite&id=1218&serno=8a8082a1884f3ce001885276bcf405e3
+- 保護專線：113（衛生福利部） https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html
+- 安心專線：1925（衛生福利部） https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html
+- LoveTypes 安全說明：{DOMAIN}/contact/#urgent-safety-support
 
 ## 五位守護者
 
@@ -15700,7 +15709,6 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 - 正式繁中路由：/site-index.json
 - 守護者資料：/guardian-profiles.json
 - 安全邊界：/safety-index.json
-- 互動事件目錄：/funnel-events.json
 - 團隊與網站資訊：/humans.txt
 """
     write(ROOT / "llms.txt", content)
@@ -15712,7 +15720,7 @@ Site: LoveTypes
 Team: LoveTypes 內容編輯團隊
 Contact: {CONTACT_EMAIL}
 Production: {DOMAIN}/
-Updated: {UPDATED}
+Updated: {MACHINE_READABLE_UPDATED}
 
 /* SITE */
 Purpose: 繁體中文的五種愛之語反思、守護者測驗、關係溝通指南、免費修復練習與產品實測紀錄。
@@ -15721,6 +15729,7 @@ Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
 Editorial method: {DOMAIN}/about/
 Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
+Taiwan safety support: {DOMAIN}/contact/#urgent-safety-support
 
 /* CORE ROUTES */
 Quiz: {DOMAIN}/start/
@@ -15773,7 +15782,7 @@ def write_site_manifest() -> None:
             },
         ],
         "shortcuts": [
-            {"name": "開始認領儀式", "url": "/start/", "description": "完成 15 道心語題目，找到你的情感守護者。", "icons": shortcut_icon},
+            {"name": "開始免費測驗", "url": "/start/", "description": "完成 15 道心語題目，找到你的情感守護者。", "icons": shortcut_icon},
             {"name": "心語庭園地圖", "url": "/garden-map/", "description": "查看測驗、守護者、指南、補給與修復計畫的完整入口。", "icons": shortcut_icon},
             {"name": "五位守護者", "url": "/characters/", "description": "查看艾莉絲、諾雅、薇薇安、克萊兒與朵拉。", "icons": shortcut_icon},
             {"name": "深度關係指南", "url": "/guides/", "description": "閱讀原創關係指南、案例與文章專用工作表。", "icons": shortcut_icon},
@@ -16154,18 +16163,17 @@ def collect_guardian_profiles() -> dict:
         supply = SUPPLY_ROUTES[slug]
         guide_slugs = [guide["slug"] for guide in GUIDES if guide["guardian"] == slug]
         zh_name, zh_language, zh_desc = data["zh"]
-        en_name, en_language, en_desc = data["en"]
         guardians.append({
             "slug": slug,
-            "name": {"zh": zh_name, "en": en_name},
-            "loveLanguage": {"zh": zh_language, "en": en_language},
-            "description": {"zh": zh_desc, "en": en_desc},
+            "name": {"zh": zh_name},
+            "loveLanguage": {"zh": zh_language},
+            "description": {"zh": zh_desc},
             "domain": {
                 "motif": domain["motif"],
                 "accent": domain["accent"],
                 "glow": domain["glow"],
-                "name": {"zh": domain["zh"][0], "en": domain["en"][0]},
-                "signal": {"zh": domain["zh"][1], "en": domain["en"][1]},
+                "name": {"zh": domain["zh"][0]},
+                "signal": {"zh": domain["zh"][1]},
             },
             "assets": {
                 "portrait": data["asset"],
@@ -16180,9 +16188,9 @@ def collect_guardian_profiles() -> dict:
                 "contact": f"{DOMAIN}/contact/#site-repair-report",
             },
             "supply": {
-                "title": {"zh": supply["zh"][0], "en": supply["en"][0]},
-                "mission": {"zh": supply["zh"][3], "en": supply["en"][3]},
-                "wound": {"zh": supply["zh"][2], "en": supply["en"][2]},
+                "title": {"zh": supply["zh"][0]},
+                "mission": {"zh": supply["zh"][3]},
+                "wound": {"zh": supply["zh"][2]},
                 "bookIndex": supply["book"],
             },
             "guides": [f"{DOMAIN}/guides/{guide_slug}/" for guide_slug in guide_slugs],
@@ -16190,18 +16198,19 @@ def collect_guardian_profiles() -> dict:
     return {
         "schemaVersion": 1,
         "generatedBy": "tools/generate_multilingual_site.py",
-        "updated": UPDATED,
+        "updated": MACHINE_READABLE_UPDATED,
         "production": f"{DOMAIN}/",
-        "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, free practices, and editorial routes.",
+        "publishedLanguage": "zh-TW",
+        "description": "LoveTypes 五位情感守護者的繁體中文公開資料，包含愛之語、分域、素材、免費練習與編輯路徑。",
         "rules": [
-            "Iris maps to words of affirmation.",
-            "Noah maps to quality time.",
-            "Vivian maps to receiving gifts.",
-            "Claire maps to acts of service.",
-            "Dora maps to physical touch.",
-            "Guardian profiles are metaphor tools for reflection, not diagnosis or therapy.",
+            "艾莉絲對應肯定的言詞。",
+            "諾雅對應優質的時光。",
+            "薇薇安對應接受禮物。",
+            "克萊兒對應服務的行動。",
+            "朵拉對應身體的接觸。",
+            "守護者是關係反思比喻，不是診斷或治療。",
         ],
-        "totals": {"guardians": len(guardians), "languages": 2, "routeTypes": 4},
+        "totals": {"guardians": len(guardians), "languages": 1, "routeTypes": 4},
         "guardians": guardians,
     }
 
@@ -16253,14 +16262,14 @@ def collect_site_index() -> dict:
     return {
         "schemaVersion": 1,
         "generatedBy": "tools/generate_multilingual_site.py",
-        "updated": UPDATED,
+        "updated": MACHINE_READABLE_UPDATED,
         "production": f"{DOMAIN}/",
         "languages": [
             {"id": lang, "hreflang": cfg["code"], "prefix": cfg["prefix"] or "/", "name": cfg["name"]}
             for lang in REVIEW_INDEX_LANGS
             for cfg in (LANGS[lang],)
         ],
-        "description": "Machine-readable LoveTypes Traditional Chinese editorial review surface and core user flows.",
+        "description": "LoveTypes 繁體中文公開內容索引與主要閱讀路徑。",
         "totals": {"pages": len(pages), "paths": len(site_index_paths()), "languages": len(REVIEW_INDEX_LANGS), "groups": dict(sorted(groups.items()))},
         "coreFlows": [
             {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/guides/"]},
@@ -16282,58 +16291,70 @@ def collect_safety_index() -> dict:
         {
             "id": "reflection_not_diagnosis",
             "severity": "core",
-            "title": {"zh": "自我理解，不是診斷", "en": "Reflection, not diagnosis"},
-            "body": {
-                "zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。",
-                "en": "LoveTypes quizzes, guardians, and the Heart Garden are for relationship reflection and communication practice, not therapy, medical advice, legal advice, or individual diagnosis.",
-            },
+            "title": {"zh": "自我理解，不是診斷"},
+            "body": {"zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。"},
             "routes": [f"{DOMAIN}/about/", f"{DOMAIN}/theory/", f"{DOMAIN}/terms/"],
         },
         {
             "id": "urgent_risk_first",
             "severity": "high",
-            "title": {"zh": "高風險情境先求助", "en": "Urgent risk comes first"},
-            "body": {
-                "zh": "若關係中有暴力、控制、創傷、騷擾、自傷風險或緊急危險，請先尋求當地緊急資源、可信任的人與專業支援。",
-                "en": "If there is violence, coercive control, trauma, harassment, self-harm risk, or urgent danger, seek local emergency resources, trusted people, and professional support first.",
-            },
-            "routes": [f"{DOMAIN}/terms/", f"{DOMAIN}/contact/#site-repair-report"],
+            "title": {"zh": "高風險情境先求助"},
+            "body": {"zh": "若關係中有暴力、控制、騷擾、自傷風險或緊急危險，請先聯絡 110、113、1925 或當地緊急資源，再考慮關係練習。"},
+            "routes": [f"{DOMAIN}/terms/", f"{DOMAIN}/contact/#urgent-safety-support"],
         },
         {
             "id": "practice_not_outcome",
             "severity": "core",
-            "title": {"zh": "不要用練習取代修復", "en": "Do not use exercises to replace repair"},
-            "body": {
-                "zh": "網站上的測驗、句型與工作表只能協助整理想法，不能取代道歉、同意、界線協商或持續行動，也不應被用來逼迫對方改變。",
-                "en": "Quizzes, scripts, and worksheets can organize thoughts, but cannot replace apology, consent, boundary negotiation, or sustained action, and must not be used to pressure someone to change.",
-            },
+            "title": {"zh": "不要用練習取代修復"},
+            "body": {"zh": "網站上的測驗、句型與工作表只能協助整理想法，不能取代道歉、同意、界線協商或持續行動，也不應被用來逼迫對方改變。"},
             "routes": [f"{DOMAIN}/repair-plan/", f"{DOMAIN}/theory/", f"{DOMAIN}/terms/"],
         },
         {
             "id": "email_minimum_context",
             "severity": "privacy",
-            "title": {"zh": "來信只需要最少脈絡", "en": "Email only the minimum context"},
-            "body": {
-                "zh": "補給願望清單與回報信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下守護者、使用情境與你希望修復或收到的素材。",
-                "en": "Supply waitlist and repair inbox emails do not need quiz scores, sensitive personal details, or emergency requests. Include only the guardian, use case, and the material or issue you want handled.",
-            },
+            "title": {"zh": "來信只需要最少脈絡"},
+            "body": {"zh": "內容修正信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下頁面、問題與希望修正的資訊。"},
             "routes": [f"{DOMAIN}/contact/", f"{DOMAIN}/privacy/"],
         },
     ]
     return {
         "schemaVersion": 1,
         "generatedBy": "tools/generate_multilingual_site.py",
-        "updated": UPDATED,
+        "updated": MACHINE_READABLE_UPDATED,
         "production": f"{DOMAIN}/",
         "contact": CONTACT_EMAIL,
-        "description": "Machine-readable LoveTypes safety boundary index for reflection, consent, privacy, and urgent-risk use cases.",
-        "totals": {"boundaries": len(boundaries), "routes": sum(len(item["routes"]) for item in boundaries), "languages": 2},
+        "publishedLanguage": "zh-TW",
+        "description": "LoveTypes 的繁體中文安全邊界、同意、隱私與高風險求助索引。",
+        "totals": {"boundaries": len(boundaries), "routes": sum(len(item["routes"]) for item in boundaries), "languages": 1},
         "notFor": ["emergency support", "therapy", "medical advice", "legal advice", "individual diagnosis", "coercive relationship pressure"],
+        "officialSupport": [
+            {
+                "id": "110",
+                "label": "緊急危險與警察協助",
+                "telephone": "tel:110",
+                "source": "https://www.npa.gov.tw/ch/app/artwebsite/view?module=artwebsite&id=1218&serno=8a8082a1884f3ce001885276bcf405e3",
+                "authority": "內政部警政署",
+            },
+            {
+                "id": "113",
+                "label": "保護專線",
+                "telephone": "tel:113",
+                "source": "https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html",
+                "authority": "衛生福利部",
+            },
+            {
+                "id": "1925",
+                "label": "安心專線",
+                "telephone": "tel:1925",
+                "source": "https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html",
+                "authority": "衛生福利部",
+            },
+        ],
         "saferFirstSteps": [
-            {"id": "free_task", "url": f"{DOMAIN}/repair-plan/", "label": "Use a free repair task before buying."},
-            {"id": "read_terms", "url": f"{DOMAIN}/terms/", "label": "Read content and purchase boundaries."},
-            {"id": "privacy", "url": f"{DOMAIN}/privacy/", "label": "Check data and local storage boundaries."},
-            {"id": "contact_repair", "url": f"{DOMAIN}/contact/#site-repair-report", "label": "Report unclear pages, links, or supply requests."},
+            {"id": "urgent_support", "url": f"{DOMAIN}/contact/#urgent-safety-support", "label": "有危險、暴力、控制或自傷風險時，先使用官方支援。"},
+            {"id": "read_terms", "url": f"{DOMAIN}/terms/", "label": "閱讀內容用途與安全界線。"},
+            {"id": "privacy", "url": f"{DOMAIN}/privacy/", "label": "確認資料與本機儲存方式。"},
+            {"id": "contact_repair", "url": f"{DOMAIN}/contact/#site-repair-report", "label": "回報不清楚的頁面、連結或內容。"},
         ],
         "boundaries": boundaries,
     }
@@ -16352,16 +16373,18 @@ def collect_ai_discovery_index() -> dict:
     guardian_entities = []
     for guardian in guardians["guardians"]:
         slug = guardian["slug"]
+        zh_name, zh_love_language, _zh_description = GUARDIANS[slug]["zh"]
+        en_name, en_love_language, _en_description = GUARDIANS[slug]["en"]
         guardian_entities.append({
             "slug": slug,
-            "name": guardian["name"],
-            "loveLanguage": guardian["loveLanguage"],
+            "name": {"zh": zh_name, "en": en_name},
+            "loveLanguage": {"zh": zh_love_language, "en": en_love_language},
             "canonical": guardian["routes"]["profile"],
-            "domain": guardian["domain"]["name"],
+            "domain": {"zh": GUARDIAN_DOMAINS[slug]["zh"][0], "en": GUARDIAN_DOMAINS[slug]["en"][0]},
             "bestForQuestions": [
-                f"{guardian['name']['zh']}代表哪一種愛之語？",
-                f"What LoveTypes guardian is {guardian['name']['en']}?",
-                f"Which supply route should a {guardian['name']['en']} result follow?",
+                f"{zh_name}代表哪一種愛之語？",
+                f"What LoveTypes guardian is {en_name}?",
+                f"Which supply route should a {en_name} result follow?",
             ],
             "answerBoundary": "Use this guardian as a relationship reflection metaphor, not as diagnosis or therapy.",
         })

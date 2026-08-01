@@ -301,15 +301,6 @@ SUPPORT_FILES = {
         '"/characters/"',
         '"/resources/"',
     ],
-    "/funnel-events.json": [
-        '"schemaVersion": 1',
-        '"localStorageKey": "lovetypes:funnel-events:v1"',
-        '"quiz_result_supply_route"',
-        '"supply_route_affiliate_book"',
-        '"luna_hero_listen"',
-        '"contact_supply_mailto"',
-        '"campaign_landing"',
-    ],
     "/commerce-catalog.json": [
         '"schemaVersion": 1',
         '"contact": "contact@lovetypes.tw"',

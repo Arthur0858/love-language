@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-07-31",
+  "updated": "2026-08-01",
   "production": "https://lovetypes.tw/",
   "languages": [
     {
@@ -11,7 +11,7 @@
       "name": "繁體中文"
     }
   ],
-  "description": "Machine-readable LoveTypes Traditional Chinese editorial review surface and core user flows.",
+  "description": "LoveTypes 繁體中文公開內容索引與主要閱讀路徑。",
   "totals": {
     "pages": 38,
     "paths": 38,

@@ -1,48 +1,44 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-07-31",
+  "updated": "2026-08-01",
   "production": "https://lovetypes.tw/",
-  "description": "Machine-readable LoveTypes five-guardian profile index for names, love languages, domains, assets, free practices, and editorial routes.",
+  "publishedLanguage": "zh-TW",
+  "description": "LoveTypes 五位情感守護者的繁體中文公開資料，包含愛之語、分域、素材、免費練習與編輯路徑。",
   "rules": [
-    "Iris maps to words of affirmation.",
-    "Noah maps to quality time.",
-    "Vivian maps to receiving gifts.",
-    "Claire maps to acts of service.",
-    "Dora maps to physical touch.",
-    "Guardian profiles are metaphor tools for reflection, not diagnosis or therapy."
+    "艾莉絲對應肯定的言詞。",
+    "諾雅對應優質的時光。",
+    "薇薇安對應接受禮物。",
+    "克萊兒對應服務的行動。",
+    "朵拉對應身體的接觸。",
+    "守護者是關係反思比喻，不是診斷或治療。"
   ],
   "totals": {
     "guardians": 5,
-    "languages": 2,
+    "languages": 1,
     "routeTypes": 4
   },
   "guardians": [
     {
       "slug": "iris",
       "name": {
-        "zh": "艾莉絲",
-        "en": "Iris"
+        "zh": "艾莉絲"
       },
       "loveLanguage": {
-        "zh": "肯定的言詞",
-        "en": "Words of affirmation"
+        "zh": "肯定的言詞"
       },
       "description": {
-        "zh": "她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。",
-        "en": "In the dawn-glass garden, she guards the heart that longs to be seen clearly and gives names to words that waited too long."
+        "zh": "她在晨曦玻璃花園守護被準確看見的心，替那些等很久的話點亮名字。"
       },
       "domain": {
         "motif": "dawn-glass-garden",
         "accent": "#943743",
         "glow": "#f0c778",
         "name": {
-          "zh": "晨曦玻璃花園",
-          "en": "Dawn-Glass Garden"
+          "zh": "晨曦玻璃花園"
         },
         "signal": {
-          "zh": "羽筆與手寫光會把等很久的話照亮。",
-          "en": "Feather-pen light gives shape to words that waited too long."
+          "zh": "羽筆與手寫光會把等很久的話照亮。"
         }
       },
       "assets": {
@@ -59,16 +55,13 @@
       },
       "supply": {
         "title": {
-          "zh": "艾莉絲語言補給",
-          "en": "Iris Word Supply"
+          "zh": "艾莉絲語言補給"
         },
         "mission": {
-          "zh": "今天寫下三句具體肯定：看見、感謝、承認，不使用空泛稱讚。",
-          "en": "Write three specific affirmations today: seeing, gratitude, and recognition."
+          "zh": "今天寫下三句具體肯定：看見、感謝、承認，不使用空泛稱讚。"
         },
         "wound": {
-          "zh": "容易把沒被肯定解讀成不被珍惜，或把需要說成測驗。",
-          "en": "You may read missing affirmation as not being valued, or turn a need into a test."
+          "zh": "容易把沒被肯定解讀成不被珍惜，或把需要說成測驗。"
         },
         "bookIndex": 1
       },
@@ -81,28 +74,23 @@
     {
       "slug": "noah",
       "name": {
-        "zh": "諾雅",
-        "en": "Noah"
+        "zh": "諾雅"
       },
       "loveLanguage": {
-        "zh": "優質的時光",
-        "en": "Quality time"
+        "zh": "優質的時光"
       },
       "description": {
-        "zh": "她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。",
-        "en": "Between the star-sea library and a quiet shore, she guards the kind of time where two people truly stay."
+        "zh": "她航行在星海書庫與安靜海面之間，守護真正留在彼此身邊的時間。"
       },
       "domain": {
         "motif": "star-sea-library",
         "accent": "#50417b",
         "glow": "#b8c7e8",
         "name": {
-          "zh": "星海圖書館",
-          "en": "Star-Sea Library"
+          "zh": "星海圖書館"
         },
         "signal": {
-          "zh": "星圖與安靜海面保存真正留在彼此身邊的時間。",
-          "en": "Star maps and quiet water preserve time where two people truly stay."
+          "zh": "星圖與安靜海面保存真正留在彼此身邊的時間。"
         }
       },
       "assets": {
@@ -119,16 +107,13 @@
       },
       "supply": {
         "title": {
-          "zh": "諾雅陪伴補給",
-          "en": "Noah Presence Supply"
+          "zh": "諾雅陪伴補給"
         },
         "mission": {
-          "zh": "安排十五分鐘無手機共處，只問一個問題：這週哪一刻最像我們在一起？",
-          "en": "Protect fifteen phone-free minutes and ask one question: when did we feel most together this week?"
+          "zh": "安排十五分鐘無手機共處，只問一個問題：這週哪一刻最像我們在一起？"
         },
         "wound": {
-          "zh": "最痛的錯頻通常是人在旁邊，心卻沒有到場。",
-          "en": "The tender wound is often presence without attention."
+          "zh": "最痛的錯頻通常是人在旁邊，心卻沒有到場。"
         },
         "bookIndex": 3
       },
@@ -141,28 +126,23 @@
     {
       "slug": "vivian",
       "name": {
-        "zh": "薇薇安",
-        "en": "Vivian"
+        "zh": "薇薇安"
       },
       "loveLanguage": {
-        "zh": "接受禮物",
-        "en": "Receiving gifts"
+        "zh": "接受禮物"
       },
       "description": {
-        "zh": "她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。",
-        "en": "In the moonlit memory workshop, she collects proof of being remembered and keeps meaning in details, not price."
+        "zh": "她在月光記憶工坊收藏被想起的證據，讓心意停在細節，而不是價格。"
       },
       "domain": {
         "motif": "moonlit-memory-workshop",
         "accent": "#76501c",
         "glow": "#e9b2a0",
         "name": {
-          "zh": "月光記憶工坊",
-          "en": "Moonlit Memory Workshop"
+          "zh": "月光記憶工坊"
         },
         "signal": {
-          "zh": "緞帶、票根與禮物盒收藏被想起的證據。",
-          "en": "Ribbons, ticket stubs, and boxes keep proof of being remembered."
+          "zh": "緞帶、票根與禮物盒收藏被想起的證據。"
         }
       },
       "assets": {
@@ -179,16 +159,13 @@
       },
       "supply": {
         "title": {
-          "zh": "薇薇安心意補給",
-          "en": "Vivian Memory Supply"
+          "zh": "薇薇安心意補給"
         },
         "mission": {
-          "zh": "記下一個對方隨口提過的小喜歡，並用低成本方式讓它被看見。",
-          "en": "Record one tiny preference and make it visible in a low-cost way."
+          "zh": "記下一個對方隨口提過的小喜歡，並用低成本方式讓它被看見。"
         },
         "wound": {
-          "zh": "容易在重要日子沒有表示時，感覺自己沒有被放在心上。",
-          "en": "You may feel unheld when important days pass with no sign."
+          "zh": "容易在重要日子沒有表示時，感覺自己沒有被放在心上。"
         },
         "bookIndex": 0
       },
@@ -200,28 +177,23 @@
     {
       "slug": "claire",
       "name": {
-        "zh": "克萊兒",
-        "en": "Claire"
+        "zh": "克萊兒"
       },
       "loveLanguage": {
-        "zh": "服務的行動",
-        "en": "Acts of service"
+        "zh": "服務的行動"
       },
       "description": {
-        "zh": "她守著不停修復的溫室，把承諾放回日常，讓疲憊不再只由一個人撐住。",
-        "en": "In a greenhouse of ongoing repair, she returns promises to daily life so one tired person does not hold everything alone."
+        "zh": "她守著不停修復的溫室，把承諾放回日常，讓疲憊不再只由一個人撐住。"
       },
       "domain": {
         "motif": "greenhouse-repair-room",
         "accent": "#435a43",
         "glow": "#d8c79a",
         "name": {
-          "zh": "溫室修復間",
-          "en": "Greenhouse Repair Room"
+          "zh": "溫室修復間"
         },
         "signal": {
-          "zh": "工具袋與暖白燈把承諾放回日常。",
-          "en": "Tool pouches and warm work lights return promises to daily life."
+          "zh": "工具袋與暖白燈把承諾放回日常。"
         }
       },
       "assets": {
@@ -238,16 +210,13 @@
       },
       "supply": {
         "title": {
-          "zh": "克萊兒行動補給",
-          "en": "Claire Action Supply"
+          "zh": "克萊兒行動補給"
         },
         "mission": {
-          "zh": "把一件想被幫忙的事寫成具體請求：時間、動作、完成標準。",
-          "en": "Turn one desired help into a concrete request: time, action, and done condition."
+          "zh": "把一件想被幫忙的事寫成具體請求：時間、動作、完成標準。"
         },
         "wound": {
-          "zh": "容易把沒有人主動分擔，感覺成自己不值得被照顧。",
-          "en": "When nobody shares the load, it can feel like you are not worth care."
+          "zh": "容易把沒有人主動分擔，感覺成自己不值得被照顧。"
         },
         "bookIndex": 3
       },
@@ -259,28 +228,23 @@
     {
       "slug": "dora",
       "name": {
-        "zh": "朵拉",
-        "en": "Dora"
+        "zh": "朵拉"
       },
       "loveLanguage": {
-        "zh": "身體的接觸",
-        "en": "Physical touch"
+        "zh": "身體的接觸"
       },
       "description": {
-        "zh": "她在柔暖聖域守護經過同意的靠近，讓身體重新記得安全的溫度。",
-        "en": "In a warm sanctuary, she guards closeness after consent and helps the body remember the temperature of safety."
+        "zh": "她在柔暖聖域守護經過同意的靠近，讓身體重新記得安全的溫度。"
       },
       "domain": {
         "motif": "rose-gold-safe-sanctuary",
         "accent": "#923e4a",
         "glow": "#f0b49c",
         "name": {
-          "zh": "玫瑰金安全聖域",
-          "en": "Rose-Gold Safe Sanctuary"
+          "zh": "玫瑰金安全聖域"
         },
         "signal": {
-          "zh": "柔軟布料與暖光守護經過同意的靠近。",
-          "en": "Soft fabric and warm light guard closeness after consent."
+          "zh": "柔軟布料與暖光守護經過同意的靠近。"
         }
       },
       "assets": {
@@ -297,16 +261,13 @@
       },
       "supply": {
         "title": {
-          "zh": "朵拉安全補給",
-          "en": "Dora Safety Supply"
+          "zh": "朵拉安全補給"
         },
         "mission": {
-          "zh": "建立一個安全靠近句：我現在可以抱你嗎？如果不行，我可以坐在旁邊。",
-          "en": "Create one safe closeness sentence: can I hold you now? If not, I can sit beside you."
+          "zh": "建立一個安全靠近句：我現在可以抱你嗎？如果不行，我可以坐在旁邊。"
         },
         "wound": {
-          "zh": "容易在靠近太快、太突然或沒有確認時，身體先關門。",
-          "en": "When closeness is sudden or unchecked, the body may close first."
+          "zh": "容易在靠近太快、太突然或沒有確認時，身體先關門。"
         },
         "bookIndex": 2
       },

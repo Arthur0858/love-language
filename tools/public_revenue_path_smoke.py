@@ -344,36 +344,32 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
             stats["luna_starter_links"] += 1
     stats["luna_product_slugs"] = len(seen_product_slugs)
 
-    funnel_response = request_url(urljoin(base_url + "/", "funnel-events.json"))
-    if funnel_response.status != 200:
-        issues.append(f"/funnel-events.json: expected status 200, got {funnel_response.status}")
+    try:
+        funnel_data = json.loads((ROOT / "funnel-events.json").read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        issues.append(f"local funnel-events.json: invalid JSON: {error}")
     else:
-        try:
-            funnel_data = json.loads(funnel_response.text)
-        except json.JSONDecodeError as error:
-            issues.append(f"/funnel-events.json: invalid JSON: {error}")
+        events = {event.get("name"): event for event in funnel_data.get("events", []) if isinstance(event, dict)}
+        gumroad_event = events.get("luna_gumroad_pack_click", {})
+        starter_event = events.get("luna_starter_pack_click", {})
+        if gumroad_event.get("role") != "revenue":
+            issues.append("local funnel-events.json: luna_gumroad_pack_click should be revenue")
+        elif gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
+            issues.append(
+                "local funnel-events.json: luna_gumroad_pack_click count should match product links "
+                f"{len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS)}, got {gumroad_event.get('count')}"
+            )
         else:
-            events = {event.get("name"): event for event in funnel_data.get("events", []) if isinstance(event, dict)}
-            gumroad_event = events.get("luna_gumroad_pack_click", {})
-            starter_event = events.get("luna_starter_pack_click", {})
-            if gumroad_event.get("role") != "revenue":
-                issues.append("/funnel-events.json: luna_gumroad_pack_click should be revenue")
-            elif gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
-                issues.append(
-                    "/funnel-events.json: luna_gumroad_pack_click count should match product links "
-                    f"{len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS)}, got {gumroad_event.get('count')}"
-                )
-            else:
-                stats["funnel_revenue_events"] += 1
-            if starter_event.get("role") != "revenue":
-                issues.append("/funnel-events.json: luna_starter_pack_click should be revenue")
-            elif starter_event.get("count") != len(LANG_PATHS):
-                issues.append(
-                    "/funnel-events.json: luna_starter_pack_click count should match starter links "
-                    f"{len(LANG_PATHS)}, got {starter_event.get('count')}"
-                )
-            else:
-                stats["funnel_revenue_events"] += 1
+            stats["funnel_revenue_events"] += 1
+        if starter_event.get("role") != "revenue":
+            issues.append("local funnel-events.json: luna_starter_pack_click should be revenue")
+        elif starter_event.get("count") != len(LANG_PATHS):
+            issues.append(
+                "local funnel-events.json: luna_starter_pack_click count should match starter links "
+                f"{len(LANG_PATHS)}, got {starter_event.get('count')}"
+            )
+        else:
+            stats["funnel_revenue_events"] += 1
     return issues, stats
 
 

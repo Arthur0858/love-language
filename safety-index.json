@@ -1,14 +1,15 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-07-31",
+  "updated": "2026-08-01",
   "production": "https://lovetypes.tw/",
   "contact": "contact@lovetypes.tw",
-  "description": "Machine-readable LoveTypes safety boundary index for reflection, consent, privacy, and urgent-risk use cases.",
+  "publishedLanguage": "zh-TW",
+  "description": "LoveTypes 的繁體中文安全邊界、同意、隱私與高風險求助索引。",
   "totals": {
     "boundaries": 4,
     "routes": 10,
-    "languages": 2
+    "languages": 1
   },
   "notFor": [
     "emergency support",
@@ -18,26 +19,49 @@
     "individual diagnosis",
     "coercive relationship pressure"
   ],
+  "officialSupport": [
+    {
+      "id": "110",
+      "label": "緊急危險與警察協助",
+      "telephone": "tel:110",
+      "source": "https://www.npa.gov.tw/ch/app/artwebsite/view?module=artwebsite&id=1218&serno=8a8082a1884f3ce001885276bcf405e3",
+      "authority": "內政部警政署"
+    },
+    {
+      "id": "113",
+      "label": "保護專線",
+      "telephone": "tel:113",
+      "source": "https://dep.mohw.gov.tw/DOPs/cp-1183-6499-105.html",
+      "authority": "衛生福利部"
+    },
+    {
+      "id": "1925",
+      "label": "安心專線",
+      "telephone": "tel:1925",
+      "source": "https://dep.mohw.gov.tw/DOMHAOH/cp-4906-54077-107.html",
+      "authority": "衛生福利部"
+    }
+  ],
   "saferFirstSteps": [
     {
-      "id": "free_task",
-      "url": "https://lovetypes.tw/repair-plan/",
-      "label": "Use a free repair task before buying."
+      "id": "urgent_support",
+      "url": "https://lovetypes.tw/contact/#urgent-safety-support",
+      "label": "有危險、暴力、控制或自傷風險時，先使用官方支援。"
     },
     {
       "id": "read_terms",
       "url": "https://lovetypes.tw/terms/",
-      "label": "Read content and purchase boundaries."
+      "label": "閱讀內容用途與安全界線。"
     },
     {
       "id": "privacy",
       "url": "https://lovetypes.tw/privacy/",
-      "label": "Check data and local storage boundaries."
+      "label": "確認資料與本機儲存方式。"
     },
     {
       "id": "contact_repair",
       "url": "https://lovetypes.tw/contact/#site-repair-report",
-      "label": "Report unclear pages, links, or supply requests."
+      "label": "回報不清楚的頁面、連結或內容。"
     }
   ],
   "boundaries": [
@@ -45,12 +69,10 @@
       "id": "reflection_not_diagnosis",
       "severity": "core",
       "title": {
-        "zh": "自我理解，不是診斷",
-        "en": "Reflection, not diagnosis"
+        "zh": "自我理解，不是診斷"
       },
       "body": {
-        "zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。",
-        "en": "LoveTypes quizzes, guardians, and the Heart Garden are for relationship reflection and communication practice, not therapy, medical advice, legal advice, or individual diagnosis."
+        "zh": "LoveTypes 的測驗、守護者與心語庭園是關係反思與溝通練習，不提供心理諮商、醫療、法律或個別關係診斷。"
       },
       "routes": [
         "https://lovetypes.tw/about/",
@@ -62,28 +84,24 @@
       "id": "urgent_risk_first",
       "severity": "high",
       "title": {
-        "zh": "高風險情境先求助",
-        "en": "Urgent risk comes first"
+        "zh": "高風險情境先求助"
       },
       "body": {
-        "zh": "若關係中有暴力、控制、創傷、騷擾、自傷風險或緊急危險，請先尋求當地緊急資源、可信任的人與專業支援。",
-        "en": "If there is violence, coercive control, trauma, harassment, self-harm risk, or urgent danger, seek local emergency resources, trusted people, and professional support first."
+        "zh": "若關係中有暴力、控制、騷擾、自傷風險或緊急危險，請先聯絡 110、113、1925 或當地緊急資源，再考慮關係練習。"
       },
       "routes": [
         "https://lovetypes.tw/terms/",
-        "https://lovetypes.tw/contact/#site-repair-report"
+        "https://lovetypes.tw/contact/#urgent-safety-support"
       ]
     },
     {
       "id": "practice_not_outcome",
       "severity": "core",
       "title": {
-        "zh": "不要用練習取代修復",
-        "en": "Do not use exercises to replace repair"
+        "zh": "不要用練習取代修復"
       },
       "body": {
-        "zh": "網站上的測驗、句型與工作表只能協助整理想法，不能取代道歉、同意、界線協商或持續行動，也不應被用來逼迫對方改變。",
-        "en": "Quizzes, scripts, and worksheets can organize thoughts, but cannot replace apology, consent, boundary negotiation, or sustained action, and must not be used to pressure someone to change."
+        "zh": "網站上的測驗、句型與工作表只能協助整理想法，不能取代道歉、同意、界線協商或持續行動，也不應被用來逼迫對方改變。"
       },
       "routes": [
         "https://lovetypes.tw/repair-plan/",
@@ -95,12 +113,10 @@
       "id": "email_minimum_context",
       "severity": "privacy",
       "title": {
-        "zh": "來信只需要最少脈絡",
-        "en": "Email only the minimum context"
+        "zh": "來信只需要最少脈絡"
       },
       "body": {
-        "zh": "補給願望清單與回報信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下守護者、使用情境與你希望修復或收到的素材。",
-        "en": "Supply waitlist and repair inbox emails do not need quiz scores, sensitive personal details, or emergency requests. Include only the guardian, use case, and the material or issue you want handled."
+        "zh": "內容修正信箱不需要測驗分數、敏感個資或緊急求助內容；請只留下頁面、問題與希望修正的資訊。"
       },
       "routes": [
         "https://lovetypes.tw/contact/",

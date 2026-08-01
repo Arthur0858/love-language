@@ -148,15 +148,29 @@ def main() -> int:
 
         source_raw = section(raw, "data-guide-sources")
         urls = re.findall(r'<a\b[^>]*href="(https?://[^"]+)"[^>]*>', source_raw, re.I)
-        if len(urls) < 2:
-            issues.append(f"{route}: expected at least two visible external sources")
+        if not 2 <= len(urls) <= 4:
+            issues.append(f"{route}: expected two to four visible external sources")
+        if len(set(urls)) != len(urls):
+            issues.append(f"{route}: source URLs must be unique within the guide")
+        source_items = re.findall(r"<li\b[^>]*>(.*?)</li>", source_raw, re.I | re.S)
+        source_paragraphs = re.findall(r"<p\b[^>]*>(.*?)</p>", source_raw, re.I | re.S)
         for url in urls:
             host = urlparse(html.unescape(url)).hostname or ""
             source_urls.add(html.unescape(url))
             source_hosts.add(host)
             if host not in ALLOWED_SOURCE_HOSTS:
                 issues.append(f"{route}: unexpected source host {host}")
-        if source_raw.count("<p>") < len(urls) + 1:
+            item = next((value for value in source_items if f'href="{url}"' in value), "")
+            explanation = re.search(r"<p\b[^>]*>(.*?)</p>", item, re.I | re.S)
+            explanation_cjk = len(
+                re.findall(r"[\u3400-\u9fff]", visible_text(explanation.group(1) if explanation else ""))
+            )
+            if explanation_cjk < 18:
+                issues.append(f"{route}: source needs a specific visible explanation: {url}")
+        source_anchors = re.findall(r"<a\b([^>]*)>", source_raw, re.I | re.S)
+        if any('target="_blank"' not in attrs or 'rel="noopener noreferrer"' not in attrs for attrs in source_anchors):
+            issues.append(f"{route}: external source links need safe new-tab attributes")
+        if len(source_items) != len(urls) or len(source_paragraphs) < len(urls) + 1:
             issues.append(f"{route}: each source needs a visible explanation plus the authorship note")
         article_match = re.search(
             r'<article\b[^>]*class="[^"]*\barticle-body\b[^"]*"[^>]*>(.*?)</article>',
@@ -311,6 +325,28 @@ def main() -> int:
         for marker in LAB_MARKERS:
             if marker not in raw:
                 issues.append(f"{route}: missing {marker}")
+        if report["test_id"] not in raw:
+            issues.append(f"{route}: missing stable test ID")
+        environment_count = len(re.findall(r"<li\b", section(raw, "data-lab-environment"), re.I))
+        step_count = len(re.findall(r"<li\b", section(raw, "data-lab-steps"), re.I))
+        result_body = re.search(r"<tbody\b[^>]*>(.*?)</tbody>", section(raw, "data-lab-results"), re.I | re.S)
+        result_count = len(re.findall(r"<tr\b", result_body.group(1) if result_body else "", re.I))
+        if environment_count != len(report["environment"]) or environment_count < 7:
+            issues.append(f"{route}: environment details must include date, platform, browser and build")
+        if step_count != len(report["steps"]) or step_count < 4:
+            issues.append(f"{route}: reproducible steps are incomplete")
+        if result_count != len(report["results"]) or result_count < 4:
+            issues.append(f"{route}: raw result table is incomplete")
+        for marker, minimum_cjk in (
+            ("data-lab-fixture", 30),
+            ("data-lab-raw-results", 150),
+            ("data-lab-failure", 30),
+            ("data-lab-fix", 35),
+            ("data-lab-limitations", 40),
+        ):
+            marker_count = len(re.findall(r"[\u3400-\u9fff]", visible_text(section(raw, marker))))
+            if marker_count < minimum_cjk:
+                issues.append(f"{route}: {marker} evidence is too brief: {marker_count} CJK")
         report_article = re.search(r'<article\b[^>]*data-lab-report[^>]*>(.*?)</article>', raw, re.I | re.S)
         lab_headings = [
             visible_text(value)

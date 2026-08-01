@@ -32,6 +32,7 @@ class CheckSpec:
 
 CHECKS = (
     CheckSpec("submission_gate", (sys.executable, "tools/adsense_submission_gate.py"), 30),
+    CheckSpec("github_ci", (sys.executable, "tools/github_ci_status.py"), 60),
     CheckSpec("local_review_surface", (sys.executable, "tools/predeploy_check.py", "--site-only"), 300),
     CheckSpec("public_review_surface", (sys.executable, "tools/public_adsense_review_smoke.py"), 300),
     CheckSpec("public_editorial_trust", (sys.executable, "tools/public_editorial_trust_smoke.py"), 240),

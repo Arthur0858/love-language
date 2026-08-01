@@ -97,6 +97,11 @@ def main_text_markup(raw: str) -> str:
     return match.group(1) if match else ""
 
 
+def marked_section(raw: str, marker: str) -> str:
+    match = re.search(rf"<section\b[^>]*\b{re.escape(marker)}\b[^>]*>(.*?)</section>", raw, re.I | re.S)
+    return match.group(1) if match else ""
+
+
 def schemas(raw: str) -> list[dict]:
     found = []
     for body in re.findall(r'<script[^>]+type="application/ld\+json"[^>]*>(.*?)</script>', raw, re.I | re.S):
@@ -303,8 +308,25 @@ def main() -> int:
         for marker in ("data-guide-revision", "data-guide-followup", "data-guide-editorial-byline", "適用", "限制"):
             if marker not in raw:
                 issues.append(f"guide missing {marker}: {slug}")
-        if raw.count('target="_blank" rel="noopener noreferrer"') < 2 or "data-guide-sources" not in raw:
-            issues.append(f"guide needs 2+ visible authoritative sources: {slug}")
+        source_raw = marked_section(raw, "data-guide-sources")
+        source_urls = re.findall(r'<a\b[^>]*href="(https?://[^"]+)"[^>]*>', source_raw, re.I)
+        source_items = re.findall(r"<li\b[^>]*>(.*?)</li>", source_raw, re.I | re.S)
+        source_paragraphs = re.findall(r"<p\b[^>]*>(.*?)</p>", source_raw, re.I | re.S)
+        if not 2 <= len(source_urls) <= 4 or len(set(source_urls)) != len(source_urls):
+            issues.append(f"guide needs 2-4 unique visible authoritative sources: {slug}")
+        for url in source_urls:
+            item = next((value for value in source_items if f'href="{url}"' in value), "")
+            explanation = re.search(r"<p\b[^>]*>(.*?)</p>", item, re.I | re.S)
+            explanation_cjk = len(
+                re.findall(r"[\u3400-\u9fff]", visible_text(explanation.group(1) if explanation else ""))
+            )
+            if explanation_cjk < 18:
+                issues.append(f"guide source explanation is too brief: {slug}={url}")
+        source_anchors = re.findall(r"<a\b([^>]*)>", source_raw, re.I | re.S)
+        if any('target="_blank"' not in attrs or 'rel="noopener noreferrer"' not in attrs for attrs in source_anchors):
+            issues.append(f"guide source link attributes are unsafe: {slug}")
+        if len(source_items) != len(source_urls) or len(source_paragraphs) < len(source_urls) + 1:
+            issues.append(f"guide source authorship note is missing: {slug}")
         article_match = re.search(
             r'<article\b[^>]*class="[^"]*\barticle-body\b[^"]*"[^>]*>(.*?)</article>',
             raw,
@@ -438,6 +460,28 @@ def main() -> int:
         for marker in ("data-lab-environment", "data-lab-fixture", "data-lab-steps", "data-lab-results", "data-lab-raw-results", "data-lab-failure", "data-lab-fix", "data-lab-limitations"):
             if marker not in raw:
                 issues.append(f"lab report missing {marker}: {slug}")
+        if report["test_id"] not in raw:
+            issues.append(f"lab report missing stable test ID: {slug}")
+        environment_count = len(re.findall(r"<li\b", marked_section(raw, "data-lab-environment"), re.I))
+        step_count = len(re.findall(r"<li\b", marked_section(raw, "data-lab-steps"), re.I))
+        result_body = re.search(r"<tbody\b[^>]*>(.*?)</tbody>", marked_section(raw, "data-lab-results"), re.I | re.S)
+        result_count = len(re.findall(r"<tr\b", result_body.group(1) if result_body else "", re.I))
+        if environment_count != len(report["environment"]) or environment_count < 7:
+            issues.append(f"lab environment evidence is incomplete: {slug}={environment_count}")
+        if step_count != len(report["steps"]) or step_count < 4:
+            issues.append(f"lab reproducible steps are incomplete: {slug}={step_count}")
+        if result_count != len(report["results"]) or result_count < 4:
+            issues.append(f"lab result table is incomplete: {slug}={result_count}")
+        for marker, minimum_cjk in (
+            ("data-lab-fixture", 30),
+            ("data-lab-raw-results", 150),
+            ("data-lab-failure", 30),
+            ("data-lab-fix", 35),
+            ("data-lab-limitations", 40),
+        ):
+            marker_count = len(re.findall(r"[\u3400-\u9fff]", visible_text(marked_section(raw, marker))))
+            if marker_count < minimum_cjk:
+                issues.append(f"lab {marker} evidence is too brief: {slug}={marker_count}")
         report_article = re.search(r'<article\b[^>]*data-lab-report[^>]*>(.*?)</article>', raw, re.I | re.S)
         lab_headings = [
             visible_text(value)

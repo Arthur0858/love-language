@@ -17,6 +17,7 @@ class AdSenseFinalReviewPacketTest(unittest.TestCase):
             {spec.name for spec in packet.CHECKS},
             {
                 "submission_gate",
+                "github_ci",
                 "local_review_surface",
                 "public_review_surface",
                 "public_editorial_trust",

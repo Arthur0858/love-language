@@ -12,7 +12,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from editorial_guides import GUIDE_EDITORIAL_CONTENT
-from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
+from generate_multilingual_site import GUARDIAN_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
 from lab_reports import LAB_REPORTS
 import deploy_cloudflare_pages as deploy
 
@@ -83,9 +83,17 @@ def main() -> int:
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     sitemap_root = ET.parse(ROOT / "sitemap.xml").getroot()
     sitemap_urls = {node.text for node in sitemap_root.findall("s:url/s:loc", ns)}
+    sitemap_lastmods = {
+        node.findtext("s:loc", default="", namespaces=ns): node.findtext("s:lastmod", default="", namespaces=ns)
+        for node in sitemap_root.findall("s:url", ns)
+    }
     expected_urls = {"https://lovetypes.tw" + route for route in expected}
     if sitemap_urls != expected_urls:
-        issues.append(f"sitemap must match the 40-page review surface, found {len(sitemap_urls)} URLs")
+        issues.append(f"sitemap must match the 38-page review surface, found {len(sitemap_urls)} URLs")
+    for slug in ("iris", "noah", "vivian", "claire", "dora"):
+        url = f"https://lovetypes.tw/characters/{slug}/"
+        if sitemap_lastmods.get(url) != GUARDIAN_UPDATED:
+            issues.append(f"guardian sitemap lastmod mismatch: {slug}")
 
     for route in expected:
         path = page_file(route)
@@ -162,6 +170,37 @@ def main() -> int:
                 issues.append(f"Article author/publisher must be Organization: {slug}")
             if json.dumps(item, ensure_ascii=False).find('"@type": "Person"') >= 0:
                 issues.append(f"fictional Person schema found: {slug}")
+
+    for slug in ("iris", "noah", "vivian", "claire", "dora"):
+        route = f"/characters/{slug}/"
+        raw = page_file(route).read_text(encoding="utf-8")
+        text = main_text(raw)
+        cjk = len(re.findall(r"[\u3400-\u9fff]", text))
+        if not 2000 <= cjk <= 2600:
+            issues.append(f"guardian main CJK count outside 2000-2600: {slug}={cjk}")
+        if raw.count("data-guardian-example") != 2:
+            issues.append(f"guardian needs exactly two labeled examples: {slug}")
+        for marker in (
+            "data-guardian-editorial",
+            "data-guardian-editorial-byline",
+            "data-guardian-workbook",
+            "適合使用",
+            "不適用與限制",
+        ):
+            if marker not in raw:
+                issues.append(f"guardian missing {marker}: {slug}")
+        if f'<time datetime="{GUARDIAN_UPDATED}">' not in raw:
+            issues.append(f"guardian update date mismatch: {slug}")
+        web_schemas = [item for item in schemas(raw) if item.get("@type") == "WebPage"]
+        if len(web_schemas) != 1:
+            issues.append(f"guardian WebPage schema missing or duplicated: {slug}")
+        else:
+            item = web_schemas[0]
+            if item.get("dateModified") != GUARDIAN_UPDATED:
+                issues.append(f"guardian schema dateModified mismatch: {slug}")
+            for field in ("author", "publisher"):
+                if item.get(field, {}).get("@type") != "Organization":
+                    issues.append(f"guardian schema {field} must be Organization: {slug}")
 
     evidence_hashes: dict[str, str] = {}
     for report in LAB_REPORTS:

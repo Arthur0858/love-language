@@ -15,6 +15,9 @@ MAX_JACCARD_SIMILARITY = 0.30
 MAX_CONTAINMENT_SIMILARITY = 0.45
 GENERAL_MAX_JACCARD_SIMILARITY = 0.45
 GENERAL_MAX_CONTAINMENT_SIMILARITY = 0.65
+GUARDIAN_CJK_SHINGLE_SIZE = 6
+GUARDIAN_MAX_JACCARD_SIMILARITY = 0.30
+GUARDIAN_MAX_CONTAINMENT_SIMILARITY = 0.45
 
 
 class MainTextParser(HTMLParser):
@@ -135,12 +138,34 @@ def is_formal_guide(page: PageText) -> bool:
     return len(relative.parts) == 3 and relative.parts[0] == "guides" and relative.parts[2] == "index.html"
 
 
+def is_zh_guardian(page: PageText) -> bool:
+    relative = page.path.relative_to(ROOT)
+    return (
+        page.html_lang == "zh-TW"
+        and len(relative.parts) == 3
+        and relative.parts[0] == "characters"
+        and relative.parts[2] == "index.html"
+    )
+
+
+def cjk_character_shingles(value: str) -> frozenset[str]:
+    characters = "".join(re.findall(r"[\u3400-\u9fff]", value))
+    if len(characters) < GUARDIAN_CJK_SHINGLE_SIZE:
+        return frozenset({characters}) if characters else frozenset()
+    return frozenset(
+        characters[index : index + GUARDIAN_CJK_SHINGLE_SIZE]
+        for index in range(len(characters) - GUARDIAN_CJK_SHINGLE_SIZE + 1)
+    )
+
+
 def main() -> int:
     pages = [page for path in html_pages() if (page := parse_page(path))]
     issues: list[str] = []
     near_duplicate_pairs = 0
     max_guide_jaccard = 0.0
     max_guide_containment = 0.0
+    max_guardian_jaccard = 0.0
+    max_guardian_containment = 0.0
 
     fingerprints: dict[str, list[PageText]] = {}
     for page in pages:
@@ -171,9 +196,34 @@ def main() -> int:
                     f"{right.path.relative_to(ROOT)} ({right.title})"
                 )
 
+    guardians = [page for page in pages if is_zh_guardian(page)]
+    for index, left in enumerate(guardians):
+        left_shingles = cjk_character_shingles(left.text)
+        for right in guardians[index + 1 :]:
+            right_shingles = cjk_character_shingles(right.text)
+            overlap = len(left_shingles & right_shingles)
+            union = len(left_shingles | right_shingles)
+            smaller = min(len(left_shingles), len(right_shingles))
+            jaccard = overlap / union if union else 0.0
+            containment = overlap / smaller if smaller else 0.0
+            max_guardian_jaccard = max(max_guardian_jaccard, jaccard)
+            max_guardian_containment = max(max_guardian_containment, containment)
+            if (
+                jaccard >= GUARDIAN_MAX_JACCARD_SIMILARITY
+                or containment >= GUARDIAN_MAX_CONTAINMENT_SIMILARITY
+            ):
+                near_duplicate_pairs += 1
+                issues.append(
+                    "near duplicate guardian character content "
+                    f"cjk_jaccard={jaccard:.3f} cjk_containment={containment:.3f}: "
+                    f"{left.path.relative_to(ROOT)} <-> {right.path.relative_to(ROOT)}"
+                )
+
     print(f"content_pages_checked={len(pages)}")
     print(f"max_guide_jaccard={max_guide_jaccard:.3f}")
     print(f"max_guide_containment={max_guide_containment:.3f}")
+    print(f"max_guardian_cjk_jaccard={max_guardian_jaccard:.3f}")
+    print(f"max_guardian_cjk_containment={max_guardian_containment:.3f}")
     print(f"near_duplicate_pairs={near_duplicate_pairs}")
     print(f"content_uniqueness_issues={len(issues)}")
     for issue in issues[:100]:

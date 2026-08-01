@@ -36,11 +36,13 @@ INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
 PREVIOUS_QUIZ_DATA_VERSIONS = ("20260707-conversion-bridge",)
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
+GUARDIAN_EDITORIAL_ASSET = "/guardian-editorial-20260801.css"
 INTERACTIONS_ASSET = f"/site-interactions-{INTERACTIONS_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
 REVIEW_INDEX_LANGS = ("zh",)
+CONVERSION_DOCK_PATHS = {"", "start", "garden-map", "compass", "repair-plan", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 RETIRED_PUBLIC_ASSET_PATHS = (
@@ -64,6 +66,7 @@ RETIRED_PUBLIC_ASSET_PATHS = (
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
+    "guardian-editorial.css": GUARDIAN_EDITORIAL_ASSET,
     "site-interactions.js": INTERACTIONS_ASSET,
     "deferred-external.js": AFFILIATE_ASSET,
 }
@@ -5629,6 +5632,9 @@ def head(
         hero_preload = """  <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-mobile.webp" media="(max-width: 720px)" fetchpriority="high" />
   <link rel="preload" as="image" href="/assets/lovetypes/backgrounds/guardian-garden-desktop.webp" media="(min-width: 721px)" fetchpriority="high" />
 """
+    page_styles = f'  <link rel="stylesheet" href="{CSS_ASSET}" />'
+    if path.startswith("characters/"):
+        page_styles += f'\n  <link rel="stylesheet" href="{GUARDIAN_EDITORIAL_ASSET}" />'
     return f"""<!DOCTYPE html>
 <html lang="{LANGS[lang]["code"]}">
 <head>
@@ -5661,7 +5667,7 @@ def head(
 {og_locale_alternates}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="{DOMAIN}{image}" />
-{hero_preload}  <link rel="stylesheet" href="{CSS_ASSET}" />
+{hero_preload}{page_styles}
 </head>
 """
 
@@ -5688,8 +5694,10 @@ def layout(
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
     if lang == "zh" and robots.startswith("index"):
         body = sanitize_indexable_body(path, body)
-    conversion_dock_html = conversion_dock(lang) if robots.startswith("index") else ""
-    return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path, robots) + f"""<body>
+    show_conversion_dock = robots.startswith("index") and path.strip("/") in CONVERSION_DOCK_PATHS
+    conversion_dock_html = conversion_dock(lang) if show_conversion_dock else ""
+    body_class = ' class="dock"' if show_conversion_dock else ""
+    return head(lang, title, desc, path, page_type, image, alternate_path, canonical_path, robots) + f"""<body{body_class}>
 <a class="skip-link" href="#main">{escape(LANGS[lang]["skip_content"])}</a>
 {nav(lang, active, path, alternate_path)}
 {organization_schema(lang)}
@@ -11949,6 +11957,226 @@ def character_detail_copy(lang: str, name: str, typ: str, desc: str) -> dict:
     return {key: [item.format(**values) for item in value] if isinstance(value, list) else value.format(**values) for key, value in raw.items()}
 
 
+GUARDIAN_UPDATED = "2026-08-01"
+
+
+ZH_GUARDIAN_EDITORIAL = {
+    "iris": {
+        "how": "艾莉絲辨認的不是一句話好不好聽，而是對方有沒有說出他實際看見的努力、選擇與改變。空泛的「你好棒」很快會消失；帶著細節的肯定，才可能讓人知道自己並非透明。",
+        "need": "肯定言詞的需要常被誤會成討稱讚。真正要確認的是：我希望哪一段付出被準確命名？我需要鼓勵、感謝、承認，還是對未來的明確承諾？把種類分清楚，才不會用沉默測試對方。",
+        "practice": "今天挑一件剛發生的事，先寫出可觀察的細節，再補上它對你的意義。請求一句具體回應，而不是要求對方證明你值得被愛。",
+        "scripts": [
+            "剛才我說完工作上的挫折時，你很快給了建議；我其實更需要先聽見一句你理解我已經很努力。",
+            "你願意具體告訴我，今天哪一件事讓你感受到我的用心嗎？一句就夠。",
+            "我不是要你一直稱讚我；重要時刻若能說出你看見的細節，我會更容易收到你的在乎。",
+        ],
+        "reflection": [
+            "我等的是鼓勵、感謝、承認，還是承諾？這四種話不能互相替代。",
+            "我是否因為怕被拒絕，故意不說需求，再把對方沒猜到解讀成不在乎？",
+            "哪一句話若包含具體事件與真實影響，會比空泛稱讚更可信？",
+        ],
+        "eyebrow": "IRIS FIELD NOTE",
+        "title": "把沒有被看見的努力，翻成可以回應的一句話",
+        "intro": "艾莉絲的重點不是增加甜言蜜語，而是提高語言的準確度。以下兩個示例用不同情境拆解：什麼是觀察、什麼是感受，以及怎麼提出不帶考試意味的請求。",
+        "scenes": [
+            ("示例一｜分享挫折後只收到解法", "小晴說自己準備很久的提案沒有被採用，伴侶立刻列出三個改善方法。可觀察的是「對方在她說完後直接分析」；感受可能是失落與孤單；需要是努力先被承認。她可以說：我知道你想幫我解決，但我現在想先聽一句你看見我為這件事付出了什麼，再一起想辦法。這不是要求對方同意所有判斷，而是說明回應順序。"),
+            ("示例二｜家務完成後只剩下一句應該的", "阿岑整理完搬家清單，得到的回應是「本來就要做」。爭點不必擴大成誰比較辛苦；先記錄具體工作、花費時間與對共同生活的影響。他可以請求：今晚你能不能挑一項你有注意到的細節，告訴我它幫上了什麼？若對方不習慣表達，可以先從一句事實開始，不要求華麗或立即感動。"),
+        ],
+        "misread_title": "艾莉絲最容易踩進的誤區：把肯定變成忠誠測驗",
+        "misread_body": "反覆追問「你到底愛不愛我」、否定對方每一次不夠完美的表達，會讓肯定從連結變成答題。若一句話無論怎麼說都不會被接受，先暫停加碼，改寫成可觀察條件：在哪個時刻、希望聽見哪一類回應、一次需要多少。也要允許對方誠實說現在說不出來，另約時間再談。",
+        "worksheet_title": "艾莉絲的四格語言校準表",
+        "worksheet_intro": "用一個最近場景完成四格，不把整段關係濃縮成一句「你都沒看見我」。",
+        "steps": [
+            ("01 記下原句", "寫下對方實際說了什麼或沒有回應多久，不補上動機。"),
+            ("02 選出語言種類", "圈選鼓勵、感謝、承認或承諾；一次只選最需要的一種。"),
+            ("03 補上可驗證細節", "說明你希望對方看見的行動、時間或選擇，避免只要抽象評價。"),
+            ("04 提出一句請求", "請對方用自己的話回應一個細節，並允許他修改措辭或另約時間。"),
+        ],
+        "fit_title": "適合使用",
+        "fit_body": "適合整理日常中沒有被承認、道歉過於空泛、鼓勵方式不對頻，或想把感謝說得更具體的情境。",
+        "limit_title": "不適用與限制",
+        "limit_body": "肯定不能抵銷持續羞辱、貶低、威脅或操控，也不能單靠一句好聽的話證明關係安全。若語言被用來否認事實或逼迫原諒，應先處理界線與安全。",
+    },
+    "noah": {
+        "how": "諾雅關心的不是兩個人待在同一個空間多久，而是注意力是否真的能相遇。一起滑手機、同時做家事也可能是舒服陪伴；關鍵是雙方是否對這段時間有相同期待，而不是用時數替親密打分。",
+        "need": "優質時光背後通常想確認的是「我說話時你有沒有在這裡」。需要可能是專心聽完、共同體驗、固定節奏或不被臨時取消。先命名是哪一種，才能避免把所有忙碌都解讀成拒絕。",
+        "practice": "安排十五分鐘可被保護的相處，開始前一起決定要聊天、散步或安靜共處。結束後各自說出一個有連上的瞬間，不用把約會做成績效檢查。",
+        "scripts": [
+            "我不是要求整晚都陪我；今晚能不能留十五分鐘，把通知關掉，讓我把這件事說完？",
+            "臨時取消讓我最難受的是不知道下一次在哪裡。你可以現在和我重約一個具體時間嗎？",
+            "我們坐在一起時，我有時仍覺得很遠。你願意先問我：今天想聊天、散步，還是安靜待著？",
+        ],
+        "reflection": [
+            "我想要的是總時數、專注程度、共同體驗，還是可預期的安排？",
+            "這次失落來自一次合理變動，還是反覆取消後從不重新安排？",
+            "什麼樣的十五分鐘能讓我們都在場，而不是只有一方努力製造氣氛？",
+        ],
+        "eyebrow": "NOAH PRESENCE LOG",
+        "title": "人在旁邊卻沒有相遇時，先重新約定注意力",
+        "intro": "諾雅不把忙碌直接判定為不愛。她先分辨時間是否被說清楚、注意力如何分配，以及取消之後有沒有修復安排。以下示例都從可觀察的節奏開始。",
+        "scenes": [
+            ("示例一｜晚餐一直被工作訊息切斷", "宜庭和伴侶約好吃飯，但對方每幾分鐘就回覆工作訊息。可觀察的是手機被拿起的次數與中斷，而不是「你心裡只有工作」。她可以說：我知道今晚仍有工作壓力，我希望前二十分鐘先不回訊息；若真的有急件，請先告訴我需要幾分鐘，回來後再把話題接上。這讓工作需求與陪伴需求同時有位置。"),
+            ("示例二｜遠距通話總在最後一刻取消", "子瑜能接受偶爾變動，真正累的是取消後沒有新時間。她先列出近三次約定與變更，再表達感受是失落和不確定，需要的是可預期。請求可以是：若今天不能通話，請在取消時一起選下一個三十分鐘時段；若這週確實排不出來，也直接告訴我，不要讓我一直等。"),
+        ],
+        "misread_title": "諾雅最容易踩進的誤區：把陪伴變成無限待命",
+        "misread_body": "要求對方隨時秒回、放下所有工作或證明自己永遠優先，並不等於優質時光。健康的在場需要開始、結束與可協商的邊界。若一方只有在另一方放棄個人生活時才覺得安心，先把需求拆成固定時段與回覆預期；觀察對方是否願意共同安排，而不是追求全天候可用。",
+        "worksheet_title": "諾雅的在場節奏盤點",
+        "worksheet_intro": "用一週內的一次失約或一次有連結的時刻，找出真正影響安全感的時間條件。",
+        "steps": [
+            ("01 畫出時間邊界", "記錄原本約定的開始、結束、變動時間，以及是否有重新安排。"),
+            ("02 標出中斷來源", "區分工作、照顧責任、裝置通知、疲累或雙方期待不同。"),
+            ("03 選一種在場方式", "決定這次要專心對話、共同活動或安靜陪伴，不同時要求全部。"),
+            ("04 建立取消修復", "約定不能赴約時要如何通知、多久內重約，以及什麼情況可以直接休息。"),
+        ],
+        "fit_title": "適合使用",
+        "fit_body": "適合遠距通話、忙碌伴侶、約會常被打斷、同住卻少有交流，或雙方對陪伴形式理解不同的情況。",
+        "limit_title": "不適用與限制",
+        "limit_body": "優質時光不能合理化監控行程、限制交友或要求全天候回報。若拒絕陪伴伴隨孤立、威脅或懲罰，問題已超出時間安排，應優先尋求安全支持。",
+    },
+    "vivian": {
+        "how": "薇薇安讀的是物件背後的記憶線索：你曾提過什麼、某一天為何重要、對方是否願意花心思留下痕跡。禮物可以是一張票根、一杯順手帶回的飲料或一段整理好的照片，不需要用價格證明感情。",
+        "need": "接受禮物常在確認「我不在場時，你仍會想起我」。真正的需要可能是紀念、驚喜、象徵或日常被記得。先說清楚意義與預算，能避免一方覺得被忽略、另一方覺得被要求消費。",
+        "practice": "回想對方最近提過的一個小偏好，用不超出雙方負擔的方式留下記得的證據。送出時說明你記得的是哪個細節，不期待對方用等價物回報。",
+        "scripts": [
+            "我在意的不是價格，而是重要日子完全沒有被提起時，會覺得自己沒有被放在心上。",
+            "下次不用買昂貴的東西；一張寫著你為什麼想到我的便條，對我就很有意義。",
+            "我們可以先約定節日預算和想保留的儀式，避免一個人猜、另一個人承受壓力。",
+        ],
+        "reflection": [
+            "我想收到的是紀念、驚喜、實用物品，還是被記得的口頭證據？",
+            "我是否把金額當成在乎程度，忽略對方實際投入的觀察與準備？",
+            "哪些低成本或不消費的方式，同樣能保留這段關係的記憶？",
+        ],
+        "eyebrow": "VIVIAN MEMORY DESK",
+        "title": "不是要更貴的東西，而是想知道自己曾被想起",
+        "intro": "薇薇安把禮物拆成記憶、象徵、成本與回應四個部分。這能讓雙方談心意而不把消費能力等同愛，也避免用驚喜越過對方的偏好與財務界線。",
+        "scenes": [
+            ("示例一｜紀念日沒有任何表示", "若涵期待的不是精品，而是這一天有被共同記住。她先區分事實：紀念日當天沒有訊息、安排或物件；感受是失落；需要是共同紀念。她可以請求：我們能不能今晚一起選一張今年最重要的照片，各寫一句想保留的事？明年也先在行事曆決定一個不必花錢的儀式。"),
+            ("示例二｜昂貴禮物反而造成壓力", "承恩收到超出預算的禮物後不自在，擔心必須等價回贈。重點不是否定對方心意，而是把財務界線說清楚：我知道你花時間選它，也很感謝；但這個金額讓我有壓力。下次我們把預算放在某個範圍，或改送一段共同回憶，好讓我能安心收下而不是開始計算欠了什麼。"),
+        ],
+        "misread_title": "薇薇安最容易踩進的誤區：用價格替心意排序",
+        "misread_body": "高價不必然代表更理解，低價也不必然代表敷衍。若每次收禮都比較品牌、金額或社群展示效果，雙方會失去談意義的空間。反過來，也不要用「你太物質」取消對方想被記得的需要。可以同時討論象徵、預算、是否喜歡驚喜，以及不消費的替代方案。",
+        "worksheet_title": "薇薇安的心意拆解單",
+        "worksheet_intro": "選一份收過或期待過的禮物，拆開物件與意義，確認真正需要被保留的是什麼。",
+        "steps": [
+            ("01 寫下記憶線索", "它連到哪句話、哪個日期、哪段共同經歷，或哪個平常被忽略的偏好？"),
+            ("02 標出象徵功能", "選擇紀念、安慰、慶祝、實用或驚喜，避免用一個物件承擔所有期待。"),
+            ("03 設定負擔邊界", "說明雙方可接受的預算、是否能退換，以及不消費時可用什麼替代。"),
+            ("04 說明收下方式", "告訴對方哪個細節讓你感到被記得，也誠實說出不適合的部分。"),
+        ],
+        "fit_title": "適合使用",
+        "fit_body": "適合紀念日落差、送禮預算衝突、不喜歡驚喜、遠距想留下共同記憶，或想分辨心意與消費壓力的情境。",
+        "limit_title": "不適用與限制",
+        "limit_body": "禮物不能補償暴力、背叛、財務控制或反覆失信，也不應成為交換親密、要求原諒或製造債務感的工具。出現這些情況時，先談權力與界線。",
+    },
+    "claire": {
+        "how": "克萊兒看見的是承諾有沒有落到可完成的動作。主動洗碗、接送、查資料或完成約定都可能傳遞照顧；但如果一個人同時負責發現問題、分派、提醒與驗收，表面的幫忙仍可能留下沉重負荷。",
+        "need": "服務行動的需要不是找一位無限供應的助手，而是確認共同生活的責任能被看見並合理分配。要談清楚誰負責、何時完成、完成標準與臨時變動，而不是把「主動一點」留給對方猜。",
+        "practice": "挑一件反覆卡住的小事，把它寫成有負責人、期限與完成條件的請求。完成後先確認效果，再決定是否成為固定分工，不用一次重整全部生活。",
+        "scripts": [
+            "我累的不只是做這件事，還包括一直記得、提醒和確認。這週你能完整負責其中一項嗎？",
+            "請在週五晚上前把預約完成，完成是收到確認信；若排不進去，週四先告訴我。",
+            "我希望我們談的是分工，不是誰比較有愛。先選一件最常漏掉的工作試一週。",
+        ],
+        "reflection": [
+            "這件事包含哪些看不見的步驟：發現、規劃、提醒、執行與收尾？",
+            "我需要一次幫忙、固定責任，還是對方主動看見負荷？",
+            "目前的完成標準是否只有我知道，導致對方做完仍被否定？",
+        ],
+        "eyebrow": "CLAIRE WORKBENCH",
+        "title": "把一句「你都不幫忙」，拆成能共同承擔的工作",
+        "intro": "克萊兒不只計算誰做了多少，也檢查管理責任是否被藏起來。以下示例把模糊期待改成完整委託，並保留拒絕、協商與重新分配的空間。",
+        "scenes": [
+            ("示例一｜家務有人做，提醒仍由一人承擔", "美芳的伴侶願意倒垃圾，但每次都等她提醒。可觀察的不只是倒垃圾次數，也包括誰注意垃圾量、記得回收日、補上垃圾袋。她可以說：我希望你接下來兩週完整負責垃圾這一區，包括判斷時間與補袋；若你想換成其他工作，我們今晚一起交換，不要等到溢出後再由我收尾。"),
+            ("示例二｜生病時收到建議，卻沒有實際分擔", "家豪不舒服時，伴侶傳了許多保健資訊，但他仍得自己買餐、找藥與取消行程。他可以先肯定對方在意，再具體請求：今天你能幫我訂一份清淡晚餐並取消晚上的訂位嗎？我需要的是減少兩個決定，而不是更多資料。這也讓對方知道什麼行動真正有幫助。"),
+        ],
+        "misread_title": "克萊兒最容易踩進的誤區：把服務變成理所當然",
+        "misread_body": "若照顧總由同一人提供、拒絕就被指責不愛，服務行動會變成義務與情緒勞動。另一個常見問題是控制完成方式，讓對方無論怎麼做都不合格。分工需要明確標準，也需要允許不同方法；若結果確實影響安全或共同成本，再說明不可妥協的條件。",
+        "worksheet_title": "克萊兒的完整委託清單",
+        "worksheet_intro": "不要只寫「幫忙做家事」。選一項工作，把看不見的管理步驟全部放到桌面上。",
+        "steps": [
+            ("01 列出完整工作", "從發現需求、準備材料、執行到收尾，寫出誰目前承擔每一步。"),
+            ("02 定義完成條件", "用可觀察結果描述完成，不以「有心就知道」作為標準。"),
+            ("03 協商期限與備案", "確認何時做、做不到何時通知，以及是否能交換其他責任。"),
+            ("04 一週後回顧", "檢查負荷是否真的下降，再調整分工，不把一次成功當成永久契約。"),
+        ],
+        "fit_title": "適合使用",
+        "fit_body": "適合家務、照顧工作、行政安排、承諾常未落實，以及一方長期負責提醒與收尾的日常協作問題。",
+        "limit_title": "不適用與限制",
+        "limit_body": "服務行動不能要求他人放棄休息、金錢或身體界線，也不能用照顧換取服從。若存在經濟控制、威脅或刻意剝奪基本需求，應優先尋求外部支持。",
+    },
+    "dora": {
+        "how": "朵拉把身體接觸放在同意之後，而不是把親密當成默認權利。同一個人可能今天想擁抱、明天只想並肩坐著；沉默、僵硬或過去曾答應，都不能取代當下可自由表達的同意。",
+        "need": "身體接觸的需要可以是安撫、連結、歡迎、性親密或單純的溫度。先確認接觸種類、部位、時間與是否能隨時停止，才能同時照顧想靠近的人與需要距離的人。",
+        "practice": "選一個低壓情境練習先問再靠近，提供兩個都可以接受的選項，並把「不要」當成完整答案。結束後只問舒不舒服，不要求對方解釋或補償。",
+        "scripts": [
+            "你現在想被抱一下、牽手，還是我坐在旁邊就好？三個答案都可以。",
+            "我很想靠近你，但我會先等你的回答；如果你不想碰觸，我不會生氣或追問。",
+            "剛才你身體往後退，我先停下來。你希望拉開距離，還是改成別的方式陪伴？",
+        ],
+        "reflection": [
+            "這次靠近是為了安撫誰？對方有沒有真正選擇的空間？",
+            "我能否接受拒絕而不冷落、說服、抱怨或要求其他親密作為補償？",
+            "哪些身體訊號代表放鬆，哪些代表僵硬、退後或需要再次確認？",
+        ],
+        "eyebrow": "DORA CONSENT CHECK",
+        "title": "安全的靠近，從可以自由說不要開始",
+        "intro": "朵拉不替任何人推測身體意願。她要求每一次接觸都能被詢問、選擇、停止與重新確認。以下示例不判定人格，只示範如何在情緒強烈時仍保留對方的決定權。",
+        "scenes": [
+            ("示例一｜吵架後一方想抱，另一方先僵住", "爭執後，安琪想用擁抱和好，伴侶卻把肩膀縮起來。她不把退後解讀成拒絕關係，而是先停下並問：我現在很想抱你，但看見你身體變緊；你想保持距離、讓我坐旁邊，還是晚一點再問？若對方選擇距離，她需要尊重，不用沉默懲罰或要求證明仍然相愛。"),
+            ("示例二｜公開場合的親密尺度不同", "明哲喜歡在人前牽手，伴侶在熟人附近會不自在。雙方可以在出門前確認可接受的接觸，而不是到了現場才拉扯：今天在外面可以牽手嗎？如果遇到同事，你希望我先放開，還是由你主動靠近？答案可以隨情境改變；一次同意不會自動延伸到所有場合。"),
+        ],
+        "misread_title": "朵拉最容易踩進的誤區：把愛之語當成接觸許可",
+        "misread_body": "測驗結果顯示偏好身體接觸，不代表伴侶有義務提供任何碰觸，更不代表性同意。撒嬌、送禮、交往身分、婚姻或過往親密都不能取代當下意願。若拒絕後出現施壓、威脅、羞辱、阻止離開或持續觸碰，請停止把它解釋成錯頻，優先尋求安全協助。",
+        "worksheet_title": "朵拉的靠近前四問",
+        "worksheet_intro": "在下一次接觸前完成四個確認，讓同意是一段可以持續更新的對話。",
+        "steps": [
+            ("01 我想要哪種接觸", "說清楚擁抱、牽手、並肩、按摩或其他方式，不用模糊的「靠近一點」。"),
+            ("02 對方能自由拒絕嗎", "確認拒絕不會換來生氣、冷落、說服或關係威脅。"),
+            ("03 如何辨認需要停", "預先同意口頭停止詞，也留意僵硬、退後、沉默或推開等訊號。"),
+            ("04 停下後怎麼陪伴", "準備不接觸的替代方式，例如坐在附近、倒水、傳訊息或暫時離開。"),
+        ],
+        "fit_title": "適合使用",
+        "fit_body": "適合討論日常擁抱、公開場合親密、壓力時的安撫方式、接觸偏好不同，以及如何練習清楚詢問與停止。",
+        "limit_title": "不適用與限制",
+        "limit_body": "這份練習不是性暴力、強迫、跟蹤或親密伴侶暴力的處理方案。若無法安全拒絕或離開，請優先聯絡可信任的人、當地緊急服務或專業支援。",
+    },
+}
+
+
+def guardian_editorial_section(slug: str) -> str:
+    copy = ZH_GUARDIAN_EDITORIAL[slug]
+    scenes = "".join(
+        f'<article data-guardian-example><h3>{escape(title)}</h3><p>{escape(body)}</p></article>'
+        for title, body in copy["scenes"]
+    )
+    steps = "".join(
+        f'<article><h3>{escape(title)}</h3><p>{escape(body)}</p></article>'
+        for title, body in copy["steps"]
+    )
+    return f"""
+<section class="section guardian-editorial" data-guardian-editorial="{slug}">
+  <p data-guardian-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{GUARDIAN_UPDATED}">內容更新：{GUARDIAN_UPDATED}</time> · <a href="/about/#editorial-method">編輯方法</a> · <a href="/contact/#site-repair-report">內容修正</a></p>
+  <div class="section-head"><div><p class="eyebrow">{escape(copy["eyebrow"])}</p><h2>{escape(copy["title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["intro"])}</p>
+  <div class="guardian-editorial-scenes">{scenes}</div>
+</section>
+<section class="section guardian-editorial-risk">
+  <h2>{escape(copy["misread_title"])}</h2>
+  <p>{escape(copy["misread_body"])}</p>
+</section>
+<section class="section guardian-editorial-workbook" data-guardian-workbook>
+  <div class="section-head"><div><p class="eyebrow">PERSONAL WORKSHEET</p><h2>{escape(copy["worksheet_title"])}</h2></div></div>
+  <p class="section-intro">{escape(copy["worksheet_intro"])}</p>
+  <div class="guardian-editorial-steps">{steps}</div>
+  <div class="guardian-editorial-boundaries">
+    <article><h3>{escape(copy["fit_title"])}</h3><p>{escape(copy["fit_body"])}</p></article>
+    <article><h3>{escape(copy["limit_title"])}</h3><p>{escape(copy["limit_body"])}</p></article>
+  </div>
+</section>
+"""
+
+
 POLICY_SECTIONS = {
     "zh": {
         "contact": [
@@ -13808,6 +14036,12 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     domain_title, domain_desc, domain_cta = GUARDIAN_DOMAINS[slug][lang]
     domain = GUARDIAN_DOMAINS[slug]
     detail = character_detail_copy(lang, name, typ, desc)
+    guardian_editorial = ""
+    if lang == "zh":
+        editorial = ZH_GUARDIAN_EDITORIAL[slug]
+        for key in ("how", "need", "practice", "scripts", "reflection"):
+            detail[key] = editorial[key]
+        guardian_editorial = guardian_editorial_section(slug)
     related_guides = [g for g in GUIDES if g["guardian"] == slug][:3]
     related_html = "".join(guide_card(lang, g) for g in related_guides)
     guardian_nav = "".join(character_link_card(lang, item_slug, item_data, slug) for item_slug, item_data in GUARDIANS.items())
@@ -13830,6 +14064,7 @@ def character_page(lang: str, slug: str, data: dict) -> None:
   <div><h2>{escape(labels["how"])}</h2><p>{escape(detail["how"])}</p><p>{escape(desc)}</p></div>
   <div class="text-stack"><h2>{escape(labels["need"])}</h2><p>{escape(detail["need"])}</p><p>{escape(detail["practice"])}</p></div>
 </section>
+{guardian_editorial}
 <section class="section article-body standalone">
   <h2>{escape(labels["use"])}</h2>
   <p>{SITE_COPY[lang]["guardian_use"].format(name=escape(name))}</p>
@@ -13853,7 +14088,8 @@ def character_page(lang: str, slug: str, data: dict) -> None:
         "inLanguage": t["code"],
         "image": f"{DOMAIN}/assets/lovetypes/share/{slug}-og.jpg",
         "about": {"@type": "Thing", "name": typ},
-        "dateModified": UPDATED,
+        "dateModified": GUARDIAN_UPDATED if lang == "zh" else UPDATED,
+        **({"author": organization_ref(), "publisher": organization_ref()} if lang == "zh" else {}),
         "isPartOf": website_ref(lang),
     })
     write(page_path(lang, "characters/" + slug), layout(lang, f"{name} | {typ} | LoveTypes", desc, "characters/" + slug, body + guardian_resume_script(lang, slug), t["guardians"], "profile", f"/assets/lovetypes/share/{slug}-og.jpg", schema))
@@ -15101,9 +15337,12 @@ def simple_page(lang: str, slug: str) -> None:
 
 
 def write_css() -> None:
-    css_path = STATIC_SOURCE_DIR / "shared.css"
-    css = css_path.read_text(encoding="utf-8")
-    write(ROOT / CSS_ASSET.lstrip("/"), css.strip() + "\n")
+    for source, target in (
+        ("shared.css", CSS_ASSET),
+        ("guardian-editorial.css", GUARDIAN_EDITORIAL_ASSET),
+    ):
+        css = (STATIC_SOURCE_DIR / source).read_text(encoding="utf-8")
+        write(ROOT / target.lstrip("/"), css.strip() + "\n")
 
 
 def write_versioned_scripts() -> None:
@@ -16996,6 +17235,8 @@ CORE_LASTMOD = {
 def lastmod_for_path(path: str) -> str:
     if path.startswith("guides/"):
         return GUIDE_UPDATED_BY_SLUG[path.split("/", 1)[1]]
+    if path.startswith("characters/"):
+        return GUARDIAN_UPDATED
     if path.startswith("lab/"):
         slug = path.split("/", 1)[1]
         return next(report["updated"] for report in LAB_REPORTS if report["slug"] == slug)

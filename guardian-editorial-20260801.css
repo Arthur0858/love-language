@@ -1,0 +1,121 @@
+.guardian-editorial {
+  background: #f6faf6;
+  border-block: 1px solid #dce8dd;
+}
+
+.guardian-editorial,
+.guardian-editorial-risk,
+.guardian-editorial-workbook {
+  scroll-margin-top: 84px;
+}
+
+.guardian-editorial-scenes,
+.guardian-editorial-steps,
+.guardian-editorial-boundaries {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.guardian-editorial-scenes,
+.guardian-editorial-boundaries {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.guardian-editorial-steps {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.guardian-editorial-scenes article,
+.guardian-editorial-steps article {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #d9e4da;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.guardian-editorial-scenes article {
+  border-top: 4px solid #657c67;
+}
+
+.guardian-editorial h3,
+.guardian-editorial-workbook h3,
+.guardian-editorial-boundaries h3 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.guardian-editorial p,
+.guardian-editorial-risk p,
+.guardian-editorial-workbook p {
+  line-height: 1.78;
+}
+
+.guardian-editorial-scenes p,
+.guardian-editorial-steps p,
+.guardian-editorial-boundaries p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guardian-editorial-risk {
+  background: #fbf4f5;
+  border-block: 1px solid #ead5d8;
+}
+
+.guardian-editorial-risk h2 {
+  max-width: 820px;
+  margin: 0 0 14px;
+  font-family: var(--serif);
+}
+
+.guardian-editorial-risk p {
+  max-width: 900px;
+  margin: 0;
+}
+
+.guardian-editorial-workbook {
+  background: #fffdf9;
+}
+
+.guardian-editorial-steps article {
+  border-color: #eadfc6;
+  background: #fffefa;
+}
+
+.guardian-editorial-boundaries {
+  padding-top: 22px;
+  border-top: 1px solid #ded8cc;
+}
+
+.guardian-editorial-boundaries article {
+  min-width: 0;
+  padding-left: 18px;
+  border-left: 4px solid #b78b45;
+}
+
+.guardian-editorial-boundaries article:last-child {
+  border-left-color: #943743;
+}
+
+@media (max-width: 1180px) {
+  .guardian-editorial-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
+  .guardian-editorial-scenes,
+  .guardian-editorial-steps,
+  .guardian-editorial-boundaries {
+    grid-template-columns: 1fr;
+  }
+
+  .guardian-editorial-scenes article,
+  .guardian-editorial-steps article {
+    padding: 16px;
+  }
+}

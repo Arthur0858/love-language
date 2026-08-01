@@ -35,6 +35,8 @@ LAB_MARKERS = (
     "data-lab-method",
 )
 AUTHOR = "LoveTypes 內容編輯團隊"
+GUARDIAN_UPDATED = "2026-08-01"
+GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 METHOD_LINK = 'href="/about/#editorial-method"'
 CORRECTION_LINK = 'href="/contact/#site-repair-report"'
 ALLOWED_SOURCE_HOSTS = {
@@ -80,6 +82,11 @@ def cjk_count(raw: str) -> int:
     return len(re.findall(r"[\u3400-\u9fff]", visible_text(main_html(raw))))
 
 
+def cjk_shingles(raw: str, size: int = 6) -> frozenset[str]:
+    characters = "".join(re.findall(r"[\u3400-\u9fff]", visible_text(main_html(raw))))
+    return frozenset(characters[index : index + size] for index in range(max(0, len(characters) - size + 1)))
+
+
 def validate_article_schema(route: str, raw: str, expected_modified: str, issues: list[str]) -> None:
     item = article_schema(raw)
     if item is None:
@@ -101,6 +108,7 @@ def main() -> int:
     source_hosts: set[str] = set()
     revision_texts: set[str] = set()
     evidence_images: set[str] = set()
+    guardian_shingle_sets: dict[str, frozenset[str]] = {}
 
     for slug in GUIDE_EDITORIAL_CONTENT:
         route = f"/guides/{slug}/"
@@ -146,6 +154,58 @@ def main() -> int:
         if source_raw.count("<p>") < len(urls) + 1:
             issues.append(f"{route}: each source needs a visible explanation plus the authorship note")
         validate_article_schema(route, raw, updated, issues)
+
+    for slug in GUARDIAN_SLUGS:
+        route = f"/characters/{slug}/"
+        response = request(route)
+        raw = response.text
+        if response.status != 200:
+            issues.append(f"{route}: expected 200, got {response.status}")
+            continue
+        count = cjk_count(raw)
+        if not 2000 <= count <= 2600:
+            issues.append(f"{route}: visible main CJK count outside 2000-2600: {count}")
+        if raw.count("data-guardian-example") != 2:
+            issues.append(f"{route}: expected exactly two labeled examples")
+        for marker in (
+            "data-guardian-editorial",
+            "data-guardian-editorial-byline",
+            "data-guardian-workbook",
+            "適合使用",
+            "不適用與限制",
+            METHOD_LINK,
+            CORRECTION_LINK,
+        ):
+            if marker not in raw:
+                issues.append(f"{route}: missing guardian editorial marker {marker!r}")
+        web_page = next((item for item in schemas(raw) if item.get("@type") == "WebPage"), None)
+        if web_page is None:
+            issues.append(f"{route}: missing WebPage schema")
+        else:
+            if web_page.get("dateModified") != GUARDIAN_UPDATED:
+                issues.append(f"{route}: dateModified must be {GUARDIAN_UPDATED}")
+            for field in ("author", "publisher"):
+                if web_page.get(field, {}).get("@type") != "Organization":
+                    issues.append(f"{route}: {field} must be an Organization")
+        guardian_shingle_sets[slug] = cjk_shingles(raw)
+
+    max_guardian_jaccard = 0.0
+    max_guardian_containment = 0.0
+    guardian_items = list(guardian_shingle_sets.items())
+    for index, (left_slug, left) in enumerate(guardian_items):
+        for right_slug, right in guardian_items[index + 1 :]:
+            overlap = len(left & right)
+            union = len(left | right)
+            smaller = min(len(left), len(right))
+            jaccard = overlap / union if union else 0.0
+            containment = overlap / smaller if smaller else 0.0
+            max_guardian_jaccard = max(max_guardian_jaccard, jaccard)
+            max_guardian_containment = max(max_guardian_containment, containment)
+            if jaccard >= 0.30 or containment >= 0.45:
+                issues.append(
+                    f"guardian pages too similar: {left_slug}/{right_slug} "
+                    f"jaccard={jaccard:.3f} containment={containment:.3f}"
+                )
 
     for report in LAB_REPORTS:
         slug = report["slug"]
@@ -206,6 +266,9 @@ def main() -> int:
 
     print(f"public_editorial_trust_guides_checked={len(GUIDE_EDITORIAL_CONTENT)}")
     print(f"public_editorial_trust_labs_checked={len(LAB_REPORTS)}")
+    print(f"public_editorial_trust_guardians_checked={len(guardian_shingle_sets)}")
+    print(f"public_editorial_trust_guardian_max_jaccard={max_guardian_jaccard:.3f}")
+    print(f"public_editorial_trust_guardian_max_containment={max_guardian_containment:.3f}")
     print(f"public_editorial_trust_core_pages_checked={len(trust_expectations)}")
     print(f"public_editorial_trust_unique_sources={len(source_urls)}")
     print(f"public_editorial_trust_source_hosts={len(source_hosts)}")

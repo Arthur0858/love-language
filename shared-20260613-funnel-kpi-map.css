@@ -4380,7 +4380,7 @@ button.secondary-btn {
   .mobile-page-jump a{color:var(--accent);text-decoration:none}
   .mobile-page-jump a+a::before{content:"·";margin-right:10px}
 
-  body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+  .dock{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
   .conversion-dock{position:fixed;inset:auto 8px calc(8px + env(safe-area-inset-bottom));display:flex;gap:6px;padding:8px;background:#fff}
   .conversion-dock a{flex:1;padding:10px 4px;background:#f2e9eb;color:var(--rose);font-weight:900;text-align:center;text-decoration:none}
   .conversion-dock a:first-of-type{background:var(--rose);color:#fff}

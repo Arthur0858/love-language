@@ -34,10 +34,10 @@
     "interpretation": "The report predates the 2026-08-01 review-surface deployment and cannot prove that the old multilingual and retired URL inventory has left the index."
   },
   "latestMaterialDeployment": {
-    "commit": "b14410bc11dc5f794aa9b396467c034262440139",
-    "commitCreatedAt": "2026-08-01T19:46:15+08:00",
-    "cloudflareDeployment": "41807d47-297d-4a14-9dd6-5905c5daaf48",
-    "productionVerifiedAt": "2026-08-01T11:49:18Z",
+    "commit": "5869e88997619f0c561da682f33767c874033074",
+    "commitCreatedAt": "2026-08-01T20:14:50+08:00",
+    "cloudflareDeployment": "b5c8569d-91b0-447c-a4d0-1aabd8f0834c",
+    "productionVerifiedAt": "2026-08-01T12:17:29Z",
     "evidence": "config/evidence/production-audit-2026-08-01.json"
   },
   "urlInspection": {
@@ -177,6 +177,6 @@
     "legacyUrlsLeavingIndex": false,
     "gscPagesWithPostDeploymentImpressions": false
   },
-  "interpretation": "GSC ownership and the 38-page sitemap are confirmed. The inspected pages are indexed, but every recorded crawl predates the latest b14410bc material deployment. The aggregate index report and seven-day performance window also predate that deployment, so they do not satisfy the recrawl, legacy-exit, or post-deployment impression gates.",
+  "interpretation": "GSC ownership and the 38-page sitemap are confirmed. The inspected pages are indexed, but every recorded crawl predates the latest 5869e889 material deployment. The aggregate index report and seven-day performance window also predate that deployment, so they do not satisfy the recrawl, legacy-exit, or post-deployment impression gates.",
   "result": "partial_external_gates"
 }

@@ -35,6 +35,7 @@ CHECKS = (
     CheckSpec("github_ci", (sys.executable, "tools/github_ci_status.py"), 60),
     CheckSpec("local_review_surface", (sys.executable, "tools/predeploy_check.py", "--site-only"), 300),
     CheckSpec("public_review_surface", (sys.executable, "tools/public_adsense_review_smoke.py"), 300),
+    CheckSpec("public_support_sync", (sys.executable, "tools/public_support_sync_smoke.py"), 240),
     CheckSpec("public_editorial_trust", (sys.executable, "tools/public_editorial_trust_smoke.py"), 240),
     CheckSpec(
         "public_indexability",
@@ -62,6 +63,11 @@ CHECKS = (
         240,
     ),
     CheckSpec(
+        "public_schema_urls",
+        (sys.executable, "tools/public_schema_url_smoke.py", "--base-url", "https://lovetypes.tw"),
+        300,
+    ),
+    CheckSpec(
         "public_external_links",
         (sys.executable, "tools/public_external_link_smoke.py", "--base-url", "https://lovetypes.tw"),
         240,
@@ -71,6 +77,12 @@ CHECKS = (
         ("node", "tools/runtime_performance_smoke.mjs"),
         240,
         {"BASE_URL": "https://lovetypes.tw", "PERFORMANCE_REPORT_PATH": "output/adsense-final-runtime-performance.json"},
+    ),
+    CheckSpec(
+        "public_not_found",
+        ("node", "tools/public_not_found_smoke.mjs"),
+        180,
+        {"BASE_URL": "https://lovetypes.tw"},
     ),
     CheckSpec(
         "public_visual",

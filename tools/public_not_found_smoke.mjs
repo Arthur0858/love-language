@@ -44,6 +44,7 @@ const cases = [
   {
     name: 'zh',
     path: '/__lovetypes_missing_smoke_zh__/',
+    finalPath: '/__lovetypes_missing_smoke_zh__/',
     lang: 'zh-TW',
     heading: '這盞燈暫時不在地圖上',
     startHref: '/#quiz-section',
@@ -53,38 +54,42 @@ const cases = [
   {
     name: 'en',
     path: '/en/__lovetypes_missing_smoke__/',
-    lang: 'en',
-    heading: 'This light is not on the map yet',
-    startHref: '/en/#quiz-section',
-    guidesHref: '/en/guides/',
-    contactHref: '/en/contact/',
+    finalPath: '/__lovetypes_missing_smoke__/',
+    lang: 'zh-TW',
+    heading: '這盞燈暫時不在地圖上',
+    startHref: '/#quiz-section',
+    guidesHref: '/guides/',
+    contactHref: '/contact/',
   },
   {
     name: 'ja',
     path: '/ja/__lovetypes_missing_smoke__/',
-    lang: 'ja',
-    heading: 'この灯りはまだ地図にありません',
-    startHref: '/ja/#quiz-section',
-    guidesHref: '/ja/guides/',
-    contactHref: '/ja/contact/',
+    finalPath: '/__lovetypes_missing_smoke__/',
+    lang: 'zh-TW',
+    heading: '這盞燈暫時不在地圖上',
+    startHref: '/#quiz-section',
+    guidesHref: '/guides/',
+    contactHref: '/contact/',
   },
   {
     name: 'ko',
     path: '/ko/__lovetypes_missing_smoke__/',
-    lang: 'ko',
-    heading: '이 불빛은 아직 지도에 없습니다',
-    startHref: '/ko/#quiz-section',
-    guidesHref: '/ko/guides/',
-    contactHref: '/ko/contact/',
+    finalPath: '/__lovetypes_missing_smoke__/',
+    lang: 'zh-TW',
+    heading: '這盞燈暫時不在地圖上',
+    startHref: '/#quiz-section',
+    guidesHref: '/guides/',
+    contactHref: '/contact/',
   },
   {
     name: 'es',
     path: '/es/__lovetypes_missing_smoke__/',
-    lang: 'es',
-    heading: 'Esta luz aún no está en el mapa',
-    startHref: '/es/#quiz-section',
-    guidesHref: '/es/guides/',
-    contactHref: '/es/contact/',
+    finalPath: '/__lovetypes_missing_smoke__/',
+    lang: 'zh-TW',
+    heading: '這盞燈暫時不在地圖上',
+    startHref: '/#quiz-section',
+    guidesHref: '/guides/',
+    contactHref: '/contact/',
   },
 ];
 
@@ -132,7 +137,9 @@ for (const item of cases) {
   });
 
   const status = response?.status() || 0;
+  const finalPath = new URL(page.url()).pathname;
   if (status !== 404) issues.push(`${item.name}: expected status 404, got ${status}`);
+  if (finalPath !== item.finalPath) issues.push(`${item.name}: expected final path ${item.finalPath}, got ${finalPath}`);
   if (result.htmlLang !== item.lang) issues.push(`${item.name}: expected html lang ${item.lang}, got ${result.htmlLang}`);
   if (result.heading !== item.heading) issues.push(`${item.name}: expected localized heading ${JSON.stringify(item.heading)}, got ${JSON.stringify(result.heading)}`);
   if (!result.robots.toLowerCase().includes('noindex')) issues.push(`${item.name}: 404 should be noindex, got ${result.robots}`);

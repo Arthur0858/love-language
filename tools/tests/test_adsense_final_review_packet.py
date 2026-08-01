@@ -34,6 +34,8 @@ class AdSenseFinalReviewPacketTest(unittest.TestCase):
                 "public_schema_urls",
                 "public_external_links",
                 "public_runtime_performance",
+                "public_csp_runtime",
+                "public_storage_privacy",
                 "public_not_found",
                 "public_visual",
             },

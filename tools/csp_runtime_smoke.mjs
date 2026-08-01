@@ -43,9 +43,11 @@ const CASES = [
   { name: 'home-mobile', path: '/', width: 390, height: 844, isMobile: true, quiz: true },
   { name: 'characters-mobile', path: '/characters/', width: 390, height: 844, selector: '[data-universe-map] .guardian-card' },
   { name: 'iris-mobile', path: '/characters/iris/', width: 390, height: 844, selector: '[data-domain-marker]' },
-  { name: 'resources-mobile', path: '/resources/', width: 390, height: 844, selector: '.supply-route-card' },
+  { name: 'guide-mobile', path: '/guides/share-your-result/', width: 390, height: 844, selector: '[data-guide-editorial-byline]' },
+  { name: 'lab-mobile', path: '/lab/quiz-scoring-test/', width: 390, height: 844, selector: '[data-lab-report]' },
+  { name: 'compass-mobile', path: '/compass/', width: 390, height: 844, selector: '[data-compass-form]' },
   { name: 'repair-plan-mobile', path: '/repair-plan/', width: 390, height: 844, selector: '[data-repair-worksheet]' },
-  { name: 'luna-mobile', path: '/luna-yoga-music/', width: 390, height: 844, selector: '[id^="luna-"]' },
+  { name: 'about-mobile', path: '/about/', width: 390, height: 844, selector: '[data-about-editorial-byline]' },
 ];
 
 function makeUrl(path) {
@@ -85,7 +87,7 @@ async function completeQuiz(page) {
     await page.locator('.quiz-next').click();
   }
   await page.locator('.quiz-result-card').waitFor({ state: 'visible', timeout: 10000 });
-  await page.locator('[data-conversion-route]').first().waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('[data-quiz-conversion-path]').waitFor({ state: 'visible', timeout: 10000 });
 }
 
 async function runCase(browser, item) {

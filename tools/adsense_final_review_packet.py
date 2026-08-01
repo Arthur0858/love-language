@@ -99,6 +99,18 @@ CHECKS = (
         {"BASE_URL": "https://lovetypes.tw", "PERFORMANCE_REPORT_PATH": "output/adsense-final-runtime-performance.json"},
     ),
     CheckSpec(
+        "public_csp_runtime",
+        ("node", "tools/csp_runtime_smoke.mjs"),
+        240,
+        {"BASE_URL": "https://lovetypes.tw"},
+    ),
+    CheckSpec(
+        "public_storage_privacy",
+        ("node", "tools/storage_privacy_smoke.mjs"),
+        240,
+        {"BASE_URL": "https://lovetypes.tw"},
+    ),
+    CheckSpec(
         "public_not_found",
         ("node", "tools/public_not_found_smoke.mjs"),
         180,

@@ -68,8 +68,8 @@ function watchNetwork(page) {
     && url.origin === 'https://static.cloudflareinsights.com'
     && url.pathname.includes('/beacon.min.js/')
   );
-  const isExpectedLocalPreviewRedirect = (url, method, type) => (
-    ['127.0.0.1', 'localhost'].includes(url.hostname)
+  const isExpectedLocalMetric = (url, method, type) => (
+    url.origin === baseOrigin
     && method === 'GET'
     && type === 'fetch'
     && ['/go/quiz-started.gif', '/go/quiz-completed.gif'].includes(url.pathname)
@@ -79,7 +79,7 @@ function watchNetwork(page) {
     const method = request.method();
     const type = request.resourceType();
     const sameOrigin = url.origin === baseOrigin;
-    if (isCloudflareRum(url, method, type) || isCloudflareInsightsScript(url, method, type) || isExpectedLocalPreviewRedirect(url, method, type)) return;
+    if (isCloudflareRum(url, method, type) || isCloudflareInsightsScript(url, method, type) || isExpectedLocalMetric(url, method, type)) return;
     if (method !== 'GET' && method !== 'HEAD') {
       issues.push(`${method} ${type} ${url.origin}${url.pathname}`);
     }
@@ -126,75 +126,11 @@ async function quizStorageCheck(browser) {
   const response = await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await resetBrowserStorage(context, page);
   await completeQuiz(page);
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  const productPackLinks = page.locator('[data-quiz-product-pack-link]');
-  const productPackLinkCount = await productPackLinks.count();
-  for (let index = 0; index < productPackLinkCount; index += 1) {
-    await productPackLinks.nth(index).click();
-  }
-  await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event], a[data-home-resume-route], a[data-home-resume-plan], a[data-home-resume-luna], a[data-home-resume-keepsake], a[data-home-resume-contact], a[data-home-resume-guardian]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  await page.locator('[data-home-saved]:not([hidden])').waitFor({ state: 'visible', timeout: 10000 });
-  const homeProductPackLinks = page.locator('[data-home-saved] [data-home-saved-product-link]');
-  const homeProductPackLinkCount = await homeProductPackLinks.count();
-  for (let index = 0; index < homeProductPackLinkCount; index += 1) {
-    await homeProductPackLinks.nth(index).click();
-  }
-  for (const selector of [
-    '[data-home-resume-route]',
-    '[data-home-resume-plan]',
-    '[data-home-resume-luna]',
-    '[data-home-resume-keepsake]',
-    '[data-home-resume-contact]',
-    '[data-home-resume-guardian]',
-  ]) {
-    await page.locator(selector).first().click();
-  }
-  await page.goto(makeUrl('/contact/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.locator('[data-contact-funnel-copy]').waitFor({ state: 'visible', timeout: 10000 });
-  await page.locator('[data-contact-funnel-copy]').click();
-  const saved = await storageSnapshot(page);
-  validateQuietStorage(saved, issues, 'quiz');
-  const quizKeys = saved.localKeys.filter((key) => key.startsWith('lovetypes:') && key.includes('quiz-result'));
-  if (!quizKeys.length) issues.push('quiz: saved result was not stored with a lovetypes quiz key');
-  if (productPackLinkCount !== 4) issues.push(`quiz: expected 4 product pack links, got ${productPackLinkCount}`);
-  if (homeProductPackLinkCount !== 4) issues.push(`quiz: expected 4 home saved product pack links, got ${homeProductPackLinkCount}`);
-  const rawFunnel = saved.entries['lovetypes:funnel-events:v1'];
-  let funnelEvents = [];
-  try {
-    funnelEvents = JSON.parse(rawFunnel || '[]');
-  } catch {
-    issues.push('quiz: funnel events should be JSON');
-  }
-  const eventNames = new Set(Array.isArray(funnelEvents) ? funnelEvents.map((event) => event.name) : []);
-  for (const expected of ['quiz_completed', 'supply_pack_free_keepsake', 'supply_pack_owned_request', 'supply_pack_luna', 'supply_pack_contact']) {
-    if (!eventNames.has(expected)) issues.push(`quiz: missing local funnel event ${expected}`);
-  }
-  for (const expected of ['home_saved_pack_free_keepsake', 'home_saved_pack_owned_request', 'home_saved_pack_luna', 'home_saved_pack_contact', 'home_resume_supply_route', 'home_resume_repair_plan', 'home_resume_luna', 'home_resume_keepsake', 'home_resume_contact', 'home_resume_guardian']) {
-    if (!eventNames.has(expected)) issues.push(`quiz: missing home resume local funnel event ${expected}`);
-  }
-  if (!eventNames.has('contact_funnel_summary_copy')) issues.push('quiz: missing contact funnel summary copy event');
-  if (Array.isArray(funnelEvents)) {
-    for (const expected of ['quiz_completed', 'home_resume_supply_route', 'contact_funnel_summary_copy']) {
-      const event = funnelEvents.find((item) => item.name === expected);
-      if (!event) continue;
-      if (typeof event.lang !== 'string' || !event.lang) issues.push(`quiz: ${expected} missing language context`);
-      if (typeof event.category !== 'string' || !event.category) issues.push(`quiz: ${expected} missing category context`);
-      if (typeof event.targetType !== 'string' || !event.targetType) issues.push(`quiz: ${expected} missing target type context`);
-      if (expected === 'quiz_completed' && event.guardian !== 'iris') issues.push(`quiz: ${expected} should infer guardian iris, got ${event.guardian || 'empty'}`);
-    }
-  }
-  const invalidValueKeys = Object.entries(saved.entries).flatMap(([key, value]) => {
+  const completed = await storageSnapshot(page);
+  validateQuietStorage(completed, issues, 'quiz');
+  const quizKeys = completed.localKeys.filter((key) => key.startsWith('lovetypes:') && key.includes('quiz-result'));
+  if (quizKeys.length !== 2) issues.push(`quiz: expected 2 namespaced result keys, got ${quizKeys.length}`);
+  const invalidValueKeys = Object.entries(completed.entries).flatMap(([key, value]) => {
     if (!key.startsWith('lovetypes:') || !key.includes('quiz-result')) return [];
     try {
       const parsed = JSON.parse(value);
@@ -204,11 +140,27 @@ async function quizStorageCheck(browser) {
     }
   });
   if (invalidValueKeys.length) issues.push(`quiz: saved result payload shape changed: ${invalidValueKeys.join(', ')}`);
-  await page.evaluate(() => {
-    for (const key of Object.keys(localStorage)) {
-      if (key.includes('quiz-result')) localStorage.removeItem(key);
-    }
-  });
+
+  await page.goto(makeUrl('/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  await page.locator('[data-home-saved]:not([hidden])').waitFor({ state: 'visible', timeout: 10000 });
+  const saved = await storageSnapshot(page);
+  validateQuietStorage(saved, issues, 'quiz');
+  const rawFunnel = saved.entries['lovetypes:funnel-events:v1'];
+  let funnelEvents = [];
+  try {
+    funnelEvents = JSON.parse(rawFunnel || '[]');
+  } catch {
+    issues.push('quiz: funnel events should be JSON');
+  }
+  const eventNames = new Set(Array.isArray(funnelEvents) ? funnelEvents.map((event) => event.name) : []);
+  if (!eventNames.has('quiz_completed')) issues.push('quiz: missing local quiz_completed event');
+  if (Array.isArray(funnelEvents)) {
+    const event = funnelEvents.find((item) => item.name === 'quiz_completed');
+    if (event && (typeof event.lang !== 'string' || !event.lang)) issues.push('quiz: quiz_completed missing language context');
+    if (event && event.guardian !== 'iris') issues.push(`quiz: quiz_completed should infer guardian iris, got ${event.guardian || 'empty'}`);
+  }
+  await page.locator('[data-clear-home-result]').click();
+  await page.waitForFunction(() => !Object.keys(localStorage).some((key) => key.includes('quiz-result')), undefined, { timeout: 5000 });
   const cleared = await storageSnapshot(page);
   const lingeringQuizKeys = cleared.localKeys.filter((key) => key.includes('quiz-result'));
   if (lingeringQuizKeys.length) issues.push(`quiz: saved result keys did not clear: ${lingeringQuizKeys.join(', ')}`);
@@ -216,7 +168,7 @@ async function quizStorageCheck(browser) {
   if (!response || response.status() >= 400) issues.push(`quiz: HTTP status ${response?.status() || 'missing'}`);
   issues.push(...networkIssues.map((issue) => `quiz network: ${issue}`));
   await context.close();
-  return { name: 'quiz-local-storage', checked: 1, localKeysChecked: saved.localKeys.length + cleared.localKeys.length, issues };
+  return { name: 'quiz-local-storage', checked: 1, localKeysChecked: completed.localKeys.length + saved.localKeys.length + cleared.localKeys.length, issues };
 }
 
 async function worksheetStorageCheck(browser) {
@@ -266,95 +218,29 @@ async function worksheetStorageCheck(browser) {
   return { name: 'repair-worksheet-local-storage', checked: 1, localKeysChecked: saved.localKeys.length + cleared.localKeys.length, issues };
 }
 
-async function funnelStorageCheck(browser) {
+async function compassStorageCheck(browser) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
   const page = await context.newPage();
   const networkIssues = watchNetwork(page);
   const issues = [];
-  const response = await page.goto(makeUrl('/resources/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
+  const response = await page.goto(makeUrl('/compass/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
   await resetBrowserStorage(context, page);
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  const clickTargets = [
-    ['supply_route_copy', '[data-copy-supply-route]'],
-    ['supply_wishlist_copy', '[data-supply-owned-card] [data-copy-contact-template]'],
-    ['safety_bridge_privacy', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_privacy"]'],
-    ['safety_bridge_terms', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_terms"]'],
-    ['safety_bridge_contact', '[data-safety-boundary-bridge] [data-funnel-event="safety_bridge_contact"]'],
-  ];
-  for (const [_name, selector] of clickTargets) {
-    await page.locator(selector).first().click();
-  }
-  await page.goto(makeUrl('/contact/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  await page.locator('[data-funnel-event="contact_supply_template_copy"]').first().click();
-  await page.locator('[data-funnel-event="contact_supply_mailto"]').first().click();
-  await page.goto(makeUrl('/luna-yoga-music/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  await page.locator('[data-funnel-event="luna_offer_contact"]').first().click();
-  await page.goto(makeUrl('/keepsakes/'), { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.evaluate(() => {
-    document.addEventListener('click', (event) => {
-      const link = event.target && event.target.closest && event.target.closest('a[data-funnel-event]');
-      if (link) event.preventDefault();
-    }, true);
-  });
-  for (const selector of [
-    '[data-funnel-event="collector_story_open"]',
-    '[data-funnel-event="collector_story_download"]',
-    '[data-funnel-event="free_keepsake_open"]',
-    '[data-funnel-event="free_keepsake_download"]',
-    '[data-funnel-event="free_keepsake_asset_request"]',
-  ]) {
-    await page.locator(selector).first().click();
-  }
-
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.locator('[data-compass-form]').waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('#compass-self').selectOption('W');
+  await page.locator('#compass-partner').selectOption('T');
+  await page.locator('#compass-status').selectOption('long-distance');
+  await page.locator('#compass-issue').selectOption('after-fight');
+  await page.locator('[data-compass-form] button[type="submit"]').click();
+  await page.locator('[data-compass-result]:not([hidden])').waitFor({ state: 'visible', timeout: 10000 });
   const saved = await storageSnapshot(page);
-  validateQuietStorage(saved, issues, 'funnel');
-  const raw = saved.entries['lovetypes:funnel-events:v1'];
-  let events = [];
-  try {
-    events = JSON.parse(raw || '[]');
-  } catch {
-    issues.push('funnel: event store should be JSON');
-  }
-  const names = new Set(Array.isArray(events) ? events.map((event) => event.name) : []);
-  for (const expected of ['supply_route_copy', 'supply_wishlist_copy', 'safety_bridge_privacy', 'safety_bridge_terms', 'safety_bridge_contact', 'contact_supply_template_copy', 'contact_supply_mailto', 'luna_offer_contact', 'collector_story_open', 'collector_story_download', 'free_keepsake_open', 'free_keepsake_download', 'free_keepsake_asset_request']) {
-    if (!names.has(expected)) issues.push(`funnel: missing local event ${expected}`);
-  }
-  if (!Array.isArray(events)) {
-    issues.push('funnel: event store should be an array');
-  } else {
-    if (events.length > 40) issues.push(`funnel: event store should keep at most 40 events, got ${events.length}`);
-    for (const [index, event] of events.entries()) {
-      if (!event || typeof event.name !== 'string' || typeof event.path !== 'string' || typeof event.at !== 'string') {
-        issues.push(`funnel: event ${index} has invalid shape`);
-      }
-      if (!event || typeof event.lang !== 'string' || !event.lang || typeof event.category !== 'string' || !event.category || typeof event.targetType !== 'string' || !event.targetType || typeof event.source !== 'string') {
-        issues.push(`funnel: event ${index} is missing context fields`);
-      }
-    }
-    const contextualEvents = events.filter((event) => event.guardian || event.category || event.source);
-    if (contextualEvents.length < 8) issues.push(`funnel: expected at least 8 contextual events, got ${contextualEvents.length}`);
-  }
-  if (!response || response.status() >= 400) issues.push(`funnel: HTTP status ${response?.status() || 'missing'}`);
-  issues.push(...networkIssues.map((issue) => `funnel network: ${issue}`));
+  validateQuietStorage(saved, issues, 'compass');
+  const compassKeys = saved.localKeys.filter((key) => key.includes('compass'));
+  if (compassKeys.length) issues.push(`compass: selections should not create dedicated storage keys: ${compassKeys.join(', ')}`);
+  if (!response || response.status() >= 400) issues.push(`compass: HTTP status ${response?.status() || 'missing'}`);
+  issues.push(...networkIssues.map((issue) => `compass network: ${issue}`));
   await context.close();
-  return { name: 'funnel-local-observability', checked: 1, localKeysChecked: saved.localKeys.length, issues };
+  return { name: 'compass-ephemeral-input', checked: 1, localKeysChecked: saved.localKeys.length, issues };
 }
 
 async function main() {
@@ -366,8 +252,8 @@ async function main() {
     results.push(await quizStorageCheck(browser));
     console.error('[storage-privacy] repair-worksheet-local-storage');
     results.push(await worksheetStorageCheck(browser));
-    console.error('[storage-privacy] funnel-local-observability');
-    results.push(await funnelStorageCheck(browser));
+    console.error('[storage-privacy] compass-ephemeral-input');
+    results.push(await compassStorageCheck(browser));
   } finally {
     await browser.close();
   }

@@ -53,6 +53,11 @@ CHECKS = (
         240,
     ),
     CheckSpec(
+        "public_availability_stability",
+        (sys.executable, "tools/public_availability_stability_smoke.py", "--base-url", "https://lovetypes.tw"),
+        240,
+    ),
+    CheckSpec(
         "public_internal_links",
         (sys.executable, "tools/public_internal_link_smoke.py", "--base-url", "https://lovetypes.tw"),
         300,

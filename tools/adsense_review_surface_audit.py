@@ -30,6 +30,7 @@ from generate_multilingual_site import (
     THEORY_UPDATED,
     UPDATED,
     PRIVACY_UPDATED,
+    ZH_GUARDIAN_SECTION_TITLES,
 )
 from lab_reports import LAB_REPORTS
 import deploy_cloudflare_pages as deploy
@@ -214,6 +215,7 @@ def main() -> int:
         issues.append(f"sitemap must match the 38-page review surface, found {len(sitemap_urls)} URLs")
     if sitemap_lastmods.get("https://lovetypes.tw/") != HOME_UPDATED:
         issues.append("homepage sitemap lastmod mismatch")
+    guardian_h2_owners: dict[str, str] = {}
     for slug in ("iris", "noah", "vivian", "claire", "dora"):
         url = f"https://lovetypes.tw/characters/{slug}/"
         if sitemap_lastmods.get(url) != GUARDIAN_UPDATED:
@@ -348,6 +350,21 @@ def main() -> int:
         ):
             if marker not in raw:
                 issues.append(f"guardian missing {marker}: {slug}")
+        main_markup = re.sub(
+            r"<(script|style|template)\b[^>]*>.*?</\1>",
+            " ",
+            main_text_markup(raw),
+            flags=re.I | re.S,
+        )
+        headings = [visible_text(value) for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", main_markup, re.I | re.S)]
+        missing_titles = set(ZH_GUARDIAN_SECTION_TITLES[slug].values()).difference(headings)
+        if missing_titles:
+            issues.append(f"guardian topic headings missing: {slug}={sorted(missing_titles)}")
+        for heading in headings:
+            previous = guardian_h2_owners.get(heading)
+            if previous:
+                issues.append(f"guardian H2 reused: {slug} and {previous}: {heading}")
+            guardian_h2_owners[heading] = slug
         if f'<time datetime="{GUARDIAN_UPDATED}">' not in raw:
             issues.append(f"guardian update date mismatch: {slug}")
         web_schemas = [item for item in schemas(raw) if item.get("@type") == "WebPage"]

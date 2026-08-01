@@ -11099,13 +11099,14 @@ def collector_card(lang: str, slug: str, compact: bool = False) -> str:
 
 def collector_section(lang: str, current_slug: str = "") -> str:
     labels = COLLECTOR_LABELS[lang]
+    title = ZH_GUARDIAN_SECTION_TITLES[current_slug]["keepsake"] if lang == "zh" and current_slug else labels["title"]
     slugs = [current_slug] if current_slug else list(GUARDIANS.keys())
     cards = "".join(collector_card(lang, slug, compact=bool(current_slug)) for slug in slugs)
     route_link = f"{lang_url(lang, 'resources')}#supply-{current_slug}" if current_slug else lang_url(lang, "resources")
     return f"""
 <section class="section collector-section" id="keepsake-cards">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(labels["title"])}</h2></div>
+    <div><p class="eyebrow">{escape(labels["eyebrow"])}</p><h2>{escape(title)}</h2></div>
     <a href="{route_link}">{escape(labels["route"])}</a>
   </div>
   <p class="section-intro">{escape(labels["intro"])} {escape(labels["share_hint"])}</p>
@@ -11808,10 +11809,11 @@ def character_supply_panel(lang: str, slug: str) -> str:
     book = route["book"]
     book_url = affiliate_book_url(book, lang)
     if lang == "zh":
+        heading = ZH_GUARDIAN_SECTION_TITLES[slug]["practice"]
         return f"""
 <section class="section supply-panel-section">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(route["title"])}</p><h2>把理解接回免費練習</h2></div>
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(heading)}</h2></div>
     <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_practice_header">打開工作表</a>
   </div>
   <p class="section-intro">{escape(route["desc"])}</p>
@@ -11860,10 +11862,11 @@ def character_route_snapshot(lang: str, slug: str) -> str:
     guide_title, guide_desc = guide[lang]
     intro_joiner = "。" if lang == "zh" else ". "
     if lang == "zh":
+        heading = ZH_GUARDIAN_SECTION_TITLES[slug]["route"]
         return f"""
 <section class="section guardian-route-snapshot">
   <div class="section-head">
-    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(labels["quick_route"])}</h2></div>
+    <div><p class="eyebrow">{escape(route["title"])}</p><h2>{escape(heading)}</h2></div>
     <a href="{lang_url(lang, "repair-plan")}#plan-{slug}" data-funnel-event="guardian_snapshot_header_plan">開始免費練習</a>
   </div>
   <p class="section-intro">{escape(guardian_name)} · {escape(guardian_type)}{intro_joiner}{escape(route["desc"])}</p>
@@ -12228,6 +12231,70 @@ ZH_GUARDIAN_EDITORIAL = {
         "fit_body": "適合討論日常擁抱、公開場合親密、壓力時的安撫方式、接觸偏好不同，以及如何練習清楚詢問與停止。",
         "limit_title": "不適用與限制",
         "limit_body": "這份練習不是性暴力、強迫、跟蹤或親密伴侶暴力的處理方案。若無法安全拒絕或離開，請優先聯絡可信任的人、當地緊急服務或專業支援。",
+    },
+}
+
+
+ZH_GUARDIAN_SECTION_TITLES = {
+    "iris": {
+        "route": "艾莉絲：先校準一句看見",
+        "how": "艾莉絲如何在回應裡辨認被看見",
+        "need": "艾莉絲真正等待的是哪一種承認",
+        "use": "把艾莉絲結果從標籤改成語言線索",
+        "scripts": "艾莉絲可以直接提出的三句請求",
+        "reflection": "艾莉絲的語言校準問題",
+        "practice": "把艾莉絲的理解接回免費練習",
+        "keepsake": "收藏艾莉絲的語言提醒",
+        "guides": "延伸閱讀艾莉絲的肯定與錯頻",
+        "guardians": "從艾莉絲走向另外四個守護入口",
+    },
+    "noah": {
+        "route": "諾雅：先安排一段可預期的在場",
+        "how": "諾雅如何在時間裡辨認真正相遇",
+        "need": "諾雅真正等待的是哪一種在場",
+        "use": "把諾雅結果從時數改成注意力線索",
+        "scripts": "諾雅可以直接協商的三句邀請",
+        "reflection": "諾雅的在場節奏問題",
+        "practice": "把諾雅的理解接回免費練習",
+        "keepsake": "收藏諾雅的時間提醒",
+        "guides": "延伸閱讀諾雅的陪伴與遠距",
+        "guardians": "從諾雅走向另外四個守護入口",
+    },
+    "vivian": {
+        "route": "薇薇安：先找出被記得的線索",
+        "how": "薇薇安如何從物件讀出記憶",
+        "need": "薇薇安真正等待的是哪一種心意",
+        "use": "把薇薇安結果從價格改成記憶線索",
+        "scripts": "薇薇安可以直接說明的三句期待",
+        "reflection": "薇薇安的心意拆解問題",
+        "practice": "把薇薇安的理解接回免費練習",
+        "keepsake": "收藏薇薇安的記憶提醒",
+        "guides": "延伸閱讀薇薇安的心意與負擔",
+        "guardians": "從薇薇安走向另外四個守護入口",
+    },
+    "claire": {
+        "route": "克萊兒：先選一件能完整交接的事",
+        "how": "克萊兒如何從行動看見承擔",
+        "need": "克萊兒真正等待的是哪一種分工",
+        "use": "把克萊兒結果從幫忙改成責任線索",
+        "scripts": "克萊兒可以直接交接的三句請求",
+        "reflection": "克萊兒的完整委託問題",
+        "practice": "把克萊兒的理解接回免費練習",
+        "keepsake": "收藏克萊兒的行動提醒",
+        "guides": "延伸閱讀克萊兒的服務與界線",
+        "guardians": "從克萊兒走向另外四個守護入口",
+    },
+    "dora": {
+        "route": "朵拉：先確認這次靠近能自由拒絕",
+        "how": "朵拉如何把接觸放回當下同意",
+        "need": "朵拉真正等待的是哪一種安全靠近",
+        "use": "把朵拉結果從偏好改成同意線索",
+        "scripts": "朵拉可以直接詢問的三句選擇",
+        "reflection": "朵拉的靠近前確認問題",
+        "practice": "把朵拉的理解接回免費練習",
+        "keepsake": "收藏朵拉的同意提醒",
+        "guides": "延伸閱讀朵拉的接觸與安全",
+        "guardians": "從朵拉走向另外四個守護入口",
     },
 }
 
@@ -14155,9 +14222,20 @@ def character_page(lang: str, slug: str, data: dict) -> None:
     guardian_editorial = ""
     if lang == "zh":
         editorial = ZH_GUARDIAN_EDITORIAL[slug]
+        guardian_titles = ZH_GUARDIAN_SECTION_TITLES[slug]
         for key in ("how", "need", "practice", "scripts", "reflection"):
             detail[key] = editorial[key]
         guardian_editorial = guardian_editorial_section(slug)
+    else:
+        guardian_titles = {
+            "how": labels["how"],
+            "need": labels["need"],
+            "use": labels["use"],
+            "scripts": TOPIC_DETAILS[lang]["scripts"],
+            "reflection": TOPIC_DETAILS[lang]["reflection"],
+            "guides": t["read"],
+            "guardians": t["guardians"],
+        }
     related_guides = [g for g in GUIDES if g["guardian"] == slug][:3]
     related_html = "".join(guide_card(lang, g) for g in related_guides)
     guardian_nav = "".join(character_link_card(lang, item_slug, item_data, slug) for item_slug, item_data in GUARDIANS.items())
@@ -14177,23 +14255,23 @@ def character_page(lang: str, slug: str, data: dict) -> None:
 </section>
 {character_route_snapshot(lang, slug)}
 <section class="section intro-grid">
-  <div><h2>{escape(labels["how"])}</h2><p>{escape(detail["how"])}</p><p>{escape(desc)}</p></div>
-  <div class="text-stack"><h2>{escape(labels["need"])}</h2><p>{escape(detail["need"])}</p><p>{escape(detail["practice"])}</p></div>
+  <div><h2>{escape(guardian_titles["how"])}</h2><p>{escape(detail["how"])}</p><p>{escape(desc)}</p></div>
+  <div class="text-stack"><h2>{escape(guardian_titles["need"])}</h2><p>{escape(detail["need"])}</p><p>{escape(detail["practice"])}</p></div>
 </section>
 {guardian_editorial}
 <section class="section article-body standalone">
-  <h2>{escape(labels["use"])}</h2>
+  <h2>{escape(guardian_titles["use"])}</h2>
   <p>{SITE_COPY[lang]["guardian_use"].format(name=escape(name))}</p>
-  <h2>{escape(TOPIC_DETAILS[lang]["scripts"])}</h2>
+  <h2>{escape(guardian_titles["scripts"])}</h2>
   <ul>{scripts}</ul>
-  <h2>{escape(TOPIC_DETAILS[lang]["reflection"])}</h2>
+  <h2>{escape(guardian_titles["reflection"])}</h2>
   <ol>{reflections}</ol>
   <div class="callout safety"><strong>{escape(t["boundary"])}</strong><p>{escape(t["boundary_text"])}</p></div>
 </section>
 {character_supply_panel(lang, slug)}
 {collector_section(lang, slug)}
-<section class="section"><div class="section-head"><p class="eyebrow">{escape(section_labels["related_guides"])}</p><h2>{escape(t["read"])}</h2></div><div class="card-grid">{related_html}</div></section>
-<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(t["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
+<section class="section"><div class="section-head"><p class="eyebrow">{escape(section_labels["related_guides"])}</p><h2>{escape(guardian_titles["guides"])}</h2></div><div class="card-grid">{related_html}</div></section>
+<section class="section guardian-nav-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["five_guardians"])}</p><h2>{escape(guardian_titles["guardians"])}</h2><a href="{lang_url(lang, "characters")}">{escape(t["learn_more"])}</a></div><div class="guardian-grid compact">{guardian_nav}</div></section>
 """
     schema = json_ld({
         "@context": "https://schema.org",

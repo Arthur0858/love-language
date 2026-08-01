@@ -10,6 +10,7 @@ import sys
 from urllib.parse import urlparse
 
 from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_TRUST_SECTION_TITLES, GUIDE_UPDATED_BY_SLUG
+from generate_multilingual_site import ZH_GUARDIAN_SECTION_TITLES
 from lab_reports import LAB_REPORTS
 from public_adsense_review_smoke import request, visible_text
 
@@ -112,6 +113,7 @@ def main() -> int:
     evidence_images: set[str] = set()
     guardian_shingle_sets: dict[str, frozenset[str]] = {}
     guide_h2_triplets: dict[tuple[str, str, str], str] = {}
+    guardian_h2_owners: dict[str, str] = {}
 
     for slug in GUIDE_EDITORIAL_CONTENT:
         route = f"/guides/{slug}/"
@@ -200,6 +202,21 @@ def main() -> int:
         ):
             if marker not in raw:
                 issues.append(f"{route}: missing guardian editorial marker {marker!r}")
+        guardian_main = re.sub(
+            r"<(script|style|template)\b[^>]*>.*?</\1>",
+            " ",
+            main_html(raw),
+            flags=re.I | re.S,
+        )
+        headings = [visible_text(value) for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", guardian_main, re.I | re.S)]
+        missing_titles = set(ZH_GUARDIAN_SECTION_TITLES[slug].values()).difference(headings)
+        if missing_titles:
+            issues.append(f"{route}: missing guardian topic headings {sorted(missing_titles)}")
+        for heading in headings:
+            previous = guardian_h2_owners.get(heading)
+            if previous:
+                issues.append(f"{route}: repeats visible guardian H2 from {previous}: {heading}")
+            guardian_h2_owners[heading] = route
         web_page = next((item for item in schemas(raw) if item.get("@type") == "WebPage"), None)
         if web_page is None:
             issues.append(f"{route}: missing WebPage schema")

@@ -2,7 +2,9 @@
   "schemaVersion": 1,
   "checkedAt": "2026-08-01T04:49:32Z",
   "site": "https://lovetypes.tw/",
-  "commit": "5de0261e7c1cffc2f82f86ffd9b1752d93abb49f",
+  "reviewSurfaceCommit": "5de0261e7c1cffc2f82f86ffd9b1752d93abb49f",
+  "auditToolingCommit": "786f86ef",
+  "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
     "id": "1840ebab-ba1f-4aba-8a51-c5a17d341dd1",
     "preview": "https://1840ebab.lovetypes.pages.dev"
@@ -17,6 +19,16 @@
       "name": "LoveTypes predeploy check",
       "conclusion": "success",
       "url": "https://github.com/Arthur0858/love-language/actions/runs/30684094864"
+    },
+    {
+      "name": "pages build and deployment after runtime audit integration",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684721781"
+    },
+    {
+      "name": "LoveTypes predeploy check with production runtime smoke",
+      "conclusion": "success",
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30684721987"
     }
   ],
   "productionChecks": {

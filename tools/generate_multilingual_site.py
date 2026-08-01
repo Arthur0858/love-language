@@ -40,14 +40,15 @@ CORE_EDITORIAL_UPDATED = "2026-08-01"
 MACHINE_READABLE_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
-QUIZ_DATA_VERSION = "20260801-review-surface"
-PREVIOUS_QUIZ_DATA_VERSIONS = ("20260707-conversion-bridge",)
+QUIZ_DATA_VERSION = "20260801-core"
+PREVIOUS_QUIZ_DATA_VERSIONS = ("20260707-conversion-bridge", "20260801-review-surface")
 CSS_ASSET = f"/shared-{ASSET_VERSION}.css"
 GUARDIAN_EDITORIAL_ASSET = "/guardian-editorial-20260801.css"
 INTERACTIONS_ASSET = f"/site-interactions-{INTERACTIONS_VERSION}.js"
 AFFILIATE_ASSET = f"/deferred-external-{ASSET_VERSION}.js"
 QUIZ_DATA_LANGS = ("zh", "en", "ja", "ko", "es")
 QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang in QUIZ_DATA_LANGS}
+COMPASS_TOOL_ASSET = "/compass-tool-20260801.js"
 REVIEW_INDEX_LANGS = ("zh",)
 CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
@@ -74,6 +75,7 @@ RETIRED_PUBLIC_ASSET_PATHS = (
     "/funnel-events.json",
     "/compass-tool-20260707.js",
     "/compass-tool.js",
+    "/compass-tool-review-20260801.js",
     AFFILIATE_ASSET,
     *(
         f"/quiz-data-{lang}-{version}.js"
@@ -10841,7 +10843,7 @@ def compass_page(lang: str) -> None:
         ],
     })
     fallback_data = '<script src="/compass-data-en.js"></script>\n' if lang in {"ja", "ko", "es"} else ""
-    tool_asset = "/compass-tool-review-20260801.js" if lang == "zh" else "/compass-tool-20260707.js"
+    tool_asset = COMPASS_TOOL_ASSET if lang == "zh" else "/compass-tool-20260707.js"
     scripts = f"""
 {fallback_data}<script src="/compass-data-{lang}.js"></script>
 <script src="{tool_asset}" defer></script>
@@ -17504,6 +17506,10 @@ def write_support_files() -> None:
   Cache-Control: public, max-age=31536000, immutable
 
 /quiz-data-*.js
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/compass-tool-*.js
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 

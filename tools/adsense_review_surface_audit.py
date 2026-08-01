@@ -546,6 +546,15 @@ def main() -> int:
             issues.append(f"external commerce link outside /resources/: {path.relative_to(ROOT)}")
 
     manifest = {path.relative_to(ROOT).as_posix() for path in deploy.collect_manifest_paths(ROOT)}
+    forbidden_public_asset_terms = ("review-surface", "compass-tool-review")
+    for relative in sorted(manifest):
+        if any(term in relative.lower() for term in forbidden_public_asset_terms):
+            issues.append(f"internal review version leaked into deploy path: {relative}")
+        path = ROOT / relative
+        if path.suffix.lower() in {".html", ".js", ".json", ".txt", ".xml", ".webmanifest"}:
+            raw = path.read_text(encoding="utf-8", errors="ignore").lower()
+            if any(term in raw for term in forbidden_public_asset_terms):
+                issues.append(f"internal review version leaked into deploy content: {relative}")
     manifest_html = {path for path in manifest if path.endswith(".html")}
     expected_manifest_html = {
         (route.strip("/") + "/index.html") if route != "/" else "index.html"

@@ -26,10 +26,12 @@ from adsense_review_surface_audit import (
 )
 from generate_multilingual_site import (
     COMPASS_UPDATED,
+    COMPASS_TOOL_ASSET,
     HOME_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     MACHINE_READABLE_UPDATED,
+    QUIZ_DATA_ASSETS,
     RETIRED_PUBLIC_ASSET_PATHS,
 )
 
@@ -309,6 +311,13 @@ def main() -> int:
             response = future.result()
             if response.status != 410 or "noindex" not in response.headers.get("X-Robots-Tag", "").lower():
                 issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, got {response.status}")
+
+    for path in (QUIZ_DATA_ASSETS["zh"], COMPASS_TOOL_ASSET):
+        response = request(path)
+        if response.status != 200:
+            issues.append(f"{path}: current product asset expected 200, got {response.status}")
+        if "review-surface" in path or "compass-tool-review" in path:
+            issues.append(f"{path}: current product asset exposes internal review naming")
 
     ads = request("/ads.txt")
     if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:

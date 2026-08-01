@@ -79,6 +79,7 @@ CASES = [
     HeaderCase("css", GENERATOR_CONFIG.CSS_ASSET, immutable=True),
     HeaderCase("interactions", GENERATOR_CONFIG.INTERACTIONS_ASSET, immutable=True),
     HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
+    HeaderCase("compass-tool", GENERATOR_CONFIG.COMPASS_TOOL_ASSET, immutable=True),
     HeaderCase("image", "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp", immutable=True),
     HeaderCase("luna-redirect", "/luna/", expected_status=301, expected_location="/luna-yoga-music/"),
     *[

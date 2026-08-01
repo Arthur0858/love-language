@@ -19,7 +19,7 @@
       "confirmed": false,
       "checkedAt": "2026-08-01T11:29:09Z",
       "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
-      "reason": "All 10 inspected crawl timestamps precede the 2026-08-01 21:02 Asia/Taipei material deployment."
+      "reason": "All 10 inspected crawl timestamps precede the 2026-08-01 21:14 Asia/Taipei material deployment."
     },
     "legacyUrlsLeavingIndex": {
       "confirmed": false,
@@ -42,7 +42,7 @@
     },
     "productionAuditGreen": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T13:05:47Z",
+      "checkedAt": "2026-08-01T13:16:33Z",
       "evidence": "config/evidence/production-audit-2026-08-01.json"
     }
   }

@@ -49,6 +49,8 @@ ALLOWED_SOURCE_HOSTS = {
     "www.cnvc.org",
     "www.who.int",
 }
+MAX_EDITORIAL_JACCARD = 0.30
+MAX_EDITORIAL_CONTAINMENT = 0.45
 
 
 def main_html(raw: str) -> str:
@@ -90,6 +92,31 @@ def cjk_shingles(raw: str, size: int = 6) -> frozenset[str]:
     return frozenset(characters[index : index + size] for index in range(max(0, len(characters) - size + 1)))
 
 
+def similarity_issues(
+    label: str,
+    shingle_sets: dict[str, frozenset[str]],
+) -> tuple[float, float, list[str]]:
+    issues: list[str] = []
+    max_jaccard = 0.0
+    max_containment = 0.0
+    items = list(shingle_sets.items())
+    for index, (left_slug, left) in enumerate(items):
+        for right_slug, right in items[index + 1 :]:
+            overlap = len(left & right)
+            union = len(left | right)
+            smaller = min(len(left), len(right))
+            jaccard = overlap / union if union else 0.0
+            containment = overlap / smaller if smaller else 0.0
+            max_jaccard = max(max_jaccard, jaccard)
+            max_containment = max(max_containment, containment)
+            if jaccard >= MAX_EDITORIAL_JACCARD or containment >= MAX_EDITORIAL_CONTAINMENT:
+                issues.append(
+                    f"{label} pages too similar: {left_slug}/{right_slug} "
+                    f"jaccard={jaccard:.3f} containment={containment:.3f}"
+                )
+    return max_jaccard, max_containment, issues
+
+
 def validate_article_schema(route: str, raw: str, expected_modified: str, issues: list[str]) -> None:
     item = article_schema(raw)
     if item is None:
@@ -111,6 +138,7 @@ def main() -> int:
     source_hosts: set[str] = set()
     revision_texts: set[str] = set()
     evidence_images: set[str] = set()
+    guide_shingle_sets: dict[str, frozenset[str]] = {}
     guardian_shingle_sets: dict[str, frozenset[str]] = {}
     guide_h2_triplets: dict[tuple[str, str, str], str] = {}
     guardian_h2_owners: dict[str, str] = {}
@@ -192,6 +220,12 @@ def main() -> int:
                 issues.append(f"{route}: repeats an H2 triplet from {previous}: {triplet}")
             guide_h2_triplets[triplet] = route
         validate_article_schema(route, raw, updated, issues)
+        guide_shingle_sets[slug] = cjk_shingles(raw)
+
+    max_guide_jaccard, max_guide_containment, guide_similarity_issues = similarity_issues(
+        "guide", guide_shingle_sets
+    )
+    issues.extend(guide_similarity_issues)
 
     for slug in GUARDIAN_SLUGS:
         route = f"/characters/{slug}/"
@@ -242,23 +276,10 @@ def main() -> int:
                     issues.append(f"{route}: {field} must be an Organization")
         guardian_shingle_sets[slug] = cjk_shingles(raw)
 
-    max_guardian_jaccard = 0.0
-    max_guardian_containment = 0.0
-    guardian_items = list(guardian_shingle_sets.items())
-    for index, (left_slug, left) in enumerate(guardian_items):
-        for right_slug, right in guardian_items[index + 1 :]:
-            overlap = len(left & right)
-            union = len(left | right)
-            smaller = min(len(left), len(right))
-            jaccard = overlap / union if union else 0.0
-            containment = overlap / smaller if smaller else 0.0
-            max_guardian_jaccard = max(max_guardian_jaccard, jaccard)
-            max_guardian_containment = max(max_guardian_containment, containment)
-            if jaccard >= 0.30 or containment >= 0.45:
-                issues.append(
-                    f"guardian pages too similar: {left_slug}/{right_slug} "
-                    f"jaccard={jaccard:.3f} containment={containment:.3f}"
-                )
+    max_guardian_jaccard, max_guardian_containment, guardian_similarity_issues = similarity_issues(
+        "guardian", guardian_shingle_sets
+    )
+    issues.extend(guardian_similarity_issues)
 
     start_response = request("/start/")
     start_raw = start_response.text
@@ -310,6 +331,7 @@ def main() -> int:
             issues.append("/repair-plan/: author and publisher must be Organization")
 
     lab_heading_owner: dict[str, str] = {}
+    lab_shingle_sets: dict[str, frozenset[str]] = {}
     lab_headings_checked = 0
     for report in LAB_REPORTS:
         slug = report["slug"]
@@ -382,6 +404,10 @@ def main() -> int:
                 issues.append(f"{route}: evidence screenshot reused by another report: {image}")
             evidence_images.add(image)
         validate_article_schema(route, raw, updated, issues)
+        lab_shingle_sets[slug] = cjk_shingles(raw)
+
+    max_lab_jaccard, max_lab_containment, lab_similarity_issues = similarity_issues("lab", lab_shingle_sets)
+    issues.extend(lab_similarity_issues)
 
     trust_expectations = {
         "/about/": (
@@ -409,7 +435,11 @@ def main() -> int:
                 issues.append(f"{route}: missing trust marker {marker!r}")
 
     print(f"public_editorial_trust_guides_checked={len(GUIDE_EDITORIAL_CONTENT)}")
+    print(f"public_editorial_trust_guide_max_jaccard={max_guide_jaccard:.3f}")
+    print(f"public_editorial_trust_guide_max_containment={max_guide_containment:.3f}")
     print(f"public_editorial_trust_labs_checked={len(LAB_REPORTS)}")
+    print(f"public_editorial_trust_lab_max_jaccard={max_lab_jaccard:.3f}")
+    print(f"public_editorial_trust_lab_max_containment={max_lab_containment:.3f}")
     print(f"public_editorial_trust_guardians_checked={len(guardian_shingle_sets)}")
     print(f"public_editorial_trust_guardian_max_jaccard={max_guardian_jaccard:.3f}")
     print(f"public_editorial_trust_guardian_max_containment={max_guardian_containment:.3f}")

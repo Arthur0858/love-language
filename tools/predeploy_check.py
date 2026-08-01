@@ -21,6 +21,7 @@ PYTHON_TOOLS = [
     "tools/content_value_audit.py",
     "tools/adsense_review_surface_audit.py",
     "tools/adsense_submission_gate.py",
+    "tools/adsense_final_review_packet.py",
     "tools/public_editorial_trust_smoke.py",
     "tools/privacy_runtime_consistency_audit.py",
     "tools/review_commercial_isolation_audit.py",
@@ -281,6 +282,10 @@ def main() -> int:
             run_step(
                 "AdSense submission gate tests",
                 [sys.executable, "-m", "unittest", "tools.tests.test_adsense_submission_gate"],
+            )
+            run_step(
+                "AdSense final review packet tests",
+                [sys.executable, "-m", "unittest", "tools.tests.test_adsense_final_review_packet"],
             )
             run_step("privacy runtime consistency audit", [sys.executable, "tools/privacy_runtime_consistency_audit.py"])
             run_step("review commercial isolation audit", [sys.executable, "tools/review_commercial_isolation_audit.py"])

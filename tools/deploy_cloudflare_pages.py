@@ -241,6 +241,8 @@ def should_skip_file(rel_path: str) -> bool:
         return True
     if rel_path == "compass-tool-20260707.js":
         return True
+    if rel_path.startswith("deferred-external-"):
+        return True
     if rel_path.startswith("quiz-data-") and not rel_path.startswith("quiz-data-zh-"):
         return True
     if rel_path.startswith("assets/lovetypes/share/") and any(

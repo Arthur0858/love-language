@@ -169,27 +169,16 @@ def noindex_cases(base_url: str) -> list[NoindexCase]:
     generator = load_module("lovetypes_generator_indexability_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     cases: list[NoindexCase] = [
         NoindexCase("missing-404", MISSING_PATH, 404),
+        NoindexCase("resources", "/resources/", 200, expected_canonical_path="/resources/"),
+        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 200, expected_canonical_path="/luna-yoga-music/"),
+        NoindexCase("keepsakes", "/keepsakes/", 200, expected_canonical_path="/keepsakes/"),
     ]
-    for lang, cfg in generator.LANGS.items():
-        prefix = cfg["prefix"]
-        luna_path = f"/{prefix}/luna/" if prefix else "/luna/"
-        target_path = f"/{prefix}/luna-yoga-music/" if prefix else "/luna-yoga-music/"
-        cases.append(
-            NoindexCase(
-                name=f"{lang}-luna-alias",
-                path=luna_path,
-                expected_status=301,
-                expected_canonical_path=target_path,
-                expected_location_path=target_path,
-            )
-        )
     for slug, _title, _desc, target in generator.LEGACY_ZH_GUIDES:
         cases.append(
             NoindexCase(
                 name=f"legacy-guide-{slug}",
                 path=f"/guides/{slug}/",
-                expected_status=200,
-                expected_canonical_path=f"/guides/{target}/",
+                expected_status=410,
             )
         )
     return cases
@@ -218,6 +207,13 @@ def noindex_case_issues(base_url: str, sitemap_set: set[str], case: NoindexCase)
         location = response.headers.get("location", "")
         if location != expected_location and public_path(location) != case.expected_location_path:
             issues.append(f"{case.path}: expected redirect to {expected_location!r}, got {location!r}")
+        return issues, checked, redirects_checked, sitemap_absence_checked
+
+    if case.expected_status == 410:
+        checked += 1
+        x_robots = response.headers.get("x-robots-tag", "").lower()
+        if "noindex" not in x_robots:
+            issues.append(f"{case.path}: retired route should send X-Robots-Tag noindex, got {x_robots!r}")
         return issues, checked, redirects_checked, sitemap_absence_checked
 
     parser = parse_head(response.text)

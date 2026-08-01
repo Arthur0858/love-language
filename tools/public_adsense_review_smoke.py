@@ -16,7 +16,7 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree as ET
 
 from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_COMMERCIAL, FORBIDDEN_VISIBLE
-from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES
+from generate_multilingual_site import LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
 
 
 BASE_URL = os.environ.get("LOVETYPES_PUBLIC_BASE_URL", "https://lovetypes.tw").rstrip("/")
@@ -171,12 +171,21 @@ def main() -> int:
             if status not in {404, 410}:
                 issues.append(f"{route}: expected 404/410, got {status}")
 
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(request, path, follow=False): path for path in RETIRED_PUBLIC_ASSET_PATHS}
+        for future in as_completed(futures):
+            path = futures[future]
+            response = future.result()
+            if response.status != 410 or "noindex" not in response.headers.get("X-Robots-Tag", "").lower():
+                issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, got {response.status}")
+
     ads = request("/ads.txt")
     if ads.status != 200 or ads.text.strip() != EXPECTED_ADS_TXT:
         issues.append("/ads.txt: missing or incorrect publisher record")
 
     print(f"public_review_pages_checked={len(routes)}")
     print(f"public_review_retired_routes_checked={len(retired_routes)}")
+    print(f"public_review_retired_assets_checked={len(RETIRED_PUBLIC_ASSET_PATHS)}")
     print(f"public_review_issues={len(issues)}")
     for issue in issues:
         print(issue)

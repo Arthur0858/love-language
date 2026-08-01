@@ -50,24 +50,6 @@ GLOBAL_HEADERS = {
 }
 IMMUTABLE_CACHE_RE = re.compile(r"max-age=31536000.*immutable", re.I)
 HTML_CACHE_RE = re.compile(r"max-age=600", re.I)
-LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
-CORE_HTML_ROUTES = (
-    "",
-    "garden-map",
-    "guides",
-    "characters",
-    "theory",
-    "resources",
-    "repair-plan",
-    "keepsakes",
-    "luna-yoga-music",
-    "about",
-    "contact",
-    "privacy",
-    "terms",
-)
-
-
 @dataclass(frozen=True)
 class HeaderCase:
     name: str
@@ -79,16 +61,12 @@ class HeaderCase:
     expected_location: str = ""
 
 
-def localized_path(lang: str, route: str) -> str:
-    prefix = LOCALE_PREFIXES[lang]
-    parts = [part for part in (prefix, route) if part]
-    return "/" + "/".join(parts) + "/" if parts else "/"
-
-
 CORE_HTML_CASES = [
-    HeaderCase(f"core-{lang}-{route or 'home'}", localized_path(lang, route), html=True)
-    for lang in LOCALE_PREFIXES
-    for route in CORE_HTML_ROUTES
+    HeaderCase(f"core-zh-{route or 'home'}", f"/{route}/" if route else "/", html=True)
+    for route in GENERATOR_CONFIG.site_index_paths()
+] + [
+    HeaderCase(f"noindex-{route}", f"/{route}/", html=True)
+    for route in ("resources", "keepsakes", "luna-yoga-music")
 ]
 
 
@@ -99,6 +77,10 @@ CASES = [
     HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
     HeaderCase("image", "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp", immutable=True),
     HeaderCase("luna-redirect", "/luna/", expected_status=301, expected_location="/luna-yoga-music/"),
+    *[
+        HeaderCase(f"language-{lang}-redirect", f"/{lang}/", expected_status=302, expected_location="/")
+        for lang in ("en", "ja", "ko", "es")
+    ],
 ]
 
 

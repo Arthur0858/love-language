@@ -41,6 +41,19 @@ QUIZ_DATA_ASSETS = {lang: f"/quiz-data-{lang}-{QUIZ_DATA_VERSION}.js" for lang i
 REVIEW_INDEX_LANGS = ("zh",)
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
+RETIRED_PUBLIC_ASSET_PATHS = (
+    "/ai-discovery.json",
+    "/commerce-catalog.json",
+    "/promotion-kit.json",
+    "/release.json",
+    "/search-indexing.json",
+    "/site-health.json",
+    "/compass-tool-20260707.js",
+    "/compass-tool.js",
+    AFFILIATE_ASSET,
+    *(f"/compass-data-{lang}.js" for lang in ("en", "ja", "ko", "es")),
+    *(QUIZ_DATA_ASSETS[lang] for lang in ("en", "ja", "ko", "es")),
+)
 STATIC_SOURCE_DIR = ROOT / "tools" / "static"
 STATIC_ASSET_SOURCES = {
     "shared.css": CSS_ASSET,
@@ -5664,7 +5677,7 @@ def layout(
     if lang not in REVIEW_INDEX_LANGS:
         robots = "noindex, follow"
     external_script = ""
-    if affiliate:
+    if affiliate and lang != "zh":
         external_script = f'\n<script src="{AFFILIATE_ASSET}" data-affiliate defer></script>'
     if lang == "zh" and robots.startswith("index"):
         body = sanitize_indexable_body(path, body)
@@ -16897,7 +16910,9 @@ def write_edge_retirement_worker() -> None:
         *(f"/guides/{slug}/" for slug in retired_guides),
         *(f"/tools/{slug}/" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
     ]
+    retired_assets = sorted(RETIRED_PUBLIC_ASSET_PATHS)
     worker = """const RETIRED_PATHS = new Set(%s);
+const RETIRED_ASSETS = new Set(%s);
 
 function normalizedPath(pathname) {
   return pathname.endsWith("/") ? pathname : `${pathname}/`;
@@ -16906,6 +16921,16 @@ function normalizedPath(pathname) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (RETIRED_ASSETS.has(url.pathname)) {
+      return new Response("This LoveTypes asset has been retired.", {
+        status: 410,
+        headers: {
+          "Cache-Control": "no-store",
+          "Content-Type": "text/plain; charset=utf-8",
+          "X-Robots-Tag": "noindex, nofollow",
+        },
+      });
+    }
     const path = normalizedPath(url.pathname);
 
     if (path === "/tools/love-compatibility/") {
@@ -16926,13 +16951,17 @@ export default {
     return env.ASSETS.fetch(request);
   },
 };
-""" % json.dumps(retired_paths, ensure_ascii=True, indent=2)
+""" % (
+        json.dumps(retired_paths, ensure_ascii=True, indent=2),
+        json.dumps(retired_assets, ensure_ascii=True, indent=2),
+    )
     routes = {
         "version": 1,
         "include": [
             "/tools/love-compatibility*",
             *(f"/tools/{slug}*" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
             *(f"/guides/{slug}*" for slug in retired_guides),
+            *retired_assets,
         ],
         "exclude": [],
     }

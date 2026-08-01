@@ -81,7 +81,6 @@ def required_manifest_files() -> set[str]:
     return BASE_REQUIRED_MANIFEST_FILES | {
         generator.CSS_ASSET.lstrip("/"),
         generator.INTERACTIONS_ASSET.lstrip("/"),
-        generator.AFFILIATE_ASSET.lstrip("/"),
     } | {generator.QUIZ_DATA_ASSETS["zh"].lstrip("/")} | deploy.PUBLIC_TOOL_HTML_PATHS
 
 
@@ -163,7 +162,7 @@ def main() -> int:
     } | {
         f"/guides/{slug}*"
         for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES
-    }
+    } | set(generator.RETIRED_PUBLIC_ASSET_PATHS)
     if routes.get("version") != 1 or set(routes.get("include", [])) != expected_route_includes or routes.get("exclude") != []:
         issues.append("Pages Function route allowlist does not match retired review paths")
 
@@ -175,6 +174,11 @@ def main() -> int:
     missing_worker_paths = sorted(path for path in expected_retired_paths if json.dumps(path) not in worker)
     if missing_worker_paths:
         issues.append(f"retired paths missing from Pages Function: {missing_worker_paths}")
+    missing_worker_assets = sorted(
+        path for path in generator.RETIRED_PUBLIC_ASSET_PATHS if json.dumps(path) not in worker
+    )
+    if missing_worker_assets:
+        issues.append(f"retired assets missing from Pages Function: {missing_worker_assets}")
     for required_worker_signal in ('status: 410', '"X-Robots-Tag": "noindex, nofollow"', 'path === "/tools/love-compatibility/"', '301'):
         if required_worker_signal not in worker:
             issues.append(f"Pages Function missing required behavior: {required_worker_signal}")

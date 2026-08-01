@@ -20,6 +20,7 @@ PYTHON_TOOLS = [
     "tools/content_uniqueness_audit.py",
     "tools/content_value_audit.py",
     "tools/adsense_review_surface_audit.py",
+    "tools/public_editorial_trust_smoke.py",
     "tools/privacy_runtime_consistency_audit.py",
     "tools/review_commercial_isolation_audit.py",
     "tools/multilingual_route_audit.py",

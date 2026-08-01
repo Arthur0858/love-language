@@ -30,6 +30,7 @@ CONTACT_EMAIL = "contact@lovetypes.tw"
 OFFICIAL_YOUTUBE_CHANNEL = "https://www.youtube.com/channel/UCPeQjvN9q2kY2s09PuRSL6w"
 UPDATED = "2026-07-31"
 PRIVACY_UPDATED = "2026-08-01"
+THEORY_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -4958,7 +4959,7 @@ def theory_evidence_section(lang: str) -> str:
 <section class="section article-body standalone theory-evidence" data-theory-evidence>
   <p class="eyebrow">EVIDENCE AND LIMITS</p>
   <h2>研究證據支持的是對話用途，不是五種固定人格</h2>
-  <p>LoveTypes 把五個入口做成守護者，是為了幫助記憶與表達，不代表科學界已確認每個人都有一個固定主要類型。Impett、Muise 與 Park 對常見愛之語假設的證據檢視指出，「每個人有一個主要語言」「伴侶配對後關係必然更好」等說法缺乏一致支持。這不等於所有相關練習都沒有用途，而是使用時應回到具體情境、偏好與可觀察行動。</p>
+  <p>LoveTypes 把五個入口做成守護者，是為了幫助記憶與表達；愛之語不是人格診斷，也不代表科學界已確認每個人都有一個固定主要類型。Impett、Muise 與 Park 對常見愛之語假設的證據檢視指出，「每個人有一個主要語言」「伴侶配對後關係必然更好」等說法缺乏一致支持。因此沒有單一「正確配對」可以判定一段關係的品質或未來。這不等於所有相關練習都沒有用途，而是使用時應回到具體情境、偏好與可觀察行動。</p>
   <h2>LoveTypes 額外做了什麼</h2>
   <p>本站的原創部分是五位守護者、錯頻翻譯、觀察／感受／需要／請求工作表，以及產品實測紀錄。這些內容屬於一般關係教育與自我反思，不是心理量表，也沒有招募受試者驗證療效。結果可能受近期事件、題目理解與作答環境影響；同一個人在不同階段得到不同排序並不表示答錯。</p>
   <h2>參考資料</h2>
@@ -15045,7 +15046,7 @@ def simple_page(lang: str, slug: str) -> None:
 <section class="section faq-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["love_language_faq"])}</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
 {trust_action_routes(lang, "theory")}
 """
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{THEORY_UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
         write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, t["theory"], "website", "/og-cover.jpg", schema))
         return
@@ -16982,7 +16983,7 @@ CORE_LASTMOD = {
     "compass": "2026-07-31",
     "guides": "2026-07-30",
     "characters": "2026-07-22",
-    "theory": "2026-07-31",
+    "theory": THEORY_UPDATED,
     "repair-plan": "2026-07-25",
     "about": "2026-07-31",
     "contact": "2026-07-21",

@@ -15,11 +15,16 @@ from editorial_guides import GUIDE_EDITORIAL_CONTENT
 from generate_multilingual_site import (
     GUARDIAN_UPDATED,
     COMPASS_UPDATED,
+    CORE_EDITORIAL_UPDATED,
     GARDEN_MAP_UPDATED,
+    LAB_INDEX_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     REPAIR_PLAN_UPDATED,
     START_UPDATED,
+    THEORY_UPDATED,
+    UPDATED,
+    PRIVACY_UPDATED,
 )
 from lab_reports import LAB_REPORTS
 import deploy_cloudflare_pages as deploy
@@ -35,6 +40,20 @@ EXPECTED_CORE = {
     "/", "/start/", "/garden-map/", "/compass/",
     "/guides/", "/characters/", "/theory/", "/repair-plan/",
     "/about/", "/contact/", "/privacy/", "/terms/", "/lab/",
+}
+CORE_EDITORIAL_TRUST = {
+    "/start/": (START_UPDATED, "data-start-editorial-byline", "WebPage"),
+    "/garden-map/": (GARDEN_MAP_UPDATED, "data-garden-map-editorial-byline", "CollectionPage"),
+    "/compass/": (COMPASS_UPDATED, "data-compass-editorial-byline", "WebApplication"),
+    "/guides/": (CORE_EDITORIAL_UPDATED, "data-guides-editorial-byline", "CollectionPage"),
+    "/characters/": (CORE_EDITORIAL_UPDATED, "data-characters-editorial-byline", "CollectionPage"),
+    "/theory/": (THEORY_UPDATED, "data-theory-editorial-byline", "WebPage"),
+    "/repair-plan/": (REPAIR_PLAN_UPDATED, "data-repair-editorial-byline", "HowTo"),
+    "/about/": (CORE_EDITORIAL_UPDATED, "data-about-editorial-byline", "AboutPage"),
+    "/contact/": (CORE_EDITORIAL_UPDATED, "data-contact-editorial-byline", "ContactPage"),
+    "/privacy/": (PRIVACY_UPDATED, "data-privacy-editorial-byline", "WebPage"),
+    "/terms/": (CORE_EDITORIAL_UPDATED, "data-terms-editorial-byline", "WebPage"),
+    "/lab/": (LAB_INDEX_UPDATED, "data-lab-editorial-byline", "CollectionPage"),
 }
 
 
@@ -103,14 +122,10 @@ def main() -> int:
         url = f"https://lovetypes.tw/characters/{slug}/"
         if sitemap_lastmods.get(url) != GUARDIAN_UPDATED:
             issues.append(f"guardian sitemap lastmod mismatch: {slug}")
-    for route, updated in (("start", START_UPDATED), ("repair-plan", REPAIR_PLAN_UPDATED)):
-        url = f"https://lovetypes.tw/{route}/"
+    for route, (updated, _marker, _schema_type) in CORE_EDITORIAL_TRUST.items():
+        url = f"https://lovetypes.tw{route}"
         if sitemap_lastmods.get(url) != updated:
             issues.append(f"{route} sitemap lastmod mismatch")
-    if sitemap_lastmods.get("https://lovetypes.tw/compass/") != COMPASS_UPDATED:
-        issues.append("compass sitemap lastmod mismatch")
-    if sitemap_lastmods.get("https://lovetypes.tw/garden-map/") != GARDEN_MAP_UPDATED:
-        issues.append("garden-map sitemap lastmod mismatch")
 
     for route in expected:
         path = page_file(route)
@@ -325,6 +340,35 @@ def main() -> int:
             if route.startswith("/characters/") and item.get("@type") == "ProfilePage":
                 issues.append(f"fictional guardian must not use ProfilePage schema: {route}")
 
+    for route, (updated, marker, expected_type) in CORE_EDITORIAL_TRUST.items():
+        raw = page_file(route).read_text(encoding="utf-8")
+        if marker not in raw:
+            issues.append(f"{route} missing visible editorial identity marker {marker}")
+        if f'datetime="{updated}"' not in raw or f"內容更新：{updated}" not in raw:
+            issues.append(f"{route} visible update date mismatch")
+        if re.search(r'datetime="\{[^"}]+\}"', raw):
+            issues.append(f"{route} contains an unexpanded datetime template")
+        primary = [item for item in schemas(raw) if expected_type in schema_types(item)]
+        if len(primary) != 1:
+            issues.append(f"{route} {expected_type} schema missing or duplicated")
+            continue
+        item = primary[0]
+        if item.get("dateModified") != updated:
+            issues.append(f"{route} schema dateModified mismatch")
+        for field in ("author", "publisher"):
+            if item.get(field, {}).get("@type") != "Organization":
+                issues.append(f"{route} schema {field} must be Organization")
+    for route in ("/about/", "/contact/"):
+        expected_type = CORE_EDITORIAL_TRUST[route][2]
+        item = next(item for item in schemas(page_file(route).read_text(encoding="utf-8")) if expected_type in schema_types(item))
+        if item.get("mainEntity", {}).get("@type") != "Organization":
+            issues.append(f"{route} schema mainEntity must be Organization")
+    terms_raw = page_file("/terms/").read_text(encoding="utf-8")
+    if f"更新日期 {CORE_EDITORIAL_UPDATED}" not in terms_raw or f"更新日期:</strong> {CORE_EDITORIAL_UPDATED}" not in terms_raw:
+        issues.append("/terms/ visible and metadata update dates must agree")
+    if UPDATED != CORE_EDITORIAL_UPDATED and UPDATED in terms_raw:
+        issues.append("/terms/ contains stale previous update date")
+
     compass_raw = page_file("/compass/").read_text(encoding="utf-8")
     compass_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(compass_raw)))
     if not 2800 <= compass_cjk <= 3600:
@@ -432,6 +476,7 @@ def main() -> int:
         issues.append("compatibility consolidation redirect missing")
 
     print(f"adsense_review_surface_pages={len(routes)}")
+    print(f"core_editorial_trust_pages={len(CORE_EDITORIAL_TRUST)}")
     print(f"garden_map_main_cjk={garden_cjk}")
     print(f"garden_map_guide_jaccard={garden_guide_jaccard:.3f}")
     print(f"garden_map_guide_containment={garden_guide_containment:.3f}")

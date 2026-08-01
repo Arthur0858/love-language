@@ -32,6 +32,7 @@ const routes = [
   { name: 'quiz', path: '/', quiz: true },
   { name: 'start', path: '/start/' },
   { name: 'garden-map', path: '/garden-map/' },
+  { name: 'characters-index', path: '/characters/' },
   { name: 'guardian-iris', path: '/characters/iris/' },
   { name: 'guardian-noah', path: '/characters/noah/' },
   { name: 'guardian-vivian', path: '/characters/vivian/' },
@@ -47,8 +48,10 @@ const routes = [
   { name: 'compass', path: '/compass/', compass: true },
   { name: 'repair-plan', path: '/repair-plan/' },
   { name: 'about', path: '/about/' },
+  { name: 'theory', path: '/theory/' },
   { name: 'contact', path: '/contact/' },
   { name: 'privacy', path: '/privacy/' },
+  { name: 'terms', path: '/terms/' },
   { name: 'resources', path: '/resources/' },
 ];
 const noScriptRoutes = [

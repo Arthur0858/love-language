@@ -35,6 +35,7 @@ START_UPDATED = "2026-08-01"
 REPAIR_PLAN_UPDATED = "2026-08-01"
 COMPASS_UPDATED = "2026-08-01"
 GARDEN_MAP_UPDATED = "2026-08-01"
+CORE_EDITORIAL_UPDATED = "2026-08-01"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-review-surface"
@@ -186,7 +187,7 @@ LANGS = {
         "resources_desc": "旅人補給整理心語庭園的指南入口、五位守護者頁面、Luna 音樂、愛之語理論與實作練習，讓你快速找到下一盞燈。",
         "contact_desc": "聯絡 LoveTypes 團隊，回報內容修正、隱私疑問、合作需求，或指出心語庭園中需要修復的頁面。",
         "privacy_desc": f"LoveTypes 隱私政策，說明裝置內保存、技術計數、Cloudflare 託管、外部連結與聯絡資料。更新日期 {PRIVACY_UPDATED}。",
-        "terms_desc": f"LoveTypes 使用條款，說明內容邊界、智慧財產、免責與網站使用規則。更新日期 {UPDATED}。",
+        "terms_desc": f"LoveTypes 使用條款，說明內容邊界、智慧財產、免責與網站使用規則。更新日期 {CORE_EDITORIAL_UPDATED}。",
         "luna_title": "Luna Yoga Music｜關係反思與放鬆音樂",
         "luna_desc": "Luna Yoga Music 提供適合書寫、放鬆與關係反思的安定音樂，像心語庭園夜晚的一盞低光。",
     },
@@ -226,7 +227,7 @@ LANGS = {
         "resources_desc": "Browse Heart Garden guide paths, guardian profiles, love-language theory notes, and practical exercises so you can find the next lamp on the path.",
         "contact_desc": "Contact LoveTypes for content corrections, privacy questions, partnership concerns, or pages in the Heart Garden that need repair.",
         "privacy_desc": f"LoveTypes privacy policy covering local storage, technical counts, Cloudflare hosting, external links, and contact data. Updated {PRIVACY_UPDATED}.",
-        "terms_desc": f"LoveTypes terms of use covering content boundaries, intellectual property, disclaimers, and site rules. Updated {UPDATED}.",
+        "terms_desc": f"LoveTypes terms of use covering content boundaries, intellectual property, disclaimers, and site rules. Updated {CORE_EDITORIAL_UPDATED}.",
         "luna_title": "Luna Yoga Music | Calm Audio for Reflection",
         "luna_desc": "Luna Yoga Music offers calm companion audio for journaling, decompression, and relationship reflection, like a low lamp in the Heart Garden at night.",
     },
@@ -266,7 +267,7 @@ LANGS = {
         "resources_desc": "心語の庭のガイド入口、五人の守護者プロフィール、愛の言語の理論、実践練習をまとめ、次の灯りを見つけやすくします。",
         "contact_desc": "内容修正、プライバシー、提携、または心語の庭で修復が必要なページについて LoveTypes に連絡できます。",
         "privacy_desc": f"端末内保存、技術的な回数計測、Cloudflare ホスティング、外部リンク、連絡データを説明する LoveTypes プライバシーポリシー。更新日 {PRIVACY_UPDATED}。",
-        "terms_desc": f"内容の範囲、知的財産、免責、サイト利用ルールを説明する LoveTypes 利用規約。更新日 {UPDATED}。",
+        "terms_desc": f"内容の範囲、知的財産、免責、サイト利用ルールを説明する LoveTypes 利用規約。更新日 {CORE_EDITORIAL_UPDATED}。",
         "luna_title": "Luna Yoga Music｜内省のための静かな音楽",
         "luna_desc": "Luna Yoga Music は、日記、緊張をほどく時間、関係のふり返りに寄り添う静かな音楽です。心語の庭の夜にともる低い灯りのように。",
     },
@@ -306,7 +307,7 @@ LANGS = {
         "resources_desc": "마음의 정원 가이드 입구, 다섯 수호자 프로필, 사랑의 언어 이론, 실천 연습을 모아 다음 등불을 찾기 쉽게 합니다.",
         "contact_desc": "콘텐츠 수정, 개인정보 문의, 협업, 또는 마음의 정원에서 수리가 필요한 페이지를 LoveTypes에 알릴 수 있습니다.",
         "privacy_desc": f"기기 내 저장, 기술적 횟수 집계, Cloudflare 호스팅, 외부 링크, 연락 자료를 설명하는 LoveTypes 개인정보 처리방침. 업데이트 {PRIVACY_UPDATED}.",
-        "terms_desc": f"콘텐츠 범위, 지식재산권, 면책, 사이트 이용 규칙을 설명하는 LoveTypes 이용약관. 업데이트 {UPDATED}.",
+        "terms_desc": f"콘텐츠 범위, 지식재산권, 면책, 사이트 이용 규칙을 설명하는 LoveTypes 이용약관. 업데이트 {CORE_EDITORIAL_UPDATED}.",
         "luna_title": "Luna Yoga Music｜성찰을 위한 차분한 음악",
         "luna_desc": "Luna Yoga Music은 기록, 긴장 완화, 관계 성찰에 어울리는 차분한 음악입니다. 밤의 마음의 정원에 켜진 낮은 등불처럼 함께합니다.",
     },
@@ -346,7 +347,7 @@ LANGS = {
         "resources_desc": "Encuentra entradas del Jardín del Corazón, perfiles de guardianas, teoría de lenguajes del amor y ejercicios prácticos para hallar la siguiente luz del camino.",
         "contact_desc": "Contacta a LoveTypes para correcciones de contenido, privacidad, colaboraciones o páginas del Jardín del Corazón que necesiten reparación.",
         "privacy_desc": f"Política de privacidad de LoveTypes sobre almacenamiento local, conteos técnicos, alojamiento de Cloudflare, enlaces externos y datos de contacto. Actualizada {PRIVACY_UPDATED}.",
-        "terms_desc": f"Términos de uso de LoveTypes sobre límites de contenido, propiedad intelectual, descargos y reglas del sitio. Actualizados {UPDATED}.",
+        "terms_desc": f"Términos de uso de LoveTypes sobre límites de contenido, propiedad intelectual, descargos y reglas del sitio. Actualizados {CORE_EDITORIAL_UPDATED}.",
         "luna_title": "Luna Yoga Music | Audio tranquilo para reflexionar",
         "luna_desc": "Luna Yoga Music ofrece audio tranquilo para escribir, descomprimir y reflexionar sobre relaciones, como una luz baja en el Jardín del Corazón de noche.",
     },
@@ -5557,6 +5558,15 @@ def organization_ref() -> dict:
 
 def website_ref(lang: str) -> dict:
     return {"@type": "WebSite", "@id": f"{abs_url(lang)}#website", "name": LANGS[lang]["brand"], "url": abs_url(lang)}
+
+
+def editorial_identity_line(marker: str, updated: str) -> str:
+    return (
+        f'<p {marker}><strong>LoveTypes 內容編輯團隊</strong> · '
+        f'<time datetime="{updated}">內容更新：{updated}</time> · '
+        '<a href="/about/#editorial-method">編輯方法</a> · '
+        '<a href="/contact/#site-repair-report">內容修正</a></p>'
+    )
 
 
 def organization_schema(lang: str) -> str:
@@ -13518,9 +13528,9 @@ START_PAGE_COPY = {
 def start_method_section(lang: str) -> str:
     if lang != "zh":
         return ""
-    return """
+    return f"""
 <section class="section article-body standalone start-method" data-start-method>
-  <p data-start-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{START_UPDATED}">內容更新：{START_UPDATED}</time> · <a href="/about/#editorial-method">編輯方法</a> · <a href="/contact/#site-repair-report">內容修正</a></p>
+  {editorial_identity_line("data-start-editorial-byline", START_UPDATED)}
   <p class="eyebrow">QUIZ METHOD</p>
   <h2>作答前先知道這 15 題如何計分</h2>
   <p>每題有五個選項，分別對應肯定言詞、優質時光、接受禮物、服務行動與身體接觸。選定一項後，該類別增加一分；完成 15 題才會產生結果。結果頁同時顯示五類原始比例，最高分成為主要守護者。這套計分只是把目前偏好整理成可閱讀順序，不使用醫療量表、人格常模，也不推論關係品質。</p>
@@ -13637,6 +13647,7 @@ def characters_index_page(lang: str) -> None:
   <p class="eyebrow">{escape(section_labels["five_guardians"])}</p>
   <h1>{escape(copy["h1"])}</h1>
   <p>{escape(copy["intro"])}</p>
+  {editorial_identity_line("data-characters-editorial-byline", CORE_EDITORIAL_UPDATED) if lang == "zh" else ""}
   <div class="hero-actions"><a class="primary-btn" href="{lang_url(lang)}#quiz-section">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "guides")}">{escape(t["guides"])}</a></div>
 </section>
 <section class="section guardian-result-resume" data-guardian-saved hidden aria-live="polite"></section>
@@ -13649,7 +13660,18 @@ def characters_index_page(lang: str) -> None:
   <div class="text-stack"><h2>{escape(PAGE_SECTIONS[lang]["need"])}</h2><p>{escape(PRACTICAL_COPY[lang]["notice"])}</p><p>{escape(PRACTICAL_COPY[lang]["practice"])}</p></div>
 </section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(copy["h1"])}","description":"{escape(desc)}","url":"{abs_url(lang, "characters")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": copy["h1"],
+        "description": desc,
+        "url": abs_url(lang, "characters"),
+        "inLanguage": t["code"],
+        "dateModified": CORE_EDITORIAL_UPDATED if lang == "zh" else UPDATED,
+        "isPartOf": website_ref(lang),
+        **({"author": organization_ref()} if lang == "zh" else {}),
+        "publisher": organization_ref(),
+    })
     guardian_items = [(data[lang][0], abs_url(lang, "characters/" + slug)) for slug, data in GUARDIANS.items()]
     schema += item_list_schema(copy["h1"], desc, guardian_items)
     write(page_path(lang, "characters"), layout(lang, title, desc, "characters", body + guardian_resume_script(lang), t["guardians"], "website", "/og-cover.jpg", schema))
@@ -13660,14 +13682,25 @@ def guides_index(lang: str) -> None:
     section_labels = SECTION_LABELS[lang]
     cards = "".join(guide_card(lang, g) for g in GUIDES)
     body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p><div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="practice" href="{lang_url(lang, "repair-plan")}" data-funnel-event="guide_index_hero_practice">{"填寫 7 日修復表" if lang == "zh" else escape(t["resources"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["heart_garden_field_guide"])}</p><h1>{escape(t["guide_index_title"])}</h1><p>{escape(t["guide_index_desc"])}</p>{editorial_identity_line("data-guides-editorial-byline", CORE_EDITORIAL_UPDATED) if lang == "zh" else ""}<div class="hero-actions" data-guide-index-actions><a class="primary-btn" data-guide-index-link="quiz" href="{lang_url(lang)}#quiz-section" data-funnel-event="guide_index_hero_quiz">{escape(t["start"])}</a><a class="secondary-btn" data-guide-index-link="guardians" href="{lang_url(lang, "characters")}" data-funnel-event="guide_index_hero_guardians">{escape(t["guardians"])}</a><a class="secondary-btn" data-guide-index-link="practice" href="{lang_url(lang, "repair-plan")}" data-funnel-event="guide_index_hero_practice">{"填寫 7 日修復表" if lang == "zh" else escape(t["resources"])}</a></div></section>
 {guide_index_compass(lang)}
 {core_reading_path_section(lang)}
 {guide_domain_routes_section(lang)}
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """
-    schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"CollectionPage","name":"{escape(t["guide_index_title"])}","description":"{escape(t["guide_index_desc"])}","url":"{abs_url(lang, "guides")}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+    schema = json_ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": t["guide_index_title"],
+        "description": t["guide_index_desc"],
+        "url": abs_url(lang, "guides"),
+        "inLanguage": t["code"],
+        "dateModified": CORE_EDITORIAL_UPDATED if lang == "zh" else UPDATED,
+        "isPartOf": website_ref(lang),
+        **({"author": organization_ref()} if lang == "zh" else {}),
+        "publisher": organization_ref(),
+    })
     guide_items = [(guide[lang][0], abs_url(lang, "guides/" + guide["slug"])) for guide in GUIDES]
     schema += item_list_schema(t["guide_index_title"], t["guide_index_desc"], guide_items)
     write(page_path(lang, "guides"), layout(lang, t["guide_index_title"], t["guide_index_desc"], "guides", body, t["guides"], "website", "/og-cover.jpg", schema))
@@ -13981,6 +14014,7 @@ def lab_index_page() -> None:
   <p class="eyebrow">PRODUCT LAB</p>
   <h1>LoveTypes 產品實測紀錄</h1>
   <p>這裡公開測驗、隱私、分享、相容性、修復表與無障礙的實際檢查方式。每份紀錄都列出環境、步驟、輸入、結果、失敗與限制；它們是軟體與內容測試，不是心理研究或使用者療效證明。</p>
+  {editorial_identity_line("data-lab-editorial-byline", LAB_INDEX_UPDATED)}
   <div class="hero-actions"><a class="primary-btn" href="#lab-reports">查看 8 份實測</a><a class="secondary-btn" href="/about/#editorial-method">內容製作方法</a></div>
 </section>
 <section class="section" id="lab-reports" data-lab-index>
@@ -15318,7 +15352,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "about":
         about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{trust_hero_actions(lang, slug)}</section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line("data-about-editorial-byline", CORE_EDITORIAL_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}</section>
 {about_garden_pass(lang)}
 {editorial_method_section(lang)}
 {core_reading_path_section(lang)}
@@ -15335,7 +15369,18 @@ def simple_page(lang: str, slug: str) -> None:
 {about_trust_charter(lang)}
 {trust_action_routes(lang, "about")}
 """
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"AboutPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{UPDATED}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        schema = json_ld({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": title,
+            "description": desc,
+            "url": abs_url(lang, slug),
+            "inLanguage": t["code"],
+            "dateModified": CORE_EDITORIAL_UPDATED if lang == "zh" else UPDATED,
+            "isPartOf": website_ref(lang),
+            **({"author": organization_ref(), "mainEntity": organization_ref()} if lang == "zh" else {}),
+            "publisher": organization_ref(),
+        })
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
         write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, t["about"], "website", "/og-cover.jpg", schema))
         return
@@ -15344,7 +15389,7 @@ def simple_page(lang: str, slug: str) -> None:
         guardian_cards = "".join(character_card(lang, guardian_slug, guardian_data) for guardian_slug, guardian_data in GUARDIANS.items())
         faq_items = "".join(f"<article><h3>{escape(q)}</h3><p>{escape(a)}</p></article>" for q, a in THEORY_FAQ[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p><div class="hero-actions" data-trust-hero-actions="theory"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-trust-hero-link="quiz" data-funnel-event="trust_hero_theory_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-trust-hero-link="guardians" data-funnel-event="trust_hero_theory_guardians">{escape(t["guardians"])}</a></div></section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["love_language_theory"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line("data-theory-editorial-byline", THEORY_UPDATED) if lang == "zh" else ""}<div class="hero-actions" data-trust-hero-actions="theory"><a class="primary-btn" href="{lang_url(lang)}#quiz-section" data-trust-hero-link="quiz" data-funnel-event="trust_hero_theory_quiz">{escape(t["start"])}</a><a class="secondary-btn" href="{lang_url(lang, "characters")}" data-trust-hero-link="guardians" data-funnel-event="trust_hero_theory_guardians">{escape(t["guardians"])}</a></div></section>
 {theory_domain_compass(lang)}
 {result_reading_method_section(lang)}
 {theory_evidence_section(lang)}
@@ -15357,7 +15402,19 @@ def simple_page(lang: str, slug: str) -> None:
 <section class="section faq-section"><div class="section-head"><p class="eyebrow">{escape(section_labels["love_language_faq"])}</p><h2>{escape(t["theory"])}</h2></div><div class="faq-grid">{faq_items}</div></section>
 {trust_action_routes(lang, "theory")}
 """
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"WebPage","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{THEORY_UPDATED}","about":{{"@type":"Thing","name":"Five love languages"}},"isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        schema = json_ld({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": title,
+            "description": desc,
+            "url": abs_url(lang, slug),
+            "inLanguage": t["code"],
+            "dateModified": THEORY_UPDATED,
+            "about": {"@type": "Thing", "name": "Five love languages"},
+            "isPartOf": website_ref(lang),
+            **({"author": organization_ref()} if lang == "zh" else {}),
+            "publisher": organization_ref(),
+        })
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
         write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, t["theory"], "website", "/og-cover.jpg", schema))
         return
@@ -15365,7 +15422,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "contact":
         extra = '<p class="contact-line"><a href="mailto:contact@lovetypes.tw">contact@lovetypes.tw</a></p>'
     if slug in {"privacy", "terms"}:
-        policy_updated = PRIVACY_UPDATED if slug == "privacy" else UPDATED
+        policy_updated = PRIVACY_UPDATED if slug == "privacy" else CORE_EDITORIAL_UPDATED
         extra = f"<p><strong>{escape(t['updated_label'])}:</strong> {policy_updated}</p>"
     if slug in {"contact", "privacy", "terms"}:
         schema_type = {"contact": "ContactPage", "privacy": "WebPage", "terms": "WebPage"}[slug]
@@ -15373,7 +15430,7 @@ def simple_page(lang: str, slug: str) -> None:
         policy_contact = policy_contact_route(lang, slug)
         policy_contact_markup = f"{policy_contact}\n" if policy_contact else ""
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{trust_hero_actions(lang, slug)}{extra}</section>
+<section class="page-hero compact"><p class="eyebrow">LOVETYPES</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line(f"data-{slug}-editorial-byline", CORE_EDITORIAL_UPDATED if slug != "privacy" else PRIVACY_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}{extra}</section>
 {contact_requests}
 {policy_compass_section(lang, slug)}
 {policy_detail_section(lang, slug)}
@@ -15382,8 +15439,19 @@ def simple_page(lang: str, slug: str) -> None:
   <p>{escape(t["boundary_text"])}</p>
 </section>
 """
-        page_updated = PRIVACY_UPDATED if slug == "privacy" else UPDATED
-        schema = f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"{schema_type}","name":"{escape(title)}","description":"{escape(desc)}","url":"{abs_url(lang, slug)}","inLanguage":"{t["code"]}","dateModified":"{page_updated}","isPartOf":{{"@type":"WebSite","name":"LoveTypes","url":"{DOMAIN}/"}}}}</script>'
+        page_updated = PRIVACY_UPDATED if slug == "privacy" else CORE_EDITORIAL_UPDATED
+        schema = json_ld({
+            "@context": "https://schema.org",
+            "@type": schema_type,
+            "name": title,
+            "description": desc,
+            "url": abs_url(lang, slug),
+            "inLanguage": t["code"],
+            "dateModified": page_updated,
+            "isPartOf": website_ref(lang),
+            **({"author": organization_ref(), "mainEntity": organization_ref()} if lang == "zh" and slug == "contact" else ({"author": organization_ref()} if lang == "zh" else {})),
+            "publisher": organization_ref(),
+        })
         page_title = f"{title} | LoveTypes" if lang == "zh" else f"{title} | LoveTypes {t['name']}"
         write(page_path(lang, slug), layout(lang, page_title, desc, slug, body, title, "website", "/og-cover.jpg", schema))
         return
@@ -17295,14 +17363,14 @@ CORE_LASTMOD = {
     "start": START_UPDATED,
     "garden-map": GARDEN_MAP_UPDATED,
     "compass": COMPASS_UPDATED,
-    "guides": "2026-07-30",
-    "characters": "2026-07-22",
+    "guides": CORE_EDITORIAL_UPDATED,
+    "characters": CORE_EDITORIAL_UPDATED,
     "theory": THEORY_UPDATED,
     "repair-plan": REPAIR_PLAN_UPDATED,
-    "about": "2026-07-31",
-    "contact": "2026-07-21",
+    "about": CORE_EDITORIAL_UPDATED,
+    "contact": CORE_EDITORIAL_UPDATED,
     "privacy": PRIVACY_UPDATED,
-    "terms": "2026-07-21",
+    "terms": CORE_EDITORIAL_UPDATED,
     "lab": LAB_INDEX_UPDATED,
 }
 

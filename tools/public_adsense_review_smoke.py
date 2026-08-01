@@ -15,7 +15,15 @@ from urllib.parse import urljoin, urlparse
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from xml.etree import ElementTree as ET
 
-from adsense_review_surface_audit import COMMERCE_HOSTS, FORBIDDEN_COMMERCIAL, FORBIDDEN_REVIEW_POSITIONING, FORBIDDEN_VISIBLE
+from adsense_review_surface_audit import (
+    COMMERCE_HOSTS,
+    CORE_EDITORIAL_TRUST,
+    FORBIDDEN_COMMERCIAL,
+    FORBIDDEN_REVIEW_POSITIONING,
+    FORBIDDEN_VISIBLE,
+    schema_types,
+    schemas,
+)
 from generate_multilingual_site import COMPASS_UPDATED, LEGACY_ZH_GUIDES, LONG_TAIL_COMPATIBILITY_PAGES, RETIRED_PUBLIC_ASSET_PATHS
 
 
@@ -112,6 +120,30 @@ def page_issues(route: str, response: Response) -> list[str]:
                 issues.append(f"{route}: missing {marker}")
         if f'"dateModified":"{COMPASS_UPDATED}"' not in raw:
             issues.append(f"{route}: schema dateModified mismatch")
+    if route in CORE_EDITORIAL_TRUST:
+        updated, marker, expected_type = CORE_EDITORIAL_TRUST[route]
+        if marker not in raw:
+            issues.append(f"{route}: missing visible editorial identity marker {marker}")
+        if f'datetime="{updated}"' not in raw or f"內容更新：{updated}" not in raw:
+            issues.append(f"{route}: visible update date mismatch")
+        if re.search(r'datetime="\{[^"}]+\}"', raw):
+            issues.append(f"{route}: unexpanded datetime template")
+        primary = [item for item in schemas(raw) if expected_type in schema_types(item)]
+        if len(primary) != 1:
+            issues.append(f"{route}: {expected_type} schema missing or duplicated")
+        else:
+            item = primary[0]
+            if item.get("dateModified") != updated:
+                issues.append(f"{route}: schema dateModified mismatch")
+            for field in ("author", "publisher"):
+                if item.get(field, {}).get("@type") != "Organization":
+                    issues.append(f"{route}: schema {field} must be Organization")
+            if route in {"/about/", "/contact/"} and item.get("mainEntity", {}).get("@type") != "Organization":
+                issues.append(f"{route}: schema mainEntity must be Organization")
+    if route == "/terms/":
+        updated = CORE_EDITORIAL_TRUST[route][0]
+        if f"更新日期 {updated}" not in raw or f"更新日期:</strong> {updated}" not in raw:
+            issues.append(f"{route}: visible and metadata update dates must agree")
     if 'type="application/ld+json"' not in raw:
         issues.append(f"{route}: JSON-LD missing")
     return issues

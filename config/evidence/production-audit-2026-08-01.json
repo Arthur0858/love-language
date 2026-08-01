@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-08-01T08:15:06Z",
+  "checkedAt": "2026-08-01T08:49:45Z",
   "site": "https://lovetypes.tw/",
-  "reviewSurfaceCommit": "85dca47181f7e19627a5eb5f162ded34062b814d",
-  "auditToolingCommit": "920dbf53e28bf7f36af5e64342cc3688efa17d46",
+  "reviewSurfaceCommit": "64a14159f8858a1e75fc08fbb5dfdd46eeac7c7a",
+  "auditToolingCommit": "64a14159f8858a1e75fc08fbb5dfdd46eeac7c7a",
   "publicSurfaceUnchangedThroughAuditToolingCommit": true,
   "cloudflareDeployment": {
-    "id": "2666e57d-2676-4da4-9643-e823794e7dad",
-    "preview": "https://2666e57d.lovetypes.pages.dev"
+    "id": "16980fc2-1ee4-4e98-8e10-a7fda63162b0",
+    "preview": "https://16980fc2.lovetypes.pages.dev"
   },
   "githubActions": [
     {
-      "name": "pages build and deployment for differentiated Heart Garden map",
+      "name": "pages build and deployment for core editorial identity",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30691300345"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692448746"
     },
     {
-      "name": "LoveTypes predeploy check with Heart Garden performance coverage",
+      "name": "LoveTypes predeploy check for core editorial identity",
       "conclusion": "success",
-      "url": "https://github.com/Arthur0858/love-language/actions/runs/30691300417"
+      "url": "https://github.com/Arthur0858/love-language/actions/runs/30692449041"
     }
   ],
   "productionChecks": {
@@ -28,7 +28,7 @@
     "indexabilityCases": 56,
     "headerCases": 51,
     "assetReferences": 444,
-    "internalLinks": 1178,
+    "internalLinks": 1194,
     "jsonLdBlocks": 118,
     "editorialGuides": 12,
     "labReports": 8,
@@ -38,18 +38,21 @@
     "editorialCorePages": 4,
     "editorialStartPages": 1,
     "editorialRepairPlans": 1,
+    "coreEditorialTrustPages": 12,
+    "unexpandedDatetimeTemplates": 0,
+    "visibleDateMismatches": 0,
     "compassMainCjk": 2930,
     "compassEditorialBylines": 1,
     "forbiddenPositioningTerms": 0,
     "gardenMapMainCjk": 1145,
     "gardenMapDecisionCards": 5,
     "gardenMapInteractiveTools": 2,
-    "gardenMapGuideJaccard": 0.089,
-    "gardenMapGuideContainment": 0.168,
+    "gardenMapGuideJaccard": 0.098,
+    "gardenMapGuideContainment": 0.185,
     "editorialSourceHosts": 5,
     "labEvidenceImages": 16,
     "externalLinks": 9,
-    "visualPages": 66,
+    "visualPages": 75,
     "noScriptPages": 5,
     "keyboardCases": 10,
     "issues": 0
@@ -58,13 +61,13 @@
     "evidence": "config/evidence/production-runtime-performance-2026-08-01.json",
     "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
     "pagesChecked": 10,
-    "worstLcpMs": 476,
+    "worstLcpMs": 328,
     "worstCls": 0,
     "maxTransferBytes": 352341,
     "failedRequests": 0,
     "failedResponses": 0,
     "brokenImages": 0,
-    "gardenMapLcpMs": 308,
+    "gardenMapLcpMs": 252,
     "gardenMapTransferBytes": 232310,
     "issues": 0
   },

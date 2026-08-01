@@ -309,6 +309,70 @@ GUIDE_APPLICABILITY = {
     "healthy-boundaries": "適用於描述自己在特定情況下會採取什麼保護行動，並保留對方提問與協商空間。不適用於規定對方不得有情緒、限制社交或以愛為名取得控制權。若執行界線可能引發報復，先和可信任的人規劃安全與必要資源，不必單獨宣布或長篇說服。",
 }
 
+
+GUIDE_TRUST_SECTION_TITLES = {
+    "share-your-result": {
+        "applicability": "分享結果前的適用與停止線",
+        "revision": "這份分享流程如何修訂",
+        "sources": "分享與非診斷界線的資料依據",
+    },
+    "repair-after-conflict": {
+        "applicability": "衝突修復何時應暫停",
+        "revision": "四步修復流程的版本變更",
+        "sources": "修復、安全與同意的資料依據",
+    },
+    "words-of-affirmation-scripts": {
+        "applicability": "句型適用時機與停止訊號",
+        "revision": "十二句肯定範例的修訂紀錄",
+        "sources": "肯定、請求與安全界線來源",
+    },
+    "acts-of-service-boundaries": {
+        "applicability": "分工協商可用與不可用情境",
+        "revision": "服務行動工作表修訂歷程",
+        "sources": "分工、請求與控制辨識來源",
+    },
+    "gifts-are-not-materialism": {
+        "applicability": "送禮練習的負擔與停止條件",
+        "revision": "記憶地圖與低預算做法修訂",
+        "sources": "禮物偏好與自主界線來源",
+    },
+    "quality-time-long-distance": {
+        "applicability": "遠距節奏何時需要停止或改約",
+        "revision": "三層連結節奏的修訂紀錄",
+        "sources": "遠距溝通與控制警訊來源",
+    },
+    "physical-touch-consent-safety": {
+        "applicability": "接觸練習的同意前提與停止線",
+        "revision": "接觸地圖與停止步驟修訂",
+        "sources": "同意、暴力與安全支援來源",
+    },
+    "weekly-relationship-review": {
+        "applicability": "回顧會議的適用與中止條件",
+        "revision": "十五分鐘回顧表修訂歷程",
+        "sources": "每週回顧與安全邊界來源",
+    },
+    "emotional-needs-checklist": {
+        "applicability": "自我檢查的適用範圍與轉介時機",
+        "revision": "四欄需求表的修訂紀錄",
+        "sources": "需要、請求與危機界線來源",
+    },
+    "misfrequency-examples": {
+        "applicability": "錯頻翻譯何時不再適用",
+        "revision": "情境矩陣與替代方式修訂",
+        "sources": "錯頻、安全與非診斷來源",
+    },
+    "relationship-stages": {
+        "applicability": "階段對話的適用與停止條件",
+        "revision": "關係階段檢查表修訂",
+        "sources": "階段、承諾與安全界線來源",
+    },
+    "healthy-boundaries": {
+        "applicability": "界線練習的適用與危險訊號",
+        "revision": "界線腳本與決策流程修訂",
+        "sources": "界線、控制與支援資料來源",
+    },
+}
+
 GUIDE_APPLICABILITY["gifts-are-not-materialism"] += " 實作前各自寫下可接受預算、不能收的類型與不需要回禮的說明，確認心意不會變成義務。"
 GUIDE_APPLICABILITY["quality-time-long-distance"] += " 開始前先各自標記今天是專注對話、共同活動或背景陪伴，結束時確認下一次時間。"
 GUIDE_APPLICABILITY["physical-touch-consent-safety"] += " 可以先建立綠、黃、紅三區接觸清單，但清單只代表目前偏好，每一次仍要重新確認。"

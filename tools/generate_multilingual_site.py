@@ -17,6 +17,7 @@ from editorial_guides import (
     GUIDE_ENRICHMENTS,
     GUIDE_FOLLOWUP_NOTES,
     GUIDE_SOURCE_NOTE,
+    GUIDE_TRUST_SECTION_TITLES,
     GUIDE_UPDATED_BY_SLUG,
 )
 from lab_reports import LAB_REPORTS, LAB_UPDATED
@@ -13839,6 +13840,7 @@ def trust_action_routes(lang: str, slug: str) -> str:
 def render_zh_editorial_guide(slug: str) -> str:
     content = GUIDE_EDITORIAL_CONTENT[slug]
     enrichment = GUIDE_ENRICHMENTS[slug]
+    trust_titles = GUIDE_TRUST_SECTION_TITLES[slug]
     sections = []
     workbook_marked = False
     for section in content["sections"]:
@@ -13880,16 +13882,16 @@ def render_zh_editorial_guide(slug: str) -> str:
     <p class="lede">{escape(content["lede"])}</p>
     {"".join(sections)}
     <section class="guide-editorial-section" data-guide-applicability>
-      <h2>適用情況與停止條件</h2>
+      <h2>{escape(trust_titles["applicability"])}</h2>
       <p>{escape(GUIDE_APPLICABILITY[slug])}</p>
     </section>
     <section class="guide-revision-note" data-guide-revision>
-      <h2>版本修訂紀錄</h2>
+      <h2>{escape(trust_titles["revision"])}</h2>
       <p>{escape(updated)}：{escape(enrichment["revision"])}</p>
       <p>{escape(GUIDE_SOURCE_NOTE)}</p>
     </section>
     <section class="guide-source-list" data-guide-sources>
-      <h2>參考資料與使用方式</h2>
+      <h2>{escape(trust_titles["sources"])}</h2>
       <ul>{sources}</ul>
       <p>外部資料用來界定概念與安全邊界；本文示例、工作表與 LoveTypes 守護者轉譯由內容編輯團隊自行撰寫。</p>
     </section>

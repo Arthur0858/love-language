@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from editorial_guides import GUIDE_EDITORIAL_CONTENT
+from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_TRUST_SECTION_TITLES
 from generate_multilingual_site import (
     GUARDIAN_UPDATED,
     COMPASS_UPDATED,
@@ -303,14 +303,19 @@ def main() -> int:
                 issues.append(f"guide missing {marker}: {slug}")
         if raw.count('target="_blank" rel="noopener noreferrer"') < 2 or "data-guide-sources" not in raw:
             issues.append(f"guide needs 2+ visible authoritative sources: {slug}")
-        editorial_blocks = re.findall(
-            r'<section class="guide-editorial-section"[^>]*>(.*?)</section>', raw, re.I | re.S
+        article_match = re.search(
+            r'<article\b[^>]*class="[^"]*\barticle-body\b[^"]*"[^>]*>(.*?)</article>',
+            raw,
+            re.I | re.S,
         )
-        headings = []
-        for block in editorial_blocks:
-            match = re.search(r"<h2[^>]*>(.*?)</h2>", block, re.I | re.S)
-            if match:
-                headings.append(visible_text(match.group(1)))
+        article = article_match.group(1) if article_match and "data-guide-editorial-byline" in article_match.group(1) else ""
+        if not article:
+            issues.append(f"guide article body missing: {slug}")
+        headings = [visible_text(value) for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", article, re.I | re.S)]
+        expected_trust_titles = set(GUIDE_TRUST_SECTION_TITLES[slug].values())
+        missing_trust_titles = expected_trust_titles.difference(headings)
+        if missing_trust_titles:
+            issues.append(f"guide trust headings missing: {slug}={sorted(missing_trust_titles)}")
         for pos in range(max(0, len(headings) - 2)):
             triplet = tuple(headings[pos:pos + 3])
             if triplet in h2_triplets:

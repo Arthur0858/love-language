@@ -9,7 +9,7 @@ import re
 import sys
 from urllib.parse import urlparse
 
-from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_UPDATED_BY_SLUG
+from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_TRUST_SECTION_TITLES, GUIDE_UPDATED_BY_SLUG
 from lab_reports import LAB_REPORTS
 from public_adsense_review_smoke import request, visible_text
 
@@ -111,6 +111,7 @@ def main() -> int:
     revision_texts: set[str] = set()
     evidence_images: set[str] = set()
     guardian_shingle_sets: dict[str, frozenset[str]] = {}
+    guide_h2_triplets: dict[tuple[str, str, str], str] = {}
 
     for slug in GUIDE_EDITORIAL_CONTENT:
         route = f"/guides/{slug}/"
@@ -155,6 +156,25 @@ def main() -> int:
                 issues.append(f"{route}: unexpected source host {host}")
         if source_raw.count("<p>") < len(urls) + 1:
             issues.append(f"{route}: each source needs a visible explanation plus the authorship note")
+        article_match = re.search(
+            r'<article\b[^>]*class="[^"]*\barticle-body\b[^"]*"[^>]*>(.*?)</article>',
+            raw,
+            re.I | re.S,
+        )
+        article = article_match.group(1) if article_match and "data-guide-editorial-byline" in article_match.group(1) else ""
+        if not article:
+            issues.append(f"{route}: guide article body missing")
+        headings = [visible_text(value) for value in re.findall(r"<h2\b[^>]*>(.*?)</h2>", article, re.I | re.S)]
+        expected_trust_titles = set(GUIDE_TRUST_SECTION_TITLES[slug].values())
+        missing_trust_titles = expected_trust_titles.difference(headings)
+        if missing_trust_titles:
+            issues.append(f"{route}: missing guide trust headings {sorted(missing_trust_titles)}")
+        for position in range(max(0, len(headings) - 2)):
+            triplet = tuple(headings[position : position + 3])
+            previous = guide_h2_triplets.get(triplet)
+            if previous:
+                issues.append(f"{route}: repeats an H2 triplet from {previous}: {triplet}")
+            guide_h2_triplets[triplet] = route
         validate_article_schema(route, raw, updated, issues)
 
     for slug in GUARDIAN_SLUGS:

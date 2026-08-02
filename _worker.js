@@ -76,18 +76,27 @@ function normalizedPath(pathname) {
   return pathname.endsWith("/") ? pathname : `${pathname}/`;
 }
 
+function retiredResponse(message) {
+  return new Response(message, {
+    status: 410,
+    headers: {
+      "Cache-Control": "no-store",
+      "Content-Type": "text/plain; charset=utf-8",
+      "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Strict-Transport-Security": "max-age=31536000",
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-Robots-Tag": "noindex, nofollow",
+    },
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (RETIRED_ASSETS.has(url.pathname)) {
-      return new Response("This LoveTypes asset has been retired.", {
-        status: 410,
-        headers: {
-          "Cache-Control": "no-store",
-          "Content-Type": "text/plain; charset=utf-8",
-          "X-Robots-Tag": "noindex, nofollow",
-        },
-      });
+      return retiredResponse("This LoveTypes asset has been retired.");
     }
     const path = normalizedPath(url.pathname);
 
@@ -96,14 +105,7 @@ export default {
     }
 
     if (path.startsWith("/tools/") || RETIRED_PATHS.has(path)) {
-      return new Response("This LoveTypes page has been retired.", {
-        status: 410,
-        headers: {
-          "Cache-Control": "no-store",
-          "Content-Type": "text/plain; charset=utf-8",
-          "X-Robots-Tag": "noindex, nofollow",
-        },
-      });
+      return retiredResponse("This LoveTypes page has been retired.");
     }
 
     return env.ASSETS.fetch(request);

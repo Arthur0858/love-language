@@ -57,6 +57,7 @@ class HeaderCase:
     expected_status: int = 200
     immutable: bool = False
     html: bool = False
+    html_revalidate: bool = False
     expect_noindex: bool = False
     expected_location: str = ""
 
@@ -69,6 +70,7 @@ CORE_HTML_CASES = [
         f"noindex-lab-{report['slug']}",
         f"/lab/{report['slug']}/",
         html=True,
+        html_revalidate=True,
         expect_noindex=True,
     )
     for report in GENERATOR_CONFIG.LAB_REPORTS
@@ -171,8 +173,9 @@ def check_case(base_url: str, case: HeaderCase) -> tuple[list[str], int]:
     issues.extend(global_issues)
     if case.html:
         cache_control = headers.get("cache-control", "")
-        if not HTML_CACHE_RE.search(cache_control):
-            issues.append(f"{case.name}: HTML cache-control should include max-age=600, got {cache_control!r}")
+        expected = "max-age=0" if case.html_revalidate else "max-age=600"
+        if expected not in cache_control.lower():
+            issues.append(f"{case.name}: HTML cache-control should include {expected}, got {cache_control!r}")
     if case.immutable:
         cache_control = headers.get("cache-control", "")
         if not IMMUTABLE_CACHE_RE.search(cache_control):

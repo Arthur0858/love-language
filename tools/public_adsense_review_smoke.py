@@ -65,6 +65,10 @@ class Response:
     def text(self) -> str:
         return self.body.decode("utf-8", errors="replace")
 
+    def header(self, name: str) -> str:
+        expected = name.lower()
+        return next((value for key, value in self.headers.items() if key.lower() == expected), "")
+
 
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
@@ -337,17 +341,17 @@ def main() -> int:
 
     for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/", "/luna/", "/go/luna-starter-click/"):
         response = request(route)
-        if response.status != 410 or "noindex" not in response.headers.get("X-Robots-Tag", "").lower():
+        if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
             issues.append(f"{route}: expected 410 with X-Robots-Tag noindex")
 
     for prefix in ("en", "ja", "ko", "es"):
         response = request(f"/{prefix}/", follow=False)
-        if response.status != 302 or response.headers.get("Location") not in ("/", CANONICAL_BASE + "/"):
+        if response.status != 302 or response.header("Location") not in ("/", CANONICAL_BASE + "/"):
             issues.append(f"/{prefix}/: expected 302 to /")
 
     compatibility = request("/tools/love-compatibility/", follow=False)
     expected_locations = {"/compass/", CANONICAL_BASE + "/compass/", BASE_URL + "/compass/"}
-    if compatibility.status != 301 or compatibility.headers.get("Location") not in expected_locations:
+    if compatibility.status != 301 or compatibility.header("Location") not in expected_locations:
         issues.append(f"/tools/love-compatibility/: expected 301 to /compass/, got {compatibility.status}")
 
     retired_routes = [f"/tools/{slug}/" for slug in LONG_TAIL_COMPATIBILITY_PAGES]
@@ -365,7 +369,7 @@ def main() -> int:
         for future in as_completed(futures):
             path = futures[future]
             response = future.result()
-            if response.status != 410 or "noindex" not in response.headers.get("X-Robots-Tag", "").lower():
+            if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
                 issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, got {response.status}")
 
     for path in (CSS_ASSET, INTERACTIONS_ASSET, QUIZ_DATA_ASSETS["zh"], COMPASS_TOOL_ASSET):

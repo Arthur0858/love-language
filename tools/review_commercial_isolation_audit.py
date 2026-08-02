@@ -122,8 +122,6 @@ def main() -> int:
 
         for destination in NOINDEX_DESTINATIONS:
             destinations_checked += 1
-            if route == "/about/" and destination == "/resources/":
-                continue
             if destination in raw:
                 issues.append(f"{route}: indexed page exposes noindex destination {destination}")
 
@@ -145,8 +143,8 @@ def main() -> int:
 
     about_raw = page_path("/about/").read_text(encoding="utf-8", errors="ignore")
     about_resource_links = len(re.findall(r'href=["\']/resources/(?:#[^"\']*)?["\']', about_raw, re.I))
-    if about_resource_links != 1:
-        issues.append(f"/about/: expected exactly one commercial disclosure link, got {about_resource_links}")
+    if about_resource_links:
+        issues.append(f"/about/: retired commercial disclosure link remains, got {about_resource_links}")
 
     for relative in sorted(runtime_artifacts):
         path = ROOT / relative

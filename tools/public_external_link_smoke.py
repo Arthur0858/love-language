@@ -123,20 +123,9 @@ def collect_external_links(base_url: str) -> tuple[list[ExternalLink], ExternalL
     stats = ExternalLinkStats()
     sources_by_url: dict[str, set[str]] = {}
     review_paths = [page["path"] for page in generator.collect_site_index()["pages"]]
-    review_paths.append("/resources/")
     for path in review_paths:
         response = smoke.request_url(urljoin(base_url + "/", path.lstrip("/")))
         assets = smoke.extract_head_assets(response.text)
-        if path.endswith("/resources/"):
-            expected_disclosure = generator.AFFILIATE_DISCLOSURE[resource_lang(path)]
-            if expected_disclosure not in response.text:
-                issues.append(f"{path}: missing localized affiliate disclosure")
-            elif "affiliate-disclosure" not in response.text:
-                issues.append(f"{path}: affiliate disclosure should use affiliate-disclosure class")
-            else:
-                stats.affiliate_disclosure_pages_checked += 1
-            if "affiliate-link-note" not in response.text:
-                issues.append(f"{path}: missing external bookstore fallback note")
         for anchor in assets.anchors:
             href = anchor.get("href", "")
             parsed = urlparse(href)

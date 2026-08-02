@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-EXPECTED_PAGE_COUNT = 38
+EXPECTED_PAGE_COUNT = 30
 EXPECTED_HTML_LANG = "zh-TW"
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 IDREF_ATTRS = {

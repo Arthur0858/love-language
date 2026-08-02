@@ -65,8 +65,13 @@ CORE_HTML_CASES = [
     HeaderCase(f"core-zh-{route or 'home'}", f"/{route}/" if route else "/", html=True)
     for route in GENERATOR_CONFIG.site_index_paths()
 ] + [
-    HeaderCase(f"noindex-{route}", f"/{route}/", html=True)
-    for route in ("resources", "keepsakes", "luna-yoga-music")
+    HeaderCase(
+        f"noindex-lab-{report['slug']}",
+        f"/lab/{report['slug']}/",
+        html=True,
+        expect_noindex=True,
+    )
+    for report in GENERATOR_CONFIG.LAB_REPORTS
 ]
 
 
@@ -81,7 +86,15 @@ CASES = [
     HeaderCase("quiz-data", GENERATOR_CONFIG.QUIZ_DATA_ASSETS["zh"], immutable=True),
     HeaderCase("compass-tool", GENERATOR_CONFIG.COMPASS_TOOL_ASSET, immutable=True),
     HeaderCase("image", "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp", immutable=True),
-    HeaderCase("luna-redirect", "/luna/", expected_status=301, expected_location="/luna-yoga-music/"),
+    *[
+        HeaderCase(
+            f"retired-commercial-{path.strip('/').replace('/', '-')}",
+            path,
+            expected_status=410,
+            expect_noindex=True,
+        )
+        for path in GENERATOR_CONFIG.COMMERCIAL_RETIRED_PATHS
+    ],
     *[
         HeaderCase(f"language-{lang}-redirect", f"/{lang}/", expected_status=302, expected_location="/")
         for lang in ("en", "ja", "ko", "es")

@@ -79,6 +79,8 @@ class AdSenseSubmissionGateTest(unittest.TestCase):
         self.assertEqual(gate.state_validation_issues(self.state), [])
 
     def test_material_commit_mismatch_is_rejected(self):
+        self.state["externalGates"]["gscFullAccess"]["confirmed"] = True
+        self.state["externalGates"]["productionAuditGreen"]["confirmed"] = True
         production = json.loads(self.production_path.read_text(encoding="utf-8"))
         production["reviewSurfaceCommit"] = "different-commit"
         self.production_path.write_text(json.dumps(production), encoding="utf-8")

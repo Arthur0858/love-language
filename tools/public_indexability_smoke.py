@@ -169,10 +169,21 @@ def noindex_cases(base_url: str) -> list[NoindexCase]:
     generator = load_module("lovetypes_generator_indexability_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     cases: list[NoindexCase] = [
         NoindexCase("missing-404", MISSING_PATH, 404),
-        NoindexCase("resources", "/resources/", 200, expected_canonical_path="/resources/"),
-        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 200, expected_canonical_path="/luna-yoga-music/"),
-        NoindexCase("keepsakes", "/keepsakes/", 200, expected_canonical_path="/keepsakes/"),
+        NoindexCase("resources", "/resources/", 410),
+        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 410),
+        NoindexCase("keepsakes", "/keepsakes/", 410),
+        NoindexCase("luna", "/luna/", 410),
+        NoindexCase("luna-starter", "/go/luna-starter-click/", 410),
     ]
+    cases.extend(
+        NoindexCase(
+            name=f"lab-{report['slug']}",
+            path=f"/lab/{report['slug']}/",
+            expected_status=200,
+            expected_canonical_path=f"/lab/{report['slug']}/",
+        )
+        for report in generator.LAB_REPORTS
+    )
     for slug, _title, _desc, target in generator.LEGACY_ZH_GUIDES:
         cases.append(
             NoindexCase(

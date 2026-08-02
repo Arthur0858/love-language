@@ -31,7 +31,12 @@ const RETIRED_PATHS = new Set([
   "/tools/relationship-repair-after-fight/",
   "/tools/silent-treatment-relationship/",
   "/tools/taken-for-granted-relationship/",
-  "/tools/trust-issues-relationship/"
+  "/tools/trust-issues-relationship/",
+  "/resources/",
+  "/luna-yoga-music/",
+  "/keepsakes/",
+  "/luna/",
+  "/go/luna-starter-click/"
 ]);
 const RETIRED_ASSETS = new Set([
   "/ai-discovery.json",

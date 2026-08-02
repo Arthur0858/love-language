@@ -52,7 +52,6 @@ const routes = [
   { name: 'contact', path: '/contact/' },
   { name: 'privacy', path: '/privacy/' },
   { name: 'terms', path: '/terms/' },
-  { name: 'resources', path: '/resources/' },
 ];
 const noScriptRoutes = [
   '/guides/share-your-result/',
@@ -65,7 +64,12 @@ const noScriptRoutes = [
 
 await mkdir(output, { recursive: true });
 const { chromium } = await loadPlaywright();
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH }
+    : {}),
+});
 const issues = [];
 let pagesChecked = 0;
 let screenshots = 0;
@@ -100,12 +104,50 @@ for (const viewport of viewports) {
       if (route.quiz) await finishQuiz(page);
       if (route.compass) {
         await page.locator('[data-compass-form]').waitFor({ state: 'visible', timeout: 10000 });
+        const guardians = ['W', 'T', 'G', 'S', 'P'];
+        for (const self of guardians) {
+          for (const partner of guardians) {
+            await page.locator('[name="self"]').selectOption(self);
+            await page.locator('[name="partner"]').selectOption(partner);
+            await page.locator('[name="status"]').selectOption('dating');
+            await page.locator('[name="issue"]').selectOption('feeling-unheard');
+            await page.locator('[data-compass-form] button[type="submit"]').click();
+            await page.locator('[data-compass-result]').waitFor({ state: 'visible', timeout: 10000 });
+            const resultText = await page.locator('[data-compass-result]').innerText();
+            if (!resultText.includes('主要錯頻') || !resultText.includes('24 小時內可做的小行動')) {
+              issues.push(`${route.name}-${viewport.name}: incomplete result for ${self}_${partner}`);
+            }
+            if (/(相配率|命定|一定會|不能結婚|\d+\s*%)/.test(resultText)) {
+              issues.push(`${route.name}-${viewport.name}: deterministic verdict for ${self}_${partner}`);
+            }
+          }
+        }
+        await page.locator('[data-compass-retry]').click();
+        const resetState = await page.evaluate(() => ({
+          self: document.querySelector('[name="self"]')?.value || '',
+          partner: document.querySelector('[name="partner"]')?.value || '',
+          resultHidden: document.querySelector('[data-compass-result]')?.hidden === true,
+        }));
+        if (resetState.self || resetState.partner || !resetState.resultHidden) {
+          issues.push(`${route.name}-${viewport.name}: retry did not clear the form and result`);
+        }
         await page.locator('[name="self"]').selectOption('W');
-        await page.locator('[name="partner"]').selectOption('T');
-        await page.locator('[name="status"]').selectOption('dating');
-        await page.locator('[name="issue"]').selectOption('feeling-unheard');
         await page.locator('[data-compass-form] button[type="submit"]').click();
-        await page.locator('[data-compass-result]').waitFor({ state: 'visible', timeout: 10000 });
+        if (await page.locator('[data-compass-result]').isVisible()) {
+          issues.push(`${route.name}-${viewport.name}: incomplete input rendered a result`);
+        }
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        const reloadState = await page.evaluate(() => ({
+          self: document.querySelector('[name="self"]')?.value || '',
+          resultHidden: document.querySelector('[data-compass-result]')?.hidden === true,
+          safetyText: document.querySelector('main')?.innerText || '',
+        }));
+        if (reloadState.self || !reloadState.resultHidden) {
+          issues.push(`${route.name}-${viewport.name}: reload retained unsaved tool state`);
+        }
+        if (!['暴力', '威脅', '控制', '強迫', '安全支援'].every((phrase) => reloadState.safetyText.includes(phrase))) {
+          issues.push(`${route.name}-${viewport.name}: high-risk safety boundary is incomplete`);
+        }
       }
       await page.waitForTimeout(100);
       const state = await page.evaluate((flags) => ({

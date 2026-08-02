@@ -6,7 +6,7 @@
 
 - 網址：https://lovetypes.tw/
 - 主要語言：繁體中文
-- 更新日期：2026-08-01
+- 更新日期：2026-08-02
 - 製作團隊：LoveTypes 內容編輯團隊
 - 編輯方法：https://lovetypes.tw/about/
 
@@ -59,14 +59,7 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 
 ## 產品實測
 
-- 15 題測驗評分與同分處理實測：https://lovetypes.tw/lab/quiz-scoring-test/
-- 相同情境重測的一致性與限制：https://lovetypes.tw/lab/result-consistency-test/
-- 瀏覽器保存、清除與跨裝置限制實測：https://lovetypes.tw/lab/local-storage-privacy-test/
-- 分享卡是否包含私人作答資料實測：https://lovetypes.tw/lab/share-card-privacy-test/
-- 相容性工具避免命定式判斷實測：https://lovetypes.tw/lab/compatibility-safety-test/
-- 7 日修復表手機完成流程實測：https://lovetypes.tw/lab/repair-plan-usability-test/
-- 鍵盤、焦點、對比與減少動態效果實測：https://lovetypes.tw/lab/keyboard-accessibility-test/
-- 慢速網路、圖片失敗與 JavaScript 關閉實測：https://lovetypes.tw/lab/slow-network-performance-test/
+- 產品實測紀錄總覽：https://lovetypes.tw/lab/
 
 ## 機器可讀資料
 

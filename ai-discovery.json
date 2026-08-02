@@ -442,11 +442,11 @@
   },
   "sourceIndexes": {
     "siteIndexTotals": {
-      "pages": 38,
-      "paths": 38,
+      "pages": 30,
+      "paths": 30,
       "languages": 1,
       "groups": {
-        "content": 26,
+        "content": 18,
         "conversion": 2,
         "guardians": 6,
         "home": 1,

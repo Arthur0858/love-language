@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "site": "https://lovetypes.tw/",
-  "lastMaterialChange": "2026-08-01",
+  "lastMaterialChange": "2026-08-02",
   "minimumStableDays": 14,
   "maximumEvidenceAgeDays": 3,
   "reviewSubmitted": false,
@@ -12,9 +12,10 @@
       "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
     },
     "sitemapAccepted": {
-      "confirmed": true,
+      "confirmed": false,
       "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
+      "reason": "The accepted sitemap evidence covers the retired 38-page surface; the new 30-page sitemap must be submitted and accepted after deployment."
     },
     "importantPagesRecrawled": {
       "confirmed": false,
@@ -62,9 +63,10 @@
       "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
     },
     "productionAuditGreen": {
-      "confirmed": true,
+      "confirmed": false,
       "checkedAt": "2026-08-01T13:16:33Z",
-      "evidence": "config/evidence/production-audit-2026-08-01.json"
+      "evidence": "config/evidence/production-audit-2026-08-01.json",
+      "reason": "The prior production audit predates the 2026-08-02 material review-surface deployment."
     }
   }
 }

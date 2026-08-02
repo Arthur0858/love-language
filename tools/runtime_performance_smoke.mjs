@@ -55,7 +55,6 @@ const CASES = [
   { name: 'compass-mobile', path: '/compass/', width: 390, height: 844, isMobile: true },
   { name: 'about-mobile', path: '/about/', width: 390, height: 844, isMobile: true },
   { name: 'privacy-mobile', path: '/privacy/', width: 390, height: 844, isMobile: true },
-  { name: 'resources-noindex-mobile', path: '/resources/', width: 390, height: 844, isMobile: true },
 ];
 
 const BUDGETS = {

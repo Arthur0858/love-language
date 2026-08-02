@@ -35,10 +35,11 @@ PRIVACY_UPDATED = "2026-08-01"
 THEORY_UPDATED = "2026-08-01"
 START_UPDATED = "2026-08-01"
 REPAIR_PLAN_UPDATED = "2026-08-01"
-COMPASS_UPDATED = "2026-08-01"
 GARDEN_MAP_UPDATED = "2026-08-01"
 CORE_EDITORIAL_UPDATED = "2026-08-01"
-MACHINE_READABLE_UPDATED = "2026-08-01"
+ABOUT_UPDATED = "2026-08-02"
+COMPASS_UPDATED = "2026-08-02"
+MACHINE_READABLE_UPDATED = "2026-08-02"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
 QUIZ_DATA_VERSION = "20260801-core"
@@ -54,6 +55,14 @@ REVIEW_INDEX_LANGS = ("zh",)
 CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
+COMMERCIAL_RETIRED_PATHS = (
+    "/resources/",
+    "/luna-yoga-music/",
+    "/keepsakes/",
+    "/luna/",
+    "/go/luna-starter-click/",
+)
+NOINDEX_LAB_PATHS = tuple(f"/lab/{report['slug']}/" for report in LAB_REPORTS)
 NOINDEX_SUPPORT_PATHS = (
     "/feed.xml",
     "/site.webmanifest",
@@ -4822,7 +4831,7 @@ SITE_COPY = {
     "zh": {
         "guardian_use": "{name}是心語庭園裡的一扇門，不是固定身份。你可以用這位守護者說明什麼讓你感到安全、哪一種錯頻最容易刺痛你，以及哪一個小行動能讓關心更容易被你收到。",
         "editorial": "LoveTypes 內容編輯團隊先定義讀者要處理的具體問題，查核公開資料，再實際操作相關工具與表單。初稿會經人工重寫、情境與安全界線檢查，最後記錄更新日期與修訂原因。內容以可觀察行動為主，不把守護者或測驗結果包裝成診斷。",
-        "disclosure": "LoveTypes 會在相關頁面揭露流量分析、聯盟連結或廣告資訊。只有旅人補給頁提供外部購買連結；若你透過聯盟連結購買，本站可能獲得少量佣金，但不影響你的購買價格。免費測驗、指南、守護者與修復工具不需要先購買商品。",
+        "disclosure": "LoveTypes 會在使用相關服務時揭露流量分析、商業合作或廣告資訊。目前公開內容不提供外部購買入口；免費測驗、指南、守護者與修復工具不需要先購買商品。",
         "contact": "若要回報內容修正、隱私問題、合作疑慮或壞頁面，請使用 <a href=\"/contact/#site-repair-report\">聯絡頁修復回報入口</a>。有效回報最好附上頁面網址、裝置、瀏覽器，以及你認為需要重新點亮或修復的句子或段落。",
     },
     "en": {
@@ -4895,7 +4904,7 @@ ABOUT_TRUST_CHARTER = {
         "cards": [
             ("01", "內容會回到真實情境", "每篇指南都從一個具體關係困惑出發，提供示例、可說出口的句子、工作表與不適用的安全界線。", "guides", "閱讀指南"),
             ("02", "測驗不是診斷", "15 道心語只指出此刻最容易被點亮的愛之語入口，不用來貼標籤、要求伴侶照單全收，或取代專業協助。", "theory", "了解理論"),
-            ("03", "補給不鼓勵過度購買", "旅人補給與延伸書卷會標示聯盟揭露，購買只應作為修復輔助；若你正在衝動消費，先使用免費任務。", "", ""),
+            ("03", "免費內容不綁定購買", "目前公開的測驗、指南、守護者與修復工具都能直接使用，不以商品購買作為取得結果或完成練習的條件。", "", ""),
             ("04", "可以要求修正", "若你發現錯字、過時資訊、破圖、無法開啟的連結，或需要合作與隱私聯絡，可以直接回報給庭園維護者。", "contact", "聯絡我們"),
         ],
     },
@@ -5772,9 +5781,8 @@ def sanitize_indexable_body(path: str, body: str) -> str:
     replacements = {
         r'href="/luna-yoga-music/(?:#[^"]*)?"': 'href="/repair-plan/"',
         r'href="/keepsakes/(?:#[^"]*)?"': 'href="/characters/"',
+        r'href="/resources/(?:#[^"]*)?"': 'href="/repair-plan/"',
     }
-    if path != "about":
-        replacements[r'href="/resources/(?:#[^"]*)?"'] = 'href="/repair-plan/"'
     for pattern, replacement in replacements.items():
         body = re.sub(pattern, replacement, body)
     body = body.replace('class="affiliate-disclosure"', 'class="content-note"')
@@ -6455,13 +6463,13 @@ COMPASS_TRAFFIC_LAYER = {
         "hero_kicker": "免費 · 2 分鐘 · 不需要註冊",
         "hero_badges": ["雙人錯頻地圖", "五位守護者", "不收身分資料", "24 小時行動"],
         "visual_title": "先選兩位守護者，再看愛在哪裡被誤讀",
-        "visual_intro": "從短影音、搜尋或伴侶對話進來的人，不需要先讀完整理論。先用羅盤整理一句能說出口的話，再選一個免費練習。",
+        "visual_intro": "不需要先讀完整理論。先選出雙方目前最接近的守護者，把一個具體情境整理成能說出口的話，再決定下一個免費練習。",
         "visual_cta": "直接開始免費羅盤",
         "audience_title": "適合從這三種情境進來",
         "audience": [
             ("剛測完守護者", "想知道自己和對方為什麼一再錯頻。"),
             ("正在吵架後冷卻", "需要一句不責備、但能說清楚需要的話。"),
-            ("想做內容分享", "需要一個比單純測驗結果更有討論感的關係地圖。"),
+            ("想一起整理差異", "需要一張比單純類型標籤更能支持對話的關係地圖。"),
         ],
     },
     "en": {
@@ -10805,7 +10813,6 @@ def compass_page(lang: str) -> None:
 {compass_result_preview_section(lang)}
 {compass_popular_pairings_section(lang)}
 {compass_situation_routes_section(lang)}
-{compass_pair_matrix_section(lang)}
 {compass_use_flow_section(lang)}
 {compass_search_routes_section(lang)}
 <section class="section intro-grid">
@@ -10816,6 +10823,7 @@ def compass_page(lang: str) -> None:
   {f'<p data-compass-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{COMPASS_UPDATED}">內容更新：{COMPASS_UPDATED}</time> · <a href="{lang_url(lang, "about")}#editorial-method">編輯方法</a> · <a href="{lang_url(lang, "lab/compatibility-safety-test")}">工具實測</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">內容修正</a></p>' if lang == 'zh' else ''}
   <h2>{escape(copy["boundary_title"])}</h2>
   <p>{escape(copy["boundary"])}</p>
+  {('<p data-compass-high-risk-boundary>若情境包含暴力、威脅、跟蹤、控制、強迫，或任何一方無法安全拒絕，請停止一般配對練習並優先尋求可信任的人與所在地的專業安全支援。羅盤不能判定關係是否安全，也不能取代緊急、心理、醫療或法律協助。</p>' if lang == 'zh' else '')}
   <p>{escape(t["unofficial_disclosure"])}</p>
 </section>
 {compass_faq_section(lang)}
@@ -14208,7 +14216,21 @@ def lab_report_page(report: dict) -> None:
         "isPartOf": {"@type": "CollectionPage", "@id": f"{DOMAIN}/lab/"},
         "mainEntityOfPage": {"@type": "WebPage", "@id": f"{DOMAIN}/lab/{report['slug']}/"},
     })
-    write(ROOT / "lab" / report["slug"] / "index.html", layout("zh", report["title"] + " | LoveTypes 實測", report["desc"], "lab/" + report["slug"], body, "實測紀錄", "article", report["screenshot"], schema))
+    write(
+        ROOT / "lab" / report["slug"] / "index.html",
+        layout(
+            "zh",
+            report["title"] + " | LoveTypes 實測",
+            report["desc"],
+            "lab/" + report["slug"],
+            body,
+            "實測紀錄",
+            "article",
+            report["screenshot"],
+            schema,
+            robots="noindex, follow",
+        ),
+    )
 
 
 def character_page(lang: str, slug: str, data: dict) -> None:
@@ -15487,7 +15509,7 @@ def simple_page(lang: str, slug: str) -> None:
     if slug == "about":
         about_items = "".join(f"<h2>{escape(heading)}</h2><p>{body_text}</p>" for heading, body_text in ABOUT_SECTIONS[lang])
         body = f"""
-<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line("data-about-editorial-byline", CORE_EDITORIAL_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}</section>
+<section class="page-hero compact"><p class="eyebrow">{escape(section_labels["about_lovetypes"])}</p><h1>{escape(title)}</h1><p>{escape(desc)}</p>{editorial_identity_line("data-about-editorial-byline", ABOUT_UPDATED) if lang == "zh" else ""}{trust_hero_actions(lang, slug)}</section>
 {about_garden_pass(lang)}
 {editorial_method_section(lang)}
 {core_reading_path_section(lang)}
@@ -15498,7 +15520,7 @@ def simple_page(lang: str, slug: str) -> None:
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
   <h2>商業內容如何分開</h2>
-  <p>外部購買與聯盟連結集中在獨立的商業揭露頁，不影響測驗計分、守護者結果或指南內容。<a href="/resources/">查看補給與商業揭露</a>。</p>
+  <p>LoveTypes 可能在未來提供商業合作或延伸商品，屆時會清楚標示價格、外部平台與利益關係。目前公開內容不提供外部購買入口，免費測驗、指南、守護者與修復工具不需要先購買商品。</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
 </section>
 {about_trust_charter(lang)}
@@ -15511,7 +15533,7 @@ def simple_page(lang: str, slug: str) -> None:
             "description": desc,
             "url": abs_url(lang, slug),
             "inLanguage": t["code"],
-            "dateModified": CORE_EDITORIAL_UPDATED if lang == "zh" else UPDATED,
+            "dateModified": ABOUT_UPDATED if lang == "zh" else UPDATED,
             "isPartOf": website_ref(lang),
             **({"author": organization_ref(), "mainEntity": organization_ref()} if lang == "zh" else {}),
             "publisher": organization_ref(),
@@ -15659,7 +15681,7 @@ def write_404_page() -> None:
         return [
             {"key": "home", "href": lang_url(code), "label": labels["start"], "text": not_found["home_text"]},
             {"key": "guardians", "href": lang_url(code, "characters"), "label": not_found["guardians"], "text": not_found["guardians_text"]},
-            {"key": "resources", "href": lang_url(code, "resources"), "label": labels["resources"], "text": not_found["resources_text"]},
+            {"key": "repair", "href": lang_url(code, "repair-plan"), "label": REPAIR_PLAN[code]["title"], "text": REPAIR_PLAN[code]["desc"]},
             {"key": "contact", "href": lang_url(code, "contact"), "label": labels["contact"], "text": not_found["contact_text"]},
         ]
 
@@ -15767,10 +15789,7 @@ def write_llms_txt() -> None:
         title, desc = guide["zh"]
         guide_lines.append(f"- {title}：{desc} {DOMAIN}/guides/{guide['slug']}/")
 
-    lab_lines = [
-        f"- {report['title']}：{DOMAIN}/lab/{report['slug']}/"
-        for report in LAB_REPORTS
-    ]
+    lab_lines = [f"- 產品實測紀錄總覽：{DOMAIN}/lab/"]
     content = f"""# LoveTypes 情感守護者宇宙
 
 > LoveTypes 是繁體中文關係反思網站，將五種愛之語轉譯為五位情感守護者，並提供 15 題測驗、原創指南、免費修復練習與可重現的產品實測紀錄。
@@ -16338,7 +16357,7 @@ def site_index_paths(lang: str | None = None) -> list[str]:
     paths = ["", "start", "garden-map", "compass", "guides", "characters", "theory", "repair-plan", "about", "contact", "privacy", "terms"]
     paths += [f"guides/{guide['slug']}" for guide in GUIDES]
     paths += [f"characters/{slug}" for slug in GUARDIANS]
-    paths += ["lab", *(f"lab/{report['slug']}" for report in LAB_REPORTS)]
+    paths += ["lab"]
     return paths
 
 
@@ -16390,7 +16409,7 @@ def collect_site_index() -> dict:
             {"id": "shorts_to_quiz", "entry": f"{DOMAIN}/start/", "next": [f"{DOMAIN}/#quiz-section", f"{DOMAIN}/characters/", f"{DOMAIN}/guides/"]},
             {"id": "quiz_to_practice", "entry": f"{DOMAIN}/#quiz-section", "next": [f"{DOMAIN}/characters/", f"{DOMAIN}/repair-plan/", f"{DOMAIN}/lab/"]},
             {"id": "editorial_evidence", "entry": f"{DOMAIN}/guides/", "next": [f"{DOMAIN}/lab/", f"{DOMAIN}/about/"]},
-            {"id": "tool_evidence", "entry": f"{DOMAIN}/compass/", "next": [f"{DOMAIN}/lab/compatibility-safety-test/", f"{DOMAIN}/repair-plan/"]},
+            {"id": "tool_evidence", "entry": f"{DOMAIN}/compass/", "next": [f"{DOMAIN}/lab/", f"{DOMAIN}/repair-plan/"]},
             {"id": "trust_boundary", "entry": f"{DOMAIN}/about/", "next": [f"{DOMAIN}/privacy/", f"{DOMAIN}/terms/", f"{DOMAIN}/humans.txt"]},
         ],
         "pages": pages,
@@ -17237,7 +17256,7 @@ def collect_release_info() -> dict:
         "assetVersion": ASSET_VERSION,
         "deploymentTarget": "Cloudflare Pages project lovetypes",
         "branch": "main",
-        "summary": "LoveTypes approval-first Traditional Chinese release with 38 indexable editorial pages, reproducible product tests, trust files, and verification gates.",
+        "summary": "LoveTypes approval-first Traditional Chinese release with 30 indexable pages, eight noindex product-test reports, no deployed commercial routes, trust files, and verification gates.",
         "releaseContents": {
             "indexablePages": site_index["totals"]["pages"],
             "languages": site_index["totals"]["languages"],
@@ -17412,8 +17431,6 @@ def write_redirects() -> None:
         "/.well-known/security.txt /security.txt 200",
         "/go/quiz-started.gif /favicon.ico 200",
         "/go/quiz-completed.gif /favicon.ico 200",
-        f"{LUNA_STARTER_PROXY_PATH} /resources/#luna-products 302",
-        "/luna/ /luna-yoga-music/ 301",
         "/tools/love-compatibility/ /compass/ 301",
         "/images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301",
         "/images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301",
@@ -17425,7 +17442,6 @@ def write_redirects() -> None:
         "/assets/lovetypes/share/vivian-story.webp /assets/lovetypes/share/vivian-story-zh.webp 301",
         "/assets/lovetypes/share/claire-story.webp /assets/lovetypes/share/claire-story-zh.webp 301",
         "/assets/lovetypes/share/dora-story.webp /assets/lovetypes/share/dora-story-zh.webp 301",
-        f"/luna-yoga-music/luna.css {CSS_ASSET} 301",
         "/assets/lovetypes/guides/lovetypes-guide-toolkit.webp /assets/lovetypes/share/guide-toolkit-og.jpg 301",
         "/assets/lovetypes/backgrounds/guardian-garden.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
         "/assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
@@ -17457,6 +17473,7 @@ def write_edge_retirement_worker() -> None:
     retired_paths = [
         *(f"/guides/{slug}/" for slug in retired_guides),
         *(f"/tools/{slug}/" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
+        *COMMERCIAL_RETIRED_PATHS,
     ]
     retired_assets = sorted(RETIRED_PUBLIC_ASSET_PATHS)
     worker = """const RETIRED_PATHS = new Set(%s);
@@ -17509,6 +17526,7 @@ export default {
             "/tools/love-compatibility*",
             *(f"/tools/{slug}*" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
             *(f"/guides/{slug}*" for slug in retired_guides),
+            *(f"{path.rstrip('/')}*" for path in COMMERCIAL_RETIRED_PATHS),
             *retired_assets,
         ],
         "exclude": [],
@@ -17526,7 +17544,7 @@ CORE_LASTMOD = {
     "characters": CORE_EDITORIAL_UPDATED,
     "theory": THEORY_UPDATED,
     "repair-plan": REPAIR_PLAN_UPDATED,
-    "about": CORE_EDITORIAL_UPDATED,
+    "about": ABOUT_UPDATED,
     "contact": CORE_EDITORIAL_UPDATED,
     "privacy": PRIVACY_UPDATED,
     "terms": CORE_EDITORIAL_UPDATED,
@@ -17572,7 +17590,7 @@ def write_support_files() -> None:
     write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")
     noindex_support_headers = "\n\n".join(
         f"{path}\n  ! Cache-Control\n  Cache-Control: public, max-age=0, must-revalidate\n  X-Robots-Tag: noindex, follow"
-        for path in NOINDEX_SUPPORT_PATHS
+        for path in (*NOINDEX_SUPPORT_PATHS, *NOINDEX_LAB_PATHS)
     )
     headers = f"""/*
   Cache-Control: public, max-age=600

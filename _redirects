@@ -1,8 +1,6 @@
 /.well-known/security.txt /security.txt 200
 /go/quiz-started.gif /favicon.ico 200
 /go/quiz-completed.gif /favicon.ico 200
-/go/luna-starter-click/ /resources/#luna-products 302
-/luna/ /luna-yoga-music/ 301
 /tools/love-compatibility/ /compass/ 301
 /images/characters/iris.webp /assets/lovetypes/guardians/iris.webp 301
 /images/characters/noah.webp /assets/lovetypes/guardians/noah.webp 301
@@ -14,7 +12,6 @@
 /assets/lovetypes/share/vivian-story.webp /assets/lovetypes/share/vivian-story-zh.webp 301
 /assets/lovetypes/share/claire-story.webp /assets/lovetypes/share/claire-story-zh.webp 301
 /assets/lovetypes/share/dora-story.webp /assets/lovetypes/share/dora-story-zh.webp 301
-/luna-yoga-music/luna.css /shared-20260801-core.css 301
 /assets/lovetypes/guides/lovetypes-guide-toolkit.webp /assets/lovetypes/share/guide-toolkit-og.jpg 301
 /assets/lovetypes/backgrounds/guardian-garden.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301
 /assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301

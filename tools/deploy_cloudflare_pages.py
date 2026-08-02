@@ -27,7 +27,7 @@ DEFAULT_TOKEN_FILE = Path.home() / ".config" / "lovetypes" / "cloudflare-pages.t
 DEFAULT_VERIFY_PATHS = [
     "/",
     "/characters/iris/",
-    "/resources/",
+    "/lab/",
     "/repair-plan/",
     "/robots.txt",
     "/sitemap.xml",
@@ -107,7 +107,12 @@ def collect_review_html_paths() -> set[str]:
         f"{path}/index.html" if path else "index.html"
         for path in generator.site_index_paths()
     }
-    paths.update({"404.html", "resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"})
+    paths.update(
+        {
+            "404.html",
+            *(f"lab/{report['slug']}/index.html" for report in generator.LAB_REPORTS),
+        }
+    )
     return paths
 
 
@@ -233,6 +238,8 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
+    if rel_path.startswith("luna-yoga-music/"):
+        return True
     if rel_path.endswith(".html") and rel_path not in REVIEW_HTML_PATHS:
         return True
     if rel_path.startswith("compass-data-") and rel_path != "compass-data-zh.js":

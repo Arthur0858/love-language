@@ -158,8 +158,8 @@ def page_issues(route: str, response: Response) -> list[str]:
     main_match = re.search(r"<main\b[^>]*>(.*?)</main>", raw, re.I | re.S)
     main_raw = main_match.group(1) if main_match else ""
     main_visible = visible_text(main_raw)
-    if route != "/about/" and re.search(r'href="/resources/(?:#[^"]*)?"', main_raw):
-        issues.append(f"{route}: resources link outside About")
+    if re.search(r'href="/resources/(?:#[^"]*)?"', main_raw):
+        issues.append(f"{route}: retired resources link exposed")
     if re.search(r'href="/(?:luna-yoga-music|keepsakes)/(?:#[^"]*)?"', main_raw):
         issues.append(f"{route}: noindex commercial route linked from indexed main")
     if route != "/contact/" and "mailto:" in main_raw:
@@ -243,8 +243,8 @@ def main() -> int:
         print(f"public_review_issues=1\n/sitemap.xml: invalid XML: {exc}")
         return 1
     routes = [urlparse(url).path for url in urls]
-    if len(urls) != 38 or len(set(urls)) != 38:
-        issues.append(f"/sitemap.xml: expected 38 unique URLs, got {len(urls)}")
+    if len(urls) != 30 or len(set(urls)) != 30:
+        issues.append(f"/sitemap.xml: expected 30 unique URLs, got {len(urls)}")
     if any(not url.startswith(CANONICAL_BASE + "/") for url in urls):
         issues.append("/sitemap.xml: contains a non-production or non-zh URL")
     if sitemap_lastmods.get(CANONICAL_BASE + "/") != HOME_UPDATED:
@@ -274,8 +274,8 @@ def main() -> int:
     site_index = request("/site-index.json")
     try:
         index = json.loads(site_index.text)
-        if site_index.status != 200 or index.get("totals", {}).get("pages") != 38:
-            issues.append("/site-index.json: expected 38 pages")
+        if site_index.status != 200 or index.get("totals", {}).get("pages") != 30:
+            issues.append("/site-index.json: expected 30 pages")
         if {page.get("lang") for page in index.get("pages", [])} != {"zh"}:
             issues.append("/site-index.json: expected zh-only pages")
         if index.get("updated") != MACHINE_READABLE_UPDATED or index.get("totals", {}).get("languages") != 1:
@@ -335,13 +335,10 @@ def main() -> int:
     except json.JSONDecodeError:
         issues.append("/safety-index.json: invalid JSON")
 
-    for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/"):
+    for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/", "/luna/", "/go/luna-starter-click/"):
         response = request(route)
-        if response.status != 200 or '<meta name="robots" content="noindex, follow"' not in response.text:
-            issues.append(f"{route}: expected 200 with noindex, follow")
-    resources = request("/resources/")
-    if not any(host in resources.text.lower() for host in COMMERCE_HOSTS):
-        issues.append("/resources/: expected disclosed commerce links")
+        if response.status != 410 or "noindex" not in response.headers.get("X-Robots-Tag", "").lower():
+            issues.append(f"{route}: expected 410 with X-Robots-Tag noindex")
 
     for prefix in ("en", "ja", "ko", "es"):
         response = request(f"/{prefix}/", follow=False)

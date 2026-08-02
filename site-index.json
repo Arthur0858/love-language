@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedBy": "tools/generate_multilingual_site.py",
-  "updated": "2026-08-01",
+  "updated": "2026-08-02",
   "production": "https://lovetypes.tw/",
   "languages": [
     {
@@ -13,11 +13,11 @@
   ],
   "description": "LoveTypes 繁體中文公開內容索引與主要閱讀路徑。",
   "totals": {
-    "pages": 38,
-    "paths": 38,
+    "pages": 30,
+    "paths": 30,
     "languages": 1,
     "groups": {
-      "content": 26,
+      "content": 18,
       "conversion": 2,
       "guardians": 6,
       "home": 1,
@@ -55,7 +55,7 @@
       "id": "tool_evidence",
       "entry": "https://lovetypes.tw/compass/",
       "next": [
-        "https://lovetypes.tw/lab/compatibility-safety-test/",
+        "https://lovetypes.tw/lab/",
         "https://lovetypes.tw/repair-plan/"
       ]
     },
@@ -307,70 +307,6 @@
       "hreflang": "zh-TW",
       "path": "/lab/",
       "canonical": "https://lovetypes.tw/lab/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/quiz-scoring-test/",
-      "canonical": "https://lovetypes.tw/lab/quiz-scoring-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/result-consistency-test/",
-      "canonical": "https://lovetypes.tw/lab/result-consistency-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/local-storage-privacy-test/",
-      "canonical": "https://lovetypes.tw/lab/local-storage-privacy-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/share-card-privacy-test/",
-      "canonical": "https://lovetypes.tw/lab/share-card-privacy-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/compatibility-safety-test/",
-      "canonical": "https://lovetypes.tw/lab/compatibility-safety-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/repair-plan-usability-test/",
-      "canonical": "https://lovetypes.tw/lab/repair-plan-usability-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/keyboard-accessibility-test/",
-      "canonical": "https://lovetypes.tw/lab/keyboard-accessibility-test/",
-      "group": "content",
-      "primary": true
-    },
-    {
-      "lang": "zh",
-      "hreflang": "zh-TW",
-      "path": "/lab/slow-network-performance-test/",
-      "canonical": "https://lovetypes.tw/lab/slow-network-performance-test/",
       "group": "content",
       "primary": true
     }

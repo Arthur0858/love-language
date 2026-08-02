@@ -19,7 +19,8 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "index.html",
     "start/index.html",
     "characters/iris/index.html",
-    "resources/index.html",
+    "lab/index.html",
+    "lab/quiz-scoring-test/index.html",
     "repair-plan/index.html",
     "robots.txt",
     "sitemap.xml",
@@ -182,6 +183,9 @@ def main() -> int:
     } | {
         f"/guides/{slug}*"
         for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES
+    } | {
+        f"{path.rstrip('/')}*"
+        for path in generator.COMMERCIAL_RETIRED_PATHS
     } | set(generator.RETIRED_PUBLIC_ASSET_PATHS)
     if routes.get("version") != 1 or set(routes.get("include", [])) != expected_route_includes or routes.get("exclude") != []:
         issues.append("Pages Function route allowlist does not match retired review paths")
@@ -190,6 +194,7 @@ def main() -> int:
     expected_retired_paths = {
         *(f"/tools/{slug}/" for slug in generator.LONG_TAIL_COMPATIBILITY_PAGES),
         *(f"/guides/{slug}/" for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES),
+        *generator.COMMERCIAL_RETIRED_PATHS,
     }
     missing_worker_paths = sorted(path for path in expected_retired_paths if json.dumps(path) not in worker)
     if missing_worker_paths:
@@ -206,7 +211,7 @@ def main() -> int:
     headers = (ROOT / "_headers").read_text(encoding="utf-8")
     missing_noindex_support_headers = sorted(
         path
-        for path in generator.NOINDEX_SUPPORT_PATHS
+        for path in (*generator.NOINDEX_SUPPORT_PATHS, *generator.NOINDEX_LAB_PATHS)
         if not re.search(
             rf"(?m)^{re.escape(path)}\n(?:  .+\n)*  X-Robots-Tag: noindex, follow$",
             headers,

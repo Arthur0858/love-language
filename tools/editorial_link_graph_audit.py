@@ -11,7 +11,7 @@ from urllib.parse import urldefrag, urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_PAGE_COUNT = 38
+EXPECTED_PAGE_COUNT = 30
 MAX_HOME_DEPTH = 3
 HUB_PREFIXES = {
     "/guides/": "/guides/",

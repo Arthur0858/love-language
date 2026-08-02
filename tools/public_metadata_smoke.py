@@ -17,7 +17,7 @@ from PIL import Image
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-EXPECTED_PAGE_COUNT = 38
+EXPECTED_PAGE_COUNT = 30
 EXPECTED_HREFLANGS = {"zh-TW", "x-default"}
 EXPECTED_OG_LOCALES = {"zh_TW"}
 LOCALE_PREFIXES = {"zh-TW": ""}

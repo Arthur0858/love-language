@@ -3,7 +3,7 @@ Site: LoveTypes
 Team: LoveTypes 內容編輯團隊
 Contact: contact@lovetypes.tw
 Production: https://lovetypes.tw/
-Updated: 2026-08-01
+Updated: 2026-08-02
 
 /* SITE */
 Purpose: 繁體中文的五種愛之語反思、守護者測驗、關係溝通指南、免費修復練習與產品實測紀錄。

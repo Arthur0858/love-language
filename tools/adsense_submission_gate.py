@@ -142,7 +142,12 @@ def cross_evidence_issues(state: dict, gates: dict) -> list[str]:
     gsc = read_local_evidence(object_value(gates.get("gscFullAccess")))
     production = read_local_evidence(object_value(gates.get("productionAuditGreen")))
     adsense = read_local_evidence(object_value(gates.get("reviewActionAvailable")))
-    if gsc is not None and production is not None:
+    if (
+        object_value(gates.get("gscFullAccess")).get("confirmed") is True
+        and object_value(gates.get("productionAuditGreen")).get("confirmed") is True
+        and gsc is not None
+        and production is not None
+    ):
         material = object_value(gsc.get("latestMaterialDeployment"))
         deployment = object_value(production.get("cloudflareDeployment"))
         if production.get("reviewSurfaceCommit") != material.get("commit"):
@@ -181,9 +186,9 @@ def evidence_contract_issues(name: str, item: dict) -> list[str]:
         if (
             sitemap.get("accepted") is not True
             or sitemap.get("status") != "success"
-            or sitemap.get("discoveredPages") != 38
+            or sitemap.get("discoveredPages") != 30
         ):
-            issues.append("GSC evidence does not prove a successful 38-page sitemap")
+            issues.append("GSC evidence does not prove a successful 30-page sitemap")
     elif name == "importantPagesRecrawled":
         inspection = object_value(payload.get("urlInspection"))
         external = object_value(payload.get("externalGates"))

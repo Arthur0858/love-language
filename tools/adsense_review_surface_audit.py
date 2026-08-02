@@ -13,6 +13,7 @@ from xml.etree import ElementTree as ET
 
 from editorial_guides import GUIDE_EDITORIAL_CONTENT, GUIDE_TRUST_SECTION_TITLES
 from generate_multilingual_site import (
+    ABOUT_UPDATED,
     GUARDIAN_UPDATED,
     COMPASS_UPDATED,
     CORE_EDITORIAL_UPDATED,
@@ -23,6 +24,8 @@ from generate_multilingual_site import (
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     MACHINE_READABLE_UPDATED,
+    COMMERCIAL_RETIRED_PATHS,
+    NOINDEX_LAB_PATHS,
     NOINDEX_SUPPORT_PATHS,
     RETIRED_PUBLIC_ASSET_PATHS,
     REPAIR_PLAN_UPDATED,
@@ -69,7 +72,7 @@ CORE_EDITORIAL_TRUST = {
     "/characters/": (CORE_EDITORIAL_UPDATED, "data-characters-editorial-byline", "CollectionPage"),
     "/theory/": (THEORY_UPDATED, "data-theory-editorial-byline", "WebPage"),
     "/repair-plan/": (REPAIR_PLAN_UPDATED, "data-repair-editorial-byline", "HowTo"),
-    "/about/": (CORE_EDITORIAL_UPDATED, "data-about-editorial-byline", "AboutPage"),
+    "/about/": (ABOUT_UPDATED, "data-about-editorial-byline", "AboutPage"),
     "/contact/": (CORE_EDITORIAL_UPDATED, "data-contact-editorial-byline", "ContactPage"),
     "/privacy/": (PRIVACY_UPDATED, "data-privacy-editorial-byline", "WebPage"),
     "/terms/": (CORE_EDITORIAL_UPDATED, "data-terms-editorial-byline", "WebPage"),
@@ -129,12 +132,12 @@ def main() -> int:
     guide_routes = {f"/guides/{slug}/" for slug in GUIDE_EDITORIAL_CONTENT}
     guardian_routes = {f"/characters/{slug}/" for slug in ("iris", "noah", "vivian", "claire", "dora")}
     lab_routes = {f"/lab/{report['slug']}/" for report in LAB_REPORTS}
-    expected = EXPECTED_CORE | guide_routes | guardian_routes | lab_routes
+    expected = EXPECTED_CORE | guide_routes | guardian_routes
 
     if routes != expected:
         issues.append(f"site-index routes differ: missing={sorted(expected-routes)} extra={sorted(routes-expected)}")
-    if index.get("totals", {}).get("pages") != 38 or len(routes) != 38:
-        issues.append(f"site-index must contain 38 unique pages, found {len(routes)}")
+    if index.get("totals", {}).get("pages") != 30 or len(routes) != 30:
+        issues.append(f"site-index must contain 30 unique pages, found {len(routes)}")
     if {page["lang"] for page in index["pages"]} != {"zh"}:
         issues.append("site-index must contain only zh pages")
     if index.get("updated") != MACHINE_READABLE_UPDATED:
@@ -160,7 +163,7 @@ def main() -> int:
     if "/funnel-events.json" not in RETIRED_PUBLIC_ASSET_PATHS:
         issues.append("funnel-events.json must be covered by the public 410 retirement worker")
     headers_text = (ROOT / "_headers").read_text(encoding="utf-8")
-    for support_path in NOINDEX_SUPPORT_PATHS:
+    for support_path in (*NOINDEX_SUPPORT_PATHS, *NOINDEX_LAB_PATHS):
         pattern = rf"(?m)^{re.escape(support_path)}\n(?:  .+\n)*  X-Robots-Tag: noindex, follow$"
         if not re.search(pattern, headers_text):
             issues.append(f"public support file lacks noindex header rule: {support_path}")
@@ -174,6 +177,9 @@ def main() -> int:
         issues.append("llms.txt machine-readable update date mismatch")
     if "/funnel-events.json" in llms_text:
         issues.append("llms.txt must not advertise the local funnel catalog")
+    for route in lab_routes:
+        if route in llms_text:
+            issues.append(f"llms.txt must not advertise noindex lab detail: {route}")
     for marker in ("/contact/#urgent-safety-support", "110", "113", "1925"):
         if marker not in llms_text:
             issues.append(f"llms.txt missing public safety marker {marker}")
@@ -217,7 +223,7 @@ def main() -> int:
     }
     expected_urls = {"https://lovetypes.tw" + route for route in expected}
     if sitemap_urls != expected_urls:
-        issues.append(f"sitemap must match the 38-page review surface, found {len(sitemap_urls)} URLs")
+        issues.append(f"sitemap must match the 30-page review surface, found {len(sitemap_urls)} URLs")
     if sitemap_lastmods.get("https://lovetypes.tw/") != HOME_UPDATED:
         issues.append("homepage sitemap lastmod mismatch")
     guardian_h2_owners: dict[str, str] = {}
@@ -457,6 +463,10 @@ def main() -> int:
         report_cjk = len(re.findall(r"[\u3400-\u9fff]", report_text))
         if not 1200 <= report_cjk <= 1800:
             issues.append(f"lab main CJK count outside 1200-1800: {slug}={report_cjk}")
+        if '<meta name="robots" content="noindex, follow"' not in raw:
+            issues.append(f"lab detail must be noindex, follow: {slug}")
+        if f"https://lovetypes.tw/lab/{slug}/" in sitemap_urls:
+            issues.append(f"lab detail leaked into sitemap: {slug}")
         for marker in ("data-lab-environment", "data-lab-fixture", "data-lab-steps", "data-lab-results", "data-lab-raw-results", "data-lab-failure", "data-lab-fix", "data-lab-limitations"):
             if marker not in raw:
                 issues.append(f"lab report missing {marker}: {slug}")
@@ -550,8 +560,8 @@ def main() -> int:
 
     about_main = main_text_markup(page_file("/about/").read_text(encoding="utf-8"))
     about_resource_links = len(re.findall(r'href="/resources/(?:#[^"]*)?"', about_main))
-    if about_resource_links != 1:
-        issues.append(f"/about/ must expose exactly one resources disclosure link: {about_resource_links}")
+    if about_resource_links:
+        issues.append(f"/about/ must not expose a retired resources link: {about_resource_links}")
 
     for route, (updated, marker, expected_type) in CORE_EDITORIAL_TRUST.items():
         raw = page_file(route).read_text(encoding="utf-8")
@@ -584,8 +594,13 @@ def main() -> int:
 
     compass_raw = page_file("/compass/").read_text(encoding="utf-8")
     compass_cjk = len(re.findall(r"[\u3400-\u9fff]", main_text(compass_raw)))
-    if not 2800 <= compass_cjk <= 3600:
-        issues.append(f"compass main CJK count outside 2800-3600: {compass_cjk}")
+    if not 1600 <= compass_cjk <= 2800:
+        issues.append(f"compass main CJK count outside 1600-2800: {compass_cjk}")
+    if "data-compass-pair-matrix" in compass_raw or "完整 25 組守護者配對入口" in compass_raw:
+        issues.append("compass static 25-pair matrix must not be published")
+    for phrase in ("從搜尋、短影音", "從短影音、搜尋", "搜尋、Shorts"):
+        if phrase in compass_raw:
+            issues.append(f"compass contains producer-facing acquisition copy: {phrase}")
     for marker in ("data-compass-editorial-byline", "編輯方法", "工具實測", "內容修正", "羅盤只整理輸入，不替關係評分"):
         if marker not in compass_raw:
             issues.append(f"compass missing {marker}")
@@ -659,7 +674,10 @@ def main() -> int:
     expected_manifest_html = {
         (route.strip("/") + "/index.html") if route != "/" else "index.html"
         for route in expected
-    } | {"404.html", "resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"}
+    } | {
+        "404.html",
+        *(f"lab/{report['slug']}/index.html" for report in LAB_REPORTS),
+    }
     if manifest_html != expected_manifest_html:
         issues.append(
             f"deploy HTML allowlist drift: missing={sorted(expected_manifest_html-manifest_html)} "
@@ -685,6 +703,9 @@ def main() -> int:
             issues.append(f"legacy zh guide output still exists: {legacy.relative_to(ROOT)}")
 
     redirects = (ROOT / "_redirects").read_text(encoding="utf-8")
+    for commercial_path in COMMERCIAL_RETIRED_PATHS:
+        if commercial_path in redirects:
+            issues.append(f"retired commercial redirect remains public: {commercial_path}")
     for cfg_prefix in ("", "en", "ja", "ko", "es"):
         prefix = f"/{cfg_prefix}" if cfg_prefix else ""
         for slug in LONG_TAIL_COMPATIBILITY_PAGES:

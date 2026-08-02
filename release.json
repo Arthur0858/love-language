@@ -6,9 +6,9 @@
   "assetVersion": "20260613-funnel-kpi-map",
   "deploymentTarget": "Cloudflare Pages project lovetypes",
   "branch": "main",
-  "summary": "LoveTypes approval-first Traditional Chinese release with 38 indexable editorial pages, reproducible product tests, trust files, and verification gates.",
+  "summary": "LoveTypes approval-first Traditional Chinese release with 30 indexable pages, eight noindex product-test reports, no deployed commercial routes, trust files, and verification gates.",
   "releaseContents": {
-    "indexablePages": 38,
+    "indexablePages": 30,
     "languages": 1,
     "guardians": 5,
     "commerceItems": 20,

@@ -43,9 +43,9 @@ const TAB_CASES = [
   { name: 'home-mobile', path: '/', width: 390, height: 844 },
   { name: 'garden-map-mobile', path: '/garden-map/', width: 390, height: 844 },
   { name: 'characters-mobile', path: '/characters/', width: 390, height: 844 },
-  { name: 'resources-mobile', path: '/resources/', width: 390, height: 844 },
+  { name: 'compass-mobile', path: '/compass/', width: 390, height: 844 },
   { name: 'repair-plan-mobile', path: '/repair-plan/', width: 390, height: 844 },
-  { name: 'luna-mobile', path: '/luna-yoga-music/', width: 390, height: 844 },
+  { name: 'lab-mobile', path: '/lab/', width: 390, height: 844 },
   { name: 'contact-mobile', path: '/contact/', width: 390, height: 844 },
 ];
 

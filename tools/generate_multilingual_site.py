@@ -10820,7 +10820,7 @@ def compass_page(lang: str) -> None:
   <div class="card-grid compact">{cards}</div>
 </section>
 <section class="section note-section">
-  {f'<p data-compass-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{COMPASS_UPDATED}">內容更新：{COMPASS_UPDATED}</time> · <a href="{lang_url(lang, "about")}#editorial-method">編輯方法</a> · <a href="{lang_url(lang, "lab/compatibility-safety-test")}">工具實測</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">內容修正</a></p>' if lang == 'zh' else ''}
+  {f'<p data-compass-editorial-byline><strong>LoveTypes 內容編輯團隊</strong> · <time datetime="{COMPASS_UPDATED}">內容更新：{COMPASS_UPDATED}</time> · <a href="{lang_url(lang, "about")}#editorial-method">編輯方法</a> · <a href="{lang_url(lang, "lab")}">工具實測</a> · <a href="{lang_url(lang, "contact")}#site-repair-report">內容修正</a></p>' if lang == 'zh' else ''}
   <h2>{escape(copy["boundary_title"])}</h2>
   <p>{escape(copy["boundary"])}</p>
   {('<p data-compass-high-risk-boundary>若情境包含暴力、威脅、跟蹤、控制、強迫，或任何一方無法安全拒絕，請停止一般配對練習並優先尋求可信任的人與所在地的專業安全支援。羅盤不能判定關係是否安全，也不能取代緊急、心理、醫療或法律協助。</p>' if lang == 'zh' else '')}
@@ -13655,7 +13655,7 @@ def start_method_section(lang: str) -> str:
   <p>適合的用法是選一個最近場景，把感受與需要翻成能協商的小請求，再觀察對方是否收得到。不要用結果要求伴侶證明愛、判斷相配率、替他人作答，或取代心理、醫療與法律評估。若關係包含暴力、控制、跟蹤、強迫或拒絕後的報復，請先尋求可信任的人與當地正式支援，不進行一般伴侶修復練習。</p>
   <h2>查看我們如何核對工具</h2>
   <p>產品實測公開固定答案、同分處理、瀏覽器保存、分享範圍與失敗案例。測試只能證明網站在記錄環境中的程式行為，不能證明心理效度或使用成效。</p>
-  <p><a class="secondary-btn" href="/lab/quiz-scoring-test/">閱讀評分實測</a> <a class="secondary-btn" href="/lab/local-storage-privacy-test/">閱讀本機保存實測</a></p>
+  <p><a class="secondary-btn" href="/lab/">閱讀產品實測總覽</a></p>
 </section>
 """
 
@@ -14160,7 +14160,7 @@ def lab_index_page() -> None:
         "dateModified": LAB_INDEX_UPDATED,
         "author": organization_ref(),
         "publisher": organization_ref(),
-        "hasPart": [{"@type": "Article", "name": report["title"], "url": f"{DOMAIN}/lab/{report['slug']}/"} for report in LAB_REPORTS],
+        "hasPart": [{"@type": "Article", "name": report["title"]} for report in LAB_REPORTS],
     })
     write(ROOT / "lab" / "index.html", layout("zh", "LoveTypes 產品實測紀錄", lab_description, "lab", body, "實測紀錄", "website", "/assets/lovetypes/share/guide-toolkit-og.jpg", schema))
 
@@ -14666,7 +14666,7 @@ def repair_plan_review_page() -> None:
 </article>
 """)
     body = f"""
-<section class="page-hero compact repair-plan-hero"><p class="eyebrow">{escape(plan["eyebrow"])}</p><h1>{escape(plan["title"])}</h1><p>{escape(plan["desc"])}</p><div class="hero-actions"><a class="primary-btn" href="#repair-worksheet" data-funnel-event="repair_hero_worksheet">開始填寫</a><a class="secondary-btn" href="/start/#quiz-section" data-funnel-event="repair_hero_quiz">先完成測驗</a><a class="secondary-btn" href="/lab/repair-plan-usability-test/" data-funnel-event="repair_hero_lab">查看手機實測</a></div></section>
+<section class="page-hero compact repair-plan-hero"><p class="eyebrow">{escape(plan["eyebrow"])}</p><h1>{escape(plan["title"])}</h1><p>{escape(plan["desc"])}</p><div class="hero-actions"><a class="primary-btn" href="#repair-worksheet" data-funnel-event="repair_hero_worksheet">開始填寫</a><a class="secondary-btn" href="/start/#quiz-section" data-funnel-event="repair_hero_quiz">先完成測驗</a><a class="secondary-btn" href="/lab/" data-funnel-event="repair_hero_lab">查看產品實測</a></div></section>
 {mobile_page_jump(lang, "repair")}
 <section class="section repair-result-resume" data-repair-saved hidden aria-live="polite"></section>
 <section class="section repair-asset-section supply-panel-section" id="repair-card-pack"><div class="section-head"><div><p class="eyebrow">FREE PRACTICE TOOLS</p><h2>四個免費練習入口</h2></div></div><p class="section-intro">不用註冊或留下聯絡資料；先用站內工具把一個真實場景整理清楚。</p><div class="supply-panel-grid repair-asset-grid">{practice_markup}</div></section>

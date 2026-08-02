@@ -63,10 +63,9 @@
       "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
     },
     "productionAuditGreen": {
-      "confirmed": false,
-      "checkedAt": "2026-08-01T13:16:33Z",
-      "evidence": "config/evidence/production-audit-2026-08-01.json",
-      "reason": "The prior production audit predates the 2026-08-02 material review-surface deployment."
+      "confirmed": true,
+      "checkedAt": "2026-08-02T06:41:55Z",
+      "evidence": "config/evidence/production-audit-2026-08-02.json"
     }
   }
 }

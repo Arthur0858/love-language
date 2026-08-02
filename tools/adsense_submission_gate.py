@@ -143,7 +143,8 @@ def cross_evidence_issues(state: dict, gates: dict) -> list[str]:
     production = read_local_evidence(object_value(gates.get("productionAuditGreen")))
     adsense = read_local_evidence(object_value(gates.get("reviewActionAvailable")))
     if (
-        object_value(gates.get("gscFullAccess")).get("confirmed") is True
+        object_value(gates.get("sitemapAccepted")).get("confirmed") is True
+        and object_value(gates.get("importantPagesRecrawled")).get("confirmed") is True
         and object_value(gates.get("productionAuditGreen")).get("confirmed") is True
         and gsc is not None
         and production is not None

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-02T06:41:55Z",
+  "site": "https://lovetypes.tw/",
+  "reviewSurfaceCommit": "c54269ca69e8695e77207c817d315b62b01f6067",
+  "auditToolingCommit": "816acaab7fb6a12cd65047fdc203a6316b1abd69",
+  "publicSurfaceUnchangedThroughAuditToolingCommit": true,
+  "cloudflareDeployment": {
+    "id": "d048a11d-7c55-4dee-94ff-def6066efdb4",
+    "preview": "https://d048a11d.lovetypes.pages.dev"
+  },
+  "productionChecks": {
+    "sitemapPages": 30,
+    "deploymentHtml": 39,
+    "deploymentFiles": 112,
+    "noindexLabReports": 8,
+    "commercialGoneRoutes": 5,
+    "retiredRoutes": 33,
+    "retiredAssets": 31,
+    "crawlerParityChecks": 60,
+    "headerCases": 67,
+    "internalLinksSeen": 1036,
+    "schemaUrlValues": 319,
+    "visualPages": 72,
+    "visualScreenshots": 72,
+    "noScriptPages": 5,
+    "keyboardCases": 10,
+    "issues": 0
+  },
+  "runtimePerformance": {
+    "evidence": "output/adsense-final-runtime-performance.json",
+    "methodology": "Synthetic Chromium navigation, not field Core Web Vitals",
+    "pagesChecked": 10,
+    "worstLcpMs": 2584,
+    "worstCls": 0,
+    "maxTransferBytes": 352476,
+    "failedRequests": 0,
+    "failedResponses": 0,
+    "brokenImages": 0,
+    "issues": 0
+  },
+  "commands": [
+    "python3 tools/predeploy_check.py --site-only",
+    "python3 tools/public_adsense_review_smoke.py",
+    "python3 tools/public_indexability_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_headers_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_internal_link_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/public_schema_url_smoke.py --base-url https://lovetypes.tw",
+    "python3 tools/predeploy_check.py --visual-only --base-url https://lovetypes.tw",
+    "BASE_URL=https://lovetypes.tw node tools/keyboard_navigation_smoke.mjs"
+  ],
+  "result": "pass"
+}

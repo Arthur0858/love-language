@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-02T07:03:49Z",
+  "timeZone": "Asia/Taipei",
+  "site": "https://lovetypes.tw/",
+  "source": "Authenticated Google Search Console UI readback in the owner's Chrome session",
+  "property": {
+    "id": "sc-domain:lovetypes.tw",
+    "access": "verified_owner",
+    "confirmed": true
+  },
+  "sitemap": {
+    "url": "https://lovetypes.tw/sitemap.xml",
+    "status": "success",
+    "submittedOn": "2026-08-02",
+    "lastReadOn": "2026-08-02",
+    "discoveredPages": 30,
+    "discoveredVideos": 0,
+    "accepted": true,
+    "screenshot": "output/gsc-sitemap-submitted-2026-08-02.png"
+  },
+  "latestMaterialDeployment": {
+    "commit": "c54269ca69e8695e77207c817d315b62b01f6067",
+    "commitCreatedAt": "2026-08-02T14:33:10+08:00",
+    "cloudflareDeployment": "d048a11d-7c55-4dee-94ff-def6066efdb4",
+    "productionVerifiedAt": "2026-08-02T06:41:55Z",
+    "evidence": "config/evidence/production-audit-2026-08-02.json"
+  },
+  "urlInspection": {
+    "priorityRequestsAccepted": 8,
+    "postMaterialDeploymentRecrawledPages": 0,
+    "requestEvidence": "output/gsc-index-request-final-2026-08-02.png",
+    "requestedUrls": [
+      "https://lovetypes.tw/",
+      "https://lovetypes.tw/start/",
+      "https://lovetypes.tw/guides/",
+      "https://lovetypes.tw/compass/",
+      "https://lovetypes.tw/lab/",
+      "https://lovetypes.tw/about/",
+      "https://lovetypes.tw/guides/physical-touch-consent-safety/",
+      "https://lovetypes.tw/guides/repair-after-conflict/"
+    ]
+  },
+  "indexReport": {
+    "currentReviewSurfaceConfirmed": false,
+    "interpretation": "No post-deployment report yet proves that retired multilingual, commercial, and tool URLs have left Google's index."
+  },
+  "searchPerformance": {
+    "sevenDayWindow": {
+      "postMaterialDeploymentEditorialPagesWithImpressions": 0
+    }
+  },
+  "manualActions": {
+    "observedAt": "2026-08-01T15:56:42Z",
+    "status": "clear",
+    "issuesDetected": false
+  },
+  "securityIssues": {
+    "observedAt": "2026-08-01T15:56:42Z",
+    "status": "clear",
+    "issuesDetected": false
+  },
+  "externalGates": {
+    "importantPagesRecrawledAfterMaterialDeployment": false,
+    "legacyUrlsLeavingIndex": false,
+    "gscPagesWithPostDeploymentImpressions": false
+  }
+}

@@ -8,26 +8,25 @@
   "externalGates": {
     "gscFullAccess": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+      "checkedAt": "2026-08-02T07:03:49Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
     },
     "sitemapAccepted": {
-      "confirmed": false,
-      "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
-      "reason": "The accepted sitemap evidence covers the retired 38-page surface; the new 30-page sitemap must be submitted and accepted after deployment."
+      "confirmed": true,
+      "checkedAt": "2026-08-02T07:03:49Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
     },
     "importantPagesRecrawled": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
-      "reason": "All 10 inspected crawl timestamps precede the 2026-08-01 21:14 Asia/Taipei material deployment."
+      "checkedAt": "2026-08-02T07:03:49Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
+      "reason": "Eight priority indexing requests were accepted, but a request does not prove that Google has recrawled the deployed pages."
     },
     "legacyUrlsLeavingIndex": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
-      "reason": "The index report was last updated on 2026-07-24 and recent performance still includes retired multilingual and tool URLs."
+      "checkedAt": "2026-08-02T07:03:49Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
+      "reason": "The available index report still predates the 2026-08-02 material deployment and cannot prove legacy URL exit."
     },
     "adsTxtRecognizedByAdsense": {
       "confirmed": false,
@@ -41,21 +40,21 @@
     },
     "gscPagesWithImpressions": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T11:29:09Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json",
+      "checkedAt": "2026-08-02T07:03:49Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
       "value": 0,
       "minimum": 5,
-      "reason": "The latest available seven-day window ends before the material deployment; three current editorial URLs had historical impressions, but zero are proven after deployment."
+      "reason": "No editorial-page impressions are yet proven after the 2026-08-02 material deployment."
     },
     "gscManualActionsClear": {
       "confirmed": true,
       "checkedAt": "2026-08-01T15:56:42Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
     },
     "gscSecurityIssuesClear": {
       "confirmed": true,
       "checkedAt": "2026-08-01T15:56:42Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-01.json"
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
     },
     "adsensePolicyCenterClear": {
       "confirmed": true,

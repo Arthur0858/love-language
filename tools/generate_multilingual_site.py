@@ -16992,6 +16992,23 @@ def collect_promotion_kit() -> dict:
     calendar_path = base / "publishing-calendar.csv"
     tracker_path = base / "kpi-tracker.csv"
     scripts_path = base / "shorts-scripts.zh-TW.json"
+    source_paths = (calendar_path, tracker_path, scripts_path)
+    source_exists = tuple(path.is_file() for path in source_paths)
+    if not any(source_exists):
+        manifest_path = ROOT / "promotion-kit.json"
+        if not manifest_path.is_file():
+            raise FileNotFoundError(
+                "promotion sources are absent and tracked promotion-kit.json is missing"
+            )
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(manifest.get("publishingTasks"), list) or not isinstance(manifest.get("publishingCalendar"), list):
+            raise ValueError("tracked promotion-kit.json has no usable publishing manifest")
+        if len(manifest["publishingTasks"]) != len(manifest["publishingCalendar"]):
+            raise ValueError("tracked promotion-kit.json task/calendar counts differ")
+        return manifest
+    if not all(source_exists):
+        missing = ", ".join(str(path.relative_to(ROOT)) for path, exists in zip(source_paths, source_exists) if not exists)
+        raise FileNotFoundError(f"promotion source set is incomplete; missing: {missing}")
     campaigns = []
     with calendar_path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):

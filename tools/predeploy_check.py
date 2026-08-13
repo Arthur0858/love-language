@@ -270,6 +270,11 @@ def main() -> int:
         help="Run only the AdSense review-surface visual suite, starting a temporary local server unless --base-url is set.",
     )
     parser.add_argument(
+        "--playwright-module-path",
+        default=os.environ.get("PLAYWRIGHT_MODULE_PATH", ""),
+        help="Optional absolute path to the approved Playwright ES module used by the browser smoke.",
+    )
+    parser.add_argument(
         "--site-only",
         action="store_true",
         help="Run public-site checks without date-sensitive promotion operations checks.",
@@ -387,7 +392,17 @@ def main() -> int:
         run_step("promotion lead form importability audit", [sys.executable, "tools/promotion_lead_form_importability_audit.py"])
         run_step("promotion lead form health report", [sys.executable, "tools/promotion_lead_form_health_report.py", "--check"])
         run_step("promotion lead mailto importability audit", [sys.executable, "tools/promotion_lead_mailto_importability_audit.py", "--check"])
-        run_step("lead intake browser smoke", [find_node(), "tools/lead_intake_browser_smoke.mjs"])
+        browser_env = os.environ.copy()
+        if args.playwright_module_path:
+            module_path = Path(args.playwright_module_path).expanduser()
+            if not module_path.is_absolute() or not module_path.is_file():
+                raise RuntimeError(f"Playwright module path must be an existing absolute file: {module_path}")
+            browser_env["PLAYWRIGHT_MODULE_PATH"] = str(module_path)
+        run_step(
+            "lead intake browser smoke",
+            [find_node(), "tools/lead_intake_browser_smoke.mjs"],
+            env=browser_env,
+        )
         run_step("promotion lead text import", [sys.executable, "tools/promotion_lead_text_import.py", "check"])
         run_step("promotion lead writeback", [sys.executable, "tools/promotion_lead_writeback.py", "check"])
         run_step("promotion lead data minimization audit", [sys.executable, "tools/promotion_lead_data_minimization_audit.py"])

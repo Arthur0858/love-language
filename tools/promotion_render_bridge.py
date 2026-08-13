@@ -69,6 +69,21 @@ def schedule_status() -> str:
     return "unknown"
 
 
+def schedule_requires_pause() -> bool:
+    status = schedule_status()
+    if status == "PAUSED":
+        return False
+    if status != "ACTIVE" or not SCHEDULES.exists():
+        return True
+    text = SCHEDULES.read_text(encoding="utf-8")
+    marker = 'id = "lovetypes-nightly-shorts-render"'
+    if marker not in text:
+        return True
+    block = text.split(marker, 1)[1].split("[[schedules]]", 1)[0]
+    read_only_command = 'command = ["python3", "scripts/check_lovetypes_offload_health.py"]'
+    return read_only_command not in block
+
+
 def first_ready_rows(packet: dict) -> list[dict]:
     if not packet.get("readyToPublish"):
         return []
@@ -476,7 +491,7 @@ def build_bridge(output_dir: Path, write_scripts: bool, include_render_preflight
             "existingJobQueueLocation": job_queue_location(job_id),
         })
     issues: list[str] = []
-    if schedule_status() != "PAUSED":
+    if schedule_requires_pause():
         issues.append("lovetypes-nightly-shorts-render schedule is not PAUSED")
     no_ready_unpublished_rows = not rows
     for item in bridge_rows:

@@ -32,6 +32,7 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 ## 核心內容
 
 - 15 題測驗：https://lovetypes.tw/start/
+- 心語庭園地圖：https://lovetypes.tw/garden-map/
 - 關係溝通羅盤：https://lovetypes.tw/compass/
 - 深度指南：https://lovetypes.tw/guides/
 - 五位守護者：https://lovetypes.tw/characters/

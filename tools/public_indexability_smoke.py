@@ -169,9 +169,9 @@ def noindex_cases(base_url: str) -> list[NoindexCase]:
     generator = load_module("lovetypes_generator_indexability_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     cases: list[NoindexCase] = [
         NoindexCase("missing-404", MISSING_PATH, 404),
-        NoindexCase("resources", "/resources/", 410),
-        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 410),
-        NoindexCase("keepsakes", "/keepsakes/", 410),
+        NoindexCase("resources", "/resources/", 200, "/resources/"),
+        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 200, "/luna-yoga-music/"),
+        NoindexCase("keepsakes", "/keepsakes/", 200, "/keepsakes/"),
         NoindexCase("luna", "/luna/", 410),
         NoindexCase("luna-starter", "/go/luna-starter-click/", 410),
     ]

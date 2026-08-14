@@ -116,6 +116,9 @@ def collect_review_html_paths() -> set[str]:
     paths.update(
         {
             "404.html",
+            "resources/index.html",
+            "keepsakes/index.html",
+            "luna-yoga-music/index.html",
             *(f"lab/{report['slug']}/index.html" for report in generator.LAB_REPORTS),
         }
     )

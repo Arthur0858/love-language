@@ -1967,7 +1967,16 @@ def validate_public_index_url(
                 targets_checked += 1
             return issues, urls_checked, targets_checked, fragments_checked
         if canonical_url not in sitemap_urls:
-            issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
+            if check_url not in response_cache:
+                response_cache[check_url] = request_url(check_url)
+            response = response_cache[check_url]
+            parser = HeadParser()
+            parser.feed(response.text)
+            robots = {token.strip().lower() for token in parser.robots.split(",") if token.strip()}
+            if response.status == 200 and "noindex" in robots:
+                targets_checked += 1
+            else:
+                issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
         else:
             targets_checked += 1
         return issues, urls_checked, targets_checked, fragments_checked

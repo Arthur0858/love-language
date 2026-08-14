@@ -33,6 +33,12 @@ BASE_REQUIRED_MANIFEST_FILES = {
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",
+    "ai-discovery.json",
+    "commerce-catalog.json",
+    "promotion-kit.json",
+    "release.json",
+    "search-indexing.json",
+    "site-health.json",
 }
 REQUIRED_SPECIAL_FILES = {"_headers", "_redirects", "_routes.json", "_worker.js"}
 FORBIDDEN_PREFIXES = {

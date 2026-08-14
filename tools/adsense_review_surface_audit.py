@@ -151,6 +151,8 @@ def main() -> int:
         "robots.txt", "sitemap.xml", "feed.xml", "site.webmanifest", "llms.txt",
         "humans.txt", "security.txt", "ads.txt", "site-index.json",
         "guardian-profiles.json", "safety-index.json",
+        "ai-discovery.json", "commerce-catalog.json", "promotion-kit.json",
+        "release.json", "search-indexing.json", "site-health.json",
     }
     if deploy.PUBLIC_SUPPORT_FILES != expected_public_support:
         issues.append(

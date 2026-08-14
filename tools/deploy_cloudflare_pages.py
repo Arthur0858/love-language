@@ -51,6 +51,12 @@ PUBLIC_SUPPORT_FILES = {
     "site-index.json",
     "guardian-profiles.json",
     "safety-index.json",
+    "ai-discovery.json",
+    "commerce-catalog.json",
+    "promotion-kit.json",
+    "release.json",
+    "search-indexing.json",
+    "site-health.json",
 }
 MAX_ASSET_SIZE = 25 * 1024 * 1024
 MAX_BUCKET_SIZE = 40 * 1024 * 1024
@@ -238,7 +244,7 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
-    if rel_path.startswith("luna-yoga-music/"):
+    if rel_path == "luna-yoga-music/images/icon.webp":
         return True
     if rel_path.endswith(".html") and rel_path not in REVIEW_HTML_PATHS:
         return True

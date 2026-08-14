@@ -341,7 +341,12 @@ def main() -> int:
 
     for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/", "/luna/", "/go/luna-starter-click/"):
         response = request(route)
-        if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
+        if route in {"/resources/", "/luna-yoga-music/", "/keepsakes/"}:
+            if response.status != 200:
+                issues.append(f"{route}: restored public route expected 200, got {response.status}")
+            if "noindex" not in str(page_signature(response)["robots"]):
+                issues.append(f"{route}: restored public route must remain noindex")
+        elif response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
             issues.append(f"{route}: expected 410 with X-Robots-Tag noindex")
 
     for prefix in ("en", "ja", "ko", "es"):
@@ -369,7 +374,17 @@ def main() -> int:
         for future in as_completed(futures):
             path = futures[future]
             response = future.result()
-            if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
+            if path in {
+                "/ai-discovery.json",
+                "/commerce-catalog.json",
+                "/promotion-kit.json",
+                "/release.json",
+                "/search-indexing.json",
+                "/site-health.json",
+            }:
+                if response.status != 200:
+                    issues.append(f"{path}: restored public asset expected 200, got {response.status}")
+            elif response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
                 issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, got {response.status}")
 
     for path in (CSS_ASSET, INTERACTIONS_ASSET, QUIZ_DATA_ASSETS["zh"], COMPASS_TOOL_ASSET):

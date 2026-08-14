@@ -32,15 +32,10 @@ const RETIRED_PATHS = new Set([
   "/tools/silent-treatment-relationship/",
   "/tools/taken-for-granted-relationship/",
   "/tools/trust-issues-relationship/",
-  "/resources/",
-  "/luna-yoga-music/",
-  "/keepsakes/",
   "/luna/",
   "/go/luna-starter-click/"
 ]);
 const RETIRED_ASSETS = new Set([
-  "/ai-discovery.json",
-  "/commerce-catalog.json",
   "/compass-data-en.js",
   "/compass-data-es.js",
   "/compass-data-ja.js",
@@ -50,7 +45,6 @@ const RETIRED_ASSETS = new Set([
   "/compass-tool.js",
   "/deferred-external-20260613-funnel-kpi-map.js",
   "/funnel-events.json",
-  "/promotion-kit.json",
   "/quiz-data-en-20260707-conversion-bridge.js",
   "/quiz-data-en-20260801-core.js",
   "/quiz-data-en-20260801-review-surface.js",
@@ -65,10 +59,7 @@ const RETIRED_ASSETS = new Set([
   "/quiz-data-ko-20260801-review-surface.js",
   "/quiz-data-zh-20260707-conversion-bridge.js",
   "/quiz-data-zh-20260801-review-surface.js",
-  "/release.json",
-  "/search-indexing.json",
   "/shared-20260613-funnel-kpi-map.css",
-  "/site-health.json",
   "/site-interactions-20260718-quiz-metrics.js"
 ]);
 

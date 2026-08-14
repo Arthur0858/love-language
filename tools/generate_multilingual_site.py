@@ -56,9 +56,6 @@ CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 COMMERCIAL_RETIRED_PATHS = (
-    "/resources/",
-    "/luna-yoga-music/",
-    "/keepsakes/",
     "/luna/",
     "/go/luna-starter-click/",
 )
@@ -76,12 +73,6 @@ NOINDEX_SUPPORT_PATHS = (
     "/safety-index.json",
 )
 RETIRED_PUBLIC_ASSET_PATHS = (
-    "/ai-discovery.json",
-    "/commerce-catalog.json",
-    "/promotion-kit.json",
-    "/release.json",
-    "/search-indexing.json",
-    "/site-health.json",
     "/funnel-events.json",
     "/compass-tool-20260707.js",
     "/compass-tool.js",

@@ -678,6 +678,9 @@ def main() -> int:
         for route in expected
     } | {
         "404.html",
+        "resources/index.html",
+        "keepsakes/index.html",
+        "luna-yoga-music/index.html",
         *(f"lab/{report['slug']}/index.html" for report in LAB_REPORTS),
     }
     if manifest_html != expected_manifest_html:

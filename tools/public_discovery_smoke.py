@@ -2050,15 +2050,14 @@ def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int
             targets_checked += targets
             fragments_checked += fragments
 
+    # These are public conversion surfaces, intentionally noindex and absent
+    # from sitemap.xml; indexable discovery core routes are checked here.
     core_routes = {
         f"{DEFAULT_BASE_URL}/",
         f"{DEFAULT_BASE_URL}/start/",
         f"{DEFAULT_BASE_URL}/garden-map/",
         f"{DEFAULT_BASE_URL}/characters/",
-        f"{DEFAULT_BASE_URL}/resources/",
         f"{DEFAULT_BASE_URL}/repair-plan/",
-        f"{DEFAULT_BASE_URL}/keepsakes/",
-        f"{DEFAULT_BASE_URL}/luna-yoga-music/",
         f"{DEFAULT_BASE_URL}/contact/",
     }
     core_routes_checked = 0

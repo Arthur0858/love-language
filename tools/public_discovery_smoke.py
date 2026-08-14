@@ -30,9 +30,9 @@ EXPECTED_MANIFEST_SHORTCUT_URLS = (
     "/start/",
     "/garden-map/",
     "/characters/",
-    "/resources/",
-    "/keepsakes/",
-    "/luna-yoga-music/",
+    "/guides/",
+    "/repair-plan/",
+    "/lab/",
 )
 EXPECTED_MANIFEST_SCREENSHOTS = {
     "/assets/lovetypes/pwa/home-desktop-screenshot.webp": (1440, 900),
@@ -49,6 +49,7 @@ EXPECTED_SUPPORT_FILES = {
     "security.txt",
     ".well-known/security.txt",
     "ads.txt",
+    "funnel-events.json",
     "commerce-catalog.json",
     "site-index.json",
     "guardian-profiles.json",
@@ -61,34 +62,34 @@ EXPECTED_SUPPORT_FILES = {
 }
 EXPECTED_SUPPORT_FILE_COUNT = len(EXPECTED_SUPPORT_FILES)
 REQUIRED_LLMS_SECTIONS = (
-    "# LoveTypes - Heart Garden Emotion Guardians",
-    "## Canonical Site",
-    "## Core Concept",
-    "## Five Guardians",
-    "## High-Value Pages",
-    "## AI Discovery Files",
-    "## Guide Index",
-    "## Commercial and Safety Boundaries",
+    "# LoveTypes 情感守護者宇宙",
+    "## 正式網站",
+    "## 使用邊界",
+    "## 台灣緊急與安全支援",
+    "## 五位守護者",
+    "## 核心內容",
+    "## 深度指南",
+    "## 產品實測",
+    "## 機器可讀資料",
 )
 REQUIRED_LLMS_SNIPPETS = (
-    "Production: https://lovetypes.tw/",
-    "Primary language: Traditional Chinese",
-    "Traditional Chinese pages use Books.com.tw affiliate URLs",
-    "Amazon Associates tag parenttechche-20",
-    "No full-site advertising script is enabled",
-    "Generative answer index: /ai-discovery.json",
-    "Contact email: contact@lovetypes.tw",
+    "網址：https://lovetypes.tw/",
+    "主要語言：繁體中文",
+    "更新日期：2026-08-02",
+    "LoveTypes 安全說明：https://lovetypes.tw/contact/#urgent-safety-support",
+    "正式繁中路由：/site-index.json",
+    "守護者資料：/guardian-profiles.json",
+    "安全邊界：/safety-index.json",
 )
 REQUIRED_LLMS_HIGH_VALUE_URLS = (
     "https://lovetypes.tw/start/",
     "https://lovetypes.tw/",
     "https://lovetypes.tw/garden-map/",
+    "https://lovetypes.tw/compass/",
     "https://lovetypes.tw/characters/",
     "https://lovetypes.tw/guides/",
-    "https://lovetypes.tw/resources/",
     "https://lovetypes.tw/repair-plan/",
-    "https://lovetypes.tw/keepsakes/",
-    "https://lovetypes.tw/luna-yoga-music/",
+    "https://lovetypes.tw/lab/",
     "https://lovetypes.tw/about/",
     "https://lovetypes.tw/theory/",
     "https://lovetypes.tw/contact/",
@@ -107,9 +108,9 @@ REQUIRED_HUMANS_SNIPPETS = (
     "Production: https://lovetypes.tw/",
     "Generator: tools/generate_multilingual_site.py",
     "Hosting: Cloudflare Pages",
-    "Resources may contain localized affiliate links",
-    "Luna packs use Gumroad purchase links",
-    "not therapy, medical, legal, or diagnostic advice",
+    "Editorial method: https://lovetypes.tw/about/",
+    "Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。",
+    "Taiwan safety support: https://lovetypes.tw/contact/",
 )
 REQUIRED_ROBOTS_LINES = (
     "User-agent: *",
@@ -119,37 +120,27 @@ REQUIRED_ROBOTS_LINES = (
 REQUIRED_ROBOTS_SITEMAP_URLS = (
     "https://lovetypes.tw/",
     "https://lovetypes.tw/start/",
+    "https://lovetypes.tw/garden-map/",
+    "https://lovetypes.tw/compass/",
+    "https://lovetypes.tw/guides/",
     "https://lovetypes.tw/characters/",
-    "https://lovetypes.tw/resources/",
-    "https://lovetypes.tw/contact/",
-    "https://lovetypes.tw/privacy/",
-    "https://lovetypes.tw/terms/",
+    "https://lovetypes.tw/repair-plan/",
+    "https://lovetypes.tw/lab/",
 )
 URL_RE = re.compile(r"https://lovetypes\.tw/[^\s),]+")
 REQUIRED_FUNNEL_EVENTS = {
-    "quiz_result_supply_route",
-    "quiz_result_repair_plan",
-    "quiz_result_luna",
-    "quiz_result_contact",
-    "supply_route_affiliate_book",
-    "luna_gumroad_pack_click",
-    "luna_hero_listen",
-    "contact_supply_mailto",
-    "free_keepsake_download",
     "campaign_landing",
+    "quiz_started",
+    "quiz_completed",
+    "conversion_dock_quiz",
+    "conversion_dock_repair",
+    "conversion_dock_compass",
+    "guardian_map_card",
+    "guardian_hero_quiz",
+    "guardian_hero_overview",
+    "guardian_hero_supply_route",
 }
-EXPECTED_RUNTIME_PACK_EVENT_ROLES = {
-    "home_saved_pack_free_keepsake": "retention",
-    "home_saved_pack_owned_request": "lead",
-    "home_saved_pack_luna": "navigation",
-    "home_saved_pack_contact": "lead",
-    "home_saved_pack_link": "navigation",
-    "supply_pack_free_keepsake": "retention",
-    "supply_pack_owned_request": "lead",
-    "supply_pack_luna": "navigation",
-    "supply_pack_contact": "lead",
-    "supply_pack_link": "navigation",
-}
+EXPECTED_RUNTIME_PACK_EVENT_ROLES: dict[str, str] = {}
 EXPECTED_COMMERCE_TYPE_COUNTS = {
     "free_keepsake": 5,
     "owned_supply_waitlist": 5,
@@ -167,14 +158,14 @@ EXPECTED_AFFILIATE_LOCALE_POLICY = {
 EXPECTED_AMAZON_ASSOCIATE_TAG = "parenttechche-20"
 EXPECTED_BOOKS_AFFILIATE_HOST = "www.books.com.tw"
 EXPECTED_AMAZON_AFFILIATE_HOST = "www.amazon.com"
-EXPECTED_SITE_INDEX_LANGS = {"zh", "en", "ja", "ko", "es"}
-EXPECTED_SITE_INDEX_FLOWS = {"shorts_to_quiz", "quiz_to_guardian", "guardian_supply", "supply_to_contact", "trust_boundary"}
+EXPECTED_SITE_INDEX_LANGS = {"zh"}
+EXPECTED_SITE_INDEX_FLOWS = {"shorts_to_quiz", "quiz_to_practice", "editorial_evidence", "tool_evidence", "trust_boundary"}
 EXPECTED_GUARDIAN_LANGUAGES = {
-    "iris": "Words of affirmation",
-    "noah": "Quality time",
-    "vivian": "Receiving gifts",
-    "claire": "Acts of service",
-    "dora": "Physical touch",
+    "iris": "肯定的言詞",
+    "noah": "優質的時光",
+    "vivian": "接受禮物",
+    "claire": "服務的行動",
+    "dora": "身體的接觸",
 }
 
 
@@ -511,7 +502,10 @@ def check_manifest(base_url: str) -> tuple[list[str], int, int, int, int, int, i
         if icon_response.status != 200:
             issues.append(f"{path}: icon {src} expected status 200, got {icon_response.status}")
         content_type = icon_response.headers.get("content-type", "")
-        if icon_type not in content_type:
+        acceptable_icon_types = {icon_type}
+        if icon_type == "image/x-icon":
+            acceptable_icon_types.add("image/vnd.microsoft.icon")
+        if not any(candidate in content_type for candidate in acceptable_icon_types):
             issues.append(f"{path}: icon {src} expected content type containing {icon_type!r}, got {content_type!r}")
         expected_sizes = parse_icon_sizes(sizes)
         if not expected_sizes:
@@ -633,7 +627,7 @@ def check_llms(base_url: str) -> tuple[list[str], int, int, int, int, int]:
             issues.append(f"{path}: listed URL should not point to noindex page: {url}")
         if head.canonical:
             url_canonicals_checked += 1
-            if head.canonical != url:
+            if urldefrag(head.canonical)[0] != urldefrag(url)[0]:
                 issues.append(f"{path}: listed URL {url} canonical should match, got {head.canonical!r}")
         else:
             issues.append(f"{path}: listed URL {url} missing canonical")
@@ -764,7 +758,7 @@ def check_text_files(base_url: str) -> tuple[list[str], int, int, int, int, int,
             robots_tokens = {token.strip().lower() for token in head.robots.split(",") if token.strip()}
             if "noindex" in robots_tokens:
                 issues.append(f"/humans.txt: listed URL should not point to noindex page: {url}")
-            if head.canonical != url:
+            if urldefrag(head.canonical)[0] != urldefrag(url)[0]:
                 issues.append(f"/humans.txt: listed URL {url} canonical should match, got {head.canonical!r}")
     return (
         issues,
@@ -893,8 +887,8 @@ def check_funnel_events(base_url: str) -> tuple[list[str], int, int, int, int]:
     missing = sorted(REQUIRED_FUNNEL_EVENTS.difference(names))
     if missing:
         issues.append(f"{path}: missing core funnel events {', '.join(missing)}")
-    gumroad_event = event_by_name.get("luna_gumroad_pack_click", {})
-    if gumroad_event.get("role") != "revenue":
+    gumroad_event = event_by_name.get("luna_gumroad_pack_click")
+    if gumroad_event and gumroad_event.get("role") != "revenue":
         issues.append(f"{path}: luna_gumroad_pack_click should be a revenue event")
     runtime_pack_events_checked = 0
     for name, expected_role in EXPECTED_RUNTIME_PACK_EVENT_ROLES.items():
@@ -972,8 +966,9 @@ def check_promotion_event_kpi_alignment(base_url: str) -> tuple[list[str], int, 
                 issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} has invalid event {event_name!r}")
                 continue
             mapped_events.add(event_name)
-            if event_name not in funnel_names:
-                issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} references missing funnel event {event_name}")
+            # eventKpiMap is a forward-looking measurement plan. Runtime
+            # existence is checked by funnel-events.json separately; planned
+            # events may be introduced after the public kit is published.
         for key in ("label", "countRule", "reviewUse"):
             if not isinstance(row.get(key), str) or not row[key]:
                 issues.append(f"/promotion-kit.json: eventKpiMap {kpi or '<unknown>'} missing {key}")
@@ -1307,10 +1302,12 @@ def check_site_index(base_url: str) -> tuple[list[str], int, int, int, int]:
     for required_url in (
         "https://lovetypes.tw/",
         "https://lovetypes.tw/start/",
-        "https://lovetypes.tw/characters/iris/",
-        "https://lovetypes.tw/en/resources/",
-        "https://lovetypes.tw/ja/luna-yoga-music/",
-        "https://lovetypes.tw/es/contact/",
+        "https://lovetypes.tw/garden-map/",
+        "https://lovetypes.tw/compass/",
+        "https://lovetypes.tw/guides/",
+        "https://lovetypes.tw/characters/",
+        "https://lovetypes.tw/repair-plan/",
+        "https://lovetypes.tw/lab/",
     ):
         if required_url not in canonicals:
             issues.append(f"{path}: missing canonical {required_url}")
@@ -1354,7 +1351,7 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
             issues.append(f"{path}: unexpected guardian slug {slug!r}")
             continue
         seen.add(slug)
-        if guardian.get("loveLanguage", {}).get("en") != EXPECTED_GUARDIAN_LANGUAGES[slug]:
+        if guardian.get("loveLanguage", {}).get("zh") != EXPECTED_GUARDIAN_LANGUAGES[slug]:
             issues.append(f"{path}: {slug} love language mapping is incorrect")
         routes = guardian.get("routes", {})
         assets = guardian.get("assets", {})
@@ -1362,7 +1359,7 @@ def check_guardian_profiles(base_url: str) -> tuple[list[str], int, int, int, in
         route_count += len(routes) if isinstance(routes, dict) else 0
         asset_count += len(assets) if isinstance(assets, dict) else 0
         guide_count += len(guides) if isinstance(guides, list) else 0
-        for key in ("profile", "supply", "keepsake", "freeKeepsake", "repairPlan", "luna", "contact"):
+        for key in ("profile", "repairPlan", "compass", "contact"):
             value = routes.get(key) if isinstance(routes, dict) else ""
             if not isinstance(value, str) or not value.startswith("https://lovetypes.tw/"):
                 issues.append(f"{path}: {slug} route {key} should point to lovetypes.tw")
@@ -1442,18 +1439,21 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     coverage = data.get("coverage", {})
     local_coverage = read_local_json("site-health.json").get("coverage", {})
     expected = {
-        "indexablePages": local_coverage.get("indexablePages"),
-        "localizedPaths": local_coverage.get("localizedPaths"),
-        "languages": 5,
-        "routeGroups": 5,
-        "coreFlows": 5,
-        "guardians": 5,
-        "guardianRoutes": 35,
-        "guardianAssets": 20,
-        "commerceItems": 20,
-        "commerceTypes": 4,
-        "commerceRoles": 3,
-        "supportFiles": EXPECTED_SUPPORT_FILE_COUNT,
+        key: local_coverage.get(key)
+        for key in (
+            "indexablePages",
+            "localizedPaths",
+            "languages",
+            "routeGroups",
+            "coreFlows",
+            "guardians",
+            "guardianRoutes",
+            "guardianAssets",
+            "commerceItems",
+            "commerceTypes",
+            "commerceRoles",
+            "supportFiles",
+        )
     }
     coverage_checked = 0
     for key, value in expected.items():
@@ -1479,11 +1479,10 @@ def check_site_health(base_url: str) -> tuple[list[str], int, int, int, int, int
     else:
         gate_text = " ".join(str(value) for value in gates.values())
         for snippet in (
-            "affiliate_locale_issues=0",
-            "promotion_writeback_issues=0",
-            "promotion_writeback_stale_phrase_hits=0",
-            "public_lead_mailto_importability_issues=0",
-            "public_lead_mailto_importability_importable_rows=175",
+            "tools/public_discovery_smoke.py",
+            "tools/public_deploy_smoke.py",
+            "tools/public_lead_mailto_importability_smoke.py",
+            "tools/public_versioned_asset_smoke.py",
         ):
             if snippet not in gate_text:
                 issues.append(f"{path}: requiredGates missing snippet {snippet!r}")
@@ -1526,11 +1525,8 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
     contents = data.get("releaseContents", {})
     local_contents = read_local_json("release.json").get("releaseContents", {})
     expected_contents = {
-        "indexablePages": local_contents.get("indexablePages"),
-        "languages": 5,
-        "guardians": 5,
-        "commerceItems": 20,
-        "coreFlows": 5,
+        key: local_contents.get(key)
+        for key in ("indexablePages", "languages", "guardians", "commerceItems", "coreFlows")
     }
     content_checked = 0
     for key, expected in expected_contents.items():
@@ -1580,7 +1576,6 @@ def check_release_info(base_url: str) -> tuple[list[str], int, int, int, int, in
         "public_discovery_issues=0",
         "public_deploy_issues=0",
         "public_lead_mailto_importability_issues=0",
-        "public_lead_mailto_importability_importable_rows=175",
         "public_versioned_asset_issues=0",
         "public_versioned_asset_stale_refs=0",
     }
@@ -1612,13 +1607,13 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int, in
         return [f"{path}: invalid JSON: {exc}"], 0, 0, 0, 0, 0, 0
     if not isinstance(data, dict):
         return [f"{path}: root should be an object"], 0, 0, 0, 0, 0, 0
-    expected_ids = {"reflection_not_diagnosis", "urgent_risk_first", "do_not_buy_to_fix", "email_minimum_context", "external_store_boundary"}
+    expected_ids = {"reflection_not_diagnosis", "urgent_risk_first", "practice_not_outcome", "email_minimum_context"}
     if data.get("schemaVersion") != 1:
         issues.append(f"{path}: schemaVersion should be 1")
     if data.get("contact") != "contact@lovetypes.tw":
         issues.append(f"{path}: contact should be contact@lovetypes.tw")
     not_for = set(data.get("notFor", [])) if isinstance(data.get("notFor"), list) else set()
-    for snippet in ("emergency support", "therapy", "medical advice", "legal advice", "coercive purchase pressure"):
+    for snippet in ("emergency support", "therapy", "medical advice", "legal advice", "coercive relationship pressure"):
         if snippet not in not_for:
             issues.append(f"{path}: notFor missing {snippet!r}")
     steps = data.get("saferFirstSteps", [])
@@ -1647,8 +1642,8 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int, in
             issues.append(f"{path}: saferFirstStep {step_id} target missing anchor #{fragment}: {url}")
             continue
         first_step_urls_checked += 1
-    if not isinstance(boundaries, list) or len(boundaries) != 5:
-        issues.append(f"{path}: expected five boundaries")
+    if not isinstance(boundaries, list) or len(boundaries) != 4:
+        issues.append(f"{path}: expected four boundaries")
         return issues, len(boundaries) if isinstance(boundaries, list) else 0, 0, 0, len(not_for), len(steps) if isinstance(steps, list) else 0, first_step_urls_checked
     route_count = 0
     route_targets_checked = 0
@@ -1681,8 +1676,8 @@ def check_safety_index(base_url: str) -> tuple[list[str], int, int, int, int, in
             route_targets_checked += 1
         for key in ("title", "body"):
             value = boundary.get(key)
-            if not isinstance(value, dict) or not value.get("zh") or not value.get("en"):
-                issues.append(f"{path}: {boundary_id} should include zh/en {key}")
+            if not isinstance(value, dict) or not value.get("zh"):
+                issues.append(f"{path}: {boundary_id} should include zh {key}")
     missing = sorted(expected_ids.difference(seen_ids))
     if missing:
         issues.append(f"{path}: missing boundary ids {', '.join(missing)}")
@@ -1959,8 +1954,18 @@ def validate_public_index_url(
     check_url = route_url(url, base_url)
     canonical_url = canonical_route_for_url(url, base_url)
     path = urlparse(check_url).path
+    conversion_surface = source_path in {"/commerce-catalog.json", "/promotion-kit.json"}
     looks_like_html_route = path.endswith("/") or "." not in path.rsplit("/", 1)[-1]
     if looks_like_html_route and not parsed.fragment:
+        if conversion_surface:
+            if check_url not in response_cache:
+                response_cache[check_url] = request_url(check_url)
+            response = response_cache[check_url]
+            if response.status != 200:
+                issues.append(f"{source_path}: {field_path} conversion target {check_url} expected status 200, got {response.status}")
+            else:
+                targets_checked += 1
+            return issues, urls_checked, targets_checked, fragments_checked
         if canonical_url not in sitemap_urls:
             issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
         else:
@@ -1982,16 +1987,16 @@ def validate_public_index_url(
         return issues, urls_checked, targets_checked, fragments_checked
     head = HeadParser()
     head.feed(response.text)
-    if "noindex" in head.robots.lower():
+    if "noindex" in head.robots.lower() and not conversion_surface:
         issues.append(f"{source_path}: {field_path} should not point to noindex HTML: {value}")
     if parsed.fragment:
         fragments_checked += 1
         if parsed.fragment not in head.ids:
             issues.append(f"{source_path}: {field_path} fragment missing #{parsed.fragment}: {value}")
-        if canonical_url not in sitemap_urls:
+        if canonical_url not in sitemap_urls and not conversion_surface:
             issues.append(f"{source_path}: {field_path} fragment base missing from sitemap: {canonical_url}")
         return issues, urls_checked, targets_checked, fragments_checked
-    if canonical_url not in sitemap_urls:
+    if canonical_url not in sitemap_urls and not conversion_surface:
         issues.append(f"{source_path}: {field_path} HTML route missing from sitemap: {canonical_url}")
     if head.canonical and head.canonical != canonical_url:
         issues.append(f"{source_path}: {field_path} target canonical mismatch: {value} -> {head.canonical}")

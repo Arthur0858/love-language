@@ -12,7 +12,7 @@ Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
 Editorial method: https://lovetypes.tw/about/
 Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
-Taiwan safety support: https://lovetypes.tw/contact/#urgent-safety-support
+Taiwan safety support: https://lovetypes.tw/contact/
 
 /* CORE ROUTES */
 Quiz: https://lovetypes.tw/start/

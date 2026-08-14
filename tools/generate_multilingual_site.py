@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urldefrag, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
 from editorial_guides import (
@@ -15279,6 +15279,13 @@ def lead_intake_form_script(lang: str) -> str:
 def contact_request_section(lang: str) -> str:
     if lang == "zh":
         return f"""
+<section class="section contact-request-section" id="luna-supply-request">
+  <div class="section-head"><div><p class="eyebrow">OWNED PRACTICE REQUEST</p><h2>提出守護者補給需求</h2></div></div>
+  <p class="section-intro">如果你想要未來的桌布、PDF、短儀式或其他自有練習素材，請寄送最少脈絡：守護者、使用情境與希望格式。不需要提供測驗答案、敏感個資或緊急求助內容。</p>
+  <div class="contact-request-note">
+    <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={quote('LoveTypes 守護者補給需求')}" data-funnel-event="contact_supply_mailto">提出補給需求</a>
+  </div>
+</section>
 <section class="section contact-request-section" id="site-repair-report">
   <div class="section-head"><div><p class="eyebrow">CONTENT CORRECTION</p><h2>回報內容、連結或可用性問題</h2></div></div>
   <p class="section-intro">請附上頁面網址、你看到的文字或操作、裝置與瀏覽器，以及預期結果。不要寄送測驗答案、伴侶私訊、身分證件、醫療紀錄或其他敏感資料。</p>
@@ -15811,6 +15818,7 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 ## 核心內容
 
 - 15 題測驗：{DOMAIN}/start/
+- 心語庭園地圖：{DOMAIN}/garden-map/
 - 關係溝通羅盤：{DOMAIN}/compass/
 - 深度指南：{DOMAIN}/guides/
 - 五位守護者：{DOMAIN}/characters/
@@ -15854,7 +15862,7 @@ Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
 Editorial method: {DOMAIN}/about/
 Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
-Taiwan safety support: {DOMAIN}/contact/#urgent-safety-support
+Taiwan safety support: {DOMAIN}/contact/
 
 /* CORE ROUTES */
 Quiz: {DOMAIN}/start/
@@ -16594,6 +16602,29 @@ def collect_ai_discovery_index() -> dict:
         },
     ]
 
+    indexable_canonicals = {
+        page["canonical"]
+        for page in site_index["pages"]
+        if isinstance(page, dict) and isinstance(page.get("canonical"), str)
+    }
+
+    def is_indexable_site_url(value: str) -> bool:
+        return urldefrag(value)[0] in indexable_canonicals
+
+    canonical_fallbacks = {
+        "supply_routes": f"{DOMAIN}/characters/",
+        "luna_positioning": f"{DOMAIN}/lab/",
+        "keepsakes": f"{DOMAIN}/characters/",
+        "commercial_disclosure": f"{DOMAIN}/terms/",
+    }
+    for question in answerable_questions:
+        question["canonical"] = canonical_fallbacks.get(question["id"], question["canonical"])
+        question["supportingUrls"] = [
+            urldefrag(url)[0] if url.startswith(f"{DOMAIN}/") else url
+            for url in question.get("supportingUrls", [])
+            if not url.startswith(f"{DOMAIN}/") or is_indexable_site_url(url)
+        ]
+
     long_tail_priority_urls = [
         {
             "url": url,
@@ -16601,19 +16632,16 @@ def collect_ai_discovery_index() -> dict:
             "priority": round(0.92 - (index * 0.02), 2),
         }
         for index, (_slug, url, desc) in enumerate(long_tail_compatibility_urls())
+        if is_indexable_site_url(url)
     ]
     priority_urls = [
         {"url": f"{DOMAIN}/start/", "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery", "priority": 1.0},
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
-        {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step", "priority": 0.94},
         *long_tail_priority_urls,
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
-        {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
         {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},
-        {"url": f"{DOMAIN}/keepsakes/", "intent": "free guardian keepsake lead magnet center", "priority": 0.86},
-        {"url": f"{DOMAIN}/luna-yoga-music/", "intent": "Luna night support and Gumroad conversion page", "priority": 0.86},
         {"url": f"{DOMAIN}/about/", "intent": "Heart Garden and brand explanation", "priority": 0.82},
         {"url": f"{DOMAIN}/theory/", "intent": "five love languages theory boundary", "priority": 0.8},
         {"url": f"{DOMAIN}/contact/", "intent": "email support, supply request, and repair report", "priority": 0.78},
@@ -16660,8 +16688,8 @@ def collect_ai_discovery_index() -> dict:
                 {"id": "guardian_recognition_ritual", "label": {"zh": "守護者認領儀式", "en": "guardian recognition ritual"}, "canonical": f"{DOMAIN}/start/"},
                 {"id": "five_love_languages", "label": {"zh": "五種愛之語", "en": "five love languages"}, "canonical": f"{DOMAIN}/theory/"},
                 {"id": "misfrequency_repair", "label": {"zh": "錯頻修復", "en": "misfrequency repair"}, "canonical": f"{DOMAIN}/repair-plan/"},
-                {"id": "traveler_supplies", "label": {"zh": "旅人補給", "en": "traveler supplies"}, "canonical": f"{DOMAIN}/resources/"},
-                {"id": "luna_night_support", "label": {"zh": "Luna 夜間補給", "en": "Luna night support"}, "canonical": f"{DOMAIN}/luna-yoga-music/"},
+                {"id": "traveler_supplies", "label": {"zh": "旅人補給", "en": "traveler supplies"}, "canonical": f"{DOMAIN}/characters/"},
+                {"id": "luna_night_support", "label": {"zh": "Luna 夜間補給", "en": "Luna night support"}, "canonical": f"{DOMAIN}/lab/"},
             ],
         },
         "answerableQuestions": answerable_questions,

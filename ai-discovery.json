@@ -223,7 +223,7 @@
           "zh": "旅人補給",
           "en": "traveler supplies"
         },
-        "canonical": "https://lovetypes.tw/resources/"
+        "canonical": "https://lovetypes.tw/characters/"
       },
       {
         "id": "luna_night_support",
@@ -231,7 +231,7 @@
           "zh": "Luna 夜間補給",
           "en": "Luna night support"
         },
-        "canonical": "https://lovetypes.tw/luna-yoga-music/"
+        "canonical": "https://lovetypes.tw/lab/"
       }
     ]
   },
@@ -255,7 +255,6 @@
       "supportingUrls": [
         "https://lovetypes.tw/",
         "https://lovetypes.tw/characters/",
-        "https://lovetypes.tw/resources/",
         "https://lovetypes.tw/repair-plan/"
       ]
     },
@@ -287,30 +286,26 @@
       "id": "supply_routes",
       "question": "旅人補給站怎麼依守護者選擇資源？",
       "answerHint": "旅人補給站以五條守護者路線整理免費任務、Luna 場景、聯盟書卷與不適合購買提醒。",
-      "canonical": "https://lovetypes.tw/resources/",
-      "supportingUrls": [
-        "https://lovetypes.tw/commerce-catalog.json",
-        "https://lovetypes.tw/safety-index.json"
-      ]
+      "canonical": "https://lovetypes.tw/characters/",
+      "supportingUrls": []
     },
     {
       "id": "luna_positioning",
       "question": "Luna Yoga Music 是什麼？",
       "answerHint": "Luna 是夜間心語補給，適合睡前整理、衝突後冷卻與測驗後承接，不是醫療或治療服務。",
-      "canonical": "https://lovetypes.tw/luna-yoga-music/",
+      "canonical": "https://lovetypes.tw/lab/",
       "supportingUrls": [
-        "https://lovetypes.tw/repair-plan/",
-        "https://lovetypes.tw/resources/"
+        "https://lovetypes.tw/repair-plan/"
       ]
     },
     {
       "id": "keepsakes",
       "question": "LoveTypes 有哪些免費收藏物？",
       "answerHint": "收藏室提供五位守護者的免費故事卡、練習卡與未來桌布/PDF/Luna 下載包等待清單入口。",
-      "canonical": "https://lovetypes.tw/keepsakes/",
+      "canonical": "https://lovetypes.tw/characters/",
       "supportingUrls": [
         "https://lovetypes.tw/characters/",
-        "https://lovetypes.tw/contact/#luna-supply-request"
+        "https://lovetypes.tw/contact/"
       ]
     },
     {
@@ -318,18 +313,14 @@
       "question": "錯頻修復計畫適合做什麼？",
       "answerHint": "錯頻修復計畫提供免費練習與 7 日路線，協助把測驗結果轉成一個可做的溝通任務。",
       "canonical": "https://lovetypes.tw/repair-plan/",
-      "supportingUrls": [
-        "https://lovetypes.tw/resources/",
-        "https://lovetypes.tw/luna-yoga-music/"
-      ]
+      "supportingUrls": []
     },
     {
       "id": "commercial_disclosure",
       "question": "LoveTypes 是否包含聯盟連結或購買入口？",
       "answerHint": "聯盟書卷集中在旅人補給站並明確揭露，Luna 可能連到 Gumroad；購買是輔助練習，不保證關係結果。",
-      "canonical": "https://lovetypes.tw/resources/",
+      "canonical": "https://lovetypes.tw/terms/",
       "supportingUrls": [
-        "https://lovetypes.tw/commerce-catalog.json",
         "https://lovetypes.tw/terms/"
       ]
     },
@@ -339,9 +330,8 @@
       "answerHint": "不能。LoveTypes 只提供關係反思與溝通練習；暴力、控制、自傷或緊急危險應先尋求當地緊急與專業支援。",
       "canonical": "https://lovetypes.tw/terms/",
       "supportingUrls": [
-        "https://lovetypes.tw/safety-index.json",
         "https://lovetypes.tw/privacy/",
-        "https://lovetypes.tw/contact/#site-repair-report"
+        "https://lovetypes.tw/contact/"
       ]
     },
     {
@@ -350,7 +340,7 @@
       "answerHint": "使用 contact@lovetypes.tw，或從聯絡頁選擇 Luna、補給願望清單、桌布/PDF/短儀式等申請情境。",
       "canonical": "https://lovetypes.tw/contact/",
       "supportingUrls": [
-        "https://lovetypes.tw/contact/#luna-supply-request",
+        "https://lovetypes.tw/contact/",
         "https://lovetypes.tw/privacy/"
       ]
     }
@@ -377,34 +367,14 @@
       "priority": 0.95
     },
     {
-      "url": "https://lovetypes.tw/tools/love-compatibility/",
-      "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step",
-      "priority": 0.94
-    },
-    {
       "url": "https://lovetypes.tw/characters/",
       "intent": "five guardian universe overview",
       "priority": 0.95
     },
     {
-      "url": "https://lovetypes.tw/resources/",
-      "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries",
-      "priority": 0.92
-    },
-    {
       "url": "https://lovetypes.tw/repair-plan/",
       "intent": "free misfrequency repair tasks after quiz result",
       "priority": 0.9
-    },
-    {
-      "url": "https://lovetypes.tw/keepsakes/",
-      "intent": "free guardian keepsake lead magnet center",
-      "priority": 0.86
-    },
-    {
-      "url": "https://lovetypes.tw/luna-yoga-music/",
-      "intent": "Luna night support and Gumroad conversion page",
-      "priority": 0.86
     },
     {
       "url": "https://lovetypes.tw/about/",
@@ -476,7 +446,7 @@
   "totals": {
     "guardians": 5,
     "answerableQuestions": 11,
-    "priorityUrls": 14,
+    "priorityUrls": 10,
     "languages": 5,
     "discoveryFiles": 11
   }

@@ -17,7 +17,7 @@
       "label": "Core conversion entrances",
       "purpose": "Submit first because these pages explain the quiz promise, Compass, and main conversion path.",
       "target": "Cold visitors should understand what to do next within one click.",
-      "urlCount": 4,
+      "urlCount": 3,
       "relatedFunnelEvents": [
         "campaign_landing",
         "compass_search_task",
@@ -44,7 +44,7 @@
       "label": "Retention, product, and trust routes",
       "purpose": "Publish only routes that have independent editorial review, practical value, and clear safety boundaries.",
       "target": "Returning visitors should find repair tasks, keepsakes, Luna, and trust pages clearly.",
-      "urlCount": 10,
+      "urlCount": 7,
       "relatedFunnelEvents": [
         "quiz_result_supply_route",
         "quiz_result_repair_plan",
@@ -221,42 +221,6 @@
     },
     {
       "position": 5,
-      "url": "https://lovetypes.tw/tools/love-compatibility/",
-      "batch": "core_conversion",
-      "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step",
-      "priority": 0.94,
-      "submitTo": [
-        "Google Search Console URL inspection",
-        "Bing Webmaster Tools URL submission",
-        "sitemap.xml recrawl request"
-      ],
-      "observeWith": [
-        "GSC indexed status",
-        "GSC query impressions",
-        "GSC clicks",
-        "GA4 landing page sessions",
-        "LoveTypes funnel events"
-      ],
-      "expectedEvents": [
-        "campaign_landing",
-        "compass_search_task",
-        "compass_search_task_tool",
-        "love_compatibility_compass_start",
-        "quiz_started",
-        "quiz_completed"
-      ],
-      "manualObservation": {
-        "indexed": null,
-        "lastSubmitted": null,
-        "impressions": null,
-        "clicks": null,
-        "averagePosition": null,
-        "queries": [],
-        "notes": ""
-      }
-    },
-    {
-      "position": 6,
       "url": "https://lovetypes.tw/characters/",
       "batch": "retention_and_trust",
       "intent": "five guardian universe overview",
@@ -290,41 +254,7 @@
       }
     },
     {
-      "position": 7,
-      "url": "https://lovetypes.tw/resources/",
-      "batch": "retention_and_trust",
-      "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries",
-      "priority": 0.92,
-      "submitTo": [
-        "Google Search Console URL inspection",
-        "Bing Webmaster Tools URL submission",
-        "sitemap.xml recrawl request"
-      ],
-      "observeWith": [
-        "GSC indexed status",
-        "GSC query impressions",
-        "GSC clicks",
-        "GA4 landing page sessions",
-        "LoveTypes funnel events"
-      ],
-      "expectedEvents": [
-        "quiz_result_supply_route",
-        "quiz_result_repair_plan",
-        "free_keepsake_download",
-        "luna_gumroad_pack_click"
-      ],
-      "manualObservation": {
-        "indexed": null,
-        "lastSubmitted": null,
-        "impressions": null,
-        "clicks": null,
-        "averagePosition": null,
-        "queries": [],
-        "notes": ""
-      }
-    },
-    {
-      "position": 8,
+      "position": 6,
       "url": "https://lovetypes.tw/repair-plan/",
       "batch": "retention_and_trust",
       "intent": "free misfrequency repair tasks after quiz result",
@@ -358,75 +288,7 @@
       }
     },
     {
-      "position": 9,
-      "url": "https://lovetypes.tw/keepsakes/",
-      "batch": "retention_and_trust",
-      "intent": "free guardian keepsake lead magnet center",
-      "priority": 0.86,
-      "submitTo": [
-        "Google Search Console URL inspection",
-        "Bing Webmaster Tools URL submission",
-        "sitemap.xml recrawl request"
-      ],
-      "observeWith": [
-        "GSC indexed status",
-        "GSC query impressions",
-        "GSC clicks",
-        "GA4 landing page sessions",
-        "LoveTypes funnel events"
-      ],
-      "expectedEvents": [
-        "quiz_result_supply_route",
-        "quiz_result_repair_plan",
-        "free_keepsake_download",
-        "luna_gumroad_pack_click"
-      ],
-      "manualObservation": {
-        "indexed": null,
-        "lastSubmitted": null,
-        "impressions": null,
-        "clicks": null,
-        "averagePosition": null,
-        "queries": [],
-        "notes": ""
-      }
-    },
-    {
-      "position": 10,
-      "url": "https://lovetypes.tw/luna-yoga-music/",
-      "batch": "retention_and_trust",
-      "intent": "Luna night support and Gumroad conversion page",
-      "priority": 0.86,
-      "submitTo": [
-        "Google Search Console URL inspection",
-        "Bing Webmaster Tools URL submission",
-        "sitemap.xml recrawl request"
-      ],
-      "observeWith": [
-        "GSC indexed status",
-        "GSC query impressions",
-        "GSC clicks",
-        "GA4 landing page sessions",
-        "LoveTypes funnel events"
-      ],
-      "expectedEvents": [
-        "quiz_result_supply_route",
-        "quiz_result_repair_plan",
-        "free_keepsake_download",
-        "luna_gumroad_pack_click"
-      ],
-      "manualObservation": {
-        "indexed": null,
-        "lastSubmitted": null,
-        "impressions": null,
-        "clicks": null,
-        "averagePosition": null,
-        "queries": [],
-        "notes": ""
-      }
-    },
-    {
-      "position": 11,
+      "position": 7,
       "url": "https://lovetypes.tw/about/",
       "batch": "retention_and_trust",
       "intent": "Heart Garden and brand explanation",
@@ -460,7 +322,7 @@
       }
     },
     {
-      "position": 12,
+      "position": 8,
       "url": "https://lovetypes.tw/theory/",
       "batch": "retention_and_trust",
       "intent": "five love languages theory boundary",
@@ -494,7 +356,7 @@
       }
     },
     {
-      "position": 13,
+      "position": 9,
       "url": "https://lovetypes.tw/contact/",
       "batch": "retention_and_trust",
       "intent": "email support, supply request, and repair report",
@@ -528,7 +390,7 @@
       }
     },
     {
-      "position": 14,
+      "position": 10,
       "url": "https://lovetypes.tw/terms/",
       "batch": "retention_and_trust",
       "intent": "safety, purchase, and non-therapy boundary",
@@ -563,7 +425,7 @@
     }
   ],
   "totals": {
-    "priorityUrls": 14,
+    "priorityUrls": 10,
     "submissionBatches": 3,
     "observationFields": 7,
     "relatedFunnelEvents": 12

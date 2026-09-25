@@ -23,6 +23,14 @@ def current_workflow_block(name: str, run_id: int, label: str) -> str:
     )
 
 
+def current_running_workflow_block(name: str, run_id: int, job_label: str) -> str:
+    return (
+        f'<a aria-label="currently running: Run {run_id} of {name}" '
+        f'href="/{ci.REPOSITORY}/actions/runs/{run_id}"><span>{name}</span></a>'
+        f'<svg aria-label="{job_label}"></svg>'
+    )
+
+
 class GitHubCiStatusTest(unittest.TestCase):
     def test_required_successful_workflows_pass(self):
         raw = "".join(
@@ -67,6 +75,26 @@ class GitHubCiStatusTest(unittest.TestCase):
         workflow = ci.parse_workflows(raw)[ci.REQUIRED_WORKFLOWS[0]]
         self.assertEqual(workflow["successJobs"], 1)
         self.assertEqual(workflow["failedJobs"], 1)
+        self.assertFalse(workflow["succeeded"])
+
+    def test_successful_job_does_not_mark_running_workflow_complete(self):
+        raw = current_running_workflow_block(
+            ci.REQUIRED_WORKFLOWS[0], 105, "This job succeeded"
+        )
+        workflow = ci.parse_workflows(raw)[ci.REQUIRED_WORKFLOWS[0]]
+        self.assertTrue(workflow["pending"])
+        self.assertFalse(workflow["succeeded"])
+        self.assertIn(
+            f"required GitHub workflow is still in progress: {ci.REQUIRED_WORKFLOWS[0]}",
+            ci.workflow_issues(ci.parse_workflows(raw)),
+        )
+
+    def test_successful_job_does_not_mask_visible_in_progress_job(self):
+        raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 106, "success") + (
+            '<svg aria-label="In progress"></svg>'
+        )
+        workflow = ci.parse_workflows(raw)[ci.REQUIRED_WORKFLOWS[0]]
+        self.assertTrue(workflow["pending"])
         self.assertFalse(workflow["succeeded"])
 
     def test_legacy_workflow_name_does_not_satisfy_required_workflow(self):

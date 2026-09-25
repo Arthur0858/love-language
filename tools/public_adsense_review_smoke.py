@@ -417,7 +417,19 @@ def main() -> int:
         for future in as_completed(futures):
             path = futures[future]
             response = future.result()
-            if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
+            if path in {
+                "/ai-discovery.json",
+                "/commerce-catalog.json",
+                "/promotion-kit.json",
+                "/release.json",
+                "/search-indexing.json",
+                "/site-health.json",
+            }:
+                if response.status != 410 or not {"noindex", "nofollow"}.issubset(
+                    {token.strip().lower() for token in response.header("X-Robots-Tag").split(",")}
+                ):
+                    issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, nofollow, got {response.status}")
+            elif response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
                 issues.append(f"{path}: expected 410 with X-Robots-Tag noindex, got {response.status}")
 
     for path in (CSS_ASSET, INTERACTIONS_ASSET, QUIZ_DATA_ASSETS["zh"], COMPASS_TOOL_ASSET):

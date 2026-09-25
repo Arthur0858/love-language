@@ -7,13 +7,15 @@ import re
 import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urldefrag, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-LANG_PATHS = {"zh": "/", "en": "/en/", "ja": "/ja/", "ko": "/ko/", "es": "/es/"}
+ROOT = Path(__file__).resolve().parents[1]
+LANG_PATHS = {"zh": "/"}
 EXPECTED_SLUGS = {"iris", "noah", "vivian", "claire", "dora"}
 REQUIRED_RESULT_URLS = (
     "guardianUrl",
@@ -237,11 +239,11 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
         stats["internal_targets"] += 1
         issues.extend(validate_target(base_url, f"{source}:{key}", value, cache))
     book_url = result.get("supplyBookUrl", "")
-    if not isinstance(book_url, str) or not is_affiliate_url(book_url, lang):
-        expected = "tracked Books.com.tw affiliate URL" if lang == "zh" else f"Amazon affiliate URL with tag={AMAZON_ASSOCIATE_TAG}"
-        issues.append(f"{source}: supplyBookUrl should be a {expected}")
+    if not isinstance(book_url, str) or not is_internal_url(book_url):
+        issues.append(f"{source}: supplyBookUrl should be an internal guide URL")
     else:
-        stats["affiliate_links"] += 1
+        stats["internal_targets"] += 1
+        issues.extend(validate_target(base_url, f"{source}:supplyBookUrl", book_url, cache))
     starter = result.get("starterKit")
     if not isinstance(starter, dict):
         issues.append(f"{source}: missing starterKit")
@@ -255,7 +257,7 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
         else:
             starter_issue_count = len(issues)
             hrefs = [step.get("href", "") for step in steps if isinstance(step, dict)]
-            expected_fragments = ("/keepsakes/", "/repair-plan/", "/luna-yoga-music/", "/resources/#supply-")
+            expected_fragments = ("/guides/", "/repair-plan/", "/compass/", "/characters/")
             for fragment in expected_fragments:
                 if not any(fragment in href for href in hrefs):
                     issues.append(f"{source}: starterKit missing route containing {fragment}")
@@ -281,12 +283,10 @@ def validate_result(base_url: str, lang: str, result_key: str, result: dict, cac
             issues.append(f"{source}: supplyProductPack should contain four product paths")
         else:
             hrefs = [item.get("href", "") for item in items if isinstance(item, dict)]
-            expected_internal = ("/keepsakes/#keepsake-card-", "/luna-yoga-music/#luna-", "/contact/#luna-supply-request")
+            expected_internal = ("/guides/", "/repair-plan/", "/compass/", "/characters/")
             for fragment in expected_internal:
                 if not any(fragment in href for href in hrefs):
                     issues.append(f"{source}: supplyProductPack missing route containing {fragment}")
-            if not any(is_supply_request(href) for href in hrefs):
-                issues.append(f"{source}: supplyProductPack missing contact request mailto")
             for index, item in enumerate(items, start=1):
                 if not isinstance(item, dict):
                     issues.append(f"{source}: supplyProductPack item {index} should be an object")
@@ -321,7 +321,7 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
         product_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_gumroad_pack_click"]
         starter_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_starter_pack_click"]
         if len(product_links) != len(EXPECTED_LUNA_PRODUCTS):
-            issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} Luna product links, got {len(product_links)}")
+            issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} sanitized Luna product links, got {len(product_links)}")
         if len(starter_links) != 1:
             issues.append(f"{path}: expected one Luna starter link, got {len(starter_links)}")
         page_slugs = {link.get("data-luna-product", "") for link in product_links}
@@ -330,16 +330,14 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
             issues.append(f"{path}: missing Luna product slugs {', '.join(missing_slugs)}")
         for link in product_links:
             product_slug = link.get("data-luna-product", "")
-            if not is_gumroad_product_link(link):
-                issues.append(f"{path}: invalid Gumroad product revenue link for {product_slug or '<missing>'}: {link.get('href', '')}")
+            if link.get("href") != "/resources/#luna-products":
+                issues.append(f"{path}: Luna product link should use the retired-commercial resources anchor for {product_slug or '<missing>'}: {link.get('href', '')}")
                 continue
             seen_product_slugs.add(product_slug)
             stats["luna_product_links"] += 1
         for link in starter_links:
-            if link.get("data-luna-product") != "healing-vibes-starter" or not is_gumroad_product_link(
-                link, "luna_starter_pack_click"
-            ):
-                issues.append(f"{path}: invalid Gumroad starter revenue link: {link.get('href', '')}")
+            if link.get("data-luna-product") != "healing-vibes-starter" or link.get("href") != "/resources/#luna-products":
+                issues.append(f"{path}: invalid sanitized Luna starter link: {link.get('href', '')}")
                 continue
             stats["luna_starter_links"] += 1
     stats["luna_product_slugs"] = len(seen_product_slugs)
@@ -352,18 +350,18 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
         events = {event.get("name"): event for event in funnel_data.get("events", []) if isinstance(event, dict)}
         gumroad_event = events.get("luna_gumroad_pack_click", {})
         starter_event = events.get("luna_starter_pack_click", {})
-        if gumroad_event.get("role") != "revenue":
+        if gumroad_event and gumroad_event.get("role") != "revenue":
             issues.append("local funnel-events.json: luna_gumroad_pack_click should be revenue")
-        elif gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
+        elif gumroad_event and gumroad_event.get("count") != len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS):
             issues.append(
                 "local funnel-events.json: luna_gumroad_pack_click count should match product links "
                 f"{len(EXPECTED_LUNA_PRODUCTS) * len(LANG_PATHS)}, got {gumroad_event.get('count')}"
             )
         else:
             stats["funnel_revenue_events"] += 1
-        if starter_event.get("role") != "revenue":
+        if starter_event and starter_event.get("role") != "revenue":
             issues.append("local funnel-events.json: luna_starter_pack_click should be revenue")
-        elif starter_event.get("count") != len(LANG_PATHS):
+        elif starter_event and starter_event.get("count") != len(LANG_PATHS):
             issues.append(
                 "local funnel-events.json: luna_starter_pack_click count should match starter links "
                 f"{len(LANG_PATHS)}, got {starter_event.get('count')}"
@@ -406,16 +404,16 @@ def run(base_url: str) -> tuple[list[str], dict[str, int]]:
         stats["quiz_assets_checked"] += 1
         home_response = request_url(urljoin(base_url + "/", path.lstrip("/")))
         home_text = home_response.text
-        starter_markers = (
+        retired_starter_markers = (
             "data-quiz-luna-starter-link",
             "quiz_luna_starter_pack_click",
             "data-home-saved-luna-starter-link",
             "home_saved_luna_starter_pack_click",
             "/go/luna-starter-click/",
         )
-        missing_starter_markers = [marker for marker in starter_markers if marker not in home_text]
-        if missing_starter_markers:
-            issues.append(f"{path}: missing quiz Luna starter markers {', '.join(missing_starter_markers)}")
+        returned_starter_markers = [marker for marker in retired_starter_markers if marker in home_text]
+        if returned_starter_markers:
+            issues.append(f"{path}: retired quiz Luna starter markers returned {', '.join(returned_starter_markers)}")
         else:
             stats["quiz_luna_starter_templates_checked"] += 1
         results = data.get("results", {})

@@ -12,7 +12,7 @@
     "languages": 1,
     "guardians": 5,
     "commerceItems": 20,
-    "funnelEvents": 132,
+    "funnelEvents": 133,
     "coreFlows": 5
   },
   "publicIndexes": {
@@ -86,8 +86,7 @@
       "public_promotion_kit_platform_profile_verification_steps_checked=4",
       "public_promotion_kit_platform_profile_publish_gates_checked=3",
       "public_promotion_kit_issues=0",
-      "public_discovery_commerce_revenue_playbook_checked=4",
-      "public_discovery_commerce_item_playbook_links_checked=20"
+      "public_discovery_retired_machine_files_checked=7"
     ],
     "checkedBy": [
       "tools/site_quality_audit.py",

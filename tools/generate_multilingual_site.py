@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urldefrag, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
 from editorial_guides import (
@@ -77,13 +77,13 @@ NOINDEX_SUPPORT_PATHS = (
 )
 NOINDEX_PAGE_PATHS = (*NOINDEX_LAB_PATHS, *NOINDEX_COMMERCIAL_PATHS)
 RETIRED_PUBLIC_ASSET_PATHS = (
+    "/funnel-events.json",
     "/ai-discovery.json",
     "/commerce-catalog.json",
     "/promotion-kit.json",
     "/release.json",
     "/search-indexing.json",
     "/site-health.json",
-    "/funnel-events.json",
     "/compass-tool-20260707.js",
     "/compass-tool.js",
     "/compass-tool-review-20260801.js",
@@ -15318,6 +15318,13 @@ def lead_intake_form_script(lang: str) -> str:
 def contact_request_section(lang: str) -> str:
     if lang == "zh":
         return f"""
+<section class="section contact-request-section" id="luna-supply-request">
+  <div class="section-head"><div><p class="eyebrow">OWNED PRACTICE REQUEST</p><h2>提出守護者補給需求</h2></div></div>
+  <p class="section-intro">如果你想要未來的桌布、PDF、短儀式或其他自有練習素材，請寄送最少脈絡：守護者、使用情境與希望格式。不需要提供測驗答案、敏感個資或緊急求助內容。</p>
+  <div class="contact-request-note">
+    <a class="primary-btn" href="mailto:{CONTACT_EMAIL}?subject={quote('LoveTypes 守護者補給需求')}" data-funnel-event="contact_supply_mailto">提出補給需求</a>
+  </div>
+</section>
 <section class="section contact-request-section" id="site-repair-report">
   <div class="section-head"><div><p class="eyebrow">CONTENT CORRECTION</p><h2>回報內容、連結或可用性問題</h2></div></div>
   <p class="section-intro">請附上頁面網址、你看到的文字或操作、裝置與瀏覽器，以及預期結果。不要寄送測驗答案、伴侶私訊、身分證件、醫療紀錄或其他敏感資料。</p>
@@ -15850,6 +15857,7 @@ LoveTypes 提供自我理解與關係溝通練習，不是人格診斷、心理�
 ## 核心內容
 
 - 15 題測驗：{DOMAIN}/start/
+- 心語庭園地圖：{DOMAIN}/garden-map/
 - 關係溝通羅盤：{DOMAIN}/compass/
 - 深度指南：{DOMAIN}/guides/
 - 五位守護者：{DOMAIN}/characters/
@@ -15893,7 +15901,7 @@ Generator: tools/generate_multilingual_site.py
 Hosting: Cloudflare Pages
 Editorial method: {DOMAIN}/about/
 Safety: 僅供關係反思與溝通練習，不是治療、醫療、法律、診斷或緊急支援。
-Taiwan safety support: {DOMAIN}/contact/#urgent-safety-support
+Taiwan safety support: {DOMAIN}/contact/
 
 /* CORE ROUTES */
 Quiz: {DOMAIN}/start/
@@ -16633,6 +16641,29 @@ def collect_ai_discovery_index() -> dict:
         },
     ]
 
+    indexable_canonicals = {
+        page["canonical"]
+        for page in site_index["pages"]
+        if isinstance(page, dict) and isinstance(page.get("canonical"), str)
+    }
+
+    def is_indexable_site_url(value: str) -> bool:
+        return urldefrag(value)[0] in indexable_canonicals
+
+    canonical_fallbacks = {
+        "supply_routes": f"{DOMAIN}/characters/",
+        "luna_positioning": f"{DOMAIN}/lab/",
+        "keepsakes": f"{DOMAIN}/characters/",
+        "commercial_disclosure": f"{DOMAIN}/terms/",
+    }
+    for question in answerable_questions:
+        question["canonical"] = canonical_fallbacks.get(question["id"], question["canonical"])
+        question["supportingUrls"] = [
+            urldefrag(url)[0] if url.startswith(f"{DOMAIN}/") else url
+            for url in question.get("supportingUrls", [])
+            if not url.startswith(f"{DOMAIN}/") or is_indexable_site_url(url)
+        ]
+
     long_tail_priority_urls = [
         {
             "url": url,
@@ -16640,19 +16671,16 @@ def collect_ai_discovery_index() -> dict:
             "priority": round(0.92 - (index * 0.02), 2),
         }
         for index, (_slug, url, desc) in enumerate(long_tail_compatibility_urls())
+        if is_indexable_site_url(url)
     ]
     priority_urls = [
         {"url": f"{DOMAIN}/start/", "intent": "dedicated quiz campaign entrance for Shorts, SEO, and AI discovery", "priority": 1.0},
         {"url": f"{DOMAIN}/", "intent": "quiz and guardian recognition entrance", "priority": 1.0},
         {"url": f"{DOMAIN}/garden-map/", "intent": "human-readable Heart Garden route map", "priority": 0.95},
         {"url": f"{DOMAIN}/compass/", "intent": "LoveTypes Relationship Compass for love-language compatibility and optional birthdate rhythm", "priority": 0.95},
-        {"url": f"{DOMAIN}/tools/love-compatibility/", "intent": "relationship compatibility reflection with optional birth rhythm and a practical next step", "priority": 0.94},
         *long_tail_priority_urls,
         {"url": f"{DOMAIN}/characters/", "intent": "five guardian universe overview", "priority": 0.95},
-        {"url": f"{DOMAIN}/resources/", "intent": "guardian supply routes, affiliate disclosure, and purchase boundaries", "priority": 0.92},
         {"url": f"{DOMAIN}/repair-plan/", "intent": "free misfrequency repair tasks after quiz result", "priority": 0.9},
-        {"url": f"{DOMAIN}/keepsakes/", "intent": "free guardian keepsake lead magnet center", "priority": 0.86},
-        {"url": f"{DOMAIN}/luna-yoga-music/", "intent": "Luna night support and Gumroad conversion page", "priority": 0.86},
         {"url": f"{DOMAIN}/about/", "intent": "Heart Garden and brand explanation", "priority": 0.82},
         {"url": f"{DOMAIN}/theory/", "intent": "five love languages theory boundary", "priority": 0.8},
         {"url": f"{DOMAIN}/contact/", "intent": "email support, supply request, and repair report", "priority": 0.78},
@@ -17022,6 +17050,23 @@ def collect_promotion_kit() -> dict:
     calendar_path = base / "publishing-calendar.csv"
     tracker_path = base / "kpi-tracker.csv"
     scripts_path = base / "shorts-scripts.zh-TW.json"
+    source_paths = (calendar_path, tracker_path, scripts_path)
+    source_exists = tuple(path.is_file() for path in source_paths)
+    if not any(source_exists):
+        manifest_path = ROOT / "promotion-kit.json"
+        if not manifest_path.is_file():
+            raise FileNotFoundError(
+                "promotion sources are absent and tracked promotion-kit.json is missing"
+            )
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(manifest.get("publishingTasks"), list) or not isinstance(manifest.get("publishingCalendar"), list):
+            raise ValueError("tracked promotion-kit.json has no usable publishing manifest")
+        if len(manifest["publishingTasks"]) != len(manifest["publishingCalendar"]):
+            raise ValueError("tracked promotion-kit.json task/calendar counts differ")
+        return manifest
+    if not all(source_exists):
+        missing = ", ".join(str(path.relative_to(ROOT)) for path, exists in zip(source_paths, source_exists) if not exists)
+        raise FileNotFoundError(f"promotion source set is incomplete; missing: {missing}")
     campaigns = []
     with calendar_path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
@@ -17261,8 +17306,7 @@ def collect_promotion_profile_verification() -> dict:
             f"public_promotion_kit_platform_profile_verification_steps_checked={platform_count * verification_steps_per_platform}",
             f"public_promotion_kit_platform_profile_publish_gates_checked={platform_count * do_not_publish_gates_per_platform}",
             "public_promotion_kit_issues=0",
-            "public_discovery_commerce_revenue_playbook_checked=4",
-            "public_discovery_commerce_item_playbook_links_checked=20",
+            "public_discovery_retired_machine_files_checked=7",
         ],
         "checkedBy": [
             "tools/site_quality_audit.py",

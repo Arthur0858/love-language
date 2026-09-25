@@ -114,6 +114,9 @@ def collect_review_html_paths() -> set[str]:
     paths.update(
         {
             "404.html",
+            "resources/index.html",
+            "keepsakes/index.html",
+            "luna-yoga-music/index.html",
             *(f"lab/{report['slug']}/index.html" for report in generator.LAB_REPORTS),
             *(f"{route.strip('/')}/index.html" for route in generator.NOINDEX_COMMERCIAL_PATHS),
         }
@@ -246,6 +249,8 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
+    if rel_path == "luna-yoga-music/images/icon.webp":
+        return True
     if rel_path.endswith(".html") and rel_path not in REVIEW_HTML_PATHS:
         return True
     if rel_path.startswith("compass-data-") and rel_path != "compass-data-zh.js":

@@ -169,9 +169,15 @@ def main() -> int:
         pattern = rf"(?m)^{re.escape(support_path)}\n(?:  .+\n)*  X-Robots-Tag: noindex, follow$"
         if not re.search(pattern, headers_text):
             issues.append(f"public support file lacks noindex header rule: {support_path}")
-    for retired_header_path in ("/funnel-events.json", "/release.json"):
+    retired_machine_files = (
+        "/ai-discovery.json", "/commerce-catalog.json", "/funnel-events.json",
+        "/promotion-kit.json", "/release.json", "/search-indexing.json", "/site-health.json",
+    )
+    for retired_header_path in retired_machine_files:
         if re.search(rf"(?m)^{re.escape(retired_header_path)}$", headers_text):
             issues.append(f"retired support file retains a static header rule: {retired_header_path}")
+        if retired_header_path not in RETIRED_PUBLIC_ASSET_PATHS:
+            issues.append(f"retired support file missing from public 410 policy: {retired_header_path}")
 
     llms_text = (ROOT / "llms.txt").read_text(encoding="utf-8")
     humans_text = (ROOT / "humans.txt").read_text(encoding="utf-8")
@@ -687,6 +693,9 @@ def main() -> int:
         for route in expected
     } | {
         "404.html",
+        "resources/index.html",
+        "keepsakes/index.html",
+        "luna-yoga-music/index.html",
         *(f"lab/{report['slug']}/index.html" for report in LAB_REPORTS),
         *(f"{route.strip('/')}/index.html" for route in NOINDEX_COMMERCIAL_PATHS),
     }

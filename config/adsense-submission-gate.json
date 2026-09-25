@@ -58,10 +58,9 @@
       "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json"
     },
     "adsensePolicyCenterClear": {
-      "confirmed": false,
-      "checkedAt": "2026-09-25T12:10:02Z",
-      "evidence": "config/evidence/adsense-dashboard-readback-2026-09-25.json",
-      "reason": "AdSense Policy Center was not checked during this pass."
+      "confirmed": true,
+      "checkedAt": "2026-09-25T12:32:33Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-09-25.json"
     },
     "productionAuditGreen": {
       "confirmed": true,

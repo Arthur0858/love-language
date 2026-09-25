@@ -38,26 +38,70 @@ class Response:
 class InternalLink:
     url: str
     source_paths: tuple[str, ...]
+    anchor_evidence: tuple["AnchorEvidence", ...]
+
+
+@dataclass(frozen=True)
+class AnchorEvidence:
+    source_path: str
+    href: str
+    text: str
+    in_commercial_footer: bool
 
 
 class AnchorParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.hrefs: list[str] = []
+        self.anchors: list[tuple[str, str, bool]] = []
         self.ids: set[str] = set()
         self.canonical = ""
         self.robots = ""
+        self._tag_stack: list[tuple[str, bool]] = []
+        self._active_anchor: dict[str, object] | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
+        classes = set(data.get("class", "").split())
+        self._tag_stack.append((tag, "footer-commercial" in classes))
         if "id" in data and data["id"]:
             self.ids.add(data["id"])
         if tag == "a" and data.get("href"):
             self.hrefs.append(data["href"])
+            self._active_anchor = {
+                "href": data["href"],
+                "text": [],
+                "in_commercial_footer": any(is_footer for _tag, is_footer in self._tag_stack),
+            }
         elif tag == "link" and data.get("rel") == "canonical":
             self.canonical = data.get("href", "")
         elif tag == "meta" and data.get("name", "").lower() == "robots":
             self.robots = data.get("content", "")
+
+    def handle_data(self, data: str) -> None:
+        if self._active_anchor is not None:
+            text = self._active_anchor["text"]
+            if isinstance(text, list):
+                text.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "a" and self._active_anchor is not None:
+            href = self._active_anchor["href"]
+            text = self._active_anchor["text"]
+            in_commercial_footer = self._active_anchor["in_commercial_footer"]
+            if isinstance(href, str) and isinstance(text, list):
+                normalized_text = " ".join("".join(text).split())
+                self.anchors.append((href, normalized_text, bool(in_commercial_footer)))
+            self._active_anchor = None
+
+        for index in range(len(self._tag_stack) - 1, -1, -1):
+            if self._tag_stack[index][0] == tag:
+                del self._tag_stack[index:]
+                break
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
 
 def normalize_base_url(value: str) -> str:
@@ -140,6 +184,29 @@ def canonical_matches_target(canonical_url: str, target_url: str) -> bool:
     return strip_query_and_fragment(normalized_canonical) == strip_query_and_fragment(normalized_target)
 
 
+def allowed_noindex_internal_target(link: InternalLink, target_path: str) -> bool:
+    if target_path.startswith("/lab/") and target_path != "/lab/" and link.source_paths == ("/lab/",):
+        return True
+    if target_path != "/resources/":
+        return False
+
+    parsed = urlparse(link.url)
+    if parsed.query or parsed.fragment:
+        return False
+    evidence_by_source: dict[str, list[AnchorEvidence]] = {}
+    for evidence in link.anchor_evidence:
+        evidence_by_source.setdefault(evidence.source_path, []).append(evidence)
+    if set(evidence_by_source) != set(link.source_paths):
+        return False
+    return all(
+        len(evidence) == 1
+        and evidence[0].href == "/resources/"
+        and evidence[0].text == "延伸資源與商業揭露"
+        and evidence[0].in_commercial_footer
+        for evidence in evidence_by_source.values()
+    )
+
+
 def sitemap_urls(base_url: str) -> tuple[list[str], list[str]]:
     issues: list[str] = []
     response = request_url(urljoin(base_url + "/", "sitemap.xml"))
@@ -190,6 +257,7 @@ def should_skip_href(href: str) -> bool:
 def collect_internal_links(base_url: str, page_urls: list[str]) -> tuple[list[InternalLink], dict[str, AnchorParser], list[str], int]:
     issues: list[str] = []
     sources_by_url: dict[str, set[str]] = {}
+    anchors_by_url: dict[str, list[AnchorEvidence]] = {}
     page_parsers: dict[str, AnchorParser] = {}
     links_seen = 0
 
@@ -211,7 +279,7 @@ def collect_internal_links(base_url: str, page_urls: list[str]) -> tuple[list[In
         parser = parse_html(response)
         page_parsers[strip_fragment(normalize_check_url(response.final_url))] = parser
         source_path = public_path(response.final_url)
-        for href in parser.hrefs:
+        for href, anchor_text, in_commercial_footer in parser.anchors:
             if should_skip_href(href):
                 continue
             absolute = normalize_check_url(urljoin(response.final_url, href))
@@ -222,9 +290,16 @@ def collect_internal_links(base_url: str, page_urls: list[str]) -> tuple[list[In
                 continue
             links_seen += 1
             sources_by_url.setdefault(absolute, set()).add(source_path)
+            anchors_by_url.setdefault(absolute, []).append(
+                AnchorEvidence(source_path, href, anchor_text, in_commercial_footer)
+            )
 
     links = [
-        InternalLink(url=url, source_paths=tuple(sorted(source_paths)))
+        InternalLink(
+            url=url,
+            source_paths=tuple(sorted(source_paths)),
+            anchor_evidence=tuple(anchors_by_url.get(url, [])),
+        )
         for url, source_paths in sorted(sources_by_url.items())
     ]
     return links, page_parsers, issues, links_seen
@@ -282,8 +357,7 @@ def main() -> int:
             robots_tokens = {token.strip().lower() for token in target_parser.robots.split(",") if token.strip()}
             if "noindex" in robots_tokens:
                 target_path = urlparse(final_base).path
-                allowed_lab_evidence_link = target_path.startswith("/lab/") and target_path != "/lab/" and set(link.source_paths) == {"/lab/"}
-                if not allowed_lab_evidence_link:
+                if not allowed_noindex_internal_target(link, target_path):
                     sources = ", ".join(link.source_paths)
                     issues.append(f"{link.url}: internal HTML link should not target noindex page from {sources}")
             if target_parser.canonical:

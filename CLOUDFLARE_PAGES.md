@@ -92,7 +92,8 @@ A production deploy is not considered verified until all of these are true:
 - `python3 tools/public_deploy_smoke.py` returns `public_deploy_issues=0`.
 - `python3 tools/public_sitemap_smoke.py` returns `public_sitemap_issues=0`.
 - `python3 tools/site_health_summary.py` returns `site_health_status=ok`.
-- The `LoveTypes predeploy check` GitHub workflow for the pushed commit shows
-  `completed/success`, including the production public smoke steps on `main`.
+- The `LoveTypes build, deploy, and verify` GitHub workflow for the pushed
+  commit shows `completed/success`, including the Cloudflare deploy and
+  production public smoke steps on `main`.
 - `git status --short --branch` shows `main...origin/main` with no local
   changes after the intended commit has been pushed.

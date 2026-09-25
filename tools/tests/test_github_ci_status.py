@@ -59,6 +59,21 @@ class GitHubCiStatusTest(unittest.TestCase):
             issues,
         )
 
+    def test_successful_validation_and_failed_deploy_still_fail_workflow(self):
+        raw = (
+            current_workflow_block(ci.REQUIRED_WORKFLOWS[0], 103, "This job succeeded")
+            + '<svg aria-label="This job failed"></svg>'
+        )
+        workflow = ci.parse_workflows(raw)[ci.REQUIRED_WORKFLOWS[0]]
+        self.assertEqual(workflow["successJobs"], 1)
+        self.assertEqual(workflow["failedJobs"], 1)
+        self.assertFalse(workflow["succeeded"])
+
+    def test_legacy_workflow_name_does_not_satisfy_required_workflow(self):
+        raw = workflow_block("LoveTypes predeploy check", 104, "success")
+        issues = ci.workflow_issues(ci.parse_workflows(raw))
+        self.assertEqual(issues, [f"required GitHub workflow missing: {ci.REQUIRED_WORKFLOWS[0]}"])
+
     def test_running_workflow_is_rejected(self):
         raw = workflow_block(ci.REQUIRED_WORKFLOWS[0], 100, "running")
         workflows = ci.parse_workflows(raw)

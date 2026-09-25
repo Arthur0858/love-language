@@ -14,9 +14,9 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "Arthur0858/love-language"
-# GitHub's native Pages deployment can be attached to the preceding source commit.
-# Production deployment is verified separately by the Cloudflare evidence gate and public smokes.
-REQUIRED_WORKFLOWS = ("LoveTypes predeploy check",)
+# Require the workflow that validates and deploys the allowlisted Cloudflare Pages build.
+# GitHub Pages is a separate legacy redirect surface, not the production deployment signal.
+REQUIRED_WORKFLOWS = ("LoveTypes build, deploy, and verify",)
 RUN_RE = re.compile(
     rf'<a href="/{re.escape(REPOSITORY)}/actions/runs/(\d+)"[^>]*>.*?<span>(.*?)</span>',
     re.I | re.S,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-09-25T12:10:02Z",
+  "checkedAt": "2026-09-25T12:32:33Z",
   "timeZone": "Asia/Taipei",
   "site": "https://lovetypes.tw/",
   "source": "Authenticated Google AdSense UI readback in the owner's Chrome session",
@@ -15,11 +15,13 @@
     "reviewActionAvailable": true,
     "reviewCheckboxChecked": false,
     "reviewSubmitted": false,
-    "readback": "頁面仍顯示需要處理與缺乏價值的內容；複查核取方塊未勾選，未送出。"
+    "submissionRestrictionInterpretation": "No separate restriction banner was present; review action availability is based on the visible enabled button.",
+    "readback": "Site details still showed 需要處理 and 缺乏價值的內容; the review checkbox remained unchecked and no review was submitted."
   },
   "policyCenter": {
-    "status": "not_checked",
-    "issuesDetected": null,
-    "readback": "Policy Center 未在本次讀回中開啟，維持未確認。"
+    "status": "clear",
+    "issuesDetected": false,
+    "observedAt": "2026-09-25T12:32:33Z",
+    "readback": "目前沒有任何問題會導致網站停止放送廣告或放送量受限。"
   }
 }

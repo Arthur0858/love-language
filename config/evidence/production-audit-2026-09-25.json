@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-25T12:10:02Z",
+  "site": "https://lovetypes.tw/",
+  "reviewSurfaceCommit": "8fef8dfefdfd870d47b4671b3ee595ffacae82f9",
+  "auditToolingCommit": "fcad63fb8115fc413dca98a8796dd9dc5c5cbc0d",
+  "publicSurfaceUnchangedThroughAuditToolingCommit": true,
+  "cloudflareDeployment": {
+    "id": "9a6b3ad6-b6d4-4454-a24a-cbfe32bdf2bd",
+    "preview": "https://9a6b3ad6.lovetypes.pages.dev"
+  },
+  "automationDeployment": {
+    "githubActionsValidation": "success",
+    "githubActionsDeploy": "failed",
+    "reason": "Repository secret CLOUDFLARE_API_TOKEN is not configured; the same allowlisted dist was deployed locally through the authorized Cloudflare token file."
+  },
+  "productionChecks": {
+    "sitemapPages": 30,
+    "deploymentHtml": 42,
+    "deploymentFiles": 121,
+    "indexablePages": 30,
+    "noindexLabReports": 8,
+    "noindexCommercialPages": 3,
+    "retiredRoutes": 33,
+    "retiredAssets": 31,
+    "crawlerParityChecks": 60,
+    "headerCases": 73,
+    "visualPages": 84,
+    "visualScreenshots": 84,
+    "noScriptPages": 8,
+    "keyboardCases": 10,
+    "availabilityRounds": 3,
+    "availabilityRequests": 90,
+    "availabilityFailedRequests": 0,
+    "discoveryIssues": 0,
+    "editorialTrustIssues": 0,
+    "revenuePathIssues": 0,
+    "adsTxtUserAgentsChecked": 4,
+    "issues": 0
+  },
+  "commands": [
+    "python3 tools/predeploy_check.py --site-only",
+    "python3 tools/predeploy_check.py --visual-only",
+    "python3 tools/public_deploy_smoke.py",
+    "python3 tools/public_sitemap_smoke.py",
+    "python3 tools/public_indexability_smoke.py",
+    "python3 tools/public_headers_smoke.py",
+    "python3 tools/public_support_sync_smoke.py",
+    "python3 tools/public_adsense_review_smoke.py",
+    "python3 tools/public_discovery_smoke.py",
+    "python3 tools/public_availability_stability_smoke.py --rounds 3",
+    "python3 tools/public_editorial_trust_smoke.py",
+    "python3 tools/public_revenue_path_smoke.py"
+  ],
+  "result": "pass"
+}

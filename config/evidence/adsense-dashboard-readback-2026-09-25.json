@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-25T12:10:02Z",
+  "timeZone": "Asia/Taipei",
+  "site": "https://lovetypes.tw/",
+  "source": "Authenticated Google AdSense UI readback in the owner's Chrome session",
+  "dashboard": {
+    "siteStatus": "needs_attention",
+    "issue": "low_value_content",
+    "issueLabel": "缺乏價值的內容",
+    "adsTxtStatus": "not_found",
+    "adsTxtVisibleLabel": "找不到",
+    "adsTxtLastUpdatedAt": "2026-07-25T10:48:00+08:00",
+    "submissionRestrictionActive": false,
+    "reviewActionAvailable": true,
+    "reviewCheckboxChecked": false,
+    "reviewSubmitted": false,
+    "readback": "頁面仍顯示需要處理與缺乏價值的內容；複查核取方塊未勾選，未送出。"
+  },
+  "policyCenter": {
+    "status": "not_checked",
+    "issuesDetected": null,
+    "readback": "Policy Center 未在本次讀回中開啟，維持未確認。"
+  }
+}

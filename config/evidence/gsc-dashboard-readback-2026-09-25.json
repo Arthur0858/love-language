@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-25T12:10:02Z",
+  "timeZone": "Asia/Taipei",
+  "site": "https://lovetypes.tw/",
+  "source": "Authenticated Google Search Console UI readback in the owner's Chrome session",
+  "property": {
+    "id": "sc-domain:lovetypes.tw",
+    "access": "verified_owner",
+    "confirmed": true
+  },
+  "sitemap": {
+    "url": "https://lovetypes.tw/sitemap.xml",
+    "status": "success",
+    "submittedOn": "2026-09-25",
+    "lastReadOn": "2026-09-25",
+    "discoveredPages": 30,
+    "discoveredVideos": 0,
+    "accepted": true,
+    "readback": "The sitemap table showed status 成功 and 30 discovered pages after this submission."
+  },
+  "latestMaterialDeployment": {
+    "commit": "8fef8dfefdfd870d47b4671b3ee595ffacae82f9",
+    "commitCreatedAt": "2026-09-25T19:44:24+08:00",
+    "cloudflareDeployment": "9a6b3ad6-b6d4-4454-a24a-cbfe32bdf2bd",
+    "productionVerifiedAt": "2026-09-25T12:10:02Z",
+    "evidence": "config/evidence/production-audit-2026-09-25.json"
+  },
+  "urlInspection": {
+    "priorityRequestsAccepted": 8,
+    "postMaterialDeploymentRecrawledPages": 0,
+    "requestedUrls": [
+      "https://lovetypes.tw/",
+      "https://lovetypes.tw/start/",
+      "https://lovetypes.tw/guides/",
+      "https://lovetypes.tw/compass/",
+      "https://lovetypes.tw/lab/",
+      "https://lovetypes.tw/about/",
+      "https://lovetypes.tw/guides/physical-touch-consent-safety/",
+      "https://lovetypes.tw/guides/repair-after-conflict/"
+    ],
+    "interpretation": "Earlier indexing requests were accepted, but no post-deployment recrawl is confirmed."
+  },
+  "indexReport": {
+    "currentReviewSurfaceConfirmed": false,
+    "interpretation": "A post-deployment index report has not yet confirmed that legacy URLs have left Google's index."
+  },
+  "searchPerformance": {
+    "sevenDayWindow": {
+      "postMaterialDeploymentEditorialPagesWithImpressions": null
+    }
+  },
+  "manualActions": {
+    "observedAt": "2026-09-25T12:10:02Z",
+    "status": "clear",
+    "issuesDetected": false,
+    "readback": "未偵測到任何問題"
+  },
+  "securityIssues": {
+    "observedAt": "2026-09-25T12:10:02Z",
+    "status": "clear",
+    "issuesDetected": false,
+    "readback": "未偵測到任何問題"
+  },
+  "externalGates": {
+    "importantPagesRecrawledAfterMaterialDeployment": false,
+    "legacyUrlsLeavingIndex": false,
+    "gscPagesWithPostDeploymentImpressions": false
+  }
+}

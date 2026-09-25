@@ -8,63 +8,65 @@
   "externalGates": {
     "gscFullAccess": {
       "confirmed": true,
-      "checkedAt": "2026-08-02T07:03:49Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json"
     },
     "sitemapAccepted": {
       "confirmed": true,
-      "checkedAt": "2026-08-02T07:03:49Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json"
     },
     "importantPagesRecrawled": {
       "confirmed": false,
-      "checkedAt": "2026-08-02T07:03:49Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
-      "reason": "Eight priority indexing requests were accepted, but a request does not prove that Google has recrawled the deployed pages."
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json",
+      "reason": "Eight priority indexing requests were accepted, but no post-deployment recrawl is confirmed."
     },
     "legacyUrlsLeavingIndex": {
       "confirmed": false,
-      "checkedAt": "2026-08-02T07:03:49Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
-      "reason": "The available index report still predates the 2026-08-02 material deployment and cannot prove legacy URL exit."
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json",
+      "reason": "The post-deployment index report has not yet confirmed legacy URL exit."
     },
     "adsTxtRecognizedByAdsense": {
       "confirmed": false,
-      "checkedAt": "2026-08-01T13:24:44Z",
-      "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-09-25.json",
+      "reason": "AdSense still displays 找不到 for ads.txt."
     },
     "reviewActionAvailable": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T13:24:44Z",
-      "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-09-25.json"
     },
     "gscPagesWithImpressions": {
       "confirmed": false,
-      "checkedAt": "2026-08-02T07:03:49Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json",
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json",
       "value": 0,
       "minimum": 5,
-      "reason": "No editorial-page impressions are yet proven after the 2026-08-02 material deployment."
+      "reason": "No post-deployment GSC performance window yet proves impressions on at least five editorial pages."
     },
     "gscManualActionsClear": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T15:56:42Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json"
     },
     "gscSecurityIssuesClear": {
       "confirmed": true,
-      "checkedAt": "2026-08-01T15:56:42Z",
-      "evidence": "config/evidence/gsc-dashboard-readback-2026-08-02.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/gsc-dashboard-readback-2026-09-25.json"
     },
     "adsensePolicyCenterClear": {
-      "confirmed": true,
-      "checkedAt": "2026-08-01T15:56:42Z",
-      "evidence": "config/evidence/adsense-dashboard-readback-2026-08-01.json"
+      "confirmed": false,
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/adsense-dashboard-readback-2026-09-25.json",
+      "reason": "AdSense Policy Center was not checked during this pass."
     },
     "productionAuditGreen": {
       "confirmed": true,
-      "checkedAt": "2026-08-02T06:41:55Z",
-      "evidence": "config/evidence/production-audit-2026-08-02.json"
+      "checkedAt": "2026-09-25T12:10:02Z",
+      "evidence": "config/evidence/production-audit-2026-09-25.json"
     }
   }
 }

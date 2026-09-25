@@ -1413,6 +1413,7 @@ def render_section(name: str, code: int, values: dict[str, str]) -> list[str]:
         "public_garden_map_tool_cards_checked",
         "public_garden_map_guardian_cards_checked",
         "public_garden_map_guide_cards_checked",
+        "public_garden_map_decision_cards_checked",
         "public_garden_map_trust_cards_checked",
         "public_garden_map_boundary_sections_checked",
         "public_guide_index_pages_checked",

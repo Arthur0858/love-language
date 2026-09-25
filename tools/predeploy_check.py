@@ -189,6 +189,7 @@ PYTHON_TOOLS = [
     "tools/site_health_config_audit.py",
     "tools/site_health_summary.py",
     "tools/deploy_cloudflare_pages.py",
+    "tools/build_review_dist.py",
     "tools/deploy_manifest_audit.py",
 ]
 
@@ -279,6 +280,7 @@ def main() -> int:
     if not args.visual_only:
         run_step("python compile", [sys.executable, "-m", "py_compile", *PYTHON_TOOLS])
         run_step("generated freshness", [sys.executable, "tools/check_generated_fresh.py"])
+        run_step("allowlisted production dist", [sys.executable, "tools/build_review_dist.py"])
         if args.site_only:
             run_step("AdSense review surface audit", [sys.executable, "tools/adsense_review_surface_audit.py"])
             run_step(

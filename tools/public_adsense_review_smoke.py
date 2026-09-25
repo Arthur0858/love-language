@@ -24,6 +24,7 @@ from adsense_review_surface_audit import (
     schema_types,
     schemas,
 )
+from editorial_guides import GUIDE_UPDATED_BY_SLUG
 from generate_multilingual_site import (
     CSS_ASSET,
     COMPASS_UPDATED,
@@ -33,8 +34,11 @@ from generate_multilingual_site import (
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     MACHINE_READABLE_UPDATED,
+    NOINDEX_COMMERCIAL_PATHS,
     QUIZ_DATA_ASSETS,
     RETIRED_PUBLIC_ASSET_PATHS,
+    lastmod_for_path,
+    site_index_paths,
 )
 
 
@@ -220,6 +224,14 @@ def page_issues(route: str, response: Response) -> list[str]:
                     issues.append(f"{route}: schema {field} must be Organization")
             if route in {"/about/", "/contact/"} and item.get("mainEntity", {}).get("@type") != "Organization":
                 issues.append(f"{route}: schema mainEntity must be Organization")
+    guide_slug = route.removeprefix("/guides/").strip("/") if route.startswith("/guides/") else ""
+    if guide_slug in GUIDE_UPDATED_BY_SLUG:
+        updated = GUIDE_UPDATED_BY_SLUG[guide_slug]
+        if f'datetime="{updated}"' not in raw or f"內容更新：{updated}" not in raw:
+            issues.append(f"{route}: visible article update date mismatch")
+        article_schemas = [item for item in schemas(raw) if "Article" in schema_types(item)]
+        if len(article_schemas) != 1 or article_schemas[0].get("dateModified") != updated:
+            issues.append(f"{route}: article schema dateModified mismatch")
     if route == "/terms/":
         updated = CORE_EDITORIAL_TRUST[route][0]
         if f"更新日期 {updated}" not in raw or f"更新日期:</strong> {updated}" not in raw:
@@ -251,8 +263,14 @@ def main() -> int:
         issues.append(f"/sitemap.xml: expected 30 unique URLs, got {len(urls)}")
     if any(not url.startswith(CANONICAL_BASE + "/") for url in urls):
         issues.append("/sitemap.xml: contains a non-production or non-zh URL")
-    if sitemap_lastmods.get(CANONICAL_BASE + "/") != HOME_UPDATED:
-        issues.append("/sitemap.xml: homepage lastmod mismatch")
+    expected_routes = {"/" if path == "" else f"/{path}/" for path in site_index_paths("zh")}
+    if set(routes) != expected_routes:
+        issues.append("/sitemap.xml: routes differ from the approved Traditional Chinese site index")
+    for route in routes:
+        expected_lastmod = lastmod_for_path(route.strip("/"))
+        actual_lastmod = sitemap_lastmods.get(CANONICAL_BASE + route)
+        if actual_lastmod != expected_lastmod:
+            issues.append(f"{route}: sitemap lastmod should be {expected_lastmod}, got {actual_lastmod!r}")
 
     browser_responses: dict[str, Response] = {}
     with ThreadPoolExecutor(max_workers=8) as pool:
@@ -339,8 +357,38 @@ def main() -> int:
     except json.JSONDecodeError:
         issues.append("/safety-index.json: invalid JSON")
 
-    for route in ("/resources/", "/luna-yoga-music/", "/keepsakes/", "/luna/", "/go/luna-starter-click/"):
-        response = request(route)
+    for route in NOINDEX_COMMERCIAL_PATHS:
+        response = request(route, follow=False)
+        if response.status != 200:
+            issues.append(f"{route}: expected 200 noindex commercial page, got {response.status}")
+            continue
+        raw = response.text
+        signature = page_signature(response)
+        if signature["canonical"] != CANONICAL_BASE + route:
+            issues.append(f"{route}: commercial page must have a self-canonical")
+        if "noindex" not in str(signature["robots"]) or "follow" not in str(signature["robots"]):
+            issues.append(f"{route}: robots meta must include noindex, follow")
+        x_robots = {token.strip().lower() for token in response.header("X-Robots-Tag").split(",") if token.strip()}
+        if not {"noindex", "follow"}.issubset(x_robots):
+            issues.append(f"{route}: X-Robots-Tag must include noindex, follow")
+        if len(str(signature["main"])) < 400:
+            issues.append(f"{route}: commercial page main content is unexpectedly thin")
+        if route == "/resources/" and (
+            "affiliate-disclosure" not in raw or "免費" not in str(signature["main"])
+        ):
+            issues.append(f"{route}: affiliate disclosure or free alternatives missing")
+        if route == "/luna-yoga-music/":
+            for marker in ("Gumroad", "US$", "退費", "可下載音檔", "免費聆聽", "不承諾療效"):
+                if marker not in str(signature["main"]):
+                    issues.append(f"{route}: commercial disclosure missing {marker}")
+            if "gumroad.com/help/article/190-how-do-i-get-a-refund.html" not in raw:
+                issues.append(f"{route}: Gumroad refund guidance link missing")
+        if route == "/keepsakes/":
+            if any(host in raw.lower() for host in COMMERCE_HOSTS) or "US$" in str(signature["main"]):
+                issues.append(f"{route}: keepsakes must not expose paid purchase calls to action")
+
+    for route in ("/luna/", "/go/luna-starter-click/"):
+        response = request(route, follow=False)
         if response.status != 410 or "noindex" not in response.header("X-Robots-Tag").lower():
             issues.append(f"{route}: expected 410 with X-Robots-Tag noindex")
 

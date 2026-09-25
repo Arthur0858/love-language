@@ -101,6 +101,21 @@
   Cache-Control: public, max-age=0, must-revalidate
   X-Robots-Tag: noindex, follow
 
+/resources/
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/luna-yoga-music/
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/keepsakes/
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex, follow
+
 /assets/*
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable

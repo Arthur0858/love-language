@@ -32,9 +32,6 @@ const RETIRED_PATHS = new Set([
   "/tools/silent-treatment-relationship/",
   "/tools/taken-for-granted-relationship/",
   "/tools/trust-issues-relationship/",
-  "/resources/",
-  "/luna-yoga-music/",
-  "/keepsakes/",
   "/luna/",
   "/go/luna-starter-click/"
 ]);
@@ -108,6 +105,16 @@ export default {
       return retiredResponse("This LoveTypes page has been retired.");
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    if (response.status === 404) {
+      const headers = new Headers(response.headers);
+      headers.set("X-Robots-Tag", "noindex, follow");
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+    return response;
   },
 };

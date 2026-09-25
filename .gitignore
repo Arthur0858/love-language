@@ -4,6 +4,7 @@ AUDIT_REPORT.md
 *.bat
 docs/
 output/
+dist/
 node_modules
 node_modules/
 .playwright-cli/

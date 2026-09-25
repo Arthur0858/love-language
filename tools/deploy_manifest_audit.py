@@ -9,6 +9,8 @@ import sys
 from urllib.parse import urlparse
 from pathlib import Path
 
+import build_review_dist
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEPLOY_SCRIPT = ROOT / "tools" / "deploy_cloudflare_pages.py"
@@ -100,7 +102,9 @@ def declared_index_and_support_files() -> set[str]:
     support_files = site_health.get("supportFiles") if isinstance(site_health, dict) else None
     if isinstance(support_files, list):
         required.update(value for value in support_files if isinstance(value, str) and value)
-    return required
+    generator = load_generator_module()
+    retired = {path.lstrip("/") for path in generator.RETIRED_PUBLIC_ASSET_PATHS}
+    return required - retired
 
 
 def deployment_special_upload_files() -> set[str]:
@@ -134,6 +138,8 @@ def main() -> int:
             "review HTML allowlist drift: "
             f"missing={sorted(expected_html-manifest_html)} extra={sorted(manifest_html-expected_html)}"
         )
+    if len(manifest_html) != 42:
+        issues.append(f"deployment must contain exactly 42 HTML files, got {len(manifest_html)}")
 
     missing_public_support = sorted(set(deploy.PUBLIC_SUPPORT_FILES) - required_files)
     if missing_public_support:
@@ -177,16 +183,7 @@ def main() -> int:
         )
 
     routes = json.loads((ROOT / "_routes.json").read_text(encoding="utf-8"))
-    expected_route_includes = {"/tools/love-compatibility*"} | {
-        f"/tools/{slug}*"
-        for slug in generator.LONG_TAIL_COMPATIBILITY_PAGES
-    } | {
-        f"/guides/{slug}*"
-        for slug, _title, _desc, _target in generator.LEGACY_ZH_GUIDES
-    } | {
-        f"{path.rstrip('/')}*"
-        for path in generator.COMMERCIAL_RETIRED_PATHS
-    } | set(generator.RETIRED_PUBLIC_ASSET_PATHS)
+    expected_route_includes = {"/*"}
     if routes.get("version") != 1 or set(routes.get("include", [])) != expected_route_includes or routes.get("exclude") != []:
         issues.append("Pages Function route allowlist does not match retired review paths")
 
@@ -207,6 +204,13 @@ def main() -> int:
     for required_worker_signal in ('status: 410', '"X-Robots-Tag": "noindex, nofollow"', 'path === "/tools/love-compatibility/"', '301'):
         if required_worker_signal not in worker:
             issues.append(f"Pages Function missing required behavior: {required_worker_signal}")
+
+    try:
+        dist_summary = build_review_dist.verify_dist(ROOT / "dist")
+        if dist_summary["html"] != 42:
+            issues.append(f"dist must contain exactly 42 HTML files, got {dist_summary['html']}")
+    except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as error:
+        issues.append(f"dist verification failed: {error}")
 
     headers = (ROOT / "_headers").read_text(encoding="utf-8")
     missing_noindex_support_headers = sorted(

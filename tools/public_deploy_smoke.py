@@ -22,8 +22,8 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE_URL = "https://lovetypes.tw"
 EXPECTED_SITEMAP_URLS = len(json.loads((ROOT / "site-index.json").read_text(encoding="utf-8"))["pages"])
-EXPECTED_HREFLANGS = ("zh-TW", "en", "ja", "ko", "es", "x-default")
-LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+EXPECTED_HREFLANGS = ("zh-TW", "x-default")
+LOCALE_PREFIXES = {"zh-TW": ""}
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 LOCAL_HOSTS = {"lovetypes.tw", "www.lovetypes.tw"}
 AFFILIATE_DISCLOSURE_SNIPPET = "本頁部分連結為聯盟行銷連結"
@@ -70,12 +70,12 @@ PUBLIC_PATHS = [
 ]
 EXPECTED_TEXT = {
     "/": "LoveTypes 情感守護者宇宙",
-    "/start/": "五種愛之語測驗入口",
+    "/start/": "五種愛之語測驗｜15 題、2 分鐘、免註冊",
     "/characters/": "五位情感守護者總覽",
     "/resources/": "旅人補給",
     "/repair-plan/": "7 日心語修復計畫",
     "/luna-yoga-music/": "Luna Yoga Music",
-    "/guides/words-of-affirmation-scripts/": "肯定言詞的具體句型",
+    "/guides/words-of-affirmation-scripts/": "肯定言詞怎麼說？12 個伴侶可直接使用的句型",
     "/keepsakes/": "守護者收藏室",
     "/contact/": "contact@lovetypes.tw",
     "/garden-map/": "心語庭園地圖",
@@ -134,7 +134,6 @@ EXPECTED_HREF_TARGETS = {
         for target in (f"/en/resources/#supply-{slug}", f"/en/repair-plan/#plan-{slug}")
     ),
     "/resources/": ("/#quiz-section", "#supply-routes", "/luna-yoga-music/", *(f"#supply-{slug}" for slug in GUARDIAN_SLUGS)),
-    "/repair-plan/": tuple(f"/resources/#supply-{slug}" for slug in GUARDIAN_SLUGS),
     "/luna-yoga-music/": tuple(
         target
         for slug in GUARDIAN_SLUGS
@@ -224,7 +223,6 @@ EXPECTED_HREF_TARGETS = {
     ),
 }
 REDIRECTS = {
-    "/luna/": "/luna-yoga-music/",
     "/images/characters/iris.webp": "/assets/lovetypes/guardians/iris.webp",
     "/images/characters/noah.webp": "/assets/lovetypes/guardians/noah.webp",
     "/images/characters/vivian.webp": "/assets/lovetypes/guardians/vivian.webp",
@@ -241,10 +239,6 @@ REDIRECTS = {
     "/assets/lovetypes/backgrounds/quiz-desk.webp": "/assets/lovetypes/backgrounds/guardian-garden-desktop.webp",
     "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp": "/assets/lovetypes/backgrounds/guardian-garden-mobile.webp",
     "/og-cover.webp": "/og-cover.jpg",
-    "/en/luna/": "/en/luna-yoga-music/",
-    "/ja/luna/": "/ja/luna-yoga-music/",
-    "/ko/luna/": "/ko/luna-yoga-music/",
-    "/es/luna/": "/es/luna-yoga-music/",
 }
 DEDICATED_SUPPORT_FILES = {"/sitemap.xml", "/feed.xml"}
 
@@ -409,7 +403,6 @@ NOT_FOUND_REQUIRED_TEXT = [
     "這盞燈暫時不在地圖上",
     "/#quiz-section",
     "/characters/",
-    "/resources/",
     "/contact/",
 ]
 SITEMAP_NS = {
@@ -437,14 +430,6 @@ QUIZ_DATA_REQUIRED_MARKERS = (
     "data-garden-map-saved",
     "data-contact-saved",
 )
-CONTACT_FUNNEL_MARKERS = (
-    "data-contact-resume-send",
-    "data-contact-resume-copy",
-    "data-contact-resume-route",
-    "data-contact-resume-luna",
-    "data-contact-resume-keepsake",
-    "data-contact-resume-plan",
-)
 RESOURCE_SUPPLY_SAFETY_MARKERS = (
     ("supply compass", 'class="section supply-compass"'),
     ("starter kit", 'class="section starter-kit-section"'),
@@ -460,11 +445,11 @@ GARDEN_MAP_SECTION_MARKERS = (
     "data-garden-map-routes",
     "data-garden-map-tools",
     "data-garden-map-guardians",
-    "data-garden-map-guides",
+    "data-garden-map-decisions",
     "data-garden-map-trust",
 )
 GARDEN_MAP_EXPECTED_GUARDIAN_CARDS = len(GUARDIAN_SLUGS)
-GARDEN_MAP_EXPECTED_GUIDE_CARDS = 12
+GARDEN_MAP_EXPECTED_DECISION_CARDS = 5
 GARDEN_MAP_EXPECTED_ROUTE_CARDS = 4
 
 
@@ -479,6 +464,50 @@ def load_generator_config():
 
 
 GENERATOR_CONFIG = load_generator_config()
+PUBLIC_INDEX_PATHS = [page["path"] for page in json.loads((ROOT / "site-index.json").read_text(encoding="utf-8"))["pages"]]
+NOINDEX_PUBLIC_PATHS = [*GENERATOR_CONFIG.NOINDEX_LAB_PATHS, *GENERATOR_CONFIG.NOINDEX_COMMERCIAL_PATHS]
+PUBLIC_PATHS = [*PUBLIC_INDEX_PATHS, *NOINDEX_PUBLIC_PATHS]
+RETIRED_MACHINE_PATHS = (
+    "/search-indexing.json",
+    "/release.json",
+    "/commerce-catalog.json",
+    "/ai-discovery.json",
+    "/site-health.json",
+    "/promotion-kit.json",
+)
+EXPECTED_TEXT.update({
+    "/compass/": "情侶愛之語不同怎麼辦？先把錯頻說清楚",
+    "/resources/": "旅人補給",
+    "/luna-yoga-music/": "Luna Yoga Music",
+    "/keepsakes/": "守護者收藏室",
+})
+EXPECTED_HREF_TARGETS = {
+    "/characters/": ("/#quiz-section", "#guardian-map"),
+    "/resources/": ("/#quiz-section", "#supply-routes", "/luna-yoga-music/", *(f"#supply-{slug}" for slug in GUARDIAN_SLUGS)),
+    "/guides/words-of-affirmation-scripts/": (
+        "/characters/iris/",
+        "/repair-plan/#plan-iris",
+        "/compass/",
+    ),
+    "/about/": ("/#quiz-section", "/characters/", "/guides/", "/contact/"),
+    "/theory/": ("/#quiz-section", "/characters/", "/repair-plan/"),
+    "/garden-map/": (
+        "/#quiz-section", "/characters/", "/repair-plan/", "/guides/", "/about/", "/theory/", "/contact/", "/privacy/"
+    ),
+}
+SUPPORT_FILES = {
+    "/robots.txt": ["User-agent: *", "Allow: /", "Sitemap: https://lovetypes.tw/sitemap.xml"],
+    "/ads.txt": ["google.com", "DIRECT", "f08c47fec0942fa0"],
+    "/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
+    "/.well-known/security.txt": ["Contact: mailto:contact@lovetypes.tw", "Policy: https://lovetypes.tw/privacy/"],
+    "/llms.txt": ["# LoveTypes 情感守護者宇宙", "主要語言：繁體中文", "https://lovetypes.tw/about/", "https://lovetypes.tw/start/", "https://lovetypes.tw/lab/"],
+    "/humans.txt": ["/* TEAM */", "Team: LoveTypes 內容編輯團隊", "Primary language: zh-TW", "Editorial method: https://lovetypes.tw/about/"],
+    "/site.webmanifest": ['"name": "LoveTypes 情感守護者宇宙"', '"start_url": "/"', '"display": "standalone"', '"/start/"', '"/characters/"'],
+    "/site-index.json": ['"schemaVersion": 1', '"production": "https://lovetypes.tw/"', '"totals"', '"pages": ['],
+    "/guardian-profiles.json": ['"schemaVersion": 1', '"slug": "iris"', '"slug": "noah"', '"slug": "vivian"', '"slug": "claire"', '"slug": "dora"'],
+    "/safety-index.json": ['"schemaVersion": 1', '"reflection_not_diagnosis"', '"urgent_risk_first"', '"110"', '"113"', '"1925"'],
+}
+EXPECTED_SUPPORT_FILE_COUNT = len(SUPPORT_FILES) + len(DEDICATED_SUPPORT_FILES)
 CURRENT_STATIC_ASSETS = {
     "css": GENERATOR_CONFIG.CSS_ASSET,
     "interactions": GENERATOR_CONFIG.INTERACTIONS_ASSET,
@@ -851,7 +880,7 @@ def check_sitemap(response: Response) -> tuple[list[str], int, int, int]:
         issues.append(f"{path}: expected {EXPECTED_SITEMAP_URLS} sitemap URLs, found {len(locs)}")
     total_alternates = sum(len(node.findall("xhtml:link", SITEMAP_NS)) for node in urls)
     checked_alternates = 0
-    for expected in (public_url_for_path(path) for path in PUBLIC_PATHS):
+    for expected in (public_url_for_path(path) for path in PUBLIC_INDEX_PATHS):
         if expected not in locs:
             issues.append(f"{path}: missing sitemap URL {expected}")
             continue
@@ -972,7 +1001,7 @@ def main() -> int:
     public_characters_universe_map_cards_checked = 0
     public_garden_map_sections_checked = 0
     public_garden_map_guardian_cards_checked = 0
-    public_garden_map_guide_cards_checked = 0
+    public_garden_map_decision_cards_checked = 0
     public_garden_map_route_cards_checked = 0
     public_supply_safety_sections_checked = 0
     public_supply_starter_cards_checked = 0
@@ -1037,11 +1066,11 @@ def main() -> int:
                 issues.append(
                     f"{path}: expected {GARDEN_MAP_EXPECTED_GUARDIAN_CARDS} garden map guardian cards, found {garden_guardian_card_count}"
                 )
-            garden_guide_card_count = response.text.count('class="content-card"')
-            public_garden_map_guide_cards_checked += garden_guide_card_count
-            if garden_guide_card_count != GARDEN_MAP_EXPECTED_GUIDE_CARDS:
+            garden_decision_card_count = response.text.count('class="garden-map-route-card garden-map-decision-card"')
+            public_garden_map_decision_cards_checked += garden_decision_card_count
+            if garden_decision_card_count != GARDEN_MAP_EXPECTED_DECISION_CARDS:
                 issues.append(
-                    f"{path}: expected {GARDEN_MAP_EXPECTED_GUIDE_CARDS} garden map guide cards, found {garden_guide_card_count}"
+                    f"{path}: expected {GARDEN_MAP_EXPECTED_DECISION_CARDS} garden map decision cards, found {garden_decision_card_count}"
                 )
             garden_route_card_count = response.text.count('class="garden-map-route-card"')
             public_garden_map_route_cards_checked += garden_route_card_count
@@ -1093,10 +1122,17 @@ def main() -> int:
         public_jsonld_entities_checked += jsonld_entities_checked
         public_robots_checked += 1
         robots_tokens = {token.strip().lower() for token in assets.robots.split(",") if token.strip()}
-        if "noindex" in robots_tokens:
-            issues.append(f"{path}: public smoke page should not be noindex")
-        if "index" not in robots_tokens or "follow" not in robots_tokens:
-            issues.append(f"{path}: robots should include index, follow; got {assets.robots!r}")
+        if path in NOINDEX_PUBLIC_PATHS:
+            if "noindex" not in robots_tokens or "follow" not in robots_tokens:
+                issues.append(f"{path}: robots should include noindex, follow; got {assets.robots!r}")
+            x_robots = {token.strip().lower() for token in response.headers.get("x-robots-tag", "").split(",") if token.strip()}
+            if "noindex" not in x_robots or "follow" not in x_robots:
+                issues.append(f"{path}: X-Robots-Tag should include noindex, follow; got {response.headers.get('x-robots-tag', '')!r}")
+        else:
+            if "noindex" in robots_tokens:
+                issues.append(f"{path}: public indexable page should not be noindex")
+            if "index" not in robots_tokens or "follow" not in robots_tokens:
+                issues.append(f"{path}: robots should include index, follow; got {assets.robots!r}")
         public_lang_checked += 1
         expected_lang = expected_html_lang(path)
         if assets.html_lang != expected_lang:
@@ -1150,7 +1186,7 @@ def main() -> int:
             )
         else:
             public_current_asset_refs_checked += 1
-        expected_affiliate_count = 1 if path.endswith("/resources/") else 0
+        expected_affiliate_count = 0
         if len(versioned_affiliate) != expected_affiliate_count:
             issues.append(f"{path}: expected {expected_affiliate_count} versioned affiliate JS asset(s), found {versioned_affiliate}")
         elif expected_affiliate_count and versioned_affiliate[0] != CURRENT_STATIC_ASSETS["affiliate"]:
@@ -1168,11 +1204,6 @@ def main() -> int:
         elif expected_quiz_data:
             public_current_asset_refs_checked += 1
 
-        if path.endswith("/contact/"):
-            for marker in CONTACT_FUNNEL_MARKERS:
-                if marker not in response.text:
-                    issues.append(f"{path}: contact saved-result funnel marker missing {marker}")
-
         page_asset_refs.extend([*versioned_stylesheets, *versioned_interactions, *versioned_affiliate, *versioned_quiz_data])
 
     for source, target in REDIRECTS.items():
@@ -1188,6 +1219,15 @@ def main() -> int:
             issues.append(f"{source}: expected 301 redirect, got {response.status}")
         if location not in expected_locations:
             issues.append(f"{source}: expected redirect to {target}, got {location!r}")
+
+    for path in RETIRED_MACHINE_PATHS:
+        response = request_url(urljoin(base_url, path), follow_redirects=False)
+        redirects_checked += 1
+        if response.status != 410:
+            issues.append(f"{path}: expected HTTP 410, got {response.status}")
+        robots_header = {token.strip().lower() for token in response.headers.get("x-robots-tag", "").split(",") if token.strip()}
+        if not {"noindex", "nofollow"}.issubset(robots_header):
+            issues.append(f"{path}: expected X-Robots-Tag noindex, nofollow, got {response.headers.get('x-robots-tag', '')!r}")
 
     not_found_response = request_url(urljoin(base_url, NOT_FOUND_PATH))
     not_found_checked += 1
@@ -1269,7 +1309,7 @@ def main() -> int:
     print(f"public_characters_universe_map_cards_checked={public_characters_universe_map_cards_checked}")
     print(f"public_garden_map_sections_checked={public_garden_map_sections_checked}")
     print(f"public_garden_map_guardian_cards_checked={public_garden_map_guardian_cards_checked}")
-    print(f"public_garden_map_guide_cards_checked={public_garden_map_guide_cards_checked}")
+    print(f"public_garden_map_decision_cards_checked={public_garden_map_decision_cards_checked}")
     print(f"public_garden_map_route_cards_checked={public_garden_map_route_cards_checked}")
     print(f"public_supply_safety_sections_checked={public_supply_safety_sections_checked}")
     print(f"public_supply_starter_cards_checked={public_supply_starter_cards_checked}")
@@ -1289,6 +1329,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    from public_adsense_review_smoke import main as review_main
-
-    sys.exit(review_main())
+    sys.exit(main())

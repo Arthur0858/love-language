@@ -26,6 +26,9 @@ DEFAULT_BRANCH = "main"
 DEFAULT_TOKEN_FILE = Path.home() / ".config" / "lovetypes" / "cloudflare-pages.token"
 DEFAULT_VERIFY_PATHS = [
     "/",
+    "/resources/",
+    "/luna-yoga-music/",
+    "/keepsakes/",
     "/characters/iris/",
     "/lab/",
     "/repair-plan/",
@@ -65,6 +68,7 @@ EXCLUDED_DIR_NAMES = {
     "__pycache__",
     "config",
     "docs",
+    "dist",
     "node_modules",
     "output",
 }
@@ -111,6 +115,7 @@ def collect_review_html_paths() -> set[str]:
         {
             "404.html",
             *(f"lab/{report['slug']}/index.html" for report in generator.LAB_REPORTS),
+            *(f"{route.strip('/')}/index.html" for route in generator.NOINDEX_COMMERCIAL_PATHS),
         }
     )
     return paths
@@ -135,7 +140,7 @@ class FileEntry:
 def parse_args() -> argparse.Namespace:
     repo_root = Path(__file__).resolve().parent.parent
     parser = argparse.ArgumentParser(description="Deploy LoveTypes static output to Cloudflare Pages.")
-    parser.add_argument("--site-dir", default=str(repo_root), help="Static site directory. Defaults to repo root.")
+    parser.add_argument("--site-dir", default=str(repo_root / "dist"), help="Built site directory. Defaults to dist/.")
     parser.add_argument(
         "--account-id",
         default=os.environ.get("CLOUDFLARE_ACCOUNT_ID", DEFAULT_ACCOUNT_ID),
@@ -211,12 +216,15 @@ def detect_git_metadata(
     commit_message_override: str | None,
     commit_dirty_override: str | None,
 ) -> tuple[str | None, str | None, str]:
-    commit_hash = commit_hash_override or run_git(site_dir, "rev-parse", "HEAD")
-    commit_message = commit_message_override or run_git(site_dir, "log", "-1", "--pretty=%s")
+    git_dir = site_dir
+    while git_dir.parent != git_dir and not (git_dir / ".git").exists():
+        git_dir = git_dir.parent
+    commit_hash = commit_hash_override or run_git(git_dir, "rev-parse", "HEAD")
+    commit_message = commit_message_override or run_git(git_dir, "log", "-1", "--pretty=%s")
     if commit_dirty_override is not None:
         commit_dirty = commit_dirty_override
     else:
-        porcelain = run_git(site_dir, "status", "--porcelain") or ""
+        porcelain = run_git(git_dir, "status", "--porcelain") or ""
         commit_dirty = "true" if porcelain else "false"
     return commit_hash, commit_message, commit_dirty
 
@@ -238,8 +246,6 @@ def hash_file(path: Path) -> str:
 
 
 def should_skip_file(rel_path: str) -> bool:
-    if rel_path.startswith("luna-yoga-music/"):
-        return True
     if rel_path.endswith(".html") and rel_path not in REVIEW_HTML_PATHS:
         return True
     if rel_path.startswith("compass-data-") and rel_path != "compass-data-zh.js":

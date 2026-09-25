@@ -1,4 +1,4 @@
-name: LoveTypes predeploy check
+name: LoveTypes build, deploy, and verify
 
 on:
   push:
@@ -8,10 +8,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: lovetypes-production-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  predeploy-check:
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
@@ -36,6 +43,12 @@ jobs:
           npm install --no-save --no-package-lock playwright
           npx playwright install --with-deps chromium
 
+      - name: Generate published site
+        run: python tools/generate_multilingual_site.py
+
+      - name: Require generated files committed
+        run: git diff --exit-code
+
       - name: Run structural predeploy checks
         run: python tools/predeploy_check.py --site-only
 
@@ -47,32 +60,87 @@ jobs:
           python tools/predeploy_check.py --visual-only 2>&1 | tee output/predeploy-check.log
           test ${PIPESTATUS[0]} -eq 0
 
-      - name: Run production public smoke
-        if: github.event_name == 'push'
+      - name: Remove local manifest marker before upload
+        run: rm -f dist/.lovetypes-dist-manifest.json
+
+      - name: Upload exact production allowlist
+        uses: actions/upload-artifact@v4
+        with:
+          name: lovetypes-dist
+          path: dist
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lovetypes-validation-evidence
+          path: |
+            output/predeploy-check.log
+            output/playwright
+          if-no-files-found: ignore
+
+  deploy-production:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    env:
+      CLOUDFLARE_ACCOUNT_ID: e6780ef96bb6f53eba1dbc4d6dfa7376
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Download validated production allowlist
+        uses: actions/download-artifact@v4
+        with:
+          name: lovetypes-dist
+          path: dist
+
+      - name: Install Wrangler
+        run: npm install --global wrangler@4
+
+      - name: Deploy Cloudflare Pages Direct Upload
+        run: wrangler pages deploy dist --project-name lovetypes --branch main
+
+      - name: Set up Python for production smoke tests
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install production smoke dependencies
+        run: python -m pip install --upgrade pillow
+
+      - name: Verify production review surface
         run: |
+          mkdir -p output
           python tools/public_deploy_smoke.py 2>&1 | tee output/public-deploy-smoke.log
           test ${PIPESTATUS[0]} -eq 0
           python tools/public_sitemap_smoke.py 2>&1 | tee output/public-sitemap-smoke.log
           test ${PIPESTATUS[0]} -eq 0
-          python tools/public_editorial_trust_smoke.py 2>&1 | tee output/public-editorial-trust-smoke.log
+          python tools/public_indexability_smoke.py 2>&1 | tee output/public-indexability-smoke.log
           test ${PIPESTATUS[0]} -eq 0
-          python tools/public_external_link_smoke.py 2>&1 | tee output/public-external-link-smoke.log
+          python tools/public_headers_smoke.py 2>&1 | tee output/public-headers-smoke.log
           test ${PIPESTATUS[0]} -eq 0
-          PERFORMANCE_REPORT_PATH=output/production-runtime-performance.json node tools/runtime_performance_smoke.mjs 2>&1 | tee output/runtime-performance-smoke.log
+          python tools/public_support_sync_smoke.py 2>&1 | tee output/public-support-sync-smoke.log
+          test ${PIPESTATUS[0]} -eq 0
+          python tools/public_availability_stability_smoke.py --rounds 3 2>&1 | tee output/public-availability-smoke.log
           test ${PIPESTATUS[0]} -eq 0
 
-      - name: Upload predeploy evidence
+      - name: Upload production deployment evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: predeploy-evidence
+          name: lovetypes-production-evidence
           path: |
-            output/predeploy-check.log
             output/public-deploy-smoke.log
             output/public-sitemap-smoke.log
-            output/public-editorial-trust-smoke.log
-            output/public-external-link-smoke.log
-            output/runtime-performance-smoke.log
-            output/production-runtime-performance.json
-            output/playwright
+            output/public-indexability-smoke.log
+            output/public-headers-smoke.log
+            output/public-support-sync-smoke.log
+            output/public-availability-smoke.log
           if-no-files-found: ignore

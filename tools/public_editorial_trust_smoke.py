@@ -37,7 +37,7 @@ LAB_MARKERS = (
 )
 AUTHOR = "LoveTypes 內容編輯團隊"
 GUARDIAN_UPDATED = "2026-08-01"
-START_UPDATED = "2026-08-01"
+START_UPDATED = "2026-09-25"
 REPAIR_PLAN_UPDATED = "2026-08-01"
 GUARDIAN_SLUGS = ("iris", "noah", "vivian", "claire", "dora")
 METHOD_LINK = 'href="/about/#editorial-method"'

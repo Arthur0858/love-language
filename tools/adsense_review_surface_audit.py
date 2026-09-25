@@ -20,12 +20,14 @@ from generate_multilingual_site import (
     DOMAIN,
     GARDEN_MAP_UPDATED,
     HOME_UPDATED,
+    GUIDES_INDEX_UPDATED,
     LAB_INDEX_UPDATED,
     LEGACY_ZH_GUIDES,
     LONG_TAIL_COMPATIBILITY_PAGES,
     MACHINE_READABLE_UPDATED,
     COMMERCIAL_RETIRED_PATHS,
     NOINDEX_LAB_PATHS,
+    NOINDEX_COMMERCIAL_PATHS,
     NOINDEX_SUPPORT_PATHS,
     RETIRED_PUBLIC_ASSET_PATHS,
     REPAIR_PLAN_UPDATED,
@@ -68,7 +70,7 @@ CORE_EDITORIAL_TRUST = {
     "/start/": (START_UPDATED, "data-start-editorial-byline", "WebPage"),
     "/garden-map/": (GARDEN_MAP_UPDATED, "data-garden-map-editorial-byline", "CollectionPage"),
     "/compass/": (COMPASS_UPDATED, "data-compass-editorial-byline", "WebApplication"),
-    "/guides/": (CORE_EDITORIAL_UPDATED, "data-guides-editorial-byline", "CollectionPage"),
+    "/guides/": (GUIDES_INDEX_UPDATED, "data-guides-editorial-byline", "CollectionPage"),
     "/characters/": (CORE_EDITORIAL_UPDATED, "data-characters-editorial-byline", "CollectionPage"),
     "/theory/": (THEORY_UPDATED, "data-theory-editorial-byline", "WebPage"),
     "/repair-plan/": (REPAIR_PLAN_UPDATED, "data-repair-editorial-byline", "HowTo"),
@@ -527,13 +529,16 @@ def main() -> int:
                 )
             evidence_hashes[digest] = evidence_path.relative_to(ROOT).as_posix()
 
-    for relative in ("resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"):
+    for route in NOINDEX_COMMERCIAL_PATHS:
+        relative = f"{route.strip('/')}/index.html"
         raw = (ROOT / relative).read_text(encoding="utf-8")
         if '<meta name="robots" content="noindex, follow"' not in raw:
             issues.append(f"noindex missing: {relative}")
-        route = "/" + relative.removesuffix("index.html")
+        canonical = f'<link rel="canonical" href="{DOMAIN}{route}"'
+        if canonical not in raw:
+            issues.append(f"self-canonical missing: {relative}")
         if "https://lovetypes.tw" + route in sitemap_urls:
-            issues.append(f"commercial route leaked into sitemap: {route}")
+            issues.append(f"noindex commercial route leaked into sitemap: {route}")
 
     for route in expected:
         raw = page_file(route).read_text(encoding="utf-8")
@@ -657,8 +662,14 @@ def main() -> int:
 
     for path in ROOT.rglob("*.html"):
         raw = path.read_text(encoding="utf-8", errors="ignore").lower()
-        if any(host in raw for host in COMMERCE_HOSTS) and path != ROOT / "resources" / "index.html":
-            issues.append(f"external commerce link outside /resources/: {path.relative_to(ROOT)}")
+        allowed_commerce_pages = {
+            ROOT / "resources" / "index.html",
+            ROOT / "luna-yoga-music" / "index.html",
+            ROOT / "dist" / "resources" / "index.html",
+            ROOT / "dist" / "luna-yoga-music" / "index.html",
+        }
+        if any(host in raw for host in COMMERCE_HOSTS) and path not in allowed_commerce_pages:
+            issues.append(f"external commerce link outside disclosed noindex pages: {path.relative_to(ROOT)}")
 
     manifest = {path.relative_to(ROOT).as_posix() for path in deploy.collect_manifest_paths(ROOT)}
     forbidden_public_asset_terms = ("review-surface", "compass-tool-review")
@@ -677,6 +688,7 @@ def main() -> int:
     } | {
         "404.html",
         *(f"lab/{report['slug']}/index.html" for report in LAB_REPORTS),
+        *(f"{route.strip('/')}/index.html" for route in NOINDEX_COMMERCIAL_PATHS),
     }
     if manifest_html != expected_manifest_html:
         issues.append(

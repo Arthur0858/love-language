@@ -16,6 +16,7 @@ from editorial_guides import (
     GUIDE_APPLICABILITY,
     GUIDE_ENRICHMENTS,
     GUIDE_FOLLOWUP_NOTES,
+    GUIDE_PUBLISHED_BY_SLUG,
     GUIDE_SOURCE_NOTE,
     GUIDE_TRUST_SECTION_TITLES,
     GUIDE_UPDATED_BY_SLUG,
@@ -33,12 +34,13 @@ UPDATED = "2026-07-31"
 HOME_UPDATED = "2026-08-01"
 PRIVACY_UPDATED = "2026-08-01"
 THEORY_UPDATED = "2026-08-01"
-START_UPDATED = "2026-08-01"
+START_UPDATED = "2026-09-25"
 REPAIR_PLAN_UPDATED = "2026-08-01"
 GARDEN_MAP_UPDATED = "2026-08-01"
 CORE_EDITORIAL_UPDATED = "2026-08-01"
-ABOUT_UPDATED = "2026-08-02"
-COMPASS_UPDATED = "2026-08-02"
+ABOUT_UPDATED = "2026-09-25"
+COMPASS_UPDATED = "2026-09-25"
+GUIDES_INDEX_UPDATED = "2026-09-25"
 MACHINE_READABLE_UPDATED = "2026-08-02"
 ASSET_VERSION = "20260613-funnel-kpi-map"
 INTERACTIONS_VERSION = "20260718-quiz-metrics"
@@ -56,12 +58,10 @@ CONVERSION_DOCK_PATHS = {"", "start", "compass", "characters", "guides", "lab"}
 LAB_INDEX_UPDATED = "2026-08-01"
 PUBLISHED_LANGS = ("zh",)
 COMMERCIAL_RETIRED_PATHS = (
-    "/resources/",
-    "/luna-yoga-music/",
-    "/keepsakes/",
     "/luna/",
     "/go/luna-starter-click/",
 )
+NOINDEX_COMMERCIAL_PATHS = ("/resources/", "/luna-yoga-music/", "/keepsakes/")
 NOINDEX_LAB_PATHS = tuple(f"/lab/{report['slug']}/" for report in LAB_REPORTS)
 NOINDEX_SUPPORT_PATHS = (
     "/feed.xml",
@@ -75,6 +75,7 @@ NOINDEX_SUPPORT_PATHS = (
     "/guardian-profiles.json",
     "/safety-index.json",
 )
+NOINDEX_PAGE_PATHS = (*NOINDEX_LAB_PATHS, *NOINDEX_COMMERCIAL_PATHS)
 RETIRED_PUBLIC_ASSET_PATHS = (
     "/ai-discovery.json",
     "/commerce-catalog.json",
@@ -1695,57 +1696,67 @@ LUNA_PRODUCT_OFFER = {
     "zh": {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "需要離線使用時，直接選一個音樂包",
-        "intro": "公開聆聽先確認節奏是否適合你；若想把音檔放進睡前、瑜伽或書寫流程，這些 Gumroad 包已連到可購買頁面。",
+        "intro": "公開聆聽先確認節奏是否適合你；以下是可下載音檔商品。價格與實際交付內容以 Gumroad 商品頁及結帳頁為準。",
+        "contents_note": "購買前請在商品頁核對曲目、檔案格式、授權與交付內容；若資訊未列清楚，先詢問創作者，不要只依商品名稱推定內容。",
         "starter_eyebrow": "RECOMMENDED STARTER",
         "starter_title": "第一次購買，先選 Healing Vibes Starter Pack",
         "starter_intro": "若你只是想把 Luna 放進睡前整理、吵架後冷卻或測驗後承接，先從最低門檻的起手包開始。確認自己真的會使用，再回來選其他主題包。",
         "starter_cta": "開啟起手包",
         "cta": "查看商品",
-        "note": "商品由 Gumroad 結帳與交付。內容是放鬆與創作陪伴，不承諾療效，也不取代諮商或醫療建議。",
+        "note": "付款與交付由 Gumroad 處理；退費政策由商品創作者訂定，請回覆收據聯絡創作者。若 30 天未收到回覆，可依 Gumroad 客服指引聯絡平台。LoveTypes 不收款或處理退費。音樂僅供放鬆與創作陪伴，不承諾療效，也不取代諮商或醫療建議。",
+        "refund_link_label": "Gumroad 退費說明",
     },
     "en": {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "When you need offline use, pick one audio pack",
         "intro": "Start with public listening to test the rhythm. If you want files for bedtime, yoga, or journaling, these Gumroad packs now point to live product pages.",
+        "contents_note": "Before buying, check the product page for the tracks, file formats, license, and delivery details. Ask the creator if anything is unclear; do not infer contents from the pack name.",
         "starter_eyebrow": "RECOMMENDED STARTER",
         "starter_title": "First purchase: start with Healing Vibes Starter Pack",
         "starter_intro": "If you only need Luna for bedtime sorting, cooling down after conflict, or post-quiz grounding, start with the lowest-friction pack. Confirm you will use it before choosing other themes.",
         "starter_cta": "Open starter pack",
         "cta": "View pack",
-        "note": "Checkout and delivery run through Gumroad. The audio is for calm creative practice, not therapy, medical care, or promised outcomes.",
+        "note": "Gumroad processes payment and delivery. The creator sets the refund policy; contact them by replying to your receipt. If there is no response within 30 days, follow Gumroad's support guidance. LoveTypes does not take payment or handle refunds. The audio is for calm creative practice, not therapy, medical care, or promised outcomes.",
+        "refund_link_label": "Gumroad refund guidance",
     },
     "ja": {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "オフラインで使う時は音楽パックを一つ選ぶ",
         "intro": "まず公開音源でリズムが合うか確かめます。就寝前、ヨガ、日記に音源ファイルが必要な場合は、Gumroad の公開商品ページへ進めます。",
+        "contents_note": "購入前に商品ページで曲目、ファイル形式、ライセンス、納品内容をご確認ください。不明点はクリエイターへ問い合わせ、商品名だけで内容を判断しないでください。",
         "starter_eyebrow": "RECOMMENDED STARTER",
         "starter_title": "初回は Healing Vibes Starter Pack から",
         "starter_intro": "就寝前の整理、衝突後の冷却、診断後の落ち着きに Luna を使いたいだけなら、まず低い入口の起手包から始めます。使い続けられると分かってから他のテーマを選んでください。",
         "starter_cta": "起手包を開く",
         "cta": "商品を見る",
-        "note": "決済と配信は Gumroad が行います。音源は落ち着く練習の補助であり、治療効果を約束したり相談支援や医療を代替したりしません。",
+        "note": "決済と配信は Gumroad が行い、返金方針は各クリエイターが定めます。返金はレシートメールに返信してクリエイターへご連絡ください。30 日間返信がない場合は Gumroad のサポート案内をご確認ください。LoveTypes は決済や返金を取り扱いません。音源は治療効果を約束せず、相談支援や医療を代替しません。",
+        "refund_link_label": "Gumroad の返金案内",
     },
     "ko": {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "오프라인 사용이 필요할 때 음악 팩 하나 고르기",
         "intro": "먼저 공개 음악으로 리듬이 맞는지 확인하세요. 잠들기 전, 요가, 기록 루틴에 파일이 필요하다면 Gumroad 공개 상품 페이지로 이동할 수 있습니다.",
+        "contents_note": "구매 전에 상품 페이지에서 트랙, 파일 형식, 라이선스와 제공 내용을 확인하세요. 정보가 불분명하면 창작자에게 문의하고 상품명만으로 내용을 추측하지 마세요.",
         "starter_eyebrow": "RECOMMENDED STARTER",
         "starter_title": "첫 구매는 Healing Vibes Starter Pack부터",
         "starter_intro": "잠들기 전 정리, 다툼 뒤 식히기, 테스트 후 마음 정리에 Luna를 쓰고 싶다면 가장 낮은 진입의 스타터 팩부터 시작하세요. 실제로 사용할 수 있는지 확인한 뒤 다른 테마를 고르세요.",
         "starter_cta": "스타터 팩 열기",
         "cta": "상품 보기",
-        "note": "결제와 전달은 Gumroad에서 진행됩니다. 이 음원은 차분한 창작 연습을 돕는 자료이며 치료, 의료, 결과 보장을 대체하지 않습니다.",
+        "note": "결제와 전달은 Gumroad에서 진행하며 환불 정책은 상품 창작자가 정합니다. 영수증 이메일에 답장해 창작자에게 문의하세요. 30일 안에 답변이 없으면 Gumroad 고객지원 안내를 확인하세요. LoveTypes는 결제나 환불을 처리하지 않습니다. 음원은 치료 효과를 보장하거나 의료 지원을 대체하지 않습니다.",
+        "refund_link_label": "Gumroad 환불 안내",
     },
     "es": {
         "eyebrow": "LUNA DOWNLOAD PACKS",
         "title": "Cuando necesites uso sin conexión, elige un pack",
         "intro": "Empieza con la escucha pública para comprobar el ritmo. Si quieres archivos para dormir, yoga o escritura, estos packs apuntan a páginas activas de Gumroad.",
+        "contents_note": "Antes de comprar, revisa en la página del producto las pistas, formatos, licencia y archivos incluidos. Si algo no está claro, pregunta al creador y no deduzcas el contenido por el nombre del pack.",
         "starter_eyebrow": "RECOMMENDED STARTER",
         "starter_title": "Primera compra: empieza con Healing Vibes Starter Pack",
         "starter_intro": "Si solo quieres Luna para ordenar la noche, enfriar después de un conflicto o sostenerte tras el test, empieza por el pack de menor fricción. Confirma que lo usarás antes de elegir otros temas.",
         "starter_cta": "Abrir pack inicial",
         "cta": "Ver pack",
-        "note": "El pago y la entrega ocurren en Gumroad. El audio acompaña prácticas de calma y creación; no promete resultados ni reemplaza terapia o atención médica.",
+        "note": "Gumroad procesa el pago y la entrega. Cada creador define su política de reembolso; contáctalo respondiendo al recibo. Si no responde en 30 días, sigue las indicaciones de soporte de Gumroad. LoveTypes no cobra ni gestiona reembolsos. El audio no promete efectos ni sustituye terapia o atención médica.",
+        "refund_link_label": "Información de reembolsos de Gumroad",
     },
 }
 
@@ -4174,7 +4185,7 @@ GUIDES = [
     {
         "slug": "repair-after-conflict",
         "guardian": "noah",
-        "zh": ("吵架後的五種愛之語修復法", "在錯頻的霧散去之前，用五種愛之語把道歉、時間、行動與安全感接回來。"),
+        "zh": ("吵架後怎麼和好？五種愛之語修復步驟與對話句型", "先確認安全與暫停時間，再承認具體影響、提出可驗證的小行動，並約定何時回看是否做到。"),
         "en": ("Repair After Conflict With Five Love Languages", "Before the mist of misfrequency settles, reconnect apology, time, action, memory, and safety in a language your partner can receive."),
         "ja": ("衝突後に五つの愛の言語で修復する", "すれ違いの霧が濃くなる前に、謝罪、時間、行動、記憶、安全を相手が受け取れる形でつなぎ直します。"),
         "ko": ("갈등 후 다섯 가지 사랑의 언어로 회복하기", "어긋남의 안개가 짙어지기 전에 사과, 시간, 행동, 기억, 안전감을 상대가 받을 수 있는 언어로 다시 잇습니다."),
@@ -4183,7 +4194,7 @@ GUIDES = [
     {
         "slug": "words-of-affirmation-scripts",
         "guardian": "iris",
-        "zh": ("肯定言詞的具體句型", "跟著艾莉絲把空泛稱讚拆成看見、感謝、承認與承諾。"),
+        "zh": ("肯定言詞怎麼說？12 個伴侶可直接使用的句型", "依感謝、看見努力、衝突修復與承諾四種情境，把空泛稱讚改成具體、真實且不帶交換條件的句子。"),
         "en": ("Practical Scripts for Words of Affirmation", "Follow Iris to turn vague praise into being seen, thanked, acknowledged, and promised to."),
         "ja": ("肯定の言葉の実用フレーズ", "アイリスと一緒に、曖昧な褒め言葉を、見ていること、感謝、承認、約束へ分けます。"),
         "ko": ("인정의 말을 위한 실제 문장", "아이리스와 함께 막연한 칭찬을 알아봄, 감사, 인정, 약속으로 나눕니다."),
@@ -5474,6 +5485,7 @@ def footer(lang: str) -> str:
 <footer class="site-footer">
   <div class="footer-grid">{card_html}</div>
   <p class="footer-disclosure">{escape(t["unofficial_disclosure"])}</p>
+  <p class="footer-commercial"><a href="{lang_url(lang, "resources")}">延伸資源與商業揭露</a></p>
   <p>© 2026 LoveTypes · <a href="{lang_url(lang, "privacy")}">{escape(t["privacy"])}</a> · <a href="{lang_url(lang, "terms")}">{escape(t["terms"])}</a> · <a href="{lang_url(lang, "contact")}">{escape(t["contact"])}</a>{safety_link}</p>
 </footer>
 """
@@ -5794,20 +5806,19 @@ def sanitize_indexable_body(path: str, body: str) -> str:
 
 def write(path: Path, html: str) -> None:
     if path.name == "index.html" and path != ROOT / "resources" / "index.html":
-        for lang in LANGS:
-            for book in AFFILIATE_BOOKS:
-                html = html.replace(affiliate_book_url(book, lang), lang_url(lang, "resources"))
-        for product in LUNA_GUMROAD_PRODUCTS:
-            html = html.replace(luna_product_url(product), "/resources/#luna-products")
-        html = re.sub(
-            r'(href="[^"]*/resources/(?:#[^"]*)?") target="_blank" rel="noopener noreferrer sponsored"',
-            r"\1",
-            html,
-        )
-        if '<meta name="robots" content="index, follow' in html:
-            rel = path.relative_to(ROOT).as_posix()
-            if rel != "about/index.html":
-                html = re.sub(r'href="/resources/(?:#[^"]*)?"', 'href="/repair-plan/"', html)
+        relative = path.relative_to(ROOT).as_posix()
+        commercial_pages = {"resources/index.html", "luna-yoga-music/index.html", "keepsakes/index.html"}
+        if relative not in commercial_pages:
+            for lang in LANGS:
+                for book in AFFILIATE_BOOKS:
+                    html = html.replace(affiliate_book_url(book, lang), lang_url(lang, "resources"))
+            for product in LUNA_GUMROAD_PRODUCTS:
+                html = html.replace(luna_product_url(product), "/resources/#luna-products")
+            html = re.sub(
+                r'(href="[^"]*/resources/(?:#[^\"]*)?") target="_blank" rel="noopener noreferrer sponsored"',
+                r"\1",
+                html,
+            )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
 
@@ -6203,11 +6214,11 @@ HOME_HERO_COPY = {
 
 COMPASS_PAGE = {
     "zh": {
-        "title": "LoveTypes 關係羅盤",
-        "desc": "不是判斷你們合不合，而是看見愛在哪裡錯頻。輸入雙方守護者與關係狀態，取得免費關係羅盤與下一步修復入口。",
+        "title": "情侶愛之語不同怎麼辦？免費關係羅盤",
+        "desc": "選擇雙方的守護者、目前情境與想討論的問題，免費整理可能的溝通落差、一句可協商的說法與一個小行動；不計算相配率，也不替關係下判斷。",
         "eyebrow": "RELATIONSHIP COMPASS",
-        "h1": "不是判斷你們合不合，而是看見愛在哪裡錯頻",
-        "intro": "LoveTypes Relationship Compass 只使用雙方自行選擇的守護者、關係狀態與當下問題，把容易被誤讀的愛整理成一張可討論的對話地圖。",
+        "h1": "情侶愛之語不同怎麼辦？先把錯頻說清楚",
+        "intro": "免費關係羅盤只需要雙方自選的守護者、目前關係情境與想討論的問題；它會整理可能的誤讀、提供一句可修改的對話開場和一個小行動，不需要生日或其他個人資料。",
         "primary": "開始免費羅盤",
         "secondary": "先做守護者測驗",
         "tertiary": "看 7 日修復",
@@ -6221,9 +6232,9 @@ COMPASS_PAGE = {
         "boundary_title": "羅盤只整理輸入，不替關係評分",
         "boundary": "結果只根據兩位守護者、關係狀態與當下問題組合出錯頻提醒、可說句子與小行動。它不計算相配率、不推論未提供的個人資料，也不替你決定關係去留。相同輸入會得到相同規則輸出，但這不代表建議適合所有關係。",
         "tool_title": "開始 LoveTypes Relationship Compass",
-        "compatibility_title": "想先理解心語合盤定位？",
-        "compatibility_intro": "如果你是從八字合婚、love compatibility 或關係測驗搜尋進來，先讀合盤入口頁，再回到免費羅盤開始。",
-        "compatibility_cta": "看心語合盤入口",
+        "compatibility_title": "先選一個最想討論的關係片刻",
+        "compatibility_intro": "不必先判斷兩人是否相配。從最近一次感到被忽略、難以開口或修復未完成的情境開始，輸入雙方的自我描述，再一起檢查建議是否貼近現況。",
+        "compatibility_cta": "開始整理關係情境",
     },
     "en": {
         "title": "LoveTypes Relationship Compass",
@@ -12797,7 +12808,7 @@ def quiz_payload(lang: str) -> str:
             "next_pack_title": "你的免費練習路線",
             "next_pack_intro": "先讀懂結果，再完成一個小練習，最後用關係羅盤整理下一句話。",
             "conversion_path_intro": "先把結果變成一個可完成的修復行動，再看兩人的錯頻，最後整理成可協商的小請求。",
-            "resources_link": "免費延伸路線",
+            "resources_link": "查看延伸資源與商業揭露",
         })
     payload = {
         "labels": labels,
@@ -12805,7 +12816,7 @@ def quiz_payload(lang: str) -> str:
         "results": results,
         "order": type_order,
         "shareUrl": DOMAIN + lang_url(lang).rstrip("/") + "/",
-        "affiliateDisclosure": "所有下一步均為站內免費內容。" if lang == "zh" else AFFILIATE_DISCLOSURE[lang],
+        "affiliateDisclosure": "延伸資源頁會標明商業合作與免費替代方案；是否前往或購買由你自行決定。" if lang == "zh" else AFFILIATE_DISCLOSURE[lang],
         "affiliateButton": "閱讀相關指南" if lang == "zh" else AFFILIATE_COPY[lang]["button"],
         "supplySafety": (
             {
@@ -13083,6 +13094,7 @@ def quiz_script(lang: str) -> str:
     const result = quiz.results[primaryKey];
     const total = answers.length || 1;
     const cardUrl = new URL(result.storyImage, location.origin).href;
+    const supplyUrl = `/resources/#supply-${{result.slug}}`;
     const shareText = `${{quiz.labels.share_prefix}}：${{result.name}}｜${{result.type}} ${{cardUrl}}`;
     await primeResultImage(result);
     hide(quizBox);
@@ -13097,7 +13109,8 @@ def quiz_script(lang: str) -> str:
       <a class="primary-btn" href="${{result.guideUrl}}" data-conversion-guide>${{quiz.labels.primary_route}}</a>
       <a class="secondary-btn" href="${{result.planUrl}}" data-conversion-plan>${{quiz.labels.secondary_plan}}</a>
       <a class="secondary-btn" href="${{result.compassUrl}}" data-conversion-compass>${{quiz.labels.conversion_compass_action}}</a>
-      <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>`;
+      <a class="secondary-btn" href="${{result.guardianUrl}}">${{quiz.labels.guardian_link}}</a>
+      <a class="secondary-btn" href="${{supplyUrl}}" data-conversion-supplies>${{quiz.labels.resources_link}}</a>`;
     try {{
       const savedPayload = savedResultPayload(primaryKey);
       localStorage.setItem(storageKey, JSON.stringify(savedPayload));
@@ -13566,12 +13579,12 @@ def quiz_section(lang: str) -> str:
 
 START_PAGE_COPY = {
     "zh": {
-        "title": "五種愛之語測驗入口",
-        "desc": "完成 15 題心語問題，找到你的情感守護者，再接到免費指南、關係羅盤與 7 日修復工作表。",
+        "title": "五種愛之語測驗｜15 題、2 分鐘、免註冊",
+        "desc": "用 15 題、約 2 分鐘整理目前較容易感到被愛的方式，查看五類分數與一個免費練習；免註冊，結果只保存在目前瀏覽器。",
         "eyebrow": "QUIZ GATE",
-        "lead": "從這裡直接開始免費守護者測驗。不用註冊，約 2 到 3 分鐘完成，結果只保存在你的瀏覽器。",
+        "lead": "用 15 題、約 2 分鐘免費完成測驗，查看五種愛之語的分數、主要守護者與一個可執行的練習。不用註冊；結果只存在目前瀏覽器，可隨時清除。這是自我反思工具，不是心理診斷或關係相配評分。",
         "map": "進入五守護者地圖",
-        "resources": "先看旅人補給",
+        "resources": "先讀深度指南",
         "preview_title": "完成後會開啟三條路",
         "preview": [
             ("守護者結果", "知道哪一種愛之語最容易讓你感到被愛，也最容易受傷。"),
@@ -13802,6 +13815,21 @@ def guides_index(lang: str) -> None:
 <section class="section"><div class="card-grid wide">{cards}</div></section>
 <section class="section note-section"><h2>{escape(t["boundary"])}</h2><p>{escape(t["boundary_text"])}</p></section>
 """
+    if lang == "zh":
+        questions = """
+<section class="section search-question-section" data-search-questions>
+  <div class="section-head"><div><p class="eyebrow">讀者常見問題</p><h2>關係裡常遇到的四個問題</h2></div></div>
+  <p class="section-intro">從測驗結果、衝突後的修復、需求表達到伴侶間的差異，先選擇最貼近眼前情境的一項，再查看可調整的練習方式。</p>
+  <div class="card-grid compact">
+    <a class="content-card" href="/start/"><h3>五種愛之語測驗會問什麼？</h3><p>了解題數、計分、結果保存方式與使用限制。</p></a>
+    <a class="content-card" href="/guides/repair-after-conflict/"><h3>吵架後怎麼和好？</h3><p>先確認安全，再用三步修復與一段對話示例開始。</p></a>
+    <a class="content-card" href="/compass/"><h3>情侶愛之語不同怎麼辦？</h3><p>整理輸入資料、羅盤結果與不能判斷的範圍。</p></a>
+    <a class="content-card" href="/guides/words-of-affirmation-scripts/"><h3>肯定言詞怎麼說？</h3><p>依四種生活情境挑選並改寫十二個句型。</p></a>
+  </div>
+</section>
+"""
+        body = body.replace('<section class="section"><div class="card-grid wide">', questions + '<section class="section"><div class="card-grid wide">', 1)
+        body = body.replace(CORE_EDITORIAL_UPDATED, GUIDES_INDEX_UPDATED)
     schema = json_ld({
         "@context": "https://schema.org",
         "@type": "CollectionPage",
@@ -13809,7 +13837,7 @@ def guides_index(lang: str) -> None:
         "description": t["guide_index_desc"],
         "url": abs_url(lang, "guides"),
         "inLanguage": t["code"],
-        "dateModified": CORE_EDITORIAL_UPDATED if lang == "zh" else UPDATED,
+        "dateModified": GUIDES_INDEX_UPDATED if lang == "zh" else UPDATED,
         "isPartOf": website_ref(lang),
         **({"author": organization_ref()} if lang == "zh" else {}),
         "publisher": organization_ref(),
@@ -14035,7 +14063,7 @@ def guide_page(lang: str, guide: dict, index: int) -> None:
         "description": desc,
         "url": abs_url(lang, "guides/" + guide["slug"]),
         "inLanguage": t["code"],
-        "datePublished": guide_updated,
+        "datePublished": GUIDE_PUBLISHED_BY_SLUG.get(guide["slug"], guide_updated),
         "dateModified": guide_updated,
         "image": f"{DOMAIN}/assets/lovetypes/share/guide-toolkit-og.jpg",
         "author": organization_ref(),
@@ -14941,6 +14969,7 @@ def luna_product_offer_section(lang: str) -> str:
 <article id="luna-pack-{escape(product["slug"])}">
   <p class="eyebrow">{escape(product["price"])}</p>
   <h3>{escape(product["title"])}</h3>
+  <p>{escape(labels["contents_note"])}</p>
   <a class="secondary-btn" href="{luna_product_url(product)}" target="_blank" rel="noopener noreferrer sponsored" data-funnel-event="luna_gumroad_pack_click" data-luna-product="{escape(product["slug"])}">{escape(labels["cta"])}</a>
 </article>
 """ for product in LUNA_GUMROAD_PRODUCTS)
@@ -14950,6 +14979,7 @@ def luna_product_offer_section(lang: str) -> str:
   <p class="section-intro">{escape(labels["intro"])}</p>
   <div class="luna-offer-grid">{cards}</div>
   <p class="section-intro">{escape(labels["note"])}</p>
+  <p><a href="https://gumroad.com/help/article/190-how-do-i-get-a-refund.html" target="_blank" rel="noopener noreferrer">{escape(labels["refund_link_label"])}</a></p>
 </section>
 """
 
@@ -15520,7 +15550,7 @@ def simple_page(lang: str, slug: str) -> None:
   <h2>{escape(t["boundary"])}</h2>
   <p>{escape(t["boundary_text"])}</p>
   <h2>商業內容如何分開</h2>
-  <p>LoveTypes 可能在未來提供商業合作或延伸商品，屆時會清楚標示價格、外部平台與利益關係。目前公開內容不提供外部購買入口，免費測驗、指南、守護者與修復工具不需要先購買商品。</p>
+  <p>外部購買與聯盟連結集中在延伸資源頁，並標示合作關係、價格或平台資訊、適用限制與免費替代方案。測驗、指南、守護者、關係羅盤與 7 日修復工具都可免費使用；不購買也能完成練習。</p>
   <div class="callout"><strong>LoveTypes</strong><p>{escape(PRACTICAL_COPY[lang]["mistakes"])}</p></div>
 </section>
 {about_trust_charter(lang)}
@@ -17446,6 +17476,7 @@ def write_redirects() -> None:
         "/assets/lovetypes/backgrounds/guardian-garden.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
         "/assets/lovetypes/backgrounds/quiz-desk.webp /assets/lovetypes/backgrounds/guardian-garden-desktop.webp 301",
         "/assets/lovetypes/backgrounds/quiz-desk-mobile.webp /assets/lovetypes/backgrounds/guardian-garden-mobile.webp 301",
+        f"/luna-yoga-music/luna.css {CSS_ASSET} 301",
         "/og-cover.webp /og-cover.jpg 301",
     ]
     for cfg in LANGS.values():
@@ -17515,7 +17546,17 @@ export default {
       return retiredResponse("This LoveTypes page has been retired.");
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    if (response.status === 404) {
+      const headers = new Headers(response.headers);
+      headers.set("X-Robots-Tag", "noindex, follow");
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    }
+    return response;
   },
 };
 """ % (
@@ -17524,13 +17565,7 @@ export default {
     )
     routes = {
         "version": 1,
-        "include": [
-            "/tools/love-compatibility*",
-            *(f"/tools/{slug}*" for slug in sorted(LONG_TAIL_COMPATIBILITY_PAGES)),
-            *(f"/guides/{slug}*" for slug in retired_guides),
-            *(f"{path.rstrip('/')}*" for path in COMMERCIAL_RETIRED_PATHS),
-            *retired_assets,
-        ],
+        "include": ["/*"],
         "exclude": [],
     }
     write(ROOT / "_worker.js", worker)
@@ -17542,7 +17577,7 @@ CORE_LASTMOD = {
     "start": START_UPDATED,
     "garden-map": GARDEN_MAP_UPDATED,
     "compass": COMPASS_UPDATED,
-    "guides": CORE_EDITORIAL_UPDATED,
+    "guides": GUIDES_INDEX_UPDATED,
     "characters": CORE_EDITORIAL_UPDATED,
     "theory": THEORY_UPDATED,
     "repair-plan": REPAIR_PLAN_UPDATED,
@@ -17589,10 +17624,22 @@ def write_support_files() -> None:
             )
     sitemap.append("</urlset>")
     write(ROOT / "sitemap.xml", "\n".join(sitemap) + "\n")
-    write(ROOT / "robots.txt", "User-agent: *\nAllow: /\n\nSitemap: https://lovetypes.tw/sitemap.xml\n")
+    write(
+        ROOT / "robots.txt",
+        "User-agent: *\n"
+        "Allow: /\n\n"
+        "Sitemap: https://lovetypes.tw/sitemap.xml\n\n"
+        "# BEGIN Cloudflare Managed content\n"
+        "Content-Signal: search=yes,ai-train=no\n"
+        "User-agent: GPTBot\n"
+        "Disallow: /\n"
+        "User-agent: Google-Extended\n"
+        "Disallow: /\n"
+        "# END Cloudflare Managed Content\n",
+    )
     noindex_support_headers = "\n\n".join(
         f"{path}\n  ! Cache-Control\n  Cache-Control: public, max-age=0, must-revalidate\n  X-Robots-Tag: noindex, follow"
-        for path in (*NOINDEX_SUPPORT_PATHS, *NOINDEX_LAB_PATHS)
+        for path in (*NOINDEX_SUPPORT_PATHS, *NOINDEX_PAGE_PATHS)
     )
     headers = f"""/*
   Cache-Control: public, max-age=600

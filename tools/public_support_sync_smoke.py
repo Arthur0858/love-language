@@ -36,12 +36,12 @@ def normalize_bytes(value: bytes) -> bytes:
     return value.replace(b"\r\n", b"\n").rstrip(b"\n") + b"\n"
 
 
-def request_bytes(url: str, attempts: int = 3) -> tuple[int, str, bytes]:
+def request_bytes(url: str, attempts: int = 3, user_agent: str = "LoveTypes public support sync smoke/1.0") -> tuple[int, str, bytes]:
     context = ssl.create_default_context()
     last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:
-            request = Request(url, headers={"User-Agent": "LoveTypes public support sync smoke/1.0"})
+            request = Request(url, headers={"User-Agent": user_agent})
             with urlopen(request, timeout=20, context=context) as response:
                 return response.status, response.headers.get("content-type", ""), response.read()
         except HTTPError as error:
@@ -85,12 +85,15 @@ def main() -> int:
     for relative in SUPPORT_FILES:
         local_path = ROOT / relative
         public_url = urljoin(base_url + "/", relative)
+        if relative == "robots.txt":
+            public_url += "?cache-bust=public-support-sync"
         if not local_path.exists():
             issues.append(f"{relative}: missing local support file")
             continue
         local_body = normalize_bytes(local_path.read_bytes())
         try:
-            status, content_type, public_body_raw = request_bytes(public_url)
+            user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 LoveTypes support sync/1.0" if relative == "robots.txt" else "LoveTypes public support sync smoke/1.0"
+            status, content_type, public_body_raw = request_bytes(public_url, user_agent=user_agent)
         except RuntimeError as error:
             issues.append(f"{relative}: {error}")
             continue

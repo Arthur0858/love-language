@@ -10,14 +10,15 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import date
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
 DEFAULT_BASE_URL = "https://lovetypes.tw"
-EXPECTED_HREFLANGS = {"zh-TW", "en", "ja", "ko", "es", "x-default"}
-LOCALE_PREFIXES = {"zh-TW": "", "en": "en", "ja": "ja", "ko": "ko", "es": "es"}
+EXPECTED_HREFLANGS = {"zh-TW", "x-default"}
+LOCALE_PREFIXES = {"zh-TW": ""}
 CORE_UNIVERSE_ROUTES = (
     "",
     "start",
@@ -25,10 +26,7 @@ CORE_UNIVERSE_ROUTES = (
     "guides",
     "characters",
     "theory",
-    "resources",
     "repair-plan",
-    "keepsakes",
-    "luna-yoga-music",
     "about",
     "contact",
     "privacy",
@@ -159,11 +157,8 @@ def localized_path(lang: str, route: str) -> str:
 
 
 def expected_core_universe_paths() -> set[str]:
-    return {
-        localized_path(lang, route)
-        for lang in LOCALE_PREFIXES
-        for route in CORE_UNIVERSE_ROUTES
-    }
+    index = json.loads((Path(__file__).resolve().parents[1] / "site-index.json").read_text(encoding="utf-8"))
+    return {page["path"] for page in index["pages"]}
 
 
 def validate_sitemap_metadata(node: ET.Element, loc: str) -> tuple[list[str], dict[str, int]]:
@@ -367,6 +362,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    from public_adsense_review_smoke import main as review_main
-
-    sys.exit(review_main())
+    sys.exit(main())

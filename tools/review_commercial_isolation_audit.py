@@ -12,10 +12,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 NOINDEX_DESTINATIONS = (
-    "/resources/",
     "/luna-yoga-music/",
     "/keepsakes/",
-    "/go/luna",
+    "/luna/",
+    "/go/luna-starter-click/",
 )
 COMMERCE_HOSTS = (
     "gumroad.com",
@@ -113,6 +113,11 @@ def main() -> int:
         )
 
         ids = set(re.findall(r'\bid=["\']([^"\']+)["\']', raw, flags=re.I))
+        footer = re.search(r"<footer\b[^>]*>(.*?)</footer>", raw, flags=re.I | re.S)
+        footer_markup = footer.group(1) if footer else ""
+        footer_links = re.findall(r'href=["\']/resources/(?:#[^"\']*)?["\']', footer_markup, flags=re.I)
+        if len(footer_links) != 1 or "延伸資源與商業揭露" not in visible_text(footer_markup):
+            issues.append(f"{route}: footer must contain one clear commercial disclosure link")
         for fragment in re.findall(r'\bhref=["\']#([^"\']+)["\']', raw, flags=re.I):
             if not fragment or "${" in fragment:
                 continue
@@ -143,8 +148,13 @@ def main() -> int:
 
     about_raw = page_path("/about/").read_text(encoding="utf-8", errors="ignore")
     about_resource_links = len(re.findall(r'href=["\']/resources/(?:#[^"\']*)?["\']', about_raw, re.I))
-    if about_resource_links:
-        issues.append(f"/about/: retired commercial disclosure link remains, got {about_resource_links}")
+    if about_resource_links != 1:
+        issues.append(f"/about/: expected only the footer disclosure route, got {about_resource_links}")
+    start_raw = page_path("/start/").read_text(encoding="utf-8", errors="ignore")
+    if "data-conversion-supplies" not in start_raw or "const supplyUrl = `/resources/#supply-${result.slug}`" not in start_raw:
+        issues.append("/start/: quiz result must have one guardian-specific supply CTA")
+    if start_raw.count("data-conversion-supplies") != 1:
+        issues.append("/start/: result-specific supply CTA must appear once")
 
     for relative in sorted(runtime_artifacts):
         path = ROOT / relative
@@ -158,7 +168,7 @@ def main() -> int:
                 issues.append(f"{relative}: indexed runtime data exposes noindex destination {destination}")
         for host in COMMERCE_HOSTS:
             markers_checked += 1
-            if host in raw.lower():
+            if host in raw.lower() and relative not in {"resources/index.html", "luna-yoga-music/index.html"}:
                 issues.append(f"{relative}: indexed runtime data exposes commerce host {host}")
         for phrase in FORBIDDEN_RUNTIME_PHRASES:
             markers_checked += 1

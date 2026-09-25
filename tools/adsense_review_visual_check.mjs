@@ -41,11 +41,15 @@ const routes = [
   { name: 'guides', path: '/guides/' },
   { name: 'guide-share-result', path: '/guides/share-your-result/' },
   { name: 'guide-conflict-repair', path: '/guides/repair-after-conflict/' },
+  { name: 'guide-affirmation-scripts', path: '/guides/words-of-affirmation-scripts/' },
   { name: 'guide-touch-consent', path: '/guides/physical-touch-consent-safety/' },
   { name: 'lab', path: '/lab/' },
   { name: 'lab-scoring', path: '/lab/quiz-scoring-test/' },
   { name: 'lab-accessibility', path: '/lab/keyboard-accessibility-test/' },
   { name: 'compass', path: '/compass/', compass: true },
+  { name: 'resources', path: '/resources/' },
+  { name: 'luna', path: '/luna-yoga-music/' },
+  { name: 'keepsakes', path: '/keepsakes/' },
   { name: 'repair-plan', path: '/repair-plan/' },
   { name: 'about', path: '/about/' },
   { name: 'theory', path: '/theory/' },
@@ -56,8 +60,11 @@ const routes = [
 const noScriptRoutes = [
   '/guides/share-your-result/',
   '/guides/repair-after-conflict/',
+  '/guides/words-of-affirmation-scripts/',
   '/lab/quiz-scoring-test/',
+  '/resources/',
   '/about/',
+  '/contact/',
   '/privacy/',
 ];
 
@@ -162,6 +169,7 @@ for (const viewport of viewports) {
         quizResultHrefs: flags.isQuiz
           ? [...document.querySelectorAll('[data-quiz-result] a[href]')].map((anchor) => anchor.getAttribute('href') || '')
           : [],
+        quizSupplyCtaCount: flags.isQuiz ? document.querySelectorAll('[data-quiz-result] [data-conversion-supplies]').length : 0,
         compassResultText: flags.isCompass ? document.querySelector('[data-compass-result]')?.innerText || '' : '',
         compassResultHrefs: flags.isCompass
           ? [...document.querySelectorAll('[data-compass-result] a[href]')].map((anchor) => anchor.getAttribute('href') || '')
@@ -177,9 +185,13 @@ for (const viewport of viewports) {
         const salesPhrases = ['需要安靜時再買', 'Starter Pack', 'Luna', '博客來', 'Amazon', 'Gumroad', '聯盟行銷', '付費報告'];
         const leakedPhrase = salesPhrases.find((phrase) => state.quizResultText.includes(phrase));
         if (leakedPhrase) issues.push(`${route.name}-${viewport.name}: rendered result exposes sales phrase ${leakedPhrase}`);
-        const noindexPaths = ['/resources/', '/luna-yoga-music/', '/keepsakes/', '/go/luna'];
+        const noindexPaths = ['/luna-yoga-music/', '/keepsakes/', '/go/luna'];
         const leakedHref = state.quizResultHrefs.find((href) => noindexPaths.some((path) => href.includes(path)));
         if (leakedHref) issues.push(`${route.name}-${viewport.name}: rendered result links to noindex route ${leakedHref}`);
+        const resourceHrefs = state.quizResultHrefs.filter((href) => href.startsWith('/resources/#supply-'));
+        if (state.quizSupplyCtaCount !== 1 || resourceHrefs.length !== 1) {
+          issues.push(`${route.name}-${viewport.name}: result must expose exactly one guardian resource link`);
+        }
       }
       if (route.compass) {
         const forbiddenCompassPhrases = ['付費', '購買', '價格', '報告需求', '八字', '流年', 'Gumroad', '出生日期'];

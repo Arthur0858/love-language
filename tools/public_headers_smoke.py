@@ -74,6 +74,15 @@ CORE_HTML_CASES = [
         expect_noindex=True,
     )
     for report in GENERATOR_CONFIG.LAB_REPORTS
+ ] + [
+    HeaderCase(
+        f"noindex-commercial-{path.strip('/').replace('/', '-')}",
+        path,
+        html=True,
+        html_revalidate=True,
+        expect_noindex=True,
+    )
+    for path in GENERATOR_CONFIG.NOINDEX_COMMERCIAL_PATHS
 ]
 
 
@@ -96,6 +105,22 @@ CASES = [
             expect_noindex=True,
         )
         for path in GENERATOR_CONFIG.COMMERCIAL_RETIRED_PATHS
+    ],
+    *[
+        HeaderCase(
+            f"retired-machine-{path.strip('/').replace('.', '-')}",
+            path,
+            expected_status=410,
+            expect_noindex=True,
+        )
+        for path in (
+            "/search-indexing.json",
+            "/release.json",
+            "/commerce-catalog.json",
+            "/ai-discovery.json",
+            "/site-health.json",
+            "/promotion-kit.json",
+        )
     ],
     *[
         HeaderCase(f"language-{lang}-redirect", f"/{lang}/", expected_status=302, expected_location="/")

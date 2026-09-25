@@ -169,11 +169,19 @@ def noindex_cases(base_url: str) -> list[NoindexCase]:
     generator = load_module("lovetypes_generator_indexability_smoke", ROOT / "tools" / "generate_multilingual_site.py")
     cases: list[NoindexCase] = [
         NoindexCase("missing-404", MISSING_PATH, 404),
-        NoindexCase("resources", "/resources/", 410),
-        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 410),
-        NoindexCase("keepsakes", "/keepsakes/", 410),
+        NoindexCase("resources", "/resources/", 200, "/resources/"),
+        NoindexCase("luna-yoga-music", "/luna-yoga-music/", 200, "/luna-yoga-music/"),
+        NoindexCase("keepsakes", "/keepsakes/", 200, "/keepsakes/"),
         NoindexCase("luna", "/luna/", 410),
         NoindexCase("luna-starter", "/go/luna-starter-click/", 410),
+        *(NoindexCase(f"retired-machine-{name}", f"/{name}", 410) for name in (
+            "search-indexing.json",
+            "release.json",
+            "commerce-catalog.json",
+            "ai-discovery.json",
+            "site-health.json",
+            "promotion-kit.json",
+        )),
     ]
     cases.extend(
         NoindexCase(
@@ -223,8 +231,8 @@ def noindex_case_issues(base_url: str, sitemap_set: set[str], case: NoindexCase)
     if case.expected_status == 410:
         checked += 1
         x_robots = response.headers.get("x-robots-tag", "").lower()
-        if "noindex" not in x_robots:
-            issues.append(f"{case.path}: retired route should send X-Robots-Tag noindex, got {x_robots!r}")
+        if not {"noindex", "nofollow"}.issubset(robots_tokens(x_robots)):
+            issues.append(f"{case.path}: retired route should send X-Robots-Tag noindex, nofollow, got {x_robots!r}")
         return issues, checked, redirects_checked, sitemap_absence_checked
 
     parser = parse_head(response.text)
@@ -232,6 +240,9 @@ def noindex_case_issues(base_url: str, sitemap_set: set[str], case: NoindexCase)
     tokens = robots_tokens(parser.robots)
     if "noindex" not in tokens or "follow" not in tokens:
         issues.append(f"{case.path}: noindex page robots should include noindex/follow, got {parser.robots!r}")
+    x_robots = response.headers.get("x-robots-tag", "").lower()
+    if "noindex" not in x_robots or "follow" not in x_robots:
+        issues.append(f"{case.path}: noindex page should send X-Robots-Tag noindex, follow, got {x_robots!r}")
     if case.expected_canonical_path:
         expected_canonical = expected_url(base_url, case.expected_canonical_path)
         if parser.canonical != expected_canonical:

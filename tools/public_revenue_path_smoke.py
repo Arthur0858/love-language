@@ -65,11 +65,14 @@ class ScriptAndIdParser(HTMLParser):
         self.scripts: list[str] = []
         self.ids: set[str] = set()
         self.links: list[dict[str, str]] = []
+        self.robots = ""
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = {key.lower(): value or "" for key, value in attrs}
         if tag == "script" and data.get("src"):
             self.scripts.append(data["src"])
+        if tag == "meta" and data.get("name", "").lower() == "robots":
+            self.robots = data.get("content", "").lower()
         if tag == "a" and data.get("href"):
             self.links.append(data)
         if data.get("id"):
@@ -318,10 +321,16 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
             continue
         stats["luna_pages"] += 1
         parser = parse_html(response.text)
+        robots = {item.strip() for item in parser.robots.split(",")}
+        if not {"noindex", "follow"}.issubset(robots):
+            issues.append(f"{path}: commercial page must declare noindex, follow")
+        for marker in ("Gumroad", "US$", "退費", "免費聆聽", "不承諾療效"):
+            if marker not in response.text:
+                issues.append(f"{path}: commercial disclosure missing {marker}")
         product_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_gumroad_pack_click"]
         starter_links = [link for link in parser.links if link.get("data-funnel-event") == "luna_starter_pack_click"]
         if len(product_links) != len(EXPECTED_LUNA_PRODUCTS):
-            issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} sanitized Luna product links, got {len(product_links)}")
+            issues.append(f"{path}: expected {len(EXPECTED_LUNA_PRODUCTS)} Luna product links, got {len(product_links)}")
         if len(starter_links) != 1:
             issues.append(f"{path}: expected one Luna starter link, got {len(starter_links)}")
         page_slugs = {link.get("data-luna-product", "") for link in product_links}
@@ -330,14 +339,16 @@ def validate_luna_products(base_url: str) -> tuple[list[str], dict[str, int]]:
             issues.append(f"{path}: missing Luna product slugs {', '.join(missing_slugs)}")
         for link in product_links:
             product_slug = link.get("data-luna-product", "")
-            if link.get("href") != "/resources/#luna-products":
-                issues.append(f"{path}: Luna product link should use the retired-commercial resources anchor for {product_slug or '<missing>'}: {link.get('href', '')}")
+            if not is_gumroad_product_link(link):
+                issues.append(f"{path}: invalid attributed Luna product link for {product_slug or '<missing>'}: {link.get('href', '')}")
                 continue
             seen_product_slugs.add(product_slug)
             stats["luna_product_links"] += 1
         for link in starter_links:
-            if link.get("data-luna-product") != "healing-vibes-starter" or link.get("href") != "/resources/#luna-products":
-                issues.append(f"{path}: invalid sanitized Luna starter link: {link.get('href', '')}")
+            if link.get("data-luna-product") != "healing-vibes-starter" or not is_gumroad_product_link(
+                link, expected_event="luna_starter_pack_click"
+            ):
+                issues.append(f"{path}: invalid attributed Luna starter link: {link.get('href', '')}")
                 continue
             stats["luna_starter_links"] += 1
     stats["luna_product_slugs"] = len(seen_product_slugs)

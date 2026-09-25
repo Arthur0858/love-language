@@ -2008,15 +2008,9 @@ def check_discovery_cross_index(base_url: str) -> tuple[list[str], int, int, int
     issues, sitemap_urls = public_sitemap_urls(base_url)
     response_cache: dict[str, Response] = {}
     index_paths = (
-        "/ai-discovery.json",
         "/site-index.json",
         "/guardian-profiles.json",
-        "/commerce-catalog.json",
         "/safety-index.json",
-        "/search-indexing.json",
-        "/promotion-kit.json",
-        "/site-health.json",
-        "/release.json",
     )
     indexes_checked = 0
     urls_checked = 0
